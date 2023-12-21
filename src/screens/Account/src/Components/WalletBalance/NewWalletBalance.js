@@ -204,7 +204,7 @@ const NewWalletBalance = ({
   openedChests,
   userRank2,
   genesisRank2,
-  onDailyBonusInfoClick,
+  onDailyBonusInfoClick,userSocialRewards
   // hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -623,7 +623,6 @@ const NewWalletBalance = ({
 
   const [landtvl, setlandTvl] = useState(0);
   const [cawslandTvl, setCawsLandtvl] = useState(0);
-  const [userRewards, setuserRewards] = useState(0);
 
   const dummyEvents = [
     {
@@ -663,25 +662,6 @@ const NewWalletBalance = ({
     },
   ];
 
-  const getUserRewardData = async (addr) => {
-    const result = await axios
-      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`)
-      .catch((e) => {
-        console.error(e);
-      });
-
-    if (result && result.status === 200) {
-      if (result.data && result.data.rewards && result.data.rewards === 0) {
-        setuserRewards(0);
-      } else if (result.data && !result.data.rewards) {
-        let amount = 0;
-        for (let i = 0; i < result.data.length; i++) {
-          amount += result.data[i].amount;
-        }
-        setuserRewards(amount);
-      }
-    }
-  };
 
   const openEvents = () => {
     setShowAllEvents(!showAllEvents);
@@ -892,7 +872,6 @@ const NewWalletBalance = ({
   useEffect(() => {
     if (email && address) {
       fetchTreasureHuntData(email, address);
-      getUserRewardData(address);
     }
   }, [email, address, bnbPrice, cfxPrice]);
 
@@ -1684,7 +1663,7 @@ const NewWalletBalance = ({
                     <h6 className="my-total-rewards mb-0 font-iceland">
                       $
                       {getFormattedNumber(
-                        userRewards +
+                        userSocialRewards +
                           weeklyplayerData +
                           dailyplayerData +
                           userRank2 +
@@ -1728,7 +1707,7 @@ const NewWalletBalance = ({
                         className="my-total-rewards mb-0 font-iceland"
                         style={{ fontSize: "20px" }}
                       >
-                        ${getFormattedNumber(userRewards, 2)}
+                        ${getFormattedNumber(userSocialRewards, 2)}
                       </h6>
                       <span
                         className="my-total-earned mb-0 font-iceland"
@@ -1883,7 +1862,7 @@ const NewWalletBalance = ({
                 <div className="d-flex align-items-center justify-content-between">
                   <span className="my-special-rewards mb-0">My Rewards</span>
                   <h6 className="my-special-rewards-value mb-0">
-                    ${getFormattedNumber(userRewards, 2)}
+                    ${getFormattedNumber(userSocialRewards, 2)}
                   </h6>
                 </div>
               </>

@@ -25,7 +25,7 @@ const MyRewardsPopup = ({
   allChests,
   weeklyplayerData,
   dailyplayerData,
-  userRank2,
+  userRank2,userSocialRewards
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -61,27 +61,7 @@ const MyRewardsPopup = ({
   const [treasureRewardNftBetaPass, setTreasureRewardNftBetaPass] = useState(0);
   const [confluxRewardsUSD, setConfluxRewardsUSD] = useState(0);
   const [gateRewardsUSD, setGateRewardsUSD] = useState(0);
-  const [userRewards, setuserRewards] = useState(0);
 
-  const getUserRewardData = async (addr) => {
-    const result = await axios
-      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`)
-      .catch((e) => {
-        console.error(e);
-      });
-
-    if (result && result.status === 200) {
-      if (result.data && result.data.rewards && result.data.rewards === 0) {
-        setuserRewards(0);
-      } else if (result.data && !result.data.rewards) {
-        let amount = 0;
-        for (let i = 0; i < result.data.length; i++) {
-          amount += result.data[i].amount;
-        }
-        setuserRewards(amount);
-      }
-    }
-  };
 
   const getBundles = async () => {
     if (address) {
@@ -541,7 +521,6 @@ const MyRewardsPopup = ({
   useEffect(() => {
     if (email && address) {
       fetchTreasureHuntData(email, address);
-      getUserRewardData(address);
     }
   }, [email, address]);
 
@@ -826,10 +805,10 @@ const MyRewardsPopup = ({
                 Social Bonus
               </td>
               <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
-                ${getFormattedNumber(userRewards, 2)}
+                ${getFormattedNumber(userSocialRewards, 2)}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {getFormattedNumber(userRewards / bnbPrice, 4)} WBNB
+                {getFormattedNumber(userSocialRewards / bnbPrice, 4)} WBNB
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 $0.00
