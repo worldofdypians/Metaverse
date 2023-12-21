@@ -132,6 +132,7 @@ function Dashboard({
   const [myConfluxNfts, setmyConfluxNfts] = useState([]);
   const [myBaseNfts, setmyBaseNfts] = useState([]);
   const [myDogeNfts, setmyDogeNfts] = useState([]);
+  const [myCmcNfts, setmyCmcNfts] = useState([]);
 
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
@@ -182,6 +183,7 @@ function Dashboard({
   const [claimedPremiumChests, setclaimedPremiumChests] = useState(0);
   const [dailyplayerData, setdailyplayerData] = useState(0);
   const [weeklyplayerData, setweeklyplayerData] = useState(0);
+  const [userSocialRewards, setuserSocialRewards] = useState(0);
 
   const [canBuy, setCanBuy] = useState(false);
 
@@ -862,6 +864,9 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "doge").then((NFTS) =>
     setmyDogeNfts(NFTS)
   );
+  getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cmc").then((NFTS) =>
+  setmyCmcNfts(NFTS)
+);
   };
 
   const getOtherNfts = async () => {
@@ -1052,6 +1057,27 @@ function Dashboard({
       });
     return finalboughtItems;
   };
+
+  const getUserRewardData = async (addr) => {
+    const result = await axios
+      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      if (result.data && result.data.rewards && result.data.rewards === 0) {
+        setuserSocialRewards(0);
+      } else if (result.data && !result.data.rewards) {
+        let amount = 0;
+        for (let i = 0; i < result.data.length; i++) {
+          amount += result.data[i].amount;
+        }
+        setuserSocialRewards(amount);
+      }
+    }
+  };
+
 
   const getMyOffers = async () => {
     //setmyOffers
@@ -1676,8 +1702,25 @@ function Dashboard({
     ) {
       getOpenedChestPerWallet();
       setuserWallet(data.getPlayer.wallet.publicAddress);
+      getUserRewardData(data.getPlayer.wallet.publicAddress)
     }
   }, [data, email, count, isPremium, claimedChests, claimedPremiumChests]);
+
+
+  useEffect(() => {
+    if (
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+      email
+    ) {
+      getUserRewardData(data.getPlayer.wallet.publicAddress)
+    }
+  }, [data, email]);
+
 
   useEffect(() => {
     if (coinbase) {
@@ -1908,6 +1951,7 @@ function Dashboard({
                         onDailyBonusInfoClick={() => {
                           setdailyBonusInfo(true);
                         }}
+                        userSocialRewards={userSocialRewards}
                         // hasNft={
                         //   MyNFTSCaws.length +
                         //     MyNFTSLand.length   >
@@ -1952,6 +1996,7 @@ function Dashboard({
                       myConfluxNfts={myConfluxNfts}
                       myBaseNfts={myBaseNfts}
                       myDogeNfts={myDogeNfts}
+                      myCmcNfts={myCmcNfts}
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
@@ -2150,6 +2195,7 @@ function Dashboard({
                             openedChests={openedChests}
                             allChests={allChests}
                             availableTime={goldenPassRemainingTime}
+                            userSocialRewards={userSocialRewards}
                             // hasNft={
                             //   MyNFTSCaws.length +
                             //     MyNFTSLand.length  >

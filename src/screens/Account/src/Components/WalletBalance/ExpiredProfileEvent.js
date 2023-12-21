@@ -39,6 +39,8 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
             height={16}
             width={16}
             alt=""
+            className="profilebannerimg"
+
           />
           <div className="d-flex flex-column">
             <div className="d-flex align-items-center gap-1">
