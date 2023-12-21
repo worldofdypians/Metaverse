@@ -98,7 +98,7 @@ const WalletBalance = ({
   myGateNfts,
   myConfluxNfts,
   myBaseNfts,
-  myDogeNfts,myCmcNfts
+  myDogeNfts,myCmcNfts,latestVersion
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -1441,7 +1441,7 @@ const WalletBalance = ({
                       World of Dypians
                     </span>
                     <span className="game-event-patchtitle d-flex algin-items-center gap-1">
-                      Latest Patch: v0.2.1{" "}
+                      Latest Patch: {latestVersion}{" "}
                       <img
                         src={require("./newAssets/orangePatch.svg").default}
                       />
