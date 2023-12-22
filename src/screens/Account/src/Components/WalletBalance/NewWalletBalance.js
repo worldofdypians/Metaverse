@@ -204,7 +204,27 @@ const NewWalletBalance = ({
   openedChests,
   userRank2,
   genesisRank2,
-  onDailyBonusInfoClick,userSocialRewards,dogePrice
+  onDailyBonusInfoClick,
+  userSocialRewards,
+  dogePrice,
+  cfxPrice,
+  userEarnUsd,
+  userEarnETH,
+  userPoints,
+  confluxUserPoints,
+  confluxEarnUSD,
+  confluxEarnCFX,
+  gateEarnUSD,
+  gateUserPoints,
+  gateEarnBnb,
+  dogeEarnUSD,
+  dogeEarnBNB,
+  dogeUserPoints,
+  baseEarnUSD,
+  baseUserPoints,
+  baseEarnETH,
+  dypiusEarnUsd,
+  dypiusEarnTokens,
   // hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -569,6 +589,7 @@ const NewWalletBalance = ({
   ];
 
   const [dummyEvent, setDummyEvent] = useState({});
+  const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0)
   const [showAllEvents, setShowAllEvents] = useState(false);
   const [eventPopup, setEventPopup] = useState(false);
   const [records, setRecords] = useState([]);
@@ -589,29 +610,6 @@ const NewWalletBalance = ({
   const [success, setSuccess] = useState("");
   const [finished, setFinished] = useState(false);
 
-  const [userPoints, setuserPoints] = useState(0);
-  const [userEarnUsd, setuserEarnUsd] = useState(0);
-  const [userEarnETH, setuserEarnETH] = useState(0);
-
-  const [cfxPrice, setCfxPrice] = useState(0);
-  const [confluxUserPoints, setConfluxUserPoints] = useState(0);
-  const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
-  const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
-
-  const [gateEarnUSD, setGateEarnUSD] = useState(0);
-  const [gateUserPoints, setGateUserPoints] = useState(0);
-  const [gateEarnBnb, setGateEarnBNB] = useState(0);
-
-  const [dogeUserPoints, setDogeUserPoints] = useState(0);
-  const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
-  const [dogeEarnBNB, setDogeEarnBNB] = useState(0);
-
-  const [baseUserPoints, setBaseUserPoints] = useState(0);
-  const [baseEarnUSD, setBaseEarnUSD] = useState(0);
-  const [baseEarnETH, setBaseEarnETH] = useState(0);
-  const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
-  const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
-
   const [EthRewards, setEthRewards] = useState(0);
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
   const [EthRewardsCawsPool, setEthRewardsCawsPool] = useState(0);
@@ -630,6 +628,14 @@ const NewWalletBalance = ({
 
   const [landtvl, setlandTvl] = useState(0);
   const [cawslandTvl, setCawsLandtvl] = useState(0);
+
+  const fetchUsersocialRewards = ()=>{
+    const cachedUserSocialRewards = localStorage.getItem("cacheduserSocialRewards");
+
+    if(cachedUserSocialRewards) {
+      setuserSocialRewardsCached(cachedUserSocialRewards)
+    }
+  }
 
   const dummyEvents = [
     {
@@ -669,7 +675,6 @@ const NewWalletBalance = ({
     },
   ];
 
-
   const openEvents = () => {
     setShowAllEvents(!showAllEvents);
   };
@@ -703,18 +708,6 @@ const NewWalletBalance = ({
     }
 
     return errors;
-  };
-
-  const fetchCFXPrice = async () => {
-    await axios
-      .get(
-        "https://pro-api.coingecko.com/api/v3/simple/price?ids=conflux-token&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev"
-      )
-      .then((obj) => {
-        if (obj.data["conflux-token"] && obj.data["conflux-token"] !== NaN) {
-          setCfxPrice(obj.data["conflux-token"].usd);
-        }
-      });
   };
 
   const getTreasureChestsInfo = async () => {
@@ -768,136 +761,6 @@ const NewWalletBalance = ({
 
     setLoading(false);
   };
-
-  const fetchTreasureHuntData = async (email, userAddress) => {
-    try {
-      // console.log(email, window.infuraWeb3.utils.toChecksumAddress(userAddress))
-      const response = await fetch(
-        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
-        {
-          body: JSON.stringify({
-            email: email,
-            publicAddress: userAddress,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          redirect: "follow",
-          mode: "cors",
-        }
-      );
-      if (response.status === 200) {
-        const responseData = await response.json();
-        if (responseData.events) {
-          const coingeckoEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "coingecko";
-          });
-          const confluxEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "conflux";
-          });
-          const gateEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "gate";
-          });
-
-          const baseEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "base";
-          });
-          const dypEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "all";
-          });
-
-          const dogeEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "doge";
-          });
-
-          if (dypEvent && dypEvent[0]) {
-            const userEarnedDyp =
-              dypEvent[0].reward.earn.total /
-              dypEvent[0].reward.earn.multiplier;
-            setDypiusEarnUsd(dyptokenDatabnb * userEarnedDyp);
-            setDypiusEarnTokens(userEarnedDyp);
-          }
-          if (coingeckoEvent && coingeckoEvent[0]) {
-            const points = coingeckoEvent[0].reward.earn.totalPoints;
-            setuserPoints(points);
-            const usdValue =
-              coingeckoEvent[0].reward.earn.total /
-              coingeckoEvent[0].reward.earn.multiplier;
-            setuserEarnUsd(usdValue);
-            if (bnbPrice !== 0) {
-              setuserEarnETH(usdValue / bnbPrice);
-            }
-          }
-
-          if (dogeEvent && dogeEvent[0]) {
-            const points = dogeEvent[0].reward.earn.totalPoints;
-            setDogeUserPoints(points);
-            const usdValue =
-              dogeEvent[0].reward.earn.total /
-              dogeEvent[0].reward.earn.multiplier;
-            setDogeEarnUSD(usdValue);
-            if (dogePrice !== 0) {
-              setDogeEarnBNB(usdValue / dogePrice);
-            }
-          }
-
-          if (confluxEvent && confluxEvent[0]) {
-            const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
-            setConfluxUserPoints(cfxPoints);
-
-            if (confluxEvent[0].reward.earn.multiplier !== 0) {
-              const cfxUsdValue =
-                confluxEvent[0].reward.earn.total /
-                confluxEvent[0].reward.earn.multiplier;
-              setConfluxEarnUSD(cfxUsdValue);
-              if (cfxPrice !== 0) {
-                setConfluxEarnCFX(cfxUsdValue / cfxPrice);
-              }
-            }
-          }
-
-          if (gateEvent && gateEvent[0]) {
-            const gatePoints = gateEvent[0].reward.earn.totalPoints;
-            setGateUserPoints(gatePoints);
-            if (gateEvent[0].reward.earn.multiplier !== 0) {
-              const gateUsdValue =
-                gateEvent[0].reward.earn.total /
-                gateEvent[0].reward.earn.multiplier;
-              setGateEarnUSD(gateUsdValue);
-              if (bnbPrice !== 0) {
-                setGateEarnBNB(gateUsdValue / bnbPrice);
-              }
-            }
-          }
-
-          if (baseEvent && baseEvent[0]) {
-            const basePoints = baseEvent[0].reward.earn.totalPoints;
-            setBaseUserPoints(basePoints);
-            if (baseEvent[0].reward.earn.multiplier !== 0) {
-              const baseUsdValue =
-                baseEvent[0].reward.earn.total /
-                baseEvent[0].reward.earn.multiplier;
-              setBaseEarnUSD(baseUsdValue);
-              if (ethTokenData !== 0) {
-                setBaseEarnETH(baseUsdValue / ethTokenData);
-              }
-            }
-          }
-        }
-      } else {
-        console.log(`Request failed with status ${response.status}`);
-      }
-    } catch (error) {
-      console.log("Error:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (email && address) {
-      fetchTreasureHuntData(email, address);
-    }
-  }, [email, address, bnbPrice, cfxPrice]);
 
   useEffect(() => {
     if (
@@ -1188,7 +1051,6 @@ const NewWalletBalance = ({
     getTokenData();
     getTokenDatabnb();
     getTokenDataavax();
-    fetchCFXPrice();
     fetchTvl();
     window.scrollTo(0, 0);
   }, []);
@@ -1214,6 +1076,10 @@ const NewWalletBalance = ({
   useEffect(() => {
     getTreasureChestsInfo();
   }, [openedChests, address]);
+
+  useEffect(()=>{
+    fetchUsersocialRewards()
+  },[userSocialRewards])
 
   const recaptchaRef = useRef(null);
 
@@ -1264,7 +1130,6 @@ const NewWalletBalance = ({
                 }}
                 data={dummyCmc}
               />
-           
               {/* <img
                 src={eventSkeleton}
                 className="profile-event-item"
@@ -1683,14 +1548,15 @@ const NewWalletBalance = ({
                     <h6 className="my-total-rewards mb-0 font-iceland">
                       $
                       {getFormattedNumber(
-                        userSocialRewards +
+                        Number(userSocialRewardsCached) +
                           weeklyplayerData +
                           dailyplayerData +
                           userRank2 +
                           genesisRank2 +
                           baseEarnUSD +
                           confluxEarnUSD +
-                          gateEarnUSD + dogeEarnUSD +
+                          gateEarnUSD +
+                          dogeEarnUSD +
                           userEarnUsd +
                           treasureRewardMoney +
                           EthRewardsLandPool * ethTokenData +
@@ -1727,7 +1593,7 @@ const NewWalletBalance = ({
                         className="my-total-rewards mb-0 font-iceland"
                         style={{ fontSize: "20px" }}
                       >
-                        ${getFormattedNumber(userSocialRewards, 2)}
+                        ${getFormattedNumber(Number(userSocialRewardsCached), 2)}
                       </h6>
                       <span
                         className="my-total-earned mb-0 font-iceland"
@@ -1882,7 +1748,7 @@ const NewWalletBalance = ({
                 <div className="d-flex align-items-center justify-content-between">
                   <span className="my-special-rewards mb-0">My Rewards</span>
                   <h6 className="my-special-rewards-value mb-0">
-                    ${getFormattedNumber(userSocialRewards, 2)}
+                    ${getFormattedNumber(Number(userSocialRewardsCached), 2)}
                   </h6>
                 </div>
               </>

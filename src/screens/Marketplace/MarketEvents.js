@@ -620,7 +620,7 @@ const MarketEvents = ({
           });
 
           const dogeEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "doge";
+            return obj.betapassId === "dogecoin";
           });
 
           //setDypiusEarnTokens

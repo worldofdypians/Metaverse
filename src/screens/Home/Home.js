@@ -27,6 +27,7 @@ import coingeckoPopup from "../../components/TimepieceMint/assets/coingeckoPopup
 import treasureHuntPopup from "../../components/TimepieceMint/assets/treasureHuntPopup.png";
 import treasureHuntGate from "../../components/TimepieceMint/assets/treasureHuntGate.webp";
 import baseTreasureHuntPopup from "../../components/TimepieceMint/assets/baseTreasureHuntPopup.webp";
+import dogeTreasureHuntPopup from "../../components/TimepieceMint/assets/dogeTreasureHunt.webp";
 
 import confluxTreasureHunt from "../../components/TimepieceMint/assets/confluxTreasureHunt.png";
 import LiveEvents from "./LiveEvents/LiveEvents";
@@ -79,7 +80,7 @@ const Home = ({
   };
   const dogePopupInfo = {
     title: "Treasure Hunt",
-    img: dogePopup,
+    img: dogeTreasureHuntPopup,
     state: "doge",
   };
 
