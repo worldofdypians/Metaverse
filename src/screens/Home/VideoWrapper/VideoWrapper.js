@@ -88,7 +88,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
     {
       title: "CMC",
       logo: cmc,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -101,7 +101,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         chain: "BNB Chain",
         linkState: "coinmarketcap",
         rewards: "BNB",
-        status: "Coming Soon",
+        status: "Live",
         id: "event8",
         eventType: "Explore & Mine",
         totalRewards: "$10,000 in BNB Rewards",

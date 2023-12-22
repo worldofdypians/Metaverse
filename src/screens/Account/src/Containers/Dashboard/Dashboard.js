@@ -140,6 +140,10 @@ function Dashboard({
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnETH, setuserEarnETH] = useState(0);
 
+  const [cmcuserPoints, setcmcuserPoints] = useState(0);
+  const [cmcuserEarnUsd, setcmcuserEarnUsd] = useState(0);
+  const [cmcuserEarnETH, setcmcuserEarnETH] = useState(0);
+
   const [confluxUserPoints, setConfluxUserPoints] = useState(0);
   const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
   const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
@@ -748,6 +752,10 @@ function Dashboard({
             return obj.betapassId === "dogecoin";
           });
 
+          const cmcEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "cmc";
+          });
+
           if (dypEvent && dypEvent[0]) {
             const userEarnedDyp =
               dypEvent[0].reward.earn.total /
@@ -764,6 +772,18 @@ function Dashboard({
             setuserEarnUsd(usdValue);
             if (bnbPrice !== 0) {
               setuserEarnETH(usdValue / bnbPrice);
+            }
+          }
+
+          if (cmcEvent && cmcEvent[0]) {
+            const points = cmcEvent[0].reward.earn.totalPoints;
+            setcmcuserPoints(points);
+            const usdValue =
+              cmcEvent[0].reward.earn.total /
+              cmcEvent[0].reward.earn.multiplier;
+            setBaseEarnUSD(usdValue);
+            if (bnbPrice !== 0) {
+              setcmcuserEarnETH(usdValue / bnbPrice);
             }
           }
 
@@ -2134,6 +2154,11 @@ function Dashboard({
                         userEarnUsd={userEarnUsd}
                         userEarnETH={userEarnETH}
                         userPoints={userPoints}
+
+                        cmcuserPoints={cmcuserPoints}
+                        cmcuserEarnETH={cmcuserEarnETH}
+                        cmcuserEarnUsd={cmcuserEarnUsd}
+
                         confluxUserPoints={confluxUserPoints}
                         confluxEarnUSD={confluxEarnUSD}
                         confluxEarnCFX={confluxEarnCFX}
@@ -2389,6 +2414,11 @@ function Dashboard({
                         dogePrice={dogePrice}
                         userEarnUsd={userEarnUsd}
                         userEarnETH={userEarnETH}
+                        
+                        cmcuserEarnETH={cmcuserEarnETH}
+                        cmcuserEarnUsd={cmcuserEarnUsd}
+
+
                         dogeEarnUSD={dogeEarnUSD}
                         dogeEarnBNB={dogeEarnBNB}
                         baseEarnUSD={baseEarnUSD}

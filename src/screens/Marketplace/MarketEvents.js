@@ -148,6 +148,9 @@ const MarketEvents = ({
   const [userPoints, setuserPoints] = useState(0);
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnETH, setuserEarnETH] = useState(0);
+  const [cmcuserPoints, setcmcuserPoints] = useState(0);
+  const [cmcuserEarnUsd, setcmcuserEarnUsd] = useState(0);
+  const [cmcuserEarnETH, setcmcuserEarnETH] = useState(0);
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
   const [confluxUserPoints, setConfluxUserPoints] = useState(0);
@@ -187,6 +190,7 @@ const MarketEvents = ({
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
+  let cmcLastDay = new Date("2024-03-25T13:00:00.000+02:00");
 
   const dailyBonusMintData = {
     title: "Daily Bonus",
@@ -225,7 +229,7 @@ const MarketEvents = ({
     {
       title: "CoinMarketCap",
       logo: cmc,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -236,11 +240,11 @@ const MarketEvents = ({
         chain: "BNB Chain",
         linkState: "coinmarketcap",
         rewards: "BNB",
-        status: "Coming Soon",
+        status: "Live",
         id: "event8",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: coingeckoLastDay,
+        eventDuration: cmcLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -625,6 +629,10 @@ const MarketEvents = ({
             return obj.betapassId === "dogecoin";
           });
 
+          const cmcEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "cmc";
+          });
+
           //setDypiusEarnTokens
 
           if (dypEvent && dypEvent[0]) {
@@ -644,6 +652,18 @@ const MarketEvents = ({
             setuserEarnUsd(usdValue);
             if (bnbPrice !== 0) {
               setuserEarnETH(usdValue / bnbPrice);
+            }
+          }
+
+          if (cmcEvent && cmcEvent[0]) {
+            const points = cmcEvent[0].reward.earn.totalPoints;
+            setcmcuserPoints(points);
+            const usdValue =
+              cmcEvent[0].reward.earn.total /
+              cmcEvent[0].reward.earn.multiplier;
+            setcmcuserEarnUsd(usdValue);
+            if (bnbPrice !== 0) {
+              setcmcuserEarnETH(usdValue / bnbPrice);
             }
           }
 
@@ -1651,6 +1671,8 @@ const MarketEvents = ({
                         ? dypiusEarnTokens
                         : dummyEvent.id === "event7"
                         ? dogeUserPoints
+                        : dummyEvent.id === "event8"
+                        ? cmcuserPoints
                         : 0,
                       0
                     )}
@@ -1682,6 +1704,8 @@ const MarketEvents = ({
                         ? dypiusEarnUsd
                         : dummyEvent.id === "event7"
                         ? dogeEarnUSD
+                        : dummyEvent.id === "event8"
+                        ? cmcuserEarnUsd
                         : 0,
                       2
                     )}
@@ -1699,6 +1723,8 @@ const MarketEvents = ({
                               ? baseEarnETH
                               : dummyEvent.id === "event7"
                               ? dogeEarnBNB
+                              : dummyEvent.id === "event8"
+                              ? cmcuserEarnETH
                               : 0,
                             2
                           )}
