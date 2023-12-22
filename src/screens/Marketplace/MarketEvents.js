@@ -123,7 +123,8 @@ const MarketEvents = ({
   remainingTime,
   tabState,
   ethTokenData,
-  dyptokenData_old,dogePrice
+  dyptokenData_old,
+  dogePrice,
 }) => {
   const location = useLocation();
   const windowSize = useWindowSize();
@@ -194,14 +195,14 @@ const MarketEvents = ({
   };
 
   const dummyBetaPassData2 = [
-  {
+    {
       title: "Dogecoin",
       logo: doge,
       eventStatus: "Live",
       totalRewards: "$10,000 in DOGE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "December 22, 2023",
+      eventDate: "Dec 22, 2023",
       backgroundImage: upcomingDoge,
       popupInfo: {
         title: "Dogecoin",
@@ -218,16 +219,17 @@ const MarketEvents = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "December 22, 2023",
+        eventDate: "Dec 22, 2023",
       },
-    },    {
+    },
+    {
       title: "CoinMarketCap",
       logo: cmc,
       eventStatus: "Coming Soon",
       totalRewards: "$10,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "December 26, 2023",
+      eventDate: "Dec 26, 2023",
       backgroundImage: upcomingCmc,
       popupInfo: {
         title: "CoinMarketCap",
@@ -243,12 +245,12 @@ const MarketEvents = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "30,000",
-        eventDate: "December 26, 2023",
+        eventDate: "Dec 26, 2023",
         learnMore:
           "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
-  
+
     {
       title: "CoinGecko",
       logo: coingecko,
@@ -256,7 +258,7 @@ const MarketEvents = ({
       totalRewards: "$10,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "September 25, 2023",
+      eventDate: "Sept 25, 2023",
       backgroundImage: coingeckoUpcoming,
       popupInfo: {
         title: "CoinGecko",
@@ -283,7 +285,7 @@ const MarketEvents = ({
       totalRewards: "$10,000 in ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "November 01, 2023",
+      eventDate: "Nov 01, 2023",
       backgroundImage: baseUpcoming,
       popupInfo: {
         eventType: "Explore & Mine",
@@ -295,7 +297,7 @@ const MarketEvents = ({
         id: "event4",
         totalRewards: "$10,000 in ETH Rewards",
         eventDuration: baseLastDay,
-        eventDate: "November 01, 2023",
+        eventDate: "Nov 01, 2023",
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",

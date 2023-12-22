@@ -628,7 +628,20 @@ const MyRewardsPopup = ({
                 ${getFormattedNumber(0, 2)}
               </td>
             </tr>
-
+            {/* <tr>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Dypius
+              </td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                ${getFormattedNumber(dypiusEarnUsd, 2)}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {getFormattedNumber(dypiusEarnTokens, 4)} DYP
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                ${getFormattedNumber(0, 2)}
+              </td>
+            </tr> */}
             <tr>
               <td className="myrewards-td-second border-0 paddingLeftCell">
                 Dogecoin
