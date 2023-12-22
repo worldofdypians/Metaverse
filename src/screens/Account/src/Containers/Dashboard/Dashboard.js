@@ -1523,7 +1523,7 @@ function Dashboard({
       await handleSwitchNetworkhook("0x2105")
         .then(() => {
           handleSwitchNetwork(8453);
-          setChainDropdown(chainDropdowns[3]);
+          setChainDropdown(chainDropdowns[4]);
         })
         .catch((e) => {
           console.log(e);
@@ -1537,7 +1537,7 @@ function Dashboard({
         await handleSwitchNetworkhook("0x406")
           .then(() => {
             handleSwitchNetwork(1030);
-            setChainDropdown(chainDropdowns[4]);
+            setChainDropdown(chainDropdowns[3]);
           })
           .catch((e) => {
             console.log(e);
@@ -1589,7 +1589,7 @@ function Dashboard({
       handleSubscriptionTokenChange(wbnbAddress);
       handleCheckIfAlreadyApproved(wbnbAddress);
     } else if (chainId === 1030) {
-      setChainDropdown(chainDropdowns[4]);
+      setChainDropdown(chainDropdowns[3]);
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
@@ -1598,7 +1598,7 @@ function Dashboard({
       handleSubscriptionTokenChange(wcfx);
       handleCheckIfAlreadyApproved(wcfx);
     } else if (chainId === 8453) {
-      setChainDropdown(chainDropdowns[3]);
+      setChainDropdown(chainDropdowns[4]);
       setdropdownIcon("weth");
       setdropdownTitle("WETH");
       setselectedSubscriptionToken(
