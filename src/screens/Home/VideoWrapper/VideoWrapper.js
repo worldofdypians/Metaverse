@@ -16,7 +16,7 @@ import conflux from "../../Marketplace/MarketNFTs/assets/conflux.svg";
 import gateWhite from "../../Marketplace/MarketNFTs/wallets/gateWallet.png";
 import coinbaseimg from "../../Marketplace/MarketNFTs/assets/base.svg";
 import doge from "../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
-import cmc from '../../Marketplace/MarketNFTs/assets/cmc.svg'
+import cmc from "../../Marketplace/MarketNFTs/assets/cmc.svg";
 
 import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
 import dypius from "../../Account/src/Components/WalletBalance/assets/dypIcon.svg";
@@ -47,61 +47,6 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
   };
 
   const dummyBetaPassData2 = [
-    {
-      title: "CoinGecko",
-      logo: coingecko,
-      eventStatus: "Live",
-      totalRewards: "$10,000 in BNB Rewards",
-      rewardsAmount: "$10,000",
-      rewardsCurrency: "BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "September 25, 2023",
-      popupInfo: {
-        title: "CoinGecko",
-        chain: "BNB Chain",
-        linkState: "coingecko",
-        rewards: "BNB",
-        status: "Live",
-        id: "event3",
-        eventType: "Explore & Mine",
-        totalRewards: "$10,000 in BNB Rewards",
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
-      },
-    },
-    {
-      title: "Base",
-      logo: coinbaseimg,
-      eventStatus: "Live",
-      totalRewards: "$10,000 in ETH Rewards",
-      rewardsAmount: "$10,000",
-      rewardsCurrency: "ETH Rewards",
-      myEarnings: 126.45,
-      eventType: "Explore & Mine",
-      eventDate: "November 01, 2023",
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Chain",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Live",
-        id: "event4",
-        date: "November 01, 2023",
-        totalRewards: "$5,000 in ETH Rewards",
-        eventDate: "November 01, 2023",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
-      },
-    },
     {
       title: "Dogecoin",
       chain: "BNB Chain",
@@ -135,7 +80,8 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         maxRewards: "100",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
         eventDate: "December 22, 2023",
       },
     },
@@ -171,6 +117,63 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
           "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
+
+    {
+      title: "Base",
+      logo: coinbaseimg,
+      eventStatus: "Live",
+      totalRewards: "$10,000 in ETH Rewards",
+      rewardsAmount: "$10,000",
+      rewardsCurrency: "ETH Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "November 01, 2023",
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Base",
+        chain: "Base Chain",
+        linkState: "base",
+        rewards: "ETH",
+        status: "Live",
+        id: "event4",
+        date: "November 01, 2023",
+        totalRewards: "$5,000 in ETH Rewards",
+        eventDate: "November 01, 2023",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "CoinGecko",
+      logo: coingecko,
+      eventStatus: "Expired",
+      totalRewards: "$10,000 in BNB Rewards",
+      rewardsAmount: "$10,000",
+      rewardsCurrency: "BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Ended",
+      popupInfo: {
+        title: "CoinGecko",
+        chain: "BNB Chain",
+        linkState: "coingecko",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event3",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      },
+    },
+
     // {
     //   title: "Dypius",
     //   logo: dypius,
@@ -331,25 +334,26 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
           <div className="col-12 col-lg-8 video-diagonal">
             <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center">
               <div className="row m-0 gap-5 align-items-center justify-content-center">
-                <div className="linear-border-download p-0" style={{
+                <div
+                  className="linear-border-download p-0"
+                  style={{
                     width: "fit-content",
                     zIndex: 5,
                     position: "relative",
                     textDecoration: "none",
-                  }} >
-                <div
-                  className="opacitywrapper5 download-filled-btn m-0 px-3"
-                 
+                  }}
                 >
-                  <a
-                    className="game-event-download d-flex align-items-center gap-2"
-                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                    target="_blank"
-                  >
-                    <img src={epicblack} alt="icon" className="epicgame2" />
-                    Download
-                  </a>
-                </div></div>
+                  <div className="opacitywrapper5 download-filled-btn m-0 px-3">
+                    <a
+                      className="game-event-download d-flex align-items-center gap-2"
+                      href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                      target="_blank"
+                    >
+                      <img src={epicblack} alt="icon" className="epicgame2" />
+                      Download
+                    </a>
+                  </div>
+                </div>
                 <NavLink
                   to="join-beta"
                   className="pink-linear-border"
