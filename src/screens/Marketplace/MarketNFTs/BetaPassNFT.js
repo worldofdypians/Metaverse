@@ -259,6 +259,7 @@ const BetaPassNFT = ({
   const [userEarnUsdGate, setUserEarnUsdGate] = useState(0);
   const [isBaseActive, setisBaseActive] = useState(false);
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
+  const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
 
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
@@ -355,11 +356,24 @@ const BetaPassNFT = ({
           const baseEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "base";
           });
+
+          const dogeEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "dogecoin";
+          });
+
           if (coingeckoEvent && coingeckoEvent[0]) {
             const usdValue =
               coingeckoEvent[0].reward.earn.total /
               coingeckoEvent[0].reward.earn.multiplier;
             setuserEarnUsd(usdValue);
+          }
+
+           
+          if (dogeEvent && dogeEvent[0]) {
+            const usdValue =
+              dogeEvent[0].reward.earn.total /
+              dogeEvent[0].reward.earn.multiplier;
+            setDogeEarnUSD(usdValue);
           }
 
           if (
@@ -1854,6 +1868,134 @@ const BetaPassNFT = ({
                           </div>
                         )}
 
+{mintTitle === "doge" && (
+                          <div className="">
+                            <div className="d-flex flex-column gap-3">
+                              <div className="d-flex align-items-center position-relative gap-2">
+                                <h6 className="coingecko-eventh6 m-0">
+                                  Dogecoin Treasure Hunt
+                                </h6>{" "}
+                                <div
+                                  className={`position-relative  events-page-status-tag-live px-2 d-flex align-items-center justify-content-center gap-0`}
+                                  style={{ top: 0 }}
+                                >
+                                  <div
+                                    class="pulsatingDot"
+                                    style={{
+                                      width: 7,
+                                      height: 7,
+                                      marginRight: 5,
+                                    }}
+                                  ></div>
+
+                                  <span>Live</span>
+                                </div>
+                              </div>
+                              <div className="doge-eventwrapper p-3">
+                                <div className="d-flex flex-column gap-4">
+                                  <div className="d-flex gap-2 align-items-center">
+                                    <img
+                                      src={dogeLogo}
+                                      width={32}
+                                      height={32}
+                                      alt=""
+                                    />
+                                    <div className="d-flex flex-column gap-1">
+                                      <span className="coingecko-eventname">
+                                        Dogecoin
+                                      </span>
+                                      <span className="coingecko-eventusd">
+                                        $10,000 in DOGE rewards
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
+                                    <div
+                                      className="mybetaearnings position-relative m-0"
+                                      style={{ top: 0, bottom: 0 }}
+                                    >
+                                      <h6 className="event-my-earnings3 mb-3">
+                                        ${getFormattedNumber(dogeEarnUSD, 2)}
+                                      </h6>
+                                    </div>
+                                    <div className="d-flex flex-column gap-2">
+                                      <div className="d-flex gap-1 align-items-center">
+                                        <img src={whitePickaxe} alt="" />
+                                        <span class="white-events-text mb-0">
+                                          Explore &amp; Mine
+                                        </span>
+                                      </div>
+                                      <div className="d-flex gap-1 align-items-center">
+                                        <img src={whiteCalendar} alt="" />
+                                        <span class="white-events-text mb-0">
+                                          Start: Dec. 22, 2023
+                                        </span>
+                                      </div>
+                                      <div className="d-flex gap-1 align-items-center">
+                                        <img src={whiteCalendar} alt="" />
+                                        <span class="white-events-text mb-0">
+                                          End: Mar. 21, 2024
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="d-flex gap-1 align-items-center justify-content-center">
+                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                      <span className="coingecko-eventdetails">
+                                        Event details
+                                      </span>
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="12"
+                                        height="12"
+                                        viewBox="0 0 12 12"
+                                        fill="none"
+                                      >
+                                        <path
+                                          d="M4.5 9L7.5 6L4.5 3"
+                                          stroke="white"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                        />
+                                      </svg>
+                                    </NavLink>
+                                  </div>
+                                </div>
+                              </div>
+                              <span className="footertxt-coingecko">
+                                Earn daily ETH rewards and global leaderboard
+                                points.
+                              </span>
+                              <div className="summaryseparator mt-3 mb-3"></div>
+                              <div className="d-flex align-items-center gap-2 justify-content-between">
+                                <div className="opacitywrapper4 m-0">
+                                  <a
+                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={epicwhite}
+                                      alt="icon"
+                                      className="epicgame2"
+                                    />
+                                    Download
+                                  </a>
+                                </div>
+                                <NavLink
+                                  to="/account"
+                                  className="accountbtn-coingecko btn d-flex align-items-center gap-1"
+                                >
+                                  <img src={user} alt="" className="user2" />
+                                  My Account
+                                </NavLink>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+
                         {mintTitle === "base" && (
                           <div className="">
                             <div className="d-flex flex-column gap-3">
@@ -2010,13 +2152,13 @@ const BetaPassNFT = ({
                               : "Registered"}{" "}
                           </h6>
                         )}
-                        {mintTitle === "doge" && (
+                        {/* {mintTitle === "doge" && (
                           <h6 className="land-name">
                             {mintTitle === "doge" && totalDogeNft > 0
                               ? "My NFT"
                               : "Registered"}{" "}
                           </h6>
-                        )}
+                        )} */}
                         {!alreadyRegistered &&
                           activeTab === "create" &&
                           mintTitle === "cmc" && (
@@ -2284,108 +2426,7 @@ const BetaPassNFT = ({
                             </div>
                           </div>
                         )}
-                        {mintTitle === "doge" && (
-                          <div className="d-flex flex-column justify-content-between h-100">
-                            {totalDogeNft === 0 && mintTitle === "doge" ? (
-                              <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
-                                <div
-                                  className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}
-                                  style={{
-                                    height: windowSize.width > 991 ? 210 : 295,
-                                  }}
-                                ></div>
-                                <div
-                                  className="genesis-desc nomask px-3 py-2 position-relative"
-                                  style={{
-                                    bottom: "5px",
-                                    minWidth: "100%",
-                                    maxWidth: "100%",
-                                  }}
-                                >
-                                  <h6
-                                    className="land-desc w-75 m-auto text-center justify-content-center"
-                                    style={{ fontWeight: 500, fontSize: 16 }}
-                                  >
-                                    {selectedMint.cardTitle}
-                                  </h6>
-                                </div>
-                              </div>
-                            ) : (
-                              <NavLink
-                                to={`/marketplace/nft/${myDogeNFTs[0]}/${window.config.nft_doge_address}`}
-                                onClick={() => {
-                                  updateViewCount(
-                                    myDogeNFTs[0],
-                                    window.config.nft_doge_address
-                                  );
-                                }}
-                              >
-                                <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
-                                  <div
-                                    className={`coingeckoempty-wrapper  ${
-                                      totalDogeNft === 0 && mintTitle === "doge"
-                                        ? "conflux-empty"
-                                        : totalDogeNft > 0 &&
-                                          mintTitle === "doge"
-                                        ? "doge-active"
-                                        : "conflux-empty"
-                                    } d-flex justify-content-center align-items-center p-3 position-relative`}
-                                    style={{
-                                      height:
-                                        windowSize.width > 991 ? 210 : 295,
-                                    }}
-                                  ></div>
-                                  <div
-                                    className="genesis-desc nomask px-3 py-2 position-relative"
-                                    style={{
-                                      bottom: "20px",
-                                      minWidth: "100%",
-                                      maxWidth: "100%",
-                                    }}
-                                  >
-                                    <h6
-                                      className="land-desc w-75 m-auto text-center justify-content-center"
-                                      style={{
-                                        fontWeight: 500,
-                                        fontSize: 16,
-                                      }}
-                                    >
-                                      DCBP {`#${myDogeNFTs[0]}`}
-                                    </h6>
-                                  </div>
-                                </div>
-                              </NavLink>
-                            )}
-                            <span className="footertxt-coingecko">
-                              After NFT distribution, you can view{" "}
-                              {selectedMint.cardTitle}.
-                            </span>
-                            <div className="summaryseparator mt-3 mb-3"></div>
-                            <div className="d-flex align-items-center gap-2 justify-content-between">
-                              <div className="opacitywrapper4 m-0">
-                                <a
-                                  className="game-event-download text-white  d-flex align-items-center gap-2"
-                                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                                  target="_blank"
-                                >
-                                  <img
-                                    src={epicwhite}
-                                    alt="icon"
-                                    className="epicgame2"
-                                  />
-                                  Download
-                                </a>
-                              </div>
-                              <NavLink
-                                to="/account"
-                                className="accountbtn-coingecko btn d-flex align-items-center gap-1"
-                              >
-                                <img src={user} alt="" className="user2" />
-                                My Account
-                              </NavLink>
-                            </div>
-                          </div>
-                        )}
+                      
                       </div>
                     </div>
                   )}
