@@ -120,7 +120,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
       maxRewards: "100",
       minPoints: "5,000",
       maxPoints: "50,000",
-      learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
       popupInfo: {
         title: "Dogecoin",
         chain: "BNB Chain",
@@ -135,7 +135,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         maxRewards: "100",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
         eventDate: "December 22, 2023",
       },
     },
