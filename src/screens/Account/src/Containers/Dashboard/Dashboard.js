@@ -64,7 +64,7 @@ function Dashboard({
   success,
   handleSwitchNetwork,
   domainName,
-  handleOpenDomains,
+  handleOpenDomains,dogePrice
 }) {
   const { email, logout } = useAuth();
 
@@ -134,6 +134,7 @@ function Dashboard({
   const [myDogeNfts, setmyDogeNfts] = useState([]);
   const [myCmcNfts, setmyCmcNfts] = useState([]);
   const [latestVersion, setLatestVersion] = useState(0);
+ 
 
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
@@ -1468,6 +1469,9 @@ function Dashboard({
       });
   };
 
+
+
+
   const handleEthPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
@@ -1767,7 +1771,7 @@ function Dashboard({
     getTokenDatabnb();
     fetchCFXPrice();
   }, []);
-
+ 
   useEffect(() => {
     if (
       (dailyBonusPopup === true && dailyrewardpopup) ||
@@ -1913,6 +1917,7 @@ function Dashboard({
                         onDailyRewardsPopupOpen={() => {
                           setdailyBonusPopup(true);
                         }}
+                        dogePrice={dogePrice}
                         weeklyplayerData={weeklyplayerData}
                         dailyplayerData={dailyplayerData}
                         userRank2={userRank2}
@@ -2216,6 +2221,8 @@ function Dashboard({
                             allChests={allChests}
                             availableTime={goldenPassRemainingTime}
                             userSocialRewards={userSocialRewards}
+                        dogePrice={dogePrice}
+
                             // hasNft={
                             //   MyNFTSCaws.length +
                             //     MyNFTSLand.length  >

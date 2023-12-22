@@ -204,7 +204,7 @@ const NewWalletBalance = ({
   openedChests,
   userRank2,
   genesisRank2,
-  onDailyBonusInfoClick,userSocialRewards
+  onDailyBonusInfoClick,userSocialRewards,dogePrice
   // hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -582,6 +582,7 @@ const NewWalletBalance = ({
   const [dyptokenDataAvax, setDypTokenDataAvax] = useState([]);
   const [specialRewardsPopup, setSpecialRewardsPopup] = useState(false);
   const [bnbPrice, setBnbPrice] = useState(0);
+
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [mediaUrl, setMediaUrl] = useState("");
@@ -836,8 +837,8 @@ const NewWalletBalance = ({
               dogeEvent[0].reward.earn.total /
               dogeEvent[0].reward.earn.multiplier;
             setDogeEarnUSD(usdValue);
-            if (bnbPrice !== 0) {
-              setDogeEarnBNB(usdValue / bnbPrice);
+            if (dogePrice !== 0) {
+              setDogeEarnBNB(usdValue / dogePrice);
             }
           }
 

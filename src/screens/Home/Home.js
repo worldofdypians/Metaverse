@@ -78,7 +78,7 @@ const Home = ({
     state: "dypius",
   };
   const dogePopupInfo = {
-    title: "DogeCoin",
+    title: "Treasure Hunt",
     img: dogePopup,
     state: "doge",
   };
@@ -122,7 +122,7 @@ const Home = ({
       >
         <MintPopup
           active={activePopup}
-          data={cmcPopupInfo}
+          data={dogePopupInfo}
           onClose={() => setActivePopup(false)}
         />
       </OutsideClickHandler>

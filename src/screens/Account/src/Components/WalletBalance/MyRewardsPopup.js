@@ -25,7 +25,7 @@ const MyRewardsPopup = ({
   allChests,
   weeklyplayerData,
   dailyplayerData,
-  userRank2,userSocialRewards
+  userRank2,userSocialRewards,dogePrice
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -286,8 +286,8 @@ const MyRewardsPopup = ({
               dogeEvent[0].reward.earn.total /
               dogeEvent[0].reward.earn.multiplier;
             setDogeEarnUSD(usdValue);
-            if (bnbPrice !== 0) {
-              setDogeEarnBNB(usdValue / bnbPrice);
+            if (dogePrice !== 0) {
+              setDogeEarnBNB(usdValue / dogePrice);
             }
           }
 

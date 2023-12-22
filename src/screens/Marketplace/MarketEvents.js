@@ -123,7 +123,7 @@ const MarketEvents = ({
   remainingTime,
   tabState,
   ethTokenData,
-  dyptokenData_old,
+  dyptokenData_old,dogePrice
 }) => {
   const location = useLocation();
   const windowSize = useWindowSize();
@@ -652,8 +652,8 @@ const MarketEvents = ({
               dogeEvent[0].reward.earn.total /
               dogeEvent[0].reward.earn.multiplier;
             setDogeEarnUSD(usdValue);
-            if (bnbPrice !== 0) {
-              setDogeEarnBNB(usdValue / bnbPrice);
+            if (dogePrice !== 0) {
+              setDogeEarnBNB(usdValue / dogePrice);
             }
           }
 

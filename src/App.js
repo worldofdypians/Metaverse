@@ -222,6 +222,7 @@ function App() {
   const [bnbUSDPrice, setBnbUSDPrice] = useState(0);
   const [successMessage, setSuccessMessage] = useState("");
   const [successDomain, setSuccessDomain] = useState(false);
+  const [dogePrice, setDogePrice] = useState(0);
 
   const [domainName, setDomainName] = useState(null);
   const [loadingDomain, setLoadingDomain] = useState(false);
@@ -328,6 +329,18 @@ function App() {
 
     setDypTokenData(dypprice);
     setDypTokenDatabnb(dypprice);
+  };
+
+  const fetchDogeCoinPrice = async () => {
+    await axios
+      .get(
+        "https://pro-api.coingecko.com/api/v3/simple/price?ids=dogecoin&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev"
+      )
+      .then((obj) => {
+        if (obj.data["dogecoin"] && obj.data["dogecoin"] !== NaN) {
+          setDogePrice(obj.data["dogecoin"].usd);
+        }
+      });
   };
 
   const getTokenDatabnb = async () => {
@@ -1810,6 +1823,7 @@ function App() {
 
   useEffect(()=>{
     getAllData()
+    fetchDogeCoinPrice()
   },[coinbase])
 
   useEffect(() => {
@@ -2021,6 +2035,7 @@ function App() {
                   handleSwitchNetwork={handleSwitchNetwork}
                   handleOpenDomains={() => setDomainPopup(true)}
                   domainName={domainName}
+                  dogePrice={dogePrice}
                 />
               }
             />
@@ -2461,6 +2476,8 @@ function App() {
                   }}
                   ethTokenData={ethTokenData}
                   dyptokenData_old={dypTokenData_old}
+                  dogePrice={dogePrice}
+
                 />
               }
             />
@@ -2483,6 +2500,8 @@ function App() {
                     setavailTime(value);
                   }}
                   ethTokenData={ethTokenData}
+                  dogePrice={dogePrice}
+
                 />
               }
             />
@@ -2505,6 +2524,8 @@ function App() {
                   }}
                   dyptokenData_old={dypTokenData_old}
                   ethTokenData={ethTokenData}
+                  dogePrice={dogePrice}
+
                 />
               }
             />
