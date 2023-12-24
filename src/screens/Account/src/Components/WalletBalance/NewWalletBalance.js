@@ -299,10 +299,10 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "coingecko",
     rewards: "BNB",
-    status: "Live",
+    status: "Expired",
     id: "event3",
     eventType: "Explore & Mine",
-    date: "Sept 25, 2023",
+    date: "Ended",
     logo: coingecko,
     totalRewards: "$10,000 in BNB Rewards",
     eventDuration: coingeckoLastDay,
@@ -418,7 +418,8 @@ const NewWalletBalance = ({
         maxRewards: "100",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
         eventDate: "Dec 22, 2023",
       },
     },
@@ -450,33 +451,7 @@ const NewWalletBalance = ({
           "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
-    {
-      title: "CoinGecko",
-      logo: coingecko,
-      eventStatus: "Live",
-      totalRewards: "$10,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Sept 25, 2023",
-      backgroundImage: coingeckoUpcoming,
-      popupInfo: {
-        title: "CoinGecko",
-        chain: "BNB Chain",
-        linkState: "coingecko",
-        rewards: "BNB",
-        status: "Live",
-        id: "event3",
-        eventType: "Explore & Mine",
-        totalRewards: "$10,000 in BNB Rewards",
-        eventDuration: coingeckoLastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
-      },
-    },
+
     {
       title: "Base",
       logo: base,
@@ -505,7 +480,33 @@ const NewWalletBalance = ({
         learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
-
+    {
+      title: "CoinGecko",
+      logo: coingecko,
+      eventStatus: "Expired",
+      totalRewards: "$10,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Ended",
+      backgroundImage: coingeckoUpcoming,
+      popupInfo: {
+        title: "CoinGecko",
+        chain: "BNB Chain",
+        linkState: "coingecko",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event3",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        eventDuration: coingeckoLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      },
+    },
     {
       title: "Dypius",
       logo: dypius,
@@ -589,7 +590,7 @@ const NewWalletBalance = ({
   ];
 
   const [dummyEvent, setDummyEvent] = useState({});
-  const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0)
+  const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
   const [showAllEvents, setShowAllEvents] = useState(false);
   const [eventPopup, setEventPopup] = useState(false);
   const [records, setRecords] = useState([]);
@@ -629,13 +630,15 @@ const NewWalletBalance = ({
   const [landtvl, setlandTvl] = useState(0);
   const [cawslandTvl, setCawsLandtvl] = useState(0);
 
-  const fetchUsersocialRewards = ()=>{
-    const cachedUserSocialRewards = localStorage.getItem("cacheduserSocialRewards");
+  const fetchUsersocialRewards = () => {
+    const cachedUserSocialRewards = localStorage.getItem(
+      "cacheduserSocialRewards"
+    );
 
-    if(cachedUserSocialRewards) {
-      setuserSocialRewardsCached(cachedUserSocialRewards)
+    if (cachedUserSocialRewards) {
+      setuserSocialRewardsCached(cachedUserSocialRewards);
     }
-  }
+  };
 
   const dummyEvents = [
     {
@@ -1077,9 +1080,9 @@ const NewWalletBalance = ({
     getTreasureChestsInfo();
   }, [openedChests, address]);
 
-  useEffect(()=>{
-    fetchUsersocialRewards()
-  },[userSocialRewards])
+  useEffect(() => {
+    fetchUsersocialRewards();
+  }, [userSocialRewards]);
 
   const recaptchaRef = useRef(null);
 
@@ -1105,14 +1108,21 @@ const NewWalletBalance = ({
                 event={dummyDoge}
                 userEarnedUsd={dogeEarnUSD}
               />
-              <ActiveProfileEvent
+              <UpcomingProfileEvent
                 onOpenEvent={() => {
-                  setDummyEvent(dummyCoingecko);
+                  setDummyEvent(dummyCmc);
                   setEventPopup(true);
                 }}
-                data={dummyCoingecko}
-                event={dummyCoingecko}
-                userEarnedUsd={userEarnUsd}
+                data={dummyCmc}
+              />
+              <ActiveProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyBase);
+                  setEventPopup(true);
+                }}
+                data={dummyBase}
+                event={dummyBase}
+                userEarnedUsd={baseEarnUSD}
               />
               {/* <ActiveProfileEvent
                 onOpenEvent={() => {
@@ -1123,13 +1133,6 @@ const NewWalletBalance = ({
                 event={dummyBase}
                 userEarnedUsd={baseEarnUSD}
               /> */}
-              <UpcomingProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyCmc);
-                  setEventPopup(true);
-                }}
-                data={dummyCmc}
-              />
               {/* <img
                 src={eventSkeleton}
                 className="profile-event-item"
@@ -1549,19 +1552,19 @@ const NewWalletBalance = ({
                       $
                       {getFormattedNumber(
                         Number(userSocialRewardsCached) +
-                        Number(weeklyplayerData) +
-                        Number(dailyplayerData) +
-                        Number(userRank2) +
-                        Number(genesisRank2) +
-                        Number(baseEarnUSD) +
-                        Number(confluxEarnUSD) +
-                        Number(gateEarnUSD) +
-                        Number(dogeEarnUSD) +
-                        Number(userEarnUsd) +
-                        Number(treasureRewardMoney) +
-                        Number(EthRewardsLandPool) * Number(ethTokenData) +
-                        Number(EthRewardsCawsPool) * Number(ethTokenData) +
-                        Number(EthRewards) * Number(ethTokenData),
+                          Number(weeklyplayerData) +
+                          Number(dailyplayerData) +
+                          Number(userRank2) +
+                          Number(genesisRank2) +
+                          Number(baseEarnUSD) +
+                          Number(confluxEarnUSD) +
+                          Number(gateEarnUSD) +
+                          Number(dogeEarnUSD) +
+                          Number(userEarnUsd) +
+                          Number(treasureRewardMoney) +
+                          Number(EthRewardsLandPool) * Number(ethTokenData) +
+                          Number(EthRewardsCawsPool) * Number(ethTokenData) +
+                          Number(EthRewards) * Number(ethTokenData),
                         2
                       )}
                     </h6>
@@ -1593,7 +1596,8 @@ const NewWalletBalance = ({
                         className="my-total-rewards mb-0 font-iceland"
                         style={{ fontSize: "20px" }}
                       >
-                        ${getFormattedNumber(Number(userSocialRewardsCached), 2)}
+                        $
+                        {getFormattedNumber(Number(userSocialRewardsCached), 2)}
                       </h6>
                       <span
                         className="my-total-earned mb-0 font-iceland"
