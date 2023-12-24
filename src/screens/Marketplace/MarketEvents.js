@@ -251,33 +251,7 @@ const MarketEvents = ({
       },
     },
 
-    {
-      title: "CoinGecko",
-      logo: coingecko,
-      eventStatus: "Live",
-      totalRewards: "$10,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Sept 25, 2023",
-      backgroundImage: coingeckoUpcoming,
-      popupInfo: {
-        title: "CoinGecko",
-        chain: "BNB Chain",
-        linkState: "coingecko",
-        rewards: "BNB",
-        status: "Live",
-        id: "event3",
-        eventType: "Explore & Mine",
-        totalRewards: "$10,000 in BNB Rewards",
-        eventDuration: coingeckoLastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
-      },
-    },
+  
     {
       title: "Base",
       logo: base,
@@ -305,7 +279,33 @@ const MarketEvents = ({
         learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
-
+    {
+      title: "CoinGecko",
+      logo: coingecko,
+      eventStatus: "Expired",
+      totalRewards: "$10,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Ended",
+      backgroundImage: coingeckoUpcoming,
+      popupInfo: {
+        title: "CoinGecko",
+        chain: "BNB Chain",
+        linkState: "coingecko",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event3",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        eventDuration: coingeckoLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      },
+    },
     {
       title: "Dypius",
       logo: dypius,
@@ -975,7 +975,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -984,9 +984,7 @@ const MarketEvents = ({
                               setDummyEvent(item.popupInfo);
                             }}
                             userEarnUsd={
-                              item.title === "CoinGecko"
-                                ? userEarnUsd
-                                : item.title === "Base"
+                               item.title === "Base"
                                 ? baseEarnUSD
                                 : item.title === "Dogecoin"
                                 ? dogeEarnUSD
@@ -1120,7 +1118,7 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(4, 7).map((item, index) => (
+                  {dummyBetaPassData2.slice(3, 7).map((item, index) => (
                     <BetaEventCard
                       data={item}
                       key={index}
@@ -1131,6 +1129,8 @@ const MarketEvents = ({
                       userEarnUsd={
                         item.title === "Conflux"
                           ? confluxEarnUSD
+                         : item.title === "CoinGecko"
+                          ? userEarnUsd
                           : item.title === "Gate.io"
                           ? gateEarnUSD
                           : item.title === "Dypius"
