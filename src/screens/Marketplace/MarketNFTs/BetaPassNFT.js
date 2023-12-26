@@ -363,9 +363,8 @@ const BetaPassNFT = ({
           });
 
           const cmcEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "cmc";
+            return obj.betapassId === "coinmarketcap";
           });
-
 
           if (coingeckoEvent && coingeckoEvent[0]) {
             const usdValue =
@@ -374,14 +373,13 @@ const BetaPassNFT = ({
             setuserEarnUsd(usdValue);
           }
 
-          if (setCmcEarnUSD && setCmcEarnUSD[0]) {
+          if (cmcEvent && cmcEvent[0]) {
             const usdValue =
-            setCmcEarnUSD[0].reward.earn.total /
-            setCmcEarnUSD[0].reward.earn.multiplier;
+            cmcEvent[0].reward.earn.total /
+            cmcEvent[0].reward.earn.multiplier;
             setCmcEarnUSD(usdValue);
           }
 
-           
           if (dogeEvent && dogeEvent[0]) {
             const usdValue =
               dogeEvent[0].reward.earn.total /
@@ -595,8 +593,8 @@ const BetaPassNFT = ({
     ) {
       setalreadyRegistered(true);
     }
-  }, [data,email]);
-  
+  }, [data, email]);
+
   useEffect(() => {
     if (
       data &&
@@ -1870,7 +1868,7 @@ const BetaPassNFT = ({
                           </div>
                         )}
 
-{mintTitle === "doge" && (
+                        {mintTitle === "doge" && (
                           <div className="">
                             <div className="d-flex flex-column gap-3">
                               <div className="d-flex align-items-center position-relative gap-2">
@@ -1996,7 +1994,6 @@ const BetaPassNFT = ({
                             </div>
                           </div>
                         )}
-
 
                         {mintTitle === "base" && (
                           <div className="">
@@ -2125,7 +2122,7 @@ const BetaPassNFT = ({
                           </div>
                         )}
 
-{mintTitle === "cmc" && (
+                        {mintTitle === "cmc" && (
                           <div className="">
                             <div className="d-flex flex-column gap-3">
                               <div className="d-flex align-items-center position-relative gap-2">
@@ -2555,7 +2552,6 @@ const BetaPassNFT = ({
                             </div>
                           </div>
                         )} */}
-                      
                       </div>
                     </div>
                   )}

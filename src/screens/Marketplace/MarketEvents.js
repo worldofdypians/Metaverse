@@ -222,7 +222,8 @@ const MarketEvents = ({
         maxRewards: "100",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
         eventDate: "Dec 22, 2023",
       },
     },
@@ -255,7 +256,6 @@ const MarketEvents = ({
       },
     },
 
-  
     {
       title: "Base",
       logo: base,
@@ -630,7 +630,7 @@ const MarketEvents = ({
           });
 
           const cmcEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "cmc";
+            return obj.betapassId === "coinmarketcap";
           });
 
           //setDypiusEarnTokens
@@ -813,6 +813,9 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -825,9 +828,6 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                    {/* <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div> */}
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1004,10 +1004,12 @@ const MarketEvents = ({
                               setDummyEvent(item.popupInfo);
                             }}
                             userEarnUsd={
-                               item.title === "Base"
+                              item.title === "Base"
                                 ? baseEarnUSD
                                 : item.title === "Dogecoin"
                                 ? dogeEarnUSD
+                                : item.title === "CoinMarketCap"
+                                ? cmcuserEarnUsd
                                 : 0
                             }
                           />
@@ -1149,7 +1151,7 @@ const MarketEvents = ({
                       userEarnUsd={
                         item.title === "Conflux"
                           ? confluxEarnUSD
-                         : item.title === "CoinGecko"
+                          : item.title === "CoinGecko"
                           ? userEarnUsd
                           : item.title === "Gate.io"
                           ? gateEarnUSD

@@ -63,7 +63,8 @@ function Dashboard({
   success,
   handleSwitchNetwork,
   domainName,
-  handleOpenDomains,dogePrice
+  handleOpenDomains,
+  dogePrice,
 }) {
   const { email, logout } = useAuth();
 
@@ -134,8 +135,6 @@ function Dashboard({
   const [myCmcNfts, setmyCmcNfts] = useState([]);
   const [latestVersion, setLatestVersion] = useState(0);
 
-
-  
   const [userPoints, setuserPoints] = useState(0);
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnETH, setuserEarnETH] = useState(0);
@@ -161,9 +160,6 @@ function Dashboard({
   const [baseEarnETH, setBaseEarnETH] = useState(0);
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
-
-
- 
 
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
@@ -369,8 +365,6 @@ function Dashboard({
     return array;
   }
 
-
-
   const fetchReleases = async () => {
     const newReleases = await axios
       .get("https://api3.dyp.finance/api/wod_releases")
@@ -381,10 +375,9 @@ function Dashboard({
     const datedReleasedNews = newReleases.map((item) => {
       return { ...item, date: new Date(item.date) };
     });
- 
+
     setLatestVersion(datedReleasedNews[0]?.version);
   };
-
 
   //land only stakes
   const getStakesIdsWod = async () => {
@@ -709,7 +702,6 @@ function Dashboard({
     }
   };
 
-
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
       // console.log(email, window.infuraWeb3.utils.toChecksumAddress(userAddress))
@@ -753,7 +745,7 @@ function Dashboard({
           });
 
           const cmcEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "cmc";
+            return obj.betapassId === "coinmarketcap";
           });
 
           if (dypEvent && dypEvent[0]) {
@@ -781,7 +773,7 @@ function Dashboard({
             const usdValue =
               cmcEvent[0].reward.earn.total /
               cmcEvent[0].reward.earn.multiplier;
-            setBaseEarnUSD(usdValue);
+            setcmcuserEarnUsd(usdValue);
             if (bnbPrice !== 0) {
               setcmcuserEarnETH(usdValue / bnbPrice);
             }
@@ -849,8 +841,6 @@ function Dashboard({
       console.log("Error:", error);
     }
   };
-
-
 
   const refreshSubscription = async (addr) => {
     let subscribedPlatformTokenAmountETH;
@@ -1053,11 +1043,11 @@ function Dashboard({
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "doge").then((NFTS) =>
-    setmyDogeNfts(NFTS)
-  );
-  getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cmc").then((NFTS) =>
-  setmyCmcNfts(NFTS)
-);
+      setmyDogeNfts(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cmc").then((NFTS) =>
+      setmyCmcNfts(NFTS)
+    );
   };
 
   const getOtherNfts = async () => {
@@ -1270,7 +1260,6 @@ function Dashboard({
       }
     }
   };
-
 
   const getMyOffers = async () => {
     //setmyOffers
@@ -1643,9 +1632,6 @@ function Dashboard({
       });
   };
 
-
-
-
   const handleEthPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
@@ -1729,7 +1715,7 @@ function Dashboard({
 
   useEffect(() => {
     setDummyPremiumChests(shuffle(dummyPremiums));
-    fetchReleases()
+    fetchReleases();
   }, []);
 
   useEffect(() => {
@@ -1855,7 +1841,7 @@ function Dashboard({
       email
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress, email);
-      fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress)
+      fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
     }
   }, [data, email]);
 
@@ -1903,7 +1889,6 @@ function Dashboard({
     }
   }, [data, email, count, isPremium, claimedChests, claimedPremiumChests]);
 
-
   useEffect(() => {
     if (
       data &&
@@ -1914,10 +1899,9 @@ function Dashboard({
       data.getPlayer.wallet.publicAddress &&
       email
     ) {
-      getUserRewardData(data.getPlayer.wallet.publicAddress)
+      getUserRewardData(data.getPlayer.wallet.publicAddress);
     }
   }, [data, email]);
-
 
   useEffect(() => {
     if (coinbase) {
@@ -1945,7 +1929,7 @@ function Dashboard({
     getTokenDatabnb();
     fetchCFXPrice();
   }, []);
- 
+
   useEffect(() => {
     if (
       (dailyBonusPopup === true && dailyrewardpopup) ||
@@ -2150,15 +2134,12 @@ function Dashboard({
                           setdailyBonusInfo(true);
                         }}
                         userSocialRewards={userSocialRewards}
-                        
                         userEarnUsd={userEarnUsd}
                         userEarnETH={userEarnETH}
                         userPoints={userPoints}
-
                         cmcuserPoints={cmcuserPoints}
                         cmcuserEarnETH={cmcuserEarnETH}
                         cmcuserEarnUsd={cmcuserEarnUsd}
-
                         confluxUserPoints={confluxUserPoints}
                         confluxEarnUSD={confluxEarnUSD}
                         confluxEarnCFX={confluxEarnCFX}
@@ -2411,19 +2392,16 @@ function Dashboard({
                             allChests={allChests}
                             availableTime={goldenPassRemainingTime}
                             userSocialRewards={userSocialRewards}
-                        dogePrice={dogePrice}
-                        userEarnUsd={userEarnUsd}
-                        userEarnETH={userEarnETH}
-                        
-                        cmcuserEarnETH={cmcuserEarnETH}
-                        cmcuserEarnUsd={cmcuserEarnUsd}
-
-
-                        dogeEarnUSD={dogeEarnUSD}
-                        dogeEarnBNB={dogeEarnBNB}
-                        baseEarnUSD={baseEarnUSD}
-                        baseEarnETH={baseEarnETH}
-                        dypiusEarnUsd={dypiusEarnUsd}
+                            dogePrice={dogePrice}
+                            userEarnUsd={userEarnUsd}
+                            userEarnETH={userEarnETH}
+                            cmcuserEarnETH={cmcuserEarnETH}
+                            cmcuserEarnUsd={cmcuserEarnUsd}
+                            dogeEarnUSD={dogeEarnUSD}
+                            dogeEarnBNB={dogeEarnBNB}
+                            baseEarnUSD={baseEarnUSD}
+                            baseEarnETH={baseEarnETH}
+                            dypiusEarnUsd={dypiusEarnUsd}
                           />
                         </div>
                       </OutsideClickHandler>
