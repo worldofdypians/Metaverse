@@ -2148,7 +2148,7 @@ const BetaPassNFT = ({
                                   <span>Live</span>
                                 </div>
                               </div>
-                              <div className="base-eventwrapper p-3">
+                              <div className="cmc-eventwrapper p-3">
                                 <div className="d-flex flex-column gap-4">
                                   <div className="d-flex gap-2 align-items-center">
                                     <img
