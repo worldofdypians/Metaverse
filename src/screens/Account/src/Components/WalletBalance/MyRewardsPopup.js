@@ -658,6 +658,21 @@ const MyRewardsPopup = ({
             </tr>
 
             <tr>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                CoinMarketCap
+              </td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                ${getFormattedNumber(cmcuserEarnUsd, 2)}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {getFormattedNumber(cmcuserEarnETH, 4)} WBNB
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                ${getFormattedNumber(0, 2)}
+              </td>
+            </tr>
+
+            <tr>
               <td className="myrewards-td-main border-0">
                 {" "}
                 <img
