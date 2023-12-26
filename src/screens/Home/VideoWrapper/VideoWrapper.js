@@ -88,7 +88,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
     {
       title: "CMC",
       logo: cmc,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -101,7 +101,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         chain: "BNB Chain",
         linkState: "coinmarketcap",
         rewards: "BNB",
-        status: "Coming Soon",
+        status: "Live",
         id: "event8",
         eventType: "Explore & Mine",
         totalRewards: "$10,000 in BNB Rewards",
@@ -114,7 +114,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         maxPoints: "30,000",
         eventDate: "December 26, 2023",
         learnMore:
-          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+          "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
     },
 
@@ -127,7 +127,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
       rewardsCurrency: "ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
-      eventDate: "November 01, 2023",
+      eventDate: "Nov 01, 2023",
       popupInfo: {
         eventType: "Explore & Mine",
         title: "Base",
@@ -136,9 +136,9 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         rewards: "ETH",
         status: "Live",
         id: "event4",
-        date: "November 01, 2023",
+        date: "Nov 01, 2023",
         totalRewards: "$5,000 in ETH Rewards",
-        eventDate: "November 01, 2023",
+        eventDate: "Nov 01, 2023",
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",

@@ -34,7 +34,7 @@ const MyRewardsPopup = ({
   dogeEarnBNB,
   baseEarnUSD,
   baseEarnETH,
-  dypiusEarnUsd,
+  dypiusEarnUsd,cmcuserEarnETH,cmcuserEarnUsd
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -651,6 +651,21 @@ const MyRewardsPopup = ({
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {getFormattedNumber(dogeEarnBNB, 2)} DOGE
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                ${getFormattedNumber(0, 2)}
+              </td>
+            </tr>
+
+            <tr>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                CoinMarketCap
+              </td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                ${getFormattedNumber(cmcuserEarnUsd, 2)}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {getFormattedNumber(cmcuserEarnETH, 4)} WBNB
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(0, 2)}
