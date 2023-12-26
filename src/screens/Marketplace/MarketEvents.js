@@ -124,6 +124,7 @@ const MarketEvents = ({
   tabState,
   ethTokenData,
   dyptokenData_old,
+  dogePrice,
 }) => {
   const location = useLocation();
   const windowSize = useWindowSize();
@@ -147,6 +148,9 @@ const MarketEvents = ({
   const [userPoints, setuserPoints] = useState(0);
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnETH, setuserEarnETH] = useState(0);
+  const [cmcuserPoints, setcmcuserPoints] = useState(0);
+  const [cmcuserEarnUsd, setcmcuserEarnUsd] = useState(0);
+  const [cmcuserEarnETH, setcmcuserEarnETH] = useState(0);
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
   const [confluxUserPoints, setConfluxUserPoints] = useState(0);
@@ -155,6 +159,11 @@ const MarketEvents = ({
   const [gateUserPoints, setGateUserPoints] = useState(0);
   const [gateEarnUSD, setGateEarnUSD] = useState(0);
   const [gateEarnBNB, setGateEarnBNB] = useState(0);
+
+  const [dogeUserPoints, setDogeUserPoints] = useState(0);
+  const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
+  const [dogeEarnBNB, setDogeEarnBNB] = useState(0);
+
   const [baseUserPoints, setBaseUserPoints] = useState(0);
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
   const [baseEarnETH, setBaseEarnETH] = useState(0);
@@ -180,6 +189,8 @@ const MarketEvents = ({
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
+  let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
+  let cmcLastDay = new Date("2024-03-25T13:00:00.000+02:00");
 
   const dailyBonusMintData = {
     title: "Daily Bonus",
@@ -189,75 +200,104 @@ const MarketEvents = ({
 
   const dummyBetaPassData2 = [
     {
-      title: "CoinMarketCap",
-      logo: cmc,
-      eventStatus: "Coming Soon",
-      totalRewards: "$10,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "December 26, 2023",
-      backgroundImage: upcomingCmc,
-      popupInfo: {
-        title: "CoinMarketCap",
-        chain: "BNB Chain",
-        linkState: "coinmarketcap",
-        rewards: "BNB",
-        status: "Coming Soon",
-        id: "event8",
-        eventType: "Explore & Mine",
-        totalRewards: "$10,000 in BNB Rewards",
-        eventDuration: coingeckoLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        eventDate: "December 26, 2023",
-        learnMore:
-          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
-      },
-    },
-    {
       title: "Dogecoin",
       logo: doge,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$10,000 in DOGE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "December 22, 2023",
+      eventDate: "Dec 22, 2023",
       backgroundImage: upcomingDoge,
       popupInfo: {
         title: "Dogecoin",
         chain: "BNB Chain",
         linkState: "doge",
         rewards: "DOGE",
-        status: "Coming Soon",
+        status: "Live",
         id: "event7",
         eventType: "Explore & Mine",
         totalRewards: "$10,000 in DOGE Rewards",
-        eventDuration: dypiusLastDay,
+        eventDuration: dogeLastDay,
         minRewards: "1",
         maxRewards: "100",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "December 22, 2023",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "Dec 22, 2023",
+      },
+    },
+    {
+      title: "CoinMarketCap",
+      logo: cmc,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Dec 26, 2023",
+      backgroundImage: upcomingCmc,
+      popupInfo: {
+        title: "CoinMarketCap",
+        chain: "BNB Chain",
+        linkState: "coinmarketcap",
+        rewards: "BNB",
+        status: "Live",
+        id: "event8",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: cmcLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        eventDate: "Dec 26, 2023",
+        learnMore:
+          "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
+      },
+    },
+
+    {
+      title: "Base",
+      logo: base,
+      eventStatus: "Live",
+      totalRewards: "$10,000 in ETH Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "Nov 01, 2023",
+      backgroundImage: baseUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Base",
+        chain: "Base Network",
+        linkState: "base",
+        rewards: "ETH",
+        status: "Live",
+        id: "event4",
+        totalRewards: "$10,000 in ETH Rewards",
+        eventDuration: baseLastDay,
+        eventDate: "Nov 01, 2023",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
     {
       title: "CoinGecko",
       logo: coingecko,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$10,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "September 25, 2023",
+      eventDate: "Ended",
       backgroundImage: coingeckoUpcoming,
       popupInfo: {
         title: "CoinGecko",
         chain: "BNB Chain",
         linkState: "coingecko",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event3",
         eventType: "Explore & Mine",
         totalRewards: "$10,000 in BNB Rewards",
@@ -270,34 +310,6 @@ const MarketEvents = ({
           "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
-    {
-      title: "Base",
-      logo: base,
-      eventStatus: "Live",
-      totalRewards: "$10,000 in ETH Rewards",
-      myEarnings: 126.45,
-      eventType: "Explore & Mine",
-      eventDate: "November 01, 2023",
-      backgroundImage: baseUpcoming,
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Network",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Live",
-        id: "event4",
-        totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: baseLastDay,
-        eventDate: "November 01, 2023",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
-      },
-    },
-
     {
       title: "Dypius",
       logo: dypius,
@@ -613,6 +625,14 @@ const MarketEvents = ({
             return obj.betapassId === "all";
           });
 
+          const dogeEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "dogecoin";
+          });
+
+          const cmcEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "coinmarketcap";
+          });
+
           //setDypiusEarnTokens
 
           if (dypEvent && dypEvent[0]) {
@@ -632,6 +652,30 @@ const MarketEvents = ({
             setuserEarnUsd(usdValue);
             if (bnbPrice !== 0) {
               setuserEarnETH(usdValue / bnbPrice);
+            }
+          }
+
+          if (cmcEvent && cmcEvent[0]) {
+            const points = cmcEvent[0].reward.earn.totalPoints;
+            setcmcuserPoints(points);
+            const usdValue =
+              cmcEvent[0].reward.earn.total /
+              cmcEvent[0].reward.earn.multiplier;
+            setcmcuserEarnUsd(usdValue);
+            if (bnbPrice !== 0) {
+              setcmcuserEarnETH(usdValue / bnbPrice);
+            }
+          }
+
+          if (dogeEvent && dogeEvent[0]) {
+            const points = dogeEvent[0].reward.earn.totalPoints;
+            setDogeUserPoints(points);
+            const usdValue =
+              dogeEvent[0].reward.earn.total /
+              dogeEvent[0].reward.earn.multiplier;
+            setDogeEarnUSD(usdValue);
+            if (dogePrice !== 0) {
+              setDogeEarnBNB(usdValue / dogePrice);
             }
           }
 
@@ -769,6 +813,9 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -781,9 +828,6 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                    {/* <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div> */}
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -951,7 +995,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -960,10 +1004,12 @@ const MarketEvents = ({
                               setDummyEvent(item.popupInfo);
                             }}
                             userEarnUsd={
-                              item.title === "CoinGecko"
-                                ? userEarnUsd
-                                : item.title === "Base"
+                              item.title === "Base"
                                 ? baseEarnUSD
+                                : item.title === "Dogecoin"
+                                ? dogeEarnUSD
+                                : item.title === "CoinMarketCap"
+                                ? cmcuserEarnUsd
                                 : 0
                             }
                           />
@@ -1094,7 +1140,7 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(4, 7).map((item, index) => (
+                  {dummyBetaPassData2.slice(3, 7).map((item, index) => (
                     <BetaEventCard
                       data={item}
                       key={index}
@@ -1105,6 +1151,8 @@ const MarketEvents = ({
                       userEarnUsd={
                         item.title === "Conflux"
                           ? confluxEarnUSD
+                          : item.title === "CoinGecko"
+                          ? userEarnUsd
                           : item.title === "Gate.io"
                           ? gateEarnUSD
                           : item.title === "Dypius"
@@ -1623,6 +1671,10 @@ const MarketEvents = ({
                         ? baseUserPoints
                         : dummyEvent.id === "event5"
                         ? dypiusEarnTokens
+                        : dummyEvent.id === "event7"
+                        ? dogeUserPoints
+                        : dummyEvent.id === "event8"
+                        ? cmcuserPoints
                         : 0,
                       0
                     )}
@@ -1652,6 +1704,10 @@ const MarketEvents = ({
                         ? baseEarnUSD
                         : dummyEvent.id === "event5"
                         ? dypiusEarnUsd
+                        : dummyEvent.id === "event7"
+                        ? dogeEarnUSD
+                        : dummyEvent.id === "event8"
+                        ? cmcuserEarnUsd
                         : 0,
                       2
                     )}
@@ -1667,6 +1723,10 @@ const MarketEvents = ({
                               ? gateEarnBNB
                               : dummyEvent.id === "event4"
                               ? baseEarnETH
+                              : dummyEvent.id === "event7"
+                              ? dogeEarnBNB
+                              : dummyEvent.id === "event8"
+                              ? cmcuserEarnETH
                               : 0,
                             2
                           )}

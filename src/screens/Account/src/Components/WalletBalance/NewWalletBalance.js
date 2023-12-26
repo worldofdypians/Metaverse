@@ -204,7 +204,30 @@ const NewWalletBalance = ({
   openedChests,
   userRank2,
   genesisRank2,
-  onDailyBonusInfoClick,userSocialRewards
+  onDailyBonusInfoClick,
+  userSocialRewards,
+  dogePrice,
+  cfxPrice,
+  userEarnUsd,
+  userEarnETH,
+  userPoints,
+  confluxUserPoints,
+  confluxEarnUSD,
+  confluxEarnCFX,
+  gateEarnUSD,
+  gateUserPoints,
+  gateEarnBnb,
+  dogeEarnUSD,
+  dogeEarnBNB,
+  dogeUserPoints,
+  baseEarnUSD,
+  baseUserPoints,
+  baseEarnETH,
+  dypiusEarnUsd,
+  dypiusEarnTokens,
+  cmcuserEarnUsd,
+  cmcuserEarnETH,
+  cmcuserPoints,
   // hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -212,6 +235,9 @@ const NewWalletBalance = ({
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
+  let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
+  let cmcLastDay = new Date("2024-03-25T13:00:00.000+02:00");
+
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
 
@@ -277,10 +303,10 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "coingecko",
     rewards: "BNB",
-    status: "Live",
+    status: "Expired",
     id: "event3",
     eventType: "Explore & Mine",
-    date: "Sept 25, 2023",
+    date: "Ended",
     logo: coingecko,
     totalRewards: "$10,000 in BNB Rewards",
     eventDuration: coingeckoLastDay,
@@ -296,19 +322,19 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "doge",
     rewards: "DOGE",
-    status: "Coming Soon",
+    status: "Live",
     id: "event7",
     eventType: "Explore & Mine",
     eventDate: "Dec 22, 2023",
     date: "Dec 22, 2023",
     logo: doge,
     totalRewards: "$10,000 in DOGE Rewards",
-    eventDuration: coingeckoLastDay,
+    eventDuration: dogeLastDay,
     minRewards: "1",
     maxRewards: "100",
     minPoints: "5,000",
     maxPoints: "50,000",
-    learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+    learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
   };
 
   const dummyCmc = {
@@ -316,19 +342,19 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "coinmarketcap",
     rewards: "BNB",
-    status: "Coming Soon",
+    status: "Live",
     id: "event8",
     eventType: "Explore & Mine",
     eventDate: "Dec 26, 2023",
     date: "Dec 26, 2023",
     logo: cmc,
-    totalRewards: "$10,000 in BNB Rewards",
-    eventDuration: coingeckoLastDay,
+    totalRewards: "$20,000 in BNB Rewards",
+    eventDuration: cmcLastDay,
     minRewards: "1",
     maxRewards: "100",
     minPoints: "5,000",
     maxPoints: "50,000",
-    learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+    learnMore: "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
   };
 
   const dummyCoin98 = {
@@ -348,12 +374,12 @@ const NewWalletBalance = ({
     rewards: "ETH",
     status: "Live",
     id: "event4",
-    date: "November 01, 2023",
+    date: "Nov 01, 2023",
     totalRewards: "$10,000 in ETH Rewards",
     eventDuration: baseLastDay,
     backgroundImage: baseUpcoming,
     logo: base,
-    date: "November 01, 2023",
+    date: "Nov 01, 2023",
     minRewards: "0.5",
     maxRewards: "20",
     minPoints: "5,000",
@@ -367,44 +393,45 @@ const NewWalletBalance = ({
       chain: "BNB Chain",
       linkState: "doge",
       rewards: "DOGE",
-      status: "Coming Soon",
-      eventStatus: "Coming Soon",
+      status: "Live",
+      eventStatus: "Live",
       id: "event7",
       eventType: "Explore & Mine",
       date: "Dec 22, 2023",
       eventDate: "Dec 22, 2023",
       logo: doge,
       totalRewards: "$10,000 in DOGE Rewards",
-      eventDuration: coingeckoLastDay,
+      eventDuration: dogeLastDay,
       minRewards: "1",
       maxRewards: "100",
       minPoints: "5,000",
       maxPoints: "50,000",
-      learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
       popupInfo: {
         title: "Dogecoin",
         chain: "BNB Chain",
         linkState: "doge",
         rewards: "DOGE",
-        status: "Coming Soon",
+        status: "Live",
         id: "event7",
-        eventStatus: "Coming Soon",
+        eventStatus: "Live",
         eventType: "Explore & Mine",
         totalRewards: "$10,000 in DOGE Rewards",
-        eventDuration: dypiusLastDay,
+        eventDuration: dogeLastDay,
         minRewards: "1",
         maxRewards: "100",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
         eventDate: "Dec 22, 2023",
       },
     },
     {
       title: "CMC",
       logo: cmc,
-      eventStatus: "Coming Soon",
-      totalRewards: "$10,000 in BNB Rewards",
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 26, 2023",
@@ -414,35 +441,64 @@ const NewWalletBalance = ({
         chain: "BNB Chain",
         linkState: "coinmarketcap",
         rewards: "BNB",
-        status: "Coming Soon",
+        status: "Live",
         id: "event8",
         eventType: "Explore & Mine",
-        totalRewards: "$10,000 in BNB Rewards",
-        eventDuration: coingeckoLastDay,
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: cmcLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "30,000",
         eventDate: "Dec 26, 2023",
         learnMore:
-          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+          "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
+      },
+    },
+
+    {
+      title: "Base",
+      logo: base,
+      eventStatus: "Live",
+      totalRewards: "$10,000 in ETH Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "Nov 01, 2023",
+      backgroundImage: baseUpcoming,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Base",
+        chain: "Base Chain",
+        linkState: "base",
+        rewards: "ETH",
+        status: "Live",
+        id: "event4",
+        date: "Nov 01, 2023",
+        totalRewards: "$10,000 in ETH Rewards",
+        eventDuration: baseLastDay,
+        eventDate: "Nov 01, 2023",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
     {
       title: "CoinGecko",
       logo: coingecko,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$10,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "September 25, 2023",
+      eventDate: "Ended",
       backgroundImage: coingeckoUpcoming,
       popupInfo: {
         title: "CoinGecko",
         chain: "BNB Chain",
         linkState: "coingecko",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event3",
         eventType: "Explore & Mine",
         totalRewards: "$10,000 in BNB Rewards",
@@ -455,35 +511,6 @@ const NewWalletBalance = ({
           "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
       },
     },
-    {
-      title: "Base",
-      logo: base,
-      eventStatus: "Live",
-      totalRewards: "$10,000 in ETH Rewards",
-      myEarnings: 126.45,
-      eventType: "Explore & Mine",
-      eventDate: "November 01, 2023",
-      backgroundImage: baseUpcoming,
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Chain",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Live",
-        id: "event4",
-        date: "November 01, 2023",
-        totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: baseLastDay,
-        eventDate: "November 01, 2023",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
-      },
-    },
-
     {
       title: "Dypius",
       logo: dypius,
@@ -567,6 +594,7 @@ const NewWalletBalance = ({
   ];
 
   const [dummyEvent, setDummyEvent] = useState({});
+  const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
   const [showAllEvents, setShowAllEvents] = useState(false);
   const [eventPopup, setEventPopup] = useState(false);
   const [records, setRecords] = useState([]);
@@ -580,30 +608,12 @@ const NewWalletBalance = ({
   const [dyptokenDataAvax, setDypTokenDataAvax] = useState([]);
   const [specialRewardsPopup, setSpecialRewardsPopup] = useState(false);
   const [bnbPrice, setBnbPrice] = useState(0);
+
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [mediaUrl, setMediaUrl] = useState("");
   const [success, setSuccess] = useState("");
   const [finished, setFinished] = useState(false);
-
-  const [userPoints, setuserPoints] = useState(0);
-  const [userEarnUsd, setuserEarnUsd] = useState(0);
-  const [userEarnETH, setuserEarnETH] = useState(0);
-
-  const [cfxPrice, setCfxPrice] = useState(0);
-  const [confluxUserPoints, setConfluxUserPoints] = useState(0);
-  const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
-  const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
-
-  const [gateEarnUSD, setGateEarnUSD] = useState(0);
-  const [gateUserPoints, setGateUserPoints] = useState(0);
-  const [gateEarnBnb, setGateEarnBNB] = useState(0);
-
-  const [baseUserPoints, setBaseUserPoints] = useState(0);
-  const [baseEarnUSD, setBaseEarnUSD] = useState(0);
-  const [baseEarnETH, setBaseEarnETH] = useState(0);
-  const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
-  const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
 
   const [EthRewards, setEthRewards] = useState(0);
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
@@ -623,6 +633,16 @@ const NewWalletBalance = ({
 
   const [landtvl, setlandTvl] = useState(0);
   const [cawslandTvl, setCawsLandtvl] = useState(0);
+
+  const fetchUsersocialRewards = () => {
+    const cachedUserSocialRewards = localStorage.getItem(
+      "cacheduserSocialRewards"
+    );
+
+    if (cachedUserSocialRewards) {
+      setuserSocialRewardsCached(cachedUserSocialRewards);
+    }
+  };
 
   const dummyEvents = [
     {
@@ -662,7 +682,6 @@ const NewWalletBalance = ({
     },
   ];
 
-
   const openEvents = () => {
     setShowAllEvents(!showAllEvents);
   };
@@ -696,18 +715,6 @@ const NewWalletBalance = ({
     }
 
     return errors;
-  };
-
-  const fetchCFXPrice = async () => {
-    await axios
-      .get(
-        "https://pro-api.coingecko.com/api/v3/simple/price?ids=conflux-token&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev"
-      )
-      .then((obj) => {
-        if (obj.data["conflux-token"] && obj.data["conflux-token"] !== NaN) {
-          setCfxPrice(obj.data["conflux-token"].usd);
-        }
-      });
   };
 
   const getTreasureChestsInfo = async () => {
@@ -761,119 +768,6 @@ const NewWalletBalance = ({
 
     setLoading(false);
   };
-
-  const fetchTreasureHuntData = async (email, userAddress) => {
-    try {
-      // console.log(email, window.infuraWeb3.utils.toChecksumAddress(userAddress))
-      const response = await fetch(
-        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
-        {
-          body: JSON.stringify({
-            email: email,
-            publicAddress: userAddress,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          redirect: "follow",
-          mode: "cors",
-        }
-      );
-      if (response.status === 200) {
-        const responseData = await response.json();
-        if (responseData.events) {
-          const coingeckoEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "coingecko";
-          });
-          const confluxEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "conflux";
-          });
-          const gateEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "gate";
-          });
-
-          const baseEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "base";
-          });
-          const dypEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "all";
-          });
-          if (dypEvent && dypEvent[0]) {
-            const userEarnedDyp =
-              dypEvent[0].reward.earn.total /
-              dypEvent[0].reward.earn.multiplier;
-            setDypiusEarnUsd(dyptokenDatabnb * userEarnedDyp);
-            setDypiusEarnTokens(userEarnedDyp);
-          }
-          if (coingeckoEvent && coingeckoEvent[0]) {
-            const points = coingeckoEvent[0].reward.earn.totalPoints;
-            setuserPoints(points);
-            const usdValue =
-              coingeckoEvent[0].reward.earn.total /
-              coingeckoEvent[0].reward.earn.multiplier;
-            setuserEarnUsd(usdValue);
-            if (bnbPrice !== 0) {
-              setuserEarnETH(usdValue / bnbPrice);
-            }
-          }
-
-          if (confluxEvent && confluxEvent[0]) {
-            const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
-            setConfluxUserPoints(cfxPoints);
-
-            if (confluxEvent[0].reward.earn.multiplier !== 0) {
-              const cfxUsdValue =
-                confluxEvent[0].reward.earn.total /
-                confluxEvent[0].reward.earn.multiplier;
-              setConfluxEarnUSD(cfxUsdValue);
-              if (cfxPrice !== 0) {
-                setConfluxEarnCFX(cfxUsdValue / cfxPrice);
-              }
-            }
-          }
-
-          if (gateEvent && gateEvent[0]) {
-            const gatePoints = gateEvent[0].reward.earn.totalPoints;
-            setGateUserPoints(gatePoints);
-            if (gateEvent[0].reward.earn.multiplier !== 0) {
-              const gateUsdValue =
-                gateEvent[0].reward.earn.total /
-                gateEvent[0].reward.earn.multiplier;
-              setGateEarnUSD(gateUsdValue);
-              if (bnbPrice !== 0) {
-                setGateEarnBNB(gateUsdValue / bnbPrice);
-              }
-            }
-          }
-
-          if (baseEvent && baseEvent[0]) {
-            const basePoints = baseEvent[0].reward.earn.totalPoints;
-            setBaseUserPoints(basePoints);
-            if (baseEvent[0].reward.earn.multiplier !== 0) {
-              const baseUsdValue =
-                baseEvent[0].reward.earn.total /
-                baseEvent[0].reward.earn.multiplier;
-              setBaseEarnUSD(baseUsdValue);
-              if (ethTokenData !== 0) {
-                setBaseEarnETH(baseUsdValue / ethTokenData);
-              }
-            }
-          }
-        }
-      } else {
-        console.log(`Request failed with status ${response.status}`);
-      }
-    } catch (error) {
-      console.log("Error:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (email && address) {
-      fetchTreasureHuntData(email, address);
-    }
-  }, [email, address, bnbPrice, cfxPrice]);
 
   useEffect(() => {
     if (
@@ -1164,7 +1058,6 @@ const NewWalletBalance = ({
     getTokenData();
     getTokenDatabnb();
     getTokenDataavax();
-    fetchCFXPrice();
     fetchTvl();
     window.scrollTo(0, 0);
   }, []);
@@ -1191,6 +1084,10 @@ const NewWalletBalance = ({
     getTreasureChestsInfo();
   }, [openedChests, address]);
 
+  useEffect(() => {
+    fetchUsersocialRewards();
+  }, [userSocialRewards]);
+
   const recaptchaRef = useRef(null);
 
   return (
@@ -1206,23 +1103,32 @@ const NewWalletBalance = ({
               >
                 Treasure Hunt
               </h6>{" "}
-              {/* <ActiveProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyDypius);
-                  setEventPopup(true);
-                }}
-                data={dummyDypius}
-                event={dummyDypius}
-                userEarnedUsd={dypiusEarnTokens}
-              /> */}
               <ActiveProfileEvent
                 onOpenEvent={() => {
-                  setDummyEvent(dummyCoingecko);
+                  setDummyEvent(dummyDoge);
                   setEventPopup(true);
                 }}
-                data={dummyCoingecko}
-                event={dummyCoingecko}
-                userEarnedUsd={userEarnUsd}
+                data={dummyDoge}
+                event={dummyDoge}
+                userEarnedUsd={dogeEarnUSD}
+              />
+              <ActiveProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyCmc);
+                  setEventPopup(true);
+                }}
+                data={dummyCmc}
+                event={dummyCmc}
+                userEarnedUsd={cmcuserEarnUsd}
+              />
+              <ActiveProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyBase);
+                  setEventPopup(true);
+                }}
+                data={dummyBase}
+                event={dummyBase}
+                userEarnedUsd={baseEarnUSD}
               />
               {/* <ActiveProfileEvent
                 onOpenEvent={() => {
@@ -1233,20 +1139,6 @@ const NewWalletBalance = ({
                 event={dummyBase}
                 userEarnedUsd={baseEarnUSD}
               /> */}
-              <UpcomingProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyCmc);
-                  setEventPopup(true);
-                }}
-                data={dummyCmc}
-              />
-              <UpcomingProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyDoge);
-                  setEventPopup(true);
-                }}
-                data={dummyDoge}
-              />
               {/* <img
                 src={eventSkeleton}
                 className="profile-event-item"
@@ -1325,6 +1217,11 @@ const NewWalletBalance = ({
                           ? gateEarnUSD
                           : item.title === "CoinGecko"
                           ? userEarnUsd
+                          : item.title === "Dogecoin"
+                          ? dogeEarnUSD
+                          : item.title === "CMC" ||
+                            item.title === "CoinMarketCap"
+                          ? cmcuserEarnUsd
                           : 0
                       }
                     />
@@ -1663,19 +1560,20 @@ const NewWalletBalance = ({
                     <h6 className="my-total-rewards mb-0 font-iceland">
                       $
                       {getFormattedNumber(
-                        userSocialRewards +
-                          weeklyplayerData +
-                          dailyplayerData +
-                          userRank2 +
-                          genesisRank2 +
-                          baseEarnUSD +
-                          confluxEarnUSD +
-                          gateEarnUSD +
-                          userEarnUsd +
-                          treasureRewardMoney +
-                          EthRewardsLandPool * ethTokenData +
-                          EthRewardsCawsPool * ethTokenData +
-                          EthRewards * ethTokenData,
+                        Number(userSocialRewardsCached) +
+                          Number(weeklyplayerData) +
+                          Number(dailyplayerData) +
+                          Number(userRank2) +
+                          Number(genesisRank2) +
+                          Number(baseEarnUSD) +
+                          Number(confluxEarnUSD) +
+                          Number(gateEarnUSD) +
+                          Number(dogeEarnUSD) +
+                          Number(userEarnUsd) +
+                          Number(treasureRewardMoney) +
+                          Number(EthRewardsLandPool) * Number(ethTokenData) +
+                          Number(EthRewardsCawsPool) * Number(ethTokenData) +
+                          Number(EthRewards) * Number(ethTokenData),
                         2
                       )}
                     </h6>
@@ -1707,7 +1605,8 @@ const NewWalletBalance = ({
                         className="my-total-rewards mb-0 font-iceland"
                         style={{ fontSize: "20px" }}
                       >
-                        ${getFormattedNumber(userSocialRewards, 2)}
+                        $
+                        {getFormattedNumber(Number(userSocialRewardsCached), 2)}
                       </h6>
                       <span
                         className="my-total-earned mb-0 font-iceland"
@@ -1862,7 +1761,7 @@ const NewWalletBalance = ({
                 <div className="d-flex align-items-center justify-content-between">
                   <span className="my-special-rewards mb-0">My Rewards</span>
                   <h6 className="my-special-rewards-value mb-0">
-                    ${getFormattedNumber(userSocialRewards, 2)}
+                    ${getFormattedNumber(Number(userSocialRewardsCached), 2)}
                   </h6>
                 </div>
               </>
@@ -1908,6 +1807,10 @@ const NewWalletBalance = ({
                       ? gateEarnUSD
                       : item.title === "CoinGecko"
                       ? userEarnUsd
+                      : item.title === "Dogecoin"
+                      ? dogeEarnUSD
+                      : item.title === "CMC" || item.title === "CoinMarketCap"
+                      ? cmcuserEarnUsd
                       : 0
                   }
                 />
@@ -2399,6 +2302,10 @@ const NewWalletBalance = ({
                         ? baseUserPoints
                         : dummyEvent.id === "event5"
                         ? dypiusEarnTokens
+                        : dummyEvent.id === "event7"
+                        ? dogeUserPoints
+                        : dummyEvent.id === "event8"
+                        ? cmcuserPoints
                         : 0,
                       0
                     )}
@@ -2428,6 +2335,10 @@ const NewWalletBalance = ({
                         ? baseEarnUSD
                         : dummyEvent.id === "event5"
                         ? dypiusEarnUsd
+                        : dummyEvent.id === "event7"
+                        ? dogeEarnUSD
+                        : dummyEvent.id === "event8"
+                        ? cmcuserEarnUsd
                         : 0,
                       2
                     )}
@@ -2443,6 +2354,10 @@ const NewWalletBalance = ({
                               ? gateEarnBnb
                               : dummyEvent.id === "event4"
                               ? baseEarnETH
+                              : dummyEvent.id === "event7"
+                              ? dogeEarnBNB
+                              : dummyEvent.id === "event8"
+                              ? cmcuserEarnETH
                               : 0,
                             2
                           )}

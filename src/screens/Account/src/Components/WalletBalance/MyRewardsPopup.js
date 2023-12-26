@@ -25,7 +25,16 @@ const MyRewardsPopup = ({
   allChests,
   weeklyplayerData,
   dailyplayerData,
-  userRank2,userSocialRewards
+  userRank2,
+  userSocialRewards,
+  dogePrice,
+  userEarnUsd,
+  userEarnETH,
+  dogeEarnUSD,
+  dogeEarnBNB,
+  baseEarnUSD,
+  baseEarnETH,
+  dypiusEarnUsd,cmcuserEarnETH,cmcuserEarnUsd
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -36,15 +45,6 @@ const MyRewardsPopup = ({
 
   const [genesisData, setgenesisData] = useState(0);
   const [bundlesBought, setbundlesBought] = useState(0);
-
-  const [userEarnUsdPrevious, setuserEarnUsdPrevious] = useState(0);
-
-  const [confluxEarnUSDPrevious, setConfluxEarnUSDPrevious] = useState(0);
-
-  const [gateEarnUSDPrevious, setgateEarnUSDPrevious] = useState(0);
-
-  const [baseEarnUSD, setBaseEarnUSD] = useState(0);
-  const [baseEarnETH, setBaseEarnETH] = useState(0);
 
   const [EthRewards, setEthRewards] = useState(0);
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
@@ -61,7 +61,7 @@ const MyRewardsPopup = ({
   const [treasureRewardNftBetaPass, setTreasureRewardNftBetaPass] = useState(0);
   const [confluxRewardsUSD, setConfluxRewardsUSD] = useState(0);
   const [gateRewardsUSD, setGateRewardsUSD] = useState(0);
-
+  const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0)
 
   const getBundles = async () => {
     if (address) {
@@ -72,6 +72,14 @@ const MyRewardsPopup = ({
       setbundlesBought(result_formatted);
     }
   };
+
+  const fetchUsersocialRewards = ()=>{
+    const cachedUserSocialRewards = localStorage.getItem("cacheduserSocialRewards");
+
+    if(cachedUserSocialRewards) {
+      setuserSocialRewardsCached(cachedUserSocialRewards)
+    }
+  }
 
   const getStakesIds = async () => {
     let stakenft = [];
@@ -218,80 +226,6 @@ const MyRewardsPopup = ({
     setEthRewardsCawsPool(result);
   };
 
-  const fetchTreasureHuntData = async (email, userAddress) => {
-    try {
-      const response = await fetch(
-        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
-        {
-          body: JSON.stringify({
-            email: email,
-            publicAddress: userAddress,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          redirect: "follow",
-          mode: "cors",
-        }
-      );
-      if (response.status === 200) {
-        const responseData = await response.json();
-        if (responseData.events) {
-          const coingeckoEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "coingecko";
-          });
-          const confluxEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "conflux";
-          });
-
-          const gateEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "gate";
-          });
-
-          const baseEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "base";
-          });
-
-          const usdValue_previous =
-            coingeckoEvent[0].reward.earn.total /
-            coingeckoEvent[0].reward.earn.multiplier;
-          setuserEarnUsdPrevious(usdValue_previous);
-
-          if (confluxEvent[0].reward.earn.multiplier !== 0) {
-            const cfxUsdValue_previous =
-              confluxEvent[0].reward.earn.total /
-              confluxEvent[0].reward.earn.multiplier;
-            setConfluxEarnUSDPrevious(cfxUsdValue_previous);
-          }
-
-          if (gateEvent[0].reward.earn.multiplier !== 0) {
-            const gateUsdValue_previous =
-              gateEvent[0].reward.earn.total /
-              gateEvent[0].reward.earn.multiplier;
-            setgateEarnUSDPrevious(gateUsdValue_previous);
-          }
-
-          if (baseEvent) {
-            if (baseEvent[0].reward.earn.multiplier !== 0) {
-              const baseUsdValue =
-                baseEvent[0].reward.earn.total /
-                baseEvent[0].reward.earn.multiplier;
-              setBaseEarnUSD(baseUsdValue);
-              if (ethTokenData !== 0) {
-                setBaseEarnETH(baseUsdValue / ethTokenData);
-              }
-            }
-          }
-        }
-      } else {
-        console.log(`Request failed with status ${response.status}`);
-      }
-    } catch (error) {
-      console.log("Error:", error);
-    }
-  };
-
   const fetchMonthlyGenesisRecordsAroundPlayer = async () => {
     const data = {
       StatisticName: "GenesisLandRewards",
@@ -314,9 +248,7 @@ const MyRewardsPopup = ({
 
   const fetchConfluxUSDRewards = async () => {
     await axios
-      .get(
-        `https://api.worldofdypians.com/api/conflux_rewards/${address}`
-      )
+      .get(`https://api.worldofdypians.com/api/conflux_rewards/${address}`)
       .then((data) => {
         if (data.data.userRewards) {
           setConfluxRewardsUSD(data.data.userRewards);
@@ -327,11 +259,10 @@ const MyRewardsPopup = ({
         }
       });
   };
+
   const fetchGateUSDRewards = async () => {
     await axios
-      .get(
-        `https://api.worldofdypians.com/api/gate_rewards/${address}`
-      )
+      .get(`https://api.worldofdypians.com/api/gate_rewards/${address}`)
       .then((data) => {
         if (data.data.userRewards) {
           localStorage.setItem("cachedGateRewards", data.data.userRewards);
@@ -387,9 +318,7 @@ const MyRewardsPopup = ({
 
   const fetchLeaderboardData = async (userAddr) => {
     const result = await axios
-      .get(
-        `https://api.worldofdypians.com/api/leaderboard_rewards/${userAddr}`
-      )
+      .get(`https://api.worldofdypians.com/api/leaderboard_rewards/${userAddr}`)
       .catch((e) => {
         console.log(e);
         localStorage.setItem("cachedLeaderboardearnings", 0);
@@ -518,11 +447,10 @@ const MyRewardsPopup = ({
     fetchCachedData();
   }, [address, email]);
 
-  useEffect(() => {
-    if (email && address) {
-      fetchTreasureHuntData(email, address);
-    }
-  }, [email, address]);
+  useEffect(()=>{
+    fetchUsersocialRewards()
+  },[userSocialRewards])
+
 
   return (
     <div className="d-flex flex-column gap-3">
@@ -627,9 +555,7 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 previousRewardsText">
                 {previousRewards &&
                   `$${getFormattedNumber(
-                    userEarnUsdPrevious +
-                      confluxEarnUSDPrevious +
-                      gateEarnUSDPrevious,
+                    userEarnUsd + confluxRewardsUSD + gateRewardsUSD,
                     2
                   )}`}
               </td>
@@ -643,15 +569,12 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 specialCell topborder text-center">
                 {previousRewards
                   ? "-"
-                  : `$${getFormattedNumber(userEarnUsdPrevious, 2)}`}
+                  : `$${getFormattedNumber(userEarnUsd, 2)}`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
                   ? "-"
-                  : `${getFormattedNumber(
-                      userEarnUsdPrevious / bnbPrice,
-                      4
-                    )} WBNB`}
+                  : `${getFormattedNumber(userEarnETH, 4)} WBNB`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards ? "-" : `$${getFormattedNumber(0, 2)}`}
@@ -695,11 +618,54 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 paddingLeftCell">
                 Base
               </td>
-              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+              <td className="myrewards-td-second border-0 specialCell text-center">
                 ${getFormattedNumber(baseEarnUSD, 2)}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {getFormattedNumber(baseEarnETH, 4)} WETH
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                ${getFormattedNumber(0, 2)}
+              </td>
+            </tr>
+            {/* <tr>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Dypius
+              </td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                ${getFormattedNumber(dypiusEarnUsd, 2)}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {getFormattedNumber(dypiusEarnTokens, 4)} DYP
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                ${getFormattedNumber(0, 2)}
+              </td>
+            </tr> */}
+            <tr>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Dogecoin
+              </td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                ${getFormattedNumber(dogeEarnUSD, 2)}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {getFormattedNumber(dogeEarnBNB, 2)} DOGE
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                ${getFormattedNumber(0, 2)}
+              </td>
+            </tr>
+
+            <tr>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                CoinMarketCap
+              </td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                ${getFormattedNumber(cmcuserEarnUsd, 2)}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {getFormattedNumber(cmcuserEarnETH, 4)} WBNB
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(0, 2)}
@@ -805,10 +771,10 @@ const MyRewardsPopup = ({
                 Social Bonus
               </td>
               <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
-                ${getFormattedNumber(userSocialRewards, 2)}
+                ${getFormattedNumber(userSocialRewardsCached, 2)}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {getFormattedNumber(userSocialRewards / bnbPrice, 4)} WBNB
+                {getFormattedNumber(userSocialRewardsCached / bnbPrice, 4)} WBNB
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 $0.00
@@ -887,11 +853,12 @@ const MyRewardsPopup = ({
               gemRewards +
                 leaderboardTotalData +
                 baseEarnUSD +
-                gateEarnUSDPrevious +
-                confluxEarnUSDPrevious +
-                userEarnUsdPrevious +
+                gateRewardsUSD +
+                confluxRewardsUSD +
+                dogeEarnUSD +
+                userEarnUsd +
                 cawsRewards +
-                wodCawsRewards +
+                wodCawsRewards + Number(userSocialRewardsCached) +
                 wodRewards,
               2
             )}

@@ -73,10 +73,10 @@ const MintPopup = ({ active, onClose, data }) => {
           <div class="d-flex align-items-center justify-content-center">
             <div class="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              300,000 DYPv2 Rewards
+              $20,000 BNB Rewards
             </h6>
           </div>
-          <h6 className="mint-popup-title">Dypius Treasure Hunt</h6>
+          <h6 className="mint-popup-title">CoinMarketCap Treasure Hunt</h6>
         </>
       ) : (
         <div className="d-flex align-items-center gap-2 mb-4 mb-lg-0">
@@ -121,7 +121,7 @@ const MintPopup = ({ active, onClose, data }) => {
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           {data.title === "Treasure Hunt" && (
             <span className="popup-available-mint">
-              Explore the downtown area and generate DYP rewards!
+              Explore the CoinMarketCap area and use your <img src={whiteExplore} className="white-explore" alt=""/> to generate rewards!
             </span>
           )}
         </div>
