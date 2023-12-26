@@ -225,6 +225,9 @@ const NewWalletBalance = ({
   baseEarnETH,
   dypiusEarnUsd,
   dypiusEarnTokens,
+  cmcuserEarnUsd,
+  cmcuserEarnETH,
+  cmcuserPoints,
   // hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -233,6 +236,7 @@ const NewWalletBalance = ({
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
+  let cmcLastDay = new Date("2024-03-25T13:00:00.000+02:00");
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
@@ -338,19 +342,19 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "coinmarketcap",
     rewards: "BNB",
-    status: "Coming Soon",
+    status: "Live",
     id: "event8",
     eventType: "Explore & Mine",
     eventDate: "Dec 26, 2023",
     date: "Dec 26, 2023",
     logo: cmc,
     totalRewards: "$20,000 in BNB Rewards",
-    eventDuration: coingeckoLastDay,
+    eventDuration: cmcLastDay,
     minRewards: "1",
     maxRewards: "100",
     minPoints: "5,000",
     maxPoints: "50,000",
-    learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+    learnMore: "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
   };
 
   const dummyCoin98 = {
@@ -370,12 +374,12 @@ const NewWalletBalance = ({
     rewards: "ETH",
     status: "Live",
     id: "event4",
-    date: "November 01, 2023",
+    date: "Nov 01, 2023",
     totalRewards: "$10,000 in ETH Rewards",
     eventDuration: baseLastDay,
     backgroundImage: baseUpcoming,
     logo: base,
-    date: "November 01, 2023",
+    date: "Nov 01, 2023",
     minRewards: "0.5",
     maxRewards: "20",
     minPoints: "5,000",
@@ -426,7 +430,7 @@ const NewWalletBalance = ({
     {
       title: "CMC",
       logo: cmc,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -437,18 +441,18 @@ const NewWalletBalance = ({
         chain: "BNB Chain",
         linkState: "coinmarketcap",
         rewards: "BNB",
-        status: "Coming Soon",
+        status: "Live",
         id: "event8",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: coingeckoLastDay,
+        eventDuration: cmcLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "30,000",
         eventDate: "Dec 26, 2023",
         learnMore:
-          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+          "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
     },
 
@@ -1108,12 +1112,14 @@ const NewWalletBalance = ({
                 event={dummyDoge}
                 userEarnedUsd={dogeEarnUSD}
               />
-              <UpcomingProfileEvent
+              <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyCmc);
                   setEventPopup(true);
                 }}
                 data={dummyCmc}
+                event={dummyCmc}
+                userEarnedUsd={cmcuserEarnUsd}
               />
               <ActiveProfileEvent
                 onOpenEvent={() => {
@@ -1213,6 +1219,9 @@ const NewWalletBalance = ({
                           ? userEarnUsd
                           : item.title === "Dogecoin"
                           ? dogeEarnUSD
+                          : item.title === "CMC" ||
+                            item.title === "CoinMarketCap"
+                          ? cmcuserEarnUsd
                           : 0
                       }
                     />
@@ -1800,6 +1809,8 @@ const NewWalletBalance = ({
                       ? userEarnUsd
                       : item.title === "Dogecoin"
                       ? dogeEarnUSD
+                      : item.title === "CMC" || item.title === "CoinMarketCap"
+                      ? cmcuserEarnUsd
                       : 0
                   }
                 />
@@ -2293,6 +2304,8 @@ const NewWalletBalance = ({
                         ? dypiusEarnTokens
                         : dummyEvent.id === "event7"
                         ? dogeUserPoints
+                        : dummyEvent.id === "event8"
+                        ? cmcuserPoints
                         : 0,
                       0
                     )}
@@ -2324,6 +2337,8 @@ const NewWalletBalance = ({
                         ? dypiusEarnUsd
                         : dummyEvent.id === "event7"
                         ? dogeEarnUSD
+                        : dummyEvent.id === "event8"
+                        ? cmcuserEarnUsd
                         : 0,
                       2
                     )}
@@ -2341,6 +2356,8 @@ const NewWalletBalance = ({
                               ? baseEarnETH
                               : dummyEvent.id === "event7"
                               ? dogeEarnBNB
+                              : dummyEvent.id === "event8"
+                              ? cmcuserEarnETH
                               : 0,
                             2
                           )}

@@ -4,6 +4,7 @@ import coingecko from "./assets/coingecko.svg";
 import gate from "./assets/gate.svg";
 import baseLogo from "./assets/baseLogo.svg";
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
+import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
 
 
 import dypius from "./assets/dypIcon.svg";
@@ -66,6 +67,8 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
                 ? dypius
                 : event.title === "Dogecoin"
                 ? doge
+                : event.title === "CoinMarketCap"
+                ? cmc
                 : gate
             }
             height={16}

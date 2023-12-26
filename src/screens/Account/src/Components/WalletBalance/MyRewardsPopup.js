@@ -34,7 +34,7 @@ const MyRewardsPopup = ({
   dogeEarnBNB,
   baseEarnUSD,
   baseEarnETH,
-  dypiusEarnUsd,
+  dypiusEarnUsd,cmcuserEarnETH,cmcuserEarnUsd
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
