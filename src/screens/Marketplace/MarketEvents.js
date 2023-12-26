@@ -252,7 +252,7 @@ const MarketEvents = ({
         maxPoints: "30,000",
         eventDate: "Dec 26, 2023",
         learnMore:
-          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+          "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
     },
 
