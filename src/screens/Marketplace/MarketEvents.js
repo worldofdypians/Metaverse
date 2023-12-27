@@ -1156,7 +1156,7 @@ const MarketEvents = ({
                           : item.title === "Gate.io"
                           ? gateEarnUSD
                           : item.title === "Dypius"
-                          ? dypiusEarnUsd
+                          ? dypiusEarnTokens
                           : 0
                       }
                     />

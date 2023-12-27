@@ -44,6 +44,7 @@ import pinkAreaConflux from "./assets/pinkAreaConflux.svg";
 import pinkAreaGate from "./assets/pinkAreaGate.svg";
 import pinkAreaBase from "./assets/pinkAreaBase.svg";
 import pinkAreaDoge from "./assets/pinkAreaDoge.svg";
+import pinkAreaCmc from "./assets/pinkAreaCmc.svg";
 import avaxBetaBanner from "./assets/avaxBetaBanner.png";
 import coingeckoBetaBanner from "./assets/coingeckoBetaBanner.png";
 import confluxBetaBanner from "./assets/confluxBetaBanner.png";
@@ -375,8 +376,8 @@ const BetaPassNFT = ({
 
           if (cmcEvent && cmcEvent[0]) {
             const usdValue =
-            cmcEvent[0].reward.earn.total /
-            cmcEvent[0].reward.earn.multiplier;
+              cmcEvent[0].reward.earn.total /
+              cmcEvent[0].reward.earn.multiplier;
             setCmcEarnUSD(usdValue);
           }
 
@@ -1071,9 +1072,14 @@ const BetaPassNFT = ({
                             <img src={pinkAreaConflux} alt="" />
                           </div>
                         )}
-                        {(mintTitle === "base" || mintTitle === "cmc") && (
+                        {mintTitle === "base" && (
                           <div className="position-relative">
                             <img src={pinkAreaBase} alt="" />
+                          </div>
+                        )}
+                        {mintTitle === "cmc" && (
+                          <div className="position-relative">
+                            <img src={pinkAreaCmc} alt="" />
                           </div>
                         )}
                         {mintTitle === "doge" && (

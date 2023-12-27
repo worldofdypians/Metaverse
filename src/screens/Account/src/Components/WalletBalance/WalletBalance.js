@@ -61,6 +61,7 @@ import halfCircleArrow from "./newAssets/halfCircleArrow.svg";
 import arrowCircle from "./newAssets/arrowCircle.svg";
 import epicblack from "./newAssets/epicblack.svg";
 import epicwhite from "./newAssets/epicwhite.svg";
+import multiplayer from '../../../../../assets/multiplayer.svg'
 
 const WalletBalance = ({
   dypBalance,
@@ -1368,6 +1369,8 @@ const WalletBalance = ({
 
   const [dummyEvent, setDummyEvent] = useState({});
   const [reqModal, setReqModal] = useState(false);
+  const [multiplayerModal, setmultiplayerModal] = useState(false);
+
   const releaseContent = useRef();
 
   const releaseContent2 = useRef();
@@ -1447,15 +1450,27 @@ const WalletBalance = ({
                       />
                     </span>
                   </div>
-                  <div className="opacitywrapper3">
+                  <div className="d-flex gap-2 align-items-center">
+                  <div className="opacitywrapper4">
                     <a
                       className="game-event-download text-white d-flex align-items-center gap-2"
                       href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                       target="_blank"
                     >
-                      <img src={epicwhite} alt="icon" className="epicgame" />
+                      <img src={epicwhite} alt="icon"  style={{width: 20, height:24}} />
                       Download
                     </a>
+                  </div>
+                  <div className="opacitywrapper4" onClick={()=>{setmultiplayerModal(true)}}>
+                    <div
+                      className="game-event-download text-white d-flex align-items-center gap-2"
+                      // href="https://drive.google.com/drive/folders/1nS4HB9K9KZcJZWjS_AXV18At5gC0N96Z?usp=sharing"
+                      target="_blank"
+                    >
+                      <img src={multiplayer} alt="icon" style={{width: 16, height:16}}/>
+                      Multiplayer
+                    </div>
+                  </div>
                   </div>
                 </div>
                 <div className="d-flex flex-column">
@@ -3445,7 +3460,7 @@ const WalletBalance = ({
             )}
           </div>
         )}
-        {reqModal === true ? (
+        {reqModal === true && (
           <OutsideClickHandler onOutsideClick={() => setReqModal(false)}>
             <div className="system-requirements-modal p-3" id="reqmodal">
               <div className="d-flex align-items-start justify-content-between">
@@ -3535,9 +3550,81 @@ const WalletBalance = ({
               </div>
             </div>
           </OutsideClickHandler>
-        ) : (
-          <></>
         )}
+
+{multiplayerModal === true && (
+        <OutsideClickHandler onOutsideClick={() => setmultiplayerModal(false)}>
+          <div className="system-requirements-modal p-3" id="reqmodal">
+            <div className="d-flex align-items-start justify-content-between mb-3">
+              <div className="d-flex flex-column gap-2">
+                <h6 className="sys-req-title">World of Dypians Multiplayer</h6>
+              </div>
+              <img
+                src={require("./assets/closeMark.svg").default}
+                alt="x mark"
+                style={{ cursor: "pointer" }}
+                onClick={() => setmultiplayerModal(false)}
+              />
+            </div>
+
+            <div className="overall-requirements">
+              <h6 className="requirements-title">Closed Demo</h6>
+              <p className="requirements-content">
+                The World of Dypians Multiplayer you are about to experience is
+                a closed demo specifically designed for testing purposes. This
+                means that you are stepping into an environment that is still
+                under development and not the final version of the game.
+              </p>
+              <h6 className="requirements-title">Basic Functionalities</h6>
+              <p className="requirements-content">
+                While the closed demo offers a glimpse into the vast potential
+                of the World of Dypians Multiplayer, please be aware that some
+                features and functionalities may be limited or subject to
+                changes. The game is a work in progress, and your feedback will
+                play a crucial role in shaping its final form.
+              </p>
+
+              <h6 className="requirements-title">Text and Voice Chat</h6>
+              <p className="requirements-content">
+                Communication is key in the World of Dypians Multiplayer, and
+                during this closed demo, you can interact with fellow players
+                through both text and voice chat functionalities.
+              </p>
+
+              <h6 className="requirements-title">
+                Reporting Bugs and Feedback
+              </h6>
+              <p className="requirements-content">
+                As you explore the world and encounter various elements, please
+                keep an eye out for any bugs or issues. If you come across
+                something unexpected or have suggestions for improvement, don't
+                hesitate to provide feedback. Your input is immensely valuable
+                in ensuring a smooth gaming experience for all.
+              </p>
+            </div>
+            <div className="d-flex align-items-center justify-content-center py-3">
+              <a
+                href="https://drive.google.com/drive/folders/1nS4HB9K9KZcJZWjS_AXV18At5gC0N96Z?usp=sharing"
+                target={"_blank"}
+                rel="noreferrer"
+                onClick={() => {
+                  setmultiplayerModal(false);
+                }}
+              >
+                <div
+                  className="linear-border"
+                  style={{
+                    width: "fit-content",
+                    margin: "auto",
+                  }}
+                >
+                  <button className="btn filled-btn px-5">Download</button>
+                </div>
+              </a>
+            </div>
+          </div>
+        </OutsideClickHandler>
+      )}
       </div>
     </>
   );
