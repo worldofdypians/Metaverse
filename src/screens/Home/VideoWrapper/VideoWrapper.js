@@ -360,7 +360,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   }}
                 >
                   <button
-                    className="btn multiplayer-btn px-5 d-flex align-items-center gap-2"
+                    className="btn multiplayer-btn px-3 d-flex align-items-center gap-2"
                     onClick={() => {
                       setmultiplayerModal(true);
                     }}
