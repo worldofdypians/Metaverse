@@ -61,6 +61,7 @@ import halfCircleArrow from "./newAssets/halfCircleArrow.svg";
 import arrowCircle from "./newAssets/arrowCircle.svg";
 import epicblack from "./newAssets/epicblack.svg";
 import epicwhite from "./newAssets/epicwhite.svg";
+import multiplayer from '../../../../../assets/multiplayer.svg'
 
 const WalletBalance = ({
   dypBalance,
@@ -1447,15 +1448,27 @@ const WalletBalance = ({
                       />
                     </span>
                   </div>
-                  <div className="opacitywrapper3">
+                  <div className="d-flex gap-2 align-items-center">
+                  <div className="opacitywrapper4">
                     <a
                       className="game-event-download text-white d-flex align-items-center gap-2"
                       href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                       target="_blank"
                     >
-                      <img src={epicwhite} alt="icon" className="epicgame" />
+                      <img src={epicwhite} alt="icon"  style={{width: 20, height:24}} />
                       Download
                     </a>
+                  </div>
+                  <div className="opacitywrapper4">
+                    <a
+                      className="game-event-download text-white d-flex align-items-center gap-2"
+                      href="https://drive.google.com/drive/folders/1nS4HB9K9KZcJZWjS_AXV18At5gC0N96Z?usp=sharing"
+                      target="_blank"
+                    >
+                      <img src={multiplayer} alt="icon" style={{width: 16, height:16}}/>
+                      Multiplayer
+                    </a>
+                  </div>
                   </div>
                 </div>
                 <div className="d-flex flex-column">

@@ -269,6 +269,46 @@ body {
     white-space: pre;
   }
 
+  .multiplayer-btn {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: linear-gradient(89.7deg, #7b2eb0 0.23%, #142d8e 99.72%);
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12pt;
+    line-height: 24px;
+    text-align: center;
+    color: #ffffff;
+    white-space: pre;
+  }
+
+  .multiplayer-btn:hover {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: linear-gradient(to left, #7b2eb0 0.23%, #142d8e 99.72%);
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #fff;
+    white-space: pre;
+  }
+
   .outline-btn-disabled {
     clip-path: polygon(
       0 19px,
@@ -470,6 +510,46 @@ body {
   .pink-linear-border::before {
     content: "";
   }
+
+  .multiplayer-linear-border {
+    position: relative;
+    padding: 2px;
+    background: linear-gradient(89.7deg, #7b2eb0 0.23%, #142d8e 99.72%);
+    border-radius: 8px;
+    clip-path: polygon(
+      0 20px,
+      20px 0,
+      100% 0,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0 100%
+    );
+  }
+
+  .multiplayer-linear-border::before {
+    content: "";
+  }
+}
+
+.join-beta-ribbon {
+  border-radius: 6px;
+  border: 1px solid #7bd8b0;
+  background: rgba(8, 11, 42, 0.6);
+  backdrop-filter: blur(12.5px);
+  position: relative;
+  z-index: 5;
+}
+
+.join-beta-ribbon:hover {
+  background: rgba(123, 216, 176, 0.3);
+}
+
+.joinbeta-white-txt {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .purple-btn {
