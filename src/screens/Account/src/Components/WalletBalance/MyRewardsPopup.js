@@ -60,6 +60,8 @@ const MyRewardsPopup = ({
   const [treasureRewardNftWod, setTreasureRewardNftWod] = useState(0);
   const [treasureRewardNftBetaPass, setTreasureRewardNftBetaPass] = useState(0);
   const [confluxRewardsUSD, setConfluxRewardsUSD] = useState(0);
+  const [dypiusRewardsUSD, setDypiusRewardsUSD] = useState(0);
+
   const [gateRewardsUSD, setGateRewardsUSD] = useState(0);
   const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0)
 
@@ -246,9 +248,9 @@ const MyRewardsPopup = ({
     }
   };
 
-  const fetchConfluxUSDRewards = async () => {
+  const fetchConfluxUSDRewards = async (addr) => {
     await axios
-      .get(`https://api.worldofdypians.com/api/conflux_rewards/${address}`)
+      .get(`https://api.worldofdypians.com/api/conflux_rewards/${addr}`)
       .then((data) => {
         if (data.data.userRewards) {
           setConfluxRewardsUSD(data.data.userRewards);
@@ -260,9 +262,24 @@ const MyRewardsPopup = ({
       });
   };
 
-  const fetchGateUSDRewards = async () => {
+
+  const fetchDypiusUSDRewards = async (addr) => {
     await axios
-      .get(`https://api.worldofdypians.com/api/gate_rewards/${address}`)
+      .get(`https://api.worldofdypians.com/api/dyp_rewards/${addr}`)
+      .then((data) => {
+        if (data.data.userRewards) {
+          setDypiusRewardsUSD(data.data.userRewards);
+          localStorage.setItem("cachedDypiusRewards", data.data.userRewards);
+        } else {
+          setDypiusRewardsUSD(0);
+          localStorage.setItem("cachedDypiusRewards", 0);
+        }
+      });
+  };
+
+  const fetchGateUSDRewards = async (addr) => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/gate_rewards/${addr}`)
       .then((data) => {
         if (data.data.userRewards) {
           localStorage.setItem("cachedGateRewards", data.data.userRewards);
@@ -389,6 +406,8 @@ const MyRewardsPopup = ({
   const fetchCachedData = () => {
     const cachedConfluxRewards = localStorage.getItem("cachedConfluxRewards");
     const cachedGateRewards = localStorage.getItem("cachedGateRewards");
+    const cachedDypiusRewards = localStorage.getItem("cachedDypiusRewards");
+
 
     const cachedCawsUserRewards = localStorage.getItem("cachedCawsUserRewards");
     const cachedWodCawsUserRewards = localStorage.getItem(
@@ -408,9 +427,11 @@ const MyRewardsPopup = ({
       cachedWodCawsUserRewards &&
       cachedWodUserRewards &&
       cachedGem_Rewards &&
-      cachedLeaderboardearnings
+      cachedLeaderboardearnings && cachedDypiusRewards
     ) {
       setConfluxRewardsUSD(Number(cachedConfluxRewards));
+
+      setDypiusRewardsUSD(cachedDypiusRewards)
 
       setGateRewardsUSD(Number(cachedGateRewards));
 
@@ -442,8 +463,9 @@ const MyRewardsPopup = ({
     fetchNftRewards(address);
     fetchGenesisGem(address);
     fetchLeaderboardData(address);
-    fetchConfluxUSDRewards();
-    fetchGateUSDRewards();
+    fetchConfluxUSDRewards(address);
+    fetchGateUSDRewards(address);
+    fetchDypiusUSDRewards(address);
     fetchCachedData();
   }, [address, email]);
 
@@ -628,25 +650,25 @@ const MyRewardsPopup = ({
                 ${getFormattedNumber(0, 2)}
               </td>
             </tr>
-            {/* <tr>
+            <tr>
               <td className="myrewards-td-second border-0 paddingLeftCell">
                 Dypius
               </td>
-              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
-                ${getFormattedNumber(dypiusEarnUsd, 2)}
-              </td>
-              <td className="myrewards-td-second border-0 text-center">
-                {getFormattedNumber(dypiusEarnTokens, 4)} DYP
-              </td>
-              <td className="myrewards-td-second border-0 text-center">
+              <td className="myrewards-td-second border-0 specialCell text-center">
                 ${getFormattedNumber(0, 2)}
               </td>
-            </tr> */}
+              <td className="myrewards-td-second border-0 text-center">
+                {getFormattedNumber(0, 4)} DYP
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                ${getFormattedNumber(dypiusRewardsUSD, 2)}
+              </td>
+            </tr>
             <tr>
               <td className="myrewards-td-second border-0 paddingLeftCell">
                 Dogecoin
               </td>
-              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+              <td className="myrewards-td-second border-0 specialCell text-center">
                 ${getFormattedNumber(dogeEarnUSD, 2)}
               </td>
               <td className="myrewards-td-second border-0 text-center">
