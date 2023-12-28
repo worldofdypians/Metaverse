@@ -1587,6 +1587,7 @@ function Dashboard({
       .send({ from: await window.getCoinbase() })
       .then(() => {
         setloadspinnerSub(false);
+        setIsPremium(true)
         setapproveStatus("successsubscribe");
         setTimeout(() => {
           setloadspinnerSub(false);
@@ -1840,7 +1841,7 @@ function Dashboard({
       data.getPlayer.wallet.publicAddress &&
       email
     ) {
-      refreshSubscription(data.getPlayer.wallet.publicAddress, email);
+      refreshSubscription(data.getPlayer.wallet.publicAddress);
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
     }
   }, [data, email]);
