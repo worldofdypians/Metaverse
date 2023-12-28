@@ -247,11 +247,7 @@ const Roadmap = () => {
           desc: "Developing Beta Pass NFT collections for World of Dypians partners, offering associated benefits within the game.",
           completed: true,
         },
-        {
-          title: "Addition and development of partnerships",
-          desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more",
-          completed: true,
-        },
+   
         {
           title: "Multiplayer PVE",
           desc: "Adventure with other players to complete quests, fight bosses, survive against waves of enemies, earn rewards and much more.",
@@ -268,7 +264,11 @@ const Roadmap = () => {
           title: "In-game chat",
           desc: "Users can communicate via voice and chat texts in multiple channels.",
           completed: true,
-
+        },
+        {
+          title: "Addition and development of partnerships",
+          desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more",
+          completed: true,
         },
         // {
         //   title: "P2P trade",
