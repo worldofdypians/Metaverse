@@ -61,6 +61,9 @@ const MyRewardsPopup = ({
   const [treasureRewardNftBetaPass, setTreasureRewardNftBetaPass] = useState(0);
   const [confluxRewardsUSD, setConfluxRewardsUSD] = useState(0);
   const [dypiusRewardsUSD, setDypiusRewardsUSD] = useState(0);
+  const [coingeckoRewardsUSD, setcoingeckoRewardsUSD] = useState(0);
+
+
 
   const [gateRewardsUSD, setGateRewardsUSD] = useState(0);
   const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0)
@@ -277,6 +280,22 @@ const MyRewardsPopup = ({
       });
   };
 
+
+  const fetchCoingeckoUSDRewards = async (addr) => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/coingecko_rewards/${addr}`)
+      .then((data) => {
+        if (data.data.userRewards) {
+          setcoingeckoRewardsUSD(data.data.userRewards);
+          localStorage.setItem("cachedCoingeckoRewards", data.data.userRewards);
+        } else {
+          setcoingeckoRewardsUSD(0);
+          localStorage.setItem("cachedCoingeckoRewards", 0);
+        }
+      });
+  };
+
+
   const fetchGateUSDRewards = async (addr) => {
     await axios
       .get(`https://api.worldofdypians.com/api/gate_rewards/${addr}`)
@@ -407,6 +426,8 @@ const MyRewardsPopup = ({
     const cachedConfluxRewards = localStorage.getItem("cachedConfluxRewards");
     const cachedGateRewards = localStorage.getItem("cachedGateRewards");
     const cachedDypiusRewards = localStorage.getItem("cachedDypiusRewards");
+    const cachedCoingeckoRewards = localStorage.getItem("cachedCoingeckoRewards");
+
 
 
     const cachedCawsUserRewards = localStorage.getItem("cachedCawsUserRewards");
@@ -427,7 +448,7 @@ const MyRewardsPopup = ({
       cachedWodCawsUserRewards &&
       cachedWodUserRewards &&
       cachedGem_Rewards &&
-      cachedLeaderboardearnings && cachedDypiusRewards
+      cachedLeaderboardearnings && cachedDypiusRewards && cachedCoingeckoRewards
     ) {
       setConfluxRewardsUSD(Number(cachedConfluxRewards));
 
@@ -444,6 +465,8 @@ const MyRewardsPopup = ({
       setGemRewards(Number(cachedGem_Rewards));
 
       setleaderboardTotalData(Number(cachedLeaderboardearnings));
+
+      setcoingeckoRewardsUSD(cachedCoingeckoRewards)
     }
   };
 
@@ -466,6 +489,7 @@ const MyRewardsPopup = ({
     fetchConfluxUSDRewards(address);
     fetchGateUSDRewards(address);
     fetchDypiusUSDRewards(address);
+    fetchCoingeckoUSDRewards(address)
     fetchCachedData();
   }, [address, email]);
 
@@ -591,15 +615,15 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 specialCell topborder text-center">
                 {previousRewards
                   ? "-"
-                  : `$${getFormattedNumber(userEarnUsd, 2)}`}
+                  : `$${getFormattedNumber(0, 2)}`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
                   ? "-"
-                  : `${getFormattedNumber(userEarnETH, 4)} WBNB`}
+                  : `${getFormattedNumber(0, 4)} WBNB`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {previousRewards ? "-" : `$${getFormattedNumber(0, 2)}`}
+                {previousRewards ? "-" : `$${getFormattedNumber(coingeckoRewardsUSD, 2)}`}
               </td>
             </tr>
             <tr>

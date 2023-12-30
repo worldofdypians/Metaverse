@@ -631,7 +631,7 @@ const ProfileCard = ({
                       <div className="d-flex flex-column gap-1 w-100">
                         <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
                           {username}
-                          {!domainName && (
+                          {!domainName && isConnected && (
                             <span
                               className={`${
                                 isPremium ? "premiumtext-active" : "premiumtext"

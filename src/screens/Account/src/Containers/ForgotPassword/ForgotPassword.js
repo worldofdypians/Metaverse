@@ -47,7 +47,7 @@ const ForgotPassword = () => {
             </h1>
             <h1
               onClick={() => {
-                history("/");
+                history("/auth");
               }}
               className={classes.succesfulBack}
             >
@@ -94,7 +94,7 @@ const ForgotPassword = () => {
           />
           <h1
             onClick={() => {
-              history("/");
+              history("/auth");
             }}
             className={classes.succesfulBack}
           >
