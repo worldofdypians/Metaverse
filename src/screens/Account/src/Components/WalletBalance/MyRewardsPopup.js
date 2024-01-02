@@ -896,16 +896,16 @@ const MyRewardsPopup = ({
           >
             $
             {getFormattedNumber(
-              gemRewards +
-                leaderboardTotalData +
-                baseEarnUSD +
-                gateRewardsUSD +
-                confluxRewardsUSD +
-                dogeEarnUSD +
-                userEarnUsd +
-                cawsRewards +
-                wodCawsRewards + Number(userSocialRewardsCached) +
-                wodRewards,
+              Number(gemRewards) +
+                Number(leaderboardTotalData) +
+                Number(baseEarnUSD) +
+                Number(gateRewardsUSD) +
+                Number(confluxRewardsUSD) + Number(dypiusRewardsUSD) +
+                Number(dogeEarnUSD) +
+                Number(coingeckoRewardsUSD) +
+                Number(cawsRewards) +
+                Number(wodCawsRewards) + Number(userSocialRewardsCached) +
+                Number(wodRewards),
               2
             )}
           </h4>
