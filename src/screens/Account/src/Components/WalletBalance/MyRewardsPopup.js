@@ -61,6 +61,13 @@ const MyRewardsPopup = ({
   const [treasureRewardNftCaws, setTreasureRewardNftCaws] = useState(0);
   const [treasureRewardNftWod, setTreasureRewardNftWod] = useState(0);
   const [treasureRewardNftBetaPass, setTreasureRewardNftBetaPass] = useState(0);
+
+  const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
+  const [pasttreasureRewardNftCaws, setpastTreasureRewardNftCaws] = useState(0);
+  const [pasttreasureRewardNftWod, setpastTreasureRewardNftWod] = useState(0);
+  const [pasttreasureRewardNftBetaPass, setpastTreasureRewardNftBetaPass] =
+    useState(0);
+
   const [confluxRewardsUSD, setConfluxRewardsUSD] = useState(0);
   const [dypiusRewardsUSD, setDypiusRewardsUSD] = useState(0);
   const [coingeckoRewardsUSD, setcoingeckoRewardsUSD] = useState(0);
@@ -364,6 +371,28 @@ const MyRewardsPopup = ({
     }
   };
 
+  const fetchPastDailyBonusMoney = async (userAddr) => {
+    const result = await axios.get(
+      `https://api.worldofdypians.com/api/daily_rewards/${userAddr}`
+    );
+    if (result && result.status === 200) {
+      const money_Rewards = result.data.userRewards;
+
+      setpastTreasureRewardMoney(money_Rewards);
+    }
+  };
+
+  const fetchPastDailyBonusBetaPass = async (userAddr) => {
+    const result = await axios.get(
+      `https://api.worldofdypians.com/api/beta_passes/${userAddr}`
+    );
+    if (result && result.status === 200) {
+      const bp_Rewards = result.data.userRewards;
+
+      setpastTreasureRewardNftBetaPass(bp_Rewards);
+    }
+  };
+
   const fetchLeaderboardData = async (userAddr) => {
     const result = await axios
       .get(`https://api.worldofdypians.com/api/leaderboard_rewards/${userAddr}`)
@@ -505,6 +534,8 @@ const MyRewardsPopup = ({
     fetchDypiusUSDRewards(address);
     fetchCoingeckoUSDRewards(address);
     fetchPastSpecialRewards(address);
+    fetchPastDailyBonusMoney(address);
+    fetchPastDailyBonusBetaPass(address);
     fetchCachedData();
   }, [address, email]);
 
@@ -805,7 +836,14 @@ const MyRewardsPopup = ({
                 USD/NFT
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {previousRewards ? "-" : "0"}
+                {"$" + getFormattedNumber(pasttreasureRewardMoney, 2)}
+                <br />
+                {pasttreasureRewardNftBetaPass + " " + "BetaPass NFT"}
+                <br />
+                {pasttreasureRewardNftCaws + " " + "CAWS NFT"}
+                <br />
+                {pasttreasureRewardNftWod + " " + "WoD NFT"}
+                <br />
               </td>
             </tr>
 
@@ -910,15 +948,14 @@ const MyRewardsPopup = ({
             {getFormattedNumber(
               Number(gemRewards) +
                 Number(leaderboardTotalData) +
-                Number(baseEarnUSD) +
                 Number(gateRewardsUSD) +
                 Number(confluxRewardsUSD) +
                 Number(dypiusRewardsUSD) +
                 Number(pastSpecialRewards) +
-                Number(dogeEarnUSD) +
                 Number(coingeckoRewardsUSD) +
                 Number(cawsRewards) +
                 Number(wodCawsRewards) +
+                Number(pasttreasureRewardMoney) +
                 Number(wodRewards),
               2
             )}
