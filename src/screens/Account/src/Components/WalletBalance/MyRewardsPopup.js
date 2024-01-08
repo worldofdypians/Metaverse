@@ -34,7 +34,9 @@ const MyRewardsPopup = ({
   dogeEarnBNB,
   baseEarnUSD,
   baseEarnETH,
-  dypiusEarnUsd,cmcuserEarnETH,cmcuserEarnUsd
+  dypiusEarnUsd,
+  cmcuserEarnETH,
+  cmcuserEarnUsd,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -59,14 +61,20 @@ const MyRewardsPopup = ({
   const [treasureRewardNftCaws, setTreasureRewardNftCaws] = useState(0);
   const [treasureRewardNftWod, setTreasureRewardNftWod] = useState(0);
   const [treasureRewardNftBetaPass, setTreasureRewardNftBetaPass] = useState(0);
+
+  const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
+  const [pasttreasureRewardNftCaws, setpastTreasureRewardNftCaws] = useState(0);
+  const [pasttreasureRewardNftWod, setpastTreasureRewardNftWod] = useState(0);
+  const [pasttreasureRewardNftBetaPass, setpastTreasureRewardNftBetaPass] =
+    useState(0);
+
   const [confluxRewardsUSD, setConfluxRewardsUSD] = useState(0);
   const [dypiusRewardsUSD, setDypiusRewardsUSD] = useState(0);
   const [coingeckoRewardsUSD, setcoingeckoRewardsUSD] = useState(0);
-
-
+  const [pastSpecialRewards, setpastSpecialRewards] = useState(0);
 
   const [gateRewardsUSD, setGateRewardsUSD] = useState(0);
-  const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0)
+  const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
 
   const getBundles = async () => {
     if (address) {
@@ -78,13 +86,15 @@ const MyRewardsPopup = ({
     }
   };
 
-  const fetchUsersocialRewards = ()=>{
-    const cachedUserSocialRewards = localStorage.getItem("cacheduserSocialRewards");
+  const fetchUsersocialRewards = () => {
+    const cachedUserSocialRewards = localStorage.getItem(
+      "cacheduserSocialRewards"
+    );
 
-    if(cachedUserSocialRewards) {
-      setuserSocialRewardsCached(cachedUserSocialRewards)
+    if (cachedUserSocialRewards) {
+      setuserSocialRewardsCached(cachedUserSocialRewards);
     }
-  }
+  };
 
   const getStakesIds = async () => {
     let stakenft = [];
@@ -265,7 +275,6 @@ const MyRewardsPopup = ({
       });
   };
 
-
   const fetchDypiusUSDRewards = async (addr) => {
     await axios
       .get(`https://api.worldofdypians.com/api/dyp_rewards/${addr}`)
@@ -280,6 +289,17 @@ const MyRewardsPopup = ({
       });
   };
 
+  const fetchPastSpecialRewards = async (addr) => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/special_r/${addr}`)
+      .then((data) => {
+        if (data.data.userRewards) {
+          setpastSpecialRewards(data.data.userRewards);
+        } else {
+          setpastSpecialRewards(0);
+        }
+      });
+  };
 
   const fetchCoingeckoUSDRewards = async (addr) => {
     await axios
@@ -294,7 +314,6 @@ const MyRewardsPopup = ({
         }
       });
   };
-
 
   const fetchGateUSDRewards = async (addr) => {
     await axios
@@ -349,6 +368,28 @@ const MyRewardsPopup = ({
       const gem_Rewards = result.data.userRewards;
       localStorage.setItem("cachedGem_Rewards", gem_Rewards);
       setGemRewards(gem_Rewards);
+    }
+  };
+
+  const fetchPastDailyBonusMoney = async (userAddr) => {
+    const result = await axios.get(
+      `https://api.worldofdypians.com/api/daily_rewards/${userAddr}`
+    );
+    if (result && result.status === 200) {
+      const money_Rewards = result.data.userRewards;
+
+      setpastTreasureRewardMoney(money_Rewards);
+    }
+  };
+
+  const fetchPastDailyBonusBetaPass = async (userAddr) => {
+    const result = await axios.get(
+      `https://api.worldofdypians.com/api/beta_passes/${userAddr}`
+    );
+    if (result && result.status === 200) {
+      const bp_Rewards = result.data.userRewards;
+
+      setpastTreasureRewardNftBetaPass(bp_Rewards);
     }
   };
 
@@ -426,9 +467,9 @@ const MyRewardsPopup = ({
     const cachedConfluxRewards = localStorage.getItem("cachedConfluxRewards");
     const cachedGateRewards = localStorage.getItem("cachedGateRewards");
     const cachedDypiusRewards = localStorage.getItem("cachedDypiusRewards");
-    const cachedCoingeckoRewards = localStorage.getItem("cachedCoingeckoRewards");
-
-
+    const cachedCoingeckoRewards = localStorage.getItem(
+      "cachedCoingeckoRewards"
+    );
 
     const cachedCawsUserRewards = localStorage.getItem("cachedCawsUserRewards");
     const cachedWodCawsUserRewards = localStorage.getItem(
@@ -448,11 +489,13 @@ const MyRewardsPopup = ({
       cachedWodCawsUserRewards &&
       cachedWodUserRewards &&
       cachedGem_Rewards &&
-      cachedLeaderboardearnings && cachedDypiusRewards && cachedCoingeckoRewards
+      cachedLeaderboardearnings &&
+      cachedDypiusRewards &&
+      cachedCoingeckoRewards
     ) {
       setConfluxRewardsUSD(Number(cachedConfluxRewards));
 
-      setDypiusRewardsUSD(cachedDypiusRewards)
+      setDypiusRewardsUSD(cachedDypiusRewards);
 
       setGateRewardsUSD(Number(cachedGateRewards));
 
@@ -466,7 +509,7 @@ const MyRewardsPopup = ({
 
       setleaderboardTotalData(Number(cachedLeaderboardearnings));
 
-      setcoingeckoRewardsUSD(cachedCoingeckoRewards)
+      setcoingeckoRewardsUSD(cachedCoingeckoRewards);
     }
   };
 
@@ -489,14 +532,16 @@ const MyRewardsPopup = ({
     fetchConfluxUSDRewards(address);
     fetchGateUSDRewards(address);
     fetchDypiusUSDRewards(address);
-    fetchCoingeckoUSDRewards(address)
+    fetchCoingeckoUSDRewards(address);
+    fetchPastSpecialRewards(address);
+    fetchPastDailyBonusMoney(address);
+    fetchPastDailyBonusBetaPass(address);
     fetchCachedData();
   }, [address, email]);
 
-  useEffect(()=>{
-    fetchUsersocialRewards()
-  },[userSocialRewards])
-
+  useEffect(() => {
+    fetchUsersocialRewards();
+  }, [userSocialRewards]);
 
   return (
     <div className="d-flex flex-column gap-3">
@@ -613,17 +658,15 @@ const MyRewardsPopup = ({
                 CoinGecko
               </td>
               <td className="myrewards-td-second border-0 specialCell topborder text-center">
-                {previousRewards
-                  ? "-"
-                  : `$${getFormattedNumber(0, 2)}`}
+                {previousRewards ? "-" : `$${getFormattedNumber(0, 2)}`}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {previousRewards ? "-" : `${getFormattedNumber(0, 4)} WBNB`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {previousRewards
                   ? "-"
-                  : `${getFormattedNumber(0, 4)} WBNB`}
-              </td>
-              <td className="myrewards-td-second border-0 text-center">
-                {previousRewards ? "-" : `$${getFormattedNumber(coingeckoRewardsUSD, 2)}`}
+                  : `$${getFormattedNumber(coingeckoRewardsUSD, 2)}`}
               </td>
             </tr>
             <tr>
@@ -793,7 +836,14 @@ const MyRewardsPopup = ({
                 USD/NFT
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {previousRewards ? "-" : "0"}
+                {"$" + getFormattedNumber(pasttreasureRewardMoney, 2)}
+                <br />
+                {pasttreasureRewardNftBetaPass + " " + "BetaPass NFT"}
+                <br />
+                {pasttreasureRewardNftCaws + " " + "CAWS NFT"}
+                <br />
+                {pasttreasureRewardNftWod + " " + "WoD NFT"}
+                <br />
               </td>
             </tr>
 
@@ -823,7 +873,7 @@ const MyRewardsPopup = ({
                 {getFormattedNumber(userSocialRewardsCached / bnbPrice, 4)} WBNB
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                $0.00
+                ${getFormattedNumber(pastSpecialRewards, 2)}
               </td>
             </tr>
 
@@ -898,13 +948,14 @@ const MyRewardsPopup = ({
             {getFormattedNumber(
               Number(gemRewards) +
                 Number(leaderboardTotalData) +
-                Number(baseEarnUSD) +
                 Number(gateRewardsUSD) +
-                Number(confluxRewardsUSD) + Number(dypiusRewardsUSD) +
-                Number(dogeEarnUSD) +
+                Number(confluxRewardsUSD) +
+                Number(dypiusRewardsUSD) +
+                Number(pastSpecialRewards) +
                 Number(coingeckoRewardsUSD) +
                 Number(cawsRewards) +
-                Number(wodCawsRewards) + Number(userSocialRewardsCached) +
+                Number(wodCawsRewards) +
+                Number(pasttreasureRewardMoney) +
                 Number(wodRewards),
               2
             )}
