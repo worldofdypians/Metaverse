@@ -1835,14 +1835,13 @@ function Dashboard({
     if (
       data &&
       data.getPlayer &&
-      data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress &&
       email
     ) {
-      refreshSubscription(data.getPlayer.wallet.publicAddress);
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
+      refreshSubscription(data.getPlayer.wallet.publicAddress);
+      setuserWallet(data.getPlayer.wallet.publicAddress);
     }
   }, [data, email]);
 
@@ -1886,7 +1885,6 @@ function Dashboard({
       email
     ) {
       getOpenedChestPerWallet();
-      setuserWallet(data.getPlayer.wallet.publicAddress);
     }
   }, [data, email, count, isPremium, claimedChests, claimedPremiumChests]);
 
