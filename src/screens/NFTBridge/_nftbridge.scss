@@ -1,0 +1,121 @@
+.nft-bridge-hero-wrapper {
+  border-radius: 10px;
+  background: #141b44;
+}
+
+.nft-bridge-page-wrapper {
+  border-radius: 15px;
+  background: linear-gradient(
+    148deg,
+    rgba(20, 27, 68, 0.1) 0%,
+    rgba(20, 27, 68, 0.5) 100%
+  );
+}
+
+.nft-bridge-select-route {
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 10px; /* 83.333% */
+  letter-spacing: -0.216px;
+}
+
+.nft-bridge-label {
+  color: #fff;
+  text-align: right;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 10px; /* 83.333% */
+  letter-spacing: -0.216px;
+}
+
+.bridge-guide-text {
+  color: #00fecf;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.status-desc {
+  color: #c0cbf7;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.18px;
+}
+
+.timeline-wrapper-item {
+  position: relative;
+  top: -20px;
+  left: 20px;
+}
+
+.timeline-wrapper-item2 {
+  position: relative;
+  top: -10px;
+  left: 20px;
+}
+
+.select-all-btn-new {
+  border-radius: 8px;
+  border: 1px solid #494b63;
+  background: rgba(8, 11, 42, 0.3);
+  color: #f7f7fc;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 147px;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.select-all-btn-new-active {
+  border-radius: 8px;
+  border: 1px solid #18ffff;
+  background: rgba(24, 255, 255, 0.3);
+  color: #f7f7fc;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 147px;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.ccip-wrapper {
+  top: 5px;
+  left: 50%;
+  transform: translate(-35%, -50%);
+}
+
+.ccip-link {
+  color: #1a2b6b;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.powered-by-text {
+  color: #fff;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  img {
+    scale: 1.4;
+  }
+}
+
+.bridgenftImg {
+  filter: drop-shadow(0px 4px 20px rgba(11, 250, 210, 0.4));
+}

@@ -3102,6 +3102,97 @@
   }
 }
 
+
+.timeline-bridge {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media only screen and (max-width: 991px) {
+    padding: inherit;
+  }
+
+  .li {
+    transition: all 200ms ease-in;
+    .listtext {
+      color: #c0cbf7;
+      text-align: center;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      letter-spacing: -0.18px;
+      position: relative;
+      margin: 0;
+    }
+    .timestamp {
+      margin-bottom: 20px;
+      padding: 0px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: 100;
+    }
+    .status {
+      padding: 10px 0 0 0;
+      display: flex;
+      border-left: 2px solid #565891;
+      position: relative;
+      transition: all 200ms ease-in;
+
+      &:before {
+        content: "";
+        width: 16px;
+        height: 16px;
+        background-color: #26264f;
+        border-radius: 25px;
+        border: 2px solid #565891;
+        position: absolute;
+        top: -10px;
+        left: -2%;
+        transition: all 200ms ease-in;
+
+        @media only screen and (max-width: 520px) {
+          left: -3%;
+        }
+      }
+    }
+
+    @media (min-device-width: 320px) and (max-device-width: 700px) {
+      .timeline {
+        list-style-type: none;
+        display: block;
+        .li {
+          transition: all 200ms ease-in;
+          display: flex;
+          width: inherit;
+        }
+        .timestamp {
+          width: 100px;
+          .status {
+            &:before {
+              left: -8%;
+              top: 30%;
+              transition: all 200ms ease-in;
+            }
+          }
+        }
+      }
+    }
+  }
+  .complete {
+    .status {
+      border-left: 2px solid #48b4bd;
+      &:before {
+        background-color: #48b4bd;
+        border: none;
+        transition: all 200ms ease-in;
+      }
+    }
+  }
+}
+
 .terms-and-conditions {
   color: #c0cbf7;
   font-size: 12px;

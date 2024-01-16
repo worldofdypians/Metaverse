@@ -129,6 +129,24 @@ const MobileNav = () => {
             );
           }}
         />
+          <NavLink
+          to="/marketplace/nft-bridge"
+          end
+          className={({ isActive }) =>
+            isActive ? "active-mobile-link" : "mobile-link"
+          }
+          children={({ isActive }) => {
+            const icon = isActive ? "bridgeIconActive" : "bridgeIcon";
+            return (
+              <>
+                <img
+                  src={require(`../MarketSidebar/assets/${icon}.svg`)}
+                  alt=""
+                />
+              </>
+            );
+          }}
+        />
         {/* <div className="mobile-link" onClick={() => setOpenMint(!openMint)}>
           <img src={require(`../MarketSidebar/assets/mintIcon.svg`).default} alt="" />
         </div> */}

@@ -127,6 +127,16 @@ function Dashboard({
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
+
+  const [MyNFTSLandBNB, setMyNFTSLandBNB] = useState([]);
+  const [MyNFTSCawsBNB, setMyNFTSCawsBNB] = useState([]);
+
+  const [MyNFTSLandAvax, setMyNFTSLandAvax] = useState([]);
+  const [MyNFTSCawsAvax, setMyNFTSCawsAvax] = useState([]);
+
+  const [MyNFTSLandBase, setMyNFTSLandBase] = useState([]);
+  const [MyNFTSCawsBase, setMyNFTSCawsBase] = useState([]);
+
   const [MyNFTSCoingecko, setMyNFTSCoingecko] = useState([]);
   const [myGateNfts, setmyGateNfts] = useState([]);
   const [myConfluxNfts, setmyConfluxNfts] = useState([]);
@@ -1022,12 +1032,31 @@ function Dashboard({
       setMyNFTSCaws(NFTS)
     );
 
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
+      (NFTS) => setMyNFTSCawsBNB(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
+      (NFTS) => setMyNFTSCawsBase(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
+      (NFTS) => setMyNFTSCawsAvax(NFTS)
+    );
+
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "timepiece").then(
       (NFTS) => setMyNFTSTimepiece(NFTS)
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "land").then((NFTS) =>
       setMyNFTSLand(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
+      (NFTS) => setMyNFTSLandBNB(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
+      (NFTS) => setMyNFTSLandBase(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
+      (NFTS) => setMyNFTSLandAvax(NFTS)
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "coingecko").then(
       (NFTS) => setMyNFTSCoingecko(NFTS)
@@ -1587,7 +1616,7 @@ function Dashboard({
       .send({ from: await window.getCoinbase() })
       .then(() => {
         setloadspinnerSub(false);
-        setIsPremium(true)
+        setIsPremium(true);
         setapproveStatus("successsubscribe");
         setTimeout(() => {
           setloadspinnerSub(false);
@@ -2195,6 +2224,12 @@ function Dashboard({
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
                       latestVersion={latestVersion}
+                      MyNFTSLandBNB={MyNFTSLandBNB}
+                      MyNFTSCawsBNB={MyNFTSCawsBNB}
+                      MyNFTSLandAvax={MyNFTSLandAvax}
+                      MyNFTSCawsAvax={MyNFTSCawsAvax}
+                      MyNFTSLandBase={MyNFTSLandBase}
+                      MyNFTSCawsBase={MyNFTSCawsBase}
                     />
                     {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">

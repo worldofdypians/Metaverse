@@ -61,7 +61,7 @@ import halfCircleArrow from "./newAssets/halfCircleArrow.svg";
 import arrowCircle from "./newAssets/arrowCircle.svg";
 import epicblack from "./newAssets/epicblack.svg";
 import epicwhite from "./newAssets/epicwhite.svg";
-import multiplayer from '../../../../../assets/multiplayer.svg'
+import multiplayer from "../../../../../assets/multiplayer.svg";
 
 const WalletBalance = ({
   dypBalance,
@@ -99,7 +99,15 @@ const WalletBalance = ({
   myGateNfts,
   myConfluxNfts,
   myBaseNfts,
-  myDogeNfts,myCmcNfts,latestVersion
+  myDogeNfts,
+  myCmcNfts,
+  latestVersion,
+  MyNFTSLandBNB,
+  MyNFTSCawsBNB,
+  MyNFTSLandAvax,
+  MyNFTSCawsAvax,
+  MyNFTSLandBase,
+  MyNFTSCawsBase,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -439,6 +447,12 @@ const WalletBalance = ({
     let baseNftsArray = [];
     let dogeNftsArray = [];
     let cmcNftsArray = [];
+    let cawsBnbArray = [];
+    let cawsAvaxArray = [];
+    let cawsBaseArray = [];
+    let landAvaxArray = [];
+    let landBnbArray = [];
+    let landBaseArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -488,6 +502,102 @@ const WalletBalance = ({
               )
                 ? true
                 : false,
+            });
+          })
+        );
+      }
+
+      if (MyNFTSLandBNB && MyNFTSLandBNB.length > 0) {
+        await Promise.all(
+          MyNFTSLandBNB.map(async (i) => {
+            landBnbArray.push({
+              nftAddress: window.config.nft_land_bnb_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "landbnb",
+              chain: 56,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (MyNFTSLandAvax && MyNFTSLandAvax.length > 0) {
+        await Promise.all(
+          MyNFTSLandAvax.map(async (i) => {
+            landAvaxArray.push({
+              nftAddress: window.config.nft_land_avax_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "landavax",
+              chain: 43114,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (MyNFTSLandBase && MyNFTSLandBase.length > 0) {
+        await Promise.all(
+          MyNFTSLandBase.map(async (i) => {
+            landBaseArray.push({
+              nftAddress: window.config.nft_land_base_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "landbase",
+              chain: 8453,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (MyNFTSCawsBNB && MyNFTSCawsBNB.length > 0) {
+        await Promise.all(
+          MyNFTSCawsBNB.map(async (i) => {
+            cawsBnbArray.push({
+              nftAddress: window.config.nft_caws_bnb_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "cawsbnb",
+              chain: 56,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (MyNFTSCawsAvax && MyNFTSCawsAvax.length > 0) {
+        await Promise.all(
+          MyNFTSCawsAvax.map(async (i) => {
+            cawsAvaxArray.push({
+              nftAddress: window.config.nft_caws_avax_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "cawsavax",
+              chain: 43114,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (MyNFTSCawsBase && MyNFTSCawsBase.length > 0) {
+        await Promise.all(
+          MyNFTSCawsBase.map(async (i) => {
+            cawsBaseArray.push({
+              nftAddress: window.config.nft_caws_base_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "cawsbase",
+              chain: 8453,
+              isStaked: false,
+              isListed: false,
             });
           })
         );
@@ -743,6 +853,12 @@ const WalletBalance = ({
       setmyNftsOffer(recievedOffers);
 
       finalCollection = [
+        ...cawsAvaxArray,
+        ...cawsBnbArray,
+        ...cawsBaseArray,
+        ...landAvaxArray,
+        ...landBnbArray,
+        ...landBaseArray,
         ...coingeckoNftsArray,
         ...confluxNftsArray,
         ...gateNftsArray,
@@ -909,7 +1025,26 @@ const WalletBalance = ({
       let wodFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_land_address
       );
-      setcollectedItemsFiltered(wodFilter);
+
+      let wodFilterbnb = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_land_bnb_address
+      );
+
+      let wodFilteravax = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_land_avax_address
+      );
+
+      let wodFilterbase = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_wod_base_address
+      );
+
+      const allcawsArray = [
+        ...wodFilter,
+        ...wodFilterbnb,
+        ...wodFilteravax,
+        ...wodFilterbase,
+      ];
+      setcollectedItemsFiltered(allcawsArray);
     } else if (filter1 === "betapass" && filter2 === "all") {
       let coingeckoFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_coingecko_address
@@ -947,7 +1082,27 @@ const WalletBalance = ({
       let cawsFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_caws_address
       );
-      setcollectedItemsFiltered(cawsFilter);
+
+      let cawsFilterbnb = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_caws_bnb_address
+      );
+
+      let cawsFilteravax = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_caws_avax_address
+      );
+
+      let cawsFilterbase = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_caws_base_address
+      );
+
+      const allcawsArray = [
+        ...cawsFilter,
+        ...cawsFilterbnb,
+        ...cawsFilteravax,
+        ...cawsFilterbase,
+      ];
+
+      setcollectedItemsFiltered(allcawsArray);
     } else if (filter1 === "all" && filter2 === "to list") {
       let nftFilter = collectedItems.filter(
         (item) => item.isListed === false && item.isStaked === false
@@ -1451,26 +1606,39 @@ const WalletBalance = ({
                     </span>
                   </div>
                   <div className="d-flex gap-2 align-items-center">
-                  <div className="opacitywrapper4">
-                    <a
-                      className="game-event-download text-white d-flex align-items-center gap-2"
-                      href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                      target="_blank"
-                    >
-                      <img src={epicwhite} alt="icon"  style={{width: 20, height:24}} />
-                      Download
-                    </a>
-                  </div>
-                  <div className="opacitywrapper4" onClick={()=>{setmultiplayerModal(true)}}>
-                    <div
-                      className="game-event-download text-white d-flex align-items-center gap-2"
-                      // href="https://drive.google.com/drive/folders/1nS4HB9K9KZcJZWjS_AXV18At5gC0N96Z?usp=sharing"
-                      target="_blank"
-                    >
-                      <img src={multiplayer} alt="icon" style={{width: 16, height:16}}/>
-                      Multiplayer
+                    <div className="opacitywrapper4">
+                      <a
+                        className="game-event-download text-white d-flex align-items-center gap-2"
+                        href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                        target="_blank"
+                      >
+                        <img
+                          src={epicwhite}
+                          alt="icon"
+                          style={{ width: 20, height: 24 }}
+                        />
+                        Download
+                      </a>
                     </div>
-                  </div>
+                    <div
+                      className="opacitywrapper4"
+                      onClick={() => {
+                        setmultiplayerModal(true);
+                      }}
+                    >
+                      <div
+                        className="game-event-download text-white d-flex align-items-center gap-2"
+                        // href="https://drive.google.com/drive/folders/1nS4HB9K9KZcJZWjS_AXV18At5gC0N96Z?usp=sharing"
+                        target="_blank"
+                      >
+                        <img
+                          src={multiplayer}
+                          alt="icon"
+                          style={{ width: 16, height: 16 }}
+                        />
+                        Multiplayer
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="d-flex flex-column">
@@ -1655,10 +1823,22 @@ const WalletBalance = ({
                                 item.nftAddress ===
                                   window.config.nft_cawsold_address ||
                                 item.nftAddress ===
-                                  window.config.nft_caws_address
+                                  window.config.nft_caws_address ||
+                                item.nftAddress ===
+                                  window.config.nft_caws_bnb_address ||
+                                item.nftAddress ===
+                                  window.config.nft_caws_base_address ||
+                                item.nftAddress ===
+                                  window.config.nft_caws_avax_address
                                   ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                   : item.nftAddress ===
-                                    window.config.nft_land_address
+                                      window.config.nft_land_address ||
+                                    item.nftAddress ===
+                                      window.config.nft_land_bnb_address ||
+                                    item.nftAddress ===
+                                      window.config.nft_land_base_address ||
+                                    item.nftAddress ===
+                                      window.config.nft_land_avax_address
                                   ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
@@ -1670,10 +1850,22 @@ const WalletBalance = ({
                                 {item.nftAddress ===
                                   window.config.nft_cawsold_address ||
                                 item.nftAddress ===
-                                  window.config.nft_caws_address
+                                  window.config.nft_caws_address ||
+                                item.nftAddress ===
+                                  window.config.nft_caws_bnb_address ||
+                                item.nftAddress ===
+                                  window.config.nft_caws_base_address ||
+                                item.nftAddress ===
+                                  window.config.nft_caws_avax_address
                                   ? "CAWS"
                                   : item.nftAddress ===
-                                    window.config.nft_land_address
+                                      window.config.nft_land_address ||
+                                    item.nftAddress ===
+                                      window.config.nft_land_bnb_address ||
+                                    item.nftAddress ===
+                                      window.config.nft_land_base_address ||
+                                    item.nftAddress ===
+                                      window.config.nft_land_avax_address
                                   ? "Genesis Land"
                                   : "CAWS Timepiece"}{" "}
                                 #{item.tokenId}
@@ -1837,10 +2029,23 @@ const WalletBalance = ({
                         state={{
                           nft: item,
                           type:
-                            item.nftAddress === window.config.nft_caws_address
+                            item.nftAddress ===
+                              window.config.nft_caws_address ||
+                            item.nftAddress ===
+                              window.config.nft_caws_bnb_address ||
+                            item.nftAddress ===
+                              window.config.nft_caws_base_address ||
+                            item.nftAddress ===
+                              window.config.nft_caws_avax_address
                               ? "caws"
                               : item.nftAddress ===
-                                window.config.nft_land_address
+                                  window.config.nft_land_address ||
+                                item.nftAddress ===
+                                  window.config.nft_land_bnb_address ||
+                                item.nftAddress ===
+                                  window.config.nft_land_base_address ||
+                                item.nftAddress ===
+                                  window.config.nft_land_avax_address
                               ? "land"
                               : "timepiece",
                           isOwner:
@@ -1860,9 +2065,15 @@ const WalletBalance = ({
                           <div className="account-nft-card w-100 d-flex align-items-center gap-3">
                             <img
                               src={
-                                item.type === "caws"
+                                item.type === "caws" ||
+                                item.type === "cawsbnb" ||
+                                item.type === "cawsavax" ||
+                                item.type === "cawsbase"
                                   ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
-                                  : item.type === "land"
+                                  : item.type === "land" ||
+                                    item.type === "landbnb" ||
+                                    item.type === "landavax" ||
+                                    item.type === "landbase"
                                   ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
                                   : item.type === "coingecko"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
@@ -1883,9 +2094,15 @@ const WalletBalance = ({
                             />
                             <div className="d-flex flex-column align-items-center justify-content-center">
                               <h6 className="account-nft-title">
-                                {item.type === "caws"
+                                {item.type === "caws" ||
+                                item.type === "cawsbnb" ||
+                                item.type === "cawsavax" ||
+                                item.type === "cawsbase"
                                   ? "CAWS"
-                                  : item.type === "land"
+                                  : item.type === "land" ||
+                                    item.type === "landbnb" ||
+                                    item.type === "landavax" ||
+                                    item.type === "landbase"
                                   ? "Genesis"
                                   : item.type === "coingecko"
                                   ? "CGBP"
@@ -2810,10 +3027,23 @@ const WalletBalance = ({
                           state={{
                             nft: nft,
                             type:
-                              nft.nftAddress === window.config.nft_caws_address
+                              nft.nftAddress ===
+                                window.config.nft_caws_address ||
+                              nft.nftAddress ===
+                                window.config.nft_caws_bnb_address ||
+                              nft.nftAddress ===
+                                window.config.nft_caws_base_address ||
+                              nft.nftAddress ===
+                                window.config.nft_caws_avax_address
                                 ? "caws"
                                 : nft.nftAddress ===
-                                  window.config.nft_land_address
+                                    window.config.nft_land_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_land_bnb_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_land_base_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_land_avax_address
                                 ? "land"
                                 : nft.nftAddress ===
                                   window.config.nft_gate_address
@@ -2864,10 +3094,22 @@ const WalletBalance = ({
                               <img
                                 src={
                                   nft.nftAddress ===
-                                  window.config.nft_caws_address
+                                    window.config.nft_caws_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_caws_bnb_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_caws_base_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_caws_avax_address
                                     ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
-                                      window.config.nft_land_address
+                                        window.config.nft_land_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_land_bnb_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_land_base_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_land_avax_address
                                     ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
                                       window.config.nft_gate_address
@@ -2895,10 +3137,22 @@ const WalletBalance = ({
                               <div className="d-flex flex-column align-items-center justify-content-center">
                                 <h6 className="account-nft-title">
                                   {nft.nftAddress ===
-                                  window.config.nft_caws_address
+                                    window.config.nft_caws_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_caws_bnb_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_caws_base_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_caws_avax_address
                                     ? "CAWS"
                                     : nft.nftAddress ===
-                                      window.config.nft_land_address
+                                        window.config.nft_land_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_land_bnb_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_land_base_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_land_avax_address
                                     ? "Genesis Land"
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
@@ -2916,8 +3170,8 @@ const WalletBalance = ({
                                       window.config.nft_doge_address
                                     ? "DCBP"
                                     : nft.nftAddress ===
-                                    window.config.nft_cmc_address
-                                  ? "CMCBP"
+                                      window.config.nft_cmc_address
+                                    ? "CMCBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -3035,11 +3289,24 @@ const WalletBalance = ({
                           state={{
                             nft: nft,
                             type:
-                              nft.type ??
-                              nft.nftAddress === window.config.nft_caws_address
+                              nft?.type !== undefined &&
+                              (nft.nftAddress ===
+                                window.config.nft_caws_address ||
+                                nft.nftAddress ===
+                                  window.config.nft_caws_bnb_address ||
+                                nft.nftAddress ===
+                                  window.config.nft_caws_base_address ||
+                                nft.nftAddress ===
+                                  window.config.nft_caws_avax_address)
                                 ? "caws"
                                 : nft.nftAddress ===
-                                  window.config.nft_land_address
+                                    window.config.nft_land_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_land_bnb_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_land_base_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_land_avax_address
                                 ? "land"
                                 : nft.nftAddress ===
                                   window.config.nft_gate_address
@@ -3054,8 +3321,8 @@ const WalletBalance = ({
                                   window.config.nft_doge_address
                                 ? "doge"
                                 : nft.nftAddress ===
-                                window.config.nft_cmc_address
-                              ? "cmc"
+                                  window.config.nft_cmc_address
+                                ? "cmc"
                                 : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
@@ -3092,10 +3359,22 @@ const WalletBalance = ({
                                   nft.nftAddress ===
                                     window.config.nft_cawsold_address ||
                                   nft.nftAddress ===
-                                    window.config.nft_caws_address
+                                    window.config.nft_caws_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_caws_bnb_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_caws_base_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_caws_avax_address
                                     ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
-                                      window.config.nft_land_address
+                                        window.config.nft_land_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_land_bnb_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_land_base_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_land_avax_address
                                     ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
                                       window.config.nft_gate_address
@@ -3125,10 +3404,22 @@ const WalletBalance = ({
                                   {nft.nftAddress ===
                                     window.config.nft_cawsold_address ||
                                   nft.nftAddress ===
-                                    window.config.nft_caws_address
+                                    window.config.nft_caws_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_caws_bnb_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_caws_base_address ||
+                                  nft.nftAddress ===
+                                    window.config.nft_caws_avax_address
                                     ? "CAWS"
                                     : nft.nftAddress ===
-                                      window.config.nft_land_address
+                                        window.config.nft_land_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_land_bnb_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_land_base_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_land_avax_address
                                     ? "Genesis Land"
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
@@ -3146,8 +3437,8 @@ const WalletBalance = ({
                                       window.config.nft_doge_address
                                     ? "DCBP"
                                     : nft.nftAddress ===
-                                    window.config.nft_cmc_address
-                                  ? "CMCBP"
+                                      window.config.nft_cmc_address
+                                    ? "CMCBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -3552,79 +3843,84 @@ const WalletBalance = ({
           </OutsideClickHandler>
         )}
 
-{multiplayerModal === true && (
-        <OutsideClickHandler onOutsideClick={() => setmultiplayerModal(false)}>
-          <div className="system-requirements-modal p-3" id="reqmodal">
-            <div className="d-flex align-items-start justify-content-between mb-3">
-              <div className="d-flex flex-column gap-2">
-                <h6 className="sys-req-title">World of Dypians Multiplayer</h6>
+        {multiplayerModal === true && (
+          <OutsideClickHandler
+            onOutsideClick={() => setmultiplayerModal(false)}
+          >
+            <div className="system-requirements-modal p-3" id="reqmodal">
+              <div className="d-flex align-items-start justify-content-between mb-3">
+                <div className="d-flex flex-column gap-2">
+                  <h6 className="sys-req-title">
+                    World of Dypians Multiplayer
+                  </h6>
+                </div>
+                <img
+                  src={require("./assets/closeMark.svg").default}
+                  alt="x mark"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setmultiplayerModal(false)}
+                />
               </div>
-              <img
-                src={require("./assets/closeMark.svg").default}
-                alt="x mark"
-                style={{ cursor: "pointer" }}
-                onClick={() => setmultiplayerModal(false)}
-              />
-            </div>
 
-            <div className="overall-requirements">
-              <h6 className="requirements-title">Closed Demo</h6>
-              <p className="requirements-content">
-                The World of Dypians Multiplayer you are about to experience is
-                a closed demo specifically designed for testing purposes. This
-                means that you are stepping into an environment that is still
-                under development and not the final version of the game.
-              </p>
-              <h6 className="requirements-title">Basic Functionalities</h6>
-              <p className="requirements-content">
-                While the closed demo offers a glimpse into the vast potential
-                of the World of Dypians Multiplayer, please be aware that some
-                features and functionalities may be limited or subject to
-                changes. The game is a work in progress, and your feedback will
-                play a crucial role in shaping its final form.
-              </p>
+              <div className="overall-requirements">
+                <h6 className="requirements-title">Closed Demo</h6>
+                <p className="requirements-content">
+                  The World of Dypians Multiplayer you are about to experience
+                  is a closed demo specifically designed for testing purposes.
+                  This means that you are stepping into an environment that is
+                  still under development and not the final version of the game.
+                </p>
+                <h6 className="requirements-title">Basic Functionalities</h6>
+                <p className="requirements-content">
+                  While the closed demo offers a glimpse into the vast potential
+                  of the World of Dypians Multiplayer, please be aware that some
+                  features and functionalities may be limited or subject to
+                  changes. The game is a work in progress, and your feedback
+                  will play a crucial role in shaping its final form.
+                </p>
 
-              <h6 className="requirements-title">Text and Voice Chat</h6>
-              <p className="requirements-content">
-                Communication is key in the World of Dypians Multiplayer, and
-                during this closed demo, you can interact with fellow players
-                through both text and voice chat functionalities.
-              </p>
+                <h6 className="requirements-title">Text and Voice Chat</h6>
+                <p className="requirements-content">
+                  Communication is key in the World of Dypians Multiplayer, and
+                  during this closed demo, you can interact with fellow players
+                  through both text and voice chat functionalities.
+                </p>
 
-              <h6 className="requirements-title">
-                Reporting Bugs and Feedback
-              </h6>
-              <p className="requirements-content">
-                As you explore the world and encounter various elements, please
-                keep an eye out for any bugs or issues. If you come across
-                something unexpected or have suggestions for improvement, don't
-                hesitate to provide feedback. Your input is immensely valuable
-                in ensuring a smooth gaming experience for all.
-              </p>
-            </div>
-            <div className="d-flex align-items-center justify-content-center py-3">
-              <a
-                href="https://drive.google.com/drive/folders/1nS4HB9K9KZcJZWjS_AXV18At5gC0N96Z?usp=sharing"
-                target={"_blank"}
-                rel="noreferrer"
-                onClick={() => {
-                  setmultiplayerModal(false);
-                }}
-              >
-                <div
-                  className="linear-border"
-                  style={{
-                    width: "fit-content",
-                    margin: "auto",
+                <h6 className="requirements-title">
+                  Reporting Bugs and Feedback
+                </h6>
+                <p className="requirements-content">
+                  As you explore the world and encounter various elements,
+                  please keep an eye out for any bugs or issues. If you come
+                  across something unexpected or have suggestions for
+                  improvement, don't hesitate to provide feedback. Your input is
+                  immensely valuable in ensuring a smooth gaming experience for
+                  all.
+                </p>
+              </div>
+              <div className="d-flex align-items-center justify-content-center py-3">
+                <a
+                  href="https://drive.google.com/drive/folders/1nS4HB9K9KZcJZWjS_AXV18At5gC0N96Z?usp=sharing"
+                  target={"_blank"}
+                  rel="noreferrer"
+                  onClick={() => {
+                    setmultiplayerModal(false);
                   }}
                 >
-                  <button className="btn filled-btn px-5">Download</button>
-                </div>
-              </a>
+                  <div
+                    className="linear-border"
+                    style={{
+                      width: "fit-content",
+                      margin: "auto",
+                    }}
+                  >
+                    <button className="btn filled-btn px-5">Download</button>
+                  </div>
+                </a>
+              </div>
             </div>
-          </div>
-        </OutsideClickHandler>
-      )}
+          </OutsideClickHandler>
+        )}
       </div>
     </>
   );
