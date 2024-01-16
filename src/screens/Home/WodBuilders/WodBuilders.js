@@ -75,7 +75,6 @@ const WodBuilders = () => {
 
   useEffect(() => {
     windowSize.width < 786 ? setSlice(2) : setSlice(8);
-    console.log(slice);
   }, [windowSize.width]);
 
   return (

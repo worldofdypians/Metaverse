@@ -261,11 +261,26 @@ const Marketplace = ({
       window.GATE_NFT_ABI,
       window.config.nft_gate_address
     );
+
+    const dogeContract = new window.bscWeb3.eth.Contract(
+      window.DOGE_NFT_ABI,
+      window.config.nft_doge_address
+    );
+
+    const cmcContract = new window.bscWeb3.eth.Contract(
+      window.CMC_NFT_ABI,
+      window.config.nft_cmc_address
+    );
+
     const confluxresult = await confluxContract.methods.totalSupply().call();
     const gateresult = await gateContract.methods.totalSupply().call();
+    const dogeresult = await dogeContract.methods.totalSupply().call();
+    const cmcresult = await cmcContract.methods.totalSupply().call();
+
+
     //20000 = 10000 caws + 1000 genesis + 9000 coingecko
     setTotalSupply(
-      parseInt(result) + parseInt(result_base) + parseInt(confluxresult) + parseInt(gateresult) + 20000
+      parseInt(result) + parseInt(result_base) + parseInt(confluxresult) + parseInt(gateresult) + parseInt(dogeresult) + parseInt(cmcresult) + 20000
     );
   };
 

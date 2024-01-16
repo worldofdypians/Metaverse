@@ -57,7 +57,6 @@ function Dashboard({
   landStaked,
   ethTokenData,
   dypTokenData,
-  dypTokenData_old,
   onSigninClick,
   onLogoutClick,
   availableTime,
@@ -65,6 +64,7 @@ function Dashboard({
   handleSwitchNetwork,
   domainName,
   handleOpenDomains,
+  dogePrice,
 }) {
   const { email, logout } = useAuth();
 
@@ -142,6 +142,34 @@ function Dashboard({
   const [myConfluxNfts, setmyConfluxNfts] = useState([]);
   const [myBaseNfts, setmyBaseNfts] = useState([]);
   const [myDogeNfts, setmyDogeNfts] = useState([]);
+  const [myCmcNfts, setmyCmcNfts] = useState([]);
+  const [latestVersion, setLatestVersion] = useState(0);
+
+  const [userPoints, setuserPoints] = useState(0);
+  const [userEarnUsd, setuserEarnUsd] = useState(0);
+  const [userEarnETH, setuserEarnETH] = useState(0);
+
+  const [cmcuserPoints, setcmcuserPoints] = useState(0);
+  const [cmcuserEarnUsd, setcmcuserEarnUsd] = useState(0);
+  const [cmcuserEarnETH, setcmcuserEarnETH] = useState(0);
+
+  const [confluxUserPoints, setConfluxUserPoints] = useState(0);
+  const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
+  const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
+
+  const [gateEarnUSD, setGateEarnUSD] = useState(0);
+  const [gateUserPoints, setGateUserPoints] = useState(0);
+  const [gateEarnBnb, setGateEarnBNB] = useState(0);
+
+  const [dogeUserPoints, setDogeUserPoints] = useState(0);
+  const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
+  const [dogeEarnBNB, setDogeEarnBNB] = useState(0);
+
+  const [baseUserPoints, setBaseUserPoints] = useState(0);
+  const [baseEarnUSD, setBaseEarnUSD] = useState(0);
+  const [baseEarnETH, setBaseEarnETH] = useState(0);
+  const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
+  const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
 
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
@@ -192,6 +220,7 @@ function Dashboard({
   const [claimedPremiumChests, setclaimedPremiumChests] = useState(0);
   const [dailyplayerData, setdailyplayerData] = useState(0);
   const [weeklyplayerData, setweeklyplayerData] = useState(0);
+  const [userSocialRewards, setuserSocialRewards] = useState(0);
 
   const [canBuy, setCanBuy] = useState(false);
 
@@ -345,6 +374,20 @@ function Dashboard({
     }
     return array;
   }
+
+  const fetchReleases = async () => {
+    const newReleases = await axios
+      .get("https://api3.dyp.finance/api/wod_releases")
+      .then((res) => {
+        return res.data;
+      });
+
+    const datedReleasedNews = newReleases.map((item) => {
+      return { ...item, date: new Date(item.date) };
+    });
+
+    setLatestVersion(datedReleasedNews[0]?.version);
+  };
 
   //land only stakes
   const getStakesIdsWod = async () => {
@@ -669,6 +712,146 @@ function Dashboard({
     }
   };
 
+  const fetchTreasureHuntData = async (email, userAddress) => {
+    try {
+      // console.log(email, window.infuraWeb3.utils.toChecksumAddress(userAddress))
+      const response = await fetch(
+        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+        {
+          body: JSON.stringify({
+            email: email,
+            publicAddress: userAddress,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          redirect: "follow",
+          mode: "cors",
+        }
+      );
+      if (response.status === 200) {
+        const responseData = await response.json();
+        if (responseData.events) {
+          const coingeckoEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "coingecko";
+          });
+          const confluxEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "conflux";
+          });
+          const gateEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "gate";
+          });
+
+          const baseEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "base";
+          });
+          const dypEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "all";
+          });
+
+          const dogeEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "dogecoin";
+          });
+
+          const cmcEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "coinmarketcap";
+          });
+
+          if (dypEvent && dypEvent[0]) {
+            const userEarnedDyp =
+              dypEvent[0].reward.earn.total /
+              dypEvent[0].reward.earn.multiplier;
+            setDypiusEarnUsd(dypTokenData * userEarnedDyp);
+            setDypiusEarnTokens(userEarnedDyp);
+          }
+          if (coingeckoEvent && coingeckoEvent[0]) {
+            const points = coingeckoEvent[0].reward.earn.totalPoints;
+            setuserPoints(points);
+            const usdValue =
+              coingeckoEvent[0].reward.earn.total /
+              coingeckoEvent[0].reward.earn.multiplier;
+            setuserEarnUsd(usdValue);
+            if (bnbPrice !== 0) {
+              setuserEarnETH(usdValue / bnbPrice);
+            }
+          }
+
+          if (cmcEvent && cmcEvent[0]) {
+            const points = cmcEvent[0].reward.earn.totalPoints;
+            setcmcuserPoints(points);
+            const usdValue =
+              cmcEvent[0].reward.earn.total /
+              cmcEvent[0].reward.earn.multiplier;
+            setcmcuserEarnUsd(usdValue);
+            if (bnbPrice !== 0) {
+              setcmcuserEarnETH(usdValue / bnbPrice);
+            }
+          }
+
+          if (dogeEvent && dogeEvent[0]) {
+            const points = dogeEvent[0].reward.earn.totalPoints;
+            setDogeUserPoints(points);
+            const usdValue =
+              dogeEvent[0].reward.earn.total /
+              dogeEvent[0].reward.earn.multiplier;
+            setDogeEarnUSD(usdValue);
+            if (dogePrice !== 0) {
+              setDogeEarnBNB(usdValue / dogePrice);
+            }
+          }
+
+          if (confluxEvent && confluxEvent[0]) {
+            const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
+            setConfluxUserPoints(cfxPoints);
+
+            if (confluxEvent[0].reward.earn.multiplier !== 0) {
+              const cfxUsdValue =
+                confluxEvent[0].reward.earn.total /
+                confluxEvent[0].reward.earn.multiplier;
+              setConfluxEarnUSD(cfxUsdValue);
+              if (cfxPrice !== 0) {
+                setConfluxEarnCFX(cfxUsdValue / cfxPrice);
+              }
+            }
+          }
+
+          if (gateEvent && gateEvent[0]) {
+            const gatePoints = gateEvent[0].reward.earn.totalPoints;
+            setGateUserPoints(gatePoints);
+            if (gateEvent[0].reward.earn.multiplier !== 0) {
+              const gateUsdValue =
+                gateEvent[0].reward.earn.total /
+                gateEvent[0].reward.earn.multiplier;
+              setGateEarnUSD(gateUsdValue);
+              if (bnbPrice !== 0) {
+                setGateEarnBNB(gateUsdValue / bnbPrice);
+              }
+            }
+          }
+
+          if (baseEvent && baseEvent[0]) {
+            const basePoints = baseEvent[0].reward.earn.totalPoints;
+            setBaseUserPoints(basePoints);
+            if (baseEvent[0].reward.earn.multiplier !== 0) {
+              const baseUsdValue =
+                baseEvent[0].reward.earn.total /
+                baseEvent[0].reward.earn.multiplier;
+              setBaseEarnUSD(baseUsdValue);
+              if (ethTokenData !== 0) {
+                setBaseEarnETH(baseUsdValue / ethTokenData);
+              }
+            }
+          }
+        }
+      } else {
+        console.log(`Request failed with status ${response.status}`);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
   const refreshSubscription = async (addr) => {
     let subscribedPlatformTokenAmountETH;
     let subscribedPlatformTokenAmountCfx;
@@ -850,16 +1033,13 @@ function Dashboard({
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
-      (NFTS) =>
-        setMyNFTSCawsBNB(NFTS)
+      (NFTS) => setMyNFTSCawsBNB(NFTS)
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
-      (NFTS) =>
-        setMyNFTSCawsBase(NFTS)
+      (NFTS) => setMyNFTSCawsBase(NFTS)
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
-      (NFTS) =>
-        setMyNFTSCawsAvax(NFTS)
+      (NFTS) => setMyNFTSCawsAvax(NFTS)
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "timepiece").then(
@@ -870,16 +1050,13 @@ function Dashboard({
       setMyNFTSLand(NFTS)
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
-      (NFTS) =>
-        setMyNFTSLandBNB(NFTS)
+      (NFTS) => setMyNFTSLandBNB(NFTS)
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
-      (NFTS) =>
-        setMyNFTSLandBase(NFTS)
+      (NFTS) => setMyNFTSLandBase(NFTS)
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
-      (NFTS) =>
-        setMyNFTSLandAvax(NFTS)
+      (NFTS) => setMyNFTSLandAvax(NFTS)
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "coingecko").then(
       (NFTS) => setMyNFTSCoingecko(NFTS)
@@ -896,6 +1073,9 @@ function Dashboard({
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "doge").then((NFTS) =>
       setmyDogeNfts(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cmc").then((NFTS) =>
+      setmyCmcNfts(NFTS)
     );
   };
 
@@ -1086,6 +1266,28 @@ function Dashboard({
         }
       });
     return finalboughtItems;
+  };
+
+  const getUserRewardData = async (addr) => {
+    const result = await axios
+      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      if (result.data && result.data.rewards && result.data.rewards === 0) {
+        setuserSocialRewards(0);
+        localStorage.setItem("cacheduserSocialRewards", 0);
+      } else if (result.data && !result.data.rewards) {
+        let amount = 0;
+        for (let i = 0; i < result.data.length; i++) {
+          amount += result.data[i].amount;
+        }
+        localStorage.setItem("cacheduserSocialRewards", amount);
+        setuserSocialRewards(amount);
+      }
+    }
   };
 
   const getMyOffers = async () => {
@@ -1414,6 +1616,7 @@ function Dashboard({
       .send({ from: await window.getCoinbase() })
       .then(() => {
         setloadspinnerSub(false);
+        setIsPremium(true);
         setapproveStatus("successsubscribe");
         setTimeout(() => {
           setloadspinnerSub(false);
@@ -1515,7 +1718,7 @@ function Dashboard({
       await handleSwitchNetworkhook("0x2105")
         .then(() => {
           handleSwitchNetwork(8453);
-          setChainDropdown(chainDropdowns[3]);
+          setChainDropdown(chainDropdowns[4]);
         })
         .catch((e) => {
           console.log(e);
@@ -1529,7 +1732,7 @@ function Dashboard({
         await handleSwitchNetworkhook("0x406")
           .then(() => {
             handleSwitchNetwork(1030);
-            setChainDropdown(chainDropdowns[4]);
+            setChainDropdown(chainDropdowns[3]);
           })
           .catch((e) => {
             console.log(e);
@@ -1542,6 +1745,7 @@ function Dashboard({
 
   useEffect(() => {
     setDummyPremiumChests(shuffle(dummyPremiums));
+    fetchReleases();
   }, []);
 
   useEffect(() => {
@@ -1580,7 +1784,7 @@ function Dashboard({
       handleSubscriptionTokenChange(wbnbAddress);
       handleCheckIfAlreadyApproved(wbnbAddress);
     } else if (chainId === 1030) {
-      setChainDropdown(chainDropdowns[4]);
+      setChainDropdown(chainDropdowns[3]);
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
@@ -1589,7 +1793,7 @@ function Dashboard({
       handleSubscriptionTokenChange(wcfx);
       handleCheckIfAlreadyApproved(wcfx);
     } else if (chainId === 8453) {
-      setChainDropdown(chainDropdowns[3]);
+      setChainDropdown(chainDropdowns[4]);
       setdropdownIcon("weth");
       setdropdownTitle("WETH");
       setselectedSubscriptionToken(
@@ -1660,13 +1864,13 @@ function Dashboard({
     if (
       data &&
       data.getPlayer &&
-      data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress &&
       email
     ) {
-      refreshSubscription(data.getPlayer.wallet.publicAddress, email);
+      fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
+      refreshSubscription(data.getPlayer.wallet.publicAddress);
+      setuserWallet(data.getPlayer.wallet.publicAddress);
     }
   }, [data, email]);
 
@@ -1710,9 +1914,22 @@ function Dashboard({
       email
     ) {
       getOpenedChestPerWallet();
-      setuserWallet(data.getPlayer.wallet.publicAddress);
     }
   }, [data, email, count, isPremium, claimedChests, claimedPremiumChests]);
+
+  useEffect(() => {
+    if (
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+      email
+    ) {
+      getUserRewardData(data.getPlayer.wallet.publicAddress);
+    }
+  }, [data, email]);
 
   useEffect(() => {
     if (coinbase) {
@@ -1886,6 +2103,7 @@ function Dashboard({
                         onDailyRewardsPopupOpen={() => {
                           setdailyBonusPopup(true);
                         }}
+                        dogePrice={dogePrice}
                         weeklyplayerData={weeklyplayerData}
                         dailyplayerData={dailyplayerData}
                         userRank2={userRank2}
@@ -1943,13 +2161,27 @@ function Dashboard({
                         onDailyBonusInfoClick={() => {
                           setdailyBonusInfo(true);
                         }}
-                        // hasNft={
-                        //   MyNFTSCaws.length +
-                        //     MyNFTSLand.length   >
-                        //   0
-                        //     ? true
-                        //     : false
-                        // }
+                        userSocialRewards={userSocialRewards}
+                        userEarnUsd={userEarnUsd}
+                        userEarnETH={userEarnETH}
+                        userPoints={userPoints}
+                        cmcuserPoints={cmcuserPoints}
+                        cmcuserEarnETH={cmcuserEarnETH}
+                        cmcuserEarnUsd={cmcuserEarnUsd}
+                        confluxUserPoints={confluxUserPoints}
+                        confluxEarnUSD={confluxEarnUSD}
+                        confluxEarnCFX={confluxEarnCFX}
+                        gateEarnUSD={gateEarnUSD}
+                        gateUserPoints={gateUserPoints}
+                        gateEarnBnb={gateEarnBnb}
+                        dogeEarnUSD={dogeEarnUSD}
+                        dogeEarnBNB={dogeEarnBNB}
+                        dogeUserPoints={dogeUserPoints}
+                        baseEarnUSD={baseEarnUSD}
+                        baseUserPoints={baseUserPoints}
+                        baseEarnETH={baseEarnETH}
+                        dypiusEarnUsd={dypiusEarnUsd}
+                        dypiusEarnTokens={dypiusEarnTokens}
                       />
                     </div>
                     <WalletBalance
@@ -1987,9 +2219,11 @@ function Dashboard({
                       myConfluxNfts={myConfluxNfts}
                       myBaseNfts={myBaseNfts}
                       myDogeNfts={myDogeNfts}
+                      myCmcNfts={myCmcNfts}
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
+                      latestVersion={latestVersion}
                       MyNFTSLandBNB={MyNFTSLandBNB}
                       MyNFTSCawsBNB={MyNFTSCawsBNB}
                       MyNFTSLandAvax={MyNFTSLandAvax}
@@ -2191,13 +2425,17 @@ function Dashboard({
                             openedChests={openedChests}
                             allChests={allChests}
                             availableTime={goldenPassRemainingTime}
-                            // hasNft={
-                            //   MyNFTSCaws.length +
-                            //     MyNFTSLand.length  >
-                            //   0
-                            //     ? true
-                            //     : false
-                            // }
+                            userSocialRewards={userSocialRewards}
+                            dogePrice={dogePrice}
+                            userEarnUsd={userEarnUsd}
+                            userEarnETH={userEarnETH}
+                            cmcuserEarnETH={cmcuserEarnETH}
+                            cmcuserEarnUsd={cmcuserEarnUsd}
+                            dogeEarnUSD={dogeEarnUSD}
+                            dogeEarnBNB={dogeEarnBNB}
+                            baseEarnUSD={baseEarnUSD}
+                            baseEarnETH={baseEarnETH}
+                            dypiusEarnUsd={dypiusEarnUsd}
                           />
                         </div>
                       </OutsideClickHandler>

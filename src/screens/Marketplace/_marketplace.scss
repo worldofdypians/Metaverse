@@ -2509,7 +2509,7 @@
 .gate-btn:hover,
 .base-btn:hover,
 .doge-button:hover,
-// .cmc-btn:hover,
+.cmc-btn:hover,
 .accountbtn-coingecko:hover {
   text-decoration: underline;
   color: #fff !important;
@@ -2603,6 +2603,17 @@
 .base-eventwrapper {
   border-radius: 20px;
   background: linear-gradient(to bottom, #181636 15.48%, #0057ff 254.86%);
+}
+
+
+.cmc-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #201d52 15.48%, #0057ff 254.86%);
+}
+
+.doge-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #1c1a39 15.48%, #ffc800 254.86%);
 }
 
 .coingecko-eventh6 {

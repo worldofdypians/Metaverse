@@ -11,6 +11,7 @@ import leaderboardBanner from "./assets/leaderboardBanner.png";
 import whitelistBanner from "./assets/whitelistBanner.webp";
 import cawsIntegration from "./assets/cawsIntegration.png";
 import gameEvents from "./assets/gameEvents.png";
+import multiplayerBanner from "./assets/multiplayerBanner.png";
 import landMinting from "./assets/landMinting.png";
 import nextArrow from "./assets/nextArrow.svg";
 import Slider from "react-slick";
@@ -246,22 +247,28 @@ const Roadmap = () => {
           desc: "Developing Beta Pass NFT collections for World of Dypians partners, offering associated benefits within the game.",
           completed: true,
         },
-        {
-          title: "Addition and development of partnerships",
-          desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more",
-          completed: true,
-        },
+   
         {
           title: "Multiplayer PVE",
           desc: "Adventure with other players to complete quests, fight bosses, survive against waves of enemies, earn rewards and much more.",
+          completed: true,
+
         },
         {
           title: "Multiplayer PVP",
           desc: "Engage in huge battle events against other players in real-time. Players can compete and interact against each other in 1v1 or group battle to complete objectives.",
+          completed: true,
+          
         },
         {
           title: "In-game chat",
           desc: "Users can communicate via voice and chat texts in multiple channels.",
+          completed: true,
+        },
+        {
+          title: "Addition and development of partnerships",
+          desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more",
+          completed: true,
         },
         // {
         //   title: "P2P trade",
@@ -309,6 +316,11 @@ const Roadmap = () => {
   ];
 
   const mainUpdate = [
+    {
+      title: "Multiplayer PVP/PVE",
+      date: "Dec 2023",
+      image: multiplayerBanner,
+    },
     {
       title: "Addition and development of Parnerships",
       date: "Dec 2023",

@@ -39,7 +39,7 @@ const ForgotPassword = () => {
 
   if (isEmailSentSucces) {
     return (
-      <LoginWrapper>
+      <LoginWrapper style={{ marginTop: "5rem", marginBottom: '4rem' }}>
         <LoginCard>
           <div className={classes.container}>
             <h1 className={classes.succesfulMessageTitle}>
@@ -47,7 +47,7 @@ const ForgotPassword = () => {
             </h1>
             <h1
               onClick={() => {
-                history("/");
+                history("/auth");
               }}
               className={classes.succesfulBack}
             >
@@ -94,7 +94,7 @@ const ForgotPassword = () => {
           />
           <h1
             onClick={() => {
-              history("/");
+              history("/auth");
             }}
             className={classes.succesfulBack}
           >

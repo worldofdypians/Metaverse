@@ -3,6 +3,10 @@ import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import gate from "./assets/gate.svg";
 import baseLogo from "./assets/baseLogo.svg";
+import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
+import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
+
+
 import dypius from "./assets/dypIcon.svg";
 import cyanArrow from "./assets/cyanArrow.svg";
 import conflux from "./assets/conflux.svg";
@@ -61,11 +65,16 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
                 ? baseLogo
                 : event.title === "Dypius"
                 ? dypius
+                : event.title === "Dogecoin"
+                ? doge
+                : event.title === "CoinMarketCap"
+                ? cmc
                 : gate
             }
             height={16}
             width={16}
             alt=""
+            className="profilebannerimg"
           />
           <div className="d-flex flex-column">
             <h6 className="profile-event-title d-flex align-items-center gap-1 mb-0">
@@ -105,7 +114,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
           />
           <span className="mb-0 event-bottom-text">{event.eventType}</span>
         </div>
-        <div className="d-flex align-items-center gap-1">
+        <div className="d-flex align-items-center gap-1 eventusd">
           {event.title === "Dypius" ? (
             <img src={dypius} height={15} width={15} alt="" />
           ) : (

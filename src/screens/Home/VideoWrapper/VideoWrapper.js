@@ -1,29 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./_videowrapper.scss";
-import sysReq from "../../../assets/sysReq.svg";
 import xMark from "../../../assets/navbarAssets/xMark.svg";
 import OutsideClickHandler from "react-outside-click-handler";
-import downloadIcon from "../../../assets/downloadIcon.svg";
-import downloadIconWhite from "../../../assets/downloadIconWhite.svg";
-import windowsIcon from "../../../assets/windowsIcon.svg";
-import windowsIconWhite from "../../../assets/windowsIconWhite.svg";
 import { NavLink } from "react-router-dom";
 import epicwhite from "../../../assets/epicwhite.svg";
 import epicblack from "../../../assets/epicblack.svg";
 import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
 import coingecko from "../../Marketplace/MarketNFTs/assets/coingecko.svg";
-import conflux from "../../Marketplace/MarketNFTs/assets/conflux.svg";
-import gateWhite from "../../Marketplace/MarketNFTs/wallets/gateWallet.png";
 import coinbaseimg from "../../Marketplace/MarketNFTs/assets/base.svg";
 import doge from "../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
+import cmc from "../../Marketplace/MarketNFTs/assets/cmc.svg";
+import multiplayer from "../../../assets/multiplayer.svg";
+import whiteCircleArrow from "../../../assets/whiteCircleArrow.svg";
 
 import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
-import dypius from "../../Account/src/Components/WalletBalance/assets/dypIcon.svg";
 import Slider from "react-slick";
 import useWindowSize from "../../../hooks/useWindowSize";
 
 const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const [modal, setModal] = useState(false);
+  const [multiplayerModal, setmultiplayerModal] = useState(false);
+
   const [icons, setIcons] = useState(false);
   const betaSlider = useRef(null);
   const [activeSlide, setActiveSlide] = useState();
@@ -47,67 +44,12 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
 
   const dummyBetaPassData2 = [
     {
-      title: "CoinGecko",
-      logo: coingecko,
-      eventStatus: "Live",
-      totalRewards: "$10,000 in BNB Rewards",
-      rewardsAmount: "$10,000",
-      rewardsCurrency: "BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "September 25, 2023",
-      popupInfo: {
-        title: "CoinGecko",
-        chain: "BNB Chain",
-        linkState: "coingecko",
-        rewards: "BNB",
-        status: "Live",
-        id: "event3",
-        eventType: "Explore & Mine",
-        totalRewards: "$10,000 in BNB Rewards",
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
-      },
-    },
-    {
-      title: "Base",
-      logo: coinbaseimg,
-      eventStatus: "Live",
-      totalRewards: "$10,000 in ETH Rewards",
-      rewardsAmount: "$10,000",
-      rewardsCurrency: "ETH Rewards",
-      myEarnings: 126.45,
-      eventType: "Explore & Mine",
-      eventDate: "November 01, 2023",
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Chain",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Live",
-        id: "event4",
-        date: "November 01, 2023",
-        totalRewards: "$5,000 in ETH Rewards",
-        eventDate: "November 01, 2023",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
-      },
-    },
-    {
       title: "Dogecoin",
       chain: "BNB Chain",
       linkState: "doge",
       rewards: "DOGE",
-      status: "Coming Soon",
-      eventStatus: "Coming Soon",
+      status: "Live",
+      eventStatus: "Live",
       id: "event7",
       eventType: "Explore & Mine",
       date: "December 22, 2023",
@@ -119,52 +61,142 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
       maxRewards: "100",
       minPoints: "5,000",
       maxPoints: "50,000",
-      learnMore: "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
       popupInfo: {
         title: "Dogecoin",
         chain: "BNB Chain",
         linkState: "doge",
         rewards: "DOGE",
-        status: "Coming Soon",
+        status: "Live",
         id: "event7",
-        eventStatus: "Coming Soon",
+        eventStatus: "Live",
         eventType: "Explore & Mine",
         totalRewards: "$10,000 in DOGE Rewards",
         minRewards: "1",
         maxRewards: "100",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
         eventDate: "December 22, 2023",
       },
     },
     {
-      title: "Dypius",
-      logo: dypius,
-      eventStatus: "Expired",
-      totalRewards: "300,000 in DYPv2 Rewards",
+      title: "CMC",
+      logo: cmc,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "September xx, 2023",
-      rewardsAmount: "300,000",
-      rewardsCurrency: "DYP Rewards",
-      // backgroundImage: upcomingDyp,
+      eventType: "Explore & Mine",
+      eventDate: "December 26, 2023",
+      // backgroundImage: upcomingCmc,
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "BNB Rewards",
       popupInfo: {
-        title: "Dypius",
+        title: "CoinMarketCap",
         chain: "BNB Chain",
-        linkState: "dypius",
-        rewards: "DYP",
-        status: "Expired",
-        id: "event5",
-        eventType: "Explore & Find",
-        totalRewards: "300,000 in DYPv2 Rewards",
+        linkState: "coinmarketcap",
+        rewards: "BNB",
+        status: "Live",
+        id: "event8",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        rewardsAmount: "$10,000",
+        rewardsCurrency: "BNB Rewards",
         // eventDuration: coingeckoLastDay,
-        minRewards: "25",
-        maxRewards: "50",
-        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "Ended",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        eventDate: "December 26, 2023",
+        learnMore:
+          "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
     },
+
+    {
+      title: "Base",
+      logo: coinbaseimg,
+      eventStatus: "Live",
+      totalRewards: "$10,000 in ETH Rewards",
+      rewardsAmount: "$10,000",
+      rewardsCurrency: "ETH Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "Nov 01, 2023",
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Base",
+        chain: "Base Chain",
+        linkState: "base",
+        rewards: "ETH",
+        status: "Live",
+        id: "event4",
+        date: "Nov 01, 2023",
+        totalRewards: "$5,000 in ETH Rewards",
+        eventDate: "Nov 01, 2023",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "CoinGecko",
+      logo: coingecko,
+      eventStatus: "Expired",
+      totalRewards: "$10,000 in BNB Rewards",
+      rewardsAmount: "$10,000",
+      rewardsCurrency: "BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Ended",
+      popupInfo: {
+        title: "CoinGecko",
+        chain: "BNB Chain",
+        linkState: "coingecko",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event3",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      },
+    },
+
+    // {
+    //   title: "Dypius",
+    //   logo: dypius,
+    //   eventStatus: "Expired",
+    //   totalRewards: "300,000 in DYPv2 Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "September xx, 2023",
+    //   rewardsAmount: "300,000",
+    //   rewardsCurrency: "DYP Rewards",
+    //   // backgroundImage: upcomingDyp,
+    //   popupInfo: {
+    //     title: "Dypius",
+    //     chain: "BNB Chain",
+    //     linkState: "dypius",
+    //     rewards: "DYP",
+    //     status: "Expired",
+    //     id: "event5",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "300,000 in DYPv2 Rewards",
+    //     // eventDuration: coingeckoLastDay,
+    //     minRewards: "25",
+    //     maxRewards: "50",
+    //     learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+    //     eventDate: "Ended",
+    //   },
+    // },
 
     // {
     //   title: "Gate.io",
@@ -298,28 +330,28 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
           <div className="col-12 col-lg-8 video-diagonal">
             <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center">
               <div className="row m-0 gap-5 align-items-center justify-content-center">
-                <div className="linear-border-download p-0" style={{
+                <div
+                  className="linear-border-download p-0"
+                  style={{
                     width: "fit-content",
                     zIndex: 5,
                     position: "relative",
                     textDecoration: "none",
-                  }} >
-                <div
-                  className="opacitywrapper5 download-filled-btn m-0 px-3"
-                 
+                  }}
                 >
-                  <a
-                    className="game-event-download d-flex align-items-center gap-2"
-                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                    target="_blank"
-                  >
-                    <img src={epicblack} alt="icon" className="epicgame2" />
-                    Download
-                  </a>
-                </div></div>
-                <NavLink
-                  to="join-beta"
-                  className="pink-linear-border"
+                  <div className="opacitywrapper5 download-filled-btn m-0 px-3">
+                    <a
+                      className="game-event-download d-flex align-items-center gap-2"
+                      href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                      target="_blank"
+                    >
+                      <img src={epicblack} alt="icon" className="epicgame2" />
+                      Download
+                    </a>
+                  </div>
+                </div>
+                <div
+                  className="multiplayer-linear-border"
                   style={{
                     width: "fit-content",
                     zIndex: 5,
@@ -328,19 +360,25 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   }}
                 >
                   <button
-                    className="btn outline-btn px-5 d-flex align-items-center gap-2"
-                    // onClick={handleRegister}
+                    className="btn multiplayer-btn px-3 d-flex align-items-center gap-2"
+                    onClick={() => {
+                      setmultiplayerModal(true);
+                    }}
                   >
-                    Join Beta
+                    <img src={multiplayer} alt="" /> Multiplayer
                   </button>
+                </div>
+              </div>
+              <div className="join-beta-ribbon p-2 w-100">
+                <NavLink to="join-beta">
+                  <div className="d-flex justify-content-between gap-2 align-items-center">
+                    <span className="joinbeta-white-txt">
+                      Join Beta Program
+                    </span>
+                    <img src={whiteCircleArrow} alt="" />
+                  </div>
                 </NavLink>
               </div>
-              {/* <div className="d-flex align-items-center gap-2">
-                <img src={sysReq} alt="system requirements" />
-                <span className="sys-req" onClick={() => setModal(true)}>
-                  System requirements
-                </span>
-              </div> */}
             </div>
             {windowSize.width < 992 && (
               <NavLink
@@ -507,6 +545,82 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
               <h6 className="close-modal" onClick={() => setModal(false)}>
                 Close
               </h6>
+            </div>
+          </div>
+        </OutsideClickHandler>
+      ) : (
+        <></>
+      )}
+
+      {multiplayerModal === true ? (
+        <OutsideClickHandler onOutsideClick={() => setmultiplayerModal(false)}>
+          <div className="system-requirements-modal p-3" id="reqmodal">
+            <div className="d-flex align-items-start justify-content-between mb-3">
+              <div className="d-flex flex-column gap-2">
+                <h6 className="sys-req-title">World of Dypians Multiplayer</h6>
+              </div>
+              <img
+                src={xMark}
+                alt="x mark"
+                style={{ cursor: "pointer" }}
+                onClick={() => setmultiplayerModal(false)}
+              />
+            </div>
+
+            <div className="overall-requirements">
+              <h6 className="requirements-title">Closed Demo</h6>
+              <p className="requirements-content">
+                The World of Dypians Multiplayer you are about to experience is
+                a closed demo specifically designed for testing purposes. This
+                means that you are stepping into an environment that is still
+                under development and not the final version of the game.
+              </p>
+              <h6 className="requirements-title">Basic Functionalities</h6>
+              <p className="requirements-content">
+                While the closed demo offers a glimpse into the vast potential
+                of the World of Dypians Multiplayer, please be aware that some
+                features and functionalities may be limited or subject to
+                changes. The game is a work in progress, and your feedback will
+                play a crucial role in shaping its final form.
+              </p>
+
+              <h6 className="requirements-title">Text and Voice Chat</h6>
+              <p className="requirements-content">
+                Communication is key in the World of Dypians Multiplayer, and
+                during this closed demo, you can interact with fellow players
+                through both text and voice chat functionalities.
+              </p>
+
+              <h6 className="requirements-title">
+                Reporting Bugs and Feedback
+              </h6>
+              <p className="requirements-content">
+                As you explore the world and encounter various elements, please
+                keep an eye out for any bugs or issues. If you come across
+                something unexpected or have suggestions for improvement, don't
+                hesitate to provide feedback. Your input is immensely valuable
+                in ensuring a smooth gaming experience for all.
+              </p>
+            </div>
+            <div className="d-flex align-items-center justify-content-center py-3">
+              <a
+                href="https://drive.google.com/drive/folders/1nS4HB9K9KZcJZWjS_AXV18At5gC0N96Z?usp=sharing"
+                target={"_blank"}
+                rel="noreferrer"
+                onClick={() => {
+                  setmultiplayerModal(false);
+                }}
+              >
+                <div
+                  className="linear-border"
+                  style={{
+                    width: "fit-content",
+                    margin: "auto",
+                  }}
+                >
+                  <button className="btn filled-btn px-5">Download</button>
+                </div>
+              </a>
             </div>
           </div>
         </OutsideClickHandler>

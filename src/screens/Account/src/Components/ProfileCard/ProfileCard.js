@@ -103,6 +103,7 @@ const ProfileCard = ({
 
   let oneJanuary = new Date("2024-01-01 11:11:00 GMT+02:00");
   let oneDecember = new Date("2023-12-01 11:11:00 GMT+02:00");
+  let oneFebruary = new Date("2024-02-01 11:11:00 GMT+02:00");
 
   const countBundle = async () => {
     const result = await axios.get(
@@ -372,10 +373,10 @@ const ProfileCard = ({
         //     Number(additional_remaining_time_timestamp * 1000);
 
         setcountdown700(
-          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
         );
         handleSetAvailableTime(
-          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
         );
 
         // }
@@ -396,10 +397,10 @@ const ProfileCard = ({
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
         setcountdown700(
-          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
         );
         handleSetAvailableTime(
-          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
         );
 
         // }
@@ -448,10 +449,10 @@ const ProfileCard = ({
           today.getFullYear() === finalDateofBundleFormatted.getFullYear()
         ) {
           setcountdown700(
-            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+            today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
           );
           handleSetAvailableTime(
-            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+            today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
           );
 
           // if (
@@ -504,10 +505,10 @@ const ProfileCard = ({
 
         if (today < finalDateofBundle  && bundlesBought !== 0) {
           setcountdown700(
-            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+            today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
           );
           handleSetAvailableTime(
-            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+            today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
           );
         } else if (today > finalDateofBundle && bundlesBought > 0) {
           setcountdown700();
@@ -531,10 +532,10 @@ const ProfileCard = ({
             handleSetAvailableTime(finalDateofBundle);
           } else {
             setcountdown700(
-              today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+              today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
             );
             handleSetAvailableTime(
-              today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+              today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
             );
           }
         } else if (today > finalDateofBundle && bundlesBought > 0) {
@@ -548,10 +549,10 @@ const ProfileCard = ({
 
       if (today < finalDateofBundle) {
         setcountdown700(
-          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
         );
         handleSetAvailableTime(
-          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
         );
       } else {
         setcountdown700();
@@ -630,7 +631,7 @@ const ProfileCard = ({
                       <div className="d-flex flex-column gap-1 w-100">
                         <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
                           {username}
-                          {!domainName && (
+                          {!domainName && isConnected && (
                             <span
                               className={`${
                                 isPremium ? "premiumtext-active" : "premiumtext"

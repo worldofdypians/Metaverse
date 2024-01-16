@@ -170,6 +170,15 @@ const NewBundleCard = ({
   const [goldenPassDypAmountV1, setGoldenPassDypAmountV1] = useState(0);
   const [goldenPassDypAmountV2, setGoldenPassDypAmountV2] = useState(0);
   const [puzzleMadnessDypAmount, setPuzzleMadnessDypAmount] = useState(0);
+  let twentyfiveJanuary = new Date("2024-01-25 23:59:00 GMT+02:00");
+  let today = new Date();
+  let oneDecember = new Date("2023-12-01 11:11:00 GMT+02:00");
+  let oneJanuary = new Date("2024-01-01 11:11:00 GMT+02:00");
+  let oneFebruary = new Date("2024-02-01 11:11:00 GMT+02:00");
+
+
+
+
 
   const getBundlePrizes = async () => {
     const dragonContract = new window.bscWeb3.eth.Contract(WOD_ABI, wodAddress);
@@ -797,10 +806,8 @@ const NewBundleCard = ({
     setcountdown3500(remainingTime);
   };
 
-  let twentyfiveDecember = new Date("2023-12-25 23:59:00 GMT+02:00");
-  let today = new Date();
-  let oneDecember = new Date("2023-12-01 11:11:00 GMT+02:00");
-  let oneJanuary = new Date("2024-01-01 11:11:00 GMT+02:00");
+
+
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -861,10 +868,10 @@ const NewBundleCard = ({
         //     Number(additional_remaining_time_timestamp * 1000);
 
         setcountdown700(
-          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
         );
         handleSetAvailableTime(
-          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
         );
         setisAtlimit(true);
         setStatus700(
@@ -890,10 +897,10 @@ const NewBundleCard = ({
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
         setcountdown700(
-          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
         );
         handleSetAvailableTime(
-          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
         );
         setisAtlimit(true);
         setStatus700(
@@ -947,10 +954,10 @@ const NewBundleCard = ({
           today.getFullYear() === finalDateofBundleFormatted.getFullYear()
         ) {
           setcountdown700(
-            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+            today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
           );
           handleSetAvailableTime(
-            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+            today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
           );
           setisAtlimit(true);
           setStatusColor700("#FE7A00");
@@ -1011,10 +1018,10 @@ const NewBundleCard = ({
 
         if (today < finalDateofBundle) {
           setcountdown700(
-            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+            today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
           );
           handleSetAvailableTime(
-            today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+            today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
           );
           setisAtlimit(true);
           setStatusColor700("#FE7A00");
@@ -1048,10 +1055,10 @@ const NewBundleCard = ({
             handleSetAvailableTime(finalDateofBundle);
           } else {
             setcountdown700(
-              today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+              today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
             );
             handleSetAvailableTime(
-              today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+              today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
             );
             setisAtlimit(true);
             setStatusColor700("#FE7A00");
@@ -1076,10 +1083,10 @@ const NewBundleCard = ({
       if (today < finalDateofBundle) {
         setisAtlimit(true);
         setcountdown700(
-          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
         );
         handleSetAvailableTime(
-          today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
         );
         setStatus700(
           "The Golden Pass bundle is currently not available for purchase. Please check back next month."
@@ -1208,10 +1215,10 @@ const NewBundleCard = ({
     ) {
       setisAtlimit(true);
       setcountdown700(
-        today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+        today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
       );
       handleSetAvailableTime(
-        today < oneDecember ? oneDecember.getTime() : oneJanuary.getTime()
+        today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
       );
       setStatus700(
         "The Golden Pass bundle is currently not available for purchase. Please check back next month."
@@ -1221,8 +1228,11 @@ const NewBundleCard = ({
 
   useEffect(() => {
     getTokenData();
-    if (today > twentyfiveDecember) {
+    if (today > twentyfiveJanuary) {
       setisAtlimit(true);
+      setStatus700(
+        "The Golden Pass bundle is currently not available for purchase. Please check back next month."
+      );
     }
 
     convertPrice();
