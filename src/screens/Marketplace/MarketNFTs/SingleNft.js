@@ -1728,11 +1728,12 @@ const SingleNft = ({
                             type === "cawsbase" ||
                             type === "landbase"
                           ? baseLogo
-                          : type === "cawsavax" || type === "cawsavax"
+                          : type === "cawsavax" || type === "landavax"
                           ? avaxLogo
                           : ethIcon
                       }
                       alt=""
+                      style={{width: 20, height:20}}
                     />{" "}
                     {type === "coingecko" ||
                     type === "gate" ||
@@ -1921,7 +1922,13 @@ const SingleNft = ({
 
                     {!isOwner &&
                       !IsListed &&
-                      !nft.price &&
+                      !nft.price && 
+                      type !== "cawsbnb" &&
+                      type !== "cawsavax" &&
+                      type !== "cawsbase" &&
+                      type !== "landavax" &&
+                      type !== "landbnb" &&
+                      type !== "landbase" &&
                       loadingNft === false && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
@@ -2276,7 +2283,7 @@ const SingleNft = ({
                           </div>
                         </div>
                       )}
-                    {isOwner &&
+                    {
                       !IsListed &&
                       !loadingNft &&
                       (type === "coingecko" ||
