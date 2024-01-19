@@ -1203,7 +1203,7 @@ const NFTBridge = ({
         style={{ backgroundSize: "cover" }}
       >
         <div className="container-lg mt-5 mt-lg-4 mx-0 position-relative">
-          <div className="nft-bridge-hero-wrapper p-3 mt-5 mt-lg-0 position-relative">
+          <div className="nft-bridge-hero-wrapper p-3 mt-5 mb-3 mt-lg-0 position-relative">
             <div className="position-absolute ccip-wrapper">
               <a
                 href="https://chain.link/cross-chain"
@@ -1237,7 +1237,14 @@ const NFTBridge = ({
                     alt=""
                   />
                   <span className="powered-by-text d-flex text-center gap-3 align-items-center">
-                    Powered by <img src={chainlinkLogo} alt="" />
+                  <a
+                href="https://chain.link/cross-chain"
+                target="_blank"
+                rel="noreferrer"
+                className="ccip-link d-flex align-items-center gap-1"
+              >
+                    <img src={'https://chain.link/badge-cross-chain-black'} alt="" />
+                    </a>
                   </span>
                 </div>
               </div>

@@ -1,15 +1,14 @@
 .nft-bridge-hero-wrapper {
+  background: #070D27;
   border-radius: 10px;
-  background: #141b44;
+  border: 1px solid #141B44;
+
 }
 
 .nft-bridge-page-wrapper {
+  background: #070D27;
   border-radius: 15px;
-  background: linear-gradient(
-    148deg,
-    rgba(20, 27, 68, 0.1) 0%,
-    rgba(20, 27, 68, 0.5) 100%
-  );
+  border: 1px solid #141B44;
 }
 
 .nft-bridge-select-route {
@@ -112,7 +111,7 @@
   line-height: normal;
 
   img {
-    scale: 1.4;
+       height: 30px;
   }
 }
 
