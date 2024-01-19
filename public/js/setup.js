@@ -1490,7 +1490,7 @@ window.config = {
   nft_caws_base_address: "0x32F0884321D2Bd1eA36Bfa6d728A5E52f8bCEd4A",
 
   nft_land_bnb_address: "0xf40674A628832eB9d3929f14AB6D9B5705BDD130",
-  nft_land_avax_address: "0x5390F1cD564b23c4594247B3577da439ACB0B228",
+  nft_land_avax_address: "0x2BD540961f44F1cd593F901697d9F8b1e5471EB8",
   nft_land_base_address: "0x57F6fFe512ef48e3FB169E48f6D4c5551688Be7D",
 
   destination_chain_selector_eth: "5009297550715157269",

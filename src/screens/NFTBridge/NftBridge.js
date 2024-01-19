@@ -315,7 +315,7 @@ const NFTBridge = ({
         }
       } else if (filterTitle === "Avalanche") {
         if (finalNftType === "land") {
-          const sourceBridge_address = window.config.ccip_bnb_avax_address;
+          const sourceBridge_address = window.config.ccip_avax_wod_address;
 
           const web3 = new Web3(window.ethereum);
 
@@ -354,7 +354,7 @@ const NFTBridge = ({
         }
       } else if (filterTitle === "Base Network") {
         if (finalNftType === "land") {
-          const sourceBridge_address = window.config.ccip_bnb_base_address;
+          const sourceBridge_address = window.config.ccip_base_wod_address;
 
           const web3 = new Web3(window.ethereum);
 
@@ -532,9 +532,9 @@ const NFTBridge = ({
           if (finalNftType === "land") {
             const sourceBridge_address = window.config.ccip_eth_wod_address;
             const destinationBridge_address =
-              window.config.ccip_bnb_wod_address;
+              window.config.ccip_avax_wod_address;
             const destinationChainSelector =
-              window.config.destination_chain_selector_bnb;
+              window.config.destination_chain_selector_avax;
             const web3 = new Web3(window.ethereum);
             const contract = new web3.eth.Contract(
               window.CCIP_ABI,
@@ -909,7 +909,7 @@ const NFTBridge = ({
         }
       } else if (filterTitle === "Avalanche") {
         if (finalNftType === "land") {
-          const sourceBridge_address = window.config.ccip_bnb_avax_address;
+          const sourceBridge_address = window.config.ccip_avax_wod_address;
           const destinationBridge_address = window.config.ccip_eth_wod_address;
           const destinationChainSelector =
             window.config.destination_chain_selector_eth;
@@ -1033,7 +1033,7 @@ const NFTBridge = ({
         }
       } else if (filterTitle === "Base Network") {
         if (finalNftType === "land") {
-          const sourceBridge_address = window.config.ccip_bnb_base_address;
+          const sourceBridge_address = window.config.ccip_base_wod_address;
           const destinationBridge_address = window.config.ccip_eth_wod_address;
           const destinationChainSelector =
             window.config.destination_chain_selector_eth;
@@ -1237,13 +1237,16 @@ const NFTBridge = ({
                     alt=""
                   />
                   <span className="powered-by-text d-flex text-center gap-3 align-items-center">
-                  <a
-                href="https://chain.link/cross-chain"
-                target="_blank"
-                rel="noreferrer"
-                className="ccip-link d-flex align-items-center gap-1"
-              >
-                    <img src={'https://chain.link/badge-cross-chain-black'} alt="" />
+                    <a
+                      href="https://chain.link/cross-chain"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="ccip-link d-flex align-items-center gap-1"
+                    >
+                      <img
+                        src={"https://chain.link/badge-cross-chain-black"}
+                        alt=""
+                      />
                     </a>
                   </span>
                 </div>
