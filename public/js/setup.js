@@ -3910,6 +3910,7 @@ window.approveNFT = async (type) => {
 
 window.cancelListNFT = async (nftAddress, tokenId, priceType, tokenType) => {
   let price_address;
+  const coinbase = await getCoinbase();
 
   if (priceType === 0) {
     price_address = "0x0000000000000000000000000000000000000000";
@@ -3929,7 +3930,7 @@ window.cancelListNFT = async (nftAddress, tokenId, priceType, tokenType) => {
 
   await marketplace.methods
     .cancelListing(nftAddress, tokenId, [priceType, price_address])
-    .send({ from: window.ethereum.selectedAddress });
+    .send({ from: coinbase });
 };
 
 window.updateListingNFT = async (token, price, priceType, type, tokenType) => {
@@ -3960,12 +3961,13 @@ window.updateListingNFT = async (token, price, priceType, type, tokenType) => {
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );
+  const coinbase = await getCoinbase();
 
   console.log(nft_address, token, price, [price_nft, price_address]);
 
   await marketplace.methods
     .updateListing(nft_address, token, price, [price_nft, price_address])
-    .send({ from: window.ethereum.selectedAddress });
+    .send({ from: coinbase });
 };
 
 // window.listNFT = async (token, price, priceType, type = "") => {
@@ -4038,6 +4040,7 @@ window.listNFT = async (token, price, priceType, type = "", tokenType) => {
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );
+  const coinbase = await getCoinbase();
 
   const gasPrice = await window.web3.eth.getGasPrice();
   const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
@@ -4059,7 +4062,7 @@ window.listNFT = async (token, price, priceType, type = "", tokenType) => {
 
   await marketplace.methods
     .listItem(nft_address, token, price, [price_nft, price_address])
-    .send({ from: window.ethereum.selectedAddress, ...transactionParameters });
+    .send({ from: coinbase, ...transactionParameters });
 };
 
 window.isApproved = async (token, type) => {

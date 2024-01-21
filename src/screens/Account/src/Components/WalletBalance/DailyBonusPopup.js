@@ -1034,20 +1034,20 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                ((liverewardData &&
-                                  liverewardData.rewards &&
-                                  !liverewardData.rewards.find(
-                                    (obj) => obj.rewardType === "Money"
-                                  )) ||
-                                  (liverewardData &&
+                                  ((liverewardData &&
                                     liverewardData.rewards &&
-                                    liverewardData.rewards.find(
+                                    !liverewardData.rewards.find(
                                       (obj) => obj.rewardType === "Money"
-                                    ) &&
-                                    liverewardData.rewards.find(
-                                      (obj) => obj.rewardType === "Money"
-                                    )?.details) ||
-                                  liverewardData.length == 0) &&
+                                    )) ||
+                                    (liverewardData &&
+                                      liverewardData.rewards &&
+                                      liverewardData.rewards.find(
+                                        (obj) => obj.rewardType === "Money"
+                                      ) &&
+                                      liverewardData.rewards.find(
+                                        (obj) => obj.rewardType === "Money"
+                                      )?.details) ||
+                                    liverewardData.length == 0) &&
                                   "gray",
                               }}
                             >
@@ -1367,20 +1367,20 @@ const DailyBonusPopup = ({
                         } `}
                         style={{
                           filter:
-                          ((liverewardData &&
-                            liverewardData.rewards &&
-                            !liverewardData.rewards.find(
-                              (obj) => obj.rewardType === "Money"
-                            )) ||
-                            (liverewardData &&
+                            ((liverewardData &&
                               liverewardData.rewards &&
-                              liverewardData.rewards.find(
-                                (obj) => obj.rewardType === "Money"
-                              ) &&
                               !liverewardData.rewards.find(
                                 (obj) => obj.rewardType === "Money"
-                              )?.details) ||
-                            liverewardData.length == 0) &&
+                              )) ||
+                              (liverewardData &&
+                                liverewardData.rewards &&
+                                liverewardData.rewards.find(
+                                  (obj) => obj.rewardType === "Money"
+                                ) &&
+                                !liverewardData.rewards.find(
+                                  (obj) => obj.rewardType === "Money"
+                                )?.details) ||
+                              liverewardData.length == 0) &&
                             "grayscale(1)",
                         }}
                       >
@@ -1395,20 +1395,20 @@ const DailyBonusPopup = ({
                               className="chest-prize-title mb-0"
                               style={{
                                 color:
-                                ((liverewardData &&
-                                  liverewardData.rewards &&
-                                  !liverewardData.rewards.find(
-                                    (obj) => obj.rewardType === "Money"
-                                  )) ||
-                                  (liverewardData &&
+                                  ((liverewardData &&
                                     liverewardData.rewards &&
-                                    liverewardData.rewards.find(
-                                      (obj) => obj.rewardType === "Money"
-                                    ) &&
                                     !liverewardData.rewards.find(
                                       (obj) => obj.rewardType === "Money"
-                                    )?.details) ||
-                                  liverewardData.length == 0) &&
+                                    )) ||
+                                    (liverewardData &&
+                                      liverewardData.rewards &&
+                                      liverewardData.rewards.find(
+                                        (obj) => obj.rewardType === "Money"
+                                      ) &&
+                                      !liverewardData.rewards.find(
+                                        (obj) => obj.rewardType === "Money"
+                                      )?.details) ||
+                                    liverewardData.length == 0) &&
                                   "gray",
                               }}
                             >
@@ -1439,7 +1439,7 @@ const DailyBonusPopup = ({
                               ) &&
                               liverewardData.rewards.find(
                                 (obj) => obj.rewardType === "Money"
-                              )?.details && (
+                              )?.details ? (
                                 <ToolTip
                                   title={
                                     <React.Fragment>
@@ -1455,7 +1455,19 @@ const DailyBonusPopup = ({
                                   icon={<img src={warning} alt="" />}
                                   color={"#000"}
                                 />
-                              )}
+                              ) : <ToolTip
+                              title={
+                                <React.Fragment>
+                                  <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                    You must hold CAWS NFT and Genesis Land
+                                    NFT to claim this prize
+                                  </p>
+                                </React.Fragment>
+                              }
+                              icon={<img src={warning} alt="" />}
+                              color={"#000"}
+                            />
+}
                           </div>
                         </div>
                       </div>
@@ -1497,6 +1509,20 @@ const DailyBonusPopup = ({
                                 {reward.title}
                               </span>
                             </div>
+                            {index === 5 && (
+                              <ToolTip
+                                title={
+                                  <React.Fragment>
+                                    <p className="py-3 pe-3 mb-0 d-flex flex-column gap-2 font-poppins">
+                                      You must hold CAWS NFT and Genesis Land NFT
+                                      to claim this prize
+                                    </p>
+                                  </React.Fragment>
+                                }
+                                icon={<img src={warning} alt="" />}
+                                color={"#000"}
+                              />
+                            )}
                           </div>
                         </div>
                       </div>
