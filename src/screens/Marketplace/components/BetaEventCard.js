@@ -30,7 +30,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
           : "upcoming-mint-wrapper-coin98"
       } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column flex-lg-row d-flex align-items-center justify-content-between px-0`}
       onClick={onOpenPopup}
-      style={{ cursor: "pointer" }}
+      style={{ cursor: "pointer", pointerEvents: activeTab === "upcoming" ? "none" : "auto" }}
     >
       <div className="d-flex col-12 col-lg-5 align-items-start align-items-lg-center  p-3 gap-3">
         <img src={data.logo} width={36} height={36} alt="" />
@@ -59,13 +59,15 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
             </div>
             <h6 className="events-page-rewards">{data.totalRewards}</h6>
           </div>
+         {activeTab !== "upcoming" &&
           <span
-            className="events-page-details d-none d-lg-flex align-items-center gap-2"
-            onClick={onOpenPopup}
-          >
-            Details
-            <img src={eventsArrow} alt="" />
-          </span>
+          className="events-page-details d-none d-lg-flex align-items-center gap-2"
+          onClick={onOpenPopup}
+        >
+          Details
+          <img src={eventsArrow} alt="" />
+        </span>
+         }
         </div>
       </div>
 
