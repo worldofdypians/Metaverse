@@ -4,6 +4,7 @@ import eventsArrow from "../assets/eventsArrow.svg";
 import whitePickaxe from "../assets/whitePickAxe.svg";
 import whiteCalendar from "../assets/whiteCalendar.svg";
 import magnifier from "../assets/magnifier.svg";
+import premiumAvailable from '../assets/premiumAvailable.svg'
 
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
@@ -73,7 +74,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
 
       <div className="d-flex align-items-center gap-3">
         <div className="d-flex col-6 col-lg-3 flex-column align-items-start align-items-lg-center">
-        {activeTab !== "upcoming" &&
+        {activeTab !== "upcoming" ?
           <div className="mybetaearnings">
           <h6 className="event-my-earnings3 mb-3">
             {data.title !== "Dypius" ? (
@@ -82,6 +83,10 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
               <>{getFormattedNumber(userEarnUsd, 0)} DYP</>
             )}
           </h6>
+        </div>
+        :
+        <div className="mybetaearnings" style={{backgroundImage: "none"}}>
+        <img src={premiumAvailable} alt="" width={145} height={145} />
         </div>
         }
         </div>
