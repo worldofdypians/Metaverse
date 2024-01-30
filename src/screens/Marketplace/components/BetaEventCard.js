@@ -8,7 +8,7 @@ import magnifier from "../assets/magnifier.svg";
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
-const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
+const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
  
   return (
     <div
@@ -71,15 +71,17 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
 
       <div className="d-flex align-items-center gap-3">
         <div className="d-flex col-6 col-lg-3 flex-column align-items-start align-items-lg-center">
+        {activeTab !== "upcoming" &&
           <div className="mybetaearnings">
-            <h6 className="event-my-earnings3 mb-3">
-              {data.title !== "Dypius" ? (
-                <>${getFormattedNumber(userEarnUsd, 2)}</>
-              ) : (
-                <>{getFormattedNumber(userEarnUsd, 0)} DYP</>
-              )}
-            </h6>
-          </div>
+          <h6 className="event-my-earnings3 mb-3">
+            {data.title !== "Dypius" ? (
+              <>${getFormattedNumber(userEarnUsd, 2)}</>
+            ) : (
+              <>{getFormattedNumber(userEarnUsd, 0)} DYP</>
+            )}
+          </h6>
+        </div>
+        }
         </div>
         <div className="d-flex flex-column d-flex d-lg-none gap-3">
           <div className="d-flex align-items-center gap-2">

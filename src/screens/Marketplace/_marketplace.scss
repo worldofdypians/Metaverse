@@ -2605,7 +2605,6 @@
   background: linear-gradient(to bottom, #181636 15.48%, #0057ff 254.86%);
 }
 
-
 .cmc-eventwrapper {
   border-radius: 20px;
   background: linear-gradient(to bottom, #201d52 15.48%, #0057ff 254.86%);
@@ -2674,7 +2673,6 @@
     text-transform: capitalize;
     transition: all 0.25s;
 
-  
     @media screen and (max-width: 500px) {
       display: none;
     }
@@ -2745,7 +2743,7 @@
 
 .upcoming-mint-wrapper-cmc {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, rgba(0, 72, 97, 0.5) 168.67%);
+  background: linear-gradient(90deg, #181b38 0%, rgba(0, 72, 97, 0.5) 168.67%);
 }
 
 .upcoming-mint-wrapper-gate {
@@ -3538,12 +3536,20 @@
 
 .upcoming-cmc-event {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, rgba(0, 72, 97, 0.5) 168.67%) !important;
+  background: linear-gradient(
+    90deg,
+    #181b38 0%,
+    rgba(0, 72, 97, 0.5) 168.67%
+  ) !important;
 }
 
 .upcoming-dyp-event {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181b38 0%, #1d4d17 168.67%);
+  background: linear-gradient(
+    90deg,
+    #181b38 0%,
+    rgba(85, 79, 216, 0.05) 168.67%
+  );
 }
 
 .base-upcoming-mint-wrapper {
