@@ -397,18 +397,18 @@ const MarketEvents = ({
   const newBetaEvent =  {
     title: "Dypius",
     logo: dypius,
-    eventStatus: "Comming Soon",
+    eventStatus: "Coming Soon",
     totalRewards: "$50,000 in BNB Rewards",
     myEarnings: 0.0,
     eventType: "Explore & Mine",
-    eventDate: "Comming Soon",
+    eventDate: "Coming Soon",
     backgroundImage: upcomingDyp,
     popupInfo: {
       title: "Dypius",
       chain: "BNB Chain",
       linkState: "dypius",
       rewards: "BNB",
-      status: "Comming Soon",
+      status: "Coming Soon",
       id: "event5",
       eventType: "Explore & Mine",
       totalRewards: "$50,000 in BNB Rewards",
@@ -416,7 +416,7 @@ const MarketEvents = ({
       minRewards: "25",
       maxRewards: "50",
       learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-      eventDate: "Comming Soon",
+      eventDate: "Coming Soon",
     },
   }
 

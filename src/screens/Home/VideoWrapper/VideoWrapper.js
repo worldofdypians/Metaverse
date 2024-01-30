@@ -174,7 +174,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Comming Soon",
+      eventStatus: "Coming Soon",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
