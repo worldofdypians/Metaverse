@@ -10,12 +10,14 @@ import subtractInactive from "../../assets/landAssets/subtractInactive.svg";
 import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
 import genesisBg from "../../assets/landAssets/genesisBg.svg";
 import ToolTip from "../Caws/elements/ToolTip";
+import wodLogo from '../Caws/assets/wodLogo.png'
 import Countdown from "react-countdown";
 import axios from "axios";
 import { formattedNum } from "../Caws/functions/formatUSD";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import { shortAddress } from "../Caws/functions/shortAddress";
 import opensea from './mintAssets/opensea.svg'
+import { NavLink } from "react-router-dom";
 const renderer = ({ days, hours, minutes }) => {
   return (
     <>
@@ -751,11 +753,19 @@ const LandStaking = ({
                 alt="land nft"
                 className="w-100 d-flex d-lg-none"
               />
+              <div className="d-flex flex-column flex-lg-row align-items-center gap-2 w-100">
               <div className={"linear-border-purple mt-4"}>
                 <a className={`btn purple-btn px-4 d-flex gap-2 align-items-center`} href='https://opensea.io/collection/worldofdypians' target='_blank' rel='noreferrer'>
                   <img src={opensea} alt=''/>
                   Buy on OpenSea
                 </a>
+              </div>
+              <div className={"linear-border-purple2 mt-4"}>
+                <NavLink to={'/marketplace/land'} className={`btn purple-btn2 px-4 d-flex gap-2 align-items-center`} >
+                  <img src={wodLogo} width={25} height={25} alt=''/>
+                  Buy on WoD
+                </NavLink>
+              </div>
               </div>
             </div>
           </div>
