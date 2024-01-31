@@ -225,8 +225,8 @@ const MakeOffer = ({
             />
           </div>
           <div className="summarywrapper">
-            <div className="d-flex flex-column flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between">
-              <div className="d-flex flex-column w-100 flex-xxl-row flex-lg-row  align-items-center gap-2">
+            <div className="d-flex flex-column flex-column flex-xxl-row flex-lg-row align-items-start align-items-lg-center justify-content-between">
+              <div className="d-flex flex-row w-100 flex-xxl-row flex-lg-row  align-items-center gap-2">
                 <img
                   className="p-0 nft-img nftimg2"
                   src={
@@ -238,6 +238,7 @@ const MakeOffer = ({
                   }
                   alt=""
                   loading="lazy"
+                  style={{width: 80, height: 80}}
                 />
                 <div className="d-flex flex-column justify-content-between">
                   <div className="d-flex flex-column align-items-center">

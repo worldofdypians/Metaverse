@@ -335,6 +335,7 @@ const MarketEvents = ({
         eventDate: "Ended",
       },
     },
+ 
 
     {
       title: "Gate.io",
@@ -391,6 +392,33 @@ const MarketEvents = ({
       },
     },
   ];
+
+
+  const newBetaEvent =  {
+    title: "Dypius",
+    logo: dypius,
+    eventStatus: "Coming Soon",
+    totalRewards: "$50,000 in BNB Rewards",
+    myEarnings: 0.0,
+    eventType: "Explore & Mine",
+    eventDate: "Coming Soon",
+    backgroundImage: upcomingDyp,
+    popupInfo: {
+      title: "Dypius",
+      chain: "BNB Chain",
+      linkState: "dypius",
+      rewards: "BNB",
+      status: "Coming Soon",
+      id: "event5",
+      eventType: "Explore & Mine",
+      totalRewards: "$50,000 in BNB Rewards",
+      eventDuration: dypiusLastDay,
+      minRewards: "25",
+      maxRewards: "50",
+      learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+      eventDate: "Coming Soon",
+    },
+  }
 
   const dailyBonusData = {
     eventType: "6 Available Rewards",
@@ -813,9 +841,7 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -828,6 +854,9 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1077,14 +1106,31 @@ const MarketEvents = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <h6 className="upcoming-stake">New events are coming...</h6>
-                    <span className="upcoming-stake-desc">
-                      Check back soon!
-                    </span>
-                  </div>
-                </div>
+                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                //   <div className="d-flex flex-column align-items-center gap-2">
+                //     <h6 className="upcoming-stake">New events are coming...</h6>
+                //     <span className="upcoming-stake-desc">
+                //       Check back soon!
+                //     </span>
+                //   </div>
+                // </div>
+
+                <BetaEventCard
+                activeTab={activeTab}
+                data={newBetaEvent}
+            
+                userEarnUsd={
+                  newBetaEvent.title === "Conflux"
+                    ? confluxEarnUSD
+                    : newBetaEvent.title === "CoinGecko"
+                    ? userEarnUsd
+                    : newBetaEvent.title === "Gate.io"
+                    ? gateEarnUSD
+                    : newBetaEvent.title === "Dypius"
+                    ? dypiusEarnTokens
+                    : 0
+                }
+              />
                 // <div className="d-flex flex-column gap-4">
                 //   <div className="border-0 upcoming-mint-wrapper upcoming-doge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                 //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
