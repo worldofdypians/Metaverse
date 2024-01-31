@@ -239,7 +239,9 @@
   font-weight: 500;
   line-height: normal;
 }
-
+.premiumAvailable {
+ filter: drop-shadow(0px 16px 12px rgba(255, 231, 148, 0.10));
+}
 .itemcollectionName {
   color: #7dd9af;
   font-size: 10px;
