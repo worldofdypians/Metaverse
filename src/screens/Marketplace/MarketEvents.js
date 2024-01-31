@@ -259,7 +259,7 @@ const MarketEvents = ({
     {
       title: "Base",
       logo: base,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$10,000 in ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
@@ -271,7 +271,7 @@ const MarketEvents = ({
         chain: "Base Network",
         linkState: "base",
         rewards: "ETH",
-        status: "Live",
+        status: "Expired",
         id: "event4",
         totalRewards: "$10,000 in ETH Rewards",
         eventDuration: baseLastDay,
@@ -1024,7 +1024,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1186,7 +1186,7 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(3, 7).map((item, index) => (
+                  {dummyBetaPassData2.slice(2, 7).map((item, index) => (
                     <BetaEventCard
                       data={item}
                       key={index}

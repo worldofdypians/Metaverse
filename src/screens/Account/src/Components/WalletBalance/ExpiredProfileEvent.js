@@ -62,7 +62,7 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
             </span>
           </div>
         </div>
-        <img src={dypiusProfileBanner} alt="" className="dypiusprofile-banner"/>
+        {/* <img src={dypiusProfileBanner} alt="" className="dypiusprofile-banner"/> */}
       </div>
       <div className="profile-event-bottom p-2 d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-1">
