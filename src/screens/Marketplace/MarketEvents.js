@@ -335,7 +335,6 @@ const MarketEvents = ({
         eventDate: "Ended",
       },
     },
- 
 
     {
       title: "Gate.io",
@@ -393,8 +392,7 @@ const MarketEvents = ({
     },
   ];
 
-
-  const newBetaEvent =  {
+  const newBetaEvent = {
     title: "Dypius",
     logo: dypius,
     eventStatus: "Coming Soon",
@@ -418,7 +416,7 @@ const MarketEvents = ({
       learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
       eventDate: "Coming Soon",
     },
-  }
+  };
 
   const dailyBonusData = {
     eventType: "6 Available Rewards",
@@ -841,7 +839,6 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                   
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -854,7 +851,7 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div>
                     <NavLink
@@ -1033,9 +1030,7 @@ const MarketEvents = ({
                               setDummyEvent(item.popupInfo);
                             }}
                             userEarnUsd={
-                              item.title === "Base"
-                                ? baseEarnUSD
-                                : item.title === "Dogecoin"
+                              item.title === "Dogecoin"
                                 ? dogeEarnUSD
                                 : item.title === "CoinMarketCap"
                                 ? cmcuserEarnUsd
@@ -1116,21 +1111,20 @@ const MarketEvents = ({
                 // </div>
 
                 <BetaEventCard
-                activeTab={activeTab}
-                data={newBetaEvent}
-            
-                userEarnUsd={
-                  newBetaEvent.title === "Conflux"
-                    ? confluxEarnUSD
-                    : newBetaEvent.title === "CoinGecko"
-                    ? userEarnUsd
-                    : newBetaEvent.title === "Gate.io"
-                    ? gateEarnUSD
-                    : newBetaEvent.title === "Dypius"
-                    ? dypiusEarnTokens
-                    : 0
-                }
-              />
+                  activeTab={activeTab}
+                  data={newBetaEvent}
+                  userEarnUsd={
+                    newBetaEvent.title === "Conflux"
+                      ? confluxEarnUSD
+                      : newBetaEvent.title === "CoinGecko"
+                      ? userEarnUsd
+                      : newBetaEvent.title === "Gate.io"
+                      ? gateEarnUSD
+                      : newBetaEvent.title === "Dypius"
+                      ? dypiusEarnTokens
+                      : 0
+                  }
+                />
                 // <div className="d-flex flex-column gap-4">
                 //   <div className="border-0 upcoming-mint-wrapper upcoming-doge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                 //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
@@ -1195,7 +1189,9 @@ const MarketEvents = ({
                         setDummyEvent(item.popupInfo);
                       }}
                       userEarnUsd={
-                        item.title === "Conflux"
+                        item.title === "Base"
+                          ? baseEarnUSD
+                          : item.title === "Conflux"
                           ? confluxEarnUSD
                           : item.title === "CoinGecko"
                           ? userEarnUsd
