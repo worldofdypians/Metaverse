@@ -77,8 +77,13 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
           ) : (
             <img src={grayDollar} height={15} width={15} alt="" />
           )}
+
           <span className="mb-0 event-bottom-text" style={{ color: "#B8B8E0" }}>
-            {getFormattedNumber(userEarnedUsd, 0)} DYP
+            {event.title === "Dypius" ? (
+              <>{getFormattedNumber(userEarnedUsd, 0)} DYP</>
+            ) : (
+              <>${getFormattedNumber(userEarnedUsd, 2)}</>
+            )}
           </span>
         </div>
 
