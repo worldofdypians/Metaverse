@@ -131,7 +131,7 @@ function App() {
   const [showForms, setShowForms] = useState(false);
   const [showForms2, setShowForms2] = useState(false);
   const [myNFTs, setMyNFTs] = useState([]);
-
+const [count, setCount] = useState(0)
   const [myCAWNFTs, setMyCAWNFTs] = useState([]);
   const [cawsToUse, setcawsToUse] = useState([]);
   const [avatar, setAvatar] = useState();
@@ -2044,6 +2044,8 @@ function App() {
               path="/land"
               element={
                 <Land
+                count={count}
+                setCount={setCount}
                   handleConnectWallet={handleConnectWallet}
                   coinbase={coinbase}
                   isConnected={isConnected}
@@ -2065,6 +2067,8 @@ function App() {
               path="/marketplace"
               element={
                 <Marketplace
+                count={count}
+                setCount={setCount}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   dypTokenData_old={dypTokenData_old}

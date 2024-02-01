@@ -11,6 +11,8 @@ import UnstakeAllModal from "./UnstakeAllModal";
 import WalletModal from "../../components/WalletModal/WalletModal";
 import LandWhitelistModal from "../../components/LandWhitelistModal/LandWhitelistModal";
 import axios from "axios";
+import OutsideClickHandler from "react-outside-click-handler";
+import DailyRewardsPopup from "../../components/TimepieceMint/DailyRewardsPopup";
 
 const Land = ({
   handleConnectWallet,
@@ -20,6 +22,8 @@ const Land = ({
   chainId,
   showForms,
   balance,
+  count,
+  setCount
 }) => {
   const [showUnstakeModal, setShowUnstakeModal] = useState(false);
   const [showWithdrawModal, setshowWithdrawModal] = useState(false);
@@ -46,7 +50,7 @@ const Land = ({
   const [totalCawsDiscount, settotalCawsDiscount] = useState(0);
   const [limit, setLimit] = useState(0);
   const [newStakes, setnewStakes] = useState(0);
-
+  const [activePopup, setActivePopup] = useState(false);
   const [openStakeChecklist, setOpenStakeChecklist] = useState(false);
   const [mintName, setMintName] = useState("");
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
@@ -467,8 +471,27 @@ const Land = ({
     myCAWSNFTsTotalStaked.length,
   ]);
 
+
+  
+  useEffect(() => {
+    {count === 0 &&
+      setTimeout(() => {
+        setActivePopup(true);
+      }, 500);
+    }
+  }, []);
+
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
+         <OutsideClickHandler
+        id="popup"
+          onOutsideClick={() => {setActivePopup(false); setCount(1)}}
+      >
+        <DailyRewardsPopup
+          active={activePopup}
+              onClose={() => {setActivePopup(false); setCount(1)}}
+        />
+      </OutsideClickHandler>
       {openStakeChecklist === true && (
         <LandStakingChecklistModal
           onClose={() => {
