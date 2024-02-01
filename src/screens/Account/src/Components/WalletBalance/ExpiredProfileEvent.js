@@ -62,7 +62,7 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
             </span>
           </div>
         </div>
-        <img src={dypiusProfileBanner} alt="" className="dypiusprofile-banner"/>
+        {/* <img src={dypiusProfileBanner} alt="" className="dypiusprofile-banner"/> */}
       </div>
       <div className="profile-event-bottom p-2 d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-1">
@@ -77,8 +77,13 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
           ) : (
             <img src={grayDollar} height={15} width={15} alt="" />
           )}
+
           <span className="mb-0 event-bottom-text" style={{ color: "#B8B8E0" }}>
-            {getFormattedNumber(userEarnedUsd, 0)} DYP
+            {event.title === "Dypius" ? (
+              <>{getFormattedNumber(userEarnedUsd, 0)} DYP</>
+            ) : (
+              <>${getFormattedNumber(userEarnedUsd, 2)}</>
+            )}
           </span>
         </div>
 

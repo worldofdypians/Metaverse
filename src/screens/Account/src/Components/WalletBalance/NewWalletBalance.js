@@ -372,7 +372,7 @@ const NewWalletBalance = ({
     chain: "Base Chain",
     linkState: "base",
     rewards: "ETH",
-    status: "Live",
+    status: "Expired",
     id: "event4",
     date: "Nov 01, 2023",
     totalRewards: "$10,000 in ETH Rewards",
@@ -459,7 +459,7 @@ const NewWalletBalance = ({
     {
       title: "Base",
       logo: base,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$10,000 in ETH Rewards",
       myEarnings: 126.45,
       eventType: "Explore & Mine",
@@ -471,7 +471,7 @@ const NewWalletBalance = ({
         chain: "Base Chain",
         linkState: "base",
         rewards: "ETH",
-        status: "Live",
+        status: "Expired",
         id: "event4",
         date: "Nov 01, 2023",
         totalRewards: "$10,000 in ETH Rewards",
@@ -1121,7 +1121,7 @@ const NewWalletBalance = ({
                 event={dummyCmc}
                 userEarnedUsd={cmcuserEarnUsd}
               />
-              <ActiveProfileEvent
+              <ExpiredProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
                   setEventPopup(true);
