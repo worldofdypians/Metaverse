@@ -20,16 +20,15 @@ html {
   overflow-x: hidden;
 }
 
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
 #root {
   height: 100vh;
   width: 100vw;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
 /* Track */
 ::-webkit-scrollbar-track {
   background: #26264f;
@@ -576,6 +575,26 @@ body {
   white-space: pre;
 }
 
+.purple-btn2 {
+  background: linear-gradient(90deg, #CA00A0 1.45%, #4525C4 96.22%);
+  clip-path: polygon(
+    0 20px,
+    20px 0,
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    0 100%
+  );
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #fff;
+  border: none !important;
+  white-space: pre;
+}
+
 .linear-border-purple::before {
   content: "";
 }
@@ -596,6 +615,26 @@ body {
 
 .linear-border-purple {
   background: linear-gradient(266.71deg, #a420e2 8.87%, #1829bd 91.56%);
+  border: transparent;
+  position: relative;
+  padding: 3px;
+  border-radius: 8px;
+  clip-path: polygon(
+    0 20px,
+    20px 0,
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    0 100%
+  );
+
+  @media only screen and (max-width: 500px) {
+    align-self: center;
+  }
+}
+
+.linear-border-purple2 {
+  background: linear-gradient(90deg, #CA00A0 1.45%, #4525C4 96.22%);
   border: transparent;
   position: relative;
   padding: 3px;

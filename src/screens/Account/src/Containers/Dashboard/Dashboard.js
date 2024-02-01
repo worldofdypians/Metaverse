@@ -853,6 +853,8 @@ function Dashboard({
   };
 
   const refreshSubscription = async (addr) => {
+    const result = window.checkPremium(addr);
+
     let subscribedPlatformTokenAmountETH;
     let subscribedPlatformTokenAmountCfx;
     let subscribedPlatformTokenAmountBNB;
@@ -917,7 +919,8 @@ function Dashboard({
         subscribedPlatformTokenAmountETH === "0" &&
         subscribedPlatformTokenAmountBase === "0" &&
         subscribedPlatformTokenAmountBNB === "0" &&
-        subscribedPlatformTokenAmountAvax === "0"
+        subscribedPlatformTokenAmountAvax === "0" &&
+        result === false
       ) {
         setIsPremium(false);
       }
@@ -926,7 +929,8 @@ function Dashboard({
         subscribedPlatformTokenAmountETH !== "0" ||
         subscribedPlatformTokenAmountBase !== "0" ||
         subscribedPlatformTokenAmountBNB !== "0" ||
-        subscribedPlatformTokenAmountAvax !== "0"
+        subscribedPlatformTokenAmountAvax !== "0" ||
+        result === true
       ) {
         setIsPremium(true);
       }

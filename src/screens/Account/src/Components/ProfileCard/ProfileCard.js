@@ -1005,7 +1005,7 @@ const ProfileCard = ({
                 email && coinbase && username ? "py-2" : "p-0"
               }`}
             >
-              <div className="d-flex flex-column flex-xxl-row flex-lg-row  align-items-center justify-content-between gap-2">
+              <div className={`d-flex flex-column flex-xxl-row flex-lg-row  align-items-center gap-2 ${coinbase ? 'justify-content-between' : 'justify-content-end p-2'} `}>
                 {address &&
                   email &&
                   coinbase &&
@@ -1080,7 +1080,7 @@ const ProfileCard = ({
                           : "Error"}
                       </button>
                     )}
-                  {address && email && coinbase && (
+                  {address && email && (
                     <button
                       className="logoutbtn px-3 py-1"
                       onClick={onLogoutClick}
