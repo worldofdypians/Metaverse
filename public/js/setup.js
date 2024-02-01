@@ -41516,6 +41516,10 @@ const landWhitelist = [
   "0x7476d4f4cb2f8e1262be377feaced711f8765ea3",
 ];
 
+const premiumUsers = [
+  '0x2b838a5a2b8a2e80e965f1fc9dfed63f1cc269fd'
+]
+
 window.checkWhitelistLand = function (address) {
   // console.log("CHECKCK")
   let found = 0;
@@ -41524,3 +41528,13 @@ window.checkWhitelistLand = function (address) {
   }
   return found;
 };
+
+window.checkPremium = function (address) {
+  // console.log("CHECKCK")
+  let found = false;
+  for (let i of premiumUsers) {
+    if (address.toLowerCase() == i.toLowerCase()) found = true;
+  }
+  return found;
+};
+
