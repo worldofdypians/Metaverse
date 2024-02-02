@@ -393,6 +393,17 @@ const MyRewardsPopup = ({
     }
   };
 
+  const fetchPastDailyBonusCaws= async (userAddr) => {
+    const result = await axios.get(
+      `https://api.worldofdypians.com/api/caws/${userAddr}`
+    );
+    if (result && result.status === 200) {
+      const caws_Rewards = result.data.userRewards;
+
+      setpastTreasureRewardNftCaws(caws_Rewards);
+    }
+  };
+
   const fetchLeaderboardData = async (userAddr) => {
     const result = await axios
       .get(`https://api.worldofdypians.com/api/leaderboard_rewards/${userAddr}`)
@@ -536,6 +547,7 @@ const MyRewardsPopup = ({
     fetchPastSpecialRewards(address);
     fetchPastDailyBonusMoney(address);
     fetchPastDailyBonusBetaPass(address);
+    fetchPastDailyBonusCaws(address);
     fetchCachedData();
   }, [address, email]);
 

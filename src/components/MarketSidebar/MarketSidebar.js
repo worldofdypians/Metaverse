@@ -244,6 +244,28 @@ const MarketSidebar = () => {
               );
             }}
           />
+             <NavLink
+            to="/marketplace/nft-bridge"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
+            }
+            children={({ isActive }) => {
+              const icon = isActive ? "bridgeIconActive" : "bridgeIcon";
+              return (
+                <>
+                  <img
+                    src={require(`./assets/${icon}.svg`)}
+                    style={{ width: "20px", height: "20px" }}
+                    alt=""
+                  />
+                  <span className={`sidebar-title`}>NFT Bridge</span>
+                </>
+              );
+            }}
+          />
         </div>
         <div
           className={`join-now-wrapper ${

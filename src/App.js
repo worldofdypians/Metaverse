@@ -68,8 +68,8 @@ import {
 } from "web3-connector";
 import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
-
 import ChestFlyout from "./components/LandFlyout/ChestFlyout";
+import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 
 function App() {
   const CHAINLIST = {
@@ -187,6 +187,18 @@ function App() {
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
 
+  const [MyNFTSCaws2, setMyNFTSCaws2] = useState([]);
+  const [myLandNFTs, setMyLandNFTs] = useState([]);
+
+  const [MyNFTSCawsBnb, setMyNFTSCawsBnb] = useState([]);
+  const [myLandNFTsBnb, setMyLandNFTsBnb] = useState([]);
+
+  const [MyNFTSCawsAvax, setMyNFTSCawsAvax] = useState([]);
+  const [myLandNFTsAvax, setMyLandNFTsAvax] = useState([]);
+
+  const [MyNFTSCawsBase, setMyNFTSCawsBase] = useState([]);
+  const [myLandNFTsBase, setMyLandNFTsBase] = useState([]);
+
   const [MyNFTSCoingecko, setMyNFTSCoingecko] = useState([]);
   const [myGateNfts, setMyGateNfts] = useState([]);
   const [myConfluxNfts, setMyConfluxNfts] = useState([]);
@@ -206,6 +218,8 @@ function App() {
   ] = useState([]);
 
   const [nftCount, setNftCount] = useState(1);
+  const [count, setCount] = useState(1);
+
   const [dypTokenData, setDypTokenData] = useState(0);
   const [dypTokenData_old, setDypTokenData_old] = useState();
   const [ethTokenData, setEthTokenData] = useState(0);
@@ -583,6 +597,129 @@ function App() {
       setMyNFTs(nfts);
     }
   };
+
+  const myLandNft = async () => {
+    let myNft = await window.myNftLandListContract(coinbase);
+
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getLandNft(nft));
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyLandNFTs(nfts);
+    } else setMyLandNFTs([]);
+  };
+
+  const myNft2 = async () => {
+    let myNft = await window.myNftListContract(coinbase);
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getNft(nft));
+
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyNFTSCaws2(nfts);
+    } else setMyNFTSCaws2([]);
+  };
+
+  const myLandNftBNB = async () => {
+    let myNft = await window.myNftLandListContractCCIP(
+      coinbase,
+      window.config.nft_land_bnb_address
+    );
+
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getLandNft(nft));
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyLandNFTsBnb(nfts);
+    } else setMyLandNFTsBnb([]);
+  };
+
+  const myNftBNB = async () => {
+    let myNft = await window.myNftListContractCCIP(
+      coinbase,
+      window.config.nft_caws_bnb_address
+    );
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getNft(nft));
+
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyNFTSCawsBnb(nfts);
+    } else setMyNFTSCawsBnb([]);
+  };
+
+  const myLandNftAVAX = async () => {
+    let myNft = await window.myNftLandListContractCCIP(
+      coinbase,
+      window.config.nft_land_avax_address
+    );
+
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getLandNft(nft));
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyLandNFTsAvax(nfts);
+    } else setMyLandNFTsAvax([]);
+  };
+
+  const myNft2Avax = async () => {
+    let myNft = await window.myNftListContractCCIP(
+      coinbase,
+      window.config.nft_caws_avax_address
+    );
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getNft(nft));
+
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyNFTSCawsAvax(nfts);
+    } else setMyNFTSCawsAvax([]);
+  };
+
+  const myLandNftsBase = async () => {
+    let myNft = await window.myNftLandListContractCCIPBase(
+      coinbase,
+      window.config.nft_land_base_address
+    );
+
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getLandNft(nft));
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyLandNFTsBase(nfts);
+    } else setMyLandNFTsBase([]);
+  };
+
+  const myNftsBase = async () => {
+    let myNft = await window.myNftListContractCCIPBase(
+      coinbase,
+      window.config.nft_caws_base_address
+    );
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getNft(nft));
+
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyNFTSCawsBase(nfts);
+    } else setMyNFTSCawsBase([]);
+  };
+
   const getMyNFTS = async (coinbase, type) => {
     return await window.getMyNFTs(coinbase, type);
   };
@@ -1390,11 +1527,31 @@ function App() {
       myCAWStakes();
       myLandStakes();
       getmyCawsWodStakes();
-      myCAWNft();
+      myNft2();
+      myLandNft();
+    }
+    if (isConnected === true && coinbase) {
       myNft();
+      myCAWNft();
     }
     fetchAllMyNfts();
   }, [isConnected, chainId, currencyAmount, coinbase]);
+
+  useEffect(() => {
+    if (isConnected === true && coinbase && chainId === 1) {
+      myNft2();
+      myLandNft();
+    } else if (isConnected === true && coinbase && chainId === 56) {
+      myNftBNB();
+      myLandNftBNB();
+    } else if (isConnected === true && coinbase && chainId === 43114) {
+      myNft2Avax();
+      myLandNftAVAX();
+    } else if (isConnected === true && coinbase && chainId === 8453) {
+      myNftsBase();
+      myLandNftsBase();
+    }
+  }, [isConnected, chainId, coinbase, count]);
 
   // useEffect(() => {
   //   if (
@@ -1992,6 +2149,47 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   timepieceMetadata={timepieceMetadata}
+                />
+              }
+            />
+
+            <Route
+              exact
+              path="/marketplace/nft-bridge"
+              element={
+                <NFTBridge
+                  coinbase={coinbase}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                  chainId={chainId}
+                  isConnected={isConnected}
+                  myNFTSLand={
+                    chainId === 1
+                      ? myLandNFTs
+                      : chainId === 56
+                      ? myLandNFTsBnb
+                      : chainId === 43114
+                      ? myLandNFTsAvax
+                      : chainId === 8453
+                      ? myLandNFTsBase
+                      : myLandNFTs
+                  }
+                  myNFTSCaws={
+                    chainId === 1
+                      ? MyNFTSCaws2
+                      : chainId === 56
+                      ? MyNFTSCawsBnb
+                      : chainId === 43114
+                      ? MyNFTSCawsAvax
+                      : chainId === 8453
+                      ? MyNFTSCawsBase
+                      : MyNFTSCaws2
+                  }
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  onSuccessTransfer={() => {
+                    setCount(count + 1);
+                  }}
                 />
               }
             />
