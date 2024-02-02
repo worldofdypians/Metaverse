@@ -131,7 +131,7 @@ function App() {
   const [showForms, setShowForms] = useState(false);
   const [showForms2, setShowForms2] = useState(false);
   const [myNFTs, setMyNFTs] = useState([]);
-const [count, setCount] = useState(0)
+  const [count2, setCount2] = useState(0);
   const [myCAWNFTs, setMyCAWNFTs] = useState([]);
   const [cawsToUse, setcawsToUse] = useState([]);
   const [avatar, setAvatar] = useState();
@@ -747,11 +747,10 @@ const [count, setCount] = useState(0)
       });
 
       getMyNFTS(coinbase, "cmc").then((NFTS) => {
-        if(NFTS) {
-           settotalCmcNft(NFTS.length);
-        setmyCmcNFTs(NFTS);
+        if (NFTS) {
+          settotalCmcNft(NFTS.length);
+          setmyCmcNFTs(NFTS);
         }
-       
       });
 
       getMyNFTS(coinbase, "conflux").then((NFTS) => {
@@ -1954,7 +1953,6 @@ const [count, setCount] = useState(0)
     }
   };
 
-
   const getAllData = async () => {
     const result = await axios
       .get("https://api.worldofdypians.com/api/totalTXs")
@@ -1978,10 +1976,10 @@ const [count, setCount] = useState(0)
     }
   };
 
-  useEffect(()=>{
-    getAllData()
-    fetchDogeCoinPrice()
-  },[coinbase])
+  useEffect(() => {
+    getAllData();
+    fetchDogeCoinPrice();
+  }, [coinbase]);
 
   useEffect(() => {
     getDomains();
@@ -2036,6 +2034,15 @@ const [count, setCount] = useState(0)
       );
     }
   }, [coinbase, nftCount]);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      setCount2(0);
+      return () => clearInterval(interval);
+    }, 300000);
+  }, [count2]);
+
+  console.log(count2);
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -2126,7 +2133,11 @@ const [count, setCount] = useState(0)
               }
             />
             <Route exact path="/roadmap" element={<Roadmap />} />
-            <Route exact path="/explorer" element={<Explorer />} />
+            <Route
+              exact
+              path="/explorer"
+              element={<Explorer count={count2} setCount={setCount2} />}
+            />
             <Route exact path="/stake" element={<NftMinting />} />
             <Route exact path="/contact-us" element={<PartnerForm />} />
             <Route exact path="/unsubscribe/:email" element={<Unsubscribe />} />
@@ -2242,8 +2253,8 @@ const [count, setCount] = useState(0)
               path="/land"
               element={
                 <Land
-                count={count}
-                setCount={setCount}
+                  count={count2}
+                  setCount={setCount2}
                   handleConnectWallet={handleConnectWallet}
                   coinbase={coinbase}
                   isConnected={isConnected}
@@ -2265,8 +2276,8 @@ const [count, setCount] = useState(0)
               path="/marketplace"
               element={
                 <Marketplace
-                count={count}
-                setCount={setCount}
+                  count={count2}
+                  setCount={setCount2}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   dypTokenData_old={dypTokenData_old}
@@ -2678,7 +2689,6 @@ const [count, setCount] = useState(0)
                   ethTokenData={ethTokenData}
                   dyptokenData_old={dypTokenData_old}
                   dogePrice={dogePrice}
-
                 />
               }
             />
@@ -2702,7 +2712,6 @@ const [count, setCount] = useState(0)
                   }}
                   ethTokenData={ethTokenData}
                   dogePrice={dogePrice}
-
                 />
               }
             />
@@ -2726,7 +2735,6 @@ const [count, setCount] = useState(0)
                   dyptokenData_old={dypTokenData_old}
                   ethTokenData={ethTokenData}
                   dogePrice={dogePrice}
-
                 />
               }
             />

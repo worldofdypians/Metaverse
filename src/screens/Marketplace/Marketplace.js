@@ -583,7 +583,7 @@ const Marketplace = ({
           setActivePopup(true);
         }, 500);
     }
-  }, []);
+  }, [count]);
 
   return (
     <div
@@ -593,11 +593,17 @@ const Marketplace = ({
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <OutsideClickHandler
         id="popup"
-        onOutsideClick={() => {setActivePopup(false); setCount(1)}}
+        onOutsideClick={() => {
+          setActivePopup(false);
+          setCount(1);
+        }}
       >
         <DailyRewardsPopup
           active={activePopup}
-          onClose={() => {setActivePopup(false); setCount(1)}}
+          onClose={() => {
+            setActivePopup(false);
+            setCount(1);
+          }}
         />
       </OutsideClickHandler>
       <div className="container-nft d-flex align-items-start px-0 px-lg-5 position-relative">
