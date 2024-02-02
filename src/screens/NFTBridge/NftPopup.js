@@ -66,7 +66,7 @@ const NftPopup = ({
   }, []);
 
   return (
-    <div className="stake-modal p-3">
+    <div className="stake-modal2 p-3">
       <div className="d-flex align-items-center justify-content-between">
         <h6 className="stake-modal-title">Select NFT</h6>
         <img
