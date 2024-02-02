@@ -74,6 +74,8 @@ const MyRewardsPopup = ({
   const [pastSpecialRewards, setpastSpecialRewards] = useState(0);
 
   const [gateRewardsUSD, setGateRewardsUSD] = useState(0);
+  const [baseRewardsUSD, setBaseRewardsUSD] = useState(0);
+
   const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
 
   const getBundles = async () => {
@@ -329,6 +331,20 @@ const MyRewardsPopup = ({
       });
   };
 
+  const fetchBaseUSDRewards = async (addr) => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/base_rewards_pass/${addr}`)
+      .then((data) => {
+        if (data.data.userRewards) {
+          localStorage.setItem("cachedBaseRewards", data.data.userRewards);
+          setBaseRewardsUSD(data.data.userRewards);
+        } else {
+          setBaseRewardsUSD(0);
+          localStorage.setItem("cachedBaseRewards", 0);
+        }
+      });
+  };
+
   const fetchNftRewards = async (userAddr) => {
     if (userAddr) {
       const cawsResult = await axios.get(
@@ -393,7 +409,7 @@ const MyRewardsPopup = ({
     }
   };
 
-  const fetchPastDailyBonusCaws= async (userAddr) => {
+  const fetchPastDailyBonusCaws = async (userAddr) => {
     const result = await axios.get(
       `https://api.worldofdypians.com/api/caws/${userAddr}`
     );
@@ -482,6 +498,8 @@ const MyRewardsPopup = ({
       "cachedCoingeckoRewards"
     );
 
+    const cachedBaseRewards = localStorage.getItem("cachedBaseRewards");
+
     const cachedCawsUserRewards = localStorage.getItem("cachedCawsUserRewards");
     const cachedWodCawsUserRewards = localStorage.getItem(
       "cachedWodCawsUserRewards"
@@ -502,7 +520,8 @@ const MyRewardsPopup = ({
       cachedGem_Rewards &&
       cachedLeaderboardearnings &&
       cachedDypiusRewards &&
-      cachedCoingeckoRewards
+      cachedCoingeckoRewards &&
+      cachedBaseRewards
     ) {
       setConfluxRewardsUSD(Number(cachedConfluxRewards));
 
@@ -521,6 +540,8 @@ const MyRewardsPopup = ({
       setleaderboardTotalData(Number(cachedLeaderboardearnings));
 
       setcoingeckoRewardsUSD(cachedCoingeckoRewards);
+
+      setBaseRewardsUSD(cachedBaseRewards);
     }
   };
 
@@ -542,6 +563,7 @@ const MyRewardsPopup = ({
     fetchLeaderboardData(address);
     fetchConfluxUSDRewards(address);
     fetchGateUSDRewards(address);
+    fetchBaseUSDRewards(address);
     fetchDypiusUSDRewards(address);
     fetchCoingeckoUSDRewards(address);
     fetchPastSpecialRewards(address);
@@ -720,13 +742,13 @@ const MyRewardsPopup = ({
                 Base
               </td>
               <td className="myrewards-td-second border-0 specialCell text-center">
-                ${getFormattedNumber(baseEarnUSD, 2)}
-              </td>
-              <td className="myrewards-td-second border-0 text-center">
-                {getFormattedNumber(baseEarnETH, 4)} WETH
-              </td>
-              <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(0, 2)}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {getFormattedNumber(0, 4)} WETH
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                ${getFormattedNumber(baseRewardsUSD, 2)}
               </td>
             </tr>
             <tr>
