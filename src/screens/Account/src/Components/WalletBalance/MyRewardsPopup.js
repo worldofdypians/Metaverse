@@ -987,6 +987,7 @@ const MyRewardsPopup = ({
                 Number(dypiusRewardsUSD) +
                 Number(pastSpecialRewards) +
                 Number(coingeckoRewardsUSD) +
+                Number(baseRewardsUSD) +
                 Number(cawsRewards) +
                 Number(wodCawsRewards) +
                 Number(pasttreasureRewardMoney) +
