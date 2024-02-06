@@ -131,7 +131,7 @@ function App() {
   const [showForms, setShowForms] = useState(false);
   const [showForms2, setShowForms2] = useState(false);
   const [myNFTs, setMyNFTs] = useState([]);
-
+  const [count2, setCount2] = useState(0);
   const [myCAWNFTs, setMyCAWNFTs] = useState([]);
   const [cawsToUse, setcawsToUse] = useState([]);
   const [avatar, setAvatar] = useState();
@@ -747,11 +747,10 @@ function App() {
       });
 
       getMyNFTS(coinbase, "cmc").then((NFTS) => {
-        if(NFTS) {
-           settotalCmcNft(NFTS.length);
-        setmyCmcNFTs(NFTS);
+        if (NFTS) {
+          settotalCmcNft(NFTS.length);
+          setmyCmcNFTs(NFTS);
         }
-       
       });
 
       getMyNFTS(coinbase, "conflux").then((NFTS) => {
@@ -1954,7 +1953,6 @@ function App() {
     }
   };
 
-
   const getAllData = async () => {
     const result = await axios
       .get("https://api.worldofdypians.com/api/totalTXs")
@@ -1978,10 +1976,10 @@ function App() {
     }
   };
 
-  useEffect(()=>{
-    getAllData()
-    fetchDogeCoinPrice()
-  },[coinbase])
+  useEffect(() => {
+    getAllData();
+    fetchDogeCoinPrice();
+  }, [coinbase]);
 
   useEffect(() => {
     getDomains();
@@ -2036,6 +2034,14 @@ function App() {
       );
     }
   }, [coinbase, nftCount]);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      setCount2(0);
+      return () => clearInterval(interval);
+    }, 300000);
+  }, [count2]);
+
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -2126,7 +2132,11 @@ function App() {
               }
             />
             <Route exact path="/roadmap" element={<Roadmap />} />
-            <Route exact path="/explorer" element={<Explorer />} />
+            <Route
+              exact
+              path="/explorer"
+              element={<Explorer count={count2} setCount={setCount2} />}
+            />
             <Route exact path="/stake" element={<NftMinting />} />
             <Route exact path="/contact-us" element={<PartnerForm />} />
             <Route exact path="/unsubscribe/:email" element={<Unsubscribe />} />
@@ -2242,6 +2252,8 @@ function App() {
               path="/land"
               element={
                 <Land
+                  count={count2}
+                  setCount={setCount2}
                   handleConnectWallet={handleConnectWallet}
                   coinbase={coinbase}
                   isConnected={isConnected}
@@ -2263,6 +2275,8 @@ function App() {
               path="/marketplace"
               element={
                 <Marketplace
+                  count={count2}
+                  setCount={setCount2}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   dypTokenData_old={dypTokenData_old}
@@ -2674,7 +2688,6 @@ function App() {
                   ethTokenData={ethTokenData}
                   dyptokenData_old={dypTokenData_old}
                   dogePrice={dogePrice}
-
                 />
               }
             />
@@ -2698,7 +2711,6 @@ function App() {
                   }}
                   ethTokenData={ethTokenData}
                   dogePrice={dogePrice}
-
                 />
               }
             />
@@ -2722,7 +2734,6 @@ function App() {
                   dyptokenData_old={dypTokenData_old}
                   ethTokenData={ethTokenData}
                   dogePrice={dogePrice}
-
                 />
               }
             />
