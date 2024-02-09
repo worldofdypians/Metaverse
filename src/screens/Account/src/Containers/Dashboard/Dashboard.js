@@ -1462,6 +1462,15 @@ function Dashboard({
       });
   };
 
+  const handleUpdatePremiumUser = async (wallet) => {
+  await axios
+      .get(`https://api.worldofdypians.com/api/sub/${wallet}`)
+      .catch((e) => {
+        console.error(e);
+      });
+
+  };
+
   const handleCheckIfAlreadyApproved = async (token) => {
     const web3eth = new Web3(window.config.infura_endpoint);
     const bscWeb3 = new Web3(window.config.bsc_endpoint);
@@ -1621,6 +1630,7 @@ function Dashboard({
       .then(() => {
         setloadspinnerSub(false);
         setIsPremium(true);
+        handleUpdatePremiumUser(coinbase);
         setapproveStatus("successsubscribe");
         setTimeout(() => {
           setloadspinnerSub(false);
