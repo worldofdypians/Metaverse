@@ -350,7 +350,6 @@ const SingleNft = ({
       const nftowner = await window.caws_timepiece.ownerOf(Id).catch((e) => {
         console.log(e);
       });
-
       setowner(nftowner);
     } else if (type === "land") {
       const nftowner = await window.landnft.ownerOf(Id).catch((e) => {
@@ -1148,9 +1147,14 @@ const SingleNft = ({
       nftAddr
     );
     if (listedNFTS.length > 0) {
+    
+      if (listedNFTS[0].seller.toLowerCase() !== owner.toLowerCase()) {
+        setIsListed(false);
+      } else if (listedNFTS[0].seller.toLowerCase() === owner.toLowerCase()) {
+        setIsListed(true);
+      }
       setNft(...listedNFTS);
       setloadingNft(false);
-      setIsListed(true);
     } else {
       setNft([]);
       setloadingNft(false);
@@ -1517,7 +1521,7 @@ const SingleNft = ({
         : "land",
       nftId
     );
-  }, [nftCount]);
+  }, [nftCount, owner]);
 
   useEffect(() => {
     getOffer();
@@ -1733,7 +1737,7 @@ const SingleNft = ({
                           : ethIcon
                       }
                       alt=""
-                      style={{width: 20, height:20}}
+                      style={{ width: 20, height: 20 }}
                     />{" "}
                     {type === "coingecko" ||
                     type === "gate" ||
@@ -1922,7 +1926,7 @@ const SingleNft = ({
 
                     {!isOwner &&
                       !IsListed &&
-                      !nft.price && 
+                      (!nft.price || nft.price) &&
                       type !== "cawsbnb" &&
                       type !== "cawsavax" &&
                       type !== "cawsbase" &&
@@ -2283,8 +2287,7 @@ const SingleNft = ({
                           </div>
                         </div>
                       )}
-                    {
-                      !IsListed &&
+                    {!IsListed &&
                       !loadingNft &&
                       (type === "coingecko" ||
                         type === "gate" ||
