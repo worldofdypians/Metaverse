@@ -25,6 +25,7 @@ import newEvents from "./assets/newEvents.png";
 import betaPassAddition from "./assets/betaPassAddition.png";
 import globalEvents from "./assets/globalEvents.png";
 import partnershipAddition from "./assets/partnershipAddition.png";
+import epicwhite from "./assets/epicwhite.svg";
 
 const Roadmap = () => {
   useEffect(() => {
@@ -74,7 +75,8 @@ const Roadmap = () => {
     ],
   };
 
-const [title, setTitle] = useState("2024")
+  const [title, setTitle] = useState("2024");
+  const [tooltip, setTooltip] = useState(false);
 
   const roadmapItems2023 = [
     {
@@ -614,46 +616,72 @@ const [title, setTitle] = useState("2024")
           </span>
         </div>
         <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5">
-          <div className="d-flex align-items-center justify-content-start mb-5 gap-3">
-            <div
-              className="linear-border"
-              style={{
-                width: "fit-content",
-              }}
-            >
-              <button
-                className={`btn ${
-                  title === "2023"
-                    ? "filled-btn"
-                    : "outline-btn"
-                } px-5`}
-                onClick={() => {
-                  setRoadmapItems(roadmapItems2023);
-                  setTitle("2023")
+          <div className="d-flex flex-column flex-xxl-row align-items-center justify-content-between mb-5 gap-3 position-relative">
+            <div className="d-flex align-items-center gap-3">
+              <div
+                className="linear-border"
+                style={{
+                  width: "fit-content",
                 }}
               >
-                2023
-              </button>
-            </div>{" "}
-            <div
-              className="linear-border"
-              style={{
-                width: "fit-content",
-              }}
-            >
-              <button
-                className={`btn ${
-                  title === "2024"
-                    ? "filled-btn"
-                    : "outline-btn"
-                } px-5`}
-                onClick={() => {
-                  setRoadmapItems(roadmapItems2024);
-                  setTitle("2024")
+                <button
+                  className={`btn ${
+                    title === "2023" ? "filled-btn" : "outline-btn"
+                  } px-5`}
+                  onClick={() => {
+                    setRoadmapItems(roadmapItems2023);
+                    setTitle("2023");
+                  }}
+                >
+                  2023
+                </button>
+              </div>
+              <div
+                className="linear-border"
+                style={{
+                  width: "fit-content",
                 }}
               >
-                2024
-              </button>
+                <button
+                  className={`btn ${
+                    title === "2024" ? "filled-btn" : "outline-btn"
+                  } px-5`}
+                  onClick={() => {
+                    setRoadmapItems(roadmapItems2024);
+                    setTitle("2024");
+                  }}
+                >
+                  2024
+                </button>
+              </div>
+            </div>
+            <div
+              className="opacitywrapper4 m-0"
+              onMouseEnter={() => {
+                setTooltip(true);
+              }}
+              onMouseLeave={() => {
+                setTooltip(false);
+              }}
+            >
+              <a
+                className="game-event-download text-white d-flex align-items-center gap-2"
+                href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                target="_blank"
+              >
+                <img
+                  src={epicwhite}
+                  alt="icon"
+                  style={{ width: 20, height: 24 }}
+                />
+                Download
+              </a>
+            </div>
+            <div
+              className={`tooltip-wrapper p-2 ${tooltip && "tooltip-active"}`}
+              style={{ top: "-30px", right: 30 }}
+            >
+              <p className="tooltip-content m-0">Early Access Game</p>
             </div>
           </div>
           <div className="roadmap-grid px-3 px-lg-0">
