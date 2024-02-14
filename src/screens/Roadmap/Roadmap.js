@@ -616,7 +616,7 @@ const Roadmap = () => {
           </span>
         </div>
         <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5">
-          <div className="d-flex flex-column flex-xxl-row align-items-center justify-content-between mb-5 gap-3 position-relative">
+          <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between mb-5 gap-3 position-relative">
             <div className="d-flex align-items-center gap-3">
               <div
                 className="linear-border"
