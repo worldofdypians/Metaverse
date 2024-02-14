@@ -19,17 +19,17 @@ const getEthPrice = async () => {
 
 const getDypPrice = async () => {
   const dypprice = await axios
-  .get(
-    "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
-  )
-  .then((res) => {
-    return res.data.data.attributes.base_token_price_usd;
-  })
-  .catch((e) => {
-    console.log(e);
-  });
+    .get(
+      "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
+    )
+    .then((res) => {
+      return res.data.data.attributes.base_token_price_usd;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 
-    return dypprice;
+  return dypprice;
 };
 
 const getListedNftResult = async () => {
@@ -71,17 +71,53 @@ const getAllNfts = async () => {
   if (result) {
     const conversionPromises = result.map(async (nft) => {
       if (nft.nftAddress === window.config.nft_caws_address) {
-        nft.type = "caws";
-        nft.chain = 1;
-        convertedNFTs.push(nft);
+        const nft_contract = new window.infuraWeb3.eth.Contract(
+          window.CAWS_ABI,
+          window.config.nft_caws_address
+        );
+        const nftowner = await nft_contract.methods
+          .ownerOf(nft.tokenId)
+          .call()
+          .catch((e) => {
+            console.log(e);
+          });
+        if (nftowner && nftowner.toLowerCase() === nft.seller.toLowerCase()) {
+          nft.type = "caws";
+          nft.chain = 1;
+          convertedNFTs.push(nft);
+        }
       } else if (nft.nftAddress === window.config.nft_land_address) {
-        nft.type = "land";
-        nft.chain = 1;
-        convertedNFTs.push(nft);
+        const nft_contract = new window.infuraWeb3.eth.Contract(
+          window.WOD_ABI,
+          window.config.nft_land_address
+        );
+        const nftowner = await nft_contract.methods
+          .ownerOf(nft.tokenId)
+          .call()
+          .catch((e) => {
+            console.log(e);
+          });
+        if (nftowner && nftowner.toLowerCase() === nft.seller.toLowerCase()) {
+          nft.type = "land";
+          nft.chain = 1;
+          convertedNFTs.push(nft);
+        }
       } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-        nft.type = "timepiece";
-        nft.chain = 1;
-        convertedNFTs.push(nft);
+        const nft_contract = new window.infuraWeb3.eth.Contract(
+          window.TIMEPIECE_ABI,
+          window.config.nft_timepiece_address
+        );
+        const nftowner = await nft_contract.methods
+          .ownerOf(nft.tokenId)
+          .call()
+          .catch((e) => {
+            console.log(e);
+          });
+        if (nftowner && nftowner.toLowerCase() === nft.seller.toLowerCase()) {
+          nft.type = "timepiece";
+          nft.chain = 1;
+          convertedNFTs.push(nft);
+        }
       }
     });
     await Promise.all(conversionPromises);

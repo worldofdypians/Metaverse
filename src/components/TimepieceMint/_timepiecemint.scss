@@ -1592,6 +1592,11 @@ input::-webkit-inner-spin-button {
   line-height: normal;
 }
 
+.daily-rewards-popup{
+  background: rgba(8, 11, 42, 0.8) !important;
+
+}
+
 .mint-popup {
   border-radius: 8px;
   background: linear-gradient(127deg, #181636 35.2%, #7133e5 191.04%);
@@ -1609,7 +1614,7 @@ input::-webkit-inner-spin-button {
   transition: all 0.25s ease-in-out;
 
   @media screen and (max-width: 1455px) {
-    width: 40%;
+    width: 40% !important;
   }
   @media screen and (max-width: 1300px) {
     width: 50% !important;
@@ -1736,4 +1741,43 @@ input::-webkit-inner-spin-button {
   background-color: #b71061;
   border-radius: 50%;
   animation: pulseDot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
+}
+
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateY(10px) ranslateX(-10px);
+  }
+  50% {
+    transform: translateY(-10px) translateX(-10px);
+  }
+  75% {
+    transform: translateY(10px) translateX(10px);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+.shake-img{
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  left: -50px;
+  animation: shake 5s ease-in-out infinite;
+
+}
+
+.rewards-title{
+  color: #18FFFF;
+text-align: right;
+font-size: 30px;
+font-style: normal;
+font-style: italic;
+font-weight: 900;
+text-transform: uppercase;
 }

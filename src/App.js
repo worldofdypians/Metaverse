@@ -68,8 +68,8 @@ import {
 } from "web3-connector";
 import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
-
 import ChestFlyout from "./components/LandFlyout/ChestFlyout";
+import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 
 function App() {
   const CHAINLIST = {
@@ -131,7 +131,7 @@ function App() {
   const [showForms, setShowForms] = useState(false);
   const [showForms2, setShowForms2] = useState(false);
   const [myNFTs, setMyNFTs] = useState([]);
-
+  const [count2, setCount2] = useState(0);
   const [myCAWNFTs, setMyCAWNFTs] = useState([]);
   const [cawsToUse, setcawsToUse] = useState([]);
   const [avatar, setAvatar] = useState();
@@ -187,6 +187,18 @@ function App() {
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
 
+  const [MyNFTSCaws2, setMyNFTSCaws2] = useState([]);
+  const [myLandNFTs, setMyLandNFTs] = useState([]);
+
+  const [MyNFTSCawsBnb, setMyNFTSCawsBnb] = useState([]);
+  const [myLandNFTsBnb, setMyLandNFTsBnb] = useState([]);
+
+  const [MyNFTSCawsAvax, setMyNFTSCawsAvax] = useState([]);
+  const [myLandNFTsAvax, setMyLandNFTsAvax] = useState([]);
+
+  const [MyNFTSCawsBase, setMyNFTSCawsBase] = useState([]);
+  const [myLandNFTsBase, setMyLandNFTsBase] = useState([]);
+
   const [MyNFTSCoingecko, setMyNFTSCoingecko] = useState([]);
   const [myGateNfts, setMyGateNfts] = useState([]);
   const [myConfluxNfts, setMyConfluxNfts] = useState([]);
@@ -206,6 +218,8 @@ function App() {
   ] = useState([]);
 
   const [nftCount, setNftCount] = useState(1);
+  const [count, setCount] = useState(1);
+
   const [dypTokenData, setDypTokenData] = useState(0);
   const [dypTokenData_old, setDypTokenData_old] = useState();
   const [ethTokenData, setEthTokenData] = useState(0);
@@ -583,6 +597,129 @@ function App() {
       setMyNFTs(nfts);
     }
   };
+
+  const myLandNft = async () => {
+    let myNft = await window.myNftLandListContract(coinbase);
+
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getLandNft(nft));
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyLandNFTs(nfts);
+    } else setMyLandNFTs([]);
+  };
+
+  const myNft2 = async () => {
+    let myNft = await window.myNftListContract(coinbase);
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getNft(nft));
+
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyNFTSCaws2(nfts);
+    } else setMyNFTSCaws2([]);
+  };
+
+  const myLandNftBNB = async () => {
+    let myNft = await window.myNftLandListContractCCIP(
+      coinbase,
+      window.config.nft_land_bnb_address
+    );
+
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getLandNft(nft));
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyLandNFTsBnb(nfts);
+    } else setMyLandNFTsBnb([]);
+  };
+
+  const myNftBNB = async () => {
+    let myNft = await window.myNftListContractCCIP(
+      coinbase,
+      window.config.nft_caws_bnb_address
+    );
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getNft(nft));
+
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyNFTSCawsBnb(nfts);
+    } else setMyNFTSCawsBnb([]);
+  };
+
+  const myLandNftAVAX = async () => {
+    let myNft = await window.myNftLandListContractCCIP(
+      coinbase,
+      window.config.nft_land_avax_address
+    );
+
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getLandNft(nft));
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyLandNFTsAvax(nfts);
+    } else setMyLandNFTsAvax([]);
+  };
+
+  const myNft2Avax = async () => {
+    let myNft = await window.myNftListContractCCIP(
+      coinbase,
+      window.config.nft_caws_avax_address
+    );
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getNft(nft));
+
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyNFTSCawsAvax(nfts);
+    } else setMyNFTSCawsAvax([]);
+  };
+
+  const myLandNftsBase = async () => {
+    let myNft = await window.myNftLandListContractCCIPBase(
+      coinbase,
+      window.config.nft_land_base_address
+    );
+
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getLandNft(nft));
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyLandNFTsBase(nfts);
+    } else setMyLandNFTsBase([]);
+  };
+
+  const myNftsBase = async () => {
+    let myNft = await window.myNftListContractCCIPBase(
+      coinbase,
+      window.config.nft_caws_base_address
+    );
+    if (myNft && myNft.length > 0) {
+      let nfts = myNft.map((nft) => window.getNft(nft));
+
+      nfts = await Promise.all(nfts);
+
+      nfts.reverse();
+
+      setMyNFTSCawsBase(nfts);
+    } else setMyNFTSCawsBase([]);
+  };
+
   const getMyNFTS = async (coinbase, type) => {
     return await window.getMyNFTs(coinbase, type);
   };
@@ -610,11 +747,10 @@ function App() {
       });
 
       getMyNFTS(coinbase, "cmc").then((NFTS) => {
-        if(NFTS) {
-           settotalCmcNft(NFTS.length);
-        setmyCmcNFTs(NFTS);
+        if (NFTS) {
+          settotalCmcNft(NFTS.length);
+          setmyCmcNFTs(NFTS);
         }
-       
       });
 
       getMyNFTS(coinbase, "conflux").then((NFTS) => {
@@ -1239,44 +1375,141 @@ function App() {
     let finalboughtItems1 = [];
     let finalboughtItems2 = [];
 
-    listedNFTS2 &&
-      listedNFTS2.length > 0 &&
-      listedNFTS2.map((nft) => {
-        if (nft.nftAddress === window.config.nft_caws_address) {
-          nft.type = "caws";
-          nft.chain = 1;
-          finalboughtItems1.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
-          nft.type = "land";
-          nft.chain = 1;
-          finalboughtItems1.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          nft.type = "timepiece";
-          nft.chain = 1;
-          finalboughtItems1.push(nft);
-        }
-      });
+    await Promise.all(
+      listedNFTS2 &&
+        listedNFTS2.length > 0 &&
+        listedNFTS2.map(async (nft) => {
+          if (nft.nftAddress === window.config.nft_caws_address) {
+            const nft_contract = new window.infuraWeb3.eth.Contract(
+              window.CAWS_ABI,
+              window.config.nft_caws_address
+            );
+            const nftowner = await nft_contract.methods
+              .ownerOf(nft.tokenId)
+              .call()
+              .catch((e) => {
+                console.log(e);
+              });
+            if (
+              nftowner &&
+              nftowner.toLowerCase() === nft.seller.toLowerCase()
+            ) {
+              nft.type = "caws";
+              nft.chain = 1;
+              finalboughtItems1.push(nft);
+            }
+          } else if (nft.nftAddress === window.config.nft_land_address) {
+            const nft_contract = new window.infuraWeb3.eth.Contract(
+              window.WOD_ABI,
+              window.config.nft_land_address
+            );
+            const nftowner = await nft_contract.methods
+              .ownerOf(nft.tokenId)
+              .call()
+              .catch((e) => {
+                console.log(e);
+              });
+            if (
+              nftowner &&
+              nftowner.toLowerCase() === nft.seller.toLowerCase()
+            ) {
+              nft.type = "land";
+              nft.chain = 1;
+              finalboughtItems1.push(nft);
+            }
+          } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+            const nft_contract = new window.infuraWeb3.eth.Contract(
+              window.TIMEPIECE_ABI,
+              window.config.nft_timepiece_address
+            );
+            const nftowner = await nft_contract.methods
+              .ownerOf(nft.Id)
+              .call()
+              .catch((e) => {
+                console.log(e);
+              });
+
+            if (
+              nftowner &&
+              nftowner.toLowerCase() === nft.seller.toLowerCase()
+            ) {
+              nft.type = "timepiece";
+              nft.chain = 1;
+              finalboughtItems1.push(nft);
+            }
+          }
+        })
+    );
 
     setListedNFTS(finalboughtItems1);
     setListedNFTSCount(finalboughtItems1.length);
 
-    recentListedNFTS2 &&
-      recentListedNFTS2.length > 0 &&
-      recentListedNFTS2.map((nft) => {
-        if (nft.nftAddress === window.config.nft_caws_address) {
-          nft.type = "caws";
-          nft.chain = 1;
-          finalboughtItems2.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
-          nft.type = "land";
-          nft.chain = 1;
-          finalboughtItems2.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          nft.type = "timepiece";
-          nft.chain = 1;
-          finalboughtItems2.push(nft);
-        }
-      });
+    await Promise.all(
+      recentListedNFTS2 &&
+        recentListedNFTS2.length > 0 &&
+        recentListedNFTS2.map(async (nft) => {
+          if (nft.nftAddress === window.config.nft_caws_address) {
+            const nft_contract = new window.infuraWeb3.eth.Contract(
+              window.CAWS_ABI,
+              window.config.nft_caws_address
+            );
+            const nftowner = await nft_contract.methods
+              .ownerOf(nft.tokenId)
+              .call()
+              .catch((e) => {
+                console.log(e);
+              });
+            if (
+              nftowner &&
+              nftowner.toLowerCase() === nft.seller.toLowerCase()
+            ) {
+              nft.type = "caws";
+              nft.chain = 1;
+              finalboughtItems2.push(nft);
+            }
+          } else if (nft.nftAddress === window.config.nft_land_address) {
+            const nft_contract = new window.infuraWeb3.eth.Contract(
+              window.WOD_ABI,
+              window.config.nft_land_address
+            );
+
+            const nftowner = await nft_contract.methods
+              .ownerOf(nft.tokenId)
+              .call()
+              .catch((e) => {
+                console.log(e);
+              });
+            if (
+              nftowner &&
+              nftowner.toLowerCase() === nft.seller.toLowerCase()
+            ) {
+              nft.type = "land";
+              nft.chain = 1;
+              finalboughtItems2.push(nft);
+            }
+          } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+            const nft_contract = new window.infuraWeb3.eth.Contract(
+              window.TIMEPIECE_ABI,
+              window.config.nft_timepiece_address
+            );
+            const nftowner = await nft_contract.methods
+              .ownerOf(nft.Id)
+              .call()
+              .catch((e) => {
+                console.log(e);
+              });
+
+            if (
+              nftowner &&
+              nftowner.toLowerCase() === nft.seller.toLowerCase()
+            ) {
+              nft.type = "timepiece";
+              nft.chain = 1;
+              finalboughtItems2.push(nft);
+            }
+          }
+        })
+    );
 
     setLatest20RecentListedNFTS(finalboughtItems2);
   };
@@ -1390,11 +1623,31 @@ function App() {
       myCAWStakes();
       myLandStakes();
       getmyCawsWodStakes();
-      myCAWNft();
+      myNft2();
+      myLandNft();
+    }
+    if (isConnected === true && coinbase) {
       myNft();
+      myCAWNft();
     }
     fetchAllMyNfts();
   }, [isConnected, chainId, currencyAmount, coinbase]);
+
+  useEffect(() => {
+    if (isConnected === true && coinbase && chainId === 1) {
+      myNft2();
+      myLandNft();
+    } else if (isConnected === true && coinbase && chainId === 56) {
+      myNftBNB();
+      myLandNftBNB();
+    } else if (isConnected === true && coinbase && chainId === 43114) {
+      myNft2Avax();
+      myLandNftAVAX();
+    } else if (isConnected === true && coinbase && chainId === 8453) {
+      myNftsBase();
+      myLandNftsBase();
+    }
+  }, [isConnected, chainId, coinbase, count]);
 
   // useEffect(() => {
   //   if (
@@ -1797,7 +2050,6 @@ function App() {
     }
   };
 
-
   const getAllData = async () => {
     const result = await axios
       .get("https://api.worldofdypians.com/api/totalTXs")
@@ -1821,10 +2073,10 @@ function App() {
     }
   };
 
-  useEffect(()=>{
-    getAllData()
-    fetchDogeCoinPrice()
-  },[coinbase])
+  useEffect(() => {
+    getAllData();
+    fetchDogeCoinPrice();
+  }, [coinbase]);
 
   useEffect(() => {
     getDomains();
@@ -1879,6 +2131,14 @@ function App() {
       );
     }
   }, [coinbase, nftCount]);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      setCount2(0);
+      return () => clearInterval(interval);
+    }, 300000);
+  }, [count2]);
+
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -1969,7 +2229,11 @@ function App() {
               }
             />
             <Route exact path="/roadmap" element={<Roadmap />} />
-            <Route exact path="/explorer" element={<Explorer />} />
+            <Route
+              exact
+              path="/explorer"
+              element={<Explorer count={count2} setCount={setCount2} />}
+            />
             <Route exact path="/stake" element={<NftMinting />} />
             <Route exact path="/contact-us" element={<PartnerForm />} />
             <Route exact path="/unsubscribe/:email" element={<Unsubscribe />} />
@@ -1992,6 +2256,47 @@ function App() {
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   timepieceMetadata={timepieceMetadata}
+                />
+              }
+            />
+
+            <Route
+              exact
+              path="/marketplace/nft-bridge"
+              element={
+                <NFTBridge
+                  coinbase={coinbase}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                  chainId={chainId}
+                  isConnected={isConnected}
+                  myNFTSLand={
+                    chainId === 1
+                      ? myLandNFTs
+                      : chainId === 56
+                      ? myLandNFTsBnb
+                      : chainId === 43114
+                      ? myLandNFTsAvax
+                      : chainId === 8453
+                      ? myLandNFTsBase
+                      : myLandNFTs
+                  }
+                  myNFTSCaws={
+                    chainId === 1
+                      ? MyNFTSCaws2
+                      : chainId === 56
+                      ? MyNFTSCawsBnb
+                      : chainId === 43114
+                      ? MyNFTSCawsAvax
+                      : chainId === 8453
+                      ? MyNFTSCawsBase
+                      : MyNFTSCaws2
+                  }
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  onSuccessTransfer={() => {
+                    setCount(count + 1);
+                  }}
                 />
               }
             />
@@ -2044,6 +2349,8 @@ function App() {
               path="/land"
               element={
                 <Land
+                  count={count2}
+                  setCount={setCount2}
                   handleConnectWallet={handleConnectWallet}
                   coinbase={coinbase}
                   isConnected={isConnected}
@@ -2065,6 +2372,8 @@ function App() {
               path="/marketplace"
               element={
                 <Marketplace
+                  count={count2}
+                  setCount={setCount2}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   dypTokenData_old={dypTokenData_old}
@@ -2476,7 +2785,6 @@ function App() {
                   ethTokenData={ethTokenData}
                   dyptokenData_old={dypTokenData_old}
                   dogePrice={dogePrice}
-
                 />
               }
             />
@@ -2500,7 +2808,6 @@ function App() {
                   }}
                   ethTokenData={ethTokenData}
                   dogePrice={dogePrice}
-
                 />
               }
             />
@@ -2524,7 +2831,6 @@ function App() {
                   dyptokenData_old={dypTokenData_old}
                   ethTokenData={ethTokenData}
                   dogePrice={dogePrice}
-
                 />
               }
             />

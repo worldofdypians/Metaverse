@@ -30,7 +30,8 @@ import greenArrow from "./assets/greenArrow.svg";
 import timepieceHome from "./assets/timepieceHome.png";
 import confluxHome from "./assets/confluxHome.png";
 import baseUpcoming from "./assets/baseUpcoming.png";
-
+import OutsideClickHandler from "react-outside-click-handler";
+import DailyRewardsPopup from "../../components/TimepieceMint/DailyRewardsPopup";
 
 const Marketplace = ({
   listedNFTS,
@@ -47,8 +48,11 @@ const Marketplace = ({
   nftCount,
   ethTokenData,
   dypTokenData,
-  dypTokenData_old, totalTx, totalvolume
-
+  dypTokenData_old,
+  totalTx,
+  totalvolume,
+  count,
+  setCount,
 }) => {
   const override = {
     display: "block",
@@ -78,6 +82,7 @@ const Marketplace = ({
   const [showSecondNext, setShowSecondNext] = useState(false);
   const [favItems, setfavItems] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
+  const [activePopup, setActivePopup] = useState(false);
 
   const firstNext = () => {
     firstSlider.current.slickNext();
@@ -240,18 +245,17 @@ const Marketplace = ({
         console.error(e);
       });
 
-      let base_contract = new window.baseWeb3.eth.Contract(
-        window.BASE_NFT_ABI,
-        window.config.nft_base_address,
-      );
-  
-      const result_base = await base_contract.methods
-        .totalSupply()
-        .call()
-        .catch((e) => {
-          console.error(e);
-        });
-  
+    let base_contract = new window.baseWeb3.eth.Contract(
+      window.BASE_NFT_ABI,
+      window.config.nft_base_address
+    );
+
+    const result_base = await base_contract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
 
     const confluxContract = new window.confluxWeb3.eth.Contract(
       window.CONFLUX_NFT_ABI,
@@ -277,13 +281,17 @@ const Marketplace = ({
     const dogeresult = await dogeContract.methods.totalSupply().call();
     const cmcresult = await cmcContract.methods.totalSupply().call();
 
-
     //20000 = 10000 caws + 1000 genesis + 9000 coingecko
     setTotalSupply(
-      parseInt(result) + parseInt(result_base) + parseInt(confluxresult) + parseInt(gateresult) + parseInt(dogeresult) + parseInt(cmcresult) + 20000
+      parseInt(result) +
+        parseInt(result_base) +
+        parseInt(confluxresult) +
+        parseInt(gateresult) +
+        parseInt(dogeresult) +
+        parseInt(cmcresult) +
+        20000
     );
   };
-
 
   const getAllData = async () => {
     const result = await axios
@@ -568,12 +576,36 @@ const Marketplace = ({
     cutLength();
   }, [windowSize.width]);
 
+  useEffect(() => {
+    {
+      count === 0 &&
+        setTimeout(() => {
+          setActivePopup(true);
+        }, 500);
+    }
+  }, [count]);
+
   return (
     <div
       className="container-fluid mt-5 mt-lg-0 d-flex flex-column-reverse flex-lg-row justify-content-center justify-content-lg-end p-0"
       style={{ minHeight: "72vh", maxWidth: "2400px" }}
     >
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
+      <OutsideClickHandler
+        id="popup"
+        onOutsideClick={() => {
+          setActivePopup(false);
+          setCount(1);
+        }}
+      >
+        <DailyRewardsPopup
+          active={activePopup}
+          onClose={() => {
+            setActivePopup(false);
+            setCount(1);
+          }}
+        />
+      </OutsideClickHandler>
       <div className="container-nft d-flex align-items-start px-0 px-lg-5 position-relative">
         <div className="container-lg mx-0">
           <div className="row justify-content-between align-items-center marketplace-banner mt-4 mt-lg-0">

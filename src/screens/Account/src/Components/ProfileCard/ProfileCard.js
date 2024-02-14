@@ -101,9 +101,8 @@ const ProfileCard = ({
   const [dateofBundlev1, setdateofBundlev1] = useState(0);
   const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
 
-  let oneJanuary = new Date("2024-01-01 11:11:00 GMT+02:00");
-  let oneDecember = new Date("2023-12-01 11:11:00 GMT+02:00");
   let oneFebruary = new Date("2024-02-01 11:11:00 GMT+02:00");
+  let oneMarch = new Date("2024-03-01 11:11:00 GMT+02:00");
 
   const countBundle = async () => {
     const result = await axios.get(
@@ -115,93 +114,90 @@ const ProfileCard = ({
   };
 
   const handleRefreshCountdown700 = async () => {
-    if(bundlesBought === 0) {
-      setcountdown700();
-      handleSetAvailableTime()
-    }
-    else if(bundlesBought > 0) {
-
-      const dypv1 = new window.infuraWeb3.eth.Contract(
-      DYP_700V1_ABI,
-      dyp700v1Address
-    );
-
-    const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
-
-    const remainingTimev1 = await dypv1.methods
-      .getTimeOfExpireBuff(coinbase)
-      .call();
-
-    const remainingTimev2 = await dypv2.methods
-      .getTimeOfExpireBuff(coinbase)
-      .call();
-
-    var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
-
-    var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
-    const timeofDepositv1 = await dypv1.methods
-      .getTimeOfDeposit(coinbase)
-      .call();
-
-    const timeofDepositv2 = await dypv2.methods
-      .getTimeOfDeposit(coinbase)
-      .call();
-
-    if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
-      remainingTime_milisecondsv1 = timeofDepositv1 * 1000;
-      remainingTime_milisecondsv2 = timeofDepositv2 * 1000;
-
-      const timeofDeposit_Datev1 = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      }).format(remainingTime_milisecondsv1);
-
-      const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Datev1);
-
-      const timeofDeposit_Hoursv1 = timeofDeposit_Date_formattedv1.getHours();
-      const timeofDeposit_Minutesv1 =
-        timeofDeposit_Date_formattedv1.getMinutes();
-      const finalHoursv1 = timeofDeposit_Hoursv1 - 11;
-
-      const finalMinutesv1 = timeofDeposit_Minutesv1 - 11;
-
-      const resultv1 =
-        remainingTimev1 - finalHoursv1 * 60 * 60 - finalMinutesv1 * 60;
-
-      const timeofDeposit_Datev2 = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      }).format(remainingTime_milisecondsv2);
-
-      const timeofDeposit_Date_formattedv2 = new Date(timeofDeposit_Datev2);
-      const timeofDeposit_day = timeofDeposit_Date_formattedv2.getDate();
-      const timeofDeposit_Hoursv2 = timeofDeposit_Date_formattedv2.getHours();
-      const timeofDeposit_Minutesv2 =
-        timeofDeposit_Date_formattedv2.getMinutes();
-      const finalHoursv2 = timeofDeposit_Hoursv2 - 11;
-
-      const finalMinutesv2 = timeofDeposit_Minutesv2 - 11;
-
-      const resultv2 =
-        remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
-      setcountdown700((resultv2 + resultv1) * 1000);
-      handleSetAvailableTime((resultv2 + resultv1) * 1000);
-      // setcountdown700(result * 1000);
-      //}
-    }
-    else {
+    if (bundlesBought === 0) {
       setcountdown700();
       handleSetAvailableTime();
+    } else if (bundlesBought > 0) {
+      const dypv1 = new window.infuraWeb3.eth.Contract(
+        DYP_700V1_ABI,
+        dyp700v1Address
+      );
+
+      const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
+
+      const remainingTimev1 = await dypv1.methods
+        .getTimeOfExpireBuff(coinbase)
+        .call();
+
+      const remainingTimev2 = await dypv2.methods
+        .getTimeOfExpireBuff(coinbase)
+        .call();
+
+      var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
+
+      var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
+      const timeofDepositv1 = await dypv1.methods
+        .getTimeOfDeposit(coinbase)
+        .call();
+
+      const timeofDepositv2 = await dypv2.methods
+        .getTimeOfDeposit(coinbase)
+        .call();
+
+      if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
+        remainingTime_milisecondsv1 = timeofDepositv1 * 1000;
+        remainingTime_milisecondsv2 = timeofDepositv2 * 1000;
+
+        const timeofDeposit_Datev1 = new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }).format(remainingTime_milisecondsv1);
+
+        const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Datev1);
+
+        const timeofDeposit_Hoursv1 = timeofDeposit_Date_formattedv1.getHours();
+        const timeofDeposit_Minutesv1 =
+          timeofDeposit_Date_formattedv1.getMinutes();
+        const finalHoursv1 = timeofDeposit_Hoursv1 - 11;
+
+        const finalMinutesv1 = timeofDeposit_Minutesv1 - 11;
+
+        const resultv1 =
+          remainingTimev1 - finalHoursv1 * 60 * 60 - finalMinutesv1 * 60;
+
+        const timeofDeposit_Datev2 = new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }).format(remainingTime_milisecondsv2);
+
+        const timeofDeposit_Date_formattedv2 = new Date(timeofDeposit_Datev2);
+        const timeofDeposit_day = timeofDeposit_Date_formattedv2.getDate();
+        const timeofDeposit_Hoursv2 = timeofDeposit_Date_formattedv2.getHours();
+        const timeofDeposit_Minutesv2 =
+          timeofDeposit_Date_formattedv2.getMinutes();
+        const finalHoursv2 = timeofDeposit_Hoursv2 - 11;
+
+        const finalMinutesv2 = timeofDeposit_Minutesv2 - 11;
+
+        const resultv2 =
+          remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
+        setcountdown700((resultv2 + resultv1) * 1000);
+        handleSetAvailableTime((resultv2 + resultv1) * 1000);
+        // setcountdown700(result * 1000);
+        //}
+      } else {
+        setcountdown700();
+        handleSetAvailableTime();
+      }
     }
-  } 
   };
 
   const setlastDay = async (addr) => {
@@ -373,14 +369,18 @@ const ProfileCard = ({
         //     Number(additional_remaining_time_timestamp * 1000);
 
         setcountdown700(
-          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
+          today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
         );
         handleSetAvailableTime(
-          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
+          today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
         );
 
         // }
-      } else if (week2.includes(today_date.toString()) && bundlesBought <= 3 && bundlesBought !== 0) {
+      } else if (
+        week2.includes(today_date.toString()) &&
+        bundlesBought <= 3 &&
+        bundlesBought !== 0
+      ) {
         handleRefreshCountdown700();
       } else if (week2.includes(today_date.toString()) && bundlesBought > 3) {
         // const remainingTime2 = lastDayofBundle;
@@ -397,14 +397,18 @@ const ProfileCard = ({
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
         setcountdown700(
-          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
+          today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
         );
         handleSetAvailableTime(
-          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
+          today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
         );
 
         // }
-      } else if (week3.includes(today_date.toString()) && bundlesBought <= 3 && bundlesBought !== 0) {
+      } else if (
+        week3.includes(today_date.toString()) &&
+        bundlesBought <= 3 &&
+        bundlesBought !== 0
+      ) {
         handleRefreshCountdown700();
       } else if (week3.includes(today_date.toString()) && bundlesBought > 3) {
         // const remainingTime3 = lastDayofBundle;
@@ -449,10 +453,10 @@ const ProfileCard = ({
           today.getFullYear() === finalDateofBundleFormatted.getFullYear()
         ) {
           setcountdown700(
-            today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
+            today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
           );
           handleSetAvailableTime(
-            today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
+            today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
           );
 
           // if (
@@ -503,12 +507,12 @@ const ProfileCard = ({
             ? datewhenBundleBought
             : datewhenBundleBoughtv1;
 
-        if (today < finalDateofBundle  && bundlesBought !== 0) {
+        if (today < finalDateofBundle && bundlesBought !== 0) {
           setcountdown700(
-            today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
+            today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
           );
           handleSetAvailableTime(
-            today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
+            today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
           );
         } else if (today > finalDateofBundle && bundlesBought > 0) {
           setcountdown700();
@@ -532,10 +536,10 @@ const ProfileCard = ({
             handleSetAvailableTime(finalDateofBundle);
           } else {
             setcountdown700(
-              today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
+              today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
             );
             handleSetAvailableTime(
-              today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
+              today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
             );
           }
         } else if (today > finalDateofBundle && bundlesBought > 0) {
@@ -549,10 +553,10 @@ const ProfileCard = ({
 
       if (today < finalDateofBundle) {
         setcountdown700(
-          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
+          today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
         );
         handleSetAvailableTime(
-          today < oneJanuary ? oneJanuary.getTime() : oneFebruary.getTime()
+          today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
         );
       } else {
         setcountdown700();
@@ -573,13 +577,13 @@ const ProfileCard = ({
   return (
     <div className="main-wrapper py-4 w-100">
       {/* {countdown700 !== 0 && countdown700 && ( */}
-        <Countdown
-          date={Number(countdown700)}
-          onComplete={() => {
-            setcountdown700();
-            handleSetAvailableTime();
-          }}
-        />
+      <Countdown
+        date={Number(countdown700)}
+        onComplete={() => {
+          setcountdown700();
+          handleSetAvailableTime();
+        }}
+      />
       {/* )} */}
       <div className="row justify-content-center gap-3 gap-lg-0">
         <div className="position-relative px-lg-3 col-12">
@@ -733,16 +737,16 @@ const ProfileCard = ({
                                 >
                                   <span className="emailtext">{email}</span>
                                   {!domainName ? (
-                                  <span className="wallet-address">
-                                    {windowSize.width > 991
-                                      ? isVerified && email
-                                        ? address
-                                        : coinbase
-                                      : isVerified && email
-                                      ? shortAddress(address)
-                                      : shortAddress(coinbase)}
-                                  </span>
-                                 ) : (
+                                    <span className="wallet-address">
+                                      {windowSize.width > 991
+                                        ? isVerified && email
+                                          ? address
+                                          : coinbase
+                                        : isVerified && email
+                                        ? shortAddress(address)
+                                        : shortAddress(coinbase)}
+                                    </span>
+                                  ) : (
                                     <span className="wallet-address">
                                       {domainName}
                                     </span>
@@ -890,7 +894,11 @@ const ProfileCard = ({
                     onClick={() => {
                       onSigninClick();
                     }}
-                    style={{ width: "fit-content", fontSize: 14, whiteSpace: 'nowrap' }}
+                    style={{
+                      width: "fit-content",
+                      fontSize: 14,
+                      whiteSpace: "nowrap",
+                    }}
                   >
                     Create player
                     <img src={greenarrow} alt="" />
@@ -1005,7 +1013,13 @@ const ProfileCard = ({
                 email && coinbase && username ? "py-2" : "p-0"
               }`}
             >
-              <div className={`d-flex flex-column flex-xxl-row flex-lg-row  align-items-center gap-2 ${coinbase ? 'justify-content-between' : 'justify-content-end p-2'} `}>
+              <div
+                className={`d-flex flex-column flex-xxl-row flex-lg-row  align-items-center gap-2 ${
+                  coinbase
+                    ? "justify-content-between"
+                    : "justify-content-end p-2"
+                } `}
+              >
                 {address &&
                   email &&
                   coinbase &&
