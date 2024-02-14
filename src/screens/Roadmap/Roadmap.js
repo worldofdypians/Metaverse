@@ -18,13 +18,13 @@ import Slider from "react-slick";
 import timepieceRoadmap from "./assets/timepieceRoadmap.webp";
 import wodPartnership from "./assets/wodPartnership.webp";
 import multichainIntegration from "./assets/multichainIntegration.webp";
-import caws3d from './assets/caws3d.webp'
-import betaPassCollection from './assets/betaPassCollection.png';
-import marketplaceIntroduction from './assets/marketplaceIntroduction.png';
-import newEvents from './assets/newEvents.png';
-import betaPassAddition from './assets/betaPassAddition.png';
-import globalEvents from './assets/globalEvents.png';
-import partnershipAddition from './assets/partnershipAddition.png';
+import caws3d from "./assets/caws3d.webp";
+import betaPassCollection from "./assets/betaPassCollection.png";
+import marketplaceIntroduction from "./assets/marketplaceIntroduction.png";
+import newEvents from "./assets/newEvents.png";
+import betaPassAddition from "./assets/betaPassAddition.png";
+import globalEvents from "./assets/globalEvents.png";
+import partnershipAddition from "./assets/partnershipAddition.png";
 
 const Roadmap = () => {
   useEffect(() => {
@@ -74,7 +74,9 @@ const Roadmap = () => {
     ],
   };
 
-  const roadmapItems = [
+const [title, setTitle] = useState("2024")
+
+  const roadmapItems2023 = [
     {
       quarter: "quarterOne",
       image: "quarterOneImage",
@@ -134,7 +136,6 @@ const Roadmap = () => {
           title: "CAWS NFT 3D rendering",
           desc: "Users are able to create an in-game playable 3D version of their owned CAWS NFT.",
           completed: true,
-
         },
       ],
     },
@@ -148,31 +149,27 @@ const Roadmap = () => {
           desc: "Users can access WoD marketplace to purchase assets used to customize and enhance their experience.",
           completed: true,
         },
-       
+
         {
           title: "In-game representation of Land NFTs",
           desc: "Players can access the land they own and enjoy its benefits within the game. It will be possible to trade Land NFTs and transfer the associated benefits to the new owner.",
           completed: true,
-
         },
         {
           title: "Quest System",
           desc: "Adventurers will complete quests to earn items and gain prestige.",
           completed: true,
-
         },
         {
           title: "Tracking goals and achievements",
           desc: "Players will receive special rewards and titles for accomplishing some of the game's most difficult tasks.",
           completed: true,
         },
-    
-    
+
         {
           title: "Addition and development of partnerships",
           desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more.",
           completed: true,
-
         },
       ],
     },
@@ -185,15 +182,13 @@ const Roadmap = () => {
           title: "CAWS NFT transformation",
           desc: "Transform your CAWS to different epic creatures to assist in special abilities and benefits.",
           completed: true,
-
         },
         {
           title: "Introduction of in-game mounts",
           desc: "Players can journey throughout the world using many types of transportation methods",
           completed: true,
-
         },
-        
+
         {
           title: "Multiplayer PVE DEMO",
           desc: "Experience cooperative gameplay with the multiplayer PVE demo, offering exciting challenges and teamwork opportunities.",
@@ -223,7 +218,6 @@ const Roadmap = () => {
           title: "Addition and development of partnerships",
           desc: "Continuous addition of features and partners including AI NPCs, advertising opportunities, user rewards, airdrops and much more.",
           completed: true,
-
         },
       ],
     },
@@ -247,18 +241,16 @@ const Roadmap = () => {
           desc: "Developing Beta Pass NFT collections for World of Dypians partners, offering associated benefits within the game.",
           completed: true,
         },
-   
+
         {
           title: "Multiplayer PVE",
           desc: "Adventure with other players to complete quests, fight bosses, survive against waves of enemies, earn rewards and much more.",
           completed: true,
-
         },
         {
           title: "Multiplayer PVP",
           desc: "Engage in huge battle events against other players in real-time. Players can compete and interact against each other in 1v1 or group battle to complete objectives.",
           completed: true,
-          
         },
         {
           title: "In-game chat",
@@ -314,6 +306,186 @@ const Roadmap = () => {
     //   ],
     // },
   ];
+  const roadmapItems2024 = [
+    {
+      quarter: "quarterOne",
+      image: "quarterOneImage",
+      content: [
+        {
+          title: "Introduction of AI Powered NPCs",
+          desc: "Implement AI-powered NPC crowds to interact with users, adding depth and engagement to the game world.",
+          completed: false,
+        },
+        {
+          title: "Expansion of the City Area",
+          desc: "Enlarge the city to include new environments, making it more expansive and futuristic, providing players with more areas to explore.",
+          completed: false,
+        },
+        {
+          title: "Introduction of New Teleport Station",
+          desc: "Introduce teleport portals that allow players to travel to different locations on the map instantly.",
+          completed: false,
+        },
+        {
+          title: "Addition of New Game Creatures",
+          desc: "Introduce new creatures to the game, increasing variety and challenges for players.",
+          completed: false,
+        },
+        {
+          title: "New Chain Expansion",
+          desc: "Integrate additional blockchains into the game to broaden the reach and appeal.",
+          completed: false,
+        },
+        {
+          title: "Daily Bonus Improvement",
+          desc: "Enhance the daily bonus system to provide players with increased benefits and a more inclusive experience.",
+          completed: false,
+        },
+        {
+          title: "Partnership Development",
+          desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
+          completed: false,
+        },
+      ],
+    },
+    {
+      quarter: "quarterTwo",
+      image: "quarterTwoImage",
+
+      content: [
+        {
+          title: "New Game UI Development",
+          desc: "Develop a new user interface to improve navigation and accessibility within the game.",
+          completed: false,
+        },
+
+        {
+          title: "Multiplayer Social Hub",
+          desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
+          completed: false,
+        },
+        {
+          title: "Introduction of Character Customization",
+          desc: "Allow players to personalize their main avatar/character with facial and body features.",
+          completed: false,
+        },
+        {
+          title: "Addition of Game Currency",
+          desc: "Introduce a new in-game currency to enhance the game's economy and provide more options for players.",
+          completed: false,
+        },
+
+        {
+          title: "Introduction of Shop v1",
+          desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
+          completed: false,
+        },
+        {
+          title: "Improving Tracking Rewards",
+          desc: "Enhance the tracking of historic data rewards earned by players to improve their gaming experience.",
+          completed: false,
+        },
+        {
+          title: "Personalized Game Domain",
+          desc: "Enable players to create personalized web3 names with a customized domain name.",
+          completed: false,
+        },
+        {
+          title: "Partnership Development",
+          desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
+          completed: false,
+        },
+      ],
+    },
+    {
+      quarter: "quarterThree",
+      image: "quarterThreeImage",
+
+      content: [
+        {
+          title: "Launch of Crypto Museum",
+          desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
+          completed: false,
+        },
+        {
+          title: "Introduction of Character NFT Generation",
+          desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
+          completed: false,
+        },
+
+        {
+          title: "Expanding with a New Environment",
+          desc: "Create a new environment, such as an island, for players to explore, complete tasks, and engage in battles.",
+          completed: false,
+        },
+        {
+          title: "Introduction of Shop v2",
+          desc: "Improve and expand the in-game shop with new features and offerings.",
+          completed: false,
+        },
+        {
+          title: "Loot Box Introduction",
+          desc: "Introduce loot boxes as a new gameplay mechanic to reward players with random items.",
+          completed: false,
+        },
+        {
+          title: "Introduction of the Mall Center",
+          desc: "Introduce a mall center in the game where players can shop for various items and goods.",
+          completed: false,
+        },
+        {
+          title: "Full Release of the Multiplayer PvE",
+          desc: "Launch the full version of the multiplayer player-versus-environment mode for all players to enjoy.",
+          completed: false,
+        },
+        {
+          title: "Partnership Development",
+          desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
+          completed: false,
+        },
+      ],
+    },
+    {
+      quarter: "quarterFour",
+      image: "quarterFourImage",
+
+      content: [
+        {
+          title: "Full Release of the Multiplayer PvP",
+          desc: "Launch the full version of the multiplayer player-versus-player mode for competitive gameplay.",
+          completed: false,
+        },
+        {
+          title: "Adopt CAWS Functionality",
+          desc: "Allow players to adopt a CAWS (cat) in-game, feed it, grow it, and use it within the game world.",
+          completed: false,
+        },
+        {
+          title: "NFT Customization",
+          desc: "Enable players to customize their NFTs, such as weapons and equipment, by adding elements or items to them.",
+          completed: false,
+        },
+
+        {
+          title: "Addition of Trade P2P",
+          desc: "Introduce peer-to-peer trading functionality in the game to allow players to exchange items and goods directly.",
+          completed: false,
+        },
+        {
+          title: "Addition of New AI Powered NPCs",
+          desc: "Introduce new AI-powered NPCs to the game to provide additional challenges and interactions for players.",
+          completed: false,
+        },
+        {
+          title: "Partnership Development",
+          desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
+          completed: false,
+        },
+      ],
+    },
+  ];
+
+  const [roadmapItems, setRoadmapItems] = useState(roadmapItems2024);
 
   const mainUpdate = [
     {
@@ -416,11 +588,9 @@ const Roadmap = () => {
     slider.current.slickPrev();
   };
 
-
   useEffect(() => {
     slider.current.innerSlider.slickGoTo(0);
-  }, [])
-  
+  }, []);
 
   return (
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5 roadmapbg">
@@ -444,6 +614,48 @@ const Roadmap = () => {
           </span>
         </div>
         <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5">
+          <div className="d-flex align-items-center justify-content-start mb-5 gap-3">
+            <div
+              className="linear-border"
+              style={{
+                width: "fit-content",
+              }}
+            >
+              <button
+                className={`btn ${
+                  title === "2023"
+                    ? "filled-btn"
+                    : "outline-btn"
+                } px-5`}
+                onClick={() => {
+                  setRoadmapItems(roadmapItems2023);
+                  setTitle("2023")
+                }}
+              >
+                2023
+              </button>
+            </div>{" "}
+            <div
+              className="linear-border"
+              style={{
+                width: "fit-content",
+              }}
+            >
+              <button
+                className={`btn ${
+                  title === "2024"
+                    ? "filled-btn"
+                    : "outline-btn"
+                } px-5`}
+                onClick={() => {
+                  setRoadmapItems(roadmapItems2024);
+                  setTitle("2024")
+                }}
+              >
+                2024
+              </button>
+            </div>
+          </div>
           <div className="roadmap-grid px-3 px-lg-0">
             <div
               className="d-flex flex-column align-items-center position-relative roadmap-slider-wrapper gap-3"
@@ -555,7 +767,7 @@ const Roadmap = () => {
                   ))}
                 </div>
                 <div className="d-flex flex-column gap-3">
-                  {mainUpdate.slice(12,15).map((item) => (
+                  {mainUpdate.slice(12, 15).map((item) => (
                     <div className="roadmap-main-update position-relative">
                       <img
                         src={item.image}
