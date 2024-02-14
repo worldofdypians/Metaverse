@@ -598,12 +598,12 @@ const [title, setTitle] = useState("2024")
         <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5 mt-5 mt-lg-0">
           <h6 className="roadmap-title font-organetto d-flex flex-column gap-2 justify-content-center align-items-center flex-lg-row">
             Roadmap{" "}
-            <span
+            {/* <span
               className="roadmap-title font-organetto"
               style={{ color: "#8c56ff" }}
             >
               2023
-            </span>
+            </span> */}
           </h6>
           <span className="roadmap-content">
             Dypius is developing an extremely ambitious and complex game. The
