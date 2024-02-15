@@ -58,7 +58,7 @@ const MarketCards = ({
           ) : activebtn === "timepiece" ? (
             <img
               className="w-100 h-100 p-0 nft-img"
-              src={`https://timepiece.worldofdypians.com/images/${nft.tokenId}.png`}
+              src={`https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nft.tokenId}.png`}
               alt=""
               style={{borderRadius: '10px'}}
             />

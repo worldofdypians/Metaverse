@@ -347,20 +347,42 @@ const SingleNft = ({
 
   const getNftOwner = async (type, Id) => {
     if (type === "timepiece") {
-      const nftowner = await window.caws_timepiece.ownerOf(Id).catch((e) => {
-        console.log(e);
-      });
+      const nft_contract = new window.infuraWeb3.eth.Contract(
+        window.TIMEPIECE_ABI,
+        window.config.nft_timepiece_address
+      );
+      const nftowner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
 
       setowner(nftowner);
     } else if (type === "land") {
-      const nftowner = await window.landnft.ownerOf(Id).catch((e) => {
-        console.log(e);
-      });
+      const nft_contract = new window.infuraWeb3.eth.Contract(
+        window.WOD_ABI,
+        window.config.nft_land_address
+      );
+      const nftowner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
       setowner(nftowner);
     } else if (type === "caws") {
-      const nftowner = await window.nft.ownerOf(Id).catch((e) => {
-        console.log(e);
-      });
+      const nft_contract = new window.infuraWeb3.eth.Contract(
+        window.CAWS_ABI,
+        window.config.nft_caws_address
+      );
+      const nftowner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
 
       setowner(nftowner);
     } else if (type === "cawsbnb") {
@@ -1148,9 +1170,13 @@ const SingleNft = ({
       nftAddr
     );
     if (listedNFTS.length > 0) {
+      if (listedNFTS[0].seller.toLowerCase() !== owner.toLowerCase()) {
+        setIsListed(false);
+      } else if (listedNFTS[0].seller.toLowerCase() === owner.toLowerCase()) {
+        setIsListed(true);
+      }
       setNft(...listedNFTS);
       setloadingNft(false);
-      setIsListed(true);
     } else {
       setNft([]);
       setloadingNft(false);
@@ -1517,7 +1543,7 @@ const SingleNft = ({
         : "land",
       nftId
     );
-  }, [nftCount]);
+  }, [nftCount, owner]);
 
   useEffect(() => {
     getOffer();
@@ -1733,7 +1759,7 @@ const SingleNft = ({
                           : ethIcon
                       }
                       alt=""
-                      style={{width: 20, height:20}}
+                      style={{ width: 20, height: 20 }}
                     />{" "}
                     {type === "coingecko" ||
                     type === "gate" ||
@@ -1922,7 +1948,7 @@ const SingleNft = ({
 
                     {!isOwner &&
                       !IsListed &&
-                      !nft.price && 
+                      (!nft.price || nft.price) &&
                       type !== "cawsbnb" &&
                       type !== "cawsavax" &&
                       type !== "cawsbase" &&
@@ -2283,8 +2309,7 @@ const SingleNft = ({
                           </div>
                         </div>
                       )}
-                    {
-                      !IsListed &&
+                    {!IsListed &&
                       !loadingNft &&
                       (type === "coingecko" ||
                         type === "gate" ||
