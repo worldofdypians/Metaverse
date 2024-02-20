@@ -1,0 +1,104 @@
+.new-daily-bonus-popup {
+  pointer-events: auto !important;
+  z-index: 9999;
+  width: 1000px;
+  height: 95%;
+  position: fixed;
+  top: 18px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  //   aspect-ratio: 0.76/1;
+  transform: translate3d(0, 0, 0);
+  z-index: 101;
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+}
+
+.daily-bonus-outer-wrapper {
+  background-image: url("./assets/dailyBonusBackground.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 1000px;
+  height: 80%;
+  filter: drop-shadow(0, 0, 0, 1000px rgba(0, 0, 0, 0.5)) !important;
+}
+
+.rewards-container-outer {
+  background-image: url("./assets/rewardsContainer.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 1000px;
+  height: 20%;
+  filter: drop-shadow(0, 0, 0, 1000px rgba(0, 0, 0, 0.5));
+}
+
+.chain-title {
+  color: white;
+  font-size: 10px;
+}
+.chain-title-position {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  color: white;
+  font-size: 12px;
+}
+
+.chain-img {
+  width: 100%;
+}
+
+.chest-progress-wrapper {
+  border-radius: 20px;
+  border: 1px solid #303d6f;
+  height: 85px;
+}
+
+.chest-progress-pink{
+    color: #F746A3;
+font-size: 8px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+
+.new-chests-grid{
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    gap: 10px;
+}
+
+.new-chest-item{
+    background-image: url('./assets/chestBackground.svg');
+    background-size: 100% 100%;
+    width: 70px;
+    height: 70px;
+}
+
+.new-rewards-grid{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 5px;
+}
+
+.new-rewards-item{
+    border-radius: 20px;
+    border: 3px solid #003C55;
+}
+.new-reward-amount{
+    color: #FFF;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 800;
+}
+
+.new-reward-type{
+    color: #FFF;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+}

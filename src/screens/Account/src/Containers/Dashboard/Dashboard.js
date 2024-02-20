@@ -46,6 +46,7 @@ import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
+import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
 
 function Dashboard({
   account,
@@ -3228,6 +3229,7 @@ function Dashboard({
           </LoginWrapper>
         </div>
       </div>
+      <NewDailyBonus />
     </div>
   );
 }
