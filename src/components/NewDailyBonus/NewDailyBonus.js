@@ -63,7 +63,8 @@ const NewDailyBonus = () => {
   ]
 
   return (
-    <div className="new-daily-bonus-popup d-flex flex-column gap-2">
+    <div className="package-popup-wrapper2">
+      <div className="new-daily-bonus-popup d-flex flex-column gap-2">
       <div className="daily-bonus-outer-wrapper p-5">
         <div className="daily-bonus-inner-wrapper container p-5">
           <div className="row mx-3 mt-5">
@@ -135,6 +136,7 @@ const NewDailyBonus = () => {
        ))}
        </div>
       </div>
+    </div>
     </div>
   );
 };
