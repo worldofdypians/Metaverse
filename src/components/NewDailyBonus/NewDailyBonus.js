@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import "./_newdailybonus.scss";
 import bnbChain from "./assets/bnbChain.png";
 import skaleChain from "./assets/skaleChain.png";
 import comingSoon from "./assets/comingSoon.png";
 import percentageFilled from "./assets/percentageFilled.svg";
 import percentageEmpty from "./assets/percentageEmpty.svg";
+import xMark from "./assets/xMark.svg";
 
-const NewDailyBonus = () => {
-  const numberArray = Array.from({ length: 30 }, (_, index) => index + 1);
+const NewDailyBonus = ({onclose}) => {
+  const numberArray = Array.from({ length: 20 }, (_, index) => ({
+    id: index + 1,
+    opened: false
+  }));
+
+  const [chain, setChain] = useState("bnb")
+  const [dummyArray, setDummyArray] = useState(numberArray)
+
+
+  const openChest = (chest) => {
+    const updatedArray = dummyArray.map((item) =>
+    item.id === chest ? { ...item, opened: true } : item
+  );
+    
+    setDummyArray(updatedArray)
+
+  }
 
   const dummyRewards = [
     {
@@ -62,41 +79,86 @@ const NewDailyBonus = () => {
     },
   ]
 
+console.log(dummyArray);
+
   return (
     <div className="package-popup-wrapper2">
-      <div className="new-daily-bonus-popup d-flex flex-column gap-2">
-      <div className="daily-bonus-outer-wrapper p-5">
-        <div className="daily-bonus-inner-wrapper container p-5">
-          <div className="row mx-3 mt-5">
-            <div className="col-12 col-lg-4">
-              <div className="d-flex flex-column justify-content-between gap-3 h-100">
-                <div className="position-relative w-100 ">
-                  <img src={bnbChain} className="chain-img" alt="" />
-                  <h6 className="chain-title-position font-organetto">
+      <div className="new-daily-bonus-popup d-flex flex-column gap-2 custom-container-width">
+      <div className="daily-bonus-outer-wrapper custom-container-width position-relative p-0 p-lg-5">
+        <img src={xMark} className="close-new-bonus" width={30} height={30} alt="" onClick={onclose} style={{cursor: "pointer"}} />
+        <div className="new-total-points-wrapper d-flex align-items-end gap-2">
+          <h6 className="new-total-points  mb-0">256,786 </h6>
+          <span className="new-total-points-type d-none d-lg-flex  mb-0">POINTS</span>
+        </div>
+        <div className="new-total-rewards-wrapper d-flex align-items-end gap-2">
+          <h6 className="new-total-points  mb-0">$26.21 </h6>
+          <span className="new-total-points-type d-none d-lg-flex  mb-0">REWARDS</span>
+        </div>
+        <div className="daily-bonus-inner-wrapper container p-4 p-lg-5 mt-3 mt-lg-0">
+          <div className="row daily-bonus-row gap-3 gap-lg-0 mx-4 mx-lg-2 mt-5 mt-lg-3" style={{ height: "100%"}}>
+            <div className="col-12 col-lg-5 chains-wrapper">
+              <div className="d-flex flex-row flex-lg-column justify-content-between h-100 chains-container" style={{gap: "8px"}}>
+                <div className={`position-relative chain-item ${chain === "bnb"  && 'chain-item-active'} w-100`}>
+                  <img src={bnbChain} className={`chain-img ${chain === "bnb" && 'chain-img-active'}`} onClick={() => setChain("bnb")} alt="" />
+                  <div className={`chain-title-wrapper ${chain === "bnb" && 'chain-title-wrapper-active'} p-2 d-flex align-items-center justify-content-between`}>
+                  <h6 className="chain-title-position mb-0">
                     BNB Chain
                   </h6>
+                  <div className="d-flex align-items-center gap-2">
+                  <div className="d-flex align-items-center">
+                      <img src={percentageFilled} height={8} alt="" />
+                      <img src={percentageFilled} height={8} alt="" />
+                      <img src={percentageFilled} height={8} alt="" />
+                      <img src={percentageEmpty} height={8} alt="" />
+                      <img src={percentageEmpty} height={8} alt="" />
+                    </div>
+                    <span className="percentage-span">
+                      62%
+                    </span>
+                  </div>
+                  </div>
                 </div>
-                <div className="position-relative w-100 ">
-                  <img src={skaleChain} className="chain-img" alt="" />
-                  <h6 className="chain-title-position font-organetto">Skale</h6>
+                <div className={`position-relative chain-item ${chain === "skale"  && 'chain-item-active'} w-100`}>
+                  <img src={skaleChain} className={`chain-img ${chain === "skale" && 'chain-img-active'}`} onClick={() => setChain("skale")} alt="" />
+                  <div className={`chain-title-wrapper ${chain === "skale" && 'chain-title-wrapper-active'} p-2 d-flex align-items-center justify-content-between`}>
+                  <h6 className="chain-title-position mb-0">
+                    Skale
+                  </h6>
+                  </div>
                 </div>
-                <div className="position-relative w-100 ">
-                  <img src={comingSoon} className="chain-img" alt="" />
-                  <h6 className="chain-title-position font-organetto">
+                <div className={`position-relative chain-item  w-100`}>
+                  <img src={comingSoon} className={`chain-img`} alt="" />
+                  <div className={`chain-title-wrapper ${chain === "comingSoon" && 'chain-title-wrapper-active'} p-2 d-flex align-items-center justify-content-between`}>
+                  <h6 className="chain-title-position mb-0">
                     Coming Soon
                   </h6>
+                  </div>
                 </div>
-                <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
+            
+              </div>
+            </div>
+            <div className="col-12 col-lg-7 px-0">
+              <div className="new-chests-grid">
+                {dummyArray.map((item, index) => (
+                    <div key={index} className={`new-chest-item ${item.opened && 'new-chest-item-open'} d-flex align-items-center justify-content-center`} onClick={() => openChest(item.id)}>
+                        <img src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/${!item.opened ?  index : index + 'open'}.png`)} width={70} height={70} alt="" />
+                        <div className="new-claim-chest-btn d-flex align-items-center justify-content-center">{item.opened ? "Claimed" : "Claim "}</div>
+                    </div>
+                ))}
+              </div>
+            </div>
+            <div className="col-12 px-0 mt-3">
+            <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                   <div className="d-flex flex-column">
-                    <h6 className="chain-title font-organetto">Chest</h6>
-                    <h6 className="chain-title font-organetto mb-0">
+                    <h6 className="chain-title ">Chest</h6>
+                    <h6 className="chain-title  mb-0">
                       Progress
                     </h6>
                   </div>
                   <div className="d-flex flex-column align-items-center">
                     <div className="d-flex align-items-center gap-2">
-                      <h6 className="chain-title font-organetto">18/30</h6>
-                      <h6 className="font-organetto chest-progress-pink">
+                      <h6 className="chain-title ">18/30</h6>
+                      <h6 className=" chest-progress-pink">
                         (62%)
                       </h6>
                     </div>
@@ -109,21 +171,11 @@ const NewDailyBonus = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="col-12 col-lg-8">
-              <div className="new-chests-grid">
-                {numberArray.map((item, index) => (
-                    <div key={index} className="new-chest-item d-flex align-items-center justify-content-center ">
-                        <img src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/${index}.png`)} width={50} height={50} alt="" />
-                    </div>
-                ))}
-              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="rewards-container-outer p-4">
+      <div className="rewards-container-outer custom-container-width p-4">
           <div className="new-rewards-grid">
        {dummyRewards.map((item, index) => (
          <div key={index} className="new-rewards-item p-2 d-flex align-items-center gap-2">

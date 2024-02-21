@@ -1464,12 +1464,11 @@ function Dashboard({
   };
 
   const handleUpdatePremiumUser = async (wallet) => {
-  await axios
+    await axios
       .get(`https://api.worldofdypians.com/api/sub/${wallet}`)
       .catch((e) => {
         console.error(e);
       });
-
   };
 
   const handleCheckIfAlreadyApproved = async (token) => {
@@ -3132,7 +3131,7 @@ function Dashboard({
                 </div>
               </div>
             )}
-            {dailyBonusPopup && (
+            {/* {dailyBonusPopup && (
               <OutsideClickHandler
                 onOutsideClick={() => {
                   setdailyBonusPopup(false);
@@ -3177,7 +3176,20 @@ function Dashboard({
                   />
                 </div>
               </OutsideClickHandler>
-            )}
+            )} */}
+            {dailyBonusPopup &&
+            <OutsideClickHandler
+            onOutsideClick={() => {
+              setdailyBonusPopup(false);
+            }}
+            >
+              <NewDailyBonus 
+               onclose={() => {
+                setdailyBonusPopup(false);
+              }}
+              />
+            </OutsideClickHandler>
+            }
             {showChecklistModal === true && (
               <ChecklistModal
                 show={showChecklistModal}
@@ -3229,7 +3241,6 @@ function Dashboard({
           </LoginWrapper>
         </div>
       </div>
-      <NewDailyBonus />
     </div>
   );
 }
