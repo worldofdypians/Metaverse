@@ -5,7 +5,7 @@
 .new-daily-bonus-popup {
   pointer-events: auto !important;
   z-index: 9999;
-  height: 95%;
+  height: 100%;
   position: fixed;
   top: 18px;
   bottom: 0;
@@ -66,6 +66,10 @@
   pointer-events: none;
   filter: brightness(0.5);
   transition: all 0.25s;
+
+  @media screen and (max-width: 786px) {
+    font-size: 14px;
+  }
 }
 
 .chain-img {
@@ -113,6 +117,10 @@ background: linear-gradient(90deg, #007982 0%, rgba(0, 121, 130, 0.30) 100%);
   .chain-title-position {
     filter: brightness(1) !important;
   }
+  .chain-desc-wrapper{
+    filter: brightness(1) !important;
+
+  }
 }
 
 .percentage-span{
@@ -133,6 +141,10 @@ line-height: normal;
   .chain-title-position {
     filter: brightness(1) !important;
   }
+  .chain-desc-wrapper{
+    filter: brightness(1) !important;
+
+  }
 }
 
 .chains-container::-webkit-scrollbar {
@@ -142,7 +154,10 @@ line-height: normal;
 .chest-progress-wrapper {
   border-radius: 20px;
   border: 1px solid #303d6f;
-  height: 60px;
+  height: 100px;
+  @media screen and (max-width: 786px) {
+    height: 100%;
+  }
 }
 
 .chest-progress-pink {
@@ -187,9 +202,9 @@ line-height: normal;
   transition: all 0.25s;
 }
 
-@media screen and (max-height: 850px) {
+@media screen and (max-height: 875px) {
   .chain-img {
-    height: 115px;
+    height: 105px;
   }
 
   .daily-bonus-row {
@@ -321,4 +336,49 @@ border: 1px solid #AE2E04 !important;
   font-style: normal;
   font-weight: 300;
   line-height: normal;
+}
+
+
+.chain-desc-wrapper{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  filter: brightness(0.5);
+  transition: all .25s;
+  pointer-events: none;
+}
+
+.desc-title{
+  color: #F2C624;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  
+}
+
+.chain-desc{
+  color: #FFF;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 50%;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 786px) {
+  .grid-overall-wrapper{
+    height: 33%;
+  }
+  .grid-scroll{
+    height: 100%;
+    overflow-y: scroll;
+  }
+}
+
+.grid-scroll::-webkit-scrollbar{
+  display: none;
 }
