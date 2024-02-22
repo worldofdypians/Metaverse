@@ -10,6 +10,7 @@ import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-n
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
 const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
+ 
   return (
     <div
       className={` ${
@@ -25,14 +26,15 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
           ? "upcoming-mint-wrapper-cmc"
           : data.title === "Gate.io"
           ? "upcoming-mint-wrapper-gate"
-          : data.title === "Dypius"
+          : data.title === "Dypius" && activeTab !== "dypiusv2"
           ? "upcoming-dyp-event"
+          : activeTab === "dypiusv2"
+          ? "upcoming-dyp-event2"
           : "upcoming-mint-wrapper-coin98"
       } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column flex-lg-row gap-3 d-flex align-items-center justify-content-between px-0`}
       onClick={onOpenPopup}
       style={{
         cursor: "pointer",
-        pointerEvents: activeTab === "upcoming" ? "none" : "auto",
       }}
     >
       <div className="d-flex col-12 col-lg-5 align-items-start align-items-lg-center  p-3 gap-3">
@@ -76,19 +78,26 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
 
       <div className="d-flex align-items-center gap-3">
         <div className="d-flex col-lg-3 flex-column align-items-start align-items-lg-center">
-          {activeTab !== "upcoming" ? (
+          {activeTab !== "dypiusv2" ? (
             <div className="mybetaearnings">
               <h6 className="event-my-earnings3 mb-3">
-                {data.title !== "Dypius" ? (
+                {data.title !== "Dypius" && activeTab !== "dypiusv2" ? (
                   <>${getFormattedNumber(userEarnUsd, 2)}</>
-                ) : (
+                ) : activeTab !== "dypiusv2" ? (
                   <>{getFormattedNumber(userEarnUsd, 0)} DYP</>
+                ) : (
+                  <></>
                 )}
               </h6>
             </div>
           ) : (
             <div className="mybetaearnings" style={{ backgroundImage: "none" }}>
-              <img src={premiumAvailable} alt="" height={145} className="premiumAvailable"/>
+              <img
+                src={premiumAvailable}
+                alt=""
+                height={145}
+                className="premiumAvailable"
+              />
             </div>
           )}
         </div>
@@ -109,11 +118,11 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
       </div>
       <div className="d-flex flex-column d-none d-lg-flex gap-3 pick-and-calendar">
         <div className="d-flex align-items-center gap-2">
-          {data.eventType === "Explore & Mine" ? (
-            <img src={whitePickaxe} alt="" />
-          ) : (
-            <img src={magnifier} alt="" className="test" />
-          )}
+          <img
+            src={data.eventType === "Explore & Mine" ? whitePickaxe : magnifier}
+            alt=""
+          />
+
           <span className="white-events-text mb-0">{data.eventType}</span>
         </div>
         <div className="d-flex align-items-center gap-2">
@@ -121,15 +130,17 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
           <span className="white-events-text mb-0">{data.eventDate}</span>
         </div>
       </div>
-      
+
       <span
-        className={`events-page-details d-flex d-lg-none my-3 align-items-center gap-2 ${activeTab === "upcoming" && 'invisible'} `}
+        className={`events-page-details d-flex d-lg-none my-3 align-items-center gap-2 ${
+          activeTab === "upcoming" && "invisible"
+        } `}
         onClick={onOpenPopup}
       >
         Details
         <img src={eventsArrow} alt="" />
       </span>
-      
+
       <img
         src={data.backgroundImage}
         alt=""

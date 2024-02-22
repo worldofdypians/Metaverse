@@ -62,6 +62,8 @@ import cmcPopupImage from "../Account/src/Components/WalletBalance/assets/cmcPop
 
 import eventPopupImageAvax from "../Account/src/Components/WalletBalance/assets/eventPopupImageAvax.png";
 import eventPopupImageGecko from "../Account/src/Components/WalletBalance/assets/eventPopupImageGecko.png";
+import eventPopupImageDypius2 from "../Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
+
 import eventPopupImageBase from "../Account/src/Components/WalletBalance/assets/eventPopupImageBase.png";
 
 import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
@@ -74,6 +76,8 @@ import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
 import upcomingDoge from "./assets/upcomingDoge.webp";
 import upcomingDyp from "./assets/upcomingDyp.webp";
 import upcomingCmc from "./assets/upcomingCmc.webp";
+import upcomingDyp2 from "./assets/dypiusBgPic2.webp";
+
 
 import dailyBonus from "./assets/dailyBonus.webp";
 import MintPopup from "../../components/TimepieceMint/MintPopup";
@@ -189,6 +193,8 @@ const MarketEvents = ({
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
+  let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
+
   let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
   let cmcLastDay = new Date("2024-03-25T13:00:00.000+02:00");
 
@@ -253,6 +259,33 @@ const MarketEvents = ({
         eventDate: "Dec 26, 2023",
         learnMore:
           "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "Dypius",
+      logo: dypius,
+      eventStatus: "Coming Soon",
+      totalRewards: "$50,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jan 26, 2024",
+      backgroundImage: upcomingDyp2,
+      activeTab: "dypiusv2",
+      popupInfo: {
+        title: "Dypius",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "BNB",
+        status: "Coming Soon",
+        id: "event9",
+        eventType: "Explore & Find",
+        totalRewards: "$50,000 in BNB Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "25",
+        maxRewards: "50",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        eventDate: "Jan 26, 2024",
+        activeTab: "dypiusv2",
       },
     },
 
@@ -838,7 +871,9 @@ const MarketEvents = ({
               </h6>
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
-                  <div className="position-relative">
+                  <div className="position-relative">  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -851,9 +886,7 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                  
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1021,8 +1054,9 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
                           <BetaEventCard
+                            activeTab={item.activeTab}
                             data={item}
                             key={index}
                             onOpenPopup={() => {
@@ -1101,30 +1135,30 @@ const MarketEvents = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">New events are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
-                //   </div>
-                // </div>
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">New events are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
+                  </div>
+                </div>
 
-                <BetaEventCard
-                  activeTab={activeTab}
-                  data={newBetaEvent}
-                  userEarnUsd={
-                    newBetaEvent.title === "Conflux"
-                      ? confluxEarnUSD
-                      : newBetaEvent.title === "CoinGecko"
-                      ? userEarnUsd
-                      : newBetaEvent.title === "Gate.io"
-                      ? gateEarnUSD
-                      : newBetaEvent.title === "Dypius"
-                      ? dypiusEarnTokens
-                      : 0
-                  }
-                />
+                // <BetaEventCard
+                //   activeTab={activeTab}
+                //   data={newBetaEvent}
+                //   userEarnUsd={
+                //     newBetaEvent.title === "Conflux"
+                //       ? confluxEarnUSD
+                //       : newBetaEvent.title === "CoinGecko"
+                //       ? userEarnUsd
+                //       : newBetaEvent.title === "Gate.io"
+                //       ? gateEarnUSD
+                //       : newBetaEvent.title === "Dypius"
+                //       ? dypiusEarnTokens
+                //       : 0
+                //   }
+                // />
                 // <div className="d-flex flex-column gap-4">
                 //   <div className="border-0 upcoming-mint-wrapper upcoming-doge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                 //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
@@ -1180,7 +1214,7 @@ const MarketEvents = ({
                 //   </div>
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                  {dummyBetaPassData2.slice(2, 7).map((item, index) => (
+                  {dummyBetaPassData2.slice(3, 7).map((item, index) => (
                     <BetaEventCard
                       data={item}
                       key={index}
@@ -1266,6 +1300,8 @@ const MarketEvents = ({
                     src={
                       dummyEvent?.id === "event5"
                         ? dypeventPopupImage
+                        :dummyEvent?.id === "event9"
+                        ? eventPopupImageDypius2
                         : dummyEvent?.linkState === "coingecko"
                         ? eventPopupImageGecko
                         : dummyEvent.linkState === "gate"
@@ -1426,6 +1462,15 @@ const MarketEvents = ({
                       Remember to log in to the game daily and venture into the
                       CoinMarketCap area to uncover hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event9" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to be {" "}
+                      <b>Premium Subscribers.</b> By actively participating in the game
+                      on a daily basis and exploring the downtown area, players
+                      have the opportunity to secure daily rewards in BNB.
+                      Remember to log in to the game daily and venture into the
+                      downtown area to uncover hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -1447,7 +1492,7 @@ const MarketEvents = ({
                   <ul>
                     <li className="popup-event-desc">Exclusive Event Access</li>
                     <>
-                      {dummyEvent.id !== "event5" ? (
+                      {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" ? (
                         <li className="popup-event-desc">
                           Daily Rewards range from ${dummyEvent.minRewards} to $
                           {dummyEvent.maxRewards}
@@ -1455,14 +1500,14 @@ const MarketEvents = ({
                       ) : (
                         <li className="popup-event-desc">Daily Rewards</li>
                       )}
-                      {dummyEvent.id !== "event5" && (
+                      {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" && (
                         <li className="popup-event-desc">
                           Daily Points range from {dummyEvent.minPoints} to{" "}
                           {dummyEvent.maxPoints}
                         </li>
                       )}
                     </>
-                    {dummyEvent.id !== "event5" && (
+                    {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" && (
                       <li className="popup-event-desc">
                         Earn{" "}
                         {dummyEvent.id === "event1"
@@ -1474,7 +1519,8 @@ const MarketEvents = ({
                           : dummyEvent.id === "event5"
                           ? "DYP"
                           : dummyEvent.id === "event6" ||
-                            dummyEvent.id === "event8"
+                            dummyEvent.id === "event8" ||
+                            dummyEvent.id === "event9"
                           ? "BNB"
                           : dummyEvent.id === "event7"
                           ? "DOGE"
@@ -1482,7 +1528,7 @@ const MarketEvents = ({
                         rewards
                       </li>
                     )}
-                    {dummyEvent.id !== "event5" && (
+                    {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" && (
                       <li className="popup-event-desc">
                         Get global leaderboard points
                       </li>
@@ -1501,7 +1547,7 @@ const MarketEvents = ({
                 ? "Coin98"
                 : dummyEvent.id === "event3"
                 ? "CoinGecko"
-                : dummyEvent.id === "event5"
+                : dummyEvent.id === "event5" || dummyEvent.id === "event9"
                 ? "Dypius"
                 : dummyEvent.id === "event6"
                 ? "Gate.io"
@@ -1548,7 +1594,7 @@ const MarketEvents = ({
                 tracks community growth, open source code development, major
                 events, and on-chain metrics.
               </p>
-            ) : dummyEvent.id === "event5" ? (
+            ) : dummyEvent.id === "event5" || dummyEvent.id === "event9" ? (
               <p
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
@@ -1618,7 +1664,7 @@ const MarketEvents = ({
                 href={
                   dummyEvent.id === "event1"
                     ? "https://twitter.com/Conflux_Network"
-                    : dummyEvent.id === "event5"
+                    : dummyEvent.id === "event5" || dummyEvent.id === "event9"
                     ? "https://twitter.com/dypius"
                     : dummyEvent.id === "event3"
                     ? "https://twitter.com/coingecko"
@@ -1641,7 +1687,7 @@ const MarketEvents = ({
                 href={
                   dummyEvent.id === "event1"
                     ? "https://t.me/Conflux_English"
-                    : dummyEvent.id === "event5"
+                    : dummyEvent.id === "event5" || dummyEvent.id === "event9"
                     ? "https://t.me/worldofdypians"
                     : dummyEvent.id === "event3"
                     ? "https://t.me/coingecko"
@@ -1673,7 +1719,7 @@ const MarketEvents = ({
                 href={
                   dummyEvent.id === "event1"
                     ? "https://confluxnetwork.org/"
-                    : dummyEvent.id === "event5"
+                    : dummyEvent.id === "event5" || dummyEvent.id === "event9"
                     ? "https://www.dypius.com/"
                     : dummyEvent.id === "event3"
                     ? "https://www.coingecko.com/"
@@ -1721,10 +1767,11 @@ const MarketEvents = ({
                       0
                     )}
                     {dummyEvent.id === "event5" && " DYP"}
+                    {dummyEvent.id === "event9" && " BNB"}
                   </h6>
 
                   <span className="mb-0 event-earnings-usd">
-                    {dummyEvent.id === "event5"
+                    {dummyEvent.id === "event5" || dummyEvent.id === "event9"
                       ? "Amount"
                       : "Leaderboard Points"}
                   </span>
@@ -1732,7 +1779,7 @@ const MarketEvents = ({
                 <div className="d-flex flex-column gap-2">
                   <h6
                     className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1"
-                    style={{ left: dummyEvent.id === "event5" && "0px" }}
+                    style={{ left: (dummyEvent.id === "event5" || dummyEvent.id === "event9") && "0px" }}
                   >
                     $
                     {getFormattedNumber(
@@ -1754,7 +1801,7 @@ const MarketEvents = ({
                       2
                     )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
-                      {dummyEvent.id !== "event5" && (
+                      {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" && (
                         <>
                           {getFormattedNumber(
                             dummyEvent.id === "event1"
@@ -1781,7 +1828,8 @@ const MarketEvents = ({
                             : dummyEvent.id === "event5"
                             ? "DYP"
                             : dummyEvent.id === "event6" ||
-                              dummyEvent.id === "event8"
+                              dummyEvent.id === "event8" ||
+                              dummyEvent.id === "event9"
                             ? "BNB"
                             : dummyEvent.id === "event7"
                             ? "DOGE"
@@ -1801,12 +1849,22 @@ const MarketEvents = ({
               </span>
             </div>
             {dummyEvent.status === "Coming Soon" &&
-              dummyEvent.id !== "event7" && (
+              dummyEvent.id !== "event7" && dummyEvent.id !== "event9" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
                   <NavLink
                     to={`/marketplace/beta-pass/${dummyEvent.linkState}`}
                   >
                     <button className="btn get-beta-btn">Get Beta Pass</button>
+                  </NavLink>
+                </div>
+              )}
+
+{dummyEvent.status === "Coming Soon" && dummyEvent.id === "event9" && (
+                <div className="w-100 d-flex justify-content-end mt-3">
+                  <NavLink
+                    to={`/account`}
+                  >
+                    <button className="btn get-beta-btn">Get Premium</button>
                   </NavLink>
                 </div>
               )}
