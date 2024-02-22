@@ -268,7 +268,7 @@ const MarketEvents = ({
       totalRewards: "$50,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate: "Jan 26, 2024",
+      eventDate: "Feb 26, 2024",
       backgroundImage: upcomingDyp2,
       activeTab: "dypiusv2",
       popupInfo: {
@@ -284,7 +284,7 @@ const MarketEvents = ({
         minRewards: "25",
         maxRewards: "50",
         learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "Jan 26, 2024",
+        eventDate: "Feb 26, 2024",
         activeTab: "dypiusv2",
       },
     },
