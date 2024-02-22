@@ -4,11 +4,12 @@ import eventsArrow from "../assets/eventsArrow.svg";
 import whitePickaxe from "../assets/whitePickAxe.svg";
 import whiteCalendar from "../assets/whiteCalendar.svg";
 import magnifier from "../assets/magnifier.svg";
+import premiumAvailable from "../assets/premiumAvailable.svg";
 
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
-const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
+const BetaEventCard = ({ data, onOpenPopup, userEarnUsd,activeTab }) => {
   return (
     <div
       className={` ${
@@ -24,8 +25,10 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
           ? "upcoming-mint-wrapper-gate"
           : data.title === "CMC" || data.title === "CoinMarketCap"
           ? "upcoming-mint-wrapper-cmc"
-          : data.title === "Dypius"
+          : data.title === "Dypius" &&  activeTab !== "dypiusv2"
           ? "upcoming-dyp-event"
+          : activeTab === "dypiusv2"
+          ? "upcoming-dyp-event2"
           : "upcoming-mint-wrapper-coin98"
       } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column d-flex align-items-center justify-content-between px-0`}
       onClick={onOpenPopup}
@@ -69,47 +72,50 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd }) => {
       </div>
 
       <div className="d-flex align-items-center gap-3">
-        <div className="d-flex col-6 flex-column align-items-start">
-          <div
-            className="mybetaearnings"
-            style={{
+        <div className="d-flex col-lg-3 flex-column align-items-start align-items-lg-center">
+          {activeTab !== "dypiusv2" ? (
+            <div className="mybetaearnings" style={{
               width: "160px",
               height: "80px",
               top: 0,
               position: "relative",
-            }}
-          >
-            <h6 className="event-my-earnings3 mb-3">
-              {data.title !== "Dypius" ? (
-                <>${getFormattedNumber(userEarnUsd, 2)}</>
-              ) : (
-                <>{getFormattedNumber(userEarnUsd, 0)} DYP</>
-              )}
-            </h6>
-          </div>
+            }}>
+              <h6 className="event-my-earnings3 mb-3">
+                {data.title !== "Dypius" && activeTab !== "dypiusv2" ? (
+                  <>${getFormattedNumber(userEarnUsd, 2)}</>
+                ) : activeTab !== "dypiusv2" ? (
+                  <>{getFormattedNumber(userEarnUsd, 0)} DYP</>
+                ) : (
+                  <></>
+                )}
+              </h6>
+            </div>
+          ) : (
+            <div className="mybetaearnings" style={{ backgroundImage: "none", width: "160px",
+            height: "80px",
+            top: 0,
+            position: "relative", }}>
+              <img
+                src={premiumAvailable}
+                alt=""
+                height={100}
+                className="premiumAvailable"
+              />
+            </div>
+          )}
         </div>
-        <div className="d-flex flex-column d-flex gap-3">
+        <div className="d-flex flex-column d-flex d-lg-none gap-3">
           <div className="d-flex align-items-center gap-2">
             {data.eventType === "Explore & Mine" ? (
               <img src={whitePickaxe} alt="" />
             ) : (
               <img src={magnifier} alt="" className="test" />
             )}
-            <span
-              className="white-events-text mb-0"
-              style={{ fontSize: "10px" }}
-            >
-              {data.eventType}
-            </span>
+            <span className="white-events-text mb-0">{data.eventType}</span>
           </div>
           <div className="d-flex align-items-center gap-2">
             <img src={whiteCalendar} alt="" />
-            <span
-              className="white-events-text mb-0"
-              style={{ fontSize: "10px" }}
-            >
-              {data.eventDate}
-            </span>
+            <span className="white-events-text mb-0">{data.eventDate}</span>
           </div>
         </div>
       </div>
