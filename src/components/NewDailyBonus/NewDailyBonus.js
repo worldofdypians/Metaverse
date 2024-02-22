@@ -5,6 +5,9 @@ import skaleChain from "./assets/skaleChain.png";
 import comingSoon from "./assets/comingSoon.png";
 import percentageFilled from "./assets/percentageFilled.svg";
 import percentageEmpty from "./assets/percentageEmpty.svg";
+import dypiusIcon from "./assets/dypiusIcon.svg";
+import wodIcon from "./assets/wodIcon.png";
+import premiumIcon from "./assets/premiumIcon.png";
 import xMark from "./assets/xMark.svg";
 
 const NewDailyBonus = ({ onclose }) => {
@@ -16,10 +19,16 @@ const NewDailyBonus = ({ onclose }) => {
     id: index + 1,
   }));
 
+  const messages = ["caws", "dyp", "premium", "wod"];
+
   const [chain, setChain] = useState("bnb");
   const [dummyArray, setDummyArray] = useState(numberArray);
+  const [message, setMessage] = useState("");
 
   const openChest = (chest) => {
+    const randomNum = Math.floor(Math.random() * 4);
+
+    setMessage(messages[randomNum]);
     const updatedArray = dummyArray.map((item) =>
       item.id === chest ? { ...item, opened: true } : item
     );
@@ -89,8 +98,8 @@ const NewDailyBonus = ({ onclose }) => {
           <img
             src={xMark}
             className="close-new-bonus"
-            width={30}
-            height={30}
+            width={40}
+            height={40}
             alt=""
             onClick={onclose}
             style={{ cursor: "pointer" }}
@@ -234,9 +243,10 @@ const NewDailyBonus = ({ onclose }) => {
                           src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
                             !item.opened ? index : index + "open"
                           }.png`)}
-                          width={70}
-                          height={70}
+                          width={80}
+                          height={80}
                           alt=""
+                          style={{ position: "relative", bottom: "5px" }}
                         />
                         <div className="new-claim-chest-btn d-flex align-items-center justify-content-center">
                           {item.opened ? "Claimed" : "Claim "}
@@ -247,39 +257,131 @@ const NewDailyBonus = ({ onclose }) => {
                 </div>
               </div>
               <div className="col-12 px-0 mt-0 mt-lg-3">
-                <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
-                  <div
-                    className="chain-desc-wrapper p-2 d-flex flex-column"
-                    style={{ filter: "brightness(1)", position: "relative" }}
-                  >
-                    <h6 className="desc-title mb-0">Unable to claim reward</h6>
-                    <span className="chain-desc mb-0">
-                      This reward can only be claimed by CAWS NFT owners. You
-                      can purchase a CAWS NFT in 24 hours to claim this reward.
-                      Please select a CAWS NFT to purchase:
-                    </span>
+                {message === "" ? (
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper"></div>
+                ) : message === "caws" ? (
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                    <div
+                      className="chain-desc-wrapper p-2 d-flex flex-column"
+                      style={{ filter: "brightness(1)", position: "relative" }}
+                    >
+                      <h6 className="desc-title mb-0">
+                        Unable to claim reward
+                      </h6>
+                      <span className="chain-desc mb-0">
+                        This reward can only be claimed by CAWS NFT owners. You
+                        can purchase a CAWS NFT in 24 hours to claim this
+                        reward. Please select a CAWS NFT to purchase:
+                      </span>
+                    </div>
+                    <div className="d-flex align-items-center gap-2">
+                      {cawsArray.map((item, index) => (
+                        <div className="nft-reward-container">
+                          <img
+                            key={index}
+                            className="nft-reward-img"
+                            src={require(`./assets/caws${item.id}.png`)}
+                            alt=""
+                            width={60}
+                            height={60}
+                          />
+                          <div className="buy-nft-reward-btn">Buy</div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div className="d-flex align-items-center gap-2">
-                    {cawsArray.map((item, index) => (
-                      <div className="nft-reward-container">
-                        <img
-                          key={index}
-                          className="nft-reward-img"
-                          src={require(`./assets/caws${item.id}.png`)}
-                          alt=""
-                          width={60}
-                          height={60}
-                        />
-                        <div className="buy-nft-reward-btn">Buy</div>
-                      </div>
-                    ))}
+                ) : message === "premium" ? (
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                    <div
+                      className="chain-desc-wrapper p-2 d-flex flex-column"
+                      style={{ filter: "brightness(1)", position: "relative" }}
+                    >
+                      <h6 className="desc-title mb-0">
+                        Unable to claim reward
+                      </h6>
+                      <span className="chain-desc mb-0">
+                        This reward can only be claimed by Premium Subscribers.
+                        You can purchase a Premium Subscription within the next
+                        24 hours to claim this reward.
+                      </span>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-between get-premium-wrapper">
+                      <img
+                        src={premiumIcon}
+                        style={{ width: 60, height: 60 }}
+                        alt=""
+                      />
+                      <button className="get-premium-btn px-2 py-1">
+                        Get Premium
+                      </button>
+                    </div>
                   </div>
-                </div>
+                ) : message === "dyp" ? (
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                    <div
+                      className="chain-desc-wrapper p-2 d-flex flex-column"
+                      style={{ filter: "brightness(1)", position: "relative" }}
+                    >
+                      <h6 className="desc-title mb-0">
+                        Unable to claim reward
+                      </h6>
+                      <span className="chain-desc mb-0">
+                        This reward can only be claimed by holders of more than
+                        $1,000 in DYP v2. You can purchase more DYP within the
+                        next 24 hours to claim this reward.{" "}
+                      </span>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-between get-premium-wrapper">
+                      <img
+                        src={dypiusIcon}
+                        style={{ width: 40, height: 40 }}
+                        alt=""
+                      />
+                      <button className="get-premium-btn px-2 py-1">
+                        Get DYP
+                      </button>
+                    </div>
+                  </div>
+                ) : message === "wod" ? (
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                    <div
+                      className="chain-desc-wrapper p-2 d-flex flex-column"
+                      style={{ filter: "brightness(1)", position: "relative" }}
+                    >
+                      <h6 className="desc-title mb-0">
+                        Unable to claim reward
+                      </h6>
+                      <span className="chain-desc mb-0">
+                        This reward can only be claimed by Genesis Land NFT
+                        owners. You can purchase a Genesis Land NFT within the
+                        next 24 hours to claim this reward. Please select an NFT
+                        to purchase:
+                      </span>
+                    </div>
+                    <div className="d-flex align-items-center gap-2">
+                      {cawsArray.map((item, index) => (
+                        <div className="nft-reward-container">
+                          <img
+                            key={index}
+                            className="nft-reward-img"
+                            src={require(`./assets/wodIcon.png`)}
+                            alt=""
+                            width={60}
+                            height={60}
+                          />
+                          <div className="buy-nft-reward-btn">Buy</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>
         </div>
-        <div className="rewards-container-outer custom-container-width p-4">
+        <div className="rewards-container-outer custom-container-width d-flex align-items-center justify-content-center p-4">
           <div className="new-rewards-grid">
             {dummyRewards.map((item, index) => (
               <div
@@ -288,8 +390,8 @@ const NewDailyBonus = ({ onclose }) => {
               >
                 <img
                   src={require(`./assets/${item.img}Icon.png`)}
-                  width={30}
-                  height={30}
+                  width={60}
+                  height={60}
                   alt=""
                 />
                 <div className="d-flex align-items-bottom gap-1">
