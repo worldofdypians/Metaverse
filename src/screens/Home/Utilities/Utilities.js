@@ -17,10 +17,10 @@ const Utilities = () => {
       image: "idyp.svg",
       desc: `
       <p class="utility-desc">
-      Beta demo game with 13,500 beta testers currently enjoying it.
-8,664 applicants are waiting for beta access.
+      Beta demo game with 25,000 beta testers currently enjoying it.
+More than 11,000 applicants are waiting for beta access.
 5 new events are currently available for users to participate in.
-Over $85,000 in distributed rewards, the equivalent of more than 225 BNB.
+Over $100,000 in distributed rewards, the equivalent of more than 260 BNB.
       </p>`,
       class: "stats-card",
     },
