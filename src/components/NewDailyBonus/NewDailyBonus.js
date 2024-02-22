@@ -16,8 +16,6 @@ const NewDailyBonus = ({ onclose }) => {
     id: index + 1,
   }));
 
-
-
   const [chain, setChain] = useState("bnb");
   const [dummyArray, setDummyArray] = useState(numberArray);
 
@@ -149,7 +147,7 @@ const NewDailyBonus = ({ onclose }) => {
                         <span className="percentage-span">62%</span>
                       </div>
                     </div>
-                    <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column gap-2">
+                    <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column">
                       <h6 className="desc-title mb-0">Magic Battle</h6>
                       <span className="chain-desc mb-0">
                         A world full of possibilities
@@ -186,7 +184,7 @@ const NewDailyBonus = ({ onclose }) => {
                         <span className="percentage-span">62%</span>
                       </div>
                     </div>
-                    <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column gap-2">
+                    <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column ">
                       <h6 className="desc-title mb-0">Magic Battle</h6>
                       <span className="chain-desc mb-0">
                         A world full of possibilities
@@ -212,7 +210,7 @@ const NewDailyBonus = ({ onclose }) => {
                         <span className="percentage-span">62%</span>
                       </div>
                     </div>
-                    <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column gap-2">
+                    <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column">
                       <h6 className="desc-title mb-0">Magic Battle</h6>
                       <span className="chain-desc mb-0">
                         A world full of possibilities
@@ -223,29 +221,29 @@ const NewDailyBonus = ({ onclose }) => {
               </div>
               <div className="col-12 col-lg-7 px-0 grid-overall-wrapper">
                 <div className="grid-scroll">
-                <div className="new-chests-grid">
-                  {dummyArray.map((item, index) => (
-                    <div
-                      key={index}
-                      className={`new-chest-item ${
-                        item.opened && "new-chest-item-open"
-                      } d-flex align-items-center justify-content-center`}
-                      onClick={() => openChest(item.id)}
-                    >
-                      <img
-                        src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
-                          !item.opened ? index : index + "open"
-                        }.png`)}
-                        width={70}
-                        height={70}
-                        alt=""
-                      />
-                      <div className="new-claim-chest-btn d-flex align-items-center justify-content-center">
-                        {item.opened ? "Claimed" : "Claim "}
+                  <div className="new-chests-grid">
+                    {dummyArray.map((item, index) => (
+                      <div
+                        key={index}
+                        className={`new-chest-item ${
+                          item.opened && "new-chest-item-open"
+                        } d-flex align-items-center justify-content-center`}
+                        onClick={() => openChest(item.id)}
+                      >
+                        <img
+                          src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
+                            !item.opened ? index : index + "open"
+                          }.png`)}
+                          width={70}
+                          height={70}
+                          alt=""
+                        />
+                        <div className="new-claim-chest-btn d-flex align-items-center justify-content-center">
+                          {item.opened ? "Claimed" : "Claim "}
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
                 </div>
               </div>
               <div className="col-12 px-0 mt-0 mt-lg-3">
@@ -255,7 +253,7 @@ const NewDailyBonus = ({ onclose }) => {
                     style={{ filter: "brightness(1)", position: "relative" }}
                   >
                     <h6 className="desc-title mb-0">Unable to claim reward</h6>
-                    <span className="chain-desc mb-0" >
+                    <span className="chain-desc mb-0">
                       This reward can only be claimed by CAWS NFT owners. You
                       can purchase a CAWS NFT in 24 hours to claim this reward.
                       Please select a CAWS NFT to purchase:
@@ -263,7 +261,17 @@ const NewDailyBonus = ({ onclose }) => {
                   </div>
                   <div className="d-flex align-items-center gap-2">
                     {cawsArray.map((item, index) => (
-                      <img key={index} src={require(`./assets/caws${item.id}.png`)} alt="" width={60} height={60} />
+                      <div className="nft-reward-container">
+                        <img
+                          key={index}
+                          className="nft-reward-img"
+                          src={require(`./assets/caws${item.id}.png`)}
+                          alt=""
+                          width={60}
+                          height={60}
+                        />
+                        <div className="buy-nft-reward-btn">Buy</div>
+                      </div>
                     ))}
                   </div>
                 </div>

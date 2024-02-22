@@ -87,7 +87,7 @@
   }
 }
 
-.chain-title-wrapper{
+.chain-title-wrapper {
   position: absolute;
   top: 2px;
   border-radius: 18px;
@@ -97,9 +97,9 @@
   width: 99%;
 }
 
-.chain-title-wrapper-active{
+.chain-title-wrapper-active {
   border-radius: 15px 15px 0px 0px;
-background: linear-gradient(90deg, #007982 0%, rgba(0, 121, 130, 0.30) 100%);
+  background: linear-gradient(90deg, #007982 0%, rgba(0, 121, 130, 0.3) 100%);
 }
 
 .close-new-bonus {
@@ -117,19 +117,18 @@ background: linear-gradient(90deg, #007982 0%, rgba(0, 121, 130, 0.30) 100%);
   .chain-title-position {
     filter: brightness(1) !important;
   }
-  .chain-desc-wrapper{
+  .chain-desc-wrapper {
     filter: brightness(1) !important;
-
   }
 }
 
-.percentage-span{
-  color: #FFF;
-text-align: center;
-font-size: 12px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+.percentage-span {
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .chain-item-active {
@@ -141,9 +140,8 @@ line-height: normal;
   .chain-title-position {
     filter: brightness(1) !important;
   }
-  .chain-desc-wrapper{
+  .chain-desc-wrapper {
     filter: brightness(1) !important;
-
   }
 }
 
@@ -154,7 +152,7 @@ line-height: normal;
 .chest-progress-wrapper {
   border-radius: 20px;
   border: 1px solid #303d6f;
-  height: 100px;
+  height: 80px;
   @media screen and (max-width: 786px) {
     height: 100%;
   }
@@ -250,22 +248,32 @@ line-height: normal;
       #00b9cd 100%
     );
     color: #056054;
-
   }
 }
 
 .new-chest-item-open {
   background-image: url("./assets/chestBackground2.png") !important;
-border: 1px solid #AE2E04;
-background: linear-gradient(135deg, #BB3104 0%, #E88000 50.5%, #BB3104 100%) !important;
-.new-claim-chest-btn{
-  color: #BB3104 !important;
-  border: 1px solid #AE2E04 !important;
-  background: linear-gradient(92deg, #BB3104 0%, #FFB503 33.5%, #FFB503 68%, #BB3104 100%) !important;
-}
+  border: 1px solid #ae2e04;
+  background: linear-gradient(
+    135deg,
+    #bb3104 0%,
+    #e88000 50.5%,
+    #bb3104 100%
+  ) !important;
+  .new-claim-chest-btn {
+    color: #bb3104 !important;
+    border: 1px solid #ae2e04 !important;
+    background: linear-gradient(
+      92deg,
+      #bb3104 0%,
+      #ffb503 33.5%,
+      #ffb503 68%,
+      #bb3104 100%
+    ) !important;
+  }
 }
 .new-chest-item-open:hover {
-border: 1px solid #AE2E04 !important;
+  border: 1px solid #ae2e04 !important;
 }
 
 .new-rewards-grid {
@@ -338,47 +346,89 @@ border: 1px solid #AE2E04 !important;
   line-height: normal;
 }
 
-
-.chain-desc-wrapper{
+.chain-desc-wrapper {
   position: absolute;
   bottom: 0;
   width: 100%;
   filter: brightness(0.5);
-  transition: all .25s;
+  transition: all 0.25s;
   pointer-events: none;
 }
 
-.desc-title{
-  color: #F2C624;
+.desc-title {
+  color: #f2c624;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  
 }
 
-.chain-desc{
-  color: #FFF;
+.chain-desc {
+  color: #fff;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  width: 50%;
+  width: 75%;
   @media screen and (max-width: 786px) {
     width: 100%;
   }
 }
 
+.grid-scroll {
+  height: 100%;
+}
+
 @media screen and (max-width: 786px) {
-  .grid-overall-wrapper{
+  .grid-overall-wrapper {
     height: 33%;
   }
-  .grid-scroll{
+  .grid-scroll {
     height: 100%;
     overflow-y: scroll;
   }
 }
 
-.grid-scroll::-webkit-scrollbar{
+.grid-scroll::-webkit-scrollbar {
   display: none;
 }
+
+.nft-reward-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.nft-reward-img {
+  border: 2px solid #1a1c39;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.buy-nft-reward-btn {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+transform: translateY(100%);
+  background: rgb(0, 219, 222);
+  color: #056054;
+  text-align: center;
+  font-size: 10px;
+  border-radius: 0 0 12px 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  transition: all 0.25s;
+}
+
+.nft-reward-img:hover{
+  border: 2px solid rgb(0, 219, 222);
+}
+
+.nft-reward-container:hover{
+  .buy-nft-reward-btn{
+    transform: translateY(0) !important;
+  }
+}
+
+
