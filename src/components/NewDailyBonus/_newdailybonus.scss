@@ -5,7 +5,7 @@
 .new-daily-bonus-popup {
   pointer-events: auto !important;
   z-index: 9999;
-  height: 100%;
+  height: 98%;
   position: fixed;
   top: 18px;
   bottom: 0;
@@ -78,7 +78,6 @@
   border-radius: 8px;
   height: 130px;
   cursor: pointer;
-  filter: brightness(0.5);
   border: 2px solid transparent;
   border-radius: 18px;
   @media screen and (max-width: 786px) {
@@ -96,14 +95,12 @@
   margin: auto;
   width: 99%;
   pointer-events: none;
-  filter: brightness(0.5);
   transition: all 0.25s;
 }
 
 .chain-title-wrapper-active {
   border-radius: 15px 15px 0px 0px;
   background: linear-gradient(90deg, #007982 0%, rgba(0, 121, 130, 0.3) 100%);
-  filter: brightness(1);
 }
 
 .close-new-bonus {
@@ -112,19 +109,15 @@
   top: 8%;
 }
 
+.chain-item {
+  filter: brightness(0.5);
+}
+
 .chain-item:hover {
+  filter: brightness(1);
   .chain-img {
-    filter: brightness(1);
     box-shadow: 0 -6px 5px -2px rgba(0, 219, 222, 0.8);
     border: 2px solid rgba(0, 219, 222, 1);
-  }
-
-  .chain-title-wrapper {
-    filter: brightness(1) !important;
-  }
-
-  .chain-desc-wrapper {
-    filter: brightness(1) !important;
   }
 }
 
@@ -138,17 +131,10 @@
 }
 
 .chain-item-active {
+  filter: brightness(1);
   .chain-img {
-    filter: brightness(1);
     box-shadow: 0 -6px 5px -2px rgba(0, 219, 222, 0.6);
     border: 2px solid rgba(0, 219, 222, 1);
-  }
-
-  .chain-title-wrapper {
-    filter: brightness(1) !important;
-  }
-  .chain-desc-wrapper {
-    filter: brightness(1) !important;
   }
 }
 
@@ -245,6 +231,7 @@
 
 .new-chest-item:hover {
   border: 2px solid #00d6be;
+  filter: drop-shadow(0 0 6px #00b9cd) !important;
   .new-claim-chest-btn {
     border: 1px solid #00b9cd;
     background: linear-gradient(
@@ -259,14 +246,10 @@
 }
 
 .new-chest-item-open {
-  background-image: url("./assets/chestBackground2.png") !important;
+  background-image: url("./assets/chestShine.png") !important;
+
   border: 2px solid #ae2e04;
-  background: linear-gradient(
-    135deg,
-    #bb3104 0%,
-    #e88000 50.5%,
-    #bb3104 100%
-  ) !important;
+
   .new-claim-chest-btn {
     color: black !important;
     border: 2px solid #ae2e04 !important;
@@ -280,7 +263,8 @@
   }
 }
 .new-chest-item-open:hover {
-  border: 2px solid #00b9cd !important;
+  // border: 2px solid #00b9cd !important;
+  filter: drop-shadow(0 0 6px #00b9cd) !important;
   .new-claim-chest-btn {
     border: 2px solid #00b9cd !important;
   }
@@ -290,7 +274,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 5px;
-  
+
   @media screen and (max-width: 786px) {
     overflow-x: scroll;
   }
@@ -303,17 +287,18 @@
 .new-rewards-item {
   border-radius: 20px;
   // border: 3px solid #003c55;
+  transition: all 0.25s;
 }
 .new-reward-amount {
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 800;
 }
 
 .new-reward-type {
   color: #fff;
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 700;
 }
@@ -360,7 +345,6 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  filter: brightness(0.5);
   transition: all 0.25s;
   pointer-events: none;
 }
@@ -441,21 +425,123 @@
   }
 }
 
-.get-premium-btn{
+.get-premium-btn {
   border-radius: 8px;
-border: 1px solid #482193;
-background: linear-gradient(92deg, #482193 0%, #7755C4 33.5%, #7755C4 68%, #482193 100%);
-color: #FFF;
-text-align: center;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+  background: linear-gradient(95deg, #d62267 0.51%, #ea1aa5 100%);
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
 }
 
-.get-premium-wrapper{
+.sign-in-btn {
+  border-radius: 8px;
+  background: linear-gradient(95deg, #d75853 0.51%, #f28a4d 100%);
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+}
+
+.get-premium-wrapper {
   width: 30%;
   @media screen and (max-width: 786px) {
     width: 100%;
+  }
+}
+
+.rewards-upper-title {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 7%;
+  margin: auto;
+  color: #292944;
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  @media screen and (max-width: 786px) {
+    bottom: 8%;
+    font-size: 8px;
+  }
+}
+
+.selected-new-chest {
+  border: 2px solid #00d6be !important;
+  background-color: linear-gradient(
+    92deg,
+    #bb3104 0%,
+    #ffb503 33.5%,
+    #ffb503 68%,
+    #bb3104 100%
+  ) !important;
+  .new-claim-chest-btn {
+    border: 2px solid #00d6be !important;
+  }
+}
+
+.chain-button-wrapper {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
+.loader {
+  position: relative;
+  display: flex;
+  .dot {
+    position: relative;
+    display: block;
+    width: 10px;
+    height: 10px;
+    background: #10c5c5;
+    box-shadow: 0 0 5px #10c5c5, 0 0 10px #10c5c5;
+
+    margin: 5px 15px;
+    border-radius: 50%;
+    animation: animateDot 2s linear infinite;
+    animation-delay: calc(0.1s * var(--i));
+  }
+}
+
+.loader-text {
+  color: #10c5c5;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.loader:last-child {
+  .dot {
+    animation-delay: calc(-0.1s * var(--i));
+  }
+}
+
+.red-loader {
+  .dot {
+    background: #d75853;
+    box-shadow: 0 0 5px #d75853, 0 0 10px #d75853;
+  }
+}
+
+@keyframes animateDot {
+  0% {
+    transform: scale(0.1);
+  }
+  10% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.1);
   }
 }

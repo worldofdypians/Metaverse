@@ -8,7 +8,9 @@ import percentageEmpty from "./assets/percentageEmpty.svg";
 import dypiusIcon from "./assets/dypiusIcon.svg";
 import wodIcon from "./assets/wodIcon.png";
 import premiumIcon from "./assets/premiumIcon.png";
-import xMark from "./assets/xMark.svg";
+import xMark from "./assets/xMark2.svg";
+import bnbIcon from "./assets/bnbIcon.svg";
+import NewChestItem from "./NewChestItem";
 
 const NewDailyBonus = ({ onclose }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
@@ -19,21 +21,35 @@ const NewDailyBonus = ({ onclose }) => {
     id: index + 1,
   }));
 
-  const messages = ["caws", "dyp", "premium", "wod"];
+  const messages = ["caws", "dyp", "premium", "wod", "switch", "login"];
 
   const [chain, setChain] = useState("bnb");
   const [dummyArray, setDummyArray] = useState(numberArray);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("login");
+  const [reward, setReward] = useState(null);
+  const [selectedChest, setSelectedChest] = useState(null);
 
-  const openChest = (chest) => {
-    const randomNum = Math.floor(Math.random() * 4);
+  const openChest = (chestId) => {
+    const chest = dummyArray.filter((item) => {
+      return item.id === chestId;
+    });
 
-    setMessage(messages[randomNum]);
-    const updatedArray = dummyArray.map((item) =>
-      item.id === chest ? { ...item, opened: true } : item
-    );
-
-    setDummyArray(updatedArray);
+    if (chest[0].opened === true) {
+      setReward(chest[0].reward);
+      setSelectedChest(chest[0].id);
+    } else {
+      const randomNum = Math.floor(Math.random() * 4);
+      const randomReward = Math.floor(Math.random() * 10);
+      // setMessage(messages[randomNum]);
+      setReward(randomReward);
+      const updatedArray = dummyArray.map((item) =>
+        item.id === chestId
+          ? { ...item, opened: true, reward: randomReward }
+          : item
+      );
+      setSelectedChest(chest[0].id);
+      setDummyArray(updatedArray);
+    }
   };
 
   const dummyRewards = [
@@ -104,6 +120,7 @@ const NewDailyBonus = ({ onclose }) => {
             onClick={onclose}
             style={{ cursor: "pointer" }}
           />
+          <h6 className="rewards-upper-title mb-9 font-organetto">Rewards</h6>
           <div className="new-total-points-wrapper d-flex align-items-end gap-2">
             <h6 className="new-total-points  mb-0">256,786 </h6>
             <span className="new-total-points-type d-none d-lg-flex  mb-0">
@@ -119,7 +136,7 @@ const NewDailyBonus = ({ onclose }) => {
           <div className="daily-bonus-inner-wrapper container p-4 p-lg-5 mt-3 mt-lg-0">
             <div
               className="row daily-bonus-row gap-3 gap-lg-0 mx-4 mx-lg-2 mt-5 mt-lg-3"
-              style={{ height: "100%" }}
+              style={{ height: "100%", marginTop: "64px" }}
             >
               <div className="col-12 col-lg-5 chains-wrapper">
                 <div
@@ -156,11 +173,22 @@ const NewDailyBonus = ({ onclose }) => {
                         <span className="percentage-span">62%</span>
                       </div>
                     </div>
-                    <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column">
-                      <h6 className="desc-title mb-0">Magic Battle</h6>
-                      <span className="chain-desc mb-0">
-                        A world full of possibilities
-                      </span>
+                    <div
+                      className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
+                      style={{ width: "fit-content" }}
+                    >
+                      <button
+                        className={`chain-active-btn d-flex gap-1 align-items-center`}
+                      >
+                        {" "}
+                        <img src={bnbIcon} alt="" /> BNB
+                      </button>
+
+                      <button
+                        className={`chain-inactive-btn d-flex gap-1 align-items-center`}
+                      >
+                        <img src={bnbIcon} alt="" /> opBNB
+                      </button>
                     </div>
                   </div>
                   <div
@@ -181,7 +209,7 @@ const NewDailyBonus = ({ onclose }) => {
                         chain === "skale" && "chain-title-wrapper-active"
                       } p-2 d-flex align-items-center justify-content-between`}
                     >
-                      <h6 className="chain-title-position mb-0">Skale</h6>
+                      <h6 className="chain-title-position mb-0">SKALE Network</h6>
                       <div className="d-flex align-items-center gap-2">
                         <div className="d-flex align-items-center">
                           <img src={percentageFilled} height={8} alt="" />
@@ -193,11 +221,18 @@ const NewDailyBonus = ({ onclose }) => {
                         <span className="percentage-span">62%</span>
                       </div>
                     </div>
-                    <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column ">
-                      <h6 className="desc-title mb-0">Magic Battle</h6>
-                      <span className="chain-desc mb-0">
-                        A world full of possibilities
-                      </span>
+                    <div
+                      className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
+                      style={{ width: "fit-content" }}
+                    >
+                      <button
+                        className={`chain-inactive-btn d-flex gap-1 align-items-center`}
+                      >
+                        {" "}
+                        <img src={bnbIcon} alt="" /> SKALE
+                      </button>
+
+                      
                     </div>
                   </div>
                   <div className={`position-relative chain-item  w-100`}>
@@ -232,33 +267,74 @@ const NewDailyBonus = ({ onclose }) => {
                 <div className="grid-scroll">
                   <div className="new-chests-grid">
                     {dummyArray.map((item, index) => (
-                      <div
+                      <NewChestItem
                         key={index}
-                        className={`new-chest-item ${
-                          item.opened && "new-chest-item-open"
-                        } d-flex align-items-center justify-content-center`}
-                        onClick={() => openChest(item.id)}
-                      >
-                        <img
-                          src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
-                            !item.opened ? index : index + "open"
-                          }.png`)}
-                          width={80}
-                          height={80}
-                          alt=""
-                          style={{ position: "relative", bottom: "5px" }}
-                        />
-                        <div className="new-claim-chest-btn d-flex align-items-center justify-content-center">
-                          {item.opened ? "Claimed" : "Claim "}
-                        </div>
-                      </div>
+                        item={item}
+                        index={index}
+                        openChest={openChest}
+                        selectedChest={selectedChest}
+                      />
                     ))}
                   </div>
                 </div>
               </div>
               <div className="col-12 px-0 mt-0 mt-lg-3">
                 {message === "" ? (
-                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper"></div>
+                  <div className="d-flex align-items-center flex-column justify-content-center p-2 w-100 chest-progress-wrapper" style={{background: "#1A1C39", border: "1px solid #10C5C5"}}>
+                    <div className="loader">
+                      <div className="dot" style={{"--i":0}}></div>
+                      <div className="dot" style={{"--i":1}}></div>
+                      <div className="dot" style={{"--i":2}}></div>
+                      <div className="dot" style={{"--i":3}}></div>
+                      <div className="dot" style={{"--i":4}}></div>
+                      <div className="dot" style={{"--i":5}}></div>
+                      <div className="dot" style={{"--i":6}}></div>
+                      <div className="dot" style={{"--i":7}}></div>
+                      <div className="dot" style={{"--i":8}}></div>
+                      <div className="dot" style={{"--i":9}}></div>
+                    </div>
+                    <h6 className="loader-text mb-0">Ready to Claim</h6>
+                    <div className="loader">
+                      <div className="dot" style={{"--i":0}}></div>
+                      <div className="dot" style={{"--i":1}}></div>
+                      <div className="dot" style={{"--i":2}}></div>
+                      <div className="dot" style={{"--i":3}}></div>
+                      <div className="dot" style={{"--i":4}}></div>
+                      <div className="dot" style={{"--i":5}}></div>
+                      <div className="dot" style={{"--i":6}}></div>
+                      <div className="dot" style={{"--i":7}}></div>
+                      <div className="dot" style={{"--i":8}}></div>
+                      <div className="dot" style={{"--i":9}}></div>
+                    </div>
+                  </div>
+                ) : message === "switch" ? (
+                  <div className="d-flex align-items-center flex-column justify-content-center p-2 w-100 chest-progress-wrapper" style={{background: "#1A1C39", border: "1px solid #D75853"}}>
+                  <div className="loader red-loader">
+                    <div className="dot" style={{"--i":0}}></div>
+                    <div className="dot" style={{"--i":1}}></div>
+                    <div className="dot" style={{"--i":2}}></div>
+                    <div className="dot" style={{"--i":3}}></div>
+                    <div className="dot" style={{"--i":4}}></div>
+                    <div className="dot" style={{"--i":5}}></div>
+                    <div className="dot" style={{"--i":6}}></div>
+                    <div className="dot" style={{"--i":7}}></div>
+                    <div className="dot" style={{"--i":8}}></div>
+                    <div className="dot" style={{"--i":9}}></div>
+                  </div>
+                  <h6 className="loader-text mb-0" style={{color: "#D75853"}}>Switch to BNB Chain</h6>
+                  <div className="loader red-loader">
+                    <div className="dot" style={{"--i":0}}></div>
+                    <div className="dot" style={{"--i":1}}></div>
+                    <div className="dot" style={{"--i":2}}></div>
+                    <div className="dot" style={{"--i":3}}></div>
+                    <div className="dot" style={{"--i":4}}></div>
+                    <div className="dot" style={{"--i":5}}></div>
+                    <div className="dot" style={{"--i":6}}></div>
+                    <div className="dot" style={{"--i":7}}></div>
+                    <div className="dot" style={{"--i":8}}></div>
+                    <div className="dot" style={{"--i":9}}></div>
+                  </div>
+                </div>
                 ) : message === "caws" ? (
                   <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                     <div
@@ -291,18 +367,16 @@ const NewDailyBonus = ({ onclose }) => {
                     </div>
                   </div>
                 ) : message === "premium" ? (
-                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper" style={{border: "1px solid #8262D0", background: "linear-gradient(180deg, #8262D0 0%, #482293 100%)"}}>
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
                     >
-                      <h6 className="desc-title mb-0">
+                      <h6 className="desc-title mb-0" style={{color: "#fff"}}>
                         Unable to claim reward
                       </h6>
                       <span className="chain-desc mb-0">
-                        This reward can only be claimed by Premium Subscribers.
-                        You can purchase a Premium Subscription within the next
-                        24 hours to claim this reward.
+                      Enjoy extra benefits and unlock more chests for extra rewards by upgrading to premium.
                       </span>
                     </div>
                     <div className="d-flex align-items-center justify-content-between get-premium-wrapper">
@@ -316,7 +390,28 @@ const NewDailyBonus = ({ onclose }) => {
                       </button>
                     </div>
                   </div>
-                ) : message === "dyp" ? (
+                ) : message === "login" ? (
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper" style={{border: "1px solid #8262D0", background: "linear-gradient(180deg, #8262D0 0%, #482293 100%)"}}>
+                    <div
+                      className="chain-desc-wrapper p-2 d-flex flex-column"
+                      style={{ filter: "brightness(1)", position: "relative" }}
+                    >
+                      <h6 className="desc-title mb-0" style={{color: "#fff"}}>
+                      Sign in with Your Game Account
+                      </h6>
+                      <span className="chain-desc mb-0">
+                      Sign in with your Game Account to unlock chests and earn rewards tailored to your gameplay. 
+                      </span>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-end get-premium-wrapper">
+                     
+                    <button className="sign-in-btn px-4 py-1">
+                        Sign In
+                      </button>
+                    </div>
+                  </div>
+                )
+                 : message === "dyp" ? (
                   <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -387,6 +482,10 @@ const NewDailyBonus = ({ onclose }) => {
               <div
                 key={index}
                 className="new-rewards-item p-2 d-flex align-items-center gap-2"
+                style={{
+                  filter:
+                    reward === index ? "brightness(1)" : "brightness(0.5)",
+                }}
               >
                 <img
                   src={require(`./assets/${item.img}Icon.png`)}
