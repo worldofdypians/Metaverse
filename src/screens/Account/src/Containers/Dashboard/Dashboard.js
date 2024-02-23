@@ -896,23 +896,23 @@ function Dashboard({
     if (addr) {
       subscribedPlatformTokenAmountETH = await ethcontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call();
+        .call().catch((e)=>{console.log(e); return 0})
 
       subscribedPlatformTokenAmountCfx = await cfxcontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call();
+        .call().catch((e)=>{console.log(e); return 0})
 
       subscribedPlatformTokenAmountBase = await basecontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call();
+        .call().catch((e)=>{console.log(e); return 0})
 
       subscribedPlatformTokenAmountBNB = await bnbcontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call();
+        .call().catch((e)=>{console.log(e); return 0})
 
       subscribedPlatformTokenAmountAvax = await avaxcontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call();
+        .call().catch((e)=>{console.log(e); return 0})
 
       if (
         subscribedPlatformTokenAmountCfx === "0" &&
@@ -1463,12 +1463,11 @@ function Dashboard({
   };
 
   const handleUpdatePremiumUser = async (wallet) => {
-  await axios
+    await axios
       .get(`https://api.worldofdypians.com/api/sub/${wallet}`)
       .catch((e) => {
         console.error(e);
       });
-
   };
 
   const handleCheckIfAlreadyApproved = async (token) => {
