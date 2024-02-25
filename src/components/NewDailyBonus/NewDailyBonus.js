@@ -8,8 +8,17 @@ import percentageEmpty from "./assets/percentageEmpty.svg";
 import dypiusIcon from "./assets/dypiusIcon.svg";
 import wodIcon from "./assets/wodIcon.png";
 import premiumIcon from "./assets/premiumIcon.png";
+import cawsRound from "./assets/cawsRound.png";
+import wodRound from "./assets/wodRound.png";
+import premiumRound from "./assets/premiumRound.png";
+import completedBg from "./assets/completedBg.png";
+import winConfetti from "./assets/winConfetti.png";
 import xMark from "./assets/xMark2.svg";
 import bnbIcon from "./assets/bnbIcon.svg";
+import greenCheck from "./assets/greenCheck.svg";
+import danger from "./assets/danger.svg";
+import warning from "./assets/warning.svg";
+import redX from "./assets/redX.svg";
 import NewChestItem from "./NewChestItem";
 
 const NewDailyBonus = ({ onclose }) => {
@@ -21,11 +30,36 @@ const NewDailyBonus = ({ onclose }) => {
     id: index + 1,
   }));
 
-  const messages = ["caws", "dyp", "premium", "wod", "switch", "login"];
+
+  const winDangerItems = [
+    {
+      title: "Hold CAWS NFT",
+      image: cawsRound,
+      holder: false,
+    },
+    {
+      title: "Hold Genesis NFT",
+      image: wodRound,
+      holder: true,
+    },
+    {
+      title: "Premium Subscriber",
+      image: premiumRound,
+      holder: false,
+    },
+    {
+      title: "Hold >$1,000 in DYP v2",
+      image: dypiusIcon,
+      holder: true,
+    },
+ 
+  ]
+
+  const messages = ["caws", "dyp", "premium", "wod", "switch", "login", "win", "winWarning", "winDanger"];
 
   const [chain, setChain] = useState("bnb");
   const [dummyArray, setDummyArray] = useState(numberArray);
-  const [message, setMessage] = useState("login");
+  const [message, setMessage] = useState("winDanger");
   const [reward, setReward] = useState(null);
   const [selectedChest, setSelectedChest] = useState(null);
 
@@ -341,15 +375,32 @@ const NewDailyBonus = ({ onclose }) => {
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
                     >
-                      <h6 className="desc-title mb-0">
+                      <h6 className="win-text mb-0">
                         Unable to claim reward
                       </h6>
-                      <span className="chain-desc mb-0">
-                        This reward can only be claimed by CAWS NFT owners. You
-                        can purchase a CAWS NFT in 24 hours to claim this
-                        reward. Please select a CAWS NFT to purchase:
+                     <div className="d-flex align-items-center gap-2">
+                      <img src={warning} alt="" width={20} height={20} />
+                      <span className="win-desc mb-0">
+                      The $30.50 reward will be allocated to you if you get one of the suggested CAWS NFTs.
                       </span>
+                     </div>
                     </div>
+                    <div className="d-flex align-items-center gap-2">
+                      <div className="d-flex flex-column align-items-center p-1">
+                        <h6 className="win-amount">1,864</h6>
+                        <span className="win-amount-desc">
+                          Leaderboard Points
+                        </span>
+                      </div>
+                      <h6 className="win-amount mb-0">+</h6>
+                      <div className="d-flex flex-column align-items-center warning-border p-1">
+                        <h6 className="win-amount">$30.50</h6>
+                        <span className="win-amount-desc">
+                          Rewards
+                        </span>
+                      </div>
+                    </div>
+
                     <div className="d-flex align-items-center gap-2">
                       {cawsArray.map((item, index) => (
                         <div className="nft-reward-container">
@@ -366,7 +417,40 @@ const NewDailyBonus = ({ onclose }) => {
                       ))}
                     </div>
                   </div>
-                ) : message === "premium" ? (
+                )
+
+                : message === "win" ? (
+                  <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                    <div
+                      className="chain-desc-wrapper p-2 d-flex flex-column"
+                      style={{ filter: "brightness(1)", position: "relative" }}
+                    >
+                      <h6 className="win-text mb-0">
+                        You Won
+                      </h6>
+                     
+                    </div>
+                    <div className="d-flex align-items-center gap-2 win-rewards-container">
+                      <div className="d-flex flex-column align-items-center p-1">
+                        <h6 className="win-amount">1,864</h6>
+                        <span className="win-amount-desc">
+                          Leaderboard Points
+                        </span>
+                      </div>
+                      <h6 className="win-amount mb-0">+</h6>
+                      <div className="d-flex flex-column align-items-center p-1">
+                        <h6 className="win-amount">$30.50</h6>
+                        <span className="win-amount-desc">
+                          Rewards
+                        </span>
+                      </div>
+                    </div>
+
+                   <img src={winConfetti} alt="" className="win-confetti" />
+                  </div>
+                )
+                
+                : message === "premium" ? (
                   <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper" style={{border: "1px solid #8262D0", background: "linear-gradient(180deg, #8262D0 0%, #482293 100%)"}}>
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -437,22 +521,87 @@ const NewDailyBonus = ({ onclose }) => {
                       </button>
                     </div>
                   </div>
-                ) : message === "wod" ? (
+                )
+                
+                : message === "winDanger" ? (
                   <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
-                    <div
+                  <div
+                        className="chain-desc-wrapper p-2 d-flex flex-column"
+                        style={{ filter: "brightness(1)", position: "relative" }}
+                      >
+                        <h6 className="win-text mb-0">
+                          You won
+                        </h6>
+                       <div className="d-flex align-items-center gap-2">
+                        <img src={danger} alt="" width={20} height={20} />
+                        <span className="win-desc mb-0">
+                        The $5,000 reward is not allocated because not all the requirements are met.
+                        </span>
+                       </div>
+                      </div>
+                      <div className="d-flex align-items-center gap-2">
+                        <div className="d-flex flex-column align-items-center p-1">
+                          <h6 className="win-amount">1,864</h6>
+                          <span className="win-amount-desc">
+                            Leaderboard Points
+                          </span>
+                        </div>
+                        <h6 className="win-amount mb-0">+</h6>
+                        <div className="d-flex flex-column align-items-center danger-border p-1">
+                          <h6 className="win-amount">$5,000</h6>
+                          <span className="win-amount-desc">
+                            Rewards
+                          </span>
+                        </div>
+                      </div>
+  
+                      <div className="win-requirements-wrapper p-1">
+                        {winDangerItems.map((item, index) => (
+                          <div className="d-flex align-items-center gap-2">
+                            <div className="position-relative">
+                              <img src={item.image} style={{opacity: item.holder ? "1" : "0.6"}} width={20} height={20} alt="" />
+                              <img src={item.holder ? greenCheck : redX} alt="" className="holder-check" />
+                            </div>
+                            <h6 className="requirement-title mb-0">{item.title}</h6>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                ) 
+                
+                
+                : message === "wod" ? (
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
                     >
-                      <h6 className="desc-title mb-0">
+                      <h6 className="win-text mb-0">
                         Unable to claim reward
                       </h6>
-                      <span className="chain-desc mb-0">
-                        This reward can only be claimed by Genesis Land NFT
-                        owners. You can purchase a Genesis Land NFT within the
-                        next 24 hours to claim this reward. Please select an NFT
-                        to purchase:
+                     <div className="d-flex align-items-center gap-2">
+                      <img src={warning} alt="" width={20} height={20} />
+                      <span className="win-desc mb-0">
+                      The $150.50 reward will be allocated to you if you get one of the suggested Genesis NFTs.
                       </span>
+                     </div>
                     </div>
+                    <div className="d-flex align-items-center gap-2">
+                      <div className="d-flex flex-column align-items-center p-1">
+                        <h6 className="win-amount">1,864</h6>
+                        <span className="win-amount-desc">
+                          Leaderboard Points
+                        </span>
+                      </div>
+                      <h6 className="win-amount mb-0">+</h6>
+                      <div className="d-flex flex-column align-items-center warning-border p-1">
+                        <h6 className="win-amount">$30.50</h6>
+                        <span className="win-amount-desc">
+                          Rewards
+                        </span>
+                      </div>
+                    </div>
+
                     <div className="d-flex align-items-center gap-2">
                       {cawsArray.map((item, index) => (
                         <div className="nft-reward-container">

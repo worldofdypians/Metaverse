@@ -344,9 +344,13 @@
 .chain-desc-wrapper {
   position: absolute;
   bottom: 0;
-  width: 100%;
+  width: 40%;
   transition: all 0.25s;
   pointer-events: none;
+
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
 }
 
 .desc-title {
@@ -544,4 +548,90 @@
   100% {
     transform: scale(0.1);
   }
+}
+
+
+.win-text{
+  color: #F2C624;
+font-size: 18px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.win-desc{
+  color: #FFF;
+font-size: 10px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.win-amount{
+  color: #EEEDFF;
+text-align: center;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.win-amount-desc{
+  color: #F2C624;
+text-align: center;
+font-size: 10px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.warning-border{
+  border-radius: 20px;
+border: 3px solid #D6661D;
+}
+
+.danger-border{
+  border-radius: 20px;
+border: 3px solid #BF0000;
+}
+
+.win-confetti{
+  height: 100%;
+  position: absolute;
+  right: 0;
+  border-radius: 0 20px 0 20px;
+}
+
+.win-rewards-container{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: fit-content;
+}
+
+.win-requirements-wrapper{
+  border-radius: 10px;
+border: 1px solid #7EABE9;
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 5px;
+}
+
+.holder-check{
+  position: absolute;
+  right: -5%;
+  top: -5%;
+  width: 10px;
+  height: 10px;
+}
+
+.requirement-title{
+  color: #FFF;
+font-size: 10px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
 }
