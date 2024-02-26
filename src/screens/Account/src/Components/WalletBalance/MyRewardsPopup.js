@@ -36,7 +36,7 @@ const MyRewardsPopup = ({
   baseEarnETH,
   dypiusEarnUsd,
   cmcuserEarnETH,
-  cmcuserEarnUsd,
+  cmcuserEarnUsd,dypiusPremiumEarnUsd,dypiusPremiumEarnTokens
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -784,7 +784,7 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 paddingLeftCell">
                 CoinMarketCap
               </td>
-              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+              <td className="myrewards-td-second border-0 specialCell text-center">
                 ${getFormattedNumber(cmcuserEarnUsd, 2)}
               </td>
               <td className="myrewards-td-second border-0 text-center">
@@ -794,6 +794,22 @@ const MyRewardsPopup = ({
                 ${getFormattedNumber(0, 2)}
               </td>
             </tr>
+
+            <tr>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Dypius Premium
+              </td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                ${getFormattedNumber(dypiusPremiumEarnUsd, 2)}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {getFormattedNumber(dypiusPremiumEarnTokens, 4)} WBNB
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                ${getFormattedNumber(0, 2)}
+              </td>
+            </tr>
+
 
             <tr>
               <td className="myrewards-td-main border-0">

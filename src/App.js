@@ -1375,9 +1375,8 @@ function App() {
     let finalboughtItems1 = [];
     let finalboughtItems2 = [];
 
-    await Promise.all(
-      listedNFTS2 &&
-        listedNFTS2.length > 0 &&
+    if (listedNFTS2 && listedNFTS2.length > 0) {
+      await Promise.all(
         listedNFTS2.map(async (nft) => {
           if (nft.nftAddress === window.config.nft_caws_address) {
             const nft_contract = new window.infuraWeb3.eth.Contract(
@@ -1417,16 +1416,20 @@ function App() {
               nft.chain = 1;
               finalboughtItems1.push(nft);
             }
-          } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+          } else if (
+            nft.nftAddress.toLowerCase() ===
+            window.config.nft_timepiece_address.toLowerCase()
+          ) {
             const nft_contract = new window.infuraWeb3.eth.Contract(
               window.TIMEPIECE_ABI,
               window.config.nft_timepiece_address
             );
             const nftowner = await nft_contract.methods
-              .ownerOf(nft.Id)
+              .ownerOf(nft.tokenId)
               .call()
               .catch((e) => {
                 console.log(e);
+                return "";
               });
 
             if (
@@ -1439,14 +1442,14 @@ function App() {
             }
           }
         })
-    );
+      );
 
-    setListedNFTS(finalboughtItems1);
-    setListedNFTSCount(finalboughtItems1.length);
+      setListedNFTS(finalboughtItems1);
+      setListedNFTSCount(finalboughtItems1.length);
+    }
 
-    await Promise.all(
-      recentListedNFTS2 &&
-        recentListedNFTS2.length > 0 &&
+    if (recentListedNFTS2 && recentListedNFTS2.length > 0) {
+      await Promise.all(
         recentListedNFTS2.map(async (nft) => {
           if (nft.nftAddress === window.config.nft_caws_address) {
             const nft_contract = new window.infuraWeb3.eth.Contract(
@@ -1493,7 +1496,7 @@ function App() {
               window.config.nft_timepiece_address
             );
             const nftowner = await nft_contract.methods
-              .ownerOf(nft.Id)
+              .ownerOf(nft.tokenId)
               .call()
               .catch((e) => {
                 console.log(e);
@@ -1509,9 +1512,10 @@ function App() {
             }
           }
         })
-    );
+      );
 
-    setLatest20RecentListedNFTS(finalboughtItems2);
+      setLatest20RecentListedNFTS(finalboughtItems2);
+    }
   };
 
   Amplify.configure(awsExports);
@@ -2113,7 +2117,7 @@ function App() {
     if (listedNFTS2.length > 0 && recentListedNFTS2.length > 0) {
       getOtherNfts();
     }
-  }, [listedNFTS2?.length, recentListedNFTS2?.length, nftCount]);
+  }, [listedNFTS2, recentListedNFTS2, nftCount]);
 
   useEffect(() => {
     if (latest20BoughtNFTS.length > 0) {

@@ -83,7 +83,7 @@ const Marketplace = ({
   const [favItems, setfavItems] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
   const [activePopup, setActivePopup] = useState(false);
-
+  
   const firstNext = () => {
     firstSlider.current.slickNext();
   };
