@@ -21,7 +21,7 @@ import dogePopup from "../../components/TimepieceMint/assets/dogePopup.png";
 import gatePopup from "../../components/TimepieceMint/assets/gatePopup.webp";
 import cmcPopup from "../../components/TimepieceMint/assets/cmcPopup.webp";
 
-import dypiusPopup from "../../components/TimepieceMint/assets/dypiusPopup.webp";
+import dypiusPopup from "../../components/TimepieceMint/assets/dypiuspremiumPopup.webp";
 
 import coingeckoPopup from "../../components/TimepieceMint/assets/coingeckoPopup.png";
 import treasureHuntPopup from "../../components/TimepieceMint/assets/treasureHuntPopup.png";
@@ -79,10 +79,10 @@ const Home = ({
     img: dypiusPopup,
     state: "dypius",
   };
-  const dogePopupInfo = {
+  const dypiusPopupInfo = {
     title: "Treasure Hunt",
-    img: dogeTreasureHuntPopup,
-    state: "doge",
+    img: dypiusPopup,
+    state: "dyp",
   };
 
   const cmcPopupInfo = {
@@ -124,7 +124,7 @@ const Home = ({
       >
         <MintPopup
           active={activePopup}
-          data={cmcPopupInfo}
+          data={dypiusPopupInfo}
           onClose={() => setActivePopup(false)}
         />
       </OutsideClickHandler>
