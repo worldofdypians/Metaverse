@@ -195,7 +195,6 @@ const NewWalletBalance = ({
   onOpenLeaderboard,
   isPremium,
   onRewardsClick,
-  onPremiumClick,
   onBalanceClick,
   claimedChests,
   claimedPremiumChests,
@@ -232,7 +231,7 @@ const NewWalletBalance = ({
   dypiusEarnTokens,
   cmcuserEarnUsd,
   cmcuserEarnETH,
-  cmcuserPoints,
+  cmcuserPoints,onPremiumClick
   // hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -314,6 +313,35 @@ const NewWalletBalance = ({
 
   const dummyBetaPassData2 = [
     {
+      title: "Dypius Premium",
+      logo: dypius,
+      eventStatus: "Live",
+      totalRewards: "$50,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Feb 26, 2024",
+      backgroundImage: upcomingDyp2,
+      activeTab: "dypiusv2",
+      popupInfo: {
+        title: "Dypius Premium",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "BNB",
+        status: "Live",
+        id: "event9",
+        eventType: "Explore & Find",
+        totalRewards: "$50,000 in BNB Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Feb 26, 2024",
+        activeTab: "dypiusv2",
+      },
+    },
+     {
       title: "Dogecoin",
       chain: "BNB Chain",
       linkState: "doge",
@@ -380,35 +408,7 @@ const NewWalletBalance = ({
           "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
     },
-    {
-      title: "Dypius Premium",
-      logo: dypius,
-      eventStatus: "Live",
-      totalRewards: "$50,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "Feb 26, 2024",
-      backgroundImage: upcomingDyp2,
-      activeTab: "dypiusv2",
-      popupInfo: {
-        title: "Dypius Premium",
-        chain: "BNB Chain",
-        linkState: "dypius",
-        rewards: "BNB",
-        status: "Live",
-        id: "event9",
-        eventType: "Explore & Find",
-        totalRewards: "$50,000 in BNB Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "Feb 26, 2024",
-        activeTab: "dypiusv2",
-      },
-    },
+   
 
     {
       title: "Base",
@@ -1057,6 +1057,16 @@ const NewWalletBalance = ({
               >
                 Treasure Hunt
               </h6>{" "}
+               <ActiveProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dypv2);
+                  setEventPopup(true);
+                }}
+                data={dypv2}
+                event={dypv2}
+                userEarnedUsd={dypiusPremiumEarnUsd}
+              />
+
               <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyDoge);
@@ -1075,15 +1085,7 @@ const NewWalletBalance = ({
                 event={dummyCmc}
                 userEarnedUsd={cmcuserEarnUsd}
               />
-              <ActiveProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dypv2);
-                  setEventPopup(true);
-                }}
-                data={dypv2}
-                event={dypv2}
-                userEarnedUsd={dypiusPremiumEarnUsd}
-              />
+             
               {/* <ExpiredProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
@@ -2391,6 +2393,7 @@ const NewWalletBalance = ({
                   to={`/account`}
                   onClick={() => {
                     setEventPopup(false);
+                    onPremiumClick()
                   }}
                 >
                   <button className="btn get-beta-btn">Get Premium</button>

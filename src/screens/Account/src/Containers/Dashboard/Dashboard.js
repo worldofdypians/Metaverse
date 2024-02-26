@@ -2220,6 +2220,9 @@ function Dashboard({
                         dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
                         dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
                         dypiusPremiumPoints={dypiusPremiumPoints}
+                        onPremiumClick={() => {
+                          setgetPremiumPopup(true);
+                        }}
                       />
                     </div>
                     <WalletBalance
