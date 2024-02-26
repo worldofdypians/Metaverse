@@ -16,10 +16,40 @@ import winConfetti from "./assets/winConfetti.png";
 import xMark from "./assets/xMark2.svg";
 import bnbIcon from "./assets/bnbIcon.svg";
 import greenCheck from "./assets/greenCheck.svg";
+import infoIcon from "./assets/infoIcon.svg";
 import danger from "./assets/danger.svg";
 import warning from "./assets/warning.svg";
 import redX from "./assets/redX.svg";
 import NewChestItem from "./NewChestItem";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "150px !important",
+    minWidth: "150px !important",
+    fontSize: theme.typography.pxToRem(12),
+    display: "flex",
+    justifyContent: "center",
+  },
+}));
+const GeneralTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "250px !important",
+    minWidth: "250px !important",
+    fontSize: theme.typography.pxToRem(12),
+    display: "flex",
+    justifyContent: "center",
+  },
+}));
 
 const NewDailyBonus = ({ onclose }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
@@ -30,32 +60,45 @@ const NewDailyBonus = ({ onclose }) => {
     id: index + 1,
   }));
 
-
   const winDangerItems = [
     {
       title: "Hold CAWS NFT",
       image: cawsRound,
       holder: false,
+      message: "Hold >1 CAWS NFT",
     },
     {
       title: "Hold Genesis NFT",
       image: wodRound,
       holder: true,
+      message: "Hold Genesis NFT",
     },
     {
       title: "Premium Subscriber",
       image: premiumRound,
       holder: false,
+      message: "Premium Subscriber",
     },
     {
       title: "Hold >$1,000 in DYP v2",
       image: dypiusIcon,
       holder: true,
+      message: "Hold >$1,000 in DYP v2",
     },
- 
-  ]
+  ];
 
-  const messages = ["caws", "dyp", "premium", "wod", "switch", "login", "win", "winWarning", "winDanger"];
+  const messages = [
+    "caws",
+    "dyp",
+    "premium",
+    "wod",
+    "switch",
+    "login",
+    "win",
+    "winDanger",
+    "complete",
+    "needPremium",
+  ];
 
   const [chain, setChain] = useState("bnb");
   const [dummyArray, setDummyArray] = useState(numberArray);
@@ -89,57 +132,76 @@ const NewDailyBonus = ({ onclose }) => {
   const dummyRewards = [
     {
       title: "Points",
-      amount: 256786,
+      amount: "Points",
       img: "points",
+      error: true,
+      threshold: [1, 200000],
     },
     {
       title: "Reward",
-      amount: 2.5,
+      amount: "$0.5 - $5",
       img: 2,
+      error: false,
+      threshold: [],
     },
     {
       title: "Reward",
-      amount: 5,
+      amount: "$15-$20",
       img: 5,
+      error: true,
+      threshold: [],
     },
     {
       title: "Reward",
-      amount: 30,
+      amount: "$20-$30",
       img: 30,
+      error: false,
+      threshold: [],
     },
     {
       title: "Reward",
-      amount: 50,
+      amount: "$20-$30",
       img: 50,
+      error: true,
+      threshold: [],
     },
     {
       title: "Reward",
-      amount: 300,
+      amount: "$50-$300",
       img: 300,
+      error: false,
+      threshold: [],
     },
     {
       title: "Reward",
-      amount: 700,
+      amount: "$350-$700",
       img: 700,
+      error: true,
+      threshold: [],
     },
     {
       title: "Reward",
-      amount: 1500,
+      amount: "$1,000-$1,500",
       img: 1500,
+      error: false,
+      threshold: [],
     },
     {
       title: "Reward",
-      amount: 3000,
+      amount: "$2,000-$3,000",
       img: 3000,
+      error: true,
+      threshold: [],
     },
     {
       title: "Reward",
-      amount: 5000,
+      amount: "$4,000-$5,000",
       img: 5000,
+
+      error: false,
+      threshold: [],
     },
   ];
-
-  console.log(dummyArray);
 
   return (
     <div className="package-popup-wrapper2">
@@ -155,6 +217,31 @@ const NewDailyBonus = ({ onclose }) => {
             style={{ cursor: "pointer" }}
           />
           <h6 className="rewards-upper-title mb-9 font-organetto">Rewards</h6>
+          <div className="general-info-tooltip">
+            <GeneralTooltip
+              placement={"top"}
+              title={
+                <span className="win-desc">
+                  The Daily Bonus offers various benefits, ranging from
+                  leaderboard points to substantial rewards. There are a total
+                  of 20 chests to unlock, with 10 chests available to all
+                  players for free, and the remaining 10 exclusive to premium
+                  subscribers.
+                  <br />
+                  <br />
+                   Each reward comes with its own set of
+                  probabilities. Typically, smaller rewards have a higher chance
+                  of being acquired, while the more valuable rewards are less
+                  likely to be obtained. This tiered system ensures that players
+                  have a diverse range of potential prizes to aim for. Keep
+                  playing daily to increase your chances of claiming valuable
+                  rewards!
+                </span>
+              }
+            >
+              <img src={infoIcon} alt="" />
+            </GeneralTooltip>
+          </div>
           <div className="new-total-points-wrapper d-flex align-items-end gap-2">
             <h6 className="new-total-points  mb-0">256,786 </h6>
             <span className="new-total-points-type d-none d-lg-flex  mb-0">
@@ -243,7 +330,9 @@ const NewDailyBonus = ({ onclose }) => {
                         chain === "skale" && "chain-title-wrapper-active"
                       } p-2 d-flex align-items-center justify-content-between`}
                     >
-                      <h6 className="chain-title-position mb-0">SKALE Network</h6>
+                      <h6 className="chain-title-position mb-0">
+                        SKALE Network
+                      </h6>
                       <div className="d-flex align-items-center gap-2">
                         <div className="d-flex align-items-center">
                           <img src={percentageFilled} height={8} alt="" />
@@ -265,8 +354,6 @@ const NewDailyBonus = ({ onclose }) => {
                         {" "}
                         <img src={bnbIcon} alt="" /> SKALE
                       </button>
-
-                      
                     </div>
                   </div>
                   <div className={`position-relative chain-item  w-100`}>
@@ -314,90 +401,148 @@ const NewDailyBonus = ({ onclose }) => {
               </div>
               <div className="col-12 px-0 mt-0 mt-lg-3">
                 {message === "" ? (
-                  <div className="d-flex align-items-center flex-column justify-content-center p-2 w-100 chest-progress-wrapper" style={{background: "#1A1C39", border: "1px solid #10C5C5"}}>
+                  <div
+                    className="d-flex align-items-center flex-column justify-content-center p-2 w-100 chest-progress-wrapper"
+                    style={{
+                      background: "#1A1C39",
+                      border: "1px solid #10C5C5",
+                    }}
+                  >
                     <div className="loader">
-                      <div className="dot" style={{"--i":0}}></div>
-                      <div className="dot" style={{"--i":1}}></div>
-                      <div className="dot" style={{"--i":2}}></div>
-                      <div className="dot" style={{"--i":3}}></div>
-                      <div className="dot" style={{"--i":4}}></div>
-                      <div className="dot" style={{"--i":5}}></div>
-                      <div className="dot" style={{"--i":6}}></div>
-                      <div className="dot" style={{"--i":7}}></div>
-                      <div className="dot" style={{"--i":8}}></div>
-                      <div className="dot" style={{"--i":9}}></div>
+                      <div className="dot" style={{ "--i": 0 }}></div>
+                      <div className="dot" style={{ "--i": 1 }}></div>
+                      <div className="dot" style={{ "--i": 2 }}></div>
+                      <div className="dot" style={{ "--i": 3 }}></div>
+                      <div className="dot" style={{ "--i": 4 }}></div>
+                      <div className="dot" style={{ "--i": 5 }}></div>
+                      <div className="dot" style={{ "--i": 6 }}></div>
+                      <div className="dot" style={{ "--i": 7 }}></div>
+                      <div className="dot" style={{ "--i": 8 }}></div>
+                      <div className="dot" style={{ "--i": 9 }}></div>
                     </div>
                     <h6 className="loader-text mb-0">Ready to Claim</h6>
                     <div className="loader">
-                      <div className="dot" style={{"--i":0}}></div>
-                      <div className="dot" style={{"--i":1}}></div>
-                      <div className="dot" style={{"--i":2}}></div>
-                      <div className="dot" style={{"--i":3}}></div>
-                      <div className="dot" style={{"--i":4}}></div>
-                      <div className="dot" style={{"--i":5}}></div>
-                      <div className="dot" style={{"--i":6}}></div>
-                      <div className="dot" style={{"--i":7}}></div>
-                      <div className="dot" style={{"--i":8}}></div>
-                      <div className="dot" style={{"--i":9}}></div>
+                      <div className="dot" style={{ "--i": 0 }}></div>
+                      <div className="dot" style={{ "--i": 1 }}></div>
+                      <div className="dot" style={{ "--i": 2 }}></div>
+                      <div className="dot" style={{ "--i": 3 }}></div>
+                      <div className="dot" style={{ "--i": 4 }}></div>
+                      <div className="dot" style={{ "--i": 5 }}></div>
+                      <div className="dot" style={{ "--i": 6 }}></div>
+                      <div className="dot" style={{ "--i": 7 }}></div>
+                      <div className="dot" style={{ "--i": 8 }}></div>
+                      <div className="dot" style={{ "--i": 9 }}></div>
                     </div>
                   </div>
                 ) : message === "switch" ? (
-                  <div className="d-flex align-items-center flex-column justify-content-center p-2 w-100 chest-progress-wrapper" style={{background: "#1A1C39", border: "1px solid #D75853"}}>
-                  <div className="loader red-loader">
-                    <div className="dot" style={{"--i":0}}></div>
-                    <div className="dot" style={{"--i":1}}></div>
-                    <div className="dot" style={{"--i":2}}></div>
-                    <div className="dot" style={{"--i":3}}></div>
-                    <div className="dot" style={{"--i":4}}></div>
-                    <div className="dot" style={{"--i":5}}></div>
-                    <div className="dot" style={{"--i":6}}></div>
-                    <div className="dot" style={{"--i":7}}></div>
-                    <div className="dot" style={{"--i":8}}></div>
-                    <div className="dot" style={{"--i":9}}></div>
+                  <div
+                    className="d-flex align-items-center flex-column justify-content-center p-2 w-100 chest-progress-wrapper"
+                    style={{
+                      background: "#1A1C39",
+                      border: "1px solid #D75853",
+                    }}
+                  >
+                    <div className="loader red-loader">
+                      <div className="dot" style={{ "--i": 0 }}></div>
+                      <div className="dot" style={{ "--i": 1 }}></div>
+                      <div className="dot" style={{ "--i": 2 }}></div>
+                      <div className="dot" style={{ "--i": 3 }}></div>
+                      <div className="dot" style={{ "--i": 4 }}></div>
+                      <div className="dot" style={{ "--i": 5 }}></div>
+                      <div className="dot" style={{ "--i": 6 }}></div>
+                      <div className="dot" style={{ "--i": 7 }}></div>
+                      <div className="dot" style={{ "--i": 8 }}></div>
+                      <div className="dot" style={{ "--i": 9 }}></div>
+                    </div>
+                    <h6
+                      className="loader-text mb-0"
+                      style={{ color: "#D75853" }}
+                    >
+                      Switch to BNB Chain
+                    </h6>
+                    <div className="loader red-loader">
+                      <div className="dot" style={{ "--i": 0 }}></div>
+                      <div className="dot" style={{ "--i": 1 }}></div>
+                      <div className="dot" style={{ "--i": 2 }}></div>
+                      <div className="dot" style={{ "--i": 3 }}></div>
+                      <div className="dot" style={{ "--i": 4 }}></div>
+                      <div className="dot" style={{ "--i": 5 }}></div>
+                      <div className="dot" style={{ "--i": 6 }}></div>
+                      <div className="dot" style={{ "--i": 7 }}></div>
+                      <div className="dot" style={{ "--i": 8 }}></div>
+                      <div className="dot" style={{ "--i": 9 }}></div>
+                    </div>
                   </div>
-                  <h6 className="loader-text mb-0" style={{color: "#D75853"}}>Switch to BNB Chain</h6>
-                  <div className="loader red-loader">
-                    <div className="dot" style={{"--i":0}}></div>
-                    <div className="dot" style={{"--i":1}}></div>
-                    <div className="dot" style={{"--i":2}}></div>
-                    <div className="dot" style={{"--i":3}}></div>
-                    <div className="dot" style={{"--i":4}}></div>
-                    <div className="dot" style={{"--i":5}}></div>
-                    <div className="dot" style={{"--i":6}}></div>
-                    <div className="dot" style={{"--i":7}}></div>
-                    <div className="dot" style={{"--i":8}}></div>
-                    <div className="dot" style={{"--i":9}}></div>
+                ) : message === "complete" ? (
+                  <div className="d-flex align-items-center justify-content-center complete-bg p-2 w-100 chest-progress-wrapper">
+                    <h6 className="completed-text mb-0">Completed</h6>
                   </div>
-                </div>
-                ) : message === "caws" ? (
+                ) : message === "needPremium" ? (
                   <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
                     >
-                      <h6 className="win-text mb-0">
-                        Unable to claim reward
-                      </h6>
-                     <div className="d-flex align-items-center gap-2">
-                      <img src={warning} alt="" width={20} height={20} />
-                      <span className="win-desc mb-0">
-                      The $30.50 reward will be allocated to you if you get one of the suggested CAWS NFTs.
-                      </span>
-                     </div>
+                      <h6 className="win-text mb-0">You won</h6>
+                      <div className="d-flex align-items-center gap-2">
+                        <img src={warning} alt="" width={20} height={20} />
+                        <span className="win-desc mb-0">
+                          The $700.50 reward will be allocated to you if you
+                          become a Premium Subscriber.
+                        </span>
+                      </div>
                     </div>
-                    <div className="d-flex align-items-center gap-2">
-                      <div className="d-flex flex-column align-items-center p-1">
-                        <h6 className="win-amount">1,864</h6>
+                    <div className="d-flex align-items-center gap-2 win-rewards-container">
+                      <div className="d-flex flex-column align-items-center neutral-border p-1">
+                        <h6 className="win-amount mb-0">1,864</h6>
                         <span className="win-amount-desc">
                           Leaderboard Points
                         </span>
                       </div>
                       <h6 className="win-amount mb-0">+</h6>
                       <div className="d-flex flex-column align-items-center warning-border p-1">
-                        <h6 className="win-amount">$30.50</h6>
-                        <span className="win-amount-desc">
-                          Rewards
+                        <h6 className="win-amount mb-0">$30.50</h6>
+                        <span className="win-amount-desc">Rewards</span>
+                      </div>
+                    </div>
+
+                    <div className="d-flex align-items-center gap-5 me-3">
+                      <img
+                        src={premiumIcon}
+                        style={{ width: 70, height: 70 }}
+                        alt=""
+                      />
+                      <button className="get-premium-btn px-2 py-1">
+                        Get Premium
+                      </button>
+                    </div>
+                  </div>
+                ) : message === "caws" ? (
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                    <div
+                      className="chain-desc-wrapper p-2 d-flex flex-column"
+                      style={{ filter: "brightness(1)", position: "relative" }}
+                    >
+                      <h6 className="win-text mb-0">Unable to claim reward</h6>
+                      <div className="d-flex align-items-center gap-2">
+                        <img src={warning} alt="" width={20} height={20} />
+                        <span className="win-desc mb-0">
+                          The $30.50 reward will be allocated to you if you get
+                          one of the suggested CAWS NFTs.
                         </span>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-center gap-2 win-rewards-container">
+                      <div className="d-flex flex-column align-items-center neutral-border p-1">
+                        <h6 className="win-amount mb-0">1,864</h6>
+                        <span className="win-amount-desc">
+                          Leaderboard Points
+                        </span>
+                      </div>
+                      <h6 className="win-amount mb-0">+</h6>
+                      <div className="d-flex flex-column align-items-center warning-border p-1">
+                        <h6 className="win-amount mb-0">$30.50</h6>
+                        <span className="win-amount-desc">Rewards</span>
                       </div>
                     </div>
 
@@ -409,58 +554,57 @@ const NewDailyBonus = ({ onclose }) => {
                             className="nft-reward-img"
                             src={require(`./assets/caws${item.id}.png`)}
                             alt=""
-                            width={60}
-                            height={60}
+                            width={70}
+                            height={70}
                           />
                           <div className="buy-nft-reward-btn">Buy</div>
                         </div>
                       ))}
                     </div>
                   </div>
-                )
-
-                : message === "win" ? (
+                ) : message === "win" ? (
                   <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
                     >
-                      <h6 className="win-text mb-0">
-                        You Won
-                      </h6>
-                     
+                      <h6 className="win-text mb-0">You Won</h6>
                     </div>
                     <div className="d-flex align-items-center gap-2 win-rewards-container">
-                      <div className="d-flex flex-column align-items-center p-1">
-                        <h6 className="win-amount">1,864</h6>
+                      <div className="d-flex flex-column align-items-center neutral-border p-1">
+                        <h6 className="win-amount mb-0">1,864</h6>
                         <span className="win-amount-desc">
                           Leaderboard Points
                         </span>
                       </div>
                       <h6 className="win-amount mb-0">+</h6>
                       <div className="d-flex flex-column align-items-center p-1">
-                        <h6 className="win-amount">$30.50</h6>
-                        <span className="win-amount-desc">
-                          Rewards
-                        </span>
+                        <h6 className="win-amount mb-0">$30.50</h6>
+                        <span className="win-amount-desc">Rewards</span>
                       </div>
                     </div>
 
-                   <img src={winConfetti} alt="" className="win-confetti" />
+                    <img src={winConfetti} alt="" className="win-confetti" />
                   </div>
-                )
-                
-                : message === "premium" ? (
-                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper" style={{border: "1px solid #8262D0", background: "linear-gradient(180deg, #8262D0 0%, #482293 100%)"}}>
+                ) : message === "premium" ? (
+                  <div
+                    className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper"
+                    style={{
+                      border: "1px solid #8262D0",
+                      background:
+                        "linear-gradient(180deg, #8262D0 0%, #482293 100%)",
+                    }}
+                  >
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
                     >
-                      <h6 className="desc-title mb-0" style={{color: "#fff"}}>
+                      <h6 className="desc-title mb-0" style={{ color: "#fff" }}>
                         Unable to claim reward
                       </h6>
                       <span className="chain-desc mb-0">
-                      Enjoy extra benefits and unlock more chests for extra rewards by upgrading to premium.
+                        Enjoy extra benefits and unlock more chests for extra
+                        rewards by upgrading to premium.
                       </span>
                     </div>
                     <div className="d-flex align-items-center justify-content-between get-premium-wrapper">
@@ -475,27 +619,31 @@ const NewDailyBonus = ({ onclose }) => {
                     </div>
                   </div>
                 ) : message === "login" ? (
-                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper" style={{border: "1px solid #8262D0", background: "linear-gradient(180deg, #8262D0 0%, #482293 100%)"}}>
+                  <div
+                    className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper"
+                    style={{
+                      border: "1px solid #8262D0",
+                      background:
+                        "linear-gradient(180deg, #8262D0 0%, #482293 100%)",
+                    }}
+                  >
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
                     >
-                      <h6 className="desc-title mb-0" style={{color: "#fff"}}>
-                      Sign in with Your Game Account
+                      <h6 className="desc-title mb-0" style={{ color: "#fff" }}>
+                        Sign in with Your Game Account
                       </h6>
                       <span className="chain-desc mb-0">
-                      Sign in with your Game Account to unlock chests and earn rewards tailored to your gameplay. 
+                        Sign in with your Game Account to unlock chests and earn
+                        rewards tailored to your gameplay.
                       </span>
                     </div>
                     <div className="d-flex align-items-center justify-content-end get-premium-wrapper">
-                     
-                    <button className="sign-in-btn px-4 py-1">
-                        Sign In
-                      </button>
+                      <button className="sign-in-btn px-4 py-1">Sign In</button>
                     </div>
                   </div>
-                )
-                 : message === "dyp" ? (
+                ) : message === "dyp" ? (
                   <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -521,84 +669,98 @@ const NewDailyBonus = ({ onclose }) => {
                       </button>
                     </div>
                   </div>
-                )
-                
-                : message === "winDanger" ? (
+                ) : message === "winDanger" ? (
                   <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
-                  <div
-                        className="chain-desc-wrapper p-2 d-flex flex-column"
-                        style={{ filter: "brightness(1)", position: "relative" }}
-                      >
-                        <h6 className="win-text mb-0">
-                          You won
-                        </h6>
-                       <div className="d-flex align-items-center gap-2">
-                        <img src={danger} alt="" width={20} height={20} />
-                        <span className="win-desc mb-0">
-                        The $5,000 reward is not allocated because not all the requirements are met.
-                        </span>
-                       </div>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="d-flex flex-column align-items-center p-1">
-                          <h6 className="win-amount">1,864</h6>
-                          <span className="win-amount-desc">
-                            Leaderboard Points
-                          </span>
-                        </div>
-                        <h6 className="win-amount mb-0">+</h6>
-                        <div className="d-flex flex-column align-items-center danger-border p-1">
-                          <h6 className="win-amount">$5,000</h6>
-                          <span className="win-amount-desc">
-                            Rewards
-                          </span>
-                        </div>
-                      </div>
-  
-                      <div className="win-requirements-wrapper p-1">
-                        {winDangerItems.map((item, index) => (
-                          <div className="d-flex align-items-center gap-2">
-                            <div className="position-relative">
-                              <img src={item.image} style={{opacity: item.holder ? "1" : "0.6"}} width={20} height={20} alt="" />
-                              <img src={item.holder ? greenCheck : redX} alt="" className="holder-check" />
-                            </div>
-                            <h6 className="requirement-title mb-0">{item.title}</h6>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                ) 
-                
-                
-                : message === "wod" ? (
-                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
-                <div
+                    <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
                     >
-                      <h6 className="win-text mb-0">
-                        Unable to claim reward
-                      </h6>
-                     <div className="d-flex align-items-center gap-2">
-                      <img src={warning} alt="" width={20} height={20} />
-                      <span className="win-desc mb-0">
-                      The $150.50 reward will be allocated to you if you get one of the suggested Genesis NFTs.
-                      </span>
-                     </div>
+                      <h6 className="win-text mb-0">You won</h6>
+                      <div className="d-flex align-items-center gap-2">
+                        <img src={danger} alt="" width={20} height={20} />
+                        <span className="win-desc mb-0">
+                          The $5,000 reward has not been assigned due to
+                          incomplete fulfillment of all the requirements.
+                        </span>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-center gap-2 win-rewards-container">
+                      <div className="d-flex flex-column align-items-center neutral-border p-1">
+                        <h6 className="win-amount mb-0">1,864</h6>
+                        <span className="win-amount-desc">
+                          Leaderboard Points
+                        </span>
+                      </div>
+                      <h6 className="win-amount mb-0">+</h6>
+                      <div className="d-flex flex-column align-items-center danger-border p-1">
+                        <h6 className="win-amount mb-0">$5,000</h6>
+                        <span className="win-amount-desc">Rewards</span>
+                      </div>
                     </div>
                     <div className="d-flex align-items-center gap-2">
-                      <div className="d-flex flex-column align-items-center p-1">
-                        <h6 className="win-amount">1,864</h6>
+                      {winDangerItems.map((item, index) => (
+                        <HtmlTooltip
+                          placement="top"
+                          title={
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <span
+                                className="win-desc"
+                                style={{ fontSize: "12px" }}
+                              >
+                                {item.message}
+                              </span>
+                            </div>
+                          }
+                        >
+                          <div className="nft-reward-container">
+                            <img
+                              key={index}
+                              className="nft-reward-img"
+                              src={item.image}
+                              alt=""
+                              width={70}
+                              height={70}
+                              style={{ borderRadius: "50%" }}
+                            />
+                            <img
+                              src={item.holder ? greenCheck : redX}
+                              alt=""
+                              className="holder-check"
+                            />
+                          </div>
+                        </HtmlTooltip>
+                      ))}
+                    </div>
+                  </div>
+                ) : message === "wod" ? (
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                    <div
+                      className="chain-desc-wrapper p-2 d-flex flex-column"
+                      style={{ filter: "brightness(1)", position: "relative" }}
+                    >
+                      <h6 className="win-text mb-0">Unable to claim reward</h6>
+                      <div className="d-flex align-items-center gap-2">
+                        <img src={warning} alt="" width={20} height={20} />
+                        <span className="win-desc mb-0">
+                          The $150.50 reward will be allocated to you if you get
+                          one of the suggested Genesis NFTs.
+                        </span>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-center gap-2 win-rewards-container">
+                      <div className="d-flex flex-column align-items-center neutral-border p-1">
+                        <h6 className="win-amount mb-0">1,864</h6>
                         <span className="win-amount-desc">
                           Leaderboard Points
                         </span>
                       </div>
                       <h6 className="win-amount mb-0">+</h6>
                       <div className="d-flex flex-column align-items-center warning-border p-1">
-                        <h6 className="win-amount">$30.50</h6>
-                        <span className="win-amount-desc">
-                          Rewards
-                        </span>
+                        <h6 className="win-amount mb-0">$30.50</h6>
+                        <span className="win-amount-desc">Rewards</span>
                       </div>
                     </div>
 
@@ -610,8 +772,8 @@ const NewDailyBonus = ({ onclose }) => {
                             className="nft-reward-img"
                             src={require(`./assets/wodIcon.png`)}
                             alt=""
-                            width={60}
-                            height={60}
+                            width={70}
+                            height={70}
                           />
                           <div className="buy-nft-reward-btn">Buy</div>
                         </div>
@@ -636,15 +798,36 @@ const NewDailyBonus = ({ onclose }) => {
                     reward === index ? "brightness(1)" : "brightness(0.5)",
                 }}
               >
-                <img
-                  src={require(`./assets/${item.img}Icon.png`)}
-                  width={60}
-                  height={60}
-                  alt=""
-                />
+                <div className="position-relative">
+                  <img
+                    src={require(`./assets/${item.img}Icon.png`)}
+                    width={60}
+                    height={60}
+                    alt=""
+                  />
+                  {reward === index && item.error ? (
+                    <img
+                      src={danger}
+                      width={25}
+                      height={25}
+                      className="reward-warning"
+                      alt=""
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
                 <div className="d-flex align-items-bottom gap-1">
-                  <h6 className="mb-0  new-reward-amount">{item.amount}</h6>
-                  <span className="mb-0  new-reward-type">{item.title}</span>
+                  <h6
+                    className="mb-0  new-reward-amount"
+                    style={{
+                      color:
+                        reward === index && item.error ? "#F2C624" : "#fff",
+                    }}
+                  >
+                    {item.amount}
+                  </h6>
+                  {/* <span className="mb-0  new-reward-type">{item.title}</span> */}
                 </div>
               </div>
             ))}
