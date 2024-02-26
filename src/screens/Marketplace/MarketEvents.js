@@ -4,6 +4,8 @@ import { ERC20_ABI } from "../Account/src/web3/abis";
 import Web3 from "web3";
 import classes from "../Account/src/Containers/Dashboard/Dashboard.module.css";
 import dypius from "../Account/src/Images/userProfile/dypius.svg";
+import dypiusPremium36 from "../Account/src/Images/userProfile/dypiusPremium36.svg";
+
 import dragonIcon from "../Account/src/Images/userProfile/dragonIcon.svg";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "../Account/src/Containers/Dashboard/Dashboard.schema";
@@ -77,7 +79,6 @@ import upcomingDoge from "./assets/upcomingDoge.webp";
 import upcomingDyp from "./assets/upcomingDyp.webp";
 import upcomingCmc from "./assets/upcomingCmc.webp";
 import upcomingDyp2 from "./assets/dypiusBgPic2.webp";
-
 
 import dailyBonus from "./assets/dailyBonus.webp";
 import MintPopup from "../../components/TimepieceMint/MintPopup";
@@ -173,6 +174,11 @@ const MarketEvents = ({
   const [baseEarnETH, setBaseEarnETH] = useState(0);
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
+
+  const [dypiusPremiumEarnTokens, setdypiusPremiumEarnTokens] = useState(0);
+  const [dypiusPremiumEarnUsd, setdypiusPremiumEarnUsd] = useState(0);
+  const [dypiusPremiumPoints, setdypiusPremiumPoints] = useState(0);
+
   const [dailyBonusPopup, setDailyBonusPopup] = useState(false);
   const [activePopup, setActivePopup] = useState(false);
 
@@ -252,19 +258,19 @@ const MarketEvents = ({
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
         eventDuration: cmcLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
+        minRewards: "1",
+        maxRewards: "100",
         minPoints: "5,000",
-        maxPoints: "30,000",
+        maxPoints: "50,000",
         eventDate: "Dec 26, 2023",
         learnMore:
           "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
     },
     {
-      title: "Dypius",
-      logo: dypius,
-      eventStatus: "Coming Soon",
+      title: "Dypius Premium",
+      logo: dypiusPremium36,
+      eventStatus: "Live",
       totalRewards: "$50,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -272,18 +278,20 @@ const MarketEvents = ({
       backgroundImage: upcomingDyp2,
       activeTab: "dypiusv2",
       popupInfo: {
-        title: "Dypius",
+        title: "Dypius Premium",
         chain: "BNB Chain",
         linkState: "dypius",
         rewards: "BNB",
-        status: "Coming Soon",
+        status: "Live",
         id: "event9",
         eventType: "Explore & Find",
         totalRewards: "$50,000 in BNB Rewards",
         eventDuration: dypius2LastDay,
-        minRewards: "25",
-        maxRewards: "50",
-        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
         eventDate: "Feb 26, 2024",
         activeTab: "dypiusv2",
       },
@@ -692,7 +700,21 @@ const MarketEvents = ({
             return obj.betapassId === "coinmarketcap";
           });
 
-          //setDypiusEarnTokens
+          
+          const dypPremiumEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "subscriber";
+          });
+          
+          if (dypPremiumEvent && dypPremiumEvent[0]) {
+            const userEarnedusd =
+            dypPremiumEvent[0].reward.earn.total /
+            dypPremiumEvent[0].reward.earn.multiplier;
+            const pointsdypius = dypPremiumEvent[0].reward.earn.totalPoints;
+           
+            setdypiusPremiumPoints(pointsdypius)
+            setdypiusPremiumEarnUsd(userEarnedusd);
+            setdypiusPremiumEarnTokens(userEarnedusd/ bnbPrice);
+          }
 
           if (dypEvent && dypEvent[0]) {
             const userEarnedDyp =
@@ -871,7 +893,9 @@ const MarketEvents = ({
               </h6>
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
-                  <div className="position-relative">  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                  <div className="position-relative">
+                    {" "}
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div>
                     <NavLink
@@ -886,7 +910,6 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                  
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1300,7 +1323,7 @@ const MarketEvents = ({
                     src={
                       dummyEvent?.id === "event5"
                         ? dypeventPopupImage
-                        :dummyEvent?.id === "event9"
+                        : dummyEvent?.id === "event9"
                         ? eventPopupImageDypius2
                         : dummyEvent?.linkState === "coingecko"
                         ? eventPopupImageGecko
@@ -1464,12 +1487,12 @@ const MarketEvents = ({
                     </p>
                   ) : dummyEvent.id === "event9" ? (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to be {" "}
-                      <b>Premium Subscribers.</b> By actively participating in the game
-                      on a daily basis and exploring the downtown area, players
-                      have the opportunity to secure daily rewards in BNB.
-                      Remember to log in to the game daily and venture into the
-                      downtown area to uncover hidden treasures.
+                      To participate in the event, players are required to be{" "}
+                      <b>Premium Subscribers.</b> By actively participating in
+                      the game on a daily basis and exploring the downtown area,
+                      players have the opportunity to secure daily rewards in
+                      BNB. Remember to log in to the game daily and venture into
+                      the downtown area to uncover hidden treasures.
                     </p>
                   ) : (
                     <p className="popup-event-desc">
@@ -1492,7 +1515,8 @@ const MarketEvents = ({
                   <ul>
                     <li className="popup-event-desc">Exclusive Event Access</li>
                     <>
-                      {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" ? (
+                      {dummyEvent.id !== "event5" 
+                      ? (
                         <li className="popup-event-desc">
                           Daily Rewards range from ${dummyEvent.minRewards} to $
                           {dummyEvent.maxRewards}
@@ -1500,39 +1524,39 @@ const MarketEvents = ({
                       ) : (
                         <li className="popup-event-desc">Daily Rewards</li>
                       )}
-                      {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" && (
+                      {dummyEvent.id !== "event5" && (
+                          <li className="popup-event-desc">
+                            Daily Points range from {dummyEvent.minPoints} to{" "}
+                            {dummyEvent.maxPoints}
+                          </li>
+                        )}
+                    </>
+                    {dummyEvent.id !== "event5" && (
                         <li className="popup-event-desc">
-                          Daily Points range from {dummyEvent.minPoints} to{" "}
-                          {dummyEvent.maxPoints}
+                          Earn{" "}
+                          {dummyEvent.id === "event1"
+                            ? "CFX"
+                            : dummyEvent.id === "event2"
+                            ? "C98"
+                            : dummyEvent.id === "event3"
+                            ? "BNB"
+                            : dummyEvent.id === "event5"
+                            ? "DYP"
+                            : dummyEvent.id === "event6" ||
+                              dummyEvent.id === "event8" ||
+                              dummyEvent.id === "event9"
+                            ? "BNB"
+                            : dummyEvent.id === "event7"
+                            ? "DOGE"
+                            : "ETH"}{" "}
+                          rewards
                         </li>
                       )}
-                    </>
-                    {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" && (
-                      <li className="popup-event-desc">
-                        Earn{" "}
-                        {dummyEvent.id === "event1"
-                          ? "CFX"
-                          : dummyEvent.id === "event2"
-                          ? "C98"
-                          : dummyEvent.id === "event3"
-                          ? "BNB"
-                          : dummyEvent.id === "event5"
-                          ? "DYP"
-                          : dummyEvent.id === "event6" ||
-                            dummyEvent.id === "event8" ||
-                            dummyEvent.id === "event9"
-                          ? "BNB"
-                          : dummyEvent.id === "event7"
-                          ? "DOGE"
-                          : "ETH"}{" "}
-                        rewards
-                      </li>
-                    )}
-                    {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" && (
-                      <li className="popup-event-desc">
-                        Get global leaderboard points
-                      </li>
-                    )}
+                    {dummyEvent.id !== "event5" && (
+                        <li className="popup-event-desc">
+                          Get global leaderboard points
+                        </li>
+                      )}
                     <li className="popup-event-desc">Community Engagement</li>
                     <li className="popup-event-desc">Exploration Adventures</li>
                   </ul>
@@ -1763,15 +1787,17 @@ const MarketEvents = ({
                         ? dogeUserPoints
                         : dummyEvent.id === "event8"
                         ? cmcuserPoints
+                        : dummyEvent.id === "event9"
+                        ? dypiusPremiumPoints
                         : 0,
                       0
                     )}
                     {dummyEvent.id === "event5" && " DYP"}
-                    {dummyEvent.id === "event9" && " BNB"}
+                    
                   </h6>
 
                   <span className="mb-0 event-earnings-usd">
-                    {dummyEvent.id === "event5" || dummyEvent.id === "event9"
+                    {dummyEvent.id === "event5"
                       ? "Amount"
                       : "Leaderboard Points"}
                   </span>
@@ -1779,7 +1805,11 @@ const MarketEvents = ({
                 <div className="d-flex flex-column gap-2">
                   <h6
                     className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1"
-                    style={{ left: (dummyEvent.id === "event5" || dummyEvent.id === "event9") && "0px" }}
+                    style={{
+                      left:
+                        (dummyEvent.id === "event5") &&
+                        "0px",
+                    }}
                   >
                     $
                     {getFormattedNumber(
@@ -1797,45 +1827,49 @@ const MarketEvents = ({
                         ? dogeEarnUSD
                         : dummyEvent.id === "event8"
                         ? cmcuserEarnUsd
+                        : dummyEvent.id === "event9"
+                        ? dypiusPremiumEarnUsd
                         : 0,
                       2
                     )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
-                      {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" && (
-                        <>
-                          {getFormattedNumber(
-                            dummyEvent.id === "event1"
-                              ? confluxEarnCFX
+                      {dummyEvent.id !== "event5" && (
+                          <>
+                            {getFormattedNumber(
+                              dummyEvent.id === "event1"
+                                ? confluxEarnCFX
+                                : dummyEvent.id === "event3"
+                                ? userEarnETH
+                                : dummyEvent.id === "event6"
+                                ? gateEarnBNB
+                                : dummyEvent.id === "event4"
+                                ? baseEarnETH
+                                : dummyEvent.id === "event7"
+                                ? dogeEarnBNB
+                                : dummyEvent.id === "event8"
+                                ? cmcuserEarnETH
+                                : dummyEvent.id === "event9"
+                                ? dypiusPremiumEarnTokens
+                                : 0,
+                              2
+                            )}
+                            {dummyEvent.id === "event1"
+                              ? "CFX"
+                              : dummyEvent.id === "event2"
+                              ? "C98"
                               : dummyEvent.id === "event3"
-                              ? userEarnETH
-                              : dummyEvent.id === "event6"
-                              ? gateEarnBNB
-                              : dummyEvent.id === "event4"
-                              ? baseEarnETH
+                              ? "BNB"
+                              : dummyEvent.id === "event5"
+                              ? "DYP"
+                              : dummyEvent.id === "event6" ||
+                                dummyEvent.id === "event8" ||
+                                dummyEvent.id === "event9"
+                              ? "BNB"
                               : dummyEvent.id === "event7"
-                              ? dogeEarnBNB
-                              : dummyEvent.id === "event8"
-                              ? cmcuserEarnETH
-                              : 0,
-                            2
-                          )}
-                          {dummyEvent.id === "event1"
-                            ? "CFX"
-                            : dummyEvent.id === "event2"
-                            ? "C98"
-                            : dummyEvent.id === "event3"
-                            ? "BNB"
-                            : dummyEvent.id === "event5"
-                            ? "DYP"
-                            : dummyEvent.id === "event6" ||
-                              dummyEvent.id === "event8" ||
-                              dummyEvent.id === "event9"
-                            ? "BNB"
-                            : dummyEvent.id === "event7"
-                            ? "DOGE"
-                            : "ETH"}
-                        </>
-                      )}
+                              ? "DOGE"
+                              : "ETH"}
+                          </>
+                        )}
                     </span>
                   </h6>
                   <span className="mb-0 event-earnings-usd">Rewards</span>
@@ -1849,7 +1883,8 @@ const MarketEvents = ({
               </span>
             </div>
             {dummyEvent.status === "Coming Soon" &&
-              dummyEvent.id !== "event7" && dummyEvent.id !== "event9" && (
+              dummyEvent.id !== "event7" &&
+              dummyEvent.id !== "event9" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
                   <NavLink
                     to={`/marketplace/beta-pass/${dummyEvent.linkState}`}
@@ -1859,11 +1894,10 @@ const MarketEvents = ({
                 </div>
               )}
 
-{dummyEvent.status === "Coming Soon" && dummyEvent.id === "event9" && (
+            {
+              dummyEvent.id === "event9" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
-                  <NavLink
-                    to={`/account`}
-                  >
+                  <NavLink to={`/account`}>
                     <button className="btn get-beta-btn">Get Premium</button>
                   </NavLink>
                 </div>

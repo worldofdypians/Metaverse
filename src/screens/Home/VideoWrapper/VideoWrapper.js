@@ -8,7 +8,7 @@ import epicblack from "../../../assets/epicblack.svg";
 import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
 import coingecko from "../../Marketplace/MarketNFTs/assets/coingecko.svg";
 import coinbaseimg from "../../Marketplace/MarketNFTs/assets/base.svg";
-import dypius from "../../Marketplace/MarketNFTs/assets/dypIcon.svg";
+import dypius from "../../Marketplace/MarketNFTs/assets/dypiusPremium16.svg";
 import doge from "../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../Marketplace/MarketNFTs/assets/cmc.svg";
 import multiplayer from "../../../assets/multiplayer.svg";
@@ -117,7 +117,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
     {
       title: "Dypius",
       logo: dypius,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -137,7 +137,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         // eventDuration: coingeckoLastDay,
         minRewards: "25",
         maxRewards: "50",
-        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        learnMore: "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
         eventDate: "Ended",
       },
     },

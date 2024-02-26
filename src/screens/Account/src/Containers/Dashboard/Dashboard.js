@@ -171,6 +171,11 @@ function Dashboard({
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
 
+
+  const [dypiusPremiumEarnTokens, setdypiusPremiumEarnTokens] = useState(0);
+  const [dypiusPremiumEarnUsd, setdypiusPremiumEarnUsd] = useState(0);
+  const [dypiusPremiumPoints, setdypiusPremiumPoints] = useState(0);
+
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
 
@@ -750,6 +755,7 @@ function Dashboard({
             return obj.betapassId === "all";
           });
 
+
           const dogeEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "dogecoin";
           });
@@ -757,6 +763,21 @@ function Dashboard({
           const cmcEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "coinmarketcap";
           });
+
+          const dypPremiumEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "subscriber";
+          });
+
+          if (dypPremiumEvent && dypPremiumEvent[0]) {
+            const userEarnedusd =
+            dypPremiumEvent[0].reward.earn.total /
+            dypPremiumEvent[0].reward.earn.multiplier;
+            const pointsdypius = dypPremiumEvent[0].reward.earn.totalPoints;
+           
+            setdypiusPremiumPoints(pointsdypius)
+            setdypiusPremiumEarnUsd(userEarnedusd);
+            setdypiusPremiumEarnTokens(userEarnedusd/ bnbPrice);
+          }
 
           if (dypEvent && dypEvent[0]) {
             const userEarnedDyp =
@@ -2195,6 +2216,10 @@ function Dashboard({
                         baseEarnETH={baseEarnETH}
                         dypiusEarnUsd={dypiusEarnUsd}
                         dypiusEarnTokens={dypiusEarnTokens}
+
+                        dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
+                        dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
+                        dypiusPremiumPoints={dypiusPremiumPoints}
                       />
                     </div>
                     <WalletBalance
@@ -2449,6 +2474,8 @@ function Dashboard({
                             baseEarnUSD={baseEarnUSD}
                             baseEarnETH={baseEarnETH}
                             dypiusEarnUsd={dypiusEarnUsd}
+                        dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
+                        dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
                           />
                         </div>
                       </OutsideClickHandler>
