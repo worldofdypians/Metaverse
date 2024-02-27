@@ -14,6 +14,7 @@ import premiumRound from "./assets/premiumRound.png";
 import completedBg from "./assets/completedBg.png";
 import winConfetti from "./assets/winConfetti.png";
 import xMark from "./assets/xMark2.svg";
+import emptyXmark from "./assets/emptyXmark.svg";
 import bnbIcon from "./assets/bnbIcon.svg";
 import greenCheck from "./assets/greenCheck.svg";
 import infoIcon from "./assets/infoIcon.svg";
@@ -62,28 +63,28 @@ const NewDailyBonus = ({ onclose }) => {
 
   const winDangerItems = [
     {
-      title: "Hold CAWS NFT",
-      image: cawsRound,
+      image: wodRound,
       holder: false,
       message: "Hold >1 CAWS NFT",
+      required: true,
     },
     {
-      title: "Hold Genesis NFT",
       image: wodRound,
       holder: true,
       message: "Hold Genesis NFT",
+      required: true,
     },
     {
-      title: "Premium Subscriber",
       image: premiumRound,
       holder: false,
       message: "Premium Subscriber",
+      required: true,
     },
     {
-      title: "Hold >$1,000 in DYP v2",
       image: dypiusIcon,
       holder: true,
       message: "Hold >$1,000 in DYP v2",
+      required: false,
     },
   ];
 
@@ -102,7 +103,7 @@ const NewDailyBonus = ({ onclose }) => {
 
   const [chain, setChain] = useState("bnb");
   const [dummyArray, setDummyArray] = useState(numberArray);
-  const [message, setMessage] = useState("winDanger");
+  const [message, setMessage] = useState("caws");
   const [reward, setReward] = useState(null);
   const [selectedChest, setSelectedChest] = useState(null);
 
@@ -207,7 +208,7 @@ const NewDailyBonus = ({ onclose }) => {
     <div className="package-popup-wrapper2">
       <div className="new-daily-bonus-popup d-flex flex-column gap-2 custom-container-width">
         <div className="daily-bonus-outer-wrapper custom-container-width position-relative p-0 p-lg-5">
-          <img
+          {/* <img
             src={xMark}
             className="close-new-bonus"
             width={40}
@@ -215,7 +216,10 @@ const NewDailyBonus = ({ onclose }) => {
             alt=""
             onClick={onclose}
             style={{ cursor: "pointer" }}
-          />
+          /> */}
+          <div className="close-daily-btn d-flex align-items-center justify-content-center">
+            <img src={emptyXmark} width={20} height={20} alt="" />
+          </div>
           <h6 className="rewards-upper-title mb-9 font-organetto">Rewards</h6>
           <div className="general-info-tooltip">
             <GeneralTooltip
@@ -245,13 +249,13 @@ const NewDailyBonus = ({ onclose }) => {
           <div className="new-total-points-wrapper d-flex align-items-end gap-2">
             <h6 className="new-total-points  mb-0">256,786 </h6>
             <span className="new-total-points-type d-none d-lg-flex  mb-0">
-              POINTS
+              Leaderboard Points
             </span>
           </div>
           <div className="new-total-rewards-wrapper d-flex align-items-end gap-2">
             <h6 className="new-total-points  mb-0">$26.21 </h6>
             <span className="new-total-points-type d-none d-lg-flex  mb-0">
-              REWARDS
+              Rewards
             </span>
           </div>
           <div className="daily-bonus-inner-wrapper container p-4 p-lg-5 mt-3 mt-lg-0">
@@ -259,7 +263,7 @@ const NewDailyBonus = ({ onclose }) => {
               className="row daily-bonus-row gap-3 gap-lg-0 mx-4 mx-lg-2 mt-5 mt-lg-3"
               style={{ height: "100%", marginTop: "64px" }}
             >
-              <div className="col-12 col-lg-5 chains-wrapper">
+              <div className="col-12 col-lg-5 chains-wrapper mt-3 mt-lg-0">
                 <div
                   className="d-flex flex-row flex-lg-column justify-content-between h-100 chains-container"
                   style={{ gap: "8px" }}
@@ -554,8 +558,7 @@ const NewDailyBonus = ({ onclose }) => {
                             className="nft-reward-img"
                             src={require(`./assets/caws${item.id}.png`)}
                             alt=""
-                            width={70}
-                            height={70}
+                    
                           />
                           <div className="buy-nft-reward-btn">Buy</div>
                         </div>
@@ -698,40 +701,43 @@ const NewDailyBonus = ({ onclose }) => {
                       </div>
                     </div>
                     <div className="d-flex align-items-center gap-2">
-                      {winDangerItems.map((item, index) => (
-                        <HtmlTooltip
-                          placement="top"
-                          title={
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <span
-                                className="win-desc"
-                                style={{ fontSize: "12px" }}
-                              >
-                                {item.message}
-                              </span>
-                            </div>
-                          }
+                      {winDangerItems.sort((a,b) => Number(b.required) - Number(a.required)).map((item, index) => (
+                      item.required ? 
+                      <HtmlTooltip
+                      placement="top"
+                      title={
+                        <div
+                          className="d-flex align-items-center gap-2"
+                          style={{ width: "fit-content" }}
                         >
-                          <div className="nft-reward-container">
-                            <img
-                              key={index}
-                              className="nft-reward-img"
-                              src={item.image}
-                              alt=""
-                              width={70}
-                              height={70}
-                              style={{ borderRadius: "50%" }}
-                            />
-                            <img
-                              src={item.holder ? greenCheck : redX}
-                              alt=""
-                              className="holder-check"
-                            />
-                          </div>
-                        </HtmlTooltip>
+                          <span
+                            className="win-desc"
+                            style={{ fontSize: "12px" }}
+                          >
+                            {item.message}
+                          </span>
+                        </div>
+                      }
+                    >
+                      <div className="nft-reward-container">
+                        <img
+                          key={index}
+                          className="nft-reward-img"
+                          src={item.image}
+                          alt=""
+                          width={70}
+                          height={70}
+                          style={{ borderRadius: "50%" }}
+                        />
+                        <img
+                          src={item.holder ? greenCheck : redX}
+                          alt=""
+                          className="holder-check"
+                        />
+                      </div>
+                    </HtmlTooltip>
+                    :
+                    <div className="required-item-placeholder"></div>
                       ))}
                     </div>
                   </div>
@@ -808,8 +814,8 @@ const NewDailyBonus = ({ onclose }) => {
                   {reward === index && item.error ? (
                     <img
                       src={danger}
-                      width={25}
-                      height={25}
+                      width={20}
+                      height={20}
                       className="reward-warning"
                       alt=""
                     />

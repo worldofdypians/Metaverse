@@ -11,8 +11,8 @@ const NewChestItem = ({item, index, openChest, selectedChest}) => {
     style={{pointerEvents: index === 5 || index === 8 ? "none" : ""}}
   >
     <img
-      src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
-        !item.opened ? index : index + "open"
+      src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/blueCrystal${
+        !item.opened ? "" :  "OpenGems"
       }.png`)}
       width={80}
       height={80}

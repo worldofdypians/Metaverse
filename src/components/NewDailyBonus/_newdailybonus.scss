@@ -168,13 +168,16 @@
   gap: 14px;
   place-items: center;
   @media screen and (max-width: 786px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 .chains-wrapper {
   padding-left: 4px !important;
   padding-right: 12px !important;
+  @media screen and (max-width: 786px) {
+    overflow-x: scroll;
+  }
 }
 
 .new-chest-item {
@@ -201,6 +204,11 @@
 
   .daily-bonus-row {
     overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+    @media screen and (max-width: 786px) {
+      height: 103% !important;
+    }
   }
   .chains-container {
     overflow-x: scroll;
@@ -380,7 +388,7 @@
 
 @media screen and (max-width: 786px) {
   .grid-overall-wrapper {
-    height: 33%;
+    height: 30%;
   }
   .grid-scroll {
     height: 100%;
@@ -401,7 +409,13 @@
   border: 2px solid #1a1c39;
   border-radius: 12px;
   cursor: pointer;
+  width: 70px;
+  height: 70px;
   transition: all 0.25s;
+  @media screen and (max-width: 786px) {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .buy-nft-reward-btn {
@@ -576,6 +590,9 @@ font-size: 24px;
 font-style: normal;
 font-weight: 600;
 line-height: normal;
+@media screen and (max-width: 786px) {
+  font-size: 16px;
+}
 }
 
 .win-amount-desc{
@@ -589,12 +606,12 @@ line-height: normal;
 
 .warning-border{
   border-radius: 20px;
-border: 3px solid #D6661D;
+border: 2px solid #D6661D;
 }
 
 .danger-border{
   border-radius: 20px;
-border: 3px solid #BF0000;
+border: 2px solid #BF0000;
 }
 
 .win-confetti{
@@ -612,6 +629,10 @@ border: 3px solid #BF0000;
   bottom: 0;
   margin: auto;
   width: fit-content;
+
+  @media screen and (max-width: 786px) {
+    position: relative;
+  }
 }
 
 .win-requirements-wrapper{
@@ -658,8 +679,8 @@ line-height: normal;
 
 .reward-warning{
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: -5px;
+  right: -5px;
 }
 
 .premium-lock{
@@ -681,4 +702,28 @@ line-height: normal;
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.required-item-placeholder{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #2c3867;
+}
+
+.close-daily-btn{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #00DBDE;
+  border: 1px solid #00BBCC;
+  position: absolute;
+  right: 10%;
+  top: 8%;
+  cursor: pointer;
+  transition: all .25s;
+}
+
+.close-daily-btn:hover{
+  background: #fff;
 }
