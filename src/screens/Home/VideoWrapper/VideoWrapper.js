@@ -8,7 +8,7 @@ import epicblack from "../../../assets/epicblack.svg";
 import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
 import coingecko from "../../Marketplace/MarketNFTs/assets/coingecko.svg";
 import coinbaseimg from "../../Marketplace/MarketNFTs/assets/base.svg";
-import dypius from "../../Marketplace/MarketNFTs/assets/dypIcon.svg";
+import dypius from "../../Marketplace/MarketNFTs/assets/dypiusPremium16.svg";
 import doge from "../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../Marketplace/MarketNFTs/assets/cmc.svg";
 import multiplayer from "../../../assets/multiplayer.svg";
@@ -44,6 +44,33 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
   };
 
   const dummyBetaPassData2 = [
+    {
+      title: "Dypius",
+      logo: dypius,
+      eventStatus: "Live",
+      totalRewards: "300,000 in DYPv2 Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "September xx, 2023",
+      rewardsAmount: "$50,000",
+      rewardsCurrency: "BNB Rewards",
+      // backgroundImage: upcomingDyp,
+      popupInfo: {
+        title: "Dypius",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "DYP",
+        status: "Expired",
+        id: "event5",
+        eventType: "Explore & Find",
+        totalRewards: "300,000 in DYPv2 Rewards",
+        // eventDuration: coingeckoLastDay,
+        minRewards: "25",
+        maxRewards: "50",
+        learnMore: "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Ended",
+      },
+    },
     {
       title: "Dogecoin",
       chain: "BNB Chain",
@@ -113,36 +140,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         learnMore:
           "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
-    },
-    {
-      title: "Dypius",
-      logo: dypius,
-      eventStatus: "Coming Soon",
-      totalRewards: "300,000 in DYPv2 Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "September xx, 2023",
-      rewardsAmount: "$50,000",
-      rewardsCurrency: "BNB Rewards",
-      // backgroundImage: upcomingDyp,
-      popupInfo: {
-        title: "Dypius",
-        chain: "BNB Chain",
-        linkState: "dypius",
-        rewards: "DYP",
-        status: "Expired",
-        id: "event5",
-        eventType: "Explore & Find",
-        totalRewards: "300,000 in DYPv2 Rewards",
-        // eventDuration: coingeckoLastDay,
-        minRewards: "25",
-        maxRewards: "50",
-        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "Ended",
-      },
-    },
-
-    {
+    }, {
       title: "Base",
       logo: coinbaseimg,
       eventStatus: "Expired",

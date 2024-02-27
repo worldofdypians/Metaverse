@@ -195,7 +195,6 @@ const NewWalletBalance = ({
   onOpenLeaderboard,
   isPremium,
   onRewardsClick,
-  onPremiumClick,
   onBalanceClick,
   claimedChests,
   claimedPremiumChests,
@@ -226,10 +225,13 @@ const NewWalletBalance = ({
   baseUserPoints,
   baseEarnETH,
   dypiusEarnUsd,
+  dypiusPremiumEarnUsd,
+  dypiusPremiumEarnTokens,
+  dypiusPremiumPoints,
   dypiusEarnTokens,
   cmcuserEarnUsd,
   cmcuserEarnETH,
-  cmcuserPoints,
+  cmcuserPoints,onPremiumClick
   // hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -244,7 +246,6 @@ const NewWalletBalance = ({
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
 
- 
   const dummyDoge = {
     title: "Dogecoin",
     chain: "BNB Chain",
@@ -266,26 +267,28 @@ const NewWalletBalance = ({
   };
 
   const dypv2 = {
-     title: "Dypius",
+    title: "Dypius Premium",
     logo: dypius,
-    eventStatus: "Coming Soon",
+    eventStatus: "Live",
     totalRewards: "$50,000 in BNB Rewards",
     myEarnings: 0.0,
-    eventDate: "Jan 26, 2024",
-    date: "Jan 26, 2024",
+    eventDate: "Feb 26, 2024",
+    date: "Feb 26, 2024",
     backgroundImage: upcomingDyp2,
     activeTab: "dypiusv2",
-      chain: "BNB Chain",
-      linkState: "dypius2",
-      rewards: "BNB",
-      status: "Coming Soon",
-      id: "event9",
-      eventType: "Explore & Find",
-      eventDuration: dypius2LastDay,
-      minRewards: "25",
-      maxRewards: "50",
-      learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event"
-  }
+    chain: "BNB Chain",
+    linkState: "dypius2",
+    rewards: "BNB",
+    status: "Live",
+    id: "event9",
+    eventType: "Explore & Find",
+    eventDuration: dypius2LastDay,
+    minRewards: "1",
+    maxRewards: "100",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+  };
 
   const dummyCmc = {
     title: "CoinMarketCap",
@@ -308,38 +311,37 @@ const NewWalletBalance = ({
       "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
   };
 
-  const dummyCoin98 = {
-    title: "Coin98 Pass",
-    chain: "BNB Chain",
-    linkState: "coin98",
-    rewards: "BNB",
-    status: "Expired",
-    id: "event2",
-    eventType: "Explore & Mine",
-  };
-  const dummyBase = {
-    eventType: "Explore & Mine",
-    title: "Base",
-    chain: "Base Chain",
-    linkState: "base",
-    rewards: "ETH",
-    status: "Expired",
-    id: "event4",
-    date: "Nov 01, 2023",
-    totalRewards: "$10,000 in ETH Rewards",
-    eventDuration: baseLastDay,
-    backgroundImage: baseUpcoming,
-    logo: base,
-    date: "Nov 01, 2023",
-    minRewards: "0.5",
-    maxRewards: "20",
-    minPoints: "5,000",
-    maxPoints: "30,000",
-    learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
-  };
-
   const dummyBetaPassData2 = [
     {
+      title: "Dypius Premium",
+      logo: dypius,
+      eventStatus: "Live",
+      totalRewards: "$50,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Feb 26, 2024",
+      backgroundImage: upcomingDyp2,
+      activeTab: "dypiusv2",
+      popupInfo: {
+        title: "Dypius Premium",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "BNB",
+        status: "Live",
+        id: "event9",
+        eventType: "Explore & Find",
+        totalRewards: "$50,000 in BNB Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Feb 26, 2024",
+        activeTab: "dypiusv2",
+      },
+    },
+     {
       title: "Dogecoin",
       chain: "BNB Chain",
       linkState: "doge",
@@ -397,41 +399,16 @@ const NewWalletBalance = ({
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
         eventDuration: cmcLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
+        minRewards: "1",
+        maxRewards: "100",
         minPoints: "5,000",
-        maxPoints: "30,000",
+        maxPoints: "50,000",
         eventDate: "Dec 26, 2023",
         learnMore:
           "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
-    },{
-      title: "Dypius",
-      logo: dypius,
-      eventStatus: "Coming Soon",
-      totalRewards: "$50,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "Jan 26, 2024",
-      backgroundImage: upcomingDyp2,
-      activeTab: "dypiusv2",
-      popupInfo: {
-        title: "Dypius",
-        chain: "BNB Chain",
-        linkState: "dypius",
-        rewards: "BNB",
-        status: "Coming Soon",
-        id: "event9",
-        eventType: "Explore & Find",
-        totalRewards: "$50,000 in BNB Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "25",
-        maxRewards: "50",
-        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-        eventDate: "Jan 26, 2024",
-        activeTab: "dypiusv2",
-      },
     },
+   
 
     {
       title: "Base",
@@ -1080,6 +1057,16 @@ const NewWalletBalance = ({
               >
                 Treasure Hunt
               </h6>{" "}
+               <ActiveProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dypv2);
+                  setEventPopup(true);
+                }}
+                data={dypv2}
+                event={dypv2}
+                userEarnedUsd={dypiusPremiumEarnUsd}
+              />
+
               <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyDoge);
@@ -1098,13 +1085,7 @@ const NewWalletBalance = ({
                 event={dummyCmc}
                 userEarnedUsd={cmcuserEarnUsd}
               />
-              <UpcomingProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dypv2);
-                  setEventPopup(true);
-                }}
-                data={dypv2}
-              />
+             
               {/* <ExpiredProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
@@ -1550,6 +1531,7 @@ const NewWalletBalance = ({
                           Number(dailyplayerData) +
                           Number(userRank2) +
                           Number(genesisRank2) +
+                          Number(dypiusPremiumEarnUsd) + Number(cmcuserEarnUsd) +
                           Number(baseEarnUSD) +
                           Number(confluxEarnUSD) +
                           Number(gateEarnUSD) +
@@ -2005,14 +1987,14 @@ const NewWalletBalance = ({
                     </p>
                   ) : dummyEvent.id === "event9" ? (
                     <p className="popup-event-desc">
-                      To participate in the event, players are required to be {" "}
-                      <b>Premium Subscribers.</b> By actively participating in the game
-                      on a daily basis and exploring the downtown area, players
-                      have the opportunity to secure daily rewards in BNB.
-                      Remember to log in to the game daily and venture into the
-                      downtown area to uncover hidden treasures.
+                      To participate in the event, players are required to be{" "}
+                      <b>Premium Subscribers.</b> By actively participating in
+                      the game on a daily basis and exploring the downtown area,
+                      players have the opportunity to secure daily rewards in
+                      BNB. Remember to log in to the game daily and venture into
+                      the downtown area to uncover hidden treasures.
                     </p>
-                  )  : (
+                  ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
                       <b>hold a Base Beta Pass NFT</b>. You can get the Base
@@ -2033,7 +2015,7 @@ const NewWalletBalance = ({
                   <ul>
                     <li className="popup-event-desc">Exclusive Event Access</li>
                     <>
-                      {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" ? (
+                      {dummyEvent.id !== "event5" ? (
                         <li className="popup-event-desc">
                           Daily Rewards range from ${dummyEvent.minRewards} to $
                           {dummyEvent.maxRewards}
@@ -2041,14 +2023,14 @@ const NewWalletBalance = ({
                       ) : (
                         <li className="popup-event-desc">Daily Rewards</li>
                       )}
-                      {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" && (
+                      {dummyEvent.id !== "event5" && (
                         <li className="popup-event-desc">
                           Daily Points range from {dummyEvent.minPoints} to{" "}
                           {dummyEvent.maxPoints}
                         </li>
                       )}
                     </>
-                    {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" && (
+                    {dummyEvent.id !== "event5" && (
                       <li className="popup-event-desc">
                         Earn{" "}
                         {dummyEvent.id === "event1"
@@ -2060,7 +2042,8 @@ const NewWalletBalance = ({
                           : dummyEvent.id === "event5"
                           ? "DYP"
                           : dummyEvent.id === "event6" ||
-                            dummyEvent.id === "event8"
+                            dummyEvent.id === "event8" ||
+                            dummyEvent.id === "event9"
                           ? "BNB"
                           : dummyEvent.id === "event7"
                           ? "DOGE"
@@ -2068,7 +2051,7 @@ const NewWalletBalance = ({
                         rewards
                       </li>
                     )}
-                    {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" && (
+                    {dummyEvent.id !== "event5" && (
                       <li className="popup-event-desc">
                         Get global leaderboard points
                       </li>
@@ -2134,7 +2117,7 @@ const NewWalletBalance = ({
                 tracks community growth, open source code development, major
                 events, and on-chain metrics.
               </p>
-            ) : (dummyEvent.id === "event5" || dummyEvent.id === "event9") ? (
+            ) : dummyEvent.id === "event5" || dummyEvent.id === "event9" ? (
               <p
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
@@ -2204,7 +2187,7 @@ const NewWalletBalance = ({
                 href={
                   dummyEvent.id === "event1"
                     ? "https://twitter.com/Conflux_Network"
-                    : (dummyEvent.id === "event5" || dummyEvent.id === "event9")
+                    : dummyEvent.id === "event5" || dummyEvent.id === "event9"
                     ? "https://twitter.com/dypius"
                     : dummyEvent.id === "event3"
                     ? "https://twitter.com/coingecko"
@@ -2227,7 +2210,7 @@ const NewWalletBalance = ({
                 href={
                   dummyEvent.id === "event1"
                     ? "https://t.me/Conflux_English"
-                    : (dummyEvent.id === "event5" || dummyEvent.id === "event9")
+                    : dummyEvent.id === "event5" || dummyEvent.id === "event9"
                     ? "https://t.me/worldofdypians"
                     : dummyEvent.id === "event3"
                     ? "https://t.me/coingecko"
@@ -2259,7 +2242,7 @@ const NewWalletBalance = ({
                 href={
                   dummyEvent.id === "event1"
                     ? "https://confluxnetwork.org/"
-                    : (dummyEvent.id === "event5" || dummyEvent.id === "event9")
+                    : dummyEvent.id === "event5" || dummyEvent.id === "event9"
                     ? "https://www.dypius.com/"
                     : dummyEvent.id === "event3"
                     ? "https://www.coingecko.com/"
@@ -2303,16 +2286,16 @@ const NewWalletBalance = ({
                         ? dogeUserPoints
                         : dummyEvent.id === "event8"
                         ? cmcuserPoints
+                        : dummyEvent.id === "event9"
+                        ? dypiusPremiumPoints
                         : 0,
                       0
                     )}
                     {dummyEvent.id === "event5" && " DYP"}
-                    {dummyEvent.id === "event9" && " BNB"}
-
                   </h6>
 
                   <span className="mb-0 event-earnings-usd">
-                    {(dummyEvent.id === "event5" || dummyEvent.id === "event9")
+                    {dummyEvent.id === "event5"
                       ? "Amount"
                       : "Leaderboard Points"}
                   </span>
@@ -2320,7 +2303,7 @@ const NewWalletBalance = ({
                 <div className="d-flex flex-column gap-2">
                   <h6
                     className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1"
-                    style={{ left: (dummyEvent.id === "event5" || dummyEvent.id === "event9") && "0px" }}
+                    style={{ left: dummyEvent.id === "event5" && "0px" }}
                   >
                     $
                     {getFormattedNumber(
@@ -2338,11 +2321,13 @@ const NewWalletBalance = ({
                         ? dogeEarnUSD
                         : dummyEvent.id === "event8"
                         ? cmcuserEarnUsd
+                        : dummyEvent.id === "event9"
+                        ? dypiusPremiumEarnUsd
                         : 0,
                       2
                     )}
                     <span className="ethpricerewards specialstyle-wrapper-eth">
-                      {dummyEvent.id !== "event5" && dummyEvent.id !== "event9" && (
+                      {dummyEvent.id !== "event5" && (
                         <>
                           {getFormattedNumber(
                             dummyEvent.id === "event1"
@@ -2357,6 +2342,8 @@ const NewWalletBalance = ({
                               ? dogeEarnBNB
                               : dummyEvent.id === "event8"
                               ? cmcuserEarnETH
+                              : dummyEvent.id === "event9"
+                              ? dypiusPremiumEarnTokens
                               : 0,
                             2
                           )}
@@ -2369,7 +2356,7 @@ const NewWalletBalance = ({
                             : dummyEvent.id === "event5"
                             ? "DYP"
                             : dummyEvent.id === "event6" ||
-                              dummyEvent.id === "event8"||
+                              dummyEvent.id === "event8" ||
                               dummyEvent.id === "event9"
                             ? "BNB"
                             : dummyEvent.id === "event7"
@@ -2390,7 +2377,8 @@ const NewWalletBalance = ({
               </span>
             </div>
             {dummyEvent.status === "Coming Soon" &&
-              dummyEvent.id !== "event7" &&  dummyEvent.id !== "event9" && (
+              dummyEvent.id !== "event7" &&
+              dummyEvent.id !== "event9" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
                   <NavLink
                     to={`/marketplace/beta-pass/${dummyEvent.linkState}`}
@@ -2399,16 +2387,19 @@ const NewWalletBalance = ({
                   </NavLink>
                 </div>
               )}
-               {dummyEvent.status === "Coming Soon"  && dummyEvent.id === "event9" && (
-                <div className="w-100 d-flex justify-content-end mt-3">
-                  <NavLink
-                    to={`/account`}
-                    onClick={()=>{setEventPopup(false);}}
-                  >
-                    <button className="btn get-beta-btn">Get Premium</button>
-                  </NavLink>
-                </div>
-              )}
+            {dummyEvent.id === "event9" && !isPremium && (
+              <div className="w-100 d-flex justify-content-end mt-3">
+                <NavLink
+                  to={`/account`}
+                  onClick={() => {
+                    setEventPopup(false);
+                    onPremiumClick()
+                  }}
+                >
+                  <button className="btn get-beta-btn">Get Premium</button>
+                </NavLink>
+              </div>
+            )}
           </div>
         </OutsideClickHandler>
       )}
