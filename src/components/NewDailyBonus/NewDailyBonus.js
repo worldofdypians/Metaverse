@@ -122,6 +122,64 @@ const NewDailyBonus = ({ onclose }) => {
       },
     ],
   };
+  var settings2 = {
+    dots: false,
+    arrows: false,
+    dotsClass: "button__bar",
+    infinite: false,
+    // swipe: false,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    // beforeChange: (current, next) => {
+    //   setActiveSlide(next);
+    //   setShowFirstNext(current);
+    // },
+    // afterChange: (current) => setActiveSlide(current),
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+    ],
+  };
 
 const windowSize = useWindowSize();
 
@@ -981,7 +1039,53 @@ const windowSize = useWindowSize();
           </div>
         </div>
         <div className="rewards-container-outer custom-container-width d-flex align-items-center justify-content-center p-4">
-          <div className="new-rewards-grid">
+          {windowSize.width > 786 ?
+           <div className="new-rewards-grid">
+           {dummyRewards.map((item, index) => (
+             <div
+               key={index}
+               className="new-rewards-item p-2 d-flex align-items-center gap-2"
+               style={{
+                 filter:
+                   reward === index ? "brightness(1)" : "brightness(0.5)",
+               }}
+             >
+               <div className="position-relative">
+                 <img
+                   src={require(`./assets/${item.img}Icon.png`)}
+                   width={60}
+                   height={60}
+                   alt=""
+                 />
+                 {reward === index && item.error ? (
+                   <img
+                     src={danger}
+                     width={20}
+                     height={20}
+                     className="reward-warning"
+                     alt=""
+                   />
+                 ) : (
+                   <></>
+                 )}
+               </div>
+               <div className="d-flex align-items-bottom gap-1">
+                 <h6
+                   className="mb-0  new-reward-amount"
+                   style={{
+                     color:
+                       reward === index && item.error ? "#F2C624" : "#fff",
+                   }}
+                 >
+                   {item.amount}
+                 </h6>
+                 {/* <span className="mb-0  new-reward-type">{item.title}</span> */}
+               </div>
+             </div>
+           ))}
+         </div>
+         : 
+         <Slider {...settings2}>
             {dummyRewards.map((item, index) => (
               <div
                 key={index}
@@ -1024,7 +1128,8 @@ const windowSize = useWindowSize();
                 </div>
               </div>
             ))}
-          </div>
+         </Slider>  
+        }
         </div>
       </div>
     </div>
