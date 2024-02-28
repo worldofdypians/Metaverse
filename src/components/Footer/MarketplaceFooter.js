@@ -32,17 +32,22 @@ const Footer = () => {
       icon: "facebook",
       link: "https://www.facebook.com/worldofdypians",
     },
-    {
-      icon: "reddit",
-      link: "https://www.reddit.com/r/WorldofDypians/",
-    },
-    {
-      icon: "tiktok",
-      link: "https://www.tiktok.com/@worldofdypians",
-    },
+    // {
+    //   icon: "reddit",
+    //   link: "https://www.reddit.com/r/WorldofDypians/",
+    // },
+    // {
+    //   icon: "tiktok",
+    //   link: "https://www.tiktok.com/@worldofdypians",
+    // },
     {
       icon: "youtube",
       link: "https://www.youtube.com/@Dypius",
+    },
+    {
+      icon: "email",
+      link: "mailto:contact@worldofdypians.com",
+
     },
   ];
 
@@ -99,7 +104,7 @@ const Footer = () => {
               </NavLink>
             </div> */}
             {windowSize.width > 992 ? (
-              <div className="footer-socials w-100">
+              <div className="footer-socials d-flex align-items-center justify-content-between w-100">
                 {socials.map((item, index) => (
                   <a
                     href={item.link}
@@ -121,7 +126,7 @@ const Footer = () => {
             ) : (
               <>
                 <div className="mobile-socials d-flex align-items-center justify-content-between w-100 gap-1">
-                  {socials.slice(0, 4).map((item, index) => (
+                  {socials.map((item, index) => (
                     <a
                       href={item.link}
                       key={index}
@@ -135,11 +140,11 @@ const Footer = () => {
                         src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                         alt={item.icon}
                       />
-                      <span>{item.icon}</span>
+                      {/* <span>{item.icon}</span> */}
                     </a>
                   ))}
                 </div>
-                <div className="mobile-socials d-flex align-items-center justify-content-between w-100 gap-1">
+                {/* <div className="mobile-socials d-flex align-items-center justify-content-between w-100 gap-1">
                   {socials.slice(4, 8).map((item, index) => (
                     <a
                       href={item.link}
@@ -157,7 +162,7 @@ const Footer = () => {
                       <span>{item.icon}</span>
                     </a>
                   ))}
-                </div>
+                </div> */}
               </>
             )}
           </div>
