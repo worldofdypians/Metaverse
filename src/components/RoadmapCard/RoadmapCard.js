@@ -58,7 +58,7 @@ const showDesc = (index) => {
                 <div className="d-flex pt-3  flex-column align-items-center justify-content-start gap-2 roadmap-items-wrapper">
                   <img src={roadmapIndicator} alt="indicator" style={{transform: desc !== null ? 'rotate(0deg)' : 'rotate(180deg)', visibility: index === 4 ? 'hidden' : 'visible'}} />
                   
-                 <div className="d-flex flex-column align-items-start gap-3 gap-lg-2">
+                 <div className="d-flex flex-column align-items-start gap-3 gap-lg-2 w-100">
                  {content.map((item, index) => (
                     <div className={`d-flex px-3 flex-column gap-1 ${desc === index && 'active-road-faq'}`} key={index} style={{cursor: 'pointer'}}>
                     <div className="d-flex align-items-start gap-2">
