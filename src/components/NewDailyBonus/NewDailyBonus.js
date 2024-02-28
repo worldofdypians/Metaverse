@@ -24,6 +24,8 @@ import redX from "./assets/redX.svg";
 import NewChestItem from "./NewChestItem";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material";
+import useWindowSize from "../../hooks/useWindowSize";
+import Slider from "react-slick";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -60,6 +62,68 @@ const NewDailyBonus = ({ onclose }) => {
   const cawsArray = Array.from({ length: 4 }, (_, index) => ({
     id: index + 1,
   }));
+
+
+
+  var settings = {
+    dots: false,
+    arrows: false,
+    dotsClass: "button__bar",
+    infinite: false,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    // beforeChange: (current, next) => {
+    //   setActiveSlide(next);
+    //   setShowFirstNext(current);
+    // },
+    // afterChange: (current) => setActiveSlide(current),
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1.3,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+    ],
+  };
+
+const windowSize = useWindowSize();
 
   const winDangerItems = [
     {
@@ -217,7 +281,7 @@ const NewDailyBonus = ({ onclose }) => {
             onClick={onclose}
             style={{ cursor: "pointer" }}
           /> */}
-          <div className="close-daily-btn d-flex align-items-center justify-content-center">
+          <div className="close-daily-btn d-flex align-items-center justify-content-center" onClick={onclose}>
             <img src={emptyXmark} width={20} height={20} alt="" />
           </div>
           <h6 className="rewards-upper-title mb-9 font-organetto">Rewards</h6>
@@ -264,129 +328,252 @@ const NewDailyBonus = ({ onclose }) => {
               style={{ height: "100%", marginTop: "64px" }}
             >
               <div className="col-12 col-lg-5 chains-wrapper mt-3 mt-lg-0">
-                <div
-                  className="d-flex flex-row flex-lg-column justify-content-between h-100 chains-container"
-                  style={{ gap: "8px" }}
-                >
-                  <div
-                    className={`position-relative chain-item ${
-                      chain === "bnb" && "chain-item-active"
-                    } w-100`}
-                  >
-                    <img
-                      src={bnbChain}
-                      className={`chain-img ${
-                        chain === "bnb" && "chain-img-active"
-                      }`}
-                      onClick={() => setChain("bnb")}
-                      alt=""
-                    />
-                    <div
-                      className={`chain-title-wrapper ${
-                        chain === "bnb" && "chain-title-wrapper-active"
-                      } p-2 d-flex align-items-center justify-content-between`}
-                    >
-                      <h6 className="chain-title-position mb-0">BNB Chain</h6>
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="d-flex align-items-center">
-                          <img src={percentageFilled} height={8} alt="" />
-                          <img src={percentageFilled} height={8} alt="" />
-                          <img src={percentageFilled} height={8} alt="" />
-                          <img src={percentageEmpty} height={8} alt="" />
-                          <img src={percentageEmpty} height={8} alt="" />
-                        </div>
-                        <span className="percentage-span">62%</span>
-                      </div>
-                    </div>
-                    <div
-                      className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
-                      style={{ width: "fit-content" }}
-                    >
-                      <button
-                        className={`chain-active-btn d-flex gap-1 align-items-center`}
-                      >
-                        {" "}
-                        <img src={bnbIcon} alt="" /> BNB
-                      </button>
+               {windowSize.width > 786?
+               <div
+               className="d-flex flex-row flex-lg-column justify-content-between h-100 chains-container"
+               style={{ gap: "8px" }}
+             >
+               <div
+                 className={`position-relative chain-item ${
+                   chain === "bnb" && "chain-item-active"
+                 } w-100`}
+               >
+                 <img
+                   src={bnbChain}
+                   className={`chain-img ${
+                     chain === "bnb" && "chain-img-active"
+                   }`}
+                   onClick={() => setChain("bnb")}
+                   alt=""
+                 />
+                 <div
+                   className={`chain-title-wrapper ${
+                     chain === "bnb" && "chain-title-wrapper-active"
+                   } p-2 d-flex align-items-center justify-content-between`}
+                 >
+                   <h6 className="chain-title-position mb-0">BNB Chain</h6>
+                   <div className="d-flex align-items-center gap-2">
+                     <div className="d-flex align-items-center">
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageEmpty} height={8} alt="" />
+                       <img src={percentageEmpty} height={8} alt="" />
+                     </div>
+                     <span className="percentage-span">62%</span>
+                   </div>
+                 </div>
+                 <div
+                   className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
+                   style={{ width: "fit-content" }}
+                 >
+                   <button
+                     className={`chain-active-btn d-flex gap-1 align-items-center`}
+                   >
+                     {" "}
+                     <img src={bnbIcon} alt="" /> BNB
+                   </button>
 
-                      <button
-                        className={`chain-inactive-btn d-flex gap-1 align-items-center`}
-                      >
-                        <img src={bnbIcon} alt="" /> opBNB
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    className={`position-relative chain-item ${
-                      chain === "skale" && "chain-item-active"
-                    } w-100`}
-                  >
-                    <img
-                      src={skaleChain}
-                      className={`chain-img ${
-                        chain === "skale" && "chain-img-active"
-                      }`}
-                      onClick={() => setChain("skale")}
-                      alt=""
-                    />
-                    <div
-                      className={`chain-title-wrapper ${
-                        chain === "skale" && "chain-title-wrapper-active"
-                      } p-2 d-flex align-items-center justify-content-between`}
-                    >
-                      <h6 className="chain-title-position mb-0">
-                        SKALE Network
-                      </h6>
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="d-flex align-items-center">
-                          <img src={percentageFilled} height={8} alt="" />
-                          <img src={percentageFilled} height={8} alt="" />
-                          <img src={percentageFilled} height={8} alt="" />
-                          <img src={percentageEmpty} height={8} alt="" />
-                          <img src={percentageEmpty} height={8} alt="" />
-                        </div>
-                        <span className="percentage-span">62%</span>
-                      </div>
-                    </div>
-                    <div
-                      className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
-                      style={{ width: "fit-content" }}
-                    >
-                      <button
-                        className={`chain-inactive-btn d-flex gap-1 align-items-center`}
-                      >
-                        {" "}
-                        <img src={bnbIcon} alt="" /> SKALE
-                      </button>
-                    </div>
-                  </div>
-                  <div className={`position-relative chain-item  w-100`}>
-                    <img src={comingSoon} className={`chain-img`} alt="" />
-                    <div
-                      className={`chain-title-wrapper ${
-                        chain === "comingSoon" && "chain-title-wrapper-active"
-                      } p-2 d-flex align-items-center justify-content-between`}
-                    >
-                      <h6 className="chain-title-position mb-0">Coming Soon</h6>
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="d-flex align-items-center">
-                          <img src={percentageFilled} height={8} alt="" />
-                          <img src={percentageFilled} height={8} alt="" />
-                          <img src={percentageFilled} height={8} alt="" />
-                          <img src={percentageEmpty} height={8} alt="" />
-                          <img src={percentageEmpty} height={8} alt="" />
-                        </div>
-                        <span className="percentage-span">62%</span>
-                      </div>
-                    </div>
-                    <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column">
-                      <h6 className="desc-title mb-0">Magic Battle</h6>
-                      <span className="chain-desc mb-0">
-                        A world full of possibilities
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                   <button
+                     className={`chain-inactive-btn d-flex gap-1 align-items-center`}
+                   >
+                     <img src={bnbIcon} alt="" /> opBNB
+                   </button>
+                 </div>
+               </div>
+               <div
+                 className={`position-relative chain-item ${
+                   chain === "skale" && "chain-item-active"
+                 } w-100`}
+               >
+                 <img
+                   src={skaleChain}
+                   className={`chain-img ${
+                     chain === "skale" && "chain-img-active"
+                   }`}
+                   onClick={() => setChain("skale")}
+                   alt=""
+                 />
+                 <div
+                   className={`chain-title-wrapper ${
+                     chain === "skale" && "chain-title-wrapper-active"
+                   } p-2 d-flex align-items-center justify-content-between`}
+                 >
+                   <h6 className="chain-title-position mb-0">
+                     SKALE Network
+                   </h6>
+                   <div className="d-flex align-items-center gap-2">
+                     <div className="d-flex align-items-center">
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageEmpty} height={8} alt="" />
+                       <img src={percentageEmpty} height={8} alt="" />
+                     </div>
+                     <span className="percentage-span">62%</span>
+                   </div>
+                 </div>
+                 <div
+                   className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
+                   style={{ width: "fit-content" }}
+                 >
+                   <button
+                     className={`chain-inactive-btn d-flex gap-1 align-items-center`}
+                   >
+                     {" "}
+                     <img src={bnbIcon} alt="" /> SKALE
+                   </button>
+                 </div>
+               </div>
+               <div className={`position-relative chain-item  w-100`}>
+                 <img src={comingSoon} className={`chain-img`} alt="" />
+                 <div
+                   className={`chain-title-wrapper ${
+                     chain === "comingSoon" && "chain-title-wrapper-active"
+                   } p-2 d-flex align-items-center justify-content-between`}
+                 >
+                   <h6 className="chain-title-position mb-0">Coming Soon</h6>
+                   <div className="d-flex align-items-center gap-2">
+                     <div className="d-flex align-items-center">
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageEmpty} height={8} alt="" />
+                       <img src={percentageEmpty} height={8} alt="" />
+                     </div>
+                     <span className="percentage-span">62%</span>
+                   </div>
+                 </div>
+                 <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column">
+                   <h6 className="desc-title mb-0">Magic Battle</h6>
+                   <span className="chain-desc mb-0">
+                     A world full of possibilities
+                   </span>
+                 </div>
+               </div>
+             </div>
+             :
+             <Slider {...settings}>
+ <div
+                 className={`position-relative chain-item ${
+                   chain === "bnb" && "chain-item-active"
+                 } w-100`}
+               >
+                 <img
+                   src={bnbChain}
+                   className={`chain-img ${
+                     chain === "bnb" && "chain-img-active"
+                   }`}
+                   onClick={() => setChain("bnb")}
+                   alt=""
+                 />
+                 <div
+                   className={`chain-title-wrapper ${
+                     chain === "bnb" && "chain-title-wrapper-active"
+                   } p-2 d-flex align-items-center justify-content-between`}
+                 >
+                   <h6 className="chain-title-position mb-0">BNB Chain</h6>
+                   <div className="d-flex align-items-center gap-2">
+                     <div className="d-flex align-items-center">
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageEmpty} height={8} alt="" />
+                       <img src={percentageEmpty} height={8} alt="" />
+                     </div>
+                     <span className="percentage-span">62%</span>
+                   </div>
+                 </div>
+                 <div
+                   className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
+                   style={{ width: "fit-content" }}
+                 >
+                   <button
+                     className={`chain-active-btn d-flex gap-1 align-items-center`}
+                   >
+                     {" "}
+                     <img src={bnbIcon} alt="" /> BNB
+                   </button>
+
+                   <button
+                     className={`chain-inactive-btn d-flex gap-1 align-items-center`}
+                   >
+                     <img src={bnbIcon} alt="" /> opBNB
+                   </button>
+                 </div>
+               </div>
+               <div
+                 className={`position-relative chain-item ${
+                   chain === "skale" && "chain-item-active"
+                 } w-100`}
+               >
+                 <img
+                   src={skaleChain}
+                   className={`chain-img ${
+                     chain === "skale" && "chain-img-active"
+                   }`}
+                   onClick={() => setChain("skale")}
+                   alt=""
+                 />
+                 <div
+                   className={`chain-title-wrapper ${
+                     chain === "skale" && "chain-title-wrapper-active"
+                   } p-2 d-flex align-items-center justify-content-between`}
+                 >
+                   <h6 className="chain-title-position mb-0">
+                     SKALE Network
+                   </h6>
+                   <div className="d-flex align-items-center gap-2">
+                     <div className="d-flex align-items-center">
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageEmpty} height={8} alt="" />
+                       <img src={percentageEmpty} height={8} alt="" />
+                     </div>
+                     <span className="percentage-span">62%</span>
+                   </div>
+                 </div>
+                 <div
+                   className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
+                   style={{ width: "fit-content" }}
+                 >
+                   <button
+                     className={`chain-inactive-btn d-flex gap-1 align-items-center`}
+                   >
+                     {" "}
+                     <img src={bnbIcon} alt="" /> SKALE
+                   </button>
+                 </div>
+               </div>
+               <div className={`position-relative chain-item  w-100`}>
+                 <img src={comingSoon} className={`chain-img`} alt="" />
+                 <div
+                   className={`chain-title-wrapper ${
+                     chain === "comingSoon" && "chain-title-wrapper-active"
+                   } p-2 d-flex align-items-center justify-content-between`}
+                 >
+                   <h6 className="chain-title-position mb-0">Coming Soon</h6>
+                   <div className="d-flex align-items-center gap-2">
+                     <div className="d-flex align-items-center">
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageFilled} height={8} alt="" />
+                       <img src={percentageEmpty} height={8} alt="" />
+                       <img src={percentageEmpty} height={8} alt="" />
+                     </div>
+                     <span className="percentage-span">62%</span>
+                   </div>
+                 </div>
+                 <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column">
+                   <h6 className="desc-title mb-0">Magic Battle</h6>
+                   <span className="chain-desc mb-0">
+                     A world full of possibilities
+                   </span>
+                 </div>
+               </div>
+             </Slider> 
+              }
               </div>
               <div className="col-12 col-lg-7 px-0 grid-overall-wrapper">
                 <div className="grid-scroll">
