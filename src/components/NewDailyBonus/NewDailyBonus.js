@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./_newdailybonus.scss";
 import bnbChain from "./assets/bnbChain.png";
 import skaleChain from "./assets/skaleChain.png";
@@ -58,12 +58,13 @@ const NewDailyBonus = ({ onclose }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
     opened: false,
+    premium: index + 1 > 10 ? true : false
   }));
   const cawsArray = Array.from({ length: 4 }, (_, index) => ({
     id: index + 1,
   }));
 
-
+  const rewardsRef = useRef()
 
   var settings = {
     dots: false,
@@ -127,7 +128,7 @@ const NewDailyBonus = ({ onclose }) => {
     arrows: false,
     dotsClass: "button__bar",
     infinite: false,
-    // swipe: false,
+    swipe: false,
     speed: 300,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -236,17 +237,26 @@ const windowSize = useWindowSize();
 
     if (chest[0].opened === true) {
       setReward(chest[0].reward);
+     if(windowSize.width < 786){
+      rewardsRef.current.innerSlider.slickGoTo(chest[0].reward)
+     }
+
       setSelectedChest(chest[0].id);
     } else {
       const randomNum = Math.floor(Math.random() * 4);
       const randomReward = Math.floor(Math.random() * 10);
       // setMessage(messages[randomNum]);
       setReward(randomReward);
+      if(windowSize.width < 786){
+        rewardsRef.current.innerSlider.slickGoTo(randomReward)
+       }
       const updatedArray = dummyArray.map((item) =>
         item.id === chestId
           ? { ...item, opened: true, reward: randomReward }
           : item
       );
+
+      console.log(updatedArray, "chests");
       setSelectedChest(chest[0].id);
       setDummyArray(updatedArray);
     }
@@ -651,7 +661,7 @@ const windowSize = useWindowSize();
               <div className="col-12 px-0 mt-0 mt-lg-3">
                 {message === "" ? (
                   <div
-                    className="d-flex align-items-center flex-column justify-content-center p-2 w-100 chest-progress-wrapper"
+                    className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                     style={{
                       background: "#1A1C39",
                       border: "1px solid #10C5C5",
@@ -685,7 +695,7 @@ const windowSize = useWindowSize();
                   </div>
                 ) : message === "switch" ? (
                   <div
-                    className="d-flex align-items-center flex-column justify-content-center p-2 w-100 chest-progress-wrapper"
+                    className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                     style={{
                       background: "#1A1C39",
                       border: "1px solid #D75853",
@@ -723,11 +733,11 @@ const windowSize = useWindowSize();
                     </div>
                   </div>
                 ) : message === "complete" ? (
-                  <div className="d-flex align-items-center justify-content-center complete-bg p-2 w-100 chest-progress-wrapper">
+                  <div className="d-flex align-items-center justify-content-center complete-bg p-0 p-lg-2 w-100 chest-progress-wrapper">
                     <h6 className="completed-text mb-0">Completed</h6>
                   </div>
                 ) : message === "needPremium" ? (
-                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
@@ -767,7 +777,7 @@ const windowSize = useWindowSize();
                     </div>
                   </div>
                 ) : message === "caws" ? (
-                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
@@ -811,7 +821,7 @@ const windowSize = useWindowSize();
                     </div>
                   </div>
                 ) : message === "win" ? (
-                  <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                  <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
@@ -836,7 +846,7 @@ const windowSize = useWindowSize();
                   </div>
                 ) : message === "premium" ? (
                   <div
-                    className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper"
+                    className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
                     style={{
                       border: "1px solid #8262D0",
                       background:
@@ -868,7 +878,7 @@ const windowSize = useWindowSize();
                   </div>
                 ) : message === "login" ? (
                   <div
-                    className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper"
+                    className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
                     style={{
                       border: "1px solid #8262D0",
                       background:
@@ -892,7 +902,7 @@ const windowSize = useWindowSize();
                     </div>
                   </div>
                 ) : message === "dyp" ? (
-                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
@@ -918,7 +928,7 @@ const windowSize = useWindowSize();
                     </div>
                   </div>
                 ) : message === "winDanger" ? (
-                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
@@ -987,7 +997,7 @@ const windowSize = useWindowSize();
                     </div>
                   </div>
                 ) : message === "wod" ? (
-                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                     <div
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
@@ -1085,11 +1095,11 @@ const windowSize = useWindowSize();
            ))}
          </div>
          : 
-         <Slider {...settings2}>
+         <Slider {...settings2} ref={rewardsRef} style={{width: "100%"}}>
             {dummyRewards.map((item, index) => (
               <div
                 key={index}
-                className="new-rewards-item p-2 d-flex align-items-center gap-2"
+                className="new-rewards-item p-2 d-flex align-items-center justify-content-center gap-2"
                 style={{
                   filter:
                     reward === index ? "brightness(1)" : "brightness(0.5)",

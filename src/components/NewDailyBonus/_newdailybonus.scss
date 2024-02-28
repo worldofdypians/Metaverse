@@ -256,7 +256,8 @@
 
 .new-chest-item-open {
   background-image: url("./assets/chestShine.png") !important;
-
+  background-repeat: no-repeat;
+  background-size: cover;
   border: 2px solid #ae2e04;
 
   .new-claim-chest-btn {
@@ -303,6 +304,10 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 800;
+  @media screen and (max-width: 786px) {
+    font-size: 24px;
+
+  }
 }
 
 .new-reward-type {
@@ -566,13 +571,49 @@
   }
 }
 
+.shake-lock{
+	        animation: shake-the-lock 0.8s both;
+}
 
+
+@keyframes shake-the-lock {
+  0%,
+  100% {
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+  }
+  15% {
+    -webkit-transform: translateX(-15px) rotate(-6deg);
+            transform: translateX(-15px) rotate(-6deg);
+  }
+  30% {
+    -webkit-transform: translateX(8px) rotate(6deg);
+            transform: translateX(8px) rotate(6deg);
+  }
+  45% {
+    -webkit-transform: translateX(-8px) rotate(-3.6deg);
+            transform: translateX(-8px) rotate(-3.6deg);
+  }
+  60% {
+    -webkit-transform: translateX(9px) rotate(2.4deg);
+            transform: translateX(9px) rotate(2.4deg);
+  }
+  75% {
+    -webkit-transform: translateX(-6px) rotate(-1.2deg);
+            transform: translateX(-6px) rotate(-1.2deg);
+  }
+}
 .win-text{
   color: #F2C624;
 font-size: 18px;
 font-style: normal;
 font-weight: 700;
 line-height: normal;
+@media screen and (max-width: 786px) {
+  font-size: 15px;
+}
 }
 
 .win-desc{
