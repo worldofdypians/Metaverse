@@ -71,6 +71,12 @@ const WodBuilders = () => {
       icon: "kucoinIcon",
       banner: "kucoinBanner",
     },
+    {
+      name: "Skale Network",
+      icon: "skaleIcon",
+      // banner: "kucoinBanner",
+    },
+
   ];
 
   useEffect(() => {

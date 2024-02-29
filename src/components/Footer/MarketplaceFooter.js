@@ -32,17 +32,22 @@ const Footer = () => {
       icon: "facebook",
       link: "https://www.facebook.com/worldofdypians",
     },
-    {
-      icon: "reddit",
-      link: "https://www.reddit.com/r/WorldofDypians/",
-    },
-    {
-      icon: "tiktok",
-      link: "https://www.tiktok.com/@worldofdypians",
-    },
+    // {
+    //   icon: "reddit",
+    //   link: "https://www.reddit.com/r/WorldofDypians/",
+    // },
+    // {
+    //   icon: "tiktok",
+    //   link: "https://www.tiktok.com/@worldofdypians",
+    // },
     {
       icon: "youtube",
       link: "https://www.youtube.com/@Dypius",
+    },
+    {
+      icon: "email",
+      link: "mailto:contact@worldofdypians.com",
+
     },
   ];
 
@@ -98,8 +103,8 @@ const Footer = () => {
                 <span className="footer-link font-poppins">Join Beta</span>
               </NavLink>
             </div> */}
-            {windowSize.width > 992 ? (
-              <div className="footer-socials w-100">
+            {/* {windowSize.width > 992 ? (
+              <div className="footer-socials d-flex align-items-center justify-content-between w-100">
                 {socials.map((item, index) => (
                   <a
                     href={item.link}
@@ -121,7 +126,7 @@ const Footer = () => {
             ) : (
               <>
                 <div className="mobile-socials d-flex align-items-center justify-content-between w-100 gap-1">
-                  {socials.slice(0, 4).map((item, index) => (
+                  {socials.map((item, index) => (
                     <a
                       href={item.link}
                       key={index}
@@ -135,34 +140,16 @@ const Footer = () => {
                         src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                         alt={item.icon}
                       />
-                      <span>{item.icon}</span>
-                    </a>
-                  ))}
-                </div>
-                <div className="mobile-socials d-flex align-items-center justify-content-between w-100 gap-1">
-                  {socials.slice(4, 8).map((item, index) => (
-                    <a
-                      href={item.link}
-                      key={index}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="d-flex gap-1 align-items-center"
-                    >
-                      <img
-                        width={25}
-                        height={25}
-                        src={require(`../../assets/footerIcons/${item.icon}.svg`)}
-                        alt={item.icon}
-                      />{" "}
-                      <span>{item.icon}</span>
                     </a>
                   ))}
                 </div>
               </>
-            )}
+            )} */}
           </div>
           <hr className="footer-divider mt-0 mb-4" />
           <div className="d-flex w-100 justify-content-center mb-4 flex-column gap-2">
+      <div className="d-flex align-items-center justify-content-between flex-column flex-lg-row w-100">
+           
             <div
               className="d-flex footer-wrapper flex-row align-items-start align-items-lg-center gap-5 justify-content-between"
               style={{ width: "fit-content" }}
@@ -206,6 +193,25 @@ const Footer = () => {
                   alt=""
                 />
               </a>
+            </div>
+            <div className="footer-socials d-flex align-items-center py-5 py-lg-0 gap-4 gap-lg-5">
+            {socials.map((item, index) => (
+              <a
+                href={item.link}
+                key={index}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img
+                  width={25}
+                  height={25}
+                  src={require(`../../assets/footerIcons/${item.icon}.svg`)}
+                  alt={item.icon}
+                />
+                {/* <span>{item.icon}</span> */}
+              </a>
+            ))}
+          </div>
             </div>
             <div className="d-flex flex-column">
               <span className="footer-link font-poppins">

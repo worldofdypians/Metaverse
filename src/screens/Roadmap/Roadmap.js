@@ -344,6 +344,11 @@ const Roadmap = () => {
           completed: false,
         },
         {
+          title: "Launch Mobile App",
+          desc: "Release a mobile application to provide users with a more convenient way to access the platform and its features.",
+          completed: false,
+        },
+        {
           title: "Partnership Development",
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
           completed: false,
@@ -476,6 +481,11 @@ const Roadmap = () => {
         {
           title: "Addition of New AI Powered NPCs",
           desc: "Introduce new AI-powered NPCs to the game to provide additional challenges and interactions for players.",
+          completed: false,
+        },
+        {
+          title: "In-Game DeFi integration",
+          desc: "Incorporating DeFi products and functionalities in an enjoyable and visual way into the platform.",
           completed: false,
         },
         {

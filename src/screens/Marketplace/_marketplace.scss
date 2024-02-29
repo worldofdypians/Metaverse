@@ -2535,7 +2535,7 @@
   @media only screen and (max-width: 991px) {
     position: relative;
     top: 0px;
-    width: 160px;
+    width: 140px;
     height: 80px;
   }
 }
@@ -3642,6 +3642,12 @@
     rgba(85, 79, 216, 0.05) 168.67%
   );
 }
+
+.upcoming-dyp-event2 {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(85, 79, 216, 0.5) 168.67%);
+}
+
 
 .base-upcoming-mint-wrapper {
   border-radius: 20px;
