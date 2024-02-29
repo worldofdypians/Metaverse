@@ -170,7 +170,7 @@ const NewBundleCard = ({
   const [goldenPassDypAmountV1, setGoldenPassDypAmountV1] = useState(0);
   const [goldenPassDypAmountV2, setGoldenPassDypAmountV2] = useState(0);
   const [puzzleMadnessDypAmount, setPuzzleMadnessDypAmount] = useState(0);
-  let twentyfiveFebruary = new Date("2024-02-25 23:59:00 GMT+02:00");
+  let twentyfiveMarch = new Date("2024-03-25 23:59:00 GMT+02:00");
   let today = new Date();
 
   let oneFebruary = new Date("2024-02-01 11:11:00 GMT+02:00");
@@ -1221,7 +1221,7 @@ const NewBundleCard = ({
 
   useEffect(() => {
     getTokenData();
-    if (today > twentyfiveFebruary) {
+    if (today > twentyfiveMarch) {
       setisAtlimit(true);
       setStatus700(
         "The Golden Pass bundle is currently not available for purchase. Please check back next month."
