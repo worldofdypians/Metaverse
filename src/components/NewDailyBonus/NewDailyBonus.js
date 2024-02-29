@@ -47,8 +47,11 @@ const GeneralTooltip = styled(({ className, ...props }) => (
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: "#252743 !important",
     color: "rgba(0, 0, 0, 0.87)",
-    maxWidth: "300px !important",
-    minWidth: "300px !important",
+    maxWidth: "350px !important",
+    minWidth: "350px !important",
+    border: "1px solid #7EABE9",
+    borderRadius: "20px",
+    padding: "10px",
     fontSize: theme.typography.pxToRem(12),
     display: "flex",
     justifyContent: "center",
