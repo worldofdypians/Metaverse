@@ -217,7 +217,6 @@ const NewDailyBonus = ({ onclose }) => {
 
   const messages = [
     "caws",
-    "dyp",
     "premium",
     "wod",
     "switch",
@@ -416,6 +415,10 @@ const NewDailyBonus = ({ onclose }) => {
                   the reward will not be allocated.
                   <br />
                   <br />
+                  All rewards earned will be distributed at the beginning of
+                  each month.
+                  <br />
+                  <br />
                   Keep playing daily to increase your chances of claiming
                   valuable rewards!
                 </span>
@@ -432,7 +435,7 @@ const NewDailyBonus = ({ onclose }) => {
           </div>
           <div className="new-total-points-wrapper d-flex align-items-end gap-2">
             <h6 className="new-total-points  mb-0">256,786 </h6>
-            <span className="new-total-points-type d-none d-lg-flex  mb-0">
+            <span className="new-total-points-type d-none d-lg-flex mb-0">
               Leaderboard Points
             </span>
           </div>
@@ -812,7 +815,7 @@ const NewDailyBonus = ({ onclose }) => {
                       <div className="d-flex align-items-center gap-2">
                         <img src={warning} alt="" width={20} height={20} />
                         <span className="win-desc mb-0">
-                          The $700.50 reward will be allocated to you if you
+                          The <span style={{color: "#F2C624"}}>$700 .50</span> reward will be allocated to you if you
                           become a Premium Subscriber.
                         </span>
                       </div>
@@ -848,11 +851,11 @@ const NewDailyBonus = ({ onclose }) => {
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
                     >
-                      <h6 className="win-text mb-0">Unable to claim reward</h6>
+                      <h6 className="win-text mb-0">You won</h6>
                       <div className="d-flex align-items-center gap-2">
                         <img src={warning} alt="" width={20} height={20} />
                         <span className="win-desc mb-0">
-                          The $30.50 reward will be allocated to you if you get
+                          The <span style={{color: "#F2C624"}}>$30.50</span> reward will be allocated to you if you get
                           one of the suggested CAWS NFTs.
                         </span>
                       </div>
@@ -923,7 +926,7 @@ const NewDailyBonus = ({ onclose }) => {
                       style={{ filter: "brightness(1)", position: "relative" }}
                     >
                       <h6 className="desc-title mb-0" style={{ color: "#fff" }}>
-                        Unable to claim reward
+                        You won
                       </h6>
                       <span className="chain-desc mb-0">
                         Enjoy extra benefits and unlock more chests for extra
@@ -966,32 +969,6 @@ const NewDailyBonus = ({ onclose }) => {
                       <button className="sign-in-btn px-4 py-1">Sign In</button>
                     </div>
                   </div>
-                ) : message === "dyp" ? (
-                  <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                    <div
-                      className="chain-desc-wrapper p-2 d-flex flex-column"
-                      style={{ filter: "brightness(1)", position: "relative" }}
-                    >
-                      <h6 className="desc-title mb-0">
-                        Unable to claim reward
-                      </h6>
-                      <span className="chain-desc mb-0">
-                        This reward can only be claimed by holders of more than
-                        $1,000 in DYP v2. You can purchase more DYP within the
-                        next 24 hours to claim this reward.{" "}
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between get-premium-wrapper">
-                      <img
-                        src={dypiusIcon}
-                        style={{ width: 40, height: 40 }}
-                        alt=""
-                      />
-                      <button className="get-premium-btn px-2 py-1">
-                        Get DYP
-                      </button>
-                    </div>
-                  </div>
                 ) : message === "winDanger" ? (
                   <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                     <div
@@ -1002,7 +979,7 @@ const NewDailyBonus = ({ onclose }) => {
                       <div className="d-flex align-items-center gap-2">
                         <img src={danger} alt="" width={20} height={20} />
                         <span className="win-desc mb-0">
-                          The $5,000 reward has not been assigned due to
+                          The <span style={{color: "#F2C624"}}>$4,520.00</span> reward has not been assigned due to
                           incomplete fulfillment of all the requirements.
                         </span>
                       </div>
@@ -1070,11 +1047,11 @@ const NewDailyBonus = ({ onclose }) => {
                       className="chain-desc-wrapper p-2 d-flex flex-column"
                       style={{ filter: "brightness(1)", position: "relative" }}
                     >
-                      <h6 className="win-text mb-0">Unable to claim reward</h6>
+                      <h6 className="win-text mb-0">You won</h6>
                       <div className="d-flex align-items-center gap-2">
                         <img src={warning} alt="" width={20} height={20} />
                         <span className="win-desc mb-0">
-                          The $150.50 reward will be allocated to you if you get
+                          The <span style={{color: "#F2C624"}}>$150.50</span> reward will be allocated to you if you get
                           one of the suggested Genesis NFTs.
                         </span>
                       </div>
