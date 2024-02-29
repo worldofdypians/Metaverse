@@ -371,9 +371,12 @@ const NewDailyBonus = ({ onclose }) => {
               title={
                 <span className="win-desc">
                   The Daily Bonus offers various benefits, ranging from
-                  leaderboard points to great rewards. There are a total of 20
-                  chests to unlock, with 10 chests available to all players for
-                  free, and the remaining 10 exclusive to premium subscribers.
+                  leaderboard points to great rewards.{" "}
+                  <b>
+                    There are a total of 20 chests to unlock, with 10 chests
+                    available to all players for free, and the remaining 10
+                    exclusive to premium subscribers.
+                  </b>
                   <br />
                   <br />
                   Each reward comes with its own set of probabilities.
@@ -381,8 +384,19 @@ const NewDailyBonus = ({ onclose }) => {
                   acquired, while the more valuable rewards are less likely to
                   be obtained. This tiered system ensures that players have a
                   diverse range of potential prizes to aim for.
+                  <b>
+                    The system is random and takes into consideration player
+                    activity and other factors. The more you play daily, the
+                    higher your chances of claiming more valuable rewards.
+                  </b>
                   <br />
                   <br />
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={warning} alt="" width={20} height={20} />
+                    <span className="win-desc" style={{ color: "#F08526" }}>
+                      <b>Action Required Sign</b> - Action Needed
+                    </span>
+                  </div>
                   Some of the rewards opened in the chests might require an
                   action, such as buying a CAWS or Genesis Land NFT, or
                   purchasing a Premium Subscription, in order to claim the
@@ -390,6 +404,12 @@ const NewDailyBonus = ({ onclose }) => {
                   day.
                   <br />
                   <br />
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={danger} alt="" width={20} height={20} />
+                    <span className="win-desc" style={{ color: "#C92422" }}>
+                      <b>No Action Sign</b> - No Action Possible
+                    </span>
+                  </div>
                   Some of the biggest rewards might not be allocated because you
                   do not fulfill certain requirements, which will be shown when
                   the chest opens. These chests do not require any action, as
