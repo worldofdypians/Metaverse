@@ -47,8 +47,8 @@ const GeneralTooltip = styled(({ className, ...props }) => (
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: "#252743 !important",
     color: "rgba(0, 0, 0, 0.87)",
-    maxWidth: "250px !important",
-    minWidth: "250px !important",
+    maxWidth: "300px !important",
+    minWidth: "300px !important",
     fontSize: theme.typography.pxToRem(12),
     display: "flex",
     justifyContent: "center",
@@ -368,18 +368,33 @@ const NewDailyBonus = ({ onclose }) => {
               title={
                 <span className="win-desc">
                   The Daily Bonus offers various benefits, ranging from
-                  leaderboard points to substantial rewards. There are a total
-                  of 20 chests to unlock, with 10 chests available to all
-                  players for free, and the remaining 10 exclusive to premium
-                  subscribers.
+                  leaderboard points to great rewards. There are a total of 20
+                  chests to unlock, with 10 chests available to all players for
+                  free, and the remaining 10 exclusive to premium subscribers.
                   <br />
                   <br />
                   Each reward comes with its own set of probabilities.
                   Typically, smaller rewards have a higher chance of being
                   acquired, while the more valuable rewards are less likely to
                   be obtained. This tiered system ensures that players have a
-                  diverse range of potential prizes to aim for. Keep playing
-                  daily to increase your chances of claiming valuable rewards!
+                  diverse range of potential prizes to aim for.
+                  <br />
+                  <br />
+                  Some of the rewards opened in the chests might require an
+                  action, such as buying a CAWS or Genesis Land NFT, or
+                  purchasing a Premium Subscription, in order to claim the
+                  reward. The deadline for taking the action is 00:00 UTC each
+                  day.
+                  <br />
+                  <br />
+                  Some of the biggest rewards might not be allocated because you
+                  do not fulfill certain requirements, which will be shown when
+                  the chest opens. These chests do not require any action, as
+                  the reward will not be allocated.
+                  <br />
+                  <br />
+                  Keep playing daily to increase your chances of claiming
+                  valuable rewards!
                 </span>
               }
             >
