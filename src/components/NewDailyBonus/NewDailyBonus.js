@@ -229,7 +229,7 @@ const NewDailyBonus = ({ onclose }) => {
 
   const [chain, setChain] = useState("bnb");
   const [dummyArray, setDummyArray] = useState(numberArray);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("needPremium");
   const [reward, setReward] = useState(null);
   const [selectedChest, setSelectedChest] = useState(null);
 
@@ -834,7 +834,7 @@ const NewDailyBonus = ({ onclose }) => {
                       </div>
                     </div>
 
-                    <div className="d-flex align-items-center gap-5 me-3">
+                    <div className="d-flex align-items-center gap-5 me-0 me-lg-3 px-3 px-lg-0">
                       <img
                         src={premiumIcon}
                         style={{ width: 70, height: 70 }}
@@ -933,7 +933,7 @@ const NewDailyBonus = ({ onclose }) => {
                         rewards by upgrading to premium.
                       </span>
                     </div>
-                    <div className="d-flex align-items-center justify-content-between get-premium-wrapper">
+                    <div className="d-flex align-items-center justify-content-between get-premium-wrapper p-3 p-lg-0">
                       <img
                         src={premiumIcon}
                         style={{ width: 60, height: 60 }}
@@ -965,7 +965,7 @@ const NewDailyBonus = ({ onclose }) => {
                         rewards tailored to your gameplay.
                       </span>
                     </div>
-                    <div className="d-flex align-items-center justify-content-end get-premium-wrapper">
+                    <div className="d-flex align-items-center justify-content-end get-premium-wrapper p-3 p-lg-0">
                       <button className="sign-in-btn px-4 py-1">Sign In</button>
                     </div>
                   </div>

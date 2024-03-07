@@ -537,6 +537,9 @@
     margin: 5px 15px;
     border-radius: 50%;
     animation: animateDot 2s linear infinite;
+    @media screen and (max-width: 786px) {
+      margin: 5px 5px !important;
+    }
   }
 }
 
@@ -669,6 +672,9 @@
   position: absolute;
   right: 0;
   border-radius: 0 20px 0 20px;
+  @media screen and (max-width: 786px) {
+    display: none;
+  }
 }
 
 .win-rewards-container {
@@ -716,6 +722,9 @@
 .complete-bg {
   background-image: url("./assets/completedBg.png") !important;
   background-size: 100%;
+  @media screen and (max-width: 786px) {
+    background-size: cover !important;
+  }
 }
 
 .completed-text {
@@ -759,6 +768,10 @@
   height: 70px;
   border-radius: 50%;
   background: #2c3867;
+  @media screen and (max-width: 786px) {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .close-daily-btn {
