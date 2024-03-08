@@ -22,12 +22,19 @@ const NewChestItem = ({item, index, openChest, selectedChest}) => {
     onClick={() => item.premium ? onShake() : openChest(item.id)}
     // style={{pointerEvents: item.premium && "none"}}
   >
-    <img
+    {/* <img
+    className='new-chest-item-img'
       src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/blueCrystal${
         !item.opened ? "" :  "OpenGems"
       }.png`)}
-      width={80}
-      height={80}
+      
+      alt=""
+      style={{ position: "relative", bottom: "5px", filter: item.premium && "blur(5px)" }}
+    /> */}
+    <img
+    className='new-chest-item-img'
+      src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/${item.opened ? index + "open" : index}.png`)}
+      
       alt=""
       style={{ position: "relative", bottom: "5px", filter: item.premium && "blur(5px)" }}
     />

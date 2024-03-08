@@ -447,7 +447,8 @@ const NewDailyBonus = ({ onclose }) => {
           </div>
           <div className="daily-bonus-inner-wrapper container p-4 p-lg-5 mt-3 mt-lg-0">
             <div
-              className="row daily-bonus-row gap-3 gap-lg-0 mx-4 mx-lg-2 mt-5 mt-lg-3"
+              className="row daily-bonus-row 
+               gap-lg-0 mx-4 mx-lg-2 mt-5 mt-lg-3"
               style={{ height: "100%", marginTop: "64px" }}
             >
               <div className="col-12 col-lg-5 chains-wrapper mt-3 mt-lg-0">
@@ -717,7 +718,7 @@ const NewDailyBonus = ({ onclose }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-12 px-0 mt-0 mt-lg-3">
+              <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper">
                 {message === "" || message === "waiting" ? (
                   <div
                     className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
@@ -836,11 +837,12 @@ const NewDailyBonus = ({ onclose }) => {
 
                     <div className="d-flex align-items-center gap-5 me-0 me-lg-3 px-3 px-lg-0">
                       <img
+                      className="d-none d-lg-flex"
                         src={premiumIcon}
                         style={{ width: 70, height: 70 }}
                         alt=""
                       />
-                      <button className="get-premium-btn px-2 py-1">
+                      <button className="get-premium-btn px-2 py-1 mb-2 mb-lg-0">
                         Get Premium
                       </button>
                     </div>
@@ -926,7 +928,7 @@ const NewDailyBonus = ({ onclose }) => {
                       style={{ filter: "brightness(1)", position: "relative" }}
                     >
                       <h6 className="desc-title mb-0" style={{ color: "#fff" }}>
-                        You won
+                        Become Premium Subscriber
                       </h6>
                       <span className="chain-desc mb-0">
                         Enjoy extra benefits and unlock more chests for extra
@@ -1107,7 +1109,7 @@ const NewDailyBonus = ({ onclose }) => {
                 >
                   <div className="position-relative">
                     <img
-                      src={require(`./assets/${item.img}Icon.png`)}
+                      src={require(`./assets/${item.img}${reward === index ? "Active" : ""}Icon.png`)}
                       width={60}
                       height={60}
                       alt=""

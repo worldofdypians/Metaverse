@@ -170,6 +170,9 @@
   @media screen and (max-width: 786px) {
     grid-template-columns: repeat(2, 1fr);
   }
+  @media screen and (max-height: 840px) {
+    gap: 10px;
+  }
 }
 
 .chains-wrapper {
@@ -195,6 +198,17 @@
   height: 100%;
   cursor: pointer;
   transition: all 0.25s;
+
+ 
+}
+
+.new-chest-item-img{
+  width: 80px;
+  height: 80px;
+  @media screen and (max-height: 800px) {
+    width: 65px;
+    height: 65px;
+  }
 }
 
 @media screen and (max-height: 875px) {
@@ -814,4 +828,10 @@
   font-weight: 500;
   line-height: normal;
   padding: 5px 10px;
+}
+
+@media screen and (max-width: 786px) {
+  .message-height-wrapper{
+    height: 35%;
+  }
 }
