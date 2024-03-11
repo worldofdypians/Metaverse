@@ -27,6 +27,8 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material";
 import useWindowSize from "../../hooks/useWindowSize";
 import Slider from "react-slick";
+import successSound from './assets/success.mp3'
+
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -247,13 +249,14 @@ const NewDailyBonus = ({ onclose }) => {
       setSelectedChest(chest[0].id);
     } else {
       setMessage("waiting");
-
       const randomNum = Math.floor(Math.random() * 4);
       const randomReward = Math.floor(Math.random() * 10);
       // setMessage(messages[randomNum]);
       setReward(randomReward);
       setTimeout(() => {
         setMessage(messages[randomNum]);
+      new Audio(successSound).play()
+
       }, 2000);
       if (windowSize.width < 786) {
         rewardsRef.current.innerSlider.slickGoTo(randomReward);
@@ -366,6 +369,7 @@ const NewDailyBonus = ({ onclose }) => {
           <h6 className="rewards-upper-title mb-9 font-organetto">Rewards</h6>
           <div className="general-info-tooltip">
             <GeneralTooltip
+            enterTouchDelay={0}
               placement={"top"}
               title={
                 <span className="win-desc">

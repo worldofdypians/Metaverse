@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import premiumLock from './assets/premiumLock.png'
+import errorSound from './assets/error.mp3'
+
 
 const NewChestItem = ({item, index, openChest, selectedChest}) => {
 
@@ -9,6 +11,7 @@ const NewChestItem = ({item, index, openChest, selectedChest}) => {
 
   const onShake = () => {
     setShake(true)
+    new Audio(errorSound).play()
     setTimeout(() => {
       setShake(false)
     }, 1000);
