@@ -101,8 +101,8 @@ const ProfileCard = ({
   const [dateofBundlev1, setdateofBundlev1] = useState(0);
   const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
 
-  let oneFebruary = new Date("2024-02-01 11:11:00 GMT+02:00");
   let oneMarch = new Date("2024-03-01 11:11:00 GMT+02:00");
+  let oneApril = new Date("2024-04-01 11:11:00 GMT+02:00");
 
   const countBundle = async () => {
     const result = await axios.get(
@@ -369,10 +369,10 @@ const ProfileCard = ({
         //     Number(additional_remaining_time_timestamp * 1000);
 
         setcountdown700(
-          today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
+          today < oneMarch ? oneMarch.getTime() : oneApril.getTime()
         );
         handleSetAvailableTime(
-          today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
+          today < oneMarch ? oneMarch.getTime() : oneApril.getTime()
         );
 
         // }
@@ -397,10 +397,10 @@ const ProfileCard = ({
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
         setcountdown700(
-          today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
+          today < oneMarch ? oneMarch.getTime() : oneApril.getTime()
         );
         handleSetAvailableTime(
-          today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
+          today < oneMarch ? oneMarch.getTime() : oneApril.getTime()
         );
 
         // }
@@ -453,10 +453,10 @@ const ProfileCard = ({
           today.getFullYear() === finalDateofBundleFormatted.getFullYear()
         ) {
           setcountdown700(
-            today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
+            today < oneMarch ? oneMarch.getTime() : oneApril.getTime()
           );
           handleSetAvailableTime(
-            today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
+            today < oneMarch ? oneMarch.getTime() : oneApril.getTime()
           );
 
           // if (
@@ -509,10 +509,10 @@ const ProfileCard = ({
 
         if (today < finalDateofBundle && bundlesBought !== 0) {
           setcountdown700(
-            today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
+            today < oneMarch ? oneMarch.getTime() : oneApril.getTime()
           );
           handleSetAvailableTime(
-            today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
+            today < oneMarch ? oneMarch.getTime() : oneApril.getTime()
           );
         } else if (today > finalDateofBundle && bundlesBought > 0) {
           setcountdown700();
@@ -536,10 +536,10 @@ const ProfileCard = ({
             handleSetAvailableTime(finalDateofBundle);
           } else {
             setcountdown700(
-              today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
+              today < oneMarch ? oneMarch.getTime() : oneApril.getTime()
             );
             handleSetAvailableTime(
-              today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
+              today < oneMarch ? oneMarch.getTime() : oneApril.getTime()
             );
           }
         } else if (today > finalDateofBundle && bundlesBought > 0) {
@@ -553,10 +553,10 @@ const ProfileCard = ({
 
       if (today < finalDateofBundle) {
         setcountdown700(
-          today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
+          today < oneMarch ? oneMarch.getTime() : oneApril.getTime()
         );
         handleSetAvailableTime(
-          today < oneFebruary ? oneFebruary.getTime() : oneMarch.getTime()
+          today < oneMarch ? oneMarch.getTime() : oneApril.getTime()
         );
       } else {
         setcountdown700();
