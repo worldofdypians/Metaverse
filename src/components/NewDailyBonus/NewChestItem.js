@@ -3,7 +3,7 @@ import premiumLock from './assets/premiumLock.png'
 import errorSound from './assets/error.mp3'
 
 
-const NewChestItem = ({item, index, openChest, selectedChest}) => {
+const NewChestItem = ({item, index, openChest, selectedChest, chainId}) => {
 
 
   const [shake, setShake] = useState(false)
@@ -23,7 +23,7 @@ const NewChestItem = ({item, index, openChest, selectedChest}) => {
       item.opened && "new-chest-item-open"
     } ${selectedChest === item.id ? "selected-new-chest" : ""}  d-flex align-items-center justify-content-center position-relative`}
     onClick={() => item.premium ? onShake() : openChest(item.id)}
-    // style={{pointerEvents: item.premium && "none"}}
+    style={{pointerEvents: chainId === 204 || chainId === 56 ? "auto" : "none", filter: chainId === 204 || chainId === 56 ? "none" : "blur(3px)"}}
   >
     {/* <img
     className='new-chest-item-img'

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./_newdailybonus.scss";
 import bnbChain from "./assets/bnbChain.png";
 import skaleChain from "./assets/skaleChain.png";
@@ -28,6 +28,7 @@ import { styled } from "@mui/material";
 import useWindowSize from "../../hooks/useWindowSize";
 import Slider from "react-slick";
 import successSound from './assets/success.mp3'
+import { handleSwitchNetworkhook } from "../../hooks/hooks";
 
 
 const HtmlTooltip = styled(({ className, ...props }) => (
@@ -60,11 +61,11 @@ const GeneralTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const NewDailyBonus = ({ onclose }) => {
+const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
     opened: false,
-    premium: index + 1 > 10 ? true : false,
+    premium: index + 1 > 10 && !isPremium ? true : false,
   }));
   const cawsArray = Array.from({ length: 4 }, (_, index) => ({
     id: index + 1,
@@ -231,7 +232,7 @@ const NewDailyBonus = ({ onclose }) => {
 
   const [chain, setChain] = useState("bnb");
   const [dummyArray, setDummyArray] = useState(numberArray);
-  const [message, setMessage] = useState("needPremium");
+  const [message, setMessage] = useState("");
   const [reward, setReward] = useState(null);
   const [selectedChest, setSelectedChest] = useState(null);
 
@@ -346,6 +347,52 @@ const NewDailyBonus = ({ onclose }) => {
       threshold: [],
     },
   ];
+
+
+  const handleOpBnbPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xcc")
+          .then(() => {
+            handleSwitchNetwork(204);
+            setMessage("")
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleBnbPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x38")
+          .then(() => {
+            handleSwitchNetwork(56);
+            setMessage("")
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+
+  useEffect(() => {
+   if(chainId === 56 || chainId === 204){
+    setMessage("")
+   }else{
+    setMessage("switch")
+   }
+   console.log(isPremium, "premium");
+  }, [chainId])
+  
 
   return (
     <div className="package-popup-wrapper2">
@@ -496,14 +543,16 @@ const NewDailyBonus = ({ onclose }) => {
                         style={{ width: "fit-content" }}
                       >
                         <button
-                          className={`new-chain-active-btn d-flex gap-1 align-items-center`}
-                        >
+                          className={` ${chainId === 56 ? "new-chain-active-btn" : "new-chain-inactive-btn"} d-flex gap-1 align-items-center`}
+                          onClick={handleBnbPool}
+                       >
                           {" "}
                           <img src={bnbIcon} alt="" /> BNB
                         </button>
 
                         <button
-                          className={`new-chain-inactive-btn d-flex gap-1 align-items-center`}
+                          className={` ${chainId === 204 ? "new-chain-active-btn" : "new-chain-inactive-btn"} d-flex gap-1 align-items-center`}
+                          onClick={handleOpBnbPool}
                         >
                           <img src={bnbIcon} alt="" /> opBNB
                         </button>
@@ -712,6 +761,7 @@ const NewDailyBonus = ({ onclose }) => {
                   <div className="new-chests-grid">
                     {dummyArray.map((item, index) => (
                       <NewChestItem
+                        chainId={chainId}
                         key={index}
                         item={item}
                         index={index}

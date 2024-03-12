@@ -3214,6 +3214,9 @@ function Dashboard({
             }}
             >
               <NewDailyBonus 
+              isPremium={isPremium}
+              chainId={chainId}
+              handleSwitchNetwork={handleSwitchNetwork}
                onclose={() => {
                 setdailyBonusPopup(false);
               }}
