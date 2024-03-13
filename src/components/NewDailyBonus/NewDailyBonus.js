@@ -27,9 +27,10 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material";
 import useWindowSize from "../../hooks/useWindowSize";
 import Slider from "react-slick";
-import successSound from './assets/success.mp3'
+import successSound from "./assets/success.mp3";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
-
+import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import { NavLink } from "react-router-dom";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -61,7 +62,28 @@ const GeneralTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => {
+const NewDailyBonus = ({
+  onclose,
+  isPremium,
+  chainId,
+  handleSwitchNetwork,
+  standardChests,
+  standardSkaleChests,
+  claimedPremiumChests,
+  claimedSkaleChests,
+  claimedSkalePremiumChests,
+  premiumChests,
+  premiumSkaleChests,
+  claimedChests,
+  email,
+  openedChests,
+  canBuy,
+  address,
+  allChests,
+  allSkaleChests,
+  onChestClaimed,
+  onSkaleChestClaimed,
+}) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
     opened: false,
@@ -72,6 +94,8 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
   }));
 
   const rewardsRef = useRef();
+
+  const html = document.querySelector("html");
 
   var settings = {
     dots: false,
@@ -228,52 +252,8 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
     "winDanger",
     "complete",
     "needPremium",
+    "error",
   ];
-
-  const [chain, setChain] = useState("bnb");
-  const [dummyArray, setDummyArray] = useState(numberArray);
-  const [message, setMessage] = useState("");
-  const [reward, setReward] = useState(null);
-  const [selectedChest, setSelectedChest] = useState(null);
-  const [disable, setDisable] = useState(false)
-
-  const openChest = (chestId) => {
-    const chest = dummyArray.filter((item) => {
-      return item.id === chestId;
-    });
-
-    if (chest[0].opened === true) {
-      setReward(chest[0].reward);
-      if (windowSize.width < 786) {
-        rewardsRef.current.innerSlider.slickGoTo(chest[0].reward);
-      }
-
-      setSelectedChest(chest[0].id);
-    } else {
-      setMessage("waiting");
-      const randomNum = Math.floor(Math.random() * 4);
-      const randomReward = Math.floor(Math.random() * 10);
-      // setMessage(messages[randomNum]);
-      setReward(randomReward);
-      setTimeout(() => {
-        setMessage(messages[randomNum]);
-      new Audio(successSound).play()
-
-      }, 2000);
-      if (windowSize.width < 786) {
-        rewardsRef.current.innerSlider.slickGoTo(randomReward);
-      }
-      const updatedArray = dummyArray.map((item) =>
-        item.id === chestId
-          ? { ...item, opened: true, reward: randomReward }
-          : item
-      );
-
-      console.log(updatedArray, "chests");
-      setSelectedChest(chest[0].id);
-      setDummyArray(updatedArray);
-    }
-  };
 
   const dummyRewards = [
     {
@@ -284,70 +264,158 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
       threshold: [1, 200000],
     },
     {
-      title: "Reward",
+      title: "Money",
       amount: "$0.5 - $5",
       img: 2,
       error: false,
       threshold: [],
+      min: 0.5,
+      max: 5,
     },
     {
-      title: "Reward",
+      title: "Money",
       amount: "$15-$20",
       img: 5,
       error: true,
       threshold: [],
+      min: 15,
+      max: 20,
     },
     {
-      title: "Reward",
+      title: "Money",
       amount: "$20-$30",
       img: 30,
       error: false,
       threshold: [],
+      min: 20,
+      max: 30,
     },
     {
-      title: "Reward",
+      title: "MoneyPremium",
       amount: "$20-$30",
       img: 50,
       error: true,
       threshold: [],
+      min: 20,
+      max: 30,
     },
     {
-      title: "Reward",
+      title: "Money",
       amount: "$50-$300",
       img: 300,
       error: false,
       threshold: [],
+      min: 50,
+      max: 300,
     },
     {
-      title: "Reward",
+      title: "Money",
       amount: "$350-$700",
       img: 700,
       error: true,
       threshold: [],
+      min: 350,
+      max: 700,
     },
     {
-      title: "Reward",
+      title: "Money",
       amount: "$1,000-$1,500",
       img: 1500,
       error: false,
       threshold: [],
+      min: 1000,
+      max: 1500,
     },
     {
-      title: "Reward",
+      title: "Money",
       amount: "$2,000-$3,000",
       img: 3000,
       error: true,
       threshold: [],
+      min: 2000,
+      max: 3000,
     },
     {
-      title: "Reward",
+      title: "Money",
       amount: "$4,000-$5,000",
       img: 5000,
-
       error: false,
       threshold: [],
+      min: 4000,
+      max: 5000,
     },
   ];
+
+  const [chain, setChain] = useState("bnb");
+  const [dummyArray, setDummyArray] = useState(numberArray);
+  const [message, setMessage] = useState("");
+  const [reward, setReward] = useState(null);
+  const [selectedChest, setSelectedChest] = useState(null);
+  const [disable, setDisable] = useState(false);
+
+  const [rewardData, setRewardData] = useState([]);
+  const [liverewardData, setLiveRewardData] = useState([]);
+  const [isActive, setIsActive] = useState();
+  const [isActiveIndex, setIsActiveIndex] = useState();
+  const [totalPoints, settotalPoints] = useState(0);
+  const [totalUsd, settotalUsd] = useState(0);
+
+  const [totalSkalePoints, settotalSkalePoints] = useState(0);
+  const [totalSkaleUsd, settotalSkaleUsd] = useState(0);
+
+  const countEarnedRewards = () => {
+    if (allChests && allChests.length > 0) {
+      let resultPoints = 0;
+      let resultUsd = 0;
+
+      allChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultPoints += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed"
+              ) {
+                resultUsd += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+
+      settotalPoints(resultPoints);
+      settotalUsd(resultUsd);
+    }
+
+    if (allSkaleChests && allSkaleChests.length > 0) {
+      let resultSkalePoints = 0;
+      let resultSkaleUsd = 0;
+
+      allSkaleChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultSkalePoints += Number(chest.rewards.reward);
+              }
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed"
+              ) {
+                resultSkaleUsd += Number(chest.rewards.reward);
+              }
+            });
+          }
+        }
+      });
+
+      settotalSkalePoints(resultSkalePoints);
+      settotalSkaleUsd(resultSkaleUsd);
+    }
+  };
 
 
   const handleOpBnbPool = async () => {
@@ -356,7 +424,7 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
         await handleSwitchNetworkhook("0xcc")
           .then(() => {
             handleSwitchNetwork(204);
-            setMessage("")
+            setMessage("");
           })
           .catch((e) => {
             console.log(e);
@@ -373,7 +441,7 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
         await handleSwitchNetworkhook("0x38")
           .then(() => {
             handleSwitchNetwork(56);
-            setMessage("")
+            setMessage("");
           })
           .catch((e) => {
             console.log(e);
@@ -389,7 +457,7 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
         await handleSwitchNetworkhook("0x79f99296")
           .then(() => {
             handleSwitchNetwork(2046399126);
-            setMessage("")
+            setMessage("");
           })
           .catch((e) => {
             console.log(e);
@@ -400,29 +468,146 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
     }
   };
 
+  const showSingleRewardData = (chestID, chestIndex) => {
+    const filteredResult = openedChests.find(
+      (el) => el.chestId === chestID && allChests.indexOf(el) === chestIndex
+    );
+
+    console.log(
+      "chestID, chestIndex, filteredResult",
+      chestID,
+      chestIndex,
+      filteredResult
+    );
+
+    setIsActive(chestID);
+    setIsActiveIndex(chestIndex + 1);
+    if (filteredResult) {
+      const result = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.details ===
+            "To claim this reward, you need to buy a CAWs NFT from the World of Dypians Marketplace"
+        );
+      });
+      console.log(result);
+      console.log(filteredResult);
+      if (result) {
+        setMessage("caws");
+      }
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
+  };
+
+  const showLiveRewardData = (value) => {
+    const filteredResult = value;
+
+    if (filteredResult) {
+      const result = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.details ===
+            "To claim this reward, you need to buy a CAWs NFT from the World of Dypians Marketplace"
+        );
+      });
+
+      if (result) {
+        console.log(result);
+        console.log(filteredResult);
+        setMessage("caws");
+      }
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
+  };
 
   useEffect(() => {
-  
-    if(chain === "bnb"){
-      if(chainId === 56 || chainId === 204){
-       setMessage("")
-       setDisable(false)
-      }else{
-       setMessage("switch")
-       setDisable(true)
+    if (chain === "bnb") {
+      if (chainId === 56 || chainId === 204) {
+        setMessage("");
+        setDisable(false);
+      } else {
+        setMessage("switch");
+        setDisable(true);
       }
-    }else if(chain === "skale"){
-      if(chainId === 2046399126){
-        setMessage("")
-        setDisable(false)
-      }else{
-        setMessage("switch")
-        setDisable(true)
+    } else if (chain === "skale") {
+      if (chainId === 2046399126) {
+        setMessage("");
+        setDisable(false);
+      } else {
+        setMessage("switch");
+        setDisable(true);
       }
     }
+  }, [chainId, chain]);
 
-  }, [chainId, chain])
-  
+  useEffect(() => {
+    countEarnedRewards();
+  }, [allChests, allSkaleChests]);
+
+  useEffect(() => {
+    if (chain === "bnb") {
+      if (email) {
+        if (isPremium) {
+          if (
+            claimedChests + claimedPremiumChests === 20 &&
+            rewardData.length === 0
+          ) {
+            setMessage("complete");
+          } else if (
+            claimedChests + claimedPremiumChests < 20 &&
+            rewardData.length === 0
+          ) {
+            setMessage("");
+          }
+        } else if (!isPremium) {
+          if (claimedChests === 10 && rewardData.length === 0) {
+            setMessage("premium");
+          } else if (claimedChests < 10 && rewardData.length === 0) {
+            setMessage("");
+          }
+        }
+      } else if (chain === "skale") {
+        if (isPremium) {
+          if (
+            claimedSkaleChests + claimedSkalePremiumChests === 20 &&
+            rewardData.length === 0
+          ) {
+            setMessage("complete");
+          } else if (
+            claimedSkaleChests + claimedSkalePremiumChests < 20 &&
+            rewardData.length === 0
+          ) {
+            setMessage("");
+          }
+        } else if (!isPremium) {
+          if (claimedSkaleChests === 10 && rewardData.length === 0) {
+            setMessage("premium");
+          } else if (claimedSkaleChests < 10 && rewardData.length === 0) {
+            setMessage("");
+          }
+        }
+      } else {
+        setMessage("login");
+      }
+    }
+  }, [
+    email,
+    chain,
+    isPremium,
+    claimedChests,
+    claimedPremiumChests,
+    claimedSkaleChests,
+    claimedSkalePremiumChests,
+    rewardData,
+  ]);
 
   return (
     <div className="package-popup-wrapper2">
@@ -446,7 +631,7 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
           <h6 className="rewards-upper-title mb-9 font-organetto">Rewards</h6>
           <div className="general-info-tooltip">
             <GeneralTooltip
-            enterTouchDelay={0}
+              enterTouchDelay={0}
               placement={"top"}
               title={
                 <span className="win-desc">
@@ -515,13 +700,24 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
             </GeneralTooltip>
           </div>
           <div className="new-total-points-wrapper d-flex align-items-end gap-2">
-            <h6 className="new-total-points  mb-0">256,786 </h6>
+            <h6 className="new-total-points  mb-0">
+              {getFormattedNumber(
+                chain === "bnb" ? totalPoints : totalSkalePoints,
+                0
+              )}{" "}
+            </h6>
             <span className="new-total-points-type d-none d-lg-flex mb-0">
               Leaderboard Points
             </span>
           </div>
           <div className="new-total-rewards-wrapper d-flex align-items-end gap-2">
-            <h6 className="new-total-points  mb-0">$26.21 </h6>
+            <h6 className="new-total-points  mb-0">
+              $
+              {getFormattedNumber(
+                chain === "bnb" ? totalUsd : totalSkaleUsd,
+                2
+              )}{" "}
+            </h6>
             <span className="new-total-points-type d-none d-lg-flex  mb-0">
               Rewards
             </span>
@@ -548,7 +744,11 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                         className={`chain-img ${
                           chain === "bnb" && "chain-img-active"
                         }`}
-                        onClick={() => setChain("bnb")}
+                        onClick={() => {
+                          setChain("bnb");
+                          setIsActive();
+                          setIsActiveIndex();
+                        }}
                         alt=""
                       />
                       <div
@@ -573,15 +773,23 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                         style={{ width: "fit-content" }}
                       >
                         <button
-                          className={` ${chainId === 56 ? "new-chain-active-btn" : "new-chain-inactive-btn"} d-flex gap-1 align-items-center`}
+                          className={` ${
+                            chainId === 56
+                              ? "new-chain-active-btn"
+                              : "new-chain-inactive-btn"
+                          } d-flex gap-1 align-items-center`}
                           onClick={handleBnbPool}
-                       >
+                        >
                           {" "}
                           <img src={bnbIcon} alt="" /> BNB
                         </button>
 
                         <button
-                          className={` ${chainId === 204 ? "new-chain-active-btn" : "new-chain-inactive-btn"} d-flex gap-1 align-items-center`}
+                          className={` ${
+                            chainId === 204
+                              ? "new-chain-active-btn"
+                              : "new-chain-inactive-btn"
+                          } d-flex gap-1 align-items-center`}
                           onClick={handleOpBnbPool}
                         >
                           <img src={bnbIcon} alt="" /> opBNB
@@ -598,7 +806,11 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                         className={`chain-img ${
                           chain === "skale" && "chain-img-active"
                         }`}
-                        onClick={() => setChain("skale")}
+                        onClick={() => {
+                          setChain("skale");
+                          setIsActive();
+                          setIsActiveIndex();
+                        }}
                         alt=""
                       />
                       <div
@@ -625,7 +837,11 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                         style={{ width: "fit-content" }}
                       >
                         <button
-                          className={`${chainId === 2046399126 ? "new-chain-active-btn" : "new-chain-inactive-btn"} d-flex gap-1 align-items-center`}
+                          className={`${
+                            chainId === 2046399126
+                              ? "new-chain-active-btn"
+                              : "new-chain-inactive-btn"
+                          } d-flex gap-1 align-items-center`}
                           onClick={handleSkalePool}
                         >
                           {" "}
@@ -674,7 +890,11 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                         className={`chain-img ${
                           chain === "bnb" && "chain-img-active"
                         }`}
-                        onClick={() => setChain("bnb")}
+                        onClick={() => {
+                          setChain("bnb");
+                          setIsActive();
+                          setIsActiveIndex();
+                        }}
                         alt=""
                       />
                       <div
@@ -722,7 +942,11 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                         className={`chain-img ${
                           chain === "skale" && "chain-img-active"
                         }`}
-                        onClick={() => setChain("skale")}
+                        onClick={() => {
+                          setChain("skale");
+                          setIsActive();
+                          setIsActiveIndex();
+                        }}
                         alt=""
                       />
                       <div
@@ -790,23 +1014,141 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
               <div className="col-12 col-lg-7 px-0 grid-overall-wrapper">
                 <div className="grid-scroll">
                   <div className="new-chests-grid">
-                    {dummyArray.map((item, index) => (
-                      <NewChestItem
-                        chainId={chainId}
-                        disable={disable}
-                        chain={chain}
-                        key={index}
-                        item={item}
-                        index={index}
-                        openChest={openChest}
-                        selectedChest={selectedChest}
-                      />
-                    ))}
+                    {chain === "bnb" ? (
+                      allChests && allChests.length > 0 ? (
+                        allChests.map((item, index) => (
+                          <NewChestItem
+                            chainId={chainId}
+                            chain={chain}
+                            key={index}
+                            item={item}
+                            // openChest={openChest}
+                            selectedChest={selectedChest}
+                            isPremium={isPremium}
+                            onClaimRewards={(value) => {
+                              // setRewardData(value);
+                              setLiveRewardData(value);
+                              onChestClaimed();
+                              showLiveRewardData(value);
+                              setIsActive(item.chestId);
+                              setIsActiveIndex(index + 1);
+                            }}
+                            handleShowRewards={(value, value2) => {
+                              showSingleRewardData(value, value2);
+                              setIsActive(value);
+                              setIsActiveIndex(index + 1);
+                            }}
+                            onLoadingChest={(value) => {
+                              // setDisable(value);
+                            }}
+                            onChestStatus={(val) => {
+                              setMessage(val);
+                            }}
+                            address={address}
+                            email={email}
+                            rewardTypes={item.chestType?.toLowerCase()}
+                            chestId={item.chestId}
+                            chestIndex={index + 1}
+                            open={item.isOpened}
+                            disableBtn={disable}
+                            isActive={isActive}
+                            isActiveIndex={isActiveIndex}
+                          />
+                        ))
+                      ) : chain === "skale" &&
+                        allSkaleChests &&
+                        allSkaleChests.length > 0 ? (
+                        allSkaleChests.map((item, index) => (
+                          <NewChestItem
+                            chainId={chainId}
+                            chain={chain}
+                            key={index}
+                            item={item}
+                            // openChest={openChest}
+                            selectedChest={selectedChest}
+                            isPremium={isPremium}
+                            onClaimRewards={(value) => {
+                              // setRewardData(value);
+                              setLiveRewardData(value);
+                              onSkaleChestClaimed();
+                              showLiveRewardData(value);
+                              setIsActive(item.chestId);
+                              // setIsActiveIndex(index + 1);
+                            }}
+                            handleShowRewards={(value, value2) => {
+                              showSingleRewardData(value, value2);
+                              setIsActive(value);
+                              // setIsActiveIndex(index + 1);
+                            }}
+                            onLoadingChest={(value) => {
+                              // setDisable(value);
+                            }}
+                            onChestStatus={(val) => {
+                              setMessage(val);
+                            }}
+                            address={address}
+                            email={email}
+                            rewardTypes={item.chestType?.toLowerCase()}
+                            chestId={item.chestId}
+                            chestIndex={index + 1}
+                            open={item.isOpened}
+                            disableBtn={disable}
+                            isActive={isActive}
+                          />
+                        ))
+                      ) : (
+                        dummyArray.map((item, index) => (
+                          <NewChestItem
+                            chainId={chainId}
+                            chain={chain}
+                            key={index}
+                            item={item}
+                            // openChest={openChest}
+                            selectedChest={selectedChest}
+                            isPremium={isPremium}
+                            onClaimRewards={(value) => {
+                              // setRewardData(value);
+                              setLiveRewardData(value);
+                              onSkaleChestClaimed();
+                              showLiveRewardData(value);
+                              setIsActive(item.chestId);
+                              // setIsActiveIndex(index + 1);
+                            }}
+                            handleShowRewards={(value, value2) => {
+                              showSingleRewardData(value, value2);
+                              setIsActive(value);
+                              // setIsActiveIndex(index + 1);
+                            }}
+                            onLoadingChest={(value) => {
+                              // setDisable(value);
+                            }}
+                            onChestStatus={(val) => {
+                              setMessage(val);
+                            }}
+                            address={address}
+                            email={email}
+                            rewardTypes={item.chestType?.toLowerCase()}
+                            chestId={item.chestId}
+                            chestIndex={index + 1}
+                            open={item.opened}
+                            disableBtn={true}
+                            isActive={isActive}
+                            openChest={() => {
+                              console.log("test");
+                            }}
+                          />
+                        ))
+                      )
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               </div>
               <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper">
-                {message === "" || message === "waiting" ? (
+                {message === "" ||
+                message === "initial" ||
+                message === "waiting" ? (
                   <div
                     className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                     style={{
@@ -889,6 +1231,45 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                       <div className="dot" style={{ "--i": 9 }}></div>
                     </div>
                   </div>
+                ) : message === "error" ? (
+                  <div
+                    className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
+                    style={{
+                      background: "#1A1C39",
+                      border: "1px solid #D75853",
+                    }}
+                  >
+                    <div className="loader red-loader">
+                      <div className="dot" style={{ "--i": 0 }}></div>
+                      <div className="dot" style={{ "--i": 1 }}></div>
+                      <div className="dot" style={{ "--i": 2 }}></div>
+                      <div className="dot" style={{ "--i": 3 }}></div>
+                      <div className="dot" style={{ "--i": 4 }}></div>
+                      <div className="dot" style={{ "--i": 5 }}></div>
+                      <div className="dot" style={{ "--i": 6 }}></div>
+                      <div className="dot" style={{ "--i": 7 }}></div>
+                      <div className="dot" style={{ "--i": 8 }}></div>
+                      <div className="dot" style={{ "--i": 9 }}></div>
+                    </div>
+                    <h6
+                      className="loader-text mb-0"
+                      style={{ color: "#D75853" }}
+                    >
+                      Something went wrong. Try again.
+                    </h6>
+                    <div className="loader red-loader">
+                      <div className="dot" style={{ "--i": 0 }}></div>
+                      <div className="dot" style={{ "--i": 1 }}></div>
+                      <div className="dot" style={{ "--i": 2 }}></div>
+                      <div className="dot" style={{ "--i": 3 }}></div>
+                      <div className="dot" style={{ "--i": 4 }}></div>
+                      <div className="dot" style={{ "--i": 5 }}></div>
+                      <div className="dot" style={{ "--i": 6 }}></div>
+                      <div className="dot" style={{ "--i": 7 }}></div>
+                      <div className="dot" style={{ "--i": 8 }}></div>
+                      <div className="dot" style={{ "--i": 9 }}></div>
+                    </div>
+                  </div>
                 ) : message === "complete" ? (
                   <div className="d-flex align-items-center justify-content-center complete-bg p-0 p-lg-2 w-100 chest-progress-wrapper">
                     <h6 className="completed-text mb-0">Completed</h6>
@@ -903,8 +1284,9 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                       <div className="d-flex align-items-center gap-2">
                         <img src={warning} alt="" width={20} height={20} />
                         <span className="win-desc mb-0">
-                          The <span style={{color: "#F2C624"}}>$700 .50</span> reward will be allocated to you if you
-                          become a Premium Subscriber.
+                          The <span style={{ color: "#F2C624" }}>$700 .50</span>{" "}
+                          reward will be allocated to you if you become a
+                          Premium Subscriber.
                         </span>
                       </div>
                     </div>
@@ -924,7 +1306,7 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
 
                     <div className="d-flex align-items-center gap-5 me-0 me-lg-3 px-3 px-lg-0">
                       <img
-                      className="d-none d-lg-flex"
+                        className="d-none d-lg-flex"
                         src={premiumIcon}
                         style={{ width: 70, height: 70 }}
                         alt=""
@@ -944,21 +1326,46 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                       <div className="d-flex align-items-center gap-2">
                         <img src={warning} alt="" width={20} height={20} />
                         <span className="win-desc mb-0">
-                          The <span style={{color: "#F2C624"}}>$30.50</span> reward will be allocated to you if you get
-                          one of the suggested CAWS NFTs.
+                          The{" "}
+                          <span style={{ color: "#F2C624" }}>
+                            $
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Money";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </span>{" "}
+                          reward will be allocated to you if you get one of the
+                          suggested CAWS NFTs.
                         </span>
                       </div>
                     </div>
                     <div className="d-flex align-items-center gap-2 win-rewards-container">
                       <div className="d-flex flex-column align-items-center neutral-border p-1">
-                        <h6 className="win-amount mb-0">1,864</h6>
+                        <h6 className="win-amount mb-0">
+                          {getFormattedNumber(
+                            rewardData.rewards.find((obj) => {
+                              return obj.rewardType === "Points";
+                            }).reward ?? 0,
+                            0
+                          )}
+                        </h6>
                         <span className="win-amount-desc">
                           Leaderboard Points
                         </span>
                       </div>
                       <h6 className="win-amount mb-0">+</h6>
                       <div className="d-flex flex-column align-items-center warning-border p-1">
-                        <h6 className="win-amount mb-0">$30.50</h6>
+                        <h6 className="win-amount mb-0">
+                          $
+                          {getFormattedNumber(
+                            rewardData.rewards.find((obj) => {
+                              return obj.rewardType === "Money";
+                            }).reward ?? 0,
+                            2
+                          )}
+                        </h6>
                         <span className="win-amount-desc">Rewards</span>
                       </div>
                     </div>
@@ -1055,7 +1462,15 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                       </span>
                     </div>
                     <div className="d-flex align-items-center justify-content-end get-premium-wrapper p-3 p-lg-0">
-                      <button className="sign-in-btn px-4 py-1">Sign In</button>
+                      <NavLink
+                        className="sign-in-btn px-4 py-1"
+                        to="/auth"
+                        onClick={() => {
+                          html.classList.remove("hidescroll");
+                        }}
+                      >
+                        Sign In
+                      </NavLink>
                     </div>
                   </div>
                 ) : message === "winDanger" ? (
@@ -1068,8 +1483,10 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                       <div className="d-flex align-items-center gap-2">
                         <img src={danger} alt="" width={20} height={20} />
                         <span className="win-desc mb-0">
-                          The <span style={{color: "#F2C624"}}>$4,520.00</span> reward has not been assigned due to
-                          incomplete fulfillment of all the requirements.
+                          The{" "}
+                          <span style={{ color: "#F2C624" }}>$4,520.00</span>{" "}
+                          reward has not been assigned due to incomplete
+                          fulfillment of all the requirements.
                         </span>
                       </div>
                     </div>
@@ -1140,8 +1557,9 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                       <div className="d-flex align-items-center gap-2">
                         <img src={warning} alt="" width={20} height={20} />
                         <span className="win-desc mb-0">
-                          The <span style={{color: "#F2C624"}}>$150.50</span> reward will be allocated to you if you get
-                          one of the suggested Genesis NFTs.
+                          The <span style={{ color: "#F2C624" }}>$150.50</span>{" "}
+                          reward will be allocated to you if you get one of the
+                          suggested Genesis NFTs.
                         </span>
                       </div>
                     </div>
@@ -1191,19 +1609,65 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                   className="new-rewards-item p-2 d-flex align-items-center gap-2"
                   style={{
                     filter:
-                      reward === index ? "brightness(1)" : "brightness(0.5)",
+                      (rewardData &&
+                        rewardData.rewards?.find((obj) => {
+                          return (
+                            obj.rewardType === "Points" &&
+                            Number(obj.reward) <= item.threshold[1]
+                          );
+                        })) ||
+                      (rewardData &&
+                        rewardData.rewards?.find((obj) => {
+                          return (
+                            obj.rewardType !== "Points" &&
+                            Number(obj.reward) > item.min &&
+                            Number(obj.reward) <= item.max
+                          );
+                        }))
+                        ? "brightness(1)"
+                        : "brightness(0.5)",
                   }}
                 >
                   <div className="position-relative">
                     <img
-                      src={require(`./assets/${item.img}${reward === index ? "Active" : ""}Icon.png`)}
+                      src={require(`./assets/${item.img}${
+                        (rewardData &&
+                          rewardData.rewards?.find((obj) => {
+                            return (
+                              obj.rewardType === "Points" &&
+                              Number(obj.reward) <= item.threshold[1]
+                            );
+                          })) ||
+                        (rewardData &&
+                          rewardData.rewards?.find((obj) => {
+                            return (
+                              obj.rewardType !== "Points" &&
+                              Number(obj.reward) > item.min &&
+                              Number(obj.reward) <= item.max
+                            );
+                          }))
+                          ? "Active"
+                          : ""
+                      }Icon.png`)}
                       width={60}
                       height={60}
                       alt=""
                     />
-                    {reward === index && item.error ? (
+                    {rewardData &&
+                    rewardData.rewards?.find((obj) => {
+                      return obj.rewardType === item.title;
+                    }) &&
+                    rewardData &&
+                    rewardData.rewards?.find((obj) => {
+                      return (
+                        obj.rewardType === item.title &&
+                        obj.status === "Unclaimed" &&
+                        obj.reward > item.min &&
+                        obj.reward <= item.max
+                      );
+                    }) ? (
                       <img
-                        src={danger}
+                        src={warning}
                         width={20}
                         height={20}
                         className="reward-warning"
@@ -1218,7 +1682,17 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                       className="mb-0  new-reward-amount"
                       style={{
                         color:
-                          reward === index && item.error ? "#F2C624" : "#fff",
+                          rewardData &&
+                          rewardData.rewards?.find((obj) => {
+                            return (
+                              obj.rewardType === item.title &&
+                              obj.status === "Unclaimed" &&
+                              obj.reward > item.min &&
+                              obj.reward <= item.max
+                            );
+                          })
+                            ? "#F2C624"
+                            : "#fff",
                       }}
                     >
                       {item.amount}

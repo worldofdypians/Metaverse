@@ -172,7 +172,6 @@ function Dashboard({
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
 
-
   const [dypiusPremiumEarnTokens, setdypiusPremiumEarnTokens] = useState(0);
   const [dypiusPremiumEarnUsd, setdypiusPremiumEarnUsd] = useState(0);
   const [dypiusPremiumPoints, setdypiusPremiumPoints] = useState(0);
@@ -191,6 +190,10 @@ function Dashboard({
   const [standardChests, setStandardChests] = useState([]);
   const [premiumChests, setPremiumChests] = useState([]);
   const [openedChests, setOpenedChests] = useState([]);
+
+  const [standardSkaleChests, setStandardSkaleChests] = useState([]);
+  const [premiumSkaleChests, setPremiumSkaleChests] = useState([]);
+  const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
 
   const [leaderboard, setLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
@@ -224,15 +227,21 @@ function Dashboard({
 
   const [claimedChests, setclaimedChests] = useState(0);
   const [claimedPremiumChests, setclaimedPremiumChests] = useState(0);
+
+  const [claimedSkaleChests, setclaimedSkaleChests] = useState(0);
+  const [claimedSkalePremiumChests, setclaimedSkalePremiumChests] = useState(0);
+
   const [dailyplayerData, setdailyplayerData] = useState(0);
   const [weeklyplayerData, setweeklyplayerData] = useState(0);
   const [userSocialRewards, setuserSocialRewards] = useState(0);
 
   const [canBuy, setCanBuy] = useState(false);
 
-  const [allChests, setallChests] = useState(0);
+  const [allChests, setallChests] = useState([]);
+  const [allSkaleChests, setallSkaleChests] = useState([]);
 
   const [count, setCount] = useState(0);
+  const [skalecount, setskalecount] = useState(0);
 
   const [userRank, setUserRank] = useState("");
   const [userRank2, setUserRank2] = useState("");
@@ -756,7 +765,6 @@ function Dashboard({
             return obj.betapassId === "all";
           });
 
-
           const dogeEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "dogecoin";
           });
@@ -771,13 +779,13 @@ function Dashboard({
 
           if (dypPremiumEvent && dypPremiumEvent[0]) {
             const userEarnedusd =
-            dypPremiumEvent[0].reward.earn.total /
-            dypPremiumEvent[0].reward.earn.multiplier;
+              dypPremiumEvent[0].reward.earn.total /
+              dypPremiumEvent[0].reward.earn.multiplier;
             const pointsdypius = dypPremiumEvent[0].reward.earn.totalPoints;
-           
-            setdypiusPremiumPoints(pointsdypius)
+
+            setdypiusPremiumPoints(pointsdypius);
             setdypiusPremiumEarnUsd(userEarnedusd);
-            setdypiusPremiumEarnTokens(userEarnedusd/ bnbPrice);
+            setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
           }
 
           if (dypEvent && dypEvent[0]) {
@@ -918,23 +926,43 @@ function Dashboard({
     if (addr) {
       subscribedPlatformTokenAmountETH = await ethcontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call().catch((e)=>{console.log(e); return 0})
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       subscribedPlatformTokenAmountCfx = await cfxcontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call().catch((e)=>{console.log(e); return 0})
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       subscribedPlatformTokenAmountBase = await basecontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call().catch((e)=>{console.log(e); return 0})
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       subscribedPlatformTokenAmountBNB = await bnbcontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call().catch((e)=>{console.log(e); return 0})
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       subscribedPlatformTokenAmountAvax = await avaxcontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call().catch((e)=>{console.log(e); return 0})
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       if (
         subscribedPlatformTokenAmountCfx === "0" &&
@@ -1021,6 +1049,53 @@ function Dashboard({
         setclaimedChests(openedStandardChests.length);
         setclaimedPremiumChests(openedPremiumChests.length);
         setallChests(chestOrder);
+      }
+    }
+  };
+
+  const getAllSkaleChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "skale" };
+
+    const result = await axios.post(
+      "https://dyp-chest-test.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedSkaleChests(openedChests);
+        setStandardSkaleChests(standardChestsArray);
+        setPremiumSkaleChests(premiumChestsArray);
+
+        setclaimedSkaleChests(openedStandardChests.length);
+        setclaimedSkalePremiumChests(openedPremiumChests.length);
+        setallSkaleChests(chestOrder);
       }
     }
   };
@@ -2021,6 +2096,12 @@ function Dashboard({
     }
   }, [email, count]);
 
+  useEffect(() => {
+    if (email) {
+      getAllSkaleChests(email);
+    }
+  }, [email, count]);
+
   // useEffect(() => {
   //   if (window.ethereum && !window.coin98) {
   //     if (window.ethereum.isConnected() === true) {
@@ -2116,6 +2197,11 @@ function Dashboard({
                           setIsPremium(false);
                           setclaimedChests(0);
                           setclaimedPremiumChests(0);
+                          setallChests([]);
+                          setallSkaleChests([]);
+                          setclaimedSkaleChests(0);
+                          setclaimedSkalePremiumChests(0);
+                          
                         }}
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
@@ -2217,7 +2303,6 @@ function Dashboard({
                         baseEarnETH={baseEarnETH}
                         dypiusEarnUsd={dypiusEarnUsd}
                         dypiusEarnTokens={dypiusEarnTokens}
-
                         dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
                         dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
                         dypiusPremiumPoints={dypiusPremiumPoints}
@@ -2478,8 +2563,8 @@ function Dashboard({
                             baseEarnUSD={baseEarnUSD}
                             baseEarnETH={baseEarnETH}
                             dypiusEarnUsd={dypiusEarnUsd}
-                        dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
-                        dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
+                            dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
+                            dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
                           />
                         </div>
                       </OutsideClickHandler>
@@ -3207,22 +3292,42 @@ function Dashboard({
                 </div>
               </OutsideClickHandler>
             )} */}
-            {dailyBonusPopup &&
-            <OutsideClickHandler
-            onOutsideClick={() => {
-              setdailyBonusPopup(false);
-            }}
-            >
-              <NewDailyBonus 
-              isPremium={isPremium}
-              chainId={chainId}
-              handleSwitchNetwork={handleSwitchNetwork}
-               onclose={() => {
-                setdailyBonusPopup(false);
-              }}
-              />
-            </OutsideClickHandler>
-            }
+            {dailyBonusPopup && (
+              <OutsideClickHandler
+                onOutsideClick={() => {
+                  setdailyBonusPopup(false);
+                }}
+              >
+                <NewDailyBonus
+                  isPremium={isPremium}
+                  chainId={chainId}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  onclose={() => {
+                    setdailyBonusPopup(false);
+                  }}
+                  standardChests={standardChests}
+                  premiumChests={premiumChests}
+                  standardSkaleChests={standardSkaleChests}
+                  premiumSkaleChests={premiumSkaleChests}
+                  claimedChests={claimedChests}
+                  claimedPremiumChests={claimedPremiumChests}
+                  claimedSkaleChests={claimedSkaleChests}
+                  claimedSkalePremiumChests={claimedSkalePremiumChests}
+                  email={email}
+                  openedChests={openedChests}
+                  canBuy={canBuy}
+                  address={data?.getPlayer?.wallet?.publicAddress}
+                  allChests={allChests}
+                  allSkaleChests={allSkaleChests}
+                  onChestClaimed={() => {
+                    setCount(count + 1);
+                  }}
+                  onSkaleChestClaimed={() => {
+                    setskalecount(skalecount + 1);
+                  }}
+                />
+              </OutsideClickHandler>
+            )}
             {showChecklistModal === true && (
               <ChecklistModal
                 show={showChecklistModal}

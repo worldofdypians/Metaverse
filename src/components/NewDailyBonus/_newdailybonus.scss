@@ -296,6 +296,15 @@
   }
 }
 
+.chest-item-active {
+  filter: drop-shadow(0 0 6px #00b9cd) !important;
+  border: 2px solid #00d6be;
+  .new-claim-chest-btn {
+    border: 2px solid #00b9cd !important;
+  }
+
+}
+
 .new-rewards-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
