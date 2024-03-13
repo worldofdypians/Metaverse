@@ -40,14 +40,14 @@ export const handleSwitchNetworkhook = async (chainID) => {
 
   const OPBNBPARAMS = {
     chainId: "0xcc", // A 0x-prefixed hexadecimal string
-     rpcUrls: ["https://opbnb.publicnode.com"],
-     chainName: "opBNB Mainnet",
+    rpcUrls: ["https://opbnb.publicnode.com"],
+    chainName: "opBNB Mainnet",
     nativeCurrency: {
       name: "opBNB",
       symbol: "BNB", // 2-6 characters long
       decimals: 18,
     },
-   
+
     blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
   };
 
@@ -75,6 +75,20 @@ export const handleSwitchNetworkhook = async (chainID) => {
     blockExplorerUrls: ["https://evm.confluxscan.net"],
   };
 
+  const SKALE_MAINNET = {
+    chainId: "0x79f99296", // A 0x-prefixed hexadecimal string
+    chainName: "SKALE Europa Hub",
+    nativeCurrency: {
+      name: "sFUEL",
+      symbol: "sFUEL", // 2-6 characters long
+      decimals: 18,
+    },
+    rpcUrls: ["https://mainnet.skalenodes.com/v1/elated-tan-skat"],
+    blockExplorerUrls: [
+      "https://elated-tan-skat.explorer.mainnet.skalenodes.com",
+    ],
+  };
+
   try {
     await ethereum.request({
       method: "wallet_switchEthereumChain",
@@ -91,6 +105,8 @@ export const handleSwitchNetworkhook = async (chainID) => {
       (chainID === "0x406" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x2105" && switchError.code.toString().includes("32603")) ||
       (chainID === "0xcc" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0x79f99296" &&
+        switchError.code.toString().includes("32603")) ||
       (switchError.code === 4902 &&
         switchError.message.includes("Unrecognized chainID"))
     ) {
@@ -110,6 +126,8 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [BASEPARAMS]
               : chainID === "0x406"
               ? [CONFLUXPARAMS]
+              : chainID === "0x79f99296"
+              ? [SKALE_MAINNET]
               : "",
         });
         if (window.ethereum && window.ethereum.isTrust === true) {

@@ -114,6 +114,18 @@ function App() {
 
       blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
     },
+
+    2046399126: {
+      chainId: 2046399126,
+      chainName: "SKALE Europa Hub",
+      rpcUrls: ["https://mainnet.skalenodes.com/v1/elated-tan-skat"],
+      nativeCurrency: {
+        symbol: "sFUEL",
+        decimals: 18,
+      },
+
+      blockExplorerUrls: ["https://elated-tan-skat.explorer.mainnet.skalenodes.com"],
+    },
   };
 
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -1920,6 +1932,8 @@ function App() {
                   ? "0x38"
                   : chain === 204
                   ? "0xcc"
+                  : chain === 2046399126
+                  ? "0x79f99296"
                   : "0x406",
             },
           ],

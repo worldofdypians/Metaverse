@@ -983,7 +983,7 @@ function Dashboard({
     const emailData = { emailAddress: userEmail };
 
     const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards",
+      "https://dyp-chest-test.azurewebsites.net/api/GetRewards?=null",
       emailData
     );
     if (result.status === 200 && result.data) {
