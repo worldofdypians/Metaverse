@@ -41,6 +41,7 @@
   @media screen and (max-width: 786px) {
     width: 100%;
     background-image: url("./assets/dailyBonusBgMobile.png");
+    height: 85%;
   }
 }
 
@@ -53,6 +54,7 @@
   filter: drop-shadow(0, 0, 0, 1000px rgba(0, 0, 0, 0.5));
   @media screen and (max-width: 786px) {
     width: 100%;
+    height: 15%;
     background-image: url("./assets/rewardsBgMobile.png");
   }
 }

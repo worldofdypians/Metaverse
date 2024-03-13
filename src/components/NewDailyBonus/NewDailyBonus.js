@@ -235,6 +235,7 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
   const [message, setMessage] = useState("");
   const [reward, setReward] = useState(null);
   const [selectedChest, setSelectedChest] = useState(null);
+  const [disable, setDisable] = useState(false)
 
   const openChest = (chestId) => {
     const chest = dummyArray.filter((item) => {
@@ -382,16 +383,45 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
+  const handleSkalePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x79f99296")
+          .then(() => {
+            handleSwitchNetwork(2046399126);
+            setMessage("")
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
 
 
   useEffect(() => {
-   if(chainId === 56 || chainId === 204){
-    setMessage("")
-   }else{
-    setMessage("switch")
-   }
-   console.log(isPremium, "premium");
-  }, [chainId])
+  
+    if(chain === "bnb"){
+      if(chainId === 56 || chainId === 204){
+       setMessage("")
+       setDisable(false)
+      }else{
+       setMessage("switch")
+       setDisable(true)
+      }
+    }else if(chain === "skale"){
+      if(chainId === 2046399126){
+        setMessage("")
+        setDisable(false)
+      }else{
+        setMessage("switch")
+        setDisable(true)
+      }
+    }
+
+  }, [chainId, chain])
   
 
   return (
@@ -595,7 +625,8 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                         style={{ width: "fit-content" }}
                       >
                         <button
-                          className={`new-chain-inactive-btn d-flex gap-1 align-items-center`}
+                          className={`${chainId === 2046399126 ? "new-chain-active-btn" : "new-chain-inactive-btn"} d-flex gap-1 align-items-center`}
+                          onClick={handleSkalePool}
                         >
                           {" "}
                           <img src={skaleIcon} alt="" /> SKALE
@@ -762,6 +793,8 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                     {dummyArray.map((item, index) => (
                       <NewChestItem
                         chainId={chainId}
+                        disable={disable}
+                        chain={chain}
                         key={index}
                         item={item}
                         index={index}
@@ -841,7 +874,7 @@ const NewDailyBonus = ({ onclose, isPremium, chainId, handleSwitchNetwork }) => 
                       className="loader-text mb-0"
                       style={{ color: "#D75853" }}
                     >
-                      Switch to BNB Chain
+                      Switch to {chain === "bnb" ? "BNB" : "SKALE"} Chain
                     </h6>
                     <div className="loader red-loader">
                       <div className="dot" style={{ "--i": 0 }}></div>
