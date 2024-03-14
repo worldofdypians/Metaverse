@@ -26,6 +26,7 @@ const NewChestItem = ({
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const getUserRewardsByChest2 = async (
     userEmail,
@@ -56,8 +57,10 @@ const NewChestItem = ({
         setIsChestOpen(true);
         // onChestStatus("success");
         onLoadingChest(false);
+        setLoading(false);
       } else {
         onLoadingChest(false);
+        setLoading(false);
         setIsChestOpen(false);
         window.alertify.error(result?.message);
         onChestStatus("initial");
@@ -72,8 +75,10 @@ const NewChestItem = ({
         setIsChestOpen(true);
         // onChestStatus("success");
         onLoadingChest(false);
+        setLoading(false);
       } else {
         onLoadingChest(false);
+        setLoading(false);
         setIsChestOpen(false);
         window.alertify.error(result?.message);
         onChestStatus("error");
@@ -113,6 +118,7 @@ const NewChestItem = ({
         setIsChestOpen(true);
         // onChestStatus("success");
         onLoadingChest(false);
+        setLoading(false);
       } else if (result.status === 400) {
         getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
       }
@@ -126,6 +132,7 @@ const NewChestItem = ({
         setIsChestOpen(true);
         // onChestStatus("success");
         onLoadingChest(false);
+        setLoading(false);
       } else if (result.status === 400) {
         getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
       }
@@ -135,6 +142,8 @@ const NewChestItem = ({
   const handleOpenChest = async () => {
     onChestStatus("waiting");
     onLoadingChest(true);
+    setLoading(true);
+
     window.web3 = new Web3(window.ethereum);
     // console.log(window.config.daily_bonus_address, address);
     const daily_bonus_contract = new window.web3.eth.Contract(
@@ -195,7 +204,7 @@ const NewChestItem = ({
               onChestStatus("initial");
             }, 3000);
             onLoadingChest(false);
-
+            setLoading(false);
             console.error(e);
           });
       } else if (rewardTypes === "standard") {
@@ -239,6 +248,7 @@ const NewChestItem = ({
               onChestStatus("initial");
             }, 3000);
             onLoadingChest(false);
+            setLoading(false);
           });
       }
     } else if (chainId === 56) {
@@ -295,6 +305,7 @@ const NewChestItem = ({
               onChestStatus("initial");
             }, 3000);
             onLoadingChest(false);
+            setLoading(false);
 
             console.error(e);
           });
@@ -345,6 +356,7 @@ const NewChestItem = ({
               onChestStatus("initial");
             }, 3000);
             onLoadingChest(false);
+            setLoading(false);
           });
       }
     }
@@ -405,7 +417,7 @@ const NewChestItem = ({
       style={{ position: "relative", bottom: "5px", filter: item.premium && "blur(5px)" }}
     /> */}
       <img
-        className="new-chest-item-img"
+        className={`new-chest-item-img ${loading ? "chest-shake" : ""}`}
         src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
           open ? chestIndex + "open" : chestIndex
         }.png`)}
