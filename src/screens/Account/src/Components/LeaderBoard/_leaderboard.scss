@@ -164,7 +164,7 @@
 }
 
 .optionsWrapper {
-  background: #1e2237;
+ background: rgba(151, 89, 192, 0.3);
   border-radius: 12px;
   padding: 2px;
 }
@@ -175,7 +175,7 @@
 }
 
 .playerInnerRow {
-  background: #181b38;
+  background: none !important;
   border-bottom: 1px solid #757086;
 }
 
@@ -212,7 +212,7 @@
   color: rgba(243, 192, 9, 1);
 }
 .goldenscore-inactive2 {
-  color: #48465e !important;
+  color: black !important;
   text-align: center;
 }
 .playerName {
@@ -225,7 +225,7 @@
 }
 
 .tablewrapper {
-  height: 366px;
+  height: fit-content !important;
   overflow-y: auto;
 }
 
@@ -400,4 +400,14 @@
   text-align: center;
   letter-spacing: -0.018em;
   color: #fe7a00;
+}
+
+.leaderboard-item {
+  width: 33%;
+ background: rgba(151, 89, 192, 0.3);
+  border-radius: 12px;
+
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
 }

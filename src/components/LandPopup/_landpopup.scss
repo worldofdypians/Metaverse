@@ -25,6 +25,11 @@
   }
 }
 
+.leaderboard-popup{
+  background-image: url('./newLeaderboardBg.jpg') !important;
+
+}
+
 .popup-active {
   box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
   top: 0% !important;
