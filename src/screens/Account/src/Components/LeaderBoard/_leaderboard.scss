@@ -226,7 +226,7 @@
 
 .tablewrapper {
   height: fit-content !important;
-  overflow-y: auto;
+  // overflow-y: auto;
 }
 
 .medal-wrapper {
@@ -333,8 +333,8 @@
   // background: linear-gradient(90.31deg, #7344B3 0.27%, #20BBCA 99.74%);
   // font-weight: bold;
   padding: 10px;
-  border-radius: 0px;
-  border-bottom: 1px solid #09f3d2 !important;
+  border-radius: 12px;
+  // border-bottom: 1px solid #09f3d2 !important;
   color: #09f3d2;
 }
 
@@ -410,4 +410,43 @@
   @media screen and (max-width: 786px) {
     width: 100%;
   }
+}
+
+.optionswrapper-bg{
+  position: absolute;
+  width: 25%;
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(110.6deg, rgba(184, 142, 252, 0.7) 2.2%, rgba(104, 119, 244, 0.7) 100.2%);
+  transition: all .25s ease-in-out;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
+
+.move-1{
+  transform: translateX(100%);
+}
+
+.move-2{
+  transform: translateX(200%);
+
+}
+
+.move-3{
+  transform: translateX(300%);
+
+
+}
+.leaderboard-icon{
+filter: grayscale(1);
+transition: all .25s;
+}
+
+
+
+.leaderboard-icon-active{
+  filter: grayscale(0);
 }

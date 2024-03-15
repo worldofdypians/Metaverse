@@ -220,6 +220,9 @@ border: 1px solid #4C4E64;
   line-height: 21px;
   letter-spacing: -0.018em;
   color: #09f3d2;
+  @media screen and (max-width: 786px) {
+    font-size: 12px !important; 
+   }
 }
 .playerScore {
   font-weight: 500;
@@ -227,7 +230,9 @@ border: 1px solid #4C4E64;
   line-height: 21px;
   letter-spacing: -0.018em;
   color: rgba(243, 192, 9, 1);
-
+  @media screen and (max-width: 786px) {
+   font-size: 12px; 
+  }
 }
   .goldenscore-inactive2 {
     color: #48465e !important;
@@ -239,6 +244,9 @@ border: 1px solid #4C4E64;
   line-height: 17px;
   letter-spacing: -0.018em;
   color: #F7F7FF;
+  @media screen and (max-width: 786px) {
+    font-size: 12px; 
+   }
 }
 
 .tablewrapper {
@@ -264,7 +272,7 @@ border: 1px solid #4C4E64;
   // font-weight: bold;
   padding: 10px;
   // border-radius: 8px;
-    border-bottom: 1px solid #09f3d2 !important;
+    // border-bottom: 1px solid #09f3d2 !important;
 }
 
 .nft-hover {
