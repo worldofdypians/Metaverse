@@ -417,7 +417,6 @@ const NewDailyBonus = ({
     }
   };
 
-
   const handleOpBnbPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
@@ -487,14 +486,43 @@ const NewDailyBonus = ({
         return (
           obj.rewardType === "Money" &&
           obj.status === "Unclaimed" &&
-          obj.details ===
-            "To claim this reward, you need to buy a CAWs NFT from the World of Dypians Marketplace"
+          obj.claimType === "CAWS"
         );
       });
+
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LANDS"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+      
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Claimed" 
+        );
+      });
+
       console.log(result);
       console.log(filteredResult);
       if (result) {
         setMessage("caws");
+      } else if (!result && resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if(resultWon) {
+        setMessage('won')
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -511,15 +539,42 @@ const NewDailyBonus = ({
         return (
           obj.rewardType === "Money" &&
           obj.status === "Unclaimed" &&
-          obj.details ===
-            "To claim this reward, you need to buy a CAWs NFT from the World of Dypians Marketplace"
+          obj.claimType === "CAWS"
         );
       });
 
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LANDS"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Claimed" 
+        );
+      });
+
+      console.log(result);
+      console.log(filteredResult);
       if (result) {
-        console.log(result);
-        console.log(filteredResult);
         setMessage("caws");
+      } else if (!result && resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if(resultWon) {
+        setMessage('won')
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -1284,7 +1339,16 @@ const NewDailyBonus = ({
                       <div className="d-flex align-items-center gap-2">
                         <img src={warning} alt="" width={20} height={20} />
                         <span className="win-desc mb-0">
-                          The <span style={{ color: "#F2C624" }}>$700 .50</span>{" "}
+                          The{" "}
+                          <span style={{ color: "#F2C624" }}>
+                            $
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Money";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </span>{" "}
                           reward will be allocated to you if you become a
                           Premium Subscriber.
                         </span>
@@ -1292,14 +1356,29 @@ const NewDailyBonus = ({
                     </div>
                     <div className="d-flex align-items-center gap-2 win-rewards-container">
                       <div className="d-flex flex-column align-items-center neutral-border p-1">
-                        <h6 className="win-amount mb-0">1,864</h6>
+                        <h6 className="win-amount mb-0">
+                          {getFormattedNumber(
+                            rewardData.rewards.find((obj) => {
+                              return obj.rewardType === "Points";
+                            }).reward ?? 0,
+                            2
+                          )}
+                        </h6>
                         <span className="win-amount-desc">
                           Leaderboard Points
                         </span>
                       </div>
                       <h6 className="win-amount mb-0">+</h6>
                       <div className="d-flex flex-column align-items-center warning-border p-1">
-                        <h6 className="win-amount mb-0">$30.50</h6>
+                        <h6 className="win-amount mb-0">
+                          $
+                          {getFormattedNumber(
+                            rewardData.rewards.find((obj) => {
+                              return obj.rewardType === "Money";
+                            }).reward ?? 0,
+                            2
+                          )}
+                        </h6>
                         <span className="win-amount-desc">Rewards</span>
                       </div>
                     </div>
@@ -1394,14 +1473,29 @@ const NewDailyBonus = ({
                     </div>
                     <div className="d-flex align-items-center gap-2 win-rewards-container">
                       <div className="d-flex flex-column align-items-center neutral-border p-1">
-                        <h6 className="win-amount mb-0">1,864</h6>
+                        <h6 className="win-amount mb-0">
+                          {getFormattedNumber(
+                            rewardData.rewards.find((obj) => {
+                              return obj.rewardType === "Points";
+                            }).reward ?? 0,
+                            2
+                          )}
+                        </h6>
                         <span className="win-amount-desc">
                           Leaderboard Points
                         </span>
                       </div>
                       <h6 className="win-amount mb-0">+</h6>
                       <div className="d-flex flex-column align-items-center p-1">
-                        <h6 className="win-amount mb-0">$30.50</h6>
+                        <h6 className="win-amount mb-0">
+                          $
+                          {getFormattedNumber(
+                            rewardData.rewards.find((obj) => {
+                              return obj.rewardType === "Money";
+                            }).reward ?? 0,
+                            2
+                          )}
+                        </h6>
                         <span className="win-amount-desc">Rewards</span>
                       </div>
                     </div>
@@ -1557,7 +1651,16 @@ const NewDailyBonus = ({
                       <div className="d-flex align-items-center gap-2">
                         <img src={warning} alt="" width={20} height={20} />
                         <span className="win-desc mb-0">
-                          The <span style={{ color: "#F2C624" }}>$150.50</span>{" "}
+                          The{" "}
+                          <span style={{ color: "#F2C624" }}>
+                            $
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Money";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </span>{" "}
                           reward will be allocated to you if you get one of the
                           suggested Genesis NFTs.
                         </span>
@@ -1565,14 +1668,29 @@ const NewDailyBonus = ({
                     </div>
                     <div className="d-flex align-items-center gap-2 win-rewards-container">
                       <div className="d-flex flex-column align-items-center neutral-border p-1">
-                        <h6 className="win-amount mb-0">1,864</h6>
+                        <h6 className="win-amount mb-0">
+                          {getFormattedNumber(
+                            rewardData.rewards.find((obj) => {
+                              return obj.rewardType === "Points";
+                            }).reward ?? 0,
+                            2
+                          )}
+                        </h6>
                         <span className="win-amount-desc">
                           Leaderboard Points
                         </span>
                       </div>
                       <h6 className="win-amount mb-0">+</h6>
                       <div className="d-flex flex-column align-items-center warning-border p-1">
-                        <h6 className="win-amount mb-0">$30.50</h6>
+                        <h6 className="win-amount mb-0">
+                          $
+                          {getFormattedNumber(
+                            rewardData.rewards.find((obj) => {
+                              return obj.rewardType === "Money";
+                            }).reward ?? 0,
+                            2
+                          )}
+                        </h6>
                         <span className="win-amount-desc">Rewards</span>
                       </div>
                     </div>

@@ -112,7 +112,16 @@ const NewChestItem = ({
       const result = await axios.post(
         "https://dyp-chest-test.azurewebsites.net/api/CollectChest",
         userData_bnb
-      );
+      ).catch((e)=>{
+        onLoadingChest(false)
+        setLoading(false);
+        setIsChestOpen(false);
+        window.alertify.error(e?.message);
+        onChestStatus("error");
+        setTimeout(() => {
+          onChestStatus("initial");
+        }, 3000);
+      })
       if (result.status === 200) {
         onClaimRewards(result.data);
         setIsChestOpen(true);
@@ -135,6 +144,16 @@ const NewChestItem = ({
         setLoading(false);
       } else if (result.status === 400) {
         getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
+      }
+      else {
+        onLoadingChest(false)
+        setLoading(false);
+        setIsChestOpen(false);
+        window.alertify.error(result?.message);
+        onChestStatus("error");
+        setTimeout(() => {
+          onChestStatus("initial");
+        }, 3000);
       }
     }
   };
