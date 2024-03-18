@@ -37,6 +37,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 // import { dyp700_abi } from "../../web3";
 import Countdown from "react-countdown";
 import Slider from "react-slick";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -189,6 +190,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     },
   ];
   const [tooltip, setTooltip] = useState(false);
+  const windowSize = useWindowSize();
 
   const placeholderplayerData = [
     {
@@ -865,7 +867,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 : optionText2 === "daily"
                 ? "move-2"
                 : optionText2 === "monthly"
-                ? "move-3"
+                ? "move-2"
                 : ""
             }`}
           ></div>
@@ -878,12 +880,12 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                     d-flex align-items-center gap-2
                     ${
                       optionText2 === "genesis" && "otheroptionsActive"
-                    } optionText col-3`}
+                    } optionText `}
               onClick={() => {
                 handleOption("genesis");
                 fetchGenesisRecords();
               }}
-              style={{ width: "25%", fontSize: "12px" }}
+              style={{ width: "33%", fontSize: "12px" }}
             >
               <img
                 src={bnbIcon}
@@ -896,7 +898,11 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 height={20}
                 alt=""
               />
-              BNB Chain
+              {windowSize.width > 768
+                ? "BNB Chain"
+                : windowSize.width < 786 && optionText2 === "genesis"
+                ? "BNB Chain"
+                : ""}
             </span>
 
             <span
@@ -904,8 +910,8 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                     d-flex align-items-center gap-2
                     ${
                       optionText2 === "weekly" && "otheroptionsActive"
-                    } optionText col-3`}
-              style={{ width: "25%", fontSize: "12px" }}
+                    } optionText `}
+              style={{ width: "33%", fontSize: "12px" }}
               onClick={() => {
                 handleOption("weekly");
                 fetchWeeklyRecords();
@@ -922,9 +928,13 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 height={20}
                 alt=""
               />
-              SKALE
+              {windowSize.width > 768
+                ? "SKALE"
+                : windowSize.width < 786 && optionText2 === "weekly"
+                ? "SKALE"
+                : ""}
             </span>
-            <span
+            {/* <span
               className={`
                     d-flex align-items-center gap-2
                     ${
@@ -947,16 +957,20 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 height={20}
                 alt=""
               />
-              CORE DAO
-            </span>
+              {windowSize.width > 768
+                ? "CORE DAO"
+                : windowSize.width < 786 && optionText2 === "daily"
+                ? "CORE DAO"
+                : ""}
+            </span> */}
             <span
               className={`
                     d-flex align-items-center gap-2
                     
                     ${
                       optionText2 === "monthly" && "otheroptionsActive"
-                    } optionText col-3`}
-              style={{ width: "25%", fontSize: "12px" }}
+                    } optionText `}
+              style={{ width: "33%", fontSize: "12px" }}
               onClick={() => {
                 handleOption("monthly");
                 fetchMonthlyRecords();
@@ -974,7 +988,11 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 style={{ borderRadius: "50%" }}
                 alt=""
               />
-              Genesis Land
+              {windowSize.width > 768
+                ? "Genesis Land"
+                : windowSize.width < 786 && optionText2 === "monthly"
+                ? "Genesis Land"
+                : ""}
             </span>
           </div>
         </div>

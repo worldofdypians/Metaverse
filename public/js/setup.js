@@ -3174,6 +3174,7 @@ class WOD_CAWS {
 
   async withdrawWodCaws(cawsArray, landArray) {
     let nft_contract = await getContractWodCawsNFT("WOD_CAWS");
+    console.log(cawsArray, landArray, "Caws and Land");
     return await nft_contract.methods
       .withdraw(cawsArray, landArray)
       .send({ from: await getCoinbase() });

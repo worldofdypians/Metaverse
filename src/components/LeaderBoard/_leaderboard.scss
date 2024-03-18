@@ -126,6 +126,11 @@
   justify-content: center;
   cursor: pointer;
   // width: 80px;
+
+  @media screen and (max-width: 786px) {
+    font-size: 12px !important;
+    white-space: nowrap;
+  }
 }
 
 .optionText:hover,

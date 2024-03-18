@@ -869,7 +869,7 @@ const NewLeaderBoard = ({
       </div>*/}
             <div className="d-flex align-items-center gap-1">
               <div className="optionsWrapper position-relative col-12">
-                <div className={`optionswrapper-bg ${optionText2 === "weekly" ? "move-1" : optionText2 === "daily" ? "move-2" : optionText2 === "monthly" ? "move-3" : ""}`}></div>
+                <div className={`optionswrapper-bg ${optionText2 === "weekly" ? "move-1" : optionText2 === "daily" || optionText2 === "monthly" ? "move-2" :  ""}`}></div>
                 <div
                   className="d-flex gap-1 align-items-center justify-content-between position-relative"
                   style={{ height: 38 }}
@@ -884,7 +884,7 @@ const NewLeaderBoard = ({
                       handleOption("genesis");
                       fetchGenesisRecords();
                     }}
-                    style={{ width: "25%" }}
+                    style={{ width: "33%" }}
                   >
                     <img src={bnbIcon} className={`${optionText2 === "genesis" ?  "leaderboard-icon leaderboard-icon-active" : "leaderboard-icon"}`} width={20} height={20} alt="" />
                     BNB Chain
@@ -896,7 +896,7 @@ const NewLeaderBoard = ({
                     ${
                       optionText2 === "weekly" && "otheroptionsActive"
                     } optionText col-3`}
-                    style={{ width: "25%" }}
+                    style={{ width: "33%" }}
                     onClick={() => {
                       handleOption("weekly");
                       fetchWeeklyRecords();
@@ -905,7 +905,7 @@ const NewLeaderBoard = ({
                     <img src={skaleIcon} className={`${optionText2 === "weekly" ?  "leaderboard-icon leaderboard-icon-active" : "leaderboard-icon"}`} width={20} height={20} alt="" />
                     SKALE
                   </span>
-                  <span
+                  {/* <span
                     className={`
                     d-flex align-items-center gap-2
                     ${
@@ -919,7 +919,7 @@ const NewLeaderBoard = ({
                   >
                     <img src={coreIcon} className={`${optionText2 === "daily" ?  "leaderboard-icon leaderboard-icon-active" : "leaderboard-icon"}`} width={20} height={20} alt="" />
                     CORE DAO
-                  </span>
+                  </span> */}
                   <span
                     className={`
                     d-flex align-items-center gap-2
@@ -927,7 +927,7 @@ const NewLeaderBoard = ({
                     ${
                       optionText2 === "monthly" && "otheroptionsActive"
                     } optionText col-3`}
-                    style={{ width: "25%" }}
+                    style={{ width: "33%" }}
                     onClick={() => {
                       handleOption("monthly");
                       fetchMonthlyRecords();
