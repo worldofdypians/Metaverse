@@ -36,7 +36,9 @@ const MyRewardsPopup = ({
   baseEarnETH,
   dypiusEarnUsd,
   cmcuserEarnETH,
-  cmcuserEarnUsd,dypiusPremiumEarnUsd,dypiusPremiumEarnTokens
+  cmcuserEarnUsd,
+  dypiusPremiumEarnUsd,
+  dypiusPremiumEarnTokens,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -47,10 +49,6 @@ const MyRewardsPopup = ({
 
   const [genesisData, setgenesisData] = useState(0);
   const [bundlesBought, setbundlesBought] = useState(0);
-
-  const [EthRewards, setEthRewards] = useState(0);
-  const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
-  const [EthRewardsCawsPool, setEthRewardsCawsPool] = useState(0);
 
   const [cawsRewards, setCawsRewards] = useState(0);
   const [wodCawsRewards, setWodCawsRewards] = useState(0);
@@ -159,88 +157,6 @@ const MyRewardsPopup = ({
 
       return myStakes;
     }
-  };
-
-  const calculateAllRewards = async () => {
-    let myStakes = await getStakesIds();
-    let result = 0;
-    const contract = new window.infuraWeb3.eth.Contract(
-      window.WOD_CAWS_ABI,
-      window.config.wod_caws_address
-    );
-    if (address) {
-      if (myStakes && myStakes.length > 0) {
-        let rewards = await contract.methods
-          .calculateRewards(address, myStakes)
-          .call()
-          .then((data) => {
-            return data;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        let finalReward = 0;
-        for (let i = 0; i < rewards.length; i++) {
-          finalReward = rewards[i] / 1e18;
-          result = result + Number(finalReward);
-        }
-      }
-    }
-    setEthRewards(result);
-  };
-
-  const calculateAllRewardsLandPool = async () => {
-    let myStakes = await getStakesIdsLandPool();
-    let result = 0;
-    let calculateRewards = [];
-    let staking_contract = new window.infuraWeb3.eth.Contract(
-      window.LANDSTAKING_ABI,
-      window.config.landnftstake_address
-    );
-    if (address) {
-      if (myStakes.length > 0) {
-        calculateRewards = await staking_contract.methods
-          .calculateRewards(address, myStakes)
-          .call()
-          .then((data) => {
-            return data;
-          });
-      }
-      let a = 0;
-
-      for (let i = 0; i < calculateRewards.length; i++) {
-        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
-        result = result + Number(a);
-      }
-    }
-    setEthRewardsLandPool(result);
-  };
-
-  const calculateAllRewardsCawsPool = async () => {
-    let myStakes = await getStakesIdsCawsPool();
-    let result = 0;
-    let calculateRewards = [];
-    let staking_contract = new window.infuraWeb3.eth.Contract(
-      window.NFTSTAKING_ABI,
-      window.config.nftstaking_address
-    );
-    if (address) {
-      if (myStakes.length > 0) {
-        calculateRewards = await staking_contract.methods
-          .calculateRewards(address, myStakes)
-          .call()
-          .then((data) => {
-            return data;
-          });
-      }
-      let a = 0;
-
-      for (let i = 0; i < calculateRewards.length; i++) {
-        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
-        result = result + Number(a);
-      }
-    }
-    setEthRewardsCawsPool(result);
   };
 
   const fetchMonthlyGenesisRecordsAroundPlayer = async () => {
@@ -555,9 +471,6 @@ const MyRewardsPopup = ({
 
   useEffect(() => {
     getBundles();
-    calculateAllRewards();
-    calculateAllRewardsLandPool();
-    calculateAllRewardsCawsPool();
     fetchNftRewards(address);
     fetchGenesisGem(address);
     fetchLeaderboardData(address);
@@ -613,17 +526,10 @@ const MyRewardsPopup = ({
                 Genesis Land
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                {previousRewards
-                  ? "-"
-                  : `$${getFormattedNumber(
-                      EthRewardsLandPool * ethTokenData,
-                      2
-                    )}`}
+                {previousRewards ? "-" : `$${getFormattedNumber(0, 2)}`}
               </td>
               <td className="myrewards-td-second border-0 specialCell topborder text-center">
-                {previousRewards
-                  ? "-"
-                  : `${getFormattedNumber(EthRewardsLandPool, 4)} WETH`}
+                {previousRewards ? "-" : `${getFormattedNumber(0, 4)} WETH`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(wodRewards, 2)}
@@ -635,14 +541,10 @@ const MyRewardsPopup = ({
               </td>
 
               <td className="myrewards-td-second border-0 text-center">
-                {previousRewards
-                  ? "-"
-                  : `$${getFormattedNumber(EthRewards * ethTokenData, 2)}`}
+                {previousRewards ? "-" : `$${getFormattedNumber(0, 2)}`}
               </td>
               <td className="myrewards-td-second border-0 specialCell text-center">
-                {previousRewards
-                  ? "-"
-                  : `${getFormattedNumber(EthRewards, 4)} WETH`}
+                {previousRewards ? "-" : `${getFormattedNumber(0, 4)} WETH`}
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(wodCawsRewards, 2)}
@@ -655,10 +557,10 @@ const MyRewardsPopup = ({
               </td>
 
               <td className="myrewards-td-second border-0 text-center">
-                {`$${getFormattedNumber(EthRewardsCawsPool * ethTokenData, 2)}`}
+                {`$${getFormattedNumber(0, 2)}`}
               </td>
               <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
-                {getFormattedNumber(EthRewardsCawsPool, 4)} WETH
+                {getFormattedNumber(0, 4)} WETH
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(cawsRewards, 2)}
@@ -809,7 +711,6 @@ const MyRewardsPopup = ({
                 ${getFormattedNumber(0, 2)}
               </td>
             </tr>
-
 
             <tr>
               <td className="myrewards-td-main border-0">
