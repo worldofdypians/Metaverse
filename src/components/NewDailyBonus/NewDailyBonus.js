@@ -505,12 +505,9 @@ const NewDailyBonus = ({
           obj.claimType === "PREMIUM"
         );
       });
-      
+
       const resultWon = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Claimed" 
-        );
+        return obj.rewardType === "Money" && obj.status === "Claimed";
       });
 
       console.log(result);
@@ -521,8 +518,8 @@ const NewDailyBonus = ({
         setMessage("wod");
       } else if (!result && !resultLand && resultPremium) {
         setMessage("needPremium");
-      } else if(resultWon) {
-        setMessage('won')
+      } else if (resultWon) {
+        setMessage("won");
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -559,10 +556,7 @@ const NewDailyBonus = ({
         );
       });
       const resultWon = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Claimed" 
-        );
+        return obj.rewardType === "Money" && obj.status === "Claimed";
       });
 
       console.log(result);
@@ -573,8 +567,8 @@ const NewDailyBonus = ({
         setMessage("wod");
       } else if (!result && !resultLand && resultPremium) {
         setMessage("needPremium");
-      } else if(resultWon) {
-        setMessage('won')
+      } else if (resultWon) {
+        setMessage("won");
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -585,7 +579,7 @@ const NewDailyBonus = ({
 
   useEffect(() => {
     if (chain === "bnb") {
-      if (chainId === 56 || chainId === 204) {
+      if (chainId === 56 || (chainId === 204 && canBuy)) {
         setMessage("");
         setDisable(false);
       } else {
@@ -593,7 +587,7 @@ const NewDailyBonus = ({
         setDisable(true);
       }
     } else if (chain === "skale") {
-      if (chainId === 2046399126) {
+      if (chainId === 2046399126 && canBuy) {
         setMessage("");
         setDisable(false);
       } else {
@@ -601,7 +595,7 @@ const NewDailyBonus = ({
         setDisable(true);
       }
     }
-  }, [chainId, chain]);
+  }, [chainId, chain, canBuy]);
 
   useEffect(() => {
     countEarnedRewards();
@@ -1151,7 +1145,7 @@ const NewDailyBonus = ({
                             isActive={isActive}
                           />
                         ))
-                      ) : (
+                      ) : allChests.length ===0 || allSkaleChests.length === 0 ?(
                         dummyArray.map((item, index) => (
                           <NewChestItem
                             chainId={chainId}
@@ -1193,7 +1187,47 @@ const NewDailyBonus = ({
                             }}
                           />
                         ))
-                      )
+                      ) : dummyArray.map((item, index) => (
+                        <NewChestItem
+                          chainId={chainId}
+                          chain={chain}
+                          key={index}
+                          item={item}
+                          // openChest={openChest}
+                          selectedChest={selectedChest}
+                          isPremium={isPremium}
+                          onClaimRewards={(value) => {
+                            // setRewardData(value);
+                            setLiveRewardData(value);
+                            onSkaleChestClaimed();
+                            showLiveRewardData(value);
+                            setIsActive(item.chestId);
+                            // setIsActiveIndex(index + 1);
+                          }}
+                          handleShowRewards={(value, value2) => {
+                            showSingleRewardData(value, value2);
+                            setIsActive(value);
+                            // setIsActiveIndex(index + 1);
+                          }}
+                          onLoadingChest={(value) => {
+                            // setDisable(value);
+                          }}
+                          onChestStatus={(val) => {
+                            setMessage(val);
+                          }}
+                          address={address}
+                          email={email}
+                          rewardTypes={item.chestType?.toLowerCase()}
+                          chestId={item.chestId}
+                          chestIndex={index + 1}
+                          open={item.opened}
+                          disableBtn={true}
+                          isActive={isActive}
+                          openChest={() => {
+                            console.log("test");
+                          }}
+                        />
+                      ))
                     ) : (
                       <></>
                     )}

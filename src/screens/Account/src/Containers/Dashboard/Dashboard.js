@@ -990,15 +990,21 @@ function Dashboard({
   const getOpenedChestPerWallet = async () => {
     if (email) {
       if (isPremium) {
-        if (claimedChests + claimedPremiumChests < 20) {
+        if (
+          claimedChests + claimedPremiumChests < 20 ||
+          claimedSkaleChests + claimedSkalePremiumChests < 20
+        ) {
           setCanBuy(true);
-        } else if (claimedChests + claimedPremiumChests === 20) {
+        } else if (
+          claimedChests + claimedPremiumChests === 20 &&
+          claimedSkaleChests + claimedSkalePremiumChests === 20
+        ) {
           setCanBuy(false);
         }
       } else if (!isPremium) {
-        if (claimedChests < 10) {
+        if (claimedChests < 10 || claimedSkaleChests < 10) {
           setCanBuy(true);
-        } else if (claimedChests === 10) {
+        } else if (claimedChests === 10 && claimedSkaleChests === 10) {
           setCanBuy(false);
         }
       }
@@ -2025,7 +2031,16 @@ function Dashboard({
     ) {
       getOpenedChestPerWallet();
     }
-  }, [data, email, count, isPremium, claimedChests, claimedPremiumChests]);
+  }, [
+    data,
+    email,
+    count,
+    isPremium,
+    claimedChests,
+    claimedPremiumChests,
+    claimedSkaleChests,
+    claimedSkalePremiumChests,
+  ]);
 
   useEffect(() => {
     if (
@@ -2201,7 +2216,6 @@ function Dashboard({
                           setallSkaleChests([]);
                           setclaimedSkaleChests(0);
                           setclaimedSkalePremiumChests(0);
-                          
                         }}
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
