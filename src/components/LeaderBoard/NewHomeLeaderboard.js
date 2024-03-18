@@ -16,6 +16,7 @@ import genesisBadge from "./assets/genesisBadge2.png";
 // import OutsideClickHandler from "react-outside-click-handler";
 import tooltipIcon from "./assets/tooltip.svg";
 import skaleIcon from "./assets/skaleIcon.png";
+import skaleIconGray from "./assets/skaleIconGray.svg";
 import wodIcon from "./assets/wodIcon.png";
 import bnbIcon from "./assets/bnbIcon.svg";
 import coreIcon from "./assets/coreIcon.svg";
@@ -918,7 +919,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
               }}
             >
               <img
-                src={skaleIcon}
+                src={optionText2 === "weekly" ? skaleIcon : skaleIconGray}
                 className={`${
                   optionText2 === "weekly"
                     ? "leaderboard-icon leaderboard-icon-active"

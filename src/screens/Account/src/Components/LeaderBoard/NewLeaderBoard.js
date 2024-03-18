@@ -17,6 +17,7 @@ import { dyp700_abi } from "../../web3";
 import Countdown from "react-countdown";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import skaleIcon from "./assets/skaleIcon.png";
+import skaleIconGray from "./assets/skaleIconGray.svg";
 import wodIcon from "./assets/wodIcon.png";
 import bnbIcon from "./assets/bnbIcon.svg";
 import coreIcon from "./assets/coreIcon.svg";
@@ -902,7 +903,7 @@ const NewLeaderBoard = ({
                       fetchWeeklyRecords();
                     }}
                   >
-                    <img src={skaleIcon} className={`${optionText2 === "weekly" ?  "leaderboard-icon leaderboard-icon-active" : "leaderboard-icon"}`} width={20} height={20} alt="" />
+                    <img src={optionText2 === "weekly" ? skaleIcon : skaleIconGray} className={`${optionText2 === "weekly" ?  "leaderboard-icon leaderboard-icon-active" : "leaderboard-icon"}`} width={20} height={20} alt="" />
                     SKALE
                   </span>
                   {/* <span
