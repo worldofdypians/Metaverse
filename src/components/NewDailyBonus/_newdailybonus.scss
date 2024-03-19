@@ -64,8 +64,11 @@
   font-size: 14px;
 }
 .chain-title-position {
-  color: white;
-  font-size: 20px;
+  color: #FFF;
+font-size: 20px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
   pointer-events: none;
   transition: all 0.25s;
 
@@ -75,6 +78,7 @@
 }
 
 .chain-img {
+  filter: brightness(0.5);
   width: 100%;
   transition: all 0.25s;
   border-radius: 8px;
@@ -103,7 +107,12 @@
 
 .chain-title-wrapper-active {
   border-radius: 15px 15px 0px 0px;
-  background: linear-gradient(90deg, #007982 0%, rgba(0, 121, 130, 0.3) 100%);
+  background: linear-gradient(90deg, rgba(0, 121, 130, 0.3) 0%, #1a1c39 100%);
+}
+.chain-title-wrapper-active-skale {
+  border-radius: 15px 15px 0px 0px;
+  background: linear-gradient(90deg, rgba(0, 121, 130, 0.3) 0%, #1a1c39 100%);
+
 }
 
 .close-new-bonus {
@@ -113,14 +122,14 @@
 }
 
 .chain-item {
-  filter: brightness(0.5);
 }
 
 .chain-item:hover {
-  filter: brightness(1);
   .chain-img {
     box-shadow: 0 -6px 5px -2px rgba(0, 219, 222, 0.8);
     border: 2px solid rgba(0, 219, 222, 1);
+  filter: brightness(1);
+
   }
 }
 
@@ -134,8 +143,8 @@
 }
 
 .chain-item-active {
-  filter: brightness(1);
   .chain-img {
+    filter: brightness(1);
     box-shadow: 0 -6px 5px -2px rgba(0, 219, 222, 0.6);
     border: 2px solid rgba(0, 219, 222, 1);
   }

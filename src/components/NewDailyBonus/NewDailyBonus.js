@@ -929,7 +929,7 @@ const NewDailyBonus = ({
                       />
                       <div
                         className={`chain-title-wrapper ${
-                          chain === "skale" && "chain-title-wrapper-active"
+                          chain === "skale" && "chain-title-wrapper-active-skale"
                         } p-2 d-flex align-items-center justify-content-between`}
                       >
                         <h6 className="chain-title-position mb-0">SKALE</h6>
@@ -1006,7 +1006,7 @@ const NewDailyBonus = ({
                         </button>
                       </div>
                     </div>
-                    <div className={`position-relative chain-item  w-100`}>
+                    <div className={`position-relative chain-item  w-100`} style={{pointerEvents: "none"}}>
                       <img src={comingSoon} className={`chain-img`} alt="" />
                       <div
                         className={`chain-title-wrapper ${
@@ -1016,7 +1016,7 @@ const NewDailyBonus = ({
                         <h6 className="chain-title-position mb-0">
                           Coming Soon
                         </h6>
-                        <div className="d-flex align-items-center gap-2">
+                        {/* <div className="d-flex align-items-center gap-2">
                           <div className="d-flex align-items-center">
                             <img src={percentageFilled} height={8} alt="" />
                             <img src={percentageFilled} height={8} alt="" />
@@ -1025,14 +1025,14 @@ const NewDailyBonus = ({
                             <img src={percentageEmpty} height={8} alt="" />
                           </div>
                           <span className="percentage-span">62%</span>
-                        </div>
+                        </div> */}
                       </div>
-                      <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column">
+                      {/* <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column">
                         <h6 className="desc-title mb-0">Magic Battle</h6>
                         <span className="chain-desc mb-0">
                           A world full of possibilities
                         </span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 ) : (

@@ -28,6 +28,22 @@ const NewChestItem = ({
   const [ischestOpen, setIsChestOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const premiumImages = [
+    "blueCrystal",
+    "purpleCrystal",
+    "cyanCrystal",
+    "greenCrystal",
+    "yellowCrystal",
+    "greenCrystal",
+    "cyanCrystal",
+    "blueCrystal",
+    "yellowCrystal",
+    "purpleCrystal",
+  ];
+
+  var premiumType = Math.round(Math.random()) + 1;
+
+
   const getUserRewardsByChest2 = async (
     userEmail,
     txHash,
@@ -109,19 +125,21 @@ const NewChestItem = ({
     };
 
     if (chainText) {
-      const result = await axios.post(
-        "https://dyp-chest-test.azurewebsites.net/api/CollectChest",
-        userData_bnb
-      ).catch((e)=>{
-        onLoadingChest(false)
-        setLoading(false);
-        setIsChestOpen(false);
-        window.alertify.error(e?.message);
-        onChestStatus("error");
-        setTimeout(() => {
-          onChestStatus("initial");
-        }, 3000);
-      })
+      const result = await axios
+        .post(
+          "https://dyp-chest-test.azurewebsites.net/api/CollectChest",
+          userData_bnb
+        )
+        .catch((e) => {
+          onLoadingChest(false);
+          setLoading(false);
+          setIsChestOpen(false);
+          window.alertify.error(e?.message);
+          onChestStatus("error");
+          setTimeout(() => {
+            onChestStatus("initial");
+          }, 3000);
+        });
       if (result.status === 200) {
         onClaimRewards(result.data);
         setIsChestOpen(true);
@@ -144,9 +162,8 @@ const NewChestItem = ({
         setLoading(false);
       } else if (result.status === 400) {
         getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
-      }
-      else {
-        onLoadingChest(false)
+      } else {
+        onLoadingChest(false);
         setLoading(false);
         setIsChestOpen(false);
         window.alertify.error(result?.message);
@@ -382,9 +399,9 @@ const NewChestItem = ({
   };
 
   const handleChestClick = () => {
-    if(!isPremium && rewardTypes === "premium"){
-      onShake()
-      return
+    if (!isPremium && rewardTypes === "premium") {
+      onShake();
+      return;
     }
     if (!disableBtn || open) {
       if (!open && !ischestOpen) {
@@ -439,18 +456,35 @@ const NewChestItem = ({
       alt=""
       style={{ position: "relative", bottom: "5px", filter: item.premium && "blur(5px)" }}
     /> */}
-      <img
-        className={`new-chest-item-img ${loading ? "chest-shake" : ""}`}
-        src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
-          open ? chestIndex + "open" : chestIndex
-        }.png`)}
-        alt=""
-        style={{
-          position: "relative",
-          bottom: "5px",
-          filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
-        }}
-      />
+      {rewardTypes !== "premium" ? (
+        <img
+          className={`new-chest-item-img ${loading ? "chest-shake" : ""}`}
+          src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
+            open ? chestIndex + "open" : chestIndex
+          }.png`)}
+          alt=""
+          style={{
+            position: "relative",
+            bottom: "5px",
+            filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
+          }}
+        />
+      ) : (
+        <img
+          className={`new-chest-item-img ${loading ? "chest-shake" : ""}`}
+          src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
+            open
+              ? premiumImages[chestIndex - 11] + premiumType === 1 ? "openCoins" : "openGems"
+              : premiumImages[chestIndex - 11]
+          }.png`)}
+          alt=""
+          style={{
+            position: "relative",
+            bottom: "5px",
+            filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
+          }}
+        />
+      )}
       {rewardTypes === "premium" && !isPremium && (
         <img
           src={premiumLock}
