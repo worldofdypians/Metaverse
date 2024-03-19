@@ -97,6 +97,19 @@ const NewDailyBonus = ({
 
   const html = document.querySelector("html");
 
+  console.log(
+    claimedPremiumChests,
+    claimedSkaleChests,
+    claimedSkalePremiumChests,
+    claimedChests
+  );
+
+  const bnbClaimed = claimedChests + claimedPremiumChests;
+  const bnbPercentage = (bnbClaimed / 20) * 100;
+
+  const skaleClaimed = claimedSkaleChests + claimedSkalePremiumChests;
+  const skalePercentage = (skaleClaimed / 20) * 100;
+
   var settings = {
     dots: false,
     arrows: false,
@@ -486,40 +499,14 @@ const NewDailyBonus = ({
         return (
           obj.rewardType === "Money" &&
           obj.status === "Unclaimed" &&
-          obj.claimType === "CAWS"
+          obj.details ===
+            "To claim this reward, you need to buy a CAWs NFT from the World of Dypians Marketplace"
         );
       });
-
-      const resultLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "LANDS"
-        );
-      });
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-
-      const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
-      });
-
       console.log(result);
       console.log(filteredResult);
       if (result) {
         setMessage("caws");
-      } else if (!result && resultLand) {
-        setMessage("wod");
-      } else if (!result && !resultLand && resultPremium) {
-        setMessage("needPremium");
-      } else if (resultWon) {
-        setMessage("won");
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -536,39 +523,15 @@ const NewDailyBonus = ({
         return (
           obj.rewardType === "Money" &&
           obj.status === "Unclaimed" &&
-          obj.claimType === "CAWS"
+          obj.details ===
+            "To claim this reward, you need to buy a CAWs NFT from the World of Dypians Marketplace"
         );
       });
 
-      const resultLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "LANDS"
-        );
-      });
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-      const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
-      });
-
-      console.log(result);
-      console.log(filteredResult);
       if (result) {
+        console.log(result);
+        console.log(filteredResult);
         setMessage("caws");
-      } else if (!result && resultLand) {
-        setMessage("wod");
-      } else if (!result && !resultLand && resultPremium) {
-        setMessage("needPremium");
-      } else if (resultWon) {
-        setMessage("won");
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -579,7 +542,7 @@ const NewDailyBonus = ({
 
   useEffect(() => {
     if (chain === "bnb") {
-      if (chainId === 56 || (chainId === 204 && canBuy)) {
+      if (chainId === 56 || chainId === 204) {
         setMessage("");
         setDisable(false);
       } else {
@@ -587,7 +550,7 @@ const NewDailyBonus = ({
         setDisable(true);
       }
     } else if (chain === "skale") {
-      if (chainId === 2046399126 && canBuy) {
+      if (chainId === 2046399126) {
         setMessage("");
         setDisable(false);
       } else {
@@ -595,11 +558,17 @@ const NewDailyBonus = ({
         setDisable(true);
       }
     }
-  }, [chainId, chain, canBuy]);
+  }, [chainId, chain]);
 
   useEffect(() => {
     countEarnedRewards();
   }, [allChests, allSkaleChests]);
+
+  useEffect(() => {
+    if (disable) {
+      setMessage("switch");
+    }
+  }, [disable]);
 
   useEffect(() => {
     if (chain === "bnb") {
@@ -808,13 +777,58 @@ const NewDailyBonus = ({
                         <h6 className="chain-title-position mb-0">BNB Chain</h6>
                         <div className="d-flex align-items-center gap-2">
                           <div className="d-flex align-items-center">
-                            <img src={percentageFilled} height={8} alt="" />
-                            <img src={percentageFilled} height={8} alt="" />
-                            <img src={percentageFilled} height={8} alt="" />
-                            <img src={percentageEmpty} height={8} alt="" />
-                            <img src={percentageEmpty} height={8} alt="" />
+                            <img
+                            className="percent-img"
+                              src={
+                                bnbPercentage >= 20
+                                  ? percentageFilled
+                                  : percentageEmpty
+                              }
+                              height={8}
+                              alt=""
+                            />
+                            <img
+                            className="percent-img"
+                              src={
+                                bnbPercentage >= 40
+                                  ? percentageFilled
+                                  : percentageEmpty
+                              }
+                              height={8}
+                              alt=""
+                            />
+                            <img
+                            className="percent-img"
+                              src={
+                                bnbPercentage >= 60
+                                  ? percentageFilled
+                                  : percentageEmpty
+                              }
+                              height={8}
+                              alt=""
+                            />
+                            <img
+                            className="percent-img"
+                              src={
+                                bnbPercentage >= 80
+                                  ? percentageFilled
+                                  : percentageEmpty
+                              }
+                              height={8}
+                              alt=""
+                            />
+                            <img
+                            className="percent-img"
+                              src={
+                                bnbPercentage === 100
+                                  ? percentageFilled
+                                  : percentageEmpty
+                              }
+                              height={8}
+                              alt=""
+                            />
                           </div>
-                          <span className="percentage-span">62%</span>
+                          <span className="percentage-span">{bnbPercentage}%</span>
                         </div>
                       </div>
                       <div
@@ -867,18 +881,61 @@ const NewDailyBonus = ({
                           chain === "skale" && "chain-title-wrapper-active"
                         } p-2 d-flex align-items-center justify-content-between`}
                       >
-                        <h6 className="chain-title-position mb-0">
-                          SKALE Network
-                        </h6>
+                        <h6 className="chain-title-position mb-0">SKALE</h6>
                         <div className="d-flex align-items-center gap-2">
                           <div className="d-flex align-items-center">
-                            <img src={percentageFilled} height={8} alt="" />
-                            <img src={percentageFilled} height={8} alt="" />
-                            <img src={percentageFilled} height={8} alt="" />
-                            <img src={percentageEmpty} height={8} alt="" />
-                            <img src={percentageEmpty} height={8} alt="" />
+                            <img
+                            className="percent-img"
+                              src={
+                                skalePercentage >= 20
+                                  ? percentageFilled
+                                  : percentageEmpty
+                              }
+                              height={8}
+                              alt=""
+                            />
+                            <img
+                            className="percent-img"
+                              src={
+                                skalePercentage >= 40
+                                  ? percentageFilled
+                                  : percentageEmpty
+                              }
+                              height={8}
+                              alt=""
+                            />
+                            <img
+                            className="percent-img"
+                              src={
+                                skalePercentage >= 60
+                                  ? percentageFilled
+                                  : percentageEmpty
+                              }
+                              height={8}
+                              alt=""
+                            />
+                            <img
+                            className="percent-img"
+                              src={
+                                skalePercentage >= 80
+                                  ? percentageFilled
+                                  : percentageEmpty
+                              }
+                              height={8}
+                              alt=""
+                            />
+                            <img
+                            className="percent-img"
+                              src={
+                                skalePercentage === 100
+                                  ? percentageFilled
+                                  : percentageEmpty
+                              }
+                              height={8}
+                              alt=""
+                            />
                           </div>
-                          <span className="percentage-span">62%</span>
+                          <span className="percentage-span">{skalePercentage}%</span>
                         </div>
                       </div>
                       <div
@@ -1104,48 +1161,7 @@ const NewDailyBonus = ({
                             isActiveIndex={isActiveIndex}
                           />
                         ))
-                      ) : chain === "skale" &&
-                        allSkaleChests &&
-                        allSkaleChests.length > 0 ? (
-                        allSkaleChests.map((item, index) => (
-                          <NewChestItem
-                            chainId={chainId}
-                            chain={chain}
-                            key={index}
-                            item={item}
-                            // openChest={openChest}
-                            selectedChest={selectedChest}
-                            isPremium={isPremium}
-                            onClaimRewards={(value) => {
-                              // setRewardData(value);
-                              setLiveRewardData(value);
-                              onSkaleChestClaimed();
-                              showLiveRewardData(value);
-                              setIsActive(item.chestId);
-                              // setIsActiveIndex(index + 1);
-                            }}
-                            handleShowRewards={(value, value2) => {
-                              showSingleRewardData(value, value2);
-                              setIsActive(value);
-                              // setIsActiveIndex(index + 1);
-                            }}
-                            onLoadingChest={(value) => {
-                              // setDisable(value);
-                            }}
-                            onChestStatus={(val) => {
-                              setMessage(val);
-                            }}
-                            address={address}
-                            email={email}
-                            rewardTypes={item.chestType?.toLowerCase()}
-                            chestId={item.chestId}
-                            chestIndex={index + 1}
-                            open={item.isOpened}
-                            disableBtn={disable}
-                            isActive={isActive}
-                          />
-                        ))
-                      ) : allChests.length ===0 || allSkaleChests.length === 0 ?(
+                      ) : (
                         dummyArray.map((item, index) => (
                           <NewChestItem
                             chainId={chainId}
@@ -1187,7 +1203,11 @@ const NewDailyBonus = ({
                             }}
                           />
                         ))
-                      ) : dummyArray.map((item, index) => (
+                      )
+                    ) : chain === "skale" &&
+                      allSkaleChests &&
+                      allSkaleChests.length > 0 ? (
+                      allSkaleChests.map((item, index) => (
                         <NewChestItem
                           chainId={chainId}
                           chain={chain}
@@ -1220,12 +1240,9 @@ const NewDailyBonus = ({
                           rewardTypes={item.chestType?.toLowerCase()}
                           chestId={item.chestId}
                           chestIndex={index + 1}
-                          open={item.opened}
-                          disableBtn={true}
+                          open={item.isOpened}
+                          disableBtn={disable}
                           isActive={isActive}
-                          openChest={() => {
-                            console.log("test");
-                          }}
                         />
                       ))
                     ) : (
@@ -1373,16 +1390,7 @@ const NewDailyBonus = ({
                       <div className="d-flex align-items-center gap-2">
                         <img src={warning} alt="" width={20} height={20} />
                         <span className="win-desc mb-0">
-                          The{" "}
-                          <span style={{ color: "#F2C624" }}>
-                            $
-                            {getFormattedNumber(
-                              rewardData.rewards.find((obj) => {
-                                return obj.rewardType === "Money";
-                              }).reward ?? 0,
-                              2
-                            )}
-                          </span>{" "}
+                          The <span style={{ color: "#F2C624" }}>$700 .50</span>{" "}
                           reward will be allocated to you if you become a
                           Premium Subscriber.
                         </span>
@@ -1390,29 +1398,14 @@ const NewDailyBonus = ({
                     </div>
                     <div className="d-flex align-items-center gap-2 win-rewards-container">
                       <div className="d-flex flex-column align-items-center neutral-border p-1">
-                        <h6 className="win-amount mb-0">
-                          {getFormattedNumber(
-                            rewardData.rewards.find((obj) => {
-                              return obj.rewardType === "Points";
-                            }).reward ?? 0,
-                            2
-                          )}
-                        </h6>
+                        <h6 className="win-amount mb-0">1,864</h6>
                         <span className="win-amount-desc">
                           Leaderboard Points
                         </span>
                       </div>
                       <h6 className="win-amount mb-0">+</h6>
                       <div className="d-flex flex-column align-items-center warning-border p-1">
-                        <h6 className="win-amount mb-0">
-                          $
-                          {getFormattedNumber(
-                            rewardData.rewards.find((obj) => {
-                              return obj.rewardType === "Money";
-                            }).reward ?? 0,
-                            2
-                          )}
-                        </h6>
+                        <h6 className="win-amount mb-0">$30.50</h6>
                         <span className="win-amount-desc">Rewards</span>
                       </div>
                     </div>
@@ -1507,29 +1500,14 @@ const NewDailyBonus = ({
                     </div>
                     <div className="d-flex align-items-center gap-2 win-rewards-container">
                       <div className="d-flex flex-column align-items-center neutral-border p-1">
-                        <h6 className="win-amount mb-0">
-                          {getFormattedNumber(
-                            rewardData.rewards.find((obj) => {
-                              return obj.rewardType === "Points";
-                            }).reward ?? 0,
-                            2
-                          )}
-                        </h6>
+                        <h6 className="win-amount mb-0">1,864</h6>
                         <span className="win-amount-desc">
                           Leaderboard Points
                         </span>
                       </div>
                       <h6 className="win-amount mb-0">+</h6>
                       <div className="d-flex flex-column align-items-center p-1">
-                        <h6 className="win-amount mb-0">
-                          $
-                          {getFormattedNumber(
-                            rewardData.rewards.find((obj) => {
-                              return obj.rewardType === "Money";
-                            }).reward ?? 0,
-                            2
-                          )}
-                        </h6>
+                        <h6 className="win-amount mb-0">$30.50</h6>
                         <span className="win-amount-desc">Rewards</span>
                       </div>
                     </div>
@@ -1685,16 +1663,7 @@ const NewDailyBonus = ({
                       <div className="d-flex align-items-center gap-2">
                         <img src={warning} alt="" width={20} height={20} />
                         <span className="win-desc mb-0">
-                          The{" "}
-                          <span style={{ color: "#F2C624" }}>
-                            $
-                            {getFormattedNumber(
-                              rewardData.rewards.find((obj) => {
-                                return obj.rewardType === "Money";
-                              }).reward ?? 0,
-                              2
-                            )}
-                          </span>{" "}
+                          The <span style={{ color: "#F2C624" }}>$150.50</span>{" "}
                           reward will be allocated to you if you get one of the
                           suggested Genesis NFTs.
                         </span>
@@ -1702,29 +1671,14 @@ const NewDailyBonus = ({
                     </div>
                     <div className="d-flex align-items-center gap-2 win-rewards-container">
                       <div className="d-flex flex-column align-items-center neutral-border p-1">
-                        <h6 className="win-amount mb-0">
-                          {getFormattedNumber(
-                            rewardData.rewards.find((obj) => {
-                              return obj.rewardType === "Points";
-                            }).reward ?? 0,
-                            2
-                          )}
-                        </h6>
+                        <h6 className="win-amount mb-0">1,864</h6>
                         <span className="win-amount-desc">
                           Leaderboard Points
                         </span>
                       </div>
                       <h6 className="win-amount mb-0">+</h6>
                       <div className="d-flex flex-column align-items-center warning-border p-1">
-                        <h6 className="win-amount mb-0">
-                          $
-                          {getFormattedNumber(
-                            rewardData.rewards.find((obj) => {
-                              return obj.rewardType === "Money";
-                            }).reward ?? 0,
-                            2
-                          )}
-                        </h6>
+                        <h6 className="win-amount mb-0">$30.50</h6>
                         <span className="win-amount-desc">Rewards</span>
                       </div>
                     </div>

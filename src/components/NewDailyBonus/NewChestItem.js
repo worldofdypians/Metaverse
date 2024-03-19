@@ -382,6 +382,10 @@ const NewChestItem = ({
   };
 
   const handleChestClick = () => {
+    if(!isPremium && rewardTypes === "premium"){
+      onShake()
+      return
+    }
     if (!disableBtn || open) {
       if (!open && !ischestOpen) {
         handleOpenChest();
@@ -423,7 +427,7 @@ const NewChestItem = ({
       onClick={() => handleChestClick()}
       style={{
         pointerEvents: !disableBtn ? "auto" : "none",
-        filter: !disableBtn ? "none" : "blur(3px)",
+        filter: !disableBtn ? "none" : "grayscale(1)",
       }}
     >
       {/* <img

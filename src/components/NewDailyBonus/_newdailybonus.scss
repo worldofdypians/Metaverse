@@ -79,6 +79,7 @@
   transition: all 0.25s;
   border-radius: 8px;
   height: 130px;
+  object-fit: cover;
   cursor: pointer;
   border: 2px solid transparent;
   border-radius: 18px;
@@ -831,8 +832,8 @@
 
 .new-chain-inactive-btn {
   border-radius: 10px;
-  border: 1px solid #7eabe9;
-  background: rgba(126, 171, 233, 0.5);
+  border: 1px solid #1A1C39;
+  background: rgba(26, 28, 57, 0.50);
   color: #fff;
   font-size: 12px;
   font-style: normal;
@@ -920,4 +921,8 @@
     infinite both;
   animation: shake-bottom 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite
     both;
+}
+
+.percent-img{
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.50));
 }
