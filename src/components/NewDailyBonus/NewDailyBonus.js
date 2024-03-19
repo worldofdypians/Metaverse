@@ -1354,7 +1354,7 @@ const NewDailyBonus = ({
                     className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                     style={{
                       background: "#1A1C39",
-                      border: "1px solid #D75853",
+                      border: "1px solid #ce5d1b",
                     }}
                   >
                     <div className="loader red-loader">
@@ -1371,7 +1371,7 @@ const NewDailyBonus = ({
                     </div>
                     <h6
                       className="loader-text mb-0"
-                      style={{ color: "#D75853" }}
+                      style={{ color: "#ce5d1b" }}
                     >
                       Switch to {chain === "bnb" ? "BNB" : "SKALE"} Chain
                     </h6>

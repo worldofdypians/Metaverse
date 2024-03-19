@@ -78,7 +78,7 @@ line-height: normal;
 }
 
 .chain-img {
-  filter: brightness(0.5);
+  filter: brightness(0.5) grayscale(0.7);
   width: 100%;
   transition: all 0.25s;
   border-radius: 8px;
@@ -602,8 +602,8 @@ line-height: normal;
 
 .red-loader {
   .dot {
-    background: #d75853;
-    box-shadow: 0 0 5px #d75853, 0 0 10px #d75853;
+    background: #ce5d1b;
+    box-shadow: 0 0 5px #ce5d1b, 0 0 10px #ce5d1b;
   }
 }
 
