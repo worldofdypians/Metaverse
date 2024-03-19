@@ -494,7 +494,7 @@ const NewDailyBonus = ({
         return (
           obj.rewardType === "Money" &&
           obj.status === "Unclaimed" &&
-          obj.claimType === "LANDS"
+          obj.claimType === "LAND"
         );
       });
 
@@ -544,7 +544,7 @@ const NewDailyBonus = ({
         return (
           obj.rewardType === "Money" &&
           obj.status === "Unclaimed" &&
-          obj.claimType === "LANDS"
+          obj.claimType === "LAND"
         );
       });
 
