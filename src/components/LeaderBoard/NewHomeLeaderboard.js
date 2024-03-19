@@ -1315,6 +1315,17 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
           </h6>
           <table className="playerTable">
             <tbody>
+            <tr className="playerRow">
+                      <th className="playerHeader">Rank</th>
+                      <th className="playerHeader">Player</th>
+                      {optionText !== "genesis" && (
+                        <th className="playerHeader text-center">Score</th>
+                      )}
+                      {optionText !== "genesis" && (
+                        <th className="playerHeader text-center">Reward</th>
+                      )}
+                      <th className="playerHeader text-center">Pass</th>
+                    </tr>
               {playerData.map((item, index) => {
                 return (
                   <tr
@@ -1397,6 +1408,17 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
           </h6>
           <table className="playerTable">
             <tbody>
+            <tr className="playerRow">
+                      <th className="playerHeader">Rank</th>
+                      <th className="playerHeader">Player</th>
+                      {optionText !== "genesis" && (
+                        <th className="playerHeader text-center">Score</th>
+                      )}
+                      {optionText !== "genesis" && (
+                        <th className="playerHeader text-center">Reward</th>
+                      )}
+                      <th className="playerHeader text-center">Pass</th>
+                    </tr>
               {playerData.map((item, index) => {
                 return (
                   <tr
@@ -1466,6 +1488,17 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
           </h6>
           <table className="playerTable">
             <tbody>
+            <tr className="playerRow">
+                      <th className="playerHeader">Rank</th>
+                      <th className="playerHeader">Player</th>
+                      {optionText !== "genesis" && (
+                        <th className="playerHeader text-center">Score</th>
+                      )}
+                      {optionText !== "genesis" && (
+                        <th className="playerHeader text-center">Reward</th>
+                      )}
+                      <th className="playerHeader text-center">Pass</th>
+                    </tr>
               {playerData.map((item, index) => {
                 return (
                   <tr
