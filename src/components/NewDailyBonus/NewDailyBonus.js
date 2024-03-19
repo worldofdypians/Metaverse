@@ -499,8 +499,7 @@ const NewDailyBonus = ({
         return (
           obj.rewardType === "Money" &&
           obj.status === "Unclaimed" &&
-          obj.details ===
-            "To claim this reward, you need to buy a CAWs NFT from the World of Dypians Marketplace"
+          obj.claimType === "CAWS"
         );
       });
 
@@ -528,6 +527,12 @@ const NewDailyBonus = ({
       console.log(filteredResult);
       if (result) {
         setMessage("caws");
+      } else if (!result && resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if (resultWon) {
+        setMessage("won");
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -544,8 +549,7 @@ const NewDailyBonus = ({
         return (
           obj.rewardType === "Money" &&
           obj.status === "Unclaimed" &&
-          obj.details ===
-            "To claim this reward, you need to buy a CAWs NFT from the World of Dypians Marketplace"
+          obj.claimType === "CAWS"
         );
       });
 
@@ -572,12 +576,19 @@ const NewDailyBonus = ({
       console.log(filteredResult);
       if (result) {
         setMessage("caws");
+      } else if (!result && resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if (resultWon) {
+        setMessage("won");
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
       setLiveRewardData([]);
     }
+    new Audio(successSound).play();
   };
 
   useEffect(() => {
