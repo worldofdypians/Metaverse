@@ -503,6 +503,27 @@ const NewDailyBonus = ({
             "To claim this reward, you need to buy a CAWs NFT from the World of Dypians Marketplace"
         );
       });
+
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LAND"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return obj.rewardType === "Money" && obj.status === "Claimed";
+      });
+
       console.log(result);
       console.log(filteredResult);
       if (result) {
@@ -528,9 +549,28 @@ const NewDailyBonus = ({
         );
       });
 
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LAND"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return obj.rewardType === "Money" && obj.status === "Claimed";
+      });
+
+      console.log(result);
+      console.log(filteredResult);
       if (result) {
-        console.log(result);
-        console.log(filteredResult);
         setMessage("caws");
       }
       setLiveRewardData(filteredResult);
