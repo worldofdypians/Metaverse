@@ -66,6 +66,8 @@ function Dashboard({
   domainName,
   handleOpenDomains,
   dogePrice,
+  dyptokenData_old,
+  handleSwitchChain
 }) {
   const { email, logout } = useAuth();
 
@@ -3307,15 +3309,20 @@ function Dashboard({
               </OutsideClickHandler>
             )} */}
             {dailyBonusPopup && (
-              <OutsideClickHandler
-                onOutsideClick={() => {
-                  setdailyBonusPopup(false);
-                }}
-              >
+              // <OutsideClickHandler
+              //   onOutsideClick={() => {
+              //     setdailyBonusPopup(false);
+              //   }}
+              // >
                 <NewDailyBonus
                   isPremium={isPremium}
                   chainId={chainId}
+                  dypTokenData={dypTokenData}
+                  ethTokenData={ethTokenData}
+                  dyptokenData_old={dyptokenData_old}
+                  handleSwitchChain={handleSwitchChain}
                   handleSwitchNetwork={handleSwitchNetwork}
+                  listedNFTS={listedNFTS}
                   onclose={() => {
                     setdailyBonusPopup(false);
                   }}
@@ -3340,7 +3347,7 @@ function Dashboard({
                     setskalecount(skalecount + 1);
                   }}
                 />
-              </OutsideClickHandler>
+              // </OutsideClickHandler>
             )}
             {showChecklistModal === true && (
               <ChecklistModal

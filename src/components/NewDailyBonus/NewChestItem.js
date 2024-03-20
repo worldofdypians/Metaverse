@@ -23,6 +23,7 @@ const NewChestItem = ({
   disableBtn,
   isActive,
   isActiveIndex,
+  buyNftPopup
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -443,8 +444,7 @@ const NewChestItem = ({
       }  d-flex align-items-center justify-content-center position-relative`}
       onClick={() => handleChestClick()}
       style={{
-        pointerEvents: !disableBtn ? "auto" : "none",
-        filter: !disableBtn ? "none" : "grayscale(1)",
+        pointerEvents: !disableBtn && !buyNftPopup ? "auto" : "none",
       }}
     >
       {/* <img

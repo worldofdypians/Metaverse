@@ -2347,6 +2347,9 @@ function App() {
                 <Dashboard
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
+                  handleSwitchChain={handleSwitchChain}
+
+                  dypTokenData_old={dypTokenData_old}
                   coinbase={coinbase}
                   account={coinbase}
                   isConnected={isConnected}

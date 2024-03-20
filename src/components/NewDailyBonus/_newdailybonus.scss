@@ -935,3 +935,31 @@ line-height: normal;
 .percent-img{
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.50));
 }
+
+.buy-nft-popup-wrapper{
+  background: #1a1c39;
+  border-radius: 15px;
+  position: fixed;
+  pointer-events: auto !important;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 10000;
+  width: fit-content;
+  height: fit-content;
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+}
+
+
+.popup-nft-img{
+  width: 300px;
+  height: 300px;
+  border-radius: 15px;
+  pointer-events: auto !important;
+}
+
+.block-pointers{
+  pointer-events: none !important;
+}
