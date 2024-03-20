@@ -9,7 +9,7 @@ import premiumAvailable from "../assets/premiumAvailable.svg";
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
-const BetaEventCard = ({ data, onOpenPopup, userEarnUsd,activeTab }) => {
+const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
   return (
     <div
       className={` ${
@@ -25,7 +25,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd,activeTab }) => {
           ? "upcoming-mint-wrapper-gate"
           : data.title === "CMC" || data.title === "CoinMarketCap"
           ? "upcoming-mint-wrapper-cmc"
-          : data.title === "Dypius" &&  activeTab !== "dypiusv2"
+          : data.title === "Dypius" && activeTab !== "dypiusv2"
           ? "upcoming-dyp-event"
           : activeTab === "dypiusv2"
           ? "upcoming-dyp-event2"
@@ -73,15 +73,18 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd,activeTab }) => {
 
       <div className="d-flex align-items-center gap-3">
         <div className="d-flex col-lg-3 flex-column align-items-start align-items-lg-center">
-          {activeTab !== "dypiusv2" ? (
-            <div className="mybetaearnings" style={{
-              width: "160px",
-              height: "80px",
-              top: 0,
-              position: "relative",
-            }}>
+          {
+            <div
+              className="mybetaearnings"
+              style={{
+                width: "160px",
+                height: "80px",
+                top: 0,
+                position: "relative",
+              }}
+            >
               <h6 className="event-my-earnings3 mb-3">
-                {data.title !== "Dypius" && activeTab !== "dypiusv2" ? (
+                {data.title !== "Dypius" ? (
                   <>${getFormattedNumber(userEarnUsd, 2)}</>
                 ) : activeTab !== "dypiusv2" ? (
                   <>{getFormattedNumber(userEarnUsd, 0)} DYP</>
@@ -90,19 +93,21 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd,activeTab }) => {
                 )}
               </h6>
             </div>
-          ) : (
-            <div className="mybetaearnings" style={{ backgroundImage: "none", width: "160px",
-            height: "80px",
-            top: 0,
-            position: "relative", }}>
-              <img
-                src={premiumAvailable}
-                alt=""
-                height={100}
-                className="premiumAvailable"
-              />
-            </div>
-          )}
+
+            // : (
+            //   <div className="mybetaearnings" style={{ backgroundImage: "none", width: "160px",
+            //   height: "80px",
+            //   top: 0,
+            //   position: "relative", }}>
+            //     <img
+            //       src={premiumAvailable}
+            //       alt=""
+            //       height={100}
+            //       className="premiumAvailable"
+            //     />
+            //   </div>
+            // )
+          }
         </div>
         <div className="d-flex flex-column d-flex d-lg-none gap-3">
           <div className="d-flex align-items-center gap-2">
