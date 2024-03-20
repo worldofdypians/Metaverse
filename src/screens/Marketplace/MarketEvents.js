@@ -1092,6 +1092,8 @@ const MarketEvents = ({
                                 ? dogeEarnUSD
                                 : item.title === "CoinMarketCap"
                                 ? cmcuserEarnUsd
+                                : item.title === 'Dypius Premium'
+                                ? dypiusPremiumEarnUsd
                                 : 0
                             }
                           />

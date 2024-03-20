@@ -63,6 +63,7 @@ import ReCaptchaV2 from "react-google-recaptcha";
 import dypius from "./assets/dypIcon.svg";
 import upcomingDyp from "./assets/upcomingDyp.webp";
 import upcomingDyp2 from "./assets/dypiuspopup2.png";
+import dypiusPremium16 from "./assets/dypiusPremium16.svg";
 
 import dypeventPopupImage from "./assets/dypEventImage.png";
 import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
@@ -314,7 +315,7 @@ const NewWalletBalance = ({
   const dummyBetaPassData2 = [
     {
       title: "Dypius Premium",
-      logo: dypius,
+      logo: dypiusPremium16,
       eventStatus: "Live",
       totalRewards: "$50,000 in BNB Rewards",
       myEarnings: 0.0,
@@ -1179,6 +1180,8 @@ const NewWalletBalance = ({
                           ? baseEarnUSD
                           : item.title === "Dypius"
                           ? dypiusEarnTokens
+                          : item.title === "Dypius Premium"
+                          ? dypiusPremiumEarnUsd
                           : item.title === "Gate.io"
                           ? gateEarnUSD
                           : item.title === "CoinGecko"
@@ -1771,6 +1774,8 @@ const NewWalletBalance = ({
                       ? baseEarnUSD
                       : item.title === "Dypius"
                       ? dypiusEarnTokens
+                      : item.title === "Dypius Premium"
+                      ? dypiusPremiumEarnUsd
                       : item.title === "Gate.io"
                       ? gateEarnUSD
                       : item.title === "CoinGecko"
