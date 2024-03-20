@@ -239,8 +239,8 @@ const NewWalletBalance = ({
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
-  let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
-  let cmcLastDay = new Date("2024-03-25T13:00:00.000+02:00");
+  let dogeLastDay = new Date("2024-04-02T13:00:00.000+02:00");
+  let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
 
   let now = new Date().getTime();

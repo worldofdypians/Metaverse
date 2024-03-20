@@ -1941,7 +1941,7 @@ const BetaPassNFT = ({
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
                                         <span class="white-events-text mb-0">
-                                          End: Mar. 21, 2024
+                                          End: Apr. 02, 2024
                                         </span>
                                       </div>
                                     </div>
@@ -2186,7 +2186,7 @@ const BetaPassNFT = ({
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
                                         <span class="white-events-text mb-0">
-                                          End: Mar. 25, 2024
+                                          End: Apr. 11, 2024
                                         </span>
                                       </div>
                                     </div>
