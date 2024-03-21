@@ -1466,6 +1466,16 @@ background: linear-gradient(90deg, #181B38 0%, #482193 168.67%);
   height: 100px;
   background-size: 100%;
   background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    position: relative;
+  }
+}
+
+@media screen and (max-width: 786px) {
+  .new-caws-stake-img{
+    width: 100%;
+  }
 }
 
 .caws-apr-percent{

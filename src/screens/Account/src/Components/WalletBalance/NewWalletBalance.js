@@ -32,7 +32,6 @@ import gate from "./assets/gate.svg";
 import eventPopupImageGecko from "./assets/eventPopupImageGecko.png";
 import dogePopupImage from "./assets/dogePopupImage.png";
 import cmcPopupImage from "./assets/cmcPopupImage.png";
-
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import base from "./assets/baseLogo.svg";
@@ -45,6 +44,7 @@ import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
 import newCawsStake from '../../../../Marketplace/assets/newCawsStake.png'
+import newCawsStakeMobile from '../../../../Marketplace/assets/newCawsStakeMobile.png'
 import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
@@ -2469,14 +2469,11 @@ const NewWalletBalance = ({
                 alt=""
               />
             </div>
-            <div className="new-caws-stake-wrapper d-flex align-items-center w-100 ps-4">
+            <div className="new-caws-stake-wrapper d-flex align-items-center w-100 ">
             
-              <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                <div className="new-caws-apr d-flex flex-column align-items-center justify-content-center">
-                  <h6 className="caws-apr-percent mb-0">25%</h6>
-                  <span className="caws-apr">APR</span>
-                </div>
-                <div className="d-flex flex-column gap-4">
+              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+              
+                <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
                   <div className="d-flex flex-column gap-2">
                     <h6 className="market-stake-title" style={{fontSize: "20px"}}>
                     Cats and Watches Society (CAWS)
@@ -2488,7 +2485,11 @@ const NewWalletBalance = ({
                   <div className="d-flex align-items-center gap-3">
                   </div>
                 </div>
-               <img src={newCawsStake} alt="" />
+                <div className="new-caws-apr d-flex flex-column align-items-center justify-content-center position-relative">
+                  <h6 className="caws-apr-percent mb-0">25%</h6>
+                  <span className="caws-apr">APR</span>
+                </div>
+               <img className="new-caws-stake-img" src={windowSize.width < 786 ? newCawsStakeMobile : newCawsStake} alt="" />
               </div>
             </div>
             <div className="d-flex justify-content-center mt-4">
