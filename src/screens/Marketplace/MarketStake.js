@@ -13,6 +13,8 @@ import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import instake from "./assets/instake.svg";
 import cawsStakeImage from "./assets/cawsStakeImage.png";
 import cawsStakeMobileImage from "./assets/cawsStakeMobileImage.png";
+import newCawsStake from "./assets/newCawsStake.png";
+import newCawsStakeMobile from "./assets/newCawsStakeMobile.png";
 import { useLocation } from "react-router-dom";
 
 const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
@@ -454,30 +456,40 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
             NFT <span style={{ color: "#8c56ff" }}> Staking</span>
           </h6>
           <div className="d-flex w-100 align-items-center justify-content-center gap-4">
-            <h6
-              className={`new-stake-tab ${
-                activeTab === "live" && "stake-tab-active"
-              } px-3 py-2`}
-              onClick={() => setActiveTab("live")}
-            >
-              Live
-            </h6>
-            <h6
-              className={`new-stake-tab ${
-                activeTab === "upcoming" && "stake-tab-active"
-              } px-3 py-2`}
-              onClick={() => setActiveTab("upcoming")}
-            >
-              Upcoming
-            </h6>
-            <h6
-              className={`new-stake-tab ${
-                activeTab === "past" && "stake-tab-active"
-              } px-3 py-2`}
-              onClick={() => setActiveTab("past")}
-            >
-              Past
-            </h6>
+            <div className="position-relative">
+             
+              <h6
+                className={`new-stake-tab ${
+                  activeTab === "live" && "stake-tab-active"
+                } px-3 py-2`}
+                onClick={() => setActiveTab("live")}
+              >
+                Live
+              </h6>
+            </div>
+            <div className="position-relative">
+            <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                <span className="mb-0">New</span>
+              </div>
+              <h6
+                className={`new-stake-tab ${
+                  activeTab === "upcoming" && "stake-tab-active"
+                } px-3 py-2`}
+                onClick={() => setActiveTab("upcoming")}
+              >
+                Upcoming
+              </h6>
+            </div>
+            <div className="position-relative">
+              <h6
+                className={`new-stake-tab ${
+                  activeTab === "past" && "stake-tab-active"
+                } px-3 py-2`}
+                onClick={() => setActiveTab("past")}
+              >
+                Past
+              </h6>
+            </div>
           </div>
           <span className="w-100 new-stake-divider mt-3 mb-5"></span>
           {activeTab === "live" && (
@@ -505,18 +517,48 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                 </div>
               </div>
               <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center mt-5">
-              <div className="d-flex flex-column align-items-center gap-2">
-                <h6 className="upcoming-stake">Staking pools are coming...</h6>
-                <span className="upcoming-stake-desc">Check back soon!</span>
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <h6 className="upcoming-stake">
+                    Staking pools are coming...
+                  </h6>
+                  <span className="upcoming-stake-desc">Check back soon!</span>
+                </div>
               </div>
-            </div>
             </>
           )}
           {activeTab === "upcoming" && (
-            <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-              <div className="d-flex flex-column align-items-center gap-2">
-                <h6 className="upcoming-stake">Staking pools are coming...</h6>
-                <span className="upcoming-stake-desc">Check back soon!</span>
+            // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+            //   <div className="d-flex flex-column align-items-center gap-2">
+            //     <h6 className="upcoming-stake">Staking pools are coming...</h6>
+            //     <span className="upcoming-stake-desc">Check back soon!</span>
+            //   </div>
+            // </div>
+            <div className="col-12 px-0">
+              <div className="new-caws-stake-wrapper d-flex align-items-center w-100 ">
+                <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                  <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
+                    <div className="d-flex flex-column gap-2">
+                      <h6 className="market-stake-title">
+                        Cats and Watches Society (CAWS)
+                      </h6>
+                      <span className="market-stake-desc">
+                        Stake your CAWS NFTs to earn daily ETH rewards.
+                      </span>
+                    </div>
+                    <div className="d-flex align-items-center gap-3"></div>
+                  </div>
+                  <div className="new-caws-apr d-flex flex-column align-items-center justify-content-center position-relative">
+                    <h6 className="caws-apr-percent mb-0">25%</h6>
+                    <span className="caws-apr">APR</span>
+                  </div>
+                  <img
+                    className="new-caws-stake-img"
+                    src={
+                      windowSize.width < 786 ? newCawsStakeMobile : newCawsStake
+                    }
+                    alt=""
+                  />
+                </div>
               </div>
             </div>
           )}
@@ -588,18 +630,17 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                   </div>
                 </div>
                 <div className="row w-100 m-0 mt-5 position-relative">
-                  
-                   <div className="d-flex align-items-center gap-2 tags-position">
+                  <div className="d-flex align-items-center gap-2 tags-position">
                     <div className="expired-caws-tag px-3 py-1">
                       <span className="expired-caws-span">Expired</span>
                     </div>
                     {mystakesLandPool && mystakesLandPool.length > 0 && (
-                    <div className="instakeWrapper">
-                      <span className="instaketxt">In stake</span>
-                    </div>
-                  )}
+                      <div className="instakeWrapper">
+                        <span className="instaketxt">In stake</span>
+                      </div>
+                    )}
                   </div>
-                  
+
                   <div className="col-12 px-0">
                     <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
                       <div className="stake-stats-wrapper flex-row flex-lg-column d-flex align-items-center justify-content-center gap-4 gap-lg-2">
@@ -659,15 +700,15 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
               </>
               <div className="col-12 mt-5">
                 <div className="caws-stake-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between w-100 position-relative">
-                <div className="d-flex align-items-center gap-2 tags-position">
+                  <div className="d-flex align-items-center gap-2 tags-position">
                     <div className="expired-caws-tag px-3 py-1">
                       <span className="expired-caws-span">Expired</span>
                     </div>
                     {mystakesLandPool && mystakesLandPool.length > 0 && (
-                    <div className="instakeWrapper">
-                      <span className="instaketxt">In stake</span>
-                    </div>
-                  )}
+                      <div className="instakeWrapper">
+                        <span className="instaketxt">In stake</span>
+                      </div>
+                    )}
                   </div>
                   <div className="d-flex p-4 p-lg-5 align-items-start align-items-lg-center justify-content-between  position-relative">
                     <div className="d-flex flex-column gap-4">
