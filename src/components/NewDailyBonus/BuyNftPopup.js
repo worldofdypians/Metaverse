@@ -308,6 +308,7 @@ const BuyNftPopup = ({
           disabled={
             buyloading === true || buyStatus === "failed" ? true : false
           }
+          style={{width: "180px", height: "42px"}}
           className={`btn  buyNftbtn px-4 d-flex justify-content-center ${
             buyStatus === "success"
               ? "successbtn"

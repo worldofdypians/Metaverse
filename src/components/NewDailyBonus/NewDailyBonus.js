@@ -314,7 +314,7 @@ const NewDailyBonus = ({
     },
     {
       title: "Money",
-      amount: "$50-$300",
+      amount: "$30-$300",
       img: 300,
       error: false,
       threshold: [],
