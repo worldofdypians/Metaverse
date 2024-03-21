@@ -456,30 +456,40 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
             NFT <span style={{ color: "#8c56ff" }}> Staking</span>
           </h6>
           <div className="d-flex w-100 align-items-center justify-content-center gap-4">
-            <h6
-              className={`new-stake-tab ${
-                activeTab === "live" && "stake-tab-active"
-              } px-3 py-2`}
-              onClick={() => setActiveTab("live")}
-            >
-              Live
-            </h6>
-            <h6
-              className={`new-stake-tab ${
-                activeTab === "upcoming" && "stake-tab-active"
-              } px-3 py-2`}
-              onClick={() => setActiveTab("upcoming")}
-            >
-              Upcoming
-            </h6>
-            <h6
-              className={`new-stake-tab ${
-                activeTab === "past" && "stake-tab-active"
-              } px-3 py-2`}
-              onClick={() => setActiveTab("past")}
-            >
-              Past
-            </h6>
+            <div className="position-relative">
+             
+              <h6
+                className={`new-stake-tab ${
+                  activeTab === "live" && "stake-tab-active"
+                } px-3 py-2`}
+                onClick={() => setActiveTab("live")}
+              >
+                Live
+              </h6>
+            </div>
+            <div className="position-relative">
+            <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                <span className="mb-0">New</span>
+              </div>
+              <h6
+                className={`new-stake-tab ${
+                  activeTab === "upcoming" && "stake-tab-active"
+                } px-3 py-2`}
+                onClick={() => setActiveTab("upcoming")}
+              >
+                Upcoming
+              </h6>
+            </div>
+            <div className="position-relative">
+              <h6
+                className={`new-stake-tab ${
+                  activeTab === "past" && "stake-tab-active"
+                } px-3 py-2`}
+                onClick={() => setActiveTab("past")}
+              >
+                Past
+              </h6>
+            </div>
           </div>
           <span className="w-100 new-stake-divider mt-3 mb-5"></span>
           {activeTab === "live" && (
@@ -526,7 +536,6 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
             <div className="col-12 px-0">
               <div className="new-caws-stake-wrapper d-flex align-items-center w-100 ">
                 <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                  
                   <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
                     <div className="d-flex flex-column gap-2">
                       <h6 className="market-stake-title">
@@ -543,7 +552,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                     <span className="caws-apr">APR</span>
                   </div>
                   <img
-                  className="new-caws-stake-img"
+                    className="new-caws-stake-img"
                     src={
                       windowSize.width < 786 ? newCawsStakeMobile : newCawsStake
                     }
