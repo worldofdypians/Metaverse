@@ -1449,6 +1449,42 @@
   }
 }
 
+.new-caws-stake-wrapper{
+  border-radius: 20px;
+background: linear-gradient(90deg, #181B38 0%, #482193 168.67%);
+}
+
+.new-caws-apr{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  background-image: url('./assets/cawsAprBg.svg');
+  width: 100px;
+  height: 100px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.caws-apr-percent{
+  color: #FFF;
+text-align: center;
+font-size: 35px;
+font-style: italic;
+font-weight: 800;
+line-height: 35px;
+}
+
+.caws-apr{
+  color: #FFF;
+font-size: 14px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+
 .stake-stats-wrapper {
   position: absolute;
   top: 0;
