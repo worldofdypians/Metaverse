@@ -261,7 +261,7 @@ const NewDailyBonus = ({
     "wod",
     "switch",
     "login",
-    "win",
+    "won",
     "winDanger",
     "complete",
     "needPremium",
@@ -496,6 +496,23 @@ const NewDailyBonus = ({
     setLandNfts(filteredLands);
   };
 
+
+
+  const boughtCaws = (chestId, chestIndex, val1, val2) => {
+    const filteredResult = openedChests.find(
+      (el) => el.chestId === chestId && allChests.indexOf(el) === chestIndex
+    );
+    setIsActive(chestId);
+    setIsActiveIndex(chestIndex);
+
+      const finalResult = {...filteredResult, rewards: [{rewardType: "Money", reward: val1 }, {rewardType: "Points", reward: val2}]}
+
+
+    setLiveRewardData(finalResult);
+    setRewardData(finalResult);
+    setMessage("won")
+  }
+
   const showSingleRewardData = (chestID, chestIndex) => {
     const filteredResult = openedChests.find(
       (el) => el.chestId === chestID && allChests.indexOf(el) === chestIndex
@@ -529,7 +546,7 @@ const NewDailyBonus = ({
       });
 
       const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
+        return obj.rewardType === "Money";
       });
 
       console.log(result);
@@ -1577,8 +1594,13 @@ const NewDailyBonus = ({
                           <div
                             className="nft-reward-container"
                             onClick={() => {
-                              setNft(item);
-                              setBuyNftPopup(true);
+                              // setNft(item);
+                              // setBuyNftPopup(true);
+                              boughtCaws(isActive, isActiveIndex, rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Money";
+                              }).reward ?? 0, rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Points";
+                              }).reward ?? 0)
                             }}
                           >
                             <img
@@ -1592,7 +1614,7 @@ const NewDailyBonus = ({
                         ))}
                       </div>
                     </div>
-                  ) : message === "win" ? (
+                  ) : message === "won" ? (
                     <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                       <div
                         className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -1813,8 +1835,13 @@ const NewDailyBonus = ({
                         {landNfts.slice(0, 4).map((item, index) => (
                           <div className="nft-reward-container"
                           onClick={() => {
-                            setNft(item);
-                            setBuyNftPopup(true);
+                            // setNft(item);
+                            // setBuyNftPopup(true);
+                            boughtCaws(isActive, isActiveIndex, rewardData.rewards.find((obj) => {
+                              return obj.rewardType === "Money";
+                            }).reward ?? 0, rewardData.rewards.find((obj) => {
+                              return obj.rewardType === "Points";
+                            }).reward ?? 0)
                           }}
                           >
                             <img
