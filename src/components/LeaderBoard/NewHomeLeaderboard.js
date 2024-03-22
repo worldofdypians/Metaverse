@@ -1311,7 +1311,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       <Slider {...settings}>
         {optionText2 !== "weekly" && (
           <div className="leaderboard-item d-flex flex-column gap-2 p-2">
+            <div className="d-flex w-100 justify-content-center">
             <h6 className="leaderboard-title  text-white mb-0">Daily</h6>
+            </div>
             <table className="playerTable">
               <tbody>
                 <tr className="playerRow">
@@ -1405,7 +1407,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
         )}
 
         <div className="leaderboard-item d-flex flex-column gap-2 p-2">
-          <h6 className="leaderboard-title  text-white mb-0">Weekly</h6>
+        <div className="d-flex w-100 justify-content-center">
+            <h6 className="leaderboard-title  text-white mb-0">Weekly</h6>
+            </div>
           <table className="playerTable">
             <tbody>
               <tr className="playerRow">
@@ -1484,7 +1488,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
         </div>
         {optionText2 !== "weekly" && (
           <div className="leaderboard-item d-flex flex-column gap-2 p-2">
+             <div className="d-flex w-100 justify-content-center">
             <h6 className="leaderboard-title  text-white mb-0">Monthly</h6>
+            </div>
             <table className="playerTable">
               <tbody>
                 <tr className="playerRow">
