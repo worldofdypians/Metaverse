@@ -201,8 +201,8 @@ const MarketEvents = ({
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
 
-  let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
-  let cmcLastDay = new Date("2024-03-25T13:00:00.000+02:00");
+  let dogeLastDay = new Date("2024-04-02T13:00:00.000+02:00");
+  let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
 
   const dailyBonusMintData = {
     title: "Daily Bonus",
@@ -1092,6 +1092,8 @@ const MarketEvents = ({
                                 ? dogeEarnUSD
                                 : item.title === "CoinMarketCap"
                                 ? cmcuserEarnUsd
+                                : item.title === 'Dypius Premium'
+                                ? dypiusPremiumEarnUsd
                                 : 0
                             }
                           />
