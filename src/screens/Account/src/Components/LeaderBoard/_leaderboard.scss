@@ -164,7 +164,7 @@
 }
 
 .optionsWrapper {
- background: rgba(151, 89, 192, 0.3);
+  background: rgba(151, 89, 192, 0.3);
   border-radius: 12px;
   padding: 2px;
 }
@@ -405,7 +405,7 @@
 
 .leaderboard-item {
   width: 33%;
- background: rgba(151, 89, 192, 0.3);
+  background: rgba(151, 89, 192, 0.3);
   border-radius: 12px;
 
   @media screen and (max-width: 786px) {
@@ -413,13 +413,14 @@
   }
 }
 
-.optionswrapper-bg{
+.optionswrapper-bg {
   position: absolute;
   width: 33%;
   height: 100%;
   border-radius: 12px;
-  background: linear-gradient(110.6deg, rgba(184, 142, 252, 0.7) 2.2%, rgba(104, 119, 244, 0.7) 100.2%);
-  transition: all .25s ease-in-out;
+  border: 1px solid #f4e07b;
+  background: #341553;
+  transition: all 0.25s ease-in-out;
   z-index: 0;
   top: 0;
   bottom: 0;
@@ -427,27 +428,22 @@
   margin: auto;
 }
 
-.move-1{
+.move-1 {
   transform: translateX(100%);
 }
 
-.move-2{
+.move-2 {
   transform: translateX(203%);
-
 }
 
-.move-3{
+.move-3 {
   transform: translateX(300%);
-
-
 }
-.leaderboard-icon{
-filter: grayscale(1);
-transition: all .25s;
+.leaderboard-icon {
+  filter: grayscale(1);
+  transition: all 0.25s;
 }
 
-
-
-.leaderboard-icon-active{
+.leaderboard-icon-active {
   filter: grayscale(0);
 }

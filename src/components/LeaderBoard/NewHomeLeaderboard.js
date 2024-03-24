@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import price1 from "./assets/price1.svg";
 import price2 from "./assets/price2.svg";
 import price3 from "./assets/price3.svg";
@@ -17,9 +17,17 @@ import genesisBadge from "./assets/genesisBadge2.png";
 import tooltipIcon from "./assets/tooltip.svg";
 import skaleIcon from "./assets/skaleIcon.png";
 import skaleIconGray from "./assets/skaleIconGray.svg";
-import wodIcon from "./assets/wodIcon.png";
-import bnbIcon from "./assets/bnbIcon.svg";
-import coreIcon from "./assets/coreIcon.svg";
+// import wodIcon from "./assets/wodIcon.png";
+// import bnbIcon from "./assets/bnbIcon.svg";
+// import coreIcon from "./assets/coreIcon.svg";
+import bnbActive from "./assets/bnbActive.svg";
+import bnbInactive from "./assets/bnbInactive.svg";
+import skaleActive from "./assets/skaleActive.svg";
+import skaleInactive from "./assets/skaleInactive.svg";
+import wodActive from "./assets/wodActive.svg";
+import wodInactive from "./assets/wodInactive.svg";
+import leftArrow from "./assets/leftArrow.svg";
+import rightArrow from "./assets/rightArrow.svg";
 // import React, { useState, useEffect } from "react";
 // import price1 from "../../Images/userProfile/price1.svg";
 // import price2 from "../../Images/userProfile/price2.svg";
@@ -191,6 +199,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     },
   ];
   const [tooltip, setTooltip] = useState(false);
+  const sliderRef = useRef(null)
   const windowSize = useWindowSize();
 
   const placeholderplayerData = [
@@ -480,6 +489,14 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
   //     setUserData(...testArray);
   //   }
   // };
+
+
+  const nextSlide = () => {
+    sliderRef.current.slickNext()
+  }
+  const prevSlide = () => {
+    sliderRef.current.slickPrev()
+  }
 
   const fetchDailyRecords = async () => {
     const data = {
@@ -889,7 +906,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
               style={{ width: "33%", fontSize: "12px" }}
             >
               <img
-                src={bnbIcon}
+                src={optionText2 === "genesis" ? bnbActive : bnbInactive}
                 className={`${
                   optionText2 === "genesis"
                     ? "leaderboard-icon leaderboard-icon-active"
@@ -919,7 +936,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
               }}
             >
               <img
-                src={optionText2 === "weekly" ? skaleIcon : skaleIconGray}
+                src={optionText2 === "weekly" ? skaleActive : skaleInactive}
                 className={`${
                   optionText2 === "weekly"
                     ? "leaderboard-icon leaderboard-icon-active"
@@ -978,7 +995,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
               }}
             >
               <img
-                src={wodIcon}
+                src={optionText2 === "monthly" ? wodActive : wodInactive}
                 className={`${
                   optionText2 === "monthly"
                     ? "leaderboard-icon leaderboard-icon-active"
@@ -1308,13 +1325,115 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
           />
         )}
       </div> */}
-      <Slider {...settings}>
+      <Slider {...settings} ref={sliderRef}>
         {optionText2 !== "weekly" && (
-          <div className="leaderboard-item d-flex flex-column gap-2 p-2">
-            <div className="d-flex w-100 justify-content-center">
-            <h6 className="leaderboard-title  text-white mb-0">Daily</h6>
+          <div className="leaderboard-item d-flex flex-column gap-2 p-0">
+            <div className="d-flex w-100 justify-content-between leaderboard-title-wrapper px-3 py-2">
+              <img src={leftArrow} alt="" style={{cursor: "pointer"}} onClick={prevSlide}  />
+              <h6 className="leaderboard-title  text-white mb-0">Daily</h6>
+              <img src={rightArrow} alt="" style={{cursor: "pointer"}}  onClick={nextSlide} />
             </div>
-            <table className="playerTable">
+            <div className="p-2">
+              <table className="playerTable w-100">
+                <tbody>
+                  <tr className="playerRow">
+                    <th className="playerHeader">Rank</th>
+                    <th className="playerHeader">Player</th>
+                    {optionText !== "genesis" && (
+                      <th className="playerHeader text-center">Score</th>
+                    )}
+                    {optionText !== "genesis" && (
+                      <th className="playerHeader text-center">Reward</th>
+                    )}
+                    <th className="playerHeader text-center">Pass</th>
+                  </tr>
+                  {playerData.map((item, index) => {
+                    return (
+                      <tr
+                        key={index}
+                        className={`playerInnerRow ${
+                          inactiveBoard || item.displayName === username
+                            ? "playerInnerRow-inactive"
+                            : null
+                        }`}
+                      >
+                        <td className="playerData col-1">{item.position}</td>
+                        <td className="playerName col-5">
+                          {item.displayName === username ? (
+                            <div className="position-relative d-flex align-items-center">
+                              <img
+                                src={premiumAvatar}
+                                alt=""
+                                className="playerAvatar"
+                              />
+                              <span>
+                                {" "}
+                                {item.displayName?.slice(0, 13)}
+                                {item.displayName?.length > 13 && "..."}
+                              </span>
+                            </div>
+                          ) : (
+                            <div className="position-relative d-flex align-items-center">
+                              <img
+                                src={playerAvatar}
+                                alt=""
+                                className="playerAvatar"
+                              />{" "}
+                              {item.displayName?.slice(0, 13)}
+                              {item.displayName?.length > 13 && "..."}
+                            </div>
+                          )}
+                        </td>
+                        <td className="playerScore col-2 text-center">
+                          {getFormattedNumber(item.statValue, 0)}
+                        </td>
+                        <td
+                          className={`playerReward text-center col-2 ${
+                            username === item.displayName
+                              ? "goldenscore"
+                              : "playerReward"
+                          }`}
+                        >
+                          ${prizes[index]}
+                        </td>
+                        <td
+                          className={`playerReward col-2 ${
+                            username === item.displayName
+                              ? "goldenscore"
+                              : "goldenscore-inactive2"
+                          }`}
+                        >
+                          +$
+                          {getFormattedNumber(dailyPrizesGolden[index], 0)}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  {inactiveBoard === true &&
+                    ((dailyplayerData.length === 0 && optionText === "daily") ||
+                      (weeklyplayerData.length === 0 &&
+                        optionText === "weekly") ||
+                      (monthlyplayerData.length === 0 &&
+                        optionText === "monthly")) &&
+                    optionText !== "genesis" && (
+                      <CircularProgress
+                        size={20}
+                        style={{ alignSelf: "center", margin: "auto" }}
+                      />
+                    )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+        <div className="leaderboard-item d-flex flex-column gap-2 p-0">
+        <div className="d-flex w-100 justify-content-between leaderboard-title-wrapper px-3 py-2">
+              <img src={leftArrow} alt="" style={{cursor: "pointer"}}  onClick={prevSlide}  />
+              <h6 className="leaderboard-title  text-white mb-0">Weekly</h6>
+              <img src={rightArrow} alt=""  style={{cursor: "pointer"}}  onClick={nextSlide} />
+            </div>
+          <div className="p-2">
+            <table className="playerTable w-100">
               <tbody>
                 <tr className="playerRow">
                   <th className="playerHeader">Rank</th>
@@ -1339,20 +1458,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                     >
                       <td className="playerData col-1">{item.position}</td>
                       <td className="playerName col-5">
-                        {item.displayName === username ? (
-                          <div className="position-relative d-flex align-items-center">
-                            <img
-                              src={premiumAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />
-                            <span>
-                              {" "}
-                              {item.displayName?.slice(0, 13)}
-                              {item.displayName?.length > 13 && "..."}
-                            </span>
-                          </div>
-                        ) : (
+                        {
                           <div className="position-relative d-flex align-items-center">
                             <img
                               src={playerAvatar}
@@ -1362,7 +1468,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName?.slice(0, 13)}
                             {item.displayName?.length > 13 && "..."}
                           </div>
-                        )}
+                        }
                       </td>
                       <td className="playerScore col-2 text-center">
                         {getFormattedNumber(item.statValue, 0)}
@@ -1404,94 +1510,16 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
               </tbody>
             </table>
           </div>
-        )}
-
-        <div className="leaderboard-item d-flex flex-column gap-2 p-2">
-        <div className="d-flex w-100 justify-content-center">
-            <h6 className="leaderboard-title  text-white mb-0">Weekly</h6>
-            </div>
-          <table className="playerTable">
-            <tbody>
-              <tr className="playerRow">
-                <th className="playerHeader">Rank</th>
-                <th className="playerHeader">Player</th>
-                {optionText !== "genesis" && (
-                  <th className="playerHeader text-center">Score</th>
-                )}
-                {optionText !== "genesis" && (
-                  <th className="playerHeader text-center">Reward</th>
-                )}
-                <th className="playerHeader text-center">Pass</th>
-              </tr>
-              {playerData.map((item, index) => {
-                return (
-                  <tr
-                    key={index}
-                    className={`playerInnerRow ${
-                      inactiveBoard || item.displayName === username
-                        ? "playerInnerRow-inactive"
-                        : null
-                    }`}
-                  >
-                    <td className="playerData col-1">{item.position}</td>
-                    <td className="playerName col-5">
-                      {
-                        <div className="position-relative d-flex align-items-center">
-                          <img
-                            src={playerAvatar}
-                            alt=""
-                            className="playerAvatar"
-                          />{" "}
-                          {item.displayName?.slice(0, 13)}
-                          {item.displayName?.length > 13 && "..."}
-                        </div>
-                      }
-                    </td>
-                    <td className="playerScore col-2 text-center">
-                      {getFormattedNumber(item.statValue, 0)}
-                    </td>
-                    <td
-                      className={`playerReward text-center col-2 ${
-                        username === item.displayName
-                          ? "goldenscore"
-                          : "playerReward"
-                      }`}
-                    >
-                      ${prizes[index]}
-                    </td>
-                    <td
-                      className={`playerReward col-2 ${
-                        username === item.displayName
-                          ? "goldenscore"
-                          : "goldenscore-inactive2"
-                      }`}
-                    >
-                      +$
-                      {getFormattedNumber(dailyPrizesGolden[index], 0)}
-                    </td>
-                  </tr>
-                );
-              })}
-              {inactiveBoard === true &&
-                ((dailyplayerData.length === 0 && optionText === "daily") ||
-                  (weeklyplayerData.length === 0 && optionText === "weekly") ||
-                  (monthlyplayerData.length === 0 &&
-                    optionText === "monthly")) &&
-                optionText !== "genesis" && (
-                  <CircularProgress
-                    size={20}
-                    style={{ alignSelf: "center", margin: "auto" }}
-                  />
-                )}
-            </tbody>
-          </table>
         </div>
         {optionText2 !== "weekly" && (
-          <div className="leaderboard-item d-flex flex-column gap-2 p-2">
-             <div className="d-flex w-100 justify-content-center">
-            <h6 className="leaderboard-title  text-white mb-0">Monthly</h6>
+          <div className="leaderboard-item d-flex flex-column gap-2 p-0">
+           <div className="d-flex w-100 justify-content-between leaderboard-title-wrapper px-3 py-2">
+              <img src={leftArrow} alt="" style={{cursor: "pointer"}}  onClick={prevSlide} />
+              <h6 className="leaderboard-title  text-white mb-0">Monthly</h6>
+              <img src={rightArrow} alt="" style={{cursor: "pointer"}}  onClick={nextSlide} />
             </div>
-            <table className="playerTable">
+            <div className="p-2">
+            <table className="playerTable w-100">
               <tbody>
                 <tr className="playerRow">
                   <th className="playerHeader">Rank</th>
@@ -1557,6 +1585,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 })}
               </tbody>
             </table>
+            </div>
           </div>
         )}
       </Slider>
