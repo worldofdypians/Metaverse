@@ -15,6 +15,7 @@
 
 .leaderboard-title {
   font-size: 20px;
+  font-weight: 800;
 }
 
 .grandPrices-wrapper {
@@ -118,14 +119,16 @@
   top: 0;
   // background: #080b2a;
   z-index: 2;
+  white-space: nowrap;
 }
 
 .optionText {
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
   font-size: 15px;
   line-height: 18px;
-  color: #ffffff;
+  color: #747687;
   display: flex;
   justify-content: center;
   cursor: pointer;
@@ -139,7 +142,7 @@
 
 .optionText:hover,
 .activeoption {
-  color: #09f3d2;
+  color: #FFF;
 }
 
 .optionTextGolden {
@@ -195,7 +198,7 @@
   background: rgba(0, 254, 207, 0.1);
 
   .goldenscore-inactive2 {
-    color: #fff !important;
+    color: #fff ;
   }
 
   .inactivegold {
@@ -248,7 +251,7 @@
   }
 }
 .goldenscore-inactive2 {
-  color: #fff !important;
+  color: #fff ;
 }
 .playerName {
   font-style: normal;
@@ -286,6 +289,8 @@
   padding: 10px;
   // border-radius: 8px;
   // border-bottom: 1px solid #09f3d2 !important;
+  color: #FFF;
+
 }
 
 .nft-hover {
@@ -434,4 +439,8 @@
       no-repeat,
     linear-gradient(to top right, #582570 0%, #351755 50%) top right / 50% 50%
       no-repeat;
+}
+
+.premium-goldenscore{
+  color: #f4e27b !important;
 }

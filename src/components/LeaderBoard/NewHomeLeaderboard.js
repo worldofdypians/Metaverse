@@ -28,6 +28,7 @@ import wodActive from "./assets/wodActive.svg";
 import wodInactive from "./assets/wodInactive.svg";
 import leftArrow from "./assets/leftArrow.svg";
 import rightArrow from "./assets/rightArrow.svg";
+import premiumIcon from "./assets/premiumIcon.png";
 // import React, { useState, useEffect } from "react";
 // import price1 from "../../Images/userProfile/price1.svg";
 // import price2 from "../../Images/userProfile/price2.svg";
@@ -800,6 +801,10 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     } else setisActive(true);
   }, [countdown]);
 
+  useEffect(() => {
+    setOptionText2("bnb");
+  }, []);
+
   return (
     <div
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
@@ -1325,24 +1330,295 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
         )}
       </div> */}
       <Slider {...settings} ref={sliderRef}>
+        {optionText2 !== "skale" &&
+          (optionText2 !== "wod" && (
+            <div className="leaderboard-item d-flex flex-column gap-2 p-0">
+              <div className="d-flex w-100 justify-content-between leaderboard-title-wrapper px-3 py-2">
+                <img
+                  src={leftArrow}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                  onClick={prevSlide}
+                />
+                <h6 className="leaderboard-title  text-white font-oxanium mb-0">
+                  DAILY
+                </h6>
+                <img
+                  src={rightArrow}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                  onClick={nextSlide}
+                />
+              </div>
+              <div className="p-2">
+                <table className="playerTable w-100">
+                  <tbody>
+                    <tr className="playerRow">
+                      <th className="playerHeader font-montserrat">Rank</th>
+                      <th className="playerHeader font-montserrat">Player</th>
+                      {optionText !== "genesis" && (
+                        <th className="playerHeader text-center font-montserrat">
+                          Score
+                        </th>
+                      )}
+                      {optionText !== "genesis" && (
+                        <th className="playerHeader text-center font-montserrat">
+                          Reward
+                        </th>
+                      )}
+                      <th className="playerHeader text-center font-montserrat">
+                        Golden Pass
+                      </th>
+                    </tr>
+                    {playerData.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1 font-montserrat">
+                            {item.position}
+                          </td>
+                          <td className="playerName col-5 font-montserrat">
+                            {item.displayName === username ? (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span>
+                                  {" "}
+                                  {item.displayName?.slice(0, 13)}
+                                  {item.displayName?.length > 13 && "..."}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName?.slice(0, 13)}
+                                {item.displayName?.length > 13 && "..."}
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center font-montserrat">
+                            {getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          <td
+                            className={`playerReward text-center col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${prizes[index]}
+                          </td>
+                          <td
+                            className={`playerReward col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive2"
+                            }`}
+                          >
+                            +$
+                            {getFormattedNumber(dailyPrizesGolden[index], 0)}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                    {inactiveBoard === true &&
+                      ((dailyplayerData.length === 0 &&
+                        optionText === "daily") ||
+                        (weeklyplayerData.length === 0 &&
+                          optionText === "weekly") ||
+                        (monthlyplayerData.length === 0 &&
+                          optionText === "monthly")) &&
+                      optionText !== "genesis" && (
+                        <CircularProgress
+                          size={20}
+                          style={{ alignSelf: "center", margin: "auto" }}
+                        />
+                      )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
+        {optionText2 !== "wod" && (
+          <div className="leaderboard-item d-flex flex-column gap-2 p-0">
+            <div
+              className={`d-flex w-100 ${
+                optionText2 !== "skale"
+                  ? "justify-content-between"
+                  : "justify-content-center p-2"
+              } leaderboard-title-wrapper px-3 py-2`}
+            >
+              {optionText2 !== "skale" && (
+                <img
+                  src={leftArrow}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                  onClick={prevSlide}
+                />
+              )}
+              <h6
+                className="leaderboard-title  text-white font-oxanium mb-0"
+                style={{ width: "fit-content" }}
+              >
+                WEEKLY
+              </h6>
+              {optionText2 !== "skale" && (
+                <img
+                  src={rightArrow}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                  onClick={nextSlide}
+                />
+              )}
+            </div>
+            <div className="p-2">
+              <table className="playerTable w-100">
+                <tbody>
+                  <tr className="playerRow">
+                    <th className="playerHeader font-montserrat">Rank</th>
+                    <th className="playerHeader font-montserrat">Player</th>
+                    {optionText !== "genesis" && (
+                      <th className="playerHeader text-center font-montserrat">
+                        Score
+                      </th>
+                    )}
+                    {optionText !== "genesis" && (
+                      <th className="playerHeader text-center font-montserrat">
+                        Reward
+                      </th>
+                    )}
+                    <th className="playerHeader text-center font-montserrat">
+                      {optionText2 === "skale" ? "Premium" : "Golden Pass"}
+                    </th>
+                  </tr>
+                  {playerData.map((item, index) => {
+                    return (
+                      <tr
+                        key={index}
+                        className={`playerInnerRow ${
+                          inactiveBoard || item.displayName === username
+                            ? "playerInnerRow-inactive"
+                            : null
+                        }`}
+                      >
+                        <td className="playerData col-1 font-montserrat">
+                          {item.position}
+                        </td>
+                        <td className="playerName col-5 font-montserrat">
+                          {item.displayName === username ? (
+                            <div className="position-relative d-flex align-items-center">
+                              <img
+                                src={premiumAvatar}
+                                alt=""
+                                className="playerAvatar"
+                              />
+                              <span>
+                                {" "}
+                                {item.displayName?.slice(0, 13)}
+                                {item.displayName?.length > 13 && "..."}
+                              </span>
+                            </div>
+                          ) : (
+                            <div className="position-relative d-flex align-items-center">
+                              <img
+                                src={playerAvatar}
+                                alt=""
+                                className="playerAvatar"
+                              />{" "}
+                              {item.displayName?.slice(0, 13)}
+                              {item.displayName?.length > 13 && "..."}
+                            </div>
+                          )}
+                        </td>
+                        <td className="playerScore col-2 text-center font-montserrat">
+                          {getFormattedNumber(item.statValue, 0)}
+                        </td>
+                        <td
+                          className={`playerReward text-center col-2 font-montserrat ${
+                            username === item.displayName
+                              ? "goldenscore"
+                              : "playerReward"
+                          }`}
+                        >
+                          ${prizes[index]}
+                        </td>
+                        <td
+                          className={`playerReward d-flex align-items-center justify-content-center gap- mb-0 ${
+                            optionText2 === "skale" && "premium-goldenscore"
+                          } col-2 font-montserrat ${
+                            username === item.displayName
+                              ? "goldenscore"
+                              : "goldenscore-inactive2"
+                          }`}
+                          style={{width: "100%"}}
+                        >
+                          +$
+                          {getFormattedNumber(dailyPrizesGolden[index], 0)}
+                          {optionText2 === "skale" && 
+                          <img src={premiumIcon} alt="" />
+                          }
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  {inactiveBoard === true &&
+                    ((dailyplayerData.length === 0 && optionText === "daily") ||
+                      (weeklyplayerData.length === 0 &&
+                        optionText === "weekly") ||
+                      (monthlyplayerData.length === 0 &&
+                        optionText === "monthly")) &&
+                    optionText !== "genesis" && (
+                      <CircularProgress
+                        size={20}
+                        style={{ alignSelf: "center", margin: "auto" }}
+                      />
+                    )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
         {optionText2 !== "skale" && (
           <div className="leaderboard-item d-flex flex-column gap-2 p-0">
-            <div className="d-flex w-100 justify-content-between leaderboard-title-wrapper px-3 py-2">
-              <img
-                src={leftArrow}
-                alt=""
-                style={{ cursor: "pointer" }}
-                onClick={prevSlide}
-              />
+            <div
+              className={`d-flex w-100 ${
+                optionText2 !== "wod"
+                  ? "justify-content-between"
+                  : "justify-content-center p-2"
+              } leaderboard-title-wrapper px-3 py-2`}
+            >
+              {optionText2 !== "wod" && (
+                <img
+                  src={leftArrow}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                  onClick={prevSlide}
+                />
+              )}
               <h6 className="leaderboard-title  text-white font-oxanium mb-0">
-                DAILY
+                MONTHLY
               </h6>
-              <img
-                src={rightArrow}
-                alt=""
-                style={{ cursor: "pointer" }}
-                onClick={nextSlide}
-              />
+              {optionText2 !== "wod" && (
+                <img
+                  src={rightArrow}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                  onClick={nextSlide}
+                />
+              )}
             </div>
             <div className="p-2">
               <table className="playerTable w-100">
@@ -1440,198 +1716,6 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                         style={{ alignSelf: "center", margin: "auto" }}
                       />
                     )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-        <div className="leaderboard-item d-flex flex-column gap-2 p-0">
-          <div className={`d-flex w-100 ${optionText2 !== "skale" ? "justify-content-between" : "justify-content-center p-2"} leaderboard-title-wrapper px-3 py-2`}>
-            {optionText2 !== "skale" && (
-              <img
-                src={leftArrow}
-                alt=""
-                style={{ cursor: "pointer" }}
-                onClick={prevSlide}
-              />
-            )}
-            <h6 className="leaderboard-title  text-white font-oxanium mb-0" style={{width: "fit-content"}}> 
-              WEEKLY
-            </h6>
-            {optionText2 !== "skale" && (
-              <img
-                src={rightArrow}
-                alt=""
-                style={{ cursor: "pointer" }}
-                onClick={nextSlide}
-              />
-            )}
-          </div>
-          <div className="p-2">
-            <table className="playerTable w-100">
-              <tbody>
-                <tr className="playerRow">
-                  <th className="playerHeader">Rank</th>
-                  <th className="playerHeader">Player</th>
-                  {optionText !== "genesis" && (
-                    <th className="playerHeader text-center">Score</th>
-                  )}
-                  {optionText !== "genesis" && (
-                    <th className="playerHeader text-center">Reward</th>
-                  )}
-                  <th className="playerHeader text-center">Golden Pass</th>
-                </tr>
-                {playerData.map((item, index) => {
-                  return (
-                    <tr
-                      key={index}
-                      className={`playerInnerRow ${
-                        inactiveBoard || item.displayName === username
-                          ? "playerInnerRow-inactive"
-                          : null
-                      }`}
-                    >
-                      <td className="playerData col-1 font-montserrat">
-                        {item.position}
-                      </td>
-                      <td className="playerName col-5 font-montserrat">
-                        {
-                          <div className="position-relative d-flex align-items-center">
-                            <img
-                              src={playerAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />{" "}
-                            {item.displayName?.slice(0, 13)}
-                            {item.displayName?.length > 13 && "..."}
-                          </div>
-                        }
-                      </td>
-                      <td className="playerScore col-2 text-center font-montserrat">
-                        {getFormattedNumber(item.statValue, 0)}
-                      </td>
-                      <td
-                        className={`playerReward text-center col-2 font-montserrat ${
-                          username === item.displayName
-                            ? "goldenscore"
-                            : "playerReward"
-                        }`}
-                      >
-                        ${prizes[index]}
-                      </td>
-                      <td
-                        className={`playerReward col-2 font-montserrat ${
-                          username === item.displayName
-                            ? "goldenscore"
-                            : "goldenscore-inactive2"
-                        }`}
-                      >
-                        +$
-                        {getFormattedNumber(dailyPrizesGolden[index], 0)}
-                      </td>
-                    </tr>
-                  );
-                })}
-                {inactiveBoard === true &&
-                  ((dailyplayerData.length === 0 && optionText === "daily") ||
-                    (weeklyplayerData.length === 0 &&
-                      optionText === "weekly") ||
-                    (monthlyplayerData.length === 0 &&
-                      optionText === "monthly")) &&
-                  optionText !== "genesis" && (
-                    <CircularProgress
-                      size={20}
-                      style={{ alignSelf: "center", margin: "auto" }}
-                    />
-                  )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-        {optionText2 !== "skale" && (
-          <div className="leaderboard-item d-flex flex-column gap-2 p-0">
-            <div className="d-flex w-100 justify-content-between leaderboard-title-wrapper px-3 py-2">
-              <img
-                src={leftArrow}
-                alt=""
-                style={{ cursor: "pointer" }}
-                onClick={prevSlide}
-              />
-              <h6 className="leaderboard-title  text-white font-oxanium mb-0">
-                MONTHLY
-              </h6>
-              <img
-                src={rightArrow}
-                alt=""
-                style={{ cursor: "pointer" }}
-                onClick={nextSlide}
-              />
-            </div>
-            <div className="p-2">
-              <table className="playerTable w-100">
-                <tbody>
-                  <tr className="playerRow">
-                    <th className="playerHeader">Rank</th>
-                    <th className="playerHeader">Player</th>
-                    {optionText !== "genesis" && (
-                      <th className="playerHeader text-center">Score</th>
-                    )}
-                    {optionText !== "genesis" && (
-                      <th className="playerHeader text-center">Reward</th>
-                    )}
-                    <th className="playerHeader text-center">Golden Pass</th>
-                  </tr>
-                  {playerData.map((item, index) => {
-                    return (
-                      <tr
-                        key={index}
-                        className={`playerInnerRow ${
-                          inactiveBoard || item.displayName === username
-                            ? "playerInnerRow-inactive"
-                            : null
-                        }`}
-                      >
-                        <td className="playerData col-1 font-montserrat">
-                          #{Number(item.position) + 1}
-                        </td>
-                        <td className="playerName col-5 font-montserrat">
-                          {
-                            <div className="position-relative d-flex align-items-center">
-                              <img
-                                src={playerAvatar}
-                                alt=""
-                                className="playerAvatar"
-                              />{" "}
-                              {item.displayName?.slice(0, 13)}
-                              {item.displayName?.length > 13 && "..."}
-                            </div>
-                          }
-                        </td>
-                        <td className="playerScore col-2 text-center font-montserrat">
-                          {getFormattedNumber(item.statValue, 0)}
-                        </td>
-                        <td
-                          className={`playerReward text-center col-2 font-montserrat ${
-                            username === item.displayName
-                              ? "goldenscore"
-                              : "playerReward"
-                          }`}
-                        >
-                          ${prizes[index]}
-                        </td>
-                        <td
-                          className={`playerReward col-2 ${
-                            username === item.displayName
-                              ? "goldenscore"
-                              : "goldenscore-inactive2"
-                          }`}
-                        >
-                          +$
-                          {getFormattedNumber(dailyPrizesGolden[index], 0)}
-                        </td>
-                      </tr>
-                    );
-                  })}
                 </tbody>
               </table>
             </div>

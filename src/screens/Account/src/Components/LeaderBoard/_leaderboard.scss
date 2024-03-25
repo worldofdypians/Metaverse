@@ -90,6 +90,7 @@
   top: 0;
   // background: #080b2a;
   z-index: 2;
+  white-space: nowrap;
 }
 
 .optionText {
@@ -97,7 +98,7 @@
   font-weight: 500;
   font-size: 15px;
   line-height: 18px;
-  color: #ffffff;
+  color: #747687;
   display: flex;
   justify-content: center;
   cursor: pointer;
@@ -106,7 +107,7 @@
 
 .optionText:hover,
 .activeoption {
-  color: #09f3d2;
+  color: #FFF;
 }
 
 .optionTextGolden {
@@ -212,7 +213,7 @@
   color: rgba(243, 192, 9, 1);
 }
 .goldenscore-inactive2 {
-  color: #fff !important;
+  color: #fff ;
   text-align: center;
 }
 .playerName {
@@ -336,7 +337,7 @@
   border-radius: 12px;
   white-space: nowrap;
   // border-bottom: 1px solid #09f3d2 !important;
-  color: #09f3d2;
+  color: #FFF;
 }
 
 .comingsoon {
