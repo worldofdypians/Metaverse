@@ -1048,7 +1048,7 @@ const NewDailyBonus = ({
                             {" "}
                             <img src={skaleIcon} alt="" /> SKALE
                           </button>
-                         <a href="https://www.sfuelstation.com/" target="_blank">
+                         {/* <a href="https://www.sfuelstation.com/" target="_blank">
                          <button
                             className={`${
                               chainId === 2046399126
@@ -1060,7 +1060,7 @@ const NewDailyBonus = ({
                             Get SFuel
                             <img src={gasRightArrow} alt="" /> 
                           </button>
-                         </a>
+                         </a> */}
                         </div>
                       </div>
                       <div
