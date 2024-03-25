@@ -1005,19 +1005,19 @@ const NewLeaderBoard = ({
                      <table className="playerTable">
                         <tbody>
                           <tr className="playerRow">
-                            <th className="playerHeader">Rank</th>
-                            <th className="playerHeader">Player</th>
+                            <th className="playerHeader font-montserrat">Rank</th>
+                            <th className="playerHeader font-montserrat">Player</th>
                             {optionText !== "genesis" && (
-                              <th className="playerHeader text-center">
+                              <th className="playerHeader text-center font-montserrat">
                                 Score
                               </th>
                             )}
                             {optionText !== "genesis" && (
-                              <th className="playerHeader text-center">
+                              <th className="playerHeader text-center font-montserrat">
                                 Reward
                               </th>
                             )}
-                            <th className="playerHeader text-center">Pass</th>
+                            <th className="playerHeader text-center font-montserrat">Pass</th>
                           </tr>
                           {playerData.map((item, index) => {
                             return (
@@ -1029,10 +1029,10 @@ const NewLeaderBoard = ({
                                     : null
                                 }`}
                               >
-                                <td className="playerData col-1">
+                                <td className="playerData col-1 font-montserrat">
                                   {item.position}
                                 </td>
-                                <td className="playerName col-5">
+                                <td className="playerName col-5 font-montserrat">
                                   {availableTime !== "0" &&
                                   availableTime &&
                                   availableTime >= today1.getTime() &&
@@ -1062,11 +1062,11 @@ const NewLeaderBoard = ({
                                     </div>
                                   )}
                                 </td>
-                                <td className="playerScore col-2 text-center">
+                                <td className="playerScore col-2 text-center font-montserrat">
                                   {getFormattedNumber(item.statValue, 0)}
                                 </td>
                                 <td
-                                  className={`playerReward text-center col-2 ${
+                                  className={`playerReward text-center col-2 font-montserrat ${
                                     availableTime !== "0" &&
                                     availableTime &&
                                     availableTime >= today1.getTime() &&
@@ -1079,7 +1079,7 @@ const NewLeaderBoard = ({
                                   ${prizes[index]}
                                 </td>
                                 <td
-                                  className={`playerReward col-2 ${
+                                  className={`playerReward col-2 font-montserrat ${
                                     availableTime !== "0" &&
                                     availableTime &&
                                     availableTime >= today1.getTime() &&
@@ -1124,13 +1124,13 @@ const NewLeaderBoard = ({
                             <tbody>
                               <tr className={`playerInnerRow-inactive`}>
                                 <td
-                                  className={`playerData ${
+                                  className={`playerData font-montserrat ${
                                     optionText === "genesis" ? "col-2" : "col-1"
                                   }`}
                                 >
                                   #{userData.position + 1}
                                 </td>
-                                <td className="playerName col-5">
+                                <td className="playerName col-5 font-montserrat">
                                   <div className="position-relative  d-flex align-items-center">
                                     {availableTime !== "0" &&
                                     availableTime &&
@@ -1169,12 +1169,12 @@ const NewLeaderBoard = ({
                                   </div>
                                 </td>
                                 {optionText !== "genesis" && (
-                                  <td className="playerScore col-2 text-center">
+                                  <td className="playerScore col-2 text-center font-montserrat">
                                     {getFormattedNumber(userData.statValue, 0)}
                                   </td>
                                 )}
                                 <td
-                                  className={`playerReward text-center ${
+                                  className={`playerReward text-center font-montserrat ${
                                     availableTime !== "0" &&
                                     availableTime &&
                                     availableTime >= today1.getTime() &&
@@ -1193,7 +1193,7 @@ const NewLeaderBoard = ({
                                 </td>
                                 {optionText !== "genesis" && (
                                   <td
-                                    className={`playerScore col-2 ${
+                                    className={`playerScore col-2 font-montserrat ${
                                       availableTime !== "0" &&
                                       availableTime &&
                                       availableTime >= today1.getTime() &&
@@ -1222,19 +1222,19 @@ const NewLeaderBoard = ({
                     <table className="playerTable">
                         <tbody>
                           <tr className="playerRow">
-                            <th className="playerHeader">Rank</th>
-                            <th className="playerHeader">Player</th>
+                            <th className="playerHeader font-montserrat">Rank</th>
+                            <th className="playerHeader font-montserrat">Player</th>
                             {optionText !== "genesis" && (
-                              <th className="playerHeader text-center">
+                              <th className="playerHeader text-center font-montserrat">
                                 Score
                               </th>
                             )}
                             {optionText !== "genesis" && (
-                              <th className="playerHeader text-center">
+                              <th className="playerHeader text-center font-montserrat">
                                 Reward
                               </th>
                             )}
-                            <th className="playerHeader text-center">Pass</th>
+                            <th className="playerHeader text-center font-montserrat">Pass</th>
                           </tr>
                           {playerData.map((item, index) => {
                             return (
@@ -1246,10 +1246,10 @@ const NewLeaderBoard = ({
                                     : null
                                 }`}
                               >
-                                <td className="playerData col-1">
+                                <td className="playerData col-1 font-montserrat">
                                   {item.position}
                                 </td>
-                                <td className="playerName col-5">
+                                <td className="playerName col-5 font-montserrat">
                                   {availableTime !== "0" &&
                                   availableTime &&
                                   availableTime >= today1.getTime() &&
@@ -1279,11 +1279,11 @@ const NewLeaderBoard = ({
                                     </div>
                                   )}
                                 </td>
-                                <td className="playerScore col-2 text-center">
+                                <td className="playerScore col-2 text-center font-montserrat">
                                   {getFormattedNumber(item.statValue, 0)}
                                 </td>
                                 <td
-                                  className={`playerReward text-center col-2 ${
+                                  className={`playerReward text-center col-2 font-montserrat ${
                                     availableTime !== "0" &&
                                     availableTime &&
                                     availableTime >= today1.getTime() &&
@@ -1296,7 +1296,7 @@ const NewLeaderBoard = ({
                                   ${prizes[index]}
                                 </td>
                                 <td
-                                  className={`playerReward col-2 ${
+                                  className={`playerReward col-2 font-montserrat ${
                                     availableTime !== "0" &&
                                     availableTime &&
                                     availableTime >= today1.getTime() &&
@@ -1341,13 +1341,13 @@ const NewLeaderBoard = ({
                             <tbody>
                               <tr className={`playerInnerRow-inactive`}>
                                 <td
-                                  className={`playerData ${
+                                  className={`playerData font-montserrat ${
                                     optionText === "genesis" ? "col-2" : "col-1"
                                   }`}
                                 >
                                   #{userData.position + 1}
                                 </td>
-                                <td className="playerName col-5">
+                                <td className="playerName col-5 font-montserrat">
                                   <div className="position-relative  d-flex align-items-center">
                                     {availableTime !== "0" &&
                                     availableTime &&
@@ -1386,12 +1386,12 @@ const NewLeaderBoard = ({
                                   </div>
                                 </td>
                                 {optionText !== "genesis" && (
-                                  <td className="playerScore col-2 text-center">
+                                  <td className="playerScore col-2 text-center font-montserrat">
                                     {getFormattedNumber(userData.statValue, 0)}
                                   </td>
                                 )}
                                 <td
-                                  className={`playerReward text-center ${
+                                  className={`playerReward text-center font-montserrat ${
                                     availableTime !== "0" &&
                                     availableTime &&
                                     availableTime >= today1.getTime() &&
@@ -1410,7 +1410,7 @@ const NewLeaderBoard = ({
                                 </td>
                                 {optionText !== "genesis" && (
                                   <td
-                                    className={`playerScore col-2 ${
+                                    className={`playerScore col-2 font-montserrat ${
                                       availableTime !== "0" &&
                                       availableTime &&
                                       availableTime >= today1.getTime() &&
@@ -1439,19 +1439,19 @@ const NewLeaderBoard = ({
                    <table className="playerTable">
                         <tbody>
                           <tr className="playerRow">
-                            <th className="playerHeader">Rank</th>
-                            <th className="playerHeader">Player</th>
+                            <th className="playerHeader font-montserrat">Rank</th>
+                            <th className="playerHeader font-montserrat">Player</th>
                             {optionText !== "genesis" && (
-                              <th className="playerHeader text-center">
+                              <th className="playerHeader text-center font-montserrat">
                                 Score
                               </th>
                             )}
                             {optionText !== "genesis" && (
-                              <th className="playerHeader text-center">
+                              <th className="playerHeader text-center font-montserrat">
                                 Reward
                               </th>
                             )}
-                            <th className="playerHeader text-center">Pass</th>
+                            <th className="playerHeader text-center font-montserrat">Pass</th>
                           </tr>
                           {playerData.map((item, index) => {
                             return (
@@ -1463,10 +1463,10 @@ const NewLeaderBoard = ({
                                     : null
                                 }`}
                               >
-                                <td className="playerData col-1">
+                                <td className="playerData col-1 font-montserrat font-montserrat">
                                   #{Number(item.position) + 1}
                                 </td>
-                                <td className="playerName col-5">
+                                <td className="playerName col-5 font-montserrat font-montserrat">
                                   {availableTime !== "0" &&
                                   availableTime &&
                                   availableTime >= today1.getTime() &&
@@ -1496,11 +1496,11 @@ const NewLeaderBoard = ({
                                     </div>
                                   )}
                                 </td>
-                                <td className="playerScore col-2 text-center">
+                                <td className="playerScore col-2 text-center font-montserrat font-montserrat">
                                   {getFormattedNumber(item.statValue, 0)}
                                 </td>
                                 <td
-                                  className={`playerReward text-center col-2 ${
+                                  className={`playerReward text-center col-2 font-montserrat font-montserrat ${
                                     availableTime !== "0" &&
                                     availableTime &&
                                     availableTime >= today1.getTime() &&
@@ -1513,7 +1513,7 @@ const NewLeaderBoard = ({
                                   ${prizes[index]}
                                 </td>
                                 <td
-                                  className={`playerReward col-2 ${
+                                  className={`playerReward col-2 font-montserrat font-montserrat ${
                                     availableTime !== "0" &&
                                     availableTime &&
                                     availableTime >= today1.getTime() &&
@@ -1558,13 +1558,13 @@ const NewLeaderBoard = ({
                             <tbody>
                               <tr className={`playerInnerRow-inactive`}>
                                 <td
-                                  className={`playerData ${
+                                  className={`playerData font-montserrat ${
                                     optionText === "genesis" ? "col-2" : "col-1"
                                   }`}
                                 >
                                   #{userData.position + 1}
                                 </td>
-                                <td className="playerName col-5">
+                                <td className="playerName col-5 font-montserrat">
                                   <div className="position-relative  d-flex align-items-center">
                                     {availableTime !== "0" &&
                                     availableTime &&
@@ -1603,12 +1603,12 @@ const NewLeaderBoard = ({
                                   </div>
                                 </td>
                                 {optionText !== "genesis" && (
-                                  <td className="playerScore col-2 text-center">
+                                  <td className="playerScore col-2 text-center font-montserrat">
                                     {getFormattedNumber(userData.statValue, 0)}
                                   </td>
                                 )}
                                 <td
-                                  className={`playerReward text-center ${
+                                  className={`playerReward text-center font-montserrat ${
                                     availableTime !== "0" &&
                                     availableTime &&
                                     availableTime >= today1.getTime() &&
@@ -1627,7 +1627,7 @@ const NewLeaderBoard = ({
                                 </td>
                                 {optionText !== "genesis" && (
                                   <td
-                                    className={`playerScore col-2 ${
+                                    className={`playerScore col-2 font-montserrat ${
                                       availableTime !== "0" &&
                                       availableTime &&
                                       availableTime >= today1.getTime() &&
