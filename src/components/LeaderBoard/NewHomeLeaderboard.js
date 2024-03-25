@@ -1330,7 +1330,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
           <div className="leaderboard-item d-flex flex-column gap-2 p-0">
             <div className="d-flex w-100 justify-content-between leaderboard-title-wrapper px-3 py-2">
               <img src={leftArrow} alt="" style={{cursor: "pointer"}} onClick={prevSlide}  />
-              <h6 className="leaderboard-title  text-white mb-0">Daily</h6>
+              <h6 className="leaderboard-title  text-white font-oxanium mb-0">DAILY</h6>
               <img src={rightArrow} alt="" style={{cursor: "pointer"}}  onClick={nextSlide} />
             </div>
             <div className="p-2">
@@ -1429,7 +1429,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
         <div className="leaderboard-item d-flex flex-column gap-2 p-0">
         <div className="d-flex w-100 justify-content-between leaderboard-title-wrapper px-3 py-2">
               <img src={leftArrow} alt="" style={{cursor: "pointer"}}  onClick={prevSlide}  />
-              <h6 className="leaderboard-title  text-white mb-0">Weekly</h6>
+              <h6 className="leaderboard-title  text-white font-oxanium mb-0">WEEKLY</h6>
               <img src={rightArrow} alt=""  style={{cursor: "pointer"}}  onClick={nextSlide} />
             </div>
           <div className="p-2">
@@ -1515,7 +1515,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
           <div className="leaderboard-item d-flex flex-column gap-2 p-0">
            <div className="d-flex w-100 justify-content-between leaderboard-title-wrapper px-3 py-2">
               <img src={leftArrow} alt="" style={{cursor: "pointer"}}  onClick={prevSlide} />
-              <h6 className="leaderboard-title  text-white mb-0">Monthly</h6>
+              <h6 className="leaderboard-title  text-white font-oxanium mb-0">MONTHLY</h6>
               <img src={rightArrow} alt="" style={{cursor: "pointer"}}  onClick={nextSlide} />
             </div>
             <div className="p-2">
