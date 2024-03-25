@@ -112,7 +112,8 @@ const MarketSidebar = () => {
                               location.pathname.includes("coingecko") ||
                               location.pathname.includes("base") ||
                               location.pathname.includes("coinmarketcap") ||
-                              location.pathname.includes("doge") ||
+                              location.pathname.includes("doge")||
+                              location.pathname.includes("skale") ||
                               location.pathname.includes("gate")
                                 ? "sidebar-item-active nft-active"
                                 : null
@@ -223,7 +224,7 @@ const MarketSidebar = () => {
             }}
           />
           <NavLink
-            to="/marketplace/mint/timepiece"
+            to="/marketplace/mint/skale"
             end
             className={({ isActive }) =>
               isActive

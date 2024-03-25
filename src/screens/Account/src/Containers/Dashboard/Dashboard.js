@@ -151,6 +151,7 @@ function Dashboard({
   const [myBaseNfts, setmyBaseNfts] = useState([]);
   const [myDogeNfts, setmyDogeNfts] = useState([]);
   const [myCmcNfts, setmyCmcNfts] = useState([]);
+  const [mySkaleNfts, setmySkaleNfts] = useState([])
   const [latestVersion, setLatestVersion] = useState(0);
 
   const [userPoints, setuserPoints] = useState(0);
@@ -1211,6 +1212,10 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cmc").then((NFTS) =>
       setmyCmcNfts(NFTS)
     );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "skale").then((NFTS) =>
+    setmySkaleNfts(NFTS)
+  );
   };
 
   const getOtherNfts = async () => {
@@ -2452,6 +2457,8 @@ function Dashboard({
                       myBaseNfts={myBaseNfts}
                       myDogeNfts={myDogeNfts}
                       myCmcNfts={myCmcNfts}
+                      mySkaleNfts={mySkaleNfts}
+
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}

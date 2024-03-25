@@ -160,6 +160,8 @@ function App() {
   const [myConfluxNFTsCreated, setmyConfluxNFTsCreated] = useState([]);
 
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
+  const [myskaleNFTsCreated, setmyskaleNFTsCreated] = useState([]);
+
 
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
@@ -176,11 +178,15 @@ function App() {
   const [totalCoingeckoNft, setTotalCoingeckoNft] = useState(0);
   const [totalGateNft, setTotalGateNft] = useState(0);
   const [totalBaseNft, settotalBaseNft] = useState(0);
+  const [totalSkaleNft, settotalSkaleNft] = useState(0);
+
   const [totalDogeNft, settotalDogeNft] = useState(0);
   const [totalCmcNft, settotalCmcNft] = useState(0);
 
   const [totalConfluxNft, setTotalConfluxNft] = useState(0);
   const [baseMintAllowed, setbaseMintAllowed] = useState(1);
+  const [skaleMintAllowed, setSkaleMintAllowed] = useState(1);
+
   const [confluxMintAllowed, setconfluxMintAllowed] = useState(1);
 
   const [fireAppcontent, setFireAppContent] = useState(false);
@@ -217,6 +223,8 @@ function App() {
   const [myGateNfts, setMyGateNfts] = useState([]);
   const [myConfluxNfts, setMyConfluxNfts] = useState([]);
   const [myBaseNFTs, setmyBaseNFTs] = useState([]);
+  const [myskaleNFTs, setmySkaleNFTs] = useState([]);
+
   const [myDogeNFTs, setmyDogeNFTs] = useState([]);
   const [myCmcNFTs, setmyCmcNFTs] = useState([]);
 
@@ -783,6 +791,13 @@ function App() {
         setmybaseNFTsCreated(NFTS);
       });
 
+      getMyNFTS(coinbase, "skale").then((NFTS) => {
+        settotalSkaleNft(NFTS.length);
+        setmySkaleNFTs(NFTS);
+        setSkaleMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setmyskaleNFTsCreated(NFTS);
+      });
+
       //setmyBaseNFTs
     } else {
       setMyNFTSCaws([]);
@@ -1150,8 +1165,8 @@ function App() {
           setmintStatus("Minting in progress...");
           settextColor("rgb(123, 216, 176)");
           // console.log(data,finalCaws, totalCawsDiscount);
-          let tokenId = await window.base_nft
-            .mintBaseNFT()
+          let tokenId = await window.skale_nft
+            .mintSkaleNFT()
             .then(() => {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
@@ -1160,10 +1175,10 @@ function App() {
                 setmintStatus("");
                 setmintloading("initial");
               }, 5000);
-              getMyNFTS(coinbase, "base").then((NFTS) => {
-                setmybaseNFTsCreated(NFTS);
-                settotalBaseNft(NFTS.length);
-                setbaseMintAllowed(0);
+              getMyNFTS(coinbase, "skale").then((NFTS) => {
+                setmyskaleNFTsCreated(NFTS);
+                settotalSkaleNft(NFTS.length);
+                setSkaleMintAllowed(0);
               });
             })
             .catch((e) => {
@@ -2955,32 +2970,36 @@ function App() {
             />
             <Route
               exact
-              path="/marketplace/mint/timepiece"
+              path="/marketplace/mint/:id"
               element={
                 <MarketMint
-                  coinbase={coinbase}
-                  showWalletConnect={() => {
-                    setwalletModal(true);
-                  }}
-                  cawsArray={allCawsForTimepieceMint}
-                  mintloading={mintloading}
-                  isConnected={isConnected}
-                  chainId={chainId}
-                  handleMint={handleTimepieceMint}
-                  mintStatus={mintStatus}
-                  textColor={textColor}
-                  calculateCaws={calculateCaws}
-                  totalCreated={totalTimepieceCreated}
-                  timepieceMetadata={timepieceMetadata}
-                  myConfluxNFTsCreated={myConfluxNFTsCreated}
-                  mybaseNFTsCreated={mybaseNFTsCreated}
-                  handleConfluxMint={handleConfluxNftMint}
-                  handleBaseNftMint={handleBaseNftMint}
-                  confluxMintAllowed={confluxMintAllowed}
-                  baseMintAllowed={baseMintAllowed}
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleMint={handleTimepieceMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                myConfluxNFTsCreated={myConfluxNFTsCreated}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                myskaleNFTsCreated={myskaleNFTsCreated}
+                handleConfluxMint={handleConfluxNftMint}
+                handleBaseNftMint={handleBaseNftMint}
+                confluxMintAllowed={confluxMintAllowed}
+                baseMintAllowed={baseMintAllowed}
+                skaleMintAllowed={skaleMintAllowed}
                 />
               }
             />
+ 
+
           </Routes>
           {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
           <ScrollTop />
