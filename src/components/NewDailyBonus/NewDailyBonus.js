@@ -21,6 +21,7 @@ import infoIcon from "./assets/infoIcon.svg";
 import skaleIcon from "./assets/skaleIcon.svg";
 import danger from "./assets/danger.svg";
 import warning from "./assets/warning.svg";
+import gasRightArrow from "./assets/gasRightArrow.svg";
 import redX from "./assets/redX.svg";
 import NewChestItem from "./NewChestItem";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -1047,6 +1048,19 @@ const NewDailyBonus = ({
                             {" "}
                             <img src={skaleIcon} alt="" /> SKALE
                           </button>
+                         <a href="https://www.sfuelstation.com/" target="_blank">
+                         <button
+                            className={`${
+                              chainId === 2046399126
+                                ? "new-chain-active-btn"
+                                : "new-chain-inactive-btn"
+                            } d-flex gap-2 align-items-center`}
+                          >
+                            {" "}
+                            Get SFuel
+                            <img src={gasRightArrow} alt="" /> 
+                          </button>
+                         </a>
                         </div>
                       </div>
                       <div
@@ -1424,12 +1438,27 @@ const NewDailyBonus = ({
                         <div className="dot" style={{ "--i": 8 }}></div>
                         <div className="dot" style={{ "--i": 9 }}></div>
                       </div>
-                      <h6
+                      {/* <h6
                         className="loader-text mb-0"
                         style={{ color: "#ce5d1b" }}
                       >
                         Switch to {chain === "bnb" ? "BNB" : "SKALE"} Chain
-                      </h6>
+                      </h6> */}
+                      {chain === "bnb" ? 
+                      <h6 className="loader-text mb-0"
+                      style={{ color: "#ce5d1b" }}
+                      
+                      >
+                        Switch to <span span style={{textDecoration: "underline", cursor: "pointer"}} onClick={handleBnbPool}>BNB Chain</span> or <span span style={{textDecoration: "underline", cursor: "pointer"}} onClick={handleOpBnbPool}>opBNB Chain</span>
+                      </h6>  
+                      :
+                      <h6 className="loader-text mb-0"
+                      style={{ color: "#ce5d1b" }}
+                      
+                      >
+                        Switch to <span style={{textDecoration: "underline", cursor: "pointer"}} onClick={handleSkalePool}>SKALE Network</span> 
+                      </h6> 
+                    }
                       <div className="loader red-loader">
                         <div className="dot" style={{ "--i": 0 }}></div>
                         <div className="dot" style={{ "--i": 1 }}></div>
