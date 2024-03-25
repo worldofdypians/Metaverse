@@ -1556,7 +1556,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           ${prizes[index]}
                         </td>
                         <td
-                          className={`playerReward d-flex align-items-center justify-content-center gap- mb-0 ${
+                          className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
                             optionText2 === "skale" && "premium-goldenscore"
                           } col-2 font-montserrat ${
                             username === item.displayName
