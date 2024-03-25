@@ -781,6 +781,25 @@ const BetaPassNFT = ({
                     />
                     <span>Avalanche</span>
                   </NavLink> */}
+                    <div
+                    // to={"/marketplace/beta-pass/skale"}
+                    className={`${
+                      location.pathname.includes("skale") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2 position-relative`}
+                    // onClick={() => {
+                    //   setSelectedMint(skaleData);
+                    //   setMintTitle("skale");
+                    // }}
+                  >
+                    <img src={comingSoon} alt='' className="position-absolute comingSoonimg" />
+                    <img
+                      src={skaleLogo}
+                      className="beta-pass-chain-img"
+                      alt=""
+                    />
+                    <span>SKALE</span>
+                  </div>
                   <NavLink
                     to={"/marketplace/beta-pass/coinmarketcap"}
                     className={`${
@@ -813,25 +832,7 @@ const BetaPassNFT = ({
                     />
                     <span>Dogecoin</span>
                   </NavLink>
-                  <div
-                    // to={"/marketplace/beta-pass/skale"}
-                    className={`${
-                      location.pathname.includes("skale") &&
-                      "selected-beta-pass-item"
-                    } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2 position-relative`}
-                    // onClick={() => {
-                    //   setSelectedMint(skaleData);
-                    //   setMintTitle("skale");
-                    // }}
-                  >
-                    <img src={comingSoon} alt='' className="position-absolute comingSoonimg" />
-                    <img
-                      src={skaleLogo}
-                      className="beta-pass-chain-img"
-                      alt=""
-                    />
-                    <span>SKALE</span>
-                  </div>
+                
                   <NavLink
                     to={"/marketplace/beta-pass/base"}
                     className={`${
