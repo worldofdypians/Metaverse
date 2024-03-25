@@ -76,16 +76,16 @@ export const handleSwitchNetworkhook = async (chainID) => {
   };
 
   const SKALE_MAINNET = {
-    chainId: "0x79f99296", // A 0x-prefixed hexadecimal string
-    chainName: "SKALE Europa Hub",
+    chainId: "0x585eb4b1", // A 0x-prefixed hexadecimal string
+    chainName: "SKALE Nebula Hub",
     nativeCurrency: {
       name: "sFUEL",
       symbol: "sFUEL", // 2-6 characters long
       decimals: 18,
     },
-    rpcUrls: ["https://mainnet.skalenodes.com/v1/elated-tan-skat"],
+    rpcUrls: ["https://mainnet.skalenodes.com/v1/green-giddy-denebola"],
     blockExplorerUrls: [
-      "https://elated-tan-skat.explorer.mainnet.skalenodes.com",
+      "https://green-giddy-denebola.explorer.mainnet.skalenodes.com",
     ],
   };
 
@@ -105,7 +105,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
       (chainID === "0x406" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x2105" && switchError.code.toString().includes("32603")) ||
       (chainID === "0xcc" && switchError.code.toString().includes("32603")) ||
-      (chainID === "0x79f99296" &&
+      (chainID === "0x585eb4b1" &&
         switchError.code.toString().includes("32603")) ||
       (switchError.code === 4902 &&
         switchError.message.includes("Unrecognized chainID"))
@@ -126,7 +126,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [BASEPARAMS]
               : chainID === "0x406"
               ? [CONFLUXPARAMS]
-              : chainID === "0x79f99296"
+              : chainID === "0x585eb4b1"
               ? [SKALE_MAINNET]
               : "",
         });

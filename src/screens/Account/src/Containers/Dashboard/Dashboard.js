@@ -47,6 +47,7 @@ import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
+import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 
 function Dashboard({
   account,
@@ -67,7 +68,7 @@ function Dashboard({
   handleOpenDomains,
   dogePrice,
   dyptokenData_old,
-  handleSwitchChain
+  handleSwitchChain,
 }) {
   const { email, logout } = useAuth();
 
@@ -105,6 +106,10 @@ function Dashboard({
     {
       name: "Base",
       symbol: "base",
+    },
+    {
+      name: "SKALE",
+      symbol: "skale",
     },
   ];
 
@@ -910,6 +915,7 @@ function Dashboard({
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
+    const skalesubscribeAddress = window.config.subscription_newavax_address;
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
@@ -1486,6 +1492,8 @@ function Dashboard({
         ? window.config.subscriptionbase_tokens[token]?.decimals
         : chainId === 43114
         ? window.config.subscription_tokens[token]?.decimals
+        : chainId === 1482601649
+        ? window.config.subscriptionskale_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -1524,6 +1532,7 @@ function Dashboard({
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
+    const skalesubscribeAddress = window.config.subscription_newavax_address;
 
     const web3 = new Web3(window.ethereum);
 
@@ -1589,6 +1598,7 @@ function Dashboard({
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
 
     const basesubscribeAddress = window.config.subscription_base_address;
+    const skalesubscribeAddress = window.config.subscription_base_address;
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -1861,6 +1871,23 @@ function Dashboard({
     }
   };
 
+  const handleSkalePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x585eb4b1")
+          .then(() => {
+            handleSwitchNetwork(1482601649);
+            setChainDropdown(chainDropdowns[5]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
   useEffect(() => {
     setDummyPremiumChests(shuffle(dummyPremiums));
     fetchReleases();
@@ -1927,6 +1954,14 @@ function Dashboard({
         Object.keys(window.config.subscription_tokens)[0]
       );
       handleSubscriptionTokenChange(wavaxAddress);
+    } else if (chainId === 1482601649) {
+      setChainDropdown(chainDropdowns[5]);
+      setdropdownIcon("usdc");
+      setdropdownTitle("USDC");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionskale_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wavaxAddress);
     } else {
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -1961,6 +1996,11 @@ function Dashboard({
     } else if (chainId === 8453 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionbase_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 1482601649 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionskale_tokens[selectedSubscriptionToken]
           ?.decimals
       );
     }
@@ -2624,15 +2664,15 @@ function Dashboard({
                                 style={{ cursor: "pointer" }}
                               />
                             </div>
-                            <div className="premium-gold-bg d-flex align-items-center justify-content-between p-3">
+                            <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
                               <div className="d-flex flex-column gap-2">
                                 <span className="lifetime-plan mb-0">
                                   Lifetime plan
                                 </span>
                                 <h6 className="plan-cost mb-0">$100</h6>
                               </div>
-                              <div className="d-flex align-items-center gap-3">
-                                <div className="d-flex flex-column gap-2">
+                              <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
+                                <div className="premium-chains-wrapper">
                                   <div className="d-flex align-items-center gap-2">
                                     <img
                                       src={
@@ -2692,6 +2732,16 @@ function Dashboard({
                                       Conflux
                                     </span>
                                   </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={skaleIcon}
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      SKALE
+                                    </span>
+                                  </div>
                                 </div>
                                 <img src={premiumIcon} alt="" />
                               </div>
@@ -2732,8 +2782,8 @@ function Dashboard({
                                   </div>
                                 ))}
                               </div>
-                            </div>
-                            <div className="d-flex mt-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
+                            </div>  <hr className="form-divider my-4" />
+                            <div className="d-flex mt-4 mb-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
                               <div className="d-flex flex-column gap-3 subscribe-input-container">
                                 <span className="token-amount-placeholder">
                                   Select chain
@@ -2825,6 +2875,20 @@ function Dashboard({
                                       />
                                       Conflux Network
                                     </li>
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleSkalePool}
+                                    >
+                                      <img
+                                        src={skaleIcon}
+                                        alt=""
+                                        style={{
+                                          width: "18px",
+                                          height: "18px",
+                                        }}
+                                      />
+                                      SKALE
+                                    </li>
                                   </ul>
                                 </div>
                               </div>
@@ -2883,6 +2947,9 @@ function Dashboard({
                                             : chainId === 8453
                                             ? window.config
                                                 .subscriptionbase_tokens
+                                            : chainId === 1482601649
+                                            ? window.config
+                                                .subscriptionskale_tokens
                                             : window.config.subscription_tokens
                                         ).map((t, i) => (
                                           <li
@@ -2917,6 +2984,11 @@ function Dashboard({
                                                         .subscriptioncfx_tokens[
                                                         t
                                                       ]?.symbol
+                                                    : chainId === 1482601649
+                                                    ? window.config
+                                                        .subscriptionskale_tokens[
+                                                        t
+                                                      ]?.symbol
                                                     : window.config
                                                         .subscription_tokens[t]
                                                         ?.symbol
@@ -2944,6 +3016,11 @@ function Dashboard({
                                                     : chainId === 1030
                                                     ? window.config
                                                         .subscriptioncfx_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 1482601649
+                                                    ? window.config
+                                                        .subscriptionskale_tokens[
                                                         t
                                                       ]?.symbol
                                                     : window.config
@@ -2981,6 +3058,10 @@ function Dashboard({
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 1482601649
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
                                                   : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
@@ -3007,6 +3088,10 @@ function Dashboard({
                                               : chainId === 8453
                                               ? window.config
                                                   .subscriptionbase_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 1482601649
+                                              ? window.config
+                                                  .subscriptionskale_tokens[t]
                                                   ?.symbol
                                               : window.config
                                                   .subscription_tokens[t]
@@ -3064,7 +3149,20 @@ function Dashboard({
                                 />
                               </div>
                             </div> */}
-                            <hr className="form-divider my-4" />
+                          
+
+                            {chainId === 1482601649 && (
+                              <div className="gotoNebula-wrapper p-3 mb-3">
+                                <div className="d-flex w-100 justify-content-between gap-2">
+                                  <span className="nebula-wrapper-text">
+                                    Bridge your USDC to Nebula now!
+                                  </span>
+                                  <a className="nebula-bridgebtn" href="https://portal.skale.space/bridge" target='_blank' rel='noreferrer'>
+                                    Nebula Bridge
+                                  </a>
+                                </div>
+                              </div>
+                            )}
 
                             <div className="d-flex align-items-center gap-3 justify-content-center">
                               <div
@@ -3314,39 +3412,39 @@ function Dashboard({
               //     setdailyBonusPopup(false);
               //   }}
               // >
-                <NewDailyBonus
-                  isPremium={isPremium}
-                  chainId={chainId}
-                  dypTokenData={dypTokenData}
-                  ethTokenData={ethTokenData}
-                  dyptokenData_old={dyptokenData_old}
-                  handleSwitchChain={handleSwitchChain}
-                  handleSwitchNetwork={handleSwitchNetwork}
-                  listedNFTS={listedNFTS}
-                  onclose={() => {
-                    setdailyBonusPopup(false);
-                  }}
-                  standardChests={standardChests}
-                  premiumChests={premiumChests}
-                  standardSkaleChests={standardSkaleChests}
-                  premiumSkaleChests={premiumSkaleChests}
-                  claimedChests={claimedChests}
-                  claimedPremiumChests={claimedPremiumChests}
-                  claimedSkaleChests={claimedSkaleChests}
-                  claimedSkalePremiumChests={claimedSkalePremiumChests}
-                  email={email}
-                  openedChests={openedChests}
-                  canBuy={canBuy}
-                  address={data?.getPlayer?.wallet?.publicAddress}
-                  allChests={allChests}
-                  allSkaleChests={allSkaleChests}
-                  onChestClaimed={() => {
-                    setCount(count + 1);
-                  }}
-                  onSkaleChestClaimed={() => {
-                    setskalecount(skalecount + 1);
-                  }}
-                />
+              <NewDailyBonus
+                isPremium={isPremium}
+                chainId={chainId}
+                dypTokenData={dypTokenData}
+                ethTokenData={ethTokenData}
+                dyptokenData_old={dyptokenData_old}
+                handleSwitchChain={handleSwitchChain}
+                handleSwitchNetwork={handleSwitchNetwork}
+                listedNFTS={listedNFTS}
+                onclose={() => {
+                  setdailyBonusPopup(false);
+                }}
+                standardChests={standardChests}
+                premiumChests={premiumChests}
+                standardSkaleChests={standardSkaleChests}
+                premiumSkaleChests={premiumSkaleChests}
+                claimedChests={claimedChests}
+                claimedPremiumChests={claimedPremiumChests}
+                claimedSkaleChests={claimedSkaleChests}
+                claimedSkalePremiumChests={claimedSkalePremiumChests}
+                email={email}
+                openedChests={openedChests}
+                canBuy={canBuy}
+                address={data?.getPlayer?.wallet?.publicAddress}
+                allChests={allChests}
+                allSkaleChests={allSkaleChests}
+                onChestClaimed={() => {
+                  setCount(count + 1);
+                }}
+                onSkaleChestClaimed={() => {
+                  setskalecount(skalecount + 1);
+                }}
+              />
               // </OutsideClickHandler>
             )}
             {showChecklistModal === true && (

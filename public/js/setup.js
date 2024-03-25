@@ -1925,6 +1925,13 @@ window.config = {
     },
   },
 
+  subscriptionskale_tokens: {
+    "0xCC205196288B7A26f6D43bBD68AaA98dde97276d": {
+      symbol: "USDC",
+      decimals: 6,
+    },
+  },
+
   automated_trust_scores: {
     perfect_scoring: {
       // minimum numbers for 100% scores
@@ -4786,7 +4793,7 @@ async function getMyNFTs(address, type = "") {
     );
 
     return tokens;
-  } 
+  }
 }
 
 async function myNftListContract(address) {
@@ -45430,10 +45437,7 @@ const landWhitelist = [
   "0x7476d4f4cb2f8e1262be377feaced711f8765ea3",
 ];
 
-const premiumUsers = [
-  '0x2b838a5a2b8a2e80e965f1fc9dfed63f1cc269fd',
-  
-]
+const premiumUsers = ["0x2b838a5a2b8a2e80e965f1fc9dfed63f1cc269fd"];
 
 window.checkWhitelistLand = function (address) {
   // console.log("CHECKCK")
@@ -45452,4 +45456,3 @@ window.checkPremium = function (address) {
   }
   return found;
 };
-

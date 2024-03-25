@@ -115,16 +115,18 @@ function App() {
       blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
     },
 
-    2046399126: {
-      chainId: 2046399126,
-      chainName: "SKALE Europa Hub",
-      rpcUrls: ["https://mainnet.skalenodes.com/v1/elated-tan-skat"],
+    1482601649: {
+      chainId: 1482601649,
+      chainName: "SKALE Nebula Hub",
       nativeCurrency: {
         symbol: "sFUEL",
         decimals: 18,
       },
 
-      blockExplorerUrls: ["https://elated-tan-skat.explorer.mainnet.skalenodes.com"],
+      rpcUrls: ["https://mainnet.skalenodes.com/v1/green-giddy-denebola"],
+      blockExplorerUrls: [
+        "https://green-giddy-denebola.explorer.mainnet.skalenodes.com",
+      ],
     },
   };
 
@@ -1932,8 +1934,8 @@ function App() {
                   ? "0x38"
                   : chain === 204
                   ? "0xcc"
-                  : chain === 2046399126
-                  ? "0x79f99296"
+                  : chain === 1482601649
+                  ? "0x585eb4b1"
                   : "0x406",
             },
           ],
@@ -2157,7 +2159,6 @@ function App() {
     }, 300000);
   }, [count2]);
 
- 
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -2348,7 +2349,6 @@ function App() {
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   handleSwitchChain={handleSwitchChain}
-
                   dypTokenData_old={dypTokenData_old}
                   coinbase={coinbase}
                   account={coinbase}
@@ -2513,6 +2513,51 @@ function App() {
                 />
               }
             />
+
+{/* <Route
+              exact
+              path="/marketplace/beta-pass/skale"
+              element={
+                <BetaPassNFT
+                  type={"skale"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                  totalCmcNft={totalCmcNft}
+                  totalSkaleNft={0}
+
+
+                />
+              }
+            /> */}
 
             <Route
               exact

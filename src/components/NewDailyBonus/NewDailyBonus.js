@@ -469,9 +469,9 @@ const NewDailyBonus = ({
   const handleSkalePool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x79f99296")
+        await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
-            handleSwitchNetwork(2046399126);
+            handleSwitchNetwork(1482601649 );
             setMessage("");
           })
           .catch((e) => {
@@ -497,8 +497,6 @@ const NewDailyBonus = ({
     setLandNfts(filteredLands);
   };
 
-
-
   const boughtCaws = (chestId, chestIndex, val1, val2) => {
     const filteredResult = openedChests.find(
       (el) => el.chestId === chestId && allChests.indexOf(el) === chestIndex
@@ -506,13 +504,18 @@ const NewDailyBonus = ({
     setIsActive(chestId);
     setIsActiveIndex(chestIndex);
 
-      const finalResult = {...filteredResult, rewards: [{rewardType: "Money", reward: val1 }, {rewardType: "Points", reward: val2}]}
-
+    const finalResult = {
+      ...filteredResult,
+      rewards: [
+        { rewardType: "Money", reward: val1 },
+        { rewardType: "Points", reward: val2 },
+      ],
+    };
 
     setLiveRewardData(finalResult);
     setRewardData(finalResult);
-    setMessage("won")
-  }
+    setMessage("won");
+  };
 
   const showSingleRewardData = (chestID, chestIndex) => {
     const filteredResult = openedChests.find(
@@ -628,7 +631,7 @@ const NewDailyBonus = ({
         setDisable(true);
       }
     } else if (chain === "skale") {
-      if (chainId === 2046399126) {
+      if (chainId === 1482601649 ) {
         setMessage("");
         setDisable(false);
       } else {
@@ -1039,7 +1042,7 @@ const NewDailyBonus = ({
                         >
                           <button
                             className={`${
-                              chainId === 2046399126
+                              chainId === 1482601649 
                                 ? "new-chain-active-btn"
                                 : "new-chain-inactive-btn"
                             } d-flex gap-1 align-items-center`}
@@ -1048,19 +1051,22 @@ const NewDailyBonus = ({
                             {" "}
                             <img src={skaleIcon} alt="" /> SKALE
                           </button>
-                         <a href="https://www.sfuelstation.com/" target="_blank">
-                         <button
-                            className={`${
-                              chainId === 2046399126
-                                ? "new-chain-active-btn"
-                                : "new-chain-inactive-btn"
-                            } d-flex gap-2 align-items-center`}
+                          <a
+                            href="https://www.sfuelstation.com/"
+                            target="_blank"
                           >
-                            {" "}
-                            Get SFuel
-                            <img src={gasRightArrow} alt="" /> 
-                          </button>
-                         </a>
+                            <button
+                              className={`${
+                                chainId === 1482601649 
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-2 align-items-center`}
+                            >
+                              {" "}
+                              Get SFuel
+                              <img src={gasRightArrow} alt="" />
+                            </button>
+                          </a>
                         </div>
                       </div>
                       <div
@@ -1235,9 +1241,94 @@ const NewDailyBonus = ({
                 <div className="col-12 col-lg-7 px-0 grid-overall-wrapper">
                   <div className="grid-scroll">
                     <div className="new-chests-grid">
-                      {chain === "bnb" ? (
-                        allChests && allChests.length > 0 ? (
-                          allChests.map((item, index) => (
+                      {chain === "bnb"
+                        ? allChests && allChests.length > 0
+                          ? allChests.map((item, index) => (
+                              <NewChestItem
+                                buyNftPopup={buyNftPopup}
+                                chainId={chainId}
+                                chain={chain}
+                                key={index}
+                                item={item}
+                                // openChest={openChest}
+                                selectedChest={selectedChest}
+                                isPremium={isPremium}
+                                onClaimRewards={(value) => {
+                                  // setRewardData(value);
+                                  setLiveRewardData(value);
+                                  onChestClaimed();
+                                  showLiveRewardData(value);
+                                  setIsActive(item.chestId);
+                                  setIsActiveIndex(index + 1);
+                                }}
+                                handleShowRewards={(value, value2) => {
+                                  showSingleRewardData(value, value2);
+                                  setIsActive(value);
+                                  setIsActiveIndex(index + 1);
+                                }}
+                                onLoadingChest={(value) => {
+                                  // setDisable(value);
+                                }}
+                                onChestStatus={(val) => {
+                                  setMessage(val);
+                                }}
+                                address={address}
+                                email={email}
+                                rewardTypes={item.chestType?.toLowerCase()}
+                                chestId={item.chestId}
+                                chestIndex={index + 1}
+                                open={item.isOpened}
+                                disableBtn={disable}
+                                isActive={isActive}
+                                isActiveIndex={isActiveIndex}
+                              />
+                            ))
+                          : dummyArray.map((item, index) => (
+                              <NewChestItem
+                                buyNftPopup={buyNftPopup}
+                                chainId={chainId}
+                                chain={chain}
+                                key={index}
+                                item={item}
+                                // openChest={openChest}
+                                selectedChest={selectedChest}
+                                isPremium={isPremium}
+                                onClaimRewards={(value) => {
+                                  // setRewardData(value);
+                                  setLiveRewardData(value);
+                                  onSkaleChestClaimed();
+                                  showLiveRewardData(value);
+                                  setIsActive(item.chestId);
+                                  // setIsActiveIndex(index + 1);
+                                }}
+                                handleShowRewards={(value, value2) => {
+                                  showSingleRewardData(value, value2);
+                                  setIsActive(value);
+                                  // setIsActiveIndex(index + 1);
+                                }}
+                                onLoadingChest={(value) => {
+                                  // setDisable(value);
+                                }}
+                                onChestStatus={(val) => {
+                                  setMessage(val);
+                                }}
+                                address={address}
+                                email={email}
+                                rewardTypes={item.chestType?.toLowerCase()}
+                                chestId={item.chestId}
+                                chestIndex={index + 1}
+                                open={item.opened}
+                                disableBtn={true}
+                                isActive={isActive}
+                                openChest={() => {
+                                  console.log("test");
+                                }}
+                              />
+                            ))
+                        : chain === "skale" &&
+                          allSkaleChests &&
+                          allSkaleChests.length > 0
+                        ? allSkaleChests.map((item, index) => (
                             <NewChestItem
                               buyNftPopup={buyNftPopup}
                               chainId={chainId}
@@ -1250,15 +1341,15 @@ const NewDailyBonus = ({
                               onClaimRewards={(value) => {
                                 // setRewardData(value);
                                 setLiveRewardData(value);
-                                onChestClaimed();
+                                onSkaleChestClaimed();
                                 showLiveRewardData(value);
                                 setIsActive(item.chestId);
-                                setIsActiveIndex(index + 1);
+                                // setIsActiveIndex(index + 1);
                               }}
                               handleShowRewards={(value, value2) => {
                                 showSingleRewardData(value, value2);
                                 setIsActive(value);
-                                setIsActiveIndex(index + 1);
+                                // setIsActiveIndex(index + 1);
                               }}
                               onLoadingChest={(value) => {
                                 // setDisable(value);
@@ -1274,11 +1365,9 @@ const NewDailyBonus = ({
                               open={item.isOpened}
                               disableBtn={disable}
                               isActive={isActive}
-                              isActiveIndex={isActiveIndex}
                             />
                           ))
-                        ) : (
-                          dummyArray.map((item, index) => (
+                        : dummyArray.map((item, index) => (
                             <NewChestItem
                               buyNftPopup={buyNftPopup}
                               chainId={chainId}
@@ -1319,53 +1408,7 @@ const NewDailyBonus = ({
                                 console.log("test");
                               }}
                             />
-                          ))
-                        )
-                      ) : chain === "skale" &&
-                        allSkaleChests &&
-                        allSkaleChests.length > 0 ? (
-                        allSkaleChests.map((item, index) => (
-                          <NewChestItem
-                            buyNftPopup={buyNftPopup}
-                            chainId={chainId}
-                            chain={chain}
-                            key={index}
-                            item={item}
-                            // openChest={openChest}
-                            selectedChest={selectedChest}
-                            isPremium={isPremium}
-                            onClaimRewards={(value) => {
-                              // setRewardData(value);
-                              setLiveRewardData(value);
-                              onSkaleChestClaimed();
-                              showLiveRewardData(value);
-                              setIsActive(item.chestId);
-                              // setIsActiveIndex(index + 1);
-                            }}
-                            handleShowRewards={(value, value2) => {
-                              showSingleRewardData(value, value2);
-                              setIsActive(value);
-                              // setIsActiveIndex(index + 1);
-                            }}
-                            onLoadingChest={(value) => {
-                              // setDisable(value);
-                            }}
-                            onChestStatus={(val) => {
-                              setMessage(val);
-                            }}
-                            address={address}
-                            email={email}
-                            rewardTypes={item.chestType?.toLowerCase()}
-                            chestId={item.chestId}
-                            chestIndex={index + 1}
-                            open={item.isOpened}
-                            disableBtn={disable}
-                            isActive={isActive}
-                          />
-                        ))
-                      ) : (
-                        <></>
-                      )}
+                          ))}
                     </div>
                   </div>
                 </div>
@@ -1444,21 +1487,51 @@ const NewDailyBonus = ({
                       >
                         Switch to {chain === "bnb" ? "BNB" : "SKALE"} Chain
                       </h6> */}
-                      {chain === "bnb" ? 
-                      <h6 className="loader-text mb-0"
-                      style={{ color: "#ce5d1b" }}
-                      
-                      >
-                        Switch to <span span style={{textDecoration: "underline", cursor: "pointer"}} onClick={handleBnbPool}>BNB Chain</span> or <span span style={{textDecoration: "underline", cursor: "pointer"}} onClick={handleOpBnbPool}>opBNB Chain</span>
-                      </h6>  
-                      :
-                      <h6 className="loader-text mb-0"
-                      style={{ color: "#ce5d1b" }}
-                      
-                      >
-                        Switch to <span style={{textDecoration: "underline", cursor: "pointer"}} onClick={handleSkalePool}>SKALE Network</span> 
-                      </h6> 
-                    }
+                      {chain === "bnb" ? (
+                        <h6
+                          className="loader-text mb-0"
+                          style={{ color: "#ce5d1b" }}
+                        >
+                          Switch to{" "}
+                          <span
+                            span
+                            style={{
+                              textDecoration: "underline",
+                              cursor: "pointer",
+                            }}
+                            onClick={handleBnbPool}
+                          >
+                            BNB Chain
+                          </span>{" "}
+                          or{" "}
+                          <span
+                            span
+                            style={{
+                              textDecoration: "underline",
+                              cursor: "pointer",
+                            }}
+                            onClick={handleOpBnbPool}
+                          >
+                            opBNB Chain
+                          </span>
+                        </h6>
+                      ) : (
+                        <h6
+                          className="loader-text mb-0"
+                          style={{ color: "#ce5d1b" }}
+                        >
+                          Switch to{" "}
+                          <span
+                            style={{
+                              textDecoration: "underline",
+                              cursor: "pointer",
+                            }}
+                            onClick={handleSkalePool}
+                          >
+                            SKALE Network
+                          </span>
+                        </h6>
+                      )}
                       <div className="loader red-loader">
                         <div className="dot" style={{ "--i": 0 }}></div>
                         <div className="dot" style={{ "--i": 1 }}></div>
@@ -1625,11 +1698,16 @@ const NewDailyBonus = ({
                             onClick={() => {
                               // setNft(item);
                               // setBuyNftPopup(true);
-                              boughtCaws(isActive, isActiveIndex, rewardData.rewards.find((obj) => {
-                                return obj.rewardType === "Money";
-                              }).reward ?? 0, rewardData.rewards.find((obj) => {
-                                return obj.rewardType === "Points";
-                              }).reward ?? 0)
+                              boughtCaws(
+                                isActive,
+                                isActiveIndex,
+                                rewardData.rewards.find((obj) => {
+                                  return obj.rewardType === "Money";
+                                }).reward ?? 0,
+                                rewardData.rewards.find((obj) => {
+                                  return obj.rewardType === "Points";
+                                }).reward ?? 0
+                              );
                             }}
                           >
                             <img
@@ -1862,16 +1940,22 @@ const NewDailyBonus = ({
 
                       <div className="d-flex align-items-center gap-2">
                         {landNfts.slice(0, 4).map((item, index) => (
-                          <div className="nft-reward-container"
-                          onClick={() => {
-                            // setNft(item);
-                            // setBuyNftPopup(true);
-                            boughtCaws(isActive, isActiveIndex, rewardData.rewards.find((obj) => {
-                              return obj.rewardType === "Money";
-                            }).reward ?? 0, rewardData.rewards.find((obj) => {
-                              return obj.rewardType === "Points";
-                            }).reward ?? 0)
-                          }}
+                          <div
+                            className="nft-reward-container"
+                            onClick={() => {
+                              // setNft(item);
+                              // setBuyNftPopup(true);
+                              boughtCaws(
+                                isActive,
+                                isActiveIndex,
+                                rewardData.rewards.find((obj) => {
+                                  return obj.rewardType === "Money";
+                                }).reward ?? 0,
+                                rewardData.rewards.find((obj) => {
+                                  return obj.rewardType === "Points";
+                                }).reward ?? 0
+                              );
+                            }}
                           >
                             <img
                               key={index}
