@@ -277,6 +277,8 @@ function Dashboard({
   let wbase = "0x4200000000000000000000000000000000000006";
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
+  let wskaleAddress = "0x5eaF4e5A908ba87Abf3dE768cb0dA517dB45dB48";
+
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
@@ -897,28 +899,35 @@ function Dashboard({
     let subscribedPlatformTokenAmountBNB;
     let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBase;
+    let subscribedPlatformTokenAmountSkale;
 
     const web3eth = window.infuraWeb3;
     const web3cfx = window.confluxWeb3;
     const web3base = window.baseWeb3;
     const web3bnb = window.bscWeb3;
     const web3avax = window.avaxWeb3;
+    const web3skale = window.skaleWeb3;
 
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const BaseABI = window.SUBSCRIPTION_BASE_ABI;
     const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
     const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
     const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
+    const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
-    const skalesubscribeAddress = window.config.subscription_newavax_address;
+    const skalesubscribeAddress = window.config.subscription_skale_address;
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
+    const skalecontract = new web3skale.eth.Contract(
+      SkaleABI,
+      skalesubscribeAddress
+    );
 
     const basecontract = new web3base.eth.Contract(
       BaseABI,
@@ -972,12 +981,21 @@ function Dashboard({
           return 0;
         });
 
+      subscribedPlatformTokenAmountSkale = await skalecontract.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
       if (
         subscribedPlatformTokenAmountCfx === "0" &&
         subscribedPlatformTokenAmountETH === "0" &&
         subscribedPlatformTokenAmountBase === "0" &&
         subscribedPlatformTokenAmountBNB === "0" &&
         subscribedPlatformTokenAmountAvax === "0" &&
+        subscribedPlatformTokenAmountSkale === "0" &&
         result === false
       ) {
         setIsPremium(false);
@@ -988,6 +1006,7 @@ function Dashboard({
         subscribedPlatformTokenAmountBase !== "0" ||
         subscribedPlatformTokenAmountBNB !== "0" ||
         subscribedPlatformTokenAmountAvax !== "0" ||
+        subscribedPlatformTokenAmountSkale !== "0" ||
         result === true
       ) {
         setIsPremium(true);
@@ -1492,7 +1511,7 @@ function Dashboard({
         ? window.config.subscriptionbase_tokens[token]?.decimals
         : chainId === 43114
         ? window.config.subscription_tokens[token]?.decimals
-        : chainId === 1482601649
+        : chainId === 37084624
         ? window.config.subscriptionskale_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
@@ -1511,6 +1530,8 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmount(token)
         : chainId === 8453
         ? await window.getEstimatedTokenSubscriptionAmountBase(token)
+        : chainId === 37084624
+        ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
@@ -1532,7 +1553,7 @@ function Dashboard({
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
-    const skalesubscribeAddress = window.config.subscription_newavax_address;
+    const skalesubscribeAddress = window.config.subscription_skale_address;
 
     const web3 = new Web3(window.ethereum);
 
@@ -1554,6 +1575,8 @@ function Dashboard({
           ? basesubscribeAddress
           : chainId === 43114
           ? avaxsubscribeAddress
+          : chainId === 37084624
+          ? skalesubscribeAddress
           : cfxsubscribeAddress,
         price
       )
@@ -1591,6 +1614,8 @@ function Dashboard({
 
     const cfxWeb3 = new Web3(window.config.conflux_endpoint);
     const baseWeb3 = new Web3(window.config.base_endpoint);
+    const skaleWeb3 = new Web3(window.config.skale_endpoint);
+
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
@@ -1598,7 +1623,7 @@ function Dashboard({
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
 
     const basesubscribeAddress = window.config.subscription_base_address;
-    const skalesubscribeAddress = window.config.subscription_base_address;
+    const skalesubscribeAddress = window.config.subscription_skale_address;
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -1626,6 +1651,11 @@ function Dashboard({
       subscribeToken
     );
 
+    const subscribeTokencontractskale = new skaleWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
     let tokenprice =
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
@@ -1637,6 +1667,8 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmount(token)
         : chainId === 8453
         ? await window.getEstimatedTokenSubscriptionAmountBase(token)
+        : chainId === 37084624
+        ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
@@ -1685,7 +1717,22 @@ function Dashboard({
           setisApproved(false);
           setapproveStatus("initial");
         }
-      } else if (chainId === 1030) {
+      } else if (chainId === 37084624) {
+        const result = await subscribeTokencontractskale.methods
+          .allowance(coinbase, skalesubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } 
+      else if (chainId === 1030) {
         const result = await subscribeTokencontractcfx.methods
           .allowance(coinbase, confluxsubscribeAddress)
           .call()
@@ -1733,6 +1780,8 @@ function Dashboard({
           ? "SUBSCRIPTION_CFX"
           : chainId === 8453
           ? "SUBSCRIPTION_BASE"
+          : chainId === 37084624
+          ? "SUBSCRIPTION_SKALE"
           : "",
     });
 
@@ -1874,9 +1923,9 @@ function Dashboard({
   const handleSkalePool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x585eb4b1")
+        await handleSwitchNetworkhook("0x235ddd0")
           .then(() => {
-            handleSwitchNetwork(1482601649);
+            handleSwitchNetwork(37084624);
             setChainDropdown(chainDropdowns[5]);
           })
           .catch((e) => {
@@ -1954,14 +2003,14 @@ function Dashboard({
         Object.keys(window.config.subscription_tokens)[0]
       );
       handleSubscriptionTokenChange(wavaxAddress);
-    } else if (chainId === 1482601649) {
+    } else if (chainId === 37084624) {
       setChainDropdown(chainDropdowns[5]);
       setdropdownIcon("usdc");
       setdropdownTitle("USDC");
       setselectedSubscriptionToken(
         Object.keys(window.config.subscriptionskale_tokens)[0]
       );
-      handleSubscriptionTokenChange(wavaxAddress);
+      handleSubscriptionTokenChange(wskaleAddress);
     } else {
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -1998,7 +2047,7 @@ function Dashboard({
         window.config.subscriptionbase_tokens[selectedSubscriptionToken]
           ?.decimals
       );
-    } else if (chainId === 1482601649 && selectedSubscriptionToken !== "") {
+    } else if (chainId === 37084624 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionskale_tokens[selectedSubscriptionToken]
           ?.decimals
@@ -2782,7 +2831,8 @@ function Dashboard({
                                   </div>
                                 ))}
                               </div>
-                            </div>  <hr className="form-divider my-4" />
+                            </div>{" "}
+                            <hr className="form-divider my-4" />
                             <div className="d-flex mt-4 mb-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
                               <div className="d-flex flex-column gap-3 subscribe-input-container">
                                 <span className="token-amount-placeholder">
@@ -2947,7 +2997,7 @@ function Dashboard({
                                             : chainId === 8453
                                             ? window.config
                                                 .subscriptionbase_tokens
-                                            : chainId === 1482601649
+                                            : chainId === 37084624
                                             ? window.config
                                                 .subscriptionskale_tokens
                                             : window.config.subscription_tokens
@@ -2984,7 +3034,7 @@ function Dashboard({
                                                         .subscriptioncfx_tokens[
                                                         t
                                                       ]?.symbol
-                                                    : chainId === 1482601649
+                                                    : chainId === 37084624
                                                     ? window.config
                                                         .subscriptionskale_tokens[
                                                         t
@@ -3018,7 +3068,7 @@ function Dashboard({
                                                         .subscriptioncfx_tokens[
                                                         t
                                                       ]?.symbol
-                                                    : chainId === 1482601649
+                                                    : chainId === 37084624
                                                     ? window.config
                                                         .subscriptionskale_tokens[
                                                         t
@@ -3058,7 +3108,7 @@ function Dashboard({
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
-                                                  : chainId === 1482601649
+                                                  : chainId === 37084624
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
@@ -3089,7 +3139,7 @@ function Dashboard({
                                               ? window.config
                                                   .subscriptionbase_tokens[t]
                                                   ?.symbol
-                                              : chainId === 1482601649
+                                              : chainId === 37084624
                                               ? window.config
                                                   .subscriptionskale_tokens[t]
                                                   ?.symbol
@@ -3149,21 +3199,23 @@ function Dashboard({
                                 />
                               </div>
                             </div> */}
-                          
-
-                            {chainId === 1482601649 && (
+                            {chainId === 37084624 && (
                               <div className="gotoNebula-wrapper p-3 mb-3">
                                 <div className="d-flex w-100 justify-content-between gap-2">
                                   <span className="nebula-wrapper-text">
                                     Bridge your USDC to Nebula now!
                                   </span>
-                                  <a className="nebula-bridgebtn" href="https://portal.skale.space/bridge" target='_blank' rel='noreferrer'>
+                                  <a
+                                    className="nebula-bridgebtn"
+                                    href="https://testnet.portal.skale.space/bridge"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                  >
                                     Nebula Bridge
                                   </a>
                                 </div>
                               </div>
                             )}
-
                             <div className="d-flex align-items-center gap-3 justify-content-center">
                               <div
                                 className={` ${
@@ -3434,6 +3486,7 @@ function Dashboard({
                 claimedSkalePremiumChests={claimedSkalePremiumChests}
                 email={email}
                 openedChests={openedChests}
+                openedSkaleChests={openedSkaleChests}
                 canBuy={canBuy}
                 address={data?.getPlayer?.wallet?.publicAddress}
                 allChests={allChests}

@@ -115,8 +115,8 @@ function App() {
       blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
     },
 
-    1482601649: {
-      chainId: 1482601649,
+    37084624: {
+      chainId: 37084624,
       chainName: "SKALE Nebula Hub",
       nativeCurrency: {
         symbol: "sFUEL",
@@ -258,6 +258,8 @@ function App() {
   const [totalTx, setTotalTx] = useState(0);
   const [totalvolume, setTotalVolume] = useState(0);
   const [bscAmount, setBscAmount] = useState(0);
+  const [skaleAmount, setSkaleAmount] = useState(0);
+
   const location = useLocation();
   const navigate = useNavigate();
   const { BigNumber } = window;
@@ -1934,8 +1936,8 @@ function App() {
                   ? "0x38"
                   : chain === 204
                   ? "0xcc"
-                  : chain === 1482601649
-                  ? "0x585eb4b1"
+                  : chain === 37084624
+                  ? "0x235ddd0"
                   : "0x406",
             },
           ],
@@ -2070,6 +2072,40 @@ function App() {
     }
   };
 
+  const handleSkaleRefill = async (address) => {
+    const result = await axios
+      .get(`https://api.worldofdypians.com/claim/${address}`)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    console.log(result);
+  };
+
+  const fetchSkaleBalance = async () => {
+    if (coinbase && window.ethereum) {
+      const skaleWeb3 = new Web3(window.config.skale_endpoint);
+
+      const balance = await window.ethereum.request({
+        method: "eth_getBalance",
+        params: [coinbase, "latest"],
+      });
+
+      const stringBalance = skaleWeb3.utils.hexToNumberString(balance);
+
+      const amount = skaleWeb3.utils.fromWei(stringBalance, "ether");
+      const formatted_amount = Number(amount);
+    
+      if (formatted_amount <= 0.000005) {
+        handleSkaleRefill(coinbase);
+      } else {
+        console.log("formatted_amount", formatted_amount);
+      }
+
+      setSkaleAmount(amount.slice(0, 7));
+    }
+  };
+
   const getAllData = async () => {
     const result = await axios
       .get("https://api.worldofdypians.com/api/totalTXs")
@@ -2102,6 +2138,10 @@ function App() {
     getDomains();
     fetchBscBalance();
   }, [coinbase, isConnected, logout, successMessage, loadingDomain]);
+
+  useEffect(() => {
+    fetchSkaleBalance();
+  }, [coinbase, isConnected]);
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
@@ -2514,7 +2554,7 @@ function App() {
               }
             />
 
-{/* <Route
+            {/* <Route
               exact
               path="/marketplace/beta-pass/skale"
               element={

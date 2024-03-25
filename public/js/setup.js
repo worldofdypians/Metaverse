@@ -1512,6 +1512,7 @@ window.config = {
 
   daily_bonus_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
   daily_bonus_bnb_address: "0xF4435c244A292a8E8D56767bf6DF9b9c4D59aEED",
+  daily_bonus_skale_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
 
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
   vote_duration_in_seconds: 259200, // 5 minutes for test
@@ -1530,6 +1531,8 @@ window.config = {
   infura_endpoint:
     "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e",
   bsc_endpoint: "https://bsc-dataseed.bnbchain.org",
+  skale_endpoint: "https://testnet.skalenodes.com/v1/lanky-ill-funny-testnet",
+
   avax_endpoint: "https://api.avax.network/ext/bc/C/rpc",
   conflux_endpoint: "https://evm.confluxrpc.com/",
   base_endpoint: "https://base.publicnode.com",
@@ -1552,6 +1555,9 @@ window.config = {
 
   subscription_cfx_address: "0x56c83c9308b066627866bba9cd2322f3e01b16bf",
   subscription_base_address: "0x9c13Dbc8f0fA8ceD8C1B53c4237A08445eca32fe",
+
+  subscription_skale_address: "0x8E4917c1Ba9598fBbF66934CB17AC28c3b5849Ab",
+
 
   //DYP-ETH 3 days
   token_address: "0xBa7872534a6C9097d805d8BEE97e030f4e372e54",
@@ -1926,7 +1932,7 @@ window.config = {
   },
 
   subscriptionskale_tokens: {
-    "0xCC205196288B7A26f6D43bBD68AaA98dde97276d": {
+    "0x5eaF4e5A908ba87Abf3dE768cb0dA517dB45dB48": {
       symbol: "USDC",
       decimals: 6,
     },
@@ -2088,6 +2094,8 @@ window.config = {
 
 window.infuraWeb3 = new Web3(window.config.infura_endpoint);
 window.bscWeb3 = new Web3(window.config.bsc_endpoint);
+window.skaleWeb3 = new Web3(window.config.skale_endpoint);
+
 window.avaxWeb3 = new Web3(window.config.avax_endpoint);
 window.confluxWeb3 = new Web3(window.config.conflux_endpoint);
 window.baseWeb3 = new Web3(window.config.base_endpoint);
@@ -8205,6 +8213,137 @@ window.DAILY_BONUS_BNB_ABI = [
   },
 ];
 
+window.DAILY_BONUS_SKALE_ABI = [
+  {
+    type: "constructor",
+    stateMutability: "nonpayable",
+    inputs: [
+      {
+        type: "address[]",
+        name: "initialPremiumUsers",
+        internalType: "address[]",
+      },
+    ],
+  },
+  {
+    type: "event",
+    name: "ChestOpened",
+    inputs: [
+      { type: "address", name: "user", internalType: "address", indexed: true },
+      {
+        type: "uint256",
+        name: "timestamp",
+        internalType: "uint256",
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "PremiumChestOpened",
+    inputs: [
+      { type: "address", name: "user", internalType: "address", indexed: true },
+      {
+        type: "uint256",
+        name: "timestamp",
+        internalType: "uint256",
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "PremiumUserAdded",
+    inputs: [
+      {
+        type: "address",
+        name: "user",
+        internalType: "address",
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "PremiumUserRemoved",
+    inputs: [
+      {
+        type: "address",
+        name: "user",
+        internalType: "address",
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "addPremiumUser",
+    inputs: [{ type: "address", name: "user", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "bool", name: "", internalType: "bool" }],
+    name: "isPremiumUser",
+    inputs: [{ type: "address", name: "user", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "uint256", name: "", internalType: "uint256" }],
+    name: "lifetimeChestCount",
+    inputs: [{ type: "address", name: "", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "uint256", name: "", internalType: "uint256" }],
+    name: "lifetimePremiumChestCount",
+    inputs: [{ type: "address", name: "", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "openChest",
+    inputs: [],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "openPremiumChest",
+    inputs: [],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "address", name: "", internalType: "address" }],
+    name: "owner",
+    inputs: [],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "bool", name: "", internalType: "bool" }],
+    name: "premiumUsers",
+    inputs: [{ type: "address", name: "", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "removePremiumUser",
+    inputs: [{ type: "address", name: "user", internalType: "address" }],
+  },
+];
+
 window.WETH_ABI = [
   {
     constant: true,
@@ -9323,6 +9462,8 @@ window.SUBSCRIPTION_CFX_ABI = [
     type: "function",
   },
 ];
+
+window.SUBSCRIPTION_SKALE_ABI = [{"type":"constructor","stateMutability":"nonpayable","inputs":[]},{"type":"event","name":"OwnershipTransferred","inputs":[{"type":"address","name":"previousOwner","internalType":"address","indexed":true},{"type":"address","name":"newOwner","internalType":"address","indexed":true}],"anonymous":false},{"type":"event","name":"Subscribe","inputs":[{"type":"address","name":"account","internalType":"address","indexed":true},{"type":"uint256","name":"platformTokenAmount","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"SubscriptionFeeSet","inputs":[{"type":"uint256","name":"amountDai","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"SupportedTokenAdded","inputs":[{"type":"address","name":"tokenAddress","internalType":"address","indexed":false}],"anonymous":false},{"type":"event","name":"SupportedTokenRemoved","inputs":[{"type":"address","name":"tokenAddress","internalType":"address","indexed":false}],"anonymous":false},{"type":"event","name":"UnsubscribeAddress","inputs":[{"type":"address","name":"accountAddress","internalType":"address","indexed":false}],"anonymous":false},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"ONE_HUNDRED_X_100","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"SLIPPAGE_TOLERANCE_X_100","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"address"}],"name":"TRUSTED_DAI_ADDRESS","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"address"}],"name":"TRUSTED_PLATFORM_TOKEN_ADDRESS","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"addSupportedToken","inputs":[{"type":"address","name":"tokenAddress","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"getEstimatedTokenSubscriptionAmount","inputs":[{"type":"address","name":"tokenAddress","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"bool","name":"","internalType":"bool"}],"name":"isTokenSupported","inputs":[{"type":"address","name":"","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"address"}],"name":"owner","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"removeSupportedToken","inputs":[{"type":"address","name":"tokenAddress","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"renounceOwnership","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"setSubscriptionFee","inputs":[{"type":"uint256","name":"newSubscriptionFeeInDai","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"subscribe","inputs":[{"type":"address","name":"tokenAddress","internalType":"address"},{"type":"uint256","name":"amount","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"subscriptionFeeInDai","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"subscriptionPlatformTokenAmount","inputs":[{"type":"address","name":"","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"transferAnyERC20Token","inputs":[{"type":"address","name":"token","internalType":"address"},{"type":"address","name":"recipient","internalType":"address"},{"type":"uint256","name":"amount","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"transferOwnership","inputs":[{"type":"address","name":"newOwner","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IUniswapV2Router"}],"name":"uniswapRouterV2","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"unsubscribeAddress","inputs":[{"type":"address","name":"accountAddress","internalType":"address"}]}]
 
 window.SUBSCRIPTION_BASE_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
@@ -41543,6 +41684,17 @@ async function getEstimatedTokenSubscriptionAmountBase(tokenAddress) {
     .getEstimatedTokenSubscriptionAmount(tokenAddress)
     .call();
 }
+
+async function getEstimatedTokenSubscriptionAmountSkale(tokenAddress) {
+  const skaleContract = new window.skaleWeb3.eth.Contract(
+    window.SUBSCRIPTION_SKALE_ABI,
+    window.config.subscription_skale_address
+  );
+  return await skaleContract.methods
+    .getEstimatedTokenSubscriptionAmount(tokenAddress)
+    .call();
+}
+
 
 // ===================== end subscription contract functions ================================
 
