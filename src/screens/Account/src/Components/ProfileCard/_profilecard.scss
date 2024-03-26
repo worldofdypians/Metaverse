@@ -361,3 +361,151 @@ display: none;
   top: -20%;
   margin: auto;
 }
+
+
+.player-rank-wrapper{
+  width: 220px;
+  height: 79px;
+  transition: all .25s ease-in-out;
+
+}
+
+.player-bust{
+  position: absolute;
+  bottom: 0;
+  width: 65%;
+  z-index: 2;
+  transition: all .25s ease-in-out;
+
+}
+
+.player-ranking-text{
+  color: #fff;
+  font-weight: 800;
+  
+ 
+  opacity: 0;
+ 
+  transition: all .25s ease-in-out;
+  
+}
+
+.ranking-text-wrapper{
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  margin: auto;
+
+}
+
+.player-rank-wrapper:hover{
+  filter: grayscale(0.5);
+
+  .player-bust{
+    opacity: 0.7;
+    filter: grayscale(0.5);
+  }
+  .player-ranking-text{
+    opacity: 1;
+    filter: brightness(3);
+  }
+}
+
+
+.player-rank-dropdown{
+  width: 100%;
+  border-radius: 12px;
+  position: absolute;
+  top: 110%;
+  background: #1A1C39;
+  z-index: 5;
+  border: 2px solid #7DD9AF;
+}
+
+.chain-score{
+  color: rgb(243, 192, 9);
+font-size: 11px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.chain-score-span{
+  color: #FFF;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+
+.open-ranks-text{
+  color: #7DD9AF;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.rank-title{
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.rank-active-div{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #00fecf;
+}
+.rank-inactive-div{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #00fecf;
+  filter: brightness(0.3);
+
+}
+
+.rank-rewards{
+  background: rgba(151, 89, 192, 0.3);
+border-radius: 12px;
+width: 100%;
+}
+
+.rank-rewards-text{
+  font-size: 12px;
+  font-family: "Montserrat";
+  color: #fff;
+  font-weight: normal;
+}
+
+.needed-points{
+  font-size: 14px;
+  font-family: "Montserrat";
+  font-weight: 700;
+  color: rgb(243, 192, 9);;
+}
+
+.needed-points-span{
+  font-size: 12px;
+  font-family: "Montserrat";
+  font-weight: 700;
+  color: #fff;
+}
+
+.rank-img-inactive{
+  opacity: 0.8;
+  filter: brightness(0.3);
+}
+.rank-title-inactive{
+  opacity: 0.8;
+  filter: brightness(0.3);
+}

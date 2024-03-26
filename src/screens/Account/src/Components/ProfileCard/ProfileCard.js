@@ -16,8 +16,10 @@ import Clipboard from "react-clipboard.js";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import copyIcon from "../WalletBalance/assets/copyIcon.svg";
 import walletIcon from "../WalletBalance/assets/walletIcon.svg";
+import xMark from "../WalletBalance/newAssets/xMark.svg";
 import greenarrow from "./assets/greenarrow.svg";
 import logouticon from "./assets/logout.svg";
+import pointerArrow from "./assets/pointerArrow.svg";
 import player from "./assets/explorePlayer.png";
 import triangle from "./assets/triangle.svg";
 import sync from "./assets/sync.svg";
@@ -26,13 +28,17 @@ import circleArrow from "../../Images/userProfile/arrow-circle.svg";
 import blackWallet from "../../Images/userProfile/wallet-black.svg";
 import starActive from "./assets/star-active.svg";
 import starDefault from "./assets/star-default.svg";
-
+import arrowCircle from "./assets/arrowCircle.svg";
+import bustDummy from "./assets/bustDummy.png";
+import skaleActive from "../../Components/LeaderBoard/assets/skaleActive.svg";
+import bnbActive from "../../Components/LeaderBoard/assets/bnbActive.svg";
 import starAlert from "./assets/star-alert.svg";
 import axios from "axios";
 import Countdown from "react-countdown";
 import { dyp700Address, dyp700v1Address } from "../../web3";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import becomePremium from "./assets/becomePremium.svg";
+import OutsideClickHandler from "react-outside-click-handler";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -100,6 +106,8 @@ const ProfileCard = ({
 
   const [dateofBundlev1, setdateofBundlev1] = useState(0);
   const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
+  const [rankDropdown, setRankDropdown] = useState(false);
+  const [rankPopup, setRankPopup] = useState(false);
 
   let oneMarch = new Date("2024-03-01 11:11:00 GMT+02:00");
   let oneApril = new Date("2024-04-01 11:11:00 GMT+02:00");
@@ -575,84 +583,99 @@ const ProfileCard = ({
   }, [bundlesBought, address]);
 
   return (
-    <div className="main-wrapper py-4 w-100">
-      {/* {countdown700 !== 0 && countdown700 && ( */}
-      <Countdown
-        date={Number(countdown700)}
-        onComplete={() => {
-          setcountdown700();
-          handleSetAvailableTime();
-        }}
-      />
-      {/* )} */}
-      <div className="row justify-content-center gap-3 gap-lg-0">
-        <div className="position-relative px-lg-3 col-12">
-          <div
-            className={` ${
-              isVerified && email && !isPremium && "user-cardImg-active"
-            } ${
-              isVerified &&
-              email &&
-              syncStatus !== "" &&
-              isPremium &&
-              "user-cardImg-active-premium"
-            }  user-cardImg`}
-          >
+    <>
+      <div className="main-wrapper py-4 w-100">
+        {/* {countdown700 !== 0 && countdown700 && ( */}
+        <Countdown
+          date={Number(countdown700)}
+          onComplete={() => {
+            setcountdown700();
+            handleSetAvailableTime();
+          }}
+        />
+        {/* )} */}
+        <div className="row justify-content-center gap-3 gap-lg-0">
+          <div className="position-relative px-lg-3 col-12">
             <div
-              className={`bordereddiv ${
-                email && coinbase && username ? "" : "border-bottom-0"
-              }`}
+              className={` ${
+                isVerified && email && !isPremium && "user-cardImg-active"
+              } ${
+                isVerified &&
+                email &&
+                syncStatus !== "" &&
+                isPremium &&
+                "user-cardImg-active-premium"
+              }  user-cardImg`}
             >
-              <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row flex-sm-row  justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
-                <div className="d-flex gap-2 justify-content-between align-items-center  w-100">
-                  <div className="d-flex align-items-center gap-2 w-100">
-                    {(coinbase && !email) ||
-                    (!coinbase && !email) ||
-                    (coinbase && email && !address && !username) ||
-                    (!coinbase && email && address && username && !isPremium) ||
-                    !address ? (
-                      <img src={defaultAvatar} alt="" className="userAvatar" />
-                    ) : null}
-                    {address && email && coinbase && !isPremium && (
-                      <img src={defaultAvatar} alt="" className="userAvatar" />
-                    )}
-                    {address && email && isPremium && !coinbase && (
-                      <img
-                        src={defaultAvatarPremium}
-                        alt=""
-                        className="userAvatarPremium"
-                      />
-                    )}
-                    {address && email && isPremium && coinbase && (
-                      <img
-                        src={defaultAvatarPremium}
-                        alt=""
-                        className="userAvatarPremium"
-                      />
-                    )}
+              <div
+                className={`bordereddiv ${
+                  email && coinbase && username ? "" : "border-bottom-0"
+                }`}
+              >
+                <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row flex-sm-row  justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
+                  <div className="d-flex gap-2 justify-content-between align-items-center  w-100">
+                    <div className="d-flex align-items-center gap-2 w-100">
+                      {(coinbase && !email) ||
+                      (!coinbase && !email) ||
+                      (coinbase && email && !address && !username) ||
+                      (!coinbase &&
+                        email &&
+                        address &&
+                        username &&
+                        !isPremium) ||
+                      !address ? (
+                        <img
+                          src={defaultAvatar}
+                          alt=""
+                          className="userAvatar"
+                        />
+                      ) : null}
+                      {address && email && coinbase && !isPremium && (
+                        <img
+                          src={defaultAvatar}
+                          alt=""
+                          className="userAvatar"
+                        />
+                      )}
+                      {address && email && isPremium && !coinbase && (
+                        <img
+                          src={defaultAvatarPremium}
+                          alt=""
+                          className="userAvatarPremium"
+                        />
+                      )}
+                      {address && email && isPremium && coinbase && (
+                        <img
+                          src={defaultAvatarPremium}
+                          alt=""
+                          className="userAvatarPremium"
+                        />
+                      )}
 
-                    {isVerified && email ? (
-                      <div className="d-flex flex-column gap-1 w-100">
-                        <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
-                          {username}
-                          {!domainName && isConnected && (
-                            <span
-                              className={`${
-                                isPremium ? "premiumtext-active" : "premiumtext"
-                              }
+                      {isVerified && email ? (
+                        <div className="d-flex flex-column gap-1 w-100">
+                          <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
+                            {username}
+                            {!domainName && isConnected && (
+                              <span
+                                className={`${
+                                  isPremium
+                                    ? "premiumtext-active"
+                                    : "premiumtext"
+                                }
                               d-flex align-items-center gap-1`}
-                              style={{ cursor: "pointer" }}
-                              onClick={handleOpenDomains}
-                            >
-                              {address && email && (
-                                <img
-                                  src={isPremium ? starActive : starDefault}
-                                />
-                              )}
-                              Get domain name
-                            </span>
-                          )}
-                          {/* {!isPremium && email && (
+                                style={{ cursor: "pointer" }}
+                                onClick={handleOpenDomains}
+                              >
+                                {address && email && (
+                                  <img
+                                    src={isPremium ? starActive : starDefault}
+                                  />
+                                )}
+                                Get domain name
+                              </span>
+                            )}
+                            {/* {!isPremium && email && (
                             <span
                               className="profile-div-title mb-0 text-decoration-underline"
                               style={{
@@ -670,48 +693,51 @@ const ProfileCard = ({
                               Upgrade to Premium
                             </span>
                           )} */}
-                        </span>
+                          </span>
 
-                        <div className="wallet-balance d-flex flex-column flex-xxl-row flex-lg-row gap-3 position-relative">
-                          <>
-                            <Clipboard
-                              component="div"
-                              data-event="click"
-                              data-for={id}
-                              data-tip="Copied To Clipboard!"
-                              data-clipboard-text={address}
-                              className={`${
-                                isVerified &&
-                                email &&
-                                address?.toLowerCase() ===
-                                  coinbase?.toLowerCase() &&
-                                !isPremium &&
-                                "wallet-wrapper-active d-flex bg-transparent p-0"
-                              } ${
-                                isVerified &&
-                                email &&
-                                syncStatus === "initial" &&
-                                isPremium &&
-                                "wallet-wrapper-active-premium d-flex bg-transparent p-0"
-                              } ${
-                                address &&
-                                email &&
-                                coinbase &&
-                                syncStatus !== "" &&
-                                address.toLowerCase() !==
-                                  coinbase.toLowerCase() &&
-                                "wallet-wrapper-alert d-flex bg-transparent p-0"
-                              } ${
-                                (coinbase && email && !address && !username) ||
-                                (coinbase && email && !address && username) ||
-                                (!email && !coinbase && "d-none")
-                              }  d-flex wallet-wrapper align-items-center gap-2 position-relative`}
-                            >
-                              {/* {(coinbase || address) && (
+                          <div className="wallet-balance d-flex flex-column flex-xxl-row flex-lg-row gap-3 position-relative">
+                            <>
+                              <Clipboard
+                                component="div"
+                                data-event="click"
+                                data-for={id}
+                                data-tip="Copied To Clipboard!"
+                                data-clipboard-text={address}
+                                className={`${
+                                  isVerified &&
+                                  email &&
+                                  address?.toLowerCase() ===
+                                    coinbase?.toLowerCase() &&
+                                  !isPremium &&
+                                  "wallet-wrapper-active d-flex bg-transparent p-0"
+                                } ${
+                                  isVerified &&
+                                  email &&
+                                  syncStatus === "initial" &&
+                                  isPremium &&
+                                  "wallet-wrapper-active-premium d-flex bg-transparent p-0"
+                                } ${
+                                  address &&
+                                  email &&
+                                  coinbase &&
+                                  syncStatus !== "" &&
+                                  address.toLowerCase() !==
+                                    coinbase.toLowerCase() &&
+                                  "wallet-wrapper-alert d-flex bg-transparent p-0"
+                                } ${
+                                  (coinbase &&
+                                    email &&
+                                    !address &&
+                                    !username) ||
+                                  (coinbase && email && !address && username) ||
+                                  (!email && !coinbase && "d-none")
+                                }  d-flex wallet-wrapper align-items-center gap-2 position-relative`}
+                              >
+                                {/* {(coinbase || address) && (
                         <img src={walletIcon} alt="" className="wallet-icon" />
                       )} */}
-                              <div className="d-flex flex-column">
-                                {/* <span className="wallet-span d-flex align-items-center gap-2">
+                                <div className="d-flex flex-column">
+                                  {/* <span className="wallet-span d-flex align-items-center gap-2">
                           {coinbase && address && email
                             ? "Game Wallet address"
                             : coinbase && !email
@@ -728,44 +754,44 @@ const ProfileCard = ({
                           )}
                         </span> */}
 
-                                <div
-                                  className="d-flex flex-column"
-                                  onClick={() => {
-                                    setTooltip(true);
-                                    setTimeout(() => setTooltip(false), 1000);
-                                  }}
-                                >
-                                  <span className="emailtext">{email}</span>
-                                  {!domainName ? (
-                                    <span className="wallet-address">
-                                      {windowSize.width > 991
-                                        ? isVerified && email
-                                          ? address
-                                          : coinbase
-                                        : isVerified && email
-                                        ? shortAddress(address)
-                                        : shortAddress(coinbase)}
-                                    </span>
-                                  ) : (
-                                    <span className="wallet-address">
-                                      {domainName}
-                                    </span>
-                                  )}
+                                  <div
+                                    className="d-flex flex-column"
+                                    onClick={() => {
+                                      setTooltip(true);
+                                      setTimeout(() => setTooltip(false), 1000);
+                                    }}
+                                  >
+                                    <span className="emailtext">{email}</span>
+                                    {!domainName ? (
+                                      <span className="wallet-address">
+                                        {windowSize.width > 991
+                                          ? isVerified && email
+                                            ? address
+                                            : coinbase
+                                          : isVerified && email
+                                          ? shortAddress(address)
+                                          : shortAddress(coinbase)}
+                                      </span>
+                                    ) : (
+                                      <span className="wallet-address">
+                                        {domainName}
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
+                              </Clipboard>
+
+                              <div
+                                className={`tooltip-wrapper p-2 ${
+                                  tooltip && "tooltip-active"
+                                }`}
+                                style={{ top: "auto", right: 0 }}
+                              >
+                                <p className="tooltip-content m-0">Copied!</p>
                               </div>
-                            </Clipboard>
+                            </>
 
-                            <div
-                              className={`tooltip-wrapper p-2 ${
-                                tooltip && "tooltip-active"
-                              }`}
-                              style={{ top: "auto", right: 0 }}
-                            >
-                              <p className="tooltip-content m-0">Copied!</p>
-                            </div>
-                          </>
-
-                          {/* : 
+                            {/* : 
                  (
                   <>
                      <Clipboard
@@ -806,7 +832,7 @@ const ProfileCard = ({
                   </>
                 ) */}
 
-                          {/* {!address ? (
+                            {/* {!address ? (
                   <span className="walletinfo">
                     *Note that once you link a wallet to your profile, it cannot
                     be changed.
@@ -817,297 +843,385 @@ const ProfileCard = ({
                     changed.
                   </span>
                 )} */}
+                          </div>
+                          {!coinbase && email && (
+                            <button
+                              className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                              onClick={() => {
+                                handleShowWalletPopup();
+                              }}
+                              style={{
+                                width: "fit-content",
+                                whiteSpace: "nowrap",
+                                fontSize: 14,
+                              }}
+                            >
+                              <img
+                                src={blackWallet}
+                                alt=""
+                                style={{ width: 18 }}
+                              />
+                              Connect wallet
+                            </button>
+                          )}
                         </div>
-                        {!coinbase && email && (
-                          <button
-                            className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                            onClick={() => {
-                              handleShowWalletPopup();
-                            }}
-                            style={{
-                              width: "fit-content",
-                              whiteSpace: "nowrap",
-                              fontSize: 14,
-                            }}
-                          >
-                            <img
-                              src={blackWallet}
-                              alt=""
-                              style={{ width: 18 }}
-                            />
-                            Connect wallet
-                          </button>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="d-flex flex-column gap-1 col-lg-7">
-                        <span className="usernametext font-organetto">
-                          Start your journey now!
-                        </span>
-                      </div>
-                    )}
-                  </div>{" "}
-                </div>
-                {!coinbase && !email && (
-                  <button
-                    className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                    onClick={() => {
-                      handleShowWalletPopup();
-                    }}
-                    style={{
-                      width: "fit-content",
-                      whiteSpace: "nowrap",
-                      fontSize: 14,
-                    }}
-                  >
-                    <img src={blackWallet} alt="" style={{ width: 18 }} />
-                    Connect wallet
-                  </button>
-                )}
-                {coinbase && address && !email && (
-                  <button
-                    className="d-flex px-3 py-1 align-items-center gap-2 signinbtn text-nowrap"
-                    onClick={() => {
-                      onSigninClick();
-                    }}
-                    style={{ width: "fit-content", fontSize: 14 }}
-                  >
-                    Sign in
-                    <img src={greenarrow} alt="" />
-                  </button>
-                )}
-                {coinbase && !email && !address && !username && (
-                  <button
-                    className="d-flex px-3 py-1 align-items-center gap-2 signinbtn text-nowrap"
-                    onClick={() => {
-                      onSigninClick();
-                    }}
-                    style={{ width: "fit-content", fontSize: 14 }}
-                  >
-                    Sign in
-                    <img src={greenarrow} alt="" />
-                  </button>
-                )}
-                {coinbase && email && !address && !username && (
-                  <button
-                    className="d-flex px-3 py-1 align-items-center signinbtn"
-                    onClick={() => {
-                      onSigninClick();
-                    }}
-                    style={{
-                      width: "fit-content",
-                      fontSize: 14,
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    Create player
-                    <img src={greenarrow} alt="" />
-                  </button>
-                )}
-                {coinbase && email && username && !address && (
-                  <div
-                    className="walletconnectBtn col-lg-3 col-12"
-                    onClick={onLinkWallet}
-                  >
-                    <div className="d-flex gap-2 justify-content-between align-items-center">
-                      <div className="d-flex gap-2 align-items-center">
-                        <img src={walletImg} alt="" />
-                        <div className="d-flex flex-column">
-                          <span className="secondTitle">Connect wallet</span>
+                      ) : (
+                        <div className="d-flex flex-column gap-1 col-lg-7">
+                          <span className="usernametext font-organetto">
+                            Start your journey now!
+                          </span>
+                        </div>
+                      )}
+                    </div>{" "}
+                  </div>
+                  {!coinbase && !email && (
+                    <button
+                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      onClick={() => {
+                        handleShowWalletPopup();
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      <img src={blackWallet} alt="" style={{ width: 18 }} />
+                      Connect wallet
+                    </button>
+                  )}
+                  {coinbase && address && !email && (
+                    <button
+                      className="d-flex px-3 py-1 align-items-center gap-2 signinbtn text-nowrap"
+                      onClick={() => {
+                        onSigninClick();
+                      }}
+                      style={{ width: "fit-content", fontSize: 14 }}
+                    >
+                      Sign in
+                      <img src={greenarrow} alt="" />
+                    </button>
+                  )}
+                  {coinbase && !email && !address && !username && (
+                    <button
+                      className="d-flex px-3 py-1 align-items-center gap-2 signinbtn text-nowrap"
+                      onClick={() => {
+                        onSigninClick();
+                      }}
+                      style={{ width: "fit-content", fontSize: 14 }}
+                    >
+                      Sign in
+                      <img src={greenarrow} alt="" />
+                    </button>
+                  )}
+                  {coinbase && email && !address && !username && (
+                    <button
+                      className="d-flex px-3 py-1 align-items-center signinbtn"
+                      onClick={() => {
+                        onSigninClick();
+                      }}
+                      style={{
+                        width: "fit-content",
+                        fontSize: 14,
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      Create player
+                      <img src={greenarrow} alt="" />
+                    </button>
+                  )}
+                  {coinbase && email && username && !address && (
+                    <div
+                      className="walletconnectBtn col-lg-3 col-12"
+                      onClick={onLinkWallet}
+                    >
+                      <div className="d-flex gap-2 justify-content-between align-items-center">
+                        <div className="d-flex gap-2 align-items-center">
+                          <img src={walletImg} alt="" />
+                          <div className="d-flex flex-column">
+                            <span className="secondTitle">Connect wallet</span>
 
-                          <span className="firsttitle">Link your wallet</span>
+                            <span className="firsttitle">Link your wallet</span>
+                          </div>
                         </div>
+                        <img src={circleArrow} alt="" />
                       </div>
-                      <img src={circleArrow} alt="" />
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {email && address && coinbase && !isPremium && (
-                  <div
-                    className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
+                  {email && address && coinbase && !isPremium && (
+                    <div
+                      className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
-                    onClick={onPremiumClick}
-                  >
-                    {/* <div className="table-separator position-absolute"></div> */}
-                    <h6 className="become-premium-title mb-0">
-                      Become a Premium Member
-                    </h6>
+                      onClick={onPremiumClick}
+                    >
+                      {/* <div className="table-separator position-absolute"></div> */}
+                      <h6 className="become-premium-title mb-0">
+                        Become a Premium Member
+                      </h6>
 
-                    <img
-                      src={becomePremium}
-                      alt=""
-                      className="become-premium-img"
-                    />
-                  </div>
-                )}
-                {email && address && (
-                  <div
-                    className={`${
-                      isPremium
-                        ? "wallet-wrapper-active-premium hoverpremium"
-                        : "wallet-wrapper-active hoveractive"
-                    }
+                      <img
+                        src={becomePremium}
+                        alt=""
+                        className="become-premium-img"
+                      />
+                    </div>
+                  )}
+                  {email && address && (
+                    <>
+                      <div
+                        className={`${
+                          isPremium
+                            ? "wallet-wrapper-active-premium hoverpremium"
+                            : "wallet-wrapper-active hoveractive"
+                        }
                     position-relative
                     d-flex flex-column align-items-center position-relative mt-3 mt-lg-0`}
-                    onClick={onOpenLeaderboard}
-                  >
-                    {countdown700 && (
-                      <div className="golden-pass-wrapper"></div>
-                    )}
-                    {countdown700 && (
-                      <img
-                        src={require("./assets/goldenPassTag.png")}
-                        alt=""
-                        className="golden-pass-tag d-flex d-lg-none"
-                      />
-                    )}
-                    {/* <div className="table-separator position-absolute"></div> */}
-                    <h6
-                      className="profile-div-title mb-0"
-                      style={{ fontSize: "10px" }}
-                    >
-                      Leaderboard
-                    </h6>
-                    <div className="d-flex align-items-center gap-4">
-                      <div className="d-flex flex-column align-items-center">
-                        <img
-                          src={globalRank}
-                          alt=""
-                          style={{ width: 27, height: 27 }}
-                        />
-                        <span className="  profile-rank mb-0">
-                          #{userRank + 1}
-                        </span>
-                        {/* <span className="font-iceland profile-rank mb-0">
+                        onClick={onOpenLeaderboard}
+                      >
+                        {countdown700 && (
+                          <div className="golden-pass-wrapper"></div>
+                        )}
+                        {countdown700 && (
+                          <img
+                            src={require("./assets/goldenPassTag.png")}
+                            alt=""
+                            className="golden-pass-tag d-flex d-lg-none"
+                          />
+                        )}
+                        {/* <div className="table-separator position-absolute"></div> */}
+                        <h6
+                          className="profile-div-title mb-0"
+                          style={{ fontSize: "10px" }}
+                        >
+                          Leaderboard
+                        </h6>
+                        <div className="d-flex align-items-center gap-4">
+                          <div className="d-flex flex-column align-items-center">
+                            <img
+                              src={globalRank}
+                              alt=""
+                              style={{ width: 27, height: 27 }}
+                            />
+                            <span className="  profile-rank mb-0">
+                              #{userRank + 1}
+                            </span>
+                            {/* <span className="font-iceland profile-rank mb-0">
                         Global
                       </span> */}
-                      </div>
-                      <div className="d-flex flex-column align-items-center">
-                        <img
-                          src={genesisRankImg}
-                          alt=""
-                          style={{ width: 27, height: 27 }}
-                        />
-                        <span className="  profile-rank mb-0">
-                          #{genesisRank + 1}
-                        </span>
-                        {/* <span className="font-iceland profile-rank mb-0">
+                          </div>
+                          <div className="d-flex flex-column align-items-center">
+                            <img
+                              src={genesisRankImg}
+                              alt=""
+                              style={{ width: 27, height: 27 }}
+                            />
+                            <span className="  profile-rank mb-0">
+                              #{genesisRank + 1}
+                            </span>
+                            {/* <span className="font-iceland profile-rank mb-0">
                         Genesis
                       </span> */}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                )}
-                {/* {availableTime !== "0" && availableTime && availableTime!==undefined &&  (
+                      <div className="position-relative">
+                        <div
+                          className={`${
+                            isPremium
+                              ? "wallet-wrapper-active-premium hoverpremium"
+                              : "wallet-wrapper-active hoveractive"
+                          }
+                    position-relative player-rank-wrapper
+                    d-flex flex-column align-items-center position-relative mt-3 mt-lg-0`}
+                          onClick={() => setRankDropdown(!rankDropdown)}
+                        >
+                          <img src={bustDummy} alt="" className="player-bust" />
+                          <div className="ranking-text-wrapper">
+                            <span className="player-ranking-text font-organetto mb-0">
+                              STARTER
+                            </span>
+                          </div>
+                        </div>
+                        {rankDropdown && (
+                          <OutsideClickHandler
+                            onOutsideClick={() => setRankDropdown(false)}
+                          >
+                            <div className="player-rank-dropdown p-3 d-flex flex-column gap-2">
+                              <div className="d-flex align-items-center justify-content-center w-100">
+                                <h6 className="text-white font-organetto mb-0">
+                                  My Rank
+                                </h6>
+                              </div>
+                              <div className="d-flex flex-column align-items-center justify-content-center gap-1">
+                                <img
+                                  src={bustDummy}
+                                  style={{ width: "50%" }}
+                                  alt=""
+                                />
+                                <span className="text-white font-organetto mb-0">
+                                  STARTER
+                                </span>
+                              </div>
+                              <div className="d-flex align-items-center justify-content-between">
+                                <span className="chain-score-span mb-0">
+                                  BNB Score:
+                                </span>
+                                <span className="chain-score mb-0">
+                                  25,544,231
+                                </span>
+                              </div>
+                              <div className="d-flex align-items-center justify-content-between">
+                                <span className="chain-score-span mb-0">
+                                  SKALE Score:
+                                </span>
+                                <span className="chain-score mb-0">
+                                  25,544,231
+                                </span>
+                              </div>
+                              <div className="d-flex align-items-center justify-content-between mt-1">
+                                <span className="chain-score-span mb-0">
+                                  Total:
+                                </span>
+                                <span className="chain-score mb-0">
+                                  51,544,231
+                                </span>
+                              </div>
+                              <div className="d-flex align-items-center justify-content-between">
+                                <span className="chain-score-span mb-0">
+                                  Points till next Rank:
+                                </span>
+                                <span className="chain-score mb-0">
+                                  22,544,231
+                                </span>
+                              </div>
+                              <div
+                                className="d-flex align-items-center justify-content-center gap-2 mt-2"
+                                onClick={() => {
+                                  setRankPopup(true);
+                                  setRankDropdown(false);
+                                }}
+                              >
+                                <span className="open-ranks-text mb-0">
+                                  Rankings and Rewards
+                                </span>
+                                <img src={arrowCircle} alt="" />
+                              </div>
+                            </div>
+                          </OutsideClickHandler>
+                        )}
+                      </div>
+                    </>
+                  )}
+                  {/* {availableTime !== "0" && availableTime && availableTime!==undefined &&  (
             <div className="d-flex flex-column">
             <span className="emailtext" style={{color: '#ffbf00'}}>*Golden Pass</span>
             <span className="emailtext" style={{color: '#00FECF'}}>{remainingTime} (GMT + 2)</span>
 
             </div>
           )} */}
+                </div>
               </div>
-            </div>
-            <div
-              className={`bordereddiv border-0 ${
-                email && coinbase && username ? "py-2" : "p-0"
-              }`}
-            >
               <div
-                className={`d-flex flex-column flex-xxl-row flex-lg-row  align-items-center gap-2 ${
-                  coinbase
-                    ? "justify-content-between"
-                    : "justify-content-end p-2"
-                } `}
+                className={`bordereddiv border-0 ${
+                  email && coinbase && username ? "py-2" : "p-0"
+                }`}
               >
-                {address &&
-                  email &&
-                  coinbase &&
-                  syncStatus !== "" &&
-                  address.toLowerCase() !== coinbase.toLowerCase() && (
-                    <div className="sync-wrapper">
-                      <div className="d-flex gap-2 align-items-center">
-                        <img
-                          src={triangle}
-                          alt=""
-                          style={{ width: "21px", height: "20px" }}
-                        />
-                        <span className="premiumtext-alert">
-                          Your gaming account is not linked to the wallet you
-                          connected. To update the game wallet address, press
-                          the synchronize button.
-                        </span>
-                      </div>
-                    </div>
-                  )}
-                {address &&
-                  coinbase &&
-                  email &&
-                  address?.toLowerCase() === coinbase?.toLowerCase() && (
-                    <p className="walletassoc-txt m-0">
-                      *This wallet is associated to your game account.
-                    </p>
-                  )}
-
-                {!address && coinbase && email && username && (
-                  <p className="walletassoc-txt m-0">
-                    *There is no wallet address associated with your game
-                    account.
-                    <br /> Link your wallet to finish setup.
-                  </p>
-                )}
-
                 <div
-                  className="d-flex align-items-center gap-2"
-                  style={{
-                    width: "fit-content",
-                    justifyContent:
-                      address &&
-                      email &&
-                      coinbase &&
-                      syncStatus !== "" &&
-                      address.toLowerCase() !== coinbase.toLowerCase()
-                        ? "space-between"
-                        : "",
-                  }}
+                  className={`d-flex flex-column flex-xxl-row flex-lg-row  align-items-center gap-2 ${
+                    coinbase
+                      ? "justify-content-between"
+                      : "justify-content-end p-2"
+                  } `}
                 >
                   {address &&
                     email &&
                     coinbase &&
                     syncStatus !== "" &&
                     address.toLowerCase() !== coinbase.toLowerCase() && (
+                      <div className="sync-wrapper">
+                        <div className="d-flex gap-2 align-items-center">
+                          <img
+                            src={triangle}
+                            alt=""
+                            style={{ width: "21px", height: "20px" }}
+                          />
+                          <span className="premiumtext-alert">
+                            Your gaming account is not linked to the wallet you
+                            connected. To update the game wallet address, press
+                            the synchronize button.
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  {address &&
+                    coinbase &&
+                    email &&
+                    address?.toLowerCase() === coinbase?.toLowerCase() && (
+                      <p className="walletassoc-txt m-0">
+                        *This wallet is associated to your game account.
+                      </p>
+                    )}
+
+                  {!address && coinbase && email && username && (
+                    <p className="walletassoc-txt m-0">
+                      *There is no wallet address associated with your game
+                      account.
+                      <br /> Link your wallet to finish setup.
+                    </p>
+                  )}
+
+                  <div
+                    className="d-flex align-items-center gap-2"
+                    style={{
+                      width: "fit-content",
+                      justifyContent:
+                        address &&
+                        email &&
+                        coinbase &&
+                        syncStatus !== "" &&
+                        address.toLowerCase() !== coinbase.toLowerCase()
+                          ? "space-between"
+                          : "",
+                    }}
+                  >
+                    {address &&
+                      email &&
+                      coinbase &&
+                      syncStatus !== "" &&
+                      address.toLowerCase() !== coinbase.toLowerCase() && (
+                        <button
+                          className="d-flex align-items-center gap-1 syncbtn"
+                          onClick={onSyncClick}
+                        >
+                          <img
+                            src={sync}
+                            alt=""
+                            className={syncStatus === "loading" && "syncicon"}
+                          />{" "}
+                          {syncStatus === "initial"
+                            ? "Synchronize"
+                            : syncStatus === "loading"
+                            ? "Synchronising..."
+                            : syncStatus === "success"
+                            ? "Success"
+                            : "Error"}
+                        </button>
+                      )}
+                    {address && email && (
                       <button
-                        className="d-flex align-items-center gap-1 syncbtn"
-                        onClick={onSyncClick}
+                        className="logoutbtn px-3 py-1"
+                        onClick={onLogoutClick}
                       >
-                        <img
-                          src={sync}
-                          alt=""
-                          className={syncStatus === "loading" && "syncicon"}
-                        />{" "}
-                        {syncStatus === "initial"
-                          ? "Synchronize"
-                          : syncStatus === "loading"
-                          ? "Synchronising..."
-                          : syncStatus === "success"
-                          ? "Success"
-                          : "Error"}
+                        <img src={logouticon} alt="" /> Log Out
                       </button>
                     )}
-                  {address && email && (
-                    <button
-                      className="logoutbtn px-3 py-1"
-                      onClick={onLogoutClick}
-                    >
-                      <img src={logouticon} alt="" /> Log Out
-                    </button>
-                  )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        {/* <div className="explorebanner col-12 col-lg-7 col-xxl-7 position-relative">
+          {/* <div className="explorebanner col-12 col-lg-7 col-xxl-7 position-relative">
           <div className="d-flex flex-column gap-2 justify-content-center h-100">
             <div className="orangesection">
               <span>World of Dypians</span>
@@ -1134,8 +1248,192 @@ const ProfileCard = ({
             }}
           />
         </div> */}
+        </div>
       </div>
-    </div>
+      {rankPopup && (
+        <OutsideClickHandler onOutsideClick={() => setRankPopup(false)}>
+          <div
+            className="popup-wrapper leaderboard-popup popup-active p-3"
+            id="leaderboard"
+            style={{ width: "70%", pointerEvents: "auto" }}
+          >
+            <div className="d-flex align-items-center justify-content-between">
+              <h2
+                className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+              >
+                Rankings and Rewards
+              </h2>
+              <img
+                src={xMark}
+                onClick={() => setRankPopup(false)}
+                alt=""
+                style={{ cursor: "pointer" }}
+              />
+            </div>
+            <div className="d-flex align-items-center justify-content-between">
+              <div className="d-flex flex-column align-items-center gap-2">
+                <img src={bustDummy} className="rank-img-active" alt="" />
+                <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
+                  STARTER
+                </h6>
+                <div className="rank-active-div"></div>
+                <div className="d-flex flex-column align-items-center gap-1">
+                  <span className="needed-points-span mb-0">
+                    Points Required
+                  </span>
+                  <span className="needed-points mb-0">500,000</span>
+                </div>
+                <div className="rank-rewards d-flex flex-column gap-2 p-3">
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={skaleActive} alt="" />
+                    <span className="rank-rewards-text font-montserrat mb-0">
+                      $10 in SKALE
+                    </span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={bnbActive} alt="" />
+                    <span className="rank-rewards-text font-montserrat mb-0">
+                      $10 in BNB Chain
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <img
+                src={pointerArrow}
+                style={{ width: "100px", height: "auto" }}
+                alt=""
+              />
+              <div className="d-flex flex-column align-items-center gap-2">
+                <img src={bustDummy} className="rank-img-active" alt="" />
+                <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
+                  ROOKIE
+                </h6>
+                <div className="rank-active-div"></div>
+                <div className="d-flex flex-column align-items-center gap-1">
+                  <span className="needed-points-span mb-0">
+                    Points Required
+                  </span>
+                  <span className="needed-points mb-0">2,000,000</span>
+                </div>
+                <div className="rank-rewards d-flex flex-column gap-2 p-3">
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={skaleActive} alt="" />
+                    <span className="rank-rewards-text font-montserrat mb-0">
+                      $20 in SKALE
+                    </span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={bnbActive} alt="" />
+                    <span className="rank-rewards-text font-montserrat mb-0">
+                      $20 in BNB Chain
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <img
+                src={pointerArrow}
+                style={{ width: "100px", height: "auto" }}
+                alt=""
+              />
+
+              <div className="d-flex flex-column align-items-center gap-2">
+                <img src={bustDummy} className="rank-img-inactive" alt="" />
+                <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                  UNDERDOG
+                </h6>
+                <div className="rank-inactive-div"></div>
+                <div className="d-flex flex-column align-items-center gap-1">
+                  <span className="needed-points-span mb-0">
+                    Points Required
+                  </span>
+                  <span className="needed-points mb-0">5,000,000</span>
+                </div>
+                <div className="rank-rewards d-flex flex-column gap-2 p-3">
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={skaleActive} alt="" />
+                    <span className="rank-rewards-text font-montserrat mb-0">
+                      $30 in SKALE
+                    </span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={bnbActive} alt="" />
+                    <span className="rank-rewards-text font-montserrat mb-0">
+                      $30 in BNB Chain
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <img
+                src={pointerArrow}
+                style={{ width: "100px", height: "auto" }}
+                alt=""
+              />
+
+              <div className="d-flex flex-column align-items-center gap-2">
+                <img src={bustDummy} className="rank-img-inactive" alt="" />
+                <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                  CHAMPION
+                </h6>
+                <div className="rank-inactive-div"></div>
+                <div className="d-flex flex-column align-items-center gap-1">
+                  <span className="needed-points-span mb-0">
+                    Points Required
+                  </span>
+                  <span className="needed-points mb-0">10,000,000</span>
+                </div>
+                <div className="rank-rewards d-flex flex-column gap-2 p-3">
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={skaleActive} alt="" />
+                    <span className="rank-rewards-text font-montserrat mb-0">
+                      $40 in SKALE
+                    </span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={bnbActive} alt="" />
+                    <span className="rank-rewards-text font-montserrat mb-0">
+                      $40 in BNB Chain
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <img
+                src={pointerArrow}
+                style={{ width: "100px", height: "auto" }}
+                alt=""
+              />
+
+              <div className="d-flex flex-column align-items-center gap-2">
+                <img src={bustDummy} className="rank-img-inactive" alt="" />
+                <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                  UNSTOPPABLE
+                </h6>
+                <div className="rank-inactive-div"></div>
+                <div className="d-flex flex-column align-items-center gap-1">
+                  <span className="needed-points-span mb-0">
+                    Points Required
+                  </span>
+                  <span className="needed-points mb-0">20,000,000</span>
+                </div>
+                <div className="rank-rewards d-flex flex-column gap-2 p-3">
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={skaleActive} alt="" />
+                    <span className="rank-rewards-text font-montserrat mb-0">
+                      $50 in SKALE
+                    </span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={bnbActive} alt="" />
+                    <span className="rank-rewards-text font-montserrat mb-0">
+                      $50 in BNB Chain
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </OutsideClickHandler>
+      )}
+    </>
   );
 };
 
