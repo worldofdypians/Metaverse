@@ -2098,7 +2098,7 @@ function App() {
   };
 
   const fetchSkaleBalance = async () => {
-    if (coinbase && window.ethereum) {
+    if (coinbase && window.ethereum && chainId === 37084624) {
       const skaleWeb3 = new Web3(window.config.skale_endpoint);
 
       const balance = await window.ethereum.request({
@@ -2156,7 +2156,7 @@ function App() {
 
   useEffect(() => {
     fetchSkaleBalance();
-  }, [coinbase, isConnected]);
+  }, [coinbase, isConnected, chainId]);
 
   useEffect(() => {
     fetchUserFavorites(coinbase);

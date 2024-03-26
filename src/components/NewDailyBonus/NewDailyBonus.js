@@ -92,6 +92,7 @@ const NewDailyBonus = ({
   ethTokenData,
   handleSwitchChain,
   openedSkaleChests,
+  coinbase,
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -399,6 +400,12 @@ const NewDailyBonus = ({
                 resultUsd += Number(innerChest.reward);
               }
             });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultPoints += Number(innerChest.reward);
+              }
+            });
           }
         }
       });
@@ -423,6 +430,13 @@ const NewDailyBonus = ({
                 innerChest.status !== "Unclaimed"
               ) {
                 resultSkaleUsd += Number(chest.rewards.reward);
+              }
+            });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              console.log(innerChest);
+              if (innerChest.rewardType === "Points") {
+                resultSkalePoints += Number(innerChest.reward);
               }
             });
           }
@@ -732,34 +746,54 @@ const NewDailyBonus = ({
   };
 
   useEffect(() => {
-    if (chain === "bnb") {
-      if (chainId === 56 || chainId === 204) {
-        setMessage("");
-        setDisable(false);
-      } else {
-        setMessage("switch");
-        setDisable(true);
-      }
-    } else if (chain === "skale") {
-      if (chainId === 37084624) {
-        setMessage("");
-        setDisable(false);
-      } else {
-        setMessage("switch");
-        setDisable(true);
+    if (address && email && coinbase) {
+      if (chain === "bnb") {
+        if (
+          (chainId === 56 || chainId === 204) &&
+          address.toLowerCase() === coinbase.toLowerCase()
+        ) {
+          setMessage("");
+          setDisable(false);
+        } else if (
+          (chainId === 56 || chainId === 204) &&
+          address.toLowerCase() !== coinbase.toLowerCase()
+        ) {
+          setDisable(true);
+          setMessage("switchAccount");
+        } else {
+          setMessage("switch");
+          setDisable(true);
+        }
+      } else if (chain === "skale") {
+        if (
+          chainId === 37084624 &&
+          address.toLowerCase() === coinbase.toLowerCase()
+        ) {
+          setMessage("");
+          setDisable(false);
+        } else if (
+          chainId === 37084624 &&
+          address.toLowerCase() !== coinbase.toLowerCase()
+        ) {
+          setDisable(true);
+          setMessage("switchAccount");
+        } else {
+          setMessage("switch");
+          setDisable(true);
+        }
       }
     }
-  }, [chainId, chain]);
+  }, [chainId, chain, coinbase, address, email]);
 
   useEffect(() => {
     countEarnedRewards();
   }, [allChests, allSkaleChests]);
 
-  useEffect(() => {
-    if (disable) {
-      setMessage("switch");
-    }
-  }, [disable]);
+  // useEffect(() => {
+  //   if (disable) {
+  //     setMessage("switch");
+  //   }
+  // }, [disable]);
 
   useEffect(() => {
     filterCawsNfts();
@@ -768,23 +802,33 @@ const NewDailyBonus = ({
 
   useEffect(() => {
     if (chain === "bnb") {
-      if (email) {
+      if (email && coinbase && address) {
         if (isPremium) {
           if (
             claimedChests + claimedPremiumChests === 20 &&
-            rewardData.length === 0
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() && chain === 'bnb' && (chainId === 56 || chainId === 204)
           ) {
             setMessage("complete");
           } else if (
             claimedChests + claimedPremiumChests < 20 &&
-            rewardData.length === 0
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() && chain === 'bnb' && (chainId === 56 || chainId === 204)
           ) {
             setMessage("");
           }
         } else if (!isPremium) {
-          if (claimedChests === 10 && rewardData.length === 0) {
+          if (
+            claimedChests === 10 &&
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() && chain === 'bnb' && (chainId === 56 || chainId === 204)
+          ) {
             setMessage("premium");
-          } else if (claimedChests < 10 && rewardData.length === 0) {
+          } else if (
+            claimedChests < 10 &&
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() && chain === 'bnb' && (chainId === 56 || chainId === 204)
+          ) {
             setMessage("");
           }
         }
@@ -792,19 +836,29 @@ const NewDailyBonus = ({
         if (isPremium) {
           if (
             claimedSkaleChests + claimedSkalePremiumChests === 20 &&
-            rewardData.length === 0
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 37084624 && chain === 'skale'
           ) {
             setMessage("complete");
           } else if (
             claimedSkaleChests + claimedSkalePremiumChests < 20 &&
-            rewardData.length === 0
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 37084624 && chain === 'skale'
           ) {
             setMessage("");
           }
         } else if (!isPremium) {
-          if (claimedSkaleChests === 10 && rewardData.length === 0) {
+          if (
+            claimedSkaleChests === 10 &&
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 37084624 && chain === 'skale'
+          ) {
             setMessage("premium");
-          } else if (claimedSkaleChests < 10 && rewardData.length === 0) {
+          } else if (
+            claimedSkaleChests < 10 &&
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 37084624 && chain === 'skale'
+          ) {
             setMessage("");
           }
         }
@@ -815,6 +869,8 @@ const NewDailyBonus = ({
   }, [
     email,
     chain,
+    coinbase,
+    address,
     isPremium,
     claimedChests,
     claimedPremiumChests,
@@ -1161,7 +1217,7 @@ const NewDailyBonus = ({
                             {" "}
                             <img src={skaleIcon} alt="" /> SKALE
                           </button>
-                         {/* <a href="https://www.sfuelstation.com/" target="_blank">
+                          {/* <a href="https://www.sfuelstation.com/" target="_blank">
                          <button
                             className={`${
                               chainId === 2046399126
@@ -1309,7 +1365,7 @@ const NewDailyBonus = ({
                             className={`chain-inactive-btn d-flex gap-1 align-items-center`}
                           >
                             {" "}
-                            <img src={bnbIcon} alt="" /> SKALE
+                            <img src={skaleIcon} alt="" /> SKALE
                           </button>
                         </div>
                       </div>
@@ -1587,12 +1643,7 @@ const NewDailyBonus = ({
                         <div className="dot" style={{ "--i": 8 }}></div>
                         <div className="dot" style={{ "--i": 9 }}></div>
                       </div>
-                      {/* <h6
-                        className="loader-text mb-0"
-                        style={{ color: "#ce5d1b" }}
-                      >
-                        Switch to {chain === "bnb" ? "BNB" : "SKALE"} Chain
-                      </h6> */}
+
                       {chain === "bnb" ? (
                         <h6
                           className="loader-text mb-0"
@@ -1649,6 +1700,49 @@ const NewDailyBonus = ({
                         <div className="dot" style={{ "--i": 7 }}></div>
                         <div className="dot" style={{ "--i": 8 }}></div>
                         <div className="dot" style={{ "--i": 9 }}></div>
+                      </div>
+                    </div>
+                  ) : message === "switchAccount" ? (
+                    <div
+                      className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
+                      style={{
+                        background: "#1A1C39",
+                        border: "1px solid #ce5d1b",
+                      }}
+                    >
+                      <div className="loader red-loader">
+                        <div className="dot" style={{ "--i": 0 }}></div>
+                        <div className="dot" style={{ "--i": 1 }}></div>
+                        <div className="dot" style={{ "--i": 2 }}></div>
+                        <div className="dot" style={{ "--i": 3 }}></div>
+                        <div className="dot" style={{ "--i": 4 }}></div>
+                        <div className="dot" style={{ "--i": 5 }}></div>
+                        <div className="dot" style={{ "--i": 6 }}></div>
+                        <div className="dot" style={{ "--i": 7 }}></div>
+                        <div className="dot" style={{ "--i": 8 }}></div>
+                        <div className="dot" style={{ "--i": 9 }}></div>
+                        <div className="dot" style={{ "--i": 10 }}></div>
+                      </div>
+
+                      <h6
+                        className="loader-text mb-0"
+                        style={{ color: "#ce5d1b" }}
+                      >
+                        Use the wallet associated to your game account.
+                      </h6>
+
+                      <div className="loader red-loader">
+                        <div className="dot" style={{ "--i": 0 }}></div>
+                        <div className="dot" style={{ "--i": 1 }}></div>
+                        <div className="dot" style={{ "--i": 2 }}></div>
+                        <div className="dot" style={{ "--i": 3 }}></div>
+                        <div className="dot" style={{ "--i": 4 }}></div>
+                        <div className="dot" style={{ "--i": 5 }}></div>
+                        <div className="dot" style={{ "--i": 6 }}></div>
+                        <div className="dot" style={{ "--i": 7 }}></div>
+                        <div className="dot" style={{ "--i": 8 }}></div>
+                        <div className="dot" style={{ "--i": 9 }}></div>
+                        <div className="dot" style={{ "--i": 10 }}></div>
                       </div>
                     </div>
                   ) : message === "error" ? (

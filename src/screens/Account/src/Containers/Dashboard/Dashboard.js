@@ -3483,6 +3483,7 @@ function Dashboard({
                 onclose={() => {
                   setdailyBonusPopup(false);
                 }}
+                coinbase={coinbase}
                 standardChests={standardChests}
                 premiumChests={premiumChests}
                 standardSkaleChests={standardSkaleChests}
