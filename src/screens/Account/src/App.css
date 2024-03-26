@@ -1,4 +1,4 @@
-*{
+* {
   font-family: "Poppins" !important;
 }
 
@@ -12,6 +12,12 @@
   flex-direction: column;
 }
 
+.premium-chains-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
 @font-face {
   font-family: "Organetto";
   src: url("./fonts/Organetto.ttf");
@@ -21,7 +27,7 @@
   font-family: "Organetto" !important;
 }
 
-.staked{
+.staked {
   position: absolute;
   right: 0px;
   top: -8px;
@@ -29,6 +35,40 @@
 
 .walletbutton:hover {
   border: 1px solid rgb(140, 86, 255);
+}
+.gotoNebula-wrapper {
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 144, 161, 0.6) 33%,
+    rgba(41, 255, 148, 0.6) 100%
+  );
+}
+
+.nebula-wrapper-text {
+  color: #f7f7fc;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 27px;
+}
+
+.nebula-bridgebtn {
+  border-radius: 6px;
+  border: 1px solid #00c899;
+  color: #fff;
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  background: transparent;
+  padding: 5px 10px;
+}
+
+.nebula-bridgebtn:hover {
+  text-decoration: underline;
+  color: #fff;
 }
 
 .walletmodal-wrapper {
@@ -46,7 +86,6 @@
   cursor: pointer;
 }
 
-
 .walletbutton {
   background: var(--box-bg);
   outline: currentcolor none medium;
@@ -63,7 +102,6 @@
   opacity: 1;
 }
 
-
 .nftcontainer {
   background: #242240;
   border-radius: 8px;
@@ -72,14 +110,13 @@
   gap: 50px;
 }
 
-
-.packages-grid{
+.packages-grid {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
-.premium-package{
+.premium-package {
   background: #242240;
   width: 125px;
   height: 125px;
@@ -87,28 +124,23 @@
   border-radius: 12px;
   border: 2px solid #242240;
   cursor: pointer;
-  transition: all .25s;
-
+  transition: all 0.25s;
 }
 
 @media screen and (max-width: 786px) {
-  .premium-package{
+  .premium-package {
     width: 75px;
     height: 75px;
   }
 }
 
-.premium-package:hover{
-  border: 2px solid #4ED5D2;
-
+.premium-package:hover {
+  border: 2px solid #4ed5d2;
 }
 
-.selected-premium{
-  border: 2px solid #4ED5D2;
+.selected-premium {
+  border: 2px solid #4ed5d2;
 }
-
-
-
 
 @media only screen and (max-width: 991px) {
   .nftcontainer {
@@ -128,7 +160,6 @@
   top: -25px;
   width: 83px;
   right: 44px;
-
 }
 
 .checklistmodal {
@@ -167,24 +198,24 @@ iframe {
 }
 
 .firsttitle {
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 10px;
-line-height: 15px;
-letter-spacing: -0.018em;
-color: #F7F7F7;
-opacity: 0.8;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 15px;
+  letter-spacing: -0.018em;
+  color: #f7f7f7;
+  opacity: 0.8;
 }
 
 .secondTitle {
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 18px;
-letter-spacing: -0.018em;
-color: #F7F7FF;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.018em;
+  color: #f7f7ff;
 }
 
 @media only screen and (max-width: 1399px) {
@@ -271,7 +302,7 @@ color: #F7F7FF;
 }
 
 .purple-btn {
-  background: linear-gradient(266.71deg,#a420e2 8.87%,#1829bd 91.56%);
+  background: linear-gradient(266.71deg, #a420e2 8.87%, #1829bd 91.56%);
   clip-path: polygon(
     0 20px,
     20px 0,
@@ -402,7 +433,6 @@ color: #F7F7FF;
   color: #ffffff;
   background: #080b2a;
 }
-
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

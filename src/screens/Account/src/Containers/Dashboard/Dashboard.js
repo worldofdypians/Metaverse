@@ -47,6 +47,7 @@ import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
+import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 
 function Dashboard({
   account,
@@ -67,7 +68,7 @@ function Dashboard({
   handleOpenDomains,
   dogePrice,
   dyptokenData_old,
-  handleSwitchChain
+  handleSwitchChain,
 }) {
   const { email, logout } = useAuth();
 
@@ -105,6 +106,10 @@ function Dashboard({
     {
       name: "Base",
       symbol: "base",
+    },
+    {
+      name: "SKALE",
+      symbol: "skale",
     },
   ];
 
@@ -146,6 +151,7 @@ function Dashboard({
   const [myBaseNfts, setmyBaseNfts] = useState([]);
   const [myDogeNfts, setmyDogeNfts] = useState([]);
   const [myCmcNfts, setmyCmcNfts] = useState([]);
+  const [mySkaleNfts, setmySkaleNfts] = useState([])
   const [latestVersion, setLatestVersion] = useState(0);
 
   const [userPoints, setuserPoints] = useState(0);
@@ -272,6 +278,8 @@ function Dashboard({
   let wbase = "0x4200000000000000000000000000000000000006";
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
+  let wskaleAddress = "0x5eaF4e5A908ba87Abf3dE768cb0dA517dB45dB48";
+
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
@@ -892,27 +900,35 @@ function Dashboard({
     let subscribedPlatformTokenAmountBNB;
     let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBase;
+    let subscribedPlatformTokenAmountSkale;
 
     const web3eth = window.infuraWeb3;
     const web3cfx = window.confluxWeb3;
     const web3base = window.baseWeb3;
     const web3bnb = window.bscWeb3;
     const web3avax = window.avaxWeb3;
+    const web3skale = window.skaleWeb3;
 
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const BaseABI = window.SUBSCRIPTION_BASE_ABI;
     const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
     const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
     const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
+    const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
+    const skalesubscribeAddress = window.config.subscription_skale_address;
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
+    const skalecontract = new web3skale.eth.Contract(
+      SkaleABI,
+      skalesubscribeAddress
+    );
 
     const basecontract = new web3base.eth.Contract(
       BaseABI,
@@ -966,12 +982,21 @@ function Dashboard({
           return 0;
         });
 
+      subscribedPlatformTokenAmountSkale = await skalecontract.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
       if (
         subscribedPlatformTokenAmountCfx === "0" &&
         subscribedPlatformTokenAmountETH === "0" &&
         subscribedPlatformTokenAmountBase === "0" &&
         subscribedPlatformTokenAmountBNB === "0" &&
         subscribedPlatformTokenAmountAvax === "0" &&
+        subscribedPlatformTokenAmountSkale === "0" &&
         result === false
       ) {
         setIsPremium(false);
@@ -982,6 +1007,7 @@ function Dashboard({
         subscribedPlatformTokenAmountBase !== "0" ||
         subscribedPlatformTokenAmountBNB !== "0" ||
         subscribedPlatformTokenAmountAvax !== "0" ||
+        subscribedPlatformTokenAmountSkale !== "0" ||
         result === true
       ) {
         setIsPremium(true);
@@ -1186,6 +1212,10 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cmc").then((NFTS) =>
       setmyCmcNfts(NFTS)
     );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "skale").then((NFTS) =>
+    setmySkaleNfts(NFTS)
+  );
   };
 
   const getOtherNfts = async () => {
@@ -1486,6 +1516,8 @@ function Dashboard({
         ? window.config.subscriptionbase_tokens[token]?.decimals
         : chainId === 43114
         ? window.config.subscription_tokens[token]?.decimals
+        : chainId === 37084624
+        ? window.config.subscriptionskale_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -1503,6 +1535,8 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmount(token)
         : chainId === 8453
         ? await window.getEstimatedTokenSubscriptionAmountBase(token)
+        : chainId === 37084624
+        ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
@@ -1524,6 +1558,7 @@ function Dashboard({
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
+    const skalesubscribeAddress = window.config.subscription_skale_address;
 
     const web3 = new Web3(window.ethereum);
 
@@ -1545,6 +1580,8 @@ function Dashboard({
           ? basesubscribeAddress
           : chainId === 43114
           ? avaxsubscribeAddress
+          : chainId === 37084624
+          ? skalesubscribeAddress
           : cfxsubscribeAddress,
         price
       )
@@ -1582,6 +1619,8 @@ function Dashboard({
 
     const cfxWeb3 = new Web3(window.config.conflux_endpoint);
     const baseWeb3 = new Web3(window.config.base_endpoint);
+    const skaleWeb3 = new Web3(window.config.skale_endpoint);
+
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
@@ -1589,6 +1628,7 @@ function Dashboard({
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
 
     const basesubscribeAddress = window.config.subscription_base_address;
+    const skalesubscribeAddress = window.config.subscription_skale_address;
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -1616,6 +1656,11 @@ function Dashboard({
       subscribeToken
     );
 
+    const subscribeTokencontractskale = new skaleWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
     let tokenprice =
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
@@ -1627,6 +1672,8 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmount(token)
         : chainId === 8453
         ? await window.getEstimatedTokenSubscriptionAmountBase(token)
+        : chainId === 37084624
+        ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
@@ -1675,7 +1722,22 @@ function Dashboard({
           setisApproved(false);
           setapproveStatus("initial");
         }
-      } else if (chainId === 1030) {
+      } else if (chainId === 37084624) {
+        const result = await subscribeTokencontractskale.methods
+          .allowance(coinbase, skalesubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } 
+      else if (chainId === 1030) {
         const result = await subscribeTokencontractcfx.methods
           .allowance(coinbase, confluxsubscribeAddress)
           .call()
@@ -1723,6 +1785,8 @@ function Dashboard({
           ? "SUBSCRIPTION_CFX"
           : chainId === 8453
           ? "SUBSCRIPTION_BASE"
+          : chainId === 37084624
+          ? "SUBSCRIPTION_SKALE"
           : "",
     });
 
@@ -1861,6 +1925,23 @@ function Dashboard({
     }
   };
 
+  const handleSkalePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x235ddd0")
+          .then(() => {
+            handleSwitchNetwork(37084624);
+            setChainDropdown(chainDropdowns[5]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
   useEffect(() => {
     setDummyPremiumChests(shuffle(dummyPremiums));
     fetchReleases();
@@ -1927,6 +2008,14 @@ function Dashboard({
         Object.keys(window.config.subscription_tokens)[0]
       );
       handleSubscriptionTokenChange(wavaxAddress);
+    } else if (chainId === 37084624) {
+      setChainDropdown(chainDropdowns[5]);
+      setdropdownIcon("usdc");
+      setdropdownTitle("USDC");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionskale_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wskaleAddress);
     } else {
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -1961,6 +2050,11 @@ function Dashboard({
     } else if (chainId === 8453 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionbase_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 37084624 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionskale_tokens[selectedSubscriptionToken]
           ?.decimals
       );
     }
@@ -2363,6 +2457,8 @@ function Dashboard({
                       myBaseNfts={myBaseNfts}
                       myDogeNfts={myDogeNfts}
                       myCmcNfts={myCmcNfts}
+                      mySkaleNfts={mySkaleNfts}
+
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
@@ -2624,15 +2720,15 @@ function Dashboard({
                                 style={{ cursor: "pointer" }}
                               />
                             </div>
-                            <div className="premium-gold-bg d-flex align-items-center justify-content-between p-3">
+                            <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
                               <div className="d-flex flex-column gap-2">
                                 <span className="lifetime-plan mb-0">
                                   Lifetime plan
                                 </span>
                                 <h6 className="plan-cost mb-0">$100</h6>
                               </div>
-                              <div className="d-flex align-items-center gap-3">
-                                <div className="d-flex flex-column gap-2">
+                              <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
+                                <div className="premium-chains-wrapper">
                                   <div className="d-flex align-items-center gap-2">
                                     <img
                                       src={
@@ -2692,6 +2788,16 @@ function Dashboard({
                                       Conflux
                                     </span>
                                   </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={skaleIcon}
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      SKALE
+                                    </span>
+                                  </div>
                                 </div>
                                 <img src={premiumIcon} alt="" />
                               </div>
@@ -2732,8 +2838,9 @@ function Dashboard({
                                   </div>
                                 ))}
                               </div>
-                            </div>
-                            <div className="d-flex mt-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
+                            </div>{" "}
+                            <hr className="form-divider my-4" />
+                            <div className="d-flex mt-4 mb-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
                               <div className="d-flex flex-column gap-3 subscribe-input-container">
                                 <span className="token-amount-placeholder">
                                   Select chain
@@ -2825,6 +2932,20 @@ function Dashboard({
                                       />
                                       Conflux Network
                                     </li>
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleSkalePool}
+                                    >
+                                      <img
+                                        src={skaleIcon}
+                                        alt=""
+                                        style={{
+                                          width: "18px",
+                                          height: "18px",
+                                        }}
+                                      />
+                                      SKALE
+                                    </li>
                                   </ul>
                                 </div>
                               </div>
@@ -2883,6 +3004,9 @@ function Dashboard({
                                             : chainId === 8453
                                             ? window.config
                                                 .subscriptionbase_tokens
+                                            : chainId === 37084624
+                                            ? window.config
+                                                .subscriptionskale_tokens
                                             : window.config.subscription_tokens
                                         ).map((t, i) => (
                                           <li
@@ -2917,6 +3041,11 @@ function Dashboard({
                                                         .subscriptioncfx_tokens[
                                                         t
                                                       ]?.symbol
+                                                    : chainId === 37084624
+                                                    ? window.config
+                                                        .subscriptionskale_tokens[
+                                                        t
+                                                      ]?.symbol
                                                     : window.config
                                                         .subscription_tokens[t]
                                                         ?.symbol
@@ -2944,6 +3073,11 @@ function Dashboard({
                                                     : chainId === 1030
                                                     ? window.config
                                                         .subscriptioncfx_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 37084624
+                                                    ? window.config
+                                                        .subscriptionskale_tokens[
                                                         t
                                                       ]?.symbol
                                                     : window.config
@@ -2981,6 +3115,10 @@ function Dashboard({
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 37084624
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
                                                   : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
@@ -3007,6 +3145,10 @@ function Dashboard({
                                               : chainId === 8453
                                               ? window.config
                                                   .subscriptionbase_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 37084624
+                                              ? window.config
+                                                  .subscriptionskale_tokens[t]
                                                   ?.symbol
                                               : window.config
                                                   .subscription_tokens[t]
@@ -3064,8 +3206,23 @@ function Dashboard({
                                 />
                               </div>
                             </div> */}
-                            <hr className="form-divider my-4" />
-
+                            {chainId === 37084624 && (
+                              <div className="gotoNebula-wrapper p-3 mb-3">
+                                <div className="d-flex w-100 justify-content-between gap-2">
+                                  <span className="nebula-wrapper-text">
+                                    Bridge your USDC to Nebula now!
+                                  </span>
+                                  <a
+                                    className="nebula-bridgebtn"
+                                    href="https://testnet.portal.skale.space/bridge"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                  >
+                                    Nebula Bridge
+                                  </a>
+                                </div>
+                              </div>
+                            )}
                             <div className="d-flex align-items-center gap-3 justify-content-center">
                               <div
                                 className={` ${
@@ -3314,39 +3471,40 @@ function Dashboard({
               //     setdailyBonusPopup(false);
               //   }}
               // >
-                <NewDailyBonus
-                  isPremium={isPremium}
-                  chainId={chainId}
-                  dypTokenData={dypTokenData}
-                  ethTokenData={ethTokenData}
-                  dyptokenData_old={dyptokenData_old}
-                  handleSwitchChain={handleSwitchChain}
-                  handleSwitchNetwork={handleSwitchNetwork}
-                  listedNFTS={listedNFTS}
-                  onclose={() => {
-                    setdailyBonusPopup(false);
-                  }}
-                  standardChests={standardChests}
-                  premiumChests={premiumChests}
-                  standardSkaleChests={standardSkaleChests}
-                  premiumSkaleChests={premiumSkaleChests}
-                  claimedChests={claimedChests}
-                  claimedPremiumChests={claimedPremiumChests}
-                  claimedSkaleChests={claimedSkaleChests}
-                  claimedSkalePremiumChests={claimedSkalePremiumChests}
-                  email={email}
-                  openedChests={openedChests}
-                  canBuy={canBuy}
-                  address={data?.getPlayer?.wallet?.publicAddress}
-                  allChests={allChests}
-                  allSkaleChests={allSkaleChests}
-                  onChestClaimed={() => {
-                    setCount(count + 1);
-                  }}
-                  onSkaleChestClaimed={() => {
-                    setskalecount(skalecount + 1);
-                  }}
-                />
+              <NewDailyBonus
+                isPremium={isPremium}
+                chainId={chainId}
+                dypTokenData={dypTokenData}
+                ethTokenData={ethTokenData}
+                dyptokenData_old={dyptokenData_old}
+                handleSwitchChain={handleSwitchChain}
+                handleSwitchNetwork={handleSwitchNetwork}
+                listedNFTS={listedNFTS}
+                onclose={() => {
+                  setdailyBonusPopup(false);
+                }}
+                standardChests={standardChests}
+                premiumChests={premiumChests}
+                standardSkaleChests={standardSkaleChests}
+                premiumSkaleChests={premiumSkaleChests}
+                claimedChests={claimedChests}
+                claimedPremiumChests={claimedPremiumChests}
+                claimedSkaleChests={claimedSkaleChests}
+                claimedSkalePremiumChests={claimedSkalePremiumChests}
+                email={email}
+                openedChests={openedChests}
+                openedSkaleChests={openedSkaleChests}
+                canBuy={canBuy}
+                address={data?.getPlayer?.wallet?.publicAddress}
+                allChests={allChests}
+                allSkaleChests={allSkaleChests}
+                onChestClaimed={() => {
+                  setCount(count + 1);
+                }}
+                onSkaleChestClaimed={() => {
+                  setskalecount(skalecount + 1);
+                }}
+              />
               // </OutsideClickHandler>
             )}
             {showChecklistModal === true && (

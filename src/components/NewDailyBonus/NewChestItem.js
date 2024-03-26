@@ -193,6 +193,11 @@ const NewChestItem = ({
       window.config.daily_bonus_bnb_address
     );
 
+    const daily_bonus_contract_skale = new window.web3.eth.Contract(
+      window.DAILY_BONUS_SKALE_ABI,
+      window.config.daily_bonus_skale_address
+    );
+
     // console.log(daily_bonus_contract);
     if (chainId === 204) {
       if (rewardTypes === "premium" && isPremium) {
@@ -383,6 +388,65 @@ const NewChestItem = ({
               data.transactionHash,
               chestIndex - 1,
               "bnb"
+            );
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+          });
+      }
+    } else if (chainId === 37084624 ) {
+      if (rewardTypes === "premium" && isPremium) {
+        const web3 = new Web3(window.ethereum);
+       
+
+      
+        await daily_bonus_contract_skale.methods
+          .openPremiumChest()
+          .send({
+            from: address
+         
+          })
+          
+          .then((data) => {
+            getUserRewardsByChest(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "skale"
+            );
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+        // console.log("standard");
+
+        await daily_bonus_contract_skale.methods
+          .openChest()
+          .send({
+            from: address
+          })
+          .then((data) => {
+            getUserRewardsByChest(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "skale"
             );
           })
           .catch((e) => {
