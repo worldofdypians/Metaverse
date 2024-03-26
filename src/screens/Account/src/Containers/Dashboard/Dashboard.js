@@ -991,23 +991,23 @@ function Dashboard({
         });
 
       if (
-        subscribedPlatformTokenAmountCfx === "0" &&
-        subscribedPlatformTokenAmountETH === "0" &&
-        subscribedPlatformTokenAmountBase === "0" &&
-        subscribedPlatformTokenAmountBNB === "0" &&
-        subscribedPlatformTokenAmountAvax === "0" &&
-        subscribedPlatformTokenAmountSkale === "0" &&
+        subscribedPlatformTokenAmountCfx == "0" &&
+        subscribedPlatformTokenAmountETH == "0" &&
+        subscribedPlatformTokenAmountBase == "0" &&
+        subscribedPlatformTokenAmountBNB == "0" &&
+        subscribedPlatformTokenAmountAvax == "0" &&
+        subscribedPlatformTokenAmountSkale == "0" &&
         result === false
       ) {
         setIsPremium(false);
       }
       if (
-        subscribedPlatformTokenAmountCfx !== "0" ||
-        subscribedPlatformTokenAmountETH !== "0" ||
-        subscribedPlatformTokenAmountBase !== "0" ||
-        subscribedPlatformTokenAmountBNB !== "0" ||
-        subscribedPlatformTokenAmountAvax !== "0" ||
-        subscribedPlatformTokenAmountSkale !== "0" ||
+        subscribedPlatformTokenAmountCfx != "0" ||
+        subscribedPlatformTokenAmountETH != "0" ||
+        subscribedPlatformTokenAmountBase != "0" ||
+        subscribedPlatformTokenAmountBNB != "0" ||
+        subscribedPlatformTokenAmountAvax != "0" ||
+        subscribedPlatformTokenAmountSkale != "0" ||
         result === true
       ) {
         setIsPremium(true);
