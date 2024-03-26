@@ -1513,7 +1513,7 @@ window.config = {
 
   daily_bonus_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
   daily_bonus_bnb_address: "0xF4435c244A292a8E8D56767bf6DF9b9c4D59aEED",
-  daily_bonus_skale_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
+  daily_bonus_skale_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
 
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
   vote_duration_in_seconds: 259200, // 5 minutes for test
@@ -1557,7 +1557,7 @@ window.config = {
   subscription_cfx_address: "0x56c83c9308b066627866bba9cd2322f3e01b16bf",
   subscription_base_address: "0x9c13Dbc8f0fA8ceD8C1B53c4237A08445eca32fe",
 
-  subscription_skale_address: "0x8E4917c1Ba9598fBbF66934CB17AC28c3b5849Ab",
+  subscription_skale_address: "0xdbE31B4f2a5921Ec2d0d739E3c9bcA985C5A18b0",
 
   //DYP-ETH 3 days
   token_address: "0xBa7872534a6C9097d805d8BEE97e030f4e372e54",
@@ -3489,16 +3489,12 @@ class BASE_NFT {
 
 window.base_nft = new BASE_NFT();
 
-
-
-
-
 /**
  *
  * @param {"TOKEN" | "SKALE_NFT" } key
  */
 
- async function getContractSkaleNFT(key) {
+async function getContractSkaleNFT(key) {
   let ABI = window[key + "_ABI"];
   let address = window.config[key.toLowerCase() + "_address"];
   if (!window.cached_contracts[key]) {
@@ -9672,20 +9668,6 @@ window.SUBSCRIPTION_SKALE_ABI = [
   {
     type: "function",
     stateMutability: "view",
-    outputs: [{ type: "uint256", name: "", internalType: "uint256" }],
-    name: "ONE_HUNDRED_X_100",
-    inputs: [],
-  },
-  {
-    type: "function",
-    stateMutability: "view",
-    outputs: [{ type: "uint256", name: "", internalType: "uint256" }],
-    name: "SLIPPAGE_TOLERANCE_X_100",
-    inputs: [],
-  },
-  {
-    type: "function",
-    stateMutability: "view",
     outputs: [{ type: "address", name: "", internalType: "address" }],
     name: "TRUSTED_DAI_ADDRESS",
     inputs: [],
@@ -9799,15 +9781,6 @@ window.SUBSCRIPTION_SKALE_ABI = [
     outputs: [],
     name: "transferOwnership",
     inputs: [{ type: "address", name: "newOwner", internalType: "address" }],
-  },
-  {
-    type: "function",
-    stateMutability: "view",
-    outputs: [
-      { type: "address", name: "", internalType: "contract IUniswapV2Router" },
-    ],
-    name: "uniswapRouterV2",
-    inputs: [],
   },
   {
     type: "function",

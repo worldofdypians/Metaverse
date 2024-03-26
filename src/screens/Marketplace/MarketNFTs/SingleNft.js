@@ -3031,6 +3031,8 @@ const SingleNft = ({
                             ? "CFX"
                             : type === "base"
                             ? "ETH"
+                            : type === "skale"
+                            ? "SKL"
                             : "BNB"}{" "}
                           rewards
                         </span>
