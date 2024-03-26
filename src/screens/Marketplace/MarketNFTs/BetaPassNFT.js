@@ -21,7 +21,7 @@ import confluxLogo from "../assets/confluxLogo.svg";
 import baseLogo from "../assets/baseLogo.svg";
 import bnbLogo from "../assets/bnbLogo.svg";
 import skaleLogo from "../assets/skaleLogo.svg";
-import comingSoon from '../assets/comingSoon.svg'
+import comingSoon from "../assets/comingSoon.svg";
 
 import wodLogo from "../assets/wodIcon.png";
 import blackWallet from "../../../assets/wallet-black.svg";
@@ -52,6 +52,7 @@ import avaxBetaBanner from "./assets/avaxBetaBanner.png";
 import coingeckoBetaBanner from "./assets/coingeckoBetaBanner.png";
 import confluxBetaBanner from "./assets/confluxBetaBanner.png";
 import cmcBetaBanner from "./assets/cmcBetaBanner.webp";
+import skaleBetaBanner from "./assets/skaleBetaBanner.webp";
 
 import baseBetaBanner from "./assets/baseBetaBanner.png";
 
@@ -134,7 +135,9 @@ const BetaPassNFT = ({
   totalDogeNft,
   myDogeNFTs,
   totalCmcNft,
-  myCmcNFTs,totalSkaleNft
+  myCmcNFTs,
+  totalSkaleNft,
+  mySkaleNfts,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -220,9 +223,9 @@ const BetaPassNFT = ({
 
   const skaleData = {
     id: "skale",
-    cardTitle: "Skale Beta Pass",
-    title: "Skale Beta Pass",
-    background: "gate-mint-bg",
+    cardTitle: "SKALE Beta Pass",
+    title: "SKALE Beta Pass",
+    background: "skale2-mint-bg",
   };
 
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
@@ -697,14 +700,19 @@ const BetaPassNFT = ({
                           : mintTitle === "coingecko"
                           ? "CoinGecko"
                           : mintTitle === "skale"
-                          ? "Skale"
+                          ? "SKALE"
                           : mintTitle === "cmc"
                           ? "CoinMarketCap"
                           : "our partners"}
-                        . During this event, players have the opportunity to
+                        .{" "}
+                        {mintTitle === "skale"
+                          ? `During this event, players have the opportunity to
+                        earn Points for their leaderboard rankings, and also
+                        collect rewards which are distributed on a monthly basis.`
+                          : `During this event, players have the opportunity to
                         earn Points for their leaderboard rankings, and also
                         collect rewards in different tokens, which are
-                        distributed on a monthly basis.
+                        distributed on a monthly basis.`}
                       </p>
                     ) : (
                       <p className="collection-desc">
@@ -750,7 +758,7 @@ const BetaPassNFT = ({
                         : mintTitle === "cmc"
                         ? cmcBetaBanner
                         : mintTitle === "skale"
-                        ? cmcBetaBanner
+                        ? skaleBetaBanner
                         : betapassBanner
                     }
                     className="w-100"
@@ -781,25 +789,25 @@ const BetaPassNFT = ({
                     />
                     <span>Avalanche</span>
                   </NavLink> */}
-                    <div
-                    // to={"/marketplace/beta-pass/skale"}
+                  <NavLink
+                    to={"/marketplace/beta-pass/skale"}
                     className={`${
                       location.pathname.includes("skale") &&
                       "selected-beta-pass-item"
                     } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2 position-relative`}
-                    // onClick={() => {
-                    //   setSelectedMint(skaleData);
-                    //   setMintTitle("skale");
-                    // }}
+                    onClick={() => {
+                      setSelectedMint(skaleData);
+                      setMintTitle("skale");
+                    }}
                   >
-                    <img src={comingSoon} alt='' className="position-absolute comingSoonimg" />
+                    {/* <img src={comingSoon} alt='' className="position-absolute comingSoonimg" /> */}
                     <img
                       src={skaleLogo}
                       className="beta-pass-chain-img"
                       alt=""
                     />
                     <span>SKALE</span>
-                  </div>
+                  </NavLink>
                   <NavLink
                     to={"/marketplace/beta-pass/coinmarketcap"}
                     className={`${
@@ -832,7 +840,7 @@ const BetaPassNFT = ({
                     />
                     <span>Dogecoin</span>
                   </NavLink>
-                
+
                   <NavLink
                     to={"/marketplace/beta-pass/base"}
                     className={`${
@@ -1112,7 +1120,7 @@ const BetaPassNFT = ({
                             <img src={pinkAreaConflux} alt="" />
                           </div>
                         )}
-                        {mintTitle === "base" && (
+                        {(mintTitle === "base" || mintTitle === "skale") && (
                           <div className="position-relative">
                             <img src={pinkAreaBase} alt="" />
                           </div>
@@ -2385,7 +2393,7 @@ const BetaPassNFT = ({
                             <div className="d-flex flex-column gap-4 justify-content-between p-4">
                               <span className={"createplayertxt"}>
                                 *Make sure to connect the same wallet address as
-                                the one you used for Skale Giveaway .
+                                the one you used for SKALE Giveaway .
                               </span>
                               <div
                                 className="walletconnectBtn w-100"
@@ -2446,21 +2454,23 @@ const BetaPassNFT = ({
                               </div>
                             ) : (
                               <NavLink
-                                to={`/marketplace/nft/${myCmcNFTs[0]}/${window.config.nft_cmc_address}`}
+                                to={`/marketplace/nft/${mySkaleNfts[0]}/${window.config.nft_skale_address}`}
                                 onClick={() => {
                                   updateViewCount(
-                                    myCmcNFTs[0],
-                                    window.config.nft_cmc_address
+                                    mySkaleNfts[0],
+                                    window.config.nft_skale_address
                                   );
                                 }}
                               >
                                 <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
                                   <div
                                     className={`coingeckoempty-wrapper  ${
-                                      totalCmcNft === 0 && mintTitle === "cmc"
+                                      totalSkaleNft === 0 &&
+                                      mintTitle === "skale"
                                         ? "conflux-empty"
-                                        : totalCmcNft > 0 && mintTitle === "cmc"
-                                        ? "cmc-active"
+                                        : totalSkaleNft > 0 &&
+                                          mintTitle === "skale"
+                                        ? "skale-active"
                                         : "conflux-empty"
                                     } d-flex justify-content-center align-items-center p-3 position-relative`}
                                     style={{
@@ -2483,7 +2493,7 @@ const BetaPassNFT = ({
                                         fontSize: 16,
                                       }}
                                     >
-                                      CMCBP {`#${myCmcNFTs[0]}`}
+                                      SKBP {`#${mySkaleNfts[0]}`}
                                     </h6>
                                   </div>
                                 </div>

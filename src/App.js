@@ -2213,7 +2213,7 @@ function App() {
       return () => clearInterval(interval);
     }, 300000);
   }, [count2]);
-
+ 
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -2569,7 +2569,7 @@ function App() {
               }
             />
 
-            {/* <Route
+            <Route
               exact
               path="/marketplace/beta-pass/skale"
               element={
@@ -2607,12 +2607,12 @@ function App() {
                     setwalletModal(true);
                   }}
                   totalCmcNft={totalCmcNft}
-                  totalSkaleNft={0}
-
+                  totalSkaleNft={totalSkaleNft}
+                  mySkaleNfts={myskaleNFTsCreated}
 
                 />
               }
-            /> */}
+            />
 
             <Route
               exact

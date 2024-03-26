@@ -496,7 +496,7 @@ const NewChestItem = ({
       setShake(false);
     }, 1000);
   };
-
+console.log(premiumImages[chestIndex - 11])
   return (
     <div
       className={`new-chest-item ${open && "new-chest-item-open"}  ${
@@ -533,12 +533,12 @@ const NewChestItem = ({
             filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
           }}
         />
-      ) : (
+      ) : rewardTypes === "premium" && premiumImages[chestIndex - 11] ? (
         <img
           className={`new-chest-item-img ${loading ? "chest-shake" : ""}`}
           src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
             open
-              ? premiumImages[chestIndex - 11] + premiumType === 1 ? "openCoins" : "openGems"
+              ? premiumType === 1 ? premiumImages[chestIndex - 11] + "OpenCoins" : premiumImages[chestIndex - 11] + "OpenGems"
               : premiumImages[chestIndex - 11]
           }.png`)}
           alt=""
@@ -548,7 +548,7 @@ const NewChestItem = ({
             filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
           }}
         />
-      )}
+      ) : <></>}
       {rewardTypes === "premium" && !isPremium && (
         <img
           src={premiumLock}
