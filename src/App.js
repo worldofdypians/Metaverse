@@ -114,6 +114,20 @@ function App() {
 
       blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
     },
+
+    37084624: {
+      chainId: 37084624,
+      chainName: "SKALE Nebula Hub",
+      nativeCurrency: {
+        symbol: "sFUEL",
+        decimals: 18,
+      },
+
+      rpcUrls: ["https://mainnet.skalenodes.com/v1/green-giddy-denebola"],
+      blockExplorerUrls: [
+        "https://green-giddy-denebola.explorer.mainnet.skalenodes.com",
+      ],
+    },
   };
 
   const [showWalletModal, setShowWalletModal] = useState(false);
@@ -146,6 +160,8 @@ function App() {
   const [myConfluxNFTsCreated, setmyConfluxNFTsCreated] = useState([]);
 
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
+  const [myskaleNFTsCreated, setmyskaleNFTsCreated] = useState([]);
+
 
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
@@ -162,11 +178,15 @@ function App() {
   const [totalCoingeckoNft, setTotalCoingeckoNft] = useState(0);
   const [totalGateNft, setTotalGateNft] = useState(0);
   const [totalBaseNft, settotalBaseNft] = useState(0);
+  const [totalSkaleNft, settotalSkaleNft] = useState(0);
+
   const [totalDogeNft, settotalDogeNft] = useState(0);
   const [totalCmcNft, settotalCmcNft] = useState(0);
 
   const [totalConfluxNft, setTotalConfluxNft] = useState(0);
   const [baseMintAllowed, setbaseMintAllowed] = useState(1);
+  const [skaleMintAllowed, setSkaleMintAllowed] = useState(1);
+
   const [confluxMintAllowed, setconfluxMintAllowed] = useState(1);
 
   const [fireAppcontent, setFireAppContent] = useState(false);
@@ -203,6 +223,8 @@ function App() {
   const [myGateNfts, setMyGateNfts] = useState([]);
   const [myConfluxNfts, setMyConfluxNfts] = useState([]);
   const [myBaseNFTs, setmyBaseNFTs] = useState([]);
+  const [myskaleNFTs, setmySkaleNFTs] = useState([]);
+
   const [myDogeNFTs, setmyDogeNFTs] = useState([]);
   const [myCmcNFTs, setmyCmcNFTs] = useState([]);
 
@@ -244,6 +266,8 @@ function App() {
   const [totalTx, setTotalTx] = useState(0);
   const [totalvolume, setTotalVolume] = useState(0);
   const [bscAmount, setBscAmount] = useState(0);
+  const [skaleAmount, setSkaleAmount] = useState(0);
+
   const location = useLocation();
   const navigate = useNavigate();
   const { BigNumber } = window;
@@ -767,6 +791,13 @@ function App() {
         setmybaseNFTsCreated(NFTS);
       });
 
+      getMyNFTS(coinbase, "skale").then((NFTS) => {
+        settotalSkaleNft(NFTS.length);
+        setmySkaleNFTs(NFTS);
+        setSkaleMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setmyskaleNFTsCreated(NFTS);
+      });
+
       //setmyBaseNFTs
     } else {
       setMyNFTSCaws([]);
@@ -1134,8 +1165,8 @@ function App() {
           setmintStatus("Minting in progress...");
           settextColor("rgb(123, 216, 176)");
           // console.log(data,finalCaws, totalCawsDiscount);
-          let tokenId = await window.base_nft
-            .mintBaseNFT()
+          let tokenId = await window.skale_nft
+            .mintSkaleNFT()
             .then(() => {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
@@ -1144,10 +1175,10 @@ function App() {
                 setmintStatus("");
                 setmintloading("initial");
               }, 5000);
-              getMyNFTS(coinbase, "base").then((NFTS) => {
-                setmybaseNFTsCreated(NFTS);
-                settotalBaseNft(NFTS.length);
-                setbaseMintAllowed(0);
+              getMyNFTS(coinbase, "skale").then((NFTS) => {
+                setmyskaleNFTsCreated(NFTS);
+                settotalSkaleNft(NFTS.length);
+                setSkaleMintAllowed(0);
               });
             })
             .catch((e) => {
@@ -1920,6 +1951,8 @@ function App() {
                   ? "0x38"
                   : chain === 204
                   ? "0xcc"
+                  : chain === 37084624
+                  ? "0x235ddd0"
                   : "0x406",
             },
           ],
@@ -2054,6 +2087,40 @@ function App() {
     }
   };
 
+  const handleSkaleRefill = async (address) => {
+    const result = await axios
+      .get(`https://api.worldofdypians.com/claim/${address}`)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    console.log(result);
+  };
+
+  const fetchSkaleBalance = async () => {
+    if (coinbase && window.ethereum && chainId === 37084624) {
+      const skaleWeb3 = new Web3(window.config.skale_endpoint);
+
+      const balance = await window.ethereum.request({
+        method: "eth_getBalance",
+        params: [coinbase, "latest"],
+      });
+
+      const stringBalance = skaleWeb3.utils.hexToNumberString(balance);
+
+      const amount = skaleWeb3.utils.fromWei(stringBalance, "ether");
+      const formatted_amount = Number(amount);
+    
+      if (formatted_amount <= 0.000005) {
+        handleSkaleRefill(coinbase);
+      } else {
+        console.log("formatted_amount", formatted_amount);
+      }
+
+      setSkaleAmount(amount.slice(0, 7));
+    }
+  };
+
   const getAllData = async () => {
     const result = await axios
       .get("https://api.worldofdypians.com/api/totalTXs")
@@ -2086,6 +2153,10 @@ function App() {
     getDomains();
     fetchBscBalance();
   }, [coinbase, isConnected, logout, successMessage, loadingDomain]);
+
+  useEffect(() => {
+    fetchSkaleBalance();
+  }, [coinbase, isConnected, chainId]);
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
@@ -2332,6 +2403,8 @@ function App() {
                 <Dashboard
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
+                  handleSwitchChain={handleSwitchChain}
+                  dypTokenData_old={dypTokenData_old}
                   coinbase={coinbase}
                   account={coinbase}
                   isConnected={isConnected}
@@ -2495,6 +2568,51 @@ function App() {
                 />
               }
             />
+
+            {/* <Route
+              exact
+              path="/marketplace/beta-pass/skale"
+              element={
+                <BetaPassNFT
+                  type={"skale"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                  totalCmcNft={totalCmcNft}
+                  totalSkaleNft={0}
+
+
+                />
+              }
+            /> */}
 
             <Route
               exact
@@ -2852,32 +2970,36 @@ function App() {
             />
             <Route
               exact
-              path="/marketplace/mint/timepiece"
+              path="/marketplace/mint/:id"
               element={
                 <MarketMint
-                  coinbase={coinbase}
-                  showWalletConnect={() => {
-                    setwalletModal(true);
-                  }}
-                  cawsArray={allCawsForTimepieceMint}
-                  mintloading={mintloading}
-                  isConnected={isConnected}
-                  chainId={chainId}
-                  handleMint={handleTimepieceMint}
-                  mintStatus={mintStatus}
-                  textColor={textColor}
-                  calculateCaws={calculateCaws}
-                  totalCreated={totalTimepieceCreated}
-                  timepieceMetadata={timepieceMetadata}
-                  myConfluxNFTsCreated={myConfluxNFTsCreated}
-                  mybaseNFTsCreated={mybaseNFTsCreated}
-                  handleConfluxMint={handleConfluxNftMint}
-                  handleBaseNftMint={handleBaseNftMint}
-                  confluxMintAllowed={confluxMintAllowed}
-                  baseMintAllowed={baseMintAllowed}
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleMint={handleTimepieceMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                myConfluxNFTsCreated={myConfluxNFTsCreated}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                myskaleNFTsCreated={myskaleNFTsCreated}
+                handleConfluxMint={handleConfluxNftMint}
+                handleBaseNftMint={handleBaseNftMint}
+                confluxMintAllowed={confluxMintAllowed}
+                baseMintAllowed={baseMintAllowed}
+                skaleMintAllowed={skaleMintAllowed}
                 />
               }
             />
+ 
+
           </Routes>
           {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
           <ScrollTop />

@@ -90,6 +90,8 @@ const NewDailyBonus = ({
   dyptokenData_old,
   ethTokenData,
   handleSwitchChain,
+  openedSkaleChests,
+  coinbase,
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -261,7 +263,7 @@ const NewDailyBonus = ({
     "wod",
     "switch",
     "login",
-    "win",
+    "won",
     "winDanger",
     "complete",
     "needPremium",
@@ -397,6 +399,12 @@ const NewDailyBonus = ({
                 resultUsd += Number(innerChest.reward);
               }
             });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultPoints += Number(innerChest.reward);
+              }
+            });
           }
         }
       });
@@ -421,6 +429,13 @@ const NewDailyBonus = ({
                 innerChest.status !== "Unclaimed"
               ) {
                 resultSkaleUsd += Number(chest.rewards.reward);
+              }
+            });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              console.log(innerChest);
+              if (innerChest.rewardType === "Points") {
+                resultSkalePoints += Number(innerChest.reward);
               }
             });
           }
@@ -468,9 +483,9 @@ const NewDailyBonus = ({
   const handleSkalePool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x79f99296")
+        await handleSwitchNetworkhook("0x235ddd0")
           .then(() => {
-            handleSwitchNetwork(2046399126);
+            handleSwitchNetwork(37084624);
             setMessage("");
           })
           .catch((e) => {
@@ -494,6 +509,26 @@ const NewDailyBonus = ({
       return item.type === "land";
     });
     setLandNfts(filteredLands);
+  };
+
+  const boughtCaws = (chestId, chestIndex, val1, val2) => {
+    const filteredResult = openedChests.find(
+      (el) => el.chestId === chestId && allChests.indexOf(el) === chestIndex
+    );
+    setIsActive(chestId);
+    setIsActiveIndex(chestIndex);
+
+    const finalResult = {
+      ...filteredResult,
+      rewards: [
+        { rewardType: "Money", reward: val1 },
+        { rewardType: "Points", reward: val2 },
+      ],
+    };
+
+    setLiveRewardData(finalResult);
+    setRewardData(finalResult);
+    setMessage("won");
   };
 
   const showSingleRewardData = (chestID, chestIndex) => {
@@ -600,35 +635,164 @@ const NewDailyBonus = ({
     new Audio(successSound).play();
   };
 
-  useEffect(() => {
-    if (chain === "bnb") {
-      if (chainId === 56 || chainId === 204) {
-        setMessage("");
-        setDisable(false);
-      } else {
-        setMessage("switch");
-        setDisable(true);
+  const showSingleRewardDataSkale = (chestID, chestIndex) => {
+    console.log(chestID, chestIndex);
+    const filteredResult = openedSkaleChests.find(
+      (el) =>
+        el.chestId === chestID && allSkaleChests.indexOf(el) === chestIndex
+    );
+    setIsActive(chestID);
+    setIsActiveIndex(chestIndex + 1);
+    if (filteredResult) {
+      const result = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "CAWS"
+        );
+      });
+
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LAND"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return obj.rewardType === "Money";
+      });
+
+      const resultPoints = filteredResult.rewards.length === 1;
+
+      if (result) {
+        setMessage("caws");
+      } else if (!result && resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if (resultWon) {
+        setMessage("won");
+      } else if (resultPoints) {
+        setMessage("wonPoints");
       }
-    } else if (chain === "skale") {
-      if (chainId === 2046399126) {
-        setMessage("");
-        setDisable(false);
-      } else {
-        setMessage("switch");
-        setDisable(true);
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
+  };
+
+  const showLiveRewardDataSkale = (value) => {
+    const filteredResult = value;
+
+    if (filteredResult) {
+      const result = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "CAWS"
+        );
+      });
+
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LAND"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return obj.rewardType === "Money" && obj.status === "Claimed";
+      });
+      const resultPoints = filteredResult.rewards.length === 1;
+
+      if (result) {
+        setMessage("caws");
+      } else if (!result && resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if (resultWon) {
+        setMessage("won");
+      } else if (resultPoints) {
+        setMessage("wonPoints");
+      }
+
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
+    new Audio(successSound).play();
+  };
+
+  useEffect(() => {
+    if (address && email && coinbase) {
+      if (chain === "bnb") {
+        if (
+          (chainId === 56 || chainId === 204) &&
+          address.toLowerCase() === coinbase.toLowerCase()
+        ) {
+          setMessage("");
+          setDisable(false);
+        } else if (
+          (chainId === 56 || chainId === 204) &&
+          address.toLowerCase() !== coinbase.toLowerCase()
+        ) {
+          setDisable(true);
+          setMessage("switchAccount");
+        } else {
+          setMessage("switch");
+          setDisable(true);
+        }
+      } else if (chain === "skale") {
+        if (
+          chainId === 37084624 &&
+          address.toLowerCase() === coinbase.toLowerCase()
+        ) {
+          setMessage("");
+          setDisable(false);
+        } else if (
+          chainId === 37084624 &&
+          address.toLowerCase() !== coinbase.toLowerCase()
+        ) {
+          setDisable(true);
+          setMessage("switchAccount");
+        } else {
+          setMessage("switch");
+          setDisable(true);
+        }
       }
     }
-  }, [chainId, chain]);
+  }, [chainId, chain, coinbase, address, email]);
 
   useEffect(() => {
     countEarnedRewards();
   }, [allChests, allSkaleChests]);
 
-  useEffect(() => {
-    if (disable) {
-      setMessage("switch");
-    }
-  }, [disable]);
+  // useEffect(() => {
+  //   if (disable) {
+  //     setMessage("switch");
+  //   }
+  // }, [disable]);
 
   useEffect(() => {
     filterCawsNfts();
@@ -637,23 +801,33 @@ const NewDailyBonus = ({
 
   useEffect(() => {
     if (chain === "bnb") {
-      if (email) {
+      if (email && coinbase && address) {
         if (isPremium) {
           if (
             claimedChests + claimedPremiumChests === 20 &&
-            rewardData.length === 0
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() && chain === 'bnb' && (chainId === 56 || chainId === 204)
           ) {
             setMessage("complete");
           } else if (
             claimedChests + claimedPremiumChests < 20 &&
-            rewardData.length === 0
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() && chain === 'bnb' && (chainId === 56 || chainId === 204)
           ) {
             setMessage("");
           }
         } else if (!isPremium) {
-          if (claimedChests === 10 && rewardData.length === 0) {
+          if (
+            claimedChests === 10 &&
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() && chain === 'bnb' && (chainId === 56 || chainId === 204)
+          ) {
             setMessage("premium");
-          } else if (claimedChests < 10 && rewardData.length === 0) {
+          } else if (
+            claimedChests < 10 &&
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() && chain === 'bnb' && (chainId === 56 || chainId === 204)
+          ) {
             setMessage("");
           }
         }
@@ -661,19 +835,29 @@ const NewDailyBonus = ({
         if (isPremium) {
           if (
             claimedSkaleChests + claimedSkalePremiumChests === 20 &&
-            rewardData.length === 0
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 37084624 && chain === 'skale'
           ) {
             setMessage("complete");
           } else if (
             claimedSkaleChests + claimedSkalePremiumChests < 20 &&
-            rewardData.length === 0
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 37084624 && chain === 'skale'
           ) {
             setMessage("");
           }
         } else if (!isPremium) {
-          if (claimedSkaleChests === 10 && rewardData.length === 0) {
+          if (
+            claimedSkaleChests === 10 &&
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 37084624 && chain === 'skale'
+          ) {
             setMessage("premium");
-          } else if (claimedSkaleChests < 10 && rewardData.length === 0) {
+          } else if (
+            claimedSkaleChests < 10 &&
+            rewardData.length === 0 &&
+            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 37084624 && chain === 'skale'
+          ) {
             setMessage("");
           }
         }
@@ -684,6 +868,8 @@ const NewDailyBonus = ({
   }, [
     email,
     chain,
+    coinbase,
+    address,
     isPremium,
     claimedChests,
     claimedPremiumChests,
@@ -1021,7 +1207,7 @@ const NewDailyBonus = ({
                         >
                           <button
                             className={`${
-                              chainId === 2046399126
+                              chainId === 37084624
                                 ? "new-chain-active-btn"
                                 : "new-chain-inactive-btn"
                             } d-flex gap-1 align-items-center`}
@@ -1030,6 +1216,19 @@ const NewDailyBonus = ({
                             {" "}
                             <img src={skaleIcon} alt="" /> SKALE
                           </button>
+                          {/* <a href="https://www.sfuelstation.com/" target="_blank">
+                         <button
+                            className={`${
+                              chainId === 2046399126
+                                ? "new-chain-active-btn"
+                                : "new-chain-inactive-btn"
+                            } d-flex gap-2 align-items-center`}
+                          >
+                            {" "}
+                            Get SFuel
+                            <img src={gasRightArrow} alt="" /> 
+                          </button>
+                         </a> */}
                         </div>
                       </div>
                       <div
@@ -1165,7 +1364,7 @@ const NewDailyBonus = ({
                             className={`chain-inactive-btn d-flex gap-1 align-items-center`}
                           >
                             {" "}
-                            <img src={bnbIcon} alt="" /> SKALE
+                            <img src={skaleIcon} alt="" /> SKALE
                           </button>
                         </div>
                       </div>
@@ -1204,9 +1403,94 @@ const NewDailyBonus = ({
                 <div className="col-12 col-lg-7 px-0 grid-overall-wrapper">
                   <div className="grid-scroll">
                     <div className="new-chests-grid">
-                      {chain === "bnb" ? (
-                        allChests && allChests.length > 0 ? (
-                          allChests.map((item, index) => (
+                      {chain === "bnb"
+                        ? allChests && allChests.length > 0
+                          ? allChests.map((item, index) => (
+                              <NewChestItem
+                                buyNftPopup={buyNftPopup}
+                                chainId={chainId}
+                                chain={chain}
+                                key={index}
+                                item={item}
+                                // openChest={openChest}
+                                selectedChest={selectedChest}
+                                isPremium={isPremium}
+                                onClaimRewards={(value) => {
+                                  // setRewardData(value);
+                                  setLiveRewardData(value);
+                                  onChestClaimed();
+                                  showLiveRewardData(value);
+                                  setIsActive(item.chestId);
+                                  setIsActiveIndex(index + 1);
+                                }}
+                                handleShowRewards={(value, value2) => {
+                                  showSingleRewardData(value, value2);
+                                  setIsActive(value);
+                                  setIsActiveIndex(index + 1);
+                                }}
+                                onLoadingChest={(value) => {
+                                  // setDisable(value);
+                                }}
+                                onChestStatus={(val) => {
+                                  setMessage(val);
+                                }}
+                                address={address}
+                                email={email}
+                                rewardTypes={item.chestType?.toLowerCase()}
+                                chestId={item.chestId}
+                                chestIndex={index + 1}
+                                open={item.isOpened}
+                                disableBtn={disable}
+                                isActive={isActive}
+                                isActiveIndex={isActiveIndex}
+                              />
+                            ))
+                          : dummyArray.map((item, index) => (
+                              <NewChestItem
+                                buyNftPopup={buyNftPopup}
+                                chainId={chainId}
+                                chain={chain}
+                                key={index}
+                                item={item}
+                                // openChest={openChest}
+                                selectedChest={selectedChest}
+                                isPremium={isPremium}
+                                onClaimRewards={(value) => {
+                                  // setRewardData(value);
+                                  setLiveRewardData(value);
+                                  onSkaleChestClaimed();
+                                  showLiveRewardData(value);
+                                  setIsActive(item.chestId);
+                                  // setIsActiveIndex(index + 1);
+                                }}
+                                handleShowRewards={(value, value2) => {
+                                  showSingleRewardData(value, value2);
+                                  setIsActive(value);
+                                  // setIsActiveIndex(index + 1);
+                                }}
+                                onLoadingChest={(value) => {
+                                  // setDisable(value);
+                                }}
+                                onChestStatus={(val) => {
+                                  setMessage(val);
+                                }}
+                                address={address}
+                                email={email}
+                                rewardTypes={item.chestType?.toLowerCase()}
+                                chestId={item.chestId}
+                                chestIndex={index + 1}
+                                open={item.opened}
+                                disableBtn={true}
+                                isActive={isActive}
+                                openChest={() => {
+                                  console.log("test");
+                                }}
+                              />
+                            ))
+                        : chain === "skale" &&
+                          allSkaleChests &&
+                          allSkaleChests.length > 0
+                        ? allSkaleChests.map((item, index) => (
                             <NewChestItem
                               buyNftPopup={buyNftPopup}
                               chainId={chainId}
@@ -1217,15 +1501,14 @@ const NewDailyBonus = ({
                               selectedChest={selectedChest}
                               isPremium={isPremium}
                               onClaimRewards={(value) => {
-                                // setRewardData(value);
                                 setLiveRewardData(value);
                                 onChestClaimed();
-                                showLiveRewardData(value);
+                                showLiveRewardDataSkale(value);
                                 setIsActive(item.chestId);
                                 setIsActiveIndex(index + 1);
                               }}
                               handleShowRewards={(value, value2) => {
-                                showSingleRewardData(value, value2);
+                                showSingleRewardDataSkale(value, value2);
                                 setIsActive(value);
                                 setIsActiveIndex(index + 1);
                               }}
@@ -1243,11 +1526,9 @@ const NewDailyBonus = ({
                               open={item.isOpened}
                               disableBtn={disable}
                               isActive={isActive}
-                              isActiveIndex={isActiveIndex}
                             />
                           ))
-                        ) : (
-                          dummyArray.map((item, index) => (
+                        : dummyArray.map((item, index) => (
                             <NewChestItem
                               buyNftPopup={buyNftPopup}
                               chainId={chainId}
@@ -1288,53 +1569,7 @@ const NewDailyBonus = ({
                                 console.log("test");
                               }}
                             />
-                          ))
-                        )
-                      ) : chain === "skale" &&
-                        allSkaleChests &&
-                        allSkaleChests.length > 0 ? (
-                        allSkaleChests.map((item, index) => (
-                          <NewChestItem
-                            buyNftPopup={buyNftPopup}
-                            chainId={chainId}
-                            chain={chain}
-                            key={index}
-                            item={item}
-                            // openChest={openChest}
-                            selectedChest={selectedChest}
-                            isPremium={isPremium}
-                            onClaimRewards={(value) => {
-                              // setRewardData(value);
-                              setLiveRewardData(value);
-                              onSkaleChestClaimed();
-                              showLiveRewardData(value);
-                              setIsActive(item.chestId);
-                              // setIsActiveIndex(index + 1);
-                            }}
-                            handleShowRewards={(value, value2) => {
-                              showSingleRewardData(value, value2);
-                              setIsActive(value);
-                              // setIsActiveIndex(index + 1);
-                            }}
-                            onLoadingChest={(value) => {
-                              // setDisable(value);
-                            }}
-                            onChestStatus={(val) => {
-                              setMessage(val);
-                            }}
-                            address={address}
-                            email={email}
-                            rewardTypes={item.chestType?.toLowerCase()}
-                            chestId={item.chestId}
-                            chestIndex={index + 1}
-                            open={item.isOpened}
-                            disableBtn={disable}
-                            isActive={isActive}
-                          />
-                        ))
-                      ) : (
-                        <></>
-                      )}
+                          ))}
                     </div>
                   </div>
                 </div>
@@ -1407,12 +1642,52 @@ const NewDailyBonus = ({
                         <div className="dot" style={{ "--i": 8 }}></div>
                         <div className="dot" style={{ "--i": 9 }}></div>
                       </div>
-                      <h6
-                        className="loader-text mb-0"
-                        style={{ color: "#ce5d1b" }}
-                      >
-                        Switch to {chain === "bnb" ? "BNB" : "SKALE"} Chain
-                      </h6>
+
+                      {chain === "bnb" ? (
+                        <h6
+                          className="loader-text mb-0"
+                          style={{ color: "#ce5d1b" }}
+                        >
+                          Switch to{" "}
+                          <span
+                            span
+                            style={{
+                              textDecoration: "underline",
+                              cursor: "pointer",
+                            }}
+                            onClick={handleBnbPool}
+                          >
+                            BNB Chain
+                          </span>{" "}
+                          or{" "}
+                          <span
+                            span
+                            style={{
+                              textDecoration: "underline",
+                              cursor: "pointer",
+                            }}
+                            onClick={handleOpBnbPool}
+                          >
+                            opBNB Chain
+                          </span>
+                        </h6>
+                      ) : (
+                        <h6
+                          className="loader-text mb-0"
+                          style={{ color: "#ce5d1b" }}
+                        >
+                          Switch to{" "}
+                          <span
+                            style={{
+                              textDecoration: "underline",
+                              cursor: "pointer",
+                            }}
+                            onClick={handleSkalePool}
+                          >
+                            SKALE Network
+                          </span>
+                        </h6>
+                      )}
                       <div className="loader red-loader">
                         <div className="dot" style={{ "--i": 0 }}></div>
                         <div className="dot" style={{ "--i": 1 }}></div>
@@ -1424,6 +1699,49 @@ const NewDailyBonus = ({
                         <div className="dot" style={{ "--i": 7 }}></div>
                         <div className="dot" style={{ "--i": 8 }}></div>
                         <div className="dot" style={{ "--i": 9 }}></div>
+                      </div>
+                    </div>
+                  ) : message === "switchAccount" ? (
+                    <div
+                      className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
+                      style={{
+                        background: "#1A1C39",
+                        border: "1px solid #ce5d1b",
+                      }}
+                    >
+                      <div className="loader red-loader">
+                        <div className="dot" style={{ "--i": 0 }}></div>
+                        <div className="dot" style={{ "--i": 1 }}></div>
+                        <div className="dot" style={{ "--i": 2 }}></div>
+                        <div className="dot" style={{ "--i": 3 }}></div>
+                        <div className="dot" style={{ "--i": 4 }}></div>
+                        <div className="dot" style={{ "--i": 5 }}></div>
+                        <div className="dot" style={{ "--i": 6 }}></div>
+                        <div className="dot" style={{ "--i": 7 }}></div>
+                        <div className="dot" style={{ "--i": 8 }}></div>
+                        <div className="dot" style={{ "--i": 9 }}></div>
+                        <div className="dot" style={{ "--i": 10 }}></div>
+                      </div>
+
+                      <h6
+                        className="loader-text mb-0"
+                        style={{ color: "#ce5d1b" }}
+                      >
+                        Use the wallet associated to your game account.
+                      </h6>
+
+                      <div className="loader red-loader">
+                        <div className="dot" style={{ "--i": 0 }}></div>
+                        <div className="dot" style={{ "--i": 1 }}></div>
+                        <div className="dot" style={{ "--i": 2 }}></div>
+                        <div className="dot" style={{ "--i": 3 }}></div>
+                        <div className="dot" style={{ "--i": 4 }}></div>
+                        <div className="dot" style={{ "--i": 5 }}></div>
+                        <div className="dot" style={{ "--i": 6 }}></div>
+                        <div className="dot" style={{ "--i": 7 }}></div>
+                        <div className="dot" style={{ "--i": 8 }}></div>
+                        <div className="dot" style={{ "--i": 9 }}></div>
+                        <div className="dot" style={{ "--i": 10 }}></div>
                       </div>
                     </div>
                   ) : message === "error" ? (
@@ -1483,7 +1801,15 @@ const NewDailyBonus = ({
                           <img src={warning} alt="" width={20} height={20} />
                           <span className="win-desc mb-0">
                             The{" "}
-                            <span style={{ color: "#F2C624" }}>$700 .50</span>{" "}
+                            <span style={{ color: "#F2C624" }}>
+                              $
+                              {getFormattedNumber(
+                                rewardData.rewards.find((obj) => {
+                                  return obj.rewardType === "Money";
+                                }).reward ?? 0,
+                                2
+                              )}
+                            </span>{" "}
                             reward will be allocated to you if you become a
                             Premium Subscriber.
                           </span>
@@ -1491,14 +1817,29 @@ const NewDailyBonus = ({
                       </div>
                       <div className="d-flex align-items-center gap-2 win-rewards-container">
                         <div className="d-flex flex-column align-items-center neutral-border p-1">
-                          <h6 className="win-amount mb-0">1,864</h6>
+                          <h6 className="win-amount mb-0">
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Points";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
                           <span className="win-amount-desc">
                             Leaderboard Points
                           </span>
                         </div>
                         <h6 className="win-amount mb-0">+</h6>
                         <div className="d-flex flex-column align-items-center warning-border p-1">
-                          <h6 className="win-amount mb-0">$30.50</h6>
+                          <h6 className="win-amount mb-0">
+                            {" "}
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Money";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
                           <span className="win-amount-desc">Rewards</span>
                         </div>
                       </div>
@@ -1579,6 +1920,16 @@ const NewDailyBonus = ({
                             onClick={() => {
                               setNft(item);
                               setBuyNftPopup(true);
+                              // boughtCaws(
+                              //   isActive,
+                              //   isActiveIndex,
+                              //   rewardData.rewards.find((obj) => {
+                              //     return obj.rewardType === "Money";
+                              //   }).reward ?? 0,
+                              //   rewardData.rewards.find((obj) => {
+                              //     return obj.rewardType === "Points";
+                              //   }).reward ?? 0
+                              // );
                             }}
                           >
                             <img
@@ -1592,7 +1943,7 @@ const NewDailyBonus = ({
                         ))}
                       </div>
                     </div>
-                  ) : message === "win" ? (
+                  ) : message === "won" ? (
                     <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                       <div
                         className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -1605,15 +1956,61 @@ const NewDailyBonus = ({
                       </div>
                       <div className="d-flex align-items-center gap-2 win-rewards-container">
                         <div className="d-flex flex-column align-items-center neutral-border p-1">
-                          <h6 className="win-amount mb-0">1,864</h6>
+                          <h6 className="win-amount mb-0">
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Points";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
+
                           <span className="win-amount-desc">
                             Leaderboard Points
                           </span>
                         </div>
                         <h6 className="win-amount mb-0">+</h6>
                         <div className="d-flex flex-column align-items-center p-1">
-                          <h6 className="win-amount mb-0">$30.50</h6>
+                          <h6 className="win-amount mb-0">
+                            $
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Money";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
+
                           <span className="win-amount-desc">Rewards</span>
+                        </div>
+                      </div>
+
+                      <img src={winConfetti} alt="" className="win-confetti" />
+                    </div>
+                  ) : message === "wonPoints" ? (
+                    <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div
+                        className="chain-desc-wrapper p-2 d-flex flex-column"
+                        style={{
+                          filter: "brightness(1)",
+                          position: "relative",
+                        }}
+                      >
+                        <h6 className="win-text mb-0">You Won</h6>
+                      </div>
+                      <div className="d-flex align-items-center gap-2 win-rewards-container">
+                        <div className="d-flex flex-column align-items-center neutral-border p-1">
+                          <h6 className="win-amount mb-0">
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Points";
+                              }).reward,
+                              0
+                            )}
+                          </h6>
+                          <span className="win-amount-desc">
+                            Leaderboard Points
+                          </span>
                         </div>
                       </div>
 
@@ -1710,7 +2107,14 @@ const NewDailyBonus = ({
                           <img src={danger} alt="" width={20} height={20} />
                           <span className="win-desc mb-0">
                             The{" "}
-                            <span style={{ color: "#F2C624" }}>$4,520.00</span>{" "}
+                            <span style={{ color: "#F2C624" }}>
+                              {getFormattedNumber(
+                                rewardData.rewards.find((obj) => {
+                                  return obj.rewardType === "Money";
+                                }).reward ?? 0,
+                                2
+                              )}
+                            </span>{" "}
                             reward has not been assigned due to incomplete
                             fulfillment of all the requirements.
                           </span>
@@ -1718,14 +2122,28 @@ const NewDailyBonus = ({
                       </div>
                       <div className="d-flex align-items-center gap-2 win-rewards-container">
                         <div className="d-flex flex-column align-items-center neutral-border p-1">
-                          <h6 className="win-amount mb-0">1,864</h6>
+                          <h6 className="win-amount mb-0">
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Points";
+                              }).reward,
+                              0
+                            )}
+                          </h6>
                           <span className="win-amount-desc">
                             Leaderboard Points
                           </span>
                         </div>
                         <h6 className="win-amount mb-0">+</h6>
                         <div className="d-flex flex-column align-items-center danger-border p-1">
-                          <h6 className="win-amount mb-0">$5,000</h6>
+                          <h6 className="win-amount mb-0">
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Money";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
                           <span className="win-amount-desc">Rewards</span>
                         </div>
                       </div>
@@ -1789,7 +2207,14 @@ const NewDailyBonus = ({
                           <img src={warning} alt="" width={20} height={20} />
                           <span className="win-desc mb-0">
                             The{" "}
-                            <span style={{ color: "#F2C624" }}>$150.50</span>{" "}
+                            <span style={{ color: "#F2C624" }}>
+                              {getFormattedNumber(
+                                rewardData.rewards.find((obj) => {
+                                  return obj.rewardType === "Money";
+                                }).reward ?? 0,
+                                2
+                              )}
+                            </span>{" "}
                             reward will be allocated to you if you get one of
                             the suggested Genesis NFTs.
                           </span>
@@ -1797,14 +2222,29 @@ const NewDailyBonus = ({
                       </div>
                       <div className="d-flex align-items-center gap-2 win-rewards-container">
                         <div className="d-flex flex-column align-items-center neutral-border p-1">
-                          <h6 className="win-amount mb-0">1,864</h6>
+                          <h6 className="win-amount mb-0">
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Points";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
                           <span className="win-amount-desc">
                             Leaderboard Points
                           </span>
                         </div>
                         <h6 className="win-amount mb-0">+</h6>
                         <div className="d-flex flex-column align-items-center warning-border p-1">
-                          <h6 className="win-amount mb-0">$30.50</h6>
+                          <h6 className="win-amount mb-0">
+                            $
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Money";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
                           <span className="win-amount-desc">Rewards</span>
                         </div>
                       </div>
@@ -1815,6 +2255,16 @@ const NewDailyBonus = ({
                           onClick={() => {
                             setNft(item);
                             setBuyNftPopup(true);
+                            // boughtCaws(
+                            //   isActive,
+                            //   isActiveIndex,
+                            //   rewardData.rewards.find((obj) => {
+                            //     return obj.rewardType === "Money";
+                            //   }).reward ?? 0,
+                            //   rewardData.rewards.find((obj) => {
+                            //     return obj.rewardType === "Points";
+                            //   }).reward ?? 0
+                            // );
                           }}
                           >
                             <img
