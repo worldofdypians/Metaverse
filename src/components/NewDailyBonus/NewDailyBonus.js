@@ -1161,22 +1161,19 @@ const NewDailyBonus = ({
                             {" "}
                             <img src={skaleIcon} alt="" /> SKALE
                           </button>
-                          <a
-                            href="https://www.sfuelstation.com/"
-                            target="_blank"
+                         {/* <a href="https://www.sfuelstation.com/" target="_blank">
+                         <button
+                            className={`${
+                              chainId === 2046399126
+                                ? "new-chain-active-btn"
+                                : "new-chain-inactive-btn"
+                            } d-flex gap-2 align-items-center`}
                           >
-                            <button
-                              className={`${
-                                chainId === 37084624
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-2 align-items-center`}
-                            >
-                              {" "}
-                              Get SFuel
-                              <img src={gasRightArrow} alt="" />
-                            </button>
-                          </a>
+                            {" "}
+                            Get SFuel
+                            <img src={gasRightArrow} alt="" /> 
+                          </button>
+                         </a> */}
                         </div>
                       </div>
                       <div
