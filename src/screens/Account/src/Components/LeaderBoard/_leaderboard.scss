@@ -447,3 +447,8 @@
 .leaderboard-icon-active {
   filter: grayscale(0);
 }
+
+.blur-leaderboard{
+  filter: blur(10px);
+  pointer-events: none;
+}
