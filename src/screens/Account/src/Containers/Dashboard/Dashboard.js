@@ -46,6 +46,7 @@ import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
+import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 
@@ -2588,9 +2589,9 @@ function Dashboard({
                         onOutsideClick={() => setLeaderboard(false)}
                       >
                         <div
-                          className="popup-wrapper popup-active p-3"
+                          className="popup-wrapper leaderboard-popup popup-active p-3"
                           id="leaderboard"
-                          style={{ width: "40%", pointerEvents: "auto" }}
+                          style={{ width: "70%", pointerEvents: "auto" }}
                         >
                           <div className="d-flex align-items-center justify-content-between">
                             <h2
@@ -2608,7 +2609,7 @@ function Dashboard({
                               style={{ cursor: "pointer" }}
                             />
                           </div>
-                          <LeaderBoard
+                          <NewLeaderBoard
                             username={data?.getPlayer?.displayName}
                             userId={data?.getPlayer?.playerId}
                             dypBalancebnb={dypBalancebnb}
