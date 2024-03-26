@@ -90,7 +90,8 @@ const NewDailyBonus = ({
   dypTokenData,
   dyptokenData_old,
   ethTokenData,
-  handleSwitchChain,openedSkaleChests
+  handleSwitchChain,
+  openedSkaleChests,
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -471,7 +472,7 @@ const NewDailyBonus = ({
       if (!window.gatewallet) {
         await handleSwitchNetworkhook("0x235ddd0")
           .then(() => {
-            handleSwitchNetwork(37084624 );
+            handleSwitchNetwork(37084624);
             setMessage("");
           })
           .catch((e) => {
@@ -518,7 +519,6 @@ const NewDailyBonus = ({
   };
 
   const showSingleRewardData = (chestID, chestIndex) => {
-   
     const filteredResult = openedChests.find(
       (el) => el.chestId === chestID && allChests.indexOf(el) === chestIndex
     );
@@ -555,7 +555,7 @@ const NewDailyBonus = ({
       });
 
       console.log(result);
-      console.log('filteredResult',filteredResult);
+      console.log("filteredResult", filteredResult);
       if (result) {
         setMessage("caws");
       } else if (!result && resultLand) {
@@ -622,12 +622,12 @@ const NewDailyBonus = ({
     new Audio(successSound).play();
   };
 
-
   const showSingleRewardDataSkale = (chestID, chestIndex) => {
-    console.log(chestID, chestIndex)
+    console.log(chestID, chestIndex);
     const filteredResult = openedSkaleChests.find(
-      (el) => el.chestId === chestID && allSkaleChests.indexOf(el) === chestIndex
-    ); 
+      (el) =>
+        el.chestId === chestID && allSkaleChests.indexOf(el) === chestIndex
+    );
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
     if (filteredResult) {
@@ -659,10 +659,8 @@ const NewDailyBonus = ({
         return obj.rewardType === "Money";
       });
 
-      const resultPoints = filteredResult.rewards.length === 1
+      const resultPoints = filteredResult.rewards.length === 1;
 
- 
-      
       if (result) {
         setMessage("caws");
       } else if (!result && resultLand) {
@@ -671,8 +669,7 @@ const NewDailyBonus = ({
         setMessage("needPremium");
       } else if (resultWon) {
         setMessage("won");
-      }
-      else if (resultPoints) {
+      } else if (resultPoints) {
         setMessage("wonPoints");
       }
       setLiveRewardData(filteredResult);
@@ -712,9 +709,8 @@ const NewDailyBonus = ({
       const resultWon = filteredResult.rewards.find((obj) => {
         return obj.rewardType === "Money" && obj.status === "Claimed";
       });
-      const resultPoints = filteredResult.rewards.length === 1
+      const resultPoints = filteredResult.rewards.length === 1;
 
-  
       if (result) {
         setMessage("caws");
       } else if (!result && resultLand) {
@@ -723,8 +719,7 @@ const NewDailyBonus = ({
         setMessage("needPremium");
       } else if (resultWon) {
         setMessage("won");
-      }
-      else if (resultPoints) {
+      } else if (resultPoints) {
         setMessage("wonPoints");
       }
 
@@ -736,9 +731,6 @@ const NewDailyBonus = ({
     new Audio(successSound).play();
   };
 
-
-
-
   useEffect(() => {
     if (chain === "bnb") {
       if (chainId === 56 || chainId === 204) {
@@ -749,7 +741,7 @@ const NewDailyBonus = ({
         setDisable(true);
       }
     } else if (chain === "skale") {
-      if (chainId === 37084624 ) {
+      if (chainId === 37084624) {
         setMessage("");
         setDisable(false);
       } else {
@@ -1160,7 +1152,7 @@ const NewDailyBonus = ({
                         >
                           <button
                             className={`${
-                              chainId === 37084624 
+                              chainId === 37084624
                                 ? "new-chain-active-btn"
                                 : "new-chain-inactive-btn"
                             } d-flex gap-1 align-items-center`}
@@ -1175,7 +1167,7 @@ const NewDailyBonus = ({
                           >
                             <button
                               className={`${
-                                chainId === 37084624 
+                                chainId === 37084624
                                   ? "new-chain-active-btn"
                                   : "new-chain-inactive-btn"
                               } d-flex gap-2 align-items-center`}
@@ -1465,8 +1457,8 @@ const NewDailyBonus = ({
                               }}
                               handleShowRewards={(value, value2) => {
                                 showSingleRewardDataSkale(value, value2);
-                                  setIsActive(value);
-                                  setIsActiveIndex(index + 1);
+                                setIsActive(value);
+                                setIsActiveIndex(index + 1);
                               }}
                               onLoadingChest={(value) => {
                                 // setDisable(value);
@@ -1719,7 +1711,15 @@ const NewDailyBonus = ({
                           <img src={warning} alt="" width={20} height={20} />
                           <span className="win-desc mb-0">
                             The{" "}
-                            <span style={{ color: "#F2C624" }}>$700 .50</span>{" "}
+                            <span style={{ color: "#F2C624" }}>
+                              $
+                              {getFormattedNumber(
+                                rewardData.rewards.find((obj) => {
+                                  return obj.rewardType === "Money";
+                                }).reward ?? 0,
+                                2
+                              )}
+                            </span>{" "}
                             reward will be allocated to you if you become a
                             Premium Subscriber.
                           </span>
@@ -1727,14 +1727,29 @@ const NewDailyBonus = ({
                       </div>
                       <div className="d-flex align-items-center gap-2 win-rewards-container">
                         <div className="d-flex flex-column align-items-center neutral-border p-1">
-                          <h6 className="win-amount mb-0">1,864</h6>
+                          <h6 className="win-amount mb-0">
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Points";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
                           <span className="win-amount-desc">
                             Leaderboard Points
                           </span>
                         </div>
                         <h6 className="win-amount mb-0">+</h6>
                         <div className="d-flex flex-column align-items-center warning-border p-1">
-                          <h6 className="win-amount mb-0">$30.50</h6>
+                          <h6 className="win-amount mb-0">
+                            {" "}
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Money";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
                           <span className="win-amount-desc">Rewards</span>
                         </div>
                       </div>
@@ -1851,14 +1866,31 @@ const NewDailyBonus = ({
                       </div>
                       <div className="d-flex align-items-center gap-2 win-rewards-container">
                         <div className="d-flex flex-column align-items-center neutral-border p-1">
-                          <h6 className="win-amount mb-0">1,864</h6>
+                          <h6 className="win-amount mb-0">
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Points";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
+
                           <span className="win-amount-desc">
                             Leaderboard Points
                           </span>
                         </div>
                         <h6 className="win-amount mb-0">+</h6>
                         <div className="d-flex flex-column align-items-center p-1">
-                          <h6 className="win-amount mb-0">$30.50</h6>
+                          <h6 className="win-amount mb-0">
+                            $
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Money";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
+
                           <span className="win-amount-desc">Rewards</span>
                         </div>
                       </div>
@@ -1878,14 +1910,18 @@ const NewDailyBonus = ({
                       </div>
                       <div className="d-flex align-items-center gap-2 win-rewards-container">
                         <div className="d-flex flex-column align-items-center neutral-border p-1">
-                          <h6 className="win-amount mb-0">{getFormattedNumber( rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Points";
-                                }).reward,0)}</h6>
+                          <h6 className="win-amount mb-0">
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Points";
+                              }).reward,
+                              0
+                            )}
+                          </h6>
                           <span className="win-amount-desc">
                             Leaderboard Points
                           </span>
                         </div>
-                        
                       </div>
 
                       <img src={winConfetti} alt="" className="win-confetti" />
@@ -1981,7 +2017,14 @@ const NewDailyBonus = ({
                           <img src={danger} alt="" width={20} height={20} />
                           <span className="win-desc mb-0">
                             The{" "}
-                            <span style={{ color: "#F2C624" }}>$4,520.00</span>{" "}
+                            <span style={{ color: "#F2C624" }}>
+                              {getFormattedNumber(
+                                rewardData.rewards.find((obj) => {
+                                  return obj.rewardType === "Money";
+                                }).reward ?? 0,
+                                2
+                              )}
+                            </span>{" "}
                             reward has not been assigned due to incomplete
                             fulfillment of all the requirements.
                           </span>
@@ -1989,14 +2032,28 @@ const NewDailyBonus = ({
                       </div>
                       <div className="d-flex align-items-center gap-2 win-rewards-container">
                         <div className="d-flex flex-column align-items-center neutral-border p-1">
-                          <h6 className="win-amount mb-0">1,864</h6>
+                          <h6 className="win-amount mb-0">
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Points";
+                              }).reward,
+                              0
+                            )}
+                          </h6>
                           <span className="win-amount-desc">
                             Leaderboard Points
                           </span>
                         </div>
                         <h6 className="win-amount mb-0">+</h6>
                         <div className="d-flex flex-column align-items-center danger-border p-1">
-                          <h6 className="win-amount mb-0">$5,000</h6>
+                          <h6 className="win-amount mb-0">
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Money";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
                           <span className="win-amount-desc">Rewards</span>
                         </div>
                       </div>
@@ -2060,7 +2117,14 @@ const NewDailyBonus = ({
                           <img src={warning} alt="" width={20} height={20} />
                           <span className="win-desc mb-0">
                             The{" "}
-                            <span style={{ color: "#F2C624" }}>$150.50</span>{" "}
+                            <span style={{ color: "#F2C624" }}>
+                              {getFormattedNumber(
+                                rewardData.rewards.find((obj) => {
+                                  return obj.rewardType === "Money";
+                                }).reward ?? 0,
+                                2
+                              )}
+                            </span>{" "}
                             reward will be allocated to you if you get one of
                             the suggested Genesis NFTs.
                           </span>
@@ -2068,14 +2132,29 @@ const NewDailyBonus = ({
                       </div>
                       <div className="d-flex align-items-center gap-2 win-rewards-container">
                         <div className="d-flex flex-column align-items-center neutral-border p-1">
-                          <h6 className="win-amount mb-0">1,864</h6>
+                          <h6 className="win-amount mb-0">
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Points";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
                           <span className="win-amount-desc">
                             Leaderboard Points
                           </span>
                         </div>
                         <h6 className="win-amount mb-0">+</h6>
                         <div className="d-flex flex-column align-items-center warning-border p-1">
-                          <h6 className="win-amount mb-0">$30.50</h6>
+                          <h6 className="win-amount mb-0">
+                            $
+                            {getFormattedNumber(
+                              rewardData.rewards.find((obj) => {
+                                return obj.rewardType === "Money";
+                              }).reward ?? 0,
+                              2
+                            )}
+                          </h6>
                           <span className="win-amount-desc">Rewards</span>
                         </div>
                       </div>
