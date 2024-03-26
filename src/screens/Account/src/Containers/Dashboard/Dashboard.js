@@ -151,7 +151,7 @@ function Dashboard({
   const [myBaseNfts, setmyBaseNfts] = useState([]);
   const [myDogeNfts, setmyDogeNfts] = useState([]);
   const [myCmcNfts, setmyCmcNfts] = useState([]);
-  const [mySkaleNfts, setmySkaleNfts] = useState([])
+  const [mySkaleNfts, setmySkaleNfts] = useState([]);
   const [latestVersion, setLatestVersion] = useState(0);
 
   const [userPoints, setuserPoints] = useState(0);
@@ -279,7 +279,6 @@ function Dashboard({
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
   let wskaleAddress = "0x5eaF4e5A908ba87Abf3dE768cb0dA517dB45dB48";
-
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
@@ -1214,8 +1213,8 @@ function Dashboard({
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "skale").then((NFTS) =>
-    setmySkaleNfts(NFTS)
-  );
+      setmySkaleNfts(NFTS)
+    );
   };
 
   const getOtherNfts = async () => {
@@ -1621,7 +1620,6 @@ function Dashboard({
     const baseWeb3 = new Web3(window.config.base_endpoint);
     const skaleWeb3 = new Web3(window.config.skale_endpoint);
 
-
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
@@ -1736,8 +1734,7 @@ function Dashboard({
           setisApproved(false);
           setapproveStatus("initial");
         }
-      } 
-      else if (chainId === 1030) {
+      } else if (chainId === 1030) {
         const result = await subscribeTokencontractcfx.methods
           .allowance(coinbase, confluxsubscribeAddress)
           .call()
@@ -2458,7 +2455,6 @@ function Dashboard({
                       myDogeNfts={myDogeNfts}
                       myCmcNfts={myCmcNfts}
                       mySkaleNfts={mySkaleNfts}
-
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
@@ -2662,7 +2658,9 @@ function Dashboard({
                             cfxPrice={cfxPrice}
                             ethTokenData={ethTokenData}
                             openedChests={openedChests}
+                            openedSkaleChests={openedSkaleChests}
                             allChests={allChests}
+                            allSkaleChests={allSkaleChests}
                             availableTime={goldenPassRemainingTime}
                             userSocialRewards={userSocialRewards}
                             dogePrice={dogePrice}

@@ -39,6 +39,8 @@ const MyRewardsPopup = ({
   cmcuserEarnUsd,
   dypiusPremiumEarnUsd,
   dypiusPremiumEarnTokens,
+  openedSkaleChests,
+  allSkaleChests,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -354,50 +356,159 @@ const MyRewardsPopup = ({
   };
 
   const getTreasureChestsInfo = async () => {
-    var pointsResult = 0;
     var nftCawsResult = 0;
     var nftLandResult = 0;
     var nftBPResult = 0;
     var moneyResult = 0;
-    if (openedChests && openedChests.length > 0) {
-      for (let i = 0; i < openedChests.length; i++) {
-        if (
-          openedChests[i].rewards.find((obj) => obj.rewardType === "Points")
-        ) {
-          pointsResult += Number(openedChests[i].reward);
-        }
-        if (openedChests[i].rewards.find((obj) => obj.rewardType === "Money")) {
-          if (
-            !openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
-              ?.details
-          ) {
-            moneyResult += Number(
-              openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
-                .reward
-            );
+    // if (openedChests && openedChests.length > 0) {
+    //   for (let i = 0; i < openedChests.length; i++) {
+    //     if (
+    //       openedChests[i].rewards.find((obj) => obj.rewardType === "Points")
+    //     ) {
+    //       pointsResult += Number(openedChests[i].reward);
+    //     }
+    //     if (openedChests[i].rewards.find((obj) => obj.rewardType === "Money")) {
+    //       if (
+    //         !openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
+    //           ?.details
+    //       ) {
+    //         moneyResult += Number(
+    //           openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
+    //             .reward
+    //         );
+    //       }
+    //     }
+    //     if (openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")) {
+    //       if (
+    //         openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
+    //           .reward === "WoD"
+    //       ) {
+    //         nftLandResult++;
+    //       }
+    //       if (
+    //         openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
+    //           .reward === "CAWS"
+    //       ) {
+    //         nftCawsResult++;
+    //       }
+    //       if (
+    //         openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
+    //           .reward === "BetaPass"
+    //       ) {
+    //         nftBPResult++;
+    //       }
+    //     }
+    //   }
+    // }
+
+    // if (openedSkaleChests && openedSkaleChests.length > 0) {
+    //   for (let i = 0; i < openedSkaleChests.length; i++) {
+    //     if (
+    //       openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "Points")
+    //     ) {
+    //       pointsResult += Number(openedSkaleChests[i].reward);
+    //     }
+    //     if (openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "Money")) {
+    //       if (
+    //         !openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "Money")
+    //           ?.details
+    //       ) {
+    //         moneyResult += Number(
+    //           openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "Money")
+    //             .reward
+    //         );
+    //       }
+    //     }
+    //     if (openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "NFT")) {
+    //       if (
+    //         openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "NFT")
+    //           .reward === "WoD"
+    //       ) {
+    //         nftLandResult++;
+    //       }
+    //       if (
+    //         openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "NFT")
+    //           .reward === "CAWS"
+    //       ) {
+    //         nftCawsResult++;
+    //       }
+    //       if (
+    //         openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "NFT")
+    //           .reward === "BetaPass"
+    //       ) {
+    //         nftBPResult++;
+    //       }
+    //     }
+    //   }
+    // }
+
+    if (allChests && allChests.length > 0) {
+      allChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "NFT" && innerChest.reward === "WoD" &&
+                innerChest.status !== "Unclaimed"
+              ) {
+                nftLandResult ++;
+              }
+              if (
+                innerChest.rewardType === "NFT" && innerChest.reward === "CAWS" &&
+                innerChest.status !== "Unclaimed"
+              ) {
+                nftCawsResult ++;
+              } if (
+                innerChest.rewardType === "NFT" && innerChest.reward === "BetaPass" &&
+                innerChest.status !== "Unclaimed"
+              ) {
+                nftBPResult ++;
+              }
+            });
           }
         }
-        if (openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")) {
-          if (
-            openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
-              .reward === "WoD"
-          ) {
-            nftLandResult++;
-          }
-          if (
-            openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
-              .reward === "CAWS"
-          ) {
-            nftCawsResult++;
-          }
-          if (
-            openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
-              .reward === "BetaPass"
-          ) {
-            nftBPResult++;
+      });
+    }
+
+    if (allSkaleChests && allSkaleChests.length > 0) {
+      allSkaleChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "NFT" && innerChest.reward === "WoD" &&
+                innerChest.status !== "Unclaimed"
+              ) {
+                nftLandResult ++;
+              }
+              if (
+                innerChest.rewardType === "NFT" && innerChest.reward === "CAWS" &&
+                innerChest.status !== "Unclaimed"
+              ) {
+                nftCawsResult ++;
+              } if (
+                innerChest.rewardType === "NFT" && innerChest.reward === "BetaPass" &&
+                innerChest.status !== "Unclaimed"
+              ) {
+                nftBPResult ++;
+              }
+
+            });
           }
         }
-      }
+      });
     }
 
     setTreasureRewardMoney(moneyResult);
@@ -467,7 +578,7 @@ const MyRewardsPopup = ({
 
   useEffect(() => {
     getTreasureChestsInfo();
-  }, [openedChests]);
+  }, [openedChests, openedSkaleChests]);
 
   useEffect(() => {
     getBundles();

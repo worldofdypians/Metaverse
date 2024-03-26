@@ -420,20 +420,20 @@ const NewDailyBonus = ({
       allSkaleChests.forEach((chest) => {
         if (chest.isOpened === true) {
           if (chest.rewards.length > 1) {
-            chest.forEach((innerChest) => {
+            chest.rewards.forEach((innerChest) => {
               if (innerChest.rewardType === "Points") {
-                resultSkalePoints += Number(chest.rewards.reward);
+                resultSkalePoints += Number(innerChest.reward);
               }
               if (
                 innerChest.rewardType === "Money" &&
                 innerChest.status !== "Unclaimed"
               ) {
-                resultSkaleUsd += Number(chest.rewards.reward);
+                resultSkaleUsd += Number(innerChest.reward);
               }
             });
           } else if (chest.rewards.length === 1) {
             chest.rewards.forEach((innerChest) => {
-              console.log(innerChest);
+             
               if (innerChest.rewardType === "Points") {
                 resultSkalePoints += Number(innerChest.reward);
               }
@@ -636,7 +636,7 @@ const NewDailyBonus = ({
   };
 
   const showSingleRewardDataSkale = (chestID, chestIndex) => {
-    console.log(chestID, chestIndex);
+    
     const filteredResult = openedSkaleChests.find(
       (el) =>
         el.chestId === chestID && allSkaleChests.indexOf(el) === chestIndex
@@ -1822,7 +1822,7 @@ const NewDailyBonus = ({
                               rewardData.rewards.find((obj) => {
                                 return obj.rewardType === "Points";
                               }).reward ?? 0,
-                              2
+                              0
                             )}
                           </h6>
                           <span className="win-amount-desc">
@@ -1961,7 +1961,7 @@ const NewDailyBonus = ({
                               rewardData.rewards.find((obj) => {
                                 return obj.rewardType === "Points";
                               }).reward ?? 0,
-                              2
+                             0
                             )}
                           </h6>
 
@@ -2227,7 +2227,7 @@ const NewDailyBonus = ({
                               rewardData.rewards.find((obj) => {
                                 return obj.rewardType === "Points";
                               }).reward ?? 0,
-                              2
+                             0
                             )}
                           </h6>
                           <span className="win-amount-desc">
