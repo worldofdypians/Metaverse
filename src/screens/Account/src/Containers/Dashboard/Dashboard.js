@@ -2422,6 +2422,7 @@ function Dashboard({
                             address={data?.getPlayer?.wallet?.publicAddress}
                             availableTime={goldenPassRemainingTime}
                             email={email}
+                            isPremium={isPremium}
                           />
                         </div>
                       </OutsideClickHandler>

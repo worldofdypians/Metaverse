@@ -204,6 +204,7 @@
   line-height: 21px;
   letter-spacing: -0.018em;
   color: #09f3d2;
+  height: 32px;
 }
 .playerScore {
   font-weight: 500;
@@ -211,6 +212,7 @@
   line-height: 21px;
   letter-spacing: -0.018em;
   color: rgba(243, 192, 9, 1);
+  height: 32px;
 }
 .goldenscore-inactive2 {
   color: #fff ;
@@ -300,6 +302,7 @@
   line-height: 10px;
   text-align: center;
   color: #b8b8e0;
+  height: 32px;
 }
 
 .playersimg {
@@ -430,7 +433,7 @@
 }
 
 .move-1 {
-  transform: translateX(100%);
+  transform: translateX(101.5%);
 }
 
 .move-2 {
