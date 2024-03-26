@@ -135,8 +135,8 @@ const MarketMint = ({
     id: "skale",
     cardTitle: "SKALE Beta Pass",
     title: "SKALE Beta Pass",
-    background: "base-mint-bg",
-    mobileBg: "baseMobileBg.png",
+    background: "skale-mint-bg",
+    mobileBg: "skaleMobileBg.webp",
   };
 
   const windowSize = useWindowSize();
@@ -632,10 +632,7 @@ const MarketMint = ({
                                   : selectedMint.id === "skale" &&
                                     myskaleNFTsCreated.length === 0
                                   ? "conflux-empty"
-                                  : selectedMint.id === "skale" &&
-                                    myskaleNFTsCreated.length === 0
-                                  ? "conflux-empty"
-                                  : "base-active"
+                                  : "skale-active"
                               } d-flex justify-content-center align-items-center p-3 position-relative`}
                               style={{ height: 312 }}
                             >
