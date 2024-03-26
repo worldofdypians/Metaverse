@@ -21,7 +21,6 @@ import infoIcon from "./assets/infoIcon.svg";
 import skaleIcon from "./assets/skaleIcon.svg";
 import danger from "./assets/danger.svg";
 import warning from "./assets/warning.svg";
-import gasRightArrow from "./assets/gasRightArrow.svg";
 import redX from "./assets/redX.svg";
 import NewChestItem from "./NewChestItem";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -565,11 +564,11 @@ const NewDailyBonus = ({
       });
 
       const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money";
+        return obj.rewardType === "Money" && obj.status === "Claimed";
       });
 
       console.log(result);
-      console.log("filteredResult", filteredResult);
+      console.log(filteredResult);
       if (result) {
         setMessage("caws");
       } else if (!result && resultLand) {
@@ -1919,18 +1918,18 @@ const NewDailyBonus = ({
                           <div
                             className="nft-reward-container"
                             onClick={() => {
-                              // setNft(item);
-                              // setBuyNftPopup(true);
-                              boughtCaws(
-                                isActive,
-                                isActiveIndex,
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Money";
-                                }).reward ?? 0,
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Points";
-                                }).reward ?? 0
-                              );
+                              setNft(item);
+                              setBuyNftPopup(true);
+                              // boughtCaws(
+                              //   isActive,
+                              //   isActiveIndex,
+                              //   rewardData.rewards.find((obj) => {
+                              //     return obj.rewardType === "Money";
+                              //   }).reward ?? 0,
+                              //   rewardData.rewards.find((obj) => {
+                              //     return obj.rewardType === "Points";
+                              //   }).reward ?? 0
+                              // );
                             }}
                           >
                             <img
@@ -2252,22 +2251,21 @@ const NewDailyBonus = ({
 
                       <div className="d-flex align-items-center gap-2">
                         {landNfts.slice(0, 4).map((item, index) => (
-                          <div
-                            className="nft-reward-container"
-                            onClick={() => {
-                              // setNft(item);
-                              // setBuyNftPopup(true);
-                              boughtCaws(
-                                isActive,
-                                isActiveIndex,
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Money";
-                                }).reward ?? 0,
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Points";
-                                }).reward ?? 0
-                              );
-                            }}
+                          <div className="nft-reward-container"
+                          onClick={() => {
+                            setNft(item);
+                            setBuyNftPopup(true);
+                            // boughtCaws(
+                            //   isActive,
+                            //   isActiveIndex,
+                            //   rewardData.rewards.find((obj) => {
+                            //     return obj.rewardType === "Money";
+                            //   }).reward ?? 0,
+                            //   rewardData.rewards.find((obj) => {
+                            //     return obj.rewardType === "Points";
+                            //   }).reward ?? 0
+                            // );
+                          }}
                           >
                             <img
                               key={index}
