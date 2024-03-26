@@ -496,7 +496,7 @@ const NewChestItem = ({
       setShake(false);
     }, 1000);
   };
-console.log(premiumImages[chestIndex - 11])
+ 
   return (
     <div
       className={`new-chest-item ${open && "new-chest-item-open"}  ${

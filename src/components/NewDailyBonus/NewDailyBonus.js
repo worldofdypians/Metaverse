@@ -896,6 +896,7 @@ const NewDailyBonus = ({
             onClick={onclose}
             style={{ cursor: "pointer" }}
           /> */}
+          <div className={'chest-test-wrapper'}>
             <div
               className="close-daily-btn d-flex align-items-center justify-content-center"
               onClick={onclose}
@@ -2285,6 +2286,7 @@ const NewDailyBonus = ({
                   )}
                 </div>
               </div>
+            </div>
             </div>
           </div>
           <div className="rewards-container-outer custom-container-width d-flex align-items-center justify-content-center p-4">
