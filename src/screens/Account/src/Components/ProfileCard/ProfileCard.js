@@ -36,10 +36,6 @@ import rookieBust from "./assets/rookieBust.png";
 import underdogBust from "./assets/underdogBust.png";
 import championBust from "./assets/championBust.png";
 import unstoppableBust from "./assets/unstoppableBust.png";
-import rookieBustInactive from "./assets/rookieBustInactive.png";
-import underdogBustInactive from "./assets/underdogBustInactive.png";
-import championBustInactive from "./assets/championBustInactive.png";
-import unstoppableBustInactive from "./assets/unstoppableBustInactive.png";
 import skaleActive from "../../Components/LeaderBoard/assets/skaleActive.svg";
 import bnbActive from "../../Components/LeaderBoard/assets/bnbActive.svg";
 import starAlert from "./assets/star-alert.svg";
@@ -1295,9 +1291,9 @@ const ProfileCard = ({
       {rankPopup && (
         <OutsideClickHandler onOutsideClick={() => setRankPopup(false)}>
           <div
-            className="popup-wrapper rank-popup popup-active p-3"
+            className="popup-wrapper leaderboard-popup popup-active p-3"
             id="leaderboard"
-            style={{ width: "80%", pointerEvents: "auto" }}
+            style={{ width: "70%", pointerEvents: "auto" }}
           >
             <div className="d-flex align-items-center justify-content-between">
               <h2
@@ -1312,24 +1308,13 @@ const ProfileCard = ({
                 style={{ cursor: "pointer" }}
               />
             </div>
-            <div className="d-flex align-items-center justify-content-between mt-5">
+            <div className="d-flex align-items-center justify-content-between">
               <div className="d-flex flex-column align-items-center gap-2">
-                <div className="position-relative rank-outer-wrapper">
-                  <div
-                    className={`${
-                      isPremium
-                        ? "wallet-wrapper-active-premium hoverpremium rank-wrapper-inner"
-                        : "wallet-wrapper-active hoveractive rank-wrapper-inner"
-                    }
-                    position-relative player-rank-wrapper
-                    d-flex flex-column align-items-start justify-content-center position-relative mt-3 mt-lg-0`}
-                  >
-                    <img src={starterBust} alt="" className="player-bust" />
-                    <div className="d-flex flex-column">
-                      <span className="my-rank-text">Rank</span>
-                      <h6 className="player-rank-text mb-0">STARTER</h6>
-                    </div>
-                  </div>
+                <div className="d-flex flex-column align-items-center gap-0">
+                  <img src={starterBust} className="rank-img-active" alt="" />
+                  <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
+                    STARTER
+                  </h6>
                 </div>
                 <div className="rank-active-div"></div>
                 <div className="d-flex flex-column align-items-center gap-1">
@@ -1345,12 +1330,12 @@ const ProfileCard = ({
                       $10 in SKALE
                     </span>
                   </div>
-                  <div className="d-flex align-items-center gap-2">
+                  {/* <div className="d-flex align-items-center gap-2">
                     <img src={bnbActive} alt="" />
                     <span className="rank-rewards-text font-montserrat mb-0">
                       $10 in BNB Chain
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <img
@@ -1359,22 +1344,11 @@ const ProfileCard = ({
                 alt=""
               />
               <div className="d-flex flex-column align-items-center gap-2">
-              <div className="position-relative rank-outer-wrapper">
-                  <div
-                    className={`${
-                      isPremium
-                        ? "wallet-wrapper-active-premium hoverpremium rank-wrapper-inner"
-                        : "wallet-wrapper-active hoveractive rank-wrapper-inner"
-                    }
-                    position-relative player-rank-wrapper
-                    d-flex flex-column align-items-start justify-content-center position-relative mt-3 mt-lg-0`}
-                  >
-                    <img src={rookieBust} alt="" className="player-bust" />
-                    <div className="d-flex flex-column">
-                      <span className="my-rank-text">Rank</span>
-                      <h6 className="player-rank-text mb-0">ROOKIE</h6>
-                    </div>
-                  </div>
+                <div className="d-flex flex-column align-items-center gap-0">
+                  <img src={rookieBust} className="rank-img-active" alt="" />
+                  <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
+                    ROOKIE
+                  </h6>
                 </div>
                 <div className="rank-active-div"></div>
                 <div className="d-flex flex-column align-items-center gap-1">
@@ -1390,12 +1364,12 @@ const ProfileCard = ({
                       $20 in SKALE
                     </span>
                   </div>
-                  <div className="d-flex align-items-center gap-2">
+                  {/* <div className="d-flex align-items-center gap-2">
                     <img src={bnbActive} alt="" />
                     <span className="rank-rewards-text font-montserrat mb-0">
                       $20 in BNB Chain
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <img
@@ -1405,22 +1379,15 @@ const ProfileCard = ({
               />
 
               <div className="d-flex flex-column align-items-center gap-2">
-              <div className="position-relative rank-outer-wrapper">
-                  <div
-                    className={`${
-                      isPremium
-                        ? "wallet-wrapper-active-premium hoverpremium rank-wrapper-inner"
-                        : "wallet-wrapper-active hoveractive rank-wrapper-inner"
-                    }
-                    position-relative player-rank-wrapper
-                    d-flex flex-column align-items-start justify-content-center position-relative mt-3 mt-lg-0`}
-                  >
-                    <img src={underdogBust} alt="" className="player-bust" />
-                    <div className="d-flex flex-column">
-                      <span className="my-rank-text">Rank</span>
-                      <h6 className="player-rank-text mb-0">UNDERDOG</h6>
-                    </div>
-                  </div>
+                <div className="d-flex flex-column align-items-center gap-0">
+                  <img
+                    src={underdogBust}
+                    className="rank-img-inactive"
+                    alt=""
+                  />
+                  <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                    UNDERDOG
+                  </h6>
                 </div>
                 <div className="rank-inactive-div"></div>
                 <div className="d-flex flex-column align-items-center gap-1">
@@ -1436,12 +1403,12 @@ const ProfileCard = ({
                       $30 in SKALE
                     </span>
                   </div>
-                  <div className="d-flex align-items-center gap-2">
+                  {/* <div className="d-flex align-items-center gap-2">
                     <img src={bnbActive} alt="" />
                     <span className="rank-rewards-text font-montserrat mb-0">
                       $30 in BNB Chain
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <img
@@ -1451,22 +1418,15 @@ const ProfileCard = ({
               />
 
               <div className="d-flex flex-column align-items-center gap-2">
-              <div className="position-relative rank-outer-wrapper">
-                  <div
-                    className={`${
-                      isPremium
-                        ? "wallet-wrapper-active-premium hoverpremium rank-wrapper-inner"
-                        : "wallet-wrapper-active hoveractive rank-wrapper-inner"
-                    }
-                    position-relative player-rank-wrapper
-                    d-flex flex-column align-items-start justify-content-center position-relative mt-3 mt-lg-0`}
-                  >
-                    <img src={championBust} alt="" className="player-bust" />
-                    <div className="d-flex flex-column">
-                      <span className="my-rank-text">Rank</span>
-                      <h6 className="player-rank-text mb-0">CHAMPION</h6>
-                    </div>
-                  </div>
+                <div className="d-flex flex-column align-items-center gap-0">
+                  <img
+                    src={championBust}
+                    className="rank-img-inactive"
+                    alt=""
+                  />
+                  <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                    CHAMPION
+                  </h6>
                 </div>
                 <div className="rank-inactive-div"></div>
                 <div className="d-flex flex-column align-items-center gap-1">
@@ -1482,12 +1442,12 @@ const ProfileCard = ({
                       $40 in SKALE
                     </span>
                   </div>
-                  <div className="d-flex align-items-center gap-2">
+                  {/* <div className="d-flex align-items-center gap-2">
                     <img src={bnbActive} alt="" />
                     <span className="rank-rewards-text font-montserrat mb-0">
                       $40 in BNB Chain
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <img
@@ -1497,22 +1457,15 @@ const ProfileCard = ({
               />
 
               <div className="d-flex flex-column align-items-center gap-2">
-              <div className="position-relative rank-outer-wrapper">
-                  <div
-                    className={`${
-                      isPremium
-                        ? "wallet-wrapper-active-premium hoverpremium rank-wrapper-inner"
-                        : "wallet-wrapper-active hoveractive rank-wrapper-inner"
-                    }
-                    position-relative player-rank-wrapper
-                    d-flex flex-column align-items-start justify-content-center position-relative mt-3 mt-lg-0`}
-                  >
-                    <img src={unstoppableBust} alt="" className="player-bust" />
-                    <div className="d-flex flex-column">
-                      <span className="my-rank-text">Rank</span>
-                      <h6 className="player-rank-text mb-0">UNSTOPPABLE</h6>
-                    </div>
-                  </div>
+                <div className="d-flex flex-column align-items-center gap-0">
+                  <img
+                    src={unstoppableBust}
+                    className="rank-img-inactive"
+                    alt=""
+                  />
+                  <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                    UNSTOPPABLE
+                  </h6>
                 </div>
                 <div className="rank-inactive-div"></div>
                 <div className="d-flex flex-column align-items-center gap-1">
@@ -1528,12 +1481,12 @@ const ProfileCard = ({
                       $50 in SKALE
                     </span>
                   </div>
-                  <div className="d-flex align-items-center gap-2">
+                  {/* <div className="d-flex align-items-center gap-2">
                     <img src={bnbActive} alt="" />
                     <span className="rank-rewards-text font-montserrat mb-0">
                       $50 in BNB Chain
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
