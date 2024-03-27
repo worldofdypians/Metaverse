@@ -40,19 +40,28 @@ const BuyNftPopup = ({
   };
 
   const handlebuy2 = async()=>{
-    const body =  {
-      // transactionHash: result.transactionHash,
+    const body_skale =  {
+      transactionHash: "0xc3f97b4994e6ef6b1b17c08104022f00010b94d3aa7d1df5359c07dc57cb8dd7",
       emailAddress: email,
       chestIndex: chestIndex,
+      chainId: 'skale'
     }
 
-    if(chain === "skale"){
-      body.chain = chain
+    const body =  {
+      transactionHash: "0xc3f97b4994e6ef6b1b17c08104022f00010b94d3aa7d1df5359c07dc57cb8dd7",
+      emailAddress: email,
+      chestIndex: chestIndex
     }
+
+    const finalBody = chain === 'skale' ? body_skale : body
+
+    // if(chain === "skale"){
+    //   body.chainId = chain
+    // }
 
    const result = await axios.post(
       `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
-     body
+      finalBody
     ).catch((e)=>{console.error(e)})
 
     if(result && result.status === 200) {
@@ -88,23 +97,29 @@ const BuyNftPopup = ({
         .then(async (result) => {
           console.log("buyNFT", result);
 
-          const body =  {
-            transactionHash: result.transactionHash,
-            emailAddress: email,
-            chestIndex: chestIndex,
-          }
+    const body_skale =  {
+      transactionHash: result.transactionHash,
+      emailAddress: email,
+      chestIndex: chestIndex,
+      chainId: 'skale'
+    }
 
-          if(chain === "skale"){
-            body.chain = chain
-          }
+    const body =  {
+      transactionHash: result.transactionHash,
+      emailAddress: email,
+      chestIndex: chestIndex,
+    }
+
+    const finalBody = chain === 'skale' ? body_skale : body;
+
 
           await axios.post(
             `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
-           body
+           finalBody
           );
           setbuyLoading(false);
           setbuyStatus("success");
-          onSuccessPurchase()
+          
           setPurchaseStatus("Successfully purchased!");
           setShowToast(true);
           setToastTitle("Successfully purchased!");
@@ -115,6 +130,7 @@ const BuyNftPopup = ({
             setPurchaseStatus("");
             setPurchaseColor("#00FECF");
             setbuyStatus("");
+            onSuccessPurchase()
             // handleRefreshList(
             //   nft.nftAddress === window.config.nft_caws_address
             //     ? "caws"

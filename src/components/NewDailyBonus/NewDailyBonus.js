@@ -91,7 +91,7 @@ const NewDailyBonus = ({
   ethTokenData,
   handleSwitchChain,
   openedSkaleChests,
-  coinbase,
+  coinbase,dummypremiumChests
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -452,7 +452,7 @@ const NewDailyBonus = ({
         await handleSwitchNetworkhook("0xcc")
           .then(() => {
             handleSwitchNetwork(204);
-            setMessage("");
+            // setMessage("");
           })
           .catch((e) => {
             console.log(e);
@@ -469,7 +469,7 @@ const NewDailyBonus = ({
         await handleSwitchNetworkhook("0x38")
           .then(() => {
             handleSwitchNetwork(56);
-            setMessage("");
+            // setMessage("");
           })
           .catch((e) => {
             console.log(e);
@@ -485,7 +485,7 @@ const NewDailyBonus = ({
         await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
             handleSwitchNetwork(1482601649);
-            setMessage("");
+            // setMessage("");
           })
           .catch((e) => {
             console.log(e);
@@ -509,9 +509,7 @@ const NewDailyBonus = ({
 
   const filterLandNfts = () => {
     const filteredLands = listedNFTS.filter((item) => {
-      return (
-        item.type === "land"
-      );
+      return item.type === "land";
     });
     setLandNfts(filteredLands);
   };
@@ -755,56 +753,12 @@ const NewDailyBonus = ({
   };
 
   useEffect(() => {
-    if (address && email && coinbase) {
-      if (chain === "bnb") {
-        if (
-          (chainId === 56 || chainId === 204) &&
-          address.toLowerCase() === coinbase.toLowerCase()
-        ) {
-          setMessage("");
-          setDisable(false);
-        } else
-
-         if (
-          (chainId === 56 || chainId === 204) &&
-          address.toLowerCase() !== coinbase.toLowerCase()
-        ) {
-          setDisable(true);
-          setMessage("switchAccount");
-        } else {
-          setMessage("switch");
-          setDisable(true);
-        }
-      } else if (chain === "skale") {
-        if (
-          chainId === 1482601649 &&
-          address.toLowerCase() === coinbase.toLowerCase()
-        ) {
-          setMessage("");
-          setDisable(false);
-        } else if (
-          chainId === 1482601649 &&
-          address.toLowerCase() !== coinbase.toLowerCase()
-        ) {
-          setDisable(true);
-          setMessage("switchAccount");
-        } else {
-          setMessage("switch");
-          setDisable(true);
-        }
-      }
-    }
-  }, [chainId, chain, coinbase, address, email]);
-
-  useEffect(() => {
     countEarnedRewards();
   }, [allChests, allSkaleChests]);
 
-  // useEffect(() => {
-  //   if (disable) {
-  //     setMessage("switch");
-  //   }
-  // }, [disable]);
+  useEffect(() => {
+    setChain("bnb");
+  }, []);
 
   useEffect(() => {
     filterCawsNfts();
@@ -814,84 +768,82 @@ const NewDailyBonus = ({
   useEffect(() => {
     if (chain === "bnb") {
       if (email && coinbase && address) {
-        if (isPremium) {
-          if (
-            claimedChests + claimedPremiumChests === 20 &&
-            rewardData.length === 0 &&
-            address.toLowerCase() === coinbase.toLowerCase() &&
-            chain === "bnb" &&
-            (chainId === 56 || chainId === 204)
-          ) {
-            setMessage("complete");
-          } else if (
-            claimedChests + claimedPremiumChests < 20 &&
-            rewardData.length === 0 &&
-            address.toLowerCase() === coinbase.toLowerCase() &&
-            chain === "bnb" &&
-            (chainId === 56 || chainId === 204)
-          ) {
-            setMessage("");
+        if (coinbase.toLowerCase() === address.toLowerCase()) {
+          if (isPremium) {
+            if (
+              claimedChests + claimedPremiumChests === 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase()  
+            ) {
+              setMessage("complete");
+            } else if (
+              claimedChests + claimedPremiumChests < 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              (chainId === 56 || chainId === 204)
+            ) {
+              setMessage("");
+            }
+          } else if (!isPremium) {
+            if (
+              claimedChests === 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              (chainId === 56 || chainId === 204)
+            ) {
+              setMessage("premium");
+            } else if (
+              claimedChests < 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              (chainId === 56 || chainId === 204)
+            ) {
+              setMessage("");
+            }
           }
-        } else if (!isPremium) {
-          if (
-            claimedChests === 10 &&
-            rewardData.length === 0 &&
-            address.toLowerCase() === coinbase.toLowerCase() &&
-            chain === "bnb" &&
-            (chainId === 56 || chainId === 204)
-          ) {
-            setMessage("premium");
-          } else if (
-            claimedChests < 10 &&
-            rewardData.length === 0 &&
-            address.toLowerCase() === coinbase.toLowerCase() &&
-            chain === "bnb" &&
-            (chainId === 56 || chainId === 204)
-          ) {
-            setMessage("");
-          }
+        } else {
+          setMessage("switchAccount");
         }
       } else {
         setMessage("login");
       }
     } else if (chain === "skale") {
       if (email && coinbase && address) {
-        if (isPremium) {
-          if (
-            claimedSkaleChests + claimedSkalePremiumChests === 20 &&
-            rewardData.length === 0 &&
-            address.toLowerCase() === coinbase.toLowerCase() &&
-            chainId === 1482601649 &&
-            chain === "skale"
-          ) {
-            setMessage("complete");
-          } else if (
-            claimedSkaleChests + claimedSkalePremiumChests < 20 &&
-            rewardData.length === 0 &&
-            address.toLowerCase() === coinbase.toLowerCase() &&
-            chainId === 1482601649 &&
-            chain === "skale"
-          ) {
-            setMessage("");
+        if (coinbase.toLowerCase() === address.toLowerCase()) {
+          if (isPremium) {
+            if (
+              claimedSkaleChests + claimedSkalePremiumChests === 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase()  
+            ) {
+              setMessage("complete");
+            } else if (
+              claimedSkaleChests + claimedSkalePremiumChests < 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 1482601649  
+            ) {
+              setMessage("");
+            }
+          } else if (!isPremium) {
+            if (
+              claimedSkaleChests === 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 1482601649  
+            ) {
+              setMessage("premium");
+            } else if (
+              claimedSkaleChests < 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 1482601649  
+            ) {
+              setMessage("");
+            }
           }
-        } else if (!isPremium) {
-          if (
-            claimedSkaleChests === 10 &&
-            rewardData.length === 0 &&
-            address.toLowerCase() === coinbase.toLowerCase() &&
-            chainId === 1482601649 &&
-            chain === "skale"
-          ) {
-            setMessage("premium");
-          } else if (
-            claimedSkaleChests < 10 &&
-            rewardData.length === 0 &&
-            address.toLowerCase() === coinbase.toLowerCase() &&
-            chainId === 1482601649 &&
-            chain === "skale"
-          ) {
-            setMessage("");
-          }
+        } else {
+          setMessage("switchAccount");
         }
       } else {
         setMessage("login");
@@ -900,6 +852,7 @@ const NewDailyBonus = ({
   }, [
     email,
     chain,
+    chainId,
     coinbase,
     address,
     isPremium,
@@ -909,6 +862,7 @@ const NewDailyBonus = ({
     claimedSkalePremiumChests,
     rewardData,
   ]);
+
   
   return (
     <>
@@ -1122,7 +1076,7 @@ const NewDailyBonus = ({
                                 />
                               </div>
                               <span className="percentage-span">
-                                {bnbPercentage}%
+                                {parseInt(bnbPercentage)}%
                               </span>
                             </div>
                           </div>
@@ -1232,7 +1186,7 @@ const NewDailyBonus = ({
                                 />
                               </div>
                               <span className="percentage-span">
-                                {skalePercentage}%
+                                {parseInt(skalePercentage)}%
                               </span>
                             </div>
                           </div>
@@ -1486,6 +1440,7 @@ const NewDailyBonus = ({
                                   disableBtn={disable}
                                   isActive={isActive}
                                   isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={dummypremiumChests[index-10]?.closedImg}
                                 />
                               ))
                             : dummyArray.map((item, index) => (
@@ -1528,6 +1483,8 @@ const NewDailyBonus = ({
                                   openChest={() => {
                                     console.log("test");
                                   }}
+                                 dummypremiumChests={dummypremiumChests[index-10]?.closedImg}
+
                                 />
                               ))
                           : chain === "skale" &&
@@ -1570,6 +1527,8 @@ const NewDailyBonus = ({
                                 disableBtn={disable}
                                 isActive={isActive}
                                 isActiveIndex={isActiveIndex}
+                               dummypremiumChests={dummypremiumChests[index-10]?.closedImg}
+
                               />
                             ))
                           : dummyArray.map((item, index) => (
@@ -1612,6 +1571,8 @@ const NewDailyBonus = ({
                                 openChest={() => {
                                   console.log("test");
                                 }}
+                               dummypremiumChests={dummypremiumChests[index-10]?.closedImg}
+
                               />
                             ))}
                       </div>
@@ -2507,6 +2468,7 @@ const NewDailyBonus = ({
           onSuccessPurchase={() => {
             onSkaleChestClaimed();
             onChestClaimed();
+            setBuyNftPopup(false);
           }}
         />
       )}

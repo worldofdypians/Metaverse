@@ -23,7 +23,7 @@ const NewChestItem = ({
   disableBtn,
   isActive,
   isActiveIndex,
-  buyNftPopup
+  buyNftPopup,dummypremiumChests
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -533,13 +533,13 @@ const NewChestItem = ({
             filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
           }}
         />
-      ) : rewardTypes === "premium" && premiumImages[chestIndex - 11] ? (
+      ) : rewardTypes === "premium" && dummypremiumChests ? (
         <img
           className={`new-chest-item-img ${loading ? "chest-shake" : ""}`}
           src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
             open
-              ? premiumType === 1 ? premiumImages[chestIndex - 11] + "OpenCoins" : premiumImages[chestIndex - 11] + "OpenGems"
-              : premiumImages[chestIndex - 11]
+              ? premiumType === 1 ? dummypremiumChests + "OpenCoins" : dummypremiumChests + "OpenGems"
+              : dummypremiumChests
           }.png`)}
           alt=""
           style={{

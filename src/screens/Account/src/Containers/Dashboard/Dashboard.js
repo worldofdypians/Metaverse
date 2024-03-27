@@ -3504,6 +3504,7 @@ function Dashboard({
                 onSkaleChestClaimed={() => {
                   setskalecount(skalecount + 1);
                 }}
+                dummypremiumChests={dummypremiumChests}
               />
               // </OutsideClickHandler>
             )}
