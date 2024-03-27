@@ -1474,7 +1474,7 @@ window.config = {
   nft_base_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
   nft_doge_address: "0x317538113E19dE1567A4b05357BAA2534353e9B2",
   nft_cmc_address: "0x05e2Efe472176f17167c93eCdEe324eF3da57Db8",
-  nft_skale_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
+  nft_skale_address: "0x5C3581fDB05E3A20fb109864DaE75A5665A7F92d",
 
   ccip_eth_caws_address: "0x2824Ac0Eab15744396E763A698b55F4Fe983a757",
   ccip_bnb_caws_address: "0x0C5E19B9147c39d196bC6c88D087A7A84f99563E",
@@ -1513,7 +1513,7 @@ window.config = {
 
   daily_bonus_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
   daily_bonus_bnb_address: "0xF4435c244A292a8E8D56767bf6DF9b9c4D59aEED",
-  daily_bonus_skale_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
+  daily_bonus_skale_address: "0x620655Ee8320bA51cf4cc06bf6a7C14022271764",
 
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
   vote_duration_in_seconds: 259200, // 5 minutes for test
@@ -1532,7 +1532,7 @@ window.config = {
   infura_endpoint:
     "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e",
   bsc_endpoint: "https://bsc-dataseed.bnbchain.org",
-  skale_endpoint: "https://testnet.skalenodes.com/v1/lanky-ill-funny-testnet",
+  skale_endpoint: "https://mainnet.skalenodes.com/v1/green-giddy-denebola",
 
   avax_endpoint: "https://api.avax.network/ext/bc/C/rpc",
   conflux_endpoint: "https://evm.confluxrpc.com/",
@@ -1557,7 +1557,7 @@ window.config = {
   subscription_cfx_address: "0x56c83c9308b066627866bba9cd2322f3e01b16bf",
   subscription_base_address: "0x9c13Dbc8f0fA8ceD8C1B53c4237A08445eca32fe",
 
-  subscription_skale_address: "0xdbE31B4f2a5921Ec2d0d739E3c9bcA985C5A18b0",
+  subscription_skale_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
 
   //DYP-ETH 3 days
   token_address: "0xBa7872534a6C9097d805d8BEE97e030f4e372e54",

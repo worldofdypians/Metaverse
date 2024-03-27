@@ -401,7 +401,7 @@ const NewChestItem = ({
             setLoading(false);
           });
       }
-    } else if (chainId === 37084624 ) {
+    } else if (chainId === 1482601649 ) {
       if (rewardTypes === "premium" && isPremium) {
         const web3 = new Web3(window.ethereum);
        

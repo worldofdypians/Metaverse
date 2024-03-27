@@ -483,9 +483,9 @@ const NewDailyBonus = ({
   const handleSkalePool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x235ddd0")
+        await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
-            handleSwitchNetwork(37084624);
+            handleSwitchNetwork(1482601649);
             setMessage("");
           })
           .catch((e) => {
@@ -765,13 +765,13 @@ const NewDailyBonus = ({
         }
       } else if (chain === "skale") {
         if (
-          chainId === 37084624 &&
+          chainId === 1482601649 &&
           address.toLowerCase() === coinbase.toLowerCase()
         ) {
           setMessage("");
           setDisable(false);
         } else if (
-          chainId === 37084624 &&
+          chainId === 1482601649 &&
           address.toLowerCase() !== coinbase.toLowerCase()
         ) {
           setDisable(true);
@@ -836,13 +836,13 @@ const NewDailyBonus = ({
           if (
             claimedSkaleChests + claimedSkalePremiumChests === 20 &&
             rewardData.length === 0 &&
-            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 37084624 && chain === 'skale'
+            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 1482601649 && chain === 'skale'
           ) {
             setMessage("complete");
           } else if (
             claimedSkaleChests + claimedSkalePremiumChests < 20 &&
             rewardData.length === 0 &&
-            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 37084624 && chain === 'skale'
+            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 1482601649 && chain === 'skale'
           ) {
             setMessage("");
           }
@@ -850,13 +850,13 @@ const NewDailyBonus = ({
           if (
             claimedSkaleChests === 10 &&
             rewardData.length === 0 &&
-            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 37084624 && chain === 'skale'
+            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 1482601649 && chain === 'skale'
           ) {
             setMessage("premium");
           } else if (
             claimedSkaleChests < 10 &&
             rewardData.length === 0 &&
-            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 37084624 && chain === 'skale'
+            address.toLowerCase() === coinbase.toLowerCase() &&  chainId === 1482601649 && chain === 'skale'
           ) {
             setMessage("");
           }
@@ -1208,7 +1208,7 @@ const NewDailyBonus = ({
                         >
                           <button
                             className={`${
-                              chainId === 37084624
+                              chainId === 1482601649
                                 ? "new-chain-active-btn"
                                 : "new-chain-inactive-btn"
                             } d-flex gap-1 align-items-center`}

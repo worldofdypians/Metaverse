@@ -708,7 +708,7 @@ const WalletBalance = ({
               buyer: coinbase,
               tokenId: i,
               type: "skale",
-              chain: 37084624,
+              chain: 1482601649,
               isStaked: false,
               isListed: false,
             });
