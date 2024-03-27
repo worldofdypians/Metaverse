@@ -279,7 +279,7 @@ function Dashboard({
   let wbase = "0x4200000000000000000000000000000000000006";
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
-  let wskaleAddress = "0x5eaF4e5A908ba87Abf3dE768cb0dA517dB45dB48";
+  let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
