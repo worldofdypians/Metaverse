@@ -3213,7 +3213,7 @@ function Dashboard({
                                   </span>
                                   <a
                                     className="nebula-bridgebtn"
-                                    href="https://testnet.portal.skale.space/bridge"
+                                    href="https://portal.skale.space/bridge?from=mainnet&to=green-giddy-denebola&token=usdc&type=erc20"
                                     target="_blank"
                                     rel="noreferrer"
                                   >
