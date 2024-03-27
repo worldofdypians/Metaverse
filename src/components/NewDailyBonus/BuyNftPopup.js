@@ -21,6 +21,7 @@ const BuyNftPopup = ({
   chestIndex,
   chain,
   email,
+  onSuccessPurchase
 }) => {
   const [type, setType] = useState("");
   const [buyloading, setbuyLoading] = useState(false); //buy
@@ -37,6 +38,27 @@ const BuyNftPopup = ({
 
     return result;
   };
+
+  const handlebuy2 = async()=>{
+    const body =  {
+      // transactionHash: result.transactionHash,
+      emailAddress: email,
+      chestIndex: chestIndex,
+    }
+
+    if(chain === "skale"){
+      body.chain = chain
+    }
+
+   const result = await axios.post(
+      `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
+     body
+    ).catch((e)=>{console.error(e)})
+
+    if(result && result.status === 200) {
+      onSuccessPurchase()
+    }
+  }
 
   async function handleBuy(nft) {
     const tokenType =
@@ -82,6 +104,7 @@ const BuyNftPopup = ({
           );
           setbuyLoading(false);
           setbuyStatus("success");
+          onSuccessPurchase()
           setPurchaseStatus("Successfully purchased!");
           setShowToast(true);
           setToastTitle("Successfully purchased!");
@@ -317,12 +340,13 @@ const BuyNftPopup = ({
               : null
           } d-flex justify-content-center align-items-center gap-2`}
           onClick={() => {
-            chainId !== 1 && chainId !== 5
-              ? handleSwitchChain()
-              : handleBuy(nft);
+            // chainId !== 1 && chainId !== 5
+            //   ? handleSwitchChain()
+            //   : handleBuy(nft);
+            handlebuy2()
           }}
         >
-          {buyloading && (chainId === 1 || chainId === 5) ? (
+          {/* {buyloading && (chainId === 1 || chainId === 5) ? (
             <div
               className="spinner-border spinner-border-sm text-light"
               role="status"
@@ -339,7 +363,8 @@ const BuyNftPopup = ({
             "Success"
           ) : (
             "Failed"
-          )}
+          )} */}
+          Buy
         </button>
       </div>
     </div>

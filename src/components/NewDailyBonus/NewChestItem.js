@@ -496,7 +496,7 @@ const NewChestItem = ({
       setShake(false);
     }, 1000);
   };
- 
+  
   return (
     <div
       className={`new-chest-item ${open && "new-chest-item-open"}  ${
