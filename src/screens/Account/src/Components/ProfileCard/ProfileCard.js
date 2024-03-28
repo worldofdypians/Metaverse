@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import "react-tooltip/dist/react-tooltip.css";
 import "./_profilecard.scss";
@@ -19,7 +19,9 @@ import walletIcon from "../WalletBalance/assets/walletIcon.svg";
 import xMark from "../WalletBalance/newAssets/xMark.svg";
 import greenarrow from "./assets/greenarrow.svg";
 import logouticon from "./assets/logout.svg";
+import leaderboardIcon from "./assets/leaderboardIcon.svg";
 import pointerArrow from "./assets/pointerArrow.svg";
+import tooltipIcon from "./assets/tooltipIcon.svg";
 import player from "./assets/explorePlayer.png";
 import triangle from "./assets/triangle.svg";
 import rankGreenArrow from "./assets/rankGreenArrow.svg";
@@ -45,6 +47,9 @@ import { dyp700Address, dyp700v1Address } from "../../web3";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import becomePremium from "./assets/becomePremium.svg";
 import OutsideClickHandler from "react-outside-click-handler";
+import Slider from "react-slick";
+import { Tooltip, tooltipClasses } from "@mui/material";
+import styled from "styled-components";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -66,6 +71,16 @@ import OutsideClickHandler from "react-outside-click-handler";
 //     </div>
 //   );
 // };
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#1b1c3a",
+    color: "#fff",
+    maxWidth: 220,
+    fontFamily: "Poppins",
+  },
+}));
 
 const ProfileCard = ({
   email,
@@ -114,6 +129,59 @@ const ProfileCard = ({
   const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
   const [rankDropdown, setRankDropdown] = useState(false);
   const [rankPopup, setRankPopup] = useState(false);
+  const sliderRef = useRef(null);
+
+  var settings = {
+    dots: false,
+    arrows: false,
+    infinite: false,
+    speed: 300,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+    ],
+  };
 
   let oneMarch = new Date("2024-03-01 11:11:00 GMT+02:00");
   let oneApril = new Date("2024-04-01 11:11:00 GMT+02:00");
@@ -619,7 +687,7 @@ const ProfileCard = ({
                 }`}
               >
                 <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row flex-sm-row  justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
-                  <div className="d-flex gap-2 justify-content-between align-items-center  w-100">
+                  <div className="d-flex gap-2 justify-content-between align-items-center  w-75">
                     <div className="d-flex align-items-center gap-2 w-100">
                       {(coinbase && !email) ||
                       (!coinbase && !email) ||
@@ -706,6 +774,7 @@ const ProfileCard = ({
                               <Clipboard
                                 component="div"
                                 data-event="click"
+                                style={{border: "none"}}
                                 data-for={id}
                                 data-tip="Copied To Clipboard!"
                                 data-clipboard-text={address}
@@ -976,16 +1045,17 @@ const ProfileCard = ({
                   {email && address && (
                     <>
                       <div
+                        style={{ height: "79px" }}
                         className={`${
                           isPremium
                             ? "wallet-wrapper-active-premium hoverpremium"
                             : "wallet-wrapper-active hoveractive"
                         }
                     position-relative
-                    d-flex flex-column align-items-center position-relative mt-3 mt-lg-0`}
+                    d-flex  align-items-center justify-content-between gap-3 position-relative mt-3 mt-lg-0`}
                         onClick={onOpenLeaderboard}
                       >
-                        {countdown700 && (
+                        {/* {countdown700 && (
                           <div className="golden-pass-wrapper"></div>
                         )}
                         {countdown700 && (
@@ -994,42 +1064,21 @@ const ProfileCard = ({
                             alt=""
                             className="golden-pass-tag d-flex d-lg-none"
                           />
-                        )}
-                        {/* <div className="table-separator position-absolute"></div> */}
-                        <h6
-                          className="profile-div-title mb-0"
-                          style={{ fontSize: "10px" }}
-                        >
-                          Leaderboard
-                        </h6>
-                        <div className="d-flex align-items-center gap-4">
-                          <div className="d-flex flex-column align-items-center">
-                            <img
-                              src={globalRank}
-                              alt=""
-                              style={{ width: 27, height: 27 }}
-                            />
-                            <span className="  profile-rank mb-0">
-                              #{userRank + 1}
-                            </span>
-                            {/* <span className="font-iceland profile-rank mb-0">
-                        Global
-                      </span> */}
-                          </div>
-                          <div className="d-flex flex-column align-items-center">
-                            <img
-                              src={genesisRankImg}
-                              alt=""
-                              style={{ width: 27, height: 27 }}
-                            />
-                            <span className="  profile-rank mb-0">
-                              #{genesisRank + 1}
-                            </span>
-                            {/* <span className="font-iceland profile-rank mb-0">
-                        Genesis
-                      </span> */}
-                          </div>
+                        )} */}
+                        <div className="d-flex flex-column">
+                          <span className="leaderboard-title-span">Game</span>
+                          <span
+                            className="leaderboard-title-span"
+                            style={{ color: "#1BF5FF" }}
+                          >
+                            Leaderboard
+                          </span>
                         </div>
+                        <img
+                          src={leaderboardIcon}
+                          alt=""
+                          style={{ height: "54px", width: "50px" }}
+                        />
                       </div>
                       <div className="position-relative rank-outer-wrapper">
                         <div
@@ -1296,11 +1345,38 @@ const ProfileCard = ({
             style={{ width: "70%", pointerEvents: "auto" }}
           >
             <div className="d-flex align-items-center justify-content-between">
-              <h2
-                className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
-              >
-                Rankings and Rewards
-              </h2>
+              <div className="d-flex align-items-center gap-2">
+                <h2
+                  className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+                >
+                  Rankings and Rewards
+                </h2>
+                <HtmlTooltip
+                  title={
+                    <React.Fragment>
+                      Rankings and Rewards offer players a way to track their
+                      game progress and see the rewards they've earned for each
+                      rank. These ranks are determined by the accumulation of
+                      in-game points from both the BNB Chain and SKALE Network.
+                      <br />
+                      <br />
+                      Each month, the ranks and points reset, giving everyone a
+                      chance for a fresh start. As you climb the ranks, you'll
+                      unlock rewards based on your final rank at the end of the
+                      cycle.
+                      <br />
+                      <br />
+                      <b>
+                        The reward is not accumulative, meaning you only get the
+                        reward for the rank you have
+                      </b>
+                    </React.Fragment>
+                  }
+                >
+                  {" "}
+                  <img src={tooltipIcon} width={25} height={25} alt="" />
+                </HtmlTooltip>
+              </div>
               <img
                 src={xMark}
                 onClick={() => setRankPopup(false)}
@@ -1308,188 +1384,217 @@ const ProfileCard = ({
                 style={{ cursor: "pointer" }}
               />
             </div>
-            <div className="d-flex align-items-center justify-content-between">
-              <div className="d-flex flex-column align-items-center gap-2">
-                <div className="d-flex flex-column align-items-center gap-0">
-                  <img src={starterBust} className="rank-img-active" alt="" />
-                  <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
-                    STARTER
-                  </h6>
-                </div>
-                <div className="rank-active-div"></div>
-                <div className="d-flex flex-column align-items-center gap-1">
-                  <span className="needed-points-span mb-0">
-                    Points Required
-                  </span>
-                  <span className="needed-points mb-0">500,000</span>
-                </div>
-                <div className="rank-rewards d-flex flex-column gap-2 p-3">
-                  <div className="d-flex align-items-center gap-2">
-                    <img src={skaleActive} alt="" />
-                    <span className="rank-rewards-text font-montserrat mb-0">
-                      $10 in SKALE
-                    </span>
+            {windowSize.width > 991 ? (
+              <div className="d-flex align-items-center justify-content-between mt-3">
+                <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
+                  <div className="d-flex flex-column align-items-center gap-0">
+                    <img src={starterBust} className="rank-img-active" alt="" />
+                    <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
+                      STARTER
+                    </h6>
                   </div>
-                  {/* <div className="d-flex align-items-center gap-2">
-                    <img src={bnbActive} alt="" />
-                    <span className="rank-rewards-text font-montserrat mb-0">
-                      $10 in BNB Chain
-                    </span>
-                  </div> */}
-                </div>
-              </div>
-              <img
-                src={pointerArrow}
-                style={{ width: "100px", height: "auto" }}
-                alt=""
-              />
-              <div className="d-flex flex-column align-items-center gap-2">
-                <div className="d-flex flex-column align-items-center gap-0">
-                  <img src={rookieBust} className="rank-img-active" alt="" />
-                  <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
-                    ROOKIE
-                  </h6>
-                </div>
-                <div className="rank-active-div"></div>
-                <div className="d-flex flex-column align-items-center gap-1">
-                  <span className="needed-points-span mb-0">
-                    Points Required
-                  </span>
-                  <span className="needed-points mb-0">2,000,000</span>
-                </div>
-                <div className="rank-rewards d-flex flex-column gap-2 p-3">
-                  <div className="d-flex align-items-center gap-2">
-                    <img src={skaleActive} alt="" />
-                    <span className="rank-rewards-text font-montserrat mb-0">
-                      $20 in SKALE
-                    </span>
+                  <div className="rank-active-div d-flex align-items-center justify-content-center">
+                    <h6>$0</h6>
                   </div>
-                  {/* <div className="d-flex align-items-center gap-2">
-                    <img src={bnbActive} alt="" />
-                    <span className="rank-rewards-text font-montserrat mb-0">
-                      $20 in BNB Chain
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
                     </span>
-                  </div> */}
+                    <span className="needed-points mb-0">500,000</span>
+                  </div>
                 </div>
-              </div>
-              <img
-                src={pointerArrow}
-                style={{ width: "100px", height: "auto" }}
-                alt=""
-              />
+                <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
+                <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
+                  <div className="d-flex flex-column align-items-center gap-0">
+                    <img src={rookieBust} className="rank-img-active" alt="" />
+                    <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
+                      ROOKIE
+                    </h6>
+                  </div>
+                  <div className="rank-active-div d-flex align-items-center justify-content-center">
+                    <h6>$0</h6>
+                  </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">2,000,000</span>
+                  </div>
+                </div>
+                <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
 
-              <div className="d-flex flex-column align-items-center gap-2">
-                <div className="d-flex flex-column align-items-center gap-0">
-                  <img
-                    src={underdogBust}
-                    className="rank-img-inactive"
-                    alt=""
-                  />
-                  <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
-                    UNDERDOG
-                  </h6>
-                </div>
-                <div className="rank-inactive-div"></div>
-                <div className="d-flex flex-column align-items-center gap-1">
-                  <span className="needed-points-span mb-0">
-                    Points Required
-                  </span>
-                  <span className="needed-points mb-0">5,000,000</span>
-                </div>
-                <div className="rank-rewards d-flex flex-column gap-2 p-3">
-                  <div className="d-flex align-items-center gap-2">
-                    <img src={skaleActive} alt="" />
-                    <span className="rank-rewards-text font-montserrat mb-0">
-                      $30 in SKALE
-                    </span>
+                <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
+                  <div className="d-flex flex-column align-items-center gap-0">
+                    <img
+                      src={underdogBust}
+                      className="rank-img-inactive"
+                      alt=""
+                    />
+                    <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                      UNDERDOG
+                    </h6>
                   </div>
-                  {/* <div className="d-flex align-items-center gap-2">
-                    <img src={bnbActive} alt="" />
-                    <span className="rank-rewards-text font-montserrat mb-0">
-                      $30 in BNB Chain
+                  <div className="rank-inactive-div d-flex align-items-center justify-content-center">
+                    <h6>$10</h6>
+                  </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
                     </span>
-                  </div> */}
+                    <span className="needed-points mb-0">5,000,000</span>
+                  </div>
                 </div>
-              </div>
-              <img
-                src={pointerArrow}
-                style={{ width: "100px", height: "auto" }}
-                alt=""
-              />
+                <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
 
-              <div className="d-flex flex-column align-items-center gap-2">
-                <div className="d-flex flex-column align-items-center gap-0">
-                  <img
-                    src={championBust}
-                    className="rank-img-inactive"
-                    alt=""
-                  />
-                  <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
-                    CHAMPION
-                  </h6>
-                </div>
-                <div className="rank-inactive-div"></div>
-                <div className="d-flex flex-column align-items-center gap-1">
-                  <span className="needed-points-span mb-0">
-                    Points Required
-                  </span>
-                  <span className="needed-points mb-0">10,000,000</span>
-                </div>
-                <div className="rank-rewards d-flex flex-column gap-2 p-3">
-                  <div className="d-flex align-items-center gap-2">
-                    <img src={skaleActive} alt="" />
-                    <span className="rank-rewards-text font-montserrat mb-0">
-                      $40 in SKALE
-                    </span>
+                <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
+                  <div className="d-flex flex-column align-items-center gap-0">
+                    <img
+                      src={championBust}
+                      className="rank-img-inactive"
+                      alt=""
+                    />
+                    <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                      CHAMPION
+                    </h6>
                   </div>
-                  {/* <div className="d-flex align-items-center gap-2">
-                    <img src={bnbActive} alt="" />
-                    <span className="rank-rewards-text font-montserrat mb-0">
-                      $40 in BNB Chain
+                  <div className="rank-inactive-div d-flex align-items-center justify-content-center">
+                    <h6>$20</h6>
+                  </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
                     </span>
-                  </div> */}
+                    <span className="needed-points mb-0">10,000,000</span>
+                  </div>               
                 </div>
-              </div>
-              <img
-                src={pointerArrow}
-                style={{ width: "100px", height: "auto" }}
-                alt=""
-              />
+                <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
 
-              <div className="d-flex flex-column align-items-center gap-2">
-                <div className="d-flex flex-column align-items-center gap-0">
-                  <img
-                    src={unstoppableBust}
-                    className="rank-img-inactive"
-                    alt=""
-                  />
-                  <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
-                    UNSTOPPABLE
-                  </h6>
-                </div>
-                <div className="rank-inactive-div"></div>
-                <div className="d-flex flex-column align-items-center gap-1">
-                  <span className="needed-points-span mb-0">
-                    Points Required
-                  </span>
-                  <span className="needed-points mb-0">20,000,000</span>
-                </div>
-                <div className="rank-rewards d-flex flex-column gap-2 p-3">
-                  <div className="d-flex align-items-center gap-2">
-                    <img src={skaleActive} alt="" />
-                    <span className="rank-rewards-text font-montserrat mb-0">
-                      $50 in SKALE
-                    </span>
+                <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
+                  <div className="d-flex flex-column align-items-center gap-0">
+                    <img
+                      src={unstoppableBust}
+                      className="rank-img-inactive"
+                      alt=""
+                    />
+                    <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                      UNSTOPPABLE
+                    </h6>
                   </div>
-                  {/* <div className="d-flex align-items-center gap-2">
-                    <img src={bnbActive} alt="" />
-                    <span className="rank-rewards-text font-montserrat mb-0">
-                      $50 in BNB Chain
+                  <div className="rank-inactive-div d-flex align-items-center justify-content-center">
+                    <h6>$30</h6>
+                  </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
                     </span>
-                  </div> */}
+                    <span className="needed-points mb-0">20,000,000</span>
+                  </div>                 
                 </div>
               </div>
-            </div>
+            ) : (
+              <Slider {...settings} ref={sliderRef}>
+                <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
+                  <div className="d-flex flex-column align-items-center gap-0">
+                    <img src={starterBust} className="rank-img-active" alt="" />
+                    <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
+                      STARTER
+                    </h6>
+                  </div>
+                  <div className="rank-active-div d-flex align-items-center justify-content-center">
+                    <h6>$0</h6>
+                  </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">500,000</span>
+                  </div>
+                 
+                </div>
+                <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
+                  <div className="d-flex flex-column align-items-center gap-0">
+                    <img src={rookieBust} className="rank-img-active" alt="" />
+                    <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
+                      ROOKIE
+                    </h6>
+                  </div>
+                  <div className="rank-active-div d-flex align-items-center justify-content-center">
+                    <h6>$0</h6>
+                  </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">2,000,000</span>
+                  </div>
+                 
+                </div>
+                <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
+                  <div className="d-flex flex-column align-items-center gap-0">
+                    <img
+                      src={underdogBust}
+                      className="rank-img-inactive"
+                      alt=""
+                    />
+                    <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                      UNDERDOG
+                    </h6>
+                  </div>
+                  <div className="rank-inactive-div d-flex align-items-center justify-content-center">
+                    <h6>$10</h6>
+                  </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">5,000,000</span>
+                  </div>
+                
+                </div>
+                <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
+                  <div className="d-flex flex-column align-items-center gap-0">
+                    <img
+                      src={championBust}
+                      className="rank-img-inactive"
+                      alt=""
+                    />
+                    <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                      CHAMPION
+                    </h6>
+                  </div>
+                  <div className="rank-inactive-div d-flex align-items-center justify-content-center">
+                    <h6>$20</h6>
+                  </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">10,000,000</span>
+                  </div>
+                </div>
+                <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
+                  <div className="d-flex flex-column align-items-center gap-0">
+                    <img
+                      src={unstoppableBust}
+                      className="rank-img-inactive"
+                      alt=""
+                    />
+                    <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                      UNSTOPPABLE
+                    </h6>
+                  </div>
+                  <div className="rank-inactive-div d-flex align-items-center justify-content-center">
+                    <h6>$50</h6>
+                  </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">20,000,000</span>
+                  </div>
+                </div>
+              </Slider>
+            )}
           </div>
         </OutsideClickHandler>
       )}

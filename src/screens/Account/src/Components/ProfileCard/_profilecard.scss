@@ -362,7 +362,7 @@
 }
 
 .player-rank-wrapper {
-  width: 200px;
+  width: 250px;
   height: 79px;
   transition: all 0.25s ease-in-out;
   @media screen and (max-width: 786px) {
@@ -374,7 +374,7 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 70%;
+  width: 50%;
   z-index: 2;
   transition: all 0.25s ease-in-out;
   @media screen and (max-width: 786px) {
@@ -423,6 +423,7 @@
   background: #1b1c3a;
   position: absolute;
   top: 110%;
+  right: 0%;
   z-index: 5;
   @media screen and (max-width: 786px) {
     width: 100%;
@@ -454,21 +455,39 @@
 }
 
 .rank-title {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 800;
 }
 
 .rank-active-div {
-  width: 20px;
-  height: 20px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  background: #1bf5ff;
+border: 2px solid #1BF5FF;
+background: rgba(27, 245, 255, 0.15);
+  h6{
+    color: #1bf5ff;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    margin-bottom: 0px !important;
+  }
 }
 .rank-inactive-div {
-  width: 20px;
-  height: 20px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  background: #747687;
+  border: 2px solid rgba(30, 34, 55, 1);
+  background: rgba(30, 34, 55, 0.15);
+  h6{
+    color: rgba(30, 34, 55, 1);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    margin-bottom: 0px !important;
+  }
 }
 
 .rank-rewards {
@@ -478,7 +497,13 @@
 }
 
 .rank-rewards-text {
-  font-size: 12px;
+  font-size: 18px;
+  font-family: "Oxanium";
+  color: #fff;
+  font-weight: 700;
+}
+.rank-rewards-placeholder {
+  font-size: 14px;
   font-family: "Montserrat";
   color: #fff;
   font-weight: normal;
@@ -500,15 +525,12 @@
 
 .rank-img-active{
 
-  position: relative;
-  right: 10%;
-  width: 110%;
+  width: 140%;
 }
 
 .rank-img-inactive {
   position: relative;
-  right: 10%;
-  width: 110%;
+  width: 140%;
   opacity: 0.8;
   filter: brightness(0.7);
 }
@@ -646,5 +668,25 @@
   }
   h6 {
     filter: grayscale(0) !important;
+  }
+}
+
+.rank-pointer-arrow{
+  width: 70px;
+  height: auto;
+}
+
+.leaderboard-title-span{
+  color: #FFF;
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.single-rank-wrapper{
+  width: 15%;
+  @media screen and (max-width: 786px) {
+    width: 100%;
   }
 }
