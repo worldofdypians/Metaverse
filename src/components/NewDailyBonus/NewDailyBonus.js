@@ -2496,9 +2496,9 @@ const NewDailyBonus = ({
                                   style={{ fontSize: "12px" }}
                                 >
                                   {
-                                    rewardData.rewards.find((obj) => {
+                                    rewardData.rewards ? rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
-                                    }).details
+                                    }).details : ''
                                   }
                                 </span>
                               </div>
@@ -2598,9 +2598,9 @@ const NewDailyBonus = ({
                                   style={{ fontSize: "12px" }}
                                 >
                                   {
-                                    rewardData.rewards.find((obj) => {
+                                    rewardData.rewards ? rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
-                                    }).details
+                                    }).details : ''
                                   }
                                 </span>
                               </div>
