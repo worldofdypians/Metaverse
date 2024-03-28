@@ -407,9 +407,9 @@
   }
 
   @media screen and (max-width: 330px) {
-     flex-direction: column;
-     align-items: start !important;
-     gap: 10px
+    flex-direction: column;
+    align-items: start !important;
+    gap: 10px;
   }
   // backdrop-filter: blur(10px);
 }
@@ -1853,11 +1853,13 @@
 }
 
 .daily-rewards-img {
+
   position: absolute;
-  width: 55%;
-  right: 0%;
-  top: -20%;
-  animation: pulsate 1.5s ease-out infinite;
+    width: 100%;
+    right: -29%;
+    bottom: -9%;
+ 
+  // animation: pulsate 1.5s ease-out infinite;
   @media screen and (max-width: 991px) {
     width: auto;
     top: -35%;
@@ -1928,9 +1930,10 @@
 .daily-bonus-wrapper {
   position: relative;
   height: 170px;
+  background: linear-gradient(125deg, #252743 -13.33%, #5f214e 70.47%);
 
   border-radius: 10px;
-  background: linear-gradient(125deg, #252743 -13.33%, #2a303c 70.47%);
+  // background: linear-gradient(125deg, #252743 -13.33%, #2a303c 70.47%);
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
   cursor: pointer;
@@ -2443,4 +2446,3 @@
   background: rgba(237, 130, 37, 0.2);
   width: fit-content;
 }
-

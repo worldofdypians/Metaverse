@@ -51,6 +51,9 @@ import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
 import grayDollar from "./assets/grayDollar.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
+import mageStarter from "./assets/mageStarter.png";
+import mageGoing from "./assets/mageGoing.png";
+import mageFinish from "./assets/mageFinish.png";
 import infoIcon from "../../../../Marketplace/assets/infoIcon.svg";
 import coingeckoPopupImage from "./assets/coingeckoPopupImage.png";
 import eventPopupImageBase from "./assets/eventPopupImageBase.png";
@@ -1401,7 +1404,8 @@ const NewWalletBalance = ({
                   <div className="green-div"></div>
                   <img
                     onClick={onDailyRewardsPopupOpen}
-                    src={finished ? dailyRewardsFinished : dailyRewards}
+                    // src={finished ? mageFinish : mageGoing}
+                    src={mageStarter}
                     className={`${
                       finished
                         ? "daily-rewards-img-finished"
@@ -1409,7 +1413,7 @@ const NewWalletBalance = ({
                     }`}
                     alt=""
                   />
-                  <div
+                  {/* <div
                     className="progress-bar-group d-flex align-items-center gap-3 me-2"
                     onClick={onDailyRewardsPopupOpen}
                   >
@@ -1431,7 +1435,7 @@ const NewWalletBalance = ({
                         style={{ width: `${claimedPremiumChests}0%` }}
                       ></div>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="d-flex flex-column justify-content-between h-100 p-3">
                     <div
                       className="d-flex align-items-center justify-content-between position-relative gap-1"
