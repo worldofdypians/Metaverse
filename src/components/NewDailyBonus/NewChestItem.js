@@ -23,7 +23,8 @@ const NewChestItem = ({
   disableBtn,
   isActive,
   isActiveIndex,
-  buyNftPopup,dummypremiumChests
+  buyNftPopup,
+  dummypremiumChests,
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -41,9 +42,6 @@ const NewChestItem = ({
     "yellowCrystal",
     "purpleCrystal",
   ];
-
-  var premiumType = Math.round(Math.random()) + 1;
-
 
   const getUserRewardsByChest2 = async (
     userEmail,
@@ -401,19 +399,16 @@ const NewChestItem = ({
             setLoading(false);
           });
       }
-    } else if (chainId === 1482601649 ) {
+    } else if (chainId === 1482601649) {
       if (rewardTypes === "premium" && isPremium) {
         const web3 = new Web3(window.ethereum);
-       
 
-      
         await daily_bonus_contract_skale.methods
           .openPremiumChest()
           .send({
-            from: address
-         
+            from: address,
           })
-          
+
           .then((data) => {
             getUserRewardsByChest(
               email,
@@ -439,7 +434,7 @@ const NewChestItem = ({
         await daily_bonus_contract_skale.methods
           .openChest()
           .send({
-            from: address
+            from: address,
           })
           .then((data) => {
             getUserRewardsByChest(
@@ -496,7 +491,7 @@ const NewChestItem = ({
       setShake(false);
     }, 1000);
   };
-  
+
   return (
     <div
       className={`new-chest-item ${open && "new-chest-item-open"}  ${
@@ -538,7 +533,13 @@ const NewChestItem = ({
           className={`new-chest-item-img ${loading ? "chest-shake" : ""}`}
           src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
             open
-              ? premiumType === 1 ? dummypremiumChests + "OpenCoins" : dummypremiumChests + "OpenGems"
+              ? chain === "bnb"
+                ? chestIndex % 2 === 1
+                  ? dummypremiumChests + "OpenCoins"
+                  : dummypremiumChests + "OpenGems"
+                : chestIndex % 2 === 0
+                ? dummypremiumChests + "OpenCoins"
+                : dummypremiumChests + "OpenGems"
               : dummypremiumChests
           }.png`)}
           alt=""
@@ -548,7 +549,9 @@ const NewChestItem = ({
             filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
           }}
         />
-      ) : <></>}
+      ) : (
+        <></>
+      )}
       {rewardTypes === "premium" && !isPremium && (
         <img
           src={premiumLock}
