@@ -662,7 +662,7 @@
 
 .win-desc {
   color: #fff;
-  font-size: 10px;
+  font-size: 11px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -692,11 +692,13 @@
 .warning-border {
   border-radius: 20px;
   border: 2px solid #d6661d;
+  background: rgba(214, 102, 29, 0.1);
 }
 
 .danger-border {
   border-radius: 20px;
   border: 2px solid #bf0000;
+  background: rgba(191, 0, 0, 0.1);
 }
 
 .win-confetti {

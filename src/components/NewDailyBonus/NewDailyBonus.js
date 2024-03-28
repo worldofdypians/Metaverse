@@ -33,6 +33,7 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import { NavLink } from "react-router-dom";
 import BuyNftPopup from "./BuyNftPopup";
 import OutsideClickHandler from "react-outside-click-handler";
+import axios from "axios";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -91,7 +92,11 @@ const NewDailyBonus = ({
   ethTokenData,
   handleSwitchChain,
   openedSkaleChests,
-  coinbase,dummypremiumChests
+  coinbase,
+  dummypremiumChests,
+  onPremiumClick,
+  premiumTxHash,
+  selectedChainforPremium,
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -306,7 +311,8 @@ const NewDailyBonus = ({
       max: 30,
     },
     {
-      title: "MoneyPremium",
+      title: "Money",
+      title2: "needPremium",
       amount: "$20-$30",
       img: 50,
       error: true,
@@ -394,7 +400,9 @@ const NewDailyBonus = ({
               }
               if (
                 innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed"
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
               ) {
                 resultUsd += Number(innerChest.reward);
               }
@@ -426,7 +434,9 @@ const NewDailyBonus = ({
               }
               if (
                 innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed"
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
               ) {
                 resultSkaleUsd += Number(innerChest.reward);
               }
@@ -445,7 +455,7 @@ const NewDailyBonus = ({
       settotalSkaleUsd(resultSkaleUsd);
     }
   };
-
+  console.log(isActiveIndex - 1);
   const handleOpBnbPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
@@ -453,6 +463,7 @@ const NewDailyBonus = ({
           .then(() => {
             handleSwitchNetwork(204);
             // setMessage("");
+            setRewardData([]);
           })
           .catch((e) => {
             console.log(e);
@@ -463,13 +474,49 @@ const NewDailyBonus = ({
     }
   };
 
+  const handleClaimUsdPremium = async () => {
+    const data = {
+      transactionHash:
+        "0x9a4c86cb9632caf3c4358789f777bf6bdace8126b63deb40f13fb4fd4169063c",
+      emailAddress: email,
+      chestIndex: isActiveIndex - 1,
+      chainId: "bnb",
+      chain: "skale",
+    };
+
+    const result = await axios
+      .post(
+        `https://dyp-chest-test.azurewebsites.net/api/ClaimPremiumReward?code=WKXKNHNplrNAzvfYrr-iAduP2Wl3eGpqwER2XqHWaqU5AzFupAtXPw%3D%3D%27`,
+        data
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      onChestClaimed();
+      onSkaleChestClaimed();
+      if (chain === "bnb") {
+        showSingleRewardData(rewardData.chestId, isActiveIndex - 1);
+      } else if (chain === "skale") {
+        showSingleRewardDataSkale(rewardData.chestId, isActiveIndex - 1);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (premiumTxHash !== "" && selectedChainforPremium !== "") {
+      handleClaimUsdPremium();
+    }
+  }, [premiumTxHash, selectedChainforPremium]);
+
   const handleBnbPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
         await handleSwitchNetworkhook("0x38")
           .then(() => {
             handleSwitchNetwork(56);
-            // setMessage("");
+            setRewardData([]);
           })
           .catch((e) => {
             console.log(e);
@@ -485,7 +532,7 @@ const NewDailyBonus = ({
         await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
             handleSwitchNetwork(1482601649);
-            // setMessage("");
+            setRewardData([]);
           })
           .catch((e) => {
             console.log(e);
@@ -569,6 +616,25 @@ const NewDailyBonus = ({
       const resultWon = filteredResult.rewards.find((obj) => {
         return obj.rewardType === "Money" && obj.status === "Claimed";
       });
+
+      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFT."
+        );
+      });
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any LAND NFT."
+        );
+      });
+
       const resultPoints = filteredResult.rewards.length === 1;
 
       console.log(result);
@@ -583,6 +649,10 @@ const NewDailyBonus = ({
         setMessage("won");
       } else if (resultPoints) {
         setMessage("wonPoints");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -623,6 +693,24 @@ const NewDailyBonus = ({
       });
       const resultPoints = filteredResult.rewards.length === 1;
 
+      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFT."
+        );
+      });
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any LAND NFT."
+        );
+      });
+
       console.log(result);
       console.log(filteredResult);
       if (result) {
@@ -635,6 +723,10 @@ const NewDailyBonus = ({
         setMessage("won");
       } else if (resultPoints) {
         setMessage("wonPoints");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -677,10 +769,28 @@ const NewDailyBonus = ({
       });
 
       const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money";
+        return obj.rewardType === "Money" && obj.status === "Claimed";
       });
 
       const resultPoints = filteredResult.rewards.length === 1;
+
+      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFT."
+        );
+      });
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any LAND NFT."
+        );
+      });
 
       if (result) {
         setMessage("caws");
@@ -692,6 +802,10 @@ const NewDailyBonus = ({
         setMessage("won");
       } else if (resultPoints) {
         setMessage("wonPoints");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -727,10 +841,29 @@ const NewDailyBonus = ({
           obj.claimType === "PREMIUM"
         );
       });
+
       const resultWon = filteredResult.rewards.find((obj) => {
         return obj.rewardType === "Money" && obj.status === "Claimed";
       });
       const resultPoints = filteredResult.rewards.length === 1;
+
+      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFT."
+        );
+      });
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any LAND NFT."
+        );
+      });
 
       if (result) {
         setMessage("caws");
@@ -742,6 +875,10 @@ const NewDailyBonus = ({
         setMessage("won");
       } else if (resultPoints) {
         setMessage("wonPoints");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
       }
 
       setLiveRewardData(filteredResult);
@@ -756,9 +893,9 @@ const NewDailyBonus = ({
     countEarnedRewards();
   }, [allChests, allSkaleChests]);
 
-  useEffect(() => {
-    setChain("bnb");
-  }, []);
+  // useEffect(() => {
+  //   setChain("bnb");
+  // }, []);
 
   useEffect(() => {
     filterCawsNfts();
@@ -773,7 +910,7 @@ const NewDailyBonus = ({
             if (
               claimedChests + claimedPremiumChests === 20 &&
               rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase()  
+              address.toLowerCase() === coinbase.toLowerCase()
             ) {
               setMessage("complete");
             } else if (
@@ -783,6 +920,16 @@ const NewDailyBonus = ({
               (chainId === 56 || chainId === 204)
             ) {
               setMessage("");
+              setDisable(false);
+            } else if (
+              claimedChests + claimedPremiumChests < 20 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 56 &&
+              chainId !== 204
+            ) {
+              setMessage("switch");
+              setDisable(true);
             }
           } else if (!isPremium) {
             if (
@@ -799,13 +946,25 @@ const NewDailyBonus = ({
               (chainId === 56 || chainId === 204)
             ) {
               setMessage("");
+              setDisable(false);
+            } else if (
+              claimedChests < 10 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 56 &&
+              chainId !== 204
+            ) {
+              setMessage("switch");
+              setDisable(true);
             }
           }
         } else {
           setMessage("switchAccount");
+          setDisable(true);
         }
       } else {
         setMessage("login");
+        setDisable(true);
       }
     } else if (chain === "skale") {
       if (email && coinbase && address) {
@@ -814,39 +973,60 @@ const NewDailyBonus = ({
             if (
               claimedSkaleChests + claimedSkalePremiumChests === 20 &&
               rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase()  
+              address.toLowerCase() === coinbase.toLowerCase()
             ) {
               setMessage("complete");
             } else if (
               claimedSkaleChests + claimedSkalePremiumChests < 20 &&
               rewardData.length === 0 &&
               address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 1482601649  
+              chainId === 1482601649
             ) {
               setMessage("");
+              setDisable(false);
+            } else if (
+              claimedSkaleChests + claimedSkalePremiumChests < 20 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 1482601649
+            ) {
+              setMessage("switch");
+              setDisable(true);
             }
           } else if (!isPremium) {
             if (
               claimedSkaleChests === 10 &&
               rewardData.length === 0 &&
               address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 1482601649  
+              chainId === 1482601649
             ) {
               setMessage("premium");
+              setDisable(true);
             } else if (
               claimedSkaleChests < 10 &&
               rewardData.length === 0 &&
               address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 1482601649  
+              chainId === 1482601649
             ) {
               setMessage("");
+              setDisable(false);
+            } else if (
+              claimedSkaleChests < 10 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 1482601649
+            ) {
+              setMessage("switch");
+              setDisable(true);
             }
           }
         } else {
           setMessage("switchAccount");
+          setDisable(true);
         }
       } else {
         setMessage("login");
+        setDisable(true);
       }
     }
   }, [
@@ -863,7 +1043,6 @@ const NewDailyBonus = ({
     rewardData,
   ]);
 
-  
   return (
     <>
       <div className={`package-popup-wrapper2 `}>
@@ -1011,6 +1190,7 @@ const NewDailyBonus = ({
                               setChain("bnb");
                               setIsActive();
                               setIsActiveIndex();
+                              setRewardData([]);
                             }}
                             alt=""
                           />
@@ -1122,6 +1302,7 @@ const NewDailyBonus = ({
                               setChain("skale");
                               setIsActive();
                               setIsActiveIndex();
+                              setRewardData([]);
                             }}
                             alt=""
                           />
@@ -1440,7 +1621,9 @@ const NewDailyBonus = ({
                                   disableBtn={disable}
                                   isActive={isActive}
                                   isActiveIndex={isActiveIndex}
-                                  dummypremiumChests={dummypremiumChests[index-10]?.closedImg}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
                                 />
                               ))
                             : dummyArray.map((item, index) => (
@@ -1483,8 +1666,9 @@ const NewDailyBonus = ({
                                   openChest={() => {
                                     console.log("test");
                                   }}
-                                 dummypremiumChests={dummypremiumChests[index-10]?.closedImg}
-
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
                                 />
                               ))
                           : chain === "skale" &&
@@ -1527,8 +1711,9 @@ const NewDailyBonus = ({
                                 disableBtn={disable}
                                 isActive={isActive}
                                 isActiveIndex={isActiveIndex}
-                               dummypremiumChests={dummypremiumChests[index-10]?.closedImg}
-
+                                dummypremiumChests={
+                                  dummypremiumChests[index - 10]?.closedImg
+                                }
                               />
                             ))
                           : dummyArray.map((item, index) => (
@@ -1571,8 +1756,9 @@ const NewDailyBonus = ({
                                 openChest={() => {
                                   console.log("test");
                                 }}
-                               dummypremiumChests={dummypremiumChests[index-10]?.closedImg}
-
+                                dummypremiumChests={
+                                  dummypremiumChests[index - 10]?.closedImg
+                                }
                               />
                             ))}
                       </div>
@@ -1809,9 +1995,11 @@ const NewDailyBonus = ({
                               <span style={{ color: "#F2C624" }}>
                                 $
                                 {getFormattedNumber(
-                                  rewardData.rewards.find((obj) => {
-                                    return obj.rewardType === "Money";
-                                  }).reward ?? 0,
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
                                   2
                                 )}
                               </span>{" "}
@@ -1824,9 +2012,11 @@ const NewDailyBonus = ({
                           <div className="d-flex flex-column align-items-center neutral-border p-1">
                             <h6 className="win-amount mb-0">
                               {getFormattedNumber(
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Points";
-                                }).reward ?? 0,
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
                                 0
                               )}
                             </h6>
@@ -1838,10 +2028,13 @@ const NewDailyBonus = ({
                           <div className="d-flex flex-column align-items-center warning-border p-1">
                             <h6 className="win-amount mb-0">
                               {" "}
+                              $
                               {getFormattedNumber(
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Money";
-                                }).reward ?? 0,
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).reward
+                                  : 0,
                                 2
                               )}
                             </h6>
@@ -1856,7 +2049,10 @@ const NewDailyBonus = ({
                             style={{ width: 70, height: 70 }}
                             alt=""
                           />
-                          <button className="get-premium-btn px-2 py-1 mb-2 mb-lg-0">
+                          <button
+                            className="get-premium-btn px-2 py-1 mb-2 mb-lg-0"
+                            onClick={handleClaimUsdPremium}
+                          >
                             Get Premium
                           </button>
                         </div>
@@ -1878,9 +2074,11 @@ const NewDailyBonus = ({
                               <span style={{ color: "#F2C624" }}>
                                 $
                                 {getFormattedNumber(
-                                  rewardData.rewards.find((obj) => {
-                                    return obj.rewardType === "Money";
-                                  }).reward ?? 0,
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
                                   2
                                 )}
                               </span>{" "}
@@ -1893,9 +2091,11 @@ const NewDailyBonus = ({
                           <div className="d-flex flex-column align-items-center neutral-border p-1">
                             <h6 className="win-amount mb-0">
                               {getFormattedNumber(
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Points";
-                                }).reward ?? 0,
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
                                 0
                               )}
                             </h6>
@@ -1908,9 +2108,11 @@ const NewDailyBonus = ({
                             <h6 className="win-amount mb-0">
                               $
                               {getFormattedNumber(
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Money";
-                                }).reward ?? 0,
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).reward
+                                  : 0,
                                 2
                               )}
                             </h6>
@@ -1963,9 +2165,11 @@ const NewDailyBonus = ({
                           <div className="d-flex flex-column align-items-center neutral-border p-1">
                             <h6 className="win-amount mb-0">
                               {getFormattedNumber(
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Points";
-                                }).reward ?? 0,
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
                                 0
                               )}
                             </h6>
@@ -1979,9 +2183,11 @@ const NewDailyBonus = ({
                             <h6 className="win-amount mb-0">
                               $
                               {getFormattedNumber(
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Money";
-                                }).reward ?? 0,
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).reward
+                                  : 0,
                                 2
                               )}
                             </h6>
@@ -2011,9 +2217,11 @@ const NewDailyBonus = ({
                           <div className="d-flex flex-column align-items-center neutral-border p-1">
                             <h6 className="win-amount mb-0">
                               {getFormattedNumber(
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Points";
-                                }).reward,
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
                                 0
                               )}
                             </h6>
@@ -2122,9 +2330,11 @@ const NewDailyBonus = ({
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
                                 {getFormattedNumber(
-                                  rewardData.rewards.find((obj) => {
-                                    return obj.rewardType === "Money";
-                                  }).reward ?? 0,
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
                                   2
                                 )}
                               </span>{" "}
@@ -2137,9 +2347,11 @@ const NewDailyBonus = ({
                           <div className="d-flex flex-column align-items-center neutral-border p-1">
                             <h6 className="win-amount mb-0">
                               {getFormattedNumber(
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Points";
-                                }).reward,
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
                                 0
                               )}
                             </h6>
@@ -2151,9 +2363,11 @@ const NewDailyBonus = ({
                           <div className="d-flex flex-column align-items-center danger-border p-1">
                             <h6 className="win-amount mb-0">
                               {getFormattedNumber(
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Money";
-                                }).reward ?? 0,
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).reward
+                                  : 0,
                                 2
                               )}
                             </h6>
@@ -2191,7 +2405,10 @@ const NewDailyBonus = ({
                                       alt=""
                                       width={70}
                                       height={70}
-                                      style={{ borderRadius: "50%" }}
+                                      style={{
+                                        borderRadius: "50%",
+                                        filter: "opacity(0.5)",
+                                      }}
                                     />
                                     <img
                                       src={item.holder ? greenCheck : redX}
@@ -2204,6 +2421,210 @@ const NewDailyBonus = ({
                                 <div className="required-item-placeholder"></div>
                               )
                             )}
+                        </div>
+                      </div>
+                    ) : message === "winDangerCaws" ? (
+                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                        <div
+                          className="chain-desc-wrapper p-2 d-flex flex-column"
+                          style={{
+                            filter: "brightness(1)",
+                            position: "relative",
+                          }}
+                        >
+                          <h6 className="win-text mb-0">You won</h6>
+                          <div className="d-flex align-items-center gap-2">
+                            <img src={danger} alt="" width={20} height={20} />
+                            <span className="win-desc mb-0">
+                              The{" "}
+                              <span style={{ color: "#F2C624" }}>
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </span>{" "}
+                              reward has not been assigned due to incomplete
+                              fulfillment of all the requirements.
+                            </span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2 win-rewards-container">
+                          <div className="d-flex flex-column align-items-center neutral-border p-1">
+                            <h6 className="win-amount mb-0">
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
+                                0
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">
+                              Leaderboard Points
+                            </span>
+                          </div>
+                          <h6 className="win-amount mb-0">+</h6>
+                          <div className="d-flex flex-column align-items-center danger-border p-1">
+                            <h6 className="win-amount mb-0">
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).reward
+                                  : 0,
+                                2
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">Rewards</span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <HtmlTooltip
+                            placement="top"
+                            title={
+                              <div
+                                className="d-flex align-items-center gap-2"
+                                style={{ width: "fit-content" }}
+                              >
+                                <span
+                                  className="win-desc"
+                                  style={{ fontSize: "12px" }}
+                                >
+                                  {
+                                    rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).details
+                                  }
+                                </span>
+                              </div>
+                            }
+                          >
+                            <div className="nft-reward-container">
+                              <img
+                                className="nft-reward-img"
+                                src={cawsRound}
+                                alt=""
+                                width={70}
+                                height={70}
+                                style={{
+                                  borderRadius: "50%",
+                                  filter: "opacity(0.5)",
+                                }}
+                              />
+                              <img src={redX} alt="" className="holder-check" />
+                            </div>
+                          </HtmlTooltip>
+                          <div className="required-item-placeholder"></div>
+                          <div className="required-item-placeholder"></div>
+                          <div className="required-item-placeholder"></div>
+
+                        </div>
+                      </div>
+                    ) : message === "winDangerLand" ? (
+                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                        <div
+                          className="chain-desc-wrapper p-2 d-flex flex-column"
+                          style={{
+                            filter: "brightness(1)",
+                            position: "relative",
+                          }}
+                        >
+                          <h6 className="win-text mb-0">You won</h6>
+                          <div className="d-flex align-items-center gap-2">
+                            <img src={danger} alt="" width={20} height={20} />
+                            <span className="win-desc mb-0">
+                              The{" "}
+                              <span style={{ color: "#F2C624" }}>
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </span>{" "}
+                              reward has not been assigned due to incomplete
+                              fulfillment of all the requirements.
+                            </span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2 win-rewards-container">
+                          <div className="d-flex flex-column align-items-center neutral-border p-1">
+                            <h6 className="win-amount mb-0">
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
+                                0
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">
+                              Leaderboard Points
+                            </span>
+                          </div>
+                          <h6 className="win-amount mb-0">+</h6>
+                          <div className="d-flex flex-column align-items-center danger-border p-1">
+                            <h6 className="win-amount mb-0">
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).reward
+                                  : 0,
+                                2
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">Rewards</span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <HtmlTooltip
+                            placement="top"
+                            title={
+                              <div
+                                className="d-flex align-items-center gap-2"
+                                style={{ width: "fit-content" }}
+                              >
+                                <span
+                                  className="win-desc"
+                                  style={{ fontSize: "12px" }}
+                                >
+                                  {
+                                    rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).details
+                                  }
+                                </span>
+                              </div>
+                            }
+                          >
+                            <div className="nft-reward-container">
+                              <img
+                                className="nft-reward-img"
+                                src={wodRound}
+                                alt=""
+                                width={70}
+                                height={70}
+                                style={{
+                                  borderRadius: "50%",
+                                  filter: "opacity(0.5)",
+                                }}
+                              />
+                              <img src={redX} alt="" className="holder-check" />
+                            </div>
+                          </HtmlTooltip>
+                          <div className="required-item-placeholder"></div>
+                          <div className="required-item-placeholder"></div>
+                          <div className="required-item-placeholder"></div>
+
                         </div>
                       </div>
                     ) : message === "wod" ? (
@@ -2222,9 +2643,11 @@ const NewDailyBonus = ({
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
                                 {getFormattedNumber(
-                                  rewardData.rewards.find((obj) => {
-                                    return obj.rewardType === "Money";
-                                  }).reward ?? 0,
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
                                   2
                                 )}
                               </span>{" "}
@@ -2237,9 +2660,11 @@ const NewDailyBonus = ({
                           <div className="d-flex flex-column align-items-center neutral-border p-1">
                             <h6 className="win-amount mb-0">
                               {getFormattedNumber(
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Points";
-                                }).reward ?? 0,
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
                                 0
                               )}
                             </h6>
@@ -2252,9 +2677,11 @@ const NewDailyBonus = ({
                             <h6 className="win-amount mb-0">
                               $
                               {getFormattedNumber(
-                                rewardData.rewards.find((obj) => {
-                                  return obj.rewardType === "Money";
-                                }).reward ?? 0,
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).reward
+                                  : 0,
                                 2
                               )}
                             </h6>
@@ -2311,21 +2738,41 @@ const NewDailyBonus = ({
                     className="new-rewards-item p-2 d-flex align-items-center gap-2"
                     style={{
                       filter:
-                        (rewardData &&
-                          rewardData.rewards?.find((obj) => {
-                            return (
-                              obj.rewardType === "Points" &&
-                              Number(obj.reward) <= item.threshold[1]
-                            );
-                          })) ||
-                        (rewardData &&
-                          rewardData.rewards?.find((obj) => {
-                            return (
-                              obj.rewardType !== "Points" &&
-                              Number(obj.reward) > item.min &&
-                              Number(obj.reward) <= item.max
-                            );
-                          }))
+                        item.title2 !== "needPremium"
+                          ? (rewardData &&
+                              rewardData.rewards?.find((obj) => {
+                                return (
+                                  obj.rewardType === "Points" &&
+                                  Number(obj.reward) <= item.threshold[1]
+                                );
+                              })) ||
+                            (rewardData &&
+                              rewardData.rewards?.find((obj) => {
+                                return (
+                                  obj.rewardType !== "Points" &&
+                                  Number(obj.reward) > item.min &&
+                                  Number(obj.reward) <= item.max
+                                );
+                              }) &&
+                              message != "needPremium")
+                            ? "brightness(1)"
+                            : "brightness(0.5)"
+                          : (rewardData &&
+                              rewardData.rewards?.find((obj) => {
+                                return (
+                                  obj.rewardType === "Points" &&
+                                  Number(obj.reward) <= item.threshold[1]
+                                );
+                              })) ||
+                            (rewardData &&
+                              rewardData.rewards?.find((obj) => {
+                                return (
+                                  obj.rewardType !== "Points" &&
+                                  Number(obj.reward) > item.min &&
+                                  Number(obj.reward) <= item.max &&
+                                  message === "needPremium"
+                                );
+                              }))
                           ? "brightness(1)"
                           : "brightness(0.5)",
                     }}
@@ -2333,21 +2780,41 @@ const NewDailyBonus = ({
                     <div className="position-relative">
                       <img
                         src={require(`./assets/${item.img}${
-                          (rewardData &&
-                            rewardData.rewards?.find((obj) => {
-                              return (
-                                obj.rewardType === "Points" &&
-                                Number(obj.reward) <= item.threshold[1]
-                              );
-                            })) ||
-                          (rewardData &&
-                            rewardData.rewards?.find((obj) => {
-                              return (
-                                obj.rewardType !== "Points" &&
-                                Number(obj.reward) > item.min &&
-                                Number(obj.reward) <= item.max
-                              );
-                            }))
+                          item.title2 !== "needPremium"
+                            ? (rewardData &&
+                                rewardData.rewards?.find((obj) => {
+                                  return (
+                                    obj.rewardType === "Points" &&
+                                    Number(obj.reward) <= item.threshold[1]
+                                  );
+                                })) ||
+                              (rewardData &&
+                                rewardData.rewards?.find((obj) => {
+                                  return (
+                                    obj.rewardType !== "Points" &&
+                                    Number(obj.reward) > item.min &&
+                                    Number(obj.reward) <= item.max
+                                  );
+                                }) &&
+                                message != "needPremium")
+                              ? "Active"
+                              : ""
+                            : (rewardData &&
+                                rewardData.rewards?.find((obj) => {
+                                  return (
+                                    obj.rewardType === "Points" &&
+                                    Number(obj.reward) <= item.threshold[1]
+                                  );
+                                })) ||
+                              (rewardData &&
+                                rewardData.rewards?.find((obj) => {
+                                  return (
+                                    obj.rewardType !== "Points" &&
+                                    Number(obj.reward) > item.min &&
+                                    Number(obj.reward) <= item.max
+                                  );
+                                }) &&
+                                message === "needPremium")
                             ? "Active"
                             : ""
                         }Icon.png`)}
@@ -2355,21 +2822,89 @@ const NewDailyBonus = ({
                         height={60}
                         alt=""
                       />
-                      {rewardData &&
-                      rewardData.rewards?.find((obj) => {
-                        return obj.rewardType === item.title;
-                      }) &&
-                      rewardData &&
-                      rewardData.rewards?.find((obj) => {
-                        return (
-                          obj.rewardType === item.title &&
-                          obj.status === "Unclaimed" &&
-                          obj.reward > item.min &&
-                          obj.reward <= item.max
-                        );
-                      }) ? (
+                      {item.title2 !== "needPremium" ? (
+                        rewardData &&
+                        rewardData.rewards?.find((obj) => {
+                          return obj.rewardType === item.title;
+                        }) &&
+                        rewardData &&
+                        rewardData.rewards?.find((obj) => {
+                          return (
+                            obj.rewardType === item.title &&
+                            obj.status === "Unclaimed" &&
+                            obj.reward > item.min &&
+                            obj.reward <= item.max
+                          );
+                        }) &&
+                        message !== "needPremium" ? (
+                          <img
+                            src={warning}
+                            width={20}
+                            height={20}
+                            className="reward-warning"
+                            alt=""
+                          />
+                        ) : rewardData &&
+                          rewardData.rewards?.find((obj) => {
+                            return obj.rewardType === item.title;
+                          }) &&
+                          rewardData &&
+                          rewardData.rewards?.find((obj) => {
+                            return (
+                              obj.rewardType === item.title &&
+                              obj.status === "Unclaimable" &&
+                              obj.reward > item.min &&
+                              obj.reward <= item.max
+                            );
+                          }) &&
+                          message !== "needPremium" ? (
+                          <img
+                            src={danger}
+                            width={20}
+                            height={20}
+                            className="reward-warning"
+                            alt=""
+                          />
+                        ) : (
+                          <></>
+                        )
+                      ) : rewardData &&
+                        rewardData.rewards?.find((obj) => {
+                          return obj.rewardType === item.title;
+                        }) &&
+                        rewardData &&
+                        rewardData.rewards?.find((obj) => {
+                          return (
+                            obj.rewardType === item.title &&
+                            obj.status === "Unclaimed" &&
+                            obj.reward > item.min &&
+                            obj.reward <= item.max
+                          );
+                        }) &&
+                        message === "needPremium" ? (
                         <img
                           src={warning}
+                          width={20}
+                          height={20}
+                          className="reward-warning"
+                          alt=""
+                        />
+                      ) : rewardData &&
+                        rewardData.rewards?.find((obj) => {
+                          return obj.rewardType === item.title;
+                        }) &&
+                        rewardData &&
+                        rewardData.rewards?.find((obj) => {
+                          return (
+                            obj.rewardType === item.title &&
+                            obj.status === "Unclaimable" &&
+                            obj.reward > item.min &&
+                            obj.reward <= item.max
+                          );
+                        }) &&
+                        message === "needPremium" ? (
+                        <img
+                          src={danger}
                           width={20}
                           height={20}
                           className="reward-warning"
@@ -2387,12 +2922,32 @@ const NewDailyBonus = ({
                             rewardData &&
                             rewardData.rewards?.find((obj) => {
                               return (
-                                obj.rewardType === item.title &&
-                                obj.status === "Unclaimed" &&
-                                obj.reward > item.min &&
-                                obj.reward <= item.max
+                                obj.rewardType === "Points" &&
+                                Number(obj.reward) <= item.threshold[1]
                               );
                             })
+                              ? "#F2C624"
+                              : item.title2 !== "needPremium"
+                              ? rewardData.rewards?.find((obj) => {
+                                  return (
+                                    obj.rewardType === item.title &&
+                                    (obj.status !== "Unclaimed" ||
+                                      obj.status !== "Unclaimable") &&
+                                    obj.reward > item.min &&
+                                    obj.reward <= item.max
+                                  );
+                                }) && message !== "needPremium"
+                                ? "#F2C624"
+                                : "#fff"
+                              : rewardData.rewards?.find((obj) => {
+                                  return (
+                                    obj.rewardType === item.title &&
+                                    (obj.status !== "Unclaimed" ||
+                                      obj.status !== "Unclaimable") &&
+                                    obj.reward > item.min &&
+                                    obj.reward <= item.max
+                                  );
+                                }) && message === "needPremium"
                               ? "#F2C624"
                               : "#fff",
                         }}
@@ -2468,7 +3023,15 @@ const NewDailyBonus = ({
           onSuccessPurchase={() => {
             onSkaleChestClaimed();
             onChestClaimed();
-            setBuyNftPopup(false);
+            // setBuyNftPopup(false);
+            setTimeout(() => {
+              chain === "bnb"
+                ? showSingleRewardData(rewardData.chestId, isActiveIndex - 1)
+                : showSingleRewardDataSkale(
+                    rewardData.chestId,
+                    isActiveIndex - 1
+                  );
+            }, 2000);
           }}
         />
       )}

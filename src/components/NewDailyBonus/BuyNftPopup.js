@@ -21,7 +21,7 @@ const BuyNftPopup = ({
   chestIndex,
   chain,
   email,
-  onSuccessPurchase
+  onSuccessPurchase,
 }) => {
   const [type, setType] = useState("");
   const [buyloading, setbuyLoading] = useState(false); //buy
@@ -39,35 +39,41 @@ const BuyNftPopup = ({
     return result;
   };
 
-  const handlebuy2 = async()=>{
-    const body_skale =  {
-      transactionHash: "0xc3f97b4994e6ef6b1b17c08104022f00010b94d3aa7d1df5359c07dc57cb8dd7",
+  const handlebuy2 = async () => {
+    const body_skale = {
+      transactionHash:
+        "0xc3f97b4994e6ef6b1b17c08104022f00010b94d3aa7d1df5359c07dc57cb8dd7",
       emailAddress: email,
-      chestIndex: chestIndex,
-      chainId: 'skale'
-    }
+      chestIndex: chestIndex - 1,
+      chainId: "skale",
+    };
 
-    const body =  {
-      transactionHash: "0xc3f97b4994e6ef6b1b17c08104022f00010b94d3aa7d1df5359c07dc57cb8dd7",
+    const body = {
+      transactionHash:
+        "0xc3f97b4994e6ef6b1b17c08104022f00010b94d3aa7d1df5359c07dc57cb8dd7",
       emailAddress: email,
-      chestIndex: chestIndex
-    }
+      chestIndex: chestIndex - 1,
+    };
 
-    const finalBody = chain === 'skale' ? body_skale : body
+    const finalBody = chain === "skale" ? body_skale : body;
 
     // if(chain === "skale"){
     //   body.chainId = chain
     // }
 
-   const result = await axios.post(
-      `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
-      finalBody
-    ).catch((e)=>{console.error(e)})
+    const result = await axios
+      .post(
+        `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
+        finalBody
+      )
+      .catch((e) => {
+        console.error(e);
+      });
 
-    if(result && result.status === 200) {
-      onSuccessPurchase()
+    if (result && result.status === 200) {
+      onSuccessPurchase();
     }
-  }
+  };
 
   async function handleBuy(nft) {
     const tokenType =
@@ -97,51 +103,47 @@ const BuyNftPopup = ({
         .then(async (result) => {
           console.log("buyNFT", result);
 
-    const body_skale =  {
-      transactionHash: result.transactionHash,
-      emailAddress: email,
-      chestIndex: chestIndex,
-      chainId: 'skale'
-    }
+          const body_skale = {
+            transactionHash: result.transactionHash,
+            emailAddress: email,
+            chestIndex: chestIndex - 1,
+            chainId: "skale",
+          };
 
-    const body =  {
-      transactionHash: result.transactionHash,
-      emailAddress: email,
-      chestIndex: chestIndex,
-    }
+          const body = {
+            transactionHash: result.transactionHash,
+            emailAddress: email,
+            chestIndex: chestIndex - 1,
+          };
 
-    const finalBody = chain === 'skale' ? body_skale : body;
+          const finalBody = chain === "skale" ? body_skale : body;
 
+          const resultBuy = await axios
+            .post(
+              `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
+              finalBody
+            )
+            .catch((e) => {
+              console.error(e);
+              setbuyLoading(false);
+              setbuyStatus("failed");
+              window.alertify.error(e?.message)
+            });
 
-          await axios.post(
-            `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
-           finalBody
-          );
-          setbuyLoading(false);
-          setbuyStatus("success");
-          
+          if (resultBuy && resultBuy.status === 200) {
+            setbuyLoading(false);
+            setbuyStatus("success");
+
+            setTimeout(() => {
+              onSuccessPurchase();
+            }, 2000);
+          }
+
           setPurchaseStatus("Successfully purchased!");
           setShowToast(true);
           setToastTitle("Successfully purchased!");
           setPurchaseColor("#00FECF");
           // setIsListed(false)
-
-          setTimeout(() => {
-            setPurchaseStatus("");
-            setPurchaseColor("#00FECF");
-            setbuyStatus("");
-            onSuccessPurchase()
-            // handleRefreshList(
-            //   nft.nftAddress === window.config.nft_caws_address
-            //     ? "caws"
-            //     : nft.nftAddress === window.config.nft_timepiece_address
-            //     ? "timepiece"
-            //     : "land",
-            //   nft.tokenId
-            // );
-            // handleRefreshListing();
-            // getLatestBoughtNFT();
-          }, 3000);
         })
         .catch((e) => {
           setbuyStatus("failed");
@@ -207,6 +209,24 @@ const BuyNftPopup = ({
       setType("landbase");
     }
   }, [nft]);
+
+  useEffect(() => {
+    isApprovedBuy(
+      nft.payment_tokenAddress === window.config.dyp_token_address
+        ? "dypv1"
+        : nft.payment_tokenAddress === window.config.token_dypius_new_address
+        ? "dypv2"
+        : "eth",
+      nft.price
+    ).then((isApproved) => {
+      console.log(isApproved);
+      if (isApproved === true) {
+        setbuyStatus("buy");
+      } else if (isApproved === false) {
+        setbuyStatus("approve");
+      }
+    });
+  }, [nft, chainId]);
 
   return (
     <div className="buy-nft-popup-wrapper d-flex flex-column gap-2 p-3">
@@ -347,7 +367,7 @@ const BuyNftPopup = ({
           disabled={
             buyloading === true || buyStatus === "failed" ? true : false
           }
-          style={{width: "180px", height: "42px"}}
+          style={{ width: "180px", height: "42px" }}
           className={`btn  buyNftbtn px-4 d-flex justify-content-center ${
             buyStatus === "success"
               ? "successbtn"
@@ -356,13 +376,13 @@ const BuyNftPopup = ({
               : null
           } d-flex justify-content-center align-items-center gap-2`}
           onClick={() => {
-            // chainId !== 1 && chainId !== 5
-            //   ? handleSwitchChain()
-            //   : handleBuy(nft);
-            handlebuy2()
+            chainId !== 1 && chainId !== 5
+              ? handleSwitchChain()
+              : handleBuy(nft);
+            // handlebuy2()
           }}
         >
-          {/* {buyloading && (chainId === 1 || chainId === 5) ? (
+          {buyloading && (chainId === 1 || chainId === 5) ? (
             <div
               className="spinner-border spinner-border-sm text-light"
               role="status"
@@ -379,8 +399,8 @@ const BuyNftPopup = ({
             "Success"
           ) : (
             "Failed"
-          )} */}
-          Buy
+          )}
+          {/* Buy */}
         </button>
       </div>
     </div>

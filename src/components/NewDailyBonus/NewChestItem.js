@@ -423,7 +423,7 @@ const NewChestItem = ({
             );
           })
           .catch((e) => {
-            window.alertify.error(e?.message);
+            window.alertify.error(e.revertReason ?? e?.message);
             onChestStatus("error");
             setTimeout(() => {
               onChestStatus("initial");
@@ -451,7 +451,7 @@ const NewChestItem = ({
           })
           .catch((e) => {
             console.error(e);
-            window.alertify.error(e?.message);
+            window.alertify.error(e.revertReason ?? e?.message);
             onChestStatus("error");
             setTimeout(() => {
               onChestStatus("initial");

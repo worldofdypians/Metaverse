@@ -232,7 +232,7 @@ const NewWalletBalance = ({
   dypiusEarnTokens,
   cmcuserEarnUsd,
   cmcuserEarnETH,
-  cmcuserPoints,onPremiumClick
+  cmcuserPoints,onPremiumClick,openedSkaleChests
   // hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -676,19 +676,42 @@ const NewWalletBalance = ({
     var moneyResult = 0;
 
     if (openedChests && openedChests.length > 0) {
-      for (let i = 0; i < openedChests.length; i++) {
-        if (openedChests[i].rewards.find((obj) => obj.rewardType === "Money")) {
-          if (
-            !openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
-              ?.details
-          ) {
-            moneyResult += Number(
-              openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
-                .reward
-            );
+      openedChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable"  &&  innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+              
+            });
           }
         }
-      }
+      });
+    }
+    
+    if(openedSkaleChests && openedSkaleChests.length > 0) {
+      
+      openedSkaleChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable"  &&  innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+              
+            });
+          }
+        }
+      });
     }
 
     setTreasureRewardMoney(moneyResult);

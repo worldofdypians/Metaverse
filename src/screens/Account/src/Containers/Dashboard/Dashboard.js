@@ -257,6 +257,8 @@ function Dashboard({
 
   const [genesisRank, setGenesisRank] = useState("");
   const [genesisRank2, setGenesisRank2] = useState("");
+  const [premiumTxHash, setPremiumTxHash] = useState("");
+  const [selectedChainforPremium, setselectedChainforPremium] = useState("");
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -1793,7 +1795,29 @@ function Dashboard({
     await subscriptionContract.methods
       .subscribe(selectedSubscriptionToken, price)
       .send({ from: await window.getCoinbase() })
-      .then(() => {
+      .then((data) => {
+        if (dailyBonusPopup === true) {
+          setPremiumTxHash(data.transactionHash);
+          const selectedchain =
+            chainId === 1
+              ? "eth"
+              : chainId === 56
+              ? "bnb"
+              : chainId === 43114
+              ? "avax"
+              : chainId === 1030
+              ? "cfx"
+              : chainId === 8453
+              ? "base"
+              : chainId === 1482601649
+              ? "skale"
+              : "";
+          setselectedChainforPremium(selectedchain);
+
+          setTimeout(() => {
+            setgetPremiumPopup(false);
+          }, 2000);
+        }
         setloadspinnerSub(false);
         setIsPremium(true);
         handleUpdatePremiumUser(coinbase);
@@ -2387,6 +2411,7 @@ function Dashboard({
                         availableTime={goldenPassRemainingTime}
                         canBuy={canBuy}
                         openedChests={openedChests}
+                        openedSkaleChests={openedSkaleChests}
                         onDailyBonusInfoClick={() => {
                           setdailyBonusInfo(true);
                         }}
@@ -3505,6 +3530,11 @@ function Dashboard({
                   setskalecount(skalecount + 1);
                 }}
                 dummypremiumChests={dummypremiumChests}
+                onPremiumClick={() => {
+                  setgetPremiumPopup(true);
+                }}
+                premiumTxHash={premiumTxHash}
+                selectedChainforPremium={selectedChainforPremium}
               />
               // </OutsideClickHandler>
             )}

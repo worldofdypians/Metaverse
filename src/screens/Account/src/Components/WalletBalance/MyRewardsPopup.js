@@ -58,9 +58,8 @@ const MyRewardsPopup = ({
   const [gemRewards, setGemRewards] = useState(0);
 
   const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
-  const [treasureRewardNftCaws, setTreasureRewardNftCaws] = useState(0);
-  const [treasureRewardNftWod, setTreasureRewardNftWod] = useState(0);
-  const [treasureRewardNftBetaPass, setTreasureRewardNftBetaPass] = useState(0);
+  const [treasureRewardMoneySkale, setTreasureRewardMoneySkale] = useState(0);
+ 
 
   const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
   const [pasttreasureRewardNftCaws, setpastTreasureRewardNftCaws] = useState(0);
@@ -356,10 +355,9 @@ const MyRewardsPopup = ({
   };
 
   const getTreasureChestsInfo = async () => {
-    var nftCawsResult = 0;
-    var nftLandResult = 0;
-    var nftBPResult = 0;
+ 
     var moneyResult = 0;
+    var moneyResultSkale = 0;
     // if (openedChests && openedChests.length > 0) {
     //   for (let i = 0; i < openedChests.length; i++) {
     //     if (
@@ -449,27 +447,13 @@ const MyRewardsPopup = ({
             chest.rewards.forEach((innerChest) => {
               if (
                 innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed"
+                innerChest.status !== "Unclaimed"&&
+                innerChest.status !== "Unclaimable"  &&  innerChest.status === "Claimed"
               ) {
                 moneyResult += Number(innerChest.reward);
               }
-              if (
-                innerChest.rewardType === "NFT" && innerChest.reward === "WoD" &&
-                innerChest.status !== "Unclaimed"
-              ) {
-                nftLandResult ++;
-              }
-              if (
-                innerChest.rewardType === "NFT" && innerChest.reward === "CAWS" &&
-                innerChest.status !== "Unclaimed"
-              ) {
-                nftCawsResult ++;
-              } if (
-                innerChest.rewardType === "NFT" && innerChest.reward === "BetaPass" &&
-                innerChest.status !== "Unclaimed"
-              ) {
-                nftBPResult ++;
-              }
+              
+              
             });
           }
         }
@@ -483,28 +467,12 @@ const MyRewardsPopup = ({
             chest.rewards.forEach((innerChest) => {
               if (
                 innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed"
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable"  &&  innerChest.status === "Claimed"
               ) {
-                moneyResult += Number(innerChest.reward);
+                moneyResultSkale += Number(innerChest.reward);
               }
-              if (
-                innerChest.rewardType === "NFT" && innerChest.reward === "WoD" &&
-                innerChest.status !== "Unclaimed"
-              ) {
-                nftLandResult ++;
-              }
-              if (
-                innerChest.rewardType === "NFT" && innerChest.reward === "CAWS" &&
-                innerChest.status !== "Unclaimed"
-              ) {
-                nftCawsResult ++;
-              } if (
-                innerChest.rewardType === "NFT" && innerChest.reward === "BetaPass" &&
-                innerChest.status !== "Unclaimed"
-              ) {
-                nftBPResult ++;
-              }
-
+              
             });
           }
         }
@@ -512,9 +480,8 @@ const MyRewardsPopup = ({
     }
 
     setTreasureRewardMoney(moneyResult);
-    setTreasureRewardNftCaws(nftCawsResult);
-    setTreasureRewardNftWod(nftLandResult);
-    setTreasureRewardNftBetaPass(nftBPResult);
+    setTreasureRewardMoneySkale(moneyResultSkale)
+ 
   };
 
   const fetchCachedData = () => {
@@ -881,33 +848,39 @@ const MyRewardsPopup = ({
             <div className="table-separator"></div>
 
             <tr>
-              <td className="myrewards-td-second border-0 paddingLeftCell">
-                Treasure Chests
+              <td className="myrewards-td-second border-0  paddingLeftCell">
+                BNB Chain Treasure Chests
               </td>
-              <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
+              <td className="myrewards-td-second border-0 specialCell topborder text-center">
                 {"$" + getFormattedNumber(treasureRewardMoney, 2)}
-                <br />
-                {treasureRewardNftBetaPass + " " + "BetaPass NFT"}
-                <br />
-                {treasureRewardNftCaws + " " + "CAWS NFT"}
-                <br />
-                {treasureRewardNftWod + " " + "WoD NFT"}
-                <br />
+                
               </td>
               <td className="myrewards-td-second border-0 text-center">
-                USD/NFT
+                USD
               </td>
               <td className="myrewards-td-second border-0 text-center">
                 {"$" + getFormattedNumber(pasttreasureRewardMoney, 2)}
-                <br />
-                {pasttreasureRewardNftBetaPass + " " + "BetaPass NFT"}
-                <br />
-                {pasttreasureRewardNftCaws + " " + "CAWS NFT"}
-                <br />
-                {pasttreasureRewardNftWod + " " + "WoD NFT"}
-                <br />
+               
               </td>
             </tr>
+
+            <tr>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                SKALE Treasure Chests
+              </td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                {"$" + getFormattedNumber(treasureRewardMoneySkale, 2)}
+                
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                USD
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {"$" + getFormattedNumber(0, 2)}
+                
+              </td>
+            </tr>
+
 
             <tr>
               <td className="myrewards-td-main border-0">

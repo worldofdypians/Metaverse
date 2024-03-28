@@ -3946,6 +3946,8 @@ window.isApprovedBuy = async (tokenType, amount) => {
       .allowance(coinbase, window.config.nft_marketplace_address)
       .call({ from: await getCoinbase() });
     return Number(allowance) >= Number(amount);
+  } else if(tokenType === 'eth') {
+    return true
   }
 
   // console.log(
