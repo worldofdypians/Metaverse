@@ -2642,7 +2642,7 @@ const NewDailyBonus = ({
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
-                                {getFormattedNumber(
+                                ${getFormattedNumber(
                                   rewardData.rewards
                                     ? rewardData.rewards.find((obj) => {
                                         return obj.rewardType === "Money";
