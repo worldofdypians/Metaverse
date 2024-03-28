@@ -3535,6 +3535,7 @@ function Dashboard({
                 }}
                 premiumTxHash={premiumTxHash}
                 selectedChainforPremium={selectedChainforPremium}
+                onPremiumClickOther={()=>{setdailyBonusPopup(false); setgetPremiumPopup(true)}}
               />
               // </OutsideClickHandler>
             )}
