@@ -1016,7 +1016,7 @@ function Dashboard({
       }
     }
   };
-
+console.log(claimedSkaleChests, claimedSkalePremiumChests, claimedChests , claimedPremiumChests)
   const getOpenedChestPerWallet = async () => {
     if (email) {
       if (isPremium) {
@@ -1031,11 +1031,13 @@ function Dashboard({
         ) {
           setCanBuy(false);
         }
-      } else if (!isPremium) {
+      } 
+      else if (!isPremium) {
         if (claimedChests < 10 || claimedSkaleChests < 10) {
           setCanBuy(true);
         } else if (claimedChests === 10 && claimedSkaleChests === 10) {
-          setCanBuy(false);
+          setCanBuy(true);
+          //change later
         }
       }
     } else {
@@ -2332,6 +2334,8 @@ function Dashboard({
                           setclaimedPremiumChests(0);
                           setallChests([]);
                           setallSkaleChests([]);
+                          setOpenedChests([]);
+                          setOpenedSkaleChests([])
                           setclaimedSkaleChests(0);
                           setclaimedSkalePremiumChests(0);
                         }}

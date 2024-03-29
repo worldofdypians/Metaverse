@@ -1441,15 +1441,13 @@ const chestPercentage = (totalClaimedChests / 40) * 100;
             <div className="row gap-3 gap-lg-0">
               <div className="col-12 col-lg-4">
                 <div className="daily-bonus-wrapper">
-                  <div className="green-div"></div>
+                  <div className="red-div"></div>
                   <img
                     onClick={onDailyRewardsPopupOpen}
                     // src={finished ? mageFinish : mageGoing}
                     src={chestPercentage >= 50 && chestPercentage < 100 ? mageGoing : chestPercentage === 100 ? mageFinish : mageStarter}
                     className={`${
-                      finished
-                        ? "daily-rewards-img-finished"
-                        : "daily-rewards-img"
+                      "daily-rewards-img"
                     }`}
                     alt=""
                   />
@@ -1457,7 +1455,8 @@ const chestPercentage = (totalClaimedChests / 40) * 100;
                     className="progress-bar-group d-flex flex-column align-items-start"
                     onClick={onDailyRewardsPopupOpen}
                   >
-                    <span className="progress-bar-title">Progress</span>
+                    {!finished &&  <span className="progress-bar-title">Progress</span>}
+                   
                     <div className="yellow-progress-outer">
                       <span className="mb-0 chest-progress">
                         {/* {claimedPremiumChests}/10 */}
@@ -1477,11 +1476,7 @@ const chestPercentage = (totalClaimedChests / 40) * 100;
                       onClick={onDailyBonusInfoClick}
                     >
                       <h6 className="profile-div-title mb-0">Daily Bonus</h6>
-                      <img
-                        src={require("./assets/greenInfo.svg").default}
-                        alt=""
-                        className="tooltipicon"
-                      />
+                      
                     </div>
 
                     <div
