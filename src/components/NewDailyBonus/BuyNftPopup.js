@@ -21,6 +21,7 @@ const BuyNftPopup = ({
   chestIndex,
   chain,
   email,
+  onSuccessPurchase,
 }) => {
   const [type, setType] = useState("");
   const [buyloading, setbuyLoading] = useState(false); //buy
@@ -36,6 +37,42 @@ const BuyNftPopup = ({
     });
 
     return result;
+  };
+
+  const handlebuy2 = async () => {
+    const body_skale = {
+      transactionHash:
+        "0xc3f97b4994e6ef6b1b17c08104022f00010b94d3aa7d1df5359c07dc57cb8dd7",
+      emailAddress: email,
+      chestIndex: chestIndex - 1,
+      chainId: "skale",
+    };
+
+    const body = {
+      transactionHash:
+        "0xc3f97b4994e6ef6b1b17c08104022f00010b94d3aa7d1df5359c07dc57cb8dd7",
+      emailAddress: email,
+      chestIndex: chestIndex - 1,
+    };
+
+    const finalBody = chain === "skale" ? body_skale : body;
+
+    // if(chain === "skale"){
+    //   body.chainId = chain
+    // }
+
+    const result = await axios
+      .post(
+        `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
+        finalBody
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      onSuccessPurchase();
+    }
   };
 
   async function handleBuy(nft) {
@@ -66,43 +103,47 @@ const BuyNftPopup = ({
         .then(async (result) => {
           console.log("buyNFT", result);
 
-          const body =  {
+          const body_skale = {
             transactionHash: result.transactionHash,
             emailAddress: email,
-            chestIndex: chestIndex,
+            chestIndex: chestIndex - 1,
+            chainId: "skale",
+          };
+
+          const body = {
+            transactionHash: result.transactionHash,
+            emailAddress: email,
+            chestIndex: chestIndex - 1,
+          };
+
+          const finalBody = chain === "skale" ? body_skale : body;
+
+          const resultBuy = await axios
+            .post(
+              `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
+              finalBody
+            )
+            .catch((e) => {
+              console.error(e);
+              setbuyLoading(false);
+              setbuyStatus("failed");
+              window.alertify.error(e?.message)
+            });
+
+          if (resultBuy && resultBuy.status === 200) {
+            setbuyLoading(false);
+            setbuyStatus("success");
+
+            setTimeout(() => {
+              onSuccessPurchase();
+            }, 2000);
           }
 
-          if(chain === "skale"){
-            body.chain = chain
-          }
-
-          await axios.post(
-            `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
-           body
-          );
-          setbuyLoading(false);
-          setbuyStatus("success");
           setPurchaseStatus("Successfully purchased!");
           setShowToast(true);
           setToastTitle("Successfully purchased!");
           setPurchaseColor("#00FECF");
           // setIsListed(false)
-
-          setTimeout(() => {
-            setPurchaseStatus("");
-            setPurchaseColor("#00FECF");
-            setbuyStatus("");
-            // handleRefreshList(
-            //   nft.nftAddress === window.config.nft_caws_address
-            //     ? "caws"
-            //     : nft.nftAddress === window.config.nft_timepiece_address
-            //     ? "timepiece"
-            //     : "land",
-            //   nft.tokenId
-            // );
-            // handleRefreshListing();
-            // getLatestBoughtNFT();
-          }, 3000);
         })
         .catch((e) => {
           setbuyStatus("failed");
@@ -169,6 +210,24 @@ const BuyNftPopup = ({
     }
   }, [nft]);
 
+  useEffect(() => {
+    isApprovedBuy(
+      nft.payment_tokenAddress === window.config.dyp_token_address
+        ? "dypv1"
+        : nft.payment_tokenAddress === window.config.token_dypius_new_address
+        ? "dypv2"
+        : "eth",
+      nft.price
+    ).then((isApproved) => {
+      console.log(isApproved);
+      if (isApproved === true) {
+        setbuyStatus("buy");
+      } else if (isApproved === false) {
+        setbuyStatus("approve");
+      }
+    });
+  }, [nft, chainId]);
+
   return (
     <div className="buy-nft-popup-wrapper d-flex flex-column gap-2 p-3">
       <div className="d-flex align-items-center justify-content-between">
@@ -185,28 +244,10 @@ const BuyNftPopup = ({
       <img
         className="popup-nft-img"
         src={
-          nft.nftAddress === window.config.nft_caws_address ||
-          nft.nftAddress === window.config.nft_caws_bnb_address ||
-          nft.nftAddress === window.config.nft_caws_avax_address ||
-          nft.nftAddress === window.config.nft_caws_base_address
+          nft.nftAddress === window.config.nft_caws_address 
             ? `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nft.tokenId}.png`
-            : nft.nftAddress === window.config.nft_land_address ||
-              nft.nftAddress === window.config.nft_land_bnb_address ||
-              nft.nftAddress === window.config.nft_land_avax_address ||
-              nft.nftAddress === window.config.nft_land_base_address
+            : nft.nftAddress === window.config.nft_land_address 
             ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nft.tokenId}.png`
-            : nft.nftAddress === window.config.nft_coingecko_address
-            ? `https://dypmeta.s3.us-east-2.amazonaws.com/400x400_cg_pass.png`
-            : nft.nftAddress === window.config.nft_gate_address
-            ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate400.png`
-            : nft.nftAddress === window.config.nft_conflux_address
-            ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
-            : nft.nftAddress === window.config.nft_doge_address
-            ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
-            : nft.nftAddress === window.config.nft_cmc_address
-            ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
-            : nft.nftAddress === window.config.nft_base_address
-            ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
             : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nft.tokenId}.png`
         }
         alt=""
@@ -214,61 +255,17 @@ const BuyNftPopup = ({
 
       <span className="seller-addr d-flex gap-1 align-items-center">
         <img
-          src={
-            type === "coingecko" ||
-            type === "gate" ||
-            type === "doge" ||
-            type === "cmc" ||
-            type === "cawsbnb" ||
-            type === "landbnb"
-              ? bnbLogo
-              : type === "conflux"
-              ? confluxLogo
-              : type === "base" || type === "cawsbase" || type === "landbase"
-              ? baseLogo
-              : type === "cawsavax" || type === "landavax"
-              ? avaxLogo
-              : ethIcon
+          src={ ethIcon
           }
           alt=""
           style={{ width: 20, height: 20 }}
         />{" "}
-        {type === "coingecko" ||
-        type === "gate" ||
-        type === "doge" ||
-        type === "cawsbnb" ||
-        type === "cmc" ||
-        type === "landbnb"
-          ? "BNB Chain"
-          : type === "conflux"
-          ? "Conflux"
-          : type === "base" || type === "landbase" || type === "cawsbase"
-          ? "BASE Network"
-          : type === "cawsavax" || type === "landavax"
-          ? "Avalanche"
-          : "Ethereum"}
+        Ethereum
       </span>
 
       <div className="d-flex justify-content-between align-items-center">
         <span className="currentprice-txt">Current price</span>
-        {/* <StyledTextField
-                        error={nftPrice === "" ? true : false}
-                        size="small"
-                        id="price"
-                        name="price"
-                        value={nftPrice}
-                        type="number"
-                        required
-                        onChange={(e) => {
-                          setNftPrice(e.target.value);
-                        }}
-                        sx={{ width: "120px" }}
-                        inputProps={{
-                          inputMode: "numeric",
-                          pattern: "[0-9]*",
-                          max: 10,
-                        }}
-                      /> */}
+        
         <div className="d-flex gap-2 align-items-center">
           <img
             src={nft?.payment_priceType === 0 ? topEth : topDyp}
@@ -308,7 +305,7 @@ const BuyNftPopup = ({
           disabled={
             buyloading === true || buyStatus === "failed" ? true : false
           }
-          style={{width: "180px", height: "42px"}}
+          style={{ width: "180px", height: "42px" }}
           className={`btn  buyNftbtn px-4 d-flex justify-content-center ${
             buyStatus === "success"
               ? "successbtn"
@@ -320,6 +317,7 @@ const BuyNftPopup = ({
             chainId !== 1 && chainId !== 5
               ? handleSwitchChain()
               : handleBuy(nft);
+            // handlebuy2()
           }}
         >
           {buyloading && (chainId === 1 || chainId === 5) ? (
@@ -340,6 +338,7 @@ const BuyNftPopup = ({
           ) : (
             "Failed"
           )}
+          {/* Buy */}
         </button>
       </div>
     </div>

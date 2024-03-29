@@ -23,7 +23,8 @@ const NewChestItem = ({
   disableBtn,
   isActive,
   isActiveIndex,
-  buyNftPopup
+  buyNftPopup,
+  dummypremiumChests,
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -41,9 +42,6 @@ const NewChestItem = ({
     "yellowCrystal",
     "purpleCrystal",
   ];
-
-  var premiumType = Math.round(Math.random()) + 1;
-
 
   const getUserRewardsByChest2 = async (
     userEmail,
@@ -401,19 +399,16 @@ const NewChestItem = ({
             setLoading(false);
           });
       }
-    } else if (chainId === 37084624 ) {
+    } else if (chainId === 1482601649) {
       if (rewardTypes === "premium" && isPremium) {
         const web3 = new Web3(window.ethereum);
-       
 
-      
         await daily_bonus_contract_skale.methods
           .openPremiumChest()
           .send({
-            from: address
-         
+            from: address,
           })
-          
+
           .then((data) => {
             getUserRewardsByChest(
               email,
@@ -423,7 +418,7 @@ const NewChestItem = ({
             );
           })
           .catch((e) => {
-            window.alertify.error(e?.message);
+            window.alertify.error(e.revertReason ?? e?.message);
             onChestStatus("error");
             setTimeout(() => {
               onChestStatus("initial");
@@ -439,7 +434,7 @@ const NewChestItem = ({
         await daily_bonus_contract_skale.methods
           .openChest()
           .send({
-            from: address
+            from: address,
           })
           .then((data) => {
             getUserRewardsByChest(
@@ -451,7 +446,7 @@ const NewChestItem = ({
           })
           .catch((e) => {
             console.error(e);
-            window.alertify.error(e?.message);
+            window.alertify.error(e.revertReason ?? e?.message);
             onChestStatus("error");
             setTimeout(() => {
               onChestStatus("initial");
@@ -522,10 +517,41 @@ const NewChestItem = ({
     /> */}
       {rewardTypes !== "premium" ? (
         <img
-          className={`new-chest-item-img ${loading ? "chest-shake" : ""}`}
-          src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
-            open ? chestIndex + "open" : chestIndex
-          }.png`)}
+          className={` ${
+            chain === "bnb" ? "new-chest-item-img" : "new-chest-item-img-skale"
+          } ${loading ? chain === "bnb" ?  "chest-shake" : "chest-pulsate" : ""}`}
+          src={
+            chain === "bnb"
+              ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
+                  open ? chestIndex + "open" : chestIndex
+                }.png`)
+              : require(`../../screens/Account/src/Components/WalletBalance/chestImages/skale/${
+                  open ? chestIndex + "open" : chestIndex
+                }.png`)
+          }
+          alt=""
+          style={{
+            position: "relative",
+            bottom: "5px",
+            filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
+          }}
+        />
+      ) : rewardTypes === "premium" && dummypremiumChests ? (
+        <img
+          className={`new-chest-item-img ${loading ? chain === "bnb" ?  "chest-shake" : "chest-pulsate" : ""}`}
+          src={
+            chain === "bnb"
+              ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
+                  open
+                    ? chestIndex % 2 === 1
+                      ? dummypremiumChests + "OpenCoins"
+                      : dummypremiumChests + "OpenGems"
+                    : dummypremiumChests
+                }.png`)
+              : require(`../../screens/Account/src/Components/WalletBalance/chestImages/skale/premium/${
+                  open ? chestIndex - 10 + "open" : chestIndex - 10
+                }.png`)
+          }
           alt=""
           style={{
             position: "relative",
@@ -534,20 +560,7 @@ const NewChestItem = ({
           }}
         />
       ) : (
-        <img
-          className={`new-chest-item-img ${loading ? "chest-shake" : ""}`}
-          src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
-            open
-              ? premiumImages[chestIndex - 11] + premiumType === 1 ? "openCoins" : "openGems"
-              : premiumImages[chestIndex - 11]
-          }.png`)}
-          alt=""
-          style={{
-            position: "relative",
-            bottom: "5px",
-            filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
-          }}
-        />
+        <></>
       )}
       {rewardTypes === "premium" && !isPremium && (
         <img

@@ -115,8 +115,8 @@ function App() {
       blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
     },
 
-    37084624: {
-      chainId: 37084624,
+    1482601649: {
+      chainId: 1482601649,
       chainName: "SKALE Nebula Hub",
       nativeCurrency: {
         symbol: "sFUEL",
@@ -1951,8 +1951,8 @@ function App() {
                   ? "0x38"
                   : chain === 204
                   ? "0xcc"
-                  : chain === 37084624
-                  ? "0x235ddd0"
+                  : chain === 1482601649
+                  ? "0x585eb4b1"
                   : "0x406",
             },
           ],
@@ -2098,7 +2098,7 @@ function App() {
   };
 
   const fetchSkaleBalance = async () => {
-    if (coinbase && window.ethereum) {
+    if (coinbase && window.ethereum && chainId === 1482601649) {
       const skaleWeb3 = new Web3(window.config.skale_endpoint);
 
       const balance = await window.ethereum.request({
@@ -2156,7 +2156,7 @@ function App() {
 
   useEffect(() => {
     fetchSkaleBalance();
-  }, [coinbase, isConnected]);
+  }, [coinbase, isConnected, chainId]);
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
@@ -2213,7 +2213,7 @@ function App() {
       return () => clearInterval(interval);
     }, 300000);
   }, [count2]);
-
+ 
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -2569,7 +2569,7 @@ function App() {
               }
             />
 
-            {/* <Route
+            <Route
               exact
               path="/marketplace/beta-pass/skale"
               element={
@@ -2607,12 +2607,12 @@ function App() {
                     setwalletModal(true);
                   }}
                   totalCmcNft={totalCmcNft}
-                  totalSkaleNft={0}
-
+                  totalSkaleNft={totalSkaleNft}
+                  mySkaleNfts={myskaleNFTsCreated}
 
                 />
               }
-            /> */}
+            />
 
             <Route
               exact

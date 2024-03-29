@@ -708,7 +708,7 @@ const WalletBalance = ({
               buyer: coinbase,
               tokenId: i,
               type: "skale",
-              chain: 37084624,
+              chain: 1482601649,
               isStaked: false,
               isListed: false,
             });
@@ -1845,7 +1845,7 @@ const WalletBalance = ({
                                   : item.type === "doge"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
                                   : item.type === "skale"
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
                                   : item.type === "cmc"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
                                   : item.type === "base"
@@ -2895,7 +2895,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
                                     : nft.nftAddress ===
                                     window.config.nft_skale_address
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_cmc_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
@@ -3169,7 +3169,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_skale_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_cmc_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`

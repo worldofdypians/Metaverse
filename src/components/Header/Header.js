@@ -141,7 +141,7 @@ const Header = ({
         setConfluxState(true);
         setopBnbState(false);
         setSkaleState(false);
-      } else if (chainId === 37084624 ) {
+      } else if (chainId === 1482601649 ) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
@@ -267,9 +267,9 @@ const Header = ({
   const handleSkalePool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x235ddd0")
+        await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
-            handleSwitchNetwork(37084624 );
+            handleSwitchNetwork(1482601649 );
           })
           .catch((e) => {
             console.log(e);
@@ -352,8 +352,8 @@ const Header = ({
       handleSwitchNetwork(8453);
     }
 
-    if (chainId === 37084624 ) {
-      handleSwitchNetwork(37084624 );
+    if (chainId === 1482601649 ) {
+      handleSwitchNetwork(1482601649 );
     }
   }, [chainId, coinbase]);
 

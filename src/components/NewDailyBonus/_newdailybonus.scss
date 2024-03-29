@@ -17,7 +17,7 @@
   transform: translate3d(0, 0, 0);
   z-index: 101;
   // box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 100%;
     .daily-bonus-inner-wrapper {
       height: 80%;
@@ -38,7 +38,7 @@
   height: 80%;
   overflow: hidden;
   filter: drop-shadow(0, 0, 0, 1000px rgba(0, 0, 0, 0.5)) !important;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 100%;
     background-image: url("./assets/dailyBonusBgMobile.png");
     height: 85%;
@@ -52,10 +52,11 @@
   background-repeat: no-repeat;
   height: 20%;
   filter: drop-shadow(0, 0, 0, 1000px rgba(0, 0, 0, 0.5));
-  @media screen and (max-width: 786px) {
-    width: 100%;
-    height: 15%;
-    background-image: url("./assets/rewardsBgMobile.png");
+  @media screen and (max-width: 991px) {
+    // width: 100%;
+    // height: 15%;
+    // background-image: url("./assets/rewardsBgMobile.png");
+    display: none !important;
   }
 }
 
@@ -64,15 +65,15 @@
   font-size: 14px;
 }
 .chain-title-position {
-  color: #FFF;
-font-size: 20px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
+  color: #fff;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
   pointer-events: none;
   transition: all 0.25s;
 
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     font-size: 14px;
   }
 }
@@ -87,7 +88,7 @@ line-height: normal;
   cursor: pointer;
   border: 2px solid transparent;
   border-radius: 18px;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     // width: 207px;
     height: 100%;
   }
@@ -112,7 +113,6 @@ line-height: normal;
 .chain-title-wrapper-active-skale {
   border-radius: 15px 15px 0px 0px;
   background: linear-gradient(90deg, rgba(0, 121, 130, 0.3) 0%, #1a1c39 100%);
-
 }
 
 .close-new-bonus {
@@ -128,8 +128,7 @@ line-height: normal;
   .chain-img {
     box-shadow: 0 -6px 5px -2px rgba(0, 219, 222, 0.8);
     border: 2px solid rgba(0, 219, 222, 1);
-  filter: brightness(1);
-
+    filter: brightness(1);
   }
 }
 
@@ -159,7 +158,7 @@ line-height: normal;
   border: 1px solid #303d6f;
   height: 80px;
   position: relative;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     height: 100%;
   }
 }
@@ -179,7 +178,7 @@ line-height: normal;
   grid-template-columns: repeat(5, 1fr);
   gap: 14px;
   place-items: center;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     grid-template-columns: repeat(2, 1fr);
   }
   @media screen and (max-height: 840px) {
@@ -190,7 +189,7 @@ line-height: normal;
 .chains-wrapper {
   padding-left: 4px !important;
   padding-right: 12px !important;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     overflow-x: scroll;
   }
 }
@@ -210,16 +209,23 @@ line-height: normal;
   height: 100%;
   cursor: pointer;
   transition: all 0.25s;
-
- 
 }
 
-.new-chest-item-img{
+.new-chest-item-img {
   width: 80px;
   height: 80px;
   @media screen and (max-height: 800px) {
     width: 65px;
     height: 65px;
+  }
+}
+
+.new-chest-item-img-skale {
+  width: 80px;
+  height: 80px;
+  @media screen and (max-height: 800px) {
+    width: 65px;
+    height: 80px;
   }
 }
 
@@ -232,7 +238,7 @@ line-height: normal;
     overflow-y: scroll;
     overflow-x: hidden;
     height: 100%;
-    @media screen and (max-width: 786px) {
+    @media screen and (max-width: 991px) {
       height: 103% !important;
     }
   }
@@ -285,7 +291,8 @@ line-height: normal;
   background-repeat: no-repeat;
   background-size: cover;
   border: 2px solid #ae2e04;
-
+  background-position: center;
+  
   .new-claim-chest-btn {
     color: #552400 !important;
     border: 2px solid #ae2e04 !important;
@@ -297,6 +304,10 @@ line-height: normal;
       #bb3104 100%
     ) !important;
   }
+}
+.chest-test-wrapper {
+  overflow-y: auto;
+  height: 96%;
 }
 .new-chest-item-open:hover {
   // border: 2px solid #00b9cd !important;
@@ -312,7 +323,6 @@ line-height: normal;
   .new-claim-chest-btn {
     border: 2px solid #00b9cd !important;
   }
-
 }
 
 .new-rewards-grid {
@@ -320,7 +330,7 @@ line-height: normal;
   grid-template-columns: repeat(5, 1fr);
   gap: 5px;
 
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     overflow-x: scroll;
   }
 }
@@ -339,7 +349,7 @@ line-height: normal;
   font-size: 14px;
   font-style: normal;
   font-weight: 800;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     font-size: 24px;
   }
 }
@@ -355,7 +365,7 @@ line-height: normal;
   position: absolute;
   left: 17%;
   bottom: 3%;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     bottom: 4%;
     left: 18%;
   }
@@ -365,7 +375,7 @@ line-height: normal;
   position: absolute;
   right: 17%;
   bottom: 3%;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     bottom: 4%;
     right: 18%;
   }
@@ -377,7 +387,7 @@ line-height: normal;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     font-size: 10px;
   }
 }
@@ -396,7 +406,7 @@ line-height: normal;
   transition: all 0.25s;
   pointer-events: none;
 
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 100%;
   }
 }
@@ -415,7 +425,7 @@ line-height: normal;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 100%;
   }
 }
@@ -424,7 +434,7 @@ line-height: normal;
   height: 100%;
 }
 
-@media screen and (max-width: 786px) {
+@media screen and (max-width: 991px) {
   .grid-overall-wrapper {
     height: 30%;
   }
@@ -450,7 +460,7 @@ line-height: normal;
   width: 70px;
   height: 70px;
   transition: all 0.25s;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 40px;
     height: 40px;
   }
@@ -515,7 +525,7 @@ line-height: normal;
 
 .get-premium-wrapper {
   width: 30%;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 100%;
   }
 }
@@ -532,7 +542,7 @@ line-height: normal;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     bottom: 8%;
     font-size: 8px;
   }
@@ -572,7 +582,7 @@ line-height: normal;
     margin: 5px 15px;
     border-radius: 50%;
     animation: animateDot 2s linear infinite;
-    @media screen and (max-width: 786px) {
+    @media screen and (max-width: 991px) {
       margin: 5px 5px !important;
     }
   }
@@ -583,7 +593,7 @@ line-height: normal;
     animation-delay: calc(0.1s * var(--i));
   }
 }
-.loader-waiting-2{
+.loader-waiting-2 {
   .dot {
     animation-delay: calc(-0.1s * var(--i));
   }
@@ -597,8 +607,6 @@ line-height: normal;
   font-weight: 700;
   line-height: normal;
 }
-
-
 
 .red-loader {
   .dot {
@@ -658,14 +666,14 @@ line-height: normal;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     font-size: 15px;
   }
 }
 
 .win-desc {
   color: #fff;
-  font-size: 10px;
+  font-size: 11px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -678,7 +686,7 @@ line-height: normal;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     font-size: 16px;
   }
 }
@@ -695,11 +703,13 @@ line-height: normal;
 .warning-border {
   border-radius: 20px;
   border: 2px solid #d6661d;
+  background: rgba(214, 102, 29, 0.1);
 }
 
 .danger-border {
   border-radius: 20px;
   border: 2px solid #bf0000;
+  background: rgba(191, 0, 0, 0.1);
 }
 
 .win-confetti {
@@ -707,7 +717,7 @@ line-height: normal;
   position: absolute;
   right: 0;
   border-radius: 0 20px 0 20px;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     display: none;
   }
 }
@@ -721,7 +731,7 @@ line-height: normal;
   margin: auto;
   width: fit-content;
 
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     position: relative;
   }
 }
@@ -757,7 +767,7 @@ line-height: normal;
 .complete-bg {
   background-image: url("./assets/completedBg.png") !important;
   background-size: 100%;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     background-size: cover !important;
   }
 }
@@ -803,7 +813,7 @@ line-height: normal;
   height: 70px;
   border-radius: 50%;
   background: #2c3867;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 40px;
     height: 40px;
   }
@@ -841,8 +851,8 @@ line-height: normal;
 
 .new-chain-inactive-btn {
   border-radius: 10px;
-  border: 1px solid #1A1C39;
-  background: rgba(26, 28, 57, 0.50);
+  border: 1px solid #1a1c39;
+  background: rgba(26, 28, 57, 0.5);
   color: #fff;
   font-size: 12px;
   font-style: normal;
@@ -851,12 +861,12 @@ line-height: normal;
   padding: 5px 10px;
 }
 
-@media screen and (max-width: 786px) {
-  .message-height-wrapper{
-    height: 35%;
+@media screen and (max-width: 991px) {
+  .message-height-wrapper {
+    // height: 35%;
+    height: fit-content;
   }
 }
-
 
 @-webkit-keyframes shake-bottom {
   0%,
@@ -925,6 +935,62 @@ line-height: normal;
   }
 }
 
+
+@-webkit-keyframes vibrate-1 {
+  0% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  20% {
+    -webkit-transform: translate(-2px, 2px);
+            transform: translate(-2px, 2px);
+  }
+  40% {
+    -webkit-transform: translate(-2px, -2px);
+            transform: translate(-2px, -2px);
+  }
+  60% {
+    -webkit-transform: translate(2px, 2px);
+            transform: translate(2px, 2px);
+  }
+  80% {
+    -webkit-transform: translate(2px, -2px);
+            transform: translate(2px, -2px);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@keyframes vibrate-1 {
+  0% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  20% {
+    -webkit-transform: translate(-2px, 2px);
+            transform: translate(-2px, 2px);
+  }
+  40% {
+    -webkit-transform: translate(-2px, -2px);
+            transform: translate(-2px, -2px);
+  }
+  60% {
+    -webkit-transform: translate(2px, 2px);
+            transform: translate(2px, 2px);
+  }
+  80% {
+    -webkit-transform: translate(2px, -2px);
+            transform: translate(2px, -2px);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+
+
+
 .chest-shake {
   -webkit-animation: shake-bottom 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955)
     infinite both;
@@ -932,11 +998,17 @@ line-height: normal;
     both;
 }
 
-.percent-img{
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.50));
+
+.chest-pulsate {
+	-webkit-animation: vibrate-1 0.3s linear infinite both;
+	        animation: vibrate-1 0.3s linear infinite both;
 }
 
-.buy-nft-popup-wrapper{
+.percent-img {
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));
+}
+
+.buy-nft-popup-wrapper {
   background: #1a1c39;
   border-radius: 15px;
   position: fixed;
@@ -952,14 +1024,13 @@ line-height: normal;
   box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
 }
 
-
-.popup-nft-img{
+.popup-nft-img {
   width: 300px;
   height: 300px;
   border-radius: 15px;
   pointer-events: auto !important;
 }
 
-.block-pointers{
+.block-pointers {
   pointer-events: none !important;
 }

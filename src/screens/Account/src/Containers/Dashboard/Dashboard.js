@@ -46,6 +46,7 @@ import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
+import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 
@@ -151,7 +152,7 @@ function Dashboard({
   const [myBaseNfts, setmyBaseNfts] = useState([]);
   const [myDogeNfts, setmyDogeNfts] = useState([]);
   const [myCmcNfts, setmyCmcNfts] = useState([]);
-  const [mySkaleNfts, setmySkaleNfts] = useState([])
+  const [mySkaleNfts, setmySkaleNfts] = useState([]);
   const [latestVersion, setLatestVersion] = useState(0);
 
   const [userPoints, setuserPoints] = useState(0);
@@ -256,6 +257,8 @@ function Dashboard({
 
   const [genesisRank, setGenesisRank] = useState("");
   const [genesisRank2, setGenesisRank2] = useState("");
+  const [premiumTxHash, setPremiumTxHash] = useState("");
+  const [selectedChainforPremium, setselectedChainforPremium] = useState("");
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -278,8 +281,7 @@ function Dashboard({
   let wbase = "0x4200000000000000000000000000000000000006";
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
-  let wskaleAddress = "0x5eaF4e5A908ba87Abf3dE768cb0dA517dB45dB48";
-
+  let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
@@ -991,23 +993,23 @@ function Dashboard({
         });
 
       if (
-        subscribedPlatformTokenAmountCfx === "0" &&
-        subscribedPlatformTokenAmountETH === "0" &&
-        subscribedPlatformTokenAmountBase === "0" &&
-        subscribedPlatformTokenAmountBNB === "0" &&
-        subscribedPlatformTokenAmountAvax === "0" &&
-        subscribedPlatformTokenAmountSkale === "0" &&
+        subscribedPlatformTokenAmountCfx == "0" &&
+        subscribedPlatformTokenAmountETH == "0" &&
+        subscribedPlatformTokenAmountBase == "0" &&
+        subscribedPlatformTokenAmountBNB == "0" &&
+        subscribedPlatformTokenAmountAvax == "0" &&
+        subscribedPlatformTokenAmountSkale == "0" &&
         result === false
       ) {
         setIsPremium(false);
       }
       if (
-        subscribedPlatformTokenAmountCfx !== "0" ||
-        subscribedPlatformTokenAmountETH !== "0" ||
-        subscribedPlatformTokenAmountBase !== "0" ||
-        subscribedPlatformTokenAmountBNB !== "0" ||
-        subscribedPlatformTokenAmountAvax !== "0" ||
-        subscribedPlatformTokenAmountSkale !== "0" ||
+        subscribedPlatformTokenAmountCfx != "0" ||
+        subscribedPlatformTokenAmountETH != "0" ||
+        subscribedPlatformTokenAmountBase != "0" ||
+        subscribedPlatformTokenAmountBNB != "0" ||
+        subscribedPlatformTokenAmountAvax != "0" ||
+        subscribedPlatformTokenAmountSkale != "0" ||
         result === true
       ) {
         setIsPremium(true);
@@ -1214,8 +1216,8 @@ function Dashboard({
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "skale").then((NFTS) =>
-    setmySkaleNfts(NFTS)
-  );
+      setmySkaleNfts(NFTS)
+    );
   };
 
   const getOtherNfts = async () => {
@@ -1516,7 +1518,7 @@ function Dashboard({
         ? window.config.subscriptionbase_tokens[token]?.decimals
         : chainId === 43114
         ? window.config.subscription_tokens[token]?.decimals
-        : chainId === 37084624
+        : chainId === 1482601649
         ? window.config.subscriptionskale_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
@@ -1535,7 +1537,7 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmount(token)
         : chainId === 8453
         ? await window.getEstimatedTokenSubscriptionAmountBase(token)
-        : chainId === 37084624
+        : chainId === 1482601649
         ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
@@ -1580,7 +1582,7 @@ function Dashboard({
           ? basesubscribeAddress
           : chainId === 43114
           ? avaxsubscribeAddress
-          : chainId === 37084624
+          : chainId === 1482601649
           ? skalesubscribeAddress
           : cfxsubscribeAddress,
         price
@@ -1620,7 +1622,6 @@ function Dashboard({
     const cfxWeb3 = new Web3(window.config.conflux_endpoint);
     const baseWeb3 = new Web3(window.config.base_endpoint);
     const skaleWeb3 = new Web3(window.config.skale_endpoint);
-
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
@@ -1672,7 +1673,7 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmount(token)
         : chainId === 8453
         ? await window.getEstimatedTokenSubscriptionAmountBase(token)
-        : chainId === 37084624
+        : chainId === 1482601649
         ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
@@ -1722,7 +1723,7 @@ function Dashboard({
           setisApproved(false);
           setapproveStatus("initial");
         }
-      } else if (chainId === 37084624) {
+      } else if (chainId === 1482601649) {
         const result = await subscribeTokencontractskale.methods
           .allowance(coinbase, skalesubscribeAddress)
           .call()
@@ -1736,8 +1737,7 @@ function Dashboard({
           setisApproved(false);
           setapproveStatus("initial");
         }
-      } 
-      else if (chainId === 1030) {
+      } else if (chainId === 1030) {
         const result = await subscribeTokencontractcfx.methods
           .allowance(coinbase, confluxsubscribeAddress)
           .call()
@@ -1785,7 +1785,7 @@ function Dashboard({
           ? "SUBSCRIPTION_CFX"
           : chainId === 8453
           ? "SUBSCRIPTION_BASE"
-          : chainId === 37084624
+          : chainId === 1482601649
           ? "SUBSCRIPTION_SKALE"
           : "",
     });
@@ -1795,7 +1795,29 @@ function Dashboard({
     await subscriptionContract.methods
       .subscribe(selectedSubscriptionToken, price)
       .send({ from: await window.getCoinbase() })
-      .then(() => {
+      .then((data) => {
+        if (dailyBonusPopup === true) {
+          setPremiumTxHash(data.transactionHash);
+          const selectedchain =
+            chainId === 1
+              ? "eth"
+              : chainId === 56
+              ? "bnb"
+              : chainId === 43114
+              ? "avax"
+              : chainId === 1030
+              ? "cfx"
+              : chainId === 8453
+              ? "base"
+              : chainId === 1482601649
+              ? "skale"
+              : "";
+          setselectedChainforPremium(selectedchain);
+
+          setTimeout(() => {
+            setgetPremiumPopup(false);
+          }, 2000);
+        }
         setloadspinnerSub(false);
         setIsPremium(true);
         handleUpdatePremiumUser(coinbase);
@@ -1928,9 +1950,9 @@ function Dashboard({
   const handleSkalePool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x235ddd0")
+        await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
-            handleSwitchNetwork(37084624);
+            handleSwitchNetwork(1482601649);
             setChainDropdown(chainDropdowns[5]);
           })
           .catch((e) => {
@@ -2008,7 +2030,7 @@ function Dashboard({
         Object.keys(window.config.subscription_tokens)[0]
       );
       handleSubscriptionTokenChange(wavaxAddress);
-    } else if (chainId === 37084624) {
+    } else if (chainId === 1482601649) {
       setChainDropdown(chainDropdowns[5]);
       setdropdownIcon("usdc");
       setdropdownTitle("USDC");
@@ -2052,7 +2074,7 @@ function Dashboard({
         window.config.subscriptionbase_tokens[selectedSubscriptionToken]
           ?.decimals
       );
-    } else if (chainId === 37084624 && selectedSubscriptionToken !== "") {
+    } else if (chainId === 1482601649 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionskale_tokens[selectedSubscriptionToken]
           ?.decimals
@@ -2391,6 +2413,7 @@ function Dashboard({
                         availableTime={goldenPassRemainingTime}
                         canBuy={canBuy}
                         openedChests={openedChests}
+                        openedSkaleChests={openedSkaleChests}
                         onDailyBonusInfoClick={() => {
                           setdailyBonusInfo(true);
                         }}
@@ -2460,7 +2483,6 @@ function Dashboard({
                       myDogeNfts={myDogeNfts}
                       myCmcNfts={myCmcNfts}
                       mySkaleNfts={mySkaleNfts}
-
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
@@ -2594,9 +2616,9 @@ function Dashboard({
                         onOutsideClick={() => setLeaderboard(false)}
                       >
                         <div
-                          className="popup-wrapper popup-active p-3"
+                          className="popup-wrapper leaderboard-popup popup-active p-3"
                           id="leaderboard"
-                          style={{ width: "40%", pointerEvents: "auto" }}
+                          style={{ width: "70%", pointerEvents: "auto" }}
                         >
                           <div className="d-flex align-items-center justify-content-between">
                             <h2
@@ -2614,7 +2636,7 @@ function Dashboard({
                               style={{ cursor: "pointer" }}
                             />
                           </div>
-                          <LeaderBoard
+                          <NewLeaderBoard
                             username={data?.getPlayer?.displayName}
                             userId={data?.getPlayer?.playerId}
                             dypBalancebnb={dypBalancebnb}
@@ -2664,7 +2686,9 @@ function Dashboard({
                             cfxPrice={cfxPrice}
                             ethTokenData={ethTokenData}
                             openedChests={openedChests}
+                            openedSkaleChests={openedSkaleChests}
                             allChests={allChests}
+                            allSkaleChests={allSkaleChests}
                             availableTime={goldenPassRemainingTime}
                             userSocialRewards={userSocialRewards}
                             dogePrice={dogePrice}
@@ -3006,7 +3030,7 @@ function Dashboard({
                                             : chainId === 8453
                                             ? window.config
                                                 .subscriptionbase_tokens
-                                            : chainId === 37084624
+                                            : chainId === 1482601649
                                             ? window.config
                                                 .subscriptionskale_tokens
                                             : window.config.subscription_tokens
@@ -3043,7 +3067,7 @@ function Dashboard({
                                                         .subscriptioncfx_tokens[
                                                         t
                                                       ]?.symbol
-                                                    : chainId === 37084624
+                                                    : chainId === 1482601649
                                                     ? window.config
                                                         .subscriptionskale_tokens[
                                                         t
@@ -3077,7 +3101,7 @@ function Dashboard({
                                                         .subscriptioncfx_tokens[
                                                         t
                                                       ]?.symbol
-                                                    : chainId === 37084624
+                                                    : chainId === 1482601649
                                                     ? window.config
                                                         .subscriptionskale_tokens[
                                                         t
@@ -3117,7 +3141,7 @@ function Dashboard({
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
-                                                  : chainId === 37084624
+                                                  : chainId === 1482601649
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
@@ -3148,7 +3172,7 @@ function Dashboard({
                                               ? window.config
                                                   .subscriptionbase_tokens[t]
                                                   ?.symbol
-                                              : chainId === 37084624
+                                              : chainId === 1482601649
                                               ? window.config
                                                   .subscriptionskale_tokens[t]
                                                   ?.symbol
@@ -3208,7 +3232,7 @@ function Dashboard({
                                 />
                               </div>
                             </div> */}
-                            {chainId === 37084624 && (
+                            {chainId === 1482601649 && (
                               <div className="gotoNebula-wrapper p-3 mb-3">
                                 <div className="d-flex w-100 justify-content-between gap-2">
                                   <span className="nebula-wrapper-text">
@@ -3216,7 +3240,7 @@ function Dashboard({
                                   </span>
                                   <a
                                     className="nebula-bridgebtn"
-                                    href="https://testnet.portal.skale.space/bridge"
+                                    href="https://portal.skale.space/bridge?from=mainnet&to=green-giddy-denebola&token=usdc&type=erc20"
                                     target="_blank"
                                     rel="noreferrer"
                                   >
@@ -3485,6 +3509,7 @@ function Dashboard({
                 onclose={() => {
                   setdailyBonusPopup(false);
                 }}
+                coinbase={coinbase}
                 standardChests={standardChests}
                 premiumChests={premiumChests}
                 standardSkaleChests={standardSkaleChests}
@@ -3506,6 +3531,13 @@ function Dashboard({
                 onSkaleChestClaimed={() => {
                   setskalecount(skalecount + 1);
                 }}
+                dummypremiumChests={dummypremiumChests}
+                onPremiumClick={() => {
+                  setgetPremiumPopup(true);
+                }}
+                premiumTxHash={premiumTxHash}
+                selectedChainforPremium={selectedChainforPremium}
+                onPremiumClickOther={()=>{setdailyBonusPopup(false); setgetPremiumPopup(true)}}
               />
               // </OutsideClickHandler>
             )}

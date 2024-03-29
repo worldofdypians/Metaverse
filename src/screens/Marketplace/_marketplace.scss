@@ -282,8 +282,8 @@
   border-radius: 20px;
   background: linear-gradient(90deg, #830e47 0%, #5065c3 100%);
   width: fit-content;
-  top: -12px;
-  position: absolute;
+  // top: -12px;
+  // position: absolute;
 
   .instaketxt {
     color: #fff;
@@ -293,6 +293,13 @@
     line-height: normal;
   }
 }
+
+.tags-position{
+  position: absolute;
+  top: -12px;
+  z-index: 4;
+}
+
 
 .instakeWrapper2 {
   z-index: 4;
@@ -1442,6 +1449,52 @@
   }
 }
 
+.new-caws-stake-wrapper{
+  border-radius: 20px;
+background: linear-gradient(90deg, #181B38 0%, #482193 168.67%);
+}
+
+.new-caws-apr{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  background-image: url('./assets/cawsAprBg.svg');
+  width: 100px;
+  height: 100px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    position: relative;
+  }
+}
+
+@media screen and (max-width: 786px) {
+  .new-caws-stake-img{
+    width: 100%;
+  }
+}
+
+.caws-apr-percent{
+  color: #FFF;
+text-align: center;
+font-size: 35px;
+font-style: italic;
+font-weight: 800;
+line-height: 35px;
+}
+
+.caws-apr{
+  color: #FFF;
+font-size: 14px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+
 .stake-stats-wrapper {
   position: absolute;
   top: 0;
@@ -2238,16 +2291,16 @@
   border-radius: 20px;
   background: linear-gradient(90deg, #d88028 0%, #a41f29 100%);
   backdrop-filter: blur(13px);
-  position: absolute;
-  top: -10px;
-  left: 10px;
+  // position: absolute;
+  // top: -10px;
+  // left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: fit-content;
   @media screen and (max-width: 786px) {
-    right: 10px;
-    left: auto;
+    // right: 10px;
+    // left: auto;
   }
 }
 

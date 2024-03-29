@@ -135,8 +135,8 @@ const MarketMint = ({
     id: "skale",
     cardTitle: "SKALE Beta Pass",
     title: "SKALE Beta Pass",
-    background: "base-mint-bg",
-    mobileBg: "baseMobileBg.png",
+    background: "skale-mint-bg",
+    mobileBg: "skaleMobileBg.webp",
   };
 
   const windowSize = useWindowSize();
@@ -449,10 +449,10 @@ const MarketMint = ({
             setStatus("");
           }
         } else if (selectedMint.id === "skale") {
-          if (chainId !== 37084624) {
+          if (chainId !== 1482601649) {
             setactiveButton(false);
             setStatus("Switch to SKALE to continue minting.");
-          } else if (chainId === 37084624) {
+          } else if (chainId === 1482601649) {
             setactiveButton(true);
             setStatus("");
           }
@@ -632,10 +632,7 @@ const MarketMint = ({
                                   : selectedMint.id === "skale" &&
                                     myskaleNFTsCreated.length === 0
                                   ? "conflux-empty"
-                                  : selectedMint.id === "skale" &&
-                                    myskaleNFTsCreated.length === 0
-                                  ? "conflux-empty"
-                                  : "base-active"
+                                  : "skale-active"
                               } d-flex justify-content-center align-items-center p-3 position-relative`}
                               style={{ height: 312 }}
                             >
@@ -1180,7 +1177,7 @@ const MarketMint = ({
                                 <div
                                   className={
                                     (isConnected === true &&
-                                      chainId !== 37084624) ||
+                                      chainId !== 1482601649) ||
                                     (status !== "Connect your wallet." &&
                                       status !== "") ||
                                     mintloading === "error" ||
@@ -1194,7 +1191,7 @@ const MarketMint = ({
                                       mintloading === "error"
                                         ? "filled-error-btn"
                                         : (isConnected === true &&
-                                            chainId !== 37084624) ||
+                                            chainId !== 1482601649) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
                                           skaleMintAllowed === 0
@@ -1203,7 +1200,7 @@ const MarketMint = ({
                                     }  px-4 w-100`}
                                     onClick={() => {
                                       isConnected === true &&
-                                      chainId === 37084624
+                                      chainId === 1482601649
                                         ? handleBaseNftMint()
                                         : showWalletConnect();
                                     }}
@@ -1211,7 +1208,7 @@ const MarketMint = ({
                                       mintloading === "error" ||
                                       mintloading === "success" ||
                                       (isConnected === true &&
-                                        chainId !== 37084624) ||
+                                        chainId !== 1482601649) ||
                                       (status !== "Connect your wallet." &&
                                         status !== "") ||
                                       skaleMintAllowed === 0
@@ -1226,7 +1223,7 @@ const MarketMint = ({
                                     }}
                                   >
                                     {(isConnected === false ||
-                                      chainId !== 37084624) && (
+                                      chainId !== 1482601649) && (
                                       <img
                                         src={
                                           mouseOver === false
@@ -1242,11 +1239,11 @@ const MarketMint = ({
                                     )}{" "}
                                     {mintloading === "initial" &&
                                     isConnected === true &&
-                                    chainId === 37084624 ? (
+                                    chainId === 1482601649 ? (
                                       "Mint"
                                     ) : mintloading === "mint" &&
                                       isConnected === true &&
-                                      chainId === 37084624 ? (
+                                      chainId === 1482601649 ? (
                                       <>
                                         <div
                                           className="spinner-border "
@@ -1255,16 +1252,16 @@ const MarketMint = ({
                                       </>
                                     ) : mintloading === "error" &&
                                       isConnected === true &&
-                                      chainId === 37084624 ? (
+                                      chainId === 1482601649 ? (
                                       "Failed"
                                     ) : mintloading === "success" &&
                                       isConnected === true &&
                                       activeButton ===
                                         (isConnected === true &&
-                                          chainId === 37084624) ? (
+                                          chainId === 1482601649) ? (
                                       "Success"
                                     ) : isConnected === true &&
-                                      chainId !== 37084624 ? (
+                                      chainId !== 1482601649 ? (
                                       " Switch Chain"
                                     ) : (
                                       "Connect wallet"
