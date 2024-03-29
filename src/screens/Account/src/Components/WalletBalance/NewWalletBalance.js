@@ -18,7 +18,7 @@ import TextField from "@mui/material/TextField";
 import dailyRewards from "./newAssets/dailyRewards.png";
 import dailyRewardsFinished from "./newAssets/dailyRewardsFinished.png";
 import gameEvents from "./newAssets/gameEvents.png";
-import readyBorder from "./newAssets/readyBorder.svg";
+import readyBorder from "./newAssets/readyBorder2.svg";
 import styled from "styled-components";
 import stakeNft from "./newAssets/stakeNft.png";
 import { shortAddress } from "../../Utils.js/hooks/shortAddress";
@@ -1413,29 +1413,23 @@ const NewWalletBalance = ({
                     }`}
                     alt=""
                   />
-                  {/* <div
-                    className="progress-bar-group d-flex align-items-center gap-3 me-2"
+                  <div
+                    className="progress-bar-group d-flex flex-column align-items-start"
                     onClick={onDailyRewardsPopupOpen}
                   >
-                    <div className="green-progress-outer">
-                      <span className="mb-0 chest-progress">
-                        {claimedChests}/10
-                      </span>
-                      <div
-                        className="green-progress-inner"
-                        style={{ width: `${claimedChests}0%` }}
-                      ></div>
-                    </div>
+                   <span className="progress-bar-title">Progress</span>
                     <div className="yellow-progress-outer">
                       <span className="mb-0 chest-progress">
-                        {claimedPremiumChests}/10
+                        {/* {claimedPremiumChests}/10 */}
+                        35%
                       </span>
                       <div
                         className="yellow-progress-inner"
-                        style={{ width: `${claimedPremiumChests}0%` }}
+                        // style={{ width: `${claimedPremiumChests}0%` }}
+                        style={{ width: `35%` }}
                       ></div>
                     </div>
-                  </div> */}
+                  </div>
                   <div className="d-flex flex-column justify-content-between h-100 p-3">
                     <div
                       className="d-flex align-items-center justify-content-between position-relative gap-1"

@@ -1853,16 +1853,16 @@
 }
 
 .daily-rewards-img {
-
   position: absolute;
-    width: 100%;
-    right: -29%;
-    bottom: -9%;
- 
+  width: 100%;
+  right: -29%;
+  bottom: -9%;
+
   // animation: pulsate 1.5s ease-out infinite;
   @media screen and (max-width: 991px) {
     width: auto;
-    top: -35%;
+    top: -43%;
+    right: -10%;
   }
 }
 .daily-rewards-img-finished {
@@ -1881,7 +1881,7 @@
 
 .progress-bar-group {
   position: absolute;
-  right: 2%;
+  left: 5%;
   bottom: 10%;
 }
 
@@ -1900,7 +1900,7 @@
 }
 .yellow-progress-outer {
   position: relative;
-  width: 60px;
+  width: 120px;
   height: 16px;
   border-radius: 12px;
   border: 1px solid rgba(234, 157, 28, 1);
@@ -2445,4 +2445,12 @@
   border-radius: 8px;
   background: rgba(237, 130, 37, 0.2);
   width: fit-content;
+}
+.progress-bar-title {
+  color: #fff;
+  text-align: center;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
