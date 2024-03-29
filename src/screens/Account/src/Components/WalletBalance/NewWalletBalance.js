@@ -202,6 +202,8 @@ const NewWalletBalance = ({
   onBalanceClick,
   claimedChests,
   claimedPremiumChests,
+  claimedSkaleChests,
+  claimedSkalePremiumChests,
   availableTime,
   canBuy,
   rewardsPopup,
@@ -291,7 +293,8 @@ const NewWalletBalance = ({
     maxRewards: "100",
     minPoints: "5,000",
     maxPoints: "50,000",
-    learnMore: "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    learnMore:
+      "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
   };
 
   const dummyCmc = {
@@ -340,12 +343,13 @@ const NewWalletBalance = ({
         maxRewards: "100",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore: "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
         eventDate: "Feb 26, 2024",
         activeTab: "dypiusv2",
       },
     },
-     {
+    {
       title: "Dogecoin",
       chain: "BNB Chain",
       linkState: "doge",
@@ -412,7 +416,6 @@ const NewWalletBalance = ({
           "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
     },
-   
 
     {
       title: "Base",
@@ -601,6 +604,19 @@ const NewWalletBalance = ({
       setuserSocialRewardsCached(cachedUserSocialRewards);
     }
   };
+
+
+
+  // const bnbClaimed = claimedChests + claimedPremiumChests;
+  // const bnbPercentage = (bnbClaimed / 20) * 100;
+
+  // const skaleClaimed = claimedSkaleChests + claimedSkalePremiumChests;
+  // const skalePercentage = (skaleClaimed / 20) * 100;
+
+const totalClaimedChests = claimedChests + claimedPremiumChests + openedSkaleChests.length;
+
+const chestPercentage = (totalClaimedChests / 40) * 100;
+
 
   const dummyEvents = [
     {
@@ -1084,7 +1100,7 @@ const NewWalletBalance = ({
               >
                 Treasure Hunt
               </h6>{" "}
-               <ActiveProfileEvent
+              <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dypv2);
                   setEventPopup(true);
@@ -1093,7 +1109,6 @@ const NewWalletBalance = ({
                 event={dypv2}
                 userEarnedUsd={dypiusPremiumEarnUsd}
               />
-
               <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyDoge);
@@ -1112,7 +1127,6 @@ const NewWalletBalance = ({
                 event={dummyCmc}
                 userEarnedUsd={cmcuserEarnUsd}
               />
-             
               {/* <ExpiredProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
@@ -1431,7 +1445,7 @@ const NewWalletBalance = ({
                   <img
                     onClick={onDailyRewardsPopupOpen}
                     // src={finished ? mageFinish : mageGoing}
-                    src={mageStarter}
+                    src={chestPercentage >= 50 && chestPercentage < 100 ? mageGoing : chestPercentage === 100 ? mageFinish : mageStarter}
                     className={`${
                       finished
                         ? "daily-rewards-img-finished"
@@ -1443,16 +1457,16 @@ const NewWalletBalance = ({
                     className="progress-bar-group d-flex flex-column align-items-start"
                     onClick={onDailyRewardsPopupOpen}
                   >
-                   <span className="progress-bar-title">Progress</span>
+                    <span className="progress-bar-title">Progress</span>
                     <div className="yellow-progress-outer">
                       <span className="mb-0 chest-progress">
                         {/* {claimedPremiumChests}/10 */}
-                        35%
+                        {chestPercentage}%
                       </span>
                       <div
                         className="yellow-progress-inner"
-                        // style={{ width: `${claimedPremiumChests}0%` }}
-                        style={{ width: `35%` }}
+                        style={{ width: `${chestPercentage}%` }}
+                        // style={{ width: `35%` }}
                       ></div>
                     </div>
                   </div>
@@ -1477,7 +1491,12 @@ const NewWalletBalance = ({
                     >
                       <div
                         className="position-relative"
-                        style={{ width: "96px", height: "40px", right: "0px" }}
+                        style={{
+                          width: "96px",
+                          height: "40px",
+                          right: "0px",
+                          bottom: "15px",
+                        }}
                       >
                         <span className="ready-to-claim mb-0">
                           {finished ? "Reset Time" : "Ready to Claim"}
@@ -1555,7 +1574,8 @@ const NewWalletBalance = ({
                           Number(dailyplayerData) +
                           Number(userRank2) +
                           Number(genesisRank2) +
-                          Number(dypiusPremiumEarnUsd) + Number(cmcuserEarnUsd) +
+                          Number(dypiusPremiumEarnUsd) +
+                          Number(cmcuserEarnUsd) +
                           Number(baseEarnUSD) +
                           Number(confluxEarnUSD) +
                           Number(gateEarnUSD) +
@@ -2419,7 +2439,7 @@ const NewWalletBalance = ({
                   to={`/account`}
                   onClick={() => {
                     setEventPopup(false);
-                    onPremiumClick()
+                    onPremiumClick();
                   }}
                 >
                   <button className="btn get-beta-btn">Get Premium</button>

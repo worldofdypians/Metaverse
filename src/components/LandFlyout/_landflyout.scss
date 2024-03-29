@@ -227,13 +227,13 @@
 
 @keyframes pulsate {
   0% {
-    filter: drop-shadow(0px 0px 0px rgba(125, 203, 217, 0.6));
+    filter: drop-shadow(0px 0px 0px rgba(202, 64, 22, 0.6));
   }
   50% {
-    filter: drop-shadow(0px 0px 15px rgba(125, 203, 217, 0.6));
+    filter: drop-shadow(0px 0px 15px rgba(202, 64, 22, 0.6));
   }
   100% {
-    filter: drop-shadow(0px 0px 0px rgba(125, 203, 217, 0.6));
+    filter: drop-shadow(0px 0px 0px rgba(202, 64, 22, 0.6));
   }
 }
 

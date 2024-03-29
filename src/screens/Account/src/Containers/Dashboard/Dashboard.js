@@ -2378,6 +2378,10 @@ function Dashboard({
                         idypBalancebnb={idypBalancebnb}
                         idypBalanceavax={idypBalanceavax}
                         showNfts={showNfts}
+                        claimedChests={claimedChests}
+                        claimedPremiumChests={claimedPremiumChests}
+                        claimedSkaleChests={claimedSkaleChests}
+                        claimedSkalePremiumChests={claimedSkalePremiumChests}
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
@@ -2406,8 +2410,6 @@ function Dashboard({
                         onBalanceClick={() => {
                           setBalancePopup(true);
                         }}
-                        claimedChests={claimedChests}
-                        claimedPremiumChests={claimedPremiumChests}
                         availableTime={goldenPassRemainingTime}
                         canBuy={canBuy}
                         openedChests={openedChests}
