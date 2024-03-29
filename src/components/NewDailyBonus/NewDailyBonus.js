@@ -94,7 +94,8 @@ const NewDailyBonus = ({
   openedSkaleChests,
   coinbase,
   dummypremiumChests,
-  onPremiumClick,onPremiumClickOther,
+  onPremiumClick,
+  onPremiumClickOther,
   premiumTxHash,
   selectedChainforPremium,
 }) => {
@@ -368,9 +369,7 @@ const NewDailyBonus = ({
   ];
 
   const [chain, setChain] = useState("bnb");
-  const [dummyArray, setDummyArray] = useState(numberArray);
   const [message, setMessage] = useState("");
-  const [reward, setReward] = useState(null);
   const [selectedChest, setSelectedChest] = useState(null);
   const [disable, setDisable] = useState(false);
   const [buyNftPopup, setBuyNftPopup] = useState(false);
@@ -455,7 +454,7 @@ const NewDailyBonus = ({
       settotalSkaleUsd(resultSkaleUsd);
     }
   };
-  console.log(isActiveIndex - 1);
+
   const handleOpBnbPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
@@ -1625,7 +1624,7 @@ const NewDailyBonus = ({
                                   }
                                 />
                               ))
-                            : window.range(0,19).map((item, index) => (
+                            : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
                                   buyNftPopup={buyNftPopup}
                                   chainId={chainId}
@@ -1656,7 +1655,9 @@ const NewDailyBonus = ({
                                   }}
                                   address={address}
                                   email={email}
-                                  rewardTypes={index+1<=10 ? 'standard' : 'premium'}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
                                   chestId={item.chestId}
                                   chestIndex={index + 1}
                                   open={item.opened}
@@ -1715,7 +1716,7 @@ const NewDailyBonus = ({
                                 }
                               />
                             ))
-                          : window.range(0,19).map((item, index) => (
+                          : window.range(0, 19).map((item, index) => (
                               <NewChestItem
                                 buyNftPopup={buyNftPopup}
                                 chainId={chainId}
@@ -1746,7 +1747,9 @@ const NewDailyBonus = ({
                                 }}
                                 address={address}
                                 email={email}
-                                rewardTypes={index+1<=10 ? 'standard' : 'premium'}
+                                rewardTypes={
+                                  index + 1 <= 10 ? "standard" : "premium"
+                                }
                                 chestId={item.chestId}
                                 chestIndex={index + 1}
                                 open={item.opened}
@@ -2068,7 +2071,7 @@ const NewDailyBonus = ({
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
                             <img src={warning} alt="" width={20} height={20} />
-                            <span className="win-desc mb-0">
+                            <span className="win-desc mb-0" style={{fontSize: 10}}>
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
                                 $
@@ -2081,8 +2084,7 @@ const NewDailyBonus = ({
                                   2
                                 )}
                               </span>{" "}
-                              reward will be allocated to you if you get one of
-                              the suggested CAWS NFTs.
+                              reward will be allocated to you if you get one of the suggested CAWS NFTs.
                             </span>
                           </div>
                         </div>
@@ -2269,7 +2271,10 @@ const NewDailyBonus = ({
                             style={{ width: 60, height: 60 }}
                             alt=""
                           />
-                          <button className="get-premium-btn px-2 py-1" onClick={onPremiumClickOther}>
+                          <button
+                            className="get-premium-btn px-2 py-1"
+                            onClick={onPremiumClickOther}
+                          >
                             Get Premium
                           </button>
                         </div>
@@ -2636,7 +2641,7 @@ const NewDailyBonus = ({
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
                             <img src={warning} alt="" width={20} height={20} />
-                            <span className="win-desc mb-0">
+                            <span className="win-desc mb-0" style={{fontSize: 10}}>
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
                                 $

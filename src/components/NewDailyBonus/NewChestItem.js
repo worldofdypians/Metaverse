@@ -519,7 +519,7 @@ const NewChestItem = ({
         <img
           className={` ${
             chain === "bnb" ? "new-chest-item-img" : "new-chest-item-img-skale"
-          } ${loading ? "chest-shake" : ""}`}
+          } ${loading ? chain === "bnb" ?  "chest-shake" : "chest-pulsate" : ""}`}
           src={
             chain === "bnb"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
@@ -538,7 +538,7 @@ const NewChestItem = ({
         />
       ) : rewardTypes === "premium" && dummypremiumChests ? (
         <img
-          className={`new-chest-item-img ${loading ? "chest-shake" : ""}`}
+          className={`new-chest-item-img ${loading ? chain === "bnb" ?  "chest-shake" : "chest-pulsate" : ""}`}
           src={
             chain === "bnb"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
