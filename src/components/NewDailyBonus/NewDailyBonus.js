@@ -1465,13 +1465,58 @@ const NewDailyBonus = ({
                             </h6>
                             <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageEmpty} height={8} alt="" />
-                                <img src={percentageEmpty} height={8} alt="" />
+                              <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
                               </div>
-                              <span className="percentage-span">62%</span>
+                              <span className="percentage-span">{parseInt(bnbPercentage)}%</span>
                             </div>
                           </div>
                           <div
@@ -1519,13 +1564,58 @@ const NewDailyBonus = ({
                             </h6>
                             <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageEmpty} height={8} alt="" />
-                                <img src={percentageEmpty} height={8} alt="" />
+                              <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
                               </div>
-                              <span className="percentage-span">62%</span>
+                              <span className="percentage-span">{parseInt(skalePercentage)}%</span>
                             </div>
                           </div>
                           <div
@@ -1555,7 +1645,7 @@ const NewDailyBonus = ({
                             <h6 className="chain-title-position mb-0">
                               Coming Soon
                             </h6>
-                            <div className="d-flex align-items-center gap-2">
+                            {/* <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
                                 <img src={percentageFilled} height={8} alt="" />
                                 <img src={percentageFilled} height={8} alt="" />
@@ -1564,7 +1654,7 @@ const NewDailyBonus = ({
                                 <img src={percentageEmpty} height={8} alt="" />
                               </div>
                               <span className="percentage-span">62%</span>
-                            </div>
+                            </div> */}
                           </div>
                           <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column">
                             <h6 className="desc-title mb-0">Magic Battle</h6>
