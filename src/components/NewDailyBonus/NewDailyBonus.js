@@ -1170,7 +1170,7 @@ const NewDailyBonus = ({
                   style={{ height: "100%", marginTop: "64px" }}
                 >
                   <div className="col-12 col-lg-5 chains-wrapper mt-3 mt-lg-0">
-                    {windowSize.width > 786 ? (
+                    {windowSize.width > 992 ? (
                       <div
                         className="d-flex flex-row flex-lg-column justify-content-between h-100 chains-container"
                         style={{ gap: "8px" }}
@@ -1625,7 +1625,7 @@ const NewDailyBonus = ({
                                   }
                                 />
                               ))
-                            : dummyArray.map((item, index) => (
+                            : window.range(0,19).map((item, index) => (
                                 <NewChestItem
                                   buyNftPopup={buyNftPopup}
                                   chainId={chainId}
@@ -1656,7 +1656,7 @@ const NewDailyBonus = ({
                                   }}
                                   address={address}
                                   email={email}
-                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  rewardTypes={index+1<=10 ? 'standard' : 'premium'}
                                   chestId={item.chestId}
                                   chestIndex={index + 1}
                                   open={item.opened}
@@ -1715,7 +1715,7 @@ const NewDailyBonus = ({
                                 }
                               />
                             ))
-                          : dummyArray.map((item, index) => (
+                          : window.range(0,19).map((item, index) => (
                               <NewChestItem
                                 buyNftPopup={buyNftPopup}
                                 chainId={chainId}
@@ -1746,7 +1746,7 @@ const NewDailyBonus = ({
                                 }}
                                 address={address}
                                 email={email}
-                                rewardTypes={item.chestType?.toLowerCase()}
+                                rewardTypes={index+1<=10 ? 'standard' : 'premium'}
                                 chestId={item.chestId}
                                 chestIndex={index + 1}
                                 open={item.opened}
@@ -2728,7 +2728,7 @@ const NewDailyBonus = ({
             </div>
           </div>
           <div className="rewards-container-outer custom-container-width d-flex align-items-center justify-content-center p-4">
-            {windowSize.width > 786 ? (
+            {windowSize.width > 992 ? (
               <div className="new-rewards-grid">
                 {dummyRewards.map((item, index) => (
                   <div
@@ -2958,234 +2958,235 @@ const NewDailyBonus = ({
                 ))}
               </div>
             ) : (
-              <Slider {...settings2} ref={rewardsRef} style={{ width: "100%" }}>
-                {dummyRewards.map((item, index) => (
-                  <div
-                    key={index}
-                    className="new-rewards-item p-2 d-flex align-items-center justify-content-center gap-2"
-                    style={{
-                      filter:
-                      item.title2 !== "needPremium"
-                        ? (rewardData &&
-                            rewardData.rewards?.find((obj) => {
-                              return (
-                                obj.rewardType === "Points" &&
-                                Number(obj.reward) <= item.threshold[1]
-                              );
-                            })) ||
-                          (rewardData &&
-                            rewardData.rewards?.find((obj) => {
-                              return (
-                                obj.rewardType !== "Points" &&
-                                Number(obj.reward) > item.min &&
-                                Number(obj.reward) <= item.max
-                              );
-                            }) &&
-                            message != "needPremium")
-                          ? "brightness(1)"
-                          : "brightness(0.5)"
-                        : (rewardData &&
-                            rewardData.rewards?.find((obj) => {
-                              return (
-                                obj.rewardType === "Points" &&
-                                Number(obj.reward) <= item.threshold[1]
-                              );
-                            })) ||
-                          (rewardData &&
-                            rewardData.rewards?.find((obj) => {
-                              return (
-                                obj.rewardType !== "Points" &&
-                                Number(obj.reward) > item.min &&
-                                Number(obj.reward) <= item.max &&
-                                message === "needPremium"
-                              );
-                            }))
-                        ? "brightness(1)"
-                        : "brightness(0.5)",
-                    }}
-                  >
-                    <div className="position-relative">
-                      <img
-                         src={require(`./assets/${item.img}${
-                          item.title2 !== "needPremium"
-                            ? (rewardData &&
-                                rewardData.rewards?.find((obj) => {
-                                  return (
-                                    obj.rewardType === "Points" &&
-                                    Number(obj.reward) <= item.threshold[1]
-                                  );
-                                })) ||
-                              (rewardData &&
-                                rewardData.rewards?.find((obj) => {
-                                  return (
-                                    obj.rewardType !== "Points" &&
-                                    Number(obj.reward) > item.min &&
-                                    Number(obj.reward) <= item.max
-                                  );
-                                }) &&
-                                message != "needPremium")
-                              ? "Active"
-                              : ""
-                            : (rewardData &&
-                                rewardData.rewards?.find((obj) => {
-                                  return (
-                                    obj.rewardType === "Points" &&
-                                    Number(obj.reward) <= item.threshold[1]
-                                  );
-                                })) ||
-                              (rewardData &&
-                                rewardData.rewards?.find((obj) => {
-                                  return (
-                                    obj.rewardType !== "Points" &&
-                                    Number(obj.reward) > item.min &&
-                                    Number(obj.reward) <= item.max
-                                  );
-                                }) &&
-                                message === "needPremium")
-                            ? "Active"
-                            : ""
-                        }Icon.png`)}
-                        width={60}
-                        height={60}
-                        alt=""
-                      />
-                      {item.title2 !== "needPremium" ? (
-                        rewardData &&
-                        rewardData.rewards?.find((obj) => {
-                          return obj.rewardType === item.title;
-                        }) &&
-                        rewardData &&
-                        rewardData.rewards?.find((obj) => {
-                          return (
-                            obj.rewardType === item.title &&
-                            obj.status === "Unclaimed" &&
-                            obj.reward > item.min &&
-                            obj.reward <= item.max
-                          );
-                        }) &&
-                        message !== "needPremium" ? (
-                          <img
-                            src={warning}
-                            width={20}
-                            height={20}
-                            className="reward-warning"
-                            alt=""
-                          />
-                        ) : rewardData &&
-                          rewardData.rewards?.find((obj) => {
-                            return obj.rewardType === item.title;
-                          }) &&
-                          rewardData &&
-                          rewardData.rewards?.find((obj) => {
-                            return (
-                              obj.rewardType === item.title &&
-                              obj.status === "Unclaimable" &&
-                              obj.reward > item.min &&
-                              obj.reward <= item.max
-                            );
-                          }) &&
-                          message !== "needPremium" ? (
-                          <img
-                            src={danger}
-                            width={20}
-                            height={20}
-                            className="reward-warning"
-                            alt=""
-                          />
-                        ) : (
-                          <></>
-                        )
-                      ) : rewardData &&
-                        rewardData.rewards?.find((obj) => {
-                          return obj.rewardType === item.title;
-                        }) &&
-                        rewardData &&
-                        rewardData.rewards?.find((obj) => {
-                          return (
-                            obj.rewardType === item.title &&
-                            obj.status === "Unclaimed" &&
-                            obj.reward > item.min &&
-                            obj.reward <= item.max
-                          );
-                        }) &&
-                        message === "needPremium" ? (
-                        <img
-                          src={warning}
-                          width={20}
-                          height={20}
-                          className="reward-warning"
-                          alt=""
-                        />
-                      ) : rewardData &&
-                        rewardData.rewards?.find((obj) => {
-                          return obj.rewardType === item.title;
-                        }) &&
-                        rewardData &&
-                        rewardData.rewards?.find((obj) => {
-                          return (
-                            obj.rewardType === item.title &&
-                            obj.status === "Unclaimable" &&
-                            obj.reward > item.min &&
-                            obj.reward <= item.max
-                          );
-                        }) &&
-                        message === "needPremium" ? (
-                        <img
-                          src={danger}
-                          width={20}
-                          height={20}
-                          className="reward-warning"
-                          alt=""
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                    <div className="d-flex align-items-bottom gap-1">
-                    <h6
-                        className="mb-0  new-reward-amount"
-                        style={{
-                          color:
-                            rewardData &&
-                            rewardData.rewards?.find((obj) => {
-                              return (
-                                obj.rewardType === "Points" &&
-                                Number(obj.reward) <= item.threshold[1]
-                              );
-                            })
-                              ? "#F2C624"
-                              : item.title2 !== "needPremium"
-                              ? rewardData.rewards?.find((obj) => {
-                                  return (
-                                    obj.rewardType === item.title &&
-                                    (obj.status !== "Unclaimed" ||
-                                      obj.status !== "Unclaimable") &&
-                                    obj.reward > item.min &&
-                                    obj.reward <= item.max
-                                  );
-                                }) && message !== "needPremium"
-                                ? "#F2C624"
-                                : "#fff"
-                              : rewardData.rewards?.find((obj) => {
-                                  return (
-                                    obj.rewardType === item.title &&
-                                    (obj.status !== "Unclaimed" ||
-                                      obj.status !== "Unclaimable") &&
-                                    obj.reward > item.min &&
-                                    obj.reward <= item.max
-                                  );
-                                }) && message === "needPremium"
-                              ? "#F2C624"
-                              : "#fff",
-                        }}
-                      >
-                        {item.amount}
-                      </h6>
-                      {/* <span className="mb-0  new-reward-type">{item.title}</span> */}
-                    </div>
-                  </div>
-                ))}
-              </Slider>
+              <></>
+              // <Slider {...settings2} ref={rewardsRef} style={{ width: "100%" }}>
+              //   {dummyRewards.map((item, index) => (
+              //     <div
+              //       key={index}
+              //       className="new-rewards-item p-2 d-flex align-items-center justify-content-center gap-2"
+              //       style={{
+              //         filter:
+              //         item.title2 !== "needPremium"
+              //           ? (rewardData &&
+              //               rewardData.rewards?.find((obj) => {
+              //                 return (
+              //                   obj.rewardType === "Points" &&
+              //                   Number(obj.reward) <= item.threshold[1]
+              //                 );
+              //               })) ||
+              //             (rewardData &&
+              //               rewardData.rewards?.find((obj) => {
+              //                 return (
+              //                   obj.rewardType !== "Points" &&
+              //                   Number(obj.reward) > item.min &&
+              //                   Number(obj.reward) <= item.max
+              //                 );
+              //               }) &&
+              //               message != "needPremium")
+              //             ? "brightness(1)"
+              //             : "brightness(0.5)"
+              //           : (rewardData &&
+              //               rewardData.rewards?.find((obj) => {
+              //                 return (
+              //                   obj.rewardType === "Points" &&
+              //                   Number(obj.reward) <= item.threshold[1]
+              //                 );
+              //               })) ||
+              //             (rewardData &&
+              //               rewardData.rewards?.find((obj) => {
+              //                 return (
+              //                   obj.rewardType !== "Points" &&
+              //                   Number(obj.reward) > item.min &&
+              //                   Number(obj.reward) <= item.max &&
+              //                   message === "needPremium"
+              //                 );
+              //               }))
+              //           ? "brightness(1)"
+              //           : "brightness(0.5)",
+              //       }}
+              //     >
+              //       <div className="position-relative">
+              //         <img
+              //            src={require(`./assets/${item.img}${
+              //             item.title2 !== "needPremium"
+              //               ? (rewardData &&
+              //                   rewardData.rewards?.find((obj) => {
+              //                     return (
+              //                       obj.rewardType === "Points" &&
+              //                       Number(obj.reward) <= item.threshold[1]
+              //                     );
+              //                   })) ||
+              //                 (rewardData &&
+              //                   rewardData.rewards?.find((obj) => {
+              //                     return (
+              //                       obj.rewardType !== "Points" &&
+              //                       Number(obj.reward) > item.min &&
+              //                       Number(obj.reward) <= item.max
+              //                     );
+              //                   }) &&
+              //                   message != "needPremium")
+              //                 ? "Active"
+              //                 : ""
+              //               : (rewardData &&
+              //                   rewardData.rewards?.find((obj) => {
+              //                     return (
+              //                       obj.rewardType === "Points" &&
+              //                       Number(obj.reward) <= item.threshold[1]
+              //                     );
+              //                   })) ||
+              //                 (rewardData &&
+              //                   rewardData.rewards?.find((obj) => {
+              //                     return (
+              //                       obj.rewardType !== "Points" &&
+              //                       Number(obj.reward) > item.min &&
+              //                       Number(obj.reward) <= item.max
+              //                     );
+              //                   }) &&
+              //                   message === "needPremium")
+              //               ? "Active"
+              //               : ""
+              //           }Icon.png`)}
+              //           width={60}
+              //           height={60}
+              //           alt=""
+              //         />
+              //         {item.title2 !== "needPremium" ? (
+              //           rewardData &&
+              //           rewardData.rewards?.find((obj) => {
+              //             return obj.rewardType === item.title;
+              //           }) &&
+              //           rewardData &&
+              //           rewardData.rewards?.find((obj) => {
+              //             return (
+              //               obj.rewardType === item.title &&
+              //               obj.status === "Unclaimed" &&
+              //               obj.reward > item.min &&
+              //               obj.reward <= item.max
+              //             );
+              //           }) &&
+              //           message !== "needPremium" ? (
+              //             <img
+              //               src={warning}
+              //               width={20}
+              //               height={20}
+              //               className="reward-warning"
+              //               alt=""
+              //             />
+              //           ) : rewardData &&
+              //             rewardData.rewards?.find((obj) => {
+              //               return obj.rewardType === item.title;
+              //             }) &&
+              //             rewardData &&
+              //             rewardData.rewards?.find((obj) => {
+              //               return (
+              //                 obj.rewardType === item.title &&
+              //                 obj.status === "Unclaimable" &&
+              //                 obj.reward > item.min &&
+              //                 obj.reward <= item.max
+              //               );
+              //             }) &&
+              //             message !== "needPremium" ? (
+              //             <img
+              //               src={danger}
+              //               width={20}
+              //               height={20}
+              //               className="reward-warning"
+              //               alt=""
+              //             />
+              //           ) : (
+              //             <></>
+              //           )
+              //         ) : rewardData &&
+              //           rewardData.rewards?.find((obj) => {
+              //             return obj.rewardType === item.title;
+              //           }) &&
+              //           rewardData &&
+              //           rewardData.rewards?.find((obj) => {
+              //             return (
+              //               obj.rewardType === item.title &&
+              //               obj.status === "Unclaimed" &&
+              //               obj.reward > item.min &&
+              //               obj.reward <= item.max
+              //             );
+              //           }) &&
+              //           message === "needPremium" ? (
+              //           <img
+              //             src={warning}
+              //             width={20}
+              //             height={20}
+              //             className="reward-warning"
+              //             alt=""
+              //           />
+              //         ) : rewardData &&
+              //           rewardData.rewards?.find((obj) => {
+              //             return obj.rewardType === item.title;
+              //           }) &&
+              //           rewardData &&
+              //           rewardData.rewards?.find((obj) => {
+              //             return (
+              //               obj.rewardType === item.title &&
+              //               obj.status === "Unclaimable" &&
+              //               obj.reward > item.min &&
+              //               obj.reward <= item.max
+              //             );
+              //           }) &&
+              //           message === "needPremium" ? (
+              //           <img
+              //             src={danger}
+              //             width={20}
+              //             height={20}
+              //             className="reward-warning"
+              //             alt=""
+              //           />
+              //         ) : (
+              //           <></>
+              //         )}
+              //       </div>
+              //       <div className="d-flex align-items-bottom gap-1">
+              //       <h6
+              //           className="mb-0  new-reward-amount"
+              //           style={{
+              //             color:
+              //               rewardData &&
+              //               rewardData.rewards?.find((obj) => {
+              //                 return (
+              //                   obj.rewardType === "Points" &&
+              //                   Number(obj.reward) <= item.threshold[1]
+              //                 );
+              //               })
+              //                 ? "#F2C624"
+              //                 : item.title2 !== "needPremium"
+              //                 ? rewardData.rewards?.find((obj) => {
+              //                     return (
+              //                       obj.rewardType === item.title &&
+              //                       (obj.status !== "Unclaimed" ||
+              //                         obj.status !== "Unclaimable") &&
+              //                       obj.reward > item.min &&
+              //                       obj.reward <= item.max
+              //                     );
+              //                   }) && message !== "needPremium"
+              //                   ? "#F2C624"
+              //                   : "#fff"
+              //                 : rewardData.rewards?.find((obj) => {
+              //                     return (
+              //                       obj.rewardType === item.title &&
+              //                       (obj.status !== "Unclaimed" ||
+              //                         obj.status !== "Unclaimable") &&
+              //                       obj.reward > item.min &&
+              //                       obj.reward <= item.max
+              //                     );
+              //                   }) && message === "needPremium"
+              //                 ? "#F2C624"
+              //                 : "#fff",
+              //           }}
+              //         >
+              //           {item.amount}
+              //         </h6>
+              //         {/* <span className="mb-0  new-reward-type">{item.title}</span> */}
+              //       </div>
+              //     </div>
+              //   ))}
+              // </Slider>
             )}
           </div>
         </div>

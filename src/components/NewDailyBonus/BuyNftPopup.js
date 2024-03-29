@@ -244,28 +244,10 @@ const BuyNftPopup = ({
       <img
         className="popup-nft-img"
         src={
-          nft.nftAddress === window.config.nft_caws_address ||
-          nft.nftAddress === window.config.nft_caws_bnb_address ||
-          nft.nftAddress === window.config.nft_caws_avax_address ||
-          nft.nftAddress === window.config.nft_caws_base_address
+          nft.nftAddress === window.config.nft_caws_address 
             ? `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nft.tokenId}.png`
-            : nft.nftAddress === window.config.nft_land_address ||
-              nft.nftAddress === window.config.nft_land_bnb_address ||
-              nft.nftAddress === window.config.nft_land_avax_address ||
-              nft.nftAddress === window.config.nft_land_base_address
+            : nft.nftAddress === window.config.nft_land_address 
             ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nft.tokenId}.png`
-            : nft.nftAddress === window.config.nft_coingecko_address
-            ? `https://dypmeta.s3.us-east-2.amazonaws.com/400x400_cg_pass.png`
-            : nft.nftAddress === window.config.nft_gate_address
-            ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate400.png`
-            : nft.nftAddress === window.config.nft_conflux_address
-            ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
-            : nft.nftAddress === window.config.nft_doge_address
-            ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
-            : nft.nftAddress === window.config.nft_cmc_address
-            ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
-            : nft.nftAddress === window.config.nft_base_address
-            ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
             : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nft.tokenId}.png`
         }
         alt=""
@@ -273,61 +255,17 @@ const BuyNftPopup = ({
 
       <span className="seller-addr d-flex gap-1 align-items-center">
         <img
-          src={
-            type === "coingecko" ||
-            type === "gate" ||
-            type === "doge" ||
-            type === "cmc" ||
-            type === "cawsbnb" ||
-            type === "landbnb"
-              ? bnbLogo
-              : type === "conflux"
-              ? confluxLogo
-              : type === "base" || type === "cawsbase" || type === "landbase"
-              ? baseLogo
-              : type === "cawsavax" || type === "landavax"
-              ? avaxLogo
-              : ethIcon
+          src={ ethIcon
           }
           alt=""
           style={{ width: 20, height: 20 }}
         />{" "}
-        {type === "coingecko" ||
-        type === "gate" ||
-        type === "doge" ||
-        type === "cawsbnb" ||
-        type === "cmc" ||
-        type === "landbnb"
-          ? "BNB Chain"
-          : type === "conflux"
-          ? "Conflux"
-          : type === "base" || type === "landbase" || type === "cawsbase"
-          ? "BASE Network"
-          : type === "cawsavax" || type === "landavax"
-          ? "Avalanche"
-          : "Ethereum"}
+        Ethereum
       </span>
 
       <div className="d-flex justify-content-between align-items-center">
         <span className="currentprice-txt">Current price</span>
-        {/* <StyledTextField
-                        error={nftPrice === "" ? true : false}
-                        size="small"
-                        id="price"
-                        name="price"
-                        value={nftPrice}
-                        type="number"
-                        required
-                        onChange={(e) => {
-                          setNftPrice(e.target.value);
-                        }}
-                        sx={{ width: "120px" }}
-                        inputProps={{
-                          inputMode: "numeric",
-                          pattern: "[0-9]*",
-                          max: 10,
-                        }}
-                      /> */}
+        
         <div className="d-flex gap-2 align-items-center">
           <img
             src={nft?.payment_priceType === 0 ? topEth : topDyp}

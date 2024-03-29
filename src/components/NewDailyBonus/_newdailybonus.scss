@@ -17,7 +17,7 @@
   transform: translate3d(0, 0, 0);
   z-index: 101;
   // box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 100%;
     .daily-bonus-inner-wrapper {
       height: 80%;
@@ -38,7 +38,7 @@
   height: 80%;
   overflow: hidden;
   filter: drop-shadow(0, 0, 0, 1000px rgba(0, 0, 0, 0.5)) !important;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 100%;
     background-image: url("./assets/dailyBonusBgMobile.png");
     height: 85%;
@@ -52,10 +52,11 @@
   background-repeat: no-repeat;
   height: 20%;
   filter: drop-shadow(0, 0, 0, 1000px rgba(0, 0, 0, 0.5));
-  @media screen and (max-width: 786px) {
-    width: 100%;
-    height: 15%;
-    background-image: url("./assets/rewardsBgMobile.png");
+  @media screen and (max-width: 991px) {
+    // width: 100%;
+    // height: 15%;
+    // background-image: url("./assets/rewardsBgMobile.png");
+    display: none !important;
   }
 }
 
@@ -72,7 +73,7 @@
   pointer-events: none;
   transition: all 0.25s;
 
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     font-size: 14px;
   }
 }
@@ -87,7 +88,7 @@
   cursor: pointer;
   border: 2px solid transparent;
   border-radius: 18px;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     // width: 207px;
     height: 100%;
   }
@@ -157,7 +158,7 @@
   border: 1px solid #303d6f;
   height: 80px;
   position: relative;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     height: 100%;
   }
 }
@@ -177,7 +178,7 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 14px;
   place-items: center;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     grid-template-columns: repeat(2, 1fr);
   }
   @media screen and (max-height: 840px) {
@@ -188,7 +189,7 @@
 .chains-wrapper {
   padding-left: 4px !important;
   padding-right: 12px !important;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     overflow-x: scroll;
   }
 }
@@ -219,6 +220,15 @@
   }
 }
 
+.new-chest-item-img-skale {
+  width: 80px;
+  height: 80px;
+  @media screen and (max-height: 800px) {
+    width: 65px;
+    height: 80px;
+  }
+}
+
 @media screen and (max-height: 875px) {
   .chain-img {
     height: 105px;
@@ -228,7 +238,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
     height: 100%;
-    @media screen and (max-width: 786px) {
+    @media screen and (max-width: 991px) {
       height: 103% !important;
     }
   }
@@ -281,7 +291,8 @@
   background-repeat: no-repeat;
   background-size: cover;
   border: 2px solid #ae2e04;
-
+  background-position: center;
+  
   .new-claim-chest-btn {
     color: #552400 !important;
     border: 2px solid #ae2e04 !important;
@@ -319,7 +330,7 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 5px;
 
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     overflow-x: scroll;
   }
 }
@@ -338,7 +349,7 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 800;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     font-size: 24px;
   }
 }
@@ -354,7 +365,7 @@
   position: absolute;
   left: 17%;
   bottom: 3%;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     bottom: 4%;
     left: 18%;
   }
@@ -364,7 +375,7 @@
   position: absolute;
   right: 17%;
   bottom: 3%;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     bottom: 4%;
     right: 18%;
   }
@@ -376,7 +387,7 @@
   font-style: normal;
   font-weight: 800;
   line-height: normal;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     font-size: 10px;
   }
 }
@@ -395,7 +406,7 @@
   transition: all 0.25s;
   pointer-events: none;
 
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 100%;
   }
 }
@@ -414,7 +425,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 100%;
   }
 }
@@ -423,7 +434,7 @@
   height: 100%;
 }
 
-@media screen and (max-width: 786px) {
+@media screen and (max-width: 991px) {
   .grid-overall-wrapper {
     height: 30%;
   }
@@ -449,7 +460,7 @@
   width: 70px;
   height: 70px;
   transition: all 0.25s;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 40px;
     height: 40px;
   }
@@ -514,7 +525,7 @@
 
 .get-premium-wrapper {
   width: 30%;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 100%;
   }
 }
@@ -531,7 +542,7 @@
   font-style: normal;
   font-weight: 800;
   line-height: normal;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     bottom: 8%;
     font-size: 8px;
   }
@@ -571,7 +582,7 @@
     margin: 5px 15px;
     border-radius: 50%;
     animation: animateDot 2s linear infinite;
-    @media screen and (max-width: 786px) {
+    @media screen and (max-width: 991px) {
       margin: 5px 5px !important;
     }
   }
@@ -655,7 +666,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     font-size: 15px;
   }
 }
@@ -675,7 +686,7 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     font-size: 16px;
   }
 }
@@ -706,7 +717,7 @@
   position: absolute;
   right: 0;
   border-radius: 0 20px 0 20px;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     display: none;
   }
 }
@@ -720,7 +731,7 @@
   margin: auto;
   width: fit-content;
 
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     position: relative;
   }
 }
@@ -756,7 +767,7 @@
 .complete-bg {
   background-image: url("./assets/completedBg.png") !important;
   background-size: 100%;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     background-size: cover !important;
   }
 }
@@ -802,7 +813,7 @@
   height: 70px;
   border-radius: 50%;
   background: #2c3867;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 40px;
     height: 40px;
   }
@@ -850,9 +861,10 @@
   padding: 5px 10px;
 }
 
-@media screen and (max-width: 786px) {
+@media screen and (max-width: 991px) {
   .message-height-wrapper {
-    height: 35%;
+    // height: 35%;
+    height: fit-content;
   }
 }
 

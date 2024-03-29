@@ -517,10 +517,18 @@ const NewChestItem = ({
     /> */}
       {rewardTypes !== "premium" ? (
         <img
-          className={`new-chest-item-img ${loading ? "chest-shake" : ""}`}
-          src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
-            open ? chestIndex + "open" : chestIndex
-          }.png`)}
+          className={` ${
+            chain === "bnb" ? "new-chest-item-img" : "new-chest-item-img-skale"
+          } ${loading ? "chest-shake" : ""}`}
+          src={
+            chain === "bnb"
+              ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
+                  open ? chestIndex + "open" : chestIndex
+                }.png`)
+              : require(`../../screens/Account/src/Components/WalletBalance/chestImages/skale/${
+                  open ? chestIndex + "open" : chestIndex
+                }.png`)
+          }
           alt=""
           style={{
             position: "relative",
@@ -531,17 +539,19 @@ const NewChestItem = ({
       ) : rewardTypes === "premium" && dummypremiumChests ? (
         <img
           className={`new-chest-item-img ${loading ? "chest-shake" : ""}`}
-          src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
-            open
-              ? chain === "bnb"
-                ? chestIndex % 2 === 1
-                  ? dummypremiumChests + "OpenCoins"
-                  : dummypremiumChests + "OpenGems"
-                : chestIndex % 2 === 0
-                ? dummypremiumChests + "OpenCoins"
-                : dummypremiumChests + "OpenGems"
-              : dummypremiumChests
-          }.png`)}
+          src={
+            chain === "bnb"
+              ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
+                  open
+                    ? chestIndex % 2 === 1
+                      ? dummypremiumChests + "OpenCoins"
+                      : dummypremiumChests + "OpenGems"
+                    : dummypremiumChests
+                }.png`)
+              : require(`../../screens/Account/src/Components/WalletBalance/chestImages/skale/premium/${
+                  open ? chestIndex - 10 + "open" : chestIndex - 10
+                }.png`)
+          }
           alt=""
           style={{
             position: "relative",
