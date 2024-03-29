@@ -1447,9 +1447,7 @@ const chestPercentage = (totalClaimedChests / 40) * 100;
                     // src={finished ? mageFinish : mageGoing}
                     src={chestPercentage >= 50 && chestPercentage < 100 ? mageGoing : chestPercentage === 100 ? mageFinish : mageStarter}
                     className={`${
-                      finished
-                        ? "daily-rewards-img-finished"
-                        : "daily-rewards-img"
+                      "daily-rewards-img"
                     }`}
                     alt=""
                   />
@@ -1457,7 +1455,8 @@ const chestPercentage = (totalClaimedChests / 40) * 100;
                     className="progress-bar-group d-flex flex-column align-items-start"
                     onClick={onDailyRewardsPopupOpen}
                   >
-                    <span className="progress-bar-title">Progress</span>
+                    {chestPercentage !== 100 &&  <span className="progress-bar-title">Progress</span>}
+                   
                     <div className="yellow-progress-outer">
                       <span className="mb-0 chest-progress">
                         {/* {claimedPremiumChests}/10 */}
