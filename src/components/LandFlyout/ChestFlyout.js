@@ -10,7 +10,7 @@ import flyoutChest from './assets/flyoutChest.png'
 import flyoutSword from './assets/flyoutSword.png'
 import sword from './assets/sword.png'
 import rockInner from './assets/rockInner.png'
-import rockOuter from './assets/rockOuter.png'
+import rockOuter from './assets/rockOuter3.png'
 
 const ChestFlyout = () => {
   const [show, setShow] = useState(false);

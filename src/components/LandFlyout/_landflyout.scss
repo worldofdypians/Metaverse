@@ -134,13 +134,13 @@
 .rock-inner {
   position: absolute;
   z-index: 1;
-  width: 100px;
+  width: 120px;
 }
 
 .rock-outer {
   position: absolute;
   z-index: 3;
-  width: 100px;
+  width: 120px;
 }
 
 @keyframes slide {
@@ -150,6 +150,8 @@
 
   50% {
     transform: translateY(-75px);
+    filter: drop-shadow(0px 10px 20px rgba(202, 64, 22, 1));
+
   }
 
   100% {
@@ -157,14 +159,28 @@
   }
 }
 
+
+// @keyframes pulsate {
+//   0% {
+//     filter: drop-shadow(0px 0px 0px rgba(202, 64, 22, 0.6));
+//   }
+//   50% {
+//     filter: drop-shadow(0px 0px 15px rgba(202, 64, 22, 0.6));
+//   }
+//   100% {
+//     filter: drop-shadow(0px 0px 0px rgba(202, 64, 22, 0.6));
+//   }
+// }
+
+
 .new-sword {
   position: absolute;
   z-index: 2;
   // top: -45px;
   transition: all 1.5s ease-in-out;
   animation: slide 5s infinite ease-in-out;
-  width: 50px;
-  left: 20px;
+  width: 60px;
+  left: 30px;
   top: -60px;
 }
 
@@ -176,6 +192,7 @@
   .new-sword{
     animation: none !important;
     top: -100px;
+    filter: drop-shadow(0px 10px 20px rgba(202, 64, 22, 1));
   }
 }
 
@@ -200,12 +217,14 @@
 }
 
 .fly-active2 {
-  right: 6.5% !important;
+  right: 13.5% !important;
   opacity: 1 !important;
-  bottom: 6.5%;
+  bottom: 75px;
   height: fit-content;
   @media screen and (max-width: 786px) {
-    right: -1.5% !important;
+    right: 30% !important;
+  bottom: 7.5% !important;
+
   }
 }
 
