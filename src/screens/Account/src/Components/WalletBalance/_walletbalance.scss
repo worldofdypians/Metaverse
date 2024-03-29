@@ -1857,7 +1857,7 @@
   width: 100%;
   right: -29%;
   bottom: -9%;
-
+  z-index: 1;
   // animation: pulsate 1.5s ease-out infinite;
   @media screen and (max-width: 991px) {
     width: auto;
