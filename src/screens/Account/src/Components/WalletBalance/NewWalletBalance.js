@@ -43,8 +43,8 @@ import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.
 import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
-import newCawsStake from '../../../../Marketplace/assets/newCawsStake.png'
-import newCawsStakeMobile from '../../../../Marketplace/assets/newCawsStakeMobile.png'
+import newCawsStake from "../../../../Marketplace/assets/newCawsStake.png";
+import newCawsStakeMobile from "../../../../Marketplace/assets/newCawsStakeMobile.png";
 import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
@@ -237,7 +237,9 @@ const NewWalletBalance = ({
   dypiusEarnTokens,
   cmcuserEarnUsd,
   cmcuserEarnETH,
-  cmcuserPoints,onPremiumClick,openedSkaleChests
+  cmcuserPoints,
+  onPremiumClick,
+  openedSkaleChests,
   // hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -605,18 +607,16 @@ const NewWalletBalance = ({
     }
   };
 
-
-
   // const bnbClaimed = claimedChests + claimedPremiumChests;
   // const bnbPercentage = (bnbClaimed / 20) * 100;
 
   // const skaleClaimed = claimedSkaleChests + claimedSkalePremiumChests;
   // const skalePercentage = (skaleClaimed / 20) * 100;
 
-const totalClaimedChests = claimedChests + claimedPremiumChests + openedSkaleChests.length;
+  const totalClaimedChests =
+    claimedChests + claimedPremiumChests + openedSkaleChests.length;
 
-const chestPercentage = (totalClaimedChests / 40) * 100;
-
+  const chestPercentage = (totalClaimedChests / 40) * 100;
 
   const dummyEvents = [
     {
@@ -702,19 +702,18 @@ const chestPercentage = (totalClaimedChests / 40) * 100;
               if (
                 innerChest.rewardType === "Money" &&
                 innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable"  &&  innerChest.status === "Claimed"
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
               ) {
                 moneyResult += Number(innerChest.reward);
               }
-              
             });
           }
         }
       });
     }
-    
-    if(openedSkaleChests && openedSkaleChests.length > 0) {
-      
+
+    if (openedSkaleChests && openedSkaleChests.length > 0) {
       openedSkaleChests.forEach((chest) => {
         if (chest.isOpened === true) {
           if (chest.rewards.length > 1) {
@@ -722,11 +721,11 @@ const chestPercentage = (totalClaimedChests / 40) * 100;
               if (
                 innerChest.rewardType === "Money" &&
                 innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable"  &&  innerChest.status === "Claimed"
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
               ) {
                 moneyResult += Number(innerChest.reward);
               }
-              
             });
           }
         }
@@ -1445,18 +1444,24 @@ const chestPercentage = (totalClaimedChests / 40) * 100;
                   <img
                     onClick={onDailyRewardsPopupOpen}
                     // src={finished ? mageFinish : mageGoing}
-                    src={chestPercentage >= 50 && chestPercentage < 100 ? mageGoing : chestPercentage === 100 ? mageFinish : mageStarter}
-                    className={`${
-                      "daily-rewards-img"
-                    }`}
+                    src={
+                      chestPercentage >= 50 && chestPercentage < 100
+                        ? mageGoing
+                        : chestPercentage === 100
+                        ? mageFinish
+                        : mageStarter
+                    }
+                    className={`${"daily-rewards-img"}`}
                     alt=""
                   />
                   <div
                     className="progress-bar-group d-flex flex-column align-items-start"
                     onClick={onDailyRewardsPopupOpen}
                   >
-                    {!finished &&  <span className="progress-bar-title">Progress</span>}
-                   
+                    {!finished && (
+                      <span className="progress-bar-title">Progress</span>
+                    )}
+
                     <div className="yellow-progress-outer">
                       <span className="mb-0 chest-progress">
                         {/* {claimedPremiumChests}/10 */}
@@ -1473,10 +1478,8 @@ const chestPercentage = (totalClaimedChests / 40) * 100;
                     <div
                       className="d-flex align-items-center justify-content-between position-relative gap-1"
                       style={{ width: "fit-content" }}
-                      onClick={onDailyBonusInfoClick}
                     >
                       <h6 className="profile-div-title mb-0">Daily Bonus</h6>
-                      
                     </div>
 
                     <div
@@ -2506,26 +2509,35 @@ const chestPercentage = (totalClaimedChests / 40) * 100;
               />
             </div>
             <div className="new-caws-stake-wrapper d-flex align-items-center w-100 ">
-            
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-              
                 <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
                   <div className="d-flex flex-column gap-2">
-                    <h6 className="market-stake-title" style={{fontSize: "20px"}}>
-                    Cats and Watches Society (CAWS)
+                    <h6
+                      className="market-stake-title"
+                      style={{ fontSize: "20px" }}
+                    >
+                      Cats and Watches Society (CAWS)
                     </h6>
-                    <span className="market-stake-desc" style={{fontSize: "11px"}}>
-                    Stake your CAWS NFTs to earn daily ETH rewards.
+                    <span
+                      className="market-stake-desc"
+                      style={{ fontSize: "11px" }}
+                    >
+                      Stake your CAWS NFTs to earn daily ETH rewards.
                     </span>
                   </div>
-                  <div className="d-flex align-items-center gap-3">
-                  </div>
+                  <div className="d-flex align-items-center gap-3"></div>
                 </div>
                 <div className="new-caws-apr d-flex flex-column align-items-center justify-content-center position-relative">
                   <h6 className="caws-apr-percent mb-0">25%</h6>
                   <span className="caws-apr">APR</span>
                 </div>
-               <img className="new-caws-stake-img" src={windowSize.width < 786 ? newCawsStakeMobile : newCawsStake} alt="" />
+                <img
+                  className="new-caws-stake-img"
+                  src={
+                    windowSize.width < 786 ? newCawsStakeMobile : newCawsStake
+                  }
+                  alt=""
+                />
               </div>
             </div>
             <div className="d-flex justify-content-center mt-4">
