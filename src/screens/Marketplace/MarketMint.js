@@ -22,13 +22,15 @@ import nextArrow from "./assets/nextArrow1.svg";
 import confluxActive from "./assets/confluxActive.png";
 import coin98Active from "./assets/coin98Active.png";
 import coingeckoActive from "./assets/coingeckoActive.png";
-import baseActive from "./assets/baseActive.webp";
+import skaleActive from "./assets/upcomingSkaleMobile.webp";
 import timepieceActive from "./assets/timepieceActive.png";
 import gateActive from "./assets/gateActive.png";
 import kucoinActive from "./assets/kucoinActive.png";
 import blockChainIcon from "./assets/blockChainIcon.svg";
 import confluxLogo from "./assets/confluxLogo.svg";
 import baseLogo from "./assets/baseLogo.svg";
+import skaleLogo from "./assets/skaleIcon.svg";
+
 import avaxLogo from "./assets/avaxLogo.svg";
 import bnbLogo from "./assets/bnbLogo.svg";
 import wodLogo from "./assets/wodIcon.png";
@@ -75,6 +77,8 @@ const MarketMint = ({
   handleBaseNftMint,
   mybaseNFTsCreated,
   baseMintAllowed,
+  myskaleNFTsCreated,
+  skaleMintAllowed,
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -128,11 +132,11 @@ const MarketMint = ({
   // };
 
   const baseData = {
-    id: "base",
-    cardTitle: "Base Beta Pass",
-    title: "Base Beta Pass",
-    background: "base-mint-bg",
-    mobileBg: "baseMobileBg.png",
+    id: "skale",
+    cardTitle: "SKALE Beta Pass",
+    title: "SKALE Beta Pass",
+    background: "skale-mint-bg",
+    mobileBg: "skaleMobileBg.webp",
   };
 
   const windowSize = useWindowSize();
@@ -181,15 +185,16 @@ const MarketMint = ({
     const baseresult = await baseContract.methods.totalSupply().call();
     setcBaseSold(baseresult);
   };
-
+ 
   useEffect(() => {
-    if (params.id === "base") {
+    if (params.id === "skale") {
       setSelectedMint(baseData);
+      setMintTitle('skale')
     } else if (params.id === "timepiece") {
       setSelectedMint(timepieceData);
       setMintTitle("timepiece");
     }
-     getTotalSupply();
+    getTotalSupply();
   }, []);
 
   useEffect(() => {
@@ -204,7 +209,7 @@ const MarketMint = ({
     //   title: "Avalanche Pass",
     //   eventId: "avax",
     //   desc: "Gain entry to metaverse, and join exclusive Avalanche event with special ticket.",
-    //   img: baseActive,
+    //   img: skaleActive,
     //   data: avaxData,
     //   class: "mint-1",
     // },
@@ -251,12 +256,12 @@ const MarketMint = ({
     //   class: "mint-6",
     // },
     {
-      title: "Base Pass",
-      eventId: "base",
-      desc: "Gain entry to metaverse, and join exclusive Base event with special ticket.",
-      img: baseActive,
+      title: "SKALE Pass",
+      eventId: "skale",
+      desc: "Gain entry to metaverse, and join exclusive SKALE event with special ticket.",
+      img: skaleActive,
       data: baseData,
-      class: "mint-7",
+      class: "mint-skale",
     },
     {
       title: "Caws Timepiece",
@@ -431,7 +436,7 @@ const MarketMint = ({
       }
     }
   }, [nftCount, coinbase, cawsArray.length]);
-
+ 
   useEffect(() => {
     if (isConnected) {
       if (chainId !== undefined) {
@@ -443,11 +448,11 @@ const MarketMint = ({
             setactiveButton(true);
             setStatus("");
           }
-        } else if (selectedMint.id === "base") {
-          if (chainId !== 8453) {
+        } else if (selectedMint.id === "skale") {
+          if (chainId !== 1482601649) {
             setactiveButton(false);
-            setStatus("Switch to Base Network to continue minting.");
-          } else if (chainId === 8453) {
+            setStatus("Switch to SKALE to continue minting.");
+          } else if (chainId === 1482601649) {
             setactiveButton(true);
             setStatus("");
           }
@@ -474,8 +479,8 @@ const MarketMint = ({
       if (totalCreated > 0) {
         setshowBadge(true);
       }
-    } else if (coinbase && isConnected && selectedMint.id === "base") {
-      if (mybaseNFTsCreated > 0) {
+    } else if (coinbase && isConnected && selectedMint.id === "skale") {
+      if (myskaleNFTsCreated > 0) {
         setshowBadge(true);
       }
     }
@@ -533,6 +538,9 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
                   >
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     Live
                   </h6>
                   <h6
@@ -541,9 +549,6 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
-                    {/* <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div> */}
                     Upcoming
                   </h6>
                   <h6
@@ -560,7 +565,7 @@ const MarketMint = ({
 
               {activeTab === "live" && (
                 <>
-                  {/* <div className="pb-5 px-0 position-relative">
+                  <div className="pb-5 px-0 position-relative">
                     {activeSlide > 0 && (
                       <div className="prev-arrow-nft" onClick={firstPrev}>
                         <img src={nextArrow} alt="" />
@@ -596,7 +601,7 @@ const MarketMint = ({
                         />
                       ))}
                     </Slider>
-                  </div> */}
+                  </div>
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -610,10 +615,10 @@ const MarketMint = ({
                                 </div>
                               )}
                             {showBadge &&
-                              mybaseNFTsCreated.length > 0 &&
-                              selectedMint.id === "base" && (
+                              myskaleNFTsCreated.length > 0 &&
+                              selectedMint.id === "skale" && (
                                 <div className="totalcreated">
-                                  <span>{mybaseNFTsCreated.length}</span>
+                                  <span>{myskaleNFTsCreated.length}</span>
                                 </div>
                               )}
                             <div
@@ -624,13 +629,10 @@ const MarketMint = ({
                                   : selectedMint.id === "timepiece" &&
                                     totalCreated === 0
                                   ? "genesis-land-empty"
-                                  : selectedMint.id === "base" &&
-                                    mybaseNFTsCreated.length === 0
+                                  : selectedMint.id === "skale" &&
+                                    myskaleNFTsCreated.length === 0
                                   ? "conflux-empty"
-                                  : selectedMint.id === "base" &&
-                                    mybaseNFTsCreated.length === 0
-                                  ? "conflux-empty"
-                                  : "base-active"
+                                  : "skale-active"
                               } d-flex justify-content-center align-items-center p-3 position-relative`}
                               style={{ height: 312 }}
                             >
@@ -680,12 +682,12 @@ const MarketMint = ({
                               </button>
                             </div>
                           )}
-                          {selectedMint.id === "base" && (
+                          {selectedMint.id === "skale" && (
                             <div
                               className={
                                 isConnected === false ||
                                 activeButton === false ||
-                                mybaseNFTsCreated.length === 0
+                                myskaleNFTsCreated.length === 0
                                   ? "linear-border-disabled"
                                   : "linear-border"
                               }
@@ -694,20 +696,20 @@ const MarketMint = ({
                                 className={`btn ${
                                   isConnected === false ||
                                   activeButton === false ||
-                                  mybaseNFTsCreated.length === 0
+                                  myskaleNFTsCreated.length === 0
                                     ? "outline-btn-disabled"
                                     : "outline-btn"
                                 } px-5 w-100`}
                                 disabled={
                                   isConnected === false ||
                                   activeButton === false ||
-                                  mybaseNFTsCreated.length === 0
+                                  myskaleNFTsCreated.length === 0
                                 }
-                                to={`/marketplace/nft/${mybaseNFTsCreated[0]}/${window.config.nft_base_address}`}
+                                to={`/marketplace/nft/${myskaleNFTsCreated[0]}/${window.config.nft_skale_address}`}
                                 onClick={() => {
                                   updateViewCount(
-                                    mybaseNFTsCreated[0],
-                                    window.config.nft_base_address
+                                    myskaleNFTsCreated[0],
+                                    window.config.nft_skale_address
                                   );
                                 }}
                               >
@@ -749,7 +751,7 @@ const MarketMint = ({
                                   </span>
                                 </div>
                               ))}
-                              {mintTitle === "base" ? (
+                              {mintTitle === "skale" ? (
                                 <div className="d-flex align-items-center gap-2">
                                   <img
                                     src={blockChainIcon}
@@ -758,7 +760,7 @@ const MarketMint = ({
                                     alt=""
                                   />
                                   <span className="mint-benefits-title">
-                                    Minting is available on Base Network
+                                    Minting is available on SKALE
                                   </span>
                                 </div>
                               ) : mintTitle === "coingecko" ||
@@ -933,13 +935,13 @@ const MarketMint = ({
                                   height={16}
                                 />
                               </span>
-                            ) : mintTitle === "base" ? (
+                            ) : mintTitle === "skale" ? (
                               <span
                                 className="limit-span position-relative d-flex align-items-center gap-2"
                                 style={{ bottom: "0px" }}
                               >
-                                Available only on Base Network
-                                <img src={baseLogo} alt="" />
+                                Available only on SKALE
+                                <img src={skaleLogo} alt="" />
                               </span>
                             ) : mintTitle === "coin98" ||
                               mintTitle === "coingecko" ||
@@ -1127,7 +1129,7 @@ const MarketMint = ({
                                   </span>
                                   <div className="d-flex align-items-center gap-2">
                                     <h6 className="latest-mint-number mb-0">
-                                      {baseMintAllowed} NFT
+                                      {skaleMintAllowed} NFT
                                     </h6>
                                   </div>
                                 </div>
@@ -1146,7 +1148,7 @@ const MarketMint = ({
                             )}
 
                             <span className="latest-mint-currency mb-0">
-                              *Important: You can only mint one Base Beta Pass
+                              *Important: You can only mint one SKALE Beta Pass
                               NFT per wallet.
                             </span>
                             <hr className="gray-divider" />
@@ -1154,8 +1156,8 @@ const MarketMint = ({
                               className="limit-span position-relative d-flex align-items-center gap-2"
                               style={{ bottom: "0px" }}
                             >
-                              Available only on Base Network
-                              <img src={baseLogo} alt="" />
+                              Available only on SKALE
+                              <img src={skaleLogo} alt="" />
                             </span>
                             {mintStatus.length > 0 && (
                               <span
@@ -1175,11 +1177,11 @@ const MarketMint = ({
                                 <div
                                   className={
                                     (isConnected === true &&
-                                      chainId !== 8453) ||
+                                      chainId !== 1482601649) ||
                                     (status !== "Connect your wallet." &&
                                       status !== "") ||
                                     mintloading === "error" ||
-                                    baseMintAllowed === 0
+                                    skaleMintAllowed === 0
                                       ? "linear-border-disabled"
                                       : "linear-border"
                                   }
@@ -1189,15 +1191,16 @@ const MarketMint = ({
                                       mintloading === "error"
                                         ? "filled-error-btn"
                                         : (isConnected === true &&
-                                            chainId !== 8453) ||
+                                            chainId !== 1482601649) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
-                                          baseMintAllowed === 0
+                                          skaleMintAllowed === 0
                                         ? "outline-btn-disabled"
                                         : "filled-btn"
                                     }  px-4 w-100`}
                                     onClick={() => {
-                                      isConnected === true && chainId === 8453
+                                      isConnected === true &&
+                                      chainId === 1482601649
                                         ? handleBaseNftMint()
                                         : showWalletConnect();
                                     }}
@@ -1205,10 +1208,10 @@ const MarketMint = ({
                                       mintloading === "error" ||
                                       mintloading === "success" ||
                                       (isConnected === true &&
-                                        chainId !== 8453) ||
+                                        chainId !== 1482601649) ||
                                       (status !== "Connect your wallet." &&
                                         status !== "") ||
-                                      baseMintAllowed === 0
+                                      skaleMintAllowed === 0
                                         ? true
                                         : false
                                     }
@@ -1220,7 +1223,7 @@ const MarketMint = ({
                                     }}
                                   >
                                     {(isConnected === false ||
-                                      chainId !== 8453) && (
+                                      chainId !== 1482601649) && (
                                       <img
                                         src={
                                           mouseOver === false
@@ -1236,11 +1239,11 @@ const MarketMint = ({
                                     )}{" "}
                                     {mintloading === "initial" &&
                                     isConnected === true &&
-                                    chainId === 8453 ? (
+                                    chainId === 1482601649 ? (
                                       "Mint"
                                     ) : mintloading === "mint" &&
                                       isConnected === true &&
-                                      chainId === 8453 ? (
+                                      chainId === 1482601649 ? (
                                       <>
                                         <div
                                           className="spinner-border "
@@ -1249,16 +1252,16 @@ const MarketMint = ({
                                       </>
                                     ) : mintloading === "error" &&
                                       isConnected === true &&
-                                      chainId === 8453 ? (
+                                      chainId === 1482601649 ? (
                                       "Failed"
                                     ) : mintloading === "success" &&
                                       isConnected === true &&
                                       activeButton ===
                                         (isConnected === true &&
-                                          chainId === 8453) ? (
+                                          chainId === 1482601649) ? (
                                       "Success"
                                     ) : isConnected === true &&
-                                      chainId !== 8453 ? (
+                                      chainId !== 1482601649 ? (
                                       " Switch Chain"
                                     ) : (
                                       "Connect wallet"

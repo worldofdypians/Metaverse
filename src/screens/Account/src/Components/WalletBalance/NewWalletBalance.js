@@ -18,7 +18,7 @@ import TextField from "@mui/material/TextField";
 import dailyRewards from "./newAssets/dailyRewards.png";
 import dailyRewardsFinished from "./newAssets/dailyRewardsFinished.png";
 import gameEvents from "./newAssets/gameEvents.png";
-import readyBorder from "./newAssets/readyBorder.svg";
+import readyBorder from "./newAssets/readyBorder2.svg";
 import styled from "styled-components";
 import stakeNft from "./newAssets/stakeNft.png";
 import { shortAddress } from "../../Utils.js/hooks/shortAddress";
@@ -44,13 +44,17 @@ import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.
 import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
-
+import newCawsStake from "../../../../Marketplace/assets/newCawsStake.png";
+import newCawsStakeMobile from "../../../../Marketplace/assets/newCawsStakeMobile.png";
 import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
 import grayDollar from "./assets/grayDollar.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
+import mageStarter from "./assets/mageStarter.png";
+import mageGoing from "./assets/mageGoing.png";
+import mageFinish from "./assets/mageFinish.png";
 import infoIcon from "../../../../Marketplace/assets/infoIcon.svg";
 import coingeckoPopupImage from "./assets/coingeckoPopupImage.png";
 import eventPopupImageBase from "./assets/eventPopupImageBase.png";
@@ -198,6 +202,8 @@ const NewWalletBalance = ({
   onBalanceClick,
   claimedChests,
   claimedPremiumChests,
+  claimedSkaleChests,
+  claimedSkalePremiumChests,
   availableTime,
   canBuy,
   rewardsPopup,
@@ -231,7 +237,9 @@ const NewWalletBalance = ({
   dypiusEarnTokens,
   cmcuserEarnUsd,
   cmcuserEarnETH,
-  cmcuserPoints,onPremiumClick
+  cmcuserPoints,
+  onPremiumClick,
+  openedSkaleChests,
   // hasNft,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -287,7 +295,8 @@ const NewWalletBalance = ({
     maxRewards: "100",
     minPoints: "5,000",
     maxPoints: "50,000",
-    learnMore: "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    learnMore:
+      "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
   };
 
   const dummyCmc = {
@@ -336,12 +345,13 @@ const NewWalletBalance = ({
         maxRewards: "100",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore: "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
         eventDate: "Feb 26, 2024",
         activeTab: "dypiusv2",
       },
     },
-     {
+    {
       title: "Dogecoin",
       chain: "BNB Chain",
       linkState: "doge",
@@ -408,7 +418,6 @@ const NewWalletBalance = ({
           "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
     },
-   
 
     {
       title: "Base",
@@ -598,6 +607,17 @@ const NewWalletBalance = ({
     }
   };
 
+  // const bnbClaimed = claimedChests + claimedPremiumChests;
+  // const bnbPercentage = (bnbClaimed / 20) * 100;
+
+  // const skaleClaimed = claimedSkaleChests + claimedSkalePremiumChests;
+  // const skalePercentage = (skaleClaimed / 20) * 100;
+
+  const totalClaimedChests =
+    claimedChests + claimedPremiumChests + openedSkaleChests.length;
+
+  const chestPercentage = (totalClaimedChests / 40) * 100;
+
   const dummyEvents = [
     {
       name: "Treasure Hunt",
@@ -675,19 +695,41 @@ const NewWalletBalance = ({
     var moneyResult = 0;
 
     if (openedChests && openedChests.length > 0) {
-      for (let i = 0; i < openedChests.length; i++) {
-        if (openedChests[i].rewards.find((obj) => obj.rewardType === "Money")) {
-          if (
-            !openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
-              ?.details
-          ) {
-            moneyResult += Number(
-              openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
-                .reward
-            );
+      openedChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
           }
         }
-      }
+      });
+    }
+
+    if (openedSkaleChests && openedSkaleChests.length > 0) {
+      openedSkaleChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
     }
 
     setTreasureRewardMoney(moneyResult);
@@ -1057,7 +1099,7 @@ const NewWalletBalance = ({
               >
                 Treasure Hunt
               </h6>{" "}
-               <ActiveProfileEvent
+              <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dypv2);
                   setEventPopup(true);
@@ -1066,7 +1108,6 @@ const NewWalletBalance = ({
                 event={dypv2}
                 userEarnedUsd={dypiusPremiumEarnUsd}
               />
-
               <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyDoge);
@@ -1085,7 +1126,6 @@ const NewWalletBalance = ({
                 event={dummyCmc}
                 userEarnedUsd={cmcuserEarnUsd}
               />
-             
               {/* <ExpiredProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
@@ -1398,37 +1438,37 @@ const NewWalletBalance = ({
             <div className="row gap-3 gap-lg-0">
               <div className="col-12 col-lg-4">
                 <div className="daily-bonus-wrapper">
-                  <div className="green-div"></div>
+                  <div className="red-div"></div>
                   <img
                     onClick={onDailyRewardsPopupOpen}
-                    src={finished ? dailyRewardsFinished : dailyRewards}
-                    className={`${
-                      finished
-                        ? "daily-rewards-img-finished"
-                        : "daily-rewards-img"
-                    }`}
+                    // src={finished ? mageFinish : mageGoing}
+                    src={
+                      chestPercentage >= 50 && chestPercentage < 100
+                        ? mageGoing
+                        : chestPercentage === 100
+                        ? mageFinish
+                        : mageStarter
+                    }
+                    className={`${"daily-rewards-img"}`}
                     alt=""
                   />
                   <div
-                    className="progress-bar-group d-flex align-items-center gap-3 me-2"
+                    className="progress-bar-group d-flex flex-column align-items-start"
                     onClick={onDailyRewardsPopupOpen}
                   >
-                    <div className="green-progress-outer">
-                      <span className="mb-0 chest-progress">
-                        {claimedChests}/10
-                      </span>
-                      <div
-                        className="green-progress-inner"
-                        style={{ width: `${claimedChests}0%` }}
-                      ></div>
-                    </div>
+                    {!finished && (
+                      <span className="progress-bar-title">Progress</span>
+                    )}
+
                     <div className="yellow-progress-outer">
                       <span className="mb-0 chest-progress">
-                        {claimedPremiumChests}/10
+                        {/* {claimedPremiumChests}/10 */}
+                        {chestPercentage}%
                       </span>
                       <div
                         className="yellow-progress-inner"
-                        style={{ width: `${claimedPremiumChests}0%` }}
+                        style={{ width: `${chestPercentage}%` }}
+                        // style={{ width: `35%` }}
                       ></div>
                     </div>
                   </div>
@@ -1436,14 +1476,8 @@ const NewWalletBalance = ({
                     <div
                       className="d-flex align-items-center justify-content-between position-relative gap-1"
                       style={{ width: "fit-content" }}
-                      onClick={onDailyBonusInfoClick}
                     >
                       <h6 className="profile-div-title mb-0">Daily Bonus</h6>
-                      <img
-                        src={require("./assets/greenInfo.svg").default}
-                        alt=""
-                        className="tooltipicon"
-                      />
                     </div>
 
                     <div
@@ -1453,7 +1487,12 @@ const NewWalletBalance = ({
                     >
                       <div
                         className="position-relative"
-                        style={{ width: "96px", height: "40px", right: "0px" }}
+                        style={{
+                          width: "96px",
+                          height: "40px",
+                          right: "0px",
+                          bottom: "15px",
+                        }}
                       >
                         <span className="ready-to-claim mb-0">
                           {finished ? "Reset Time" : "Ready to Claim"}
@@ -1531,7 +1570,8 @@ const NewWalletBalance = ({
                           Number(dailyplayerData) +
                           Number(userRank2) +
                           Number(genesisRank2) +
-                          Number(dypiusPremiumEarnUsd) + Number(cmcuserEarnUsd) +
+                          Number(dypiusPremiumEarnUsd) +
+                          Number(cmcuserEarnUsd) +
                           Number(baseEarnUSD) +
                           Number(confluxEarnUSD) +
                           Number(gateEarnUSD) +
@@ -2393,7 +2433,7 @@ const NewWalletBalance = ({
                   to={`/account`}
                   onClick={() => {
                     setEventPopup(false);
-                    onPremiumClick()
+                    onPremiumClick();
                   }}
                 >
                   <button className="btn get-beta-btn">Get Premium</button>
@@ -2464,83 +2504,24 @@ const NewWalletBalance = ({
                 alt=""
               />
             </div>
-            <div className="d-flex flex-column gap-3 mb-4 nft-popup-container">
-              <div className="row w-100  m-0  position-relative">
-                {/* {myLandstakes && myLandstakes.length > 0 && (
-                  <div className="instakeWrapper">
-                    <span className="instaketxt">In stake</span>
+            <div className="new-caws-stake-wrapper d-flex align-items-center w-100 ">
+              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
+                  <div className="d-flex flex-column gap-2">
+                    <h6
+                      className="market-stake-title"
+                      style={{ fontSize: "20px" }}
+                    >
+                      Cats and Watches Society (CAWS)
+                    </h6>
+                    <span
+                      className="market-stake-desc"
+                      style={{ fontSize: "11px" }}
+                    >
+                      Stake your CAWS NFTs to earn daily ETH rewards.
+                    </span>
                   </div>
-                )} */}
-                <div className="col-12 px-0">
-                  <div className="caws-wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
-                    <div className="stake-stats-wrapper flex-row flex-lg-column d-flex align-items-center justify-content-center gap-4 gap-lg-2">
-                      <div className="stake-stats-item d-flex flex-column align-items-center justify-content-center">
-                        <h6>50%</h6>
-                        <span>APR</span>
-                      </div>
-                      <div className="stake-stats-item d-flex flex-column align-items-center justify-content-center">
-                        <h6>ETH</h6>
-                        <span>Rewards</span>
-                      </div>
-                      <div className="stake-stats-item d-flex flex-column align-items-center justify-content-center">
-                        <h6>No Lock</h6>
-                        <span>Lock Time</span>
-                      </div>
-                    </div>
-                    <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                      <div className="d-flex flex-column gap-4">
-                        <div className="d-flex flex-column gap-2">
-                          <h6
-                            className="market-stake-title"
-                            style={{ fontSize: "16px" }}
-                          >
-                            World of Dypians Land & CAWS
-                          </h6>
-                          <span
-                            className="market-stake-desc"
-                            style={{ fontSize: "11px" }}
-                          >
-                            Combine your Land and CAWS NFTs to earn daily ETH
-                            rewards.
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center gap-3">
-                          <NavLink
-                            to={"/marketplace/stake"}
-                            state={{ modal: "nftModal" }}
-                            className="btn pill-btn px-3 py-2"
-                            style={{ fontSize: "12px" }}
-                            // onClick={() => setNftModal(true)}
-                          >
-                            Deposit
-                          </NavLink>
-                          <NavLink
-                            to={"/marketplace/stake"}
-                            state={{ modal: "rewardModal" }}
-                            className="btn rewards-btn px-3 py-2"
-                            style={{ fontSize: "12px" }}
-                            // onClick={() => {
-                            //   setRewardModal(true);
-                            // }}
-                          >
-                            Rewards
-                          </NavLink>
-                        </div>
-                      </div>
-                      <div
-                        className="tvl-wrapper"
-                        style={{ width: "150px", height: "134px" }}
-                      >
-                        <h6
-                          className="market-stake-tvl"
-                          style={{ fontSize: "24px" }}
-                        >
-                          ${abbreviateNumber(cawslandTvl)}
-                          {/* $15,000 */}
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
+                  <div className="d-flex align-items-center gap-3"></div>
                 </div>
               </div>
               <div className="row w-100 m-0  position-relative">
@@ -2623,6 +2604,13 @@ const NewWalletBalance = ({
                     </div>
                   </div>
                 </div>
+                <img
+                  className="new-caws-stake-img"
+                  src={
+                    windowSize.width < 786 ? newCawsStakeMobile : newCawsStake
+                  }
+                  alt=""
+                />
               </div>
             </div>
             <div className="d-flex justify-content-center">
