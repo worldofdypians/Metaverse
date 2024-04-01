@@ -32,6 +32,7 @@ import gate from "./assets/gate.svg";
 import eventPopupImageGecko from "./assets/eventPopupImageGecko.png";
 import dogePopupImage from "./assets/dogePopupImage.png";
 import cmcPopupImage from "./assets/cmcPopupImage.png";
+
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import base from "./assets/baseLogo.svg";
@@ -66,7 +67,6 @@ import ReCaptchaV2 from "react-google-recaptcha";
 import dypius from "./assets/dypIcon.svg";
 import upcomingDyp from "./assets/upcomingDyp.webp";
 import upcomingDyp2 from "./assets/dypiuspopup2.png";
-import dypiusPremium16 from "./assets/dypiusPremium16.svg";
 
 import dypeventPopupImage from "./assets/dypEventImage.png";
 import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
@@ -247,8 +247,8 @@ const NewWalletBalance = ({
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
-  let dogeLastDay = new Date("2024-04-02T13:00:00.000+02:00");
-  let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
+  let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
+  let cmcLastDay = new Date("2024-03-25T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
 
   let now = new Date().getTime();
@@ -323,7 +323,7 @@ const NewWalletBalance = ({
   const dummyBetaPassData2 = [
     {
       title: "Dypius Premium",
-      logo: dypiusPremium16,
+      logo: dypius,
       eventStatus: "Live",
       totalRewards: "$50,000 in BNB Rewards",
       myEarnings: 0.0,
@@ -1219,8 +1219,6 @@ const NewWalletBalance = ({
                           ? baseEarnUSD
                           : item.title === "Dypius"
                           ? dypiusEarnTokens
-                          : item.title === "Dypius Premium"
-                          ? dypiusPremiumEarnUsd
                           : item.title === "Gate.io"
                           ? gateEarnUSD
                           : item.title === "CoinGecko"
@@ -1813,8 +1811,6 @@ const NewWalletBalance = ({
                       ? baseEarnUSD
                       : item.title === "Dypius"
                       ? dypiusEarnTokens
-                      : item.title === "Dypius Premium"
-                      ? dypiusPremiumEarnUsd
                       : item.title === "Gate.io"
                       ? gateEarnUSD
                       : item.title === "CoinGecko"
@@ -2527,9 +2523,86 @@ const NewWalletBalance = ({
                   </div>
                   <div className="d-flex align-items-center gap-3"></div>
                 </div>
-                <div className="new-caws-apr d-flex flex-column align-items-center justify-content-center position-relative">
-                  <h6 className="caws-apr-percent mb-0">25%</h6>
-                  <span className="caws-apr">APR</span>
+              </div>
+              <div className="row w-100 m-0  position-relative">
+                {/* {mystakesLandPool && mystakesLandPool.length > 0 && (
+                  <div className="instakeWrapper">
+                    <span className="instaketxt">In stake</span>
+                  </div>
+                )} */}
+                <div className="col-12 px-0">
+                  <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+                    <div className="stake-stats-wrapper flex-row flex-lg-column d-flex align-items-center justify-content-center gap-4 gap-lg-2">
+                      <div className="stake-stats-item d-flex flex-column align-items-center justify-content-center">
+                        <h6>25%</h6>
+                        <span>APR</span>
+                      </div>
+                      <div className="stake-stats-item d-flex flex-column align-items-center justify-content-center">
+                        <h6>ETH</h6>
+                        <span>Rewards</span>
+                      </div>
+                      <div className="stake-stats-item d-flex flex-column align-items-center justify-content-center">
+                        <h6>No Lock</h6>
+                        <span>Lock Time</span>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                      <div className="d-flex flex-column gap-4">
+                        <div className="d-flex flex-column gap-2">
+                          <h6
+                            className="market-stake-title"
+                            style={{ fontSize: "16px" }}
+                          >
+                            World of Dypians Land
+                          </h6>
+                          <span
+                            className="market-stake-desc"
+                            style={{ fontSize: "11px" }}
+                          >
+                            Stake your Genesis Land NFTs to earn daily ETH
+                            rewards.
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-3">
+                          <NavLink
+                            to={"/marketplace/stake"}
+                            state={{ modal: "landStakeModal" }}
+                            className="btn pill-btn px-3 py-2"
+                            style={{ fontSize: "12px" }}
+                            // onClick={() => {
+                            //   setlandStakeModal(true);
+                            // }}
+                          >
+                            Deposit
+                          </NavLink>
+                          <NavLink
+                            to={"/marketplace/stake"}
+                            state={{ modal: "landunStakeModal" }}
+                            className="btn rewards-btn px-3 py-2"
+                            style={{ fontSize: "12px" }}
+                            // onClick={() => {
+                            //   setlandunStakeModal(true);
+                            // }}
+                          >
+                            Rewards
+                          </NavLink>
+                        </div>
+                        <div
+                          className="tvl-wrapper"
+                          style={{ width: "150px", height: "134px" }}
+                        >
+                          <h6
+                            className="market-stake-tvl"
+                            style={{ fontSize: "24px" }}
+                          >
+                            ${abbreviateNumber(landtvl)}
+                            {/* $1,500 */}
+                          </h6>
+                        </div>
+                        <div></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <img
                   className="new-caws-stake-img"
@@ -2540,7 +2613,7 @@ const NewWalletBalance = ({
                 />
               </div>
             </div>
-            <div className="d-flex justify-content-center mt-4">
+            <div className="d-flex justify-content-center">
               <NavLink to={`/marketplace/stake`}>
                 <div className="linear-border">
                   <button className="btn filled-btn px-5">Stake</button>
