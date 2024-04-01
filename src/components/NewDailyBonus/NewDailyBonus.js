@@ -11,6 +11,8 @@ import premiumIcon from "./assets/premiumIcon.png";
 import cawsRound from "./assets/cawsRound.png";
 import wodRound from "./assets/wodRound.png";
 import premiumRound from "./assets/premiumRound.png";
+import dypRound from "./assets/dypRound.png";
+
 import completedBg from "./assets/completedBg.png";
 import winConfetti from "./assets/winConfetti.png";
 import xMark from "./assets/xMark2.svg";
@@ -624,14 +626,36 @@ const NewDailyBonus = ({
         );
       });
 
+      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Land."
+          );
+        }
+      );
+
       const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
         return (
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any LAND NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
         );
       });
+
+      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAW NFTs and a Premium Subscription."
+          );
+        }
+      );
 
       const resultPoints = filteredResult.rewards.length === 1;
 
@@ -651,6 +675,10 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
+      } else if (resultWonMoneyNotEnoughLands) {
+        setMessage("winDangerNotEnoughLand");
+      } else if (resultWonMoneyhasNftsNoPremium) {
+        setMessage("winDangerHasNftsNoPremium");
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -700,14 +728,36 @@ const NewDailyBonus = ({
         );
       });
 
+      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Land."
+          );
+        }
+      );
+
       const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
         return (
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any LAND NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
         );
       });
+
+      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAW NFTs and a Premium Subscription."
+          );
+        }
+      );
 
       console.log(result);
       console.log(filteredResult);
@@ -725,7 +775,12 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
+      } else if (resultWonMoneyNotEnoughLands) {
+        setMessage("winDangerNotEnoughLand");
+      } else if (resultWonMoneyhasNftsNoPremium) {
+        setMessage("winDangerHasNftsNoPremium");
       }
+
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -781,12 +836,34 @@ const NewDailyBonus = ({
         );
       });
 
+      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Land."
+          );
+        }
+      );
+
+      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAW NFTs and a Premium Subscription."
+          );
+        }
+      );
+
       const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
         return (
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any LAND NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
         );
       });
 
@@ -804,6 +881,10 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
+      } else if (resultWonMoneyNotEnoughLands) {
+        setMessage("winDangerNotEnoughLand");
+      } else if (resultWonMoneyhasNftsNoPremium) {
+        setMessage("winDangerHasNftsNoPremium");
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -854,14 +935,36 @@ const NewDailyBonus = ({
         );
       });
 
+      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Land."
+          );
+        }
+      );
+
       const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
         return (
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any LAND NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
         );
       });
+
+      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAW NFTs and a Premium Subscription."
+          );
+        }
+      );
 
       if (result) {
         setMessage("caws");
@@ -877,6 +980,10 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
+      } else if (resultWonMoneyNotEnoughLands) {
+        setMessage("winDangerNotEnoughLand");
+      } else if (resultWonMoneyhasNftsNoPremium) {
+        setMessage("winDangerHasNftsNoPremium");
       }
 
       setLiveRewardData(filteredResult);
@@ -1465,13 +1572,60 @@ const NewDailyBonus = ({
                             </h6>
                             <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageEmpty} height={8} alt="" />
-                                <img src={percentageEmpty} height={8} alt="" />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
                               </div>
-                              <span className="percentage-span">62%</span>
+                              <span className="percentage-span">
+                                {parseInt(bnbPercentage)}%
+                              </span>
                             </div>
                           </div>
                           <div
@@ -1480,6 +1634,7 @@ const NewDailyBonus = ({
                           >
                             <button
                               className={`chain-active-btn d-flex gap-1 align-items-center`}
+                              onClick={handleBnbPool}
                             >
                               {" "}
                               <img src={bnbIcon} alt="" /> BNB
@@ -1487,6 +1642,7 @@ const NewDailyBonus = ({
 
                             <button
                               className={`chain-inactive-btn d-flex gap-1 align-items-center`}
+                              onClick={handleOpBnbPool}
                             >
                               <img src={bnbIcon} alt="" /> opBNB
                             </button>
@@ -1514,18 +1670,63 @@ const NewDailyBonus = ({
                               chain === "skale" && "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center justify-content-between`}
                           >
-                            <h6 className="chain-title-position mb-0">
-                              SKALE Network
-                            </h6>
+                            <h6 className="chain-title-position mb-0">SKALE</h6>
                             <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageEmpty} height={8} alt="" />
-                                <img src={percentageEmpty} height={8} alt="" />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
                               </div>
-                              <span className="percentage-span">62%</span>
+                              <span className="percentage-span">
+                                {parseInt(skalePercentage)}%
+                              </span>
                             </div>
                           </div>
                           <div
@@ -1534,6 +1735,7 @@ const NewDailyBonus = ({
                           >
                             <button
                               className={`chain-inactive-btn d-flex gap-1 align-items-center`}
+                              onClick={handleSkalePool}
                             >
                               {" "}
                               <img src={skaleIcon} alt="" /> SKALE
@@ -1555,7 +1757,7 @@ const NewDailyBonus = ({
                             <h6 className="chain-title-position mb-0">
                               Coming Soon
                             </h6>
-                            <div className="d-flex align-items-center gap-2">
+                            {/* <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
                                 <img src={percentageFilled} height={8} alt="" />
                                 <img src={percentageFilled} height={8} alt="" />
@@ -1564,7 +1766,7 @@ const NewDailyBonus = ({
                                 <img src={percentageEmpty} height={8} alt="" />
                               </div>
                               <span className="percentage-span">62%</span>
-                            </div>
+                            </div> */}
                           </div>
                           <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column">
                             <h6 className="desc-title mb-0">Magic Battle</h6>
@@ -2071,7 +2273,10 @@ const NewDailyBonus = ({
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
                             <img src={warning} alt="" width={20} height={20} />
-                            <span className="win-desc mb-0" style={{fontSize: 10}}>
+                            <span
+                              className="win-desc mb-0"
+                              style={{ fontSize: 10 }}
+                            >
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
                                 $
@@ -2084,7 +2289,8 @@ const NewDailyBonus = ({
                                   2
                                 )}
                               </span>{" "}
-                              reward will be allocated to you if you get one of the suggested CAWS NFTs.
+                              reward will be allocated to you if you get one of
+                              the suggested CAWS NFTs.
                             </span>
                           </div>
                         </div>
@@ -2442,6 +2648,7 @@ const NewDailyBonus = ({
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
+                                $
                                 {getFormattedNumber(
                                   rewardData.rewards
                                     ? rewardData.rewards.find((obj) => {
@@ -2475,6 +2682,7 @@ const NewDailyBonus = ({
                           <h6 className="win-amount mb-0">+</h6>
                           <div className="d-flex flex-column align-items-center danger-border p-1">
                             <h6 className="win-amount mb-0">
+                              $
                               {getFormattedNumber(
                                 rewardData.rewards
                                   ? rewardData.rewards.find((obj) => {
@@ -2488,44 +2696,133 @@ const NewDailyBonus = ({
                           </div>
                         </div>
                         <div className="d-flex align-items-center gap-2">
-                          <HtmlTooltip
-                            placement="top"
-                            title={
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === false ? (
+                                  <></>
+                                ) : (
+                                  <div
+                                    className="nft-reward-container"
+                                    key={index}
+                                  >
+                                    <img
+                                      className="nft-reward-img"
+                                      src={
+                                        item.type === "PREMIUM"
+                                          ? premiumRound
+                                          : item.type === "CAWS"
+                                          ? cawsRound
+                                          : item.type === "LAND"
+                                          ? wodRound
+                                          : dypRound
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                      style={{
+                                        borderRadius: "50%",
+                                      }}
+                                    />
+                                    <img
+                                      src={greenCheck}
+                                      alt=""
+                                      className="holder-check"
+                                    />
+                                  </div>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === true ? (
+                                  <></>
+                                ) : (
+                                  <HtmlTooltip
+                                    placement="top"
+                                    key={index}
+                                    title={
+                                      <div
+                                        className="d-flex align-items-center gap-2"
+                                        style={{ width: "fit-content" }}
+                                      >
+                                        <span
+                                          className="win-desc"
+                                          style={{ fontSize: "12px" }}
+                                        >
+                                          {rewardData.rewards
+                                            ? rewardData.rewards.find((obj) => {
+                                                return (
+                                                  obj.rewardType === "Money"
+                                                );
+                                              }).details
+                                            : ""}
+                                        </span>
+                                      </div>
+                                    }
+                                  >
+                                    <div
+                                      className="nft-reward-container"
+                                      key={index}
+                                    >
+                                      <img
+                                        className="nft-reward-img"
+                                        src={
+                                          item.type === "PREMIUM"
+                                            ? premiumRound
+                                            : item.type === "CAWS"
+                                            ? cawsRound
+                                            : item.type === "LAND"
+                                            ? wodRound
+                                            : dypRound
+                                        }
+                                        alt=""
+                                        width={70}
+                                        height={70}
+                                        style={{
+                                          borderRadius: "50%",
+                                          filter: "opacity(0.5)",
+                                        }}
+                                      />
+                                      <img
+                                        src={redX}
+                                        alt=""
+                                        className="holder-check"
+                                      />
+                                    </div>
+                                  </HtmlTooltip>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+                          {window
+                            .range(
+                              0,
+                              rewardData.rewards
+                                ? (3 -
+                                    rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).requirements.length)
+                                : 0
+                            )
+                            .map((item, index) => {
+                              return(
                               <div
-                                className="d-flex align-items-center gap-2"
-                                style={{ width: "fit-content" }}
-                              >
-                                <span
-                                  className="win-desc"
-                                  style={{ fontSize: "12px" }}
-                                >
-                                  {rewardData.rewards
-                                    ? rewardData.rewards.find((obj) => {
-                                        return obj.rewardType === "Money";
-                                      }).details
-                                    : ""}
-                                </span>
-                              </div>
-                            }
-                          >
-                            <div className="nft-reward-container">
-                              <img
-                                className="nft-reward-img"
-                                src={cawsRound}
-                                alt=""
-                                width={70}
-                                height={70}
-                                style={{
-                                  borderRadius: "50%",
-                                  filter: "opacity(0.5)",
-                                }}
-                              />
-                              <img src={redX} alt="" className="holder-check" />
-                            </div>
-                          </HtmlTooltip>
-                          <div className="required-item-placeholder"></div>
-                          <div className="required-item-placeholder"></div>
-                          <div className="required-item-placeholder"></div>
+                                className="required-item-placeholder"
+                                key={index}
+                              ></div>);
+                            })}
                         </div>
                       </div>
                     ) : message === "winDangerLand" ? (
@@ -2543,6 +2840,7 @@ const NewDailyBonus = ({
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
+                                $
                                 {getFormattedNumber(
                                   rewardData.rewards
                                     ? rewardData.rewards.find((obj) => {
@@ -2589,44 +2887,709 @@ const NewDailyBonus = ({
                           </div>
                         </div>
                         <div className="d-flex align-items-center gap-2">
-                          <HtmlTooltip
-                            placement="top"
-                            title={
-                              <div
-                                className="d-flex align-items-center gap-2"
-                                style={{ width: "fit-content" }}
-                              >
-                                <span
-                                  className="win-desc"
-                                  style={{ fontSize: "12px" }}
-                                >
-                                  {rewardData.rewards
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === false ? (
+                                  <></>
+                                ) : (
+                                  <div
+                                    className="nft-reward-container"
+                                    key={index}
+                                  >
+                                    <img
+                                      className="nft-reward-img"
+                                      src={
+                                        item.type === "PREMIUM"
+                                          ? premiumRound
+                                          : item.type === "CAWS"
+                                          ? cawsRound
+                                          : item.type === "LAND"
+                                          ? wodRound
+                                          : dypRound
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                      style={{
+                                        borderRadius: "50%",
+                                      }}
+                                    />
+                                    <img
+                                      src={greenCheck}
+                                      alt=""
+                                      className="holder-check"
+                                    />
+                                  </div>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === true ? (
+                                  <></>
+                                ) : (
+                                  <HtmlTooltip
+                                    placement="top"
+                                    key={index}
+                                    title={
+                                      <div
+                                        className="d-flex align-items-center gap-2"
+                                        style={{ width: "fit-content" }}
+                                      >
+                                        <span
+                                          className="win-desc"
+                                          style={{ fontSize: "12px" }}
+                                        >
+                                          {rewardData.rewards
+                                            ? rewardData.rewards.find((obj) => {
+                                                return (
+                                                  obj.rewardType === "Money"
+                                                );
+                                              }).details
+                                            : ""}
+                                        </span>
+                                      </div>
+                                    }
+                                  >
+                                    <div
+                                      className="nft-reward-container"
+                                      key={index}
+                                    >
+                                      <img
+                                        className="nft-reward-img"
+                                        src={
+                                          item.type === "PREMIUM"
+                                            ? premiumRound
+                                            : item.type === "CAWS"
+                                            ? cawsRound
+                                            : item.type === "LAND"
+                                            ? wodRound
+                                            : dypRound
+                                        }
+                                        alt=""
+                                        width={70}
+                                        height={70}
+                                        style={{
+                                          borderRadius: "50%",
+                                          filter: "opacity(0.5)",
+                                        }}
+                                      />
+                                      <img
+                                        src={redX}
+                                        alt=""
+                                        className="holder-check"
+                                      />
+                                    </div>
+                                  </HtmlTooltip>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+                          {window
+                            .range(
+                              0,
+                              rewardData.rewards
+                                ? (3 -
+                                    rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).requirements.length)
+                                : 0
+                            )
+                            .map((item, index) => {
+                              return(
+                                <div
+                                  className="required-item-placeholder"
+                                  key={index}
+                                ></div>);
+                            })}
+                        </div>
+                      </div>
+                    ) : message === "winDangerNotEnoughLand" ? (
+                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                        <div
+                          className="chain-desc-wrapper p-2 d-flex flex-column"
+                          style={{
+                            filter: "brightness(1)",
+                            position: "relative",
+                          }}
+                        >
+                          <h6 className="win-text mb-0">You won</h6>
+                          <div className="d-flex align-items-center gap-2">
+                            <img src={danger} alt="" width={20} height={20} />
+                            <span className="win-desc mb-0">
+                              The{" "}
+                              <span style={{ color: "#F2C624" }}>
+                                $
+                                {getFormattedNumber(
+                                  rewardData.rewards
                                     ? rewardData.rewards.find((obj) => {
                                         return obj.rewardType === "Money";
-                                      }).details
-                                    : ""}
-                                </span>
-                              </div>
-                            }
-                          >
-                            <div className="nft-reward-container">
-                              <img
-                                className="nft-reward-img"
-                                src={wodRound}
-                                alt=""
-                                width={70}
-                                height={70}
-                                style={{
-                                  borderRadius: "50%",
-                                  filter: "opacity(0.5)",
-                                }}
-                              />
-                              <img src={redX} alt="" className="holder-check" />
-                            </div>
-                          </HtmlTooltip>
-                          <div className="required-item-placeholder"></div>
-                          <div className="required-item-placeholder"></div>
-                          <div className="required-item-placeholder"></div>
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </span>{" "}
+                              reward has not been assigned due to incomplete
+                              fulfillment of all the requirements.
+                            </span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2 win-rewards-container">
+                          <div className="d-flex flex-column align-items-center neutral-border p-1">
+                            <h6 className="win-amount mb-0">
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
+                                0
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">
+                              Leaderboard Points
+                            </span>
+                          </div>
+                          <h6 className="win-amount mb-0">+</h6>
+                          <div className="d-flex flex-column align-items-center danger-border p-1">
+                            <h6 className="win-amount mb-0">
+                              $
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).reward
+                                  : 0,
+                                2
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">Rewards</span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === false ? (
+                                  <></>
+                                ) : (
+                                  <div
+                                    className="nft-reward-container"
+                                    key={index}
+                                  >
+                                    <img
+                                      className="nft-reward-img"
+                                      src={
+                                        item.type === "PREMIUM"
+                                          ? premiumRound
+                                          : item.type === "CAWS"
+                                          ? cawsRound
+                                          : item.type === "LAND"
+                                          ? wodRound
+                                          : dypRound
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                      style={{
+                                        borderRadius: "50%",
+                                      }}
+                                    />
+                                    <img
+                                      src={greenCheck}
+                                      alt=""
+                                      className="holder-check"
+                                    />
+                                  </div>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === true ? (
+                                  <></>
+                                ) : (
+                                  <HtmlTooltip
+                                    placement="top"
+                                    key={index}
+                                    title={
+                                      <div
+                                        className="d-flex align-items-center gap-2"
+                                        style={{ width: "fit-content" }}
+                                      >
+                                        <span
+                                          className="win-desc"
+                                          style={{ fontSize: "12px" }}
+                                        >
+                                          {rewardData.rewards
+                                            ? rewardData.rewards.find((obj) => {
+                                                return (
+                                                  obj.rewardType === "Money"
+                                                );
+                                              }).details
+                                            : ""}
+                                        </span>
+                                      </div>
+                                    }
+                                  >
+                                    <div
+                                      className="nft-reward-container"
+                                      key={index}
+                                    >
+                                      <img
+                                        className="nft-reward-img"
+                                        src={
+                                          item.type === "PREMIUM"
+                                            ? premiumRound
+                                            : item.type === "CAWS"
+                                            ? cawsRound
+                                            : item.type === "LAND"
+                                            ? wodRound
+                                            : dypRound
+                                        }
+                                        alt=""
+                                        width={70}
+                                        height={70}
+                                        style={{
+                                          borderRadius: "50%",
+                                          filter: "opacity(0.5)",
+                                        }}
+                                      />
+                                      <img
+                                        src={redX}
+                                        alt=""
+                                        className="holder-check"
+                                      />
+                                    </div>
+                                  </HtmlTooltip>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+                          {window
+                            .range(
+                              0,
+                              rewardData.rewards
+                                ? (3 -
+                                    rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).requirements.length)
+                                : 0
+                            )
+                            .map((item, index) => {
+                              return(
+                                <div
+                                  className="required-item-placeholder"
+                                  key={index}
+                                ></div>);
+                            })}
+                        </div>
+                      </div>
+                    ) : message === "winDangerHasNftsNoPremium" ? (
+                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                        <div
+                          className="chain-desc-wrapper p-2 d-flex flex-column"
+                          style={{
+                            filter: "brightness(1)",
+                            position: "relative",
+                          }}
+                        >
+                          <h6 className="win-text mb-0">You won</h6>
+                          <div className="d-flex align-items-center gap-2">
+                            <img src={danger} alt="" width={20} height={20} />
+                            <span className="win-desc mb-0">
+                              The{" "}
+                              <span style={{ color: "#F2C624" }}>
+                                $
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </span>{" "}
+                              reward has not been assigned due to incomplete
+                              fulfillment of all the requirements.
+                            </span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2 win-rewards-container">
+                          <div className="d-flex flex-column align-items-center neutral-border p-1">
+                            <h6 className="win-amount mb-0">
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
+                                0
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">
+                              Leaderboard Points
+                            </span>
+                          </div>
+                          <h6 className="win-amount mb-0">+</h6>
+                          <div className="d-flex flex-column align-items-center danger-border p-1">
+                            <h6 className="win-amount mb-0">
+                              $
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).reward
+                                  : 0,
+                                2
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">Rewards</span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === false ? (
+                                  <></>
+                                ) : (
+                                  <div
+                                    className="nft-reward-container"
+                                    key={index}
+                                  >
+                                    <img
+                                      className="nft-reward-img"
+                                      src={
+                                        item.type === "PREMIUM"
+                                          ? premiumRound
+                                          : item.type === "CAWS"
+                                          ? cawsRound
+                                          : item.type === "LAND"
+                                          ? wodRound
+                                          : dypRound
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                      style={{
+                                        borderRadius: "50%",
+                                      }}
+                                    />
+                                    <img
+                                      src={greenCheck}
+                                      alt=""
+                                      className="holder-check"
+                                    />
+                                  </div>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === true ? (
+                                  <></>
+                                ) : (
+                                  <HtmlTooltip
+                                    placement="top"
+                                    key={index}
+                                    title={
+                                      <div
+                                        className="d-flex align-items-center gap-2"
+                                        style={{ width: "fit-content" }}
+                                      >
+                                        <span
+                                          className="win-desc"
+                                          style={{ fontSize: "12px" }}
+                                        >
+                                          {rewardData.rewards
+                                            ? rewardData.rewards.find((obj) => {
+                                                return (
+                                                  obj.rewardType === "Money"
+                                                );
+                                              }).details
+                                            : ""}
+                                        </span>
+                                      </div>
+                                    }
+                                  >
+                                    <div
+                                      className="nft-reward-container"
+                                      key={index}
+                                    >
+                                      <img
+                                        className="nft-reward-img"
+                                        src={
+                                          item.type === "PREMIUM"
+                                            ? premiumRound
+                                            : item.type === "CAWS"
+                                            ? cawsRound
+                                            : item.type === "LAND"
+                                            ? wodRound
+                                            : dypRound
+                                        }
+                                        alt=""
+                                        width={70}
+                                        height={70}
+                                        style={{
+                                          borderRadius: "50%",
+                                          filter: "opacity(0.5)",
+                                        }}
+                                      />
+                                      <img
+                                        src={redX}
+                                        alt=""
+                                        className="holder-check"
+                                      />
+                                    </div>
+                                  </HtmlTooltip>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+                          {window
+                            .range(
+                              0,
+                              rewardData.rewards
+                                ? (3 -
+                                    rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).requirements.length)
+                                : 0
+                            )
+                            .map((item, index) => {
+                              return(
+                                <div
+                                  className="required-item-placeholder"
+                                  key={index}
+                                ></div>);
+                            })}
+                        </div>
+                      </div>
+                    ) : message === "winDangerHasNftsPremiumNoDyp" ? (
+                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                        <div
+                          className="chain-desc-wrapper p-2 d-flex flex-column"
+                          style={{
+                            filter: "brightness(1)",
+                            position: "relative",
+                          }}
+                        >
+                          <h6 className="win-text mb-0">You won</h6>
+                          <div className="d-flex align-items-center gap-2">
+                            <img src={danger} alt="" width={20} height={20} />
+                            <span className="win-desc mb-0">
+                              The{" "}
+                              <span style={{ color: "#F2C624" }}>
+                                $
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </span>{" "}
+                              reward has not been assigned due to incomplete
+                              fulfillment of all the requirements.
+                            </span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2 win-rewards-container">
+                          <div className="d-flex flex-column align-items-center neutral-border p-1">
+                            <h6 className="win-amount mb-0">
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
+                                0
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">
+                              Leaderboard Points
+                            </span>
+                          </div>
+                          <h6 className="win-amount mb-0">+</h6>
+                          <div className="d-flex flex-column align-items-center danger-border p-1">
+                            <h6 className="win-amount mb-0">
+                              $
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).reward
+                                  : 0,
+                                2
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">Rewards</span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === false ? (
+                                  <></>
+                                ) : (
+                                  <div
+                                    className="nft-reward-container"
+                                    key={index}
+                                  >
+                                    <img
+                                      className="nft-reward-img"
+                                      src={
+                                        item.type === "PREMIUM"
+                                          ? premiumRound
+                                          : item.type === "CAWS"
+                                          ? cawsRound
+                                          : item.type === "LAND"
+                                          ? wodRound
+                                          : dypRound
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                      style={{
+                                        borderRadius: "50%",
+                                      }}
+                                    />
+                                    <img
+                                      src={greenCheck}
+                                      alt=""
+                                      className="holder-check"
+                                    />
+                                  </div>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === true ? (
+                                  <></>
+                                ) : (
+                                  <HtmlTooltip
+                                    placement="top"
+                                    key={index}
+                                    title={
+                                      <div
+                                        className="d-flex align-items-center gap-2"
+                                        style={{ width: "fit-content" }}
+                                      >
+                                        <span
+                                          className="win-desc"
+                                          style={{ fontSize: "12px" }}
+                                        >
+                                          {rewardData.rewards
+                                            ? rewardData.rewards.find((obj) => {
+                                                return (
+                                                  obj.rewardType === "Money"
+                                                );
+                                              }).details
+                                            : ""}
+                                        </span>
+                                      </div>
+                                    }
+                                  >
+                                    <div
+                                      className="nft-reward-container"
+                                      key={index}
+                                    >
+                                      <img
+                                        className="nft-reward-img"
+                                        src={
+                                          item.type === "PREMIUM"
+                                            ? premiumRound
+                                            : item.type === "CAWS"
+                                            ? cawsRound
+                                            : item.type === "LAND"
+                                            ? wodRound
+                                            : dypRound
+                                        }
+                                        alt=""
+                                        width={70}
+                                        height={70}
+                                        style={{
+                                          borderRadius: "50%",
+                                          filter: "opacity(0.5)",
+                                        }}
+                                      />
+                                      <img
+                                        src={redX}
+                                        alt=""
+                                        className="holder-check"
+                                      />
+                                    </div>
+                                  </HtmlTooltip>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+                          {window
+                            .range(
+                              0,
+                              rewardData.rewards
+                                ? (3 -
+                                    rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).requirements.length)
+                                : 0
+                            )
+                            .map((item, index) => {
+                              return(
+                                <div
+                                  className="required-item-placeholder"
+                                  key={index}
+                                ></div>);
+                            })}
                         </div>
                       </div>
                     ) : message === "wod" ? (
@@ -2641,7 +3604,10 @@ const NewDailyBonus = ({
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
                             <img src={warning} alt="" width={20} height={20} />
-                            <span className="win-desc mb-0" style={{fontSize: 10}}>
+                            <span
+                              className="win-desc mb-0"
+                              style={{ fontSize: 10 }}
+                            >
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
                                 $

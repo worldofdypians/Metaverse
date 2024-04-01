@@ -1016,7 +1016,7 @@ function Dashboard({
       }
     }
   };
-console.log(claimedSkaleChests, claimedSkalePremiumChests, claimedChests , claimedPremiumChests)
+  
   const getOpenedChestPerWallet = async () => {
     if (email) {
       if (isPremium) {

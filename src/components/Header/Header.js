@@ -269,7 +269,7 @@ const Header = ({
       if (!window.gatewallet) {
         await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
-            handleSwitchNetwork(1482601649 );
+            handleSwitchNetwork(1482601649);
           })
           .catch((e) => {
             console.log(e);
@@ -353,7 +353,7 @@ const Header = ({
     }
 
     if (chainId === 1482601649 ) {
-      handleSwitchNetwork(1482601649 );
+      handleSwitchNetwork(1482601649);
     }
   }, [chainId, coinbase]);
 
@@ -721,6 +721,11 @@ const Header = ({
                     <img src={bnb} alt="" />
                     BNB Chain
                   </Dropdown.Item>
+                  
+                  <Dropdown.Item onClick={() => handleOpBnbPool()}>
+                    <img src={bnb} alt="" />
+                    opBNB Chain
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleSkalePool()}>
                     <img src={skale} alt="" />
                     SKALE
@@ -728,10 +733,6 @@ const Header = ({
                   <Dropdown.Item onClick={() => handleAvaxPool()}>
                     <img src={avax} alt="" />
                     Avalanche
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleOpBnbPool()}>
-                    <img src={bnb} alt="" />
-                    opBNB Chain
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleConfluxPool()}>
                     <img src={conflux} alt="" />
