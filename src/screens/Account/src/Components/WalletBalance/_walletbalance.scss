@@ -38,6 +38,7 @@
 
 .wallet-wrapper-active {
   background: rgba(27, 245, 255, 0.15);
+  border: 2px solid #1BF5FF;
   padding: 10px;
   cursor: pointer;
   border-radius: 10px;
@@ -45,9 +46,11 @@
 
 .wallet-wrapper-active2 {
   background: rgba(27, 245, 255, 0.15);
+  border: 2px solid #1BF5FF;
   padding: 14px 10px;
   cursor: pointer;
   border-radius: 10px;
+  height: 79px;
 }
 
 .dypiusprofile-banner {
@@ -56,6 +59,8 @@
 
 .wallet-wrapper-active-premium {
   background: rgba(255, 191, 0, 0.15);
+  border: 2px solid #FFBF00;
+
   padding: 10px;
   cursor: pointer;
   border-radius: 10px;
@@ -2356,7 +2361,7 @@
   color: #f7f7fc;
   font-size: 10px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   line-height: normal;
   width: 43%;
 }

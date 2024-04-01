@@ -62,6 +62,7 @@ const NewLeaderBoard = ({
   availableTime,
   email,
   coinbase,
+  isPremium
 }) => {
   const playerData = [
     {
@@ -1034,7 +1035,7 @@ const NewLeaderBoard = ({
                         </h6>
                       </div>
                       <div className="p-2">
-                        <table className="playerTable">
+                        <table className="playerTable w-100">
                           <tbody>
                             <tr className="playerRow">
                               <th className="playerHeader font-montserrat">
@@ -1161,7 +1162,7 @@ const NewLeaderBoard = ({
                           inactiveBoard === false &&
                           optionText !== "genesis" && (
                             <table
-                              className="playerTable"
+                              className="playerTable w-100"
                               // style={{ marginTop: windowSize > 600 ? "-33px" : "-20px" }}
                             >
                               <tbody>
@@ -1173,7 +1174,7 @@ const NewLeaderBoard = ({
                                         : "col-1"
                                     }`}
                                   >
-                                    #{userData.position + 1}
+                                    {userData.position + 1}
                                   </td>
                                   <td className="playerName col-5 font-montserrat">
                                     <div className="position-relative  d-flex align-items-center">
@@ -1274,7 +1275,7 @@ const NewLeaderBoard = ({
                         </h6>
                       </div>
                       <div className="p-2">
-                        <table className="playerTable">
+                        <table className="playerTable w-100">
                           <tbody>
                             <tr className="playerRow">
                               <th className="playerHeader font-montserrat">
@@ -1407,7 +1408,7 @@ const NewLeaderBoard = ({
                           inactiveBoard === false &&
                           optionText !== "genesis" && (
                             <table
-                              className="playerTable"
+                              className="playerTable w-100"
                               // style={{ marginTop: windowSize > 600 ? "-33px" : "-20px" }}
                             >
                               <tbody>
@@ -1419,7 +1420,7 @@ const NewLeaderBoard = ({
                                         : "col-1"
                                     }`}
                                   >
-                                    #{userData.position + 1}
+                                    {userData.position + 1}
                                   </td>
                                   <td className="playerName col-5 font-montserrat">
                                     <div className="position-relative  d-flex align-items-center">
@@ -1490,7 +1491,7 @@ const NewLeaderBoard = ({
                                   </td>
                                   {optionText !== "genesis" && (
                                     <td
-                                      className={`playerScore col-2 font-montserrat ${
+                                      className={`playerScore col-2 font-montserrat d-flex align-items-center justify-content-center w-100 gap-2 ${
                                         availableTime !== "0" &&
                                         availableTime &&
                                         availableTime >= today1.getTime() &&
@@ -1501,6 +1502,9 @@ const NewLeaderBoard = ({
                                       }`}
                                     >
                                       +$0
+                                      {optionText2 === "skale" &&
+                                      <img src={isPremium ? premiumIcon : premiumInactive} alt="" />
+                                      }
                                     </td>
                                   )}
                                 </tr>
@@ -1520,7 +1524,7 @@ const NewLeaderBoard = ({
                         </h6>
                       </div>
                       <div className="p-2">
-                        <table className="playerTable">
+                        <table className="playerTable w-100">
                           <tbody>
                             <tr className="playerRow">
                               <th className="playerHeader font-montserrat">
@@ -1555,7 +1559,7 @@ const NewLeaderBoard = ({
                                   }`}
                                 >
                                   <td className="playerData col-1 font-montserrat font-montserrat">
-                                    #{Number(item.position) + 1}
+                                    {Number(item.position) + 1}
                                   </td>
                                   <td className="playerName col-5 font-montserrat font-montserrat">
                                     {availableTime !== "0" &&
@@ -1647,7 +1651,7 @@ const NewLeaderBoard = ({
                           inactiveBoard === false &&
                           optionText !== "genesis" && (
                             <table
-                              className="playerTable"
+                              className="playerTable w-100"
                               // style={{ marginTop: windowSize > 600 ? "-33px" : "-20px" }}
                             >
                               <tbody>
@@ -1659,7 +1663,7 @@ const NewLeaderBoard = ({
                                         : "col-1"
                                     }`}
                                   >
-                                    #{userData.position + 1}
+                                    {userData.position + 1}
                                   </td>
                                   <td className="playerName col-5 font-montserrat">
                                     <div className="position-relative  d-flex align-items-center">
@@ -1771,7 +1775,7 @@ const NewLeaderBoard = ({
                             onClick={nextSlide}
                           />
                         </div>
-                        <table className="playerTable">
+                        <table className="playerTable w-100">
                           <tbody>
                             <tr className="playerRow">
                               <th className="playerHeader font-montserrat">
@@ -1898,7 +1902,7 @@ const NewLeaderBoard = ({
                           inactiveBoard === false &&
                           optionText !== "genesis" && (
                             <table
-                              className="playerTable"
+                              className="playerTable w-100"
                               // style={{ marginTop: windowSize > 600 ? "-33px" : "-20px" }}
                             >
                               <tbody>
@@ -1910,7 +1914,7 @@ const NewLeaderBoard = ({
                                         : "col-1"
                                     }`}
                                   >
-                                    #{userData.position + 1}
+                                    {userData.position + 1}
                                   </td>
                                   <td className="playerName col-5 font-montserrat">
                                     <div className="position-relative  d-flex align-items-center">
@@ -2032,7 +2036,7 @@ const NewLeaderBoard = ({
                             />
                           )}
                         </div>
-                        <table className="playerTable">
+                        <table className="playerTable w-100">
                           <tbody>
                             <tr className="playerRow">
                               <th className="playerHeader font-montserrat">
@@ -2164,7 +2168,7 @@ const NewLeaderBoard = ({
                           inactiveBoard === false &&
                           optionText !== "genesis" && (
                             <table
-                              className="playerTable"
+                              className="playerTable w-100"
                               // style={{ marginTop: windowSize > 600 ? "-33px" : "-20px" }}
                             >
                               <tbody>
@@ -2176,7 +2180,7 @@ const NewLeaderBoard = ({
                                         : "col-1"
                                     }`}
                                   >
-                                    #{userData.position + 1}
+                                    {userData.position + 1}
                                   </td>
                                   <td className="playerName col-5 font-montserrat font-montserrat">
                                     <div className="position-relative  d-flex align-items-center">
@@ -2247,7 +2251,7 @@ const NewLeaderBoard = ({
                                   </td>
                                   {optionText !== "genesis" && (
                                     <td
-                                      className={`playerScore col-2 font-montserrat font-montserrat ${
+                                      className={`playerScore col-2 font-montserrat font-montserrat d-flex align-items-center justify-content-center w-100 gap-2 ${
                                         availableTime !== "0" &&
                                         availableTime &&
                                         availableTime >= today1.getTime() &&
@@ -2258,6 +2262,9 @@ const NewLeaderBoard = ({
                                       }`}
                                     >
                                       +$0
+                                      {optionText2 === "skale" &&
+                                      <img src={isPremium ? premiumIcon : premiumInactive} alt="" />
+                                      }
                                     </td>
                                   )}
                                 </tr>
@@ -2295,7 +2302,7 @@ const NewLeaderBoard = ({
                             />
                           )}
                         </div>
-                        <table className="playerTable">
+                        <table className="playerTable w-100">
                           <tbody>
                             <tr className="playerRow">
                               <th className="playerHeader font-montserrat">
@@ -2422,7 +2429,7 @@ const NewLeaderBoard = ({
                           inactiveBoard === false &&
                           optionText !== "genesis" && (
                             <table
-                              className="playerTable"
+                              className="playerTable w-100"
                               // style={{ marginTop: windowSize > 600 ? "-33px" : "-20px" }}
                             >
                               <tbody>
@@ -2434,7 +2441,7 @@ const NewLeaderBoard = ({
                                         : "col-1"
                                     }`}
                                   >
-                                    #{userData.position + 1}
+                                    {userData.position + 1}
                                   </td>
                                   <td className="playerName col-5 font-montserrat">
                                     <div className="position-relative  d-flex align-items-center">

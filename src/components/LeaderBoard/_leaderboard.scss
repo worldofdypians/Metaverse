@@ -202,7 +202,7 @@
   }
 
   .inactivegold {
-    color: #48465e !important;
+    color: #fff !important;
     text-align: center;
     position: relative;
   }
@@ -236,6 +236,7 @@
   line-height: 21px;
   letter-spacing: -0.018em;
   color: #09f3d2;
+  height: 32px;
   @media screen and (max-width: 786px) {
     font-size: 12px !important;
   }
@@ -246,6 +247,7 @@
   line-height: 21px;
   letter-spacing: -0.018em;
   color: rgba(243, 192, 9, 1);
+  height: 32px;
   @media screen and (max-width: 786px) {
     font-size: 12px;
   }

@@ -895,13 +895,14 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0"></td>
               <td className="myrewards-td-second border-0 previousRewardsText"></td>
             </tr>
+            
             <div className="table-separator"></div>
 
             <tr>
               <td className="myrewards-td-second border-0 paddingLeftCell">
                 Social Bonus
               </td>
-              <td className="myrewards-td-second border-0 specialCell topbottom-border text-center">
+              <td className="myrewards-td-second border-0 specialCell topborder text-center">
                 ${getFormattedNumber(userSocialRewardsCached, 2)}
               </td>
               <td className="myrewards-td-second border-0 text-center">
@@ -910,8 +911,26 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(pastSpecialRewards, 2)}
               </td>
+
+              
             </tr>
 
+            <tr>
+              <td className="myrewards-td-second border-0 paddingLeftCell">
+                Rank Bonus
+              </td>
+              <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
+                ${getFormattedNumber(0, 2)}
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                {getFormattedNumber(0, 4)} WBNB
+              </td>
+              <td className="myrewards-td-second border-0 text-center">
+                ${getFormattedNumber(0, 2)}
+              </td>
+
+              
+            </tr>
             <tr>
               <td className="myrewards-td-main border-0">
                 {" "}

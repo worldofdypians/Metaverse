@@ -36,6 +36,15 @@
   }
  
 }
+.rank-popup{
+  @media screen and (max-width: 1455px) {
+    width: 95% !important;
+  }
+  @media screen and (max-width: 786px) {
+    width: 98% !important;
+  }
+ 
+}
 
 .popup-active {
   box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
