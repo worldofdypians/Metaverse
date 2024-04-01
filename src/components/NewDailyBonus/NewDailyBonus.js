@@ -2508,8 +2508,7 @@ const NewDailyBonus = ({
                             Sign in with Your Game Account
                           </h6>
                           <span className="chain-desc mb-0">
-                            Sign in with your Game Account to unlock chests and
-                            earn rewards tailored to your gameplay.
+                          Sign in to access Daily Bonus and earn tailored rewards!
                           </span>
                         </div>
                         <div className="d-flex align-items-center justify-content-end get-premium-wrapper p-3 p-lg-0">
