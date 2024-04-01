@@ -412,9 +412,9 @@
   }
 
   @media screen and (max-width: 330px) {
-     flex-direction: column;
-     align-items: start !important;
-     gap: 10px
+    flex-direction: column;
+    align-items: start !important;
+    gap: 10px;
   }
   // backdrop-filter: blur(10px);
 }
@@ -1859,13 +1859,15 @@
 
 .daily-rewards-img {
   position: absolute;
-  width: 55%;
-  right: 0%;
-  top: -20%;
-  animation: pulsate 1.5s ease-out infinite;
+  width: 100%;
+  right: -29%;
+  bottom: -9%;
+  z-index: 1;
+  // animation: pulsate 1.5s ease-out infinite;
   @media screen and (max-width: 991px) {
     width: auto;
-    top: -35%;
+    top: -43%;
+    right: -10%;
   }
 }
 .daily-rewards-img-finished {
@@ -1884,7 +1886,7 @@
 
 .progress-bar-group {
   position: absolute;
-  right: 2%;
+  left: 5%;
   bottom: 10%;
 }
 
@@ -1903,7 +1905,7 @@
 }
 .yellow-progress-outer {
   position: relative;
-  width: 60px;
+  width: 120px;
   height: 16px;
   border-radius: 12px;
   border: 1px solid rgba(234, 157, 28, 1);
@@ -1933,9 +1935,10 @@
 .daily-bonus-wrapper {
   position: relative;
   height: 170px;
+  background: linear-gradient(125deg, #252743 -13.33%, #5f214e 70.47%);
 
   border-radius: 10px;
-  background: linear-gradient(125deg, #252743 -13.33%, #2a303c 70.47%);
+  // background: linear-gradient(125deg, #252743 -13.33%, #2a303c 70.47%);
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
   cursor: pointer;
@@ -2176,6 +2179,17 @@
   top: 12.5px;
 }
 
+.red-div {
+  width: 3px;
+  height: 25px;
+  border-radius: 0px 100px 100px 0px;
+  background:  #B44169;
+  position: absolute;
+  left: 0;
+  top: 12.5px;
+}
+
+
 .green-link {
   cursor: pointer;
 }
@@ -2292,24 +2306,24 @@
 
 @keyframes pulsate {
   0% {
-    filter: drop-shadow(0px 0px 0px rgba(125, 217, 175, 0.6));
+    filter: drop-shadow(0px 0px 0px rgba(202, 64, 22, 0.6));
   }
   50% {
-    filter: drop-shadow(0px 0px 15px rgba(125, 217, 175, 0.6));
+    filter: drop-shadow(0px 0px 15px rgba(202, 64, 22, 0.6));
   }
   100% {
-    filter: drop-shadow(0px 0px 0px rgba(125, 217, 175, 0.6));
+    filter: drop-shadow(0px 0px 0px rgba(202, 64, 22, 0.6));
   }
 }
 .ready-to-claim {
   color: #f7f7fc;
   text-align: center;
-  font-size: 10px;
+  font-size: 9px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   line-height: normal;
   position: absolute;
-  top: 28%;
+  top: 32%;
   right: 0;
   left: 0;
   bottom: 0;
@@ -2347,7 +2361,7 @@
   color: #f7f7fc;
   font-size: 10px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   line-height: normal;
   width: 43%;
 }
@@ -2448,4 +2462,11 @@
   background: rgba(237, 130, 37, 0.2);
   width: fit-content;
 }
-
+.progress-bar-title {
+  color: #fff;
+  text-align: center;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

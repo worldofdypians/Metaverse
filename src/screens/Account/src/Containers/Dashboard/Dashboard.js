@@ -47,6 +47,8 @@ import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
+import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
+import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 
 function Dashboard({
   account,
@@ -66,6 +68,8 @@ function Dashboard({
   domainName,
   handleOpenDomains,
   dogePrice,
+  dyptokenData_old,
+  handleSwitchChain,
 }) {
   const { email, logout } = useAuth();
 
@@ -103,6 +107,10 @@ function Dashboard({
     {
       name: "Base",
       symbol: "base",
+    },
+    {
+      name: "SKALE",
+      symbol: "skale",
     },
   ];
 
@@ -144,6 +152,7 @@ function Dashboard({
   const [myBaseNfts, setmyBaseNfts] = useState([]);
   const [myDogeNfts, setmyDogeNfts] = useState([]);
   const [myCmcNfts, setmyCmcNfts] = useState([]);
+  const [mySkaleNfts, setmySkaleNfts] = useState([]);
   const [latestVersion, setLatestVersion] = useState(0);
 
   const [userPoints, setuserPoints] = useState(0);
@@ -172,7 +181,6 @@ function Dashboard({
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
 
-
   const [dypiusPremiumEarnTokens, setdypiusPremiumEarnTokens] = useState(0);
   const [dypiusPremiumEarnUsd, setdypiusPremiumEarnUsd] = useState(0);
   const [dypiusPremiumPoints, setdypiusPremiumPoints] = useState(0);
@@ -191,6 +199,10 @@ function Dashboard({
   const [standardChests, setStandardChests] = useState([]);
   const [premiumChests, setPremiumChests] = useState([]);
   const [openedChests, setOpenedChests] = useState([]);
+
+  const [standardSkaleChests, setStandardSkaleChests] = useState([]);
+  const [premiumSkaleChests, setPremiumSkaleChests] = useState([]);
+  const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
 
   const [leaderboard, setLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
@@ -224,21 +236,29 @@ function Dashboard({
 
   const [claimedChests, setclaimedChests] = useState(0);
   const [claimedPremiumChests, setclaimedPremiumChests] = useState(0);
+
+  const [claimedSkaleChests, setclaimedSkaleChests] = useState(0);
+  const [claimedSkalePremiumChests, setclaimedSkalePremiumChests] = useState(0);
+
   const [dailyplayerData, setdailyplayerData] = useState(0);
   const [weeklyplayerData, setweeklyplayerData] = useState(0);
   const [userSocialRewards, setuserSocialRewards] = useState(0);
 
   const [canBuy, setCanBuy] = useState(false);
 
-  const [allChests, setallChests] = useState(0);
+  const [allChests, setallChests] = useState([]);
+  const [allSkaleChests, setallSkaleChests] = useState([]);
 
   const [count, setCount] = useState(0);
+  const [skalecount, setskalecount] = useState(0);
 
   const [userRank, setUserRank] = useState("");
   const [userRank2, setUserRank2] = useState("");
 
   const [genesisRank, setGenesisRank] = useState("");
   const [genesisRank2, setGenesisRank2] = useState("");
+  const [premiumTxHash, setPremiumTxHash] = useState("");
+  const [selectedChainforPremium, setselectedChainforPremium] = useState("");
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -261,6 +281,7 @@ function Dashboard({
   let wbase = "0x4200000000000000000000000000000000000006";
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
+  let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
@@ -756,7 +777,6 @@ function Dashboard({
             return obj.betapassId === "all";
           });
 
-
           const dogeEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "dogecoin";
           });
@@ -771,13 +791,13 @@ function Dashboard({
 
           if (dypPremiumEvent && dypPremiumEvent[0]) {
             const userEarnedusd =
-            dypPremiumEvent[0].reward.earn.total /
-            dypPremiumEvent[0].reward.earn.multiplier;
+              dypPremiumEvent[0].reward.earn.total /
+              dypPremiumEvent[0].reward.earn.multiplier;
             const pointsdypius = dypPremiumEvent[0].reward.earn.totalPoints;
-           
-            setdypiusPremiumPoints(pointsdypius)
+
+            setdypiusPremiumPoints(pointsdypius);
             setdypiusPremiumEarnUsd(userEarnedusd);
-            setdypiusPremiumEarnTokens(userEarnedusd/ bnbPrice);
+            setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
           }
 
           if (dypEvent && dypEvent[0]) {
@@ -882,27 +902,35 @@ function Dashboard({
     let subscribedPlatformTokenAmountBNB;
     let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBase;
+    let subscribedPlatformTokenAmountSkale;
 
     const web3eth = window.infuraWeb3;
     const web3cfx = window.confluxWeb3;
     const web3base = window.baseWeb3;
     const web3bnb = window.bscWeb3;
     const web3avax = window.avaxWeb3;
+    const web3skale = window.skaleWeb3;
 
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const BaseABI = window.SUBSCRIPTION_BASE_ABI;
     const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
     const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
     const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
+    const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
+    const skalesubscribeAddress = window.config.subscription_skale_address;
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
+    const skalecontract = new web3skale.eth.Contract(
+      SkaleABI,
+      skalesubscribeAddress
+    );
 
     const basecontract = new web3base.eth.Contract(
       BaseABI,
@@ -918,60 +946,98 @@ function Dashboard({
     if (addr) {
       subscribedPlatformTokenAmountETH = await ethcontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call().catch((e)=>{console.log(e); return 0})
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       subscribedPlatformTokenAmountCfx = await cfxcontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call().catch((e)=>{console.log(e); return 0})
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       subscribedPlatformTokenAmountBase = await basecontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call().catch((e)=>{console.log(e); return 0})
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       subscribedPlatformTokenAmountBNB = await bnbcontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call().catch((e)=>{console.log(e); return 0})
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       subscribedPlatformTokenAmountAvax = await avaxcontract.methods
         .subscriptionPlatformTokenAmount(addr)
-        .call().catch((e)=>{console.log(e); return 0})
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
+      subscribedPlatformTokenAmountSkale = await skalecontract.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       if (
-        subscribedPlatformTokenAmountCfx === "0" &&
-        subscribedPlatformTokenAmountETH === "0" &&
-        subscribedPlatformTokenAmountBase === "0" &&
-        subscribedPlatformTokenAmountBNB === "0" &&
-        subscribedPlatformTokenAmountAvax === "0" &&
+        subscribedPlatformTokenAmountCfx == "0" &&
+        subscribedPlatformTokenAmountETH == "0" &&
+        subscribedPlatformTokenAmountBase == "0" &&
+        subscribedPlatformTokenAmountBNB == "0" &&
+        subscribedPlatformTokenAmountAvax == "0" &&
+        subscribedPlatformTokenAmountSkale == "0" &&
         result === false
       ) {
         setIsPremium(false);
       }
       if (
-        subscribedPlatformTokenAmountCfx !== "0" ||
-        subscribedPlatformTokenAmountETH !== "0" ||
-        subscribedPlatformTokenAmountBase !== "0" ||
-        subscribedPlatformTokenAmountBNB !== "0" ||
-        subscribedPlatformTokenAmountAvax !== "0" ||
+        subscribedPlatformTokenAmountCfx != "0" ||
+        subscribedPlatformTokenAmountETH != "0" ||
+        subscribedPlatformTokenAmountBase != "0" ||
+        subscribedPlatformTokenAmountBNB != "0" ||
+        subscribedPlatformTokenAmountAvax != "0" ||
+        subscribedPlatformTokenAmountSkale != "0" ||
         result === true
       ) {
         setIsPremium(true);
       }
     }
   };
-
+  
   const getOpenedChestPerWallet = async () => {
     if (email) {
       if (isPremium) {
-        if (claimedChests + claimedPremiumChests < 20) {
+        if (
+          claimedChests + claimedPremiumChests < 20 ||
+          claimedSkaleChests + claimedSkalePremiumChests < 20
+        ) {
           setCanBuy(true);
-        } else if (claimedChests + claimedPremiumChests === 20) {
+        } else if (
+          claimedChests + claimedPremiumChests === 20 &&
+          claimedSkaleChests + claimedSkalePremiumChests === 20
+        ) {
           setCanBuy(false);
         }
-      } else if (!isPremium) {
-        if (claimedChests < 10) {
+      } 
+      else if (!isPremium) {
+        if (claimedChests < 10 || claimedSkaleChests < 10) {
           setCanBuy(true);
-        } else if (claimedChests === 10) {
-          setCanBuy(false);
+        } else if (claimedChests === 10 && claimedSkaleChests === 10) {
+          setCanBuy(true);
+          //change later
         }
       }
     } else {
@@ -983,7 +1049,7 @@ function Dashboard({
     const emailData = { emailAddress: userEmail };
 
     const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards",
+      "https://dyp-chest-test.azurewebsites.net/api/GetRewards?=null",
       emailData
     );
     if (result.status === 200 && result.data) {
@@ -1021,6 +1087,53 @@ function Dashboard({
         setclaimedChests(openedStandardChests.length);
         setclaimedPremiumChests(openedPremiumChests.length);
         setallChests(chestOrder);
+      }
+    }
+  };
+
+  const getAllSkaleChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "skale" };
+
+    const result = await axios.post(
+      "https://dyp-chest-test.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedSkaleChests(openedChests);
+        setStandardSkaleChests(standardChestsArray);
+        setPremiumSkaleChests(premiumChestsArray);
+
+        setclaimedSkaleChests(openedStandardChests.length);
+        setclaimedSkalePremiumChests(openedPremiumChests.length);
+        setallSkaleChests(chestOrder);
       }
     }
   };
@@ -1102,6 +1215,10 @@ function Dashboard({
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cmc").then((NFTS) =>
       setmyCmcNfts(NFTS)
+    );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "skale").then((NFTS) =>
+      setmySkaleNfts(NFTS)
     );
   };
 
@@ -1403,6 +1520,8 @@ function Dashboard({
         ? window.config.subscriptionbase_tokens[token]?.decimals
         : chainId === 43114
         ? window.config.subscription_tokens[token]?.decimals
+        : chainId === 1482601649
+        ? window.config.subscriptionskale_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -1420,6 +1539,8 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmount(token)
         : chainId === 8453
         ? await window.getEstimatedTokenSubscriptionAmountBase(token)
+        : chainId === 1482601649
+        ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
@@ -1441,6 +1562,7 @@ function Dashboard({
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
+    const skalesubscribeAddress = window.config.subscription_skale_address;
 
     const web3 = new Web3(window.ethereum);
 
@@ -1462,6 +1584,8 @@ function Dashboard({
           ? basesubscribeAddress
           : chainId === 43114
           ? avaxsubscribeAddress
+          : chainId === 1482601649
+          ? skalesubscribeAddress
           : cfxsubscribeAddress,
         price
       )
@@ -1499,6 +1623,7 @@ function Dashboard({
 
     const cfxWeb3 = new Web3(window.config.conflux_endpoint);
     const baseWeb3 = new Web3(window.config.base_endpoint);
+    const skaleWeb3 = new Web3(window.config.skale_endpoint);
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
@@ -1506,6 +1631,7 @@ function Dashboard({
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
 
     const basesubscribeAddress = window.config.subscription_base_address;
+    const skalesubscribeAddress = window.config.subscription_skale_address;
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -1533,6 +1659,11 @@ function Dashboard({
       subscribeToken
     );
 
+    const subscribeTokencontractskale = new skaleWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
     let tokenprice =
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
@@ -1544,6 +1675,8 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmount(token)
         : chainId === 8453
         ? await window.getEstimatedTokenSubscriptionAmountBase(token)
+        : chainId === 1482601649
+        ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
@@ -1581,6 +1714,20 @@ function Dashboard({
       } else if (chainId === 43114) {
         const result = await subscribeTokencontractavax.methods
           .allowance(coinbase, avaxsubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } else if (chainId === 1482601649) {
+        const result = await subscribeTokencontractskale.methods
+          .allowance(coinbase, skalesubscribeAddress)
           .call()
           .then();
         if (result != 0 && Number(result) >= Number(tokenprice)) {
@@ -1640,6 +1787,8 @@ function Dashboard({
           ? "SUBSCRIPTION_CFX"
           : chainId === 8453
           ? "SUBSCRIPTION_BASE"
+          : chainId === 1482601649
+          ? "SUBSCRIPTION_SKALE"
           : "",
     });
 
@@ -1648,7 +1797,29 @@ function Dashboard({
     await subscriptionContract.methods
       .subscribe(selectedSubscriptionToken, price)
       .send({ from: await window.getCoinbase() })
-      .then(() => {
+      .then((data) => {
+        if (dailyBonusPopup === true) {
+          setPremiumTxHash(data.transactionHash);
+          const selectedchain =
+            chainId === 1
+              ? "eth"
+              : chainId === 56
+              ? "bnb"
+              : chainId === 43114
+              ? "avax"
+              : chainId === 1030
+              ? "cfx"
+              : chainId === 8453
+              ? "base"
+              : chainId === 1482601649
+              ? "skale"
+              : "";
+          setselectedChainforPremium(selectedchain);
+
+          setTimeout(() => {
+            setgetPremiumPopup(false);
+          }, 2000);
+        }
         setloadspinnerSub(false);
         setIsPremium(true);
         handleUpdatePremiumUser(coinbase);
@@ -1778,6 +1949,23 @@ function Dashboard({
     }
   };
 
+  const handleSkalePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x585eb4b1")
+          .then(() => {
+            handleSwitchNetwork(1482601649);
+            setChainDropdown(chainDropdowns[5]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
   useEffect(() => {
     setDummyPremiumChests(shuffle(dummyPremiums));
     fetchReleases();
@@ -1844,6 +2032,14 @@ function Dashboard({
         Object.keys(window.config.subscription_tokens)[0]
       );
       handleSubscriptionTokenChange(wavaxAddress);
+    } else if (chainId === 1482601649) {
+      setChainDropdown(chainDropdowns[5]);
+      setdropdownIcon("usdc");
+      setdropdownTitle("USDC");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionskale_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wskaleAddress);
     } else {
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -1878,6 +2074,11 @@ function Dashboard({
     } else if (chainId === 8453 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionbase_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 1482601649 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionskale_tokens[selectedSubscriptionToken]
           ?.decimals
       );
     }
@@ -1950,7 +2151,16 @@ function Dashboard({
     ) {
       getOpenedChestPerWallet();
     }
-  }, [data, email, count, isPremium, claimedChests, claimedPremiumChests]);
+  }, [
+    data,
+    email,
+    count,
+    isPremium,
+    claimedChests,
+    claimedPremiumChests,
+    claimedSkaleChests,
+    claimedSkalePremiumChests,
+  ]);
 
   useEffect(() => {
     if (
@@ -2018,6 +2228,12 @@ function Dashboard({
   useEffect(() => {
     if (email) {
       getAllChests(email);
+    }
+  }, [email, count]);
+
+  useEffect(() => {
+    if (email) {
+      getAllSkaleChests(email);
     }
   }, [email, count]);
 
@@ -2116,6 +2332,12 @@ function Dashboard({
                           setIsPremium(false);
                           setclaimedChests(0);
                           setclaimedPremiumChests(0);
+                          setallChests([]);
+                          setallSkaleChests([]);
+                          setOpenedChests([]);
+                          setOpenedSkaleChests([])
+                          setclaimedSkaleChests(0);
+                          setclaimedSkalePremiumChests(0);
                         }}
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
@@ -2160,6 +2382,10 @@ function Dashboard({
                         idypBalancebnb={idypBalancebnb}
                         idypBalanceavax={idypBalanceavax}
                         showNfts={showNfts}
+                        claimedChests={claimedChests}
+                        claimedPremiumChests={claimedPremiumChests}
+                        claimedSkaleChests={claimedSkaleChests}
+                        claimedSkalePremiumChests={claimedSkalePremiumChests}
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
@@ -2188,11 +2414,10 @@ function Dashboard({
                         onBalanceClick={() => {
                           setBalancePopup(true);
                         }}
-                        claimedChests={claimedChests}
-                        claimedPremiumChests={claimedPremiumChests}
                         availableTime={goldenPassRemainingTime}
                         canBuy={canBuy}
                         openedChests={openedChests}
+                        openedSkaleChests={openedSkaleChests}
                         onDailyBonusInfoClick={() => {
                           setdailyBonusInfo(true);
                         }}
@@ -2217,7 +2442,6 @@ function Dashboard({
                         baseEarnETH={baseEarnETH}
                         dypiusEarnUsd={dypiusEarnUsd}
                         dypiusEarnTokens={dypiusEarnTokens}
-
                         dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
                         dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
                         dypiusPremiumPoints={dypiusPremiumPoints}
@@ -2262,6 +2486,7 @@ function Dashboard({
                       myBaseNfts={myBaseNfts}
                       myDogeNfts={myDogeNfts}
                       myCmcNfts={myCmcNfts}
+                      mySkaleNfts={mySkaleNfts}
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
@@ -2466,7 +2691,9 @@ function Dashboard({
                             cfxPrice={cfxPrice}
                             ethTokenData={ethTokenData}
                             openedChests={openedChests}
+                            openedSkaleChests={openedSkaleChests}
                             allChests={allChests}
+                            allSkaleChests={allSkaleChests}
                             availableTime={goldenPassRemainingTime}
                             userSocialRewards={userSocialRewards}
                             dogePrice={dogePrice}
@@ -2479,8 +2706,8 @@ function Dashboard({
                             baseEarnUSD={baseEarnUSD}
                             baseEarnETH={baseEarnETH}
                             dypiusEarnUsd={dypiusEarnUsd}
-                        dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
-                        dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
+                            dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
+                            dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
                           />
                         </div>
                       </OutsideClickHandler>
@@ -2524,15 +2751,15 @@ function Dashboard({
                                 style={{ cursor: "pointer" }}
                               />
                             </div>
-                            <div className="premium-gold-bg d-flex align-items-center justify-content-between p-3">
+                            <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
                               <div className="d-flex flex-column gap-2">
                                 <span className="lifetime-plan mb-0">
                                   Lifetime plan
                                 </span>
                                 <h6 className="plan-cost mb-0">$100</h6>
                               </div>
-                              <div className="d-flex align-items-center gap-3">
-                                <div className="d-flex flex-column gap-2">
+                              <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
+                                <div className="premium-chains-wrapper">
                                   <div className="d-flex align-items-center gap-2">
                                     <img
                                       src={
@@ -2592,6 +2819,16 @@ function Dashboard({
                                       Conflux
                                     </span>
                                   </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={skaleIcon}
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      SKALE
+                                    </span>
+                                  </div>
                                 </div>
                                 <img src={premiumIcon} alt="" />
                               </div>
@@ -2632,8 +2869,9 @@ function Dashboard({
                                   </div>
                                 ))}
                               </div>
-                            </div>
-                            <div className="d-flex mt-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
+                            </div>{" "}
+                            <hr className="form-divider my-4" />
+                            <div className="d-flex mt-4 mb-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
                               <div className="d-flex flex-column gap-3 subscribe-input-container">
                                 <span className="token-amount-placeholder">
                                   Select chain
@@ -2725,6 +2963,20 @@ function Dashboard({
                                       />
                                       Conflux Network
                                     </li>
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleSkalePool}
+                                    >
+                                      <img
+                                        src={skaleIcon}
+                                        alt=""
+                                        style={{
+                                          width: "18px",
+                                          height: "18px",
+                                        }}
+                                      />
+                                      SKALE
+                                    </li>
                                   </ul>
                                 </div>
                               </div>
@@ -2783,6 +3035,9 @@ function Dashboard({
                                             : chainId === 8453
                                             ? window.config
                                                 .subscriptionbase_tokens
+                                            : chainId === 1482601649
+                                            ? window.config
+                                                .subscriptionskale_tokens
                                             : window.config.subscription_tokens
                                         ).map((t, i) => (
                                           <li
@@ -2817,6 +3072,11 @@ function Dashboard({
                                                         .subscriptioncfx_tokens[
                                                         t
                                                       ]?.symbol
+                                                    : chainId === 1482601649
+                                                    ? window.config
+                                                        .subscriptionskale_tokens[
+                                                        t
+                                                      ]?.symbol
                                                     : window.config
                                                         .subscription_tokens[t]
                                                         ?.symbol
@@ -2844,6 +3104,11 @@ function Dashboard({
                                                     : chainId === 1030
                                                     ? window.config
                                                         .subscriptioncfx_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 1482601649
+                                                    ? window.config
+                                                        .subscriptionskale_tokens[
                                                         t
                                                       ]?.symbol
                                                     : window.config
@@ -2881,6 +3146,10 @@ function Dashboard({
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 1482601649
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
                                                   : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
@@ -2907,6 +3176,10 @@ function Dashboard({
                                               : chainId === 8453
                                               ? window.config
                                                   .subscriptionbase_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 1482601649
+                                              ? window.config
+                                                  .subscriptionskale_tokens[t]
                                                   ?.symbol
                                               : window.config
                                                   .subscription_tokens[t]
@@ -2964,8 +3237,23 @@ function Dashboard({
                                 />
                               </div>
                             </div> */}
-                            <hr className="form-divider my-4" />
-
+                            {chainId === 1482601649 && (
+                              <div className="gotoNebula-wrapper p-3 mb-3">
+                                <div className="d-flex w-100 justify-content-between gap-2">
+                                  <span className="nebula-wrapper-text">
+                                    Bridge your USDC to Nebula now!
+                                  </span>
+                                  <a
+                                    className="nebula-bridgebtn"
+                                    href="https://portal.skale.space/bridge?from=mainnet&to=green-giddy-denebola&token=usdc&type=erc20"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                  >
+                                    Nebula Bridge
+                                  </a>
+                                </div>
+                              </div>
+                            )}
                             <div className="d-flex align-items-center gap-3 justify-content-center">
                               <div
                                 className={` ${
@@ -3162,7 +3450,7 @@ function Dashboard({
                 </div>
               </div>
             )}
-            {dailyBonusPopup && (
+            {/* {dailyBonusPopup && (
               <OutsideClickHandler
                 onOutsideClick={() => {
                   setdailyBonusPopup(false);
@@ -3207,6 +3495,56 @@ function Dashboard({
                   />
                 </div>
               </OutsideClickHandler>
+            )} */}
+            {dailyBonusPopup && (
+              // <OutsideClickHandler
+              //   onOutsideClick={() => {
+              //     setdailyBonusPopup(false);
+              //   }}
+              // >
+              <NewDailyBonus
+                isPremium={isPremium}
+                chainId={chainId}
+                dypTokenData={dypTokenData}
+                ethTokenData={ethTokenData}
+                dyptokenData_old={dyptokenData_old}
+                handleSwitchChain={handleSwitchChain}
+                handleSwitchNetwork={handleSwitchNetwork}
+                listedNFTS={listedNFTS}
+                onclose={() => {
+                  setdailyBonusPopup(false);
+                }}
+                coinbase={coinbase}
+                standardChests={standardChests}
+                premiumChests={premiumChests}
+                standardSkaleChests={standardSkaleChests}
+                premiumSkaleChests={premiumSkaleChests}
+                claimedChests={claimedChests}
+                claimedPremiumChests={claimedPremiumChests}
+                claimedSkaleChests={claimedSkaleChests}
+                claimedSkalePremiumChests={claimedSkalePremiumChests}
+                email={email}
+                openedChests={openedChests}
+                openedSkaleChests={openedSkaleChests}
+                canBuy={canBuy}
+                address={data?.getPlayer?.wallet?.publicAddress}
+                allChests={allChests}
+                allSkaleChests={allSkaleChests}
+                onChestClaimed={() => {
+                  setCount(count + 1);
+                }}
+                onSkaleChestClaimed={() => {
+                  setskalecount(skalecount + 1);
+                }}
+                dummypremiumChests={dummypremiumChests}
+                onPremiumClick={() => {
+                  setgetPremiumPopup(true);
+                }}
+                premiumTxHash={premiumTxHash}
+                selectedChainforPremium={selectedChainforPremium}
+                onPremiumClickOther={()=>{setdailyBonusPopup(false); setgetPremiumPopup(true)}}
+              />
+              // </OutsideClickHandler>
             )}
             {showChecklistModal === true && (
               <ChecklistModal
