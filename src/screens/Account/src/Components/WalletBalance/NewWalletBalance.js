@@ -252,7 +252,7 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "doge",
     rewards: "DOGE",
-    status: "Live",
+    status: "Expired",
     id: "event7",
     eventType: "Explore & Mine",
     eventDate: "Dec 22, 2023",
@@ -342,45 +342,7 @@ const NewWalletBalance = ({
         activeTab: "dypiusv2",
       },
     },
-     {
-      title: "Dogecoin",
-      chain: "BNB Chain",
-      linkState: "doge",
-      rewards: "DOGE",
-      status: "Live",
-      eventStatus: "Live",
-      id: "event7",
-      eventType: "Explore & Mine",
-      date: "Dec 22, 2023",
-      eventDate: "Dec 22, 2023",
-      logo: doge,
-      totalRewards: "$10,000 in DOGE Rewards",
-      eventDuration: dogeLastDay,
-      minRewards: "1",
-      maxRewards: "100",
-      minPoints: "5,000",
-      maxPoints: "50,000",
-      learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
-      popupInfo: {
-        title: "Dogecoin",
-        chain: "BNB Chain",
-        linkState: "doge",
-        rewards: "DOGE",
-        status: "Live",
-        id: "event7",
-        eventStatus: "Live",
-        eventType: "Explore & Mine",
-        totalRewards: "$10,000 in DOGE Rewards",
-        eventDuration: dogeLastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
-        eventDate: "Dec 22, 2023",
-      },
-    },
+    
     {
       title: "CMC",
       logo: cmc,
@@ -410,7 +372,45 @@ const NewWalletBalance = ({
       },
     },
    
-
+    {
+      title: "Dogecoin",
+      chain: "BNB Chain",
+      linkState: "doge",
+      rewards: "DOGE",
+      status: "Expired",
+      eventStatus: "Expired",
+      id: "event7",
+      eventType: "Explore & Mine",
+      date: "Dec 22, 2023",
+      eventDate: "Dec 22, 2023",
+      logo: doge,
+      totalRewards: "$10,000 in DOGE Rewards",
+      eventDuration: dogeLastDay,
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+      popupInfo: {
+        title: "Dogecoin",
+        chain: "BNB Chain",
+        linkState: "doge",
+        rewards: "DOGE",
+        status: "Expired",
+        id: "event7",
+        eventStatus: "Expired",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in DOGE Rewards",
+        eventDuration: dogeLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "Dec 22, 2023",
+      },
+    },
     {
       title: "Base",
       logo: base,
@@ -1068,15 +1068,7 @@ const NewWalletBalance = ({
                 userEarnedUsd={dypiusPremiumEarnUsd}
               />
 
-              <ActiveProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyDoge);
-                  setEventPopup(true);
-                }}
-                data={dummyDoge}
-                event={dummyDoge}
-                userEarnedUsd={dogeEarnUSD}
-              />
+              
               <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyCmc);
@@ -1085,6 +1077,15 @@ const NewWalletBalance = ({
                 data={dummyCmc}
                 event={dummyCmc}
                 userEarnedUsd={cmcuserEarnUsd}
+              />
+              <ExpiredProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyDoge);
+                  setEventPopup(true);
+                }}
+                data={dummyDoge}
+                event={dummyDoge}
+                userEarnedUsd={dogeEarnUSD}
               />
              
               {/* <ExpiredProfileEvent
