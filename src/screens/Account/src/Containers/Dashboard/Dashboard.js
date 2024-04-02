@@ -49,6 +49,7 @@ import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
+import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
 
 function Dashboard({
   account,
@@ -2679,7 +2680,7 @@ function Dashboard({
                               style={{ cursor: "pointer" }}
                             />
                           </div>
-                          <MyRewardsPopup
+                          <MyRewardsPopupNew
                             username={data?.getPlayer?.displayName}
                             userId={data?.getPlayer?.playerId}
                             address={data?.getPlayer?.wallet?.publicAddress}
