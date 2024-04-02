@@ -774,7 +774,7 @@ const ProfileCard = ({
                               <Clipboard
                                 component="div"
                                 data-event="click"
-                                style={{border: "none"}}
+                                style={{ border: "none" }}
                                 data-for={id}
                                 data-tip="Copied To Clipboard!"
                                 data-clipboard-text={address}
@@ -1069,7 +1069,7 @@ const ProfileCard = ({
                           <span className="leaderboard-title-span">Game</span>
                           <span
                             className="leaderboard-title-span"
-                            style={{ color: "#1BF5FF" }}
+                            style={{ color: isPremium ? "#FFBF00" : "#1BF5FF" }}
                           >
                             Leaderboard
                           </span>
@@ -1098,7 +1098,14 @@ const ProfileCard = ({
                           />
                           <div className="d-flex flex-column">
                             <span className="my-rank-text">My Rank</span>
-                            <h6 className="player-rank-text mb-0">STARTER</h6>
+                            <h6
+                              className="player-rank-text mb-0"
+                              style={{
+                                color: isPremium ? "#FFBF00" : "#1BF5FF",
+                              }}
+                            >
+                              STARTER
+                            </h6>
                           </div>
                         </div>
                         {rankDropdown && (
@@ -1465,7 +1472,7 @@ const ProfileCard = ({
                       Points Required
                     </span>
                     <span className="needed-points mb-0">10,000,000</span>
-                  </div>               
+                  </div>
                 </div>
                 <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
 
@@ -1488,7 +1495,7 @@ const ProfileCard = ({
                       Points Required
                     </span>
                     <span className="needed-points mb-0">20,000,000</span>
-                  </div>                 
+                  </div>
                 </div>
               </div>
             ) : (
@@ -1509,7 +1516,6 @@ const ProfileCard = ({
                     </span>
                     <span className="needed-points mb-0">500,000</span>
                   </div>
-                 
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
@@ -1527,7 +1533,6 @@ const ProfileCard = ({
                     </span>
                     <span className="needed-points mb-0">2,000,000</span>
                   </div>
-                 
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
@@ -1549,7 +1554,6 @@ const ProfileCard = ({
                     </span>
                     <span className="needed-points mb-0">5,000,000</span>
                   </div>
-                
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
