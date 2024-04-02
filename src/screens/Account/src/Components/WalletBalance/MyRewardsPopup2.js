@@ -590,6 +590,15 @@ const MyRewardsPopupNew = ({
             $
             {getFormattedNumber(
               Number(gemRewards) +
+                Number(dailyplayerData) +
+                Number(weeklyplayerData) +
+                Number(userRank2) +
+                Number(genesisData) +
+                Number(cmcuserEarnUsd) +
+                Number(dypiusPremiumEarnUsd) +
+                Number(userSocialRewardsCached) +
+                Number(treasureRewardMoney) +
+                Number(treasureRewardMoneySkale) +
                 Number(leaderboardTotalData) +
                 Number(gateRewardsUSD) +
                 Number(confluxRewardsUSD) +
@@ -904,15 +913,21 @@ const MyRewardsPopupNew = ({
             <div className="d-flex flex-column gap-2">
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CAWS</span>
-                <span className="item-name-right">$200</span>
+                <span className="item-name-right">
+                  ${getFormattedNumber(cawsRewards, 2)}
+                </span>
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">WoD Land & CAWS </span>
-                <span className="item-name-right">$200</span>
+                <span className="item-name-right">
+                  ${getFormattedNumber(wodCawsRewards, 2)}
+                </span>
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Genesis Land</span>
-                <span className="item-name-right">$200</span>
+                <span className="item-name-right">
+                  ${getFormattedNumber(wodRewards, 2)}
+                </span>
               </div>
             </div>
           </div>
