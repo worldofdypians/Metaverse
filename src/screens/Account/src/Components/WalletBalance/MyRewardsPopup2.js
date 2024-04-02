@@ -640,10 +640,32 @@ const MyRewardsPopupNew = ({
           }}
         >
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
-            <img src={ rewardCategory === "all" ? allActive : allImg} alt="" />
-            <span className={rewardCategory === "all" ? "reward-item-desc-active" : 'reward-item-desc'}>All</span>
-            <div className={rewardCategory === "all" ? "small-separator-active" : "small-separator"}></div>
-            <span className={rewardCategory === "all" ?   "reward-category-amount-active" : 'reward-category-amount'}>$1,435</span>
+            <img src={rewardCategory === "all" ? allActive : allImg} alt="" />
+            <span
+              className={
+                rewardCategory === "all"
+                  ? "reward-item-desc-active"
+                  : "reward-item-desc"
+              }
+            >
+              All
+            </span>
+            <div
+              className={
+                rewardCategory === "all"
+                  ? "small-separator-active"
+                  : "small-separator"
+              }
+            ></div>
+            <span
+              className={
+                rewardCategory === "all"
+                  ? "reward-category-amount-active"
+                  : "reward-category-amount"
+              }
+            >
+              $1,435
+            </span>
           </div>
         </div>
         <div
@@ -657,10 +679,37 @@ const MyRewardsPopupNew = ({
           }}
         >
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
-            <img src={rewardCategory === "nftStaking" ? nftStakingActive : nftStaking} alt="" />
-            <span className={  rewardCategory === "nftStaking" ? 'reward-item-desc-active' : "reward-item-desc"}>NFT Staking</span>
-            <div className={   rewardCategory === "nftStaking" ? 'small-separator-active' : "small-separator"}></div>
-            <span className={  rewardCategory === "nftStaking" ? 'reward-category-amount-active' : "reward-category-amount"}>$135</span>
+            <img
+              src={
+                rewardCategory === "nftStaking" ? nftStakingActive : nftStaking
+              }
+              alt=""
+            />
+            <span
+              className={
+                rewardCategory === "nftStaking"
+                  ? "reward-item-desc-active"
+                  : "reward-item-desc"
+              }
+            >
+              NFT Staking
+            </span>
+            <div
+              className={
+                rewardCategory === "nftStaking"
+                  ? "small-separator-active"
+                  : "small-separator"
+              }
+            ></div>
+            <span
+              className={
+                rewardCategory === "nftStaking"
+                  ? "reward-category-amount-active"
+                  : "reward-category-amount"
+              }
+            >
+              $135
+            </span>
           </div>
         </div>
         <div
@@ -674,10 +723,38 @@ const MyRewardsPopupNew = ({
           }}
         >
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
-            <img src={rewardCategory === "dailyBonus" ? dailyBonusActive : dailyBonus} style={{ width: 36, height: 36 }} alt="" />
-            <span className={  rewardCategory === "dailyBonus" ? 'reward-item-desc-active' : "reward-item-desc"}>Daily Bonus</span>
-            <div className={ rewardCategory === "dailyBonus" ?  'small-separator-active' : "small-separator"}></div>
-            <span className={ rewardCategory === "dailyBonus" ? 'reward-category-amount-active' :  "reward-category-amount"}>$16</span>
+            <img
+              src={
+                rewardCategory === "dailyBonus" ? dailyBonusActive : dailyBonus
+              }
+              style={{ width: 36, height: 36 }}
+              alt=""
+            />
+            <span
+              className={
+                rewardCategory === "dailyBonus"
+                  ? "reward-item-desc-active"
+                  : "reward-item-desc"
+              }
+            >
+              Daily Bonus
+            </span>
+            <div
+              className={
+                rewardCategory === "dailyBonus"
+                  ? "small-separator-active"
+                  : "small-separator"
+              }
+            ></div>
+            <span
+              className={
+                rewardCategory === "dailyBonus"
+                  ? "reward-category-amount-active"
+                  : "reward-category-amount"
+              }
+            >
+              $16
+            </span>
           </div>
         </div>
         <div
@@ -691,10 +768,39 @@ const MyRewardsPopupNew = ({
           }}
         >
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
-            <img src={ rewardCategory === "leaderboard" ? leaderboardActive : leaderboard} alt="" />
-            <span className={ rewardCategory === "leaderboard" ? 'reward-item-desc-active' : "reward-item-desc"}>Leaderboard</span>
-            <div className={ rewardCategory === "leaderboard" ? 'small-separator-active' : "small-separator"}></div>
-            <span className={ rewardCategory === "leaderboard" ? 'reward-category-amount-active' : "reward-category-amount"}>$540</span>
+            <img
+              src={
+                rewardCategory === "leaderboard"
+                  ? leaderboardActive
+                  : leaderboard
+              }
+              alt=""
+            />
+            <span
+              className={
+                rewardCategory === "leaderboard"
+                  ? "reward-item-desc-active"
+                  : "reward-item-desc"
+              }
+            >
+              Leaderboard
+            </span>
+            <div
+              className={
+                rewardCategory === "leaderboard"
+                  ? "small-separator-active"
+                  : "small-separator"
+              }
+            ></div>
+            <span
+              className={
+                rewardCategory === "leaderboard"
+                  ? "reward-category-amount-active"
+                  : "reward-category-amount"
+              }
+            >
+              $540
+            </span>
           </div>
         </div>
         <div
@@ -708,10 +814,40 @@ const MyRewardsPopupNew = ({
           }}
         >
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
-            <img src={ rewardCategory === "treasurehunt" ? treasureHuntActive : treasureHunt} alt="" style={{ width: 36, height: 36 }} />
-            <span className={ rewardCategory === "treasurehunt" ? 'reward-item-desc-active' : "reward-item-desc"}>Treasure Hunt</span>
-            <div className={ rewardCategory === "treasurehunt" ? 'small-separator-active' : "small-separator"}></div>
-            <span className={ rewardCategory === "treasurehunt" ? 'reward-category-amount-active' : "reward-category-amount"}>$5</span>
+            <img
+              src={
+                rewardCategory === "treasurehunt"
+                  ? treasureHuntActive
+                  : treasureHunt
+              }
+              alt=""
+              style={{ width: 36, height: 36 }}
+            />
+            <span
+              className={
+                rewardCategory === "treasurehunt"
+                  ? "reward-item-desc-active"
+                  : "reward-item-desc"
+              }
+            >
+              Treasure Hunt
+            </span>
+            <div
+              className={
+                rewardCategory === "treasurehunt"
+                  ? "small-separator-active"
+                  : "small-separator"
+              }
+            ></div>
+            <span
+              className={
+                rewardCategory === "treasurehunt"
+                  ? "reward-category-amount-active"
+                  : "reward-category-amount"
+              }
+            >
+              $5
+            </span>
           </div>
         </div>
         <div
@@ -725,10 +861,39 @@ const MyRewardsPopupNew = ({
           }}
         >
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
-            <img src={rewardCategory === "specialRewards" ? specialRewardsActive : specialRewards} alt="" />
-            <span className={ rewardCategory === "specialRewards" ? 'reward-item-desc-active' : "reward-item-desc"}>Special Rewards</span>
-            <div className={ rewardCategory === "specialRewards" ? 'small-separator-active' : "small-separator"}></div>
-            <span className={ rewardCategory === "specialRewards" ? 'reward-category-amount-active' : "reward-category-amount"}>$0</span>
+            <img
+              src={
+                rewardCategory === "specialRewards"
+                  ? specialRewardsActive
+                  : specialRewards
+              }
+              alt=""
+            />
+            <span
+              className={
+                rewardCategory === "specialRewards"
+                  ? "reward-item-desc-active"
+                  : "reward-item-desc"
+              }
+            >
+              Special Rewards
+            </span>
+            <div
+              className={
+                rewardCategory === "specialRewards"
+                  ? "small-separator-active"
+                  : "small-separator"
+              }
+            ></div>
+            <span
+              className={
+                rewardCategory === "specialRewards"
+                  ? "reward-category-amount-active"
+                  : "reward-category-amount"
+              }
+            >
+              $0
+            </span>
           </div>
         </div>
       </div>
@@ -767,18 +932,27 @@ const MyRewardsPopupNew = ({
       <div className="d-flex flex-column gap-2">
         <span className="item-name-title">Leaderboard</span>
         <div className="item-name-wrapper p-2">
-          <div className="d-flex flex-column gap-2">
-            <div className="d-flex w-100 justify-content-between gap-2">
-              <span className="item-name-left">BNB Chain</span>
-              <span className="item-name-right">$200</span>
+          <div className="d-flex justify-content-between gap-4 align-items-center">
+            <div className="d-flex flex-column gap-2 w-50">
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">BNB Chain</span>
+                <span className="item-name-right">$200</span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">SKALE</span>
+                <span className="item-name-right">$200</span>
+              </div>
             </div>
-            <div className="d-flex w-100 justify-content-between gap-2">
-              <span className="item-name-left">SKALE</span>
-              <span className="item-name-right">$200</span>
-            </div>
-            <div className="d-flex w-100 justify-content-between gap-2">
-              <span className="item-name-left">Genesis</span>
-              <span className="item-name-right">$200</span>
+
+            <div className="d-flex flex-column gap-2 w-50">
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Genesis</span>
+                <span className="item-name-right">$200</span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Kitty Dash</span>
+                <span className="item-name-right">$200</span>
+              </div>
             </div>
           </div>
         </div>
