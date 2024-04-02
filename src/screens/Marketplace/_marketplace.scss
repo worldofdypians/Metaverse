@@ -3710,3 +3710,15 @@ line-height: normal;
     rgba(16, 93, 255, 0.5) 168.67%
   );
 }
+
+.market-stake-desc{
+  color: #FFF;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+width: 50%;
+@media screen and (max-width: 786px) {
+  width: 100%;
+}
+}
