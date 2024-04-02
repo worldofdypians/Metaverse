@@ -18,7 +18,8 @@ import MobileNav from "../../components/MobileNav/MobileNav";
 import Slider from "react-slick";
 import topEth from "./assets/topEth.svg";
 import topDyp from "../../screens/Marketplace/assets/dypIcon.svg";
-
+import newCawsApr from './assets/newCawsApr.svg'
+import cawsMarketplaceBannerMobile from './assets/cawsMarketplaceBannerMobile.png'
 import { abbreviateNumber } from "js-abbreviation-number";
 import nextArrow from "./assets/nextArrow1.svg";
 import axios from "axios";
@@ -1233,47 +1234,44 @@ const Marketplace = ({
                       Mint now <img src={greenArrow} alt="" />{" "}
                     </span>
                   </NavLink>
-                  {/* <div className="d-flex flex-column gap-4">
-                    <NavLink
-                      to={"/marketplace/mint/base"}
-                      className="homepage-mint-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between"
-                    >
-                      <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 py-3 py-lg-0">
-                        <div className="homepage-nft-mint-tag px-4 py-1 d-flex align-items-center justify-content-center">
-                          <span className="mb-0">NFT Minting</span>
-                        </div>
-                        <h6 className="homepage-minting-title">
-                          Base Beta Pass
-                        </h6>
+                </div>
+                <div className="stakeright-side d-flex flex-column gap-3">
+                <NavLink
+                    to={"/marketplace/stake"}
+                    className="w-100 m-0 d-flex flex-column gap-5"
+                  >
+                    <div className="p-4 mint-wrappernew market-stake-bg betastyle w-100 m-0 d-flex flex-column gap-lg-5 gap-3 justify-content-start staking-height staking-height2 h-auto">
+                      <div className="d-flex flex-column gap-5 align-items-center align-items-lg-start">
+                      <div className="d-flex flex-column">
+                      <h6 className="marketmintnewtitle position-relative">
+                        CAWS NFT  
+                        
+                        <span className="marketmintnewtitle-marked mx-2" style={{color: "#FE53BB"}}>
+                          Staking
+                        </span>
+                      </h6>
+                      <p className="market-stake-desc">Stake your CAWS NFTs to earn daily ETH rewards.</p>
                       </div>
-                      <img src={baseUpcoming} alt="" />
-                    </NavLink>
-                    <NavLink
-                      to={"/marketplace/mint/timepiece"}
-                      className="homepage-mint-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between"
-                    >
-                      <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 py-3 py-lg-0">
-                        <div className="homepage-nft-mint-tag px-4 py-1 d-flex align-items-center justify-content-center">
-                          <span className="mb-0">NFT Minting</span>
-                        </div>
-                        <h6 className="homepage-minting-title">
-                          CAWS Timepiece
-                        </h6>
+                      <img src={newCawsApr} alt="" className="w-25" />
                       </div>
-                      <img src={timepieceHome} alt="" />
-                    </NavLink>
-                  </div>
-                  <NavLink to="/marketplace/mint/conflux">
+                     
+                      <img
+                        src={cawsMarketplaceBannerMobile}
+                        alt=""
+                        className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
+                        style={{scale: 1}}
+                      />
+                    </div>
+                  </NavLink>
+                  <NavLink to="/marketplace/stake">
                     <span
                       className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                       style={{ width: "fit-content" }}
                     >
-                      Mint now <img src={greenArrow} alt="" />{" "}
+                      Stake now <img src={greenArrow} alt="" />{" "}
                     </span>
-                  </NavLink> */}
-                </div>
-                <div className="stakeright-side d-flex flex-column gap-3">
-                  <div className=" d-flex flex-column align-items-start align-items-lg-center gap-lg-4 gap-2">
+                  </NavLink>
+                  {/* <div className=" d-flex flex-column align-items-start align-items-lg-center gap-lg-4 gap-2">
                     <NavLink
                       to="/marketplace/stake"
                       className={
@@ -1326,7 +1324,7 @@ const Marketplace = ({
                     >
                       Stake now <img src={greenArrow} alt="" />{" "}
                     </span>
-                  </NavLink>
+                  </NavLink> */}
                 </div>
               </div>
             </div>
