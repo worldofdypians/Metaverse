@@ -2014,6 +2014,12 @@
   gap: 20px;
 }
 
+.treasure-hunt-item-wrapper-active {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 20px;
+}
+
 .reward-category-items-wrapper {
   display: grid;
   grid-template-columns: repeat(6, 1fr);

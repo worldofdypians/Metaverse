@@ -897,21 +897,39 @@ const MyRewardsPopupNew = ({
           </div>
         </div>
       </div>
-      <div className="d-flex flex-column gap-2">
-        <span className="item-name-title">NFT Staking</span>
-        <div className="item-name-wrapper p-2">
-          <div className="d-flex flex-column gap-2">
-            <div className="d-flex w-100 justify-content-between gap-2">
-              <span className="item-name-left">CAWS</span>
-              <span className="item-name-right">$200</span>
-            </div>
-            <div className="d-flex w-100 justify-content-between gap-2">
-              <span className="item-name-left">WoD Land & CAWS </span>
-              <span className="item-name-right">$200</span>
+      {previousRewards ? (
+        <div className="d-flex flex-column gap-2">
+          <span className="item-name-title">NFT Staking</span>
+          <div className="item-name-wrapper p-2">
+            <div className="d-flex flex-column gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">CAWS</span>
+                <span className="item-name-right">$200</span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">WoD Land & CAWS </span>
+                <span className="item-name-right">$200</span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Genesis Land</span>
+                <span className="item-name-right">$200</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="d-flex flex-column gap-2">
+          <span className="item-name-title">NFT Staking</span>
+          <div className="item-name-wrapper p-2">
+            <div className="d-flex flex-column gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">CAWS Premium</span>
+                <span className="item-name-right">$0.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="d-flex flex-column gap-2">
         <span className="item-name-title">Daily Bonus</span>
@@ -919,11 +937,21 @@ const MyRewardsPopupNew = ({
           <div className="d-flex flex-column gap-2">
             <div className="d-flex w-100 justify-content-between gap-2">
               <span className="item-name-left">BNB Chain</span>
-              <span className="item-name-right">$200</span>
+              <span className="item-name-right">
+                $
+                {previousRewards
+                  ? getFormattedNumber(pasttreasureRewardMoney, 2)
+                  : getFormattedNumber(treasureRewardMoney, 2)}
+              </span>
             </div>
             <div className="d-flex w-100 justify-content-between gap-2">
               <span className="item-name-left">SKALE</span>
-              <span className="item-name-right">$200</span>
+              <span className="item-name-right">
+                $
+                {previousRewards
+                  ? getFormattedNumber(0, 2)
+                  : getFormattedNumber(treasureRewardMoneySkale, 2)}
+              </span>
             </div>
           </div>
         </div>
@@ -936,18 +964,31 @@ const MyRewardsPopupNew = ({
             <div className="d-flex flex-column gap-2 w-50">
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">BNB Chain</span>
-                <span className="item-name-right">$200</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(leaderboardTotalData, 2)
+                    : getFormattedNumber(
+                        dailyplayerData + weeklyplayerData + userRank2,
+                        2
+                      )}
+                </span>
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SKALE</span>
-                <span className="item-name-right">$200</span>
+                <span className="item-name-right">$0.00</span>
               </div>
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Genesis</span>
-                <span className="item-name-right">$200</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(gemRewards, 2)
+                    : getFormattedNumber(genesisData, 2)}
+                </span>
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Kitty Dash</span>
@@ -958,84 +999,116 @@ const MyRewardsPopupNew = ({
         </div>
       </div>
 
-      <div className="d-flex flex-column gap-2">
-        <span className="item-name-title">Treasure Hunt</span>
-        <div className="item-name-wrapper p-2">
-          <div className="treasure-hunt-item-wrapper">
-            <div className="d-flex flex-column gap-2">
-              <div className="d-flex gap-2 align-items-center justify-content-between">
-                <span className="d-flex align-items-center gap-2 item-name-left">
-                  <img src={base} alt="" />
-                  Base
-                </span>
-                <span className="item-name-right">$200</span>
-              </div>
-              <div className="d-flex gap-2 align-items-center justify-content-between">
-                <span className="d-flex align-items-center gap-2 item-name-left">
-                  <img src={cmc} alt="" />
-                  CoinMarketCap
-                </span>
-                <span className="item-name-right">$200</span>
-              </div>
-              <div className="d-flex gap-2 align-items-center justify-content-between">
-                <span className="d-flex align-items-center gap-2 item-name-left">
-                  <img src={coingecko} alt="" />
-                  CoinGecko
-                </span>
-                <span className="item-name-right">$200</span>
-              </div>
-            </div>
-
-            <div className="d-flex flex-column gap-2">
-              <div className="d-flex gap-2 align-items-center justify-content-between">
-                <span className="d-flex align-items-center gap-2 item-name-left">
-                  <img src={skale} alt="" />
-                  SKALE
-                </span>
-                <span className="item-name-right">$200</span>
-              </div>
-              <div className="d-flex gap-2 align-items-center justify-content-between">
-                <span className="d-flex align-items-center gap-2 item-name-left">
-                  <img src={dypius} alt="" />
-                  Dypius
-                </span>
-                <span className="item-name-right">$200</span>
-              </div>
-              <div className="d-flex gap-2 align-items-center justify-content-between">
-                <span className="d-flex align-items-center gap-2 item-name-left">
-                  <img src={gate} alt="" />
-                  Gate.io
-                </span>
-                <span className="item-name-right">$200</span>
-              </div>
-            </div>
-
-            <div className="d-flex flex-column gap-2">
-              <div className="d-flex gap-2 align-items-center justify-content-between">
-                <span className="d-flex align-items-center gap-2 item-name-left">
-                  <img src={conflux} alt="" />
-                  Conflux
-                </span>
-                <span className="item-name-right">$200</span>
-              </div>
-              <div className="d-flex gap-2 align-items-center justify-content-between">
-                <span className="d-flex align-items-center gap-2 item-name-left">
-                  <img src={dypiusPremium} alt="" />
-                  Dypius Premium
-                </span>
-                <span className="item-name-right">$200</span>
-              </div>
-              <div className="d-flex gap-2 align-items-center justify-content-between">
-                <span className="d-flex align-items-center gap-2 item-name-left">
-                  <img src={dogeCoin} alt="" />
-                  Dogecoin
-                </span>
-                <span className="item-name-right">$200</span>
+      {!previousRewards ? (
+        <div className="d-flex flex-column gap-2">
+          <span className="item-name-title">Treasure Hunt</span>
+          <div className="item-name-wrapper p-2">
+            <div className="treasure-hunt-item-wrapper-active">
+              <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center justify-content-between gap-2">
+                <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={cmc} alt="" />
+                    CoinMarketCap
+                  </span>
+                  <span className="item-name-right">
+                    {" "}
+                    ${getFormattedNumber(cmcuserEarnUsd, 2)}
+                  </span>
+                </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={skale} alt="" />
+                    SKALE
+                  </span>
+                  <span className="item-name-right">$0.00</span>
+                </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={dypiusPremium} alt="" />
+                    Dypius Premium
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(dypiusPremiumEarnUsd, 2)}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="d-flex flex-column gap-2">
+          <span className="item-name-title">Treasure Hunt</span>
+          <div className="item-name-wrapper p-2">
+            <div className="treasure-hunt-item-wrapper">
+              <div className="d-flex flex-column gap-2">
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={base} alt="" />
+                    Base
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(baseRewardsUSD, 2)}
+                  </span>
+                </div>
+
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={coingecko} alt="" />
+                    CoinGecko
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(coingeckoRewardsUSD, 2)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="d-flex flex-column gap-2">
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={dypius} alt="" />
+                    Dypius
+                  </span>
+                  <span className="item-name-right">
+                    {" "}
+                    ${getFormattedNumber(dypiusRewardsUSD, 2)}
+                  </span>
+                </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={gate} alt="" />
+                    Gate.io
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(gateRewardsUSD, 2)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="d-flex flex-column gap-2">
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={conflux} alt="" />
+                    Conflux
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(confluxRewardsUSD, 2)}
+                  </span>
+                </div>
+
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={dogeCoin} alt="" />
+                    Dogecoin
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(dogeEarnUSD, 2)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="d-flex flex-column gap-2">
         <span className="item-name-title">Special Rewards</span>
@@ -1043,11 +1116,21 @@ const MyRewardsPopupNew = ({
           <div className="d-flex flex-column gap-2">
             <div className="d-flex w-100 justify-content-between gap-2">
               <span className="item-name-left">Social Bonus</span>
-              <span className="item-name-right">$200</span>
+              <span className="item-name-right">
+                $
+                {previousRewards
+                  ? getFormattedNumber(pastSpecialRewards, 2)
+                  : getFormattedNumber(userSocialRewardsCached, 2)}
+              </span>
             </div>
             <div className="d-flex w-100 justify-content-between gap-2">
               <span className="item-name-left">Rank Bonus</span>
-              <span className="item-name-right">$200</span>
+              <span className="item-name-right">
+                $
+                {previousRewards
+                  ? getFormattedNumber(0, 2)
+                  : getFormattedNumber(0, 2)}
+              </span>
             </div>
           </div>
         </div>
