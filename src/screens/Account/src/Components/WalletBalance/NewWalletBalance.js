@@ -1436,11 +1436,11 @@ const NewWalletBalance = ({
           </div> */}
           <div className="col-12 col-lg-8 d-flex flex-column justify-content-between gap-3 px-0 gap-lg-0 mt-lg-0 mt-5">
             <div className="row gap-3 gap-lg-0">
-              <div className="col-12 col-lg-4">
+              <div className="col-12 col-lg-4"  onClick={onDailyRewardsPopupOpen}>
                 <div className="daily-bonus-wrapper">
                   <div className="red-div"></div>
                   <img
-                    onClick={onDailyRewardsPopupOpen}
+                  
                     // src={finished ? mageFinish : mageGoing}
                     src={
                       chestPercentage >= 50 && chestPercentage < 100
@@ -1454,7 +1454,7 @@ const NewWalletBalance = ({
                   />
                   <div
                     className="progress-bar-group d-flex flex-column align-items-start"
-                    onClick={onDailyRewardsPopupOpen}
+                    
                   >
                     {!finished && (
                       <span className="progress-bar-title">Progress</span>
@@ -1483,7 +1483,7 @@ const NewWalletBalance = ({
                     <div
                       className="d-flex flex-column align-items-center"
                       style={{ width: "fit-content" }}
-                      onClick={onDailyRewardsPopupOpen}
+                      // onClick={onDailyRewardsPopupOpen}
                     >
                       <div
                         className="position-relative"

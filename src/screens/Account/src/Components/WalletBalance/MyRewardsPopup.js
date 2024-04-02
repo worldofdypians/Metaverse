@@ -97,69 +97,9 @@ const MyRewardsPopup = ({
     }
   };
 
-  const getStakesIds = async () => {
-    let stakenft = [];
+ 
 
-    if (address) {
-      const contract = new window.infuraWeb3.eth.Contract(
-        window.WOD_CAWS_ABI,
-        window.config.wod_caws_address
-      );
-      const allCawsStakes = await contract.methods
-        .depositsOf(address)
-        .call()
-        .then((result) => {
-          if (result.length > 0) {
-            for (let i = 0; i < result.length; i++)
-              stakenft.push(parseInt(result[i]));
-            return stakenft;
-          }
-        });
-
-      return allCawsStakes;
-    }
-  };
-
-  const getStakesIdsLandPool = async () => {
-    if (address) {
-      let staking_contract = new window.infuraWeb3.eth.Contract(
-        window.LANDSTAKING_ABI,
-        window.config.landnftstake_address
-      );
-      let stakenft = [];
-      let myStakes = await staking_contract.methods
-        .depositsOf(address)
-        .call()
-        .then((result) => {
-          for (let i = 0; i < result.length; i++)
-            stakenft.push(parseInt(result[i]));
-          return stakenft;
-        });
-
-      return myStakes;
-    }
-  };
-
-  const getStakesIdsCawsPool = async () => {
-    if (address) {
-      let staking_contract = new window.infuraWeb3.eth.Contract(
-        window.NFTSTAKING_ABI,
-        window.config.nftstaking_address
-      );
-      let stakenft = [];
-      let myStakes = await staking_contract.methods
-        .depositsOf(address)
-        .call()
-        .then((result) => {
-          for (let i = 0; i < result.length; i++)
-            stakenft.push(parseInt(result[i]));
-          return stakenft;
-        });
-
-      return myStakes;
-    }
-  };
-
+ 
   const fetchMonthlyGenesisRecordsAroundPlayer = async () => {
     const data = {
       StatisticName: "GenesisLandRewards",
