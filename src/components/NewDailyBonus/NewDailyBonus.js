@@ -556,7 +556,11 @@ const NewDailyBonus = ({
 
   const filterLandNfts = () => {
     const filteredLands = listedNFTS.filter((item) => {
-      return item.type === "land";
+      return (
+        item.type === "land" &&
+        item.seller.toLowerCase() ===
+          window.config.nftSeller_address.toLowerCase()
+      );
     });
     setLandNfts(filteredLands);
   };
@@ -2508,7 +2512,8 @@ const NewDailyBonus = ({
                             Sign in with Your Game Account
                           </h6>
                           <span className="chain-desc mb-0">
-                          Sign in to access Daily Bonus and earn tailored rewards!
+                            Sign in to access Daily Bonus and earn tailored
+                            rewards!
                           </span>
                         </div>
                         <div className="d-flex align-items-center justify-content-end get-premium-wrapper p-3 p-lg-0">
@@ -2809,18 +2814,19 @@ const NewDailyBonus = ({
                             .range(
                               0,
                               rewardData.rewards
-                                ? (3 -
+                                ? 3 -
                                     rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
-                                    }).requirements.length)
+                                    }).requirements.length
                                 : 0
                             )
                             .map((item, index) => {
-                              return(
-                              <div
-                                className="required-item-placeholder"
-                                key={index}
-                              ></div>);
+                              return (
+                                <div
+                                  className="required-item-placeholder"
+                                  key={index}
+                                ></div>
+                              );
                             })}
                         </div>
                       </div>
@@ -3000,18 +3006,19 @@ const NewDailyBonus = ({
                             .range(
                               0,
                               rewardData.rewards
-                                ? (3 -
+                                ? 3 -
                                     rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
-                                    }).requirements.length)
+                                    }).requirements.length
                                 : 0
                             )
                             .map((item, index) => {
-                              return(
+                              return (
                                 <div
                                   className="required-item-placeholder"
                                   key={index}
-                                ></div>);
+                                ></div>
+                              );
                             })}
                         </div>
                       </div>
@@ -3192,18 +3199,19 @@ const NewDailyBonus = ({
                             .range(
                               0,
                               rewardData.rewards
-                                ? (3 -
+                                ? 3 -
                                     rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
-                                    }).requirements.length)
+                                    }).requirements.length
                                 : 0
                             )
                             .map((item, index) => {
-                              return(
+                              return (
                                 <div
                                   className="required-item-placeholder"
                                   key={index}
-                                ></div>);
+                                ></div>
+                              );
                             })}
                         </div>
                       </div>
@@ -3384,18 +3392,19 @@ const NewDailyBonus = ({
                             .range(
                               0,
                               rewardData.rewards
-                                ? (3 -
+                                ? 3 -
                                     rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
-                                    }).requirements.length)
+                                    }).requirements.length
                                 : 0
                             )
                             .map((item, index) => {
-                              return(
+                              return (
                                 <div
                                   className="required-item-placeholder"
                                   key={index}
-                                ></div>);
+                                ></div>
+                              );
                             })}
                         </div>
                       </div>
@@ -3576,18 +3585,19 @@ const NewDailyBonus = ({
                             .range(
                               0,
                               rewardData.rewards
-                                ? (3 -
+                                ? 3 -
                                     rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
-                                    }).requirements.length)
+                                    }).requirements.length
                                 : 0
                             )
                             .map((item, index) => {
-                              return(
+                              return (
                                 <div
                                   className="required-item-placeholder"
                                   key={index}
-                                ></div>);
+                                ></div>
+                              );
                             })}
                         </div>
                       </div>

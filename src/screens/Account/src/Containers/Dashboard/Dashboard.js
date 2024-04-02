@@ -2662,7 +2662,7 @@ function Dashboard({
                           className="popup-wrapper popup-active p-4"
                           id="leaderboard"
                           style={{
-                            width: "40%",
+                            width: "fit-content",
                             pointerEvents: "auto",
                             overflowX: "auto",
                           }}

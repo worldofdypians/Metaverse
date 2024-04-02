@@ -583,7 +583,7 @@ const MyRewardsPopupNew = ({
   }, [userSocialRewards]);
 
   return (
-    <div className="d-flex flex-column gap-3 mt-3">
+    <div className="d-grid rewardstable-wrapper gap-2 mt-3 px-1">
       <div className="total-earnings-purple-wrapper p-2">
         <div className="d-flex flex-column align-items-center justify-content-center">
           <span className="total-rewards-amount">
@@ -616,26 +616,29 @@ const MyRewardsPopupNew = ({
           <span className="total-rewards-desc">TOTAL EARNINGS</span>
         </div>
       </div>
-      <div className="d-flex flex-row justify-content-between gap-2 align-items-center">
-        <span className="reward-category-text">Reward Category</span>
-        <div className="d-flex align-items-center gap-2">
-          <button
-            className={previousRewards ? "past-reward" : "active-reward"}
-            onClick={() => {
-              setPreviousRewards(false);
-            }}
-          >
-            Active
-          </button>
-          <button
-            className={previousRewards ? "active-reward" : "past-reward"}
-            onClick={() => {
-              setPreviousRewards(true);
-            }}
-          >
-            Past
-          </button>
+      <div className="d-flex flex-column gap-1 w-100">
+        <div className="d-flex flex-row justify-content-between gap-2 align-items-center">
+          <span className="reward-category-text">Reward Category</span>
+          <div className="d-flex align-items-center gap-2">
+            <button
+              className={previousRewards ? "past-reward" : "active-reward"}
+              onClick={() => {
+                setPreviousRewards(false);
+              }}
+            >
+              Active
+            </button>
+            <button
+              className={previousRewards ? "active-reward" : "past-reward"}
+              onClick={() => {
+                setPreviousRewards(true);
+              }}
+            >
+              Past
+            </button>
+          </div>
         </div>
+        <div className="small-separator"></div>
       </div>
       <div className="reward-category-items-wrapper">
         <div
@@ -673,7 +676,35 @@ const MyRewardsPopupNew = ({
                   : "reward-category-amount"
               }
             >
-              $1,435
+              $
+              {previousRewards
+                ? getFormattedNumber(
+                    Number(wodRewards) +
+                      Number(wodCawsRewards) +
+                      Number(cawsRewards) +
+                      Number(pasttreasureRewardMoney) +
+                      Number(gemRewards) +
+                      Number(leaderboardTotalData) +
+                      Number(baseRewardsUSD) +
+                      Number(coingeckoRewardsUSD) +
+                      Number(dypiusRewardsUSD) +
+                      Number(gateRewardsUSD) +
+                      Number(confluxRewardsUSD) +
+                      Number(dogeEarnUSD),
+                    2
+                  )
+                : getFormattedNumber(
+                    0 +
+                      Number(treasureRewardMoney) +
+                      Number(treasureRewardMoneySkale) +
+                      Number(dailyplayerData) +
+                      Number(weeklyplayerData) +
+                      Number(userRank2) +
+                      Number(genesisData) +
+                      Number(cmcuserEarnUsd) +
+                      Number(dypiusPremiumEarnUsd),
+                    2
+                  )}
             </span>
           </div>
         </div>
@@ -717,7 +748,15 @@ const MyRewardsPopupNew = ({
                   : "reward-category-amount"
               }
             >
-              $135
+              $
+              {previousRewards
+                ? getFormattedNumber(
+                    Number(wodRewards) +
+                      Number(wodCawsRewards) +
+                      Number(cawsRewards),
+                    2
+                  )
+                : "0.00"}
             </span>
           </div>
         </div>
@@ -762,7 +801,14 @@ const MyRewardsPopupNew = ({
                   : "reward-category-amount"
               }
             >
-              $16
+              $
+              {previousRewards
+                ? getFormattedNumber(pasttreasureRewardMoney, 2)
+                : getFormattedNumber(
+                    Number(treasureRewardMoney) +
+                      Number(treasureRewardMoneySkale),
+                    2
+                  )}
             </span>
           </div>
         </div>
@@ -808,7 +854,19 @@ const MyRewardsPopupNew = ({
                   : "reward-category-amount"
               }
             >
-              $540
+              $
+              {previousRewards
+                ? getFormattedNumber(
+                    Number(gemRewards) + Number(leaderboardTotalData),
+                    2
+                  )
+                : getFormattedNumber(
+                    Number(dailyplayerData) +
+                      Number(weeklyplayerData) +
+                      Number(userRank2) +
+                      Number(genesisData),
+                    2
+                  )}
             </span>
           </div>
         </div>
@@ -855,7 +913,21 @@ const MyRewardsPopupNew = ({
                   : "reward-category-amount"
               }
             >
-              $5
+              $
+              {previousRewards
+                ? getFormattedNumber(
+                    Number(baseRewardsUSD) +
+                      Number(coingeckoRewardsUSD) +
+                      Number(dypiusRewardsUSD) +
+                      Number(gateRewardsUSD) +
+                      Number(confluxRewardsUSD) +
+                      Number(dogeEarnUSD),
+                    2
+                  )
+                : getFormattedNumber(
+                    Number(cmcuserEarnUsd) + Number(dypiusPremiumEarnUsd),
+                    2
+                  )}
             </span>
           </div>
         </div>
@@ -901,7 +973,10 @@ const MyRewardsPopupNew = ({
                   : "reward-category-amount"
               }
             >
-              $0
+              $
+              {previousRewards
+                ? getFormattedNumber(userSocialRewardsCached, 2)
+                : getFormattedNumber(0, 2)}
             </span>
           </div>
         </div>
@@ -945,7 +1020,6 @@ const MyRewardsPopupNew = ({
           </div>
         </div>
       )}
-
       <div className="d-flex flex-column gap-2">
         <span className="item-name-title">Daily Bonus</span>
         <div className="item-name-wrapper p-2">
@@ -971,7 +1045,6 @@ const MyRewardsPopupNew = ({
           </div>
         </div>
       </div>
-
       <div className="d-flex flex-column gap-2">
         <span className="item-name-title">Leaderboard</span>
         <div className="item-name-wrapper p-2">
@@ -1013,7 +1086,6 @@ const MyRewardsPopupNew = ({
           </div>
         </div>
       </div>
-
       {!previousRewards ? (
         <div className="d-flex flex-column gap-2">
           <span className="item-name-title">Treasure Hunt</span>
@@ -1124,7 +1196,6 @@ const MyRewardsPopupNew = ({
           </div>
         </div>
       )}
-
       <div className="d-flex flex-column gap-2">
         <span className="item-name-title">Special Rewards</span>
         <div className="item-name-wrapper p-2">
@@ -1150,7 +1221,6 @@ const MyRewardsPopupNew = ({
           </div>
         </div>
       </div>
-
       {/* <div className="d-grid rewardstable-wrapper">
         <table className="myrewards-table table">
           <thead>

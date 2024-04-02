@@ -30,6 +30,7 @@ const BuyNftPopup = ({
   const [purchaseStatus, setPurchaseStatus] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastTitle, setToastTitle] = useState("");
+  const [buyTxHash, setBuyTxHash] = useState("");
 
   const isApprovedBuy = async (tokenType, amount) => {
     const result = await window.isApprovedBuy(tokenType, amount).catch((e) => {
@@ -39,40 +40,82 @@ const BuyNftPopup = ({
     return result;
   };
 
-  const handlebuy2 = async () => {
+  const handleCollectReward = async (txHash) => {
+    // const body_skale = {
+    //   transactionHash:
+    //     "0xc3f97b4994e6ef6b1b17c08104022f00010b94d3aa7d1df5359c07dc57cb8dd7",
+    //   emailAddress: email,
+    //   chestIndex: chestIndex - 1,
+    //   chainId: "skale",
+    // };
+
+    // const body = {
+    //   transactionHash:
+    //     "0xc3f97b4994e6ef6b1b17c08104022f00010b94d3aa7d1df5359c07dc57cb8dd7",
+    //   emailAddress: email,
+    //   chestIndex: chestIndex - 1,
+    // };
+
+    // const finalBody = chain === "skale" ? body_skale : body;
+
+    // // if(chain === "skale"){
+    // //   body.chainId = chain
+    // // }
+
+    // const result = await axios
+    //   .post(
+    //     `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
+    //     finalBody
+    //   )
+    //   .catch((e) => {
+    //     console.error(e);
+    //   });
+
+    // if (result && result.status === 200) {
+    //   onSuccessPurchase();
+    // }
+console.log('txHash',txHash)
     const body_skale = {
-      transactionHash:
-        "0xc3f97b4994e6ef6b1b17c08104022f00010b94d3aa7d1df5359c07dc57cb8dd7",
+      transactionHash: txHash,
       emailAddress: email,
       chestIndex: chestIndex - 1,
       chainId: "skale",
     };
 
     const body = {
-      transactionHash:
-        "0xc3f97b4994e6ef6b1b17c08104022f00010b94d3aa7d1df5359c07dc57cb8dd7",
+      transactionHash: txHash,
       emailAddress: email,
       chestIndex: chestIndex - 1,
     };
 
     const finalBody = chain === "skale" ? body_skale : body;
 
-    // if(chain === "skale"){
-    //   body.chainId = chain
-    // }
-
-    const result = await axios
+    const resultBuy = await axios
       .post(
         `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
         finalBody
       )
       .catch((e) => {
         console.error(e);
+        setbuyLoading(false);
+        setbuyStatus("failed");
+        window.alertify.error(e?.message);
       });
 
-    if (result && result.status === 200) {
-      onSuccessPurchase();
+    if (resultBuy && resultBuy.status === 200) {
+      setbuyLoading(false);
+      setbuyStatus("success");
+
+      setTimeout(() => {
+        onSuccessPurchase();
+      }, 2000);
     }
+
+    setPurchaseStatus("Successfully purchased!");
+    setShowToast(true);
+    setToastTitle("Successfully purchased!");
+    setPurchaseColor("#00FECF");
+    // setIsListed(false)
   };
 
   async function handleBuy(nft) {
@@ -92,71 +135,116 @@ const BuyNftPopup = ({
       setbuyLoading(true);
       setbuyStatus("buy");
       setPurchaseStatus("Buying NFT in progress..");
-      await window
-        .buyNFT(
-          nft.price,
-          nft.nftAddress,
-          nft.tokenId,
+
+      const marketplace = new window.web3.eth.Contract(
+        window.MARKETPLACE_ABI,
+        window.config.nft_marketplace_address
+      );
+
+      const gasPrice = await window.web3.eth.getGasPrice();
+      console.log("gasPrice", gasPrice);
+      const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
+      const increasedGwei = parseInt(currentGwei) + 3;
+      console.log("increasedGwei", increasedGwei);
+
+      const transactionParameters = {
+        gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
+      };
+      // console.log( transactionParameters )
+
+      await marketplace.methods
+        .buyItem(nft.nftAddress, nft.tokenId, [
           nft.payment_priceType,
-          nft.payment_tokenAddress
-        )
-        .then(async (result) => {
-          console.log("buyNFT", result);
-
-          const body_skale = {
-            transactionHash: result.transactionHash,
-            emailAddress: email,
-            chestIndex: chestIndex - 1,
-            chainId: "skale",
-          };
-
-          const body = {
-            transactionHash: result.transactionHash,
-            emailAddress: email,
-            chestIndex: chestIndex - 1,
-          };
-
-          const finalBody = chain === "skale" ? body_skale : body;
-
-          const resultBuy = await axios
-            .post(
-              `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
-              finalBody
-            )
-            .catch((e) => {
-              console.error(e);
-              setbuyLoading(false);
-              setbuyStatus("failed");
-              window.alertify.error(e?.message)
-            });
-
-          if (resultBuy && resultBuy.status === 200) {
-            setbuyLoading(false);
-            setbuyStatus("success");
-
-            setTimeout(() => {
-              onSuccessPurchase();
-            }, 2000);
-          }
-
-          setPurchaseStatus("Successfully purchased!");
-          setShowToast(true);
-          setToastTitle("Successfully purchased!");
-          setPurchaseColor("#00FECF");
-          // setIsListed(false)
+          nft.payment_tokenAddress,
+        ])
+        .estimateGas({ from: await window.getCoinbase(), value: nft.price })
+        .then((gas) => {
+          transactionParameters.gas = window.web3.utils.toHex(gas);
         })
-        .catch((e) => {
-          setbuyStatus("failed");
-          setbuyLoading(false);
-          setPurchaseStatus(e?.message);
-          setPurchaseColor("#FF6232");
-          setTimeout(() => {
-            setPurchaseStatus("");
-            setPurchaseColor("#00FECF");
-            setbuyStatus("");
-          }, 3000);
-          console.error(e);
+        .catch(function (error) {
+          console.log(error);
         });
+
+      if (nft.payment_priceType === 1) {
+        await marketplace.methods
+          .buyItem(nft.nftAddress, nft.tokenId, [
+            nft.payment_priceType,
+            nft.payment_tokenAddress,
+          ])
+          .send({
+            from: await window.getCoinbase(),
+            value: 0,
+            ...transactionParameters,
+          })
+          .then((data) => {
+            console.log("buyTxHash", data.transactionHash);
+            handleCollectReward(data.transactionHash);
+          })
+          .catch((e) => {
+            setbuyStatus("failed");
+            setbuyLoading(false);
+            setPurchaseStatus(e?.message);
+            setPurchaseColor("#FF6232");
+            setTimeout(() => {
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+              setbuyStatus("");
+            }, 3000);
+            console.error(e);
+          });
+      } else if (nft.payment_priceType === 0) {
+        await marketplace.methods
+          .buyItem(nft.nftAddress, nft.tokenId, [
+            nft.payment_priceType,
+            nft.payment_tokenAddress,
+          ])
+          .send({
+            from: await window.getCoinbase(),
+            value: nft.price,
+            ...transactionParameters,
+          }).then((data) => {
+            console.log("buyTxHash", data.transactionHash);
+            handleCollectReward(data.transactionHash);
+          })
+          .catch((e) => {
+            setbuyStatus("failed");
+            setbuyLoading(false);
+            setPurchaseStatus(e?.message);
+            setPurchaseColor("#FF6232");
+            setTimeout(() => {
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+              setbuyStatus("");
+            }, 3000);
+            console.error(e);
+          });
+      }
+
+      // await window
+      //   .buyNFT2(
+      //     nft.price,
+      //     nft.nftAddress,
+      //     nft.tokenId,
+      //     nft.payment_priceType,
+      //     nft.payment_tokenAddress
+      //   )
+      //   .then((transactionHash) => {
+      //     console.log("transactionHash", transactionHash);
+      //     handleCollectReward(transactionHash)
+
+      //   })
+      //   .catch((e) => {
+      //     setbuyStatus("failed");
+      //     setbuyLoading(false);
+      //     setPurchaseStatus(e?.message);
+      //     setPurchaseColor("#FF6232");
+      //     setTimeout(() => {
+      //       setPurchaseStatus("");
+      //       setPurchaseColor("#00FECF");
+      //       setbuyStatus("");
+      //     }, 3000);
+      //     console.error(e);
+      //   });
     } else {
       console.log("approve buying");
 
@@ -244,9 +332,9 @@ const BuyNftPopup = ({
       <img
         className="popup-nft-img"
         src={
-          nft.nftAddress === window.config.nft_caws_address 
+          nft.nftAddress === window.config.nft_caws_address
             ? `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nft.tokenId}.png`
-            : nft.nftAddress === window.config.nft_land_address 
+            : nft.nftAddress === window.config.nft_land_address
             ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nft.tokenId}.png`
             : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nft.tokenId}.png`
         }
@@ -254,18 +342,12 @@ const BuyNftPopup = ({
       />
 
       <span className="seller-addr d-flex gap-1 align-items-center">
-        <img
-          src={ ethIcon
-          }
-          alt=""
-          style={{ width: 20, height: 20 }}
-        />{" "}
-        Ethereum
+        <img src={ethIcon} alt="" style={{ width: 20, height: 20 }} /> Ethereum
       </span>
 
       <div className="d-flex justify-content-between align-items-center">
         <span className="currentprice-txt">Current price</span>
-        
+
         <div className="d-flex gap-2 align-items-center">
           <img
             src={nft?.payment_priceType === 0 ? topEth : topDyp}
