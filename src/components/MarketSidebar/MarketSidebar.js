@@ -101,7 +101,7 @@ const MarketSidebar = () => {
                 <div className="accordion-body">
                   <div className="d-flex flex-column gap-2">
                     <NavLink
-                      to="/marketplace/beta-pass/coinmarketcap"
+                      to="/marketplace/beta-pass/skale"
                       end
                       className={({ isActive }) =>
                         isActive
@@ -113,7 +113,9 @@ const MarketSidebar = () => {
                               location.pathname.includes("base") ||
                               location.pathname.includes("coinmarketcap") ||
                               location.pathname.includes("doge") ||
-                              location.pathname.includes("gate")
+                              location.pathname.includes("skale") ||
+                              location.pathname.includes("gate") ||
+                              location.pathname.includes("skale")
                                 ? "sidebar-item-active nft-active"
                                 : null
                             }`
@@ -244,7 +246,7 @@ const MarketSidebar = () => {
               );
             }}
           />
-             <NavLink
+          <NavLink
             to="/marketplace/nft-bridge"
             end
             className={({ isActive }) =>

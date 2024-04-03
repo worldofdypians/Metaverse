@@ -40,7 +40,7 @@
 }
 
 .premiumtext {
-  color: #1BF5FF;
+  color: #1bf5ff;
   font-size: 10px;
   font-style: normal;
   font-weight: 600;
@@ -98,7 +98,8 @@
 .hoverpremium:hover {
   filter: drop-shadow(0px 4px 25px #dfb625);
 }
-.hoveractive,.hoverpremium {
+.hoveractive,
+.hoverpremium {
   @media only screen and (max-width: 576px) {
     width: 100%;
   }
@@ -334,8 +335,8 @@
   }
 }
 
-.golden-pass-wrapper{
-  background-image: url('./assets/goldenPassBorder.png');
+.golden-pass-wrapper {
+  background-image: url("./assets/goldenPassBorder.png");
   background-repeat: no-repeat;
   background-size: 100% 90%;
   padding: 0px;
@@ -348,16 +349,341 @@
   bottom: 0;
   margin: auto;
 
-
   @media screen and (max-width: 786px) {
-display: none;
-   
+    display: none;
   }
 }
 
-.golden-pass-tag{
+.golden-pass-tag {
   position: absolute;
   right: 0;
   top: -20%;
   margin: auto;
+}
+
+.player-rank-wrapper {
+  width: 250px;
+  height: 79px;
+  transition: all 0.25s ease-in-out;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
+}
+
+.player-bust {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  z-index: 2;
+  transition: all 0.25s ease-in-out;
+  @media screen and (max-width: 786px) {
+    width: 40%;
+  }
+}
+
+.player-ranking-text {
+  color: #fff;
+  font-weight: 800;
+
+  opacity: 0;
+
+  transition: all 0.25s ease-in-out;
+}
+
+.ranking-text-wrapper {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  margin: auto;
+}
+
+
+
+.player-rank-dropdown {
+  width: 130%;
+  border-radius: 10px;
+  border: 2px solid #b8b8e0;
+  background: #1b1c3a;
+  position: absolute;
+  top: 110%;
+  right: 0%;
+  z-index: 5;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+    top: auto;
+    bottom: 100%;
+  }
+}
+
+.chain-score {
+  color: rgb(243, 192, 9);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.chain-score-span {
+  color: #fff;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.open-ranks-text {
+  color: #7dd9af;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.rank-title {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.rank-active-div {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #1bf5ff;
+  background: rgba(27, 245, 255, 0.15);
+  h6 {
+    color: #1bf5ff;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    margin-bottom: 0px !important;
+  }
+}
+.rank-inactive-div {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid rgba(30, 34, 55, 1);
+  background: rgba(30, 34, 55, 0.15);
+  h6 {
+    color: rgba(30, 34, 55, 1);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    margin-bottom: 0px !important;
+  }
+}
+
+.rank-rewards {
+  background: rgba(151, 89, 192, 0.3);
+  border-radius: 12px;
+  width: 100%;
+}
+
+.rank-rewards-text {
+  font-size: 18px;
+  font-family: "Oxanium";
+  color: #fff;
+  font-weight: 700;
+}
+.rank-rewards-placeholder {
+  font-size: 14px;
+  font-family: "Montserrat";
+  color: #fff;
+  font-weight: normal;
+}
+
+.needed-points {
+  font-size: 14px;
+  font-family: "Montserrat";
+  font-weight: 700;
+  color: rgb(243, 192, 9);
+}
+
+.needed-points-span {
+  font-size: 12px;
+  font-family: "Montserrat";
+  font-weight: 700;
+  color: #fff;
+}
+
+.rank-img-active {
+  width: 140%;
+}
+
+.rank-img-inactive {
+  position: relative;
+  width: 140%;
+  opacity: 0.8;
+  filter: brightness(0.7);
+}
+.rank-title-inactive {
+  opacity: 0.8;
+  filter: brightness(0.7);
+}
+
+.my-rank-text {
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.player-rank-text {
+  color: #1bf5ff;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.bnb-rank-wrapper {
+  border-radius: 12px;
+  background: rgba(240, 185, 11, 0.05);
+}
+.skale-rank-wrapper {
+  border-radius: 12px;
+  background: rgba(12, 215, 239, 0.05);
+}
+
+.new-rank-span {
+  color: #f7f7ff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.bnb-rank-score {
+  color: #f0b90b;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+.skale-rank-score {
+  color: #0cd7ef;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.rank-logo-position {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -15%;
+  margin: auto;
+}
+
+.new-rank-divider {
+  width: 100%;
+  height: 2px;
+  color: #b8b8e0;
+  background: #b8b8e0;
+}
+
+.current-rank {
+  color: #f7f7ff;
+  font-family: "Oxanium";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.rank-progress-bar {
+  border-radius: 8px;
+  background: #262640;
+  height: 25px;
+  width: 100%;
+}
+
+.rank-current-progress {
+  border-radius: 8px;
+  height: 25px;
+  background: linear-gradient(90deg, #e07864 0%, #a74e69 100%);
+  min-width: 30%;
+  position: absolute;
+  left: 0;
+  z-index: 0;
+}
+
+.rank-current-score {
+  color: #f7f7ff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  z-index: 1;
+}
+
+.rank-current-reward {
+  color: #feb45d;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.rank-popup-btn {
+  border-radius: 12px;
+  border: 2px solid #7bd8af;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 786px) {
+  .rank-outer-wrapper {
+    width: 100%;
+    margin-top: 40px;
+  }
+}
+
+.rank-wrapper-inner {
+  .player-rank-text {
+    font-size: 15px;
+  }
+  filter: grayscale(0) !important;
+  img {
+    filter: grayscale(0) !important;
+  }
+  h6 {
+    filter: grayscale(0) !important;
+  }
+}
+
+.rank-pointer-arrow {
+  width: 70px;
+  height: auto;
+}
+
+.leaderboard-title-span {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.single-rank-wrapper {
+  width: 15%;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .rankingsPopupTitle {
+    font-size: 12px !important;
+  }
 }

@@ -84,7 +84,7 @@ const Marketplace = ({
   const [favItems, setfavItems] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
   const [activePopup, setActivePopup] = useState(false);
-  
+
   const firstNext = () => {
     firstSlider.current.slickNext();
   };
@@ -277,10 +277,16 @@ const Marketplace = ({
       window.config.nft_cmc_address
     );
 
+    const skaleContract = new window.skaleWeb3.eth.Contract(
+      window.SKALE_NFT_ABI,
+      window.config.nft_skale_address
+    );
+
     const confluxresult = await confluxContract.methods.totalSupply().call();
     const gateresult = await gateContract.methods.totalSupply().call();
     const dogeresult = await dogeContract.methods.totalSupply().call();
     const cmcresult = await cmcContract.methods.totalSupply().call();
+    const skaleresult = await skaleContract.methods.totalSupply().call();
 
     //20000 = 10000 caws + 1000 genesis + 9000 coingecko
     setTotalSupply(
@@ -290,6 +296,7 @@ const Marketplace = ({
         parseInt(gateresult) +
         parseInt(dogeresult) +
         parseInt(cmcresult) +
+        Number(skaleresult) +
         20000
     );
   };

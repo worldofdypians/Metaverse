@@ -2867,6 +2867,11 @@ line-height: normal;
 .mint-7 {
   background: linear-gradient(90deg, #181b38 0%, #1d438d 100%);
 }
+
+.mint-skale {
+  background: linear-gradient(90deg, #181B38 0%, #217893 168.67%);
+}
+
 .mint-8 {
   background: linear-gradient(90deg, #181b38 0%, #5daaa6 168.67%);
 }
@@ -3678,6 +3683,16 @@ line-height: normal;
   background: linear-gradient(90deg, #181b38 0%, #ac5426 168.67%) !important;
 }
 
+.upcoming-skale-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, #002C39 168.67%);
+}
+
+.upcoming-babydoge-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, #76473C 168.67%);
+}
+
 .upcoming-cmc-event {
   border-radius: 20px;
   background: linear-gradient(
@@ -3709,6 +3724,17 @@ line-height: normal;
     #181b38 0%,
     rgba(16, 93, 255, 0.5) 168.67%
   );
+}
+
+.skale-upcoming-mint-wrapper {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, #002C39 168.67%);
+}
+
+
+.babydoge-upcoming-mint-wrapper {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, #76473C 168.67%);
 }
 
 .market-stake-desc{
