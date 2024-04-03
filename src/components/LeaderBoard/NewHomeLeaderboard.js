@@ -431,7 +431,6 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
   const [skaleRecords, setskaleRecords] = useState([]);
   const [skalePreviousRecords, setskalePreviousRecords] = useState([]);
 
-
   const [previousVersion, setpreviousVersion] = useState(0);
   const [previousWeeklyVersion, setpreviousWeeklyVersion] = useState(0);
   const [previousMonthlyVersion, setpreviousMonthlyVersion] = useState(0);
@@ -465,38 +464,6 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     }
   };
 
-  const fetchDailyRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "DailyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
-
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
-      }
-      if (testArray.length > 0 && testArray2.length === 0) {
-        setActivePlayer(false);
-        setUserData(...testArray);
-      }
-    }
-    if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
-    }
-  };
-
   const nextSlide = () => {
     sliderRef.current.slickNext();
   };
@@ -514,17 +481,6 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     setpreviousVersion(parseInt(result.data.data.version));
     setRecords(result.data.data.leaderboard);
     fillRecords(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayer(true);
-    }
-
-    if (testArray.length === 0) {
-      setActivePlayer(false);
-      fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
-    }
   };
 
   const fetchWeeklyRecords = async () => {
@@ -621,7 +577,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     }
   };
 
-  const fetchSkaleRecords = async()=>{
+  const fetchSkaleRecords = async () => {
     const data = {
       StatisticName: "LeaderboardSkaleWeekly",
       StartPosition: 0,
@@ -630,10 +586,10 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     // setpreviousVersion(parseInt(result.data.data.version));
     setskaleRecords(result.data.data.leaderboard);
-    fillRecordsSkale(result.data.data.leaderboard)    
-  } 
+    fillRecordsSkale(result.data.data.leaderboard);
+  };
 
-  const fetchPreviousSkaleRecords = async()=>{
+  const fetchPreviousSkaleRecords = async () => {
     const data = {
       StatisticName: "LeaderboardSkaleMonthly",
       StartPosition: 0,
@@ -642,68 +598,76 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     // setpreviousVersion(parseInt(result.data.data.version));
     setskalePreviousRecords(result.data.data.leaderboard);
-    fillPreviousRecordsSkale(result.data.data.leaderboard)    
-  } 
+    fillPreviousRecordsSkale(result.data.data.leaderboard);
+  };
 
   const fetchPreviousWinners = async () => {
-    const data = {
-      StatisticName: "DailyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-      Version: previousVersion - 1,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data
-    );
+    if (previousVersion != 0) {
+      const data = {
+        StatisticName: "DailyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: previousVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-    setdailyplayerData(result.data.data.leaderboard);
+      setdailyplayerData(result.data.data.leaderboard);
+    }
   };
 
   const fetchGenesisPreviousWinners = async () => {
-    const data = {
-      StatisticName: "GenesisLandRewards",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-      Version: previousGenesisVersion - 1,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data
-    );
-    fillRecordsGenesis(result.data.data.leaderboard);
+    if (previousGenesisVersion != 0) {
+      const data = {
+        StatisticName: "GenesisLandRewards",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: previousGenesisVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      fillRecordsGenesis(result.data.data.leaderboard);
 
-    setpreviousgenesisData(result.data.data.leaderboard);
+      setpreviousgenesisData(result.data.data.leaderboard);
+    }
   };
 
   const fetchPreviousWeeklyWinners = async () => {
-    const data = {
-      StatisticName: "WeeklyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-      Version: previousWeeklyVersion - 1,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data
-    );
+    if (previousWeeklyVersion != 0) {
+      const data = {
+        StatisticName: "WeeklyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: previousWeeklyVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-    setweeklyplayerData(result.data.data.leaderboard);
+      setweeklyplayerData(result.data.data.leaderboard);
+    }
   };
 
   const fetchPreviousMonthlyWinners = async () => {
-    const data = {
-      StatisticName: "MonthlyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-      Version: previousMonthlyVersion - 1,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data
-    );
+    if (previousMonthlyVersion != 0) {
+      const data = {
+        StatisticName: "MonthlyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: previousMonthlyVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-    setmonthlyplayerData(result.data.data.leaderboard);
+      setmonthlyplayerData(result.data.data.leaderboard);
+    }
   };
 
   useEffect(() => {
@@ -711,7 +675,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     fetchWeeklyRecords();
     fetchMonthlyRecords();
     fetchGenesisRecords();
-    fetchSkaleRecords()
+    fetchSkaleRecords();
   }, []);
 
   useEffect(() => {
@@ -719,7 +683,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     fetchPreviousWinners();
     fetchPreviousWeeklyWinners();
     fetchPreviousMonthlyWinners();
-    fetchPreviousSkaleRecords()
+    fetchPreviousSkaleRecords();
   }, [
     previousGenesisVersion,
     previousMonthlyVersion,
@@ -2045,7 +2009,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
         </Slider>
       )}
 
-{optionText2 === "skale" && (
+      {optionText2 === "skale" && (
         <Slider {...settings} ref={sliderRef}>
           <div className="leaderboard-item d-flex flex-column gap-2 p-0">
             <div
@@ -2066,6 +2030,12 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
 
                     <th className="playerHeader text-center font-montserrat">
                       Score
+                    </th>
+                    <th className="playerHeader text-center font-montserrat">
+                      Reward
+                    </th>
+                    <th className="playerHeader text-center font-montserrat">
+                      Premium
                     </th>
                   </tr>
                   {skaleRecords &&
@@ -2113,7 +2083,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                          {/* <td
+                          <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
                                 ? "goldenscore"
@@ -2123,15 +2093,21 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ${getFormattedNumber(monthlyPrizes[index], 0)}
                           </td>
                           <td
-                            className={`playerReward col-2 font-montserrat ${
+                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
+                              optionText2 === "skale" && "premium-goldenscore"
+                            } col-2 font-montserrat ${
                               username === item.displayName
                                 ? "goldenscore"
                                 : "goldenscore-inactive2"
                             }`}
+                            style={{ width: "100%" }}
                           >
                             +$
                             {getFormattedNumber(monthlyPrizesGolden[index], 0)}
-                          </td> */}
+                           
+                              <img src={premiumIcon} alt="" />
+                          
+                          </td>
                         </tr>
                       );
                     })}
@@ -2181,7 +2157,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                          {/* <td
+                          <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
                                 ? "goldenscore"
@@ -2189,8 +2165,8 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             ${getFormattedNumber(monthlyPrizes[index], 0)}
-                          </td> */}
-                          {/* <td
+                          </td>
+                          <td
                             className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
                               optionText2 === "skale" && "premium-goldenscore"
                             } col-2 font-montserrat ${
@@ -2202,10 +2178,10 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           >
                             +$
                             {getFormattedNumber(monthlyPrizesGolden[index], 0)}
-                            {optionText2 === "skale" && (
+                           
                               <img src={premiumIcon} alt="" />
-                            )}
-                          </td> */}
+                          
+                          </td>
                         </tr>
                       );
                     })}
