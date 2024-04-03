@@ -770,11 +770,11 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
                 Leaderboard tracks players' activities related to the BNB Chain,
                 such as in-game activities, Daily Bonus, and different events.
                 This leaderboard operates on a daily, weekly, and monthly basis,
-                with rewards distributed monthly based on players' performance.<br />
+                with rewards distributed monthly based on players' performance.<br /><br />
                 SKALE Leaderboard: In World of Dypians, the SKALE Leaderboard
                 tracks players' activities related to SKALE, such as Daily Bonus
                 and Treasure Hunt. This leaderboard operates on a weekly basis,
-                with rewards distributed weekly based on players' performance.<br />
+                with rewards distributed weekly based on players' performance.<br /><br />
                 Genesis Leaderboard: In World of Dypians, the Genesis
                 Leaderboard is a monthly competition exclusive to Genesis Land
                 NFT owners. This leaderboard tracks players' activities on their
