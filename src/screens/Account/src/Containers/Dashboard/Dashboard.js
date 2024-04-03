@@ -121,7 +121,7 @@ function Dashboard({
     useState(false);
   const firstSlider = useRef();
   const [loading, setLoading] = useState(true);
-
+  const [userRankRewards, setUserRankRewards] = useState(0);
   const [dypBalance, setDypBalance] = useState();
   const [dypBalancebnb, setDypBalanceBnb] = useState();
   const [dypBalanceavax, setDypBalanceAvax] = useState();
@@ -255,13 +255,16 @@ function Dashboard({
   const [skalecount, setskalecount] = useState(0);
 
   const [userRank, setUserRank] = useState("");
+  const [userRankSkale, setUserRankSkale] = useState("")
   const [userRank2, setUserRank2] = useState("");
-
+  const [userRank2Skale, setUserRank2Skale] = useState("");
+  const [userBnbScore, setUserBnbScore] = useState(0)
+  const [userSkaleScore, setUserSkaleScore] = useState(0)
   const [genesisRank, setGenesisRank] = useState("");
   const [genesisRank2, setGenesisRank2] = useState("");
   const [premiumTxHash, setPremiumTxHash] = useState("");
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
-
+  
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
   const leaderboardId = document.querySelector("#leaderboard");
@@ -638,6 +641,50 @@ function Dashboard({
     }
 
     setUserRank(testArray[0].position);
+    setUserBnbScore(testArray[0].statValue)
+
+  };
+  const fetchSkaleRecordsAroundPlayer = async (userId, userName) => {
+    const data = {
+      StatisticName: "LeaderboardSkaleMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    const result = await axios.post(
+      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
+      data
+    );
+
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === userName
+    );
+    const userPosition = testArray[0].position;
+    // console.log(userPosition)
+
+    if (goldenPassRemainingTime) {
+      setUserRank2Skale(
+        testArray[0].statValue !== 0
+          ? userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? monthlyPrizes[9] + monthlyPrizesGolden[9]
+            : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
+          : 0
+      );
+    } else if (!goldenPassRemainingTime) {
+      setUserRank2Skale(
+        testArray[0].statValue !== 0
+          ? userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? monthlyPrizes[9]
+            : monthlyPrizes[userPosition]
+          : 0
+      );
+    }
+
+    setUserRankSkale(testArray[0].position);
+    setUserSkaleScore(testArray[0].statValue)
   };
 
   const fetchGenesisAroundPlayer = async (userId, userName) => {
@@ -1986,6 +2033,25 @@ function Dashboard({
     }
   };
 
+
+  const handleRankRewards = () => {
+    let totalScore = userBnbScore + userSkaleScore
+    if(totalScore > 6000000){
+      setUserRankRewards(5);
+    }else if(totalScore > 12000000){
+      setUserRankRewards(10)
+    }else if(totalScore > 24000000){
+      setUserRankRewards(25)
+    }else if(totalScore > 40000000){
+      setUserRankRewards(100)
+    }
+  }
+
+  useEffect(() => {
+ handleRankRewards()
+  }, [userBnbScore, userSkaleScore])
+  
+
   useEffect(() => {
     setDummyPremiumChests(shuffle(dummyPremiums));
     fetchReleases();
@@ -2141,6 +2207,10 @@ function Dashboard({
       email
     ) {
       fetchMonthlyRecordsAroundPlayer(
+        data.getPlayer.playerId,
+        data.getPlayer.displayName
+      );
+      fetchSkaleRecordsAroundPlayer(
         data.getPlayer.playerId,
         data.getPlayer.displayName
       );
@@ -2337,6 +2407,9 @@ function Dashboard({
                     >
                       <ProfileCard
                         userRank={userRank}
+                        userRankSkale={userRankSkale}
+                        userBnbScore={userBnbScore}
+                        userSkaleScore={userSkaleScore}
                         genesisRank={genesisRank}
                         email={email}
                         username={data?.getPlayer?.displayName}

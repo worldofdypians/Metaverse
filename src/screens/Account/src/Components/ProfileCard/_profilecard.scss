@@ -403,18 +403,7 @@
   margin: auto;
 }
 
-.player-rank-wrapper:hover {
-  filter: grayscale(0.5);
 
-  .player-bust {
-    opacity: 0.7;
-    filter: grayscale(0.5);
-  }
-  .player-ranking-text {
-    opacity: 1;
-    filter: brightness(3);
-  }
-}
 
 .player-rank-dropdown {
   width: 130%;
@@ -551,6 +540,7 @@
 .player-rank-text {
   color: #1bf5ff;
   font-size: 20px;
+  text-transform: uppercase;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
@@ -623,7 +613,7 @@
   border-radius: 8px;
   height: 25px;
   background: linear-gradient(90deg, #e07864 0%, #a74e69 100%);
-  width: 33%;
+  min-width: 30%;
   position: absolute;
   left: 0;
   z-index: 0;

@@ -225,6 +225,9 @@
   line-height: 17px;
   letter-spacing: -0.018em;
   color: #f7f7ff;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+  }
 }
 
 .tablewrapper {

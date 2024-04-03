@@ -50,6 +50,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import Slider from "react-slick";
 import { Tooltip, tooltipClasses } from "@mui/material";
 import styled from "styled-components";
+import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -104,6 +105,9 @@ const ProfileCard = ({
   onPremiumClick,
   handleSetAvailableTime,
   userRank,
+  userRankSkale,
+  userBnbScore,
+  userSkaleScore,
   genesisRank,
   handleOpenDomains,
   domainName,
@@ -113,6 +117,7 @@ const ProfileCard = ({
   const windowSize = useWindowSize();
   const [tooltip, setTooltip] = useState(false);
   const [tooltip2, setTooltip2] = useState(false);
+  const [userRankName, setUserRankName] = useState("starter");
   const [countdown700, setcountdown700] = useState();
   const [bundlesBought, setbundlesBought] = useState(0);
   const [dateofBundle, setdateofBundle] = useState(0);
@@ -124,12 +129,37 @@ const ProfileCard = ({
   const [lastDayofBundleMilliseconds, setlastDayofBundleMilliseconds] =
     useState(0);
   const [lastDayofBundle, setlastDayofBundle] = useState(0);
-
+  const [userProgress, setUserProgress] = useState(0);
   const [dateofBundlev1, setdateofBundlev1] = useState(0);
   const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
   const [rankDropdown, setRankDropdown] = useState(false);
   const [rankPopup, setRankPopup] = useState(false);
   const sliderRef = useRef(null);
+
+  const userTotalScore = userBnbScore + userSkaleScore;
+
+  const handleUserRank = () => {
+    if (userTotalScore > 39999999) {
+      setUserRankName("unstoppable");
+      sliderRef?.current?.innerSlider?.slickGoTo(4);
+      setUserProgress(100);
+    } else if (userTotalScore > 23999999) {
+      setUserRankName("champion");
+      sliderRef?.current?.innerSlider?.slickGoTo(3);
+      setUserProgress((userTotalScore / 40000000) * 100);
+    } else if (userTotalScore > 11999999) {
+      setUserRankName("underdog");
+      sliderRef?.current?.innerSlider?.slickGoTo(2);
+      setUserProgress((userTotalScore / 24000000) * 100);
+    } else if (userTotalScore > 5999999) {
+      setUserRankName("rookie");
+      sliderRef?.current?.innerSlider?.slickGoTo(1);
+      setUserProgress((userTotalScore / 12000000) * 100);
+    } else {
+      sliderRef?.current?.innerSlider?.slickGoTo(0);
+      setUserProgress((userTotalScore / 6000000) * 100);
+    }
+  };
 
   var settings = {
     dots: false,
@@ -185,7 +215,7 @@ const ProfileCard = ({
 
   let oneMarch = new Date("2024-03-01 11:11:00 GMT+02:00");
   let oneApril = new Date("2024-04-01 11:11:00 GMT+02:00");
-  let oneMay = new Date("2024-05-01 11:11:00 GMT+02:00"); 
+  let oneMay = new Date("2024-05-01 11:11:00 GMT+02:00");
 
   const countBundle = async () => {
     const result = await axios.get(
@@ -657,6 +687,10 @@ const ProfileCard = ({
     checkBundleDates();
   }, [bundlesBought, address]);
 
+  useEffect(() => {
+    handleUserRank();
+  }, [userRank, userRankSkale, userBnbScore, userSkaleScore]);
+
   return (
     <>
       <div className="main-wrapper py-4 w-100">
@@ -1093,7 +1127,19 @@ const ProfileCard = ({
                           onClick={() => setRankDropdown(!rankDropdown)}
                         >
                           <img
-                            src={starterBust}
+                            src={
+                              userRankName === "starter"
+                                ? starterBust
+                                : userRankName === "rookie"
+                                ? rookieBust
+                                : userRankName === "underdog"
+                                ? underdogBust
+                                : userRankName === "champion"
+                                ? championBust
+                                : userRankName === "unstoppable"
+                                ? unstoppableBust
+                                : starterBust
+                            }
                             alt=""
                             className="player-bust"
                           />
@@ -1105,7 +1151,7 @@ const ProfileCard = ({
                                 color: isPremium ? "#FFBF00" : "#1BF5FF",
                               }}
                             >
-                              STARTER
+                              {userRankName}
                             </h6>
                           </div>
                         </div>
@@ -1125,10 +1171,10 @@ const ProfileCard = ({
                                     BNB SCORE
                                   </span>
                                   <h6 className="bnb-rank-score mb-0">
-                                    25,544,231
+                                    {getFormattedNumber(userBnbScore, 0)}
                                   </h6>
                                 </div>
-                                <div className="d-flex flex-column">
+                                <div className="d-flex flex-column align-items-center">
                                   <span className="new-rank-span">RANK</span>
                                   <h6 className="bnb-rank-score mb-0">
                                     #{userRank + 1}
@@ -1146,31 +1192,80 @@ const ProfileCard = ({
                                     SKALE SCORE
                                   </span>
                                   <h6 className="skale-rank-score mb-0">
-                                    25,544,231
+                                    {getFormattedNumber(userSkaleScore, 0)}
                                   </h6>
                                 </div>
-                                <div className="d-flex flex-column">
+                                <div className="d-flex flex-column align-items-center">
                                   <span className="new-rank-span">RANK</span>
                                   <h6 className="skale-rank-score mb-0">
-                                    #{userRank + 1}
+                                    #{userRankSkale + 1}
                                   </h6>
                                 </div>
                               </div>
                               <hr className="new-rank-divider my-2" />
                               <div className="d-flex align-items-center justify-content-between">
-                                <span className="current-rank">STARTER</span>
-                                <span className="current-rank">ROOKIE</span>
+                                <span
+                                  className="current-rank"
+                                  style={{ textTransform: "uppercase" }}
+                                >
+                                  {userRankName}
+                                </span>
+                                <span
+                                  className="current-rank"
+                                  style={{ textTransform: "uppercase" }}
+                                >
+                                  {userRankName === "rookie"
+                                    ? "underdog"
+                                    : userRankName === "underdog"
+                                    ? "champion"
+                                    : userRankName === "champion"
+                                    ? "unstoppable"
+                                    : userRankName === "unstoppable"
+                                    ? ""
+                                    : "rookie"}
+                                </span>
                               </div>
                               <div className="rank-progress-bar d-flex align-items-center px-2 justify-content-between position-relative">
-                                <div className="rank-current-progress"></div>
+                                <div className="rank-current-progress" style={{width: `${userProgress}%`}}></div>
                                 <span className="rank-current-score">
-                                  5,544,200
+                                  {getFormattedNumber(userTotalScore, 0)}
                                 </span>
-                                <span className="rank-current-score">10M</span>
+                                <span className="rank-current-score">
+                                  {userRankName === "rookie"
+                                    ? "12M"
+                                    : userRankName === "underdog"
+                                    ? "24M"
+                                    : userRankName === "champion"
+                                    ? "40M"
+                                    : userRankName === "unstoppable"
+                                    ? ""
+                                    : "6M"}
+                                </span>
                               </div>
                               <div className="d-flex align-items-center justify-content-between">
-                                <span className="rank-current-reward">0$</span>
-                                <span className="rank-current-reward">50$</span>
+                                <span className="rank-current-reward">
+                                  {userRankName === "rookie"
+                                    ? "$5"
+                                    : userRankName === "underdog"
+                                    ? "$10"
+                                    : userRankName === "champion"
+                                    ? "$25"
+                                    : userRankName === "unstoppable"
+                                    ? "$100"
+                                    : "$0"}
+                                </span>
+                                <span className="rank-current-reward">
+                                  {" "}
+                                  {userRankName === "rookie"
+                                    ? "$10"
+                                    : userRankName === "underdog"
+                                    ? "$25"
+                                    : userRankName === "champion"
+                                    ? "$100"
+                                    : userRankName === "unstoppable"
+                                    ? ""
+                                    : "$5"}
+                                </span>
                               </div>
                               <hr className="new-rank-divider my-2" />
                               <div
@@ -1396,37 +1491,77 @@ const ProfileCard = ({
               <div className="d-flex align-items-center justify-content-between mt-3">
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
-                    <img src={starterBust} className="rank-img-active" alt="" />
-                    <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
+                    <img
+                      src={starterBust}
+                      className={`${
+                        userRankName === "starter"
+                          ? "rank-img-active"
+                          : "rank-img-inactive"
+                      }`}
+                      alt=""
+                    />
+                    <h6
+                      className={`rank-title ${
+                        userRankName === "starter"
+                          ? "rank-title-active"
+                          : "rank-title-inactive"
+                      } font-oxanium text-white mb-0`}
+                    >
                       STARTER
                     </h6>
                   </div>
-                  <div className="rank-active-div d-flex align-items-center justify-content-center">
+                  <div
+                    className={` ${
+                      userRankName === "starter"
+                        ? "rank-active-div"
+                        : "rank-inactive-div"
+                    }  d-flex align-items-center justify-content-center`}
+                  >
                     <h6>$0</h6>
                   </div>
                   <div className="d-flex flex-column align-items-center gap-1">
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">500,000</span>
+                    <span className="needed-points mb-0">0</span>
                   </div>
                 </div>
                 <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
-                    <img src={rookieBust} className="rank-img-active" alt="" />
-                    <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
+                    <img
+                      src={rookieBust}
+                      className={`${
+                        userRankName === "rookie"
+                          ? "rank-img-active"
+                          : "rank-img-inactive"
+                      }`}
+                      alt=""
+                    />
+                    <h6
+                      className={`rank-title ${
+                        userRankName === "rookie"
+                          ? "rank-title-active"
+                          : "rank-title-inactive"
+                      } font-oxanium text-white mb-0`}
+                    >
                       ROOKIE
                     </h6>
                   </div>
-                  <div className="rank-active-div d-flex align-items-center justify-content-center">
-                    <h6>$0</h6>
+                  <div
+                    className={` ${
+                      userRankName === "rookie"
+                        ? "rank-active-div"
+                        : "rank-inactive-div"
+                    }  d-flex align-items-center justify-content-center`}
+                  >
+                    <h6>$5</h6>
                   </div>
                   <div className="d-flex flex-column align-items-center gap-1">
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">2,000,000</span>
+                    <span className="needed-points mb-0">6,000,000</span>
                   </div>
                 </div>
                 <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
@@ -1435,21 +1570,37 @@ const ProfileCard = ({
                   <div className="d-flex flex-column align-items-center gap-0">
                     <img
                       src={underdogBust}
-                      className="rank-img-inactive"
+                      className={`${
+                        userRankName === "underdog"
+                          ? "rank-img-active"
+                          : "rank-img-inactive"
+                      }`}
                       alt=""
                     />
-                    <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                    <h6
+                      className={`rank-title ${
+                        userRankName === "underdog"
+                          ? "rank-title-active"
+                          : "rank-title-inactive"
+                      } font-oxanium text-white mb-0`}
+                    >
                       UNDERDOG
                     </h6>
                   </div>
-                  <div className="rank-inactive-div d-flex align-items-center justify-content-center">
+                  <div
+                    className={` ${
+                      userRankName === "underdog"
+                        ? "rank-active-div"
+                        : "rank-inactive-div"
+                    }  d-flex align-items-center justify-content-center`}
+                  >
                     <h6>$10</h6>
                   </div>
                   <div className="d-flex flex-column align-items-center gap-1">
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">5,000,000</span>
+                    <span className="needed-points mb-0">12,000,000</span>
                   </div>
                 </div>
                 <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
@@ -1458,21 +1609,37 @@ const ProfileCard = ({
                   <div className="d-flex flex-column align-items-center gap-0">
                     <img
                       src={championBust}
-                      className="rank-img-inactive"
+                      className={`${
+                        userRankName === "champion"
+                          ? "rank-img-active"
+                          : "rank-img-inactive"
+                      }`}
                       alt=""
                     />
-                    <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                    <h6
+                      className={`rank-title ${
+                        userRankName === "champion"
+                          ? "rank-title-active"
+                          : "rank-title-inactive"
+                      } font-oxanium text-white mb-0`}
+                    >
                       CHAMPION
                     </h6>
                   </div>
-                  <div className="rank-inactive-div d-flex align-items-center justify-content-center">
-                    <h6>$20</h6>
+                  <div
+                    className={` ${
+                      userRankName === "champion"
+                        ? "rank-active-div"
+                        : "rank-inactive-div"
+                    }  d-flex align-items-center justify-content-center`}
+                  >
+                    <h6>$25</h6>
                   </div>
                   <div className="d-flex flex-column align-items-center gap-1">
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">10,000,000</span>
+                    <span className="needed-points mb-0">24,000,000</span>
                   </div>
                 </div>
                 <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
@@ -1481,121 +1648,225 @@ const ProfileCard = ({
                   <div className="d-flex flex-column align-items-center gap-0">
                     <img
                       src={unstoppableBust}
-                      className="rank-img-inactive"
+                      className={`${
+                        userRankName === "unstoppable"
+                          ? "rank-img-active"
+                          : "rank-img-inactive"
+                      }`}
                       alt=""
                     />
-                    <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                    <h6
+                      className={`rank-title ${
+                        userRankName === "unstoppable"
+                          ? "rank-title-active"
+                          : "rank-title-inactive"
+                      } font-oxanium text-white mb-0`}
+                    >
                       UNSTOPPABLE
                     </h6>
                   </div>
-                  <div className="rank-inactive-div d-flex align-items-center justify-content-center">
-                    <h6>$30</h6>
+                  <div
+                    className={` ${
+                      userRankName === "unstoppable"
+                        ? "rank-active-div"
+                        : "rank-inactive-div"
+                    }  d-flex align-items-center justify-content-center`}
+                  >
+                    <h6>$100</h6>
                   </div>
                   <div className="d-flex flex-column align-items-center gap-1">
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">20,000,000</span>
+                    <span className="needed-points mb-0">40,000,000</span>
                   </div>
                 </div>
               </div>
             ) : (
-              <Slider {...settings} ref={sliderRef}>
+              <Slider {...settings} ref={(c) => (sliderRef.current = c)}>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
-                    <img src={starterBust} className="rank-img-active" alt="" />
-                    <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
+                    <img
+                      src={starterBust}
+                      className={`${
+                        userRankName === "starter"
+                          ? "rank-img-active"
+                          : "rank-img-inactive"
+                      }`}
+                      alt=""
+                    />
+                    <h6
+                      className={`rank-title ${
+                        userRankName === "starter"
+                          ? "rank-title-active"
+                          : "rank-title-inactive"
+                      } font-oxanium text-white mb-0`}
+                    >
                       STARTER
                     </h6>
                   </div>
-                  <div className="rank-active-div d-flex align-items-center justify-content-center">
+                  <div
+                    className={` ${
+                      userRankName === "starter"
+                        ? "rank-active-div"
+                        : "rank-inactive-div"
+                    }  d-flex align-items-center justify-content-center`}
+                  >
                     <h6>$0</h6>
                   </div>
                   <div className="d-flex flex-column align-items-center gap-1">
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">500,000</span>
+                    <span className="needed-points mb-0">0</span>
                   </div>
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
-                    <img src={rookieBust} className="rank-img-active" alt="" />
-                    <h6 className="rank-title rank-title-active font-oxanium text-white mb-0">
+                    <img
+                      src={rookieBust}
+                      className={`${
+                        userRankName === "rookie"
+                          ? "rank-img-active"
+                          : "rank-img-inactive"
+                      }`}
+                      alt=""
+                    />
+                    <h6
+                      className={`rank-title ${
+                        userRankName === "rookie"
+                          ? "rank-title-active"
+                          : "rank-title-inactive"
+                      } font-oxanium text-white mb-0`}
+                    >
                       ROOKIE
                     </h6>
                   </div>
-                  <div className="rank-active-div d-flex align-items-center justify-content-center">
-                    <h6>$0</h6>
+                  <div
+                    className={` ${
+                      userRankName === "rookie"
+                        ? "rank-active-div"
+                        : "rank-inactive-div"
+                    }  d-flex align-items-center justify-content-center`}
+                  >
+                    <h6>$5</h6>
                   </div>
                   <div className="d-flex flex-column align-items-center gap-1">
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">2,000,000</span>
+                    <span className="needed-points mb-0">6,000,000</span>
                   </div>
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
                     <img
                       src={underdogBust}
-                      className="rank-img-inactive"
+                      className={`${
+                        userRankName === "underdog"
+                          ? "rank-img-active"
+                          : "rank-img-inactive"
+                      }`}
                       alt=""
                     />
-                    <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                    <h6
+                      className={`rank-title ${
+                        userRankName === "underdog"
+                          ? "rank-title-active"
+                          : "rank-title-inactive"
+                      } font-oxanium text-white mb-0`}
+                    >
                       UNDERDOG
                     </h6>
                   </div>
-                  <div className="rank-inactive-div d-flex align-items-center justify-content-center">
+                  <div
+                    className={` ${
+                      userRankName === "underdog"
+                        ? "rank-active-div"
+                        : "rank-inactive-div"
+                    }  d-flex align-items-center justify-content-center`}
+                  >
                     <h6>$10</h6>
                   </div>
                   <div className="d-flex flex-column align-items-center gap-1">
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">5,000,000</span>
+                    <span className="needed-points mb-0">12,000,000</span>
                   </div>
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
                     <img
                       src={championBust}
-                      className="rank-img-inactive"
+                      className={`${
+                        userRankName === "champion"
+                          ? "rank-img-active"
+                          : "rank-img-inactive"
+                      }`}
                       alt=""
                     />
-                    <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                    <h6
+                      className={`rank-title ${
+                        userRankName === "champion"
+                          ? "rank-title-active"
+                          : "rank-title-inactive"
+                      } font-oxanium text-white mb-0`}
+                    >
                       CHAMPION
                     </h6>
                   </div>
-                  <div className="rank-inactive-div d-flex align-items-center justify-content-center">
-                    <h6>$20</h6>
+                  <div
+                    className={` ${
+                      userRankName === "champion"
+                        ? "rank-active-div"
+                        : "rank-inactive-div"
+                    }  d-flex align-items-center justify-content-center`}
+                  >
+                    <h6>$25</h6>
                   </div>
                   <div className="d-flex flex-column align-items-center gap-1">
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">10,000,000</span>
+                    <span className="needed-points mb-0">24,000,000</span>
                   </div>
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
                     <img
                       src={unstoppableBust}
-                      className="rank-img-inactive"
+                      className={`${
+                        userRankName === "unstoppable"
+                          ? "rank-img-active"
+                          : "rank-img-inactive"
+                      }`}
                       alt=""
                     />
-                    <h6 className="rank-title rank-title-inactive font-oxanium text-white mb-0">
+                    <h6
+                      className={`rank-title ${
+                        userRankName === "unstoppable"
+                          ? "rank-title-active"
+                          : "rank-title-inactive"
+                      } font-oxanium text-white mb-0`}
+                    >
                       UNSTOPPABLE
                     </h6>
                   </div>
-                  <div className="rank-inactive-div d-flex align-items-center justify-content-center">
-                    <h6>$50</h6>
+                  <div
+                    className={` ${
+                      userRankName === "unstoppable"
+                        ? "rank-active-div"
+                        : "rank-inactive-div"
+                    }  d-flex align-items-center justify-content-center`}
+                  >
+                    <h6>$100</h6>
                   </div>
                   <div className="d-flex flex-column align-items-center gap-1">
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">20,000,000</span>
+                    <span className="needed-points mb-0">40,000,000</span>
                   </div>
                 </div>
               </Slider>
