@@ -3019,7 +3019,7 @@ function App() {
         </div>
 
         {!location.pathname.includes("account") &&
-          !location.pathname.includes("auth") && <ChestFlyout />}
+          !location.pathname.includes("auth") && !location.pathname.includes("explorer") && <ChestFlyout />}
         {domainPopup && (
           <DomainModal
             onClose={() => setDomainPopup(false)}
