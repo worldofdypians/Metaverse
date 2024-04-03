@@ -1467,7 +1467,7 @@ const NewWalletBalance = ({
                     <div className="yellow-progress-outer">
                       <span className="mb-0 chest-progress">
                         {/* {claimedPremiumChests}/10 */}
-                        {chestPercentage}%
+                        {parseInt(chestPercentage)}%
                       </span>
                       <div
                         className="yellow-progress-inner"
