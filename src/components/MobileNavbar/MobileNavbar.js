@@ -18,6 +18,8 @@ import bnb from "../Header/assets/bnb.svg";
 import eth from "../Header/assets/eth.svg";
 import base from "../Header/assets/base.svg";
 import conflux from "../Header/assets/conflux.svg";
+import skale from "../Header/assets/skale.svg";
+
 import error from "../Header/assets/error.svg";
 import dropdown from "../Header/assets/dropdown.svg";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -47,6 +49,8 @@ const MobileNavbar = ({
   const [avaxState, setAvaxState] = useState(false);
   const [baseState, setBaseState] = useState(false);
   const [confluxState, setConfluxState] = useState(false);
+  const [skaleState, setSkaleState] = useState(false);
+
 
   const bgmenu = document.querySelector("#bgmenu");
   const hamburger = document.querySelector("#mobileNavbar");
@@ -68,30 +72,35 @@ const MobileNavbar = ({
         setEthState(true);
         setBaseState(false);
         setOpBnbState(false);
+        setSkaleState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
         setEthState(false);
         setBaseState(false);
         setOpBnbState(false);
+        setSkaleState(false);
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
         setBaseState(true);
         setOpBnbState(false);
+        setSkaleState(false);
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
         setEthState(false);
         setBaseState(false);
         setOpBnbState(false);
+        setSkaleState(false);
       } else if (chainId === 204) {
         setAvaxState(false);
-        setBnbState(true);
+        setBnbState(false);
         setEthState(false);
         setBaseState(false);
         setOpBnbState(true);
+        setSkaleState(false);
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -99,12 +108,22 @@ const MobileNavbar = ({
         setBaseState(false);
         setConfluxState(true);
         setOpBnbState(false);
+        setSkaleState(false);
+      } else if (chainId === 1482601649 ) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setOpBnbState(false);
+        setSkaleState(true);
       } else {
         setAvaxState(false);
         setBnbState(false);
         setBaseState(false);
         setEthState(false);
         setOpBnbState(false);
+        setSkaleState(false);
       }
     }
   };
@@ -217,6 +236,24 @@ const MobileNavbar = ({
     }
   };
 
+  const handleSkalePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x585eb4b1")
+          .then(() => {
+            handleSwitchNetwork(1482601649);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet();
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
   useEffect(() => {
     if (chainId === 1) {
       handleSwitchNetwork(1);
@@ -228,6 +265,10 @@ const MobileNavbar = ({
 
     if (chainId === 8453) {
       handleSwitchNetwork(8453);
+    }
+
+    if (chainId === 1482601649 ) {
+      handleSwitchNetwork(1482601649);
     }
   }, [chainId, coinbase]);
 
@@ -290,37 +331,41 @@ const MobileNavbar = ({
                     <img
                       src={
                         ethState === true
-                          ? eth
-                          : bnbState === true
-                          ? bnb
-                          : opbnbState === true
-                          ? bnb
-                          : avaxState === true
-                          ? avax
-                          :baseState === true
-                          ? base
-                          : confluxState === true
-                          ? conflux
-                          : error
+                              ? eth
+                              : bnbState === true
+                              ? bnb
+                              : opbnbState === true
+                              ? bnb
+                              : avaxState === true
+                              ? avax
+                              : baseState === true
+                              ? base
+                              : confluxState === true
+                              ? conflux
+                              : skaleState === true
+                              ? skale
+                              : error
                       }
                       height={16}
                       width={16}
                       alt=""
                     />
                     <span className="change-chain-text d-none d-lg-flex">
-                      {ethState === true
-                        ? "Ethereum"
-                        : bnbState === true
-                        ? "BNB Chain"
-                        : opbnbState === true
-                        ? "opBNB Chain"
-                         : avaxState === true
-                        ? "Avalanche"
-                        :baseState === true
-                        ? "Base"
-                        : confluxState === true
-                        ? "Conflux"
-                        : "Unsupported"}
+                    {ethState === true
+                            ? "Ethereum"
+                            : bnbState === true
+                            ? "BNB Chain"
+                            : opbnbState === true
+                            ? "opBNB Chain"
+                            : avaxState === true
+                            ? "Avalanche"
+                            : baseState === true
+                            ? "Base"
+                            : confluxState === true
+                            ? "Conflux"
+                            : skaleState === true
+                            ? "SKALE"
+                            : "Unsupported"}
                     </span>
 
                     <img src={dropdown} alt="" />
@@ -339,6 +384,10 @@ const MobileNavbar = ({
                   <img src={bnb} alt="" />
                   opBNB Chain
                 </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleSkalePool()}>
+                    <img src={skale} alt="" />
+                    SKALE
+                  </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleAvaxPool()}>
                   <img src={avax} alt="" />
                   Avalanche

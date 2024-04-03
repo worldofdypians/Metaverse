@@ -17,7 +17,7 @@
   background-color: #242240;
   border-radius: 8px;
   padding: 10px;
-  background-image: url("./assets/grandPrizeBanner.jpg");
+  background-image: url("./assets/grandPrizeBanner.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -88,8 +88,9 @@
   color: #f7f7ff;
   position: sticky;
   top: 0;
-  background: #080b2a;
+  // background: #080b2a;
   z-index: 2;
+  white-space: nowrap;
 }
 
 .optionText {
@@ -97,7 +98,7 @@
   font-weight: 500;
   font-size: 15px;
   line-height: 18px;
-  color: #ffffff;
+  color: #747687;
   display: flex;
   justify-content: center;
   cursor: pointer;
@@ -106,7 +107,7 @@
 
 .optionText:hover,
 .activeoption {
-  color: #09f3d2;
+  color: #FFF;
 }
 
 .optionTextGolden {
@@ -164,8 +165,8 @@
 }
 
 .optionsWrapper {
-  background: #1e2237;
   border-radius: 12px;
+  background: #1E2237;
   padding: 2px;
 }
 
@@ -175,12 +176,12 @@
 }
 
 .playerInnerRow {
-  background: #181b38;
+  background: none !important;
   border-bottom: 1px solid #757086;
 }
 
 .playerInnerRow-inactive {
-  background: rgba(0, 254, 207, 0.1);
+  background: rgba(0, 254, 207, 0.1) !important;
   .goldenscore-inactive {
     color: #09f3d2 !important;
   }
@@ -203,6 +204,7 @@
   line-height: 21px;
   letter-spacing: -0.018em;
   color: #09f3d2;
+  height: 32px;
 }
 .playerScore {
   font-weight: 500;
@@ -210,9 +212,10 @@
   line-height: 21px;
   letter-spacing: -0.018em;
   color: rgba(243, 192, 9, 1);
+  height: 32px;
 }
 .goldenscore-inactive2 {
-  color: #48465e !important;
+  color: #fff ;
   text-align: center;
 }
 .playerName {
@@ -222,11 +225,14 @@
   line-height: 17px;
   letter-spacing: -0.018em;
   color: #f7f7ff;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+  }
 }
 
 .tablewrapper {
-  height: 366px;
-  overflow-y: auto;
+  height: fit-content !important;
+  // overflow-y: auto;
 }
 
 .medal-wrapper {
@@ -299,6 +305,7 @@
   line-height: 10px;
   text-align: center;
   color: #b8b8e0;
+  height: 32px;
 }
 
 .playersimg {
@@ -333,9 +340,10 @@
   // background: linear-gradient(90.31deg, #7344B3 0.27%, #20BBCA 99.74%);
   // font-weight: bold;
   padding: 10px;
-  border-radius: 0px;
-  border-bottom: 1px solid #09f3d2 !important;
-  color: #09f3d2;
+  border-radius: 12px;
+  white-space: nowrap;
+  // border-bottom: 1px solid #09f3d2 !important;
+  color: #FFF;
 }
 
 .comingsoon {
@@ -400,4 +408,53 @@
   text-align: center;
   letter-spacing: -0.018em;
   color: #fe7a00;
+}
+
+.leaderboard-item {
+  width: 33%;
+  background: rgba(151, 89, 192, 0.3);
+  border-radius: 12px;
+
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
+}
+
+.optionswrapper-bg {
+  position: absolute;
+  width: 33%;
+  height: 100%;
+  border-radius: 12px;
+  border: 1px solid #f4e07b;
+  background: #341553;
+  transition: all 0.25s ease-in-out;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
+
+.move-1 {
+  transform: translateX(101.5%);
+}
+
+.move-2 {
+  transform: translateX(203%);
+}
+
+.move-3 {
+  transform: translateX(300%);
+}
+.leaderboard-icon {
+  transition: all 0.25s;
+}
+
+.leaderboard-icon-active {
+  filter: grayscale(0);
+}
+
+.blur-leaderboard{
+  filter: blur(10px);
+  pointer-events: none;
 }

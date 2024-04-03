@@ -76,6 +76,12 @@ import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
 import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
 import upcomingDoge from "./assets/upcomingDoge.webp";
+import upcomingSkale from "./assets/upcomingSkale.webp";
+import upcomingSkaleMobile from "./assets/upcomingSkaleMobile.webp";
+
+import upcomingBabyDoge from "./assets/upcomingBabyDoge.webp";
+import upcomingBabyDogeMobile from "./assets/upomingBabyDogeMobile.webp";
+
 import upcomingDyp from "./assets/upcomingDyp.webp";
 import upcomingCmc from "./assets/upcomingCmc.webp";
 import upcomingDyp2 from "./assets/dypiusBgPic2.webp";
@@ -895,10 +901,6 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                    {" "}
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -911,6 +913,9 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1159,14 +1164,14 @@ const MarketEvents = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <h6 className="upcoming-stake">New events are coming...</h6>
-                    <span className="upcoming-stake-desc">
-                      Check back soon!
-                    </span>
-                  </div>
-                </div>
+                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                //   <div className="d-flex flex-column align-items-center gap-2">
+                //     <h6 className="upcoming-stake">New events are coming...</h6>
+                //     <span className="upcoming-stake-desc">
+                //       Check back soon!
+                //     </span>
+                //   </div>
+                // </div>
 
                 // <BetaEventCard
                 //   activeTab={activeTab}
@@ -1183,37 +1188,45 @@ const MarketEvents = ({
                 //       : 0
                 //   }
                 // />
-                // <div className="d-flex flex-column gap-4">
-                //   <div className="border-0 upcoming-mint-wrapper upcoming-doge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                //       <h6 className="upcoming-mint-title">Dogecoin</h6>
-                //       <p className="upcoming-mint-desc">
-                //         Join the Dogecoin event for a chance to grab a share of
-                //         DOGE rewards.
-                //       </p>
-                //     </div>
-                //     <img
-                //       src={upcomingDoge}
-                //       alt=""
-                //       className="upcoming-mint-img"
-                //     />
-                //   </div>
-
-                //   <div className="border-0 upcoming-mint-wrapper upcoming-cmc-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                //       <h6 className="upcoming-mint-title">CoinMarketCap</h6>
-                //       <p className="upcoming-mint-desc">
-                //         Join the CoinMarketCap event for a chance to grab a
-                //         share of the $10,000 BNB reward pool.
-                //       </p>
-                //     </div>
-                //     <img
-                //       src={upcomingCmc}
-                //       alt=""
-                //       className="upcoming-mint-img"
-                //     />
-                //   </div>
-                // </div>
+                <div className="d-flex flex-column gap-4">
+                  <div className="border-0 upcoming-mint-wrapper upcoming-skale-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">SKALE</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the SKALE Treasure Hunt event for a chance to grab
+                        a share of the $20,000 SKL reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingSkale}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                     <img
+                      src={upcomingSkaleMobile}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+                  <div className="border-0 upcoming-mint-wrapper upcoming-babydoge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">BabyDoge</h6>
+                      <p className="upcoming-mint-desc">
+                      Join the BabyDoge Treasure Hunt event for a chance to grab a share of the $20,000 BabyDoge reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingBabyDoge}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                     <img
+                      src={upcomingBabyDogeMobile}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+                </div>
                 // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                 //   {dummyBetaPassData2.slice(3, 4).map((item, index) => (
                 //     <BetaEventCard

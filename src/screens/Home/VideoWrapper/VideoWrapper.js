@@ -17,6 +17,7 @@ import whiteCircleArrow from "../../../assets/whiteCircleArrow.svg";
 import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
 import Slider from "react-slick";
 import useWindowSize from "../../../hooks/useWindowSize";
+import NewHomeLeaderboard from "../../../components/LeaderBoard/NewHomeLeaderboard";
 
 const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const [modal, setModal] = useState(false);
@@ -432,7 +433,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
             ></video>
           </div>
           <div className="col-12 col-lg-4  d-flex align-items-center justify-content-center justify-content-lg-start">
-            <LeaderBoard />
+            <NewHomeLeaderboard />
           </div>
         </div>
         {windowSize.width > 992 && (

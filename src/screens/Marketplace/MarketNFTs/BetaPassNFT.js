@@ -20,6 +20,9 @@ import blockChainIcon from "../assets/blockChainIcon.svg";
 import confluxLogo from "../assets/confluxLogo.svg";
 import baseLogo from "../assets/baseLogo.svg";
 import bnbLogo from "../assets/bnbLogo.svg";
+import skaleLogo from "../assets/skaleLogo.svg";
+import comingSoon from "../assets/comingSoon.svg";
+
 import wodLogo from "../assets/wodIcon.png";
 import blackWallet from "../../../assets/wallet-black.svg";
 import whitewallet from "../../../assets/wallet-white.svg";
@@ -49,6 +52,7 @@ import avaxBetaBanner from "./assets/avaxBetaBanner.png";
 import coingeckoBetaBanner from "./assets/coingeckoBetaBanner.png";
 import confluxBetaBanner from "./assets/confluxBetaBanner.png";
 import cmcBetaBanner from "./assets/cmcBetaBanner.webp";
+import skaleBetaBanner from "./assets/skaleBetaBanner.webp";
 
 import baseBetaBanner from "./assets/baseBetaBanner.png";
 
@@ -132,6 +136,8 @@ const BetaPassNFT = ({
   myDogeNFTs,
   totalCmcNft,
   myCmcNFTs,
+  totalSkaleNft,
+  mySkaleNfts,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -213,6 +219,13 @@ const BetaPassNFT = ({
     cardTitle: "Gate Beta Pass",
     title: "Gate Beta Pass",
     background: "gate-mint-bg",
+  };
+
+  const skaleData = {
+    id: "skale",
+    cardTitle: "SKALE Beta Pass",
+    title: "SKALE Beta Pass",
+    background: "skale2-mint-bg",
   };
 
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
@@ -565,6 +578,9 @@ const BetaPassNFT = ({
     } else if (locationState.includes("/beta-pass/gate")) {
       setSelectedMint(gateData);
       setMintTitle("gate");
+    } else if (locationState.includes("/beta-pass/skale")) {
+      setSelectedMint(skaleData);
+      setMintTitle("skale");
     } else if (locationState.includes("/beta-pass/coinmarketcap")) {
       setSelectedMint(cmcData);
       setMintTitle("cmc");
@@ -683,13 +699,20 @@ const BetaPassNFT = ({
                           ? "Gate.io"
                           : mintTitle === "coingecko"
                           ? "CoinGecko"
+                          : mintTitle === "skale"
+                          ? "SKALE"
                           : mintTitle === "cmc"
                           ? "CoinMarketCap"
                           : "our partners"}
-                        . During this event, players have the opportunity to
+                        .{" "}
+                        {mintTitle === "skale"
+                          ? `During this event, players have the opportunity to
+                        earn Points for their leaderboard rankings, and also
+                        collect rewards which are distributed on a monthly basis.`
+                          : `During this event, players have the opportunity to
                         earn Points for their leaderboard rankings, and also
                         collect rewards in different tokens, which are
-                        distributed on a monthly basis.
+                        distributed on a monthly basis.`}
                       </p>
                     ) : (
                       <p className="collection-desc">
@@ -734,6 +757,8 @@ const BetaPassNFT = ({
                         ? dogeBetaBanner
                         : mintTitle === "cmc"
                         ? cmcBetaBanner
+                        : mintTitle === "skale"
+                        ? skaleBetaBanner
                         : betapassBanner
                     }
                     className="w-100"
@@ -764,6 +789,25 @@ const BetaPassNFT = ({
                     />
                     <span>Avalanche</span>
                   </NavLink> */}
+                  <NavLink
+                    to={"/marketplace/beta-pass/skale"}
+                    className={`${
+                      location.pathname.includes("skale") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2 position-relative`}
+                    onClick={() => {
+                      setSelectedMint(skaleData);
+                      setMintTitle("skale");
+                    }}
+                  >
+                    {/* <img src={comingSoon} alt='' className="position-absolute comingSoonimg" /> */}
+                    <img
+                      src={skaleLogo}
+                      className="beta-pass-chain-img"
+                      alt=""
+                    />
+                    <span>SKALE</span>
+                  </NavLink>
                   <NavLink
                     to={"/marketplace/beta-pass/coinmarketcap"}
                     className={`${
@@ -888,7 +932,8 @@ const BetaPassNFT = ({
                   mintTitle !== "gate" &&
                   mintTitle !== "base" &&
                   mintTitle !== "doge" &&
-                  mintTitle !== "cmc" && (
+                  mintTitle !== "cmc" &&
+                  mintTitle !== "skale" && (
                     <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
                       <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
                         <div className="d-flex flex-column position-relative">
@@ -960,7 +1005,8 @@ const BetaPassNFT = ({
                     mintTitle === "gate" ||
                     mintTitle === "doge" ||
                     mintTitle === "base" ||
-                    mintTitle === "cmc"
+                    mintTitle === "cmc" ||
+                    mintTitle === "skale"
                       ? "col-12 col-md-12 col-xxl-7 mt-0 px-0"
                       : "col-12 col-md-12 col-xxl-5 mt-0 px-0"
                   }
@@ -985,7 +1031,8 @@ const BetaPassNFT = ({
                         mintTitle !== "gate" &&
                         mintTitle !== "base" &&
                         mintTitle !== "doge" &&
-                        mintTitle !== "cmc" && (
+                        mintTitle !== "cmc" &&
+                        mintTitle !== "skale" && (
                           <>
                             Mint your {selectedMint.title}{" "}
                             <br className="d-none d-lg-flex" />
@@ -999,7 +1046,8 @@ const BetaPassNFT = ({
                         mintTitle === "gate" ||
                         mintTitle === "doge" ||
                         mintTitle === "base" ||
-                        mintTitle === "cmc") && (
+                        mintTitle === "cmc" ||
+                        mintTitle === "skale") && (
                         <>
                           Get your {selectedMint.title}{" "}
                           <br className="d-none d-lg-flex" />
@@ -1072,7 +1120,7 @@ const BetaPassNFT = ({
                             <img src={pinkAreaConflux} alt="" />
                           </div>
                         )}
-                        {mintTitle === "base" && (
+                        {(mintTitle === "base" || mintTitle === "skale") && (
                           <div className="position-relative">
                             <img src={pinkAreaBase} alt="" />
                           </div>
@@ -1194,7 +1242,8 @@ const BetaPassNFT = ({
                     mintTitle === "gate" ||
                     mintTitle === "doge" ||
                     mintTitle === "base" ||
-                    mintTitle === "cmc"
+                    mintTitle === "cmc" ||
+                    mintTitle === "skale"
                       ? "col-12 col-md-12 col-xxl-5 mt-0 px-0 px-lg-2"
                       : "col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2"
                   }
@@ -1204,7 +1253,8 @@ const BetaPassNFT = ({
                   mintTitle !== "doge" &&
                   mintTitle !== "gate" &&
                   mintTitle !== "base" &&
-                  mintTitle !== "cmc" ? (
+                  mintTitle !== "cmc" &&
+                  mintTitle !== "skale" ? (
                     <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
                       <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
                         <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
@@ -1470,7 +1520,7 @@ const BetaPassNFT = ({
                       className={`  justify-content-start
                      mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
                     >
-                      {/* {!alreadyRegistered && mintTitle === "cmc" && (
+                      {!alreadyRegistered && mintTitle === "skale" && (
                         <div className="d-flex align-items-center justify-content-around gap-2">
                           <button
                             className={
@@ -1497,35 +1547,8 @@ const BetaPassNFT = ({
                             Sign in
                           </button>
                         </div>
-                      )} */}
-                      {/* {!alreadyRegistered && mintTitle === "base" && (
-                        <div className="d-flex align-items-center justify-content-around gap-2">
-                          <button
-                            className={
-                              activeTab === "create"
-                                ? "land-name2-active w-100"
-                                : "land-name2-passive w-100"
-                            }
-                            onClick={() => {
-                              setactiveTab("create");
-                            }}
-                          >
-                            Create Account
-                          </button>
-                          <button
-                            className={
-                              activeTab === "login"
-                                ? "land-name2-active w-100"
-                                : "land-name2-passive w-100"
-                            }
-                            onClick={() => {
-                              setactiveTab("login");
-                            }}
-                          >
-                            Sign in
-                          </button>
-                        </div>
-                      )} */}
+                      )}
+
                       <div className="p-4 d-flex flex-column gap-3 h-100">
                         {mintTitle === "coingecko" && (
                           <div className="">
@@ -2259,13 +2282,13 @@ const BetaPassNFT = ({
                       </button>
                     </div> */}
 
-                        {/* {alreadyRegistered && mintTitle === "cmc" && (
+                        {alreadyRegistered && mintTitle === "skale" && (
                           <h6 className="land-name">
-                            {mintTitle === "cmc" && totalCmcNft > 0
+                            {mintTitle === "skale" && totalSkaleNft > 0
                               ? "My NFT"
                               : "Registered"}{" "}
                           </h6>
-                        )} */}
+                        )}
                         {/* {mintTitle === "doge" && (
                           <h6 className="land-name">
                             {mintTitle === "doge" && totalDogeNft > 0
@@ -2273,9 +2296,9 @@ const BetaPassNFT = ({
                               : "Registered"}{" "}
                           </h6>
                         )} */}
-                        {/* {!alreadyRegistered &&
+                        {!alreadyRegistered &&
                           activeTab === "create" &&
-                          mintTitle === "cmc" && (
+                          mintTitle === "skale" && (
                             <div>
                               <ul class="timeline m-0 p-0" id="timeline">
                                 <li class="col-3 li complete">
@@ -2316,10 +2339,10 @@ const BetaPassNFT = ({
                                 </li>
                               </ul>
                             </div>
-                          )} */}
-                        {/* {playerCreation === false &&
+                          )}
+                        {playerCreation === false &&
                           !alreadyRegistered &&
-                          mintTitle === "cmc" && (
+                          mintTitle === "skale" && (
                             <SignUpGecko
                               onSuccessVerify={(value) => {
                                 setplayerCreation(value);
@@ -2341,65 +2364,27 @@ const BetaPassNFT = ({
                                 setactiveTab("login");
                               }}
                             />
-                          )} */}
+                          )}
 
-                        {/* {playerCreation === true &&
+                        {playerCreation === true &&
                           linkWallet === false &&
                           !alreadyRegistered &&
-                          mintTitle === "cmc" && (
+                          mintTitle === "skale" && (
                             <PlayerCreationGecko
                               onSuccessCreation={() => {
                                 setLinkWallet(true);
                               }}
                               mintTitle={selectedMint.cardTitle}
                             />
-                          )} */}
+                          )}
 
-                        {/* {playerCreation === false &&
+                        {linkWallet === true &&
                           !alreadyRegistered &&
-                          mintTitle === "base" && (
-                            <SignUpGecko
-                              onSuccessVerify={(value) => {
-                                setplayerCreation(value);
-                              }}
-                              onEmailVerify={(value) => {
-                                setEmailVerify(value);
-                              }}
-                              onShowVerify={(value) => {
-                                setShowVerify(value);
-                              }}
-                              onSuccessLogin={() => {
-                                setalreadyRegistered(true);
-                                refetchPlayer();
-                              }}
-                              mintTitle={selectedMint.cardTitle}
-                              chainId={chainId}
-                              activeTab={activeTab}
-                              isExistingUser={() => {
-                                setactiveTab("login");
-                              }}
-                            />
-                          )} */}
-
-                        {/* {playerCreation === true &&
-                          linkWallet === false &&
-                          !alreadyRegistered &&
-                          mintTitle === "base" && (
-                            <PlayerCreationGecko
-                              onSuccessCreation={() => {
-                                setLinkWallet(true);
-                              }}
-                              mintTitle={selectedMint.cardTitle}
-                            />
-                          )} */}
-
-                        {/* {linkWallet === true &&
-                          !alreadyRegistered &&
-                          mintTitle === "cmc" && (
+                          mintTitle === "skale" && (
                             <div className="d-flex flex-column gap-4 justify-content-between p-4">
                               <span className={"createplayertxt"}>
                                 *Make sure to connect the same wallet address as
-                                the one you used for CoinMarketCap Giveaway .
+                                the one you used for SKALE Giveaway .
                               </span>
                               <div
                                 className="walletconnectBtn w-100"
@@ -2421,27 +2406,20 @@ const BetaPassNFT = ({
                                   <img src={circleArrow} alt="" />
                                 </div>
                               </div>
-                              {selectedMint.cardTitle === "Conflux" ? (
-                                <span className="footertxt-coingecko mt-4">
-                                  Users that joined in the Conflux Giveaway are
-                                  required to create a WoD Account to receive
-                                  the NFT and participate in the exclusive
-                                  event.
-                                </span>
-                              ) : (
-                                <span className="footertxt-coingecko mt-4">
-                                  Users who have claimed the{" "}
-                                  {selectedMint.cardTitle} NFT are required to
-                                  create a WoD Account to receive the NFT and
-                                  participate in the exclusive event.
-                                </span>
-                              )}
+
+                              <span className="footertxt-coingecko mt-4">
+                                Users who have claimed the{" "}
+                                {selectedMint.cardTitle} NFT are required to
+                                create a WoD Account to receive the NFT and
+                                participate in the exclusive event.
+                              </span>
+
                               <div className="summaryseparator"></div>
                             </div>
-                          )} */}
-                        {/* {alreadyRegistered && mintTitle === "cmc" && (
+                          )}
+                        {alreadyRegistered && mintTitle === "skale" && (
                           <div className="d-flex flex-column justify-content-between h-100">
-                            {totalCmcNft === 0 && mintTitle === "cmc" ? (
+                            {totalSkaleNft === 0 && mintTitle === "skale" ? (
                               <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
                                 <div
                                   className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}
@@ -2467,21 +2445,23 @@ const BetaPassNFT = ({
                               </div>
                             ) : (
                               <NavLink
-                                to={`/marketplace/nft/${myCmcNFTs[0]}/${window.config.nft_cmc_address}`}
+                                to={`/marketplace/nft/${mySkaleNfts[0]}/${window.config.nft_skale_address}`}
                                 onClick={() => {
                                   updateViewCount(
-                                    myCmcNFTs[0],
-                                    window.config.nft_cmc_address
+                                    mySkaleNfts[0],
+                                    window.config.nft_skale_address
                                   );
                                 }}
                               >
                                 <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
                                   <div
                                     className={`coingeckoempty-wrapper  ${
-                                      totalCmcNft === 0 && mintTitle === "cmc"
+                                      totalSkaleNft === 0 &&
+                                      mintTitle === "skale"
                                         ? "conflux-empty"
-                                        : totalCmcNft > 0 && mintTitle === "cmc"
-                                        ? "cmc-active"
+                                        : totalSkaleNft > 0 &&
+                                          mintTitle === "skale"
+                                        ? "skale-active"
                                         : "conflux-empty"
                                     } d-flex justify-content-center align-items-center p-3 position-relative`}
                                     style={{
@@ -2504,7 +2484,7 @@ const BetaPassNFT = ({
                                         fontSize: 16,
                                       }}
                                     >
-                                      CMCBP {`#${myCmcNFTs[0]}`}
+                                      SKBP {`#${mySkaleNfts[0]}`}
                                     </h6>
                                   </div>
                                 </div>
@@ -2539,7 +2519,7 @@ const BetaPassNFT = ({
                               </NavLink>
                             </div>
                           </div>
-                        )} */}
+                        )}
                       </div>
                     </div>
                   )}
