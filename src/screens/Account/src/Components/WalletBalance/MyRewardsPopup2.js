@@ -528,7 +528,7 @@ const MyRewardsPopupNew = ({
   };
 
   return (
-    <div className="d-grid rewardstable-wrapper gap-2 mt-3 px-1">
+    <div className="d-grid rewardstable-wrapper2 gap-2 mt-3 px-1">
       <div className="total-earnings-purple-wrapper p-2">
         <div className="d-flex flex-column align-items-center justify-content-center">
           <span className="total-rewards-amount">
