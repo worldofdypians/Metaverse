@@ -1116,7 +1116,7 @@ function Dashboard({
     const emailData = { emailAddress: userEmail, chainId: "bnb" };
 
     const result = await axios.post(
-      "https://dyp-chest-test.azurewebsites.net/api/GetRewards?=null",
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
       emailData
     );
     if (result.status === 200 && result.data) {
@@ -1162,7 +1162,7 @@ function Dashboard({
     const emailData = { emailAddress: userEmail, chainId: "skale" };
 
     const result = await axios.post(
-      "https://dyp-chest-test.azurewebsites.net/api/GetRewards?=null",
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
       emailData
     );
     if (result.status === 200 && result.data) {
@@ -1238,15 +1238,15 @@ function Dashboard({
       setMyNFTSCaws(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
-      (NFTS) => setMyNFTSCawsBNB(NFTS)
-    );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
-      (NFTS) => setMyNFTSCawsBase(NFTS)
-    );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
-      (NFTS) => setMyNFTSCawsAvax(NFTS)
-    );
+    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
+    //   (NFTS) => setMyNFTSCawsBNB(NFTS)
+    // );
+    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
+    //   (NFTS) => setMyNFTSCawsBase(NFTS)
+    // );
+    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
+    //   (NFTS) => setMyNFTSCawsAvax(NFTS)
+    // );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "timepiece").then(
       (NFTS) => setMyNFTSTimepiece(NFTS)
@@ -1255,15 +1255,15 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "land").then((NFTS) =>
       setMyNFTSLand(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
-      (NFTS) => setMyNFTSLandBNB(NFTS)
-    );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
-      (NFTS) => setMyNFTSLandBase(NFTS)
-    );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
-      (NFTS) => setMyNFTSLandAvax(NFTS)
-    );
+    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
+    //   (NFTS) => setMyNFTSLandBNB(NFTS)
+    // );
+    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
+    //   (NFTS) => setMyNFTSLandBase(NFTS)
+    // );
+    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
+    //   (NFTS) => setMyNFTSLandAvax(NFTS)
+    // );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "coingecko").then(
       (NFTS) => setMyNFTSCoingecko(NFTS)
     );
@@ -2278,11 +2278,9 @@ function Dashboard({
       getmyWodStakes();
     }
   }, [
-    email,
     userWallet,
     data?.getPlayer?.wallet?.publicAddress,
     coinbase,
-    chainId,
   ]);
 
   useEffect(() => {
@@ -2313,7 +2311,7 @@ function Dashboard({
   useEffect(() => {
     // if (coinbase) {
     getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
-    getMyOffers();
+    // getMyOffers();
     // }
   }, [coinbase, isConnected]);
 
@@ -2806,6 +2804,7 @@ function Dashboard({
                             dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
                             dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
                             kittyDashRecords={kittyDashRecords}
+                            userRankRewards={userRankRewards}
                           />
                         </div>
                       </OutsideClickHandler>

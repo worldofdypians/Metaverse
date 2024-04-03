@@ -293,6 +293,8 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
 
   const dailyPrizesGolden = ["10", "8", "5", "5", "5", "5", "5", "5", "5", "5"];
 
+  const prizeSkale = ["25", "15", "10", "8", "5", "5", "5", "5", "5", "5"];
+
   const previous_dailyPrizesGolden = [
     "20",
     "10",
@@ -2090,7 +2092,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                                 : "playerReward"
                             }`}
                           >
-                            ${getFormattedNumber(monthlyPrizes[index], 0)}
+                            ${getFormattedNumber(prizeSkale[index], 0)}
                           </td>
                           <td
                             className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
@@ -2103,7 +2105,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             style={{ width: "100%" }}
                           >
                             +$
-                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
+                            {getFormattedNumber(prizeSkale[index], 0)}
                            
                               <img src={premiumIcon} alt="" />
                           
@@ -2164,7 +2166,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                                 : "playerReward"
                             }`}
                           >
-                            ${getFormattedNumber(monthlyPrizes[index], 0)}
+                            ${getFormattedNumber(prizeSkale[index], 0)}
                           </td>
                           <td
                             className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
@@ -2177,7 +2179,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             style={{ width: "100%" }}
                           >
                             +$
-                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
+                            {getFormattedNumber(prizeSkale[index], 0)}
                            
                               <img src={premiumIcon} alt="" />
                           

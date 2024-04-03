@@ -295,6 +295,7 @@ const NewLeaderBoard = ({
 
   // const dailyPrizesGolden = ["10", "8", "5", "5", "5", "5", "5", "5", "5", "5"];
   const dailyPrizesGolden = ["10", "8", "5", "5", "5", "5", "5", "5", "5", "5"];
+  const prizeSkale = ["25", "15", "10", "8", "5", "5", "5", "5", "5", "5"];
 
   const previous_dailyPrizesGolden = [
     "20",
@@ -1542,7 +1543,7 @@ const NewLeaderBoard = ({
                                       >
                                         $
                                         {getFormattedNumber(
-                                          monthlyPrizes[index],
+                                          prizeSkale[index],
                                           0
                                         )}
                                       </td>
@@ -1559,7 +1560,7 @@ const NewLeaderBoard = ({
                                       >
                                         +$
                                         {getFormattedNumber(
-                                          monthlyPrizesGolden[index],
+                                          prizeSkale[index],
                                           0
                                         )}
                                         <img src={premiumIcon} alt="" />
@@ -1625,7 +1626,7 @@ const NewLeaderBoard = ({
                                       >
                                         $
                                         {getFormattedNumber(
-                                          monthlyPrizes[index],
+                                          prizeSkale[index],
                                           0
                                         )}
                                       </td>
@@ -1642,7 +1643,7 @@ const NewLeaderBoard = ({
                                       >
                                         +$
                                         {getFormattedNumber(
-                                          monthlyPrizesGolden[index],
+                                          prizeSkale[index],
                                           0
                                         )}
                                         <img src={premiumIcon} alt="" />
