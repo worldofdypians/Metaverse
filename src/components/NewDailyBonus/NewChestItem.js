@@ -205,7 +205,7 @@ const NewChestItem = ({
             from: address,
           })
           .then((data) => {
-            getUserRewardsByChest(email, data.transactionHash, chestIndex - 1);
+            getUserRewardsByChest(email, data.transactionHash, chestIndex - 1,"opbnb");
           })
           .catch((e) => {
             window.alertify.error(e?.message);
@@ -224,7 +224,7 @@ const NewChestItem = ({
             from: address,
           })
           .then((data) => {
-            getUserRewardsByChest(email, data.transactionHash, chestIndex - 1);
+            getUserRewardsByChest(email, data.transactionHash, chestIndex - 1,"opbnb");
           })
           .catch((e) => {
             console.error(e);
