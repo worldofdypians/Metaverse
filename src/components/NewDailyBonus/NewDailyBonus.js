@@ -556,7 +556,11 @@ const NewDailyBonus = ({
 
   const filterLandNfts = () => {
     const filteredLands = listedNFTS.filter((item) => {
-      return item.type === "land";
+      return (
+        item.type === "land" &&
+        item.seller.toLowerCase() ===
+          window.config.nftSeller_address.toLowerCase()
+      );
     });
     setLandNfts(filteredLands);
   };
@@ -622,7 +626,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
         );
       });
 
@@ -632,7 +636,7 @@ const NewDailyBonus = ({
             obj.rewardType === "Money" &&
             obj.status === "Unclaimable" &&
             obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Land."
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
           );
         }
       );
@@ -652,7 +656,18 @@ const NewDailyBonus = ({
             obj.rewardType === "Money" &&
             obj.status === "Unclaimable" &&
             obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAW NFTs and a Premium Subscription."
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
+          );
+        }
+      );
+
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
           );
         }
       );
@@ -679,6 +694,8 @@ const NewDailyBonus = ({
         setMessage("winDangerNotEnoughLand");
       } else if (resultWonMoneyhasNftsNoPremium) {
         setMessage("winDangerHasNftsNoPremium");
+      } else if(resultWonMoneyhasNftsNoDyp) {
+        setMessage('winDangerHasNftsPremiumNoDyp')
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -724,7 +741,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
         );
       });
 
@@ -734,7 +751,7 @@ const NewDailyBonus = ({
             obj.rewardType === "Money" &&
             obj.status === "Unclaimable" &&
             obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Land."
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
           );
         }
       );
@@ -754,7 +771,18 @@ const NewDailyBonus = ({
             obj.rewardType === "Money" &&
             obj.status === "Unclaimable" &&
             obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAW NFTs and a Premium Subscription."
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
+          );
+        }
+      );
+
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
           );
         }
       );
@@ -779,6 +807,8 @@ const NewDailyBonus = ({
         setMessage("winDangerNotEnoughLand");
       } else if (resultWonMoneyhasNftsNoPremium) {
         setMessage("winDangerHasNftsNoPremium");
+      } else if(resultWonMoneyhasNftsNoDyp) {
+        setMessage('winDangerHasNftsPremiumNoDyp')
       }
 
       setLiveRewardData(filteredResult);
@@ -832,7 +862,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
         );
       });
 
@@ -842,7 +872,7 @@ const NewDailyBonus = ({
             obj.rewardType === "Money" &&
             obj.status === "Unclaimable" &&
             obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Land."
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
           );
         }
       );
@@ -853,7 +883,7 @@ const NewDailyBonus = ({
             obj.rewardType === "Money" &&
             obj.status === "Unclaimable" &&
             obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAW NFTs and a Premium Subscription."
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
           );
         }
       );
@@ -866,6 +896,17 @@ const NewDailyBonus = ({
             "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
         );
       });
+
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+          );
+        }
+      );
 
       if (result) {
         setMessage("caws");
@@ -885,7 +926,10 @@ const NewDailyBonus = ({
         setMessage("winDangerNotEnoughLand");
       } else if (resultWonMoneyhasNftsNoPremium) {
         setMessage("winDangerHasNftsNoPremium");
+      } else if(resultWonMoneyhasNftsNoDyp) {
+        setMessage('winDangerHasNftsPremiumNoDyp')
       }
+
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -931,7 +975,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
         );
       });
 
@@ -941,7 +985,7 @@ const NewDailyBonus = ({
             obj.rewardType === "Money" &&
             obj.status === "Unclaimable" &&
             obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Land."
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
           );
         }
       );
@@ -961,10 +1005,22 @@ const NewDailyBonus = ({
             obj.rewardType === "Money" &&
             obj.status === "Unclaimable" &&
             obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAW NFTs and a Premium Subscription."
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
           );
         }
       );
+
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+          );
+        }
+      );
+
 
       if (result) {
         setMessage("caws");
@@ -984,6 +1040,8 @@ const NewDailyBonus = ({
         setMessage("winDangerNotEnoughLand");
       } else if (resultWonMoneyhasNftsNoPremium) {
         setMessage("winDangerHasNftsNoPremium");
+      } else if(resultWonMoneyhasNftsNoDyp) {
+        setMessage('winDangerHasNftsPremiumNoDyp')
       }
 
       setLiveRewardData(filteredResult);
@@ -1246,7 +1304,7 @@ const NewDailyBonus = ({
                   />
                 </GeneralTooltip>
               </div>
-              <div className="new-total-points-wrapper d-flex align-items-end gap-2">
+              <div className="new-total-points-wrapper d-flex align-items-center gap-2">
                 <h6 className="new-total-points  mb-0">
                   {getFormattedNumber(
                     chain === "bnb" ? totalPoints : totalSkalePoints,
@@ -1257,7 +1315,7 @@ const NewDailyBonus = ({
                   Leaderboard Points
                 </span>
               </div>
-              <div className="new-total-rewards-wrapper d-flex align-items-end gap-2">
+              <div className="new-total-rewards-wrapper d-flex align-items-center gap-2">
                 <h6 className="new-total-points  mb-0">
                   $
                   {getFormattedNumber(
@@ -2508,7 +2566,8 @@ const NewDailyBonus = ({
                             Sign in with Your Game Account
                           </h6>
                           <span className="chain-desc mb-0">
-                          Sign in to access Daily Bonus and earn tailored rewards!
+                            Sign in to access Daily Bonus and earn tailored
+                            rewards!
                           </span>
                         </div>
                         <div className="d-flex align-items-center justify-content-end get-premium-wrapper p-3 p-lg-0">
@@ -2809,18 +2868,19 @@ const NewDailyBonus = ({
                             .range(
                               0,
                               rewardData.rewards
-                                ? (3 -
+                                ? 3 -
                                     rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
-                                    }).requirements.length)
+                                    }).requirements.length
                                 : 0
                             )
                             .map((item, index) => {
-                              return(
-                              <div
-                                className="required-item-placeholder"
-                                key={index}
-                              ></div>);
+                              return (
+                                <div
+                                  className="required-item-placeholder"
+                                  key={index}
+                                ></div>
+                              );
                             })}
                         </div>
                       </div>
@@ -3000,18 +3060,19 @@ const NewDailyBonus = ({
                             .range(
                               0,
                               rewardData.rewards
-                                ? (3 -
+                                ? 3 -
                                     rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
-                                    }).requirements.length)
+                                    }).requirements.length
                                 : 0
                             )
                             .map((item, index) => {
-                              return(
+                              return (
                                 <div
                                   className="required-item-placeholder"
                                   key={index}
-                                ></div>);
+                                ></div>
+                              );
                             })}
                         </div>
                       </div>
@@ -3192,18 +3253,19 @@ const NewDailyBonus = ({
                             .range(
                               0,
                               rewardData.rewards
-                                ? (3 -
+                                ? 3 -
                                     rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
-                                    }).requirements.length)
+                                    }).requirements.length
                                 : 0
                             )
                             .map((item, index) => {
-                              return(
+                              return (
                                 <div
                                   className="required-item-placeholder"
                                   key={index}
-                                ></div>);
+                                ></div>
+                              );
                             })}
                         </div>
                       </div>
@@ -3384,18 +3446,19 @@ const NewDailyBonus = ({
                             .range(
                               0,
                               rewardData.rewards
-                                ? (3 -
+                                ? 3 -
                                     rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
-                                    }).requirements.length)
+                                    }).requirements.length
                                 : 0
                             )
                             .map((item, index) => {
-                              return(
+                              return (
                                 <div
                                   className="required-item-placeholder"
                                   key={index}
-                                ></div>);
+                                ></div>
+                              );
                             })}
                         </div>
                       </div>
@@ -3576,18 +3639,19 @@ const NewDailyBonus = ({
                             .range(
                               0,
                               rewardData.rewards
-                                ? (3 -
+                                ? 3 -
                                     rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
-                                    }).requirements.length)
+                                    }).requirements.length
                                 : 0
                             )
                             .map((item, index) => {
-                              return(
+                              return (
                                 <div
                                   className="required-item-placeholder"
                                   key={index}
-                                ></div>);
+                                ></div>
+                              );
                             })}
                         </div>
                       </div>

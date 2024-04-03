@@ -49,6 +49,7 @@ import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
+import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
 
 function Dashboard({
   account,
@@ -120,7 +121,7 @@ function Dashboard({
     useState(false);
   const firstSlider = useRef();
   const [loading, setLoading] = useState(true);
-
+  const [userRankRewards, setUserRankRewards] = useState(0);
   const [dypBalance, setDypBalance] = useState();
   const [dypBalancebnb, setDypBalanceBnb] = useState();
   const [dypBalanceavax, setDypBalanceAvax] = useState();
@@ -203,6 +204,7 @@ function Dashboard({
   const [standardSkaleChests, setStandardSkaleChests] = useState([]);
   const [premiumSkaleChests, setPremiumSkaleChests] = useState([]);
   const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
+  const [kittyDashRecords, setkittyDashRecords] = useState([]);
 
   const [leaderboard, setLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
@@ -253,13 +255,16 @@ function Dashboard({
   const [skalecount, setskalecount] = useState(0);
 
   const [userRank, setUserRank] = useState("");
+  const [userRankSkale, setUserRankSkale] = useState("")
   const [userRank2, setUserRank2] = useState("");
-
+  const [userRank2Skale, setUserRank2Skale] = useState("");
+  const [userBnbScore, setUserBnbScore] = useState(0)
+  const [userSkaleScore, setUserSkaleScore] = useState(0)
   const [genesisRank, setGenesisRank] = useState("");
   const [genesisRank2, setGenesisRank2] = useState("");
   const [premiumTxHash, setPremiumTxHash] = useState("");
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
-
+  
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
   const leaderboardId = document.querySelector("#leaderboard");
@@ -636,6 +641,50 @@ function Dashboard({
     }
 
     setUserRank(testArray[0].position);
+    setUserBnbScore(testArray[0].statValue)
+
+  };
+  const fetchSkaleRecordsAroundPlayer = async (userId, userName) => {
+    const data = {
+      StatisticName: "LeaderboardSkaleMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    const result = await axios.post(
+      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
+      data
+    );
+
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === userName
+    );
+    const userPosition = testArray[0].position;
+    // console.log(userPosition)
+
+    if (goldenPassRemainingTime) {
+      setUserRank2Skale(
+        testArray[0].statValue !== 0
+          ? userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? monthlyPrizes[9] + monthlyPrizesGolden[9]
+            : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
+          : 0
+      );
+    } else if (!goldenPassRemainingTime) {
+      setUserRank2Skale(
+        testArray[0].statValue !== 0
+          ? userPosition > 10
+            ? 0
+            : userPosition === 10
+            ? monthlyPrizes[9]
+            : monthlyPrizes[userPosition]
+          : 0
+      );
+    }
+
+    setUserRankSkale(testArray[0].position);
+    setUserSkaleScore(testArray[0].statValue)
   };
 
   const fetchGenesisAroundPlayer = async (userId, userName) => {
@@ -655,6 +704,25 @@ function Dashboard({
 
     setGenesisRank(testArray[0].position);
     setGenesisRank2(testArray[0].statValue);
+  };
+
+  const fetchKittyDashAroundPlayer = async (userId, userName) => {
+    const data = {
+      StatisticName: "MobileGameDailyLeaderboard",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    const result = await axios.post(
+      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
+      data
+    );
+
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === userName
+    );
+    setkittyDashRecords(testArray);
+    // setGenesisRank(testArray[0].position);
+    // setGenesisRank2(testArray[0].statValue);
   };
 
   const fetchDailyRecordsAroundPlayer = async (userId, userName) => {
@@ -1016,7 +1084,7 @@ function Dashboard({
       }
     }
   };
-  
+
   const getOpenedChestPerWallet = async () => {
     if (email) {
       if (isPremium) {
@@ -1031,8 +1099,7 @@ function Dashboard({
         ) {
           setCanBuy(false);
         }
-      } 
-      else if (!isPremium) {
+      } else if (!isPremium) {
         if (claimedChests < 10 || claimedSkaleChests < 10) {
           setCanBuy(true);
         } else if (claimedChests === 10 && claimedSkaleChests === 10) {
@@ -1046,10 +1113,10 @@ function Dashboard({
   };
 
   const getAllChests = async (userEmail) => {
-    const emailData = { emailAddress: userEmail };
+    const emailData = { emailAddress: userEmail, chainId: "bnb" };
 
     const result = await axios.post(
-      "https://dyp-chest-test.azurewebsites.net/api/GetRewards?=null",
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
       emailData
     );
     if (result.status === 200 && result.data) {
@@ -1095,7 +1162,7 @@ function Dashboard({
     const emailData = { emailAddress: userEmail, chainId: "skale" };
 
     const result = await axios.post(
-      "https://dyp-chest-test.azurewebsites.net/api/GetRewards?=null",
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
       emailData
     );
     if (result.status === 200 && result.data) {
@@ -1171,15 +1238,15 @@ function Dashboard({
       setMyNFTSCaws(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
-      (NFTS) => setMyNFTSCawsBNB(NFTS)
-    );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
-      (NFTS) => setMyNFTSCawsBase(NFTS)
-    );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
-      (NFTS) => setMyNFTSCawsAvax(NFTS)
-    );
+    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
+    //   (NFTS) => setMyNFTSCawsBNB(NFTS)
+    // );
+    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
+    //   (NFTS) => setMyNFTSCawsBase(NFTS)
+    // );
+    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
+    //   (NFTS) => setMyNFTSCawsAvax(NFTS)
+    // );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "timepiece").then(
       (NFTS) => setMyNFTSTimepiece(NFTS)
@@ -1188,15 +1255,15 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "land").then((NFTS) =>
       setMyNFTSLand(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
-      (NFTS) => setMyNFTSLandBNB(NFTS)
-    );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
-      (NFTS) => setMyNFTSLandBase(NFTS)
-    );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
-      (NFTS) => setMyNFTSLandAvax(NFTS)
-    );
+    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
+    //   (NFTS) => setMyNFTSLandBNB(NFTS)
+    // );
+    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
+    //   (NFTS) => setMyNFTSLandBase(NFTS)
+    // );
+    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
+    //   (NFTS) => setMyNFTSLandAvax(NFTS)
+    // );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "coingecko").then(
       (NFTS) => setMyNFTSCoingecko(NFTS)
     );
@@ -1966,6 +2033,25 @@ function Dashboard({
     }
   };
 
+
+  const handleRankRewards = () => {
+    let totalScore = userBnbScore + userSkaleScore
+    if(totalScore > 6000000){
+      setUserRankRewards(5);
+    }else if(totalScore > 12000000){
+      setUserRankRewards(10)
+    }else if(totalScore > 24000000){
+      setUserRankRewards(25)
+    }else if(totalScore > 40000000){
+      setUserRankRewards(100)
+    }
+  }
+
+  useEffect(() => {
+ handleRankRewards()
+  }, [userBnbScore, userSkaleScore])
+  
+
   useEffect(() => {
     setDummyPremiumChests(shuffle(dummyPremiums));
     fetchReleases();
@@ -2124,6 +2210,10 @@ function Dashboard({
         data.getPlayer.playerId,
         data.getPlayer.displayName
       );
+      fetchSkaleRecordsAroundPlayer(
+        data.getPlayer.playerId,
+        data.getPlayer.displayName
+      );
       fetchGenesisAroundPlayer(
         data.getPlayer.playerId,
         data.getPlayer.displayName
@@ -2133,6 +2223,10 @@ function Dashboard({
         data.getPlayer.displayName
       );
       fetchDailyRecordsAroundPlayer(
+        data.getPlayer.playerId,
+        data.getPlayer.displayName
+      );
+      fetchKittyDashAroundPlayer(
         data.getPlayer.playerId,
         data.getPlayer.displayName
       );
@@ -2184,11 +2278,9 @@ function Dashboard({
       getmyWodStakes();
     }
   }, [
-    email,
     userWallet,
     data?.getPlayer?.wallet?.publicAddress,
     coinbase,
-    chainId,
   ]);
 
   useEffect(() => {
@@ -2219,7 +2311,7 @@ function Dashboard({
   useEffect(() => {
     // if (coinbase) {
     getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
-    getMyOffers();
+    // getMyOffers();
     // }
   }, [coinbase, isConnected]);
 
@@ -2313,6 +2405,9 @@ function Dashboard({
                     >
                       <ProfileCard
                         userRank={userRank}
+                        userRankSkale={userRankSkale}
+                        userBnbScore={userBnbScore}
+                        userSkaleScore={userSkaleScore}
                         genesisRank={genesisRank}
                         email={email}
                         username={data?.getPlayer?.displayName}
@@ -2335,7 +2430,7 @@ function Dashboard({
                           setallChests([]);
                           setallSkaleChests([]);
                           setOpenedChests([]);
-                          setOpenedSkaleChests([])
+                          setOpenedSkaleChests([]);
                           setclaimedSkaleChests(0);
                           setclaimedSkalePremiumChests(0);
                         }}
@@ -2661,7 +2756,7 @@ function Dashboard({
                           className="popup-wrapper popup-active p-4"
                           id="leaderboard"
                           style={{
-                            width: "40%",
+                            width: "fit-content",
                             pointerEvents: "auto",
                             overflowX: "auto",
                           }}
@@ -2679,7 +2774,7 @@ function Dashboard({
                               style={{ cursor: "pointer" }}
                             />
                           </div>
-                          <MyRewardsPopup
+                          <MyRewardsPopupNew
                             username={data?.getPlayer?.displayName}
                             userId={data?.getPlayer?.playerId}
                             address={data?.getPlayer?.wallet?.publicAddress}
@@ -2708,6 +2803,8 @@ function Dashboard({
                             dypiusEarnUsd={dypiusEarnUsd}
                             dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
                             dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
+                            kittyDashRecords={kittyDashRecords}
+                            userRankRewards={userRankRewards}
                           />
                         </div>
                       </OutsideClickHandler>
@@ -3542,7 +3639,10 @@ function Dashboard({
                 }}
                 premiumTxHash={premiumTxHash}
                 selectedChainforPremium={selectedChainforPremium}
-                onPremiumClickOther={()=>{setdailyBonusPopup(false); setgetPremiumPopup(true)}}
+                onPremiumClickOther={() => {
+                  setdailyBonusPopup(false);
+                  setgetPremiumPopup(true);
+                }}
               />
               // </OutsideClickHandler>
             )}

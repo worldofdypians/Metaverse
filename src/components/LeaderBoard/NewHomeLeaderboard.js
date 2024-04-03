@@ -205,28 +205,28 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
 
   const placeholderplayerData = [
     {
-      position: "-1",
+      position: 0,
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: 1,
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: 2,
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: 3,
       displayName: "---",
       reward: "---",
       statValue: "---",
@@ -234,42 +234,42 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     },
 
     {
-      position: "-1",
+      position: 4,
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: 5,
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: 6,
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: 7,
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: 8,
       displayName: "---",
       reward: "---",
       premium: false,
       statValue: "---",
     },
     {
-      position: "-1",
+      position: 9,
       displayName: "---",
       reward: "---",
       premium: false,
@@ -292,6 +292,8 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
   ];
 
   const dailyPrizesGolden = ["10", "8", "5", "5", "5", "5", "5", "5", "5", "5"];
+
+  const prizeSkale = ["25", "15", "10", "8", "5", "5", "5", "5", "5", "5"];
 
   const previous_dailyPrizesGolden = [
     "20",
@@ -417,6 +419,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
   const [optionText2, setOptionText2] = useState("bnb");
 
   const [dailyrecords, setRecords] = useState([]);
+  const [weeklyrecords, setWeeklyRecords] = useState([]);
+  const [monthlyrecords, setMonthlyRecords] = useState([]);
+
   const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
   const [prizes, setPrizes] = useState(dailyPrizes);
   const [activePlayer, setActivePlayer] = useState(false);
@@ -425,11 +430,15 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
   const [dailyplayerData, setdailyplayerData] = useState([]);
   const [weeklyplayerData, setweeklyplayerData] = useState([]);
   const [monthlyplayerData, setmonthlyplayerData] = useState([]);
+  const [skaleRecords, setskaleRecords] = useState([]);
+  const [skalePreviousRecords, setskalePreviousRecords] = useState([]);
 
   const [previousVersion, setpreviousVersion] = useState(0);
   const [previousWeeklyVersion, setpreviousWeeklyVersion] = useState(0);
   const [previousMonthlyVersion, setpreviousMonthlyVersion] = useState(0);
   const [genesisData, setgenesisData] = useState([]);
+  const [previousgenesisData, setpreviousgenesisData] = useState([]);
+
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
   const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
@@ -455,41 +464,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
 
       fillRecordsGenesis(result2.data.data.leaderboard);
     }
-
-    // fetchMonthlyGenesisRecordsAroundPlayer(result2.data.data.leaderboard);
   };
-
-  // const fetchDailyRecordsAroundPlayer = async (itemData) => {
-  //   const data = {
-  //     StatisticName: "DailyLeaderboard",
-  //     MaxResultsCount: 6,
-  //     PlayerId: userId,
-  //   };
-  //   const result = await axios.post(
-  //     `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-  //     data
-  //   );
-  //   setRecordsAroundPlayer(result.data.data.leaderboard);
-  //   var testArray = result.data.data.leaderboard.filter(
-  //     (item) => item.displayName === username
-  //   );
-
-  //   if (itemData.length > 0) {
-  //     var testArray2 = itemData.filter((item) => item.displayName === username);
-
-  //     if (testArray.length > 0 && testArray2.length > 0) {
-  //       setActivePlayer(true);
-  //     }
-  //     if (testArray.length > 0 && testArray2.length === 0) {
-  //       setActivePlayer(false);
-  //       setUserData(...testArray);
-  //     }
-  //   }
-  //   if (testArray.length > 0) {
-  //     setActivePlayer(false);
-  //     setUserData(...testArray);
-  //   }
-  // };
 
   const nextSlide = () => {
     sliderRef.current.slickNext();
@@ -508,50 +483,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     setpreviousVersion(parseInt(result.data.data.version));
     setRecords(result.data.data.leaderboard);
     fillRecords(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayer(true);
-    }
-
-    if (testArray.length === 0) {
-      setActivePlayer(false);
-      // fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
-    }
   };
-
-  // const fetchWeeklyRecordsAroundPlayer = async (itemData) => {
-  //   const data = {
-  //     StatisticName: "WeeklyLeaderboard",
-  //     MaxResultsCount: 6,
-  //     PlayerId: userId,
-  //   };
-  //   const result = await axios.post(
-  //     `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-  //     data
-  //   );
-  //   setRecordsAroundPlayer(result.data.data.leaderboard);
-  //   var testArray = result.data.data.leaderboard.filter(
-  //     (item) => item.displayName === username
-  //   );
-
-  //   if (itemData.length > 0) {
-  //     var testArray2 = itemData.filter((item) => item.displayName === username);
-
-  //     if (testArray.length > 0 && testArray2.length > 0) {
-  //       setActivePlayer(true);
-  //     }
-  //     if (testArray.length > 0 && testArray2.length === 0) {
-  //       setActivePlayer(false);
-  //       setUserData(...testArray);
-  //     }
-  //   }
-  //   if (testArray.length > 0) {
-  //     setActivePlayer(false);
-  //     setUserData(...testArray);
-  //   }
-  // };
 
   const fetchWeeklyRecords = async () => {
     const data = {
@@ -560,84 +492,12 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       MaxResultsCount: 10,
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-    setRecords(result.data.data.leaderboard);
+    setWeeklyRecords(result.data.data.leaderboard);
     setpreviousWeeklyVersion(result.data.data.version);
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
     fillRecords(result.data.data.leaderboard);
-
-    if (testArray.length > 0) {
-      setActivePlayer(true);
-    }
-    if (testArray.length === 0) {
-      setActivePlayer(false);
-      // fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
-    }
-  };
-
-  // const fetchMonthlyRecordsAroundPlayer = async (itemData) => {
-  //   const data = {
-  //     StatisticName: "MonthlyLeaderboard",
-  //     MaxResultsCount: 6,
-  //     PlayerId: userId,
-  //   };
-  //   const result = await axios.post(
-  //     `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-  //     data
-  //   );
-  //   setRecordsAroundPlayer(result.data.data.leaderboard);
-
-  //   var testArray = result.data.data.leaderboard.filter(
-  //     (item) => item.displayName === username
-  //   );
-
-  //   if (itemData.length > 0) {
-  //     var testArray2 = itemData.filter((item) => item.displayName === username);
-
-  //     if (testArray.length > 0 && testArray2.length > 0) {
-  //       setActivePlayer(true);
-  //     }
-
-  //     if (testArray.length > 0 && testArray2.length === 0) {
-  //       setActivePlayer(false);
-  //       setUserData(...testArray);
-  //     }
-  //   }
-  //   if (testArray.length > 0) {
-  //     setActivePlayer(false);
-  //     setUserData(...testArray);
-  //   }
-  // };
-
-  const fetchMonthlyGenesisRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "GenesisLandRewards",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter((item) => item.displayName === username);
-
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayer(true);
-      } else if (testArray.length > 0 && testArray2.length === 0) {
-        setActivePlayer(false);
-        setUserData(...testArray);
-      }
-    } else if (testArray.length > 0) {
-      setActivePlayer(false);
-      setUserData(...testArray);
-    }
   };
 
   const fetchMonthlyRecords = async () => {
@@ -647,7 +507,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       MaxResultsCount: 10,
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-    setRecords(result.data.data.leaderboard);
+    setMonthlyRecords(result.data.data.leaderboard);
     setpreviousMonthlyVersion(result.data.data.version);
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
@@ -656,11 +516,6 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       setActivePlayer(true);
     }
     fillRecords(result.data.data.leaderboard);
-
-    if (testArray.length === 0) {
-      setActivePlayer(false);
-      // fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
-    }
   };
   const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -702,98 +557,145 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     }
   };
 
-  const fetchPreviousWinners = async () => {
+  const fillRecordsSkale = (itemData) => {
+    if (itemData.length === 0) {
+      setskaleRecords(placeholderplayerData);
+    } else if (itemData.length < 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setskaleRecords(finalData);
+    }
+  };
+
+  const fillPreviousRecordsSkale = (itemData) => {
+    if (itemData.length === 0) {
+      setskalePreviousRecords(placeholderplayerData);
+    } else if (itemData.length < 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setskalePreviousRecords(finalData);
+    }
+  };
+
+  const fetchSkaleRecords = async () => {
     const data = {
-      StatisticName: "DailyLeaderboard",
+      StatisticName: "LeaderboardSkaleWeekly",
       StartPosition: 0,
       MaxResultsCount: 10,
-      Version: previousVersion - 1,
     };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data
-    );
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    // setpreviousVersion(parseInt(result.data.data.version));
+    setskaleRecords(result.data.data.leaderboard);
+    fillRecordsSkale(result.data.data.leaderboard);
+  };
 
-    setdailyplayerData(result.data.data.leaderboard);
+  const fetchPreviousSkaleRecords = async () => {
+    const data = {
+      StatisticName: "LeaderboardSkaleMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    // setpreviousVersion(parseInt(result.data.data.version));
+    setskalePreviousRecords(result.data.data.leaderboard);
+    fillPreviousRecordsSkale(result.data.data.leaderboard);
+  };
+
+  const fetchPreviousWinners = async () => {
+    if (previousVersion != 0) {
+      const data = {
+        StatisticName: "DailyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: previousVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setdailyplayerData(result.data.data.leaderboard);
+    }
   };
 
   const fetchGenesisPreviousWinners = async () => {
-    const data = {
-      StatisticName: "GenesisLandRewards",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-      Version: previousGenesisVersion - 1,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data
-    );
-    fillRecordsGenesis(result.data.data.leaderboard);
+    if (previousGenesisVersion != 0) {
+      const data = {
+        StatisticName: "GenesisLandRewards",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: previousGenesisVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      fillRecordsGenesis(result.data.data.leaderboard);
 
-    setgenesisData(result.data.data.leaderboard);
+      setpreviousgenesisData(result.data.data.leaderboard);
+    }
   };
 
   const fetchPreviousWeeklyWinners = async () => {
-    const data = {
-      StatisticName: "WeeklyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-      Version: previousWeeklyVersion - 1,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data
-    );
+    if (previousWeeklyVersion != 0) {
+      const data = {
+        StatisticName: "WeeklyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: previousWeeklyVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-    setweeklyplayerData(result.data.data.leaderboard);
+      setweeklyplayerData(result.data.data.leaderboard);
+    }
   };
 
   const fetchPreviousMonthlyWinners = async () => {
-    const data = {
-      StatisticName: "MonthlyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-      Version: previousMonthlyVersion - 1,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data
-    );
+    if (previousMonthlyVersion != 0) {
+      const data = {
+        StatisticName: "MonthlyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: previousMonthlyVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-    setmonthlyplayerData(result.data.data.leaderboard);
+      setmonthlyplayerData(result.data.data.leaderboard);
+    }
   };
 
   useEffect(() => {
     fetchDailyRecords();
+    fetchWeeklyRecords();
+    fetchMonthlyRecords();
+    fetchGenesisRecords();
+    fetchSkaleRecords();
   }, []);
 
   useEffect(() => {
-    if (inactiveBoard === true && optionText === "daily") {
-      fetchPreviousWinners();
-    }
-    if (inactiveBoard === true && optionText === "weekly") {
-      fetchPreviousWeeklyWinners();
-    }
-    if (inactiveBoard === true && optionText === "genesis") {
-      fetchGenesisPreviousWinners();
-    }
-    if (inactiveBoard === false && optionText === "genesis") {
-      fetchGenesisRecords();
-    }
-    if (inactiveBoard === true && optionText === "monthly") {
-      fetchPreviousMonthlyWinners();
-    }
+    fetchGenesisPreviousWinners();
+    fetchPreviousWinners();
+    fetchPreviousWeeklyWinners();
+    fetchPreviousMonthlyWinners();
+    fetchPreviousSkaleRecords();
   }, [
-    optionText,
-    inactiveBoard,
+    previousGenesisVersion,
+    previousMonthlyVersion,
     previousVersion,
     previousWeeklyVersion,
-    previousMonthlyVersion,
   ]);
 
-  useEffect(() => {
-    handleOption(optionText);
-  }, [inactiveBoard]);
+  // useEffect(() => {
+  //   handleOption(optionText);
+  // }, [inactiveBoard]);
 
   useEffect(() => {
     if (countdown === null || countdown === undefined || countdown === "0") {
@@ -1329,48 +1231,50 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
           />
         )}
       </div> */}
-      <Slider {...settings} ref={sliderRef}>
-        {optionText2 !== "skale" &&
-          (optionText2 !== "wod" && (
-            <div className="leaderboard-item d-flex flex-column gap-2 p-0">
-              <div className="d-flex w-100 justify-content-between leaderboard-title-wrapper px-3 py-2">
-                <img
-                  src={leftArrow}
-                  alt=""
-                  style={{ cursor: "pointer" }}
-                  onClick={prevSlide}
-                />
-                <h6 className="leaderboard-title  text-white font-oxanium mb-0">
-                  DAILY
-                </h6>
-                <img
-                  src={rightArrow}
-                  alt=""
-                  style={{ cursor: "pointer" }}
-                  onClick={nextSlide}
-                />
-              </div>
-              <div className="p-2">
-                <table className="playerTable w-100">
-                  <tbody>
-                    <tr className="playerRow">
-                      <th className="playerHeader font-montserrat">Rank</th>
-                      <th className="playerHeader font-montserrat">Player</th>
-                      {optionText !== "genesis" && (
-                        <th className="playerHeader text-center font-montserrat">
-                          Score
-                        </th>
-                      )}
-                      {optionText !== "genesis" && (
-                        <th className="playerHeader text-center font-montserrat">
-                          Reward
-                        </th>
-                      )}
+      {optionText2 === "bnb" && (
+        <Slider {...settings} ref={sliderRef}>
+          <div className="leaderboard-item d-flex flex-column gap-2 p-0">
+            <div className="d-flex w-100 justify-content-between leaderboard-title-wrapper px-3 py-2">
+              <img
+                src={leftArrow}
+                alt=""
+                style={{ cursor: "pointer" }}
+                onClick={prevSlide}
+              />
+              <h6 className="leaderboard-title  text-white font-oxanium mb-0">
+                DAILY
+              </h6>
+              <img
+                src={rightArrow}
+                alt=""
+                style={{ cursor: "pointer" }}
+                onClick={nextSlide}
+              />
+            </div>
+            <div className="p-2">
+              <table className="playerTable w-100">
+                <tbody>
+                  <tr className="playerRow">
+                    <th className="playerHeader font-montserrat">Rank</th>
+                    <th className="playerHeader font-montserrat">Player</th>
+                    {optionText !== "genesis" && (
                       <th className="playerHeader text-center font-montserrat">
-                        Golden Pass
+                        Score
                       </th>
-                    </tr>
-                    {playerData.map((item, index) => {
+                    )}
+                    {optionText !== "genesis" && (
+                      <th className="playerHeader text-center font-montserrat">
+                        Reward
+                      </th>
+                    )}
+                    <th className="playerHeader text-center font-montserrat">
+                      Golden Pass
+                    </th>
+                  </tr>
+                  {dailyrecords &&
+                    inactiveBoard === false &&
+                    dailyrecords.length > 0 &&
+                    dailyrecords.map((item, index) => {
                       return (
                         <tr
                           key={index}
@@ -1381,7 +1285,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           }`}
                         >
                           <td className="playerData col-1 font-montserrat">
-                            {item.position}
+                            {playerData[index].position}
                           </td>
                           <td className="playerName col-5 font-montserrat">
                             {item.displayName === username ? (
@@ -1419,7 +1323,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                                 : "playerReward"
                             }`}
                           >
-                            ${prizes[index]}
+                            ${getFormattedNumber(dailyPrizes[index], 0)}
                           </td>
                           <td
                             className={`playerReward col-2 font-montserrat ${
@@ -1434,25 +1338,86 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                         </tr>
                       );
                     })}
-                    {inactiveBoard === true &&
-                      ((dailyplayerData.length === 0 &&
-                        optionText === "daily") ||
-                        (weeklyplayerData.length === 0 &&
-                          optionText === "weekly") ||
-                        (monthlyplayerData.length === 0 &&
-                          optionText === "monthly")) &&
-                      optionText !== "genesis" && (
-                        <CircularProgress
-                          size={20}
-                          style={{ alignSelf: "center", margin: "auto" }}
-                        />
-                      )}
-                  </tbody>
-                </table>
-              </div>
+
+                  {dailyplayerData &&
+                    inactiveBoard === true &&
+                    dailyplayerData.length > 0 &&
+                    dailyplayerData.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1 font-montserrat">
+                            {playerData[index].position}
+                          </td>
+                          <td className="playerName col-5 font-montserrat">
+                            {item.displayName === username ? (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span>
+                                  {" "}
+                                  {item.displayName?.slice(0, 13)}
+                                  {item.displayName?.length > 13 && "..."}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName?.slice(0, 13)}
+                                {item.displayName?.length > 13 && "..."}
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center font-montserrat">
+                            {getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          <td
+                            className={`playerReward text-center col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${getFormattedNumber(dailyPrizes[index], 0)}
+                          </td>
+                          <td
+                            className={`playerReward col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive2"
+                            }`}
+                          >
+                            +$
+                            {getFormattedNumber(dailyPrizesGolden[index], 0)}
+                          </td>
+                        </tr>
+                      );
+                    })}
+
+                  {inactiveBoard === true && dailyplayerData.length === 0 && (
+                    <CircularProgress
+                      size={20}
+                      style={{ alignSelf: "center", margin: "auto" }}
+                    />
+                  )}
+                </tbody>
+              </table>
             </div>
-          ))}
-        {optionText2 !== "wod" && (
+          </div>
+
           <div className="leaderboard-item d-flex flex-column gap-2 p-0">
             <div
               className={`d-flex w-100 ${
@@ -1504,76 +1469,152 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                       {optionText2 === "skale" ? "Premium" : "Golden Pass"}
                     </th>
                   </tr>
-                  {playerData.map((item, index) => {
-                    return (
-                      <tr
-                        key={index}
-                        className={`playerInnerRow ${
-                          inactiveBoard || item.displayName === username
-                            ? "playerInnerRow-inactive"
-                            : null
-                        }`}
-                      >
-                        <td className="playerData col-1 font-montserrat">
-                          {item.position}
-                        </td>
-                        <td className="playerName col-5 font-montserrat">
-                          {item.displayName === username ? (
-                            <div className="position-relative d-flex align-items-center">
-                              <img
-                                src={premiumAvatar}
-                                alt=""
-                                className="playerAvatar"
-                              />
-                              <span>
-                                {" "}
+                  {weeklyrecords &&
+                    inactiveBoard === false &&
+                    weeklyrecords.length > 0 &&
+                    weeklyrecords.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1 font-montserrat">
+                            {item.position + 1}
+                          </td>
+                          <td className="playerName col-5 font-montserrat">
+                            {item.displayName === username ? (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span>
+                                  {" "}
+                                  {item.displayName?.slice(0, 13)}
+                                  {item.displayName?.length > 13 && "..."}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
                                 {item.displayName?.slice(0, 13)}
                                 {item.displayName?.length > 13 && "..."}
-                              </span>
-                            </div>
-                          ) : (
-                            <div className="position-relative d-flex align-items-center">
-                              <img
-                                src={playerAvatar}
-                                alt=""
-                                className="playerAvatar"
-                              />{" "}
-                              {item.displayName?.slice(0, 13)}
-                              {item.displayName?.length > 13 && "..."}
-                            </div>
-                          )}
-                        </td>
-                        <td className="playerScore col-2 text-center font-montserrat">
-                          {getFormattedNumber(item.statValue, 0)}
-                        </td>
-                        <td
-                          className={`playerReward text-center col-2 font-montserrat ${
-                            username === item.displayName
-                              ? "goldenscore"
-                              : "playerReward"
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center font-montserrat">
+                            {getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          <td
+                            className={`playerReward text-center col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${getFormattedNumber(weeklyPrizes[index], 0)}
+                          </td>
+                          <td
+                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
+                              optionText2 === "skale" && "premium-goldenscore"
+                            } col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive2"
+                            }`}
+                            style={{ width: "100%" }}
+                          >
+                            +$
+                            {getFormattedNumber(weeklyPrizesGolden[index], 0)}
+                            {optionText2 === "skale" && (
+                              <img src={premiumIcon} alt="" />
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  {weeklyplayerData &&
+                    inactiveBoard === true &&
+                    weeklyplayerData.length > 0 &&
+                    weeklyplayerData.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
                           }`}
                         >
-                          ${prizes[index]}
-                        </td>
-                        <td
-                          className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
-                            optionText2 === "skale" && "premium-goldenscore"
-                          } col-2 font-montserrat ${
-                            username === item.displayName
-                              ? "goldenscore"
-                              : "goldenscore-inactive2"
-                          }`}
-                          style={{width: "100%"}}
-                        >
-                          +$
-                          {getFormattedNumber(dailyPrizesGolden[index], 0)}
-                          {optionText2 === "skale" && 
-                          <img src={premiumIcon} alt="" />
-                          }
-                        </td>
-                      </tr>
-                    );
-                  })}
+                          <td className="playerData col-1 font-montserrat">
+                            {item.position + 1}
+                          </td>
+                          <td className="playerName col-5 font-montserrat">
+                            {item.displayName === username ? (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span>
+                                  {" "}
+                                  {item.displayName?.slice(0, 13)}
+                                  {item.displayName?.length > 13 && "..."}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName?.slice(0, 13)}
+                                {item.displayName?.length > 13 && "..."}
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center font-montserrat">
+                            {getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          <td
+                            className={`playerReward text-center col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${getFormattedNumber(weeklyPrizes[index], 0)}
+                          </td>
+                          <td
+                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
+                              optionText2 === "skale" && "premium-goldenscore"
+                            } col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive2"
+                            }`}
+                            style={{ width: "100%" }}
+                          >
+                            +$
+                            {getFormattedNumber(weeklyPrizesGolden[index], 0)}
+                            {optionText2 === "skale" && (
+                              <img src={premiumIcon} alt="" />
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
                   {inactiveBoard === true &&
                     ((dailyplayerData.length === 0 && optionText === "daily") ||
                       (weeklyplayerData.length === 0 &&
@@ -1590,8 +1631,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
               </table>
             </div>
           </div>
-        )}
-        {optionText2 !== "skale" && (
+
           <div className="leaderboard-item d-flex flex-column gap-2 p-0">
             <div
               className={`d-flex w-100 ${
@@ -1640,70 +1680,148 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                       Golden Pass
                     </th>
                   </tr>
-                  {playerData.map((item, index) => {
-                    return (
-                      <tr
-                        key={index}
-                        className={`playerInnerRow ${
-                          inactiveBoard || item.displayName === username
-                            ? "playerInnerRow-inactive"
-                            : null
-                        }`}
-                      >
-                        <td className="playerData col-1 font-montserrat">
-                          {item.position}
-                        </td>
-                        <td className="playerName col-5 font-montserrat">
-                          {item.displayName === username ? (
-                            <div className="position-relative d-flex align-items-center">
-                              <img
-                                src={premiumAvatar}
-                                alt=""
-                                className="playerAvatar"
-                              />
-                              <span>
-                                {" "}
+                  {monthlyrecords &&
+                    monthlyrecords.length > 0 &&
+                    inactiveBoard === false &&
+                    monthlyrecords.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1 font-montserrat">
+                            {item.position + 1}
+                          </td>
+                          <td className="playerName col-5 font-montserrat">
+                            {item.displayName === username ? (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span>
+                                  {" "}
+                                  {item.displayName?.slice(0, 13)}
+                                  {item.displayName?.length > 13 && "..."}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
                                 {item.displayName?.slice(0, 13)}
                                 {item.displayName?.length > 13 && "..."}
-                              </span>
-                            </div>
-                          ) : (
-                            <div className="position-relative d-flex align-items-center">
-                              <img
-                                src={playerAvatar}
-                                alt=""
-                                className="playerAvatar"
-                              />{" "}
-                              {item.displayName?.slice(0, 13)}
-                              {item.displayName?.length > 13 && "..."}
-                            </div>
-                          )}
-                        </td>
-                        <td className="playerScore col-2 text-center font-montserrat">
-                          {getFormattedNumber(item.statValue, 0)}
-                        </td>
-                        <td
-                          className={`playerReward text-center col-2 font-montserrat ${
-                            username === item.displayName
-                              ? "goldenscore"
-                              : "playerReward"
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center font-montserrat">
+                            {getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          <td
+                            className={`playerReward text-center col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${getFormattedNumber(monthlyPrizes[index], 0)}
+                          </td>
+                          <td
+                            className={`playerReward col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive2"
+                            }`}
+                          >
+                            +$
+                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
+                          </td>
+                        </tr>
+                      );
+                    })}
+
+                  {monthlyplayerData &&
+                    inactiveBoard === true &&
+                    monthlyplayerData.length > 0 &&
+                    monthlyplayerData.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
                           }`}
                         >
-                          ${prizes[index]}
-                        </td>
-                        <td
-                          className={`playerReward col-2 font-montserrat ${
-                            username === item.displayName
-                              ? "goldenscore"
-                              : "goldenscore-inactive2"
-                          }`}
-                        >
-                          +$
-                          {getFormattedNumber(dailyPrizesGolden[index], 0)}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                          <td className="playerData col-1 font-montserrat">
+                            {item.position + 1}
+                          </td>
+                          <td className="playerName col-5 font-montserrat">
+                            {item.displayName === username ? (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span>
+                                  {" "}
+                                  {item.displayName?.slice(0, 13)}
+                                  {item.displayName?.length > 13 && "..."}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName?.slice(0, 13)}
+                                {item.displayName?.length > 13 && "..."}
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center font-montserrat">
+                            {getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          <td
+                            className={`playerReward text-center col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${getFormattedNumber(monthlyPrizes[index], 0)}
+                          </td>
+                          <td
+                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
+                              optionText2 === "skale" && "premium-goldenscore"
+                            } col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive2"
+                            }`}
+                            style={{ width: "100%" }}
+                          >
+                            +$
+                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
+                            {optionText2 === "skale" && (
+                              <img src={premiumIcon} alt="" />
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+
                   {inactiveBoard === true &&
                     ((dailyplayerData.length === 0 && optionText === "daily") ||
                       (weeklyplayerData.length === 0 &&
@@ -1720,8 +1838,362 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
               </table>
             </div>
           </div>
-        )}
-      </Slider>
+        </Slider>
+      )}
+      {optionText2 === "wod" && (
+        <Slider {...settings} ref={sliderRef}>
+          <div className="leaderboard-item d-flex flex-column gap-2 p-0">
+            <div
+              className={`d-flex w-100  
+                   justify-content-center p-2
+               leaderboard-title-wrapper px-3 py-2`}
+            >
+              <h6 className="leaderboard-title  text-white font-oxanium mb-0">
+                MONTHLY
+              </h6>
+            </div>
+            <div className="p-2">
+              <table className="playerTable w-100">
+                <tbody>
+                  <tr className="playerRow">
+                    <th className="playerHeader font-montserrat">Rank</th>
+                    <th className="playerHeader font-montserrat">Player</th>
+
+                    <th className="playerHeader text-center font-montserrat">
+                      Reward
+                    </th>
+                  </tr>
+                  {genesisData &&
+                    genesisData.length > 0 &&
+                    inactiveBoard === false &&
+                    genesisData.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1 font-montserrat">
+                            {item.position + 1}
+                          </td>
+                          <td className="playerName col-5 font-montserrat">
+                            {item.displayName === username ? (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span>
+                                  {" "}
+                                  {item.displayName?.slice(0, 13)}
+                                  {item.displayName?.length > 13 && "..."}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName?.slice(0, 13)}
+                                {item.displayName?.length > 13 && "..."}
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center font-montserrat">
+                            {getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          {/* <td
+                            className={`playerReward text-center col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${getFormattedNumber(monthlyPrizes[index], 0)}
+                          </td>
+                          <td
+                            className={`playerReward col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive2"
+                            }`}
+                          >
+                            +$
+                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
+                          </td> */}
+                        </tr>
+                      );
+                    })}
+
+                  {previousgenesisData &&
+                    inactiveBoard === true &&
+                    previousgenesisData.length > 0 &&
+                    previousgenesisData.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1 font-montserrat">
+                            {item.position + 1}
+                          </td>
+                          <td className="playerName col-5 font-montserrat">
+                            {item.displayName === username ? (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span>
+                                  {" "}
+                                  {item.displayName?.slice(0, 13)}
+                                  {item.displayName?.length > 13 && "..."}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName?.slice(0, 13)}
+                                {item.displayName?.length > 13 && "..."}
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center font-montserrat">
+                            {getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          {/* <td
+                            className={`playerReward text-center col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${getFormattedNumber(monthlyPrizes[index], 0)}
+                          </td>
+                          <td
+                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
+                              optionText2 === "skale" && "premium-goldenscore"
+                            } col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive2"
+                            }`}
+                            style={{ width: "100%" }}
+                          >
+                            +$
+                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
+                            {optionText2 === "skale" && (
+                              <img src={premiumIcon} alt="" />
+                            )}
+                          </td> */}
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </Slider>
+      )}
+
+      {optionText2 === "skale" && (
+        <Slider {...settings} ref={sliderRef}>
+          <div className="leaderboard-item d-flex flex-column gap-2 p-0">
+            <div
+              className={`d-flex w-100  
+                   justify-content-center p-2
+               leaderboard-title-wrapper px-3 py-2`}
+            >
+              <h6 className="leaderboard-title  text-white font-oxanium mb-0">
+                Weekly
+              </h6>
+            </div>
+            <div className="p-2">
+              <table className="playerTable w-100">
+                <tbody>
+                  <tr className="playerRow">
+                    <th className="playerHeader font-montserrat">Rank</th>
+                    <th className="playerHeader font-montserrat">Player</th>
+
+                    <th className="playerHeader text-center font-montserrat">
+                      Score
+                    </th>
+                    <th className="playerHeader text-center font-montserrat">
+                      Reward
+                    </th>
+                    <th className="playerHeader text-center font-montserrat">
+                      Premium
+                    </th>
+                  </tr>
+                  {skaleRecords &&
+                    skaleRecords.length > 0 &&
+                    inactiveBoard === false &&
+                    skaleRecords.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1 font-montserrat">
+                            {item.position + 1}
+                          </td>
+                          <td className="playerName col-5 font-montserrat">
+                            {item.displayName === username ? (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span>
+                                  {" "}
+                                  {item.displayName?.slice(0, 13)}
+                                  {item.displayName?.length > 13 && "..."}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName?.slice(0, 13)}
+                                {item.displayName?.length > 13 && "..."}
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center font-montserrat">
+                            {getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          <td
+                            className={`playerReward text-center col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${getFormattedNumber(prizeSkale[index], 0)}
+                          </td>
+                          <td
+                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
+                              optionText2 === "skale" && "premium-goldenscore"
+                            } col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive2"
+                            }`}
+                            style={{ width: "100%" }}
+                          >
+                            +$
+                            {getFormattedNumber(prizeSkale[index], 0)}
+                           
+                              <img src={premiumIcon} alt="" />
+                          
+                          </td>
+                        </tr>
+                      );
+                    })}
+
+                  {skalePreviousRecords &&
+                    inactiveBoard === true &&
+                    skalePreviousRecords.length > 0 &&
+                    skalePreviousRecords.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1 font-montserrat">
+                            {item.position + 1}
+                          </td>
+                          <td className="playerName col-5 font-montserrat">
+                            {item.displayName === username ? (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span>
+                                  {" "}
+                                  {item.displayName?.slice(0, 13)}
+                                  {item.displayName?.length > 13 && "..."}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName?.slice(0, 13)}
+                                {item.displayName?.length > 13 && "..."}
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center font-montserrat">
+                            {getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          <td
+                            className={`playerReward text-center col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${getFormattedNumber(prizeSkale[index], 0)}
+                          </td>
+                          <td
+                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
+                              optionText2 === "skale" && "premium-goldenscore"
+                            } col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive2"
+                            }`}
+                            style={{ width: "100%" }}
+                          >
+                            +$
+                            {getFormattedNumber(prizeSkale[index], 0)}
+                           
+                              <img src={premiumIcon} alt="" />
+                          
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </Slider>
+      )}
+
       {/* {activePlayer === false && inactiveBoard === false && (
         <table className="playerTable" style={{ marginTop: "-33px" }}>
           <tbody>
