@@ -145,7 +145,7 @@ const NewLeaderBoard = ({
       displayName: "...",
       reward: "---",
       premium: false,
-      statValue: "50",
+      statValue: "---",
     },
     {
       position: "1",
@@ -643,6 +643,7 @@ const NewLeaderBoard = ({
         (item) => item.displayName === username
       );
 
+
       if (itemData.length > 0) {
         var testArray2 = itemData.filter(
           (item) => item.displayName === username
@@ -655,10 +656,11 @@ const NewLeaderBoard = ({
           setUserDataSkale(...testArray);
         }
       }
-      //  else if (testArray.length > 0) {
-      //     setActiveSkalePlayer(false);
-      //     setUserDataSkale(...testArray);
-      //   }
+       else if (testArray.length > 0) {
+          setActiveSkalePlayer(false);
+          setUserDataSkale(...testArray);
+        }
+      
     }
   };
   const fetchMonthlyGenesisRecordsAroundPlayer = async (itemData) => {
