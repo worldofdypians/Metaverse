@@ -259,7 +259,7 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "doge",
     rewards: "DOGE",
-    status: "Live",
+    status: "Expired",
     id: "event7",
     eventType: "Explore & Mine",
     eventDate: "Dec 22, 2023",
@@ -351,45 +351,7 @@ const NewWalletBalance = ({
         activeTab: "dypiusv2",
       },
     },
-    {
-      title: "Dogecoin",
-      chain: "BNB Chain",
-      linkState: "doge",
-      rewards: "DOGE",
-      status: "Live",
-      eventStatus: "Live",
-      id: "event7",
-      eventType: "Explore & Mine",
-      date: "Dec 22, 2023",
-      eventDate: "Dec 22, 2023",
-      logo: doge,
-      totalRewards: "$10,000 in DOGE Rewards",
-      eventDuration: dogeLastDay,
-      minRewards: "1",
-      maxRewards: "100",
-      minPoints: "5,000",
-      maxPoints: "50,000",
-      learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
-      popupInfo: {
-        title: "Dogecoin",
-        chain: "BNB Chain",
-        linkState: "doge",
-        rewards: "DOGE",
-        status: "Live",
-        id: "event7",
-        eventStatus: "Live",
-        eventType: "Explore & Mine",
-        totalRewards: "$10,000 in DOGE Rewards",
-        eventDuration: dogeLastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
-        eventDate: "Dec 22, 2023",
-      },
-    },
+    
     {
       title: "CMC",
       logo: cmc,
@@ -418,7 +380,46 @@ const NewWalletBalance = ({
           "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
     },
-
+   
+    {
+      title: "Dogecoin",
+      chain: "BNB Chain",
+      linkState: "doge",
+      rewards: "DOGE",
+      status: "Expired",
+      eventStatus: "Expired",
+      id: "event7",
+      eventType: "Explore & Mine",
+      date: "Dec 22, 2023",
+      eventDate: "Dec 22, 2023",
+      logo: doge,
+      totalRewards: "$10,000 in DOGE Rewards",
+      eventDuration: dogeLastDay,
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+      popupInfo: {
+        title: "Dogecoin",
+        chain: "BNB Chain",
+        linkState: "doge",
+        rewards: "DOGE",
+        status: "Expired",
+        id: "event7",
+        eventStatus: "Expired",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in DOGE Rewards",
+        eventDuration: dogeLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "Dec 22, 2023",
+      },
+    },
     {
       title: "Base",
       logo: base,
@@ -1108,15 +1109,8 @@ const NewWalletBalance = ({
                 event={dypv2}
                 userEarnedUsd={dypiusPremiumEarnUsd}
               />
-              <ActiveProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyDoge);
-                  setEventPopup(true);
-                }}
-                data={dummyDoge}
-                event={dummyDoge}
-                userEarnedUsd={dogeEarnUSD}
-              />
+
+              
               <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyCmc);
@@ -1126,6 +1120,16 @@ const NewWalletBalance = ({
                 event={dummyCmc}
                 userEarnedUsd={cmcuserEarnUsd}
               />
+              <ExpiredProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyDoge);
+                  setEventPopup(true);
+                }}
+                data={dummyDoge}
+                event={dummyDoge}
+                userEarnedUsd={dogeEarnUSD}
+              />
+             
               {/* <ExpiredProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
@@ -1436,11 +1440,11 @@ const NewWalletBalance = ({
           </div> */}
           <div className="col-12 col-lg-8 d-flex flex-column justify-content-between gap-3 px-0 gap-lg-0 mt-lg-0 mt-5">
             <div className="row gap-3 gap-lg-0">
-              <div className="col-12 col-lg-4">
+              <div className="col-12 col-lg-4"  onClick={onDailyRewardsPopupOpen}>
                 <div className="daily-bonus-wrapper">
                   <div className="red-div"></div>
                   <img
-                    onClick={onDailyRewardsPopupOpen}
+                  
                     // src={finished ? mageFinish : mageGoing}
                     src={
                       chestPercentage >= 50 && chestPercentage < 100
@@ -1454,7 +1458,7 @@ const NewWalletBalance = ({
                   />
                   <div
                     className="progress-bar-group d-flex flex-column align-items-start"
-                    onClick={onDailyRewardsPopupOpen}
+                    
                   >
                     {!finished && (
                       <span className="progress-bar-title">Progress</span>
@@ -1483,7 +1487,7 @@ const NewWalletBalance = ({
                     <div
                       className="d-flex flex-column align-items-center"
                       style={{ width: "fit-content" }}
-                      onClick={onDailyRewardsPopupOpen}
+                      // onClick={onDailyRewardsPopupOpen}
                     >
                       <div
                         className="position-relative"

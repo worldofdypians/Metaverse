@@ -226,14 +226,6 @@ const NewChestItem = ({
           .send({
             from: address,
           })
-          // .then(() => {
-          //   setTimeout(() => {
-          //     // onOpenChest();
-          // onChestStatus("success");
-          //     // setIsChestOpen(true);
-          //     onLoadingChest(false);
-          //   }, 3000);
-          // })
           .then((data) => {
             getUserRewardsByChest(email, data.transactionHash, chestIndex - 1);
           })

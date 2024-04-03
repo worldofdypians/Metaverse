@@ -1,19 +1,35 @@
 import React, { useEffect, useState } from "react";
-import criticalHit from "./myrewardsAssets/criticalHit.png";
-import dailyBonus from "./myrewardsAssets/dailyBonus.png";
-import leaderboard from "./myrewardsAssets/leaderboard.png";
-import nftStake from "./myrewardsAssets/nftStake.png";
-import treasureHunt from "./myrewardsAssets/treasureHunt.png";
-import specialRewards from "./myrewardsAssets/specialRewards.png";
-
-import Switch from "@mui/material/Switch";
 import axios from "axios";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
-import greenInfo from "./assets/greenInfo.svg";
-import OutsideClickHandler from "react-outside-click-handler";
-import { async } from "q";
 
-const MyRewardsPopup = ({
+import allImg from "./myrewardsAssets/newAssets/allImg.svg";
+import allActive from "./myrewardsAssets/newAssets/allActive.svg";
+import nftStaking from "./myrewardsAssets/newAssets/nftStaking.svg";
+import nftStakingActive from "./myrewardsAssets/newAssets/nftStakingActive.svg";
+
+import leaderboard from "./myrewardsAssets/newAssets/leaderboard.svg";
+import leaderboardActive from "./myrewardsAssets/newAssets/leaderboardActive.svg";
+
+import specialRewards from "./myrewardsAssets/newAssets/specialRewards.svg";
+import specialRewardsActive from "./myrewardsAssets/newAssets/specialRewardsActive.svg";
+
+import dailyBonus from "./myrewardsAssets/newAssets/dailyBonus.png";
+import dailyBonusActive from "./myrewardsAssets/newAssets/dailyBonusActive.png";
+
+import treasureHunt from "./myrewardsAssets/newAssets/treasureHunt.png";
+import treasureHuntActive from "./myrewardsAssets/newAssets/treasureHuntActive.png";
+
+import base from "./myrewardsAssets/newAssets/treasureHunt/base.svg";
+import cmc from "./myrewardsAssets/newAssets/treasureHunt/cmc.svg";
+import coingecko from "./myrewardsAssets/newAssets/treasureHunt/coingecko.svg";
+import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
+import dypius from "./myrewardsAssets/newAssets/treasureHunt/dypius.svg";
+import gate from "./myrewardsAssets/newAssets/treasureHunt/gate.svg";
+import conflux from "./myrewardsAssets/newAssets/treasureHunt/conflux.svg";
+import dypiusPremium from "./myrewardsAssets/newAssets/treasureHunt/dypiusPremium.svg";
+import dogeCoin from "./myrewardsAssets/newAssets/treasureHunt/dogeCoin.svg";
+
+const MyRewardsPopupNew = ({
   username,
   userId,
   address,
@@ -44,6 +60,8 @@ const MyRewardsPopup = ({
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
+  const [rewardCategory, setrewardCategory] = useState("all");
+
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
@@ -59,7 +77,6 @@ const MyRewardsPopup = ({
 
   const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
   const [treasureRewardMoneySkale, setTreasureRewardMoneySkale] = useState(0);
- 
 
   const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
   const [pasttreasureRewardNftCaws, setpastTreasureRewardNftCaws] = useState(0);
@@ -97,9 +114,69 @@ const MyRewardsPopup = ({
     }
   };
 
- 
+  const getStakesIds = async () => {
+    let stakenft = [];
 
- 
+    if (address) {
+      const contract = new window.infuraWeb3.eth.Contract(
+        window.WOD_CAWS_ABI,
+        window.config.wod_caws_address
+      );
+      const allCawsStakes = await contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          if (result.length > 0) {
+            for (let i = 0; i < result.length; i++)
+              stakenft.push(parseInt(result[i]));
+            return stakenft;
+          }
+        });
+
+      return allCawsStakes;
+    }
+  };
+
+  const getStakesIdsLandPool = async () => {
+    if (address) {
+      let staking_contract = new window.infuraWeb3.eth.Contract(
+        window.LANDSTAKING_ABI,
+        window.config.landnftstake_address
+      );
+      let stakenft = [];
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft.push(parseInt(result[i]));
+          return stakenft;
+        });
+
+      return myStakes;
+    }
+  };
+
+  const getStakesIdsCawsPool = async () => {
+    if (address) {
+      let staking_contract = new window.infuraWeb3.eth.Contract(
+        window.NFTSTAKING_ABI,
+        window.config.nftstaking_address
+      );
+      let stakenft = [];
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft.push(parseInt(result[i]));
+          return stakenft;
+        });
+
+      return myStakes;
+    }
+  };
+
   const fetchMonthlyGenesisRecordsAroundPlayer = async () => {
     const data = {
       StatisticName: "GenesisLandRewards",
@@ -295,7 +372,6 @@ const MyRewardsPopup = ({
   };
 
   const getTreasureChestsInfo = async () => {
- 
     var moneyResult = 0;
     var moneyResultSkale = 0;
     // if (openedChests && openedChests.length > 0) {
@@ -387,13 +463,12 @@ const MyRewardsPopup = ({
             chest.rewards.forEach((innerChest) => {
               if (
                 innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed"&&
-                innerChest.status !== "Unclaimable"  &&  innerChest.status === "Claimed"
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
               ) {
                 moneyResult += Number(innerChest.reward);
               }
-              
-              
             });
           }
         }
@@ -408,11 +483,11 @@ const MyRewardsPopup = ({
               if (
                 innerChest.rewardType === "Money" &&
                 innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable"  &&  innerChest.status === "Claimed"
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
               ) {
                 moneyResultSkale += Number(innerChest.reward);
               }
-              
             });
           }
         }
@@ -420,8 +495,7 @@ const MyRewardsPopup = ({
     }
 
     setTreasureRewardMoney(moneyResult);
-    setTreasureRewardMoneySkale(moneyResultSkale)
- 
+    setTreasureRewardMoneySkale(moneyResultSkale);
   };
 
   const fetchCachedData = () => {
@@ -509,8 +583,645 @@ const MyRewardsPopup = ({
   }, [userSocialRewards]);
 
   return (
-    <div className="d-flex flex-column gap-3">
-      <div className="d-grid rewardstable-wrapper">
+    <div className="d-grid rewardstable-wrapper gap-2 mt-3 px-1">
+      <div className="total-earnings-purple-wrapper p-2">
+        <div className="d-flex flex-column align-items-center justify-content-center">
+          <span className="total-rewards-amount">
+            $
+            {getFormattedNumber(
+              Number(gemRewards) +
+                Number(dailyplayerData) +
+                Number(weeklyplayerData) +
+                Number(userRank2) +
+                Number(genesisData) +
+                Number(cmcuserEarnUsd) +
+                Number(dypiusPremiumEarnUsd) +
+                Number(userSocialRewardsCached) +
+                Number(treasureRewardMoney) +
+                Number(treasureRewardMoneySkale) +
+                Number(leaderboardTotalData) +
+                Number(gateRewardsUSD) +
+                Number(confluxRewardsUSD) +
+                Number(dypiusRewardsUSD) +
+                Number(pastSpecialRewards) +
+                Number(coingeckoRewardsUSD) +
+                Number(baseRewardsUSD) +
+                Number(cawsRewards) +
+                Number(wodCawsRewards) +
+                Number(pasttreasureRewardMoney) +
+                Number(wodRewards),
+              2
+            )}
+          </span>
+          <span className="total-rewards-desc">TOTAL EARNINGS</span>
+        </div>
+      </div>
+      <div className="d-flex flex-column gap-1 w-100">
+        <div className="d-flex flex-row justify-content-between gap-2 align-items-center">
+          <span className="reward-category-text">Reward Category</span>
+          <div className="d-flex align-items-center gap-2">
+            <button
+              className={previousRewards ? "past-reward" : "active-reward"}
+              onClick={() => {
+                setPreviousRewards(false);
+              }}
+            >
+              Active
+            </button>
+            <button
+              className={previousRewards ? "active-reward" : "past-reward"}
+              onClick={() => {
+                setPreviousRewards(true);
+              }}
+            >
+              Past
+            </button>
+          </div>
+        </div>
+        <div className="small-separator"></div>
+      </div>
+      <div className="reward-category-items-wrapper">
+        <div
+          className={` ${
+            rewardCategory === "all"
+              ? "reward-category-item-active"
+              : "reward-category-item"
+          }  p-2`}
+          onClick={() => {
+            setrewardCategory("all");
+          }}
+        >
+          <div className="d-flex flex-column align-items-center justify-content-center gap-2">
+            <img src={rewardCategory === "all" ? allActive : allImg} alt="" />
+            <span
+              className={
+                rewardCategory === "all"
+                  ? "reward-item-desc-active"
+                  : "reward-item-desc"
+              }
+            >
+              All
+            </span>
+            <div
+              className={
+                rewardCategory === "all"
+                  ? "small-separator-active"
+                  : "small-separator"
+              }
+            ></div>
+            <span
+              className={
+                rewardCategory === "all"
+                  ? "reward-category-amount-active"
+                  : "reward-category-amount"
+              }
+            >
+              $
+              {previousRewards
+                ? getFormattedNumber(
+                    Number(wodRewards) +
+                      Number(wodCawsRewards) +
+                      Number(cawsRewards) +
+                      Number(pasttreasureRewardMoney) +
+                      Number(gemRewards) +
+                      Number(leaderboardTotalData) +
+                      Number(baseRewardsUSD) +
+                      Number(coingeckoRewardsUSD) +
+                      Number(dypiusRewardsUSD) +
+                      Number(gateRewardsUSD) +
+                      Number(confluxRewardsUSD) +
+                      Number(dogeEarnUSD),
+                    2
+                  )
+                : getFormattedNumber(
+                    0 +
+                      Number(treasureRewardMoney) +
+                      Number(treasureRewardMoneySkale) +
+                      Number(dailyplayerData) +
+                      Number(weeklyplayerData) +
+                      Number(userRank2) +
+                      Number(genesisData) +
+                      Number(cmcuserEarnUsd) +
+                      Number(dypiusPremiumEarnUsd),
+                    2
+                  )}
+            </span>
+          </div>
+        </div>
+        <div
+          className={` ${
+            rewardCategory === "nftStaking"
+              ? "reward-category-item-active"
+              : "reward-category-item"
+          }  p-2`}
+          onClick={() => {
+            setrewardCategory("nftStaking");
+          }}
+        >
+          <div className="d-flex flex-column align-items-center justify-content-center gap-2">
+            <img
+              src={
+                rewardCategory === "nftStaking" ? nftStakingActive : nftStaking
+              }
+              alt=""
+            />
+            <span
+              className={
+                rewardCategory === "nftStaking"
+                  ? "reward-item-desc-active"
+                  : "reward-item-desc"
+              }
+            >
+              NFT Staking
+            </span>
+            <div
+              className={
+                rewardCategory === "nftStaking"
+                  ? "small-separator-active"
+                  : "small-separator"
+              }
+            ></div>
+            <span
+              className={
+                rewardCategory === "nftStaking"
+                  ? "reward-category-amount-active"
+                  : "reward-category-amount"
+              }
+            >
+              $
+              {previousRewards
+                ? getFormattedNumber(
+                    Number(wodRewards) +
+                      Number(wodCawsRewards) +
+                      Number(cawsRewards),
+                    2
+                  )
+                : "0.00"}
+            </span>
+          </div>
+        </div>
+        <div
+          className={` ${
+            rewardCategory === "dailyBonus"
+              ? "reward-category-item-active"
+              : "reward-category-item"
+          }  p-2`}
+          onClick={() => {
+            setrewardCategory("dailyBonus");
+          }}
+        >
+          <div className="d-flex flex-column align-items-center justify-content-center gap-2">
+            <img
+              src={
+                rewardCategory === "dailyBonus" ? dailyBonusActive : dailyBonus
+              }
+              style={{ width: 36, height: 36 }}
+              alt=""
+            />
+            <span
+              className={
+                rewardCategory === "dailyBonus"
+                  ? "reward-item-desc-active"
+                  : "reward-item-desc"
+              }
+            >
+              Daily Bonus
+            </span>
+            <div
+              className={
+                rewardCategory === "dailyBonus"
+                  ? "small-separator-active"
+                  : "small-separator"
+              }
+            ></div>
+            <span
+              className={
+                rewardCategory === "dailyBonus"
+                  ? "reward-category-amount-active"
+                  : "reward-category-amount"
+              }
+            >
+              $
+              {previousRewards
+                ? getFormattedNumber(pasttreasureRewardMoney, 2)
+                : getFormattedNumber(
+                    Number(treasureRewardMoney) +
+                      Number(treasureRewardMoneySkale),
+                    2
+                  )}
+            </span>
+          </div>
+        </div>
+        <div
+          className={` ${
+            rewardCategory === "leaderboard"
+              ? "reward-category-item-active"
+              : "reward-category-item"
+          }  p-2`}
+          onClick={() => {
+            setrewardCategory("leaderboard");
+          }}
+        >
+          <div className="d-flex flex-column align-items-center justify-content-center gap-2">
+            <img
+              src={
+                rewardCategory === "leaderboard"
+                  ? leaderboardActive
+                  : leaderboard
+              }
+              alt=""
+            />
+            <span
+              className={
+                rewardCategory === "leaderboard"
+                  ? "reward-item-desc-active"
+                  : "reward-item-desc"
+              }
+            >
+              Leaderboard
+            </span>
+            <div
+              className={
+                rewardCategory === "leaderboard"
+                  ? "small-separator-active"
+                  : "small-separator"
+              }
+            ></div>
+            <span
+              className={
+                rewardCategory === "leaderboard"
+                  ? "reward-category-amount-active"
+                  : "reward-category-amount"
+              }
+            >
+              $
+              {previousRewards
+                ? getFormattedNumber(
+                    Number(gemRewards) + Number(leaderboardTotalData),
+                    2
+                  )
+                : getFormattedNumber(
+                    Number(dailyplayerData) +
+                      Number(weeklyplayerData) +
+                      Number(userRank2) +
+                      Number(genesisData),
+                    2
+                  )}
+            </span>
+          </div>
+        </div>
+        <div
+          className={` ${
+            rewardCategory === "treasurehunt"
+              ? "reward-category-item-active"
+              : "reward-category-item"
+          }  p-2`}
+          onClick={() => {
+            setrewardCategory("treasurehunt");
+          }}
+        >
+          <div className="d-flex flex-column align-items-center justify-content-center gap-2">
+            <img
+              src={
+                rewardCategory === "treasurehunt"
+                  ? treasureHuntActive
+                  : treasureHunt
+              }
+              alt=""
+              style={{ width: 36, height: 36 }}
+            />
+            <span
+              className={
+                rewardCategory === "treasurehunt"
+                  ? "reward-item-desc-active"
+                  : "reward-item-desc"
+              }
+            >
+              Treasure Hunt
+            </span>
+            <div
+              className={
+                rewardCategory === "treasurehunt"
+                  ? "small-separator-active"
+                  : "small-separator"
+              }
+            ></div>
+            <span
+              className={
+                rewardCategory === "treasurehunt"
+                  ? "reward-category-amount-active"
+                  : "reward-category-amount"
+              }
+            >
+              $
+              {previousRewards
+                ? getFormattedNumber(
+                    Number(baseRewardsUSD) +
+                      Number(coingeckoRewardsUSD) +
+                      Number(dypiusRewardsUSD) +
+                      Number(gateRewardsUSD) +
+                      Number(confluxRewardsUSD) +
+                      Number(dogeEarnUSD),
+                    2
+                  )
+                : getFormattedNumber(
+                    Number(cmcuserEarnUsd) + Number(dypiusPremiumEarnUsd),
+                    2
+                  )}
+            </span>
+          </div>
+        </div>
+        <div
+          className={` ${
+            rewardCategory === "specialRewards"
+              ? "reward-category-item-active"
+              : "reward-category-item"
+          }  p-2`}
+          onClick={() => {
+            setrewardCategory("specialRewards");
+          }}
+        >
+          <div className="d-flex flex-column align-items-center justify-content-center gap-2">
+            <img
+              src={
+                rewardCategory === "specialRewards"
+                  ? specialRewardsActive
+                  : specialRewards
+              }
+              alt=""
+            />
+            <span
+              className={
+                rewardCategory === "specialRewards"
+                  ? "reward-item-desc-active"
+                  : "reward-item-desc"
+              }
+            >
+              Special Rewards
+            </span>
+            <div
+              className={
+                rewardCategory === "specialRewards"
+                  ? "small-separator-active"
+                  : "small-separator"
+              }
+            ></div>
+            <span
+              className={
+                rewardCategory === "specialRewards"
+                  ? "reward-category-amount-active"
+                  : "reward-category-amount"
+              }
+            >
+              $
+              {previousRewards
+                ? getFormattedNumber(userSocialRewardsCached, 2)
+                : getFormattedNumber(0, 2)}
+            </span>
+          </div>
+        </div>
+      </div>
+      {previousRewards ? (
+        <div className="d-flex flex-column gap-2">
+          <span className="item-name-title">NFT Staking</span>
+          <div className="item-name-wrapper p-2">
+            <div className="d-flex flex-column gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">CAWS</span>
+                <span className="item-name-right">
+                  ${getFormattedNumber(cawsRewards, 2)}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">WoD Land & CAWS </span>
+                <span className="item-name-right">
+                  ${getFormattedNumber(wodCawsRewards, 2)}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Genesis Land</span>
+                <span className="item-name-right">
+                  ${getFormattedNumber(wodRewards, 2)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="d-flex flex-column gap-2">
+          <span className="item-name-title">NFT Staking</span>
+          <div className="item-name-wrapper p-2">
+            <div className="d-flex flex-column gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">CAWS Premium</span>
+                <span className="item-name-right">$0.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="d-flex flex-column gap-2">
+        <span className="item-name-title">Daily Bonus</span>
+        <div className="item-name-wrapper p-2">
+          <div className="d-flex flex-column gap-2">
+            <div className="d-flex w-100 justify-content-between gap-2">
+              <span className="item-name-left">BNB Chain</span>
+              <span className="item-name-right">
+                $
+                {previousRewards
+                  ? getFormattedNumber(pasttreasureRewardMoney, 2)
+                  : getFormattedNumber(treasureRewardMoney, 2)}
+              </span>
+            </div>
+            <div className="d-flex w-100 justify-content-between gap-2">
+              <span className="item-name-left">SKALE</span>
+              <span className="item-name-right">
+                $
+                {previousRewards
+                  ? getFormattedNumber(0, 2)
+                  : getFormattedNumber(treasureRewardMoneySkale, 2)}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="d-flex flex-column gap-2">
+        <span className="item-name-title">Leaderboard</span>
+        <div className="item-name-wrapper p-2">
+          <div className="d-flex justify-content-between gap-4 align-items-center">
+            <div className="d-flex flex-column gap-2 w-50">
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">BNB Chain</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(leaderboardTotalData, 2)
+                    : getFormattedNumber(
+                        dailyplayerData + weeklyplayerData + userRank2,
+                        2
+                      )}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">SKALE</span>
+                <span className="item-name-right">$0.00</span>
+              </div>
+            </div>
+
+            <div className="d-flex flex-column gap-2 w-50">
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Genesis</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(gemRewards, 2)
+                    : getFormattedNumber(genesisData, 2)}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Kitty Dash</span>
+                <span className="item-name-right">$200</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {!previousRewards ? (
+        <div className="d-flex flex-column gap-2">
+          <span className="item-name-title">Treasure Hunt</span>
+          <div className="item-name-wrapper p-2">
+            <div className="treasure-hunt-item-wrapper-active">
+              <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center justify-content-between gap-2">
+                <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={cmc} alt="" />
+                    CoinMarketCap
+                  </span>
+                  <span className="item-name-right">
+                    {" "}
+                    ${getFormattedNumber(cmcuserEarnUsd, 2)}
+                  </span>
+                </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={skale} alt="" />
+                    SKALE
+                  </span>
+                  <span className="item-name-right">$0.00</span>
+                </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={dypiusPremium} alt="" />
+                    Dypius Premium
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(dypiusPremiumEarnUsd, 2)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="d-flex flex-column gap-2">
+          <span className="item-name-title">Treasure Hunt</span>
+          <div className="item-name-wrapper p-2">
+            <div className="treasure-hunt-item-wrapper">
+              <div className="d-flex flex-column gap-2">
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={base} alt="" />
+                    Base
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(baseRewardsUSD, 2)}
+                  </span>
+                </div>
+
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={coingecko} alt="" />
+                    CoinGecko
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(coingeckoRewardsUSD, 2)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="d-flex flex-column gap-2">
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={dypius} alt="" />
+                    Dypius
+                  </span>
+                  <span className="item-name-right">
+                    {" "}
+                    ${getFormattedNumber(dypiusRewardsUSD, 2)}
+                  </span>
+                </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={gate} alt="" />
+                    Gate.io
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(gateRewardsUSD, 2)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="d-flex flex-column gap-2">
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={conflux} alt="" />
+                    Conflux
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(confluxRewardsUSD, 2)}
+                  </span>
+                </div>
+
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={dogeCoin} alt="" />
+                    Dogecoin
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(dogeEarnUSD, 2)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="d-flex flex-column gap-2">
+        <span className="item-name-title">Special Rewards</span>
+        <div className="item-name-wrapper p-2">
+          <div className="d-flex flex-column gap-2">
+            <div className="d-flex w-100 justify-content-between gap-2">
+              <span className="item-name-left">Social Bonus</span>
+              <span className="item-name-right">
+                $
+                {previousRewards
+                  ? getFormattedNumber(pastSpecialRewards, 2)
+                  : getFormattedNumber(userSocialRewardsCached, 2)}
+              </span>
+            </div>
+            <div className="d-flex w-100 justify-content-between gap-2">
+              <span className="item-name-left">Rank Bonus</span>
+              <span className="item-name-right">
+                $
+                {previousRewards
+                  ? getFormattedNumber(0, 2)
+                  : getFormattedNumber(0, 2)}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <div className="d-grid rewardstable-wrapper">
         <table className="myrewards-table table">
           <thead>
             <tr>
@@ -965,22 +1676,9 @@ const MyRewardsPopup = ({
             Total Earned
           </span>
         </div>
-      </div>
-      {/* <div className="optionsWrapper2 p-2">
-        <div className="d-flex flex-column">
-          <div className="d-flex justify-content-between gap-2 align-items-center">
-            <span className="viewWinners">View past rewards</span>
-            <Switch
-              {...label}
-              onChange={() => {
-                setPreviousRewards(!previousRewards);
-              }}
-            />
-          </div>
-        </div>
       </div> */}
     </div>
   );
 };
 
-export default MyRewardsPopup;
+export default MyRewardsPopupNew;
