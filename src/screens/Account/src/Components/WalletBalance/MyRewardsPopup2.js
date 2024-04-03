@@ -167,7 +167,6 @@ const MyRewardsPopupNew = ({
     await axios
       .get(`https://api.worldofdypians.com/api/special_r/${addr}`)
       .then((data) => {
-        console.log(data.data);
         if (data.data.userRewards) {
           setpastSpecialRewards(data.data.userRewards);
         } else {
