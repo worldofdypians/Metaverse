@@ -673,7 +673,7 @@ function Dashboard({
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === userName
     );
-setkittyDashRecords(testArray)
+    setkittyDashRecords(testArray);
     // setGenesisRank(testArray[0].position);
     // setGenesisRank2(testArray[0].statValue);
   };
@@ -1066,7 +1066,7 @@ setkittyDashRecords(testArray)
   };
 
   const getAllChests = async (userEmail) => {
-    const emailData = { emailAddress: userEmail };
+    const emailData = { emailAddress: userEmail, chainId: "bnb" };
 
     const result = await axios.post(
       "https://dyp-chest-test.azurewebsites.net/api/GetRewards?=null",
