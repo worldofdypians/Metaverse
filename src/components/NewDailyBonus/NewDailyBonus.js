@@ -386,6 +386,7 @@ const NewDailyBonus = ({
   const [nft, setNft] = useState({});
   const [totalSkalePoints, settotalSkalePoints] = useState(0);
   const [totalSkaleUsd, settotalSkaleUsd] = useState(0);
+  const [tooltip, setTooltip] = useState(false);
 
   const countEarnedRewards = () => {
     if (allChests && allChests.length > 0) {
@@ -661,16 +662,14 @@ const NewDailyBonus = ({
         }
       );
 
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-          );
-        }
-      );
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+        );
+      });
 
       const resultPoints = filteredResult.rewards.length === 1;
 
@@ -694,8 +693,8 @@ const NewDailyBonus = ({
         setMessage("winDangerNotEnoughLand");
       } else if (resultWonMoneyhasNftsNoPremium) {
         setMessage("winDangerHasNftsNoPremium");
-      } else if(resultWonMoneyhasNftsNoDyp) {
-        setMessage('winDangerHasNftsPremiumNoDyp')
+      } else if (resultWonMoneyhasNftsNoDyp) {
+        setMessage("winDangerHasNftsPremiumNoDyp");
       }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
@@ -776,16 +775,14 @@ const NewDailyBonus = ({
         }
       );
 
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-          );
-        }
-      );
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+        );
+      });
 
       console.log(result);
       console.log(filteredResult);
@@ -807,8 +804,8 @@ const NewDailyBonus = ({
         setMessage("winDangerNotEnoughLand");
       } else if (resultWonMoneyhasNftsNoPremium) {
         setMessage("winDangerHasNftsNoPremium");
-      } else if(resultWonMoneyhasNftsNoDyp) {
-        setMessage('winDangerHasNftsPremiumNoDyp')
+      } else if (resultWonMoneyhasNftsNoDyp) {
+        setMessage("winDangerHasNftsPremiumNoDyp");
       }
 
       setLiveRewardData(filteredResult);
@@ -897,16 +894,14 @@ const NewDailyBonus = ({
         );
       });
 
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-          );
-        }
-      );
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+        );
+      });
 
       if (result) {
         setMessage("caws");
@@ -926,8 +921,8 @@ const NewDailyBonus = ({
         setMessage("winDangerNotEnoughLand");
       } else if (resultWonMoneyhasNftsNoPremium) {
         setMessage("winDangerHasNftsNoPremium");
-      } else if(resultWonMoneyhasNftsNoDyp) {
-        setMessage('winDangerHasNftsPremiumNoDyp')
+      } else if (resultWonMoneyhasNftsNoDyp) {
+        setMessage("winDangerHasNftsPremiumNoDyp");
       }
 
       setLiveRewardData(filteredResult);
@@ -1010,17 +1005,14 @@ const NewDailyBonus = ({
         }
       );
 
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-          );
-        }
-      );
-
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+        );
+      });
 
       if (result) {
         setMessage("caws");
@@ -1040,8 +1032,8 @@ const NewDailyBonus = ({
         setMessage("winDangerNotEnoughLand");
       } else if (resultWonMoneyhasNftsNoPremium) {
         setMessage("winDangerHasNftsNoPremium");
-      } else if(resultWonMoneyhasNftsNoDyp) {
-        setMessage('winDangerHasNftsPremiumNoDyp')
+      } else if (resultWonMoneyhasNftsNoDyp) {
+        setMessage("winDangerHasNftsPremiumNoDyp");
       }
 
       setLiveRewardData(filteredResult);
@@ -1235,76 +1227,88 @@ const NewDailyBonus = ({
                 Rewards
               </h6>
               <div className="general-info-tooltip">
-                <GeneralTooltip
-                  enterTouchDelay={0}
-                  enterDelay={0}
-                  leaveDelay={2000}
-                  placement={"top"}
-                  title={
-                    <span className="db-tooltip-desc">
-                      The Daily Bonus offers various benefits, ranging from
-                      leaderboard points to great rewards.{" "}
-                      <b>
-                        There are a total of 20 chests to unlock, with 10 chests
-                        available to all players for free, and the remaining 10
-                        exclusive to premium subscribers.
-                      </b>
-                      <br />
-                      <br />
-                      Each reward comes with its own set of probabilities.
-                      Typically, smaller rewards have a higher chance of being
-                      acquired, while the more valuable rewards are less likely
-                      to be obtained. This tiered system ensures that players
-                      have a diverse range of potential prizes to aim for.
-                      <b>
-                        The system is random and takes into consideration player
-                        activity and other factors. The more you play daily, the
-                        higher your chances of claiming more valuable rewards.
-                      </b>
-                      <br />
-                      <br />
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={warning} alt="" width={20} height={20} />
-                        <span className="db-tooltip-desc" style={{ color: "#F08526" }}>
-                          <b>Action Required Sign</b> - Action Needed
-                        </span>
-                      </div>
-                      Some of the rewards opened in the chests might require an
-                      action, such as buying a CAWS or Genesis Land NFT, or
-                      purchasing a Premium Subscription, in order to claim the
-                      reward. The deadline for taking the action is 00:00 UTC
-                      each day.
-                      <br />
-                      <br />
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={danger} alt="" width={20} height={20} />
-                        <span className="db-tooltip-desc" style={{ color: "#C92422" }}>
-                          <b>No Action Sign</b> - No Action Possible
-                        </span>
-                      </div>
-                      Some of the biggest rewards might not be allocated because
-                      you do not fulfill certain requirements, which will be
-                      shown when the chest opens. These chests do not require
-                      any action, as the reward will not be allocated.
-                      <br />
-                      <br />
-                      All rewards earned will be distributed at the beginning of
-                      each month.
-                      <br />
-                      <br />
-                      Keep playing daily to increase your chances of claiming
-                      valuable rewards!
-                    </span>
-                  }
-                >
-                  <img
-                    src={infoIcon}
-                    width={35}
-                    height={35}
-                    style={{ cursor: "pointer" }}
-                    alt=""
-                  />
-                </GeneralTooltip>
+                <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
+                  <GeneralTooltip
+                    open={tooltip}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    placement={"top"}
+                    title={
+                      <span className="db-tooltip-desc">
+                        The Daily Bonus offers various benefits, ranging from
+                        leaderboard points to great rewards.{" "}
+                        <b>
+                          There are a total of 20 chests to unlock, with 10
+                          chests available to all players for free, and the
+                          remaining 10 exclusive to premium subscribers.
+                        </b>
+                        <br />
+                        <br />
+                        Each reward comes with its own set of probabilities.
+                        Typically, smaller rewards have a higher chance of being
+                        acquired, while the more valuable rewards are less
+                        likely to be obtained. This tiered system ensures that
+                        players have a diverse range of potential prizes to aim
+                        for.
+                        <b>
+                          The system is random and takes into consideration
+                          player activity and other factors. The more you play
+                          daily, the higher your chances of claiming more
+                          valuable rewards.
+                        </b>
+                        <br />
+                        <br />
+                        <div className="d-flex align-items-center gap-2">
+                          <img src={warning} alt="" width={20} height={20} />
+                          <span
+                            className="db-tooltip-desc"
+                            style={{ color: "#F08526" }}
+                          >
+                            <b>Action Required Sign</b> - Action Needed
+                          </span>
+                        </div>
+                        Some of the rewards opened in the chests might require
+                        an action, such as buying a CAWS or Genesis Land NFT, or
+                        purchasing a Premium Subscription, in order to claim the
+                        reward. The deadline for taking the action is 00:00 UTC
+                        each day.
+                        <br />
+                        <br />
+                        <div className="d-flex align-items-center gap-2">
+                          <img src={danger} alt="" width={20} height={20} />
+                          <span
+                            className="db-tooltip-desc"
+                            style={{ color: "#C92422" }}
+                          >
+                            <b>No Action Sign</b> - No Action Possible
+                          </span>
+                        </div>
+                        Some of the biggest rewards might not be allocated
+                        because you do not fulfill certain requirements, which
+                        will be shown when the chest opens. These chests do not
+                        require any action, as the reward will not be allocated.
+                        <br />
+                        <br />
+                        All rewards earned will be distributed at the beginning
+                        of each month.
+                        <br />
+                        <br />
+                        Keep playing daily to increase your chances of claiming
+                        valuable rewards!
+                      </span>
+                    }
+                  >
+                    <img
+                      onClick={() => setTooltip(true)}
+                      src={infoIcon}
+                      width={35}
+                      height={35}
+                      style={{ cursor: "pointer" }}
+                      alt=""
+                    />
+                  </GeneralTooltip>
+                </OutsideClickHandler>
               </div>
               <div className="new-total-points-wrapper d-flex align-items-center gap-2">
                 <h6 className="new-total-points  mb-0">
@@ -1630,7 +1634,6 @@ const NewDailyBonus = ({
                             <h6 className="chain-title-position mb-0">
                               BNB Chain
                             </h6>
-
                           </div>
                           <div
                             className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
@@ -1675,7 +1678,6 @@ const NewDailyBonus = ({
                             } p-2 d-flex align-items-center justify-content-between`}
                           >
                             <h6 className="chain-title-position mb-0">SKALE</h6>
-                           
                           </div>
                           <div
                             className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
