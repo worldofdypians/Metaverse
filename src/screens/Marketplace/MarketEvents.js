@@ -245,34 +245,7 @@ const MarketEvents = ({
         activeTab: "dypiusv2",
       },
     },
-    {
-      title: "Dogecoin",
-      logo: doge,
-      eventStatus: "Live",
-      totalRewards: "$10,000 in DOGE Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Dec 22, 2023",
-      backgroundImage: upcomingDoge,
-      popupInfo: {
-        title: "Dogecoin",
-        chain: "BNB Chain",
-        linkState: "doge",
-        rewards: "DOGE",
-        status: "Live",
-        id: "event7",
-        eventType: "Explore & Mine",
-        totalRewards: "$10,000 in DOGE Rewards",
-        eventDuration: dogeLastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
-        eventDate: "Dec 22, 2023",
-      },
-    },
+
     {
       title: "CoinMarketCap",
       logo: cmc,
@@ -299,6 +272,34 @@ const MarketEvents = ({
         eventDate: "Dec 26, 2023",
         learnMore:
           "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "Dogecoin",
+      logo: doge,
+      eventStatus: "Expired",
+      totalRewards: "$10,000 in DOGE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Dec 22, 2023",
+      backgroundImage: upcomingDoge,
+      popupInfo: {
+        title: "Dogecoin",
+        chain: "BNB Chain",
+        linkState: "doge",
+        rewards: "DOGE",
+        status: "Expired",
+        id: "event7",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in DOGE Rewards",
+        eventDuration: dogeLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "Dec 22, 2023",
       },
     },
 
@@ -1080,7 +1081,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
                           <BetaEventCard
                             activeTab={item.activeTab}
                             data={item}
@@ -1090,11 +1091,9 @@ const MarketEvents = ({
                               setDummyEvent(item.popupInfo);
                             }}
                             userEarnUsd={
-                              item.title === "Dogecoin"
-                                ? dogeEarnUSD
-                                : item.title === "CoinMarketCap"
+                              item.title === "CoinMarketCap"
                                 ? cmcuserEarnUsd
-                                : item.title === 'Dypius Premium'
+                                : item.title === "Dypius Premium"
                                 ? dypiusPremiumEarnUsd
                                 : 0
                             }
@@ -1233,7 +1232,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(3, dummyBetaPassData2.length)
+                    .slice(2, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
@@ -1245,6 +1244,8 @@ const MarketEvents = ({
                         userEarnUsd={
                           item.title === "Base"
                             ? baseEarnUSD
+                            : item.title === "Dogecoin"
+                            ? dogeEarnUSD
                             : item.title === "Conflux"
                             ? confluxEarnUSD
                             : item.title === "CoinGecko"
