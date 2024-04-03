@@ -1237,9 +1237,11 @@ const NewDailyBonus = ({
               <div className="general-info-tooltip">
                 <GeneralTooltip
                   enterTouchDelay={0}
+                  enterDelay={0}
+                  leaveDelay={2000}
                   placement={"top"}
                   title={
-                    <span className="win-desc">
+                    <span className="db-tooltip-desc">
                       The Daily Bonus offers various benefits, ranging from
                       leaderboard points to great rewards.{" "}
                       <b>
@@ -1263,7 +1265,7 @@ const NewDailyBonus = ({
                       <br />
                       <div className="d-flex align-items-center gap-2">
                         <img src={warning} alt="" width={20} height={20} />
-                        <span className="win-desc" style={{ color: "#F08526" }}>
+                        <span className="db-tooltip-desc" style={{ color: "#F08526" }}>
                           <b>Action Required Sign</b> - Action Needed
                         </span>
                       </div>
@@ -1276,7 +1278,7 @@ const NewDailyBonus = ({
                       <br />
                       <div className="d-flex align-items-center gap-2">
                         <img src={danger} alt="" width={20} height={20} />
-                        <span className="win-desc" style={{ color: "#C92422" }}>
+                        <span className="db-tooltip-desc" style={{ color: "#C92422" }}>
                           <b>No Action Sign</b> - No Action Possible
                         </span>
                       </div>
@@ -1628,63 +1630,7 @@ const NewDailyBonus = ({
                             <h6 className="chain-title-position mb-0">
                               BNB Chain
                             </h6>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    bnbPercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    bnbPercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    bnbPercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    bnbPercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    bnbPercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(bnbPercentage)}%
-                              </span>
-                            </div>
+
                           </div>
                           <div
                             className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
@@ -1729,63 +1675,7 @@ const NewDailyBonus = ({
                             } p-2 d-flex align-items-center justify-content-between`}
                           >
                             <h6 className="chain-title-position mb-0">SKALE</h6>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(skalePercentage)}%
-                              </span>
-                            </div>
+                           
                           </div>
                           <div
                             className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
