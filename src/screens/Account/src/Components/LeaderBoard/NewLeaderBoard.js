@@ -1154,7 +1154,6 @@ const NewLeaderBoard = ({
                       } d-flex flex-column gap-2 p-0`}
                     >
                       <div className="d-flex w-100 justify-content-center leaderboard-title-wrapper position-relative px-3 py-2">
-                        <div></div>
                         <h6 className="leaderboard-title  text-white font-oxanium mb-0">
                           DAILY
                         </h6>

@@ -25,6 +25,10 @@ const Footer = () => {
       link: "https://discord.gg/worldofdypians",
     },
     {
+      icon: "github",
+      link: "https://github.com/worldofdypians/Metaverse",
+    },
+    {
       icon: "instagram",
       link: "https://www.instagram.com/worldofdypians",
     },
