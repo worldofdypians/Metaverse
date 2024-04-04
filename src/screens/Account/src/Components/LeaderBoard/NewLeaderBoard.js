@@ -407,6 +407,7 @@ const NewLeaderBoard = ({
   const [optionText, setOptionText] = useState("daily");
   const [optionText2, setOptionText2] = useState("bnb");
   const [dailyrecords, setRecords] = useState([]);
+
   const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
   const [prizes, setPrizes] = useState(dummyPrizes);
   const [activePlayer, setActivePlayer] = useState(false);
@@ -580,7 +581,7 @@ const NewLeaderBoard = ({
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
-    fillRecords(result.data.data.leaderboard);
+    fillRecordsWeekly(result.data.data.leaderboard);
 
     if (testArray.length > 0) {
       setActivePlayer(true);
@@ -716,7 +717,7 @@ const NewLeaderBoard = ({
     if (testArray.length > 0) {
       setActivePlayer(true);
     }
-    fillRecords(result.data.data.leaderboard);
+    fillRecordsMonthly(result.data.data.leaderboard);
 
     if (testArray.length === 0) {
       setActivePlayer(false);
@@ -750,6 +751,26 @@ const NewLeaderBoard = ({
       const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
       const finalData = [...testArray, ...placeholderArray];
       setRecords(finalData);
+    }
+  };
+  const fillRecordsWeekly = (itemData) => {
+    if (itemData.length === 0) {
+      setWeeklyRecords(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setWeeklyRecords(finalData);
+    }
+  };
+  const fillRecordsMonthly = (itemData) => {
+    if (itemData.length === 0) {
+      setMonthlyRecords(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setMonthlyRecords(finalData);
     }
   };
 
@@ -1153,7 +1174,7 @@ const NewLeaderBoard = ({
                           : ""
                       } d-flex flex-column gap-2 p-0`}
                     >
-                      <div className="d-flex w-100 justify-content-center leaderboard-title-wrapper position-relative px-3 py-2">
+                      <div className="d-flex w-100 justify-content-center leaderboard-title-wrapper position-relative p-2">
                         <h6 className="leaderboard-title  text-white font-oxanium mb-0">
                           DAILY
                         </h6>
@@ -1215,8 +1236,8 @@ const NewLeaderBoard = ({
                                           />
                                           <span>
                                             {" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </span>
                                         </div>
@@ -1227,8 +1248,8 @@ const NewLeaderBoard = ({
                                             alt=""
                                             className="playerAvatar"
                                           />{" "}
-                                          {item.displayName?.slice(0, 13)}
-                                          {item.displayName?.length > 13 &&
+                                          {item.displayName?.slice(0, 10)}
+                                          {item.displayName?.length > 10 &&
                                             "..."}
                                         </div>
                                       )}
@@ -1293,8 +1314,8 @@ const NewLeaderBoard = ({
                                           />
                                           <span>
                                             {" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </span>
                                         </div>
@@ -1305,8 +1326,8 @@ const NewLeaderBoard = ({
                                             alt=""
                                             className="playerAvatar"
                                           />{" "}
-                                          {item.displayName?.slice(0, 13)}
-                                          {item.displayName?.length > 13 &&
+                                          {item.displayName?.slice(0, 10)}
+                                          {item.displayName?.length > 10 &&
                                             "..."}
                                         </div>
                                       )}
@@ -1469,7 +1490,7 @@ const NewLeaderBoard = ({
                           optionText2 === "wod" ? "blur-leaderboard" : ""
                         } d-flex flex-column gap-2 p-0`}
                       >
-                        <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper px-3 py-2">
+                        <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
                           <h6 className="leaderboard-title  text-white font-oxanium mb-0">
                             WEEKLY
                           </h6>
@@ -1533,8 +1554,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -1545,8 +1566,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -1616,8 +1637,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -1628,8 +1649,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -1795,7 +1816,7 @@ const NewLeaderBoard = ({
                           optionText2 === "wod" ? "blur-leaderboard" : ""
                         } d-flex flex-column gap-2 p-0`}
                       >
-                        <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper px-3 py-2">
+                        <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
                           <h6 className="leaderboard-title  text-white font-oxanium mb-0">
                             WEEKLY
                           </h6>
@@ -1859,8 +1880,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -1871,8 +1892,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -1943,8 +1964,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -1955,8 +1976,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -2150,7 +2171,7 @@ const NewLeaderBoard = ({
                           optionText2 === "skale" ? "blur-leaderboard" : ""
                         } d-flex flex-column gap-2 p-0`}
                       >
-                         <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper px-3 py-2">
+                         <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
                           <h6 className="leaderboard-title  text-white font-oxanium mb-0">
                             MONTHLY
                           </h6>
@@ -2202,8 +2223,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -2214,8 +2235,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -2273,8 +2294,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -2285,8 +2306,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -2407,7 +2428,7 @@ const NewLeaderBoard = ({
                           optionText2 === "skale" ? "blur-leaderboard" : ""
                         } d-flex flex-column gap-2 p-0`}
                       >
-                        <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper px-3 py-2">
+                        <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
                           <h6 className="leaderboard-title  text-white font-oxanium mb-0">
                             MONTHLY
                           </h6>
@@ -2469,8 +2490,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -2481,8 +2502,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -2547,8 +2568,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -2559,8 +2580,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -2744,7 +2765,7 @@ const NewLeaderBoard = ({
                   <Slider {...settings} ref={sliderRef}>
                     {optionText2 !== "skale" && optionText2 !== "wod" && (
                       <div className="leaderboard-item d-flex flex-column gap-2 p-2">
-                        <div className="d-flex w-100 justify-content-between position-relative leaderboard-title-wrapper px-3 py-2">
+                        <div className="d-flex w-100 justify-content-between position-relative leaderboard-title-wrapper p-2">
                           <img
                             src={leftArrow}
                             alt=""
@@ -2760,7 +2781,7 @@ const NewLeaderBoard = ({
                             style={{ cursor: "pointer" }}
                             onClick={nextSlide}
                           />
-                           <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: "10%"}}>
+                           <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: "8%"}}>
                           <span className="reset-time-lb">
                             Reset time
                           </span>
@@ -2817,8 +2838,8 @@ const NewLeaderBoard = ({
                                           />
                                           <span>
                                             {" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </span>
                                         </div>
@@ -2829,8 +2850,8 @@ const NewLeaderBoard = ({
                                             alt=""
                                             className="playerAvatar"
                                           />{" "}
-                                          {item.displayName?.slice(0, 13)}
-                                          {item.displayName?.length > 13 &&
+                                          {item.displayName?.slice(0, 10)}
+                                          {item.displayName?.length > 10 &&
                                             "..."}
                                         </div>
                                       )}
@@ -2895,8 +2916,8 @@ const NewLeaderBoard = ({
                                           />
                                           <span>
                                             {" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </span>
                                         </div>
@@ -2907,8 +2928,8 @@ const NewLeaderBoard = ({
                                             alt=""
                                             className="playerAvatar"
                                           />{" "}
-                                          {item.displayName?.slice(0, 13)}
-                                          {item.displayName?.length > 13 &&
+                                          {item.displayName?.slice(0, 10)}
+                                          {item.displayName?.length > 10 &&
                                             "..."}
                                         </div>
                                       )}
@@ -3073,7 +3094,7 @@ const NewLeaderBoard = ({
                               optionText2 !== "skale"
                                 ? "justify-content-between"
                                 : "justify-content-center p-2"
-                            } leaderboard-title-wrapper px-3 py-2`}
+                            } leaderboard-title-wrapper p-2`}
                           >
                             {optionText2 !== "skale" && (
                               <img
@@ -3098,7 +3119,7 @@ const NewLeaderBoard = ({
                                 onClick={nextSlide}
                               />
                             )}
-                             <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "skale" ?  "10%" : "0%"}}>
+                             <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "skale" ?  "8%" : "0%"}}>
                           <span className="reset-time-lb">
                             Reset time
                           </span>
@@ -3157,8 +3178,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -3169,8 +3190,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -3240,8 +3261,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -3252,8 +3273,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -3427,7 +3448,7 @@ const NewLeaderBoard = ({
                               optionText2 !== "skale"
                                 ? "justify-content-between"
                                 : "justify-content-center p-2"
-                            } leaderboard-title-wrapper px-3 py-2`}
+                            } leaderboard-title-wrapper p-2`}
                           >
                             {optionText2 !== "skale" && (
                               <img
@@ -3451,7 +3472,7 @@ const NewLeaderBoard = ({
                                 onClick={nextSlide}
                               />
                             )}
-                              <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "skale" ?  "10%" : "0%"}}>
+                              <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "skale" ?  "8%" : "0%"}}>
                           <span className="reset-time-lb">
                             Reset time
                           </span>
@@ -3510,8 +3531,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -3522,8 +3543,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -3594,8 +3615,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -3606,8 +3627,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -3802,7 +3823,7 @@ const NewLeaderBoard = ({
                               optionText2 !== "wod"
                                 ? "justify-content-between"
                                 : "justify-content-center p-2"
-                            } leaderboard-title-wrapper px-3 py-2`}
+                            } leaderboard-title-wrapper p-2`}
                           >
                             {optionText2 !== "wod" && (
                               <img
@@ -3823,7 +3844,7 @@ const NewLeaderBoard = ({
                                 onClick={nextSlide}
                               />
                             )}
-                              <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "wod" ?  "10%" : "0%"}}>
+                              <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "wod" ?  "5%" : "0%"}}>
                           <span className="reset-time-lb">
                             Reset time
                           </span>
@@ -3872,8 +3893,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -3884,8 +3905,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -3943,8 +3964,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -3955,8 +3976,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -4077,7 +4098,7 @@ const NewLeaderBoard = ({
                               optionText2 !== "wod"
                                 ? "justify-content-between"
                                 : "justify-content-center p-2"
-                            } leaderboard-title-wrapper px-3 py-2`}
+                            } leaderboard-title-wrapper p-2`}
                           >
                             {optionText2 !== "wod" && (
                               <img
@@ -4098,7 +4119,7 @@ const NewLeaderBoard = ({
                                 onClick={nextSlide}
                               />
                             )}
-                              <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "wod" ?  "10%" : "0%"}}>
+                              <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "wod" ?  "5%" : "0%"}}>
                           <span className="reset-time-lb">
                             Reset time
                           </span>
@@ -4155,8 +4176,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -4167,8 +4188,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}
@@ -4233,8 +4254,8 @@ const NewLeaderBoard = ({
                                             />
                                             <span>
                                               {" "}
-                                              {item.displayName?.slice(0, 13)}
-                                              {item.displayName?.length > 13 &&
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
                                                 "..."}
                                             </span>
                                           </div>
@@ -4245,8 +4266,8 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />{" "}
-                                            {item.displayName?.slice(0, 13)}
-                                            {item.displayName?.length > 13 &&
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
                                               "..."}
                                           </div>
                                         )}

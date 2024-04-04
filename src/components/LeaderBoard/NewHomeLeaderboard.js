@@ -1245,7 +1245,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       {optionText2 === "bnb" && (
         <Slider {...settings} ref={sliderRef}>
           <div className="leaderboard-item d-flex flex-column gap-2 p-0">
-            <div className="d-flex w-100 position-relative justify-content-between leaderboard-title-wrapper px-3 py-2">
+            <div className="d-flex w-100 position-relative justify-content-between leaderboard-title-wrapper p-2">
               <img
                 src={leftArrow}
                 alt=""
@@ -1261,7 +1261,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 style={{ cursor: "pointer" }}
                 onClick={nextSlide}
               />
-              <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: "10%"}}>
+              <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: "8%"}}>
                           <span className="reset-time-lb">
                             Reset time
                           </span>
@@ -1441,7 +1441,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 optionText2 !== "skale"
                   ? "justify-content-between"
                   : "justify-content-center p-2"
-              } leaderboard-title-wrapper px-3 py-2`}
+              } leaderboard-title-wrapper p-2`}
             >
               {optionText2 !== "skale" && (
                 <img
@@ -1465,7 +1465,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                   onClick={nextSlide}
                 />
               )}
-               <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "skale" ?  "10%" : "0%"}}>
+               <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "skale" ?  "8%" : "0%"}}>
                           <span className="reset-time-lb">
                             Reset time
                           </span>
@@ -1661,7 +1661,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 optionText2 !== "wod"
                   ? "justify-content-between"
                   : "justify-content-center p-2"
-              } leaderboard-title-wrapper px-3 py-2`}
+              } leaderboard-title-wrapper p-2`}
             >
               {optionText2 !== "wod" && (
                 <img
@@ -1682,7 +1682,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                   onClick={nextSlide}
                 />
               )}
-              <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "wod" ?  "10%" : "0%"}}>
+              <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "wod" ?  "8%" : "0%"}}>
                           <span className="reset-time-lb">
                             Reset time
                           </span>
@@ -1875,7 +1875,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
             <div
               className={`d-flex w-100 position-relative  
                    justify-content-center p-2
-               leaderboard-title-wrapper px-3 py-2`}
+               leaderboard-title-wrapper p-2`}
             >
               <h6 className="leaderboard-title  text-white font-oxanium mb-0">
                 MONTHLY
@@ -2052,7 +2052,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
             <div
               className={`d-flex w-100 position-relative 
                    justify-content-center p-2
-               leaderboard-title-wrapper px-3 py-2`}
+               leaderboard-title-wrapper p-2`}
             >
               <h6 className="leaderboard-title  text-white font-oxanium mb-0">
                 Weekly
