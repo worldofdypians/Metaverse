@@ -92,7 +92,7 @@ console.log('txHash',txHash)
 
     const resultBuy = await axios
       .post(
-        `https://dyp-chest-test.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
+        `https://worldofdypiansdailybonus.azurewebsites.net/api/ClaimNftReward?code=wcdvJ3PTF9eB0mZOu25FNxSuUZLWiubCQNG8oljEy88fAzFufLdFSw%3D%3D`,
         finalBody
       )
       .catch((e) => {

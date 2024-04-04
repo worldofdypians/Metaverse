@@ -487,7 +487,7 @@ const NewDailyBonus = ({
 
     const result = await axios
       .post(
-        `https://dyp-chest-test.azurewebsites.net/api/ClaimPremiumReward?code=WKXKNHNplrNAzvfYrr-iAduP2Wl3eGpqwER2XqHWaqU5AzFupAtXPw%3D%3D%27`,
+        `https://worldofdypiansdailybonus.azurewebsites.net/api/ClaimPremiumReward?code=WKXKNHNplrNAzvfYrr-iAduP2Wl3eGpqwER2XqHWaqU5AzFupAtXPw%3D%3D%27`,
         data
       )
       .catch((e) => {
