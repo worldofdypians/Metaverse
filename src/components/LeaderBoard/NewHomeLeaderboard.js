@@ -432,6 +432,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
   const [monthlyplayerData, setmonthlyplayerData] = useState([]);
   const [skaleRecords, setskaleRecords] = useState([]);
   const [skalePreviousRecords, setskalePreviousRecords] = useState([]);
+  const [skalepreviousVersion, setskalepreviousVersion] = useState(0);
 
   const [previousVersion, setpreviousVersion] = useState(0);
   const [previousWeeklyVersion, setpreviousWeeklyVersion] = useState(0);
@@ -586,21 +587,26 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       MaxResultsCount: 10,
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-    // setpreviousVersion(parseInt(result.data.data.version));
+    setskalepreviousVersion(result.data.data.version);
+
     setskaleRecords(result.data.data.leaderboard);
     fillRecordsSkale(result.data.data.leaderboard);
   };
 
   const fetchPreviousSkaleRecords = async () => {
-    const data = {
-      StatisticName: "LeaderboardSkaleMonthly",
+    if(skalepreviousVersion!=0)
+ {   const data = {
+      StatisticName: "LeaderboardSkaleWeekly",
       StartPosition: 0,
       MaxResultsCount: 10,
+      Version: skalepreviousVersion - 1,
+
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     // setpreviousVersion(parseInt(result.data.data.version));
     setskalePreviousRecords(result.data.data.leaderboard);
     fillPreviousRecordsSkale(result.data.data.leaderboard);
+  }
   };
 
   const fetchPreviousWinners = async () => {
@@ -1911,7 +1917,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             )}
                           </td>
                           <td className="playerScore col-2 text-center font-montserrat">
-                            {getFormattedNumber(item.statValue, 0)}
+                            ${getFormattedNumber(item.statValue, 0)}
                           </td>
                           {/* <td
                             className={`playerReward text-center col-2 font-montserrat ${
@@ -1979,7 +1985,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             )}
                           </td>
                           <td className="playerScore col-2 text-center font-montserrat">
-                            {getFormattedNumber(item.statValue, 0)}
+                            ${getFormattedNumber(item.statValue, 0)}
                           </td>
                           {/* <td
                             className={`playerReward text-center col-2 font-montserrat ${
