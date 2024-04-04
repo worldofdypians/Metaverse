@@ -407,6 +407,7 @@ const NewLeaderBoard = ({
   const [optionText, setOptionText] = useState("daily");
   const [optionText2, setOptionText2] = useState("bnb");
   const [dailyrecords, setRecords] = useState([]);
+
   const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
   const [prizes, setPrizes] = useState(dummyPrizes);
   const [activePlayer, setActivePlayer] = useState(false);
@@ -580,7 +581,7 @@ const NewLeaderBoard = ({
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
-    fillRecords(result.data.data.leaderboard);
+    fillRecordsWeekly(result.data.data.leaderboard);
 
     if (testArray.length > 0) {
       setActivePlayer(true);
@@ -716,7 +717,7 @@ const NewLeaderBoard = ({
     if (testArray.length > 0) {
       setActivePlayer(true);
     }
-    fillRecords(result.data.data.leaderboard);
+    fillRecordsMonthly(result.data.data.leaderboard);
 
     if (testArray.length === 0) {
       setActivePlayer(false);
@@ -750,6 +751,26 @@ const NewLeaderBoard = ({
       const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
       const finalData = [...testArray, ...placeholderArray];
       setRecords(finalData);
+    }
+  };
+  const fillRecordsWeekly = (itemData) => {
+    if (itemData.length === 0) {
+      setWeeklyRecords(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setWeeklyRecords(finalData);
+    }
+  };
+  const fillRecordsMonthly = (itemData) => {
+    if (itemData.length === 0) {
+      setMonthlyRecords(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setMonthlyRecords(finalData);
     }
   };
 
