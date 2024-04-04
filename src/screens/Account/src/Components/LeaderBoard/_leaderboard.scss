@@ -468,3 +468,35 @@ letter-spacing: -0.252px;
   filter: blur(10px);
   pointer-events: none;
 }
+.reset-time-lb{
+  color: #7D7484;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  @media screen and (max-width: 786px) {
+    font-size: 9px;
+  }
+}
+
+.reset-time-lb-value{
+  color: #F4E27B;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  @media screen and (max-width: 786px) {
+    font-size: 9px;
+  }
+}
+
+.reset-time-wrapper{
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  justify-content: center;
+}
