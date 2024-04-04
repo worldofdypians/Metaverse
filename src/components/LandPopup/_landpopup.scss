@@ -18,11 +18,35 @@
     width: 55%;
   }
   @media screen and (max-width: 1300px) {
-    width: 70% !important;
+    width: 70% ;
   }
   @media screen and (max-width: 786px) {
-    width: 90% !important;
+    width: 90% ;
   }
+}
+
+.leaderboard-popup{
+  background-image: url('./newLeaderboardBg.jpg') !important;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 1525px) {
+    width: 95% !important;
+  }
+  @media screen and (max-width: 786px) {
+    width: 98% !important;
+  background-size: 300%;
+
+  }
+ 
+}
+.rank-popup{
+  @media screen and (max-width: 1455px) {
+    width: 95% !important;
+  }
+  @media screen and (max-width: 786px) {
+    width: 98% !important;
+  }
+ 
 }
 
 .popup-active {

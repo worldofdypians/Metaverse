@@ -13,11 +13,16 @@
   }
 }
 
+.leaderboard-title {
+  font-size: 20px;
+  font-weight: 800;
+}
+
 .grandPrices-wrapper {
   background-color: #242240;
   border-radius: 8px;
   padding: 10px;
-  background-image: url("./assets/grandPrizeBanner.jpg");
+  background-image: url("./assets/grandPrizeBanner.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -33,7 +38,7 @@
 
 .goldenscore-inactive {
   // background: rgb(88 86 82 / 80%) !important;
-  color: #48465E !important;
+  color: #48465e !important;
   text-align: center;
   position: relative;
 }
@@ -100,7 +105,7 @@
   font-size: 14px;
   line-height: 17px;
   letter-spacing: -0.018em;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .playerHeader {
@@ -109,28 +114,35 @@
   font-size: 10px;
   line-height: 12px;
   letter-spacing: -0.018em;
-  color: #F7F7FF;
+  color: #f7f7ff;
   position: sticky;
   top: 0;
-  background: #080b2a;
+  // background: #080b2a;
   z-index: 2;
+  white-space: nowrap;
 }
 
 .optionText {
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
   font-size: 15px;
   line-height: 18px;
-  color: #FFFFFF;  
+  color: #747687;
   display: flex;
   justify-content: center;
   cursor: pointer;
   // width: 80px;
+
+  @media screen and (max-width: 786px) {
+    font-size: 10px !important;
+    white-space: nowrap;
+  }
 }
 
 .optionText:hover,
 .activeoption {
-  color: #09f3d2;
+  color: #FFF;
 }
 
 .optionTextGolden {
@@ -183,24 +195,38 @@
 }
 
 .playerInnerRow-inactive {
-  background: rgba(0, 254, 207, 0.1);
+  background: rgba(0, 254, 207, 0.1) !important;
 
   .goldenscore-inactive2 {
-    color: #48465e !important;
+    color: #fff ;
   }
 
   .inactivegold {
-    color: #48465e !important;
+    color: #fff !important;
     text-align: center;
     position: relative;
   }
 }
 
+.golden-score-disabled {
+  color: #8f8e99 !important;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.252px;
+}
+
+
 .optionsWrapper2 {
-  background: linear-gradient(180deg, rgba(33, 36, 64, 0.15) 99.99%, rgba(255, 255, 255, 0.15) 100%);
-backdrop-filter: blur(13px);
-border-radius: 10px;
-border: 1px solid #4C4E64;
+  background: linear-gradient(
+    180deg,
+    rgba(33, 36, 64, 0.15) 99.99%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  backdrop-filter: blur(13px);
+  border-radius: 10px;
+  border: 1px solid #4c4e64;
 }
 
 .playerAvatar {
@@ -220,6 +246,10 @@ border: 1px solid #4C4E64;
   line-height: 21px;
   letter-spacing: -0.018em;
   color: #09f3d2;
+  height: 32px;
+  @media screen and (max-width: 786px) {
+    font-size: 12px !important;
+  }
 }
 .playerScore {
   font-weight: 500;
@@ -227,18 +257,34 @@ border: 1px solid #4C4E64;
   line-height: 21px;
   letter-spacing: -0.018em;
   color: rgba(243, 192, 9, 1);
-
-}
-  .goldenscore-inactive2 {
-    color: #48465e !important;
+  height: 32px;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
   }
+}
+.goldenscore-inactive2 {
+  color: #fff ;
+}
+.golden-score-disabled {
+  color: #8f8e99 !important;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.252px;
+}
+
+
 .playerName {
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
   letter-spacing: -0.018em;
-  color: #F7F7FF;
+  color: #f7f7ff;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+  }
 }
 
 .tablewrapper {
@@ -264,7 +310,9 @@ border: 1px solid #4C4E64;
   // font-weight: bold;
   padding: 10px;
   // border-radius: 8px;
-    border-bottom: 1px solid #09f3d2 !important;
+  // border-bottom: 1px solid #09f3d2 !important;
+  color: #FFF;
+
 }
 
 .nft-hover {
@@ -319,7 +367,7 @@ border: 1px solid #4C4E64;
 }
 
 .tooltip-wrapper2 {
-  background: #43455D;
+  background: #43455d;
   box-shadow: 0px 4.3px 53px rgba(0, 7, 72, 0.12);
   border-radius: 10px;
   position: absolute;
@@ -334,7 +382,7 @@ border: 1px solid #4C4E64;
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;
-  color: #B8B8E0;
+  color: #b8b8e0;
 }
 
 .tooltip-active {
@@ -400,4 +448,21 @@ border: 1px solid #4C4E64;
     width: 253px;
     font-size: 20px;
   }
+}
+
+.leaderboard-title-wrapper {
+  border-radius: 8px 8px 0px 0px;
+  border: 1.5px solid #f4e27b;
+  background: linear-gradient(to bottom right, #582570 0%, #351755 50%) bottom
+      right / 50% 50% no-repeat,
+    linear-gradient(to bottom left, #582570 0%, #351755 50%) bottom left / 50%
+      50% no-repeat,
+    linear-gradient(to top left, #582570 0%, #351755 50%) top left / 50% 50%
+      no-repeat,
+    linear-gradient(to top right, #582570 0%, #351755 50%) top right / 50% 50%
+      no-repeat;
+}
+
+.premium-goldenscore{
+  color: #f4e27b !important;
 }

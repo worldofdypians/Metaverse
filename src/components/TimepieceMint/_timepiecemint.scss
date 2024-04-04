@@ -582,8 +582,24 @@
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   }
 }
+
+
 .base-mint-bg {
   background-image: url("./assets/baseBackground.png");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+
+.skale-mint-bg {
+  background-image: url("./assets/skaleBackground.png");
   background-size: cover;
   background-position: right;
   background-repeat: no-repeat;
@@ -606,6 +622,19 @@
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   }
 }
+
+.skale2-mint-bg {
+  background-image: url("./assets/skaleBackground2.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
 
 // .mint-wrappernew::before {
 //   content: "";
@@ -1023,6 +1052,13 @@
 
 .base-active {
   background-image: url("../../assets/baseActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.skale-active {
+  background-image: url("../../assets/skaleActive.webp");
   background-repeat: no-repeat;
   background-size: cover !important;
   background-position: center;

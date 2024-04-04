@@ -22,6 +22,8 @@ import bnbLogo from "../assets/bnbLogo.svg";
 import confluxLogo from "../assets/confluxLogo.svg";
 import baseLogo from "../assets/baseLogo.svg";
 import avaxLogo from "../assets/avaxLogo.svg";
+import skaleLogo from "../assets/skaleIcon.svg";
+
 
 import { GET_PLAYER } from "../../Account/src/Containers/Dashboard/Dashboard.schema";
 import { useQuery } from "@apollo/client";
@@ -202,6 +204,8 @@ const SingleNft = ({
       type !== "coingecko" &&
       type !== "gate" &&
       type !== "base"
+      &&
+      type !== "skale"
     ) {
       const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
       const token_address_old = "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17";
@@ -516,6 +520,21 @@ const SingleNft = ({
       const nft_contract = new window.bscWeb3.eth.Contract(
         window.DOGE_NFT_ABI,
         window.config.nft_doge_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      console.log(owner);
+
+      setowner(owner);
+    }  else if (type === "skale") {
+      const nft_contract = new window.skaleWeb3.eth.Contract(
+        window.SKALE_NFT_ABI,
+        window.config.nft_skale_address
       );
       const owner = await nft_contract.methods
         .ownerOf(Id)
@@ -1442,6 +1461,8 @@ const SingleNft = ({
         ? "conflux"
         : nftAddress === window.config.nft_doge_address
         ? "doge"
+        : nftAddress === window.config.nft_skale_address
+        ? "skale"
         : nftAddress === window.config.nft_cmc_address
         ? "cmc"
         : nftAddress === window.config.nft_base_address
@@ -1484,6 +1505,8 @@ const SingleNft = ({
         ? "conflux"
         : nftAddress === window.config.nft_doge_address
         ? "doge"
+        : nftAddress === window.config.nft_skale_address
+        ? "skale"
         : nftAddress === window.config.nft_cmc_address
         ? "cmc"
         : nftAddress === window.config.nft_base_address
@@ -1510,7 +1533,11 @@ const SingleNft = ({
       setType("conflux");
     } else if (nftAddress === window.config.nft_doge_address) {
       setType("doge");
-    } else if (nftAddress === window.config.nft_cmc_address) {
+    } 
+    else if (nftAddress === window.config.nft_skale_address) {
+      setType("skale");
+    } 
+    else if (nftAddress === window.config.nft_cmc_address) {
       setType("cmc");
     } else if (nftAddress === window.config.nft_base_address) {
       setType("base");
@@ -1669,7 +1696,21 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
-            ) : type === "cmc" ? (
+            ) 
+            : type === "skale" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  SKALE{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
+            ) 
+            : type === "cmc" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   CoinMarketCap{" "}
@@ -1725,6 +1766,8 @@ const SingleNft = ({
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
                         : nftAddress === window.config.nft_base_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
+                        : nftAddress === window.config.nft_skale_address
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+400x400.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
                     alt=""
@@ -1756,6 +1799,8 @@ const SingleNft = ({
                           ? baseLogo
                           : type === "cawsavax" || type === "landavax"
                           ? avaxLogo
+                          : type === "skale"
+                          ? skaleLogo
                           : ethIcon
                       }
                       alt=""
@@ -1776,6 +1821,8 @@ const SingleNft = ({
                       ? "BASE Network"
                       : type === "cawsavax" || type === "landavax"
                       ? "Avalanche"
+                      : type === "skale"
+                      ? "SKALE"
                       : "Ethereum"}
                   </span>
                   <span className="seller-addr d-flex gap-1 align-items-center">
@@ -1806,6 +1853,8 @@ const SingleNft = ({
                         ? "Conflux Beta Pass"
                         : type === "doge"
                         ? "Dogecoin Beta Pass"
+                        : type === "skale"
+                        ? "SKALE Beta Pass"
                         : type === "cmc"
                         ? "CoinMarketCap Beta Pass"
                         : type === "base"
@@ -1954,7 +2003,8 @@ const SingleNft = ({
                       type !== "cawsbase" &&
                       type !== "landavax" &&
                       type !== "landbnb" &&
-                      type !== "landbase" &&
+                      type !== "landbase"&&
+                      type !== "skale" &&
                       loadingNft === false && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
@@ -2128,7 +2178,10 @@ const SingleNft = ({
                       type !== "cawsbase" &&
                       type !== "landavax" &&
                       type !== "landbnb" &&
-                      type !== "landbase" && (
+                      type !== "landbase"
+                      &&
+                      type !== "skale" && (
+
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                           <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
                             <div className="d-flex w-100 justify-content-between flex-column ">
@@ -2316,6 +2369,7 @@ const SingleNft = ({
                         type === "conflux" ||
                         type === "base" ||
                         type === "doge" ||
+                        type === "skale" ||
                         type === "cmc" ||
                         type === "cawsbnb" ||
                         type === "cawsavax" ||
@@ -2352,6 +2406,9 @@ const SingleNft = ({
                                 ? `https://basescan.org/address/${owner}`
                                 : type === "cawsavax" || type === "landavax"
                                 ? `https://snowtrace.io/address/${owner}`
+                                : type === "skale"
+                                ? `https://lanky-ill-funny-testnet.explorer.testnet.skalenodes.com/address/${owner}`
+
                                 : `https://etherscan.io/address/${owner}`
                             }
                             target="_blank"
@@ -2542,6 +2599,7 @@ const SingleNft = ({
                         type !== "base" &&
                         type !== "cmc" &&
                         type !== "doge" &&
+                        type !== "skale" &&
                         type !== "cawsbnb" &&
                         type !== "cawsavax" &&
                         type !== "cawsbase" &&
@@ -2609,6 +2667,7 @@ const SingleNft = ({
                         type !== "conflux" &&
                         type !== "base" &&
                         type !== "doge" &&
+                        type !== "skale" &&
                         type !== "cmc" &&
                         type !== "cawsbnb" &&
                         type !== "cawsavax" &&
@@ -2635,6 +2694,7 @@ const SingleNft = ({
                         type !== "conflux" &&
                         type !== "base" &&
                         type !== "doge" &&
+                        type !== "skale" &&
                         type !== "cmc" &&
                         type !== "cawsbnb" &&
                         type !== "cawsavax" &&
@@ -2677,6 +2737,7 @@ const SingleNft = ({
             type !== "conflux" &&
             type !== "base" &&
             type !== "doge" &&
+            type !== "skale" &&
             type !== "cmc" && (
               <div className="px-2">
                 <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
@@ -2940,6 +3001,7 @@ const SingleNft = ({
             type === "conflux" ||
             type === "base" ||
             type === "doge" ||
+            type === "skale" ||
             type === "cmc") && (
             <div className="px-2">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
@@ -2969,6 +3031,8 @@ const SingleNft = ({
                             ? "CFX"
                             : type === "base"
                             ? "ETH"
+                            : type === "skale"
+                            ? "SKL"
                             : "BNB"}{" "}
                           rewards
                         </span>
