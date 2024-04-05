@@ -677,7 +677,7 @@ const NewLeaderBoard = ({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-
+console.log(result.data.data.leaderboard)
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
@@ -925,7 +925,7 @@ const NewLeaderBoard = ({
     fetchMonthlyRecords();
     fetchGenesisRecords();
     fetchSkaleRecords();
-  }, [username]);
+  }, [username, userId]);
 
   useEffect(() => {
     fetchGenesisPreviousWinners();
