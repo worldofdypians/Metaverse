@@ -16,6 +16,7 @@ import cawsStakeMobileImage from "./assets/cawsStakeMobileImage.png";
 import newCawsStake from "./assets/newCawsStake.png";
 import newCawsStakeMobile from "./assets/newCawsStakeMobile.png";
 import { useLocation } from "react-router-dom";
+import CawsStakeModal from "../../components/StakeModal/CawsStakeModal";
 
 const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const windowSize = useWindowSize();
@@ -27,7 +28,9 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const [nftModal, setNftModal] = useState(false);
   const [rewardModal, setRewardModal] = useState(false);
   const [landStakeModal, setlandStakeModal] = useState(false);
+  const [cawsStakeModal, setCawsStakeModal] = useState(false);
   const [landunStakeModal, setlandunStakeModal] = useState(false);
+  const [cawsUnstakeModal, setCawsUnstakeModal] = useState(false);
 
   const [newStakes, setnewStakes] = useState(0);
   const [approvedNfts, setApprovedNfts] = useState([]);
@@ -335,9 +338,15 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const onLandStakeModalClose = () => {
     setlandStakeModal(false);
   };
+  const onCawsStakeModalClose = () => {
+    setCawsStakeModal(false);
+  };
 
   const onLandunStakeModalClose = () => {
     setlandunStakeModal(false);
+  };
+  const onCawsUnstakeModalClose = () => {
+    setCawsUnstakeModal(false);
   };
 
   useEffect(() => {
@@ -368,12 +377,26 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   }, []);
 
   useEffect(() => {
-    if (nftModal || rewardModal || landStakeModal || landunStakeModal) {
+    if (
+      nftModal ||
+      rewardModal ||
+      landStakeModal ||
+      landunStakeModal ||
+      cawsStakeModal ||
+      cawsUnstakeModal
+    ) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [nftModal, rewardModal, landStakeModal, landunStakeModal]);
+  }, [
+    nftModal,
+    rewardModal,
+    landStakeModal,
+    landunStakeModal,
+    cawsStakeModal,
+    cawsUnstakeModal,
+  ]);
 
   return (
     <div
@@ -434,10 +457,42 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
               handleConnect={handleConnect}
             />
           )}
+          {cawsStakeModal && (
+            <CawsStakeModal
+              onModalClose={onCawsStakeModalClose}
+              getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
+              nftItem={myLandNFTs}
+              isConnected={isConnected}
+              coinbase={coinbase}
+              onDepositComplete={() => refreshStakes()}
+              onClaimAll={() => {
+                claimRewards();
+              }}
+              isStake={false}
+              handleConnect={handleConnect}
+            />
+          )}
 
           {landunStakeModal && (
             <StakeLandModal
               onModalClose={onLandunStakeModalClose}
+              getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
+              nftItem={mystakesLandPool}
+              isConnected={isConnected}
+              coinbase={coinbase}
+              onDepositComplete={() => refreshStakes()}
+              ETHrewards={EthRewardsLandPool}
+              finalUsd={ethToUSDLandPool}
+              onClaimAll={() => {
+                claimRewardsLandPool();
+              }}
+              isStake={true}
+              handleConnect={handleConnect}
+            />
+          )}
+          {cawsUnstakeModal && (
+            <CawsStakeModal
+              onModalClose={onCawsUnstakeModalClose}
               getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
               nftItem={mystakesLandPool}
               isConnected={isConnected}
@@ -470,7 +525,6 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
               </h6>
             </div>
             <div className="position-relative">
-           
               <h6
                 className={`new-stake-tab ${
                   activeTab === "upcoming" && "stake-tab-active"
@@ -517,33 +571,53 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                 </div>
               </div>
               <div className="col-12 px-0 mt-3">
-              <div className="new-caws-stake-wrapper d-flex align-items-center w-100 ">
-                <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                  <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
-                    <div className="d-flex flex-column gap-2">
-                      <h6 className="market-stake-title">
-                        Cats and Watches Society (CAWS)
-                      </h6>
-                      <span className="market-stake-desc">
-                        Stake your CAWS NFTs to earn daily ETH rewards.
-                      </span>
+                <div className="new-caws-stake-wrapper d-flex align-items-center w-100 ">
+                  <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                    <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
+                      <div className="d-flex flex-column gap-2">
+                        <h6 className="market-stake-title">
+                          Cats and Watches Society (CAWS)
+                        </h6>
+                        <span className="market-stake-desc">
+                          Stake your CAWS NFTs to earn daily ETH rewards.
+                        </span>
+                      </div>
+                      <div className="d-flex align-items-center gap-3">
+                        <button
+                          className="btn pill-btn px-4 py-2"
+                          onClick={() => {
+                            setCawsStakeModal(true);
+                          }}
+                        >
+                          Deposit
+                        </button>
+                        <button
+                          className="btn rewards-btn px-4 py-2"
+                          onClick={() => {
+                            setCawsUnstakeModal(true);
+                          }}
+                        >
+                          Rewards
+                        </button>
+                      </div>
+                      <div className="d-flex align-items-center gap-3"></div>
                     </div>
-                    <div className="d-flex align-items-center gap-3"></div>
+                    <div className="new-caws-apr d-flex flex-column align-items-center justify-content-center position-relative">
+                      <h6 className="caws-apr-percent mb-0">25%</h6>
+                      <span className="caws-apr">APR</span>
+                    </div>
+                    <img
+                      className="new-caws-stake-img"
+                      src={
+                        windowSize.width < 786
+                          ? newCawsStakeMobile
+                          : newCawsStake
+                      }
+                      alt=""
+                    />
                   </div>
-                  <div className="new-caws-apr d-flex flex-column align-items-center justify-content-center position-relative">
-                    <h6 className="caws-apr-percent mb-0">25%</h6>
-                    <span className="caws-apr">APR</span>
-                  </div>
-                  <img
-                    className="new-caws-stake-img"
-                    src={
-                      windowSize.width < 786 ? newCawsStakeMobile : newCawsStake
-                    }
-                    alt=""
-                  />
                 </div>
               </div>
-            </div>
             </>
           )}
           {activeTab === "upcoming" && (
@@ -553,7 +627,6 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                 <span className="upcoming-stake-desc">Check back soon!</span>
               </div>
             </div>
-           
           )}
           {activeTab === "past" && (
             <div className="row w-100 m-0 mt-5">
