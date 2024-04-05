@@ -677,7 +677,7 @@ const NewLeaderBoard = ({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-console.log(result.data.data.leaderboard)
+      
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
@@ -691,12 +691,12 @@ console.log(result.data.data.leaderboard)
           setActivePlayer(true);
         } else if (testArray.length > 0 && testArray2.length === 0) {
           setActivePlayer(false);
-          setUserDataMonthly(...testArray);
+          // setUserDataMonthly(...testArray);
           setUserDataGenesis(...testArray);
         }
       } else if (testArray.length > 0) {
         setActivePlayer(false);
-        setUserDataMonthly(...testArray);
+        // setUserDataMonthly(...testArray);
         setUserDataGenesis(...testArray);
       }
     }
@@ -862,9 +862,10 @@ console.log(result.data.data.leaderboard)
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     // setpreviousVersion(parseInt(result.data.data.version));
-    console.log(result.data.data.leaderboard)
+    // console.log(result.data.data.leaderboard)
     setskalePreviousRecords(result.data.data.leaderboard);
-    fillPreviousRecordsSkale(result.data.data.leaderboard);}
+    fillPreviousRecordsSkale(result.data.data.leaderboard);
+  }
   };
 
   const fetchGenesisPreviousWinners = async () => {
@@ -938,6 +939,7 @@ console.log(result.data.data.leaderboard)
     previousMonthlyVersion,
     previousVersion,
     previousWeeklyVersion,
+    skalepreviousVersion
   ]);
 
   useEffect(() => {
