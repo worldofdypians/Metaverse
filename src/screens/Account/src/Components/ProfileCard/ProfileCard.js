@@ -51,9 +51,9 @@ import Slider from "react-slick";
 import { Tooltip, tooltipClasses } from "@mui/material";
 import styled from "styled-components";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
-import premiumOfferTag from './assets/premiumOfferTag.png'
-import premiumExclusive from './assets/premiumExclusive.png'
-import premiumExclusive2 from './assets/premiumExclusive2.svg'
+import premiumOfferTag from "./assets/premiumOfferTag2.png";
+import premiumExclusive from "./assets/premiumExclusive.svg";
+import premiumExclusive2 from "./assets/premiumExclusive2.svg";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -138,7 +138,13 @@ const ProfileCard = ({
   const [rankDropdown, setRankDropdown] = useState(false);
   const [rankPopup, setRankPopup] = useState(false);
   const sliderRef = useRef(null);
-  const [rankTooltip, setRankTooltip] = useState(false)
+  const [rankTooltip, setRankTooltip] = useState(false);
+  const [exclusivePremium, setExclusivePremium] = useState(false);
+
+
+const handleExclusive = () => {
+  setExclusivePremium((old) => !old)
+}
 
   const userTotalScore = userBnbScore + userSkaleScore;
 
@@ -1240,7 +1246,10 @@ const ProfileCard = ({
                                 </span>
                               </div>
                               <div className="rank-progress-bar d-flex align-items-center px-2 justify-content-between position-relative">
-                                <div className="rank-current-progress" style={{width: `${userProgress}%`}}></div>
+                                <div
+                                  className="rank-current-progress"
+                                  style={{ width: `${userProgress}%` }}
+                                ></div>
                                 <span className="rank-current-score">
                                   {getFormattedNumber(userTotalScore, 0)}
                                 </span>
@@ -1461,8 +1470,29 @@ const ProfileCard = ({
             id="leaderboard"
             style={{ width: "70%", pointerEvents: "auto" }}
           >
-            <img src={premiumOfferTag} className="premium-offer-tag" alt="" />
-            <img src={premiumExclusive} className="premium-exclusive" alt="" />
+            {!isPremium ? (
+              <>
+                <img
+                  src={premiumOfferTag}
+                  className={`premium-offer-tag ${exclusivePremium ? "premium-shadow-active" : ""}`}
+                  onClick={() => handleExclusive()}
+                  alt=""
+                />
+                <OutsideClickHandler
+                  onOutsideClick={() => setExclusivePremium(false)}
+                >
+                  <img
+                    src={premiumExclusive}
+                    className={`premium-exclusive ${
+                      exclusivePremium ? "premium-exclusive-active" : ""
+                    }`}
+                    alt=""
+                  />
+                </OutsideClickHandler>
+              </>
+            ) : (
+              <></>
+            )}
             <div className="d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center gap-2">
                 <h2
@@ -1470,36 +1500,46 @@ const ProfileCard = ({
                 >
                   Rankings and Rewards
                 </h2>
-                <OutsideClickHandler onOutsideClick={() => setRankTooltip(false)}>
-                <HtmlTooltip
-                   open={rankTooltip}
-                   disableFocusListener
-                   disableHoverListener
-                   disableTouchListener
-                  title={
-                    <React.Fragment>
-                      Rankings and Rewards offer players a way to track their
-                      game progress and see the rewards they've earned for each
-                      rank. These ranks are determined by the accumulation of
-                      in-game points from both the BNB Chain and SKALE Network.
-                      <br />
-                      <br />
-                      Each month, the ranks and points reset, giving everyone a
-                      chance for a fresh start. As you climb the ranks, you'll
-                      unlock rewards based on your final rank at the end of the
-                      cycle.
-                      <br />
-                      <br />
-                      <b>
-                        The reward is not accumulative, meaning you only get the
-                        reward for the rank you have
-                      </b>
-                    </React.Fragment>
-                  }
+                <OutsideClickHandler
+                  onOutsideClick={() => setRankTooltip(false)}
                 >
-                  {" "}
-                  <img style={{cursor: "pointer"}} src={tooltipIcon} width={25} height={25} onClick={() => setRankTooltip(true)} alt="" />
-                </HtmlTooltip>
+                  <HtmlTooltip
+                    open={rankTooltip}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    title={
+                      <React.Fragment>
+                        Rankings and Rewards offer players a way to track their
+                        game progress and see the rewards they've earned for
+                        each rank. These ranks are determined by the
+                        accumulation of in-game points from both the BNB Chain
+                        and SKALE Network.
+                        <br />
+                        <br />
+                        Each month, the ranks and points reset, giving everyone
+                        a chance for a fresh start. As you climb the ranks,
+                        you'll unlock rewards based on your final rank at the
+                        end of the cycle.
+                        <br />
+                        <br />
+                        <b>
+                          The reward is not accumulative, meaning you only get
+                          the reward for the rank you have
+                        </b>
+                      </React.Fragment>
+                    }
+                  >
+                    {" "}
+                    <img
+                      style={{ cursor: "pointer" }}
+                      src={tooltipIcon}
+                      width={25}
+                      height={25}
+                      onClick={() => setRankTooltip(true)}
+                      alt=""
+                    />
+                  </HtmlTooltip>
                 </OutsideClickHandler>
               </div>
               <img
@@ -1509,7 +1549,7 @@ const ProfileCard = ({
                 style={{ cursor: "pointer" }}
               />
             </div>
-         
+
             {windowSize.width > 991 ? (
               <div className="d-flex align-items-center justify-content-between mt-3">
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
@@ -1548,7 +1588,6 @@ const ProfileCard = ({
                   >
                     <h6>$0</h6>
                   </div>
-                  
                 </div>
                 <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
@@ -1587,7 +1626,6 @@ const ProfileCard = ({
                   >
                     <h6>$5</h6>
                   </div>
-                 
                 </div>
                 <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
 
@@ -1627,7 +1665,6 @@ const ProfileCard = ({
                   >
                     <h6>$10</h6>
                   </div>
-                 
                 </div>
                 <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
 
@@ -1667,7 +1704,6 @@ const ProfileCard = ({
                   >
                     <h6>$25</h6>
                   </div>
-                 
                 </div>
                 <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
 
@@ -1707,7 +1743,6 @@ const ProfileCard = ({
                   >
                     <h6>$100</h6>
                   </div>
-                  
                 </div>
               </div>
             ) : (
@@ -1748,7 +1783,6 @@ const ProfileCard = ({
                   >
                     <h6>$0</h6>
                   </div>
-                 
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
@@ -1786,7 +1820,6 @@ const ProfileCard = ({
                   >
                     <h6>$5</h6>
                   </div>
-                 
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
@@ -1824,7 +1857,6 @@ const ProfileCard = ({
                   >
                     <h6>$10</h6>
                   </div>
-                 
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
@@ -1862,7 +1894,6 @@ const ProfileCard = ({
                   >
                     <h6>$25</h6>
                   </div>
-                  
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
@@ -1900,11 +1931,9 @@ const ProfileCard = ({
                   >
                     <h6>$100</h6>
                   </div>
-                 
                 </div>
               </Slider>
             )}
-           
           </div>
         </OutsideClickHandler>
       )}
