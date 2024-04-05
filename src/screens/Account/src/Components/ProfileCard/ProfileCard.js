@@ -51,6 +51,9 @@ import Slider from "react-slick";
 import { Tooltip, tooltipClasses } from "@mui/material";
 import styled from "styled-components";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
+import premiumOfferTag from './assets/premiumOfferTag.png'
+import premiumExclusive from './assets/premiumExclusive.png'
+import premiumExclusive2 from './assets/premiumExclusive2.svg'
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -691,6 +694,16 @@ const ProfileCard = ({
   useEffect(() => {
     handleUserRank();
   }, [userRank, userRankSkale, userBnbScore, userSkaleScore]);
+
+  const html = document.querySelector("html");
+
+  useEffect(() => {
+    if (rankPopup === true) {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [rankPopup]);
 
   return (
     <>
@@ -1444,14 +1457,16 @@ const ProfileCard = ({
       {rankPopup && (
         <OutsideClickHandler onOutsideClick={() => setRankPopup(false)}>
           <div
-            className="popup-wrapper leaderboard-popup popup-active p-3"
+            className="popup-wrapper leaderboard-popup rank-popup popup-active p-3"
             id="leaderboard"
             style={{ width: "70%", pointerEvents: "auto" }}
           >
+            <img src={premiumOfferTag} className="premium-offer-tag" alt="" />
+            <img src={premiumExclusive} className="premium-exclusive" alt="" />
             <div className="d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center gap-2">
                 <h2
-                  className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle rankingsPopupTitle gap-2`}
+                  className={`mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle rankingsPopupTitle gap-2`}
                 >
                   Rankings and Rewards
                 </h2>
@@ -1494,6 +1509,7 @@ const ProfileCard = ({
                 style={{ cursor: "pointer" }}
               />
             </div>
+         
             {windowSize.width > 991 ? (
               <div className="d-flex align-items-center justify-content-between mt-3">
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
@@ -1517,6 +1533,12 @@ const ProfileCard = ({
                       STARTER
                     </h6>
                   </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">0</span>
+                  </div>
                   <div
                     className={` ${
                       userRankName === "starter"
@@ -1526,12 +1548,7 @@ const ProfileCard = ({
                   >
                     <h6>$0</h6>
                   </div>
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <span className="needed-points-span mb-0">
-                      Points Required
-                    </span>
-                    <span className="needed-points mb-0">0</span>
-                  </div>
+                  
                 </div>
                 <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
@@ -1555,6 +1572,12 @@ const ProfileCard = ({
                       ROOKIE
                     </h6>
                   </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">6,000,000</span>
+                  </div>
                   <div
                     className={` ${
                       userRankName === "rookie"
@@ -1564,12 +1587,7 @@ const ProfileCard = ({
                   >
                     <h6>$5</h6>
                   </div>
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <span className="needed-points-span mb-0">
-                      Points Required
-                    </span>
-                    <span className="needed-points mb-0">6,000,000</span>
-                  </div>
+                 
                 </div>
                 <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
 
@@ -1594,6 +1612,12 @@ const ProfileCard = ({
                       UNDERDOG
                     </h6>
                   </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">12,000,000</span>
+                  </div>
                   <div
                     className={` ${
                       userRankName === "underdog"
@@ -1603,12 +1627,7 @@ const ProfileCard = ({
                   >
                     <h6>$10</h6>
                   </div>
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <span className="needed-points-span mb-0">
-                      Points Required
-                    </span>
-                    <span className="needed-points mb-0">12,000,000</span>
-                  </div>
+                 
                 </div>
                 <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
 
@@ -1633,6 +1652,12 @@ const ProfileCard = ({
                       CHAMPION
                     </h6>
                   </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">24,000,000</span>
+                  </div>
                   <div
                     className={` ${
                       userRankName === "champion"
@@ -1642,12 +1667,7 @@ const ProfileCard = ({
                   >
                     <h6>$25</h6>
                   </div>
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <span className="needed-points-span mb-0">
-                      Points Required
-                    </span>
-                    <span className="needed-points mb-0">24,000,000</span>
-                  </div>
+                 
                 </div>
                 <img src={pointerArrow} className="rank-pointer-arrow" alt="" />
 
@@ -1672,6 +1692,12 @@ const ProfileCard = ({
                       UNSTOPPABLE
                     </h6>
                   </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">40,000,000</span>
+                  </div>
                   <div
                     className={` ${
                       userRankName === "unstoppable"
@@ -1681,12 +1707,7 @@ const ProfileCard = ({
                   >
                     <h6>$100</h6>
                   </div>
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <span className="needed-points-span mb-0">
-                      Points Required
-                    </span>
-                    <span className="needed-points mb-0">40,000,000</span>
-                  </div>
+                  
                 </div>
               </div>
             ) : (
@@ -1712,6 +1733,12 @@ const ProfileCard = ({
                       STARTER
                     </h6>
                   </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">0</span>
+                  </div>
                   <div
                     className={` ${
                       userRankName === "starter"
@@ -1721,12 +1748,7 @@ const ProfileCard = ({
                   >
                     <h6>$0</h6>
                   </div>
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <span className="needed-points-span mb-0">
-                      Points Required
-                    </span>
-                    <span className="needed-points mb-0">0</span>
-                  </div>
+                 
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
@@ -1749,6 +1771,12 @@ const ProfileCard = ({
                       ROOKIE
                     </h6>
                   </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">6,000,000</span>
+                  </div>
                   <div
                     className={` ${
                       userRankName === "rookie"
@@ -1758,12 +1786,7 @@ const ProfileCard = ({
                   >
                     <h6>$5</h6>
                   </div>
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <span className="needed-points-span mb-0">
-                      Points Required
-                    </span>
-                    <span className="needed-points mb-0">6,000,000</span>
-                  </div>
+                 
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
@@ -1786,6 +1809,12 @@ const ProfileCard = ({
                       UNDERDOG
                     </h6>
                   </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">12,000,000</span>
+                  </div>
                   <div
                     className={` ${
                       userRankName === "underdog"
@@ -1795,12 +1824,7 @@ const ProfileCard = ({
                   >
                     <h6>$10</h6>
                   </div>
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <span className="needed-points-span mb-0">
-                      Points Required
-                    </span>
-                    <span className="needed-points mb-0">12,000,000</span>
-                  </div>
+                 
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
@@ -1823,6 +1847,12 @@ const ProfileCard = ({
                       CHAMPION
                     </h6>
                   </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">24,000,000</span>
+                  </div>
                   <div
                     className={` ${
                       userRankName === "champion"
@@ -1832,12 +1862,7 @@ const ProfileCard = ({
                   >
                     <h6>$25</h6>
                   </div>
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <span className="needed-points-span mb-0">
-                      Points Required
-                    </span>
-                    <span className="needed-points mb-0">24,000,000</span>
-                  </div>
+                  
                 </div>
                 <div className="d-flex flex-column align-items-center gap-2 single-rank-wrapper">
                   <div className="d-flex flex-column align-items-center gap-0">
@@ -1860,6 +1885,12 @@ const ProfileCard = ({
                       UNSTOPPABLE
                     </h6>
                   </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <span className="needed-points-span mb-0">
+                      Points Required
+                    </span>
+                    <span className="needed-points mb-0">40,000,000</span>
+                  </div>
                   <div
                     className={` ${
                       userRankName === "unstoppable"
@@ -1869,15 +1900,11 @@ const ProfileCard = ({
                   >
                     <h6>$100</h6>
                   </div>
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <span className="needed-points-span mb-0">
-                      Points Required
-                    </span>
-                    <span className="needed-points mb-0">40,000,000</span>
-                  </div>
+                 
                 </div>
               </Slider>
             )}
+           
           </div>
         </OutsideClickHandler>
       )}
