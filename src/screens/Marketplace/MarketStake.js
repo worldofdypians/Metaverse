@@ -17,10 +17,13 @@ import newCawsStake from "./assets/newCawsStake.png";
 import newCawsStakeMobile from "./assets/newCawsStakeMobile.png";
 import { useLocation } from "react-router-dom";
 import CawsStakeModal from "../../components/StakeModal/CawsStakeModal";
+import { useNavigate } from "react-router-dom";
 
-const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
+const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }) => {
   const windowSize = useWindowSize();
   const [mystakes, setMystakes] = useState([]);
+  const [myCawsstakes, setMyCawsstakes] = useState([]);
+
   const [mystakesLandPool, setMystakesLandPool] = useState([]);
   const [myLandstakes, setMyLandstakes] = useState([]);
   const [myNFTs, setMyNFTs] = useState([]);
@@ -40,9 +43,13 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const [approvedLandNfts, setApprovedLandNfts] = useState([]);
   const [EthRewards, setEthRewards] = useState(0);
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
+  const [EthRewardsCawsPremium, setEthRewardsCawsPremium] = useState(0);
+
 
   const [ethToUSD, setethToUSD] = useState(0);
   const [ethToUSDLandPool, setethToUSDLandPool] = useState(0);
+  const [ethToUSDCawsPremium, setethToUSDCawsPremium] = useState(0);
+
 
   const [landtvl, setlandTvl] = useState(0);
   const [cawslandTvl, setCawsLandtvl] = useState(0);
@@ -52,6 +59,8 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const [pastCawsUsdPrice, setPastCawsUsdPrice] = useState(0);
   const html = document.querySelector("html");
   const location = useLocation();
+
+  const navigate = useNavigate()
 
   const fetchTvl = async () => {
     const result = await axios.get(
@@ -64,6 +73,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
       setCawsLandtvl(resultcawsWod);
     }
   };
+
   const fetchTotalLocked = async () => {
     const result = await axios.get(
       `https://api.worldofdypians.com/api/lockedNFTs`
@@ -108,6 +118,25 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     }
   }, [location]);
 
+  const getCawsStakesIds = async () => {
+    const address = coinbase;
+    let staking_contract = await window.getContractCawsPremiumNFT(
+      "CAWSPREMIUM"
+    );
+    let stakenft = [];
+    let myStakes = await staking_contract.methods
+      .depositsOf(address)
+      .call()
+      .then((result) => {
+        for (let i = 0; i < result.length; i++)
+          stakenft.push(parseInt(result[i]));
+        return stakenft;
+      });
+
+    return myStakes;
+  };
+
+
   const getStakesIds = async () => {
     let stakenft = [];
 
@@ -125,6 +154,19 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
       return allCawsStakes;
     }
   };
+
+
+  const myCawsStakes = async () => {
+    let myStakes = await getCawsStakesIds();
+    if (myStakes && myStakes.length > 0) {
+      let stakes = myStakes.map((stake) => window.getNft(stake));
+
+      stakes = await Promise.all(stakes);
+      stakes.reverse();
+      setMyCawsstakes(stakes);
+    } else setMyCawsstakes([]);
+  };
+
 
   const myStakes = async () => {
     let myStakes = await getStakesIds();
@@ -230,6 +272,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     const ethprice = await convertEthToUsd();
     setethToUSD(Number(ethprice) * Number(EthRewards));
     setethToUSDLandPool(Number(ethprice) * Number(EthRewardsLandPool));
+    setethToUSDCawsPremium(Number(ethprice) * EthRewardsCawsPremium)
     setPastCawsUsdPrice(Number(ethprice) * 59);
   };
 
@@ -286,6 +329,33 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     setEthRewardsLandPool(result);
   };
 
+
+  const calculateAllRewardsCawsPremium = async () => {
+    let myStakes = await getCawsStakesIds();
+    let result = 0;
+    let calculateRewards = [];
+    let staking_contract = await window.getContractCawsPremiumNFT(
+      "CAWSPREMIUM"
+    );
+    if (coinbase !== null) {
+      if (myStakes && myStakes.length > 0) {
+        calculateRewards = await staking_contract.methods
+          .calculateRewards(coinbase, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          });
+      }
+      let a = 0;
+
+      for (let i = 0; i < calculateRewards.length; i++) {
+        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
+        result = result + Number(a);
+      }
+    }
+    setEthRewardsCawsPremium(result);
+  };
+
   const claimRewards = async () => {
     let myStakes = await getStakesIds();
     // setclaimAllStatus("Claiming all rewards, please wait...");
@@ -300,6 +370,24 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
   const claimRewardsLandPool = async () => {
     let myStakes = await getStakesIdsLandPool();
     let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
+
+    await staking_contract.methods
+      .claimRewards(myStakes)
+      .send()
+      .then(() => {
+        setEthRewards(0);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  
+  const claimRewardsCawsPremium = async () => {
+    let myStakes = await getCawsStakesIds();
+    let staking_contract = await window.getContractCawsPremiumNFT(
+      "CAWSPREMIUM"
+    );
 
     await staking_contract.methods
       .claimRewards(myStakes)
@@ -349,19 +437,25 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
     setCawsUnstakeModal(false);
   };
 
+  const handleNavigateToAccount=()=>{
+    navigate('/account')
+  }
+
   useEffect(() => {
     if (isConnected) {
       setUSDPrice();
     }
     setPastCawsUsd();
-  }, [isConnected, EthRewards]);
+  }, [isConnected, EthRewards, EthRewardsCawsPremium]);
 
   useEffect(() => {
     if (coinbase && chainId === 1) {
       calculateAllRewards();
       calculateAllRewardsLandPool();
+      calculateAllRewardsCawsPremium()
       myNft();
       myStakes();
+      myCawsStakes();
       myLandNft();
       myLandStakes();
       myStakesLandPool();
@@ -460,13 +554,13 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
           {cawsStakeModal && (
             <CawsStakeModal
               onModalClose={onCawsStakeModalClose}
-              getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
-              nftItem={myLandNFTs}
+              getApprovedLandPoolsNfts={getApprovedNfts}
+              nftItem={myNFTs}
               isConnected={isConnected}
               coinbase={coinbase}
               onDepositComplete={() => refreshStakes()}
               onClaimAll={() => {
-                claimRewards();
+                claimRewardsCawsPremium();
               }}
               isStake={false}
               handleConnect={handleConnect}
@@ -493,15 +587,15 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
           {cawsUnstakeModal && (
             <CawsStakeModal
               onModalClose={onCawsUnstakeModalClose}
-              getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
-              nftItem={mystakesLandPool}
+              getApprovedLandPoolsNfts={getApprovedNfts}
+              nftItem={myCawsstakes}
               isConnected={isConnected}
               coinbase={coinbase}
               onDepositComplete={() => refreshStakes()}
-              ETHrewards={EthRewardsLandPool}
-              finalUsd={ethToUSDLandPool}
+              ETHrewards={EthRewardsCawsPremium}
+              finalUsd={ethToUSDCawsPremium}
               onClaimAll={() => {
-                claimRewardsLandPool();
+                claimRewardsCawsPremium();
               }}
               isStake={true}
               handleConnect={handleConnect}
@@ -582,6 +676,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                           Stake your CAWS NFTs to earn daily ETH rewards.
                         </span>
                       </div>
+                      {isPremium && isConnected &&
                       <div className="d-flex align-items-center gap-3">
                         <button
                           className="btn pill-btn px-4 py-2"
@@ -600,6 +695,25 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                           Rewards
                         </button>
                       </div>
+                       }
+                       {!isConnected &&  <button
+                          className="btn pill-btn px-4 py-2"
+                          style={{width: 'fit-content'}}
+                          onClick={() => {
+                            handleConnect()
+                          }}
+                        >
+                          Connect Wallet
+                        </button>}
+                        {isConnected && !isPremium && <button
+                          className="btn pill-btn px-4 py-2"
+                          style={{width: 'fit-content'}}
+                          onClick={() => {
+                            handleNavigateToAccount()
+                          }}
+                        >
+                          Become Premium
+                        </button>}
                       <div className="d-flex align-items-center gap-3"></div>
                     </div>
                     <div className="new-caws-apr d-flex flex-column align-items-center justify-content-center position-relative">

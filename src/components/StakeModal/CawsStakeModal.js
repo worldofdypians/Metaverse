@@ -8,12 +8,12 @@ import cawsTag from "./assets/cawsTag.svg";
 import wodTag from "./assets/wodTag.svg";
 import fullWod from "./assets/fullWod.png";
 import ethIcon from "./assets/ethIcon.svg";
-import LandNftChecklist from "./LandNftChecklist";
 import OutsideClickHandler from "react-outside-click-handler";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { formattedNum } from "../../screens/Caws/functions/formatUSD";
 import EmptyCawsCard from "./EmptyCawsCard";
+import CawsPremiumChecklist from "./CawsPremiumChecklist";
 
 const CawsStakeModal = ({
   onModalClose,
@@ -74,9 +74,9 @@ const CawsStakeModal = ({
 
   const checkApproval = async () => {
     const address = coinbase;
-    const stake25 = await window.config.landnftstake_address;
+    const stake25 = await window.config.nft_caws_premiumstake_address;
     if (address) {
-      const result = await window.landnft
+      const result = await window.nft
         .checkapproveStake(address, stake25)
         .then((data) => {
           return data;
@@ -98,10 +98,13 @@ const CawsStakeModal = ({
   const handleSelectAll = () => {
     setCheckBtn(!checkbtn);
     if (checkbtn === false) {
-      if (nftIds.length > 50) {
-        setSelectedNftIds(nftIds.slice(0, 50));
-      } else if (nftIds.length <= 50) {
+      if (nftIds.length > 4) {
+        setSelectedNftIds(nftIds.slice(0, 4));
+        getApprovedLandPoolsNfts(nftIds.slice(0, 4))
+      } else if (nftIds.length <= 4) {
         setSelectedNftIds(nftIds);
+        getApprovedLandPoolsNfts(nftIds)
+        
       }
     } else if (checkbtn === true) {
       setSelectedNftIds([]);
@@ -109,13 +112,19 @@ const CawsStakeModal = ({
     setCheckUnstakeBtn(false);
   };
 
+
+
   const handleSelectAllToUnstake = () => {
     setCheckUnstakeBtn(!checkUnstakebtn);
     if (checkUnstakebtn === false) {
-      if (nftIds.length > 50) {
-        setSelectedNftIds(nftIds.slice(0, 50));
-      } else if (nftIds.length <= 50) {
+      if (nftIds.length > 4) {
+        setSelectedNftIds(nftIds.slice(0, 4));
+        getApprovedLandPoolsNfts(nftIds.slice(0, 4))
+        
+      } else if (nftIds.length <= 4) {
         setSelectedNftIds(nftIds);
+        getApprovedLandPoolsNfts(nftIds)
+
       }
     } else if (checkUnstakebtn === true) {
       setSelectedNftIds([]);
@@ -124,11 +133,11 @@ const CawsStakeModal = ({
   };
 
   const handleApprove = async () => {
-    const stake25 = await window.config.landnftstake_address;
+    const stake25 = await window.config.nft_caws_premiumstake_address;
     setloading(true);
     setStatus("*Waiting for approval");
     setColor("#52A8A4");
-    await window.landnft
+    await window.nft
       .approveStake(stake25)
       .then(() => {
         setActive(false);
@@ -145,7 +154,9 @@ const CawsStakeModal = ({
   };
 
   const handleDeposit = async (value) => {
-    let stake_contract = await window.getContractLandNFT("LANDNFTSTAKING");
+    let stake_contract = await await window.getContractCawsPremiumNFT(
+      "CAWSPREMIUM"
+    );
     setloadingdeposit(true);
     setStatus("*Processing deposit");
     setColor("#52A8A4");
@@ -188,22 +199,22 @@ const CawsStakeModal = ({
 
   useEffect(() => {
     if (
-      selectNftIds.length > 50 &&
+      selectNftIds.length > 4 &&
       checkbtn === false &&
       showToStake === true
     ) {
-      window.alertify.error("Limit to Stake/Unstake NFT is 50 NFT's per round");
+      window.alertify.error("Limit to Stake/Unstake NFT is 4 NFT's per wallet");
       const interval = setInterval(async () => {
         setCheckBtn(false);
         setCheckUnstakeBtn(false);
         return () => clearInterval(interval);
       }, 500);
     } else if (
-      selectNftIds.length > 50 &&
+      selectNftIds.length > 4 &&
       checkbtn === true &&
       showToStake === true
     ) {
-      window.alertify.error("Limit to Stake/Unstake NFT is 50 NFT's per round");
+      window.alertify.error("Limit to Stake/Unstake NFT is 4 NFT's per wallet");
       const interval = setInterval(async () => {
         setCheckBtn(false);
         setCheckUnstakeBtn(false);
@@ -211,22 +222,22 @@ const CawsStakeModal = ({
         return () => clearInterval(interval);
       }, 500);
     } else if (
-      selectNftIds.length > 50 &&
+      selectNftIds.length > 4 &&
       checkUnstakebtn === false &&
       showToStake === false
     ) {
-      window.alertify.error("Limit to Stake/Unstake NFT is 50 NFT's per round");
+      window.alertify.error("Limit to Stake/Unstake NFT is 4 NFT's per wallet");
       const interval = setInterval(async () => {
         setCheckBtn(false);
         setCheckUnstakeBtn(false);
         return () => clearInterval(interval);
       }, 500);
     } else if (
-      selectNftIds.length > 50 &&
+      selectNftIds.length > 4 &&
       checkUnstakebtn === true &&
       showToStake === false
     ) {
-      window.alertify.error("Limit to Stake/Unstake NFT is 50 NFT's per round");
+      window.alertify.error("Limit to Stake/Unstake NFT is 4 NFT's per wallet");
       const interval = setInterval(async () => {
         setCheckBtn(false);
         setCheckUnstakeBtn(false);
@@ -252,7 +263,9 @@ const CawsStakeModal = ({
   const onEmptyState = () => {};
 
   const handleUnstake = async (value) => {
-    let stake_contract = await window.getContractLandNFT("LANDNFTSTAKING");
+    let stake_contract = await window.getContractCawsPremiumNFT(
+      "CAWSPREMIUM"
+    );
     setStatus("*Processing unstake");
     setColor("#52A8A4");
 
@@ -281,7 +294,9 @@ const CawsStakeModal = ({
   };
 
   const handleClaim = async (itemId) => {
-    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
+    let staking_contract = await window.getContractCawsPremiumNFT(
+      "CAWSPREMIUM"
+    );
     setColor("#52A8A4");
     setloadingClaim(true);
     setActive(false);
@@ -385,7 +400,7 @@ const CawsStakeModal = ({
       </div>
       <div className="row position-relative mt-3">
         <div className="col-12">
-          <div className="nft-modal-grid2">
+          <div className="nft-modal-grid22">
             {nftItem.length === 0 ? (
               [...Array(devicewidth < 500 ? 2 : 4)].map((item, id) => {
                 return <EmptyCawsCard key={id} />;
@@ -393,25 +408,26 @@ const CawsStakeModal = ({
             ) : nftItem.length === 1 ? (
               <>
                 {nftItem.map((item, id) => {
-                  let nftId = item.name?.slice(1, nftItem.name?.length);
+                  let nftId = item.name?.slice(6, nftItem.name?.length);
 
                   nftIds.push(nftId);
 
                   return (
                     <>
-                      <LandNftChecklist
+                      <CawsPremiumChecklist
                         key={id}
                         nft={item}
                         width={"auto"}
                         height={"auto"}
                         modalId="#newNftchecklist"
                         isStake={isStake}
+                        countDownLeft={0}
                         checked={
-                          ((isStake === false && checkbtn === true) ||
-                            (isStake === true && checkUnstakebtn === true)) &&
-                          selectNftIds.length <= 50
+                          ((isStake === false && checkbtn === true && selectNftIds.includes(nftId)) ||
+                            (isStake === true && checkUnstakebtn === true && selectNftIds.includes(nftId))) &&
+                          selectNftIds.length <= 4
                         }
-                        checked2={selectNftIds.length <= 50 ? true : false}
+                        checked2={selectNftIds.length <= 4 ? true : false}
                         checklistItemID={nftId}
                         onChange={(value) => {
                           selectNftIds.indexOf(value) === -1
@@ -445,24 +461,25 @@ const CawsStakeModal = ({
             ) : (
               <>
                 {nftItem.map((item, id) => {
-                  let nftId = item.name?.slice(1, nftItem.name?.length);
+                  let nftId = item.name?.slice(6, nftItem.name?.length);
                   nftIds.push(nftId);
 
                   return (
                     <>
-                      <LandNftChecklist
+                      <CawsPremiumChecklist
                         key={id}
                         nft={item}
+                        countDownLeft={0}
                         width={"auto"}
                         height={"auto"}
                         modalId="#newNftchecklist"
                         isStake={isStake}
                         checked={
-                          ((isStake === true && checkbtn === true) ||
-                            (isStake === false && checkUnstakebtn === true)) &&
-                          selectNftIds.length <= 50
+                          ((isStake === true && checkbtn === true && selectNftIds.includes(nftId)) ||
+                            (isStake === false && checkUnstakebtn === true && selectNftIds.includes(nftId))) &&
+                          selectNftIds.length <= 4
                         }
-                        checked2={selectNftIds.length <= 50 ? true : false}
+                        checked2={selectNftIds.length <= 4 ? true : false}
                         checklistItemID={nftId}
                         onChange={(value) => {
                           selectNftIds.indexOf(value) === -1
@@ -491,9 +508,11 @@ const CawsStakeModal = ({
       <div className="w-100 p-2 d-flex align-items-center gap-2 mt-3 info-span">
         <img src={greenInfo} alt="" />
         <span className="info-span-text">
-          Please choose the NFTs that you wish to stake. Once you have made your
+          {isStake ? `Please select the NFTs to claim your rewards or withdraw them
+            from the staking pool.` : ` Please choose the NFTs that you wish to stake. Once you have made your
           selection, you will be required to approve the process before
-          depositing the NFTs.
+          depositing the NFTs.`}
+         
         </span>
       </div>
       {!isStake ? (
@@ -522,7 +541,7 @@ const CawsStakeModal = ({
                 style={{ top: "-30px", right: "-175px" }}
               >
                 <p className="tooltip-content2 m-0">
-                  You can select a maximum of 50 CAWS NFTs
+                  You can select a maximum of 4 CAWS NFTs
                 </p>
               </div>
             </div>
@@ -542,7 +561,7 @@ const CawsStakeModal = ({
                   className={`btn m-auto ${
                     showApprove === true &&
                     getApprovedLandPoolsNfts(selectNftIds).length > 0 &&
-                    getApprovedLandPoolsNfts(selectNftIds).length < 51
+                    getApprovedLandPoolsNfts(selectNftIds).length < 5
                       ? "pill-btn"
                       : "disabled-approve-btn"
                   }`}
@@ -550,7 +569,7 @@ const CawsStakeModal = ({
                     pointerEvents:
                       showApprove === true &&
                       getApprovedLandPoolsNfts(selectNftIds).length > 0 &&
-                      getApprovedLandPoolsNfts(selectNftIds).length < 51
+                      getApprovedLandPoolsNfts(selectNftIds).length < 5
                         ? "auto"
                         : "none",
                   }}
@@ -576,7 +595,7 @@ const CawsStakeModal = ({
                   showApprove === false &&
                   isConnected &&
                   getApprovedLandPoolsNfts(selectNftIds).length > 0 &&
-                  getApprovedLandPoolsNfts(selectNftIds).length < 51
+                  getApprovedLandPoolsNfts(selectNftIds).length < 5
                     ? "pill-btn"
                     : "disabled-approve-btn"
                 }`}
@@ -585,7 +604,7 @@ const CawsStakeModal = ({
                   pointerEvents:
                     showApprove === false &&
                     getApprovedLandPoolsNfts(selectNftIds).length > 0 &&
-                    getApprovedLandPoolsNfts(selectNftIds).length < 51
+                    getApprovedLandPoolsNfts(selectNftIds).length < 5
                       ? "auto"
                       : "none",
                 }}
@@ -594,7 +613,7 @@ const CawsStakeModal = ({
                     getApprovedLandPoolsNfts(selectNftIds).length === 0) ||
                   (checkbtn === false &&
                     getApprovedLandPoolsNfts(selectNftIds).length === 0) ||
-                  getApprovedLandPoolsNfts(selectNftIds).length > 50
+                  getApprovedLandPoolsNfts(selectNftIds).length > 4
                     ? onEmptyState()
                     : handleDeposit()
                 }
@@ -704,21 +723,21 @@ const CawsStakeModal = ({
               <button
                 className={` ${
                   (getApprovedLandPoolsNfts(selectNftIds).length !== 0 &&
-                    getApprovedLandPoolsNfts(selectNftIds).length < 51 &&
+                    getApprovedLandPoolsNfts(selectNftIds).length < 5 &&
                     nftItem.length !== 0) ||
                   checkUnstakebtn === true
-                    ? "withdrawbtn"
+                    ? "withdrawbtn border-0"
                     : "disabled-approve-btn"
                 } w-100 p-2`}
                 onClick={() => {
                   checkUnstakebtn === true &&
                   getApprovedLandPoolsNfts(selectNftIds).length ===
                     nftItem.length &&
-                  getApprovedLandPoolsNfts(selectNftIds).length < 51
+                  getApprovedLandPoolsNfts(selectNftIds).length < 5
                     ? handleUnstake()
                     : (checkUnstakebtn === true &&
                         getApprovedLandPoolsNfts(selectNftIds).length === 0) ||
-                      getApprovedLandPoolsNfts(selectNftIds).length > 50
+                      getApprovedLandPoolsNfts(selectNftIds).length > 4
                     ? onEmptyState()
                     : getApprovedLandPoolsNfts(selectNftIds).length !== 0 &&
                       getApprovedLandPoolsNfts(selectNftIds).length <
