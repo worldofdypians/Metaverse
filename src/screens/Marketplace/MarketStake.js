@@ -457,7 +457,9 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
           </h6>
           <div className="d-flex w-100 align-items-center justify-content-center gap-4">
             <div className="position-relative">
-             
+              <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                <span className="mb-0">New</span>
+              </div>
               <h6
                 className={`new-stake-tab ${
                   activeTab === "live" && "stake-tab-active"
@@ -468,9 +470,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
               </h6>
             </div>
             <div className="position-relative">
-            <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                <span className="mb-0">New</span>
-              </div>
+           
               <h6
                 className={`new-stake-tab ${
                   activeTab === "upcoming" && "stake-tab-active"
@@ -516,24 +516,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                   <span className="new-stake-desc">Paid Rewards</span>
                 </div>
               </div>
-              <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center mt-5">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <h6 className="upcoming-stake">
-                    Staking pools are coming...
-                  </h6>
-                  <span className="upcoming-stake-desc">Check back soon!</span>
-                </div>
-              </div>
-            </>
-          )}
-          {activeTab === "upcoming" && (
-            // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-            //   <div className="d-flex flex-column align-items-center gap-2">
-            //     <h6 className="upcoming-stake">Staking pools are coming...</h6>
-            //     <span className="upcoming-stake-desc">Check back soon!</span>
-            //   </div>
-            // </div>
-            <div className="col-12 px-0">
+              <div className="col-12 px-0 mt-3">
               <div className="new-caws-stake-wrapper d-flex align-items-center w-100 ">
                 <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
                   <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
@@ -561,6 +544,16 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected }) => {
                 </div>
               </div>
             </div>
+            </>
+          )}
+          {activeTab === "upcoming" && (
+            <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+              <div className="d-flex flex-column align-items-center gap-2">
+                <h6 className="upcoming-stake">Staking pools are coming...</h6>
+                <span className="upcoming-stake-desc">Check back soon!</span>
+              </div>
+            </div>
+           
           )}
           {activeTab === "past" && (
             <div className="row w-100 m-0 mt-5">

@@ -1467,6 +1467,7 @@ window.config = {
   nft_marketplace_address: "0xF55D96735Fa22ba1C119bA37aF76C2c4E3BeC224",
   nft_caws_address: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
   nft_cawsold_address: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+  nft_caws_premiumstake_address: '0x097bB1679AC734E90907Ff4173bA966c694428Fc',
   nft_timepiece_address: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
   nft_coingecko_address: "0x9b7c2B05367A729e0E671a24B8a143C0d4F6A90D",
   nft_gate_address: "0x2FED6783AdA5eA6B2D7cE9aE749c76B9f4858526",
