@@ -25,6 +25,33 @@
   }
 }
 
+.domain-popup-wrapper {
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
+  top: -10000px;
+  left: 0%;
+  bottom: 0%;
+  right: 0%;
+  margin: auto;
+  z-index: 1000;
+  background: #1A1C39;
+  border-radius: 16px;
+  pointer-events: auto !important;
+  transition: all 1s ease-in-out;
+  width: 50%;
+
+  // @media screen and (max-width: 1455px) {
+  //   width: 55%;
+  // }
+  @media screen and (max-width: 1300px) {
+    width: 50% !important;
+  }
+  @media screen and (max-width: 991px) {
+    width: 90% !important;
+  }
+}
+
 .leaderboard-popup{
   background-image: url('./newLeaderboardBg.jpg') !important;
   background-size: 100%;
