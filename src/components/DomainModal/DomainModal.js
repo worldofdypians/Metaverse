@@ -53,9 +53,9 @@ const DomainModal = ({
   return (
     <OutsideClickHandler onOutsideClick={onClose}>
       <div
-        className="popup-wrapper popup-active p-3"
+        className="domain-popup-wrapper popup-active p-3"
         style={{
-          width: "35%",
+          width: "30%",
           // height: windowSize.width > 786 ? "530px" : "650px",
           minHeight: "330px",
           background: "#1A1C39",
