@@ -155,7 +155,9 @@ function App() {
   const [listedNFTS2, setListedNFTS2] = useState([]);
   const [recentListedNFTS2, setrecentListedNFTS2] = useState([]);
   const [count33, setCount33] = useState(0);
-  const [count44, setCount44] = useState(1);
+  const [count44, setCount44] = useState(0);
+  const [count55, setCount55] = useState(0);
+
 
 
   const [myCAWstakes, setCAWMystakes] = useState([]);
@@ -1398,7 +1400,7 @@ function App() {
     getListedNFTS(0, "", "recentListedNFTS")
       .then((data) => {
         setrecentListedNFTS2(data);
-        setCount33(count44+1)
+        setCount44(count44+1)
       })
       .catch((e) => {
         console.log(e);
@@ -1792,7 +1794,6 @@ function App() {
   };
 
   const refreshSubscription = async (addr) => {
-    const result = window.checkPremium(addr);
 
     let subscribedPlatformTokenAmountETH;
     let subscribedPlatformTokenAmountCfx;
@@ -1841,6 +1842,10 @@ function App() {
     );
 
     if (addr) {
+
+    const result = window.checkPremium(addr);
+
+    
       subscribedPlatformTokenAmountETH = await ethcontract.methods
         .subscriptionPlatformTokenAmount(addr)
         .call()
@@ -2206,7 +2211,7 @@ function App() {
     getAllData();
     fetchDogeCoinPrice();
     refreshSubscription(coinbase)
-  }, [coinbase]);
+  }, [coinbase, count55]);
 
   useEffect(() => {
     getDomains();
@@ -3025,6 +3030,8 @@ function App() {
                   chainId={chainId}
                   coinbase={coinbase}
                   isPremium={isPremium}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  onSuccessDeposit={()=>{setCount55(count55+1)}}
                 />
               }
             />

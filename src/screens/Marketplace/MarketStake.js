@@ -18,8 +18,18 @@ import newCawsStakeMobile from "./assets/newCawsStakeMobile.png";
 import { useLocation } from "react-router-dom";
 import CawsStakeModal from "../../components/StakeModal/CawsStakeModal";
 import { useNavigate } from "react-router-dom";
+import GetPremiumPopup from "../Account/src/Components/PremiumPopup/GetPremium";
+import OutsideClickHandler from "react-outside-click-handler";
 
-const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }) => {
+const MarketStake = ({
+  coinbase,
+  chainId,
+  handleConnect,
+  isConnected,
+  isPremium,
+  onSuccessDeposit,
+  handleSwitchNetwork,
+}) => {
   const windowSize = useWindowSize();
   const [mystakes, setMystakes] = useState([]);
   const [myCawsstakes, setMyCawsstakes] = useState([]);
@@ -45,11 +55,9 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
   const [EthRewardsCawsPremium, setEthRewardsCawsPremium] = useState(0);
 
-
   const [ethToUSD, setethToUSD] = useState(0);
   const [ethToUSDLandPool, setethToUSDLandPool] = useState(0);
   const [ethToUSDCawsPremium, setethToUSDCawsPremium] = useState(0);
-
 
   const [landtvl, setlandTvl] = useState(0);
   const [cawslandTvl, setCawsLandtvl] = useState(0);
@@ -59,8 +67,9 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }
   const [pastCawsUsdPrice, setPastCawsUsdPrice] = useState(0);
   const html = document.querySelector("html");
   const location = useLocation();
+  const [getPremiumPopup, setgetPremiumPopup] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const fetchTvl = async () => {
     const result = await axios.get(
@@ -136,7 +145,6 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }
     return myStakes;
   };
 
-
   const getStakesIds = async () => {
     let stakenft = [];
 
@@ -155,7 +163,6 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }
     }
   };
 
-
   const myCawsStakes = async () => {
     let myStakes = await getCawsStakesIds();
     if (myStakes && myStakes.length > 0) {
@@ -166,7 +173,6 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }
       setMyCawsstakes(stakes);
     } else setMyCawsstakes([]);
   };
-
 
   const myStakes = async () => {
     let myStakes = await getStakesIds();
@@ -272,7 +278,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }
     const ethprice = await convertEthToUsd();
     setethToUSD(Number(ethprice) * Number(EthRewards));
     setethToUSDLandPool(Number(ethprice) * Number(EthRewardsLandPool));
-    setethToUSDCawsPremium(Number(ethprice) * EthRewardsCawsPremium)
+    setethToUSDCawsPremium(Number(ethprice) * EthRewardsCawsPremium);
     setPastCawsUsdPrice(Number(ethprice) * 59);
   };
 
@@ -329,7 +335,6 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }
     setEthRewardsLandPool(result);
   };
 
-
   const calculateAllRewardsCawsPremium = async () => {
     let myStakes = await getCawsStakesIds();
     let result = 0;
@@ -382,7 +387,6 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }
       });
   };
 
-  
   const claimRewardsCawsPremium = async () => {
     let myStakes = await getCawsStakesIds();
     let staking_contract = await window.getContractCawsPremiumNFT(
@@ -437,9 +441,9 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }
     setCawsUnstakeModal(false);
   };
 
-  const handleNavigateToAccount=()=>{
-    navigate('/account')
-  }
+  const handleNavigateToAccount = () => {
+    navigate("/account");
+  };
 
   useEffect(() => {
     if (isConnected) {
@@ -452,7 +456,7 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }
     if (coinbase && chainId === 1) {
       calculateAllRewards();
       calculateAllRewardsLandPool();
-      calculateAllRewardsCawsPremium()
+      calculateAllRewardsCawsPremium();
       myNft();
       myStakes();
       myCawsStakes();
@@ -493,363 +497,370 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }
   ]);
 
   return (
-    <div
-      className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
-      style={{ minHeight: "72vh", maxWidth: "2400px" }}
-    >
-      {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
+    <>
       <div
-        className="container-nft d-flex align-items-start flex-column gap-2 px-3 px-lg-5 my-4 position-relative"
-        style={{ minHeight: "72vh", backgroundSize: "cover" }}
+        className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
+        style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
-        <div className="container-lg mx-0">
-          {nftModal && (
-            <StakeModal
-              onModalClose={onModalClose}
-              getApprovedNfts={getApprovedNfts}
-              getApprovedLandNfts={getApprovedLandNfts}
-              landItems={myLandNFTs}
-              cawsItems={myNFTs}
-              nftItem={myNFTs}
-              isConnected={isConnected}
-              coinbase={coinbase}
-              onDepositComplete={() => refreshStakes()}
-              handleConnect={handleConnect}
-            />
-          )}
-          {rewardModal && (
-            <RewardsModal
-              onModalClose={onRewardModalClose}
-              getApprovedNfts={getApprovedNfts}
-              getApprovedLandNfts={getApprovedLandNfts}
-              landStakes={myLandstakes}
-              cawsStakes={mystakes}
-              nftItem={mystakes}
-              isConnected={isConnected}
-              coinbase={coinbase}
-              onDepositComplete={() => refreshStakes()}
-              ETHrewards={EthRewards}
-              finalUsd={ethToUSD}
-              handleConnect={handleConnect}
-              onClaimAll={() => {
-                claimRewards();
-              }}
-            />
-          )}
-          {landStakeModal && (
-            <StakeLandModal
-              onModalClose={onLandStakeModalClose}
-              getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
-              nftItem={myLandNFTs}
-              isConnected={isConnected}
-              coinbase={coinbase}
-              onDepositComplete={() => refreshStakes()}
-              onClaimAll={() => {
-                claimRewards();
-              }}
-              isStake={false}
-              handleConnect={handleConnect}
-            />
-          )}
-          {cawsStakeModal && (
-            <CawsStakeModal
-              onModalClose={onCawsStakeModalClose}
-              getApprovedLandPoolsNfts={getApprovedNfts}
-              nftItem={myNFTs}
-              isConnected={isConnected}
-              coinbase={coinbase}
-              onDepositComplete={() => refreshStakes()}
-              onClaimAll={() => {
-                claimRewardsCawsPremium();
-              }}
-              isStake={false}
-              handleConnect={handleConnect}
-            />
-          )}
+        {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
+        <div
+          className="container-nft d-flex align-items-start flex-column gap-2 px-3 px-lg-5 my-4 position-relative"
+          style={{ minHeight: "72vh", backgroundSize: "cover" }}
+        >
+          <div className="container-lg mx-0">
+            {nftModal && (
+              <StakeModal
+                onModalClose={onModalClose}
+                getApprovedNfts={getApprovedNfts}
+                getApprovedLandNfts={getApprovedLandNfts}
+                landItems={myLandNFTs}
+                cawsItems={myNFTs}
+                nftItem={myNFTs}
+                isConnected={isConnected}
+                coinbase={coinbase}
+                onDepositComplete={() => refreshStakes()}
+                handleConnect={handleConnect}
+              />
+            )}
+            {rewardModal && (
+              <RewardsModal
+                onModalClose={onRewardModalClose}
+                getApprovedNfts={getApprovedNfts}
+                getApprovedLandNfts={getApprovedLandNfts}
+                landStakes={myLandstakes}
+                cawsStakes={mystakes}
+                nftItem={mystakes}
+                isConnected={isConnected}
+                coinbase={coinbase}
+                onDepositComplete={() => refreshStakes()}
+                ETHrewards={EthRewards}
+                finalUsd={ethToUSD}
+                handleConnect={handleConnect}
+                onClaimAll={() => {
+                  claimRewards();
+                }}
+              />
+            )}
+            {landStakeModal && (
+              <StakeLandModal
+                onModalClose={onLandStakeModalClose}
+                getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
+                nftItem={myLandNFTs}
+                isConnected={isConnected}
+                coinbase={coinbase}
+                onDepositComplete={() => refreshStakes()}
+                onClaimAll={() => {
+                  claimRewards();
+                }}
+                isStake={false}
+                handleConnect={handleConnect}
+              />
+            )}
+            {cawsStakeModal && (
+              <CawsStakeModal
+                onModalClose={onCawsStakeModalClose}
+                getApprovedLandPoolsNfts={getApprovedNfts}
+                nftItem={myNFTs}
+                isConnected={isConnected}
+                coinbase={coinbase}
+                onDepositComplete={() => refreshStakes()}
+                onClaimAll={() => {
+                  claimRewardsCawsPremium();
+                }}
+                isStake={false}
+                handleConnect={handleConnect}
+              />
+            )}
 
-          {landunStakeModal && (
-            <StakeLandModal
-              onModalClose={onLandunStakeModalClose}
-              getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
-              nftItem={mystakesLandPool}
-              isConnected={isConnected}
-              coinbase={coinbase}
-              onDepositComplete={() => refreshStakes()}
-              ETHrewards={EthRewardsLandPool}
-              finalUsd={ethToUSDLandPool}
-              onClaimAll={() => {
-                claimRewardsLandPool();
-              }}
-              isStake={true}
-              handleConnect={handleConnect}
-            />
-          )}
-          {cawsUnstakeModal && (
-            <CawsStakeModal
-              onModalClose={onCawsUnstakeModalClose}
-              getApprovedLandPoolsNfts={getApprovedNfts}
-              nftItem={myCawsstakes}
-              isConnected={isConnected}
-              coinbase={coinbase}
-              onDepositComplete={() => refreshStakes()}
-              ETHrewards={EthRewardsCawsPremium}
-              finalUsd={ethToUSDCawsPremium}
-              onClaimAll={() => {
-                claimRewardsCawsPremium();
-              }}
-              isStake={true}
-              handleConnect={handleConnect}
-            />
-          )}
-          <h6 className="nft-page-title font-raleway mt-3 mb-4 mb-lg-4 mt-lg-4">
-            NFT <span style={{ color: "#8c56ff" }}> Staking</span>
-          </h6>
-          <div className="d-flex w-100 align-items-center justify-content-center gap-4">
-            <div className="position-relative">
-              <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                <span className="mb-0">New</span>
+            {landunStakeModal && (
+              <StakeLandModal
+                onModalClose={onLandunStakeModalClose}
+                getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
+                nftItem={mystakesLandPool}
+                isConnected={isConnected}
+                coinbase={coinbase}
+                onDepositComplete={() => refreshStakes()}
+                ETHrewards={EthRewardsLandPool}
+                finalUsd={ethToUSDLandPool}
+                onClaimAll={() => {
+                  claimRewardsLandPool();
+                }}
+                isStake={true}
+                handleConnect={handleConnect}
+              />
+            )}
+            {cawsUnstakeModal && (
+              <CawsStakeModal
+                onModalClose={onCawsUnstakeModalClose}
+                getApprovedLandPoolsNfts={getApprovedNfts}
+                nftItem={myCawsstakes}
+                isConnected={isConnected}
+                coinbase={coinbase}
+                onDepositComplete={() => refreshStakes()}
+                ETHrewards={EthRewardsCawsPremium}
+                finalUsd={ethToUSDCawsPremium}
+                onClaimAll={() => {
+                  claimRewardsCawsPremium();
+                }}
+                isStake={true}
+                handleConnect={handleConnect}
+              />
+            )}
+            <h6 className="nft-page-title font-raleway mt-3 mb-4 mb-lg-4 mt-lg-4">
+              NFT <span style={{ color: "#8c56ff" }}> Staking</span>
+            </h6>
+            <div className="d-flex w-100 align-items-center justify-content-center gap-4">
+              <div className="position-relative">
+                <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                  <span className="mb-0">New</span>
+                </div>
+                <h6
+                  className={`new-stake-tab ${
+                    activeTab === "live" && "stake-tab-active"
+                  } px-3 py-2`}
+                  onClick={() => setActiveTab("live")}
+                >
+                  Live
+                </h6>
               </div>
-              <h6
-                className={`new-stake-tab ${
-                  activeTab === "live" && "stake-tab-active"
-                } px-3 py-2`}
-                onClick={() => setActiveTab("live")}
-              >
-                Live
-              </h6>
-            </div>
-            <div className="position-relative">
-              <h6
-                className={`new-stake-tab ${
-                  activeTab === "upcoming" && "stake-tab-active"
-                } px-3 py-2`}
-                onClick={() => setActiveTab("upcoming")}
-              >
-                Upcoming
-              </h6>
-            </div>
-            <div className="position-relative">
-              <h6
-                className={`new-stake-tab ${
-                  activeTab === "past" && "stake-tab-active"
-                } px-3 py-2`}
-                onClick={() => setActiveTab("past")}
-              >
-                Past
-              </h6>
-            </div>
-          </div>
-          <span className="w-100 new-stake-divider mt-3 mb-5"></span>
-          {activeTab === "live" && (
-            <>
-              <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-4 d-flex align-items-center justify-content-around">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <h6 className="new-stake-info">
-                    ${abbreviateNumber(landtvl + cawslandTvl)}
-                  </h6>
-                  <span className="new-stake-desc">
-                    Total Value Locked (TVL)
-                  </span>
-                </div>
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <h6 className="new-stake-info">
-                    {abbreviateNumber(totalLocked)}
-                  </h6>
-                  <span className="new-stake-desc">Total Staked NFTs</span>
-                </div>
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <h6 className="new-stake-info">
-                    ${abbreviateNumber(totalRewards)}
-                  </h6>
-                  <span className="new-stake-desc">Paid Rewards</span>
-                </div>
+              <div className="position-relative">
+                <h6
+                  className={`new-stake-tab ${
+                    activeTab === "upcoming" && "stake-tab-active"
+                  } px-3 py-2`}
+                  onClick={() => setActiveTab("upcoming")}
+                >
+                  Upcoming
+                </h6>
               </div>
-              <div className="col-12 px-0 mt-3">
-                <div className="new-caws-stake-wrapper d-flex align-items-center w-100 ">
-                  <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                    <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
-                      <div className="d-flex flex-column gap-2">
-                        <h6 className="market-stake-title">
-                          Cats and Watches Society (CAWS)
-                        </h6>
-                        <span className="market-stake-desc">
-                          Stake your CAWS NFTs to earn daily ETH rewards.
-                        </span>
-                      </div>
-                      {isPremium && isConnected &&
-                      <div className="d-flex align-items-center gap-3">
-                        <button
-                          className="btn pill-btn px-4 py-2"
-                          onClick={() => {
-                            setCawsStakeModal(true);
-                          }}
-                        >
-                          Deposit
-                        </button>
-                        <button
-                          className="btn rewards-btn px-4 py-2"
-                          onClick={() => {
-                            setCawsUnstakeModal(true);
-                          }}
-                        >
-                          Rewards
-                        </button>
-                      </div>
-                       }
-                       {!isConnected &&  <button
-                          className="btn pill-btn px-4 py-2"
-                          style={{width: 'fit-content'}}
-                          onClick={() => {
-                            handleConnect()
-                          }}
-                        >
-                          Connect Wallet
-                        </button>}
-                        {isConnected && !isPremium && <button
-                          className="btn pill-btn px-4 py-2"
-                          style={{width: 'fit-content'}}
-                          onClick={() => {
-                            handleNavigateToAccount()
-                          }}
-                        >
-                          Become Premium
-                        </button>}
-                      <div className="d-flex align-items-center gap-3"></div>
-                    </div>
-                    <div className="new-caws-apr d-flex flex-column align-items-center justify-content-center position-relative">
-                      <h6 className="caws-apr-percent mb-0">25%</h6>
-                      <span className="caws-apr">APR</span>
-                    </div>
-                    <img
-                      className="new-caws-stake-img"
-                      src={
-                        windowSize.width < 786
-                          ? newCawsStakeMobile
-                          : newCawsStake
-                      }
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-          {activeTab === "upcoming" && (
-            <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-              <div className="d-flex flex-column align-items-center gap-2">
-                <h6 className="upcoming-stake">Staking pools are coming...</h6>
-                <span className="upcoming-stake-desc">Check back soon!</span>
+              <div className="position-relative">
+                <h6
+                  className={`new-stake-tab ${
+                    activeTab === "past" && "stake-tab-active"
+                  } px-3 py-2`}
+                  onClick={() => setActiveTab("past")}
+                >
+                  Past
+                </h6>
               </div>
             </div>
-          )}
-          {activeTab === "past" && (
-            <div className="row w-100 m-0 mt-5">
+            <span className="w-100 new-stake-divider mt-3 mb-5"></span>
+            {activeTab === "live" && (
               <>
-                <div className="row w-100  m-0 mt-5 position-relative">
-                  <div className="d-flex align-items-center gap-2 tags-position">
-                    <div className="expired-caws-tag px-3 py-1">
-                      <span className="expired-caws-span">Expired</span>
-                    </div>
-                    {myLandstakes && myLandstakes.length > 0 && (
-                      <div className="instakeWrapper">
-                        <span className="instaketxt">In stake</span>
-                      </div>
-                    )}
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-4 d-flex align-items-center justify-content-around">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="new-stake-info">
+                      ${abbreviateNumber(landtvl + cawslandTvl)}
+                    </h6>
+                    <span className="new-stake-desc">
+                      Total Value Locked (TVL)
+                    </span>
                   </div>
-                  <div className="col-12 px-0">
-                    <div className="caws-wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
-                      <div className="stake-stats-wrapper flex-row flex-lg-column d-flex align-items-center justify-content-center gap-4 gap-lg-2">
-                        <div className="stake-stats-item-2 d-flex flex-column align-items-center justify-content-center">
-                          <h6>50%</h6>
-                          <span>APR</span>
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="new-stake-info">
+                      {abbreviateNumber(totalLocked)}
+                    </h6>
+                    <span className="new-stake-desc">Total Staked NFTs</span>
+                  </div>
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="new-stake-info">
+                      ${abbreviateNumber(totalRewards)}
+                    </h6>
+                    <span className="new-stake-desc">Paid Rewards</span>
+                  </div>
+                </div>
+                <div className="col-12 px-0 mt-3">
+                  <div className="new-caws-stake-wrapper d-flex align-items-center w-100 ">
+                    <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                      <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
+                        <div className="d-flex flex-column gap-2">
+                          <h6 className="market-stake-title">
+                            Cats and Watches Society (CAWS)
+                          </h6>
+                          <span className="market-stake-desc">
+                            Stake your CAWS NFTs to earn daily ETH rewards.
+                          </span>
                         </div>
-                        <div className="stake-stats-item-2 d-flex flex-column align-items-center justify-content-center">
-                          <h6>ETH</h6>
-                          <span>Rewards</span>
-                        </div>
-                        <div className="stake-stats-item-2 d-flex flex-column align-items-center justify-content-center">
-                          <h6>No Lock</h6>
-                          <span>Lock Time</span>
-                        </div>
-                      </div>
-                      <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                        <div className="d-flex flex-column gap-4">
-                          <div className="d-flex flex-column gap-2">
-                            <h6 className="market-stake-title">
-                              World of Dypians Land & CAWS
-                            </h6>
-                            <span className="market-stake-desc">
-                              Combine your Land and CAWS NFTs to earn daily ETH
-                              rewards.
-                            </span>
-                          </div>
+                        {isPremium && isConnected && (
                           <div className="d-flex align-items-center gap-3">
-                            {/* <button
+                            <button
                               className="btn pill-btn px-4 py-2"
-                              onClick={() => setNftModal(true)}
+                              onClick={() => {
+                                setCawsStakeModal(true);
+                              }}
                             >
                               Deposit
-                            </button> */}
+                            </button>
                             <button
                               className="btn rewards-btn px-4 py-2"
                               onClick={() => {
-                                setRewardModal(true);
+                                setCawsUnstakeModal(true);
                               }}
                             >
                               Rewards
                             </button>
                           </div>
-                        </div>
-                        <div className="tvl-wrapper">
-                          <h6 className="market-stake-tvl">
-                            ${abbreviateNumber(cawslandTvl)}
-                          </h6>
-                        </div>
+                        )}
+                        {!isConnected && (
+                          <button
+                            className="btn pill-btn px-4 py-2"
+                            style={{ width: "fit-content" }}
+                            onClick={() => {
+                              handleConnect();
+                            }}
+                          >
+                            Connect Wallet
+                          </button>
+                        )}
+                        {isConnected && !isPremium && (
+                          <button
+                            className="btn pill-btn px-4 py-2"
+                            style={{ width: "fit-content" }}
+                            onClick={() => {
+                              setgetPremiumPopup(true);
+                            }}
+                          >
+                            Become Premium
+                          </button>
+                        )}
+                        <div className="d-flex align-items-center gap-3"></div>
                       </div>
+                      <div className="new-caws-apr d-flex flex-column align-items-center justify-content-center position-relative">
+                        <h6 className="caws-apr-percent mb-0">25%</h6>
+                        <span className="caws-apr">APR</span>
+                      </div>
+                      <img
+                        className="new-caws-stake-img"
+                        src={
+                          windowSize.width < 786
+                            ? newCawsStakeMobile
+                            : newCawsStake
+                        }
+                        alt=""
+                      />
                     </div>
                   </div>
                 </div>
-                <div className="row w-100 m-0 mt-5 position-relative">
-                  <div className="d-flex align-items-center gap-2 tags-position">
-                    <div className="expired-caws-tag px-3 py-1">
-                      <span className="expired-caws-span">Expired</span>
+              </>
+            )}
+            {activeTab === "upcoming" && (
+              <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <h6 className="upcoming-stake">
+                    Staking pools are coming...
+                  </h6>
+                  <span className="upcoming-stake-desc">Check back soon!</span>
+                </div>
+              </div>
+            )}
+            {activeTab === "past" && (
+              <div className="row w-100 m-0 mt-5">
+                <>
+                  <div className="row w-100  m-0 mt-5 position-relative">
+                    <div className="d-flex align-items-center gap-2 tags-position">
+                      <div className="expired-caws-tag px-3 py-1">
+                        <span className="expired-caws-span">Expired</span>
+                      </div>
+                      {myLandstakes && myLandstakes.length > 0 && (
+                        <div className="instakeWrapper">
+                          <span className="instaketxt">In stake</span>
+                        </div>
+                      )}
                     </div>
-                    {mystakesLandPool && mystakesLandPool.length > 0 && (
-                      <div className="instakeWrapper">
-                        <span className="instaketxt">In stake</span>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="col-12 px-0">
-                    <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
-                      <div className="stake-stats-wrapper flex-row flex-lg-column d-flex align-items-center justify-content-center gap-4 gap-lg-2">
-                        <div className="stake-stats-item-2 d-flex flex-column align-items-center justify-content-center">
-                          <h6>25%</h6>
-                          <span>APR</span>
-                        </div>
-                        <div className="stake-stats-item-2 d-flex flex-column align-items-center justify-content-center">
-                          <h6>ETH</h6>
-                          <span>Rewards</span>
-                        </div>
-                        <div className="stake-stats-item-2 d-flex flex-column align-items-center justify-content-center">
-                          <h6>No Lock</h6>
-                          <span>Lock Time</span>
-                        </div>
-                      </div>
-                      <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                        <div className="d-flex flex-column gap-4">
-                          <div className="d-flex flex-column gap-2">
-                            <h6 className="market-stake-title">
-                              World of Dypians Land
-                            </h6>
-                            <span className="market-stake-desc">
-                              Stake your Genesis Land NFTs to earn daily ETH
-                              rewards.
-                            </span>
+                    <div className="col-12 px-0">
+                      <div className="caws-wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+                        <div className="stake-stats-wrapper flex-row flex-lg-column d-flex align-items-center justify-content-center gap-4 gap-lg-2">
+                          <div className="stake-stats-item-2 d-flex flex-column align-items-center justify-content-center">
+                            <h6>50%</h6>
+                            <span>APR</span>
                           </div>
-                          <div className="d-flex align-items-center gap-3">
-                            {/* <button
+                          <div className="stake-stats-item-2 d-flex flex-column align-items-center justify-content-center">
+                            <h6>ETH</h6>
+                            <span>Rewards</span>
+                          </div>
+                          <div className="stake-stats-item-2 d-flex flex-column align-items-center justify-content-center">
+                            <h6>No Lock</h6>
+                            <span>Lock Time</span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                          <div className="d-flex flex-column gap-4">
+                            <div className="d-flex flex-column gap-2">
+                              <h6 className="market-stake-title">
+                                World of Dypians Land & CAWS
+                              </h6>
+                              <span className="market-stake-desc">
+                                Combine your Land and CAWS NFTs to earn daily
+                                ETH rewards.
+                              </span>
+                            </div>
+                            <div className="d-flex align-items-center gap-3">
+                              {/* <button
+                              className="btn pill-btn px-4 py-2"
+                              onClick={() => setNftModal(true)}
+                            >
+                              Deposit
+                            </button> */}
+                              <button
+                                className="btn rewards-btn px-4 py-2"
+                                onClick={() => {
+                                  setRewardModal(true);
+                                }}
+                              >
+                                Rewards
+                              </button>
+                            </div>
+                          </div>
+                          <div className="tvl-wrapper">
+                            <h6 className="market-stake-tvl">
+                              ${abbreviateNumber(cawslandTvl)}
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row w-100 m-0 mt-5 position-relative">
+                    <div className="d-flex align-items-center gap-2 tags-position">
+                      <div className="expired-caws-tag px-3 py-1">
+                        <span className="expired-caws-span">Expired</span>
+                      </div>
+                      {mystakesLandPool && mystakesLandPool.length > 0 && (
+                        <div className="instakeWrapper">
+                          <span className="instaketxt">In stake</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="col-12 px-0">
+                      <div className="wod-stake-wrapper d-flex align-items-center w-100 p-4 p-lg-5">
+                        <div className="stake-stats-wrapper flex-row flex-lg-column d-flex align-items-center justify-content-center gap-4 gap-lg-2">
+                          <div className="stake-stats-item-2 d-flex flex-column align-items-center justify-content-center">
+                            <h6>25%</h6>
+                            <span>APR</span>
+                          </div>
+                          <div className="stake-stats-item-2 d-flex flex-column align-items-center justify-content-center">
+                            <h6>ETH</h6>
+                            <span>Rewards</span>
+                          </div>
+                          <div className="stake-stats-item-2 d-flex flex-column align-items-center justify-content-center">
+                            <h6>No Lock</h6>
+                            <span>Lock Time</span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                          <div className="d-flex flex-column gap-4">
+                            <div className="d-flex flex-column gap-2">
+                              <h6 className="market-stake-title">
+                                World of Dypians Land
+                              </h6>
+                              <span className="market-stake-desc">
+                                Stake your Genesis Land NFTs to earn daily ETH
+                                rewards.
+                              </span>
+                            </div>
+                            <div className="d-flex align-items-center gap-3">
+                              {/* <button
                               className="btn pill-btn px-4 py-2"
                               onClick={() => {
                                 setlandStakeModal(true);
@@ -857,105 +868,123 @@ const MarketStake = ({ coinbase, chainId, handleConnect, isConnected,isPremium }
                             >
                               Deposit
                             </button> */}
-                            <button
-                              className="btn rewards-btn px-4 py-2"
-                              onClick={() => {
-                                setlandunStakeModal(true);
-                              }}
-                            >
-                              Rewards
-                            </button>
+                              <button
+                                className="btn rewards-btn px-4 py-2"
+                                onClick={() => {
+                                  setlandunStakeModal(true);
+                                }}
+                              >
+                                Rewards
+                              </button>
+                            </div>
+                            <div className="tvl-wrapper">
+                              <h6 className="market-stake-tvl">
+                                ${abbreviateNumber(landtvl)}
+                              </h6>
+                            </div>
+                            <div></div>
                           </div>
-                          <div className="tvl-wrapper">
-                            <h6 className="market-stake-tvl">
-                              ${abbreviateNumber(landtvl)}
-                            </h6>
-                          </div>
-                          <div></div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </>
-              <div className="col-12 mt-5">
-                <div className="caws-stake-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between w-100 position-relative">
-                  <div className="d-flex align-items-center gap-2 tags-position">
-                    <div className="expired-caws-tag px-3 py-1">
-                      <span className="expired-caws-span">Expired</span>
-                    </div>
-                    {mystakesLandPool && mystakesLandPool.length > 0 && (
-                      <div className="instakeWrapper">
-                        <span className="instaketxt">In stake</span>
+                </>
+                <div className="col-12 mt-5">
+                  <div className="caws-stake-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between w-100 position-relative">
+                    <div className="d-flex align-items-center gap-2 tags-position">
+                      <div className="expired-caws-tag px-3 py-1">
+                        <span className="expired-caws-span">Expired</span>
                       </div>
-                    )}
-                  </div>
-                  <div className="d-flex p-4 p-lg-5 align-items-start align-items-lg-center justify-content-between  position-relative">
-                    <div className="d-flex flex-column gap-4">
-                      <div className="d-flex flex-column gap-2">
-                        <h6 className="market-stake-title">
-                          Cats and Watches Society
+                      {mystakesLandPool && mystakesLandPool.length > 0 && (
+                        <div className="instakeWrapper">
+                          <span className="instaketxt">In stake</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="d-flex p-4 p-lg-5 align-items-start align-items-lg-center justify-content-between  position-relative">
+                      <div className="d-flex flex-column gap-4">
+                        <div className="d-flex flex-column gap-2">
+                          <h6 className="market-stake-title">
+                            Cats and Watches Society
+                          </h6>
+                          <span className="market-stake-desc">
+                            Stake your CAWS NFTs to earn daily ETH rewards.
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="total-past-rewards">
+                      <div className="d-flex align-items-center flex-column past-caws-values p-5">
+                        <h6 className="past-caws-eth">59 ETH</h6>
+                        <h6 className="past-caws-usd">
+                          ${getFormattedNumber(pastCawsUsdPrice)}
                         </h6>
-                        <span className="market-stake-desc">
-                          Stake your CAWS NFTs to earn daily ETH rewards.
+                      </div>
+                      <div className="d-flex flex-column align-items-center">
+                        <span className="past-caws-total">Total</span>
+                        <span className="past-caws-total">
+                          Distributed Rewards
                         </span>
                       </div>
                     </div>
-                  </div>
-                  <div className="total-past-rewards">
-                    <div className="d-flex align-items-center flex-column past-caws-values p-5">
-                      <h6 className="past-caws-eth">59 ETH</h6>
-                      <h6 className="past-caws-usd">
-                        ${getFormattedNumber(pastCawsUsdPrice)}
-                      </h6>
-                    </div>
-                    <div className="d-flex flex-column align-items-center">
-                      <span className="past-caws-total">Total</span>
-                      <span className="past-caws-total">
-                        Distributed Rewards
-                      </span>
-                    </div>
-                  </div>
-                  <div className="position-relative past-image-position">
-                    <div className="stake-info-column  d-flex flex-row flex-lg-column justify-content-center w-100 gap-2">
-                      <div className="stake-info-item d-flex flex-column align-items-center justify-content-center">
-                        <h6 className="stake-info-primary mb-0">50%</h6>
-                        <span className="stake-info-secondary mb-0">APR</span>
+                    <div className="position-relative past-image-position">
+                      <div className="stake-info-column  d-flex flex-row flex-lg-column justify-content-center w-100 gap-2">
+                        <div className="stake-info-item d-flex flex-column align-items-center justify-content-center">
+                          <h6 className="stake-info-primary mb-0">50%</h6>
+                          <span className="stake-info-secondary mb-0">APR</span>
+                        </div>
+                        <div className="stake-info-item d-flex flex-column align-items-center justify-content-center">
+                          <h6 className="stake-info-primary mb-0">ETH</h6>
+                          <span className="stake-info-secondary mb-0">
+                            Rewards
+                          </span>
+                        </div>
+                        <div className="stake-info-item d-flex flex-column align-items-center justify-content-center">
+                          <h6 className="stake-info-primary mb-0">No Lock</h6>
+                          <span className="stake-info-secondary mb-0">
+                            Lock Time
+                          </span>
+                        </div>
                       </div>
-                      <div className="stake-info-item d-flex flex-column align-items-center justify-content-center">
-                        <h6 className="stake-info-primary mb-0">ETH</h6>
-                        <span className="stake-info-secondary mb-0">
-                          Rewards
-                        </span>
-                      </div>
-                      <div className="stake-info-item d-flex flex-column align-items-center justify-content-center">
-                        <h6 className="stake-info-primary mb-0">No Lock</h6>
-                        <span className="stake-info-secondary mb-0">
-                          Lock Time
-                        </span>
-                      </div>
+                      {windowSize.width > 786 ? (
+                        <img
+                          src={cawsStakeImage}
+                          className="caws-stake-image h-100"
+                          alt=""
+                        />
+                      ) : (
+                        <img
+                          src={cawsStakeMobileImage}
+                          className="caws-stake-image w-100"
+                          alt=""
+                        />
+                      )}
                     </div>
-                    {windowSize.width > 786 ? (
-                      <img
-                        src={cawsStakeImage}
-                        className="caws-stake-image h-100"
-                        alt=""
-                      />
-                    ) : (
-                      <img
-                        src={cawsStakeMobileImage}
-                        className="caws-stake-image w-100"
-                        alt=""
-                      />
-                    )}
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      {getPremiumPopup && (
+        <OutsideClickHandler
+          onOutsideClick={() => {
+            setgetPremiumPopup(false);
+          }}
+        >
+          <GetPremiumPopup
+            chainId={chainId}
+            coinbase={coinbase}
+            handleSwitchNetwork={handleSwitchNetwork}
+            onSuccessDeposit={onSuccessDeposit}
+            onClose={() => {
+              setgetPremiumPopup(false);
+            }}
+          />
+        </OutsideClickHandler>
+      )}
+    </>
   );
 };
 

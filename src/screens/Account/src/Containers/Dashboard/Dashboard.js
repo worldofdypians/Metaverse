@@ -1951,7 +1951,7 @@ function Dashboard({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-  // console.log(avatar);
+
   const handleBnbPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {

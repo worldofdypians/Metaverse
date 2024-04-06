@@ -158,6 +158,7 @@ const CawsPremiumChecklist = ({
       }
     }
   };
+ 
   return (
     <div className="d-flex flex-column gap-2">
       <div
@@ -175,15 +176,15 @@ const CawsPremiumChecklist = ({
             ? checked === true
               ? Unstakebtn === true
                 ? "2px solid #4ED5D2"
-                : "none"
+                : "2px solid transparent"
               : Unstakebtn === true
               ? "2px solid #4ED5D2"
-              : "none"
+              : "2px solid transparent"
             : checked === false && checkbtn === true && checked2 === true
             ? "2px solid #4ED5D2"
             : checked === true && checkbtn === true && checked2 === true
             ? "2px solid #4ED5D2"
-            : "none",
+            : "2px solid transparent",
         }}
       >
         <div
