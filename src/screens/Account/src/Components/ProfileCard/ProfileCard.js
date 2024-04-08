@@ -6,7 +6,8 @@ import defaultAvatar from "../../Images/userProfile/default-avatar.png";
 import defaultAvatarAlert from "../../Images/userProfile/default-avatar-alert.png";
 import defaultAvatarPremium from "../../Images/userProfile/defaultAvatarPremium.png";
 import defaultAvatarPremiumAlert from "../../Images/userProfile/defaultAvatarPremiumAlert.png";
-
+import x4 from "./assets/4x.svg";
+import x4rounded from "./assets/x4Rounded.svg";
 import genesisRankImg from "../WalletBalance/newAssets/genesisRank.svg";
 import globalRank from "../WalletBalance/newAssets/globalRank.svg";
 // import Countdown from "react-countdown";
@@ -24,7 +25,8 @@ import pointerArrow from "./assets/pointerArrow.svg";
 import tooltipIcon from "./assets/tooltipIcon.svg";
 import player from "./assets/explorePlayer.png";
 import triangle from "./assets/triangle.svg";
-import rankGreenArrow from "./assets/rankGreenArrow.svg";
+import rankYellowArrow from "./assets/rankYellowArrow.svg";
+import rankBlueArrow from "./assets/rankBlueArrow.svg";
 import sync from "./assets/sync.svg";
 import walletImg from "../../Images/userProfile/wallet.svg";
 import circleArrow from "../../Images/userProfile/arrow-circle.svg";
@@ -52,8 +54,8 @@ import { Tooltip, tooltipClasses } from "@mui/material";
 import styled from "styled-components";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import premiumOfferTag from "./assets/premiumOfferTag2.png";
-import premiumExclusive from "./assets/premiumExclusive.svg";
-import premiumExclusive2 from "./assets/premiumExclusive2.svg";
+import premiumExclusive from "./assets/premiumExclusive2.svg";
+// import premiumExclusive2 from "./assets/premiumExclusive2.svg";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -114,13 +116,20 @@ const ProfileCard = ({
   genesisRank,
   handleOpenDomains,
   domainName,
+  rankData,
+  setRankData,
+  getRankData
 }) => {
   let id = Math.random().toString(36);
 
   const windowSize = useWindowSize();
+  const [exclusivePremium, setExclusivePremium] = useState(false);
   const [tooltip, setTooltip] = useState(false);
   const [tooltip2, setTooltip2] = useState(false);
-  const [userRankName, setUserRankName] = useState("starter");
+  const [userRankName, setUserRankName] = useState({
+    name: "starter",
+    id: 0,
+  });
   const [countdown700, setcountdown700] = useState();
   const [bundlesBought, setbundlesBought] = useState(0);
   const [dateofBundle, setdateofBundle] = useState(0);
@@ -139,35 +148,64 @@ const ProfileCard = ({
   const [rankPopup, setRankPopup] = useState(false);
   const sliderRef = useRef(null);
   const [rankTooltip, setRankTooltip] = useState(false);
-  const [exclusivePremium, setExclusivePremium] = useState(false);
-
-
-const handleExclusive = () => {
-  setExclusivePremium((old) => !old)
-}
 
   const userTotalScore = userBnbScore + userSkaleScore;
 
   const handleUserRank = () => {
-    if (userTotalScore > 39999999) {
-      setUserRankName("unstoppable");
+    let allScore;
+    if (rankData.multiplier === "yes") {
+      allScore = userTotalScore * 4;
+    } else if (rankData.multiplier === "no") {
+      allScore = userTotalScore;
+    }
+    if (allScore > 39999999) {
+      setUserRankName({
+        name: "unstoppable",
+        id: 4,
+      });
       sliderRef?.current?.innerSlider?.slickGoTo(4);
       setUserProgress(100);
-    } else if (userTotalScore > 23999999) {
-      setUserRankName("champion");
+    } else if (allScore > 23999999) {
+      setUserRankName({
+        name: "champion",
+        id: 3,
+      });
       sliderRef?.current?.innerSlider?.slickGoTo(3);
-      setUserProgress((userTotalScore / 40000000) * 100);
-    } else if (userTotalScore > 11999999) {
-      setUserRankName("underdog");
+      setUserProgress((allScore / 40000000) * 100);
+    } else if (allScore > 11999999) {
+      setUserRankName({
+        name: "underdog",
+        id: 2,
+      });
       sliderRef?.current?.innerSlider?.slickGoTo(2);
-      setUserProgress((userTotalScore / 24000000) * 100);
-    } else if (userTotalScore > 5999999) {
-      setUserRankName("rookie");
+      setUserProgress((allScore / 24000000) * 100);
+    } else if (allScore > 5999999) {
+      setUserRankName({
+        name: "rookie",
+        id: 1,
+      });
       sliderRef?.current?.innerSlider?.slickGoTo(1);
-      setUserProgress((userTotalScore / 12000000) * 100);
+      setUserProgress((allScore / 12000000) * 100);
     } else {
       sliderRef?.current?.innerSlider?.slickGoTo(0);
-      setUserProgress((userTotalScore / 6000000) * 100);
+      setUserProgress((allScore / 6000000) * 100);
+    }
+  };
+
+  const updateUserRank = async () => {
+    if (rankData.rank === userRankName.id) {
+      return;
+    } else {
+      await axios
+        .patch(
+          `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
+          {
+            rank: userRankName.id,
+          }
+        )
+        .then(async () => {
+          getRankData()
+        });
     }
   };
 
@@ -689,6 +727,10 @@ const handleExclusive = () => {
   };
 
   useEffect(() => {
+    updateUserRank()
+  }, [handleUserRank])
+
+  useEffect(() => {
     countBundle();
     setlastDay(address);
   }, [address]);
@@ -1148,15 +1190,15 @@ const handleExclusive = () => {
                         >
                           <img
                             src={
-                              userRankName === "starter"
+                              userRankName.name === "starter"
                                 ? starterBust
-                                : userRankName === "rookie"
+                                : userRankName.name === "rookie"
                                 ? rookieBust
-                                : userRankName === "underdog"
+                                : userRankName.name === "underdog"
                                 ? underdogBust
-                                : userRankName === "champion"
+                                : userRankName.name === "champion"
                                 ? championBust
-                                : userRankName === "unstoppable"
+                                : userRankName.name === "unstoppable"
                                 ? unstoppableBust
                                 : starterBust
                             }
@@ -1171,7 +1213,7 @@ const handleExclusive = () => {
                                 color: isPremium ? "#FFBF00" : "#1BF5FF",
                               }}
                             >
-                              {userRankName}
+                              {userRankName.name}
                             </h6>
                           </div>
                         </div>
@@ -1228,85 +1270,161 @@ const handleExclusive = () => {
                                   className="current-rank"
                                   style={{ textTransform: "uppercase" }}
                                 >
-                                  {userRankName}
+                                  {userRankName.name}
+                                  <span
+                                    className="current-rank"
+                                    style={{
+                                      color:
+                                        rankData.multiplier === "yes"
+                                          ? "#FFC700"
+                                          : "#1BF5FF",
+                                    }}
+                                  >
+                                    (
+                                    {userRankName.name === "rookie"
+                                      ? "$5"
+                                      : userRankName.name === "underdog"
+                                      ? "$10"
+                                      : userRankName.name === "champion"
+                                      ? "$25"
+                                      : userRankName.name === "unstoppable"
+                                      ? "$100"
+                                      : "$0"}
+                                    )
+                                  </span>
                                 </span>
                                 <span
                                   className="current-rank"
                                   style={{ textTransform: "uppercase" }}
                                 >
-                                  {userRankName === "rookie"
+                                  {userRankName.name === "rookie"
                                     ? "underdog"
-                                    : userRankName === "underdog"
+                                    : userRankName.name === "underdog"
                                     ? "champion"
-                                    : userRankName === "champion"
+                                    : userRankName.name === "champion"
                                     ? "unstoppable"
-                                    : userRankName === "unstoppable"
+                                    : userRankName.name === "unstoppable"
                                     ? ""
                                     : "rookie"}
+                                  <span
+                                    className="current-rank"
+                                    style={{
+                                      color:
+                                        rankData.multiplier === "yes"
+                                          ? "#FFC700"
+                                          : "#1BF5FF",
+                                    }}
+                                  >
+                                    (
+                                    {userRankName.name === "rookie"
+                                      ? "$10"
+                                      : userRankName.name === "underdog"
+                                      ? "$25"
+                                      : userRankName.name === "champion"
+                                      ? "$100"
+                                      : userRankName.name === "unstoppable"
+                                      ? ""
+                                      : "$5"}
+                                    )
+                                  </span>
                                 </span>
                               </div>
-                              <div className="rank-progress-bar d-flex align-items-center px-2 justify-content-between position-relative">
+                              <div
+                                className={`${
+                                  rankData.multiplier === "yes"
+                                    ? "rank-progress-bar-active"
+                                    : "rank-progress-bar"
+                                } d-flex align-items-center px-2 justify-content-between position-relative`}
+                              >
                                 <div
-                                  className="rank-current-progress"
+                                  className={` ${
+                                    rankData.multiplier === "yes"
+                                      ? "rank-current-progress-active"
+                                      : "rank-current-progress"
+                                  } d-flex align-items-center justify-content-end`}
                                   style={{ width: `${userProgress}%` }}
-                                ></div>
+                                >
+                                  {rankData.multiplier === "yes" && (
+                                    <img
+                                      src={x4}
+                                      style={{ marginRight: "5px" }}
+                                      width={25}
+                                      height={17}
+                                      alt=""
+                                    />
+                                  )}
+                                </div>
                                 <span className="rank-current-score">
-                                  {getFormattedNumber(userTotalScore, 0)}
+                                  {rankData.multiplier === "yes"
+                                    ? getFormattedNumber(userTotalScore * 4, 0)
+                                    : getFormattedNumber(userTotalScore, 0)}
                                 </span>
                                 <span className="rank-current-score">
-                                  {userRankName === "rookie"
+                                  {userRankName.name === "rookie"
                                     ? "12M"
-                                    : userRankName === "underdog"
+                                    : userRankName.name === "underdog"
                                     ? "24M"
-                                    : userRankName === "champion"
+                                    : userRankName.name === "champion"
                                     ? "40M"
-                                    : userRankName === "unstoppable"
+                                    : userRankName.name === "unstoppable"
                                     ? ""
                                     : "6M"}
                                 </span>
                               </div>
-                              <div className="d-flex align-items-center justify-content-between">
-                                <span className="rank-current-reward">
-                                  {userRankName === "rookie"
-                                    ? "$5"
-                                    : userRankName === "underdog"
-                                    ? "$10"
-                                    : userRankName === "champion"
-                                    ? "$25"
-                                    : userRankName === "unstoppable"
-                                    ? "$100"
-                                    : "$0"}
-                                </span>
-                                <span className="rank-current-reward">
-                                  {" "}
-                                  {userRankName === "rookie"
-                                    ? "$10"
-                                    : userRankName === "underdog"
-                                    ? "$25"
-                                    : userRankName === "champion"
-                                    ? "$100"
-                                    : userRankName === "unstoppable"
-                                    ? ""
-                                    : "$5"}
-                                </span>
-                              </div>
+                              {rankData.multiplier === "no" && !isPremium ? (
+                                <div className="d-flex justify-content-center">
+                                  <button className="activate-bonus-btn d-flex align-items-center gap-2" onClick={() => {onPremiumClick(); setRankDropdown(false)}}>
+                                    Activate
+                                    <img
+                                      src={x4}
+                                      style={{ width: "25px" }}
+                                      alt=""
+                                    />
+                                  </button>
+                                </div>
+                              ) : (
+                                <></>
+                              )}
                               <hr className="new-rank-divider my-2" />
                               <div
                                 className="rank-popup-btn p-2 d-flex align-items-center justify-content-between"
+                                style={{
+                                  border:
+                                    rankData.multiplier === "yes"
+                                      ? "2px solid #FFC700"
+                                      : "2px solid #1BF5FF",
+                                }}
                                 onClick={() => {
                                   setRankPopup(true);
                                   setRankDropdown(false);
                                 }}
                               >
-                                <span className="open-ranks-text">
+                                <span
+                                  className="open-ranks-text"
+                                  style={{
+                                    color:
+                                      rankData.multiplier === "yes"
+                                        ? "#FFC700"
+                                        : "#1BF5FF",
+                                  }}
+                                >
                                   Rankings and Rewards
                                 </span>
-                                <img
-                                  src={rankGreenArrow}
-                                  alt=""
-                                  width={20}
-                                  height={20}
-                                />
+                                {rankData.multiplier === "yes" ? (
+                                  <img
+                                    src={rankYellowArrow}
+                                    alt=""
+                                    width={20}
+                                    height={20}
+                                  />
+                                ) : (
+                                  <img
+                                    src={rankBlueArrow}
+                                    alt=""
+                                    width={20}
+                                    height={20}
+                                  />
+                                )}
                               </div>
                               {/* <div
                                 className="d-flex align-items-center justify-content-center gap-2 mt-2"
@@ -1470,12 +1588,18 @@ const handleExclusive = () => {
             id="leaderboard"
             style={{ width: "70%", pointerEvents: "auto" }}
           >
-            {!isPremium ? (
+            {rankData.multiplier === "no" && !isPremium ? (
               <>
                 <img
                   src={premiumOfferTag}
-                  className={`premium-offer-tag ${exclusivePremium ? "premium-shadow-active" : ""}`}
-                  onClick={() => handleExclusive()}
+                  className={`premium-offer-tag ${
+                    exclusivePremium ? "premium-shadow-active" : ""
+                  }`}
+                  onClick={() =>
+                    exclusivePremium
+                      ? setExclusivePremium(false)
+                      : setExclusivePremium(true)
+                  }
                   alt=""
                 />
                 <OutsideClickHandler
@@ -1483,6 +1607,7 @@ const handleExclusive = () => {
                 >
                   <img
                     src={premiumExclusive}
+                    onClick={() => {onPremiumClick(); setRankPopup(false); setExclusivePremium(false);}}
                     className={`premium-exclusive ${
                       exclusivePremium ? "premium-exclusive-active" : ""
                     }`}
@@ -1493,54 +1618,86 @@ const handleExclusive = () => {
             ) : (
               <></>
             )}
-            <div className="d-flex align-items-center justify-content-between">
-              <div className="d-flex align-items-center gap-2">
-                <h2
-                  className={`mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle rankingsPopupTitle gap-2`}
-                >
-                  Rankings and Rewards
-                </h2>
-                <OutsideClickHandler
-                  onOutsideClick={() => setRankTooltip(false)}
-                >
-                  <HtmlTooltip
-                    open={rankTooltip}
-                    disableFocusListener
-                    disableHoverListener
-                    disableTouchListener
-                    title={
-                      <React.Fragment>
-                        Rankings and Rewards offer players a way to track their
-                        game progress and see the rewards they've earned for
-                        each rank. These ranks are determined by the
-                        accumulation of in-game points from both the BNB Chain
-                        and SKALE Network.
-                        <br />
-                        <br />
-                        Each month, the ranks and points reset, giving everyone
-                        a chance for a fresh start. As you climb the ranks,
-                        you'll unlock rewards based on your final rank at the
-                        end of the cycle.
-                        <br />
-                        <br />
-                        <b>
-                          The reward is not accumulative, meaning you only get
-                          the reward for the rank you have
-                        </b>
-                      </React.Fragment>
-                    }
+            <div className="d-flex align-items-start justify-content-between">
+              <div className="d-flex flex-column">
+                <div className="d-flex align-items-center gap-2">
+                  <h2
+                    className={`mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle rankingsPopupTitle gap-2`}
                   >
-                    {" "}
-                    <img
-                      style={{ cursor: "pointer" }}
-                      src={tooltipIcon}
-                      width={25}
-                      height={25}
-                      onClick={() => setRankTooltip(true)}
-                      alt=""
-                    />
-                  </HtmlTooltip>
-                </OutsideClickHandler>
+                    Rankings and Rewards
+                  </h2>
+                  <OutsideClickHandler
+                    onOutsideClick={() => setRankTooltip(false)}
+                  >
+                    <HtmlTooltip
+                      open={rankTooltip}
+                      disableFocusListener
+                      disableHoverListener
+                      disableTouchListener
+                      title={
+                        <React.Fragment>
+                          Rankings and Rewards offer players a way to track
+                          their game progress and see the rewards they've earned
+                          for each rank. These ranks are determined by the
+                          accumulation of in-game points from both the BNB Chain
+                          and SKALE Network.
+                          <br />
+                          <br />
+                          Each month, the ranks and points reset, giving
+                          everyone a chance for a fresh start. As you climb the
+                          ranks, you'll unlock rewards based on your final rank
+                          at the end of the cycle.
+                          <br />
+                          <br />
+                          <b>
+                            The reward is not accumulative, meaning you only get
+                            the reward for the rank you have
+                          </b>
+                        </React.Fragment>
+                      }
+                    >
+                      {" "}
+                      <img
+                        style={{ cursor: "pointer" }}
+                        src={tooltipIcon}
+                        width={25}
+                        height={25}
+                        onClick={() => setRankTooltip(true)}
+                        alt=""
+                      />
+                    </HtmlTooltip>
+                  </OutsideClickHandler>
+                </div>
+                <div
+                  className={` ${
+                    rankData.multiplier === "yes" ? "activated-user-score" : ""
+                  } d-flex align-items-center gap-2 mt-2`}
+                >
+                  <span
+                    className="your-score-span"
+                    style={{
+                      marginLeft: rankData.multiplier === "yes" ? "10px" : "0",
+                    }}
+                  >
+                    My points
+                  </span>
+                  <h6
+                    className="mb-0 your-score-text"
+                    style={{
+                      color:
+                        rankData.multiplier === "yes" ? "#FFC700" : "#1BF5FF",
+                    }}
+                  >
+                    {rankData.multiplier === "yes"
+                      ? getFormattedNumber(userTotalScore * 4, 0)
+                      : getFormattedNumber(userTotalScore, 0)}
+                  </h6>
+                  {rankData.multiplier === "yes" ? (
+                    <img src={x4rounded} width={30} alt="" />
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
               <img
                 src={xMark}
@@ -1557,7 +1714,7 @@ const handleExclusive = () => {
                     <img
                       src={starterBust}
                       className={`${
-                        userRankName === "starter"
+                        userRankName.name === "starter"
                           ? "rank-img-active"
                           : "rank-img-inactive"
                       }`}
@@ -1565,7 +1722,7 @@ const handleExclusive = () => {
                     />
                     <h6
                       className={`rank-title ${
-                        userRankName === "starter"
+                        userRankName.name === "starter"
                           ? "rank-title-active"
                           : "rank-title-inactive"
                       } font-oxanium text-white mb-0`}
@@ -1581,7 +1738,7 @@ const handleExclusive = () => {
                   </div>
                   <div
                     className={` ${
-                      userRankName === "starter"
+                      userRankName.name === "starter"
                         ? "rank-active-div"
                         : "rank-inactive-div"
                     }  d-flex align-items-center justify-content-center`}
@@ -1595,7 +1752,7 @@ const handleExclusive = () => {
                     <img
                       src={rookieBust}
                       className={`${
-                        userRankName === "rookie"
+                        userRankName.name === "rookie"
                           ? "rank-img-active"
                           : "rank-img-inactive"
                       }`}
@@ -1603,7 +1760,7 @@ const handleExclusive = () => {
                     />
                     <h6
                       className={`rank-title ${
-                        userRankName === "rookie"
+                        userRankName.name === "rookie"
                           ? "rank-title-active"
                           : "rank-title-inactive"
                       } font-oxanium text-white mb-0`}
@@ -1619,7 +1776,7 @@ const handleExclusive = () => {
                   </div>
                   <div
                     className={` ${
-                      userRankName === "rookie"
+                      userRankName.name === "rookie"
                         ? "rank-active-div"
                         : "rank-inactive-div"
                     }  d-flex align-items-center justify-content-center`}
@@ -1634,7 +1791,7 @@ const handleExclusive = () => {
                     <img
                       src={underdogBust}
                       className={`${
-                        userRankName === "underdog"
+                        userRankName.name === "underdog"
                           ? "rank-img-active"
                           : "rank-img-inactive"
                       }`}
@@ -1642,7 +1799,7 @@ const handleExclusive = () => {
                     />
                     <h6
                       className={`rank-title ${
-                        userRankName === "underdog"
+                        userRankName.name === "underdog"
                           ? "rank-title-active"
                           : "rank-title-inactive"
                       } font-oxanium text-white mb-0`}
@@ -1658,7 +1815,7 @@ const handleExclusive = () => {
                   </div>
                   <div
                     className={` ${
-                      userRankName === "underdog"
+                      userRankName.name === "underdog"
                         ? "rank-active-div"
                         : "rank-inactive-div"
                     }  d-flex align-items-center justify-content-center`}
@@ -1673,7 +1830,7 @@ const handleExclusive = () => {
                     <img
                       src={championBust}
                       className={`${
-                        userRankName === "champion"
+                        userRankName.name === "champion"
                           ? "rank-img-active"
                           : "rank-img-inactive"
                       }`}
@@ -1681,7 +1838,7 @@ const handleExclusive = () => {
                     />
                     <h6
                       className={`rank-title ${
-                        userRankName === "champion"
+                        userRankName.name === "champion"
                           ? "rank-title-active"
                           : "rank-title-inactive"
                       } font-oxanium text-white mb-0`}
@@ -1697,7 +1854,7 @@ const handleExclusive = () => {
                   </div>
                   <div
                     className={` ${
-                      userRankName === "champion"
+                      userRankName.name === "champion"
                         ? "rank-active-div"
                         : "rank-inactive-div"
                     }  d-flex align-items-center justify-content-center`}
@@ -1712,7 +1869,7 @@ const handleExclusive = () => {
                     <img
                       src={unstoppableBust}
                       className={`${
-                        userRankName === "unstoppable"
+                        userRankName.name === "unstoppable"
                           ? "rank-img-active"
                           : "rank-img-inactive"
                       }`}
@@ -1720,7 +1877,7 @@ const handleExclusive = () => {
                     />
                     <h6
                       className={`rank-title ${
-                        userRankName === "unstoppable"
+                        userRankName.name === "unstoppable"
                           ? "rank-title-active"
                           : "rank-title-inactive"
                       } font-oxanium text-white mb-0`}
@@ -1736,7 +1893,7 @@ const handleExclusive = () => {
                   </div>
                   <div
                     className={` ${
-                      userRankName === "unstoppable"
+                      userRankName.name === "unstoppable"
                         ? "rank-active-div"
                         : "rank-inactive-div"
                     }  d-flex align-items-center justify-content-center`}
@@ -1752,7 +1909,7 @@ const handleExclusive = () => {
                     <img
                       src={starterBust}
                       className={`${
-                        userRankName === "starter"
+                        userRankName.name === "starter"
                           ? "rank-img-active"
                           : "rank-img-inactive"
                       }`}
@@ -1760,7 +1917,7 @@ const handleExclusive = () => {
                     />
                     <h6
                       className={`rank-title ${
-                        userRankName === "starter"
+                        userRankName.name === "starter"
                           ? "rank-title-active"
                           : "rank-title-inactive"
                       } font-oxanium text-white mb-0`}
@@ -1776,7 +1933,7 @@ const handleExclusive = () => {
                   </div>
                   <div
                     className={` ${
-                      userRankName === "starter"
+                      userRankName.name === "starter"
                         ? "rank-active-div"
                         : "rank-inactive-div"
                     }  d-flex align-items-center justify-content-center`}
@@ -1789,7 +1946,7 @@ const handleExclusive = () => {
                     <img
                       src={rookieBust}
                       className={`${
-                        userRankName === "rookie"
+                        userRankName.name === "rookie"
                           ? "rank-img-active"
                           : "rank-img-inactive"
                       }`}
@@ -1797,7 +1954,7 @@ const handleExclusive = () => {
                     />
                     <h6
                       className={`rank-title ${
-                        userRankName === "rookie"
+                        userRankName.name === "rookie"
                           ? "rank-title-active"
                           : "rank-title-inactive"
                       } font-oxanium text-white mb-0`}
@@ -1813,7 +1970,7 @@ const handleExclusive = () => {
                   </div>
                   <div
                     className={` ${
-                      userRankName === "rookie"
+                      userRankName.name === "rookie"
                         ? "rank-active-div"
                         : "rank-inactive-div"
                     }  d-flex align-items-center justify-content-center`}
@@ -1826,7 +1983,7 @@ const handleExclusive = () => {
                     <img
                       src={underdogBust}
                       className={`${
-                        userRankName === "underdog"
+                        userRankName.name === "underdog"
                           ? "rank-img-active"
                           : "rank-img-inactive"
                       }`}
@@ -1834,7 +1991,7 @@ const handleExclusive = () => {
                     />
                     <h6
                       className={`rank-title ${
-                        userRankName === "underdog"
+                        userRankName.name === "underdog"
                           ? "rank-title-active"
                           : "rank-title-inactive"
                       } font-oxanium text-white mb-0`}
@@ -1850,7 +2007,7 @@ const handleExclusive = () => {
                   </div>
                   <div
                     className={` ${
-                      userRankName === "underdog"
+                      userRankName.name === "underdog"
                         ? "rank-active-div"
                         : "rank-inactive-div"
                     }  d-flex align-items-center justify-content-center`}
@@ -1863,7 +2020,7 @@ const handleExclusive = () => {
                     <img
                       src={championBust}
                       className={`${
-                        userRankName === "champion"
+                        userRankName.name === "champion"
                           ? "rank-img-active"
                           : "rank-img-inactive"
                       }`}
@@ -1871,7 +2028,7 @@ const handleExclusive = () => {
                     />
                     <h6
                       className={`rank-title ${
-                        userRankName === "champion"
+                        userRankName.name === "champion"
                           ? "rank-title-active"
                           : "rank-title-inactive"
                       } font-oxanium text-white mb-0`}
@@ -1887,7 +2044,7 @@ const handleExclusive = () => {
                   </div>
                   <div
                     className={` ${
-                      userRankName === "champion"
+                      userRankName.name === "champion"
                         ? "rank-active-div"
                         : "rank-inactive-div"
                     }  d-flex align-items-center justify-content-center`}
@@ -1900,7 +2057,7 @@ const handleExclusive = () => {
                     <img
                       src={unstoppableBust}
                       className={`${
-                        userRankName === "unstoppable"
+                        userRankName.name === "unstoppable"
                           ? "rank-img-active"
                           : "rank-img-inactive"
                       }`}
@@ -1908,7 +2065,7 @@ const handleExclusive = () => {
                     />
                     <h6
                       className={`rank-title ${
-                        userRankName === "unstoppable"
+                        userRankName.name === "unstoppable"
                           ? "rank-title-active"
                           : "rank-title-inactive"
                       } font-oxanium text-white mb-0`}
@@ -1924,7 +2081,7 @@ const handleExclusive = () => {
                   </div>
                   <div
                     className={` ${
-                      userRankName === "unstoppable"
+                      userRankName.name === "unstoppable"
                         ? "rank-active-div"
                         : "rank-inactive-div"
                     }  d-flex align-items-center justify-content-center`}
