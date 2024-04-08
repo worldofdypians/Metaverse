@@ -239,10 +239,10 @@ const CawsStakeModal = ({
   }, [selectNftIds.length, val, checkbtn, checkUnstakebtn]);
 
   useEffect(() => {
-    if (showToStake === true) {
-      checkApproval().then();
+    if (isStake === false) {
+      checkApproval();
     } else setSelectedNftIds([]);
-  }, [showClaim, showToStake]);
+  }, [isStake,coinbase]);
 
   useEffect(() => {
     if (hideItem === "staked") {
