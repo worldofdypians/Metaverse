@@ -26,6 +26,10 @@ import betaPassAddition from "./assets/betaPassAddition.png";
 import globalEvents from "./assets/globalEvents.png";
 import partnershipAddition from "./assets/partnershipAddition.png";
 import epicwhite from "./assets/epicwhite.svg";
+import wodAnimalsBanner from './assets/wodAnimalsBanner.png';
+import wodLeaderBoardBanner from './assets/wodLeaderboardBanner.png';
+import dailyBonusBanner from './assets/dailyBonusBanner.png';
+import premiumBanner from './assets/premiumsubscBanner.png'
 
 const Roadmap = () => {
   useEffect(() => {
@@ -348,6 +352,34 @@ const Roadmap = () => {
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
           completed: true,
         },
+   {
+          title: "Enhanced Leaderboard",
+          desc: "Integrate an enhanced leaderboard feature to track player achievements and progress, promoting competition and recognition among players.",
+          completed: true,
+        },
+
+        {
+          title: "Teleportation Hub",
+          desc: `Introduce a teleportation hub in the game, allowing players to swiftly travel between different areas and regions, enhancing convenience and exploration.`,
+          completed: true,
+        },
+        {
+          title: "Skyway System",
+          desc: "Implement a skyway system for efficient travel within the game world, offering a scenic and immersive mode of transportation for players.",
+          completed: true,
+        },
+     
+        {
+          title: "Rank and Reward System",
+          desc: "Introduce a ranking system based on player performance and engagement, rewarding players with unique perks and benefits as they progress through the ranks.",
+          completed: true,
+        },
+        {
+          title: "Premium Subscriber Benefits Expansion",
+          desc: "Introduce a ranking system based on player performance and engagement, rewarding players with unique perks and benefits as they progress through the ranks.",
+          completed: true,
+        },
+
         {
           title: "Launch Mobile App",
           desc: "Release a mobile application to provide users with a more convenient way to access the platform and its features.",
@@ -501,6 +533,28 @@ const Roadmap = () => {
   const [roadmapItems, setRoadmapItems] = useState(roadmapItems2024);
 
   const mainUpdate = [
+
+    {
+      title: "Addition of New Game Creatures",
+      date: "March 2024",
+      image: wodAnimalsBanner,
+    },
+    {
+      title: "Daily Bonus Improvement",
+      date: "March 2024",
+      image: dailyBonusBanner,
+    },
+    {
+      title: "Premium Subscriber Benefits Expansion",
+      date: "March 2024",
+      image: premiumBanner,
+    },
+    {
+      title: "Enhanced Leaderboard",
+      date: "March 2024",
+      image: wodLeaderBoardBanner,
+    },
+
     {
       title: "Multiplayer PVP/PVE",
       date: "Dec 2023",
@@ -825,7 +879,45 @@ const Roadmap = () => {
                   ))}
                 </div>
                 <div className="d-flex flex-column gap-3">
-                  {mainUpdate.slice(15, mainUpdate.length).map((item) => (
+                  {mainUpdate.slice(15, 18).map((item) => (
+                    <div className="roadmap-main-update position-relative">
+                      <img
+                        src={item.image}
+                        className="main-update-image"
+                        alt=""
+                      />
+                      <div className="main-update-title-wrapper w-100">
+                        <span className="font-organetto main-update-date">
+                          {item.date}
+                        </span>
+                        <h6 className="main-update-title mb-0 font-organetto">
+                          {item.title}
+                        </h6>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="d-flex flex-column gap-3">
+                  {mainUpdate.slice(18, 21).map((item) => (
+                    <div className="roadmap-main-update position-relative">
+                      <img
+                        src={item.image}
+                        className="main-update-image"
+                        alt=""
+                      />
+                      <div className="main-update-title-wrapper w-100">
+                        <span className="font-organetto main-update-date">
+                          {item.date}
+                        </span>
+                        <h6 className="main-update-title mb-0 font-organetto">
+                          {item.title}
+                        </h6>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="d-flex flex-column gap-3">
+                  {mainUpdate.slice(21, mainUpdate.length).map((item) => (
                     <div className="roadmap-main-update position-relative">
                       <img
                         src={item.image}
