@@ -41,8 +41,8 @@
   @media screen and (max-width: 991px) {
     width: 100%;
     background-image: none;
-    // background-image: url("./assets/dailyBonusBgMobile.png");
-    background: #1a1c39;
+    background-image: url("./assets/dailyBonusBgMobile.png");
+    // background: #1a1c39;
     height: 95%;
     border-radius: 12px;
   }
@@ -243,7 +243,7 @@
     overflow-x: hidden;
     height: 100%;
     @media screen and (max-width: 991px) {
-      height: 103% !important;
+      height: 105% !important;
     }
   }
   .chains-container {

@@ -1336,10 +1336,10 @@ const NewDailyBonus = ({
               <div className="daily-bonus-inner-wrapper container p-4 p-lg-5 mt-3 mt-lg-0">
                 <div
                   className="row daily-bonus-row 
-               gap-lg-0 mx-0 mx-lg-2 mt-0 mt-lg-3"
+               gap-lg-0 mx-3 mx-lg-2 mt-3 mt-lg-3"
                   style={{ height: "100%", marginTop: "64px" }}
                 >
-                  <div className="col-12 col-lg-5 chains-wrapper mt-0 mt-lg-0">
+                  <div className="col-12 col-lg-5 chains-wrapper mt-5 mt-lg-0">
                     {windowSize.width > 992 ? (
                       <div
                         className="d-flex flex-row flex-lg-column justify-content-between h-100 chains-container"
