@@ -59,12 +59,11 @@ const MyRewardsPopupNew = ({
   allSkaleChests,
   kittyDashRecords,
   userRankRewards,
-  chainId,
+  cawsPremiumRewards,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
   const [rewardCategory, setrewardCategory] = useState("all");
-  const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
@@ -312,48 +311,7 @@ const MyRewardsPopupNew = ({
     }
   };
 
-  const getCawsStakesIds = async (userAddr) => {
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
-    );
-    let stakenft = [];
-    let myStakes = await staking_contract.methods
-      .depositsOf(userAddr)
-      .call()
-      .then((result) => {
-        for (let i = 0; i < result.length; i++)
-          stakenft.push(parseInt(result[i]));
-        return stakenft;
-      });
 
-    return myStakes;
-  };
-
-  const calculateAllRewardsCawsPremium = async (userAddr) => {
-    let myStakes = await getCawsStakesIds(userAddr);
-    let result = 0;
-    let calculateRewards = [];
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
-    );
-    if (userAddr !== null) {
-      if (myStakes && myStakes.length > 0) {
-        calculateRewards = await staking_contract.methods
-          .calculateRewards(userAddr, myStakes)
-          .call()
-          .then((data) => {
-            return data;
-          });
-      }
-      let a = 0;
-
-      for (let i = 0; i < calculateRewards.length; i++) {
-        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
-        result = result + Number(a);
-      }
-    }
-    setcawsPremiumRewards(result);
-  };
 
   const getTreasureChestsInfo = async () => {
     var moneyResult = 0;
@@ -561,11 +519,7 @@ const MyRewardsPopupNew = ({
     fetchPastDailyBonusCaws(address);
     fetchCachedData();
   }, [address, email]);
-  useEffect(() => {
-    if (address && chainId === 1) {
-      calculateAllRewardsCawsPremium(address);
-    }
-  }, [address, chainId]);
+
 
   useEffect(() => {
     fetchUsersocialRewards();
@@ -688,7 +642,8 @@ const MyRewardsPopupNew = ({
                       Number(userRank2) +
                       Number(genesisData) +
                       Number(cmcuserEarnUsd) +
-                      Number(dypiusPremiumEarnUsd),
+                      Number(dypiusPremiumEarnUsd) +
+                      Number(cawsPremiumRewards),
                     2
                   )}
             </span>

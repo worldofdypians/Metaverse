@@ -240,7 +240,7 @@ const NewWalletBalance = ({
   cmcuserPoints,
   onPremiumClick,
   openedSkaleChests,
-  // hasNft,
+  cawsPremiumRewards,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -1583,7 +1583,7 @@ const NewWalletBalance = ({
                           Number(userEarnUsd) +
                           Number(treasureRewardMoney) +
                           Number(EthRewardsLandPool) * Number(ethTokenData) +
-                          Number(EthRewardsCawsPool) * Number(ethTokenData) +
+                          Number(EthRewardsCawsPool) * Number(ethTokenData) + Number(cawsPremiumRewards) +
                           Number(EthRewards) * Number(ethTokenData),
                         2
                       )}
