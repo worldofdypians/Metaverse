@@ -185,7 +185,7 @@ function Dashboard({
   const [dypiusPremiumEarnTokens, setdypiusPremiumEarnTokens] = useState(0);
   const [dypiusPremiumEarnUsd, setdypiusPremiumEarnUsd] = useState(0);
   const [dypiusPremiumPoints, setdypiusPremiumPoints] = useState(0);
-
+  const [playerRank, setPlayerRank] = useState({});
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
 
@@ -253,13 +253,13 @@ function Dashboard({
 
   const [count, setCount] = useState(0);
   const [skalecount, setskalecount] = useState(0);
-
+  const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
-  const [userRankSkale, setUserRankSkale] = useState("")
+  const [userRankSkale, setUserRankSkale] = useState("");
   const [userRank2, setUserRank2] = useState("");
   const [userRank2Skale, setUserRank2Skale] = useState("");
-  const [userBnbScore, setUserBnbScore] = useState(0)
-  const [userSkaleScore, setUserSkaleScore] = useState(0)
+  const [userBnbScore, setUserBnbScore] = useState(0);
+  const [userSkaleScore, setUserSkaleScore] = useState(0);
   const [genesisRank, setGenesisRank] = useState("");
   const [genesisRank2, setGenesisRank2] = useState("");
   const [premiumTxHash, setPremiumTxHash] = useState("");
@@ -357,6 +357,44 @@ function Dashboard({
       chestId: 10,
     },
   ];
+
+  const getRankData = async () => {
+    await axios
+      .get(
+        `https://api.worldofdypians.com/api/userRanks/${coinbase}`
+      )
+      .then((data) => {
+        console.log(data.data, "data1");
+        setRankData(data.data);
+      })
+      .catch(async (err) => {
+        if (err.response.status === 404) {
+          await axios
+            .post(`https://api.worldofdypians.com/api/addUserRank`, 
+            {
+              walletAddress: coinbase
+            })
+            .then(async (data) => {
+              const response2 = await axios.get(
+                `https://api.worldofdypians.com/api/userRanks/${coinbase}`
+              );
+        console.log(data.data, "data2");
+
+              setRankData(response2.data.data);
+            });
+        }
+      });
+
+    // if(response.status === 404){
+    //    await axios.post(`https://api.worldofdypians.com/api/addUserRank/0xbf8bc0660f96b1068e21e0f28614148dfa758cec`,
+    // {
+    //   walletAddress: "0xbf8bc0660f96b1068e21e0f28614148dfa758cec"
+    // }).then(async() => {
+    //   const response2 = await axios.get(`https://api.worldofdypians.com/api/userRanks/0xbf8bc0660f96b1068e21e0f28614148dfa758cec`)
+    //   console.log(response2.data, "data");
+    // })
+    // }
+  };
 
   const metaverseBenefits = [
     "Exclusive access to World of Dypians",
@@ -690,8 +728,7 @@ function Dashboard({
     }
 
     setUserRank(testArray[0].position);
-    setUserBnbScore(testArray[0].statValue)
-
+    setUserBnbScore(testArray[0].statValue);
   };
   const fetchSkaleRecordsAroundPlayer = async (userId, userName) => {
     const data = {
@@ -733,7 +770,7 @@ function Dashboard({
     }
 
     setUserRankSkale(testArray[0].position);
-    setUserSkaleScore(testArray[0].statValue)
+    setUserSkaleScore(testArray[0].statValue);
   };
 
   const fetchGenesisAroundPlayer = async (userId, userName) => {
@@ -1913,7 +1950,7 @@ function Dashboard({
     await subscriptionContract.methods
       .subscribe(selectedSubscriptionToken, price)
       .send({ from: await window.getCoinbase() })
-      .then((data) => {
+      .then(async (data) => {
         if (dailyBonusPopup === true) {
           setPremiumTxHash(data.transactionHash);
           const selectedchain =
@@ -1940,6 +1977,16 @@ function Dashboard({
         setIsPremium(true);
         handleUpdatePremiumUser(coinbase);
         setapproveStatus("successsubscribe");
+        await axios
+          .patch(
+            `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            {
+              multiplier: "yes",
+            }
+          )
+          .then((response) => {
+            console.log(response.data);
+          });
         setTimeout(() => {
           setloadspinnerSub(false);
           setloadspinner(false);
@@ -2082,23 +2129,26 @@ function Dashboard({
     }
   };
 
-
   const handleRankRewards = () => {
-    let totalScore = userBnbScore + userSkaleScore
-    if(totalScore > 6000000){
+    let totalScore = userBnbScore + userSkaleScore;
+    if (totalScore > 6000000) {
       setUserRankRewards(5);
-    }else if(totalScore > 12000000){
-      setUserRankRewards(10)
-    }else if(totalScore > 24000000){
-      setUserRankRewards(25)
-    }else if(totalScore > 40000000){
-      setUserRankRewards(100)
+    } else if (totalScore > 12000000) {
+      setUserRankRewards(10);
+    } else if (totalScore > 24000000) {
+      setUserRankRewards(25);
+    } else if (totalScore > 40000000) {
+      setUserRankRewards(100);
     }
-  }
+  };
 
   useEffect(() => {
- handleRankRewards()
-  }, [userBnbScore, userSkaleScore])
+    handleRankRewards();
+  }, [userBnbScore, userSkaleScore]);
+
+  useEffect(() => {
+    getRankData();
+  }, [coinbase]);
 
   useEffect(() => {
     if ( data &&
@@ -2337,11 +2387,7 @@ function Dashboard({
       getmyCawsWodStakes();
       getmyWodStakes();
     }
-  }, [
-    userWallet,
-    data?.getPlayer?.wallet?.publicAddress,
-    coinbase,
-  ]);
+  }, [userWallet, data?.getPlayer?.wallet?.publicAddress, coinbase]);
 
   useEffect(() => {
     getOtherNfts();
@@ -2464,6 +2510,8 @@ function Dashboard({
                       className={`col-12 d-flex flex-column gap-3  mt-5 mt-lg-0 ${classes.containerPlayer}`}
                     >
                       <ProfileCard
+                      getRankData={getRankData}
+                      rankData={rankData}
                         userRank={userRank}
                         userRankSkale={userRankSkale}
                         userBnbScore={userBnbScore}
@@ -2477,6 +2525,7 @@ function Dashboard({
                         availableTime={availableTime}
                         isVerified={data?.getPlayer?.wallet}
                         coinbase={account}
+                        setRankData={setRankData}
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
