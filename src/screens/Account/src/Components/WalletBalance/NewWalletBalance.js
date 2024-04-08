@@ -404,7 +404,7 @@ const NewWalletBalance = ({
         maxPoints: "30,000",
         learnMore:
           "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
-        eventDate: "Apr 14, 2024",
+        eventDate: "Apr 15, 2024",
       },
     },
     {
@@ -2145,9 +2145,14 @@ const NewWalletBalance = ({
                         rewards
                       </li>
                     )}
-                    {dummyEvent.id !== "event5" && (
+                    {dummyEvent.id !== "event5" && dummyEvent.id !== "event11" && (
                       <li className="popup-event-desc">
                         Get global leaderboard points
+                      </li>
+                    )}
+                     {dummyEvent.id === "event11" && (
+                      <li className="popup-event-desc">
+                        Get global SKALE leaderboard points
                       </li>
                     )}
                     <li className="popup-event-desc">Community Engagement</li>
