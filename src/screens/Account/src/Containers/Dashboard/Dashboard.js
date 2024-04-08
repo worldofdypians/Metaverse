@@ -1985,7 +1985,7 @@ function Dashboard({
             }
           )
           .then((response) => {
-            console.log(response.data);
+            getRankData()
           });
         setTimeout(() => {
           setloadspinnerSub(false);
