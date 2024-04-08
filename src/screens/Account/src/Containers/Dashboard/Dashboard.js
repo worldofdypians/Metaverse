@@ -1984,7 +1984,7 @@ function Dashboard({
               multiplier: "yes",
             }
           )
-          .then((response) => {
+          .then(() => {
             getRankData()
           });
         setTimeout(() => {
