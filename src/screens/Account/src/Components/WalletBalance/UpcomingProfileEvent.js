@@ -1,11 +1,6 @@
 import React from "react";
-import coin98 from "./assets/coin98.svg";
-import coingecko from "./assets/coingecko.svg";
-import conflux from "./assets/conflux.svg";
 import orangeArrow from "./assets/orangeArrow.svg";
-
 import orangeDate from "./assets/orangeDate.svg";
-
 import orangeExplore from "./assets/orangeExplore.svg";
 
 import purpleFind from "./assets/purpleFind.svg";
@@ -17,6 +12,9 @@ import gateProfileBanner from "./assets/gateProfileBanner.png";
 import baseProfileBanner from "./assets/baseProfileBanner.png";
 import dogeProfileBanner from "./assets/dogeProfileBanner.png";
 import cmcProfileBanner from "./assets/cmcProfileBanner.png";
+import skaleProfileBanner from "./assets/skaleProfileBanner.png";
+
+ 
 
 const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
   return (
@@ -66,6 +64,8 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
               ? cmcProfileBanner
               : data.linkState == "dypius2"
               ? dypiusBanner2
+              : data.linkState == "skale"
+              ? skaleProfileBanner
               : coingeckoProfileBanner
           }
           style={{ height: "50px", width: "25%" }}
@@ -78,7 +78,7 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
         <div className="d-flex align-items-center gap-1">
           <img src={purpleFind} height={15} width={15} alt="" />
           <span className="mb-0 event-bottom-text" style={{ color: "#EC8123" }}>
-            Explore & Find
+            Explore & Mine
           </span>
         </div>
 

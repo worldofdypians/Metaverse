@@ -29,9 +29,12 @@ import UpcomingProfileEvent from "./UpcomingProfileEvent";
 import NewBetaEventCard from "../../../../Marketplace/components/NewBetaEventCard";
 import conflux from "./assets/conflux.svg";
 import gate from "./assets/gate.svg";
+import skaleLogo from "./assets/skaleLogo.svg";
+
 import eventPopupImageGecko from "./assets/eventPopupImageGecko.png";
 import dogePopupImage from "./assets/dogePopupImage.png";
 import cmcPopupImage from "./assets/cmcPopupImage.png";
+import upcomingSkale from "./assets/skalePopupImage.png";
 
 import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
@@ -67,13 +70,8 @@ import ReCaptchaV2 from "react-google-recaptcha";
 import dypius from "./assets/dypIcon.svg";
 import upcomingDyp from "./assets/upcomingDyp.webp";
 import upcomingDyp2 from "./assets/dypiuspopup2.png";
-
 import dypeventPopupImage from "./assets/dypEventImage.png";
 import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
-import { abbreviateNumber } from "js-abbreviation-number";
-import eventSkeleton from "./assets/eventSkeleton.png";
-import sliderEventSkeleton from "./assets/sliderEventSkeleton.svg";
-import ExpiredProfileEvent from "./ExpiredProfileEvent";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -240,7 +238,7 @@ const NewWalletBalance = ({
   cmcuserPoints,
   onPremiumClick,
   openedSkaleChests,
-  // hasNft,
+  cawsPremiumRewards,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -250,29 +248,10 @@ const NewWalletBalance = ({
   let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
+  let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
-
-  const dummyDoge = {
-    title: "Dogecoin",
-    chain: "BNB Chain",
-    linkState: "doge",
-    rewards: "DOGE",
-    status: "Expired",
-    id: "event7",
-    eventType: "Explore & Mine",
-    eventDate: "Dec 22, 2023",
-    date: "Dec 22, 2023",
-    logo: doge,
-    totalRewards: "$10,000 in DOGE Rewards",
-    eventDuration: dogeLastDay,
-    minRewards: "1",
-    maxRewards: "100",
-    minPoints: "5,000",
-    maxPoints: "50,000",
-    learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
-  };
 
   const dypv2 = {
     title: "Dypius Premium",
@@ -320,6 +299,27 @@ const NewWalletBalance = ({
       "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
   };
 
+  const dummySkale = {
+    title: "SKALE",
+    chain: "SKALE Nebula Hub",
+    linkState: "skale",
+    rewards: "SKL",
+    status: "Coming Soon",
+    id: "event11",
+    eventType: "Explore & Mine",
+    eventDate: "Apr 15, 2024",
+    date: "Apr 15, 2024",
+    logo: skaleLogo,
+    totalRewards: "$20,000 in SKL Rewards",
+    eventDuration: skaleLastDay,
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "30,000",
+    learnMore:
+      "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
+  };
+
   const dummyBetaPassData2 = [
     {
       title: "Dypius Premium",
@@ -351,7 +351,6 @@ const NewWalletBalance = ({
         activeTab: "dypiusv2",
       },
     },
-    
     {
       title: "CMC",
       logo: cmc,
@@ -380,7 +379,34 @@ const NewWalletBalance = ({
           "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
     },
-   
+    {
+      title: "SKALE",
+      logo: skaleLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in SKALE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Apr 15, 2024",
+      backgroundImage: upcomingSkale,
+      popupInfo: {
+        title: "SKALE",
+        chain: "SKALE Nebula Hub",
+        linkState: "skale",
+        rewards: "SKL",
+        status: "Coming Soon",
+        id: "event11",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in SKALE Rewards",
+        eventDuration: skaleLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "Apr 15, 2024",
+      },
+    },
     {
       title: "Dogecoin",
       chain: "BNB Chain",
@@ -1109,8 +1135,6 @@ const NewWalletBalance = ({
                 event={dypv2}
                 userEarnedUsd={dypiusPremiumEarnUsd}
               />
-
-              
               <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyCmc);
@@ -1120,16 +1144,13 @@ const NewWalletBalance = ({
                 event={dummyCmc}
                 userEarnedUsd={cmcuserEarnUsd}
               />
-              <ExpiredProfileEvent
+              <UpcomingProfileEvent
+                data={dummySkale}
                 onOpenEvent={() => {
-                  setDummyEvent(dummyDoge);
+                  setDummyEvent(dummySkale);
                   setEventPopup(true);
                 }}
-                data={dummyDoge}
-                event={dummyDoge}
-                userEarnedUsd={dogeEarnUSD}
               />
-             
               {/* <ExpiredProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
@@ -1440,11 +1461,13 @@ const NewWalletBalance = ({
           </div> */}
           <div className="col-12 col-lg-8 d-flex flex-column justify-content-between gap-3 px-0 gap-lg-0 mt-lg-0 mt-5">
             <div className="row gap-3 gap-lg-0">
-              <div className="col-12 col-lg-4"  onClick={onDailyRewardsPopupOpen}>
+              <div
+                className="col-12 col-lg-4"
+                onClick={onDailyRewardsPopupOpen}
+              >
                 <div className="daily-bonus-wrapper">
                   <div className="red-div"></div>
                   <img
-                  
                     // src={finished ? mageFinish : mageGoing}
                     src={
                       chestPercentage >= 50 && chestPercentage < 100
@@ -1456,10 +1479,7 @@ const NewWalletBalance = ({
                     className={`${"daily-rewards-img"}`}
                     alt=""
                   />
-                  <div
-                    className="progress-bar-group d-flex flex-column align-items-start"
-                    
-                  >
+                  <div className="progress-bar-group d-flex flex-column align-items-start">
                     {!finished && (
                       <span className="progress-bar-title">Progress</span>
                     )}
@@ -1583,7 +1603,7 @@ const NewWalletBalance = ({
                           Number(userEarnUsd) +
                           Number(treasureRewardMoney) +
                           Number(EthRewardsLandPool) * Number(ethTokenData) +
-                          Number(EthRewardsCawsPool) * Number(ethTokenData) +
+                          Number(EthRewardsCawsPool) * Number(ethTokenData) + Number(cawsPremiumRewards) +
                           Number(EthRewards) * Number(ethTokenData),
                         2
                       )}
@@ -1872,6 +1892,8 @@ const NewWalletBalance = ({
                         ? dypeventPopupImage
                         : dummyEvent?.id === "event9"
                         ? upcomingDyp2
+                        : dummyEvent?.id === "event11"
+                        ? upcomingSkale
                         : dummyEvent?.linkState === "coingecko"
                         ? eventPopupImageGecko
                         : dummyEvent.linkState === "gate"
@@ -2005,6 +2027,18 @@ const NewWalletBalance = ({
                       the game daily and venture into the Gate.io area to
                       uncover hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event11" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a SKALE Beta Pass NFT</b>. You can get the SKALE
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      SKALE area, players not only stand a chance to secure
+                      daily rewards in SKL, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the SKALE area to uncover
+                      hidden treasures.
+                    </p>
                   ) : dummyEvent.id === "event7" ? (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -2028,6 +2062,20 @@ const NewWalletBalance = ({
                       points for their placement on the global leaderboard.
                       Remember to log in to the game daily and venture into the
                       CoinMarketCap area to uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event11" ? (
+                    <p
+                      className="popup-event-desc"
+                      // style={{ fontSize: "12px", fontWeight: "500" }}
+                    >
+                      SKALE stands as the world's fastest blockchain,
+                      meticulously engineered to enable secure Ethereum scaling.
+                      With SKALE AppChains, users enjoy ZERO gas fees and access
+                      advanced functionalities like AI/ML smart contracts,
+                      on-chain file storage, interchain messaging, and zero-cost
+                      minting. This empowers developers to swiftly deploy their
+                      own configurable EVM blockchains without compromising on
+                      speed, security, or decentralization.
                     </p>
                   ) : dummyEvent.id === "event9" ? (
                     <p className="popup-event-desc">
@@ -2091,13 +2139,20 @@ const NewWalletBalance = ({
                           ? "BNB"
                           : dummyEvent.id === "event7"
                           ? "DOGE"
+                          : dummyEvent.id === "event11"
+                          ? "SKL"
                           : "ETH"}{" "}
                         rewards
                       </li>
                     )}
-                    {dummyEvent.id !== "event5" && (
+                    {dummyEvent.id !== "event5" && dummyEvent.id !== "event11" && (
                       <li className="popup-event-desc">
                         Get global leaderboard points
+                      </li>
+                    )}
+                     {dummyEvent.id === "event11" && (
+                      <li className="popup-event-desc">
+                        Get global SKALE leaderboard points
                       </li>
                     )}
                     <li className="popup-event-desc">Community Engagement</li>
@@ -2122,6 +2177,8 @@ const NewWalletBalance = ({
                 ? "Dogecoin"
                 : dummyEvent.id === "event8"
                 ? "CoinMarketCap"
+                : dummyEvent.id === "event11"
+                ? "SKALE"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2199,6 +2256,20 @@ const NewWalletBalance = ({
                 public ledger that is maintained by a network of computers
                 called nodes.
               </p>
+            ) : dummyEvent.id === "event11" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                SKALE stands as the world's fastest blockchain, meticulously
+                engineered to enable secure Ethereum scaling. With SKALE
+                AppChains, users enjoy ZERO gas fees and access advanced
+                functionalities like AI/ML smart contracts, on-chain file
+                storage, interchain messaging, and zero-cost minting. This
+                empowers developers to swiftly deploy their own configurable EVM
+                blockchains without compromising on speed, security, or
+                decentralization.
+              </p>
             ) : dummyEvent.id === "event8" ? (
               <p
                 className="popup-event-desc"
@@ -2241,6 +2312,8 @@ const NewWalletBalance = ({
                     ? "https://twitter.com/dogecoin"
                     : dummyEvent.id === "event8"
                     ? "https://twitter.com/CoinMarketCap"
+                    : dummyEvent.id === "event11"
+                    ? "https://twitter.com/SkaleNetwork"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2264,6 +2337,8 @@ const NewWalletBalance = ({
                     ? "https://t.me/CoinMarketCapAnnouncements"
                     : dummyEvent.id === "event7"
                     ? "https://discord.gg/dogecoin"
+                    : dummyEvent.id === "event11"
+                    ? "https://discord.com/invite/gM5XBy6"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -2296,6 +2371,8 @@ const NewWalletBalance = ({
                     ? "https://dogecoin.com/"
                     : dummyEvent.id === "event8"
                     ? "https://coinmarketcap.com/"
+                    : dummyEvent.id === "event11"
+                    ? "https://skale.space/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -2405,6 +2482,8 @@ const NewWalletBalance = ({
                             ? "BNB"
                             : dummyEvent.id === "event7"
                             ? "DOGE"
+                            : dummyEvent.id === "event11"
+                            ? "SKL"
                             : "ETH"}
                         </>
                       )}
@@ -2498,7 +2577,10 @@ const NewWalletBalance = ({
       )}
       {stakePopup && (
         <OutsideClickHandler onOutsideClick={() => setStakePopup(false)}>
-          <div className="popup-wrapper popup-active nft-wrapper-popup p-3" style={{width: 'fit-content'}}>
+          <div
+            className="popup-wrapper popup-active nft-wrapper-popup p-3"
+            style={{ width: "fit-content" }}
+          >
             <div className="d-flex align-items-center justify-content-between w-100 mb-4">
               <h6 className="popup-title-2 mb-0">Stake NFT</h6>
               <img
@@ -2534,7 +2616,7 @@ const NewWalletBalance = ({
                     <span className="instaketxt">In stake</span>
                   </div>
                 )} */}
-                
+
                 <img
                   className="new-caws-stake-img p-0"
                   src={

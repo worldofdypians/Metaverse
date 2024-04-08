@@ -18,7 +18,7 @@
   z-index: 101;
   // box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
   @media screen and (max-width: 991px) {
-    width: 100%;
+    width: 95%;
     .daily-bonus-inner-wrapper {
       height: 80%;
     }
@@ -40,8 +40,11 @@
   filter: drop-shadow(0, 0, 0, 1000px rgba(0, 0, 0, 0.5)) !important;
   @media screen and (max-width: 991px) {
     width: 100%;
+    background-image: none;
     background-image: url("./assets/dailyBonusBgMobile.png");
+    // background: #1a1c39;
     height: 95%;
+    border-radius: 12px;
   }
 }
 
@@ -240,7 +243,7 @@
     overflow-x: hidden;
     height: 100%;
     @media screen and (max-width: 991px) {
-      height: 103% !important;
+      height: 105% !important;
     }
   }
   .chains-container {
@@ -1044,7 +1047,7 @@
 
 @media screen and (max-height: 932px) and (max-width: 786px) {
   .chains-wrapper{
-    margin-top: 30px !important;
+    // margin-top: 30px !important;
     height: 20% !important;
   }
 
