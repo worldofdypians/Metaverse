@@ -2805,6 +2805,7 @@ function Dashboard({
                             dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
                             kittyDashRecords={kittyDashRecords}
                             userRankRewards={userRankRewards}
+                            chainId={chainId}
                           />
                         </div>
                       </OutsideClickHandler>
