@@ -316,43 +316,44 @@ const Roadmap = () => {
         {
           title: "Introduction of AI Powered NPCs",
           desc: "Implement AI-powered NPC crowds to interact with users, adding depth and engagement to the game world.",
-          completed: false,
+          completed: true,
         },
         {
           title: "Expansion of the City Area",
           desc: "Enlarge the city to include new environments, making it more expansive and futuristic, providing players with more areas to explore.",
-          completed: false,
+          completed: true,
         },
         {
           title: "Introduction of New Teleport Station",
           desc: "Introduce teleport portals that allow players to travel to different locations on the map instantly.",
-          completed: false,
+          completed: true,
         },
         {
           title: "Addition of New Game Creatures",
           desc: "Introduce new creatures to the game, increasing variety and challenges for players.",
-          completed: false,
+          completed: true,
         },
         {
           title: "New Chain Expansion",
           desc: "Integrate additional blockchains into the game to broaden the reach and appeal.",
-          completed: false,
+          completed: true,
         },
         {
           title: "Daily Bonus Improvement",
           desc: "Enhance the daily bonus system to provide players with increased benefits and a more inclusive experience.",
-          completed: false,
+          completed: true,
+        },
+        {
+          title: "Partnership Development",
+          desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
+          completed: true,
         },
         {
           title: "Launch Mobile App",
           desc: "Release a mobile application to provide users with a more convenient way to access the platform and its features.",
           completed: false,
         },
-        {
-          title: "Partnership Development",
-          desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
-          completed: false,
-        },
+       
       ],
     },
     {
