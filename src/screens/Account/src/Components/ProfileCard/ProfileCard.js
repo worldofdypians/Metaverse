@@ -1734,7 +1734,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">0</span>
+                    <span className="needed-points mb-0">0 - 5,999,999</span>
                   </div>
                   <div
                     className={` ${
@@ -1929,7 +1929,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">0</span>
+                    <span className="needed-points mb-0">0 - 5,999,999</span>
                   </div>
                   <div
                     className={` ${

@@ -736,6 +736,21 @@
 
 }
 
+@keyframes shine2 {
+  0%{
+  filter: drop-shadow(0px 0px 6px #ddb800);
+
+  }
+  50%{
+  filter: drop-shadow(0px 0px 0px #ddb800);
+
+  }
+  100%{
+  filter: drop-shadow(0px 0px 6px #ddb800);
+
+  }
+}
+
 .premium-offer-tag {
   position: absolute;
   right: 15%;
@@ -743,14 +758,17 @@
   cursor: pointer;
   z-index: 6;
   transition: all 0.25s;
+  animation: shine2 2s infinite;
 }
 
 .premium-offer-tag:hover{
   filter: drop-shadow(0px 0px 6px #ddb800);
+  animation: none !important;
 }
 
 .premium-shadow-active{
   filter: drop-shadow(0px 0px 6px #ddb800);
+  animation: none !important;
 
 }
 
@@ -777,6 +795,24 @@
 
 }
 
+
+@keyframes shine {
+  
+0%{
+  box-shadow: 0px 0px 8px 0px rgba(255, 199, 0, 1);
+
+}
+50%{
+  box-shadow: 0px 0px 0px 0px rgba(255, 199, 0, 1);
+
+}
+100%{
+  box-shadow: 0px 0px 8px 0px rgba(255, 199, 0, 1);
+
+}
+
+}
+
 .activate-bonus-btn{
   border-radius: 12px;
 background: linear-gradient(89deg, #B26510 3.75%, #E9C333 99.13%);
@@ -788,7 +824,10 @@ line-height: normal;
 outline: none;
 border: none;
 transition: all .25s;
+animation: shine 2s infinite;
 }
+
+
 
 .activate-bonus-btn:hover{
   box-shadow: 0px 0px 8px 0px rgba(255, 199, 0, 1);
