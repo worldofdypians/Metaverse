@@ -10,7 +10,6 @@ import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-n
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
 const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
- 
   return (
     <div
       className={` ${
@@ -30,6 +29,8 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
           ? "upcoming-dyp-event"
           : activeTab === "dypiusv2"
           ? "upcoming-dyp-event2"
+          : data.title === "SKALE"
+          ? "upcoming-skale-event"
           : "upcoming-mint-wrapper-coin98"
       } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column flex-lg-row gap-3 d-flex align-items-center justify-content-between px-0`}
       onClick={onOpenPopup}
@@ -80,17 +81,17 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
         <div className="d-flex col-lg-3 flex-column align-items-start align-items-lg-center">
           {/* {activeTab !== "dypiusv2" ? ( */}
 
-            <div className="mybetaearnings">
-              <h6 className="event-my-earnings3 mb-3">
-                {data.title !== "Dypius" ? (
-                  <>${getFormattedNumber(userEarnUsd, 2)}</>
-                ) : activeTab !== "dypiusv2" ? (
-                  <>{getFormattedNumber(userEarnUsd, 0)} DYP</>
-                ) : (
-                  <></>
-                )}
-              </h6>
-            </div>
+          <div className="mybetaearnings">
+            <h6 className="event-my-earnings3 mb-3">
+              {data.title !== "Dypius" ? (
+                <>${getFormattedNumber(userEarnUsd, 2)}</>
+              ) : activeTab !== "dypiusv2" ? (
+                <>{getFormattedNumber(userEarnUsd, 0)} DYP</>
+              ) : (
+                <></>
+              )}
+            </h6>
+          </div>
           {/* ) : (
           //   <div className="mybetaearnings" style={{ backgroundImage: "none" }}>
           //     <img

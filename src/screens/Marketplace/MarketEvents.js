@@ -28,6 +28,7 @@ import cmc from "../Marketplace/MarketNFTs/assets/cmc.svg";
 import coin98 from "../Account/src/Components/WalletBalance/assets/coin98.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
 import base from "./assets/baseLogo.svg";
+import skaleLogo from "./assets/skaleLogo.svg";
 import avaxLogo from "./assets/avaxLogo.svg";
 
 import betaMyEarnings from "./assets/betaMyEarnings.png";
@@ -61,6 +62,7 @@ import dypeventPopupImage from "../Account/src/Components/WalletBalance/assets/d
 
 import gatePopupImage from "../Account/src/Components/WalletBalance/assets/gatePopupImage.png";
 import cmcPopupImage from "../Account/src/Components/WalletBalance/assets/cmcPopupImage.png";
+import skalePopupImage from "../Account/src/Components/WalletBalance/assets/skalePopupImage.png";
 
 import eventPopupImageAvax from "../Account/src/Components/WalletBalance/assets/eventPopupImageAvax.png";
 import eventPopupImageGecko from "../Account/src/Components/WalletBalance/assets/eventPopupImageGecko.png";
@@ -209,6 +211,7 @@ const MarketEvents = ({
 
   let dogeLastDay = new Date("2024-04-02T13:00:00.000+02:00");
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
+  let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
 
   const dailyBonusMintData = {
     title: "Daily Bonus",
@@ -247,7 +250,6 @@ const MarketEvents = ({
         activeTab: "dypiusv2",
       },
     },
-
     {
       title: "CoinMarketCap",
       logo: cmc,
@@ -276,6 +278,35 @@ const MarketEvents = ({
           "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
     },
+    {
+      title: "SKALE",
+      logo: skaleLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in SKALE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Apr 15, 2024",
+      backgroundImage: upcomingSkale,
+      popupInfo: {
+        title: "SKALE",
+        chain: "SKALE Nebula Hub",
+        linkState: "skale",
+        rewards: "SKL",
+        status: "Coming Soon",
+        id: "event11",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in SKALE Rewards",
+        eventDuration: skaleLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "Apr 14, 2024",
+      },
+    },
+
     {
       title: "Dogecoin",
       logo: doge,
@@ -901,6 +932,9 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -913,9 +947,7 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1083,7 +1115,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
                           <BetaEventCard
                             activeTab={item.activeTab}
                             data={item}
@@ -1189,30 +1221,12 @@ const MarketEvents = ({
                 //   }
                 // />
                 <div className="d-flex flex-column gap-4">
-                  <div className="border-0 upcoming-mint-wrapper upcoming-skale-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">SKALE</h6>
-                      <p className="upcoming-mint-desc">
-                        Join the SKALE Treasure Hunt event for a chance to grab
-                        a share of the $20,000 SKL reward pool.
-                      </p>
-                    </div>
-                    <img
-                      src={upcomingSkale}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-block"
-                    />
-                     <img
-                      src={upcomingSkaleMobile}
-                      alt=""
-                      className="upcoming-mint-img d-block d-lg-none d-md-none"
-                    />
-                  </div>
                   <div className="border-0 upcoming-mint-wrapper upcoming-babydoge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">BabyDoge</h6>
                       <p className="upcoming-mint-desc">
-                      Join the BabyDoge Treasure Hunt event for a chance to grab a share of the $20,000 BabyDoge reward pool.
+                        Join the BabyDoge Treasure Hunt event for a chance to
+                        grab a share of the $20,000 BabyDoge reward pool.
                       </p>
                     </div>
                     <img
@@ -1220,7 +1234,7 @@ const MarketEvents = ({
                       alt=""
                       className="upcoming-mint-img d-none d-lg-block"
                     />
-                     <img
+                    <img
                       src={upcomingBabyDogeMobile}
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
@@ -1252,7 +1266,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(2, dummyBetaPassData2.length)
+                    .slice(3, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
@@ -1353,6 +1367,8 @@ const MarketEvents = ({
                         ? dogePopupImage
                         : dummyEvent.linkState === "coinmarketcap"
                         ? cmcPopupImage
+                        : dummyEvent.linkState === "skale"
+                        ? skalePopupImage
                         : eventPopupImage
                     }
                     alt=""
@@ -1512,6 +1528,18 @@ const MarketEvents = ({
                       BNB. Remember to log in to the game daily and venture into
                       the downtown area to uncover hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event11" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a SKALE Beta Pass NFT</b>. You can get the SKALE
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      SKALE area, players not only stand a chance to secure
+                      daily rewards in SKL, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the SKALE area to uncover
+                      hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -1565,6 +1593,8 @@ const MarketEvents = ({
                           ? "BNB"
                           : dummyEvent.id === "event7"
                           ? "DOGE"
+                          : dummyEvent.id === "event11"
+                          ? "SKL"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -1596,6 +1626,8 @@ const MarketEvents = ({
                 ? "Dogecoin"
                 : dummyEvent.id === "event8"
                 ? "CoinMarketCap"
+                : dummyEvent.id === "event11"
+                ? "SKALE"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -1686,6 +1718,20 @@ const MarketEvents = ({
                 in May 2013 by Brandon Chez in Long Island City, Queens, New
                 York.
               </p>
+            ) : dummyEvent.id === "event11" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                SKALE stands as the world's fastest blockchain, meticulously
+                engineered to enable secure Ethereum scaling. With SKALE
+                AppChains, users enjoy ZERO gas fees and access advanced
+                functionalities like AI/ML smart contracts, on-chain file
+                storage, interchain messaging, and zero-cost minting. This
+                empowers developers to swiftly deploy their own configurable EVM
+                blockchains without compromising on speed, security, or
+                decentralization.
+              </p>
             ) : (
               <p
                 className="popup-event-desc"
@@ -1715,6 +1761,8 @@ const MarketEvents = ({
                     ? "https://twitter.com/dogecoin"
                     : dummyEvent.id === "event8"
                     ? "https://twitter.com/CoinMarketCap"
+                    : dummyEvent.id === "event11"
+                    ? "https://twitter.com/SkaleNetwork"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -1738,6 +1786,8 @@ const MarketEvents = ({
                     ? "https://t.me/gateio_en"
                     : dummyEvent.id === "event7"
                     ? "https://discord.gg/dogecoin"
+                    : dummyEvent.id === "event11"
+                    ? "https://discord.com/invite/gM5XBy6"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -1770,6 +1820,8 @@ const MarketEvents = ({
                     ? "https://dogecoin.com/"
                     : dummyEvent.id === "event8"
                     ? "https://coinmarketcap.com/"
+                    : dummyEvent.id === "event11"
+                    ? "https://skale.space/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -1881,6 +1933,8 @@ const MarketEvents = ({
                             ? "BNB"
                             : dummyEvent.id === "event7"
                             ? "DOGE"
+                            : dummyEvent.id === "event11"
+                            ? "SKL"
                             : "ETH"}
                         </>
                       )}
