@@ -59,6 +59,7 @@ const MyRewardsPopupNew = ({
   allSkaleChests,
   kittyDashRecords,
   userRankRewards,
+  cawsPremiumRewards,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -310,6 +311,8 @@ const MyRewardsPopupNew = ({
     }
   };
 
+
+
   const getTreasureChestsInfo = async () => {
     var moneyResult = 0;
     var moneyResultSkale = 0;
@@ -517,6 +520,7 @@ const MyRewardsPopupNew = ({
     fetchCachedData();
   }, [address, email]);
 
+
   useEffect(() => {
     fetchUsersocialRewards();
   }, [userSocialRewards]);
@@ -638,7 +642,8 @@ const MyRewardsPopupNew = ({
                       Number(userRank2) +
                       Number(genesisData) +
                       Number(cmcuserEarnUsd) +
-                      Number(dypiusPremiumEarnUsd),
+                      Number(dypiusPremiumEarnUsd) +
+                      Number(cawsPremiumRewards),
                     2
                   )}
             </span>
@@ -944,11 +949,19 @@ const MyRewardsPopupNew = ({
           >
             <div className="d-flex flex-column gap-2">
               <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">CAWS Premium</span>
+                <span className="item-name-right">
+                  ${getFormattedNumber(0, 2)}
+                </span>
+              </div>
+
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CAWS</span>
                 <span className="item-name-right">
                   ${getFormattedNumber(cawsRewards, 2)}
                 </span>
               </div>
+
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">WoD Land & CAWS </span>
                 <span className="item-name-right">
@@ -985,7 +998,9 @@ const MyRewardsPopupNew = ({
             <div className="d-flex flex-column gap-2">
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CAWS Premium</span>
-                <span className="item-name-right">$0.00</span>
+                <span className="item-name-right">
+                  ${getFormattedNumber(cawsPremiumRewards, 2)}
+                </span>
               </div>
             </div>
           </div>
