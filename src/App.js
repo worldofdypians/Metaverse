@@ -155,7 +155,9 @@ function App() {
   const [listedNFTS2, setListedNFTS2] = useState([]);
   const [recentListedNFTS2, setrecentListedNFTS2] = useState([]);
   const [count33, setCount33] = useState(0);
-  const [count44, setCount44] = useState(1);
+  const [count44, setCount44] = useState(0);
+  const [count55, setCount55] = useState(0);
+
 
 
   const [myCAWstakes, setCAWMystakes] = useState([]);
@@ -1398,7 +1400,7 @@ function App() {
     getListedNFTS(0, "", "recentListedNFTS")
       .then((data) => {
         setrecentListedNFTS2(data);
-        setCount33(count44+1)
+        setCount44(count44+1)
       })
       .catch((e) => {
         console.log(e);
@@ -1791,29 +1793,42 @@ function App() {
     }
   };
 
-  const refreshSubscription = async () => {
+  const refreshSubscription = async (addr) => {
+
     let subscribedPlatformTokenAmountETH;
     let subscribedPlatformTokenAmountCfx;
     let subscribedPlatformTokenAmountBNB;
+    let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBase;
+    let subscribedPlatformTokenAmountSkale;
 
     const web3eth = window.infuraWeb3;
     const web3cfx = window.confluxWeb3;
     const web3base = window.baseWeb3;
     const web3bnb = window.bscWeb3;
+    const web3avax = window.avaxWeb3;
+    const web3skale = window.skaleWeb3;
 
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const BaseABI = window.SUBSCRIPTION_BASE_ABI;
-    const EthABI = window.SUBSCRIPTIONETH_ABI;
-    const BnbABI = window.SUBSCRIPTIONBNB_ABI;
+    const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
+    const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
+    const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
+    const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
 
-    const ethsubscribeAddress = window.config.subscriptioneth_address;
+    const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const basesubscribeAddress = window.config.subscription_base_address;
-    const bnbsubscribeAddress = window.config.subscriptionbnb_address;
+    const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    const avaxsubscribeAddress = window.config.subscription_newavax_address;
+    const skalesubscribeAddress = window.config.subscription_skale_address;
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
+    const skalecontract = new web3skale.eth.Contract(
+      SkaleABI,
+      skalesubscribeAddress
+    );
 
     const basecontract = new web3base.eth.Contract(
       BaseABI,
@@ -1821,43 +1836,88 @@ function App() {
     );
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
+    const avaxcontract = new web3avax.eth.Contract(
+      AvaxABI,
+      avaxsubscribeAddress
+    );
 
-    if (coinbase) {
+    if (addr) {
+
+    const result = window.checkPremium(addr);
+
+    
       subscribedPlatformTokenAmountETH = await ethcontract.methods
-        .subscriptionPlatformTokenAmount(coinbase)
-        .call();
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       subscribedPlatformTokenAmountCfx = await cfxcontract.methods
-        .subscriptionPlatformTokenAmount(coinbase)
-        .call();
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       subscribedPlatformTokenAmountBase = await basecontract.methods
-        .subscriptionPlatformTokenAmount(coinbase)
-        .call();
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       subscribedPlatformTokenAmountBNB = await bnbcontract.methods
-        .subscriptionPlatformTokenAmount(coinbase)
-        .call();
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
+      subscribedPlatformTokenAmountAvax = await avaxcontract.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
+      subscribedPlatformTokenAmountSkale = await skalecontract.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       if (
-        subscribedPlatformTokenAmountCfx === "0" &&
-        subscribedPlatformTokenAmountETH === "0" &&
-        subscribedPlatformTokenAmountBase === "0" &&
-        subscribedPlatformTokenAmountBNB === "0"
+        subscribedPlatformTokenAmountCfx == "0" &&
+        subscribedPlatformTokenAmountETH == "0" &&
+        subscribedPlatformTokenAmountBase == "0" &&
+        subscribedPlatformTokenAmountBNB == "0" &&
+        subscribedPlatformTokenAmountAvax == "0" &&
+        subscribedPlatformTokenAmountSkale == "0" &&
+        result === false
       ) {
         setIsPremium(false);
       }
       if (
-        subscribedPlatformTokenAmountCfx !== "0" ||
-        subscribedPlatformTokenAmountETH !== "0" ||
-        subscribedPlatformTokenAmountBase !== "0" ||
-        subscribedPlatformTokenAmountBNB !== "0"
+        subscribedPlatformTokenAmountCfx != "0" ||
+        subscribedPlatformTokenAmountETH != "0" ||
+        subscribedPlatformTokenAmountBase != "0" ||
+        subscribedPlatformTokenAmountBNB != "0" ||
+        subscribedPlatformTokenAmountAvax != "0" ||
+        subscribedPlatformTokenAmountSkale != "0" ||
+        result === true
       ) {
         setIsPremium(true);
       }
     }
   };
-
   // const getmyCollectedNfts = async () => {
   //   let recievedOffers = [];
 
@@ -2150,7 +2210,8 @@ function App() {
   useEffect(() => {
     getAllData();
     fetchDogeCoinPrice();
-  }, [coinbase]);
+    refreshSubscription(coinbase)
+  }, [coinbase, count55]);
 
   useEffect(() => {
     getDomains();
@@ -2968,6 +3029,9 @@ function App() {
                   handleConnect={handleConnectWallet}
                   chainId={chainId}
                   coinbase={coinbase}
+                  isPremium={isPremium}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  onSuccessDeposit={()=>{setCount55(count55+1)}}
                 />
               }
             />

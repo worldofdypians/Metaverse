@@ -264,7 +264,9 @@ function Dashboard({
   const [genesisRank2, setGenesisRank2] = useState("");
   const [premiumTxHash, setPremiumTxHash] = useState("");
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
+  const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
   
+
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
   const leaderboardId = document.querySelector("#leaderboard");
@@ -496,6 +498,53 @@ function Dashboard({
       });
 
     return myStakes;
+  };
+
+  const getCawsStakesIds = async () => {
+    const address = coinbase;
+
+    let staking_contract = await window.getContractCawsPremiumNFT(
+      "CAWSPREMIUM"
+    );
+    let stakenft = [];
+    let myStakes = await staking_contract.methods
+      .depositsOf(address)
+      .call()
+      .then((result) => {
+        for (let i = 0; i < result.length; i++)
+          stakenft.push(parseInt(result[i]));
+        return stakenft;
+      });
+
+    return myStakes;
+  };
+
+  const calculateAllRewardsCawsPremium = async () => {
+    const address = coinbase;
+
+    let myStakes = await getCawsStakesIds(address);
+    let result = 0;
+    let calculateRewards = [];
+    let staking_contract = await window.getContractCawsPremiumNFT(
+      "CAWSPREMIUM"
+    );
+    if (address !== null) {
+      if (myStakes && myStakes.length > 0) {
+        calculateRewards = await staking_contract.methods
+          .calculateRewards(address, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          });
+      }
+      let a = 0;
+
+      for (let i = 0; i < calculateRewards.length; i++) {
+        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
+        result = result + Number(a);
+      }
+    }
+    setcawsPremiumRewards(result);
   };
 
   const getmyCawsWodStakes = async () => {
@@ -1951,7 +2000,7 @@ function Dashboard({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-  // console.log(avatar);
+
   const handleBnbPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
@@ -2050,6 +2099,17 @@ function Dashboard({
   useEffect(() => {
  handleRankRewards()
   }, [userBnbScore, userSkaleScore])
+
+  useEffect(() => {
+    if ( data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress && chainId === 1) {
+      calculateAllRewardsCawsPremium(data.getPlayer.wallet.publicAddress);
+    }
+  }, [data, chainId]);
   
 
   useEffect(() => {
@@ -2543,6 +2603,8 @@ function Dashboard({
                         onPremiumClick={() => {
                           setgetPremiumPopup(true);
                         }}
+                        cawsPremiumRewards={cawsPremiumRewards}
+
                       />
                     </div>
                     <WalletBalance
@@ -2804,7 +2866,8 @@ function Dashboard({
                             dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
                             dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
                             kittyDashRecords={kittyDashRecords}
-                            userRankRewards={userRankRewards}
+                            userRankRewards={userRankRewards} 
+                            cawsPremiumRewards={cawsPremiumRewards}
                           />
                         </div>
                       </OutsideClickHandler>
