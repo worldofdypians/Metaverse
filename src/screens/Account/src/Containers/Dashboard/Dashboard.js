@@ -406,7 +406,7 @@ function Dashboard({
   const dappsBenefits = [
     "DYP Tools administrative dashboard",
     "Voting capabilities in the News section",
-    "Priority allocation to presales of new projects through Dypius Launchpad",
+    "Priority access to dedicated DeFi pools",
     "Early access to upcoming features and updates",
   ];
 
