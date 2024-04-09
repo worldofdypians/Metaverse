@@ -410,12 +410,10 @@ const MarketStake = ({
     return data;
   };
 
-  
   const getApprovedNftsPremiumCaws = (data) => {
     setApprovedNftsPremiumCaws(data);
     return data;
   };
-
 
   const getApprovedLandPoolsNfts = (data) => {
     setApprovedLandPoolNfts(data);
@@ -516,7 +514,6 @@ const MarketStake = ({
           style={{ minHeight: "72vh", backgroundSize: "cover" }}
         >
           <div className="container-lg mx-0">
-
             <h6 className="nft-page-title font-raleway mt-3 mb-4 mb-lg-4 mt-lg-4">
               NFT <span style={{ color: "#8c56ff" }}> Staking</span>
             </h6>
@@ -580,9 +577,13 @@ const MarketStake = ({
                     <span className="new-stake-desc">Paid Rewards</span>
                   </div>
                 </div>
-                <div className="col-12 px-0 mt-3">
-                  <div className="new-caws-stake-wrapper d-flex align-items-center w-100 ">
-                    <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                <div className="col-12 px-0 mt-4">
+               
+                  <div className="new-caws-stake-wrapper d-flex position-relative align-items-center w-100 ">
+                      {myCawsstakes && myCawsstakes.length > 0 && (
+                    <img src={instake} alt="" className="position-absolute" style={{top: '-12px', left: '15px'}}/>
+                  )} 
+                  <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
                       <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
                         <div className="d-flex flex-column gap-2">
                           <h6 className="market-stake-title">
@@ -599,7 +600,7 @@ const MarketStake = ({
                               onClick={() => {
                                 setCawsStakeModal(true);
                               }}
-                              disabled={myCawsstakes.length===4}
+                              disabled={myCawsstakes.length === 4}
                             >
                               Deposit
                             </button>
@@ -880,103 +881,103 @@ const MarketStake = ({
         </div>
       </div>
       {nftModal && (
-              <StakeModal
-                onModalClose={onModalClose}
-                getApprovedNfts={getApprovedNfts}
-                getApprovedLandNfts={getApprovedLandNfts}
-                landItems={myLandNFTs}
-                cawsItems={myNFTs}
-                nftItem={myNFTs}
-                isConnected={isConnected}
-                coinbase={coinbase}
-                onDepositComplete={() => refreshStakes()}
-                handleConnect={handleConnect}
-              />
-            )}
-            {rewardModal && (
-              <RewardsModal
-                onModalClose={onRewardModalClose}
-                getApprovedNfts={getApprovedNfts}
-                getApprovedLandNfts={getApprovedLandNfts}
-                landStakes={myLandstakes}
-                cawsStakes={mystakes}
-                nftItem={mystakes}
-                isConnected={isConnected}
-                coinbase={coinbase}
-                onDepositComplete={() => refreshStakes()}
-                ETHrewards={EthRewards}
-                finalUsd={ethToUSD}
-                handleConnect={handleConnect}
-                onClaimAll={() => {
-                  claimRewards();
-                }}
-              />
-            )}
-            {landStakeModal && (
-              <StakeLandModal
-                onModalClose={onLandStakeModalClose}
-                getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
-                nftItem={myLandNFTs}
-                isConnected={isConnected}
-                coinbase={coinbase}
-                onDepositComplete={() => refreshStakes()}
-                onClaimAll={() => {
-                  claimRewards();
-                }}
-                isStake={false}
-                handleConnect={handleConnect}
-              />
-            )}
-            {cawsStakeModal && (
-              <CawsStakeModal
-                onModalClose={onCawsStakeModalClose}
-                getApprovedLandPoolsNfts={getApprovedNftsPremiumCaws}
-                nftItem={myNFTs}
-                isConnected={isConnected}
-                coinbase={coinbase}
-                onDepositComplete={() => refreshStakes()}
-                onClaimAll={() => {
-                  claimRewardsCawsPremium();
-                }}
-                isStake={false}
-                handleConnect={handleConnect}
-              />
-            )}
+        <StakeModal
+          onModalClose={onModalClose}
+          getApprovedNfts={getApprovedNfts}
+          getApprovedLandNfts={getApprovedLandNfts}
+          landItems={myLandNFTs}
+          cawsItems={myNFTs}
+          nftItem={myNFTs}
+          isConnected={isConnected}
+          coinbase={coinbase}
+          onDepositComplete={() => refreshStakes()}
+          handleConnect={handleConnect}
+        />
+      )}
+      {rewardModal && (
+        <RewardsModal
+          onModalClose={onRewardModalClose}
+          getApprovedNfts={getApprovedNfts}
+          getApprovedLandNfts={getApprovedLandNfts}
+          landStakes={myLandstakes}
+          cawsStakes={mystakes}
+          nftItem={mystakes}
+          isConnected={isConnected}
+          coinbase={coinbase}
+          onDepositComplete={() => refreshStakes()}
+          ETHrewards={EthRewards}
+          finalUsd={ethToUSD}
+          handleConnect={handleConnect}
+          onClaimAll={() => {
+            claimRewards();
+          }}
+        />
+      )}
+      {landStakeModal && (
+        <StakeLandModal
+          onModalClose={onLandStakeModalClose}
+          getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
+          nftItem={myLandNFTs}
+          isConnected={isConnected}
+          coinbase={coinbase}
+          onDepositComplete={() => refreshStakes()}
+          onClaimAll={() => {
+            claimRewards();
+          }}
+          isStake={false}
+          handleConnect={handleConnect}
+        />
+      )}
+      {cawsStakeModal && (
+        <CawsStakeModal
+          onModalClose={onCawsStakeModalClose}
+          getApprovedLandPoolsNfts={getApprovedNftsPremiumCaws}
+          nftItem={myNFTs}
+          isConnected={isConnected}
+          coinbase={coinbase}
+          onDepositComplete={() => refreshStakes()}
+          onClaimAll={() => {
+            claimRewardsCawsPremium();
+          }}
+          isStake={false}
+          handleConnect={handleConnect}
+        />
+      )}
 
-            {landunStakeModal && (
-              <StakeLandModal
-                onModalClose={onLandunStakeModalClose}
-                getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
-                nftItem={mystakesLandPool}
-                isConnected={isConnected}
-                coinbase={coinbase}
-                onDepositComplete={() => refreshStakes()}
-                ETHrewards={EthRewardsLandPool}
-                finalUsd={ethToUSDLandPool}
-                onClaimAll={() => {
-                  claimRewardsLandPool();
-                }}
-                isStake={true}
-                handleConnect={handleConnect}
-              />
-            )}
-            {cawsUnstakeModal && (
-              <CawsStakeModal
-                onModalClose={onCawsUnstakeModalClose}
-                getApprovedLandPoolsNfts={getApprovedNftsPremiumCaws}
-                nftItem={myCawsstakes}
-                isConnected={isConnected}
-                coinbase={coinbase}
-                onDepositComplete={() => refreshStakes()}
-                ETHrewards={EthRewardsCawsPremium}
-                finalUsd={ethToUSDCawsPremium}
-                onClaimAll={() => {
-                  claimRewardsCawsPremium();
-                }}
-                isStake={true}
-                handleConnect={handleConnect}
-              />
-            )}
+      {landunStakeModal && (
+        <StakeLandModal
+          onModalClose={onLandunStakeModalClose}
+          getApprovedLandPoolsNfts={getApprovedLandPoolsNfts}
+          nftItem={mystakesLandPool}
+          isConnected={isConnected}
+          coinbase={coinbase}
+          onDepositComplete={() => refreshStakes()}
+          ETHrewards={EthRewardsLandPool}
+          finalUsd={ethToUSDLandPool}
+          onClaimAll={() => {
+            claimRewardsLandPool();
+          }}
+          isStake={true}
+          handleConnect={handleConnect}
+        />
+      )}
+      {cawsUnstakeModal && (
+        <CawsStakeModal
+          onModalClose={onCawsUnstakeModalClose}
+          getApprovedLandPoolsNfts={getApprovedNftsPremiumCaws}
+          nftItem={myCawsstakes}
+          isConnected={isConnected}
+          coinbase={coinbase}
+          onDepositComplete={() => refreshStakes()}
+          ETHrewards={EthRewardsCawsPremium}
+          finalUsd={ethToUSDCawsPremium}
+          onClaimAll={() => {
+            claimRewardsCawsPremium();
+          }}
+          isStake={true}
+          handleConnect={handleConnect}
+        />
+      )}
 
       {getPremiumPopup && (
         <OutsideClickHandler
