@@ -95,6 +95,7 @@ import PlayerCreationConflux from "../../Account/src/Containers/PlayerCreation/P
 import whitePickaxe from "../assets/whitePickAxe.svg";
 import whiteCalendar from "../assets/whiteCalendar.svg";
 import epicwhite from "../assets/epicwhite.svg";
+import Countdown from "react-countdown";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -275,11 +276,12 @@ const BetaPassNFT = ({
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
   const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
   const [cmcEarnUSD, setCmcEarnUSD] = useState(0);
+  const [isSkaleLive, setisSkaleLive] = useState(false);
 
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
   const bgmenu2 = document.querySelector("#switch");
-  let baseLastDay = new Date("2023-10-23T14:00:00.000+02:00");
+  let skaleLiveDay = new Date("2024-04-10T11:00:00.000+02:00");
 
   // useEffect(() => {
   //   if (
@@ -1202,24 +1204,39 @@ const BetaPassNFT = ({
                         </a>
                       )} */}
 
-                      {/* {mintTitle === "cmc" && (
+                      {mintTitle === "skale" && isSkaleLive === true ? (
                         <a
                           className={`btn cmc-btn px-3 d-flex align-items-center justify-content-center gap-2`}
                           href="https://coinmarketcap.com/account/rewards/"
                           target="_blank"
                           rel="noreferrer"
                         >
-                          <img
-                            src={cmc}
-                            alt=""
-                          />{" "}
-                          CMC Diamods
-                          <img
+                          <img src={skaleLogo} alt="" /> SKALE Giveaway
+                          <img src={arrowRight} alt="" />
+                        </a>
+                      ) : mintTitle === "skale" && isSkaleLive === false ? (
+                        <span
+                          className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
+                          // href="https://coinmarketcap.com/account/rewards/"
+                          // target="_blank"
+                          // rel="noreferrer"
+                        >
+                          <img src={skaleLogo} alt="" /> Coming Soon
+                          {/* <img
                             src={arrowRight}
                             alt=""
-                          />{" "}
-                        </a>
-                      )} */}
+                          /> */}
+                          <Countdown
+                            date={skaleLiveDay}
+                            renderer={renderer}
+                            onComplete={() => {
+                              setisSkaleLive(true);
+                            }}
+                          />
+                        </span>
+                      ) : (
+                        <></>
+                      )}
                       {/* {mintTitle === "doge" && (
                         <a
                           className="btn doge-button mt-3 d-flex align-items-center gap-2 p-2"
