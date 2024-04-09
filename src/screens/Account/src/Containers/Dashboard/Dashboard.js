@@ -363,8 +363,7 @@ function Dashboard({
       .get(
         `https://api.worldofdypians.com/api/userRanks/${coinbase}`
       )
-      .then((data) => {
-        console.log(data.data, "data1");
+      .then((data) => { 
         setRankData(data.data);
       })
       .catch(async (err) => {
