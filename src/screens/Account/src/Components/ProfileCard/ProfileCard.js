@@ -118,7 +118,7 @@ const ProfileCard = ({
   domainName,
   rankData,
   setRankData,
-  getRankData
+  getRankData,
 }) => {
   let id = Math.random().toString(36);
 
@@ -193,19 +193,21 @@ const ProfileCard = ({
   };
 
   const updateUserRank = async () => {
-    if (rankData.rank === userRankName.id) {
-      return;
-    } else {
-      await axios
-        .patch(
-          `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
-          {
-            rank: userRankName.id,
-          }
-        )
-        .then(async () => {
-          getRankData()
-        });
+    if (rankData) {
+      if (rankData.rank === userRankName.id) {
+        return;
+      } else {
+        await axios
+          .patch(
+            `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
+            {
+              rank: userRankName.id,
+            }
+          )
+          .then(async () => {
+            getRankData();
+          });
+      }
     }
   };
 
@@ -727,8 +729,8 @@ const ProfileCard = ({
   };
 
   useEffect(() => {
-    updateUserRank()
-  }, [handleUserRank])
+    updateUserRank();
+  }, [handleUserRank]);
 
   useEffect(() => {
     countBundle();
@@ -1373,7 +1375,13 @@ const ProfileCard = ({
                               </div>
                               {rankData.multiplier === "no" && !isPremium ? (
                                 <div className="d-flex justify-content-center">
-                                  <button className="activate-bonus-btn d-flex align-items-center gap-2" onClick={() => {onPremiumClick(); setRankDropdown(false)}}>
+                                  <button
+                                    className="activate-bonus-btn d-flex align-items-center gap-2"
+                                    onClick={() => {
+                                      onPremiumClick();
+                                      setRankDropdown(false);
+                                    }}
+                                  >
                                     Activate
                                     <img
                                       src={x4}
@@ -1607,7 +1615,11 @@ const ProfileCard = ({
                 >
                   <img
                     src={premiumExclusive}
-                    onClick={() => {onPremiumClick(); setRankPopup(false); setExclusivePremium(false);}}
+                    onClick={() => {
+                      onPremiumClick();
+                      setRankPopup(false);
+                      setExclusivePremium(false);
+                    }}
                     className={`premium-exclusive ${
                       exclusivePremium ? "premium-exclusive-active" : ""
                     }`}
