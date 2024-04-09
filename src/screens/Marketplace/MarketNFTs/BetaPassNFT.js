@@ -1207,7 +1207,7 @@ const BetaPassNFT = ({
                       {mintTitle === "skale" && isSkaleLive === true ? (
                         <a
                           className={`btn cmc-btn px-3 d-flex align-items-center justify-content-center gap-2`}
-                          href="https://coinmarketcap.com/account/rewards/"
+                          href="https://sweepwidget.com/c/79449-18gusx9f"
                           target="_blank"
                           rel="noreferrer"
                         >
@@ -1217,15 +1217,8 @@ const BetaPassNFT = ({
                       ) : mintTitle === "skale" && isSkaleLive === false ? (
                         <span
                           className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
-                          // href="https://coinmarketcap.com/account/rewards/"
-                          // target="_blank"
-                          // rel="noreferrer"
                         >
                           <img src={skaleLogo} alt="" /> Coming Soon
-                          {/* <img
-                            src={arrowRight}
-                            alt=""
-                          /> */}
                           <Countdown
                             date={skaleLiveDay}
                             renderer={renderer}
