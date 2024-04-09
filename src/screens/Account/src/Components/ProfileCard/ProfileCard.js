@@ -193,7 +193,7 @@ const ProfileCard = ({
   };
 
   const updateUserRank = async () => {
-    if (rankData) {
+    if (rankData && userRankName) {
       if (rankData.rank === userRankName.id) {
         return;
       } else {
