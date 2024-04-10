@@ -28,6 +28,8 @@ import treasureHuntPopup from "../../components/TimepieceMint/assets/treasureHun
 import treasureHuntGate from "../../components/TimepieceMint/assets/treasureHuntGate.webp";
 import baseTreasureHuntPopup from "../../components/TimepieceMint/assets/baseTreasureHuntPopup.webp";
 import dogeTreasureHuntPopup from "../../components/TimepieceMint/assets/dogeTreasureHunt.webp";
+import skalePopup from "../../components/TimepieceMint/assets/skalePopup.webp";
+
 import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreasureHunt.webp";
 
 import confluxTreasureHunt from "../../components/TimepieceMint/assets/confluxTreasureHunt.png";
@@ -74,6 +76,13 @@ const Home = ({
     img: coingeckoPopup,
     state: "coingecko",
   };
+
+  const skalePopupInfo = {
+    title: "SKALE",
+    img: skalePopup,
+    state: "skale",
+  };
+
   const treasureHuntPopupInfo = {
     title: "Treasure Hunt",
     img: dypiusPopup,
@@ -124,7 +133,7 @@ const Home = ({
       >
         <MintPopup
           active={activePopup}
-          data={dypiusPopupInfo}
+          data={skalePopupInfo}
           onClose={() => setActivePopup(false)}
         />
       </OutsideClickHandler>
