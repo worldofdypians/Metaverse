@@ -772,7 +772,7 @@ const BetaPassNFT = ({
                 className="filters-container d-flex flex-column flex-lg-row align-items-center justify-content-center my-4 p-3 position-relative gap-3"
                 style={{ zIndex: 2 }}
               >
-                <div className="d-flex align-items-center gap-4 justify-content-center flex-wrap">
+                <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
                   {/* <NavLink
                     to={"/marketplace/beta-pass/avalanche"}
                     className={`${
