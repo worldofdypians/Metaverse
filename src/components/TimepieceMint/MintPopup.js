@@ -38,6 +38,16 @@ const MintPopup = ({ active, onClose, data }) => {
           </div>
           <h6 className="mint-popup-title">Candy Rewards</h6>
         </>
+      ) : data.title === "SKALE" ? (
+        <>
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="pulsatingDot"></div>
+            <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
+              Live SKALE Beta Pass NFT
+            </h6>
+          </div>
+          <h6 className="mint-popup-title">Giveaway</h6>
+        </>
       ) : data.title === "DogeCoin" ? (
         <>
           <div className="d-flex align-items-center justify-content-center">
@@ -143,6 +153,15 @@ const MintPopup = ({ active, onClose, data }) => {
             </span>
           )}
         </div>
+      ) : data.title === "SKALE" ? (
+        <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
+          
+            <span className="popup-available-mint">
+              Get access to the game and a unique event filled with surprises
+              and rewards!
+            </span>
+         
+        </div>
       )  : null}
       {
         data.title === "Treasure Hunt" ? (
@@ -158,6 +177,15 @@ const MintPopup = ({ active, onClose, data }) => {
           <Link
             onClick={onClose}
             to={"/marketplace/beta-pass/doge"}
+            state={{ event: data.state }}
+            className="linear-border"
+          >
+            <button className="btn filled-btn px-4">More</button>
+          </Link>
+        ) : data.title === "SKALE" ? (
+          <Link
+            onClick={onClose}
+            to={"/marketplace/beta-pass/skale"}
             state={{ event: data.state }}
             className="linear-border"
           >
