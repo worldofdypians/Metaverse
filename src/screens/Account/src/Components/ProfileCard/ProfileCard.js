@@ -153,9 +153,9 @@ const ProfileCard = ({
 
   const handleUserRank = () => {
     let allScore;
-    if (rankData.multiplier === "yes") {
+    if (rankData && rankData.multiplier === "yes") {
       allScore = userTotalScore * 4;
-    } else if (rankData.multiplier === "no") {
+    } else if (rankData && rankData.multiplier === "no") {
       allScore = userTotalScore;
     }
     if (allScore > 39999999) {
@@ -1277,19 +1277,19 @@ const ProfileCard = ({
                                     className="current-rank"
                                     style={{
                                       color:
-                                        rankData.multiplier === "yes"
+                                        rankData?.multiplier === "yes"
                                           ? "#FFC700"
                                           : "#1BF5FF",
                                     }}
                                   >
                                     (
-                                    {userRankName.name === "rookie"
+                                    {userRankName?.name === "rookie"
                                       ? "$5"
-                                      : userRankName.name === "underdog"
+                                      : userRankName?.name === "underdog"
                                       ? "$10"
-                                      : userRankName.name === "champion"
+                                      : userRankName?.name === "champion"
                                       ? "$25"
-                                      : userRankName.name === "unstoppable"
+                                      : userRankName?.name === "unstoppable"
                                       ? "$100"
                                       : "$0"}
                                     )
@@ -1312,19 +1312,19 @@ const ProfileCard = ({
                                     className="current-rank"
                                     style={{
                                       color:
-                                        rankData.multiplier === "yes"
+                                        rankData?.multiplier === "yes"
                                           ? "#FFC700"
                                           : "#1BF5FF",
                                     }}
                                   >
                                     (
-                                    {userRankName.name === "rookie"
+                                    {userRankName?.name === "rookie"
                                       ? "$10"
-                                      : userRankName.name === "underdog"
+                                      : userRankName?.name === "underdog"
                                       ? "$25"
-                                      : userRankName.name === "champion"
+                                      : userRankName?.name === "champion"
                                       ? "$100"
-                                      : userRankName.name === "unstoppable"
+                                      : userRankName?.name === "unstoppable"
                                       ? ""
                                       : "$5"}
                                     )
@@ -1333,20 +1333,20 @@ const ProfileCard = ({
                               </div>
                               <div
                                 className={`${
-                                  rankData.multiplier === "yes"
+                                  rankData?.multiplier === "yes"
                                     ? "rank-progress-bar-active"
                                     : "rank-progress-bar"
                                 } d-flex align-items-center px-2 justify-content-between position-relative`}
                               >
                                 <div
                                   className={` ${
-                                    rankData.multiplier === "yes"
+                                    rankData?.multiplier === "yes"
                                       ? "rank-current-progress-active"
                                       : "rank-current-progress"
                                   } d-flex align-items-center justify-content-end`}
                                   style={{ width: `${userProgress}%` }}
                                 >
-                                  {rankData.multiplier === "yes" && (
+                                  {rankData?.multiplier === "yes" && (
                                     <img
                                       src={x4}
                                       style={{ marginRight: "5px" }}
@@ -1357,23 +1357,23 @@ const ProfileCard = ({
                                   )}
                                 </div>
                                 <span className="rank-current-score">
-                                  {rankData.multiplier === "yes"
+                                  {rankData?.multiplier === "yes"
                                     ? getFormattedNumber(userTotalScore * 4, 0)
                                     : getFormattedNumber(userTotalScore, 0)}
                                 </span>
                                 <span className="rank-current-score">
-                                  {userRankName.name === "rookie"
+                                  {userRankName?.name === "rookie"
                                     ? "12M"
-                                    : userRankName.name === "underdog"
+                                    : userRankName?.name === "underdog"
                                     ? "24M"
-                                    : userRankName.name === "champion"
+                                    : userRankName?.name === "champion"
                                     ? "40M"
-                                    : userRankName.name === "unstoppable"
+                                    : userRankName?.name === "unstoppable"
                                     ? ""
                                     : "6M"}
                                 </span>
                               </div>
-                              {rankData.multiplier === "no" && !isPremium ? (
+                              {rankData?.multiplier === "no" && !isPremium ? (
                                 <div className="d-flex justify-content-center">
                                   <button
                                     className="activate-bonus-btn d-flex align-items-center gap-2"
@@ -1398,7 +1398,7 @@ const ProfileCard = ({
                                 className="rank-popup-btn p-2 d-flex align-items-center justify-content-between"
                                 style={{
                                   border:
-                                    rankData.multiplier === "yes"
+                                    rankData?.multiplier === "yes"
                                       ? "2px solid #FFC700"
                                       : "2px solid #1BF5FF",
                                 }}
@@ -1411,14 +1411,14 @@ const ProfileCard = ({
                                   className="open-ranks-text"
                                   style={{
                                     color:
-                                      rankData.multiplier === "yes"
+                                      rankData?.multiplier === "yes"
                                         ? "#FFC700"
                                         : "#1BF5FF",
                                   }}
                                 >
                                   Rankings and Rewards
                                 </span>
-                                {rankData.multiplier === "yes" ? (
+                                {rankData?.multiplier === "yes" ? (
                                   <img
                                     src={rankYellowArrow}
                                     alt=""
@@ -1596,7 +1596,7 @@ const ProfileCard = ({
             id="leaderboard"
             style={{ width: "70%", pointerEvents: "auto" }}
           >
-            {rankData.multiplier === "no" && !isPremium ? (
+            {rankData?.multiplier === "no" && !isPremium ? (
               <>
                 <img
                   src={premiumOfferTag}
@@ -1682,13 +1682,13 @@ const ProfileCard = ({
                 </div>
                 <div
                   className={` ${
-                    rankData.multiplier === "yes" ? "activated-user-score" : ""
+                    rankData?.multiplier === "yes" ? "activated-user-score" : ""
                   } d-flex align-items-center gap-2 mt-2`}
                 >
                   <span
                     className="your-score-span"
                     style={{
-                      marginLeft: rankData.multiplier === "yes" ? "10px" : "0",
+                      marginLeft: rankData?.multiplier === "yes" ? "10px" : "0",
                     }}
                   >
                     My points
@@ -1697,14 +1697,14 @@ const ProfileCard = ({
                     className="mb-0 your-score-text"
                     style={{
                       color:
-                        rankData.multiplier === "yes" ? "#FFC700" : "#1BF5FF",
+                        rankData?.multiplier === "yes" ? "#FFC700" : "#1BF5FF",
                     }}
                   >
-                    {rankData.multiplier === "yes"
+                    {rankData?.multiplier === "yes"
                       ? getFormattedNumber(userTotalScore * 4, 0)
                       : getFormattedNumber(userTotalScore, 0)}
                   </h6>
-                  {rankData.multiplier === "yes" ? (
+                  {rankData?.multiplier === "yes" ? (
                     <img src={x4rounded} width={30} alt="" />
                   ) : (
                     <></>
