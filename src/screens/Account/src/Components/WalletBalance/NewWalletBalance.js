@@ -26,6 +26,7 @@ import walletIcon from "../WalletBalance/assets/walletIcon.svg";
 import ActiveProfileEvent from "./ActiveProfileEvent";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import UpcomingProfileEvent from "./UpcomingProfileEvent";
+import ExpiredProfileEvent from "./ExpiredProfileEvent";
 import NewBetaEventCard from "../../../../Marketplace/components/NewBetaEventCard";
 import conflux from "./assets/conflux.svg";
 import gate from "./assets/gate.svg";
@@ -283,7 +284,7 @@ const NewWalletBalance = ({
     chain: "BNB Chain",
     linkState: "coinmarketcap",
     rewards: "BNB",
-    status: "Live",
+    status: "Expired",
     id: "event8",
     eventType: "Explore & Mine",
     eventDate: "Dec 26, 2023",
@@ -351,34 +352,7 @@ const NewWalletBalance = ({
         activeTab: "dypiusv2",
       },
     },
-    {
-      title: "CMC",
-      logo: cmc,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Dec 26, 2023",
-      // backgroundImage: upcomingCmc,
-      popupInfo: {
-        title: "CoinMarketCap",
-        chain: "BNB Chain",
-        linkState: "coinmarketcap",
-        rewards: "BNB",
-        status: "Live",
-        id: "event8",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: cmcLastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        eventDate: "Dec 26, 2023",
-        learnMore:
-          "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
-      },
-    },
+ 
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -405,6 +379,34 @@ const NewWalletBalance = ({
         learnMore:
           "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
         eventDate: "Apr 15, 2024",
+      },
+    },
+    {
+      title: "CMC",
+      logo: cmc,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Dec 26, 2023",
+      // backgroundImage: upcomingCmc,
+      popupInfo: {
+        title: "CoinMarketCap",
+        chain: "BNB Chain",
+        linkState: "coinmarketcap",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event8",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: cmcLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        eventDate: "Dec 26, 2023",
+        learnMore:
+          "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
       },
     },
     {
@@ -1135,7 +1137,15 @@ const NewWalletBalance = ({
                 event={dypv2}
                 userEarnedUsd={dypiusPremiumEarnUsd}
               />
-              <ActiveProfileEvent
+             
+              <UpcomingProfileEvent
+                data={dummySkale}
+                onOpenEvent={() => {
+                  setDummyEvent(dummySkale);
+                  setEventPopup(true);
+                }}
+              />
+               <ExpiredProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyCmc);
                   setEventPopup(true);
@@ -1143,13 +1153,6 @@ const NewWalletBalance = ({
                 data={dummyCmc}
                 event={dummyCmc}
                 userEarnedUsd={cmcuserEarnUsd}
-              />
-              <UpcomingProfileEvent
-                data={dummySkale}
-                onOpenEvent={() => {
-                  setDummyEvent(dummySkale);
-                  setEventPopup(true);
-                }}
               />
               {/* <ExpiredProfileEvent
                 onOpenEvent={() => {

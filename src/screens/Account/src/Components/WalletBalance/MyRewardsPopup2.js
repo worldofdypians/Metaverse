@@ -1132,16 +1132,7 @@ const MyRewardsPopupNew = ({
           >
             <div className="treasure-hunt-item-wrapper-active">
               <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center justify-content-between gap-2">
-                <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={cmc} alt="" />
-                    CMC
-                  </span>
-                  <span className="item-name-right">
-                    {" "}
-                    ${getFormattedNumber(cmcuserEarnUsd, 2)}
-                  </span>
-                </div>
+               
                 <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img src={skale} alt="" />
@@ -1201,8 +1192,18 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(coingeckoRewardsUSD, 2)}
                   </span>
                 </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={cmc} alt="" />
+                    CMC
+                  </span>
+                  <span className="item-name-right">
+                    {" "}
+                    ${getFormattedNumber(cmcuserEarnUsd, 2)}
+                  </span>
+                </div>
               </div>
-
+              
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
@@ -1246,6 +1247,7 @@ const MyRewardsPopupNew = ({
                   </span>
                 </div>
               </div>
+              
             </div>
           </div>
         </div>

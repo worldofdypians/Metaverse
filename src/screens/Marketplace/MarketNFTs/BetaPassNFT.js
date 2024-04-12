@@ -2150,7 +2150,7 @@ const BetaPassNFT = ({
                                 <h6 className="coingecko-eventh6 m-0">
                                   CoinMarketCap Treasure Hunt
                                 </h6>{" "}
-                                <div
+                                {/* <div
                                   className={`position-relative  events-page-status-tag-live px-2 d-flex align-items-center justify-content-center gap-0`}
                                   style={{ top: 0 }}
                                 >
@@ -2164,6 +2164,12 @@ const BetaPassNFT = ({
                                   ></div>
 
                                   <span>Live</span>
+                                </div> */}
+                                <div
+                                  className={`position-relative  events-page-status-tag-expired px-2 d-flex align-items-center justify-content-center gap-0`}
+                                  style={{ top: 0 }}
+                                >
+                                  <span>Expired</span>
                                 </div>
                               </div>
                               <div className="cmc-eventwrapper p-3">

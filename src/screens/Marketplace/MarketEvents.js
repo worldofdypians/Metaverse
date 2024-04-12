@@ -250,34 +250,7 @@ const MarketEvents = ({
         activeTab: "dypiusv2",
       },
     },
-    {
-      title: "CoinMarketCap",
-      logo: cmc,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Dec 26, 2023",
-      backgroundImage: upcomingCmc,
-      popupInfo: {
-        title: "CoinMarketCap",
-        chain: "BNB Chain",
-        linkState: "coinmarketcap",
-        rewards: "BNB",
-        status: "Live",
-        id: "event8",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: cmcLastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        eventDate: "Dec 26, 2023",
-        learnMore:
-          "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
-      },
-    },
+   
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -306,7 +279,34 @@ const MarketEvents = ({
         eventDate: "Apr 15, 2024",
       },
     },
-
+    {
+      title: "CoinMarketCap",
+      logo: cmc,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Dec 26, 2023",
+      backgroundImage: upcomingCmc,
+      popupInfo: {
+        title: "CoinMarketCap",
+        chain: "BNB Chain",
+        linkState: "coinmarketcap",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event8",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: cmcLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        eventDate: "Dec 26, 2023",
+        learnMore:
+          "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
+      },
+    },
     {
       title: "Dogecoin",
       logo: doge,
@@ -1115,7 +1115,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
                           <BetaEventCard
                             activeTab={item.activeTab}
                             data={item}
@@ -1266,7 +1266,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(3, dummyBetaPassData2.length)
+                    .slice(2, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
