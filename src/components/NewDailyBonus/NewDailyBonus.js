@@ -387,6 +387,7 @@ const NewDailyBonus = ({
   const [totalSkalePoints, settotalSkalePoints] = useState(0);
   const [totalSkaleUsd, settotalSkaleUsd] = useState(0);
   const [tooltip, setTooltip] = useState(false);
+  const [claimingChest, setClaimingChest] = useState(false)
 
   const countEarnedRewards = () => {
     if (allChests && allChests.length > 0) {
@@ -1735,6 +1736,8 @@ const NewDailyBonus = ({
                           ? allChests && allChests.length > 0
                             ? allChests.map((item, index) => (
                                 <NewChestItem
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
                                   buyNftPopup={buyNftPopup}
                                   chainId={chainId}
                                   chain={chain}
@@ -1778,6 +1781,8 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                claimingChest={claimingChest}
+                                setClaimingChest={setClaimingChest}
                                   buyNftPopup={buyNftPopup}
                                   chainId={chainId}
                                   chain={chain}
@@ -1828,6 +1833,8 @@ const NewDailyBonus = ({
                             allSkaleChests.length > 0
                           ? allSkaleChests.map((item, index) => (
                               <NewChestItem
+                              claimingChest={claimingChest}
+                              setClaimingChest={setClaimingChest}
                                 buyNftPopup={buyNftPopup}
                                 chainId={chainId}
                                 chain={chain}
@@ -1870,6 +1877,8 @@ const NewDailyBonus = ({
                             ))
                           : window.range(0, 19).map((item, index) => (
                               <NewChestItem
+                              claimingChest={claimingChest}
+                              setClaimingChest={setClaimingChest}
                                 buyNftPopup={buyNftPopup}
                                 chainId={chainId}
                                 chain={chain}
