@@ -25,6 +25,8 @@ const NewChestItem = ({
   isActiveIndex,
   buyNftPopup,
   dummypremiumChests,
+  claimingChest,
+  setClaimingChest,
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -73,9 +75,11 @@ const NewChestItem = ({
         // onChestStatus("success");
         onLoadingChest(false);
         setLoading(false);
+        setClaimingChest(false);
       } else {
         onLoadingChest(false);
         setLoading(false);
+        setClaimingChest(false);
         setIsChestOpen(false);
         window.alertify.error(result?.message);
         onChestStatus("initial");
@@ -91,9 +95,12 @@ const NewChestItem = ({
         // onChestStatus("success");
         onLoadingChest(false);
         setLoading(false);
+        setClaimingChest(false);
       } else {
         onLoadingChest(false);
         setLoading(false);
+        setClaimingChest(false);
+
         setIsChestOpen(false);
         window.alertify.error(result?.message);
         onChestStatus("error");
@@ -132,6 +139,8 @@ const NewChestItem = ({
         .catch((e) => {
           onLoadingChest(false);
           setLoading(false);
+          setClaimingChest(false);
+
           setIsChestOpen(false);
           window.alertify.error(e?.message);
           onChestStatus("error");
@@ -145,6 +154,7 @@ const NewChestItem = ({
         // onChestStatus("success");
         onLoadingChest(false);
         setLoading(false);
+        setClaimingChest(false);
       } else if (result.status === 400) {
         getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
       }
@@ -159,11 +169,14 @@ const NewChestItem = ({
         // onChestStatus("success");
         onLoadingChest(false);
         setLoading(false);
+        setClaimingChest(false);
       } else if (result.status === 400) {
         getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
       } else {
         onLoadingChest(false);
         setLoading(false);
+        setClaimingChest(false);
+
         setIsChestOpen(false);
         window.alertify.error(result?.message);
         onChestStatus("error");
@@ -178,6 +191,7 @@ const NewChestItem = ({
     onChestStatus("waiting");
     onLoadingChest(true);
     setLoading(true);
+    setClaimingChest(true);
 
     window.web3 = new Web3(window.ethereum);
     // console.log(window.config.daily_bonus_address, address);
@@ -205,7 +219,12 @@ const NewChestItem = ({
             from: address,
           })
           .then((data) => {
-            getUserRewardsByChest(email, data.transactionHash, chestIndex - 1,"opbnb");
+            getUserRewardsByChest(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "opbnb"
+            );
           })
           .catch((e) => {
             window.alertify.error(e?.message);
@@ -215,6 +234,8 @@ const NewChestItem = ({
             }, 3000);
             onLoadingChest(false);
             setLoading(false);
+            setClaimingChest(false);
+
             console.error(e);
           });
       } else if (rewardTypes === "standard") {
@@ -224,7 +245,12 @@ const NewChestItem = ({
             from: address,
           })
           .then((data) => {
-            getUserRewardsByChest(email, data.transactionHash, chestIndex - 1,"opbnb");
+            getUserRewardsByChest(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "opbnb"
+            );
           })
           .catch((e) => {
             console.error(e);
@@ -235,6 +261,7 @@ const NewChestItem = ({
             }, 3000);
             onLoadingChest(false);
             setLoading(false);
+            setClaimingChest(false);
           });
       }
     } else if (chainId === 56) {
@@ -292,6 +319,7 @@ const NewChestItem = ({
             }, 3000);
             onLoadingChest(false);
             setLoading(false);
+            setClaimingChest(false);
 
             console.error(e);
           });
@@ -343,6 +371,7 @@ const NewChestItem = ({
             }, 3000);
             onLoadingChest(false);
             setLoading(false);
+            setClaimingChest(false);
           });
       }
     } else if (chainId === 1482601649) {
@@ -371,6 +400,7 @@ const NewChestItem = ({
             }, 3000);
             onLoadingChest(false);
             setLoading(false);
+            setClaimingChest(false);
 
             console.error(e);
           });
@@ -399,6 +429,7 @@ const NewChestItem = ({
             }, 3000);
             onLoadingChest(false);
             setLoading(false);
+            setClaimingChest(false);
           });
       }
     }
@@ -446,10 +477,13 @@ const NewChestItem = ({
         "chest-item-active"
       } ${
         selectedChest === chestId ? "selected-new-chest" : ""
-      }  d-flex align-items-center justify-content-center position-relative`}
+      } 
+      ${claimingChest === true ? "disable-chest" : ""}
+      d-flex align-items-center justify-content-center position-relative`}
       onClick={() => handleChestClick()}
       style={{
-        pointerEvents: !disableBtn && !buyNftPopup ? "auto" : "none",
+        pointerEvents:
+          !disableBtn && !buyNftPopup ? "auto" : "none",
       }}
     >
       {/* <img
