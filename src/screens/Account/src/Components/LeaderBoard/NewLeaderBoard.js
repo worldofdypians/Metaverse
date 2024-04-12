@@ -2244,7 +2244,7 @@ const NewLeaderBoard = ({
                                         )}
                                       </td>
                                       <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
+                                        ${getFormattedNumber(item.statValue, 0)}
                                       </td>
                                       {/* <td
                             className={`playerReward text-center col-2 font-montserrat ${

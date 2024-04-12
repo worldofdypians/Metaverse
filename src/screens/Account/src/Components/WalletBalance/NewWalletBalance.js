@@ -680,7 +680,7 @@ const NewWalletBalance = ({
       name: "Critical Hit",
       img: "criticalHit",
       id: "critical-hit",
-      desc: "The Treasure Hunt event is a series of local events organized by Partners in the World of Dypians. Players need to visit partner areas daily to complete tasks and earn rewards. There are different reward pools available for each partner.",
+      desc: "The Critical Hit event, exclusively for Genesis Land NFT owners, offers a daily opportunity to earn points and rewards. Through a random mechanism, players accumulate points to increase their global rank or earn BNB rewards.",
       button: "Get Genesis Land",
     },
   ];
