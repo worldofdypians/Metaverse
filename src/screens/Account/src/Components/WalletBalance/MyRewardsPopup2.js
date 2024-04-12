@@ -311,8 +311,6 @@ const MyRewardsPopupNew = ({
     }
   };
 
-
-
   const getTreasureChestsInfo = async () => {
     var moneyResult = 0;
     var moneyResultSkale = 0;
@@ -520,7 +518,6 @@ const MyRewardsPopupNew = ({
     fetchCachedData();
   }, [address, email]);
 
-
   useEffect(() => {
     fetchUsersocialRewards();
   }, [userSocialRewards]);
@@ -630,6 +627,7 @@ const MyRewardsPopupNew = ({
                       Number(dypiusRewardsUSD) +
                       Number(gateRewardsUSD) +
                       Number(confluxRewardsUSD) +
+                      +Number(cmcuserEarnUsd) +
                       Number(dogeEarnUSD),
                     2
                   )
@@ -641,7 +639,6 @@ const MyRewardsPopupNew = ({
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(genesisData) +
-                      Number(cmcuserEarnUsd) +
                       Number(dypiusPremiumEarnUsd) +
                       Number(cawsPremiumRewards),
                     2
@@ -1132,7 +1129,6 @@ const MyRewardsPopupNew = ({
           >
             <div className="treasure-hunt-item-wrapper-active">
               <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center justify-content-between gap-2">
-               
                 <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img src={skale} alt="" />
@@ -1203,7 +1199,7 @@ const MyRewardsPopupNew = ({
                   </span>
                 </div>
               </div>
-              
+
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
@@ -1247,7 +1243,6 @@ const MyRewardsPopupNew = ({
                   </span>
                 </div>
               </div>
-              
             </div>
           </div>
         </div>

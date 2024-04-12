@@ -1598,16 +1598,7 @@ const NewWalletBalance = ({
                           Number(userRank2) +
                           Number(genesisRank2) +
                           Number(dypiusPremiumEarnUsd) +
-                          Number(cmcuserEarnUsd) +
-                          Number(baseEarnUSD) +
-                          Number(confluxEarnUSD) +
-                          Number(gateEarnUSD) +
-                          Number(dogeEarnUSD) +
-                          Number(userEarnUsd) +
-                          Number(treasureRewardMoney) +
-                          Number(EthRewardsLandPool) * Number(ethTokenData) +
-                          Number(EthRewardsCawsPool) * Number(ethTokenData) + Number(cawsPremiumRewards) +
-                          Number(EthRewards) * Number(ethTokenData),
+                           Number(treasureRewardMoney) ,
                         2
                       )}
                     </h6>
