@@ -1598,7 +1598,7 @@ const NewWalletBalance = ({
                           Number(userRank2) +
                           Number(genesisRank2) +
                           Number(dypiusPremiumEarnUsd) +
-                          Number(treasureRewardMoney) +
+                           Number(treasureRewardMoney) ,
                         2
                       )}
                     </h6>
