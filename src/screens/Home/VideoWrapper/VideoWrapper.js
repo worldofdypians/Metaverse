@@ -93,7 +93,8 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
       maxRewards: "100",
       minPoints: "5,000",
       maxPoints: "50,000",
-      learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+      learnMore: 
+      "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
       popupInfo: {
         title: "SKALE",
         chain: "SKALE Nebula Hub",

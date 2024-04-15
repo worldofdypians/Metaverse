@@ -380,7 +380,7 @@ skalePoints,
         minPoints: "5,000",
         maxPoints: "30,000",
         learnMore:
-          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
         eventDate: "Apr 15, 2024",
       },
     },
