@@ -27,7 +27,7 @@ const CawsStakeModal = ({
   hideItem,
   finalUsd,
   onClaimAll,
-  handleConnect,
+  handleConnect,myCawsstakes
 }) => {
   const [active, setActive] = useState(true);
   const [showToStake, setshowToStake] = useState(false);
@@ -99,11 +99,11 @@ const CawsStakeModal = ({
     setCheckBtn(!checkbtn);
     if (checkbtn === false) {
       if (nftIds.length > 4) {
-        setSelectedNftIds(nftIds.slice(0, 4));
-        getApprovedLandPoolsNfts(nftIds.slice(0, 4));
+        setSelectedNftIds(nftIds.slice(0, 4 -myCawsstakes.length));
+        getApprovedLandPoolsNfts(nftIds.slice(0, 4 -myCawsstakes.length));
       } else if (nftIds.length <= 4) {
-        setSelectedNftIds(nftIds);
-        getApprovedLandPoolsNfts(nftIds);
+        setSelectedNftIds(nftIds.slice(0, 4 -myCawsstakes.length));
+        getApprovedLandPoolsNfts(nftIds.slice(0, 4 -myCawsstakes.length));
       }
     } else if (checkbtn === true) {
       setSelectedNftIds([]);
