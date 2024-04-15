@@ -276,7 +276,8 @@ const BetaPassNFT = ({
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
   const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
   const [cmcEarnUSD, setCmcEarnUSD] = useState(0);
-  const [isSkaleLive, setisSkaleLive] = useState(false);
+  const [isSkaleLive, setisSkaleLive] = useState(true);
+  const [skaleEarnUsd, setSkaleEarnUsd] = useState(0)
 
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
@@ -367,6 +368,9 @@ const BetaPassNFT = ({
           const confluxEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "conflux";
           });
+          const skaleEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "skale";
+          });
           const gateEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "gate";
           });
@@ -394,6 +398,12 @@ const BetaPassNFT = ({
               cmcEvent[0].reward.earn.total /
               cmcEvent[0].reward.earn.multiplier;
             setCmcEarnUSD(usdValue);
+          }
+          if (skaleEvent && skaleEvent[0]) {
+            const usdValue =
+              skaleEvent[0].reward.earn.total /
+              skaleEvent[0].reward.earn.multiplier;
+            setSkaleEarnUsd(usdValue);
           }
 
           if (dogeEvent && dogeEvent[0]) {
@@ -1204,7 +1214,7 @@ const BetaPassNFT = ({
                         </a>
                       )} */}
 
-                      {mintTitle === "skale" && isSkaleLive === true ? (
+                      {/* {mintTitle === "skale" && isSkaleLive === true ? (
                         <a
                           className={`btn cmc-btn px-3 d-flex align-items-center justify-content-center gap-2`}
                           href="https://sweepwidget.com/c/79449-18gusx9f"
@@ -1229,7 +1239,7 @@ const BetaPassNFT = ({
                         </span>
                       ) : (
                         <></>
-                      )}
+                      )} */}
                       {/* {mintTitle === "doge" && (
                         <a
                           className="btn doge-button mt-3 d-flex align-items-center gap-2 p-2"
@@ -2275,6 +2285,133 @@ const BetaPassNFT = ({
                             </div>
                           </div>
                         )}
+                        {mintTitle === "skale" && (
+                          <div className="">
+                            <div className="d-flex flex-column gap-3">
+                              <div className="d-flex align-items-center position-relative gap-2">
+                                <h6 className="coingecko-eventh6 m-0">
+                                  SKALE Treasure Hunt
+                                </h6>{" "}
+                                <div
+                                  className={`position-relative  events-page-status-tag-live px-2 d-flex align-items-center justify-content-center gap-0`}
+                                  style={{ top: 0 }}
+                                >
+                                  <div
+                                    class="pulsatingDot"
+                                    style={{
+                                      width: 7,
+                                      height: 7,
+                                      marginRight: 5,
+                                    }}
+                                  ></div>
+
+                                  <span>Live</span>
+                                </div>
+                             
+                              </div>
+                              <div className="skl-eventwrapper p-3">
+                                <div className="d-flex flex-column gap-4">
+                                  <div className="d-flex gap-2 align-items-center">
+                                    <img
+                                      src={skaleLogo}
+                                      width={32}
+                                      height={32}
+                                      alt=""
+                                    />
+                                    <div className="d-flex flex-column gap-1">
+                                      <span className="coingecko-eventname">
+                                        SKALE
+                                      </span>
+                                      <span className="coingecko-eventusd">
+                                        $20,000 in SKL rewards
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
+                                    <div
+                                      className="mybetaearnings position-relative m-0"
+                                      style={{ top: 0, bottom: 0 }}
+                                    >
+                                      <h6 className="event-my-earnings3 mb-3">
+                                        ${getFormattedNumber(skaleEarnUsd, 2)}
+                                      </h6>
+                                    </div>
+                                    <div className="d-flex flex-column gap-2">
+                                      <div className="d-flex gap-1 align-items-center">
+                                        <img src={whitePickaxe} alt="" />
+                                        <span class="white-events-text mb-0">
+                                          Explore &amp; Mine
+                                        </span>
+                                      </div>
+                                      <div className="d-flex gap-1 align-items-center">
+                                        <img src={whiteCalendar} alt="" />
+                                        <span class="white-events-text mb-0">
+                                          Start: Apr. 15, 2024
+                                        </span>
+                                      </div>
+                                      <div className="d-flex gap-1 align-items-center">
+                                        <img src={whiteCalendar} alt="" />
+                                        <span class="white-events-text mb-0">
+                                          End: Jul. 14, 2024
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="d-flex gap-1 align-items-center justify-content-center">
+                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                      <span className="coingecko-eventdetails">
+                                        Event details
+                                      </span>
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="12"
+                                        height="12"
+                                        viewBox="0 0 12 12"
+                                        fill="none"
+                                      >
+                                        <path
+                                          d="M4.5 9L7.5 6L4.5 3"
+                                          stroke="white"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                        />
+                                      </svg>
+                                    </NavLink>
+                                  </div>
+                                </div>
+                              </div>
+                              <span className="footertxt-coingecko">
+                                Earn daily SKL rewards and global leaderboard
+                                points.
+                              </span>
+                              <div className="summaryseparator mt-3 mb-3"></div>
+                              <div className="d-flex align-items-center gap-2 justify-content-between">
+                                <div className="opacitywrapper4 m-0">
+                                  <a
+                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={epicwhite}
+                                      alt="icon"
+                                      className="epicgame2"
+                                    />
+                                    Download
+                                  </a>
+                                </div>
+                                <NavLink
+                                  to="/account"
+                                  className="accountbtn-coingecko btn d-flex align-items-center gap-1"
+                                >
+                                  <img src={user} alt="" className="user2" />
+                                  My Account
+                                </NavLink>
+                              </div>
+                            </div>
+                          </div>
+                        )}
 
                         {/* <h6
                       className="land-placeholder mb-0"
@@ -2298,13 +2435,13 @@ const BetaPassNFT = ({
                       </button>
                     </div> */}
 
-                        {alreadyRegistered && mintTitle === "skale" && (
+                        {/* {alreadyRegistered && mintTitle === "skale" && (
                           <h6 className="land-name">
                             {mintTitle === "skale" && totalSkaleNft > 0
                               ? "My NFT"
                               : "Registered"}{" "}
                           </h6>
-                        )}
+                        )} */}
                         {/* {mintTitle === "doge" && (
                           <h6 className="land-name">
                             {mintTitle === "doge" && totalDogeNft > 0
@@ -2312,7 +2449,7 @@ const BetaPassNFT = ({
                               : "Registered"}{" "}
                           </h6>
                         )} */}
-                        {!alreadyRegistered &&
+                        {/* {!alreadyRegistered &&
                           activeTab === "create" &&
                           mintTitle === "skale" && (
                             <div>
@@ -2535,7 +2672,7 @@ const BetaPassNFT = ({
                               </NavLink>
                             </div>
                           </div>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   )}
