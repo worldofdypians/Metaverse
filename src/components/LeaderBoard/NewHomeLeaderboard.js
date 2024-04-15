@@ -28,7 +28,9 @@ import wodActive from "./assets/wodActive.svg";
 import wodInactive from "./assets/wodInactive.svg";
 import leftArrow from "./assets/leftArrow.svg";
 import rightArrow from "./assets/rightArrow.svg";
+import star from "./assets/star.svg";
 import premiumIcon from "./assets/premiumIcon.png";
+
 // import React, { useState, useEffect } from "react";
 // import price1 from "../../Images/userProfile/price1.svg";
 // import price2 from "../../Images/userProfile/price2.svg";
@@ -1895,7 +1897,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                     <th className="playerHeader font-montserrat">Player</th>
 
                     <th className="playerHeader text-center font-montserrat">
-                      Reward
+                      Collected Stars
                     </th>
                   </tr>
                   {genesisData &&
@@ -1940,7 +1942,8 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                               </div>
                             )}
                           </td>
-                          <td className="playerScore col-2 text-center font-montserrat">
+                          <td className="playerScore col-2 text-center font-montserrat d-flex align-items-center justify-content-center w-100 gap-2">
+                            <img src={star} style={{width: "10px", height: "10px"}} alt="" />
                             ${getFormattedNumber(item.statValue, 0)}
                           </td>
                           {/* <td
