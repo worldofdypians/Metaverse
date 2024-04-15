@@ -3,6 +3,7 @@ import coin98 from "./assets/coin98.svg";
 import coingecko from "./assets/coingecko.svg";
 import gate from "./assets/gate.svg";
 import baseLogo from "./assets/baseLogo.svg";
+import skaleLogo from "./assets/skaleLogo.svg";
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
 
@@ -69,6 +70,8 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
                 ? doge
                 : event.title === "CoinMarketCap"
                 ? cmc
+                : event.title === "SKALE"
+                ? skaleLogo
                 : gate
             }
             height={16}

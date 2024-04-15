@@ -205,7 +205,9 @@ function Dashboard({
   const [premiumSkaleChests, setPremiumSkaleChests] = useState([]);
   const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
   const [kittyDashRecords, setkittyDashRecords] = useState([]);
-
+  const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
+  const [skaleEarnToken, setSkaleEarnToken] = useState(0);
+  const [skalePoints, setSkalePoints] = useState(0);
   const [leaderboard, setLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
@@ -245,6 +247,7 @@ function Dashboard({
   const [dailyplayerData, setdailyplayerData] = useState(0);
   const [weeklyplayerData, setweeklyplayerData] = useState(0);
   const [userSocialRewards, setuserSocialRewards] = useState(0);
+  const [skalePrice, setSkalePrice] = useState(0);
 
   const [canBuy, setCanBuy] = useState(false);
 
@@ -265,12 +268,21 @@ function Dashboard({
   const [premiumTxHash, setPremiumTxHash] = useState("");
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
   const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
-  
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
   const leaderboardId = document.querySelector("#leaderboard");
   const { BigNumber } = window;
+
+  const fetchSkalePrice = async () => {
+    await axios
+      .get(
+        `https://api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd`
+      )
+      .then((obj) => {
+        setSkalePrice(obj.data.skale.usd);
+      });
+  };
 
   const dailyBonusData = {
     eventType: "6 Available Rewards",
@@ -360,24 +372,21 @@ function Dashboard({
 
   const getRankData = async () => {
     await axios
-      .get(
-        `https://api.worldofdypians.com/api/userRanks/${coinbase}`
-      )
-      .then((data) => { 
+      .get(`https://api.worldofdypians.com/api/userRanks/${coinbase}`)
+      .then((data) => {
         setRankData(data.data);
       })
       .catch(async (err) => {
         if (err.response.status === 404) {
           await axios
-            .post(`https://api.worldofdypians.com/api/addUserRank`, 
-            {
-              walletAddress: coinbase
+            .post(`https://api.worldofdypians.com/api/addUserRank`, {
+              walletAddress: coinbase,
             })
             .then(async (data) => {
               const response2 = await axios.get(
                 `https://api.worldofdypians.com/api/userRanks/${coinbase}`
               );
-        console.log(data.data, "data2");
+              console.log(data.data, "data2");
 
               setRankData(response2.data.data);
             });
@@ -919,6 +928,9 @@ function Dashboard({
           const confluxEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "conflux";
           });
+          const skaleEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "skale";
+          });
           const gateEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "gate";
           });
@@ -960,6 +972,19 @@ function Dashboard({
             setDypiusEarnUsd(dypTokenData * userEarnedDyp);
             setDypiusEarnTokens(userEarnedDyp);
           }
+
+          if (skaleEvent && skaleEvent[0]) {
+            const points = skaleEvent[0].reward.earn.totalPoints;
+            setSkalePoints(points);
+            const usdValue =
+              skaleEvent[0].reward.earn.total /
+              skaleEvent[0].reward.earn.multiplier;
+            setSkaleEarnUsd(usdValue);
+            if (bnbPrice !== 0) {
+              setSkaleEarnToken(usdValue / skalePrice);
+            }
+          }
+
           if (coingeckoEvent && coingeckoEvent[0]) {
             const points = coingeckoEvent[0].reward.earn.totalPoints;
             setuserPoints(points);
@@ -1984,7 +2009,7 @@ function Dashboard({
             }
           )
           .then(() => {
-            getRankData()
+            getRankData();
           });
         setTimeout(() => {
           setloadspinnerSub(false);
@@ -2150,16 +2175,22 @@ function Dashboard({
   }, [coinbase]);
 
   useEffect(() => {
-    if ( data &&
+    fetchSkalePrice();
+  }, []);
+
+  useEffect(() => {
+    if (
+      data &&
       data.getPlayer &&
       data.getPlayer.displayName &&
       data.getPlayer.playerId &&
       data.getPlayer.wallet &&
-      data.getPlayer.wallet.publicAddress && chainId === 1) {
+      data.getPlayer.wallet.publicAddress &&
+      chainId === 1
+    ) {
       calculateAllRewardsCawsPremium(data.getPlayer.wallet.publicAddress);
     }
   }, [data, chainId]);
-  
 
   useEffect(() => {
     setDummyPremiumChests(shuffle(dummyPremiums));
@@ -2509,8 +2540,8 @@ function Dashboard({
                       className={`col-12 d-flex flex-column gap-3  mt-5 mt-lg-0 ${classes.containerPlayer}`}
                     >
                       <ProfileCard
-                      getRankData={getRankData}
-                      rankData={rankData}
+                        getRankData={getRankData}
+                        rankData={rankData}
                         userRank={userRank}
                         userRankSkale={userRankSkale}
                         userBnbScore={userBnbScore}
@@ -2566,6 +2597,9 @@ function Dashboard({
                         dogePrice={dogePrice}
                         weeklyplayerData={weeklyplayerData}
                         dailyplayerData={dailyplayerData}
+                        skaleEarnToken={skaleEarnToken}
+                        skaleEarnUsd={skaleEarnUsd}
+                        skalePoints={skalePoints}
                         userRank2={userRank2}
                         genesisRank2={genesisRank2}
                         dailyPopup={dailyBonusPopup}
@@ -2652,7 +2686,6 @@ function Dashboard({
                           setgetPremiumPopup(true);
                         }}
                         cawsPremiumRewards={cawsPremiumRewards}
-
                       />
                     </div>
                     <WalletBalance
@@ -2910,11 +2943,12 @@ function Dashboard({
                             dogeEarnBNB={dogeEarnBNB}
                             baseEarnUSD={baseEarnUSD}
                             baseEarnETH={baseEarnETH}
+                            skaleEarnUsd={skaleEarnUsd}
                             dypiusEarnUsd={dypiusEarnUsd}
                             dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
                             dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
                             kittyDashRecords={kittyDashRecords}
-                            userRankRewards={userRankRewards} 
+                            userRankRewards={userRankRewards}
                             cawsPremiumRewards={cawsPremiumRewards}
                           />
                         </div>

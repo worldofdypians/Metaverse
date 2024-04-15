@@ -240,6 +240,9 @@ const NewWalletBalance = ({
   onPremiumClick,
   openedSkaleChests,
   cawsPremiumRewards,
+  skaleEarnToken,
+skaleEarnUsd,
+skalePoints,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -305,7 +308,7 @@ const NewWalletBalance = ({
     chain: "SKALE Nebula Hub",
     linkState: "skale",
     rewards: "SKL",
-    status: "Coming Soon",
+    status: "Live",
     id: "event11",
     eventType: "Explore & Mine",
     eventDate: "Apr 15, 2024",
@@ -356,7 +359,7 @@ const NewWalletBalance = ({
     {
       title: "SKALE",
       logo: skaleLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -367,7 +370,7 @@ const NewWalletBalance = ({
         chain: "SKALE Nebula Hub",
         linkState: "skale",
         rewards: "SKL",
-        status: "Coming Soon",
+        status: "Live",
         id: "event11",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SKL Rewards",
@@ -1138,8 +1141,10 @@ const NewWalletBalance = ({
                 userEarnedUsd={dypiusPremiumEarnUsd}
               />
              
-              <UpcomingProfileEvent
+              <ActiveProfileEvent
                 data={dummySkale}
+                event={dummySkale}
+                userEarnedUsd={skaleEarnUsd}
                 onOpenEvent={() => {
                   setDummyEvent(dummySkale);
                   setEventPopup(true);
@@ -1253,6 +1258,8 @@ const NewWalletBalance = ({
                           ? userEarnUsd
                           : item.title === "Dogecoin"
                           ? dogeEarnUSD
+                          : item.title === "SKALE"
+                          ? skaleEarnUsd
                           : item.title === "CMC" ||
                             item.title === "CoinMarketCap"
                           ? cmcuserEarnUsd
@@ -2403,6 +2410,8 @@ const NewWalletBalance = ({
                         ? cmcuserPoints
                         : dummyEvent.id === "event9"
                         ? dypiusPremiumPoints
+                        : dummyEvent.id === "event11"
+                        ? skalePoints
                         : 0,
                       0
                     )}
@@ -2438,6 +2447,8 @@ const NewWalletBalance = ({
                         ? cmcuserEarnUsd
                         : dummyEvent.id === "event9"
                         ? dypiusPremiumEarnUsd
+                        : dummyEvent.id === "event11"
+                        ? skaleEarnUsd
                         : 0,
                       2
                     )}
@@ -2459,6 +2470,8 @@ const NewWalletBalance = ({
                               ? cmcuserEarnETH
                               : dummyEvent.id === "event9"
                               ? dypiusPremiumEarnTokens
+                              : dummyEvent.id === "event11"
+                              ? skaleEarnToken
                               : 0,
                             2
                           )}
