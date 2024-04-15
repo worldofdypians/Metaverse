@@ -980,7 +980,7 @@ function Dashboard({
               skaleEvent[0].reward.earn.total /
               skaleEvent[0].reward.earn.multiplier;
             setSkaleEarnUsd(usdValue);
-            if (bnbPrice !== 0) {
+            if (skalePrice !== 0) {
               setSkaleEarnToken(usdValue / skalePrice);
             }
           }

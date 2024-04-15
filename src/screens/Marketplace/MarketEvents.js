@@ -752,7 +752,7 @@ const [skalePoints, setSkalePoints] = useState(0);
           const skaleEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "skale";
           });
-          console.log(skaleEvent, "skale");
+          
           const gateEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "gate";
           });
@@ -826,7 +826,7 @@ const [skalePoints, setSkalePoints] = useState(0);
               skaleEvent[0].reward.earn.total /
               skaleEvent[0].reward.earn.multiplier;
             setSkaleEarnUsd(usdValue);
-            if (bnbPrice !== 0) {
+            if (skalePrice !== 0) {
               setSkaleEarnToken(usdValue / skalePrice);
             }
           }
@@ -950,7 +950,7 @@ const [skalePoints, setSkalePoints] = useState(0);
     ) {
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
     }
-  }, [email, data, cfxPrice, bnbPrice, dyptokenDatabnb]);
+  }, [email, data, cfxPrice, bnbPrice, skalePrice, dyptokenDatabnb]);
 
   useEffect(() => {
     setActiveTab(tabState);

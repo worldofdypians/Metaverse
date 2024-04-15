@@ -1605,7 +1605,8 @@ skalePoints,
                           Number(userRank2) +
                           Number(genesisRank2) +
                           Number(dypiusPremiumEarnUsd) +
-                           Number(treasureRewardMoney) ,
+                           Number(treasureRewardMoney) +
+                           Number(skaleEarnUsd) ,
                         2
                       )}
                     </h6>

@@ -636,6 +636,7 @@ const MyRewardsPopupNew = ({
                     0 +
                       Number(treasureRewardMoney) +
                       Number(treasureRewardMoneySkale) +
+                      Number(skaleEarnUsd) +
                       Number(dailyplayerData) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
@@ -864,11 +865,12 @@ const MyRewardsPopupNew = ({
                       Number(dypiusRewardsUSD) +
                       Number(gateRewardsUSD) +
                       Number(confluxRewardsUSD) +
+                      Number(cmcuserEarnUsd) +
                       Number(dogeEarnUSD),
                     2
                   )
                 : getFormattedNumber(
-                    Number(cmcuserEarnUsd) + Number(dypiusPremiumEarnUsd),
+                    Number(skaleEarnUsd) + Number(dypiusPremiumEarnUsd),
                     2
                   )}
             </span>
@@ -1136,8 +1138,7 @@ const MyRewardsPopupNew = ({
                     SKALE
                   </span>
                   <span className="item-name-right">
-                  ${getFormattedNumber(skaleEarnUsd, 2)}
-
+                    ${getFormattedNumber(skaleEarnUsd, 2)}
                   </span>
                 </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
