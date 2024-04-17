@@ -47,7 +47,6 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
             width={16}
             alt=""
             className="profilebannerimg"
-
           />
           <div className="d-flex flex-column">
             <div className="d-flex align-items-center gap-1">
@@ -73,9 +72,16 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
       </div>
       <div className="profile-event-bottom p-2 d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-1">
-          <img src={grayFind} height={15} width={15} alt="" />
+          {event.title === "Dogecoin" || event.title === "CoinMarketCap" ? (
+            <img src={grayExplore} height={15} width={15} alt="" />
+          ) : (
+            <img src={grayFind} height={15} width={15} alt="" />
+          )}
+
           <span className="mb-0 event-bottom-text" style={{ color: "#B8B8E0" }}>
-            {event.title === "Dogecoin" ? "Explore & Mine" : "Explore & Find"}
+            {event.title === "Dogecoin" || event.title === "CoinMarketCap"
+              ? "Explore & Mine"
+              : "Explore & Find"}
           </span>
         </div>
         <div className="d-flex align-items-center gap-1">
