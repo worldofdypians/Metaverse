@@ -3,6 +3,7 @@ import avaxMobileBg from "./assets/avaxMobileBg.png";
 import coin98MobileBg from "./assets/coin98MobileBg.png";
 import baseMobileBg from "./assets/baseMobileBg.png";
 import confluxMobileBg from "./assets/confluxMobileBg.png";
+import skaleTreasureHunt from './assets/skaleTreasureHunt.png'
 import closePopup from "../LandPopup/closePopup.svg";
 import { Link, NavLink } from "react-router-dom";
 import whiteExplore from "../../screens/Account/src/Components/WalletBalance/assets/whiteExplore.svg";
@@ -40,13 +41,13 @@ const MintPopup = ({ active, onClose, data }) => {
         </>
       ) : data.title === "SKALE" ? (
         <>
-          <div className="d-flex align-items-center justify-content-center">
-            <div className="pulsatingDot"></div>
+          <div class="d-flex align-items-center justify-content-center">
+            <div class="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              Live SKALE Beta Pass NFT
+              $20,000 SKL Rewards
             </h6>
           </div>
-          <h6 className="mint-popup-title">Giveaway</h6>
+          <h6 className="mint-popup-title">SKALE Treasure Hunt</h6>
         </>
       ) : data.title === "DogeCoin" ? (
         <>
@@ -101,7 +102,8 @@ const MintPopup = ({ active, onClose, data }) => {
       )}
 
       <img
-        src={data.img}
+        // src={data.img}
+        src={skaleTreasureHunt}
         className={`mint-popup-img ${
           data.title === "Daily Bonus" && "bottom-auto-bg"
         } `}
@@ -155,13 +157,12 @@ const MintPopup = ({ active, onClose, data }) => {
         </div>
       ) : data.title === "SKALE" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-          
-            <span className="popup-available-mint">
-              Get access to the game and a unique event filled with surprises
-              and rewards!
-            </span>
-         
-        </div>
+        {data.title === "SKALE" && (
+          <span className="popup-available-mint">
+            Explore the downtown area and use your <img src={whiteExplore} className="white-explore" alt=""/> to generate rewards!
+          </span>
+        )}
+      </div>
       )  : null}
       {
         data.title === "Treasure Hunt" ? (
@@ -185,7 +186,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "SKALE" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/beta-pass/skale"}
+            to={"/marketplace/events/treasure-hunt"}
             state={{ event: data.state }}
             className="linear-border"
           >

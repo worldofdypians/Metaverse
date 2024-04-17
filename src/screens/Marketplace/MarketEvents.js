@@ -182,11 +182,13 @@ const MarketEvents = ({
   const [baseEarnETH, setBaseEarnETH] = useState(0);
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
-
+  const [skalePrice, setSkalePrice] = useState(0)
   const [dypiusPremiumEarnTokens, setdypiusPremiumEarnTokens] = useState(0);
   const [dypiusPremiumEarnUsd, setdypiusPremiumEarnUsd] = useState(0);
   const [dypiusPremiumPoints, setdypiusPremiumPoints] = useState(0);
-
+const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
+const [skaleEarnToken, setSkaleEarnToken] = useState(0);
+const [skalePoints, setSkalePoints] = useState(0);
   const [dailyBonusPopup, setDailyBonusPopup] = useState(false);
   const [activePopup, setActivePopup] = useState(false);
 
@@ -254,7 +256,7 @@ const MarketEvents = ({
     {
       title: "SKALE",
       logo: skaleLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -265,7 +267,7 @@ const MarketEvents = ({
         chain: "SKALE Nebula Hub",
         linkState: "skale",
         rewards: "SKL",
-        status: "Coming Soon",
+        status: "Live",
         id: "event11",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SKL Rewards",
@@ -275,7 +277,7 @@ const MarketEvents = ({
         minPoints: "5,000",
         maxPoints: "30,000",
         learnMore:
-          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
         eventDate: "Apr 15, 2024",
       },
     },
@@ -498,6 +500,21 @@ const MarketEvents = ({
     },
   };
 
+
+
+
+
+
+
+// if (dypEvent && dypEvent[0]) {
+//   const userEarnedDyp =
+//     dypEvent[0].reward.earn.total /
+//     dypEvent[0].reward.earn.multiplier;
+//   setDypiusEarnUsd(dyptokenDatabnb * userEarnedDyp);
+//   setDypiusEarnTokens(userEarnedDyp);
+// }
+
+
   const dailyBonusData = {
     eventType: "6 Available Rewards",
     title: "Daily Bonus",
@@ -677,6 +694,12 @@ const MarketEvents = ({
     setPackagePopup("");
   };
 
+  const fetchSkalePrice = async () => {
+    await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd`).then((obj) => {
+      setSkalePrice(obj.data.skale.usd)
+    })
+  }
+
   const fetchCFXPrice = async () => {
     await axios
       .get(
@@ -690,18 +713,25 @@ const MarketEvents = ({
   };
 
   useEffect(() => {
+    fetchSkalePrice();
     fetchCFXPrice();
   }, []);
-
+  
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
       const response = await fetch(
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
-          body: JSON.stringify({
+          body: JSON.stringify(
+            {
             email: email,
             publicAddress: userAddress,
-          }),
+          }
+          // {
+          //   "email": "renato@outerlynx.com",
+          //   "publicAddress": "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0"
+          // }
+        ),
           headers: {
             "Content-Type": "application/json",
           },
@@ -719,6 +749,10 @@ const MarketEvents = ({
           const confluxEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "conflux";
           });
+          const skaleEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "skale";
+          });
+          
           const gateEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "gate";
           });
@@ -783,6 +817,17 @@ const MarketEvents = ({
             setcmcuserEarnUsd(usdValue);
             if (bnbPrice !== 0) {
               setcmcuserEarnETH(usdValue / bnbPrice);
+            }
+          }
+          if (skaleEvent && skaleEvent[0]) {
+            const points = skaleEvent[0].reward.earn.totalPoints;
+            setSkalePoints(points);
+            const usdValue =
+              skaleEvent[0].reward.earn.total /
+              skaleEvent[0].reward.earn.multiplier;
+            setSkaleEarnUsd(usdValue);
+            if (skalePrice !== 0) {
+              setSkaleEarnToken(usdValue / skalePrice);
             }
           }
 
@@ -905,7 +950,7 @@ const MarketEvents = ({
     ) {
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
     }
-  }, [email, data, cfxPrice, bnbPrice, dyptokenDatabnb]);
+  }, [email, data, cfxPrice, bnbPrice, skalePrice, dyptokenDatabnb]);
 
   useEffect(() => {
     setActiveTab(tabState);
@@ -1129,6 +1174,8 @@ const MarketEvents = ({
                                 ? cmcuserEarnUsd
                                 : item.title === "Dypius Premium"
                                 ? dypiusPremiumEarnUsd
+                                : item.title === "SKALE"
+                                ? skaleEarnUsd
                                 : 0
                             }
                           />
@@ -1863,6 +1910,8 @@ const MarketEvents = ({
                         ? cmcuserPoints
                         : dummyEvent.id === "event9"
                         ? dypiusPremiumPoints
+                        : dummyEvent.id === "event11"
+                        ? skalePoints
                         : 0,
                       0
                     )}
@@ -1900,6 +1949,8 @@ const MarketEvents = ({
                         ? cmcuserEarnUsd
                         : dummyEvent.id === "event9"
                         ? dypiusPremiumEarnUsd
+                        : dummyEvent.id === "event11"
+                        ? skaleEarnUsd
                         : 0,
                       2
                     )}
@@ -1921,6 +1972,8 @@ const MarketEvents = ({
                               ? cmcuserEarnETH
                               : dummyEvent.id === "event9"
                               ? dypiusPremiumEarnTokens
+                              : dummyEvent.id === "event11"
+                              ? skaleEarnToken
                               : 0,
                             2
                           )}
