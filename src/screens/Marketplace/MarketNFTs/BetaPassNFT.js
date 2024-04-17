@@ -1540,7 +1540,7 @@ const BetaPassNFT = ({
                       className={`  justify-content-start
                      mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
                     >
-                      {!alreadyRegistered && mintTitle === "skale" && (
+                      {/* {!alreadyRegistered && mintTitle === "skale" && (
                         <div className="d-flex align-items-center justify-content-around gap-2">
                           <button
                             className={
@@ -1567,7 +1567,7 @@ const BetaPassNFT = ({
                             Sign in
                           </button>
                         </div>
-                      )}
+                      )} */}
 
                       <div className="p-4 d-flex flex-column gap-3 h-100">
                         {mintTitle === "coingecko" && (
