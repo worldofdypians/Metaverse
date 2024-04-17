@@ -2171,7 +2171,9 @@ function Dashboard({
   }, [userBnbScore, userSkaleScore]);
 
   useEffect(() => {
-    getRankData();
+    if (coinbase) {
+      getRankData();
+    }
   }, [coinbase]);
 
   useEffect(() => {
