@@ -7,6 +7,8 @@ import conflux from "./assets/conflux.svg";
 import coingecko from "./assets/coingecko.svg";
 import gate from "./assets/gate.svg";
 import baseLogo from "./assets/baseLogo.svg";
+import cmc from "./assets/cmc.svg";
+
 import dypius from "./assets/dypIcon.svg";
 import grayArrow from "./assets/grayArrow.svg";
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
@@ -37,6 +39,8 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
                 ? dypius
                 : event.title === "Dogecoin"
                 ? doge
+                : event.title === "CoinMarketCap"
+                ? cmc
                 : gate
             }
             height={16}
