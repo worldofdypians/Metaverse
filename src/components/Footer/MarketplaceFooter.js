@@ -152,7 +152,7 @@ const Footer = () => {
           </div>
           <hr className="footer-divider mt-0 mb-4" />
           <div className="d-flex w-100 justify-content-center mb-4 flex-column gap-2">
-      <div className="d-flex align-items-center justify-content-between flex-column flex-lg-row w-100">
+      <div className="d-flex align-items-center justify-content-between flex-column flex-lg-row gap-lg-3 w-100">
            
             <div
               className="d-flex footer-wrapper flex-row align-items-start align-items-lg-center gap-5 justify-content-between"
