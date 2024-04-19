@@ -187,6 +187,24 @@ const NewChestItem = ({
     }
   };
 
+  const handleCheckIfTxExists = async (
+    email,
+    txHash,
+    chestIndex,
+    chainText
+  ) => {
+    const txResult = await window.web3.eth.getTransaction(txHash).catch((e) => {
+      console.error(e);
+    });
+
+    if (txResult) { 
+      getUserRewardsByChest(email, txHash, chestIndex, chainText);
+    } else {
+      // console.log("fail", txHash);
+      handleCheckIfTxExists(txHash);
+    }
+  };
+
   const handleOpenChest = async () => {
     onChestStatus("waiting");
     onLoadingChest(true);
@@ -385,7 +403,7 @@ const NewChestItem = ({
           })
 
           .then((data) => {
-            getUserRewardsByChest(
+            handleCheckIfTxExists(
               email,
               data.transactionHash,
               chestIndex - 1,
@@ -413,7 +431,7 @@ const NewChestItem = ({
             from: address,
           })
           .then((data) => {
-            getUserRewardsByChest(
+            handleCheckIfTxExists(
               email,
               data.transactionHash,
               chestIndex - 1,
@@ -475,15 +493,12 @@ const NewChestItem = ({
         isActive === chestId &&
         isActiveIndex === chestIndex &&
         "chest-item-active"
-      } ${
-        selectedChest === chestId ? "selected-new-chest" : ""
-      } 
+      } ${selectedChest === chestId ? "selected-new-chest" : ""} 
       ${claimingChest === true ? "disable-chest" : ""}
       d-flex align-items-center justify-content-center position-relative`}
       onClick={() => handleChestClick()}
       style={{
-        pointerEvents:
-          !disableBtn && !buyNftPopup ? "auto" : "none",
+        pointerEvents: !disableBtn && !buyNftPopup ? "auto" : "none",
       }}
     >
       {/* <img
