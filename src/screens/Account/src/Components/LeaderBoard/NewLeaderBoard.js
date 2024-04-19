@@ -411,6 +411,11 @@ const NewLeaderBoard = ({
   const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
   const [prizes, setPrizes] = useState(dummyPrizes);
   const [activePlayer, setActivePlayer] = useState(false);
+  const [activePlayerWeekly, setActivePlayerWeekly] = useState(false);
+  const [activePlayerMonthly, setActivePlayerMonthly] = useState(false);
+  const [activePlayerGenesis, setActivePlayerGenesis] = useState(false);
+
+
   const [activeSkalePlayer, setActiveSkalePlayer] = useState(false);
 
   const [userData, setUserData] = useState({});
@@ -555,15 +560,15 @@ const NewLeaderBoard = ({
         );
 
         if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayer(true);
+          setActivePlayerWeekly(true);
         }
         if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayer(false);
+          setActivePlayerWeekly(false);
           setUserDataWeekly(...testArray);
         }
       }
       if (testArray.length > 0) {
-        setActivePlayer(false);
+        setActivePlayerWeekly(false);
         setUserDataWeekly(...testArray);
       }
     }
@@ -584,10 +589,10 @@ const NewLeaderBoard = ({
     fillRecordsWeekly(result.data.data.leaderboard);
 
     if (testArray.length > 0) {
-      setActivePlayer(true);
+      setActivePlayerWeekly(true);
     }
     if (testArray.length === 0) {
-      setActivePlayer(false);
+      setActivePlayerWeekly(false);
       fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
@@ -615,16 +620,16 @@ const NewLeaderBoard = ({
         );
 
         if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayer(true);
+          setActivePlayerMonthly(true);
         }
 
         if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayer(false);
+          setActivePlayerMonthly(false);
           setUserDataMonthly(...testArray);
         }
       }
       if (testArray.length > 0) {
-        setActivePlayer(false);
+        setActivePlayerMonthly(false);
         setUserDataMonthly(...testArray);
       }
     }
@@ -688,14 +693,14 @@ const NewLeaderBoard = ({
         );
 
         if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayer(true);
+          setActivePlayerGenesis(true);
         } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayer(false);
+          setActivePlayerGenesis(false);
           // setUserDataMonthly(...testArray);
           setUserDataGenesis(...testArray);
         }
       } else if (testArray.length > 0) {
-        setActivePlayer(false);
+        setActivePlayerGenesis(false);
         // setUserDataMonthly(...testArray);
         setUserDataGenesis(...testArray);
       }
@@ -715,12 +720,12 @@ const NewLeaderBoard = ({
       (item) => item.displayName === username
     );
     if (testArray.length > 0) {
-      setActivePlayer(true);
+      setActivePlayerMonthly(true);
     }
     fillRecordsMonthly(result.data.data.leaderboard);
 
     if (testArray.length === 0) {
-      setActivePlayer(false);
+      setActivePlayerMonthly(false);
       fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
@@ -1168,7 +1173,7 @@ const NewLeaderBoard = ({
             >
               {optionText !== "genesis" ? (
                 windowSize.width > 786 ? (
-                  <div className="d-flex align-items-center justify-content-between">
+                  <div className="d-flex align-items-start justify-content-between">
                     <div
                       className={`leaderboard-item ${
                         optionText2 === "skale" || optionText2 === "wod"
@@ -2041,7 +2046,7 @@ const NewLeaderBoard = ({
                                 )}
                             </tbody>
                           </table>
-                          {activePlayer === false &&
+                          {activePlayerWeekly === false &&
                             email &&
                             inactiveBoard === false &&
                             optionText !== "genesis" && (
@@ -2347,7 +2352,7 @@ const NewLeaderBoard = ({
                                 })}
                             </tbody>
                           </table>
-                          {activePlayer === false &&
+                          {activePlayerGenesis === false &&
                             email &&
                             inactiveBoard === false &&
                             optionText !== "genesis" && (
@@ -2646,7 +2651,7 @@ const NewLeaderBoard = ({
                                 )}
                             </tbody>
                           </table>
-                          {activePlayer === false &&
+                          {activePlayerMonthly === false &&
                             email &&
                             inactiveBoard === false &&
                             optionText !== "genesis" && (
@@ -3684,7 +3689,7 @@ const NewLeaderBoard = ({
                                 )}
                             </tbody>
                           </table>
-                          {activePlayer === false &&
+                          {activePlayerWeekly === false &&
                             email &&
                             inactiveBoard === false &&
                             optionText !== "genesis" && (
@@ -4009,7 +4014,7 @@ const NewLeaderBoard = ({
                                 })}
                             </tbody>
                           </table>
-                          {activePlayer === false &&
+                          {activePlayerGenesis === false &&
                             email &&
                             inactiveBoard === false &&
                             optionText !== "genesis" && (
@@ -4324,7 +4329,7 @@ const NewLeaderBoard = ({
                                 )}
                             </tbody>
                           </table>
-                          {activePlayer === false &&
+                          {activePlayerMonthly === false &&
                             email &&
                             inactiveBoard === false &&
                             optionText !== "genesis" && (
