@@ -186,7 +186,7 @@ const NewChestItem = ({
       }
     }
   };
-
+  let count = 1;
   const handleCheckIfTxExists = async (
     email,
     txHash,
@@ -197,12 +197,23 @@ const NewChestItem = ({
       console.error(e);
     });
 
-    if (txResult) { 
+    if (txResult) {
       getUserRewardsByChest(email, txHash, chestIndex, chainText);
     } else {
-      // console.log("fail", txHash);
-      handleCheckIfTxExists(txHash);
+      if (count <= 5) {
+        handleCheckIfTxExists(txHash);
+      } else {
+        window.alertify.error("Something went wrong.");
+        onChestStatus("error");
+        onLoadingChest(false);
+        setLoading(false);
+        setClaimingChest(false);
+        setTimeout(() => {
+          onChestStatus("initial");
+        }, 3000);
+      }
     }
+    count = count + 1;
   };
 
   const handleOpenChest = async () => {
