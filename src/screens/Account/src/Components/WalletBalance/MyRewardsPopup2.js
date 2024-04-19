@@ -51,6 +51,7 @@ const MyRewardsPopupNew = ({
   baseEarnUSD,
   baseEarnETH,
   dypiusEarnUsd,
+  skaleEarnUsd,
   cmcuserEarnETH,
   cmcuserEarnUsd,
   dypiusPremiumEarnUsd,
@@ -69,6 +70,7 @@ const MyRewardsPopupNew = ({
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
   const [leaderboardTotalData, setleaderboardTotalData] = useState(0);
+  const [leaderboardSkaleTotalData, setleaderboardSkaleTotalData] = useState(0);
 
   const [genesisData, setgenesisData] = useState(0);
   const [bundlesBought, setbundlesBought] = useState(0);
@@ -91,6 +93,9 @@ const MyRewardsPopupNew = ({
   const [dypiusRewardsUSD, setDypiusRewardsUSD] = useState(0);
   const [coingeckoRewardsUSD, setcoingeckoRewardsUSD] = useState(0);
   const [pastSpecialRewards, setpastSpecialRewards] = useState(0);
+
+  const [cmcRewardsUSD, setcmcRewardsUSD] = useState(0);
+  const [dogeRewardsUSD, setdogeRewardsUSD] = useState(0);
 
   const [gateRewardsUSD, setGateRewardsUSD] = useState(0);
   const [baseRewardsUSD, setBaseRewardsUSD] = useState(0);
@@ -148,6 +153,39 @@ const MyRewardsPopupNew = ({
           setConfluxRewardsUSD(0);
           localStorage.setItem("cachedConfluxRewards", 0);
         }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
+  const fetchCmcUSDRewards = async (addr) => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/cmc_rewards/${addr}`)
+      .then((data) => {
+        if (data.data.userRewards) {
+          setcmcRewardsUSD(data.data.userRewards);
+        } else {
+          setcmcRewardsUSD(0);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
+  const fetchDogeUSDRewards = async (addr) => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/doge_rewards/${addr}`)
+      .then((data) => {
+        if (data.data.userRewards) {
+          setdogeRewardsUSD(data.data.userRewards);
+        } else {
+          setdogeRewardsUSD(0);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
       });
   };
 
@@ -311,7 +349,20 @@ const MyRewardsPopupNew = ({
     }
   };
 
+  const fetchSkaleboardData = async (userAddr) => {
+    const result = await axios
+      .get(
+        `https://api.worldofdypians.com/api/skale_leaderboard_rewards/${userAddr}`
+      )
+      .catch((e) => {
+        console.error(e);
+      });
 
+    if (result && result.status === 200) {
+      const leaderboard_earnings = result.data.userRewards;
+      setleaderboardSkaleTotalData(leaderboard_earnings);
+    }
+  };
 
   const getTreasureChestsInfo = async () => {
     var moneyResult = 0;
@@ -508,7 +559,10 @@ const MyRewardsPopupNew = ({
     fetchNftRewards(address);
     fetchGenesisGem(address);
     fetchLeaderboardData(address);
+    fetchSkaleboardData(address);
     fetchConfluxUSDRewards(address);
+    fetchCmcUSDRewards(address);
+    fetchDogeUSDRewards(address);
     fetchGateUSDRewards(address);
     fetchBaseUSDRewards(address);
     fetchDypiusUSDRewards(address);
@@ -519,7 +573,6 @@ const MyRewardsPopupNew = ({
     fetchPastDailyBonusCaws(address);
     fetchCachedData();
   }, [address, email]);
-
 
   useEffect(() => {
     fetchUsersocialRewards();
@@ -544,12 +597,14 @@ const MyRewardsPopupNew = ({
                 Number(pasttreasureRewardMoney) +
                 Number(gemRewards) +
                 Number(leaderboardTotalData) +
+                Number(leaderboardSkaleTotalData) +
                 Number(baseRewardsUSD) +
                 Number(coingeckoRewardsUSD) +
                 Number(dypiusRewardsUSD) +
                 Number(gateRewardsUSD) +
                 Number(confluxRewardsUSD) +
-                Number(dogeEarnUSD),
+                Number(dogeRewardsUSD) +
+                Number(cmcRewardsUSD),
               2
             )}
           </span>
@@ -625,23 +680,25 @@ const MyRewardsPopupNew = ({
                       Number(pasttreasureRewardMoney) +
                       Number(gemRewards) +
                       Number(leaderboardTotalData) +
+                      Number(leaderboardSkaleTotalData) +
                       Number(baseRewardsUSD) +
                       Number(coingeckoRewardsUSD) +
                       Number(dypiusRewardsUSD) +
                       Number(gateRewardsUSD) +
                       Number(confluxRewardsUSD) +
-                      Number(dogeEarnUSD),
+                      Number(dogeRewardsUSD) +
+                      Number(cmcRewardsUSD),
                     2
                   )
                 : getFormattedNumber(
                     0 +
                       Number(treasureRewardMoney) +
                       Number(treasureRewardMoneySkale) +
+                      Number(skaleEarnUsd) +
                       Number(dailyplayerData) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(genesisData) +
-                      Number(cmcuserEarnUsd) +
                       Number(dypiusPremiumEarnUsd) +
                       Number(cawsPremiumRewards),
                     2
@@ -801,7 +858,9 @@ const MyRewardsPopupNew = ({
               $
               {previousRewards
                 ? getFormattedNumber(
-                    Number(gemRewards) + Number(leaderboardTotalData),
+                    Number(gemRewards) +
+                      Number(leaderboardTotalData) +
+                      Number(leaderboardSkaleTotalData),
                     2
                   )
                 : getFormattedNumber(
@@ -866,11 +925,12 @@ const MyRewardsPopupNew = ({
                       Number(dypiusRewardsUSD) +
                       Number(gateRewardsUSD) +
                       Number(confluxRewardsUSD) +
-                      Number(dogeEarnUSD),
+                      Number(dogeRewardsUSD) +
+                      Number(cmcRewardsUSD),
                     2
                   )
                 : getFormattedNumber(
-                    Number(cmcuserEarnUsd) + Number(dypiusPremiumEarnUsd),
+                    Number(skaleEarnUsd) + Number(dypiusPremiumEarnUsd),
                     2
                   )}
             </span>
@@ -1085,7 +1145,12 @@ const MyRewardsPopupNew = ({
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SKALE</span>
-                <span className="item-name-right">$0.00</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(leaderboardSkaleTotalData, 2)
+                    : getFormattedNumber(0, 2)}
+                </span>
               </div>
             </div>
 
@@ -1132,13 +1197,14 @@ const MyRewardsPopupNew = ({
           >
             <div className="treasure-hunt-item-wrapper-active">
               <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center justify-content-between gap-2">
-               
                 <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img src={skale} alt="" />
                     SKALE
                   </span>
-                  <span className="item-name-right">$0.00</span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(skaleEarnUsd, 2)}
+                  </span>
                 </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
                   <span className="d-flex align-items-center gap-2 item-name-left">
@@ -1199,11 +1265,11 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     {" "}
-                    ${getFormattedNumber(cmcuserEarnUsd, 2)}
+                    ${getFormattedNumber(cmcRewardsUSD, 2)}
                   </span>
                 </div>
               </div>
-              
+
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
@@ -1243,11 +1309,10 @@ const MyRewardsPopupNew = ({
                     Dogecoin
                   </span>
                   <span className="item-name-right">
-                    ${getFormattedNumber(dogeEarnUSD, 2)}
+                    ${getFormattedNumber(dogeRewardsUSD, 2)}
                   </span>
                 </div>
               </div>
-              
             </div>
           </div>
         </div>

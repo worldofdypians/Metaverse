@@ -240,6 +240,9 @@ const NewWalletBalance = ({
   onPremiumClick,
   openedSkaleChests,
   cawsPremiumRewards,
+  skaleEarnToken,
+skaleEarnUsd,
+skalePoints,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -305,7 +308,7 @@ const NewWalletBalance = ({
     chain: "SKALE Nebula Hub",
     linkState: "skale",
     rewards: "SKL",
-    status: "Coming Soon",
+    status: "Live",
     id: "event11",
     eventType: "Explore & Mine",
     eventDate: "Apr 15, 2024",
@@ -356,7 +359,7 @@ const NewWalletBalance = ({
     {
       title: "SKALE",
       logo: skaleLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -367,7 +370,7 @@ const NewWalletBalance = ({
         chain: "SKALE Nebula Hub",
         linkState: "skale",
         rewards: "SKL",
-        status: "Coming Soon",
+        status: "Live",
         id: "event11",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SKL Rewards",
@@ -377,7 +380,7 @@ const NewWalletBalance = ({
         minPoints: "5,000",
         maxPoints: "30,000",
         learnMore:
-          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
         eventDate: "Apr 15, 2024",
       },
     },
@@ -680,7 +683,7 @@ const NewWalletBalance = ({
       name: "Critical Hit",
       img: "criticalHit",
       id: "critical-hit",
-      desc: "The Treasure Hunt event is a series of local events organized by Partners in the World of Dypians. Players need to visit partner areas daily to complete tasks and earn rewards. There are different reward pools available for each partner.",
+      desc: "The Critical Hit event, exclusively for Genesis Land NFT owners, offers a daily opportunity to earn points and rewards. Through a random mechanism, players accumulate points to increase their global rank or earn BNB rewards.",
       button: "Get Genesis Land",
     },
   ];
@@ -1138,8 +1141,10 @@ const NewWalletBalance = ({
                 userEarnedUsd={dypiusPremiumEarnUsd}
               />
              
-              <UpcomingProfileEvent
+              <ActiveProfileEvent
                 data={dummySkale}
+                event={dummySkale}
+                userEarnedUsd={skaleEarnUsd}
                 onOpenEvent={() => {
                   setDummyEvent(dummySkale);
                   setEventPopup(true);
@@ -1253,6 +1258,8 @@ const NewWalletBalance = ({
                           ? userEarnUsd
                           : item.title === "Dogecoin"
                           ? dogeEarnUSD
+                          : item.title === "SKALE"
+                          ? skaleEarnUsd
                           : item.title === "CMC" ||
                             item.title === "CoinMarketCap"
                           ? cmcuserEarnUsd
@@ -1598,16 +1605,8 @@ const NewWalletBalance = ({
                           Number(userRank2) +
                           Number(genesisRank2) +
                           Number(dypiusPremiumEarnUsd) +
-                          Number(cmcuserEarnUsd) +
-                          Number(baseEarnUSD) +
-                          Number(confluxEarnUSD) +
-                          Number(gateEarnUSD) +
-                          Number(dogeEarnUSD) +
-                          Number(userEarnUsd) +
-                          Number(treasureRewardMoney) +
-                          Number(EthRewardsLandPool) * Number(ethTokenData) +
-                          Number(EthRewardsCawsPool) * Number(ethTokenData) + Number(cawsPremiumRewards) +
-                          Number(EthRewards) * Number(ethTokenData),
+                           Number(treasureRewardMoney) +
+                           Number(skaleEarnUsd) ,
                         2
                       )}
                     </h6>
@@ -2412,6 +2411,8 @@ const NewWalletBalance = ({
                         ? cmcuserPoints
                         : dummyEvent.id === "event9"
                         ? dypiusPremiumPoints
+                        : dummyEvent.id === "event11"
+                        ? skalePoints
                         : 0,
                       0
                     )}
@@ -2447,6 +2448,8 @@ const NewWalletBalance = ({
                         ? cmcuserEarnUsd
                         : dummyEvent.id === "event9"
                         ? dypiusPremiumEarnUsd
+                        : dummyEvent.id === "event11"
+                        ? skaleEarnUsd
                         : 0,
                       2
                     )}
@@ -2468,6 +2471,8 @@ const NewWalletBalance = ({
                               ? cmcuserEarnETH
                               : dummyEvent.id === "event9"
                               ? dypiusPremiumEarnTokens
+                              : dummyEvent.id === "event11"
+                              ? skaleEarnToken
                               : 0,
                             2
                           )}

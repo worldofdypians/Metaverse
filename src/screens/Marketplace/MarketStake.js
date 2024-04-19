@@ -69,6 +69,7 @@ const MarketStake = ({
   const html = document.querySelector("html");
   const location = useLocation();
   const [getPremiumPopup, setgetPremiumPopup] = useState(false);
+  const [totalStakesCawsPremium, settotalStakesCawsPremium] = useState(0);
 
   const navigate = useNavigate();
 
@@ -99,6 +100,22 @@ const MarketStake = ({
     if (result) {
       setTotalRewards(result.data);
     }
+  };
+
+
+  const totalStakedNft = async () => {
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.NFT_ABI,
+      window.config.nft_address,
+      { from: undefined }
+    );
+
+    await staking_contract.methods
+      .balanceOf(window.config.nft_caws_premiumstake_address)
+      .call()
+      .then((data) => {
+        settotalStakesCawsPremium(data);
+      });
   };
 
   const myNft = async () => {
@@ -481,6 +498,10 @@ const MarketStake = ({
   }, []);
 
   useEffect(() => {
+    totalStakedNft();
+  }, [newStakes]);
+
+  useEffect(() => {
     if (
       nftModal ||
       rewardModal ||
@@ -600,7 +621,7 @@ const MarketStake = ({
                               onClick={() => {
                                 setCawsStakeModal(true);
                               }}
-                              disabled={myCawsstakes.length === 4}
+                              disabled={myCawsstakes.length === 4 || totalStakesCawsPremium === 200}
                             >
                               Deposit
                             </button>
@@ -941,6 +962,8 @@ const MarketStake = ({
           }}
           isStake={false}
           handleConnect={handleConnect}
+          myCawsstakes={myCawsstakes}
+
         />
       )}
 
@@ -959,6 +982,7 @@ const MarketStake = ({
           }}
           isStake={true}
           handleConnect={handleConnect}
+          
         />
       )}
       {cawsUnstakeModal && (
@@ -976,6 +1000,7 @@ const MarketStake = ({
           }}
           isStake={true}
           handleConnect={handleConnect}
+          myCawsstakes={myCawsstakes}
         />
       )}
 
