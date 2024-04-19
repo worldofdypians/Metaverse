@@ -186,7 +186,9 @@ const NewChestItem = ({
       }
     }
   };
+
   let count = 1;
+
   const handleCheckIfTxExists = async (
     email,
     txHash,
@@ -200,8 +202,14 @@ const NewChestItem = ({
     if (txResult) {
       getUserRewardsByChest(email, txHash, chestIndex, chainText);
     } else {
-      if (count <= 5) {
-        handleCheckIfTxExists(txHash);
+      
+      if (count < 10) {
+        setTimeout(
+          () => {
+            handleCheckIfTxExists(txHash);
+          },
+          count === 9 ? 5000 : 2000
+        );
       } else {
         window.alertify.error("Something went wrong.");
         onChestStatus("error");
@@ -405,8 +413,6 @@ const NewChestItem = ({
       }
     } else if (chainId === 1482601649) {
       if (rewardTypes === "premium" && isPremium) {
-        const web3 = new Web3(window.ethereum);
-
         await daily_bonus_contract_skale.methods
           .openPremiumChest()
           .send({
