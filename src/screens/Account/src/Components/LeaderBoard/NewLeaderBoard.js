@@ -411,6 +411,11 @@ const NewLeaderBoard = ({
   const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
   const [prizes, setPrizes] = useState(dummyPrizes);
   const [activePlayer, setActivePlayer] = useState(false);
+  const [activePlayerWeekly, setActivePlayerWeekly] = useState(false);
+  const [activePlayerMonthly, setActivePlayerMonthly] = useState(false);
+  const [activePlayerGenesis, setActivePlayerGenesis] = useState(false);
+
+
   const [activeSkalePlayer, setActiveSkalePlayer] = useState(false);
 
   const [userData, setUserData] = useState({});
@@ -555,15 +560,15 @@ const NewLeaderBoard = ({
         );
 
         if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayer(true);
+          setActivePlayerWeekly(true);
         }
         if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayer(false);
+          setActivePlayerWeekly(false);
           setUserDataWeekly(...testArray);
         }
       }
       if (testArray.length > 0) {
-        setActivePlayer(false);
+        setActivePlayerWeekly(false);
         setUserDataWeekly(...testArray);
       }
     }
@@ -584,10 +589,10 @@ const NewLeaderBoard = ({
     fillRecordsWeekly(result.data.data.leaderboard);
 
     if (testArray.length > 0) {
-      setActivePlayer(true);
+      setActivePlayerWeekly(true);
     }
     if (testArray.length === 0) {
-      setActivePlayer(false);
+      setActivePlayerWeekly(false);
       fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
@@ -615,16 +620,16 @@ const NewLeaderBoard = ({
         );
 
         if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayer(true);
+          setActivePlayerMonthly(true);
         }
 
         if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayer(false);
+          setActivePlayerMonthly(false);
           setUserDataMonthly(...testArray);
         }
       }
       if (testArray.length > 0) {
-        setActivePlayer(false);
+        setActivePlayerMonthly(false);
         setUserDataMonthly(...testArray);
       }
     }
@@ -688,14 +693,14 @@ const NewLeaderBoard = ({
         );
 
         if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayer(true);
+          setActivePlayerGenesis(true);
         } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayer(false);
+          setActivePlayerGenesis(false);
           // setUserDataMonthly(...testArray);
           setUserDataGenesis(...testArray);
         }
       } else if (testArray.length > 0) {
-        setActivePlayer(false);
+        setActivePlayerGenesis(false);
         // setUserDataMonthly(...testArray);
         setUserDataGenesis(...testArray);
       }
@@ -715,12 +720,12 @@ const NewLeaderBoard = ({
       (item) => item.displayName === username
     );
     if (testArray.length > 0) {
-      setActivePlayer(true);
+      setActivePlayerMonthly(true);
     }
     fillRecordsMonthly(result.data.data.leaderboard);
 
     if (testArray.length === 0) {
-      setActivePlayer(false);
+      setActivePlayerMonthly(false);
       fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
     }
   };
@@ -1168,7 +1173,7 @@ const NewLeaderBoard = ({
             >
               {optionText !== "genesis" ? (
                 windowSize.width > 786 ? (
-                  <div className="d-flex align-items-center justify-content-between">
+                  <div className="d-flex align-items-start justify-content-between">
                     <div
                       className={`leaderboard-item ${
                         optionText2 === "skale" || optionText2 === "wod"
@@ -2041,7 +2046,7 @@ const NewLeaderBoard = ({
                                 )}
                             </tbody>
                           </table>
-                          {activePlayer === false &&
+                          {activePlayerWeekly === false &&
                             email &&
                             inactiveBoard === false &&
                             optionText !== "genesis" && (
@@ -2347,7 +2352,7 @@ const NewLeaderBoard = ({
                                 })}
                             </tbody>
                           </table>
-                          {activePlayer === false &&
+                          {activePlayerGenesis === false &&
                             email &&
                             inactiveBoard === false &&
                             optionText !== "genesis" && (
@@ -2646,7 +2651,7 @@ const NewLeaderBoard = ({
                                 )}
                             </tbody>
                           </table>
-                          {activePlayer === false &&
+                          {activePlayerMonthly === false &&
                             email &&
                             inactiveBoard === false &&
                             optionText !== "genesis" && (
@@ -3210,7 +3215,7 @@ const NewLeaderBoard = ({
                                       >
                                         $
                                         {getFormattedNumber(
-                                          monthlyPrizes[index],
+                                          prizeSkale[index],
                                           0
                                         )}
                                       </td>
@@ -3219,24 +3224,24 @@ const NewLeaderBoard = ({
                                           optionText2 === "skale" &&
                                           "premium-goldenscore"
                                         } col-2 font-montserrat ${
-                                          username === item.displayName
+                                          isPremium && username === item.displayName
                                             ? "goldenscore"
-                                            : "goldenscore-inactive2"
+                                            : "golden-score-disabled"
                                         }`}
                                         style={{ width: "100%" }}
                                       >
                                         +$
                                         {getFormattedNumber(
-                                          monthlyPrizesGolden[index],
+                                          prizeSkale[index],
                                           0
                                         )}
-                                        <img src={premiumIcon} alt="" />
+                                        <img src={ (isPremium && username === item.displayName) ? premiumIcon : premiumInactive} alt="" />
                                       </td>
                                     </tr>
                                   );
                                 })}
 
-                              {skalePreviousRecords &&
+{skalePreviousRecords &&
                                 inactiveBoard === true &&
                                 skalePreviousRecords.length > 0 &&
                                 skalePreviousRecords.map((item, index) => {
@@ -3293,7 +3298,7 @@ const NewLeaderBoard = ({
                                       >
                                         $
                                         {getFormattedNumber(
-                                          monthlyPrizes[index],
+                                          prizeSkale[index],
                                           0
                                         )}
                                       </td>
@@ -3302,18 +3307,18 @@ const NewLeaderBoard = ({
                                           optionText2 === "skale" &&
                                           "premium-goldenscore"
                                         } col-2 font-montserrat ${
-                                          username === item.displayName
+                                          isPremium && username === item.displayName
                                             ? "goldenscore"
-                                            : "goldenscore-inactive2"
+                                            : "golden-score-disabled"
                                         }`}
                                         style={{ width: "100%" }}
                                       >
                                         +$
                                         {getFormattedNumber(
-                                          monthlyPrizesGolden[index],
+                                          prizeSkale[index],
                                           0
                                         )}
-                                        <img src={premiumIcon} alt="" />
+                                      <img src={ (isPremium && username === item.displayName) ? premiumIcon : premiumInactive} alt="" />
                                       </td>
                                     </tr>
                                   );
@@ -3393,11 +3398,7 @@ const NewLeaderBoard = ({
                                     )}
                                     <td
                                       className={`playerReward text-center font-montserrat ${
-                                        availableTime !== "0" &&
-                                        availableTime &&
-                                        availableTime >= today1.getTime() &&
-                                        availableTime !== undefined &&
-                                        username === userDataSkale.displayName
+                                        (isPremium && username === userDataSkale.displayName)
                                           ? "goldenscore"
                                           : "playerReward"
                                       } col-2 ${
@@ -3416,20 +3417,16 @@ const NewLeaderBoard = ({
                                     {optionText !== "genesis" && (
                                       <td
                                         className={`playerScore col-2 font-montserrat d-flex align-items-center justify-content-center w-100 gap-2 ${
-                                          availableTime !== "0" &&
-                                          availableTime &&
-                                          availableTime >= today1.getTime() &&
-                                          availableTime !== undefined &&
-                                          username === userDataSkale.displayName
+                                          (isPremium && username === userDataSkale.displayName)
                                             ? "goldenscore"
-                                            : "inactivegold"
+                                            : "golden-score-disabled"
                                         }`}
                                       >
                                         +$0
                                         {optionText2 === "skale" && (
                                           <img
                                             src={
-                                              isPremium
+                                              (isPremium && username === userDataSkale.displayName)
                                                 ? premiumIcon
                                                 : premiumInactive
                                             }
@@ -3692,7 +3689,7 @@ const NewLeaderBoard = ({
                                 )}
                             </tbody>
                           </table>
-                          {activePlayer === false &&
+                          {activePlayerWeekly === false &&
                             email &&
                             inactiveBoard === false &&
                             optionText !== "genesis" && (
@@ -3864,7 +3861,7 @@ const NewLeaderBoard = ({
                                 </th>
                                 {optionText !== "genesis" && (
                                   <th className="playerHeader text-center font-montserrat">
-                                    Score
+                                    Reward
                                   </th>
                                 )}
                               </tr>
@@ -3914,7 +3911,7 @@ const NewLeaderBoard = ({
                                         )}
                                       </td>
                                       <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
+                                        ${getFormattedNumber(item.statValue, 0)}
                                       </td>
                                       {/* <td
                             className={`playerReward text-center col-2 font-montserrat ${
@@ -3985,7 +3982,7 @@ const NewLeaderBoard = ({
                                         )}
                                       </td>
                                       <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
+                                        ${getFormattedNumber(item.statValue, 0)}
                                       </td>
                                       {/* <td
                             className={`playerReward text-center col-2 font-montserrat ${
@@ -4017,7 +4014,7 @@ const NewLeaderBoard = ({
                                 })}
                             </tbody>
                           </table>
-                          {activePlayer === false &&
+                          {activePlayerGenesis === false &&
                             email &&
                             inactiveBoard === false &&
                             optionText !== "genesis" && (
@@ -4082,7 +4079,7 @@ const NewLeaderBoard = ({
                                     </td>
                                     {optionText !== "genesis" && (
                                       <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(
+                                        ${getFormattedNumber(
                                           userDataGenesis.statValue,
                                           0
                                         )}
@@ -4332,7 +4329,7 @@ const NewLeaderBoard = ({
                                 )}
                             </tbody>
                           </table>
-                          {activePlayer === false &&
+                          {activePlayerMonthly === false &&
                             email &&
                             inactiveBoard === false &&
                             optionText !== "genesis" && (
