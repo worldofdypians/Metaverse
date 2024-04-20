@@ -187,6 +187,43 @@ const NewChestItem = ({
     }
   };
 
+  let count = 1;
+
+  const handleCheckIfTxExists = async (
+    email,
+    txHash,
+    chestIndex,
+    chainText
+  ) => {
+    const txResult = await window.web3.eth.getTransaction(txHash).catch((e) => {
+      console.error(e);
+    });
+
+    if (txResult) {
+      getUserRewardsByChest(email, txHash, chestIndex, chainText);
+    } else {
+      
+      if (count < 10) {
+        setTimeout(
+          () => {
+            handleCheckIfTxExists(txHash);
+          },
+          count === 9 ? 5000 : 2000
+        );
+      } else {
+        window.alertify.error("Something went wrong.");
+        onChestStatus("error");
+        onLoadingChest(false);
+        setLoading(false);
+        setClaimingChest(false);
+        setTimeout(() => {
+          onChestStatus("initial");
+        }, 3000);
+      }
+    }
+    count = count + 1;
+  };
+
   const handleOpenChest = async () => {
     onChestStatus("waiting");
     onLoadingChest(true);
@@ -376,8 +413,6 @@ const NewChestItem = ({
       }
     } else if (chainId === 1482601649) {
       if (rewardTypes === "premium" && isPremium) {
-        const web3 = new Web3(window.ethereum);
-
         await daily_bonus_contract_skale.methods
           .openPremiumChest()
           .send({
@@ -385,7 +420,7 @@ const NewChestItem = ({
           })
 
           .then((data) => {
-            getUserRewardsByChest(
+            handleCheckIfTxExists(
               email,
               data.transactionHash,
               chestIndex - 1,
@@ -413,7 +448,7 @@ const NewChestItem = ({
             from: address,
           })
           .then((data) => {
-            getUserRewardsByChest(
+            handleCheckIfTxExists(
               email,
               data.transactionHash,
               chestIndex - 1,
@@ -475,15 +510,12 @@ const NewChestItem = ({
         isActive === chestId &&
         isActiveIndex === chestIndex &&
         "chest-item-active"
-      } ${
-        selectedChest === chestId ? "selected-new-chest" : ""
-      } 
+      } ${selectedChest === chestId ? "selected-new-chest" : ""} 
       ${claimingChest === true ? "disable-chest" : ""}
       d-flex align-items-center justify-content-center position-relative`}
       onClick={() => handleChestClick()}
       style={{
-        pointerEvents:
-          !disableBtn && !buyNftPopup ? "auto" : "none",
+        pointerEvents: !disableBtn && !buyNftPopup ? "auto" : "none",
       }}
     >
       {/* <img
