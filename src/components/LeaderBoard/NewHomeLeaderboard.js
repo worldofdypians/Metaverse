@@ -449,6 +449,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
   const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
+  const [globalTooltip, setGlobalTooltip] = useState(false);
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
@@ -861,14 +862,8 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       <div className="d-flex align-items-center gap-1">
         <div className="optionsWrapper position-relative col-12">
           <div
-            className={`optionswrapper-bg ${
-              optionText2 === "skale"
-                ? "move-1"
-                : optionText2 === "wod"
-                ? "move-2"
-                : optionText2 === "wod"
-                ? "move-2"
-                : ""
+            className={`optionswrapper-bg-2 ${
+              optionText2 === "global" ? "move-3" : ""
             }`}
           ></div>
           <div
@@ -885,428 +880,208 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 handleOption("bnb");
                 fetchGenesisRecords();
               }}
-              style={{ width: "33%", fontSize: "12px" }}
+              style={{ width: "50%", fontSize: "12px" }}
             >
-              <img
-                src={optionText2 === "bnb" ? bnbActive : bnbInactive}
-                className={`${
-                  optionText2 === "bnb"
-                    ? "leaderboard-icon leaderboard-icon-active"
-                    : "leaderboard-icon"
-                }`}
-                width={20}
-                height={20}
-                alt=""
-              />
-              {windowSize.width > 768
-                ? "BNB Chain"
-                : windowSize.width < 786 && optionText2 === "bnb"
-                ? "BNB Chain"
-                : ""}
+              <div className="d-flex align-items-center gap-2">
+                <img
+                  src={optionText2 !== "global" ? bnbActive : bnbInactive}
+                  className={`${
+                    optionText2 === "global"
+                      ? "leaderboard-icon leaderboard-icon-active"
+                      : "leaderboard-icon"
+                  }`}
+                  width={20}
+                  height={20}
+                  alt=""
+                />
+                <img
+                  src={optionText2 !== "global" ? skaleActive : skaleInactive}
+                  className={`${
+                    optionText2 === "global"
+                      ? "leaderboard-icon leaderboard-icon-active"
+                      : "leaderboard-icon"
+                  }`}
+                  width={20}
+                  height={20}
+                  alt=""
+                />
+                <img
+                  src={optionText2 !== "global" ? wodActive : wodInactive}
+                  className={`${
+                    optionText2 === "global"
+                      ? "leaderboard-icon leaderboard-icon-active"
+                      : "leaderboard-icon"
+                  }`}
+                  width={20}
+                  height={20}
+                  alt=""
+                />
+              </div>
+              Chains
             </span>
 
             <span
               className={` 
                     d-flex align-items-center gap-2
                     ${
-                      optionText2 === "skale" && "otheroptionsActive"
+                      optionText2 === "global" && "otheroptionsActive"
                     } optionText `}
-              style={{ width: "33%", fontSize: "12px" }}
+              style={{ width: "50%", fontSize: "12px" }}
               onClick={() => {
-                handleOption("skale");
+                handleOption("global");
                 fetchWeeklyRecords();
               }}
             >
               <img
-                src={optionText2 === "skale" ? skaleActive : skaleInactive}
+                src={star}
                 className={`${
-                  optionText2 === "skale"
+                  optionText2 === "global"
                     ? "leaderboard-icon leaderboard-icon-active"
                     : "leaderboard-icon"
                 }`}
                 width={20}
                 height={20}
+                style={{
+                  filter: optionText2 !== "global" ? "grayscale(1)" : "",
+                }}
                 alt=""
               />
-              {windowSize.width > 768
-                ? "SKALE"
-                : windowSize.width < 786 && optionText2 === "skale"
-                ? "SKALE"
-                : ""}
-            </span>
-            {/* <span
-              className={`
-                    d-flex align-items-center gap-2
-                    ${
-                      optionText2 === "daily" && "otheroptionsActive"
-                    } optionText col-3`}
-              style={{ width: "25%", fontSize: "12px" }}
-              onClick={() => {
-                handleOption("daily");
-                fetchDailyRecords();
-              }}
-            >
-              <img
-                src={coreIcon}
-                className={`${
-                  optionText2 === "daily"
-                    ? "leaderboard-icon leaderboard-icon-active"
-                    : "leaderboard-icon"
-                }`}
-                width={20}
-                height={20}
-                alt=""
-              />
-              {windowSize.width > 768
-                ? "CORE DAO"
-                : windowSize.width < 786 && optionText2 === "daily"
-                ? "CORE DAO"
-                : ""}
-            </span> */}
-            <span
-              className={`
-                    d-flex align-items-center gap-2
-                    
-                    ${
-                      optionText2 === "wod" && "otheroptionsActive"
-                    } optionText `}
-              style={{ width: "33%", fontSize: "12px" }}
-              onClick={() => {
-                handleOption("wod");
-                fetchMonthlyRecords();
-              }}
-            >
-              <img
-                src={optionText2 === "wod" ? wodActive : wodInactive}
-                className={`${
-                  optionText2 === "monthly"
-                    ? "leaderboard-icon leaderboard-icon-active"
-                    : "leaderboard-icon"
-                }`}
-                width={20}
-                height={20}
-                style={{ borderRadius: "50%" }}
-                alt=""
-              />
-              {windowSize.width > 768
-                ? "Genesis Land"
-                : windowSize.width < 786 && optionText2 === "wod"
-                ? "Genesis Land"
-                : ""}
+              Global
             </span>
           </div>
         </div>
       </div>
-      {/* <div
-        className="d-flex flex-column gap-2 tablewrapper"
-        style={{ height: "366px" }}
-      >
-        {optionText !== "genesis" ? (
-          <table className="playerTable">
-            <tbody>
-              <tr className="playerRow">
-                <th className="playerHeader">Rank</th>
-                <th className="playerHeader">Player</th>
-                {optionText !== "genesis" && (
-                  <th className="playerHeader text-center">Score</th>
-                )}
-                {optionText !== "genesis" && (
-                  <th className="playerHeader text-center">Reward</th>
-                )}
-                <th className="playerHeader text-center">Golden Pass</th>
-              </tr>
+      <div className="d-flex align-items-center gap-1">
+        <div className="optionsWrapper position-relative col-12">
+          <div
+            className={`optionswrapper-bg ${
+              optionText2 === "skale"
+                ? "move-1"
+                : optionText2 === "wod"
+                ? "move-2"
+                : optionText2 === "global"
+                ? "w-100"
+                : ""
+            }`}
+          ></div>
+          {optionText2 === "global" ? (
+            <div
+              className="d-flex gap-1 align-items-center justify-content-between position-relative"
+              style={{ height: 38 }}
+            >
+              <span
+                className={`
+                  d-flex align-items-center gap-2
+                  otheroptionsActive optionText `}
+                onClick={() => {
+                  handleOption("global");
+                  fetchGenesisRecords();
+                }}
+                style={{ width: "100%", fontSize: "12px" }}
+              >
+                <img
+                  src={star}
+                  className={`leaderboard-icon leaderboard-icon-active`}
+                  width={20}
+                  height={20}
+                  alt=""
+                />
+                Global
+              </span>
+            </div>
+          ) : (
+            <div
+              className="d-flex gap-1 align-items-center justify-content-between position-relative"
+              style={{ height: 38 }}
+            >
+              <span
+                className={`
+                d-flex align-items-center gap-2
+                ${optionText2 === "bnb" && "otheroptionsActive"} optionText `}
+                onClick={() => {
+                  handleOption("bnb");
+                  fetchGenesisRecords();
+                }}
+                style={{ width: "33%", fontSize: "12px" }}
+              >
+                <img
+                  src={optionText2 === "bnb" ? bnbActive : bnbInactive}
+                  className={`${
+                    optionText2 === "bnb"
+                      ? "leaderboard-icon leaderboard-icon-active"
+                      : "leaderboard-icon"
+                  }`}
+                  width={20}
+                  height={20}
+                  alt=""
+                />
+                {windowSize.width > 768
+                  ? "BNB Chain"
+                  : windowSize.width < 786 && optionText2 === "bnb"
+                  ? "BNB Chain"
+                  : ""}
+              </span>
 
-              {dailyrecords &&
-                inactiveBoard === false &&
-                dailyrecords.length > 0 &&
-                dailyrecords.map((item, index) => {
-                  return (
-                    <tr
-                      key={index}
-                      className={`playerInnerRow ${
-                        inactiveBoard || item.displayName === username
-                          ? "playerInnerRow-inactive"
-                          : null
-                      }`}
-                    >
-                      <td className="playerData col-1">
-                        {playerData[index].position}
-                      </td>
-                      <td className="playerName col-5">
-                        {isactive === true && item.displayName === username ? (
-                          <div className="position-relative  d-flex align-items-center">
-                            <img
-                              src={premiumAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />
-                            <span> {item.displayName}</span>
-                          </div>
-                        ) : (
-                          <div className="position-relative  d-flex align-items-center">
-                            <img
-                              src={playerAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />{" "}
-                            {item.displayName}
-                          </div>
-                        )}
-                      </td>
-                      {optionText !== "genesis" ? (
-                        <td className="playerScore col-2 text-center">
-                          {getFormattedNumber(item.statValue, 0)}
-                        </td>
-                      ) : (
-                        <td className="playerScore col-2 text-center">
-                          {getFormattedNumber(item.statValue, 0)}
-                        </td>
-                      )}
-
-                      {optionText !== "genesis" && (
-                        <td
-                          className={`playerReward text-center col-2 ${
-                            isactive === true && username === item.displayName
-                              ? "goldenscore"
-                              : "playerReward"
-                          }`}
-                        >
-                          ${getFormattedNumber(prizes[index], 0)}
-                        </td>
-                      )}
-                      <td
-                        className={`playerScore col-2 ${
-                          isactive === true && username === item.displayName
-                            ? "goldenscore"
-                            : "goldenscore-inactive"
-                        }`}
-                      >
-                        +$
-                        {getFormattedNumber(
-                          optionText === "daily"
-                            ? dailyPrizesGolden[index]
-                            : optionText === "monthly"
-                            ? monthlyPrizesGolden[index]
-                            : optionText === "weekly"
-                            ? weeklyPrizesGolden[index]
-                            : prizes[index],
-                          0
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-
-              {monthlyplayerData &&
-                inactiveBoard === true &&
-                optionText === "monthly" &&
-                monthlyplayerData.length > 0 &&
-                monthlyplayerData.map((item, index) => {
-                  return (
-                    <tr
-                      key={index}
-                      className={`playerInnerRow ${
-                        inactiveBoard || item.displayName === username
-                          ? "playerInnerRow-inactive"
-                          : null
-                      }`}
-                    >
-                      <td className="playerData col-1">
-                        #{Number(item.position) + 1}
-                      </td>
-                      <td className="playerName col-5">
-                        {isactive === true && item.displayName === username ? (
-                          <div className="position-relative d-flex align-items-center">
-                            <img
-                              src={premiumAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />
-                            <span> {item.displayName}</span>
-                          </div>
-                        ) : (
-                          <div className="position-relative d-flex align-items-center">
-                            <img
-                              src={playerAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />{" "}
-                            {item.displayName}
-                          </div>
-                        )}
-                      </td>
-                      <td className="playerScore col-2  text-center">
-                        {" "}
-                        {getFormattedNumber(item.statValue, 0)}
-                      </td>
-                      <td
-                        className={`playerReward text-center col-2 ${
-                          isactive === true && username === item.displayName
-                            ? "goldenscore"
-                            : "playerReward"
-                        }`}
-                      >
-                        ${prizes[index]}
-                      </td>
-                      <td
-                        className={`playerReward col-2 ${
-                          isactive === true && username === item.displayName
-                            ? "goldenscore"
-                            : "goldenscore-inactive"
-                        }`}
-                      >
-                        +$
-                        {getFormattedNumber(
-                          monthlyPrizesGolden[index],
-                          0
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-
-              {weeklyplayerData &&
-                inactiveBoard === true &&
-                optionText === "weekly" &&
-                weeklyplayerData.length > 0 &&
-                weeklyplayerData.map((item, index) => {
-                  return (
-                    <tr
-                      key={index}
-                      className={`playerInnerRow ${
-                        inactiveBoard || item.displayName === username
-                          ? "playerInnerRow-inactive"
-                          : null
-                      }`}
-                    >
-                      <td className="playerData col-1">#{item.position + 1}</td>
-                      <td className="playerName col-5">
-                        {isactive === true && item.displayName === username ? (
-                          <div className="position-relative d-flex align-items-center">
-                            <img
-                              src={premiumAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />
-                            <span> {item.displayName}</span>
-                          </div>
-                        ) : (
-                          <div className="position-relative d-flex align-items-center">
-                            <img
-                              src={playerAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />{" "}
-                            {item.displayName}
-                          </div>
-                        )}
-                      </td>
-                      <td className="playerScore col-2 text-center">
-                        {getFormattedNumber(item.statValue, 0)}
-                      </td>
-                      <td
-                        className={`playerReward text-center col-2 ${
-                          isactive === true && username === item.displayName
-                            ? "goldenscore"
-                            : "playerReward"
-                        }`}
-                      >
-                        ${prizes[index]}
-                      </td>
-                      <td
-                        className={`playerReward col-2 ${
-                          isactive === true && username === item.displayName
-                            ? "goldenscore"
-                            : "goldenscore-inactive"
-                        }`}
-                      >
-                        +${getFormattedNumber(weeklyPrizesGolden[index], 0)}
-                      </td>
-                    </tr>
-                  );
-                })}
-
-              {dailyplayerData &&
-                inactiveBoard === true &&
-                optionText === "daily" &&
-                dailyplayerData.length > 0 &&
-                dailyplayerData.map((item, index) => {
-                  return (
-                    <tr
-                      key={index}
-                      className={`playerInnerRow ${
-                        inactiveBoard || item.displayName === username
-                          ? "playerInnerRow-inactive"
-                          : null
-                      }`}
-                    >
-                      <td className="playerData col-1">#{item.position + 1}</td>
-                      <td className="playerName col-5">
-                        {isactive === true && item.displayName === username ? (
-                          <div className="position-relative d-flex align-items-center">
-                            <img
-                              src={premiumAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />
-                            <span> {item.displayName}</span>
-                          </div>
-                        ) : (
-                          <div className="position-relative d-flex align-items-center">
-                            <img
-                              src={playerAvatar}
-                              alt=""
-                              className="playerAvatar"
-                            />{" "}
-                            {item.displayName}
-                          </div>
-                        )}
-                      </td>
-                      <td className="playerScore col-2 text-center">
-                        {getFormattedNumber(item.statValue, 0)}
-                      </td>
-                      <td
-                        className={`playerReward text-center col-2 ${
-                          isactive === true && username === item.displayName
-                            ? "goldenscore"
-                            : "playerReward"
-                        }`}
-                      >
-                        ${prizes[index]}
-                      </td>
-                      <td
-                        className={`playerReward col-2 ${
-                          isactive === true && username === item.displayName
-                            ? "goldenscore"
-                            : "goldenscore-inactive"
-                        }`}
-                      >
-                        +${dailyPrizesGolden[index]}
-                      </td>
-                    </tr>
-                  );
-                })}
-              {inactiveBoard === true &&
-                ((dailyplayerData.length === 0 && optionText === "daily") ||
-                  (weeklyplayerData.length === 0 && optionText === "weekly") ||
-                  (monthlyplayerData.length === 0 &&
-                    optionText === "monthly")) &&
-                optionText !== "genesis" && (
-                  <CircularProgress
-                    size={20}
-                    style={{ alignSelf: "center", margin: "auto" }}
-                  />
-                )}
-            </tbody>
-          </table>
-        ) : (
-          <ComingSoon
-            optionText={optionText}
-            data={genesisData}
-            username={username}
-          />
-        )}
-      </div> */}
+              <span
+                className={` 
+                d-flex align-items-center gap-2
+                ${optionText2 === "skale" && "otheroptionsActive"} optionText `}
+                style={{ width: "33%", fontSize: "12px" }}
+                onClick={() => {
+                  handleOption("skale");
+                  fetchWeeklyRecords();
+                }}
+              >
+                <img
+                  src={optionText2 === "skale" ? skaleActive : skaleInactive}
+                  className={`${
+                    optionText2 === "skale"
+                      ? "leaderboard-icon leaderboard-icon-active"
+                      : "leaderboard-icon"
+                  }`}
+                  width={20}
+                  height={20}
+                  alt=""
+                />
+                {windowSize.width > 768
+                  ? "SKALE"
+                  : windowSize.width < 786 && optionText2 === "skale"
+                  ? "SKALE"
+                  : ""}
+              </span>
+              <span
+                className={`
+                d-flex align-items-center gap-2
+                
+                ${optionText2 === "wod" && "otheroptionsActive"} optionText `}
+                style={{ width: "33%", fontSize: "12px" }}
+                onClick={() => {
+                  handleOption("wod");
+                  fetchMonthlyRecords();
+                }}
+              >
+                <img
+                  src={optionText2 === "wod" ? wodActive : wodInactive}
+                  className={`${
+                    optionText2 === "monthly"
+                      ? "leaderboard-icon leaderboard-icon-active"
+                      : "leaderboard-icon"
+                  }`}
+                  width={20}
+                  height={20}
+                  style={{ borderRadius: "50%" }}
+                  alt=""
+                />
+                {windowSize.width > 768
+                  ? "Genesis Land"
+                  : windowSize.width < 786 && optionText2 === "wod"
+                  ? "Genesis Land"
+                  : ""}
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
       {optionText2 === "bnb" && (
         <Slider {...settings} ref={sliderRef}>
           <div className="leaderboard-item d-flex flex-column gap-2 p-0">
@@ -1399,7 +1174,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                            <td
+                          <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
                                 ? "goldenscore"
@@ -1475,7 +1250,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                            <td
+                          <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
                                 ? "goldenscore"
@@ -1620,7 +1395,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                           <td
+                          <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
                                 ? "goldenscore"
@@ -1695,7 +1470,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                           <td
+                          <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
                                 ? "goldenscore"
@@ -1866,7 +1641,10 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             <div className="d-flex align-items-center justify-content-center gap-2">
                               <img src={star} width={15} height={15} alt="" />
 
-                              {getFormattedNumber(monthlyPrizesGolden[index], 0)}
+                              {getFormattedNumber(
+                                monthlyPrizesGolden[index],
+                                0
+                              )}
                             </div>
                           </td>
                         </tr>
@@ -1942,7 +1720,10 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             <div className="d-flex align-items-center justify-content-center gap-2">
                               <img src={star} width={15} height={15} alt="" />
 
-                              {getFormattedNumber(monthlyPrizesGolden[index], 0)}
+                              {getFormattedNumber(
+                                monthlyPrizesGolden[index],
+                                0
+                              )}
                             </div>
                           </td>
                         </tr>
@@ -2331,7 +2112,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {getFormattedNumber(prizeSkale[index], 0)}
                             <img src={premiumIcon} alt="" />
                           </td> */}
-                            <td
+                          <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
                                 ? "goldenscore"
@@ -2476,7 +2257,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {getFormattedNumber(prizeSkale[index], 0)}
                             <img src={premiumIcon} alt="" />
                           </td> */}
-                            <td
+                          <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
                                 ? "goldenscore"
@@ -2576,7 +2357,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {getFormattedNumber(prizeSkale[index], 0)}
                             <img src={premiumIcon} alt="" />
                           </td> */}
-                            <td
+                          <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
                                 ? "goldenscore"
@@ -2721,7 +2502,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {getFormattedNumber(prizeSkale[index], 0)}
                             <img src={premiumIcon} alt="" />
                           </td> */}
-                            <td
+                          <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
                                 ? "goldenscore"
@@ -2821,7 +2602,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {getFormattedNumber(prizeSkale[index], 0)}
                             <img src={premiumIcon} alt="" />
                           </td> */}
-                            <td
+                          <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
                                 ? "goldenscore"
@@ -2859,7 +2640,218 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
         </Slider>
       )}
 
-      
+      {optionText2 === "global" && (
+        <Slider {...settings} ref={sliderRef}>
+          <div className="leaderboard-item d-flex flex-column gap-2 p-0">
+            <div
+              className={`d-flex w-100 position-relative  
+                   justify-content-center p-2
+               leaderboard-title-wrapper p-2`}
+            >
+              <div className="global-tooltip-position">
+                <OutsideClickHandler
+                  onOutsideClick={() => setGlobalTooltip(false)}
+                >
+                  <div className="d-flex align-items-center gap-2 position-relative">
+                    <img
+                      src={tooltipIcon}
+                      alt=""
+                      className="tooltip-icon"
+                      style={{
+                        cursor: "pointer",
+                        width: "20px",
+                        height: "20px",
+                      }}
+                      onClick={() => setGlobalTooltip(!globalTooltip)}
+                    />
+                    <div
+                      className={`tooltip-wrapper p-3 ${
+                        globalTooltip && "tooltip-active"
+                      }`}
+                      style={{ width: 350, left: "20%" }}
+                    >
+                      <p className="tooltip-content">
+                        Welcome to the Monthly Star Accumulation Leaderboard!
+                        Earn stars by playing regularly, participating in
+                        special events like Dragon Ruins, Critical Hit, Golden
+                        Pass, and Treasure Hunt. Dominate the BNB Chain and
+                        SKALE Network leaderboards for extra stars. At
+                        month-end, top performers receive exclusive rewards.
+                        Will you ascend to glory?
+                      </p>
+                    </div>
+                  </div>
+                </OutsideClickHandler>
+              </div>
+              <h6 className="leaderboard-title  text-white font-oxanium mb-0">
+                MONTHLY
+              </h6>
+              <div className="d-flex flex-column px-2 reset-time-wrapper">
+                <span className="reset-time-lb">Reset time</span>
+                <span className="reset-time-lb-value">Monthly (00:00 UTC)</span>
+              </div>
+            </div>
+            <div className="p-2">
+              <table className="playerTable w-100">
+                <tbody>
+                  <tr className="playerRow">
+                    <th className="playerHeader font-montserrat">Rank</th>
+                    <th className="playerHeader font-montserrat">Player</th>
+
+                    <th className="playerHeader text-center font-montserrat">
+                      Total Stars
+                    </th>
+                  </tr>
+                  {genesisData &&
+                    genesisData.length > 0 &&
+                    inactiveBoard === false &&
+                    genesisData.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1 font-montserrat">
+                            {item.position + 1}
+                          </td>
+                          <td className="playerName col-5 font-montserrat">
+                            {item.displayName === username ? (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span>
+                                  {" "}
+                                  {item.displayName?.slice(0, 13)}
+                                  {item.displayName?.length > 13 && "..."}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName?.slice(0, 13)}
+                                {item.displayName?.length > 13 && "..."}
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center font-montserrat">
+                            <div className="d-flex align-items-center justify-content-center gap-2">
+                              <img src={star} alt="" />
+                              {getFormattedNumber(item.statValue, 0)}
+                            </div>
+                          </td>
+                          {/* <td
+                            className={`playerReward text-center col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${getFormattedNumber(monthlyPrizes[index], 0)}
+                          </td>
+                          <td
+                            className={`playerReward col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive2"
+                            }`}
+                          >
+                            +$
+                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
+                          </td> */}
+                        </tr>
+                      );
+                    })}
+
+                  {previousgenesisData &&
+                    inactiveBoard === true &&
+                    previousgenesisData.length > 0 &&
+                    previousgenesisData.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className={`playerInnerRow ${
+                            inactiveBoard || item.displayName === username
+                              ? "playerInnerRow-inactive"
+                              : null
+                          }`}
+                        >
+                          <td className="playerData col-1 font-montserrat">
+                            {item.position + 1}
+                          </td>
+                          <td className="playerName col-5 font-montserrat">
+                            {item.displayName === username ? (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={premiumAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />
+                                <span>
+                                  {" "}
+                                  {item.displayName?.slice(0, 13)}
+                                  {item.displayName?.length > 13 && "..."}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="position-relative d-flex align-items-center">
+                                <img
+                                  src={playerAvatar}
+                                  alt=""
+                                  className="playerAvatar"
+                                />{" "}
+                                {item.displayName?.slice(0, 13)}
+                                {item.displayName?.length > 13 && "..."}
+                              </div>
+                            )}
+                          </td>
+                          <td className="playerScore col-2 text-center font-montserrat">
+                            ${getFormattedNumber(item.statValue, 0)}
+                          </td>
+                          {/* <td
+                            className={`playerReward text-center col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "playerReward"
+                            }`}
+                          >
+                            ${getFormattedNumber(monthlyPrizes[index], 0)}
+                          </td>
+                          <td
+                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
+                              optionText2 === "skale" && "premium-goldenscore"
+                            } col-2 font-montserrat ${
+                              username === item.displayName
+                                ? "goldenscore"
+                                : "goldenscore-inactive2"
+                            }`}
+                            style={{ width: "100%" }}
+                          >
+                            +$
+                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
+                            {optionText2 === "skale" && (
+                              <img src={premiumIcon} alt="" />
+                            )}
+                          </td> */}
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </Slider>
+      )}
 
       {/* {activePlayer === false && inactiveBoard === false && (
         <table className="playerTable" style={{ marginTop: "-33px" }}>
