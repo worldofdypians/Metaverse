@@ -540,7 +540,9 @@ const MarketMint = ({
                       activeTab === "live" && "stake-tab-active"
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
-                  >
+                  >  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     Live
                   </h6>
                   <h6
@@ -549,9 +551,7 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                  
                     Upcoming
                   </h6>
                   <h6
@@ -568,7 +568,7 @@ const MarketMint = ({
 
               {activeTab === "live" && (
                 <>
-                  {/* <div className="pb-5 px-0 position-relative">
+                  <div className="pb-5 px-0 position-relative">
                     {activeSlide > 0 && (
                       <div className="prev-arrow-nft" onClick={firstPrev}>
                         <img src={nextArrow} alt="" />
@@ -604,7 +604,7 @@ const MarketMint = ({
                         />
                       ))}
                     </Slider>
-                  </div> */}
+                  </div>
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -1290,7 +1290,7 @@ const MarketMint = ({
                 //   </div>
                 // </div>
 <div className="d-flex flex-column gap-4">
-                <div className="upcoming-mint-wrapper skale-upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                {/* <div className="upcoming-mint-wrapper skale-upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                   <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                     <h6 className="upcoming-mint-title">SKALE Beta Pass</h6>
                     <p className="upcoming-mint-desc">
@@ -1302,7 +1302,7 @@ const MarketMint = ({
                     alt=""
                     className="upcoming-mint-img"
                   />
-                </div>
+                </div> */}
 
                 <div className="upcoming-mint-wrapper babydoge-upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                   <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
