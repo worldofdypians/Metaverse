@@ -114,7 +114,7 @@ const MarketMint = ({
 
   const timepieceData = {
     id: "timepiece",
-    cardTitle: "Caws Timepiece",
+    cardTitle: "CAWS Timepiece",
     title: "Timepiece",
     background: "market-mint-bg",
     mobileBg: "timepieceMobileBg.png",
@@ -267,7 +267,7 @@ const MarketMint = ({
       class: "mint-skale",
     },
     {
-      title: "Caws Timepiece",
+      title: "CAWS Timepiece",
       eventId: "timepiece",
       desc: "Access the metaverse, experience enhanced interactions, and enjoy diverse benefits.",
       img: timepieceActive,
