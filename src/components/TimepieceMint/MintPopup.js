@@ -41,13 +41,15 @@ const MintPopup = ({ active, onClose, data }) => {
         </>
       ) : data.title === "SKALE" ? (
         <>
-          <div class="d-flex align-items-center justify-content-center">
-            <div class="pulsatingDot"></div>
+         <div className="d-flex align-items-center gap-2 mb-4 mb-lg-0">
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              $20,000 SKL Rewards
+              Live
             </h6>
           </div>
-          <h6 className="mint-popup-title">SKALE Treasure Hunt</h6>
+          <h6 className="mint-popup-title m-0"> SKALE Beta Pass NFT</h6>
+        </div>
         </>
       ) : data.title === "DogeCoin" ? (
         <>
@@ -102,8 +104,7 @@ const MintPopup = ({ active, onClose, data }) => {
       )}
 
       <img
-        // src={data.img}
-        src={skaleTreasureHunt}
+        src={data.img}
         className={`mint-popup-img ${
           data.title === "Daily Bonus" && "bottom-auto-bg"
         } `}
@@ -158,9 +159,13 @@ const MintPopup = ({ active, onClose, data }) => {
       ) : data.title === "SKALE" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
         {data.title === "SKALE" && (
+          // <span className="popup-available-mint">
+          //   Explore the downtown area and use your <img src={whiteExplore} className="white-explore" alt=""/> to generate rewards!
+          // </span>
           <span className="popup-available-mint">
-            Explore the downtown area and use your <img src={whiteExplore} className="white-explore" alt=""/> to generate rewards!
-          </span>
+          Get access to the game and a unique event filled with surprises
+          and rewards!
+        </span>
         )}
       </div>
       )  : null}
@@ -186,7 +191,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "SKALE" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/events/treasure-hunt"}
+            to={"/marketplace/mint/skale"}
             state={{ event: data.state }}
             className="linear-border"
           >
