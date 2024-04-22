@@ -205,7 +205,7 @@ const MarketMint = ({
   }, []);
 
   let countToLiveConflux = new Date("2023-10-10T11:00:00.000+02:00");
-  let countToExpireConflux = new Date("2023-11-17T11:00:00.000+02:00");
+  let countToExpireConflux = new Date("2024-05-06T14:00:00.000+02:00");
 
   const dummyCards = [
     // {
