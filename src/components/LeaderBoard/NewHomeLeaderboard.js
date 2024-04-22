@@ -862,98 +862,6 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       <div className="d-flex align-items-center gap-1">
         <div className="optionsWrapper position-relative col-12">
           <div
-            className={`optionswrapper-bg-2 ${
-              optionText2 === "global" ? "move-3" : ""
-            }`}
-          ></div>
-          <div
-            className="d-flex gap-1 align-items-center justify-content-between position-relative"
-            style={{ height: 38 }}
-          >
-            <span
-              className={`
-                    d-flex align-items-center gap-2
-                    ${
-                      optionText2 === "bnb" && "otheroptionsActive"
-                    } optionText `}
-              onClick={() => {
-                handleOption("bnb");
-                fetchGenesisRecords();
-              }}
-              style={{ width: "50%", fontSize: "12px" }}
-            >
-              <div className="d-flex align-items-center gap-2">
-                <img
-                  src={optionText2 !== "global" ? bnbActive : bnbInactive}
-                  className={`${
-                    optionText2 === "global"
-                      ? "leaderboard-icon leaderboard-icon-active"
-                      : "leaderboard-icon"
-                  }`}
-                  width={20}
-                  height={20}
-                  alt=""
-                />
-                <img
-                  src={optionText2 !== "global" ? skaleActive : skaleInactive}
-                  className={`${
-                    optionText2 === "global"
-                      ? "leaderboard-icon leaderboard-icon-active"
-                      : "leaderboard-icon"
-                  }`}
-                  width={20}
-                  height={20}
-                  alt=""
-                />
-                <img
-                  src={optionText2 !== "global" ? wodActive : wodInactive}
-                  className={`${
-                    optionText2 === "global"
-                      ? "leaderboard-icon leaderboard-icon-active"
-                      : "leaderboard-icon"
-                  }`}
-                  width={20}
-                  height={20}
-                  alt=""
-                />
-              </div>
-              Chains
-            </span>
-
-            <span
-              className={` 
-                    d-flex align-items-center gap-2
-                    ${
-                      optionText2 === "global" && "otheroptionsActive"
-                    } optionText `}
-              style={{ width: "50%", fontSize: "12px" }}
-              onClick={() => {
-                handleOption("global");
-                fetchWeeklyRecords();
-              }}
-            >
-              <img
-                src={star}
-                className={`${
-                  optionText2 === "global"
-                    ? "leaderboard-icon leaderboard-icon-active"
-                    : "leaderboard-icon"
-                }`}
-                width={20}
-                height={20}
-                style={{
-                  filter: optionText2 !== "global" ? "grayscale(1)" : "",
-                }}
-                alt=""
-              />
-              Global
-            </span>
-          </div>
-        </div>
-      </div>
-      <div className="d-flex align-items-center gap-1">
-        <div className="optionsWrapper position-relative col-12">
-          <div
             className={`optionswrapper-bg ${
               optionText2 === "skale"
                 ? "move-1"
@@ -964,122 +872,96 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 : ""
             }`}
           ></div>
-          {optionText2 === "global" ? (
-            <div
-              className="d-flex gap-1 align-items-center justify-content-between position-relative"
-              style={{ height: 38 }}
-            >
-              <span
-                className={`
-                  d-flex align-items-center gap-2
-                  otheroptionsActive optionText `}
-                onClick={() => {
-                  handleOption("global");
-                  fetchGenesisRecords();
-                }}
-                style={{ width: "100%", fontSize: "12px" }}
-              >
-                <img
-                  src={star}
-                  className={`leaderboard-icon leaderboard-icon-active`}
-                  width={20}
-                  height={20}
-                  alt=""
-                />
-                Global
-              </span>
-            </div>
-          ) : (
-            <div
-              className="d-flex gap-1 align-items-center justify-content-between position-relative"
-              style={{ height: 38 }}
-            >
-              <span
-                className={`
+
+          <div
+            className="d-flex gap-1 align-items-center justify-content-between position-relative"
+            style={{ height: 38 }}
+          >
+            <span
+              className={`
                 d-flex align-items-center gap-2
                 ${optionText2 === "bnb" && "otheroptionsActive"} optionText `}
-                onClick={() => {
-                  handleOption("bnb");
-                  fetchGenesisRecords();
-                }}
-                style={{ width: "33%", fontSize: "12px" }}
-              >
-                <img
-                  src={optionText2 === "bnb" ? bnbActive : bnbInactive}
-                  className={`${
-                    optionText2 === "bnb"
-                      ? "leaderboard-icon leaderboard-icon-active"
-                      : "leaderboard-icon"
-                  }`}
-                  width={20}
-                  height={20}
-                  alt=""
-                />
-                {windowSize.width > 768
-                  ? "BNB Chain"
-                  : windowSize.width < 786 && optionText2 === "bnb"
-                  ? "BNB Chain"
-                  : ""}
-              </span>
+              onClick={() => {
+                handleOption("bnb");
+                fetchGenesisRecords();
+              }}
+              style={{ width: "33%", fontSize: "12px" }}
+            >
+              <img
+                src={optionText2 === "bnb" ? bnbActive : bnbInactive}
+                className={`${
+                  optionText2 === "bnb"
+                    ? "leaderboard-icon leaderboard-icon-active"
+                    : "leaderboard-icon"
+                }`}
+                width={20}
+                height={20}
+                alt=""
+              />
+              {windowSize.width > 768
+                ? "BNB Chain"
+                : windowSize.width < 786 && optionText2 === "bnb"
+                ? "BNB Chain"
+                : ""}
+            </span>
 
-              <span
-                className={` 
+            <span
+              className={` 
                 d-flex align-items-center gap-2
                 ${optionText2 === "skale" && "otheroptionsActive"} optionText `}
-                style={{ width: "33%", fontSize: "12px" }}
-                onClick={() => {
-                  handleOption("skale");
-                  fetchWeeklyRecords();
-                }}
-              >
-                <img
-                  src={optionText2 === "skale" ? skaleActive : skaleInactive}
-                  className={`${
-                    optionText2 === "skale"
-                      ? "leaderboard-icon leaderboard-icon-active"
-                      : "leaderboard-icon"
-                  }`}
-                  width={20}
-                  height={20}
-                  alt=""
-                />
-                {windowSize.width > 768
-                  ? "SKALE"
-                  : windowSize.width < 786 && optionText2 === "skale"
-                  ? "SKALE"
-                  : ""}
-              </span>
-              <span
-                className={`
+              style={{ width: "33%", fontSize: "12px" }}
+              onClick={() => {
+                handleOption("skale");
+                fetchWeeklyRecords();
+              }}
+            >
+              <img
+                src={optionText2 === "skale" ? skaleActive : skaleInactive}
+                className={`${
+                  optionText2 === "skale"
+                    ? "leaderboard-icon leaderboard-icon-active"
+                    : "leaderboard-icon"
+                }`}
+                width={20}
+                height={20}
+                alt=""
+              />
+              {windowSize.width > 768
+                ? "SKALE"
+                : windowSize.width < 786 && optionText2 === "skale"
+                ? "SKALE"
+                : ""}
+            </span>
+            <span
+              className={`
                 d-flex align-items-center gap-2
                 
                 ${optionText2 === "wod" && "otheroptionsActive"} optionText `}
-                style={{ width: "33%", fontSize: "12px" }}
-                onClick={() => {
-                  handleOption("wod");
-                  fetchMonthlyRecords();
-                }}
-              >
-                <img
-                  src={optionText2 === "wod" ? wodActive : wodInactive}
-                  className={`${
-                    optionText2 === "monthly"
-                      ? "leaderboard-icon leaderboard-icon-active"
-                      : "leaderboard-icon"
-                  }`}
-                  width={20}
-                  height={20}
-                  style={{ borderRadius: "50%" }}
-                  alt=""
-                />
-                {windowSize.width > 768
-                  ? "Genesis Land"
-                  : windowSize.width < 786 && optionText2 === "wod"
-                  ? "Genesis Land"
-                  : ""}
-              </span>
-            </div>
-          )}
+              style={{ width: "33%", fontSize: "12px" }}
+              onClick={() => {
+                handleOption("wod");
+                fetchMonthlyRecords();
+              }}
+            >
+              <img
+                src={optionText2 === "wod" ? wodActive : wodInactive}
+                className={`${
+                  optionText2 === "monthly"
+                    ? "leaderboard-icon leaderboard-icon-active"
+                    : "leaderboard-icon"
+                }`}
+                width={20}
+                height={20}
+                style={{ borderRadius: "50%" }}
+                alt=""
+              />
+              {windowSize.width > 768
+                ? "Genesis Land"
+                : windowSize.width < 786 && optionText2 === "wod"
+                ? "Genesis Land"
+                : ""}
+            </span>
+          </div>
         </div>
       </div>
       {optionText2 === "bnb" && (
@@ -1402,10 +1284,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                                 : "playerReward"
                             }`}
                           >
-                            <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-                              {getFormattedNumber(weeklyPrizes[index], 0)}
-                            </div>
+                              ${getFormattedNumber(weeklyPrizes[index], 0)}
                           </td>
                           <td
                             className={`playerReward  mb-0 ${
@@ -1416,11 +1295,8 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                                 : "goldenscore-inactive2"
                             }`}
                           >
-                            <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
 
-                              {getFormattedNumber(weeklyPrizesGolden[index], 0)}
-                            </div>
+                              ${getFormattedNumber(weeklyPrizesGolden[index], 0)}
                           </td>
                         </tr>
                       );
@@ -2479,29 +2355,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                          {/* <td
-                            className={`playerReward text-center col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "playerReward"
-                            }`}
-                          >
-                            ${getFormattedNumber(prizeSkale[index], 0)}
-                          </td>
-                          <td
-                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
-                              optionText2 === "skale" && "premium-goldenscore"
-                            } col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "goldenscore-inactive2"
-                            }`}
-                            style={{ width: "100%" }}
-                          >
-                            +$
-                            {getFormattedNumber(prizeSkale[index], 0)}
-                            <img src={premiumIcon} alt="" />
-                          </td> */}
+                    
                           <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
@@ -2579,29 +2433,6 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                          {/* <td
-                            className={`playerReward text-center col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "playerReward"
-                            }`}
-                          >
-                            ${getFormattedNumber(prizeSkale[index], 0)}
-                          </td>
-                          <td
-                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
-                              optionText2 === "skale" && "premium-goldenscore"
-                            } col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "goldenscore-inactive2"
-                            }`}
-                            style={{ width: "100%" }}
-                          >
-                            +$
-                            {getFormattedNumber(prizeSkale[index], 0)}
-                            <img src={premiumIcon} alt="" />
-                          </td> */}
                           <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
@@ -2640,282 +2471,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
         </Slider>
       )}
 
-      {optionText2 === "global" && (
-        <Slider {...settings} ref={sliderRef}>
-          <div className="leaderboard-item d-flex flex-column gap-2 p-0">
-            <div
-              className={`d-flex w-100 position-relative  
-                   justify-content-center p-2
-               leaderboard-title-wrapper p-2`}
-            >
-              <div className="global-tooltip-position">
-                <OutsideClickHandler
-                  onOutsideClick={() => setGlobalTooltip(false)}
-                >
-                  <div className="d-flex align-items-center gap-2 position-relative">
-                    <img
-                      src={tooltipIcon}
-                      alt=""
-                      className="tooltip-icon"
-                      style={{
-                        cursor: "pointer",
-                        width: "20px",
-                        height: "20px",
-                      }}
-                      onClick={() => setGlobalTooltip(!globalTooltip)}
-                    />
-                    <div
-                      className={`tooltip-wrapper p-3 ${
-                        globalTooltip && "tooltip-active"
-                      }`}
-                      style={{ width: 350, left: "20%" }}
-                    >
-                      <p className="tooltip-content">
-                        Welcome to the Monthly Star Accumulation Leaderboard!
-                        Earn stars by playing regularly, participating in
-                        special events like Dragon Ruins, Critical Hit, Golden
-                        Pass, and Treasure Hunt. Dominate the BNB Chain and
-                        SKALE Network leaderboards for extra stars. At
-                        month-end, top performers receive exclusive rewards.
-                        Will you ascend to glory?
-                      </p>
-                    </div>
-                  </div>
-                </OutsideClickHandler>
-              </div>
-              <h6 className="leaderboard-title  text-white font-oxanium mb-0">
-                MONTHLY
-              </h6>
-              <div className="d-flex flex-column px-2 reset-time-wrapper">
-                <span className="reset-time-lb">Reset time</span>
-                <span className="reset-time-lb-value">Monthly (00:00 UTC)</span>
-              </div>
-            </div>
-            <div className="p-2">
-              <table className="playerTable w-100">
-                <tbody>
-                  <tr className="playerRow">
-                    <th className="playerHeader font-montserrat">Rank</th>
-                    <th className="playerHeader font-montserrat">Player</th>
-
-                    <th className="playerHeader text-center font-montserrat">
-                      Total Stars
-                    </th>
-                  </tr>
-                  {genesisData &&
-                    genesisData.length > 0 &&
-                    inactiveBoard === false &&
-                    genesisData.map((item, index) => {
-                      return (
-                        <tr
-                          key={index}
-                          className={`playerInnerRow ${
-                            inactiveBoard || item.displayName === username
-                              ? "playerInnerRow-inactive"
-                              : null
-                          }`}
-                        >
-                          <td className="playerData col-1 font-montserrat">
-                            {item.position + 1}
-                          </td>
-                          <td className="playerName col-5 font-montserrat">
-                            {item.displayName === username ? (
-                              <div className="position-relative d-flex align-items-center">
-                                <img
-                                  src={premiumAvatar}
-                                  alt=""
-                                  className="playerAvatar"
-                                />
-                                <span>
-                                  {" "}
-                                  {item.displayName?.slice(0, 13)}
-                                  {item.displayName?.length > 13 && "..."}
-                                </span>
-                              </div>
-                            ) : (
-                              <div className="position-relative d-flex align-items-center">
-                                <img
-                                  src={playerAvatar}
-                                  alt=""
-                                  className="playerAvatar"
-                                />{" "}
-                                {item.displayName?.slice(0, 13)}
-                                {item.displayName?.length > 13 && "..."}
-                              </div>
-                            )}
-                          </td>
-                          <td className="playerScore col-2 text-center font-montserrat">
-                            <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} alt="" />
-                              {getFormattedNumber(item.statValue, 0)}
-                            </div>
-                          </td>
-                          {/* <td
-                            className={`playerReward text-center col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "playerReward"
-                            }`}
-                          >
-                            ${getFormattedNumber(monthlyPrizes[index], 0)}
-                          </td>
-                          <td
-                            className={`playerReward col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "goldenscore-inactive2"
-                            }`}
-                          >
-                            +$
-                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
-                          </td> */}
-                        </tr>
-                      );
-                    })}
-
-                  {previousgenesisData &&
-                    inactiveBoard === true &&
-                    previousgenesisData.length > 0 &&
-                    previousgenesisData.map((item, index) => {
-                      return (
-                        <tr
-                          key={index}
-                          className={`playerInnerRow ${
-                            inactiveBoard || item.displayName === username
-                              ? "playerInnerRow-inactive"
-                              : null
-                          }`}
-                        >
-                          <td className="playerData col-1 font-montserrat">
-                            {item.position + 1}
-                          </td>
-                          <td className="playerName col-5 font-montserrat">
-                            {item.displayName === username ? (
-                              <div className="position-relative d-flex align-items-center">
-                                <img
-                                  src={premiumAvatar}
-                                  alt=""
-                                  className="playerAvatar"
-                                />
-                                <span>
-                                  {" "}
-                                  {item.displayName?.slice(0, 13)}
-                                  {item.displayName?.length > 13 && "..."}
-                                </span>
-                              </div>
-                            ) : (
-                              <div className="position-relative d-flex align-items-center">
-                                <img
-                                  src={playerAvatar}
-                                  alt=""
-                                  className="playerAvatar"
-                                />{" "}
-                                {item.displayName?.slice(0, 13)}
-                                {item.displayName?.length > 13 && "..."}
-                              </div>
-                            )}
-                          </td>
-                          <td className="playerScore col-2 text-center font-montserrat">
-                            ${getFormattedNumber(item.statValue, 0)}
-                          </td>
-                          {/* <td
-                            className={`playerReward text-center col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "playerReward"
-                            }`}
-                          >
-                            ${getFormattedNumber(monthlyPrizes[index], 0)}
-                          </td>
-                          <td
-                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
-                              optionText2 === "skale" && "premium-goldenscore"
-                            } col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "goldenscore-inactive2"
-                            }`}
-                            style={{ width: "100%" }}
-                          >
-                            +$
-                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
-                            {optionText2 === "skale" && (
-                              <img src={premiumIcon} alt="" />
-                            )}
-                          </td> */}
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </Slider>
-      )}
-
-      {/* {activePlayer === false && inactiveBoard === false && (
-        <table className="playerTable" style={{ marginTop: "-33px" }}>
-          <tbody>
-            <tr className={`playerInnerRow-inactive`}>
-              <td
-                className={`playerData ${
-                  optionText === "genesis" ? "col-2" : "col-1"
-                }`}
-              >
-                #{userData.position + 1}
-              </td>
-              <td className="playerName col-5">
-                <div className="position-relative">
-                  {isactive === true ? (
-                    <div className="position-relative">
-                      <img
-                        src={premiumAvatar}
-                        alt=""
-                        className="playerAvatar"
-                      />
-                      <img src={premiumStar} alt="" className="premium-star" />
-                      <span> {userData.displayName}</span>
-                    </div>
-                  ) : (
-                    <>
-                      <img src={playerAvatar} alt="" className="playerAvatar" />
-                      {userData.displayName}
-                    </>
-                  )}
-                </div>
-              </td>
-              {optionText !== "genesis" && (
-                <td className="playerScore col-2 text-center">
-                  {getFormattedNumber(userData.statValue, 0)}
-                </td>
-              )}
-              <td
-                className={`playerReward text-center ${
-                  isactive === true && username === userData.displayName
-                    ? "goldenscore"
-                    : "playerReward"
-                } col-2 ${optionText !== "genesis" && "text-center"} `}
-              >
-                $
-                {optionText === "genesis"
-                  ? getFormattedNumber(userData.statValue, 0)
-                  : "0"}{" "}
-              </td>
-              {optionText !== "genesis" && (
-                <td
-                  className={`playerScore col-2 ${
-                    isactive === true && username === userData.displayName
-                      ? "goldenscore"
-                      : "goldenscore-inactive"
-                  }`}
-                >
-                  +$0
-                </td>
-              )}
-            </tr>
-          </tbody>
-        </table>
-      )} */}
+    
       <div className="optionsWrapper p-2">
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-between gap-2 align-items-center">

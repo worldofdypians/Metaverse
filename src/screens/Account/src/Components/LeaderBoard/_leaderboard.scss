@@ -107,7 +107,7 @@
 
 .optionText:hover,
 .activeoption {
-  color: #FFF;
+  color: #fff;
 }
 
 .optionTextGolden {
@@ -166,7 +166,7 @@
 
 .optionsWrapper {
   border-radius: 12px;
-  background: #1E2237;
+  background: #1e2237;
   padding: 2px;
 }
 
@@ -215,17 +215,17 @@
   height: 32px;
 }
 .goldenscore-inactive2 {
-  color: #fff ;
+  color: #fff;
   text-align: center;
 }
 
 .golden-score-disabled {
   color: #8f8e99 !important;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-letter-spacing: -0.252px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.252px;
 }
 
 .playerName {
@@ -353,7 +353,7 @@ letter-spacing: -0.252px;
   border-radius: 12px;
   white-space: nowrap;
   // border-bottom: 1px solid #09f3d2 !important;
-  color: #FFF;
+  color: #fff;
 }
 
 .comingsoon {
@@ -478,12 +478,12 @@ letter-spacing: -0.252px;
   filter: grayscale(0);
 }
 
-.blur-leaderboard{
+.blur-leaderboard {
   filter: blur(10px);
   pointer-events: none;
 }
-.reset-time-lb{
-  color: #B1A8B9;
+.reset-time-lb {
+  color: #b1a8b9;
   font-family: "Montserrat";
   font-size: 10px;
   font-style: normal;
@@ -494,8 +494,8 @@ letter-spacing: -0.252px;
   }
 }
 
-.reset-time-lb-value{
-  color: #F4E27B;
+.reset-time-lb-value {
+  color: #f4e27b;
   font-family: "Montserrat";
   font-size: 10px;
   font-style: normal;
@@ -506,7 +506,7 @@ letter-spacing: -0.252px;
   }
 }
 
-.reset-time-wrapper{
+.reset-time-wrapper {
   position: absolute;
   right: 0;
   top: 0;
@@ -515,7 +515,15 @@ letter-spacing: -0.252px;
   justify-content: center;
 }
 
-.global-tooltip-position{
+.global-tooltip-position {
   position: absolute;
   left: 2%;
+}
+
+.leaderboard-text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.018em;
+  font-family: "Montserrat" !important;
 }

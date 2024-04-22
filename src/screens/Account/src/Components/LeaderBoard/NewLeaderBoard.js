@@ -32,6 +32,12 @@ import leftArrow from "./assets/leftArrow.svg";
 import rightArrow from "./assets/rightArrow.svg";
 import premiumIcon from "./assets/premiumIcon.png";
 import premiumInactive from "./assets/premiumInactive.svg";
+import upgradeIcon from "./assets/upgradeIcon.svg";
+import starIcon from "./assets/starIcon.svg";
+import basicPlayer from "./assets/basicPlayer.png";
+import premiumPlayer from "./assets/premiumPlayer.png";
+import goldenPlayer from "./assets/goldenPlayer.png";
+import goldenPremiumPlayer from "./assets/goldenPremiumPlayer.png";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -415,7 +421,6 @@ const NewLeaderBoard = ({
   const [activePlayerMonthly, setActivePlayerMonthly] = useState(false);
   const [activePlayerGenesis, setActivePlayerGenesis] = useState(false);
 
-
   const [activeSkalePlayer, setActiveSkalePlayer] = useState(false);
 
   const [userData, setUserData] = useState({});
@@ -651,24 +656,21 @@ const NewLeaderBoard = ({
         (item) => item.displayName === username
       );
 
-
       if (itemData.length > 0) {
         var testArray2 = itemData.filter(
           (item) => item.displayName === username
         );
-        
+
         if (testArray.length > 0 && testArray2.length > 0) {
           setActiveSkalePlayer(true);
         } else if (testArray.length > 0 && testArray2.length === 0) {
           setActiveSkalePlayer(false);
           setUserDataSkale(...testArray);
         }
+      } else if (testArray.length > 0) {
+        setActiveSkalePlayer(false);
+        setUserDataSkale(...testArray);
       }
-       else if (testArray.length > 0) {
-          setActiveSkalePlayer(false);
-          setUserDataSkale(...testArray);
-        }
-      
     }
   };
   const fetchMonthlyGenesisRecordsAroundPlayer = async (itemData) => {
@@ -682,7 +684,7 @@ const NewLeaderBoard = ({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      
+
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
@@ -858,19 +860,22 @@ const NewLeaderBoard = ({
   };
 
   const fetchPreviousSkaleRecords = async () => {
-    if(skalepreviousVersion!=0)
-  {  const data = {
-      StatisticName: "LeaderboardSkaleWeekly",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-      Version: skalepreviousVersion - 1,
-    };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-    // setpreviousVersion(parseInt(result.data.data.version));
-    // console.log(result.data.data.leaderboard)
-    setskalePreviousRecords(result.data.data.leaderboard);
-    fillPreviousRecordsSkale(result.data.data.leaderboard);
-  }
+    if (skalepreviousVersion != 0) {
+      const data = {
+        StatisticName: "LeaderboardSkaleWeekly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: skalepreviousVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+      // setpreviousVersion(parseInt(result.data.data.version));
+      // console.log(result.data.data.leaderboard)
+      setskalePreviousRecords(result.data.data.leaderboard);
+      fillPreviousRecordsSkale(result.data.data.leaderboard);
+    }
   };
 
   const fetchGenesisPreviousWinners = async () => {
@@ -944,7 +949,7 @@ const NewLeaderBoard = ({
     previousMonthlyVersion,
     previousVersion,
     previousWeeklyVersion,
-    skalepreviousVersion
+    skalepreviousVersion,
   ]);
 
   useEffect(() => {
@@ -1186,10 +1191,10 @@ const NewLeaderBoard = ({
                           DAILY
                         </h6>
                         <div className="d-flex flex-column px-2 reset-time-wrapper">
-                          <span className="reset-time-lb">
-                            Reset time
+                          <span className="reset-time-lb">Reset time</span>
+                          <span className="reset-time-lb-value">
+                            Daily (00:00 UTC)
                           </span>
-                          <span className="reset-time-lb-value">Daily (00:00 UTC)</span>
                         </div>
                       </div>
                       <div className="p-2">
@@ -1204,16 +1209,16 @@ const NewLeaderBoard = ({
                               </th>
                               {optionText !== "genesis" && (
                                 <th className="playerHeader text-center font-montserrat">
-                                  Score
+                                  Reward
                                 </th>
                               )}
                               {optionText !== "genesis" && (
                                 <th className="playerHeader text-center font-montserrat">
-                                  Reward
+                                  Stars
                                 </th>
                               )}
                               <th className="playerHeader text-center font-montserrat">
-                                Golden Pass
+                                Score
                               </th>
                             </tr>
                             {dailyrecords &&
@@ -1233,7 +1238,7 @@ const NewLeaderBoard = ({
                                     <td className="playerData col-1 font-montserrat">
                                       {playerData[index].position}
                                     </td>
-                                    <td className="playerName col-5 font-montserrat">
+                                    <td className="playerName col-4 font-montserrat">
                                       {item.displayName === username ? (
                                         <div className="position-relative d-flex align-items-center">
                                           <img
@@ -1261,8 +1266,33 @@ const NewLeaderBoard = ({
                                         </div>
                                       )}
                                     </td>
-                                    <td className="playerScore col-2 text-center font-montserrat">
-                                      {getFormattedNumber(item.statValue, 0)}
+                                    <td
+                                      className={`playerReward col-2 font-montserrat ${
+                                        username === item.displayName
+                                          ? "goldenscore"
+                                          : "goldenscore-inactive2"
+                                      }`}
+                                    >
+                                      <div className="d-flex align-items-center justify-content-start gap-1">
+                                        <img src={upgradeIcon} alt="" />
+                                        <span className="leaderboard-text">
+                                          $
+                                          {getFormattedNumber(
+                                            dailyPrizesGolden[index],
+                                            0
+                                          )}
+                                        </span>
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "gray" }}
+                                        >
+                                          | $
+                                          {getFormattedNumber(
+                                            dailyPrizesGolden[index],
+                                            0
+                                          )}
+                                        </span>
+                                      </div>
                                     </td>
                                     <td
                                       className={`playerReward text-center col-2 font-montserrat ${
@@ -1271,24 +1301,32 @@ const NewLeaderBoard = ({
                                           : "playerReward"
                                       }`}
                                     >
-                                      $
-                                      {getFormattedNumber(
-                                        dailyPrizes[index],
-                                        0
-                                      )}
+                                      <div className="d-flex align-items-center justify-content-start gap-1">
+                                        <img src={starIcon} alt="" />
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "#F3C009" }}
+                                        >
+                                          {getFormattedNumber(
+                                            dailyPrizesGolden[index],
+                                            0
+                                          )}
+                                        </span>
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "gray" }}
+                                        >
+                                          |{" "}
+                                          {getFormattedNumber(
+                                            dailyPrizesGolden[index],
+                                            0
+                                          )}
+                                        </span>
+                                      </div>
                                     </td>
-                                    <td
-                                      className={`playerReward col-2 font-montserrat ${
-                                        username === item.displayName
-                                          ? "goldenscore"
-                                          : "goldenscore-inactive2"
-                                      }`}
-                                    >
-                                      +$
-                                      {getFormattedNumber(
-                                        dailyPrizesGolden[index],
-                                        0
-                                      )}
+
+                                    <td className="playerScore col-2 text-center font-montserrat">
+                                      {getFormattedNumber(item.statValue, 0)}
                                     </td>
                                   </tr>
                                 );
@@ -1502,11 +1540,11 @@ const NewLeaderBoard = ({
                             WEEKLY
                           </h6>
                           <div className="d-flex flex-column px-2 reset-time-wrapper">
-                          <span className="reset-time-lb">
-                            Reset time
-                          </span>
-                          <span className="reset-time-lb-value">Monday (00:00 UTC)</span>
-                        </div>
+                            <span className="reset-time-lb">Reset time</span>
+                            <span className="reset-time-lb-value">
+                              Monday (00:00 UTC)
+                            </span>
+                          </div>
                         </div>
                         <div className="p-2">
                           <table className="playerTable w-100">
@@ -1600,7 +1638,8 @@ const NewLeaderBoard = ({
                                           optionText2 === "skale" &&
                                           "premium-goldenscore"
                                         } col-2 font-montserrat ${
-                                          isPremium && username === item.displayName
+                                          isPremium &&
+                                          username === item.displayName
                                             ? "goldenscore"
                                             : "golden-score-disabled"
                                         }`}
@@ -1611,7 +1650,15 @@ const NewLeaderBoard = ({
                                           prizeSkale[index],
                                           0
                                         )}
-                                        <img src={ (isPremium && username === item.displayName) ? premiumIcon : premiumInactive} alt="" />
+                                        <img
+                                          src={
+                                            isPremium &&
+                                            username === item.displayName
+                                              ? premiumIcon
+                                              : premiumInactive
+                                          }
+                                          alt=""
+                                        />
                                       </td>
                                     </tr>
                                   );
@@ -1683,7 +1730,8 @@ const NewLeaderBoard = ({
                                           optionText2 === "skale" &&
                                           "premium-goldenscore"
                                         } col-2 font-montserrat ${
-                                          isPremium && username === item.displayName
+                                          isPremium &&
+                                          username === item.displayName
                                             ? "goldenscore"
                                             : "golden-score-disabled"
                                         }`}
@@ -1694,7 +1742,15 @@ const NewLeaderBoard = ({
                                           prizeSkale[index],
                                           0
                                         )}
-                                      <img src={ (isPremium && username === item.displayName) ? premiumIcon : premiumInactive} alt="" />
+                                        <img
+                                          src={
+                                            isPremium &&
+                                            username === item.displayName
+                                              ? premiumIcon
+                                              : premiumInactive
+                                          }
+                                          alt=""
+                                        />
                                       </td>
                                     </tr>
                                   );
@@ -1774,7 +1830,8 @@ const NewLeaderBoard = ({
                                     )}
                                     <td
                                       className={`playerReward text-center font-montserrat ${
-                                        (isPremium && username === userDataSkale.displayName)
+                                        isPremium &&
+                                        username === userDataSkale.displayName
                                           ? "goldenscore"
                                           : "playerReward"
                                       } col-2 ${
@@ -1793,7 +1850,8 @@ const NewLeaderBoard = ({
                                     {optionText !== "genesis" && (
                                       <td
                                         className={`playerScore col-2 font-montserrat d-flex align-items-center justify-content-center w-100 gap-2 ${
-                                          (isPremium && username === userDataSkale.displayName)
+                                          isPremium &&
+                                          username === userDataSkale.displayName
                                             ? "goldenscore"
                                             : "golden-score-disabled"
                                         }`}
@@ -1802,7 +1860,9 @@ const NewLeaderBoard = ({
                                         {optionText2 === "skale" && (
                                           <img
                                             src={
-                                              (isPremium && username === userDataSkale.displayName)
+                                              isPremium &&
+                                              username ===
+                                                userDataSkale.displayName
                                                 ? premiumIcon
                                                 : premiumInactive
                                             }
@@ -1828,11 +1888,11 @@ const NewLeaderBoard = ({
                             WEEKLY
                           </h6>
                           <div className="d-flex flex-column px-2 reset-time-wrapper">
-                          <span className="reset-time-lb">
-                            Reset time
-                          </span>
-                          <span className="reset-time-lb-value">Monday (00:00 UTC)</span>
-                        </div>
+                            <span className="reset-time-lb">Reset time</span>
+                            <span className="reset-time-lb-value">
+                              Monday (00:00 UTC)
+                            </span>
+                          </div>
                         </div>
                         <div className="p-2">
                           <table className="playerTable w-100">
@@ -1846,18 +1906,16 @@ const NewLeaderBoard = ({
                                 </th>
                                 {optionText !== "genesis" && (
                                   <th className="playerHeader text-center font-montserrat">
-                                    Score
-                                  </th>
-                                )}
-                                {optionText !== "genesis" && (
-                                  <th className="playerHeader text-center font-montserrat">
                                     Reward
                                   </th>
                                 )}
+                                {optionText === "genesis" && (
+                                  <th className="playerHeader text-center font-montserrat">
+                                    Stars
+                                  </th>
+                                )}
                                 <th className="playerHeader text-center font-montserrat">
-                                  {optionText2 === "skale"
-                                    ? "Premium"
-                                    : "Golden Pass"}
+                                  Score
                                 </th>
                               </tr>
                               {weeklyrecords &&
@@ -1905,9 +1963,7 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
-                                      </td>
+
                                       <td
                                         className={`playerReward text-center col-2 font-montserrat ${
                                           username === item.displayName
@@ -1915,31 +1971,29 @@ const NewLeaderBoard = ({
                                             : "playerReward"
                                         }`}
                                       >
-                                        $
-                                        {getFormattedNumber(
-                                          weeklyPrizes[index],
-                                          0
-                                        )}
+                                        <div className="d-flex align-items-center justify-content-start gap-1">
+                                          <img src={upgradeIcon} alt="" />
+                                          <span className="leaderboard-text" style={{color: "#fff"}}>
+                                            $
+                                            {getFormattedNumber(
+                                              weeklyPrizesGolden[index],
+                                              0
+                                            )}
+                                          </span>
+                                          <span
+                                            className="leaderboard-text"
+                                            style={{ color: "gray" }}
+                                          >
+                                            | $
+                                            {getFormattedNumber(
+                                              weeklyPrizesGolden[index],
+                                              0
+                                            )}
+                                          </span>
+                                        </div>
                                       </td>
-                                      <td
-                                        className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
-                                          optionText2 === "skale" &&
-                                          "premium-goldenscore"
-                                        } col-2 font-montserrat ${
-                                          username === item.displayName
-                                            ? "goldenscore"
-                                            : "goldenscore-inactive2"
-                                        }`}
-                                        style={{ width: "100%" }}
-                                      >
-                                        +$
-                                        {getFormattedNumber(
-                                          weeklyPrizesGolden[index],
-                                          0
-                                        )}
-                                        {optionText2 === "skale" && (
-                                          <img src={premiumIcon} alt="" />
-                                        )}
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
                                       </td>
                                     </tr>
                                   );
@@ -2178,16 +2232,16 @@ const NewLeaderBoard = ({
                           optionText2 === "skale" ? "blur-leaderboard" : ""
                         } d-flex flex-column gap-2 p-0`}
                       >
-                         <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
+                        <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
                           <h6 className="leaderboard-title  text-white font-oxanium mb-0">
                             MONTHLY
                           </h6>
                           <div className="d-flex flex-column px-2 reset-time-wrapper">
-                          <span className="reset-time-lb">
-                            Reset time
-                          </span>
-                          <span className="reset-time-lb-value">Monthly (00:00 UTC)</span>
-                        </div>
+                            <span className="reset-time-lb">Reset time</span>
+                            <span className="reset-time-lb-value">
+                              Monthly (00:00 UTC)
+                            </span>
+                          </div>
                         </div>
                         <div className="p-2">
                           <table className="playerTable w-100">
@@ -2199,9 +2253,9 @@ const NewLeaderBoard = ({
                                 <th className="playerHeader font-montserrat">
                                   Player
                                 </th>
-                                  <th className="playerHeader text-center font-montserrat">
-                                    Reward
-                                  </th>
+                                <th className="playerHeader text-center font-montserrat">
+                                  Reward
+                                </th>
                               </tr>
                               {genesisData &&
                                 genesisData.length > 0 &&
@@ -2417,7 +2471,8 @@ const NewLeaderBoard = ({
                                     </td>
                                     {optionText !== "genesis" && (
                                       <td className="playerScore col-2 text-center font-montserrat">
-                                        ${getFormattedNumber(
+                                        $
+                                        {getFormattedNumber(
                                           userDataGenesis.statValue,
                                           0
                                         )}
@@ -2440,11 +2495,11 @@ const NewLeaderBoard = ({
                             MONTHLY
                           </h6>
                           <div className="d-flex flex-column px-2 reset-time-wrapper">
-                          <span className="reset-time-lb">
-                            Reset time
-                          </span>
-                          <span className="reset-time-lb-value">Monthly (00:00 UTC)</span>
-                        </div>
+                            <span className="reset-time-lb">Reset time</span>
+                            <span className="reset-time-lb-value">
+                              Monthly (00:00 UTC)
+                            </span>
+                          </div>
                         </div>
                         <div className="p-2">
                           <table className="playerTable w-100">
@@ -2458,16 +2513,12 @@ const NewLeaderBoard = ({
                                 </th>
                                 {optionText !== "genesis" && (
                                   <th className="playerHeader text-center font-montserrat">
-                                    Score
-                                  </th>
-                                )}
-                                {optionText !== "genesis" && (
-                                  <th className="playerHeader text-center font-montserrat">
                                     Reward
                                   </th>
                                 )}
+                         
                                 <th className="playerHeader text-center font-montserrat">
-                                  Golden Pass
+                                  Score
                                 </th>
                               </tr>
                               {monthlyrecords &&
@@ -2515,9 +2566,7 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
-                                      </td>
+                                      
                                       <td
                                         className={`playerReward text-center col-2 font-montserrat ${
                                           username === item.displayName
@@ -2525,25 +2574,31 @@ const NewLeaderBoard = ({
                                             : "playerReward"
                                         }`}
                                       >
-                                        $
-                                        {getFormattedNumber(
-                                          monthlyPrizes[index],
-                                          0
-                                        )}
+                                           <div className="d-flex align-items-center justify-content-start gap-1">
+                                          <img src={upgradeIcon} alt="" />
+                                          <span className="leaderboard-text" style={{color: "#fff"}}>
+                                            $
+                                            {getFormattedNumber(
+                                              monthlyPrizesGolden[index],
+                                              0
+                                            )}
+                                          </span>
+                                          <span
+                                            className="leaderboard-text"
+                                            style={{ color: "gray" }}
+                                          >
+                                            | $
+                                            {getFormattedNumber(
+                                              monthlyPrizesGolden[index],
+                                              0
+                                            )}
+                                          </span>
+                                        </div>
                                       </td>
-                                      <td
-                                        className={`playerReward col-2 font-montserrat ${
-                                          username === item.displayName
-                                            ? "goldenscore"
-                                            : "goldenscore-inactive2"
-                                        }`}
-                                      >
-                                        +$
-                                        {getFormattedNumber(
-                                          monthlyPrizesGolden[index],
-                                          0
-                                        )}
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
                                       </td>
+                                      
                                     </tr>
                                   );
                                 })}
@@ -2788,12 +2843,15 @@ const NewLeaderBoard = ({
                             style={{ cursor: "pointer" }}
                             onClick={nextSlide}
                           />
-                           <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: "8%"}}>
-                          <span className="reset-time-lb">
-                            Reset time
-                          </span>
-                          <span className="reset-time-lb-value">Daily (00:00 UTC)</span>
-                        </div>
+                          <div
+                            className="d-flex flex-column px-2 reset-time-wrapper"
+                            style={{ right: "8%" }}
+                          >
+                            <span className="reset-time-lb">Reset time</span>
+                            <span className="reset-time-lb-value">
+                              Daily (00:00 UTC)
+                            </span>
+                          </div>
                         </div>
                         <table className="playerTable w-100">
                           <tbody>
@@ -3111,7 +3169,7 @@ const NewLeaderBoard = ({
                                 onClick={prevSlide}
                               />
                             )}
-                            
+
                             <h6
                               className="leaderboard-title  text-white font-oxanium mb-0"
                               style={{ width: "fit-content" }}
@@ -3126,12 +3184,17 @@ const NewLeaderBoard = ({
                                 onClick={nextSlide}
                               />
                             )}
-                             <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "skale" ?  "8%" : "0%"}}>
-                          <span className="reset-time-lb">
-                            Reset time
-                          </span>
-                          <span className="reset-time-lb-value">Monday (00:00 UTC)</span>
-                        </div>
+                            <div
+                              className="d-flex flex-column px-2 reset-time-wrapper"
+                              style={{
+                                right: optionText2 !== "skale" ? "8%" : "0%",
+                              }}
+                            >
+                              <span className="reset-time-lb">Reset time</span>
+                              <span className="reset-time-lb-value">
+                                Monday (00:00 UTC)
+                              </span>
+                            </div>
                           </div>
                           <table className="playerTable w-100">
                             <tbody>
@@ -3224,7 +3287,8 @@ const NewLeaderBoard = ({
                                           optionText2 === "skale" &&
                                           "premium-goldenscore"
                                         } col-2 font-montserrat ${
-                                          isPremium && username === item.displayName
+                                          isPremium &&
+                                          username === item.displayName
                                             ? "goldenscore"
                                             : "golden-score-disabled"
                                         }`}
@@ -3235,13 +3299,21 @@ const NewLeaderBoard = ({
                                           prizeSkale[index],
                                           0
                                         )}
-                                        <img src={ (isPremium && username === item.displayName) ? premiumIcon : premiumInactive} alt="" />
+                                        <img
+                                          src={
+                                            isPremium &&
+                                            username === item.displayName
+                                              ? premiumIcon
+                                              : premiumInactive
+                                          }
+                                          alt=""
+                                        />
                                       </td>
                                     </tr>
                                   );
                                 })}
 
-{skalePreviousRecords &&
+                              {skalePreviousRecords &&
                                 inactiveBoard === true &&
                                 skalePreviousRecords.length > 0 &&
                                 skalePreviousRecords.map((item, index) => {
@@ -3307,7 +3379,8 @@ const NewLeaderBoard = ({
                                           optionText2 === "skale" &&
                                           "premium-goldenscore"
                                         } col-2 font-montserrat ${
-                                          isPremium && username === item.displayName
+                                          isPremium &&
+                                          username === item.displayName
                                             ? "goldenscore"
                                             : "golden-score-disabled"
                                         }`}
@@ -3318,7 +3391,15 @@ const NewLeaderBoard = ({
                                           prizeSkale[index],
                                           0
                                         )}
-                                      <img src={ (isPremium && username === item.displayName) ? premiumIcon : premiumInactive} alt="" />
+                                        <img
+                                          src={
+                                            isPremium &&
+                                            username === item.displayName
+                                              ? premiumIcon
+                                              : premiumInactive
+                                          }
+                                          alt=""
+                                        />
                                       </td>
                                     </tr>
                                   );
@@ -3398,7 +3479,8 @@ const NewLeaderBoard = ({
                                     )}
                                     <td
                                       className={`playerReward text-center font-montserrat ${
-                                        (isPremium && username === userDataSkale.displayName)
+                                        isPremium &&
+                                        username === userDataSkale.displayName
                                           ? "goldenscore"
                                           : "playerReward"
                                       } col-2 ${
@@ -3417,7 +3499,8 @@ const NewLeaderBoard = ({
                                     {optionText !== "genesis" && (
                                       <td
                                         className={`playerScore col-2 font-montserrat d-flex align-items-center justify-content-center w-100 gap-2 ${
-                                          (isPremium && username === userDataSkale.displayName)
+                                          isPremium &&
+                                          username === userDataSkale.displayName
                                             ? "goldenscore"
                                             : "golden-score-disabled"
                                         }`}
@@ -3426,7 +3509,9 @@ const NewLeaderBoard = ({
                                         {optionText2 === "skale" && (
                                           <img
                                             src={
-                                              (isPremium && username === userDataSkale.displayName)
+                                              isPremium &&
+                                              username ===
+                                                userDataSkale.displayName
                                                 ? premiumIcon
                                                 : premiumInactive
                                             }
@@ -3471,12 +3556,17 @@ const NewLeaderBoard = ({
                                 onClick={nextSlide}
                               />
                             )}
-                              <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "skale" ?  "8%" : "0%"}}>
-                          <span className="reset-time-lb">
-                            Reset time
-                          </span>
-                          <span className="reset-time-lb-value">Monday (00:00 UTC)</span>
-                        </div>
+                            <div
+                              className="d-flex flex-column px-2 reset-time-wrapper"
+                              style={{
+                                right: optionText2 !== "skale" ? "8%" : "0%",
+                              }}
+                            >
+                              <span className="reset-time-lb">Reset time</span>
+                              <span className="reset-time-lb-value">
+                                Monday (00:00 UTC)
+                              </span>
+                            </div>
                           </div>
                           <table className="playerTable w-100">
                             <tbody>
@@ -3843,12 +3933,17 @@ const NewLeaderBoard = ({
                                 onClick={nextSlide}
                               />
                             )}
-                              <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "wod" ?  "5%" : "0%"}}>
-                          <span className="reset-time-lb">
-                            Reset time
-                          </span>
-                          <span className="reset-time-lb-value">Monthly (00:00 UTC)</span>
-                        </div>
+                            <div
+                              className="d-flex flex-column px-2 reset-time-wrapper"
+                              style={{
+                                right: optionText2 !== "wod" ? "5%" : "0%",
+                              }}
+                            >
+                              <span className="reset-time-lb">Reset time</span>
+                              <span className="reset-time-lb-value">
+                                Monthly (00:00 UTC)
+                              </span>
+                            </div>
                           </div>
                           <table className="playerTable w-100">
                             <tbody>
@@ -4079,7 +4174,8 @@ const NewLeaderBoard = ({
                                     </td>
                                     {optionText !== "genesis" && (
                                       <td className="playerScore col-2 text-center font-montserrat">
-                                        ${getFormattedNumber(
+                                        $
+                                        {getFormattedNumber(
                                           userDataGenesis.statValue,
                                           0
                                         )}
@@ -4118,12 +4214,17 @@ const NewLeaderBoard = ({
                                 onClick={nextSlide}
                               />
                             )}
-                              <div className="d-flex flex-column px-2 reset-time-wrapper" style={{right: optionText2 !== "wod" ?  "5%" : "0%"}}>
-                          <span className="reset-time-lb">
-                            Reset time
-                          </span>
-                          <span className="reset-time-lb-value">Monthly (00:00 UTC)</span>
-                        </div>
+                            <div
+                              className="d-flex flex-column px-2 reset-time-wrapper"
+                              style={{
+                                right: optionText2 !== "wod" ? "5%" : "0%",
+                              }}
+                            >
+                              <span className="reset-time-lb">Reset time</span>
+                              <span className="reset-time-lb-value">
+                                Monthly (00:00 UTC)
+                              </span>
+                            </div>
                           </div>
                           <table className="playerTable w-100">
                             <tbody>
