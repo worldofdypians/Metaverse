@@ -1,55 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import price1 from "./assets/price1.svg";
-import price2 from "./assets/price2.svg";
-import price3 from "./assets/price3.svg";
-import { CircularProgress } from "@mui/material";
 import playerAvatar from "./assets/userAvatar2.png";
 import premiumAvatar from "./assets/premiumAvatar.png";
-import premiumStar from "./assets/premiumStar.png";
-// import axios from "axios";
-// import Switch from "@mui/material/Switch";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-// import "./_leaderboard.scss";
-// import ComingSoon from "./ComingSoon";
 import cawsBadge from "./assets/cawsBadge2.png";
 import genesisBadge from "./assets/genesisBadge2.png";
-// import OutsideClickHandler from "react-outside-click-handler";
 import tooltipIcon from "./assets/tooltip.svg";
-import skaleIcon from "./assets/skaleIcon.png";
-import skaleIconGray from "./assets/skaleIconGray.svg";
-// import wodIcon from "./assets/wodIcon.png";
-// import bnbIcon from "./assets/bnbIcon.svg";
-// import coreIcon from "./assets/coreIcon.svg";
-import bnbActive from "./assets/bnbActive.svg";
-import bnbInactive from "./assets/bnbInactive.svg";
-import skaleActive from "./assets/skaleActive.svg";
-import skaleInactive from "./assets/skaleInactive.svg";
-import wodActive from "./assets/wodActive.svg";
-import wodInactive from "./assets/wodInactive.svg";
-import leftArrow from "./assets/leftArrow.svg";
-import rightArrow from "./assets/rightArrow.svg";
 import star from "./assets/star.svg";
-import premiumIcon from "./assets/premiumIcon.png";
-
-// import React, { useState, useEffect } from "react";
-// import price1 from "../../Images/userProfile/price1.svg";
-// import price2 from "../../Images/userProfile/price2.svg";
-// import price3 from "../../Images/userProfile/price3.svg";
-// import { CircularProgress } from "@mui/material";
-// import playerAvatar from "../../Images/userProfile/userAvatar2.png";
-// import premiumAvatar from "../../Images/userProfile/premiumAvatar.png";
-// import premiumStar from "../../Images/userProfile/premiumStar.png";
 import axios from "axios";
 import Switch from "@mui/material/Switch";
-// import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import "./_leaderboard.scss";
-import ComingSoon from "./ComingSoon";
-// import tooltipIcon from "./tooltipIcon.svg";
 import OutsideClickHandler from "react-outside-click-handler";
-// import { dyp700_abi } from "../../web3";
 import Countdown from "react-countdown";
-import Slider from "react-slick";
 import useWindowSize from "../../hooks/useWindowSize";
+import globalIcon from './assets/globalRanks/globalIcon.png'
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -73,61 +36,6 @@ const renderer = ({ hours, minutes, seconds }) => {
 };
 
 const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
-  var settings = {
-    dots: false,
-    arrows: false,
-    dotsClass: "button__bar",
-    infinite: true,
-    speed: 1000,
-    autoplay: true,
-    autoplaySpeed: 5000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    responsive: [
-      {
-        breakpoint: 1600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1500,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1400,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1050,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-    ],
-  };
-
   const playerData = [
     {
       position: "1",
@@ -203,8 +111,7 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
   ];
   const [tooltip, setTooltip] = useState(false);
   const sliderRef = useRef(null);
-  const windowSize = useWindowSize();
-
+  const label = { inputProps: { "aria-label": "Switch demo" } };
   const placeholderplayerData = [
     {
       position: 0,
@@ -405,51 +312,25 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
   ];
 
   const dummyPrizes = [
-    "250",
-    "150",
-    "100",
-    "50",
-    "50",
-    "20",
-    "20",
+    "1000",
+    "500",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
     "10",
     "10",
     "10",
   ];
 
-  const [optionText, setOptionText] = useState("daily");
   const [optionText2, setOptionText2] = useState("bnb");
-
-  const [dailyrecords, setRecords] = useState([]);
-  const [weeklyrecords, setWeeklyRecords] = useState([]);
-  const [monthlyrecords, setMonthlyRecords] = useState([]);
-
-  const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
-  const [prizes, setPrizes] = useState(dailyPrizes);
-  const [activePlayer, setActivePlayer] = useState(false);
-  const [userData, setUserData] = useState({});
   const [inactiveBoard, setInactiveBoard] = useState(false);
-  const [dailyplayerData, setdailyplayerData] = useState([]);
-  const [weeklyplayerData, setweeklyplayerData] = useState([]);
-  const [monthlyplayerData, setmonthlyplayerData] = useState([]);
-  const [skaleRecords, setskaleRecords] = useState([]);
-  const [skalePreviousRecords, setskalePreviousRecords] = useState([]);
-  const [skalepreviousVersion, setskalepreviousVersion] = useState(0);
-  const [skaleMonthlyData, setSkaleMonthlyData] = useState([]);
-  const [skalePreviousMonthlyData, setSkalePreviousMonthlyData] = useState([]);
-  const [skalePreviousVersionMontly, setSkalePreviousVersionMontly] =
-    useState(0);
-
-  const [previousVersion, setpreviousVersion] = useState(0);
-  const [previousWeeklyVersion, setpreviousWeeklyVersion] = useState(0);
-  const [previousMonthlyVersion, setpreviousMonthlyVersion] = useState(0);
   const [genesisData, setgenesisData] = useState([]);
   const [previousgenesisData, setpreviousgenesisData] = useState([]);
-
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
   const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
-  const [globalTooltip, setGlobalTooltip] = useState(false);
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
@@ -474,86 +355,6 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     }
   };
 
-  const nextSlide = () => {
-    sliderRef.current.slickNext();
-  };
-  const prevSlide = () => {
-    sliderRef.current.slickPrev();
-  };
-
-  const fetchDailyRecords = async () => {
-    const data = {
-      StatisticName: "DailyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-    };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-    setpreviousVersion(parseInt(result.data.data.version));
-    setRecords(result.data.data.leaderboard);
-    fillRecords(result.data.data.leaderboard);
-  };
-
-  const fetchWeeklyRecords = async () => {
-    const data = {
-      StatisticName: "WeeklyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-    };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-    setWeeklyRecords(result.data.data.leaderboard);
-    setpreviousWeeklyVersion(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    fillRecords(result.data.data.leaderboard);
-  };
-
-  const fetchMonthlyRecords = async () => {
-    const data = {
-      StatisticName: "MonthlyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-    };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-    setMonthlyRecords(result.data.data.leaderboard);
-    setpreviousMonthlyVersion(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayer(true);
-    }
-    fillRecords(result.data.data.leaderboard);
-  };
-  const label = { inputProps: { "aria-label": "Switch demo" } };
-
-  const handleOption = (item) => {
-    setOptionText2(item);
-    if (item === "bnb" && inactiveBoard === false) {
-      setPrizes(dummyPrizes);
-    } else if (item === "bnb" && inactiveBoard === true) {
-      setPrizes(dummyPrizes);
-    } else if (item === "skale" && inactiveBoard === false) {
-      setPrizes(dummyPrizes);
-    } else if (item === "skale" && inactiveBoard === true) {
-      setPrizes(dummyPrizes);
-    } else if (item === "wod" && inactiveBoard === false) {
-      setPrizes(dummyPrizes);
-    } else if (item === "wod" && inactiveBoard === true) {
-      setPrizes(dummyPrizes);
-    }
-  };
-  const fillRecords = (itemData) => {
-    if (itemData.length === 0) {
-      setRecords(placeholderplayerData);
-    } else if (itemData.length < 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setRecords(finalData);
-    }
-  };
-
   const fillRecordsGenesis = (itemData) => {
     if (itemData.length === 0) {
       setgenesisData(placeholderplayerData);
@@ -562,127 +363,6 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
       const finalData = [...testArray, ...placeholderArray];
       setgenesisData(finalData);
-    }
-  };
-
-  const fillRecordsSkale = (itemData) => {
-    if (itemData.length === 0) {
-      setskaleRecords(placeholderplayerData);
-    } else if (itemData.length < 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setskaleRecords(finalData);
-    }
-  };
-
-  const fillPreviousRecordsSkale = (itemData) => {
-    if (itemData.length === 0) {
-      setskalePreviousRecords(placeholderplayerData);
-    } else if (itemData.length < 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setskalePreviousRecords(finalData);
-    }
-  };
-  const fillRecordsSkaleMonthly = (itemData) => {
-    if (itemData.length === 0) {
-      setSkaleMonthlyData(placeholderplayerData);
-    } else if (itemData.length < 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setSkaleMonthlyData(finalData);
-    }
-  };
-
-  const fillPreviousRecordsSkaleMonthly = (itemData) => {
-    if (itemData.length === 0) {
-      setSkalePreviousMonthlyData(placeholderplayerData);
-    } else if (itemData.length < 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setSkalePreviousMonthlyData(finalData);
-    }
-  };
-
-  const fetchSkaleRecords = async () => {
-    const data = {
-      StatisticName: "LeaderboardSkaleWeekly",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-    };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-    setskalepreviousVersion(result.data.data.version);
-
-    setskaleRecords(result.data.data.leaderboard);
-    fillRecordsSkale(result.data.data.leaderboard);
-  };
-
-  const fetchPreviousSkaleRecords = async () => {
-    if (skalepreviousVersion != 0) {
-      const data = {
-        StatisticName: "LeaderboardSkaleWeekly",
-        StartPosition: 0,
-        MaxResultsCount: 10,
-        Version: skalepreviousVersion - 1,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard`,
-        data
-      );
-      // setpreviousVersion(parseInt(result.data.data.version));
-      setskalePreviousRecords(result.data.data.leaderboard);
-      fillPreviousRecordsSkale(result.data.data.leaderboard);
-    }
-  };
-  const fetchSkaleRecordsMonthly = async () => {
-    const data = {
-      StatisticName: "LeaderboardSkaleMonthly",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-    };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-    setskalepreviousVersion(result.data.data.version);
-
-    setSkaleMonthlyData(result.data.data.leaderboard);
-    fillRecordsSkaleMonthly(result.data.data.leaderboard);
-  };
-
-  const fetchPreviousSkaleRecordsMonthly = async () => {
-    if (skalepreviousVersion != 0) {
-      const data = {
-        StatisticName: "LeaderboardSkaleMonthly",
-        StartPosition: 0,
-        MaxResultsCount: 10,
-        Version: skalepreviousVersion - 1,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard`,
-        data
-      );
-      // setpreviousVersion(parseInt(result.data.data.version));
-      setSkalePreviousMonthlyData(result.data.data.leaderboard);
-      fillPreviousRecordsSkaleMonthly(result.data.data.leaderboard);
-    }
-  };
-
-  const fetchPreviousWinners = async () => {
-    if (previousVersion != 0) {
-      const data = {
-        StatisticName: "DailyLeaderboard",
-        StartPosition: 0,
-        MaxResultsCount: 10,
-        Version: previousVersion - 1,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
-      );
-
-      setdailyplayerData(result.data.data.leaderboard);
     }
   };
 
@@ -704,62 +384,13 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     }
   };
 
-  const fetchPreviousWeeklyWinners = async () => {
-    if (previousWeeklyVersion != 0) {
-      const data = {
-        StatisticName: "WeeklyLeaderboard",
-        StartPosition: 0,
-        MaxResultsCount: 10,
-        Version: previousWeeklyVersion - 1,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
-      );
-
-      setweeklyplayerData(result.data.data.leaderboard);
-    }
-  };
-
-  const fetchPreviousMonthlyWinners = async () => {
-    if (previousMonthlyVersion != 0) {
-      const data = {
-        StatisticName: "MonthlyLeaderboard",
-        StartPosition: 0,
-        MaxResultsCount: 10,
-        Version: previousMonthlyVersion - 1,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
-      );
-
-      setmonthlyplayerData(result.data.data.leaderboard);
-    }
-  };
-
   useEffect(() => {
-    fetchDailyRecords();
-    fetchWeeklyRecords();
-    fetchMonthlyRecords();
     fetchGenesisRecords();
-    fetchSkaleRecords();
-    fetchSkaleRecordsMonthly();
   }, []);
 
   useEffect(() => {
     fetchGenesisPreviousWinners();
-    fetchPreviousWinners();
-    fetchPreviousWeeklyWinners();
-    fetchPreviousMonthlyWinners();
-    fetchPreviousSkaleRecords();
-    fetchPreviousSkaleRecordsMonthly();
-  }, [
-    previousGenesisVersion,
-    previousMonthlyVersion,
-    previousVersion,
-    previousWeeklyVersion,
-  ]);
+  }, [previousGenesisVersion]);
 
   // useEffect(() => {
   //   handleOption(optionText);
@@ -816,7 +447,7 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
           }}
         />
       )}
-      <h2
+      {/* <h2
         className={`font-organetto d-flex gap-1 align-items-center  leaderboardTitle justify-content-between`}
       >
         Leaderboard
@@ -857,140 +488,124 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
             </div>
           </div>
         </OutsideClickHandler>
-      </h2>
-      <div className="grandPrices-wrapper position-relative"></div>
-        <div className="leaderboard-item d-flex flex-column gap-2 w-100 p-0">
-          <div
-            className={`d-flex w-100 position-relative  
-                   justify-content-center p-2
-               leaderboard-title-wrapper p-2`}
-          >
-            <h6 className="leaderboard-title  text-white font-oxanium mb-0">
-              GLOBAL LEADERBOARD
-            </h6>
-            <div className="d-flex flex-column px-2 reset-time-wrapper">
-              <span className="reset-time-lb">Reset time</span>
-              <span className="reset-time-lb-value">Monthly (00:00 UTC)</span>
-            </div>
-          </div>
-          <div className="p-2">
-            <table className="playerTable w-100">
-              <tbody>
-                <tr className="playerRow">
-                  <th className="playerHeader font-montserrat">Rank</th>
-                  <th className="playerHeader font-montserrat">Player</th>
-
-                  <th className="playerHeader text-center font-montserrat">
-                    Reward
-                  </th>
-                </tr>
-                {genesisData &&
-                  genesisData.length > 0 &&
-                  inactiveBoard === false &&
-                  genesisData.map((item, index) => {
-                    return (
-                      <tr
-                        key={index}
-                        className={`playerInnerRow ${
-                          inactiveBoard || item.displayName === username
-                            ? "playerInnerRow-inactive"
-                            : null
-                        }`}
-                      >
-                        <td className="playerData col-1 font-montserrat">
-                          {item.position + 1}
-                        </td>
-                        <td className="playerName col-5 font-montserrat">
-                          {item.displayName === username ? (
-                            <div className="position-relative d-flex align-items-center">
-                              <img
-                                src={premiumAvatar}
-                                alt=""
-                                className="playerAvatar"
-                              />
-                              <span>
-                                {" "}
-                                {item.displayName?.slice(0, 13)}
-                                {item.displayName?.length > 13 && "..."}
-                              </span>
-                            </div>
-                          ) : (
-                            <div className="position-relative d-flex align-items-center">
-                              <img
-                                src={playerAvatar}
-                                alt=""
-                                className="playerAvatar"
-                              />{" "}
-                              {item.displayName?.slice(0, 13)}
-                              {item.displayName?.length > 13 && "..."}
-                            </div>
-                          )}
-                        </td>
-                        <td className="playerScore col-2 text-center font-montserrat">
-                        <div className="d-flex align-items-center justify-content-center gap-2">
-                            <img src={star} alt="" />
-                            {getFormattedNumber(item.statValue, 0)}
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-
-                {previousgenesisData &&
-                  inactiveBoard === true &&
-                  previousgenesisData.length > 0 &&
-                  previousgenesisData.map((item, index) => {
-                    return (
-                      <tr
-                        key={index}
-                        className={`playerInnerRow ${
-                          inactiveBoard || item.displayName === username
-                            ? "playerInnerRow-inactive"
-                            : null
-                        }`}
-                      >
-                        <td className="playerData col-1 font-montserrat">
-                          {item.position + 1}
-                        </td>
-                        <td className="playerName col-5 font-montserrat">
-                          {item.displayName === username ? (
-                            <div className="position-relative d-flex align-items-center">
-                              <img
-                                src={premiumAvatar}
-                                alt=""
-                                className="playerAvatar"
-                              />
-                              <span>
-                                {" "}
-                                {item.displayName?.slice(0, 13)}
-                                {item.displayName?.length > 13 && "..."}
-                              </span>
-                            </div>
-                          ) : (
-                            <div className="position-relative d-flex align-items-center">
-                              <img
-                                src={playerAvatar}
-                                alt=""
-                                className="playerAvatar"
-                              />{" "}
-                              {item.displayName?.slice(0, 13)}
-                              {item.displayName?.length > 13 && "..."}
-                            </div>
-                          )}
-                        </td>
-                        <td className="playerScore col-2 text-center font-montserrat">
-                          <div className="d-flex align-items-center justify-content-center gap-2">
-                            <img src={star} alt="" />
-                            {getFormattedNumber(item.statValue, 0)}
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
-          </div>
+      </h2> */}
+      {/* <div className="grandPrices-wrapper position-relative"></div> */}
+      <div className="leaderboard-item d-flex flex-column gap-2 w-100 p-0">
+      <div className="global-leaderboard-banner d-flex align-items-center w-100 p-3 gap-3">
+        <img src={globalIcon} alt="" />
+        <div className="d-flex flex-column">
+          <h6 className="global-leaderboard-title mb-0">
+            CHALLENGER
+          </h6>
+          <h6 className="global-leaderboard-title" style={{color: "#F4E27B"}}>
+            GLOBAL RANK
+          </h6>
         </div>
+      </div>
+        <div className="p-2">
+          <table className="playerTable w-100">
+            <tbody>
+              <tr className="playerRow">
+                <th className="playerHeader font-montserrat">Rank</th>
+                <th className="playerHeader font-montserrat">Player</th>
+                <th className="playerHeader text-center font-montserrat">
+                  Collected Stars
+                </th>
+                <th className="playerHeader text-center font-montserrat">
+                  Reward
+                </th>
+              </tr>
+              {genesisData &&
+                genesisData.length > 0 &&
+                inactiveBoard === false &&
+                genesisData.map((item, index) => {
+                  return (
+                    <tr
+                      key={index}
+                      className={`playerInnerRow ${
+                        inactiveBoard || item.displayName === username
+                          ? "playerInnerRow-inactive"
+                          : null
+                      }`}
+                    >
+                      <td className="playerData col-1 font-montserrat">
+                        {item.position + 1}
+                      </td>
+                      <td className="playerName col-5 font-montserrat">
+                        <div className="position-relative d-flex align-items-center">
+                          <img
+                            src={require(`./assets/globalRanks/globalRank${
+                              item.position + 1
+                            }.png`)}
+                            alt=""
+                            className="playerAvatar me-2"
+                          />
+                          <span>
+                            {" "}
+                            {item.displayName?.slice(0, 13)}
+                            {item.displayName?.length > 13 && "..."}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="playerScore col-2 text-center font-montserrat">
+                        <div className="d-flex align-items-center justify-content-center gap-2">
+                          <img src={star} alt="" />
+                          {getFormattedNumber(item.statValue, 0)}
+                        </div>
+                      </td>
+                      <td className="playerScore col-2 text-center font-montserrat" style={{color: "#09F3D2"}}>
+                          ${getFormattedNumber(dummyPrizes[item.position], 0)}
+                      </td>
+                    </tr>
+                  );
+                })}
+
+              {previousgenesisData &&
+                inactiveBoard === true &&
+                previousgenesisData.length > 0 &&
+                previousgenesisData.map((item, index) => {
+                  return (
+                    <tr
+                      key={index}
+                      className={`playerInnerRow ${
+                        inactiveBoard || item.displayName === username
+                          ? "playerInnerRow-inactive"
+                          : null
+                      }`}
+                    >
+                      <td className="playerData col-1 font-montserrat">
+                        {item.position + 1}
+                      </td>
+                      <td className="playerName col-5 font-montserrat">
+                        <img
+                          src={require(`./assets/globalRanks/globalRank${
+                            item.position + 1
+                          }.png`)}
+                          alt=""
+                          className="playerAvatar me-2"
+                        />
+                        <span>
+                          {" "}
+                          {item.displayName?.slice(0, 13)}
+                          {item.displayName?.length > 13 && "..."}
+                        </span>
+                      </td>
+                      <td className="playerScore col-2 text-center font-montserrat">
+                        <div className="d-flex align-items-center justify-content-center gap-2">
+                          <img src={star} alt="" />
+                          {getFormattedNumber(item.statValue, 0)}
+                        </div>
+                      </td>
+                      <td className="playerScore col-2 text-center font-montserrat" style={{color: "#09F3D2"}}>
+                          ${getFormattedNumber(dummyPrizes[item.position], 0)}
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       <div className="optionsWrapper p-2">
         <div className="d-flex flex-column">

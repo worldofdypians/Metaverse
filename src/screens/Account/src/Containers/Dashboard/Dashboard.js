@@ -52,6 +52,7 @@ import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.
 import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import { dyp700Address, dyp700v1Address } from "../../web3";
+import { NavLink } from "react-router-dom";
 
 
 function Dashboard({
@@ -3236,20 +3237,23 @@ function Dashboard({
                             </h2>
                             {windowSize.width > 786 &&
                               <div className="d-flex align-items-center gap-2">
-                              <div className="buy-premium-tag  px-4 py-1 d-flex flex-column justify-content-center align-items-center position-relative">
+                              <div className="buy-premium-tag  px-4 py-1 d-flex flex-column justify-content-center align-items-center position-relative" onClick={() => {
+                                setLeaderboard(false);
+                                setgetPremiumPopup(true);
+                              }}>
                                 <span>Premium Subscriber</span>
                                 <h6>x2</h6>
                                 <div className="activate-premium-btn px-3 d-flex align-items-center justify-content-center">
                                     Activate
                                 </div>
                               </div>
-                              <div className="buy-golden-tag  px-4 py-1 d-flex flex-column justify-content-center align-items-center position-relative">
+                              <NavLink to={'/marketplace/events/golden-pass'} className="buy-golden-tag  px-4 py-1 d-flex flex-column justify-content-center align-items-center position-relative">
                                 <span>Golden Pass - Double</span>
                                 <h6>Double Rewards</h6>
                                 <div className="activate-golden-btn px-3 d-flex align-items-center justify-content-center">
                                     Activate
                                 </div>
-                              </div>
+                              </NavLink>
                             </div>
                             }
                             <img
@@ -3261,20 +3265,25 @@ function Dashboard({
                           </div>
                           {windowSize.width < 786 &&
                               <div className="d-flex align-items-center gap-2">
-                              <div className="buy-premium-tag px-4 py-1 d-flex flex-column align-items-center justify-content-center position-relative">
+                              <div className="buy-premium-tag px-4 py-1 d-flex flex-column align-items-center justify-content-center position-relative"
+                              onClick={() => {
+                                setLeaderboard(false);
+                                setgetPremiumPopup(true);
+                              }}
+                              >
                                 <span>Premium Subscriber</span>
                                 <h6>x2</h6>
                                 <div className="activate-premium-btn px-3 d-flex align-items-center justify-content-center">
                                     Activate
                                 </div>
                               </div>
-                              <div className="buy-golden-tag px-4 py-1 d-flex flex-column align-items-center justify-content-center position-relative">
+                              <NavLink  to={'/marketplace/events/golden-pass'} className="buy-golden-tag px-4 py-1 d-flex flex-column align-items-center justify-content-center position-relative">
                                 <span>Golden Pass - Double</span>
                                 <h6>Double Rewards</h6>
                                 <div className="activate-golden-btn px-3 d-flex align-items-center justify-content-center">
                                     Activate
                                 </div>
-                              </div>
+                              </NavLink>
                             </div>
                             }
                           <NewLeaderBoard
