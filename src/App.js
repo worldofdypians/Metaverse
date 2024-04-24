@@ -158,15 +158,12 @@ function App() {
   const [count44, setCount44] = useState(0);
   const [count55, setCount55] = useState(0);
 
-
-
   const [myCAWstakes, setCAWMystakes] = useState([]);
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myConfluxNFTsCreated, setmyConfluxNFTsCreated] = useState([]);
 
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
   const [myskaleNFTsCreated, setmyskaleNFTsCreated] = useState([]);
-
 
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
@@ -566,18 +563,21 @@ function App() {
   const handleConnectWallet = async () => {
     try {
       if (!window.gatewallet) {
-        localStorage.setItem("logout", "false");
-        await window.connectWallet().then((data) => {
-          setIsConnected(data);
-        });
+        if (window.ethereum) {
+          localStorage.setItem("logout", "false");
+          await window.connectWallet().then((data) => {
+            setIsConnected(data);
+          });
 
-        await window.getCoinbase().then((data) => {
-          setCoinbase(data);
-        });
-        setwalletModal(false);
-        setShowForms2(true);
-        setSuccess(true);
-        checkConnection();
+          await window.getCoinbase().then((data) => {
+            setCoinbase(data);
+          });
+          setwalletModal(false);
+          setShowForms2(true);
+          setSuccess(true);
+          checkConnection();
+        } else
+          window.alertify.error("No web3 detected. Please install Metamask!");
       } else {
         await connectWallet(ConnectionType.INJECTED);
         setCoinbase(account);
@@ -1391,7 +1391,7 @@ function App() {
     getListedNFTS(0)
       .then((data) => {
         setListedNFTS2(data);
-        setCount33(count33+1)
+        setCount33(count33 + 1);
       })
       .catch((e) => {
         console.log(e);
@@ -1400,7 +1400,7 @@ function App() {
     getListedNFTS(0, "", "recentListedNFTS")
       .then((data) => {
         setrecentListedNFTS2(data);
-        setCount44(count44+1)
+        setCount44(count44 + 1);
       })
       .catch((e) => {
         console.log(e);
@@ -1794,7 +1794,6 @@ function App() {
   };
 
   const refreshSubscription = async (addr) => {
-
     let subscribedPlatformTokenAmountETH;
     let subscribedPlatformTokenAmountCfx;
     let subscribedPlatformTokenAmountBNB;
@@ -1842,10 +1841,8 @@ function App() {
     );
 
     if (addr) {
+      const result = window.checkPremium(addr);
 
-    const result = window.checkPremium(addr);
-
-    
       subscribedPlatformTokenAmountETH = await ethcontract.methods
         .subscriptionPlatformTokenAmount(addr)
         .call()
@@ -2173,7 +2170,7 @@ function App() {
 
       const amount = skaleWeb3.utils.fromWei(stringBalance, "ether");
       const formatted_amount = Number(amount);
-    
+
       if (formatted_amount <= 0.000005) {
         handleSkaleRefill(coinbase);
       } else {
@@ -2210,7 +2207,7 @@ function App() {
   useEffect(() => {
     getAllData();
     fetchDogeCoinPrice();
-    refreshSubscription(coinbase)
+    refreshSubscription(coinbase);
   }, [coinbase, count55]);
 
   useEffect(() => {
@@ -2277,7 +2274,7 @@ function App() {
       return () => clearInterval(interval);
     }, 300000);
   }, [count2]);
- 
+
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -2673,7 +2670,6 @@ function App() {
                   totalCmcNft={totalCmcNft}
                   totalSkaleNft={totalSkaleNft}
                   mySkaleNfts={myskaleNFTsCreated}
-
                 />
               }
             />
@@ -3031,7 +3027,9 @@ function App() {
                   coinbase={coinbase}
                   isPremium={isPremium}
                   handleSwitchNetwork={handleSwitchNetwork}
-                  onSuccessDeposit={()=>{setCount55(count55+1)}}
+                  onSuccessDeposit={() => {
+                    setCount55(count55 + 1);
+                  }}
                 />
               }
             />
@@ -3040,33 +3038,31 @@ function App() {
               path="/marketplace/mint/:id"
               element={
                 <MarketMint
-                coinbase={coinbase}
-                showWalletConnect={() => {
-                  setwalletModal(true);
-                }}
-                cawsArray={allCawsForTimepieceMint}
-                mintloading={mintloading}
-                isConnected={isConnected}
-                chainId={chainId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                timepieceMetadata={timepieceMetadata}
-                myConfluxNFTsCreated={myConfluxNFTsCreated}
-                mybaseNFTsCreated={mybaseNFTsCreated}
-                myskaleNFTsCreated={myskaleNFTsCreated}
-                handleConfluxMint={handleConfluxNftMint}
-                handleBaseNftMint={handleBaseNftMint}
-                confluxMintAllowed={confluxMintAllowed}
-                baseMintAllowed={baseMintAllowed}
-                skaleMintAllowed={skaleMintAllowed}
+                  coinbase={coinbase}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  timepieceMetadata={timepieceMetadata}
+                  myConfluxNFTsCreated={myConfluxNFTsCreated}
+                  mybaseNFTsCreated={mybaseNFTsCreated}
+                  myskaleNFTsCreated={myskaleNFTsCreated}
+                  handleConfluxMint={handleConfluxNftMint}
+                  handleBaseNftMint={handleBaseNftMint}
+                  confluxMintAllowed={confluxMintAllowed}
+                  baseMintAllowed={baseMintAllowed}
+                  skaleMintAllowed={skaleMintAllowed}
                 />
               }
             />
- 
-
           </Routes>
           {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
           <ScrollTop />
@@ -3083,7 +3079,8 @@ function App() {
         </div>
 
         {!location.pathname.includes("account") &&
-          !location.pathname.includes("auth") && !location.pathname.includes("explorer") && <ChestFlyout />}
+          !location.pathname.includes("auth") &&
+          !location.pathname.includes("explorer") && <ChestFlyout />}
         {domainPopup && (
           <DomainModal
             onClose={() => setDomainPopup(false)}

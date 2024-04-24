@@ -275,7 +275,7 @@ const [skalePoints, setSkalePoints] = useState(0);
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "30,000",
+        maxPoints: "50,000",
         learnMore:
           "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
         eventDate: "Apr 15, 2024",

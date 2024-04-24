@@ -3924,7 +3924,7 @@ window.buyNFT = async (
   const gasPrice = await window.web3.eth.getGasPrice();
   console.log("gasPrice", gasPrice);
   const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
-  const increasedGwei = parseInt(currentGwei) + 3;
+  const increasedGwei = parseInt(currentGwei) + 1.5;
   console.log("increasedGwei", increasedGwei);
 
   const transactionParameters = {
@@ -3978,7 +3978,7 @@ window.buyNFT2 = async (
   const gasPrice = await window.web3.eth.getGasPrice();
   console.log("gasPrice", gasPrice);
   const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
-  const increasedGwei = parseInt(currentGwei) + 3;
+  const increasedGwei = parseInt(currentGwei) + 1.5;
   console.log("increasedGwei", increasedGwei);
 
   const transactionParameters = {
@@ -4306,7 +4306,7 @@ window.listNFT = async (token, price, priceType, type = "", tokenType) => {
 
   const gasPrice = await window.web3.eth.getGasPrice();
   const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
-  const increasedGwei = parseInt(currentGwei) + 3;
+  const increasedGwei = parseInt(currentGwei) + 1.5;
 
   const transactionParameters = {
     gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
@@ -4406,7 +4406,7 @@ window.makeOffer = async (nftAddress, tokenId, price, priceType, tokenType) => {
 
   const gasPrice = await window.web3.eth.getGasPrice();
   const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
-  const increasedGwei = parseInt(currentGwei) + 3;
+  const increasedGwei = parseInt(currentGwei) + 1.5;
 
   const transactionParameters = {
     gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
@@ -4446,7 +4446,7 @@ window.cancelOffer = async (nftAddress, tokenId, offerIndex) => {
 
   const gasPrice = await window.web3.eth.getGasPrice();
   const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
-  const increasedGwei = parseInt(currentGwei) + 3;
+  const increasedGwei = parseInt(currentGwei) + 1.5;
 
   const transactionParameters = {
     gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
@@ -4528,7 +4528,7 @@ window.updateOffer = async (
 
   const gasPrice = await window.web3.eth.getGasPrice();
   const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
-  const increasedGwei = parseInt(currentGwei) + 3;
+  const increasedGwei = parseInt(currentGwei) + 1.5;
 
   const transactionParameters = {
     gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
@@ -4611,7 +4611,7 @@ window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
 
   const gasPrice = await window.web3.eth.getGasPrice();
   const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
-  const increasedGwei = parseInt(currentGwei) + 3;
+  const increasedGwei = parseInt(currentGwei) + 1.5;
 
   const transactionParameters = {
     gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
