@@ -432,7 +432,7 @@
 
 .optionswrapper-bg {
   position: absolute;
-  width: 33%;
+  width: 25%;
   height: 100%;
   border-radius: 12px;
   border: 1px solid #f4e07b;
@@ -460,15 +460,15 @@
 }
 
 .move-1 {
-  transform: translateX(101.5%);
+  transform: translateX(100%);
 }
 
 .move-2 {
-  transform: translateX(203%);
+  transform: translateX(200%);
 }
 
 .move-3 {
-  transform: translateX(100%);
+  transform: translateX(300%);
 }
 .leaderboard-icon {
   transition: all 0.25s;

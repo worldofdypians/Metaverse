@@ -272,150 +272,90 @@ const NewLeaderBoard = ({
     ],
   };
 
-  const dailyPrizes = ["10", "8", "5", "5", "0", "0", "0", "0", "0", "0"];
-  const dummyPrizes = [
-    "250",
-    "150",
-    "100",
+  const bnbStars = ["50", "40", "30", "20", "20", "20", "20", "20", "20", "20"];
+  const bnbStarsPremium = [
     "50",
-    "50",
+    "40",
+    "30",
     "20",
     "20",
-    "10",
-    "10",
-    "10",
+    "20",
+    "20",
+    "20",
+    "20",
+    "20",
   ];
-
-  const previous_dailyPrizes = [
-    "20",
-    "10",
-    "8",
-    "5",
-    "0",
-    "0",
-    "0",
-    "0",
-    "0",
-    "0",
-  ];
-
-  // const dailyPrizesGolden = ["10", "8", "5", "5", "5", "5", "5", "5", "5", "5"];
-  const dailyPrizesGolden = ["10", "8", "5", "5", "5", "5", "5", "5", "5", "5"];
-  const prizeSkale = ["25", "15", "10", "8", "5", "5", "5", "5", "5", "5"];
-
-  const previous_dailyPrizesGolden = [
-    "20",
-    "10",
-    "8",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-  ];
-
-  const weeklyPrizes = ["25", "15", "10", "8", "0", "0", "0", "0", "0", "0"];
+  const weeklyPrizesBnb = ["30", "20", "10", "5", "5", "5", "5", "5", "5", "5"];
   const weeklyPrizesGolden = [
-    "25",
-    "15",
-    "10",
-    "8",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-  ];
-
-  const previous_weeklyPrizes = [
     "40",
+    "30",
     "20",
     "15",
-    "10",
-    "0",
-    "0",
-    "0",
-    "0",
-    "0",
-    "0",
-  ];
-
-  const previous_weeklyPrizesGolden = [
-    "40",
-    "20",
     "15",
-    "10",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
+    "15",
+    "15",
+    "15",
+    "15",
+    "15",
+    "15",
   ];
 
-  const monthlyPrizes = [
-    "250",
-    "150",
+  const monthlyPrizesBnb = [
+    "200",
     "100",
-    "50",
-    "50",
-    "20",
-    "20",
+    "60",
+    "30",
+    "30",
     "10",
     "10",
     "10",
-  ];
-
-  const previous_monthlyPrizes = [
-    "500",
-    "250",
-    "150",
-    "50",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
+    "10",
+    "10",
   ];
 
   const monthlyPrizesGolden = [
-    "250",
-    "150",
-    "100",
-    "50",
-    "50",
-    "20",
-    "20",
-    "10",
-    "10",
-    "10",
+    "300",
+    "200",
+    "140",
+    "70",
+    "70",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
   ];
 
-  const previous_monthlyPrizesGolden = [
-    "500",
-    "250",
-    "150",
+
+  const skaleStars = ["70", "60", "50", "30", "30", "30", "30", "30", "30", "30"];
+  const skaleStarsPremium = [
+    "70",
+    "60",
     "50",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
   ];
+
+  const skalePrizesWeekly = ["15", "10", "5", "4", "2", "2", "2", "2", "2", "2"];
+  const skalePrizesWeeklyGolden = ["25", "20", "15", "12", "8", "8", "8", "8", "8", "8"];
+  const skalePrizesMonthly = ["60", "30", "20", "10", "5", "5", "5", "5", "5", "5"];
+  const skalePrizesMonthlyGolden = ["140", "70", "30", "20", "15", "15", "15", "15", "15", "15"];
+
+  const genesisPrizes = ["100", "100", "80", "80", "80", "60", "50", "40", "20", "20"];
+
+
+ 
 
   const [optionText, setOptionText] = useState("daily");
   const [optionText2, setOptionText2] = useState("bnb");
   const [dailyrecords, setRecords] = useState([]);
 
   const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
-  const [prizes, setPrizes] = useState(dummyPrizes);
   const [activePlayer, setActivePlayer] = useState(false);
   const [activePlayerWeekly, setActivePlayerWeekly] = useState(false);
   const [activePlayerMonthly, setActivePlayerMonthly] = useState(false);
@@ -427,6 +367,7 @@ const NewLeaderBoard = ({
   const [userDataWeekly, setUserDataWeekly] = useState({});
   const [userDataMonthly, setUserDataMonthly] = useState({});
   const [userDataSkale, setUserDataSkale] = useState({});
+  const [userDataSkaleMonthly, setUserDataSkaleMonthly] = useState({});
   const [userDataGenesis, setUserDataGenesis] = useState({});
   const [inactiveBoard, setInactiveBoard] = useState(false);
   const [dailyplayerData, setdailyplayerData] = useState([]);
@@ -444,7 +385,8 @@ const NewLeaderBoard = ({
   const [monthlyrecords, setMonthlyRecords] = useState([]);
   const [genesisData, setgenesisData] = useState([]);
   const [previousgenesisData, setpreviousgenesisData] = useState([]);
-
+  const [skaleMonthlyData, setSkaleMonthlyData] = useState([]);
+  const [skalePreviousMonthlyData, setSkalePreviousMonthlyData] = useState([]);
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
   const [bundlesBought, setbundlesBought] = useState(0);
@@ -673,6 +615,40 @@ const NewLeaderBoard = ({
       }
     }
   };
+  const fetchSkaleRecondsMonthlyAroundPlayer = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardSkaleMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      setRecordsAroundPlayer(result.data.data.leaderboard);
+
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      if (itemData.length > 0) {
+        var testArray2 = itemData.filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActiveSkalePlayer(true);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActiveSkalePlayer(false);
+          setUserDataSkaleMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActiveSkalePlayer(false);
+        setUserDataSkaleMonthly(...testArray);
+      }
+    }
+  };
   const fetchMonthlyGenesisRecordsAroundPlayer = async (itemData) => {
     const data = {
       StatisticName: "GenesisLandRewards",
@@ -709,6 +685,38 @@ const NewLeaderBoard = ({
     }
   };
 
+
+  const fetchSkaleRecordsMonthly = async () => {
+    const data = {
+      StatisticName: "LeaderboardSkaleMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    setskalepreviousVersion(result.data.data.version);
+
+    setSkaleMonthlyData(result.data.data.leaderboard);
+    fillRecordsSkaleMonthly(result.data.data.leaderboard);
+  };
+
+  const fetchPreviousSkaleRecordsMonthly = async () => {
+    if (skalepreviousVersion != 0) {
+      const data = {
+        StatisticName: "LeaderboardSkaleMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: skalepreviousVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+      // setpreviousVersion(parseInt(result.data.data.version));
+      setSkalePreviousMonthlyData(result.data.data.leaderboard);
+      fillPreviousRecordsSkaleMonthly(result.data.data.leaderboard);
+    }
+  };
+
   const fetchMonthlyRecords = async () => {
     const data = {
       StatisticName: "MonthlyLeaderboard",
@@ -735,19 +743,6 @@ const NewLeaderBoard = ({
 
   const handleOption = (item) => {
     setOptionText2(item);
-    if (item === "bnb" && inactiveBoard === false) {
-      setPrizes(dummyPrizes);
-    } else if (item === "bnb" && inactiveBoard === true) {
-      setPrizes(dummyPrizes);
-    } else if (item === "skale" && inactiveBoard === false) {
-      setPrizes(dummyPrizes);
-    } else if (item === "skale" && inactiveBoard === true) {
-      setPrizes(dummyPrizes);
-    } else if (item === "wod" && inactiveBoard === false) {
-      setPrizes(dummyPrizes);
-    } else if (item === "wod" && inactiveBoard === true) {
-      setPrizes(dummyPrizes);
-    }
   };
 
   const fillRecords = (itemData) => {
@@ -800,6 +795,28 @@ const NewLeaderBoard = ({
       const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
       const finalData = [...testArray, ...placeholderArray];
       setgenesisData(finalData);
+    }
+  };
+
+  const fillRecordsSkaleMonthly = (itemData) => {
+    if (itemData.length === 0) {
+      setSkaleMonthlyData(placeholderplayerData);
+    } else if (itemData.length < 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setSkaleMonthlyData(finalData);
+    }
+  };
+
+  const fillPreviousRecordsSkaleMonthly = (itemData) => {
+    if (itemData.length === 0) {
+      setSkalePreviousMonthlyData(placeholderplayerData);
+    } else if (itemData.length < 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setSkalePreviousMonthlyData(finalData);
     }
   };
 
@@ -875,6 +892,8 @@ const NewLeaderBoard = ({
       // console.log(result.data.data.leaderboard)
       setskalePreviousRecords(result.data.data.leaderboard);
       fillPreviousRecordsSkale(result.data.data.leaderboard);
+    fetchSkaleRecondsMonthlyAroundPlayer(result.data.data.leaderboard);
+
     }
   };
 
@@ -936,6 +955,7 @@ const NewLeaderBoard = ({
     fetchMonthlyRecords();
     fetchGenesisRecords();
     fetchSkaleRecords();
+    fetchSkaleRecordsMonthly();
   }, [username, userId]);
 
   useEffect(() => {
@@ -944,6 +964,7 @@ const NewLeaderBoard = ({
     fetchPreviousWeeklyWinners();
     fetchPreviousMonthlyWinners();
     fetchPreviousSkaleRecords();
+    fetchPreviousSkaleRecordsMonthly();
   }, [
     previousGenesisVersion,
     previousMonthlyVersion,
@@ -1053,8 +1074,10 @@ const NewLeaderBoard = ({
                   className={`optionswrapper-bg ${
                     optionText2 === "skale"
                       ? "move-1"
-                      : optionText2 === "wod"
+                      : optionText2 === "core"
                       ? "move-2"
+                      : optionText2 === "wod"
+                      ? "move-3"
                       : ""
                   }`}
                 ></div>
@@ -1072,7 +1095,7 @@ const NewLeaderBoard = ({
                       handleOption("bnb");
                       fetchGenesisRecords();
                     }}
-                    style={{ width: "33%" }}
+                    style={{ width: "25%" }}
                   >
                     <img
                       src={optionText2 === "bnb" ? bnbActive : bnbInactive}
@@ -1091,14 +1114,13 @@ const NewLeaderBoard = ({
                       ? "BNB Chain"
                       : ""}
                   </span>
-
                   <span
                     className={` 
                     d-flex align-items-center gap-2
                     ${
                       optionText2 === "skale" && "otheroptionsActive"
                     } optionText col-3`}
-                    style={{ width: "33%" }}
+                    style={{ width: "25%" }}
                     onClick={() => {
                       handleOption("skale");
                       fetchWeeklyRecords();
@@ -1123,21 +1145,35 @@ const NewLeaderBoard = ({
                       ? "SKALE"
                       : ""}
                   </span>
-                  {/* <span
-                    className={`
-                    d-flex align-items-center gap-2
-                    ${
-                      optionText2 === "daily" && "otheroptionsActive"
-                    } optionText col-3`}
+                  <span
+                    className={` 
+                   d-flex align-items-center gap-2
+                   ${
+                     optionText2 === "core" && "otheroptionsActive"
+                   } optionText col-3`}
                     style={{ width: "25%" }}
                     onClick={() => {
-                      handleOption("daily");
+                      handleOption("core");
                       fetchDailyRecords();
                     }}
                   >
-                    <img src={coreIcon} className={`${optionText2 === "daily" ?  "leaderboard-icon leaderboard-icon-active" : "leaderboard-icon"}`} width={20} height={20} alt="" />
-                    CORE DAO
-                  </span> */}
+                    <img
+                      src={coreIcon}
+                      className={`${
+                        optionText2 === "core"
+                          ? "leaderboard-icon leaderboard-icon-active"
+                          : "leaderboard-icon"
+                      }`}
+                      width={20}
+                      height={20}
+                      alt=""
+                    />
+                    {windowSize.width > 768
+                      ? "CORE DAO"
+                      : windowSize.width < 786 && optionText2 === "core"
+                      ? "CORE DAO"
+                      : ""}
+                  </span>
                   <span
                     className={`
                     d-flex align-items-center gap-2
@@ -1145,7 +1181,7 @@ const NewLeaderBoard = ({
                     ${
                       optionText2 === "wod" && "otheroptionsActive"
                     } optionText col-3`}
-                    style={{ width: "33%" }}
+                    style={{ width: "25%" }}
                     onClick={() => {
                       handleOption("wod");
                       fetchGenesisRecords();
@@ -1209,16 +1245,16 @@ const NewLeaderBoard = ({
                               </th>
                               {optionText !== "genesis" && (
                                 <th className="playerHeader text-center font-montserrat">
-                                  Reward
+                                  Score
                                 </th>
                               )}
                               {optionText !== "genesis" && (
                                 <th className="playerHeader text-center font-montserrat">
-                                  Stars
+                                  Standard
                                 </th>
                               )}
                               <th className="playerHeader text-center font-montserrat">
-                                Score
+                                Premium
                               </th>
                             </tr>
                             {dailyrecords &&
@@ -1266,6 +1302,9 @@ const NewLeaderBoard = ({
                                         </div>
                                       )}
                                     </td>
+                                    <td className="playerScore col-2 text-center font-montserrat">
+                                      {getFormattedNumber(item.statValue, 0)}
+                                    </td>
                                     <td
                                       className={`playerReward col-2 font-montserrat ${
                                         username === item.displayName
@@ -1273,22 +1312,11 @@ const NewLeaderBoard = ({
                                           : "goldenscore-inactive2"
                                       }`}
                                     >
-                                      <div className="d-flex align-items-center justify-content-start gap-1">
-                                        <img src={upgradeIcon} alt="" />
+                                      <div className="d-flex align-items-center justify-content-center gap-1">
+                                        <img src={starIcon} alt="" />
                                         <span className="leaderboard-text">
-                                          $
                                           {getFormattedNumber(
-                                            dailyPrizesGolden[index],
-                                            0
-                                          )}
-                                        </span>
-                                        <span
-                                          className="leaderboard-text"
-                                          style={{ color: "gray" }}
-                                        >
-                                          | $
-                                          {getFormattedNumber(
-                                            dailyPrizesGolden[index],
+                                            bnbStars[index],
                                             0
                                           )}
                                         </span>
@@ -1301,31 +1329,18 @@ const NewLeaderBoard = ({
                                           : "playerReward"
                                       }`}
                                     >
-                                      <div className="d-flex align-items-center justify-content-start gap-1">
-                                        <img src={starIcon} alt="" />
+                                      <div className="d-flex align-items-center justify-content-center gap-1">
                                         <span
                                           className="leaderboard-text"
                                           style={{ color: "#F3C009" }}
                                         >
                                           {getFormattedNumber(
-                                            dailyPrizesGolden[index],
+                                            bnbStarsPremium[index],
                                             0
                                           )}
                                         </span>
-                                        <span
-                                          className="leaderboard-text"
-                                          style={{ color: "gray" }}
-                                        >
-                                          |{" "}
-                                          {getFormattedNumber(
-                                            dailyPrizesGolden[index],
-                                            0
-                                          )}
-                                        </span>
+                                        <img src={premiumInactive} alt="" />
                                       </div>
-                                    </td>
-                                    <td className="playerScore col-2 text-center font-montserrat">
-                                      {getFormattedNumber(item.statValue, 0)}
                                     </td>
                                   </tr>
                                 );
@@ -1376,6 +1391,9 @@ const NewLeaderBoard = ({
                                         </div>
                                       )}
                                     </td>
+                                    <td className="playerScore col-2 text-center font-montserrat">
+                                      {getFormattedNumber(item.statValue, 0)}
+                                    </td>
                                     <td
                                       className={`playerReward col-2 font-montserrat ${
                                         username === item.displayName
@@ -1383,22 +1401,12 @@ const NewLeaderBoard = ({
                                           : "goldenscore-inactive2"
                                       }`}
                                     >
-                                      <div className="d-flex align-items-center justify-content-start gap-1">
-                                        <img src={upgradeIcon} alt="" />
+                                      <div className="d-flex align-items-center justify-content-center gap-1">
+                                        <img src={starIcon} alt="" />
                                         <span className="leaderboard-text">
-                                          $
+                                          
                                           {getFormattedNumber(
-                                            dailyPrizesGolden[index],
-                                            0
-                                          )}
-                                        </span>
-                                        <span
-                                          className="leaderboard-text"
-                                          style={{ color: "gray" }}
-                                        >
-                                          | $
-                                          {getFormattedNumber(
-                                            dailyPrizesGolden[index],
+                                            bnbStars[index],
                                             0
                                           )}
                                         </span>
@@ -1411,31 +1419,18 @@ const NewLeaderBoard = ({
                                           : "playerReward"
                                       }`}
                                     >
-                                      <div className="d-flex align-items-center justify-content-start gap-1">
-                                        <img src={starIcon} alt="" />
+                                      <div className="d-flex align-items-center justify-content-center gap-1">
                                         <span
                                           className="leaderboard-text"
                                           style={{ color: "#F3C009" }}
                                         >
                                           {getFormattedNumber(
-                                            dailyPrizesGolden[index],
+                                            bnbStarsPremium[index],
                                             0
                                           )}
                                         </span>
-                                        <span
-                                          className="leaderboard-text"
-                                          style={{ color: "gray" }}
-                                        >
-                                          |{" "}
-                                          {getFormattedNumber(
-                                            dailyPrizesGolden[index],
-                                            0
-                                          )}
-                                        </span>
+                                        <img src={premiumInactive} alt="" />
                                       </div>
-                                    </td>
-                                    <td className="playerScore col-2 text-center font-montserrat">
-                                      {getFormattedNumber(item.statValue, 0)}
                                     </td>
                                   </tr>
                                 );
@@ -1510,42 +1505,8 @@ const NewLeaderBoard = ({
                                       )}
                                     </div>
                                   </td>
-
-                                  <td
-                                    className={`playerReward text-center font-montserrat ${
-                                      availableTime !== "0" &&
-                                      availableTime &&
-                                      availableTime >= today1.getTime() &&
-                                      availableTime !== undefined &&
-                                      username === userData.displayName
-                                        ? "goldenscore"
-                                        : "playerReward"
-                                    } col-2 ${
-                                      optionText !== "genesis" && "text-center"
-                                    } `}
-                                  >
-                                    <div className="d-flex align-items-center justify-content-start gap-1">
-                                      <img src={upgradeIcon} alt="" />
-                                      <span className="leaderboard-text">
-                                        $
-                                        {optionText === "genesis"
-                                          ? getFormattedNumber(
-                                              userData.statValue,
-                                              0
-                                            )
-                                          : "0"}{" "}
-                                      </span>
-                                      <span
-                                        className="leaderboard-text"
-                                        style={{ color: "gray" }}
-                                      >
-                                        | $
-                                        {getFormattedNumber(
-                                          dailyPrizesGolden[userData.position] ? dailyPrizesGolden[userData.position] : 0,
-                                          0
-                                        )}
-                                      </span>
-                                    </div>
+                                  <td className="playerScore col-2 text-center font-montserrat">
+                                    {getFormattedNumber(userData.statValue, 0)}
                                   </td>
                                   <td
                                     className={`playerReward text-center font-montserrat ${
@@ -1562,29 +1523,51 @@ const NewLeaderBoard = ({
                                   >
                                     <div className="d-flex align-items-center justify-content-start gap-1">
                                       <img src={starIcon} alt="" />
-                                      <span className="leaderboard-text">
-                                        {optionText === "genesis"
-                                          ? getFormattedNumber(
-                                              userData.statValue,
-                                              0
-                                            )
-                                          : "0"}{" "}
-                                      </span>
+                                     
                                       <span
                                         className="leaderboard-text"
                                         style={{ color: "gray" }}
                                       >
-                                        |
                                         {getFormattedNumber(
-                                          dailyPrizesGolden[userData.position] ? dailyPrizesGolden[userData.position] : 0,
+                                          bnbStars[userData.position]
+                                            ? bnbStars[userData.position]
+                                            : 0,
                                           0
                                         )}
                                       </span>
                                     </div>
                                   </td>
-                                  <td className="playerScore col-2 text-center font-montserrat">
-                                    {getFormattedNumber(userData.statValue, 0)}
+                                  <td
+                                    className={`playerReward text-center font-montserrat ${
+                                      availableTime !== "0" &&
+                                      availableTime &&
+                                      availableTime >= today1.getTime() &&
+                                      availableTime !== undefined &&
+                                      username === userData.displayName
+                                        ? "goldenscore"
+                                        : "playerReward"
+                                    } col-2 ${
+                                      optionText !== "genesis" && "text-center"
+                                    } `}
+                                  >
+                                    <div className="d-flex align-items-center justify-content-start gap-1">
+                                     
+                                      <span
+                                        className="leaderboard-text"
+                                        style={{ color: "gray" }}
+                                      >
+                                        {getFormattedNumber(
+                                          bnbStarsPremium[userData.position]
+                                            ? bnbStarsPremium[userData.position]
+                                            : 0,
+                                          0
+                                        )}
+                                      </span>
+                                      <img src={isPremium ? premiumIcon : premiumInactive} alt="" />
+
+                                    </div>
                                   </td>
+                                  
                                 </tr>
                               </tbody>
                             </table>
@@ -1677,6 +1660,9 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
                                       <td
                                         className={`playerReward col-2 font-montserrat ${
                                           username === item.displayName
@@ -1689,7 +1675,7 @@ const NewLeaderBoard = ({
                                           <span className="leaderboard-text">
                                             $
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeekly[index],
                                               0
                                             )}
                                           </span>
@@ -1699,7 +1685,7 @@ const NewLeaderBoard = ({
                                           >
                                             | $
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeeklyGolden[index],
                                               0
                                             )}
                                           </span>
@@ -1719,7 +1705,7 @@ const NewLeaderBoard = ({
                                             style={{ color: "#F3C009" }}
                                           >
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeekly[index],
                                               0
                                             )}
                                           </span>
@@ -1729,14 +1715,11 @@ const NewLeaderBoard = ({
                                           >
                                             |{" "}
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeeklyGolden[index],
                                               0
                                             )}
                                           </span>
                                         </div>
-                                      </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
                                       </td>
                                     </tr>
                                   );
@@ -1787,6 +1770,9 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
                                       <td
                                         className={`playerReward col-2 font-montserrat ${
                                           username === item.displayName
@@ -1799,7 +1785,7 @@ const NewLeaderBoard = ({
                                           <span className="leaderboard-text">
                                             $
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeekly[index],
                                               0
                                             )}
                                           </span>
@@ -1809,7 +1795,7 @@ const NewLeaderBoard = ({
                                           >
                                             | $
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeeklyGolden[index],
                                               0
                                             )}
                                           </span>
@@ -1829,7 +1815,7 @@ const NewLeaderBoard = ({
                                             style={{ color: "#F3C009" }}
                                           >
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeekly[index],
                                               0
                                             )}
                                           </span>
@@ -1839,14 +1825,11 @@ const NewLeaderBoard = ({
                                           >
                                             |{" "}
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeeklyGolden[index],
                                               0
                                             )}
                                           </span>
                                         </div>
-                                      </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
                                       </td>
                                     </tr>
                                   );
@@ -1916,67 +1899,86 @@ const NewLeaderBoard = ({
                                         )}
                                       </div>
                                     </td>
+                                    <td className="playerScore col-2 text-center font-montserrat">
+                                      {getFormattedNumber(
+                                        userDataSkale.statValue,
+                                        0
+                                      )}
+                                    </td>
                                     <td
-                                        className={`playerReward col-2 font-montserrat ${
-                                          username === userData.displayName
-                                            ? "goldenscore"
-                                            : "goldenscore-inactive2"
-                                        }`}
-                                      >
-                                        <div className="d-flex align-items-center justify-content-start gap-1">
-                                          <img src={upgradeIcon} alt="" />
-                                          <span className="leaderboard-text">
-                                            $
-                                            {getFormattedNumber(
-                                              prizeSkale[userDataSkale.position] ? prizeSkale[userDataSkale.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                          <span
-                                            className="leaderboard-text"
-                                            style={{ color: "gray" }}
-                                          >
-                                            | $
-                                            {getFormattedNumber(
-                                              prizeSkale[userDataSkale.position] ? prizeSkale[userDataSkale.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                        </div>
-                                      </td>
-                                      <td
-                                        className={`playerReward text-center col-2 font-montserrat ${
-                                          username === userData.displayName
-                                            ? "goldenscore"
-                                            : "playerReward"
-                                        }`}
-                                      >
-                                        <div className="d-flex align-items-center justify-content-start gap-1">
-                                          <img src={starIcon} alt="" />
-                                          <span
-                                            className="leaderboard-text"
-                                            style={{ color: "#F3C009" }}
-                                          >
-                                            {getFormattedNumber(
-                                              prizeSkale[userDataSkale.position] ? prizeSkale[userDataSkale.position]: 0,
-                                              0
-                                            )}
-                                          </span>
-                                          <span
-                                            className="leaderboard-text"
-                                            style={{ color: "gray" }}
-                                          >
-                                            |{" "}
-                                            {getFormattedNumber(
-                                              prizeSkale[userDataSkale.position] ? prizeSkale[userDataSkale.position]: 0,
-                                              0
-                                            )}
-                                          </span>
-                                        </div>
-                                      </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(userDataSkale.statValue, 0)}
-                                      </td>
+                                      className={`playerReward col-2 font-montserrat ${
+                                        username === userData.displayName
+                                          ? "goldenscore-inactive2"
+                                          : "goldenscore-inactive2"
+                                      }`}
+                                    >
+                                      <div className="d-flex align-items-center justify-content-start gap-1">
+                                        <img src={upgradeIcon} alt="" />
+                                        <span className="leaderboard-text">
+                                          $
+                                          {getFormattedNumber(
+                                            skalePrizesWeekly[userDataSkale.position]
+                                              ? skalePrizesWeekly[
+                                                  userDataSkale.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "gray" }}
+                                        >
+                                          | $
+                                          {getFormattedNumber(
+                                            skalePrizesWeeklyGolden[userDataSkale.position]
+                                              ? skalePrizesWeeklyGolden[
+                                                  userDataSkale.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                      </div>
+                                    </td>
+                                    <td
+                                      className={`playerReward text-center col-2 font-montserrat ${
+                                        username === userData.displayName
+                                          ? "playerReward"
+                                          : "playerReward"
+                                      }`}
+                                    >
+                                      <div className="d-flex align-items-center justify-content-start gap-1">
+                                        <img src={starIcon} alt="" />
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "#F3C009" }}
+                                        >
+                                          {getFormattedNumber(
+                                            skalePrizesWeekly[userDataSkale.position]
+                                              ? skalePrizesWeekly[
+                                                  userDataSkale.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "gray" }}
+                                        >
+                                          |{" "}
+                                          {getFormattedNumber(
+                                            skalePrizesWeeklyGolden[userDataSkale.position]
+                                              ? skalePrizesWeeklyGolden[
+                                                  userDataSkale.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                      </div>
+                                    </td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -2021,7 +2023,10 @@ const NewLeaderBoard = ({
                                   </th>
                                 )}
                                 <th className="playerHeader text-center font-montserrat">
-                                  Score
+                                  Standard
+                                </th>
+                                <th className="playerHeader text-center font-montserrat">
+                                  Premium
                                 </th>
                               </tr>
                               {weeklyrecords &&
@@ -2041,7 +2046,7 @@ const NewLeaderBoard = ({
                                       <td className="playerData col-1 font-montserrat">
                                         {parseInt(item.position) + 1}
                                       </td>
-                                      <td className="playerName col-5 font-montserrat">
+                                      <td className="playerName col-3 font-montserrat">
                                         {item.displayName === username ? (
                                           <div className="position-relative d-flex align-items-center">
                                             <img
@@ -2069,7 +2074,9 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
-
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
                                       <td
                                         className={`playerReward text-center col-2 font-montserrat ${
                                           username === item.displayName
@@ -2077,32 +2084,43 @@ const NewLeaderBoard = ({
                                             : "playerReward"
                                         }`}
                                       >
-                                        <div className="d-flex align-items-center justify-content-start gap-1">
-                                          <img src={upgradeIcon} alt="" />
+                                        <div className="d-flex align-items-center justify-content-start ms-4 gap-1">
+                                          <img src={starIcon} alt="" />
                                           <span
                                             className="leaderboard-text"
                                             style={{ color: "#fff" }}
                                           >
-                                            $
                                             {getFormattedNumber(
-                                              weeklyPrizesGolden[index],
-                                              0
-                                            )}
-                                          </span>
-                                          <span
-                                            className="leaderboard-text"
-                                            style={{ color: "gray" }}
-                                          >
-                                            | $
-                                            {getFormattedNumber(
-                                              weeklyPrizesGolden[index],
+                                              weeklyPrizesBnb[index],
                                               0
                                             )}
                                           </span>
                                         </div>
                                       </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
+                                      <td
+                                        className={`playerReward text-center col-2 font-montserrat ${
+                                          username === item.displayName
+                                            ? "goldenscore"
+                                            : "playerReward"
+                                        }`}
+                                      >
+                                        <div className="d-flex align-items-center justify-content-start ms-4 gap-1">
+                                          <img
+                                            src={premiumInactive}
+                                            width={18}
+                                            height={18}
+                                            alt=""
+                                          />
+                                          <span
+                                            className="leaderboard-text"
+                                            style={{ color: "gray" }}
+                                          >
+                                           {getFormattedNumber(
+                                              weeklyPrizesGolden[index],
+                                              0
+                                            )}
+                                          </span>
+                                        </div>
                                       </td>
                                     </tr>
                                   );
@@ -2152,7 +2170,10 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
-                                    <td
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
+                                      <td
                                         className={`playerReward text-center col-2 font-montserrat ${
                                           username === item.displayName
                                             ? "goldenscore"
@@ -2167,7 +2188,7 @@ const NewLeaderBoard = ({
                                           >
                                             $
                                             {getFormattedNumber(
-                                              weeklyPrizesGolden[index],
+                                              weeklyPrizesBnb[index],
                                               0
                                             )}
                                           </span>
@@ -2182,9 +2203,6 @@ const NewLeaderBoard = ({
                                             )}
                                           </span>
                                         </div>
-                                      </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
                                       </td>
                                     </tr>
                                   );
@@ -2270,40 +2288,55 @@ const NewLeaderBoard = ({
                                         )}
                                       </div>
                                     </td>
+                                    <td className="playerScore col-2 text-center font-montserrat">
+                                      {getFormattedNumber(
+                                        userDataWeekly.statValue,
+                                        0
+                                      )}
+                                    </td>
                                     <td
-                                        className={`playerReward text-center col-2 font-montserrat ${
-                                          username === userDataWeekly.displayName
-                                            ? "playerReward"
-                                            : "playerReward"
-                                        }`}
-                                      >
-                                        <div className="d-flex align-items-center justify-content-start gap-1">
-                                          <img src={upgradeIcon} alt="" />
-                                          <span
-                                            className="leaderboard-text"
-                                            style={{ color: "#fff" }}
-                                          >
-                                            $
-                                            {getFormattedNumber(
-                                              weeklyPrizesGolden[userDataWeekly.position] ?  weeklyPrizesGolden[userDataWeekly.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                          <span
-                                            className="leaderboard-text"
-                                            style={{ color: "gray" }}
-                                          >
-                                            | $
-                                            {getFormattedNumber(
-                                              weeklyPrizesGolden[userDataWeekly.position] ?  weeklyPrizesGolden[userDataWeekly.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                        </div>
-                                      </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(userDataWeekly.statValue, 0)}
-                                      </td>
+                                      className={`playerReward text-center col-2 font-montserrat ${
+                                        username === userDataWeekly.displayName
+                                          ? "playerReward"
+                                          : "playerReward"
+                                      }`}
+                                    >
+                                      <div className="d-flex align-items-center justify-content-start gap-1">
+                                        <img src={upgradeIcon} alt="" />
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "#fff" }}
+                                        >
+                                          $
+                                          {getFormattedNumber(
+                                            weeklyPrizesBnb[
+                                              userDataWeekly.position
+                                            ]
+                                              ? weeklyPrizesBnb[
+                                                  userDataWeekly.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "gray" }}
+                                        >
+                                          | $
+                                          {getFormattedNumber(
+                                            weeklyPrizesGolden[
+                                              userDataWeekly.position
+                                            ]
+                                              ? weeklyPrizesGolden[
+                                                  userDataWeekly.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                      </div>
+                                    </td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -2390,25 +2423,6 @@ const NewLeaderBoard = ({
                                       <td className="playerScore col-2 text-center font-montserrat">
                                         ${getFormattedNumber(item.statValue, 0)}
                                       </td>
-                                      {/* <td
-                            className={`playerReward text-center col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "playerReward"
-                            }`}
-                          >
-                            ${getFormattedNumber(monthlyPrizes[index], 0)}
-                          </td>
-                          <td
-                            className={`playerReward col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "goldenscore-inactive2"
-                            }`}
-                          >
-                            +$
-                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
-                          </td> */}
                                     </tr>
                                   );
                                 })}
@@ -2461,31 +2475,6 @@ const NewLeaderBoard = ({
                                       <td className="playerScore col-2 text-center font-montserrat">
                                         ${getFormattedNumber(item.statValue, 0)}
                                       </td>
-                                      {/* <td
-                            className={`playerReward text-center col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "playerReward"
-                            }`}
-                          >
-                            ${getFormattedNumber(monthlyPrizes[index], 0)}
-                          </td>
-                          <td
-                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
-                              optionText2 === "skale" && "premium-goldenscore"
-                            } col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "goldenscore-inactive2"
-                            }`}
-                            style={{ width: "100%" }}
-                          >
-                            +$
-                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
-                            {optionText2 === "skale" && (
-                              <img src={premiumIcon} alt="" />
-                            )}
-                          </td> */}
                                     </tr>
                                   );
                                 })}
@@ -2651,7 +2640,9 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
-
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
                                       <td
                                         className={`playerReward text-center col-2 font-montserrat ${
                                           username === item.displayName
@@ -2667,7 +2658,7 @@ const NewLeaderBoard = ({
                                           >
                                             $
                                             {getFormattedNumber(
-                                              monthlyPrizesGolden[index],
+                                              monthlyPrizesBnb[index],
                                               0
                                             )}
                                           </span>
@@ -2682,9 +2673,6 @@ const NewLeaderBoard = ({
                                             )}
                                           </span>
                                         </div>
-                                      </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
                                       </td>
                                     </tr>
                                   );
@@ -2735,6 +2723,9 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
                                       <td
                                         className={`playerReward text-center col-2 font-montserrat ${
                                           username === item.displayName
@@ -2750,7 +2741,7 @@ const NewLeaderBoard = ({
                                           >
                                             $
                                             {getFormattedNumber(
-                                              monthlyPrizesGolden[index],
+                                              monthlyPrizesBnb[index],
                                               0
                                             )}
                                           </span>
@@ -2765,9 +2756,6 @@ const NewLeaderBoard = ({
                                             )}
                                           </span>
                                         </div>
-                                      </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
                                       </td>
                                     </tr>
                                   );
@@ -2854,40 +2842,55 @@ const NewLeaderBoard = ({
                                         )}
                                       </div>
                                     </td>
+                                    <td className="playerScore col-2 text-center font-montserrat">
+                                      {getFormattedNumber(
+                                        userDataMonthly.statValue,
+                                        0
+                                      )}
+                                    </td>
                                     <td
-                                        className={`playerReward text-center col-2 font-montserrat ${
-                                          username === userDataMonthly.displayName
-                                            ? "playerReward"
-                                            : "playerReward"
-                                        }`}
-                                      >
-                                        <div className="d-flex align-items-center justify-content-start gap-1">
-                                          <img src={upgradeIcon} alt="" />
-                                          <span
-                                            className="leaderboard-text"
-                                            style={{ color: "#fff" }}
-                                          >
-                                            $
-                                            {getFormattedNumber(
-                                              monthlyPrizesGolden[userDataMonthly.position] ? monthlyPrizesGolden[userDataMonthly.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                          <span
-                                            className="leaderboard-text"
-                                            style={{ color: "gray" }}
-                                          >
-                                            | $
-                                            {getFormattedNumber(
-                                              monthlyPrizesGolden[userDataMonthly.position] ? monthlyPrizesGolden[userDataMonthly.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                        </div>
-                                      </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(userDataMonthly.statValue, 0)}
-                                      </td>
+                                      className={`playerReward text-center col-2 font-montserrat ${
+                                        username === userDataMonthly.displayName
+                                          ? "playerReward"
+                                          : "playerReward"
+                                      }`}
+                                    >
+                                      <div className="d-flex align-items-center justify-content-start gap-1">
+                                        <img src={upgradeIcon} alt="" />
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "#fff" }}
+                                        >
+                                          $
+                                          {getFormattedNumber(
+                                            monthlyPrizesBnb[
+                                              userDataMonthly.position
+                                            ]
+                                              ? monthlyPrizesBnb[
+                                                  userDataMonthly.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "gray" }}
+                                        >
+                                          | $
+                                          {getFormattedNumber(
+                                            monthlyPrizesGolden[
+                                              userDataMonthly.position
+                                            ]
+                                              ? monthlyPrizesGolden[
+                                                  userDataMonthly.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                      </div>
+                                    </td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -2994,6 +2997,9 @@ const NewLeaderBoard = ({
                                         </div>
                                       )}
                                     </td>
+                                    <td className="playerScore col-2 text-center font-montserrat">
+                                      {getFormattedNumber(item.statValue, 0)}
+                                    </td>
                                     <td
                                       className={`playerReward col-2 font-montserrat ${
                                         username === item.displayName
@@ -3006,7 +3012,7 @@ const NewLeaderBoard = ({
                                         <span className="leaderboard-text">
                                           $
                                           {getFormattedNumber(
-                                            dailyPrizesGolden[index],
+                                            bnbStars[index],
                                             0
                                           )}
                                         </span>
@@ -3016,7 +3022,7 @@ const NewLeaderBoard = ({
                                         >
                                           | $
                                           {getFormattedNumber(
-                                            dailyPrizesGolden[index],
+                                            bnbStarsPremium[index],
                                             0
                                           )}
                                         </span>
@@ -3036,7 +3042,7 @@ const NewLeaderBoard = ({
                                           style={{ color: "#F3C009" }}
                                         >
                                           {getFormattedNumber(
-                                            dailyPrizesGolden[index],
+                                            bnbStars[index],
                                             0
                                           )}
                                         </span>
@@ -3046,14 +3052,11 @@ const NewLeaderBoard = ({
                                         >
                                           |{" "}
                                           {getFormattedNumber(
-                                            dailyPrizesGolden[index],
+                                            bnbStarsPremium[index],
                                             0
                                           )}
                                         </span>
                                       </div>
-                                    </td>
-                                    <td className="playerScore col-2 text-center font-montserrat">
-                                      {getFormattedNumber(item.statValue, 0)}
                                     </td>
                                   </tr>
                                 );
@@ -3104,6 +3107,9 @@ const NewLeaderBoard = ({
                                         </div>
                                       )}
                                     </td>
+                                    <td className="playerScore col-2 text-center font-montserrat">
+                                      {getFormattedNumber(item.statValue, 0)}
+                                    </td>
                                     <td
                                       className={`playerReward col-2 font-montserrat ${
                                         username === item.displayName
@@ -3116,7 +3122,7 @@ const NewLeaderBoard = ({
                                         <span className="leaderboard-text">
                                           $
                                           {getFormattedNumber(
-                                            dailyPrizesGolden[index],
+                                            bnbStars[index],
                                             0
                                           )}
                                         </span>
@@ -3126,7 +3132,7 @@ const NewLeaderBoard = ({
                                         >
                                           | $
                                           {getFormattedNumber(
-                                            dailyPrizesGolden[index],
+                                            bnbStarsPremium[index],
                                             0
                                           )}
                                         </span>
@@ -3146,7 +3152,7 @@ const NewLeaderBoard = ({
                                           style={{ color: "#F3C009" }}
                                         >
                                           {getFormattedNumber(
-                                            dailyPrizesGolden[index],
+                                            bnbStars[index],
                                             0
                                           )}
                                         </span>
@@ -3156,14 +3162,11 @@ const NewLeaderBoard = ({
                                         >
                                           |{" "}
                                           {getFormattedNumber(
-                                            dailyPrizesGolden[index],
+                                            bnbStars[index],
                                             0
                                           )}
                                         </span>
                                       </div>
-                                    </td>
-                                    <td className="playerScore col-2 text-center font-montserrat">
-                                      {getFormattedNumber(item.statValue, 0)}
                                     </td>
                                   </tr>
                                 );
@@ -3238,67 +3241,75 @@ const NewLeaderBoard = ({
                                       )}
                                     </div>
                                   </td>
+                                  <td className="playerScore col-2 text-center font-montserrat">
+                                    {getFormattedNumber(userData.statValue, 0)}
+                                  </td>
                                   <td
-                                      className={`playerReward col-2 font-montserrat ${
-                                        username === userData.displayName
-                                          ? "goldenscore"
-                                          : "goldenscore-inactive2"
-                                      }`}
-                                    >
-                                      <div className="d-flex align-items-center justify-content-start gap-1">
-                                        <img src={upgradeIcon} alt="" />
-                                        <span className="leaderboard-text">
-                                          $
-                                          {getFormattedNumber(
-                                            dailyPrizesGolden[userData.position] ? dailyPrizesGolden[userData.position] : 0,
-                                            0
-                                          )}
-                                        </span>
-                                        <span
-                                          className="leaderboard-text"
-                                          style={{ color: "gray" }}
-                                        >
-                                          | $
-                                          {getFormattedNumber(
-                                            dailyPrizesGolden[userData.position] ? dailyPrizesGolden[userData.position] : 0,
-                                            0
-                                          )}
-                                        </span>
-                                      </div>
-                                    </td>
-                                    <td
-                                      className={`playerReward text-center col-2 font-montserrat ${
-                                        username === userData.displayName
-                                          ? "goldenscore"
-                                          : "playerReward"
-                                      }`}
-                                    >
-                                      <div className="d-flex align-items-center justify-content-start gap-1">
-                                        <img src={starIcon} alt="" />
-                                        <span
-                                          className="leaderboard-text"
-                                          style={{ color: "#F3C009" }}
-                                        >
-                                          {getFormattedNumber(
-                                        dailyPrizesGolden[userData.position] ? dailyPrizesGolden[userData.position] : 0,
-                                            0
-                                          )}
-                                        </span>
-                                        <span
-                                          className="leaderboard-text"
-                                          style={{ color: "gray" }}
-                                        >
-                                          |{" "}
-                                          {getFormattedNumber(
-                                      dailyPrizesGolden[userData.position] ? dailyPrizesGolden[userData.position] : 0,
-                                            0
-                                          )}
-                                        </span>
-                                      </div>
-                                    </td>
-                                    <td className="playerScore col-2 text-center font-montserrat">
-                                      {getFormattedNumber(userData.statValue, 0)}
-                                    </td>
+                                    className={`playerReward col-2 font-montserrat ${
+                                      username === userData.displayName
+                                        ? "goldenscore"
+                                        : "goldenscore-inactive2"
+                                    }`}
+                                  >
+                                    <div className="d-flex align-items-center justify-content-start gap-1">
+                                      <img src={upgradeIcon} alt="" />
+                                      <span className="leaderboard-text">
+                                        $
+                                        {getFormattedNumber(
+                                          bnbStars[userData.position]
+                                            ? bnbStars[userData.position]
+                                            : 0,
+                                          0
+                                        )}
+                                      </span>
+                                      <span
+                                        className="leaderboard-text"
+                                        style={{ color: "gray" }}
+                                      >
+                                        | $
+                                        {getFormattedNumber(
+                                          bnbStarsPremium[userData.position]
+                                            ? bnbStarsPremium[userData.position]
+                                            : 0,
+                                          0
+                                        )}
+                                      </span>
+                                    </div>
+                                  </td>
+                                  <td
+                                    className={`playerReward text-center col-2 font-montserrat ${
+                                      username === userData.displayName
+                                        ? "goldenscore"
+                                        : "playerReward"
+                                    }`}
+                                  >
+                                    <div className="d-flex align-items-center justify-content-start gap-1">
+                                      <img src={starIcon} alt="" />
+                                      <span
+                                        className="leaderboard-text"
+                                        style={{ color: "#F3C009" }}
+                                      >
+                                        {getFormattedNumber(
+                                          bnbStars[userData.position]
+                                            ? bnbStars[userData.position]
+                                            : 0,
+                                          0
+                                        )}
+                                      </span>
+                                      <span
+                                        className="leaderboard-text"
+                                        style={{ color: "gray" }}
+                                      >
+                                        |{" "}
+                                        {getFormattedNumber(
+                                          bnbStarsPremium[userData.position]
+                                            ? bnbStarsPremium[userData.position]
+                                            : 0,
+                                          0
+                                        )}
+                                      </span>
+                                    </div>
+                                  </td>
                                 </tr>
                               </tbody>
                             </table>
@@ -3418,6 +3429,9 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
                                       <td
                                         className={`playerReward col-2 font-montserrat ${
                                           username === item.displayName
@@ -3430,7 +3444,7 @@ const NewLeaderBoard = ({
                                           <span className="leaderboard-text">
                                             $
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeekly[index],
                                               0
                                             )}
                                           </span>
@@ -3440,7 +3454,7 @@ const NewLeaderBoard = ({
                                           >
                                             | $
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeeklyGolden[index],
                                               0
                                             )}
                                           </span>
@@ -3460,7 +3474,7 @@ const NewLeaderBoard = ({
                                             style={{ color: "#F3C009" }}
                                           >
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeekly[index],
                                               0
                                             )}
                                           </span>
@@ -3470,14 +3484,11 @@ const NewLeaderBoard = ({
                                           >
                                             |{" "}
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeeklyGolden[index],
                                               0
                                             )}
                                           </span>
                                         </div>
-                                      </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
                                       </td>
                                     </tr>
                                   );
@@ -3528,6 +3539,9 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
                                       <td
                                         className={`playerReward col-2 font-montserrat ${
                                           username === item.displayName
@@ -3540,7 +3554,7 @@ const NewLeaderBoard = ({
                                           <span className="leaderboard-text">
                                             $
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeekly[index],
                                               0
                                             )}
                                           </span>
@@ -3550,7 +3564,7 @@ const NewLeaderBoard = ({
                                           >
                                             | $
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeeklyGolden[index],
                                               0
                                             )}
                                           </span>
@@ -3570,7 +3584,7 @@ const NewLeaderBoard = ({
                                             style={{ color: "#F3C009" }}
                                           >
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeekly[index],
                                               0
                                             )}
                                           </span>
@@ -3580,14 +3594,11 @@ const NewLeaderBoard = ({
                                           >
                                             |{" "}
                                             {getFormattedNumber(
-                                              prizeSkale[index],
+                                              skalePrizesWeeklyGolden[index],
                                               0
                                             )}
                                           </span>
                                         </div>
-                                      </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
                                       </td>
                                     </tr>
                                   );
@@ -3657,67 +3668,86 @@ const NewLeaderBoard = ({
                                         )}
                                       </div>
                                     </td>
+                                    <td className="playerScore col-2 text-center font-montserrat">
+                                      {getFormattedNumber(
+                                        userDataSkale.statValue,
+                                        0
+                                      )}
+                                    </td>
                                     <td
-                                        className={`playerReward col-2 font-montserrat ${
-                                          username === userDataSkale.displayName
-                                            ? "goldenscore"
-                                            : "goldenscore-inactive2"
-                                        }`}
-                                      >
-                                        <div className="d-flex align-items-center justify-content-start gap-1">
-                                          <img src={upgradeIcon} alt="" />
-                                          <span className="leaderboard-text">
-                                            $
-                                            {getFormattedNumber(
-                                              prizeSkale[userDataSkale.position] ? prizeSkale[userDataSkale.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                          <span
-                                            className="leaderboard-text"
-                                            style={{ color: "gray" }}
-                                          >
-                                            | $
-                                            {getFormattedNumber(
-                                              prizeSkale[userDataSkale.position] ? prizeSkale[userDataSkale.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                        </div>
-                                      </td>
-                                      <td
-                                        className={`playerReward text-center col-2 font-montserrat ${
-                                          username === userDataSkale.displayName
-                                            ? "goldenscore"
-                                            : "playerReward"
-                                        }`}
-                                      >
-                                        <div className="d-flex align-items-center justify-content-start gap-1">
-                                          <img src={starIcon} alt="" />
-                                          <span
-                                            className="leaderboard-text"
-                                            style={{ color: "#F3C009" }}
-                                          >
-                                            {getFormattedNumber(
-                                            prizeSkale[userDataSkale.position] ? prizeSkale[userDataSkale.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                          <span
-                                            className="leaderboard-text"
-                                            style={{ color: "gray" }}
-                                          >
-                                            |{" "}
-                                            {getFormattedNumber(
-                                            prizeSkale[userDataSkale.position] ? prizeSkale[userDataSkale.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                        </div>
-                                      </td>
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(userDataSkale.statValue, 0)}
-                                      </td>
+                                      className={`playerReward col-2 font-montserrat ${
+                                        username === userDataSkale.displayName
+                                          ? "goldenscore"
+                                          : "goldenscore-inactive2"
+                                      }`}
+                                    >
+                                      <div className="d-flex align-items-center justify-content-start gap-1">
+                                        <img src={upgradeIcon} alt="" />
+                                        <span className="leaderboard-text">
+                                          $
+                                          {getFormattedNumber(
+                                            skalePrizesWeekly[userDataSkale.position]
+                                              ? skalePrizesWeekly[
+                                                  userDataSkale.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "gray" }}
+                                        >
+                                          | $
+                                          {getFormattedNumber(
+                                            skalePrizesWeeklyGolden[userDataSkale.position]
+                                              ? skalePrizesWeeklyGolden[
+                                                  userDataSkale.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                      </div>
+                                    </td>
+                                    <td
+                                      className={`playerReward text-center col-2 font-montserrat ${
+                                        username === userDataSkale.displayName
+                                          ? "goldenscore"
+                                          : "playerReward"
+                                      }`}
+                                    >
+                                      <div className="d-flex align-items-center justify-content-start gap-1">
+                                        <img src={starIcon} alt="" />
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "#F3C009" }}
+                                        >
+                                          {getFormattedNumber(
+                                            skalePrizesWeekly[userDataSkale.position]
+                                              ? skalePrizesWeekly[
+                                                  userDataSkale.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "gray" }}
+                                        >
+                                          |{" "}
+                                          {getFormattedNumber(
+                                            skalePrizesWeeklyGolden[userDataSkale.position]
+                                              ? skalePrizesWeeklyGolden[
+                                                  userDataSkale.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                      </div>
+                                    </td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -3830,6 +3860,9 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
                                       <td
                                         className={`playerReward col-2 font-montserrat ${
                                           username === item.displayName
@@ -3842,7 +3875,7 @@ const NewLeaderBoard = ({
                                           <span className="leaderboard-text">
                                             $
                                             {getFormattedNumber(
-                                              weeklyPrizesGolden[index],
+                                              weeklyPrizesBnb[index],
                                               0
                                             )}
                                           </span>
@@ -3857,10 +3890,6 @@ const NewLeaderBoard = ({
                                             )}
                                           </span>
                                         </div>
-                                      </td>
-
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
                                       </td>
                                     </tr>
                                   );
@@ -3910,6 +3939,10 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
+
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
                                       <td
                                         className={`playerReward col-2 font-montserrat ${
                                           username === item.displayName
@@ -3922,7 +3955,7 @@ const NewLeaderBoard = ({
                                           <span className="leaderboard-text">
                                             $
                                             {getFormattedNumber(
-                                              weeklyPrizesGolden[index],
+                                              weeklyPrizesBnb[index],
                                               0
                                             )}
                                           </span>
@@ -3937,10 +3970,6 @@ const NewLeaderBoard = ({
                                             )}
                                           </span>
                                         </div>
-                                      </td>
-
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
                                       </td>
                                     </tr>
                                   );
@@ -4026,38 +4055,52 @@ const NewLeaderBoard = ({
                                         )}
                                       </div>
                                     </td>
+                                    <td className="playerScore col-2 text-center font-montserrat">
+                                      {getFormattedNumber(
+                                        userDataWeekly.statValue,
+                                        0
+                                      )}
+                                    </td>
                                     <td
-                                        className={`playerReward col-2 font-montserrat ${
-                                          username === userDataWeekly.displayName
-                                            ? "goldenscore-inactive2"
-                                            : "goldenscore-inactive2"
-                                        }`}
-                                      >
-                                        <div className="d-flex align-items-center justify-content-start gap-1">
-                                          <img src={upgradeIcon} alt="" />
-                                          <span className="leaderboard-text">
-                                            $
-                                            {getFormattedNumber(
-                                              weeklyPrizesGolden[userDataWeekly.position] ? weeklyPrizesGolden[userDataWeekly.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                          <span
-                                            className="leaderboard-text"
-                                            style={{ color: "gray" }}
-                                          >
-                                            | $
-                                            {getFormattedNumber(
-                                              weeklyPrizesGolden[userDataWeekly.position] ? weeklyPrizesGolden[userDataWeekly.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                        </div>
-                                      </td>
-
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(userDataWeekly.statValue, 0)}
-                                      </td>
+                                      className={`playerReward col-2 font-montserrat ${
+                                        username === userDataWeekly.displayName
+                                          ? "goldenscore-inactive2"
+                                          : "goldenscore-inactive2"
+                                      }`}
+                                    >
+                                      <div className="d-flex align-items-center justify-content-start gap-1">
+                                        <img src={upgradeIcon} alt="" />
+                                        <span className="leaderboard-text">
+                                          $
+                                          {getFormattedNumber(
+                                            weeklyPrizesBnb[
+                                              userDataWeekly.position
+                                            ]
+                                              ? weeklyPrizesBnb[
+                                                  userDataWeekly.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "gray" }}
+                                        >
+                                          | $
+                                          {getFormattedNumber(
+                                            weeklyPrizesGolden[
+                                              userDataWeekly.position
+                                            ]
+                                              ? weeklyPrizesGolden[
+                                                  userDataWeekly.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                      </div>
+                                    </td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -4168,25 +4211,6 @@ const NewLeaderBoard = ({
                                       <td className="playerScore col-2 text-center font-montserrat">
                                         ${getFormattedNumber(item.statValue, 0)}
                                       </td>
-                                      {/* <td
-                            className={`playerReward text-center col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "playerReward"
-                            }`}
-                          >
-                            ${getFormattedNumber(monthlyPrizes[index], 0)}
-                          </td>
-                          <td
-                            className={`playerReward col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "goldenscore-inactive2"
-                            }`}
-                          >
-                            +$
-                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
-                          </td> */}
                                     </tr>
                                   );
                                 })}
@@ -4239,31 +4263,6 @@ const NewLeaderBoard = ({
                                       <td className="playerScore col-2 text-center font-montserrat">
                                         ${getFormattedNumber(item.statValue, 0)}
                                       </td>
-                                      {/* <td
-                            className={`playerReward text-center col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "playerReward"
-                            }`}
-                          >
-                            ${getFormattedNumber(monthlyPrizes[index], 0)}
-                          </td>
-                          <td
-                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
-                              optionText2 === "skale" && "premium-goldenscore"
-                            } col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "goldenscore-inactive2"
-                            }`}
-                            style={{ width: "100%" }}
-                          >
-                            +$
-                            {getFormattedNumber(monthlyPrizesGolden[index], 0)}
-                            {optionText2 === "skale" && (
-                              <img src={premiumIcon} alt="" />
-                            )}
-                          </td> */}
                                     </tr>
                                   );
                                 })}
@@ -4451,6 +4450,9 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
                                       <td
                                         className={`playerReward col-2 font-montserrat ${
                                           username === item.displayName
@@ -4463,7 +4465,7 @@ const NewLeaderBoard = ({
                                           <span className="leaderboard-text">
                                             $
                                             {getFormattedNumber(
-                                              monthlyPrizesGolden[index],
+                                              monthlyPrizesBnb[index],
                                               0
                                             )}
                                           </span>
@@ -4478,10 +4480,6 @@ const NewLeaderBoard = ({
                                             )}
                                           </span>
                                         </div>
-                                      </td>
-
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
                                       </td>
                                     </tr>
                                   );
@@ -4532,6 +4530,9 @@ const NewLeaderBoard = ({
                                           </div>
                                         )}
                                       </td>
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
                                       <td
                                         className={`playerReward col-2 font-montserrat ${
                                           username === item.displayName
@@ -4544,7 +4545,7 @@ const NewLeaderBoard = ({
                                           <span className="leaderboard-text">
                                             $
                                             {getFormattedNumber(
-                                              monthlyPrizesGolden[index],
+                                              monthlyPrizesBnb[index],
                                               0
                                             )}
                                           </span>
@@ -4559,10 +4560,6 @@ const NewLeaderBoard = ({
                                             )}
                                           </span>
                                         </div>
-                                      </td>
-
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
                                       </td>
                                     </tr>
                                   );
@@ -4649,38 +4646,52 @@ const NewLeaderBoard = ({
                                         )}
                                       </div>
                                     </td>
+                                    <td className="playerScore col-2 text-center font-montserrat">
+                                      {getFormattedNumber(
+                                        userDataMonthly.statValue,
+                                        0
+                                      )}
+                                    </td>
                                     <td
-                                        className={`playerReward col-2 font-montserrat ${
-                                          username === userDataMonthly.displayName
-                                            ? "goldenscore-inactive2"
-                                            : "goldenscore-inactive2"
-                                        }`}
-                                      >
-                                        <div className="d-flex align-items-center justify-content-start gap-1">
-                                          <img src={upgradeIcon} alt="" />
-                                          <span className="leaderboard-text">
-                                            $
-                                            {getFormattedNumber(
-                                              monthlyPrizesGolden[userDataMonthly.position] ? monthlyPrizesGolden[userDataMonthly.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                          <span
-                                            className="leaderboard-text"
-                                            style={{ color: "gray" }}
-                                          >
-                                            | $
-                                            {getFormattedNumber(
-                                              monthlyPrizesGolden[userDataMonthly.position] ? monthlyPrizesGolden[userDataMonthly.position] : 0,
-                                              0
-                                            )}
-                                          </span>
-                                        </div>
-                                      </td>
-
-                                      <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(userDataMonthly.statValue, 0)}
-                                      </td>
+                                      className={`playerReward col-2 font-montserrat ${
+                                        username === userDataMonthly.displayName
+                                          ? "goldenscore-inactive2"
+                                          : "goldenscore-inactive2"
+                                      }`}
+                                    >
+                                      <div className="d-flex align-items-center justify-content-start gap-1">
+                                        <img src={upgradeIcon} alt="" />
+                                        <span className="leaderboard-text">
+                                          $
+                                          {getFormattedNumber(
+                                            monthlyPrizesBnb[
+                                              userDataMonthly.position
+                                            ]
+                                              ? monthlyPrizesBnb[
+                                                  userDataMonthly.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                        <span
+                                          className="leaderboard-text"
+                                          style={{ color: "gray" }}
+                                        >
+                                          | $
+                                          {getFormattedNumber(
+                                            monthlyPrizesGolden[
+                                              userDataMonthly.position
+                                            ]
+                                              ? monthlyPrizesGolden[
+                                                  userDataMonthly.position
+                                                ]
+                                              : 0,
+                                            0
+                                          )}
+                                        </span>
+                                      </div>
+                                    </td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -4712,229 +4723,6 @@ const NewLeaderBoard = ({
               </div>
             </div>
           </div>
-          {/* <div className="d-flex flex-column gap-3 col-12 col-xxl-6 col-lg-6 px-0 px-lg-3 medal-wrapper align-items-center justify-content-center position-relative">
-            <div className="d-flex justify-content-center w-100 position-relative medalinnerwrapper">
-              <div className="secondaryplayer-wrapper col-3">
-                <div className="position-relative d-flex h-100 flex-column justify-content-end gap-2 align-items-center">
-                  <img
-                    src={playerImg}
-                    alt=""
-                    className="position-absolute playersimg"
-                  />
-                  <img
-                    src={second}
-                    alt=""
-                    className="position-absolute placeimg"
-                  />
-                  <div className="d-flex flex-column h-100 justify-content-between">
-                    <div className="d-flex flex-column gap-2 m-auto align-items-center">
-                      <span className="playersname">
-                        {optionText === "daily"
-                          ? dailyrecords[1]?.displayName
-                          : optionText === "weekly"
-                          ? dailyrecords[1]?.displayName
-                          : optionText === "monthly"
-                          ? dailyrecords[1]?.displayName
-                          : genesisData[1]?.displayName}
-                      </span>
-                      <span className="playersreward">
-                        $
-                        {optionText === "daily"
-                          ? getFormattedNumber(
-                              availableTime !== "0" &&
-                                availableTime &&
-                                availableTime >= today1.getTime() &&
-                                availableTime !== undefined &&
-                                username === dailyrecords[1]?.displayName
-                                ? parseInt(prizes[1]) +
-                                    parseInt(dailyPrizesGolden[1])
-                                : parseInt(prizes[1]),
-                              0
-                            )
-                          : optionText === "weekly"
-                          ? getFormattedNumber(
-                              availableTime !== "0" &&
-                                availableTime &&
-                                availableTime >= today1.getTime() &&
-                                availableTime !== undefined &&
-                                username === dailyrecords[1]?.displayName
-                                ? parseInt(prizes[1]) +
-                                    parseInt(weeklyPrizesGolden[1])
-                                : parseInt(prizes[1]),
-                              0
-                            )
-                          : optionText === "monthly"
-                          ? getFormattedNumber(
-                              availableTime !== "0" &&
-                                availableTime &&
-                                availableTime >= today1.getTime() &&
-                                availableTime !== undefined &&
-                                username === dailyrecords[1]?.displayName
-                                ? parseInt(prizes[1]) +
-                                    parseInt(monthlyPrizesGolden[1])
-                                : parseInt(prizes[1]),
-                              0
-                            )
-                          : getFormattedNumber(genesisData[1]?.statValue, 0)}
-                      </span>
-                    </div>
-                    {optionText !== "genesis" && (
-                      <span className="playerscore">
-                        {getFormattedNumber(dailyrecords[1]?.statValue, 0)}{" "}
-                        Points
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="mainplayer-wrapper col-3">
-                <div className="position-relative d-flex h-100 flex-column justify-content-end gap-2 align-items-center">
-                  <img
-                    src={winner}
-                    alt=""
-                    className="position-absolute winnerimg"
-                  />
-                  <img
-                    src={first}
-                    alt=""
-                    className="position-absolute placeimg"
-                  />
-                  <div className="d-flex flex-column h-100 justify-content-between">
-                    <div className="d-flex flex-column gap-2 m-auto align-items-center">
-                      <span className="playersname">
-                        {optionText === "daily"
-                          ? dailyrecords[0]?.displayName
-                          : optionText === "weekly"
-                          ? dailyrecords[0]?.displayName
-                          : optionText === "monthly"
-                          ? dailyrecords[0]?.displayName
-                          : genesisData[0]?.displayName}
-                      </span>
-                      <span className="winnersreward">
-                        $
-                        {optionText === "daily"
-                          ? getFormattedNumber(
-                              availableTime !== "0" &&
-                                availableTime &&
-                                availableTime >= today1.getTime() &&
-                                availableTime !== undefined &&
-                                username === dailyrecords[0]?.displayName
-                                ? parseInt(prizes[0]) +
-                                    parseInt(dailyPrizesGolden[0])
-                                : parseInt(prizes[0]),
-                              0
-                            )
-                          : optionText === "weekly"
-                          ? getFormattedNumber(
-                              availableTime !== "0" &&
-                                availableTime &&
-                                availableTime >= today1.getTime() &&
-                                availableTime !== undefined &&
-                                username === dailyrecords[0]?.displayName
-                                ? parseInt(prizes[0]) +
-                                    parseInt(weeklyPrizesGolden[0])
-                                : parseInt(prizes[0]),
-                              0
-                            )
-                          : optionText === "monthly"
-                          ? getFormattedNumber(
-                              availableTime !== "0" &&
-                                availableTime &&
-                                availableTime >= today1.getTime() &&
-                                availableTime !== undefined &&
-                                username === dailyrecords[0]?.displayName
-                                ? parseInt(prizes[0]) +
-                                    parseInt(monthlyPrizesGolden[0])
-                                : parseInt(prizes[0]),
-                              0
-                            )
-                          : getFormattedNumber(genesisData[0]?.statValue, 0)}
-                      </span>
-                    </div>
-                    {optionText !== "genesis" && (
-                      <span className="playerscore">
-                        {getFormattedNumber(dailyrecords[0]?.statValue, 0)}{" "}
-                        Points
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="thirdplayer-wrapper col-3">
-                <div className="position-relative d-flex h-100 flex-column justify-content-end gap-2 align-items-center">
-                  <img
-                    src={playerImg}
-                    alt=""
-                    className="position-absolute playersimg"
-                  />
-                  <img
-                    src={third}
-                    alt=""
-                    className="position-absolute placeimg"
-                  />
-                  <div className="d-flex flex-column h-100 justify-content-between">
-                    <div className="d-flex flex-column gap-2 m-auto align-items-center">
-                      <span className="playersname">
-                        {optionText === "daily"
-                          ? dailyrecords[2]?.displayName
-                          : optionText === "weekly"
-                          ? dailyrecords[2]?.displayName
-                          : optionText === "monthly"
-                          ? dailyrecords[2]?.displayName
-                          : genesisData[2]?.displayName}
-                      </span>
-                      <span className="playersreward">
-                        $
-                        {optionText === "daily"
-                          ? getFormattedNumber(
-                              availableTime !== "0" &&
-                                availableTime &&
-                                availableTime >= today1.getTime() &&
-                                availableTime !== undefined &&
-                                username === dailyrecords[2]?.displayName
-                                ? parseInt(prizes[2]) +
-                                    parseInt(dailyPrizesGolden[2])
-                                : parseInt(prizes[2]),
-                              0
-                            )
-                          : optionText === "weekly"
-                          ? getFormattedNumber(
-                              availableTime !== "0" &&
-                                availableTime &&
-                                availableTime >= today1.getTime() &&
-                                availableTime !== undefined &&
-                                username === dailyrecords[2]?.displayName
-                                ? parseInt(prizes[2]) +
-                                    parseInt(weeklyPrizesGolden[2])
-                                : parseInt(prizes[2]),
-                              0
-                            )
-                          : optionText === "monthly"
-                          ? getFormattedNumber(
-                              availableTime !== "0" &&
-                                availableTime &&
-                                availableTime >= today1.getTime() &&
-                                availableTime !== undefined &&
-                                username === dailyrecords[2]?.displayName
-                                ? parseInt(prizes[2]) +
-                                    parseInt(monthlyPrizesGolden[2])
-                                : parseInt(prizes[2]),
-                              0
-                            )
-                          : getFormattedNumber(genesisData[2]?.statValue, 0)}
-                      </span>
-                    </div>
-                    {optionText !== "genesis" && (
-                      <span className="playerscore">
-                        {getFormattedNumber(dailyrecords[2]?.statValue, 0)}{" "}
-                        Points
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
     </>

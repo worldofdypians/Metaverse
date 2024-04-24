@@ -532,7 +532,6 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                         {item.position + 1}
                       </td>
                       <td className="playerName col-5 font-montserrat">
-                        <div className="position-relative d-flex align-items-center">
                           <img
                             src={require(`./assets/globalRanks/globalRank${
                               item.position + 1
@@ -545,7 +544,6 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName?.slice(0, 13)}
                             {item.displayName?.length > 13 && "..."}
                           </span>
-                        </div>
                       </td>
                       <td className="playerScore col-2 text-center font-montserrat">
                         <div className="d-flex align-items-center justify-content-center gap-2">
