@@ -190,12 +190,7 @@ const BetaPassNFT = ({
     background: "cmc-mint-bg2",
   };
 
-  const timepieceData = {
-    id: "timepiece",
-    cardTitle: "Caws Timepiece",
-    title: "Timepiece",
-    background: "market-mint-bg",
-  };
+
   const coin98Data = {
     id: "coin98",
     cardTitle: "Coin98 Beta Pass",
