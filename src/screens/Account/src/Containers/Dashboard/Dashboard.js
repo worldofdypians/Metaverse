@@ -2337,7 +2337,7 @@ function Dashboard({
       setuserWallet(data.getPlayer.wallet.publicAddress);
     }
   }, [data, email]);
-
+ 
   useEffect(() => {
     if (
       data &&

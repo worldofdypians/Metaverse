@@ -70,6 +70,7 @@ import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
 import ChestFlyout from "./components/LandFlyout/ChestFlyout";
 import NFTBridge from "./screens/NFTBridge/NftBridge.js";
+import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 
 function App() {
   const CHAINLIST = {
@@ -2452,6 +2453,13 @@ function App() {
               exact
               path="/auth"
               element={<Auth isConnected={isConnected} coinbase={coinbase} />}
+            />
+            <Route
+              exact
+              path="/bnbchain-alliance-program"
+              element={
+                <AuthBNB isConnected={isConnected} coinbase={coinbase} />
+              }
             />
             <Route exact path="/forgotPassword" element={<ForgotPassword />} />
             <Route exact path="/ResetPassword" element={<ResetPassword />} />
