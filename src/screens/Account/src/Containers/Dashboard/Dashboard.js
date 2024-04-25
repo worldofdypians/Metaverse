@@ -268,6 +268,8 @@ function Dashboard({
   const [premiumTxHash, setPremiumTxHash] = useState("");
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
   const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
+  const [discountPercentage, setdiscountPercentage] = useState(0);
+  const [nftPremium_tokenId, setnftPremium_tokenId] = useState(0);
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -798,6 +800,51 @@ function Dashboard({
     setUserSkaleScore(testArray[0].statValue);
   };
 
+  const calculatePremiumDiscount = async () => {
+    if (chainId === 56) {
+      const web3 = new window.ethereum();
+      const premiumSc = new web3.eth.Contract(
+        window.SUBSCRIPTION_NEWBNB2_ABI,
+        window.config.subscription_newbnb2_address
+      );
+
+      const discount = await premiumSc.methods
+        .discountPercentage()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      console.log(discount);
+    }
+  };
+
+  const fetchPremiumNft = async (wallet) => {
+    const nftContract = new window.bscWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_ABI,
+      window.config.nft_dypius_premium_address
+    );
+    if (wallet) {
+      const result = await nftContract.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      if (result && result > 0) {
+        const tokenId = await nftContract.methods
+          .tokenOfOwnerByIndex(wallet, 0)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+        setnftPremium_tokenId(tokenId);
+      }
+    }
+  };
+
   const fetchGenesisAroundPlayer = async (userId, userName) => {
     const data = {
       StatisticName: "GenesisLandRewards",
@@ -1095,6 +1142,7 @@ function Dashboard({
     let subscribedPlatformTokenAmountETH;
     let subscribedPlatformTokenAmountCfx;
     let subscribedPlatformTokenAmountBNB;
+    let subscribedPlatformTokenAmountBNB2;
     let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBase;
     let subscribedPlatformTokenAmountSkale;
@@ -1111,12 +1159,15 @@ function Dashboard({
     const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
     const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
     const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
+    const BnbABI2 = window.SUBSCRIPTION_NEWBNB2_ABI;
     const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    const bnbsubscribeAddress2 = window.config.subscription_newbnb2_address;
+
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
     const skalesubscribeAddress = window.config.subscription_skale_address;
 
@@ -1133,6 +1184,11 @@ function Dashboard({
     );
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
+    const bnbcontract2 = new web3bnb.eth.Contract(
+      BnbABI2,
+      bnbsubscribeAddress2
+    );
+
     const avaxcontract = new web3avax.eth.Contract(
       AvaxABI,
       avaxsubscribeAddress
@@ -1171,6 +1227,14 @@ function Dashboard({
           return 0;
         });
 
+      subscribedPlatformTokenAmountBNB2 = await bnbcontract2.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
       subscribedPlatformTokenAmountAvax = await avaxcontract.methods
         .subscriptionPlatformTokenAmount(addr)
         .call()
@@ -1192,6 +1256,7 @@ function Dashboard({
         subscribedPlatformTokenAmountETH == "0" &&
         subscribedPlatformTokenAmountBase == "0" &&
         subscribedPlatformTokenAmountBNB == "0" &&
+        subscribedPlatformTokenAmountBNB2 == "0" &&
         subscribedPlatformTokenAmountAvax == "0" &&
         subscribedPlatformTokenAmountSkale == "0" &&
         result === false
@@ -1203,6 +1268,7 @@ function Dashboard({
         subscribedPlatformTokenAmountETH != "0" ||
         subscribedPlatformTokenAmountBase != "0" ||
         subscribedPlatformTokenAmountBNB != "0" ||
+        subscribedPlatformTokenAmountBNB2 != "0" ||
         subscribedPlatformTokenAmountAvax != "0" ||
         subscribedPlatformTokenAmountSkale != "0" ||
         result === true
@@ -1726,7 +1792,8 @@ function Dashboard({
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
         : chainId === 56
-        ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
+        ? // ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
+          await window.getEstimatedTokenSubscriptionAmountBNB2(token)
         : chainId === 1030
         ? await window.getEstimatedTokenSubscriptionAmountCFX(token)
         : chainId === 43114
@@ -1754,7 +1821,9 @@ function Dashboard({
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const basesubscribeAddress = window.config.subscription_base_address;
-    const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    // const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    const bnbsubscribeAddress = window.config.subscription_newbnb2_address;
+
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
     const skalesubscribeAddress = window.config.subscription_skale_address;
 
@@ -1821,7 +1890,9 @@ function Dashboard({
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
-    const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    // const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    const bnbsubscribeAddress = window.config.subscription_newbnb2_address;
+
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
 
     const basesubscribeAddress = window.config.subscription_base_address;
@@ -1862,7 +1933,8 @@ function Dashboard({
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
         : chainId === 56
-        ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
+        ? // ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
+          await window.getEstimatedTokenSubscriptionAmountBNB2(token)
         : chainId === 1030
         ? await window.getEstimatedTokenSubscriptionAmountCFX(token)
         : chainId === 43114
@@ -1890,8 +1962,7 @@ function Dashboard({
           setisApproved(false);
           setapproveStatus("initial");
         }
-      }
-      if (chainId === 56) {
+      } else if (chainId === 56) {
         const result = await subscribeTokencontractbnb.methods
           .allowance(coinbase, bnbsubscribeAddress)
           .call()
@@ -1974,7 +2045,8 @@ function Dashboard({
         chainId === 1
           ? "SUBSCRIPTION_NEWETH"
           : chainId === 56
-          ? "SUBSCRIPTION_NEWBNB"
+          ? // ? "SUBSCRIPTION_NEWBNB"
+            "SUBSCRIPTION_NEWBNB2"
           : chainId === 43114
           ? "SUBSCRIPTION_NEWAVAX"
           : chainId === 1030
@@ -2513,7 +2585,15 @@ function Dashboard({
     }
   }, [dailyBonusPopup]);
 
- const hashValue = window.location.hash
+  useEffect(() => {
+    calculatePremiumDiscount();
+  }, [chainId]);
+
+  useEffect(() => {
+    fetchPremiumNft(userWallet !== "" ? userWallet : coinbase);
+  }, [userWallet, coinbase, chainId]);
+
+  const hashValue = window.location.hash;
 
   return (
     <div
@@ -3759,7 +3839,7 @@ function Dashboard({
                 </div>
               </OutsideClickHandler>
             )} */}
-            {(dailyBonusPopup || hashValue==="#dailybonus" )&& (
+            {(dailyBonusPopup || hashValue === "#dailybonus") && (
               // <OutsideClickHandler
               //   onOutsideClick={() => {
               //     setdailyBonusPopup(false);
@@ -3776,7 +3856,7 @@ function Dashboard({
                 listedNFTS={listedNFTS}
                 onclose={() => {
                   setdailyBonusPopup(false);
-                  window.location.hash = ""
+                  window.location.hash = "";
                 }}
                 coinbase={coinbase}
                 standardChests={standardChests}
