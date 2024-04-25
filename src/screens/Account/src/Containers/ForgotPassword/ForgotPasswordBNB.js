@@ -62,10 +62,8 @@ const ForgotPasswordBNB = ({onSuccess}) => {
   return (
     <LoginWrapper
       style={{
-        paddingTop: "3rem",
-        paddingBottom: "3rem",
-        marginTop: "3rem",
-        marginBottom: "3rem",
+        paddingTop: "5rem",
+        paddingBottom: "5rem",
       }}
     >
       <LoginCard>

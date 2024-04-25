@@ -230,6 +230,8 @@ function App() {
 
   const [myDogeNFTs, setmyDogeNFTs] = useState([]);
   const [myCmcNFTs, setmyCmcNFTs] = useState([]);
+  const [isBnb, setisBnb] = useState(false);
+  const [isBnbSuccess, setisBnbSuccess] = useState(false);
 
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
   const [
@@ -573,6 +575,9 @@ function App() {
           await window.getCoinbase().then((data) => {
             setCoinbase(data);
           });
+          if (isBnb === true) {
+            setisBnbSuccess(true);
+          }
           setwalletModal(false);
           setShowForms2(true);
           setSuccess(true);
@@ -2279,7 +2284,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
-        <div className="container-fluid p-0 main-wrapper position-relative">
+        <div className="container-fluid p-0 main-wrapper2 position-relative">
           <Header
             handleSignUp={handleShowWalletModal}
             coinbase={coinbase}
@@ -2316,6 +2321,7 @@ function App() {
             handleOpenDomains={() => setDomainPopup(true)}
             domainName={domainName}
           />
+
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
             <Route
@@ -2458,7 +2464,18 @@ function App() {
               exact
               path="/bnbchain-alliance-program"
               element={
-                <AuthBNB isConnected={isConnected} coinbase={coinbase} />
+                <AuthBNB
+                  isConnected={isConnected}
+                  coinbase={coinbase}
+                  isSuccess={isBnbSuccess}
+                  onWalletLinkComplete={() => {
+                    setisBnbSuccess(false);
+                  }}
+                  handleConnect={() => {
+                    setisBnb(true);
+                    setwalletModal(true);
+                  }}
+                />
               }
             />
             <Route exact path="/forgotPassword" element={<ForgotPassword />} />

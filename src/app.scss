@@ -15,16 +15,24 @@
   src: url("./fonts/Iceland.ttf");
 }
 
-.font-oxanium{
+.font-oxanium {
   font-family: "Oxanium" !important;
 }
-.font-montserrat{
+.font-montserrat {
   font-family: "Montserrat" !important;
 }
 
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+}
+
+.main-wrapper2 {
+  min-height: 100vh;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+
 }
 
 #root {
@@ -583,7 +591,7 @@ body {
 }
 
 .purple-btn2 {
-  background: linear-gradient(90deg, #CA00A0 1.45%, #4525C4 96.22%);
+  background: linear-gradient(90deg, #ca00a0 1.45%, #4525c4 96.22%);
   clip-path: polygon(
     0 20px,
     20px 0,
@@ -641,7 +649,7 @@ body {
 }
 
 .linear-border-purple2 {
-  background: linear-gradient(90deg, #CA00A0 1.45%, #4525C4 96.22%);
+  background: linear-gradient(90deg, #ca00a0 1.45%, #4525c4 96.22%);
   border: transparent;
   position: relative;
   padding: 3px;

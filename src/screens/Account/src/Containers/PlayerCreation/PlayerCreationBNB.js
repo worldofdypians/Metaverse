@@ -78,7 +78,7 @@ function PlayerCreationBNB({ onLinkWallet, linkWallet }) {
   }, [creationState]);
 
   return (
-    <LoginWrapper style={{ marginTop: "9rem", marginBottom: "9rem" }}>
+    <LoginWrapper style={{ marginTop: "3rem" }}>
       <div className="container-lg">
         <div
           className="d-flex flex-column gap-3 align-items-center m-auto"

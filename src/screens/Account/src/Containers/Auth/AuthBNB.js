@@ -4,17 +4,19 @@ import LoginWrapper from "../../Components/LoginWrapper/LoginWrapper";
 import { styled } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-
+import { ethers } from "ethers";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import ErrorAlert from "../../Components/ErrorAlert/ErrorAlert";
 import SingUpBNB from "../SingUp/SignUpBNB";
 import LoginBNB from "../Login/LoginBNB";
 import PlayerCreationBNB from "../PlayerCreation/PlayerCreationBNB";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { GET_PLAYER } from "../Dashboard/Dashboard.schema";
 import { useNavigate } from "react-router-dom";
 import ForgotPasswordBNB from "../ForgotPassword/ForgotPasswordBNB";
+import { GENERATE_NONCE, VERIFY_WALLET } from "../Dashboard/Dashboard.schema";
+import axios from "axios";
 
 const StyledTabs = styled((props) => (
   <Tabs
@@ -53,7 +55,13 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
   })
 );
 
-function AuthBNB({ isConnected, coinbase }) {
+function AuthBNB({
+  isConnected,
+  coinbase,
+  handleConnect,
+  isSuccess,
+  onWalletLinkComplete,
+}) {
   const { isAuthenticated, loginError, setLoginValues, playerId } = useAuth();
 
   const {
@@ -70,6 +78,11 @@ function AuthBNB({ isConnected, coinbase }) {
   const [isLogin, setisLogin] = useState(false);
   const navigate = useNavigate();
   const [linkWallet, setLinkWallet] = useState(false);
+
+  const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
+    useMutation(GENERATE_NONCE);
+  const [verifyWallet, { loading: loadingVerify, data: dataVerify }] =
+    useMutation(VERIFY_WALLET);
 
   useEffect(() => {
     if (isAuthenticated && !playerId) {
@@ -89,6 +102,18 @@ function AuthBNB({ isConnected, coinbase }) {
       setplayerCreation(true);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (dataNonce?.generateWalletNonce) {
+      signWalletPublicAddress();
+    }
+  }, [dataNonce]);
+
+  useEffect(() => {
+    if (isSuccess === true && isConnected) {
+      handleLinkWallet();
+    }
+  }, [isSuccess, isConnected]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -114,7 +139,6 @@ function AuthBNB({ isConnected, coinbase }) {
   }
 
   const handleManageLoginStates = () => {
-    console.log(isAuthenticated, playerId, data);
     if (
       isAuthenticated &&
       playerId &&
@@ -131,7 +155,52 @@ function AuthBNB({ isConnected, coinbase }) {
     }
   };
 
-  const handleLinkWallet = () => {};
+  const handleLinkWallet = async () => {
+    if (isConnected) {
+      await generateNonce({
+        variables: {
+          publicAddress: coinbase,
+        },
+      });
+    } else {
+      handleConnect();
+    }
+  };
+
+  const handleFirstTask = async (wallet) => {
+    const result = await axios
+      .get(
+        `https://api.worldofdypians.com/api/airdrop-alliance/task1/${wallet}`
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result && result.status === 200) {
+      console.log(result);
+      navigate("/account");
+    }
+  };
+
+  const signWalletPublicAddress = async () => {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner(coinbase);
+      const signature = await signer.signMessage(
+        `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+      );
+      verifyWallet({
+        variables: {
+          publicAddress: coinbase,
+          signature: signature,
+        },
+      }).then(() => {
+        onWalletLinkComplete();
+        handleFirstTask(coinbase);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // if (isAuthenticated && !playerId) {
   //   return <Navigate to={"/player"} />;
@@ -148,8 +217,15 @@ function AuthBNB({ isConnected, coinbase }) {
           linkWallet={linkWallet}
           onLinkWallet={handleLinkWallet}
         />
+      ) : playerCreation === false && forgotPassword === true ? (
+        <ForgotPasswordBNB
+          onSuccess={() => {
+            setforgotPassword(false);
+            handleChange("click", 0);
+          }}
+        />
       ) : (
-        <LoginWrapper style={{ marginTop: "5rem", marginBottom: "4rem" }}>
+        <LoginWrapper style={{ marginTop: "3rem" }}>
           <LoginCard
             containerStyles={{
               height: 500,
@@ -180,14 +256,7 @@ function AuthBNB({ isConnected, coinbase }) {
                   onSuccessLogin={handleManageLoginStates}
                 />
               )}
-            {forgotPassword === true && (
-              <ForgotPasswordBNB
-                onSuccess={() => {
-                  setforgotPassword(false);
-                  handleChange("click", 0);
-                }}
-              />
-            )}
+
             {value === 1 && playerCreation === false && (
               <SingUpBNB
                 onUserExists={() => {

@@ -64,8 +64,6 @@ const ForgotPassword = () => {
       style={{
         paddingTop: "3rem",
         paddingBottom: "3rem",
-        marginTop: "3rem",
-        marginBottom: "3rem",
       }}
     >
       <LoginCard>

@@ -661,6 +661,24 @@ function Dashboard({
     }
   }
 
+  const handleFirstTask = async (wallet) => {
+    const result = await axios
+      .get(
+        `https://api.worldofdypians.com/api/airdrop-alliance/task1/${wallet}`
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result && result.status === 200) {
+      console.log(result.data.result);
+      setTimeout(() => {
+        if (isonlink) {
+          window.location.reload();
+        }
+      }, 2000);
+    }
+  };
+
   const signWalletPublicAddress = async () => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -680,11 +698,9 @@ function Dashboard({
           setsyncStatus("initial");
         }, 1000);
 
-        setTimeout(() => {
-          if (isonlink) {
-            window.location.reload();
-          }
-        }, 2000);
+        if (isonlink) {
+          handleFirstTask(account);
+        }
       });
     } catch (error) {
       setsyncStatus("error");
@@ -2337,7 +2353,7 @@ function Dashboard({
       setuserWallet(data.getPlayer.wallet.publicAddress);
     }
   }, [data, email]);
- 
+
   useEffect(() => {
     if (
       data &&

@@ -19,6 +19,7 @@
   align-self: flex-start;
   text-decoration: none;
   margin: 40px auto;
+  cursor: pointer;
 }
 
 .createplayertxt {
