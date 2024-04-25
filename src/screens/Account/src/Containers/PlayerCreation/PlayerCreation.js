@@ -75,10 +75,10 @@ function PlayerCreation() {
   }, [creationState]);
 
   return (
-    <LoginWrapper style={{ marginTop: "9rem", marginBottom: "9rem" }}>
+    <LoginWrapper style={{ margin: "8rem 0" }}>
       <LoginCard>
         <div className={classes.container}>
-          <p className={classes.playerCreationTitle}>Player Creation</p>
+        <h4 className={classes.playerCreationTitle}>Player Creation</h4>
           <form autocomplete="off">
             <Input
               autocomplete="off"
