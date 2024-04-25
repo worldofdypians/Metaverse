@@ -754,6 +754,7 @@ function Dashboard({
     setUserRank(testArray[0].position);
     setUserBnbScore(testArray[0].statValue);
   };
+
   const fetchSkaleRecordsAroundPlayer = async (userId, userName) => {
     const data = {
       StatisticName: "LeaderboardSkaleMonthly",
@@ -2512,6 +2513,8 @@ function Dashboard({
     }
   }, [dailyBonusPopup]);
 
+ const hashValue = window.location.hash
+
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0"
@@ -3756,7 +3759,7 @@ function Dashboard({
                 </div>
               </OutsideClickHandler>
             )} */}
-            {dailyBonusPopup && (
+            {(dailyBonusPopup || hashValue==="#dailybonus" )&& (
               // <OutsideClickHandler
               //   onOutsideClick={() => {
               //     setdailyBonusPopup(false);
@@ -3773,6 +3776,7 @@ function Dashboard({
                 listedNFTS={listedNFTS}
                 onclose={() => {
                   setdailyBonusPopup(false);
+                  window.location.hash = ""
                 }}
                 coinbase={coinbase}
                 standardChests={standardChests}
