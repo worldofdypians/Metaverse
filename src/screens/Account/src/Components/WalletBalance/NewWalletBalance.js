@@ -319,7 +319,7 @@ skalePoints,
     minRewards: "0.5",
     maxRewards: "20",
     minPoints: "5,000",
-    maxPoints: "30,000",
+    maxPoints: "50,000",
     learnMore:
       "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
   };
