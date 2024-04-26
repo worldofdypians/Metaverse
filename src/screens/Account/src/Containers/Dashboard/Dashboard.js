@@ -270,6 +270,7 @@ function Dashboard({
   const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
   const [discountPercentage, setdiscountPercentage] = useState(0);
   const [nftPremium_tokenId, setnftPremium_tokenId] = useState(0);
+  const [nftPremium_total, setnftPremium_total] = useState(0);
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -802,8 +803,7 @@ function Dashboard({
 
   const calculatePremiumDiscount = async () => {
     if (chainId === 56) {
-      const web3 = new window.ethereum;
-      const premiumSc = new web3.eth.Contract(
+      const premiumSc = new window.bscWeb3.eth.Contract(
         window.SUBSCRIPTION_NEWBNB2_ABI,
         window.config.subscription_newbnb2_address
       );
@@ -815,7 +815,7 @@ function Dashboard({
           console.error(e);
           return 0;
         });
-      console.log(discount);
+      setdiscountPercentage(discount);
     }
   };
 
@@ -832,6 +832,7 @@ function Dashboard({
           console.error(e);
           return 0;
         });
+
       if (result && result > 0) {
         const tokenId = await nftContract.methods
           .tokenOfOwnerByIndex(wallet, 0)
@@ -841,6 +842,7 @@ function Dashboard({
             return 0;
           });
         setnftPremium_tokenId(tokenId);
+        setnftPremium_total(result);
       }
     }
   };
@@ -1834,41 +1836,67 @@ function Dashboard({
       selectedSubscriptionToken
     );
     setloadspinner(true);
+    let nftContract = new window.web3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_ABI,
+      window.config.nft_dypius_premium_address
+    );
 
-    await tokenContract.methods
-      .approve(
-        chainId === 1
-          ? ethsubscribeAddress
-          : chainId === 56
-          ? bnbsubscribeAddress
-          : chainId === 1030
-          ? cfxsubscribeAddress
-          : chainId === 8453
-          ? basesubscribeAddress
-          : chainId === 43114
-          ? avaxsubscribeAddress
-          : chainId === 1482601649
-          ? skalesubscribeAddress
-          : cfxsubscribeAddress,
-        price
-      )
-      .send({ from: coinbase })
-      .then(() => {
-        setloadspinner(false);
-        setisApproved(true);
-        setapproveStatus("deposit");
-      })
-      .catch((e) => {
-        setstatus(e?.message);
-        setloadspinner(false);
-        setapproveStatus("fail");
-        window.alertify.error(e?.message);
-        setTimeout(() => {
-          setstatus("");
+    if (discountPercentage == "100" && chainId === 56 && nftPremium_total > 0) {
+      await nftContract.methods
+        .approve(window.config.subscription_newbnb2_address, nftPremium_tokenId)
+        .send({ from: coinbase })
+        .then(() => {
           setloadspinner(false);
-          setapproveStatus("initial");
-        }, 5000);
-      });
+          setisApproved(true);
+          setapproveStatus("deposit");
+        })
+        .catch((e) => {
+          setstatus(e?.message);
+          setloadspinner(false);
+          setapproveStatus("fail");
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setstatus("");
+            setloadspinner(false);
+            setapproveStatus("initial");
+          }, 5000);
+        });
+    } else {
+      await tokenContract.methods
+        .approve(
+          chainId === 1
+            ? ethsubscribeAddress
+            : chainId === 56
+            ? bnbsubscribeAddress
+            : chainId === 1030
+            ? cfxsubscribeAddress
+            : chainId === 8453
+            ? basesubscribeAddress
+            : chainId === 43114
+            ? avaxsubscribeAddress
+            : chainId === 1482601649
+            ? skalesubscribeAddress
+            : cfxsubscribeAddress,
+          price
+        )
+        .send({ from: coinbase })
+        .then(() => {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        })
+        .catch((e) => {
+          setstatus(e?.message);
+          setloadspinner(false);
+          setapproveStatus("fail");
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setstatus("");
+            setloadspinner(false);
+            setapproveStatus("initial");
+          }, 5000);
+        });
+    }
   };
 
   const handleUpdatePremiumUser = async (wallet) => {
@@ -1963,18 +1991,55 @@ function Dashboard({
           setapproveStatus("initial");
         }
       } else if (chainId === 56) {
-        const result = await subscribeTokencontractbnb.methods
-          .allowance(coinbase, bnbsubscribeAddress)
-          .call()
-          .then();
-        if (result != 0 && Number(result) >= Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(true);
-          setapproveStatus("deposit");
-        } else if (result == 0 || Number(result) < Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(false);
-          setapproveStatus("initial");
+        if (discountPercentage == "100" && nftPremium_total > 0) {
+          let contract = new window.web3.eth.Contract(
+            window.NFT_DYPIUS_PREMIUM_ABI,
+            window.config.nft_dypius_premium_address
+          );
+
+          let approved = await contract.methods
+            .getApproved(nftPremium_tokenId)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          let approvedAll = await contract.methods
+            .isApprovedForAll(coinbase, bnbsubscribeAddress)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          if (
+            approved.toLowerCase() === bnbsubscribeAddress.toLowerCase() ||
+            approvedAll
+          ) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        } else {
+          const result = await subscribeTokencontractbnb.methods
+            .allowance(coinbase, bnbsubscribeAddress)
+            .call()
+            .then();
+
+          if (result != 0 && Number(result) >= Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else if (result == 0 || Number(result) < Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
         }
       } else if (chainId === 43114) {
         const result = await subscribeTokencontractavax.methods
@@ -2059,68 +2124,129 @@ function Dashboard({
     });
 
     setloadspinnerSub(true);
+    if (chainId === 56 && nftPremium_total > 0 && discountPercentage == "100") {
+      await window
+        .subscribeNFT(nftPremium_tokenId)
+        .then(async (data) => {
+          if (dailyBonusPopup === true) {
+            setPremiumTxHash(data.transactionHash);
+            const selectedchain =
+              chainId === 1
+                ? "eth"
+                : chainId === 56
+                ? "bnb"
+                : chainId === 43114
+                ? "avax"
+                : chainId === 1030
+                ? "cfx"
+                : chainId === 8453
+                ? "base"
+                : chainId === 1482601649
+                ? "skale"
+                : "";
+            setselectedChainforPremium(selectedchain);
 
-    await subscriptionContract.methods
-      .subscribe(selectedSubscriptionToken, price)
-      .send({ from: await window.getCoinbase() })
-      .then(async (data) => {
-        if (dailyBonusPopup === true) {
-          setPremiumTxHash(data.transactionHash);
-          const selectedchain =
-            chainId === 1
-              ? "eth"
-              : chainId === 56
-              ? "bnb"
-              : chainId === 43114
-              ? "avax"
-              : chainId === 1030
-              ? "cfx"
-              : chainId === 8453
-              ? "base"
-              : chainId === 1482601649
-              ? "skale"
-              : "";
-          setselectedChainforPremium(selectedchain);
+            setTimeout(() => {
+              setgetPremiumPopup(false);
+            }, 2000);
+          }
+          setloadspinnerSub(false);
+          setIsPremium(true);
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
 
+          await axios
+            .patch(
+              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+              {
+                multiplier: "yes",
+              }
+            )
+            .then(() => {
+              getRankData();
+            });
           setTimeout(() => {
-            setgetPremiumPopup(false);
-          }, 2000);
-        }
-        setloadspinnerSub(false);
-        setIsPremium(true);
-        handleUpdatePremiumUser(coinbase);
-        setapproveStatus("successsubscribe");
-        await axios
-          .patch(
-            `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-            {
-              multiplier: "yes",
-            }
-          )
-          .then(() => {
-            getRankData();
-          });
-        setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        })
+        .catch((e) => {
           setloadspinnerSub(false);
-          setloadspinner(false);
-          setapproveStatus("initial");
-          setstatus("");
-        }, 5000);
-        // this.props.onSubscribe();
-        // window.location.href = "https://app.dypius.com/account";
-      })
-      .catch((e) => {
-        setloadspinnerSub(false);
-        setapproveStatus("failsubscribe");
-        setstatus(e?.message);
-        window.alertify.error(e?.message);
-        setTimeout(() => {
+          setapproveStatus("failsubscribe");
+          setstatus(e?.message);
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        });
+    } else {
+      await subscriptionContract.methods
+        .subscribe(selectedSubscriptionToken, price)
+        .send({ from: await window.getCoinbase() })
+        .then(async (data) => {
+          if (dailyBonusPopup === true) {
+            setPremiumTxHash(data.transactionHash);
+            const selectedchain =
+              chainId === 1
+                ? "eth"
+                : chainId === 56
+                ? "bnb"
+                : chainId === 43114
+                ? "avax"
+                : chainId === 1030
+                ? "cfx"
+                : chainId === 8453
+                ? "base"
+                : chainId === 1482601649
+                ? "skale"
+                : "";
+            setselectedChainforPremium(selectedchain);
+
+            setTimeout(() => {
+              setgetPremiumPopup(false);
+            }, 2000);
+          }
           setloadspinnerSub(false);
-          setloadspinner(false);
-          setapproveStatus("initial");
-          setstatus("");
-        }, 5000);
-      });
+          setIsPremium(true);
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          await axios
+            .patch(
+              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+              {
+                multiplier: "yes",
+              }
+            )
+            .then(() => {
+              getRankData();
+            });
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+          // this.props.onSubscribe();
+          // window.location.href = "https://app.dypius.com/account";
+        })
+        .catch((e) => {
+          setloadspinnerSub(false);
+          setapproveStatus("failsubscribe");
+          setstatus(e?.message);
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        });
+    }
   };
 
   const getTokenDatabnb = async () => {

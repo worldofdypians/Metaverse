@@ -3105,8 +3105,10 @@ function App() {
 
         {!location.pathname.includes("account") &&
           !location.pathname.includes("auth") &&
-          !location.pathname.includes("explorer")&&
-          !location.pathname.includes("bnbchain-alliance-program") && <ChestFlyout />}
+          !location.pathname.includes("explorer") &&
+          !location.pathname.includes("bnbchain-alliance-program") &&
+          !location.pathname.includes("forgotPassword") &&
+          !location.pathname.includes("player") && <ChestFlyout />}
         {domainPopup && (
           <DomainModal
             onClose={() => setDomainPopup(false)}
