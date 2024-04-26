@@ -802,7 +802,7 @@ function Dashboard({
 
   const calculatePremiumDiscount = async () => {
     if (chainId === 56) {
-      const web3 = new window.ethereum();
+      const web3 = new window.ethereum;
       const premiumSc = new web3.eth.Contract(
         window.SUBSCRIPTION_NEWBNB2_ABI,
         window.config.subscription_newbnb2_address
