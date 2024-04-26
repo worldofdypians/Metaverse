@@ -213,6 +213,9 @@
   letter-spacing: -0.018em;
   color: rgba(243, 192, 9, 1);
   height: 32px;
+  @media screen and (max-width: 400px) {
+    font-size: 12px;
+  }
 }
 .goldenscore-inactive2 {
   color: #fff;
@@ -526,4 +529,24 @@
   line-height: 21px;
   letter-spacing: -0.018em;
   font-family: "Montserrat" !important;
+
+  @media screen and (max-width: 400px) {
+    font-size: 12px;
+  }
+}
+.left-arrow-leaderboard{
+  position: absolute;
+  left: -4%;
+  top: 50%;
+  z-index: 1;
+  width: 30px;
+  cursor: pointer;
+}
+.right-arrow-leaderboard{
+  position: absolute;
+  right: -4%;
+  top: 50%;
+  z-index: 1;
+  width: 30px;
+  cursor: pointer;
 }
