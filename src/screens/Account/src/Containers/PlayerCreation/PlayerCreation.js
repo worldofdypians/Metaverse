@@ -75,7 +75,7 @@ function PlayerCreation() {
   }, [creationState]);
 
   return (
-    <LoginWrapper style={{ margin: "8rem 0" }}>
+    <LoginWrapper style={{ margin: "auto" }}>
       <LoginCard>
         <div className={classes.container}>
         <h4 className={classes.playerCreationTitle}>Player Creation</h4>
