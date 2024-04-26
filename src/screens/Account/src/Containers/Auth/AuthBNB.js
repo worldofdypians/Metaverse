@@ -225,7 +225,7 @@ function AuthBNB({
           }}
         />
       ) : (
-        <LoginWrapper style={{ marginTop: "3rem" }}>
+        <LoginWrapper style={{ margin: "auto" }}>
           <LoginCard
             containerStyles={{
               height: 500,

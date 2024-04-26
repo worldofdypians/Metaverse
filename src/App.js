@@ -3105,7 +3105,8 @@ function App() {
 
         {!location.pathname.includes("account") &&
           !location.pathname.includes("auth") &&
-          !location.pathname.includes("explorer") && <ChestFlyout />}
+          !location.pathname.includes("explorer")&&
+          !location.pathname.includes("bnbchain-alliance-program") && <ChestFlyout />}
         {domainPopup && (
           <DomainModal
             onClose={() => setDomainPopup(false)}

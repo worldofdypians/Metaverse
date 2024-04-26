@@ -39,7 +39,7 @@ const ForgotPasswordBNB = ({onSuccess}) => {
 
   if (isEmailSentSucces) {
     return (
-      <LoginWrapper style={{ marginTop: "5rem", marginBottom: '4rem' }}>
+      <LoginWrapper style={{ margin:'auto' }}>
         <LoginCard>
           <div className={classes.container}>
             <h1 className={classes.succesfulMessageTitle}>
@@ -62,8 +62,7 @@ const ForgotPasswordBNB = ({onSuccess}) => {
   return (
     <LoginWrapper
       style={{
-        paddingTop: "5rem",
-        paddingBottom: "5rem",
+        margin:'auto'
       }}
     >
       <LoginCard>
