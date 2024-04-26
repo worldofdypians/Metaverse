@@ -9,8 +9,9 @@ import {
   ErrorAlert,
 } from "../../Components";
 import classes from "./ForgotPassword.module.css";
+import LoginCardBNB from "../../Components/LoginCard/LoginCardBNB";
 
-const ForgotPasswordBNB = ({onSuccess}) => {
+const ForgotPasswordBNB = ({ onSuccess }) => {
   const [email, setEmail] = useState("");
   const [isEmailSentSucces, setEmailSentSucces] = useState(false);
   const [error, setError] = useState("");
@@ -39,43 +40,38 @@ const ForgotPasswordBNB = ({onSuccess}) => {
 
   if (isEmailSentSucces) {
     return (
-      <LoginWrapper style={{ margin:'auto' }}>
-        <LoginCard>
-          <div className={classes.container}>
-            <h1 className={classes.succesfulMessageTitle}>
-              We sent you a link at your email.
-            </h1>
-            <h1
-              onClick={() => {
-                onSuccess();
-              }}
-              className={classes.succesfulBack}
-            >
-              Back to Sign In
-            </h1>
-          </div>
-        </LoginCard>
-      </LoginWrapper>
+      <div style={{ margin: "auto" }}>
+        <div className={classes.containerbnb}>
+        <h6 className={classes.create_acc_bnb}>
+            We sent you a link at your email.
+          </h6>
+          <span className={classes.createplayertxt2} style={{ margin: "auto" }}>
+            *We sent you a link at your email. Check your inbox and reset your
+            password. Then try to login again.
+          </span>
+
+          <h1
+            onClick={() => {
+              onSuccess();
+            }}
+            className={classes.errorText2}
+          >
+            Back to Sign In
+          </h1>
+        </div>
+      </div>
     );
   }
 
   return (
-    <LoginWrapper
-      style={{
-        margin:'auto'
-      }}
-    >
-      <LoginCard>
-        <div className={classes.container}>
-          <h1
-            style={{
-              fontSize: 24,
-              marginBottom: 40,
-              fontWeight: 500,
-            }}
-          >
-            Reset Password
-          </h1>
+    <div>
+      <div className={classes.containerbnb}>
+        <div className="d-flex flex-column gap-3">
+          <h6 className={classes.create_acc_bnb}>Reset Password</h6>
+          <span className={classes.createplayertxt2}>
+            *Please enter your email address in the field below. After
+            submitting, the password reset link will be sent to your inbox.
+          </span>
           <Input
             style={{
               marginBottom: 20,
@@ -83,24 +79,29 @@ const ForgotPasswordBNB = ({onSuccess}) => {
             placeHolder="Email"
             value={email}
             onChange={onChangeEmail}
+            type={"coingecko"}
           />
-          <Button
-            style={{ margin: "auto", marginTop: 30, marginBottom: 20 }}
-            onPress={handleEmail}
-            title={"Send Email"}
-          />
-          <h1
-            onClick={() => {
-              onSuccess();
-            }}
-            className={classes.succesfulBack}
-          >
-            Back to Sign In
-          </h1>
+          <div className="summaryseparator"></div>
+          <div className="d-flex flex-column gap-1 align-items-center">
+            <Button
+              onPress={handleEmail}
+              title={"Send Email"}
+              type={"primary2"}
+            />
+            <h1
+              onClick={() => {
+                onSuccess();
+              }}
+              className={classes.errorText2}
+            >
+              Back to Sign In
+            </h1>{" "}
+          </div>
         </div>
-      </LoginCard>
+      </div>
+
       <ErrorAlert error={error} />
-    </LoginWrapper>
+    </div>
   );
 };
 

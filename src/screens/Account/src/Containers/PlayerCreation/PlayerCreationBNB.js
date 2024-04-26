@@ -16,9 +16,9 @@ import { useNavigate } from "react-router-dom";
 import defaultAvatar from "../../Images/userProfile/default-avatar.png";
 import walletImg from "../../Images/userProfile/wallet.svg";
 import circleArrow from "../../Images/userProfile/arrow-circle.svg";
-import greenCheck from "../../Images/userProfile/greenCheck.svg";
+import successLogo from '../../Images/userProfile/successLogo.svg';
 
-function PlayerCreationBNB({ onLinkWallet, linkWallet }) {
+function PlayerCreationBNB({ onLinkWallet, linkWallet, successLink, onShowLinkWallet }) {
   const { getUpdatedUser } = useAuth();
 
   const [onCreatePlayer, { loading }] = useMutation(CREATE_PLAYER);
@@ -65,6 +65,7 @@ function PlayerCreationBNB({ onLinkWallet, linkWallet }) {
       setTimeout(() => {
         // navigate("/account");
         setShowLinkWallet(true);
+        onShowLinkWallet()
       }, 1000);
     } catch (error) {
       setCreateError(getErrorMessage(error));
@@ -78,112 +79,91 @@ function PlayerCreationBNB({ onLinkWallet, linkWallet }) {
   }, [creationState]);
 
   return (
-    <LoginWrapper style={{ margin: "auto" }}>
-      <div className="container-lg">
-        <div
-          className="d-flex flex-column gap-3 align-items-center m-auto"
-          style={{ width: "fit-content" }}
-        >
-          {(showLinkWallet === true || linkWallet === true) && (
-            <div className="d-flex flex-column gap-2">
-              <h5 className="d-flex align-items-center gap-2 text-white">
-                <img src={greenCheck} alt="" /> Link your wallet to finish game
-                account setup
-              </h5>
-              <div className="position-relative px-0 w-100">
-                <div className={`user-cardImg`}>
-                  <div className={`bordereddiv`}>
-                    <div className="d-flex flex-column justify-content-between gap-2 align-items-start">
-                      <div className="d-flex gap-2 justify-content-between align-items-center w-100">
-                        <div className="d-flex align-items-center gap-2 w-100">
-                          <img
-                            src={defaultAvatar}
-                            alt=""
-                            className="userAvatar"
-                          />
-                          <div className="d-flex flex-column gap-1">
-                            <span className="usernametext font-organetto">
-                              Start your journey now!
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className="walletconnectBtn m-0 w-100"
-                        onClick={onLinkWallet}
-                      >
-                        <div className="d-flex gap-2 justify-content-between align-items-center">
-                          <div className="d-flex gap-2 align-items-center">
-                            <img src={walletImg} alt="" />
-                            <div className="d-flex flex-column">
-                              <span className="secondTitle">
-                                Connect wallet
-                              </span>
+    <div className="d-flex flex-column h-100">
+      <div className={`d-flex flex-column gap-3 align-items-center h-100`}>
+        {(showLinkWallet === true || linkWallet === true) && successLink === false && (
+          <div className="d-flex flex-column gap-2 w-100 px-3">
+            <h4 className={classes.create_acc_bnb}>Link Wallet</h4>
+            <span className={classes.createplayertxt2}>
+              Make sure to connect your wallet, as it will be associated with
+              your game account. This connection is essential for accessing
+              in-game assets, making transactions, and participating in the
+              game's economy.
+            </span>
+            <div className="summaryseparator my-2"></div>
+            <div className="position-relative px-0 w-100">
+              <div className="d-flex flex-column justify-content-between gap-2 align-items-start">
+                <div
+                  className="walletconnectBtn m-0 w-100"
+                  onClick={onLinkWallet}
+                >
+                  <div className="d-flex gap-2 justify-content-between align-items-center">
+                    <div className="d-flex gap-2 align-items-center">
+                      <img src={walletImg} alt="" />
+                      <div className="d-flex flex-column">
+                        <span className="secondTitle">Connect wallet</span>
 
-                              <span className="firsttitle">
-                                Link your wallet
-                              </span>
-                            </div>
-                          </div>
-                          <img src={circleArrow} alt="" />
-                        </div>
+                        <span className="firsttitle">Link your wallet</span>
                       </div>
                     </div>
-                  </div>
-                  <div className={`bordereddiv border-0 `}>
-                    <div
-                      className={`d-flex flex-column flex-xxl-row flex-lg-row  align-items-center gap-2 ${"justify-content-start p-2"} `}
-                    >
-                      <p className="walletassoc-txt m-0">
-                        *There is no wallet address associated with your game
-                        account.
-                        <br /> Link your wallet to finish setup.
-                      </p>
-                    </div>
+                    <img src={circleArrow} alt="" />
                   </div>
                 </div>
               </div>
             </div>
-          )}
-          {showLinkWallet === false && linkWallet === false && (
-            <LoginCard>
-              <div className={classes.container}>
-                <h4 className={classes.playerCreationTitle}>Player Creation</h4>
-                <form autocomplete="off">
-                  <Input
-                    autocomplete="off"
-                    name="displayName"
-                    style={{
-                      marginBottom: 24,
-                    }}
-                    placeHolder="Display name"
-                    value={displayName}
-                    onChange={setDisplayName}
-                  />
-                  <Input
-                    name="player-password"
-                    style={{
-                      marginBottom: 48,
-                    }}
-                    inputType="password"
-                    placeHolder="Password"
-                    value={password}
-                    onChange={setPassword}
-                  />
-                  <Button
-                    style={{ margin: "auto" }}
-                    onPress={_onCreatePlayer}
-                    title={"Continue"}
-                    loading={loading}
-                  />
-                </form>
+          </div>
+        )}
+        {showLinkWallet === false && linkWallet === false && successLink === false &&  (
+          <div className={`${classes.containerbnb} w-100 align-items-center`}>
+            <div className="d-flex flex-column gap-3">
+              <h4 className={classes.create_acc_bnb}>Create Profile</h4>
+              <span className={classes.createplayertxt2}>
+                Please create a username that will be associated with your game
+                account. This username will be used to identify you in the game
+                and will be visible to other players. Choose a unique username
+                that reflects your personality or gaming style.
+              </span>
+              <div className="d-flex flex-column w-100 gap-1">
+                <h6 className={classes.labelBNB}>Username*</h6>
+                <Input
+                  autocomplete="off"
+                  name="displayName"
+                  placeHolder="Display name"
+                  value={displayName}
+                  onChange={setDisplayName}
+                  type={"coingecko"}
+                />
               </div>
-            </LoginCard>
-          )}
-        </div>
+              <div className="d-flex flex-column w-100 gap-1">
+                <h6 className={classes.labelBNB}>Password*</h6>
+                <Input
+                  name="player-password"
+                  inputType="password"
+                  placeHolder="Password"
+                  value={password}
+                  onChange={setPassword}
+                  type={"coingecko"}
+                />
+              </div>
+              <div className="summaryseparator"></div>
+            </div>
+            <Button
+              onPress={_onCreatePlayer}
+              title={"Continue"}
+              // loading={loading}
+              type={"primary2"}
+            />
+          </div>
+        )}
+        {successLink === true && <div className="d-flex flex-column gap-3 align-items-center h-100 justify-content-center">
+          <img src={successLogo} alt='' />
+          <h6 className={classes.successmsg}>Congratulations!</h6>
+          <h6 className={classes.bottomGroup_graytxt}>You have successfully created your game account</h6>
+          </div>}
       </div>
+
       <ErrorAlert error={createError} />
-    </LoginWrapper>
+    </div>
   );
 }
 
