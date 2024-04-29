@@ -817,7 +817,7 @@ function Dashboard({
           return 0;
         });
       setdiscountPercentage(discount);
-    }
+    } else setdiscountPercentage(0)
   };
 
   const fetchPremiumNft = async (wallet) => {

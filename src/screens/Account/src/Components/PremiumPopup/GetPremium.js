@@ -105,7 +105,7 @@ const GetPremiumPopup = ({
           return 0;
         });
       setdiscountPercentage(discount);
-    }
+    } else setdiscountPercentage(0)
   };
 
   const fetchPremiumNft = async (wallet) => {
@@ -712,6 +712,14 @@ const GetPremiumPopup = ({
     }
   }, [chainId, selectedSubscriptionToken]);
 
+  useEffect(() => {
+    calculatePremiumDiscount();
+  }, [chainId]);
+
+  useEffect(() => {
+    fetchPremiumNft(coinbase);
+  }, [coinbase, chainId]);
+
   return (
     <div
       className="popup-wrapper popup-active p-4"
@@ -1232,7 +1240,7 @@ const GetPremiumPopup = ({
               (approveStatus === "initial" ||
                 approveStatus === "fail" ||
                 approveStatus === "deposit") ? (
-                "Buy"
+                  <>{ discountPercentage > 0 ? 'Redeem' : "Buy"}</>
               ) : loadspinnerSub === false &&
                 approveStatus === "successsubscribe" ? (
                 "Success"
