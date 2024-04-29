@@ -227,20 +227,22 @@ function AuthBNB({
     <div className="mx-0 container-nft w-100 container-fluid d-flex align-items-start px-0 px-lg-5 flex-column">
       <div className="d-flex flex-column container-lg gap-2 w-100">
         <div className="nft-page-wrapper bg-transparent d-flex flex-column flex-lg-row gap-3 mb-3">
-          <div className="col-12 col-md-12 col-lg-8 mt-0 p-3 nft-page-wrapperbnb">
-            <div className="d-flex justify-content-end buttonwrapper-bnb-alliance">
+          <div className="d-flex flex-column gap-4 col-12 col-md-12 col-lg-8 mt-0">
+            <div className="p-3 nft-page-wrapperbnb h-100"></div>
+            <div className="d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center gap-0 gap-lg-1 gap-md-1 ">
+              <span className="detailsgreen-txt text-white">For any issues submit a ticket on:{" "} </span>
               <a
-                href="https://medium.com/@worldofdypians/create-world-of-dypians-account-tutorial-9bceb9f13f9d"
+                href="https://discord.gg/worldofdypians"
+                className="detailsgreen-txt d-flex"
                 target="_blank"
                 rel="noreferrer"
-                className="d-flex gap-2 align-items-center medium-btn-bnb px-3 py-1"
               >
-                <img src={mediumLogo} alt="" /> Create Account Tutorial
+                World of Dypians Discord
               </a>
             </div>
           </div>
           <div className="col-12 col-md-12 col-lg-4 mt-0 px-0 px-lg-2">
-            <div style={{ margin: "auto" }}>
+            <div className="d-flex flex-column gap-5 gap-lg-2 gap-md-2">
               <LoginCardBNB
                 containerStyles={{
                   height: 500,
@@ -347,6 +349,16 @@ function AuthBNB({
                   </>
                 )}
               </LoginCardBNB>
+              <div className="d-flex justify-content-end buttonwrapper-bnb-alliance">
+                <a
+                  href="https://medium.com/@worldofdypians/create-world-of-dypians-account-tutorial-9bceb9f13f9d"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="d-flex gap-2 align-items-center medium-btn-bnb px-3 py-1"
+                >
+                  <img src={mediumLogo} alt="" /> Create Account Tutorial
+                </a>
+              </div>
               <ErrorAlert error={loginError} />
             </div>
           </div>
