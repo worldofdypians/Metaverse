@@ -230,7 +230,7 @@ function AuthBNB({
           <div className="col-12 col-md-12 col-lg-8 mt-0 p-3 nft-page-wrapperbnb">
             <div className="d-flex justify-content-end buttonwrapper-bnb-alliance">
               <a
-                href="https://medium.com/@worldofdypians"
+                href="https://medium.com/@worldofdypians/create-world-of-dypians-account-tutorial-9bceb9f13f9d"
                 target="_blank"
                 rel="noreferrer"
                 className="d-flex gap-2 align-items-center medium-btn-bnb px-3 py-1"
