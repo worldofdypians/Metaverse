@@ -661,6 +661,24 @@ function Dashboard({
     }
   }
 
+  const handleFirstTask = async (wallet) => {
+    const result = await axios
+      .get(
+        `https://api.worldofdypians.com/api/airdrop-alliance/task1/${wallet}`
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result && result.status === 200) {
+      console.log(result.data.result);
+      setTimeout(() => {
+        if (isonlink) {
+          window.location.reload();
+        }
+      }, 2000);
+    }
+  };
+
   const signWalletPublicAddress = async () => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -680,11 +698,9 @@ function Dashboard({
           setsyncStatus("initial");
         }, 1000);
 
-        setTimeout(() => {
-          if (isonlink) {
-            window.location.reload();
-          }
-        }, 2000);
+        if (isonlink) {
+          handleFirstTask(account);
+        }
       });
     } catch (error) {
       setsyncStatus("error");
@@ -738,6 +754,7 @@ function Dashboard({
     setUserRank(testArray[0].position);
     setUserBnbScore(testArray[0].statValue);
   };
+
   const fetchSkaleRecordsAroundPlayer = async (userId, userName) => {
     const data = {
       StatisticName: "LeaderboardSkaleMonthly",
@@ -2431,6 +2448,7 @@ function Dashboard({
     window.scrollTo(0, 0);
     getTokenDatabnb();
     fetchCFXPrice();
+    refetchPlayer();
   }, []);
 
   useEffect(() => {
@@ -2495,6 +2513,8 @@ function Dashboard({
       html.classList.remove("hidescroll");
     }
   }, [dailyBonusPopup]);
+
+ const hashValue = window.location.hash
 
   return (
     <div
@@ -2574,6 +2594,7 @@ function Dashboard({
                           setOpenedSkaleChests([]);
                           setclaimedSkaleChests(0);
                           setclaimedSkalePremiumChests(0);
+                          refetchPlayer();
                         }}
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
@@ -3740,7 +3761,7 @@ function Dashboard({
                 </div>
               </OutsideClickHandler>
             )} */}
-            {dailyBonusPopup && (
+            {(dailyBonusPopup || hashValue==="#dailybonus" )&& (
               // <OutsideClickHandler
               //   onOutsideClick={() => {
               //     setdailyBonusPopup(false);
@@ -3757,6 +3778,7 @@ function Dashboard({
                 listedNFTS={listedNFTS}
                 onclose={() => {
                   setdailyBonusPopup(false);
+                  window.location.hash = ""
                 }}
                 coinbase={coinbase}
                 standardChests={standardChests}
