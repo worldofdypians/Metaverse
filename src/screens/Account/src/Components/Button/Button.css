@@ -26,6 +26,35 @@
   justify-content: center;
 }
 
+
+.primary2Button {
+  width: fit-content;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  clip-path: polygon(
+    10% 0%,
+    100% 0,
+    100% 20%,
+    100% 65%,
+    90% 100%,
+    20% 100%,
+    0 100%,
+    0% 40%
+  );
+  border-radius: 12px;
+  background: rgb(123, 216, 176);
+  background: linear-gradient(
+    135deg,
+    rgba(123, 216, 176, 1) 0%,
+    rgba(171, 233, 155, 1) 51%,
+    rgba(213, 248, 136, 1) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
 .coingeckoButton {
   width: fit-content;
   cursor: pointer;
@@ -51,6 +80,20 @@
   color: #0b0b2e;
   opacity: 1;
   text-align: left;
+
+}
+
+.primary2titleButton {
+  color: #080B2A;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  gap:20px;
+  display: flex;
+  align-items: center;
 }
 
 .coingeckotitleButton {
@@ -60,7 +103,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  margin: 0;
+
 }
 
 .lds-dual-ring {

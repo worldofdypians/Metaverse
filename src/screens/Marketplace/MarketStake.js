@@ -93,6 +93,7 @@ const MarketStake = ({
       setTotalLocked(result.data);
     }
   };
+  
   const fetchTotalRewars = async () => {
     const result = await axios.get(
       `https://api.worldofdypians.com/api/stakeRewards`

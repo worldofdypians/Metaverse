@@ -848,24 +848,7 @@ const ProfileCard = ({
                                 Get domain name
                               </span>
                             )}
-                            {/* {!isPremium && email && (
-                            <span
-                              className="profile-div-title mb-0 text-decoration-underline"
-                              style={{
-                                color:
-                                  coinbase &&
-                                  syncStatus !== "" &&
-                                  address?.toLowerCase() !==
-                                    coinbase?.toLowerCase()
-                                    ? "#ED8225"
-                                    : "#1BF5FF",
-                                cursor: "pointer",
-                              }}
-                              onClick={onPremiumClick}
-                            >
-                              Upgrade to Premium
-                            </span>
-                          )} */}
+                           
                           </span>
 
                           <div className="wallet-balance d-flex flex-column flex-xxl-row flex-lg-row gap-3 position-relative">
@@ -907,26 +890,9 @@ const ProfileCard = ({
                                   (!email && !coinbase && "d-none")
                                 }  d-flex wallet-wrapper align-items-center gap-2 position-relative`}
                               >
-                                {/* {(coinbase || address) && (
-                        <img src={walletIcon} alt="" className="wallet-icon" />
-                      )} */}
+                               
                                 <div className="d-flex flex-column">
-                                  {/* <span className="wallet-span d-flex align-items-center gap-2">
-                          {coinbase && address && email
-                            ? "Game Wallet address"
-                            : coinbase && !email
-                            ? "Wallet address"
-                            : !coinbase && address && email
-                            ? "Game Wallet address"
-                            : ""}
-                          {coinbase && (
-                            <img
-                              src={copyIcon}
-                              alt="copy"
-                              className="copy-icon"
-                            />
-                          )}
-                        </span> */}
+                                
 
                                   <div
                                     className="d-flex flex-column"
@@ -965,58 +931,7 @@ const ProfileCard = ({
                               </div>
                             </>
 
-                            {/* : 
-                 (
-                  <>
-                     <Clipboard
-                  //     component="div"
-                  //     data-event="click"
-                  //     data-for={id}
-                  //     data-tip="Copied To Clipboard!"
-                  //     data-clipboard-text={address}
-                  //     className="wallet-wrapper d-flex align-items-center gap-2"
-                  //     onClick={() => {
-                  //       setTooltip(true);
-                  //       setTimeout(() => setTooltip(false), 1000);
-                  //     }}
-                  //   >
-                  //     <img src={walletIcon} alt="" className="wallet-icon" />
-                  //     <div className="d-flex flex-column">
-                  //       <span className="wallet-span">Wallet address</span>
-                  //       <div className="d-flex align-items-center gap-2">
-                  //         <span className="wallet-address">
-                  //           {shortAddress(address)}
-                  //         </span>
-                  //         <img
-                  //           src={copyIcon}
-                  //           alt="copy"
-                  //           className="copy-icon"
-                  //         />
-                  //       </div>
-                  //     </div>
-                    </Clipboard>
-                    <div
-                      className={`tooltip-wrapper p-2 ${
-                        tooltip && "tooltip-active"
-                      }`}
-                      style={{ top: "auto", right: 0 }}
-                    >
-                      <p className="tooltip-content m-0">Copied!</p>
-                    </div>
-                  </>
-                ) */}
-
-                            {/* {!address ? (
-                  <span className="walletinfo">
-                    *Note that once you link a wallet to your profile, it cannot
-                    be changed.
-                  </span>
-                ) : (
-                  <span className="walletinfo">
-                    *This wallet is associated to your profile and cannot be
-                    changed.
-                  </span>
-                )} */}
+                     
                           </div>
                           {!coinbase && email && (
                             <button

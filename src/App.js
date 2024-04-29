@@ -70,6 +70,7 @@ import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
 import ChestFlyout from "./components/LandFlyout/ChestFlyout";
 import NFTBridge from "./screens/NFTBridge/NftBridge.js";
+import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 
 function App() {
   const CHAINLIST = {
@@ -229,6 +230,8 @@ function App() {
 
   const [myDogeNFTs, setmyDogeNFTs] = useState([]);
   const [myCmcNFTs, setmyCmcNFTs] = useState([]);
+  const [isBnb, setisBnb] = useState(false);
+  const [isBnbSuccess, setisBnbSuccess] = useState(false);
 
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
   const [
@@ -572,6 +575,9 @@ function App() {
           await window.getCoinbase().then((data) => {
             setCoinbase(data);
           });
+          if (isBnb === true) {
+            setisBnbSuccess(true);
+          }
           setwalletModal(false);
           setShowForms2(true);
           setSuccess(true);
@@ -2278,7 +2284,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
-        <div className="container-fluid p-0 main-wrapper position-relative">
+        <div className="container-fluid p-0 main-wrapper2 position-relative">
           <Header
             handleSignUp={handleShowWalletModal}
             coinbase={coinbase}
@@ -2315,6 +2321,7 @@ function App() {
             handleOpenDomains={() => setDomainPopup(true)}
             domainName={domainName}
           />
+
           <Routes>
             <Route path="/news/:newsId?/:titleId?" element={<News />} />
             <Route
@@ -2452,6 +2459,24 @@ function App() {
               exact
               path="/auth"
               element={<Auth isConnected={isConnected} coinbase={coinbase} />}
+            />
+            <Route
+              exact
+              path="/bnbchain-alliance-program"
+              element={
+                <AuthBNB
+                  isConnected={isConnected}
+                  coinbase={coinbase}
+                  isSuccess={isBnbSuccess}
+                  onWalletLinkComplete={() => {
+                    setisBnbSuccess(false);
+                  }}
+                  handleConnect={() => {
+                    setisBnb(true);
+                    setwalletModal(true);
+                  }}
+                />
+              }
             />
             <Route exact path="/forgotPassword" element={<ForgotPassword />} />
             <Route exact path="/ResetPassword" element={<ResetPassword />} />
@@ -3080,7 +3105,8 @@ function App() {
 
         {!location.pathname.includes("account") &&
           !location.pathname.includes("auth") &&
-          !location.pathname.includes("explorer") && <ChestFlyout />}
+          !location.pathname.includes("explorer")&&
+          !location.pathname.includes("bnbchain-alliance-program") && <ChestFlyout />}
         {domainPopup && (
           <DomainModal
             onClose={() => setDomainPopup(false)}

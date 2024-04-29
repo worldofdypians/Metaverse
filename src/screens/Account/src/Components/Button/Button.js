@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./Button.css";
+import arrow from "./arrow.svg";
 
 const Button = ({
   type,
@@ -13,7 +14,7 @@ const Button = ({
 }) => {
   return (
     <div
-      className={`${type}Button ${disabled && 'disabledBtn'} `}
+      className={`${type}Button ${disabled && "disabledBtn"} `}
       onClick={loading || disabled ? () => {} : onPress}
       {...rest}
     >
@@ -25,6 +26,7 @@ const Button = ({
           style={textStyles}
         >
           {title}
+          {type === "primary2" && <img src={arrow} alt="" />}
         </h1>
       )}
     </div>

@@ -177,64 +177,6 @@ const NewDailyBonus = ({
       },
     ],
   };
-  var settings2 = {
-    dots: false,
-    arrows: false,
-    dotsClass: "button__bar",
-    infinite: false,
-    swipe: false,
-    speed: 300,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    // beforeChange: (current, next) => {
-    //   setActiveSlide(next);
-    //   setShowFirstNext(current);
-    // },
-    // afterChange: (current) => setActiveSlide(current),
-    responsive: [
-      {
-        breakpoint: 1600,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1500,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1400,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1050,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-    ],
-  };
 
   const windowSize = useWindowSize();
 
