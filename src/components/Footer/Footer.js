@@ -66,7 +66,7 @@ const Footer = () => {
     <div
       className={`${
         padding ? "extra-padding" : null
-      } footer-container flex-column px-3 px-lg-5 `}
+      } footer-container flex-column px-3 px-lg-5 w-100 `}
     >
       <div className="container-fluid d-flex w-100 pb-4 pt-4 flex-column flex-xxl-row flex-lg-row flex-xl-row  gap-3 justify-content-between align-items-baseline">
         {/* {windowSize.width > 992 ? (

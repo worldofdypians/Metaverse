@@ -72,6 +72,9 @@ const NewChestItem = ({
       if (result.status === 200) {
         onClaimRewards(result.data);
         setIsChestOpen(true);
+        if (chainText !== "skale") {
+          handleSecondTask(address);
+        }
         // onChestStatus("success");
         onLoadingChest(false);
         setLoading(false);
@@ -108,6 +111,20 @@ const NewChestItem = ({
           onChestStatus("initial");
         }, 3000);
       }
+    }
+  };
+
+  const handleSecondTask = async (wallet) => {
+    const result = await axios
+      .get(
+        `https://api.worldofdypians.com/api/airdrop-alliance/task2/${wallet}`
+      )
+      .catch((err) => {
+        console.error(err);
+      });
+
+    if (result && result.status === 200) {
+      console.log(result);
     }
   };
 
@@ -150,6 +167,9 @@ const NewChestItem = ({
         });
       if (result.status === 200) {
         onClaimRewards(result.data);
+        if (chainText !== "skale") {
+          handleSecondTask(address);
+        }
         setIsChestOpen(true);
         // onChestStatus("success");
         onLoadingChest(false);
@@ -202,7 +222,6 @@ const NewChestItem = ({
     if (txResult) {
       getUserRewardsByChest(email, txHash, chestIndex, chainText);
     } else {
-      
       if (count < 10) {
         setTimeout(
           () => {
