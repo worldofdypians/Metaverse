@@ -50,6 +50,7 @@ import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
+import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 
 function Dashboard({
   account,
@@ -3222,88 +3223,116 @@ function Dashboard({
                                 style={{ cursor: "pointer" }}
                               />
                             </div>
-                            <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
-                              <div className="d-flex flex-column gap-2">
-                                <span className="lifetime-plan mb-0">
-                                  Lifetime plan
-                                </span>
-                                <h6 className="plan-cost mb-0">$100</h6>
-                              </div>
-                              <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
-                                <div className="premium-chains-wrapper">
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={
-                                        require(`../../Images/premium/tokens/ethIcon.svg`)
-                                          .default
-                                      }
-                                      alt=""
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      Ethereum
-                                    </span>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={
-                                        require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                                          .default
-                                      }
-                                      alt=""
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      BNB Chain
-                                    </span>
-                                  </div>
+                            {discountPercentage > 0 ? (
+                              <div className="premium-discount-bg mt-3 p-4 position-relative">
+                                <div className="premiumRedTag position-absolute">
+                                  <div className="position-relative d-flex flex-column">
+                                    <img src={premiumRedTag} alt="" />
+                                    <div className="d-flex flex-column position-absolute discountwrap">
+                                      <span className="discount-price2 font-oxanium">{discountPercentage}%</span>
+                                      <span className="discount-price-bottom">Discount</span>
 
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={
-                                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                                          .default
-                                      }
-                                      alt=""
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      Avalanche
-                                    </span>
-                                  </div>
-
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={baseLogo}
-                                      alt=""
-                                      style={{ width: 18, height: 18 }}
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      Base
-                                    </span>
-                                  </div>
-
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={conflux}
-                                      alt=""
-                                      style={{ width: 18, height: 18 }}
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      Conflux
-                                    </span>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={skaleIcon}
-                                      alt=""
-                                      style={{ width: 18, height: 18 }}
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      SKALE
-                                    </span>
+                                    </div>
                                   </div>
                                 </div>
-                                <img src={premiumIcon} alt="" />
+                                <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column align-items-center align-items-lg-start">
+                                  <h6 className="lifetime-plan-text m-0">
+                                    Lifetime plan
+                                  </h6>
+                                  <div className="d-flex align-items-end gap-2">
+                                    <h6 className="discount-price">
+                                      {Number(discountPercentage) === 100
+                                        ? "FREE"
+                                        : "$" + (100 - Number(discountPercentage))}
+                                    </h6>
+                                    <h6 className="old-price-text">$100</h6>
+                                  </div>
+                                </div>
                               </div>
-                            </div>
+                            ) : (
+                              <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
+                                <div className="d-flex flex-column gap-2">
+                                  <span className="lifetime-plan mb-0">
+                                    Lifetime plan
+                                  </span>
+                                  <h6 className="plan-cost mb-0">$100</h6>
+                                </div>
+                                <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
+                                  <div className="premium-chains-wrapper">
+                                    <div className="d-flex align-items-center gap-2">
+                                      <img
+                                        src={
+                                          require(`../../Images/premium/tokens/ethIcon.svg`)
+                                            .default
+                                        }
+                                        alt=""
+                                      />
+                                      <span className="subscription-chain mb-0">
+                                        Ethereum
+                                      </span>
+                                    </div>
+                                    <div className="d-flex align-items-center gap-2">
+                                      <img
+                                        src={
+                                          require(`../../Images/premium/tokens/wbnbIcon.svg`)
+                                            .default
+                                        }
+                                        alt=""
+                                      />
+                                      <span className="subscription-chain mb-0">
+                                        BNB Chain
+                                      </span>
+                                    </div>
+
+                                    <div className="d-flex align-items-center gap-2">
+                                      <img
+                                        src={
+                                          require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                                            .default
+                                        }
+                                        alt=""
+                                      />
+                                      <span className="subscription-chain mb-0">
+                                        Avalanche
+                                      </span>
+                                    </div>
+
+                                    <div className="d-flex align-items-center gap-2">
+                                      <img
+                                        src={baseLogo}
+                                        alt=""
+                                        style={{ width: 18, height: 18 }}
+                                      />
+                                      <span className="subscription-chain mb-0">
+                                        Base
+                                      </span>
+                                    </div>
+
+                                    <div className="d-flex align-items-center gap-2">
+                                      <img
+                                        src={conflux}
+                                        alt=""
+                                        style={{ width: 18, height: 18 }}
+                                      />
+                                      <span className="subscription-chain mb-0">
+                                        Conflux
+                                      </span>
+                                    </div>
+                                    <div className="d-flex align-items-center gap-2">
+                                      <img
+                                        src={skaleIcon}
+                                        alt=""
+                                        style={{ width: 18, height: 18 }}
+                                      />
+                                      <span className="subscription-chain mb-0">
+                                        SKALE
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <img src={premiumIcon} alt="" />
+                                </div>
+                              </div>
+                            )}
                             <div className="my-3">
                               <h6 className="popup-subtitle mb-0">Benefits</h6>
                             </div>
@@ -3670,7 +3699,7 @@ function Dashboard({
                                     </span>
                                   </div>
                                   <span className="subscription-price-usd mb-0">
-                                    $100
+                                    ${100 - Number(discountPercentage)}
                                   </span>
                                 </div>
                               </div>
@@ -3792,7 +3821,7 @@ function Dashboard({
                                   (approveStatus === "initial" ||
                                     approveStatus === "fail" ||
                                     approveStatus === "deposit") ? (
-                                    "Buy"
+                                    <>{ discountPercentage > 0 ? 'Redeem' : "Buy"}</>
                                   ) : loadspinnerSub === false &&
                                     approveStatus === "successsubscribe" ? (
                                     "Success"
