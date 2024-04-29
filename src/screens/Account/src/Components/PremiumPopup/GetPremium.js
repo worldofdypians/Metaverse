@@ -12,6 +12,7 @@ import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
 import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import axios from "axios";
+import premiumRedTag from '../../../../../assets/redPremiumTag.svg'
 
 const GetPremiumPopup = ({
   coinbase,
@@ -85,6 +86,55 @@ const GetPremiumPopup = ({
     Object.keys(window.config.subscription_tokens)[0]
   );
   const [tokenDecimals, settokenDecimals] = useState(1);
+  const [discountPercentage, setdiscountPercentage] = useState(0);
+  const [nftPremium_tokenId, setnftPremium_tokenId] = useState(0);
+  const [nftPremium_total, setnftPremium_total] = useState(0);
+
+  const calculatePremiumDiscount = async () => {
+    if (chainId === 56) {
+      const premiumSc = new window.bscWeb3.eth.Contract(
+        window.SUBSCRIPTION_NEWBNB2_ABI,
+        window.config.subscription_newbnb2_address
+      );
+
+      const discount = await premiumSc.methods
+        .discountPercentage()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      setdiscountPercentage(discount);
+    }
+  };
+
+  const fetchPremiumNft = async (wallet) => {
+    const nftContract = new window.bscWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_ABI,
+      window.config.nft_dypius_premium_address
+    );
+    if (wallet) {
+      const result = await nftContract.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+      if (result && result > 0) {
+        const tokenId = await nftContract.methods
+          .tokenOfOwnerByIndex(wallet, 0)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+        setnftPremium_tokenId(tokenId);
+        setnftPremium_total(result);
+      }
+    }
+  };
 
   const handleUpdatePremiumUser = async (wallet) => {
     await axios
@@ -217,7 +267,7 @@ const GetPremiumPopup = ({
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
         : chainId === 56
-        ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
+        ? await window.getEstimatedTokenSubscriptionAmountBNB2(token)
         : chainId === 1030
         ? await window.getEstimatedTokenSubscriptionAmountCFX(token)
         : chainId === 43114
@@ -245,7 +295,7 @@ const GetPremiumPopup = ({
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const basesubscribeAddress = window.config.subscription_base_address;
-    const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    const bnbsubscribeAddress = window.config.subscription_newbnb2_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
     const skalesubscribeAddress = window.config.subscription_skale_address;
 
@@ -304,7 +354,7 @@ const GetPremiumPopup = ({
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
-    const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    const bnbsubscribeAddress = window.config.subscription_newbnb2_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
 
     const basesubscribeAddress = window.config.subscription_base_address;
@@ -345,7 +395,7 @@ const GetPremiumPopup = ({
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
         : chainId === 56
-        ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
+        ? await window.getEstimatedTokenSubscriptionAmountBNB2(token)
         : chainId === 1030
         ? await window.getEstimatedTokenSubscriptionAmountCFX(token)
         : chainId === 43114
@@ -375,18 +425,54 @@ const GetPremiumPopup = ({
         }
       }
       if (chainId === 56) {
-        const result = await subscribeTokencontractbnb.methods
-          .allowance(coinbase, bnbsubscribeAddress)
-          .call()
-          .then();
-        if (result != 0 && Number(result) >= Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(true);
-          setapproveStatus("deposit");
-        } else if (result == 0 || Number(result) < Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(false);
-          setapproveStatus("initial");
+        if (discountPercentage == "100" && nftPremium_total > 0) {
+          let contract = new window.web3.eth.Contract(
+            window.NFT_DYPIUS_PREMIUM_ABI,
+            window.config.nft_dypius_premium_address
+          );
+
+          let approved = await contract.methods
+            .getApproved(nftPremium_tokenId)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          let approvedAll = await contract.methods
+            .isApprovedForAll(coinbase, bnbsubscribeAddress)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          if (
+            approved.toLowerCase() === bnbsubscribeAddress.toLowerCase() ||
+            approvedAll
+          ) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        } else {
+          const result = await subscribeTokencontractbnb.methods
+            .allowance(coinbase, bnbsubscribeAddress)
+            .call()
+            .then();
+          if (result != 0 && Number(result) >= Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else if (result == 0 || Number(result) < Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
         }
       } else if (chainId === 43114) {
         const result = await subscribeTokencontractavax.methods
@@ -457,7 +543,7 @@ const GetPremiumPopup = ({
         chainId === 1
           ? "SUBSCRIPTION_NEWETH"
           : chainId === 56
-          ? "SUBSCRIPTION_NEWBNB"
+          ? "SUBSCRIPTION_NEWBNB2"
           : chainId === 43114
           ? "SUBSCRIPTION_NEWAVAX"
           : chainId === 1030
@@ -470,39 +556,64 @@ const GetPremiumPopup = ({
     });
 
     setloadspinnerSub(true);
-
-    await subscriptionContract.methods
-      .subscribe(selectedSubscriptionToken, price)
-      .send({ from: await window.getCoinbase() })
-      .then((data) => {
-        setloadspinnerSub(false);
-        onSuccessDeposit();
-        handleUpdatePremiumUser(coinbase);
-        setapproveStatus("successsubscribe");
-        setTimeout(() => {
+    if (chainId === 56 && nftPremium_total > 0 && discountPercentage == "100") {
+      await window
+        .subscribeNFT(nftPremium_tokenId)
+        .then(async (data) => {
           setloadspinnerSub(false);
-          setloadspinner(false);
-          setapproveStatus("initial");
-          setstatus("");
-        }, 5000);
-        // this.props.onSubscribe();
-        // window.location.href = "https://app.dypius.com/account";
-      })
-      .catch((e) => {
-        setloadspinnerSub(false);
-        setapproveStatus("failsubscribe");
-        setstatus(e?.message);
-        window.alertify.error(e?.message);
-        setTimeout(() => {
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        })
+        .catch((e) => {
           setloadspinnerSub(false);
-          setloadspinner(false);
-          setapproveStatus("initial");
-          setstatus("");
-        }, 5000);
-      });
+          setapproveStatus("failsubscribe");
+          setstatus(e?.message);
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        });
+    } else {
+      await subscriptionContract.methods
+        .subscribe(selectedSubscriptionToken, price)
+        .send({ from: await window.getCoinbase() })
+        .then((data) => {
+          setloadspinnerSub(false);
+          onSuccessDeposit();
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+          // this.props.onSubscribe();
+          // window.location.href = "https://app.dypius.com/account";
+        })
+        .catch((e) => {
+          setloadspinnerSub(false);
+          setapproveStatus("failsubscribe");
+          setstatus(e?.message);
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        });
+    }
   };
-
-  console.log(chainId, chainDropdowns, dropdownIcon);
 
   useEffect(() => {
     if (chainId === 1) {
@@ -618,59 +729,96 @@ const GetPremiumPopup = ({
             style={{ cursor: "pointer" }}
           />
         </div>
-        <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
-          <div className="d-flex flex-column gap-2">
-            <span className="lifetime-plan mb-0">Lifetime plan</span>
-            <h6 className="plan-cost mb-0">$100</h6>
-          </div>
-          <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
-            <div className="premium-chains-wrapper">
-              <div className="d-flex align-items-center gap-2">
-                <img
-                  src={
-                    require(`../../Images/premium/tokens/ethIcon.svg`).default
-                  }
-                  alt=""
-                />
-                <span className="subscription-chain mb-0">Ethereum</span>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <img
-                  src={
-                    require(`../../Images/premium/tokens/wbnbIcon.svg`).default
-                  }
-                  alt=""
-                />
-                <span className="subscription-chain mb-0">BNB Chain</span>
-              </div>
-
-              <div className="d-flex align-items-center gap-2">
-                <img
-                  src={
-                    require(`../../Images/premium/tokens/wavaxIcon.svg`).default
-                  }
-                  alt=""
-                />
-                <span className="subscription-chain mb-0">Avalanche</span>
-              </div>
-
-              <div className="d-flex align-items-center gap-2">
-                <img src={baseLogo} alt="" style={{ width: 18, height: 18 }} />
-                <span className="subscription-chain mb-0">Base</span>
-              </div>
-
-              <div className="d-flex align-items-center gap-2">
-                <img src={conflux} alt="" style={{ width: 18, height: 18 }} />
-                <span className="subscription-chain mb-0">Conflux</span>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <img src={skaleIcon} alt="" style={{ width: 18, height: 18 }} />
-                <span className="subscription-chain mb-0">SKALE</span>
+        {discountPercentage > 0 ? (
+          <div className="premium-discount-bg mt-3 p-4 position-relative">
+            <div className="premiumRedTag position-absolute">
+              <div className="position-relative d-flex flex-column">
+                <img src={premiumRedTag} alt="" />
+                <div className="d-flex flex-column position-absolute discountwrap">
+                  <span className="discount-price2 font-oxanium">
+                    {discountPercentage}%
+                  </span>
+                  <span className="discount-price-bottom">Discount</span>
+                </div>
               </div>
             </div>
-            <img src={premiumIcon} alt="" />
+            <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column align-items-center align-items-lg-start">
+              <h6 className="lifetime-plan-text m-0">Lifetime plan</h6>
+              <div className="d-flex align-items-end gap-2">
+                <h6 className="discount-price">
+                  {Number(discountPercentage) === 100
+                    ? "FREE"
+                    : "$" + (100 - Number(discountPercentage))}
+                </h6>
+                <h6 className="old-price-text">$100</h6>
+              </div>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
+            <div className="d-flex flex-column gap-2">
+              <span className="lifetime-plan mb-0">Lifetime plan</span>
+              <h6 className="plan-cost mb-0">$100</h6>
+            </div>
+            <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
+              <div className="premium-chains-wrapper">
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={
+                      require(`../../Images/premium/tokens/ethIcon.svg`).default
+                    }
+                    alt=""
+                  />
+                  <span className="subscription-chain mb-0">Ethereum</span>
+                </div>
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={
+                      require(`../../Images/premium/tokens/wbnbIcon.svg`)
+                        .default
+                    }
+                    alt=""
+                  />
+                  <span className="subscription-chain mb-0">BNB Chain</span>
+                </div>
+
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={
+                      require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                        .default
+                    }
+                    alt=""
+                  />
+                  <span className="subscription-chain mb-0">Avalanche</span>
+                </div>
+
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={baseLogo}
+                    alt=""
+                    style={{ width: 18, height: 18 }}
+                  />
+                  <span className="subscription-chain mb-0">Base</span>
+                </div>
+
+                <div className="d-flex align-items-center gap-2">
+                  <img src={conflux} alt="" style={{ width: 18, height: 18 }} />
+                  <span className="subscription-chain mb-0">Conflux</span>
+                </div>
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={skaleIcon}
+                    alt=""
+                    style={{ width: 18, height: 18 }}
+                  />
+                  <span className="subscription-chain mb-0">SKALE</span>
+                </div>
+              </div>
+              <img src={premiumIcon} alt="" />
+            </div>
+          </div>
+        )}
         <div className="my-3">
           <h6 className="popup-subtitle mb-0">Benefits</h6>
         </div>
