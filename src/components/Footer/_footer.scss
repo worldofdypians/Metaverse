@@ -52,8 +52,8 @@
 
 @media screen and (max-width: 786px) {
   .footer-socials {
-    grid-template-columns: repeat(4, 1fr) !important;
-    // gap: 100% !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    display: grid !important
   }
 }
 

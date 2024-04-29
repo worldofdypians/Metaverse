@@ -1248,6 +1248,9 @@
     background-repeat: no-repeat;
     background-position: bottom;
     background-size: contain !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
 }
@@ -3098,11 +3101,25 @@ line-height: normal;
   letter-spacing: -0.18px;
 }
 
+.statusIndex {
+  position: absolute;
+  top: -8px;
+  left: 6px;
+  text-align: center;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.18px;
+}
+
 .timeline {
   list-style-type: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  left: -11px;
   .li {
     transition: all 200ms ease-in;
     .listtext {
@@ -3110,12 +3127,13 @@ line-height: normal;
       text-align: center;
       font-size: 10px;
       font-style: normal;
-      font-weight: 600;
+      font-weight: 500;
       line-height: normal;
       letter-spacing: -0.18px;
       position: relative;
       left: -11px;
       width: 35px;
+      top: 4px;
     }
     .timestamp {
       margin-bottom: 20px;
@@ -3134,8 +3152,8 @@ line-height: normal;
 
       &:before {
         content: "";
-        width: 16px;
-        height: 16px;
+        width: 22px;
+        height: 22px;
         background-color: #26264f;
         border-radius: 25px;
         border: 2px solid #565891;
@@ -3172,11 +3190,47 @@ line-height: normal;
     .status {
       border-top: 2px solid #48b4bd;
       &:before {
-        background-color: #48b4bd;
-        border: none;
+        background-color: #007F88;
+        border: 2px solid #48B4BD;
         transition: all 200ms ease-in;
       }
     }
+  }
+}
+
+.medium-btn-bnb {
+  border-radius: 8px;
+  color: #FFF;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.18px;
+background: linear-gradient(90deg, #7F43FF 1.45%, #C01BDB 96.22%);
+}
+
+.medium-btn-bnb:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+  .medium-btn-bnb {
+    border-radius: 8px;
+    color: #FFF;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.18px;
+  background: linear-gradient(90deg, #7F43FF 1.45%, #C01BDB 96.22%);
+  }
+
+  .buttonwrapper-bnb-alliance {
+    position: relative;
+    top: -25px;
   }
 }
 
