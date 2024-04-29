@@ -2646,6 +2646,7 @@ function Dashboard({
     window.scrollTo(0, 0);
     getTokenDatabnb();
     fetchCFXPrice();
+    refetchPlayer();
   }, []);
 
   useEffect(() => {
@@ -2799,6 +2800,7 @@ function Dashboard({
                           setOpenedSkaleChests([]);
                           setclaimedSkaleChests(0);
                           setclaimedSkalePremiumChests(0);
+                          refetchPlayer();
                         }}
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}

@@ -7,7 +7,12 @@ import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./Login.module.css";
 import { Redirect } from "react-router-dom";
 
-function LoginBNB({ onLoginTry, onForgetPassword, onSuccessLogin }) {
+function LoginBNB({
+  onLoginTry,
+  onForgetPassword,
+  onSuccessLogin,
+  handleGoToSignup,
+}) {
   const {
     isAuthenticated,
     login: LoginGlobal,
@@ -66,7 +71,20 @@ function LoginBNB({ onLoginTry, onForgetPassword, onSuccessLogin }) {
 
   if (code === "UserNotConfirmedException") {
     return (
-      <div className={classes.container}>
+      <div className={classes.containerbnb}>
+        <h6 className={classes.create_acc_bnb}>Verify Account</h6>
+        <div className="d-flex flex-column gap-2">
+        <span className={classes.createplayertxt2}>
+          *The verification code required for your account has been successfully sent to the email address associated with your account. 
+        </span>
+
+        <span className={classes.createplayertxt2}>
+        Please check your inbox, including the spam folder, and enter the code here to complete the verification process. The verification code you will receive is a 6-digit code.
+        </span>
+        
+        </div>
+        <div className="d-flex flex-column w-100 gap-1">
+          <h6 className={classes.labelBNB}>Code*</h6>
         <Input
           style={{
             marginBottom: 24,
@@ -74,47 +92,71 @@ function LoginBNB({ onLoginTry, onForgetPassword, onSuccessLogin }) {
           placeHolder="Verify"
           value={verifyCode}
           onChange={setVerifyCode}
+          type={"coingecko"}
         />
+        </div>
+        <div className="summaryseparator"></div>
 
         <Button
           disabled={disabled}
           style={{ margin: "auto" }}
           onPress={verifyEmailValidationCode}
           title={"Verify"}
+          type={"primary2"}
         />
       </div>
     );
   }
 
   return (
-    <div className={classes.container}>
+    <div className={`${classes.containerbnb} h-auto`}>
+      <div className="d-flex flex-column gap-3">
+      <h6 className={classes.create_acc_bnb}>Log in to your Game Account</h6>
+      <div className="d-flex flex-column w-100 gap-1">
+        <h6 className={classes.labelBNB}>Email*</h6>
       <Input
-        style={{
-          marginBottom: 24,
-        }}
         placeHolder="Email"
         value={username}
         onChange={setUserName}
         inputType="email"
+        type={"coingecko"}
       />
+      </div>
+      <div className="d-flex flex-column w-100 gap-1">
+        <h6 className={classes.labelBNB}>Password*</h6>
       <Input
-        style={{
-          marginBottom: 48,
-        }}
         inputType="password"
         placeHolder="Password"
         value={password}
         onChange={setPassword}
+        type={"coingecko"}
       />
+      </div>
+      <div className="summaryseparator"></div>
+<div className="d-flex flex-column gap-1" >
       <Button
         disabled={disabled}
         style={{ margin: "auto" }}
         onPress={login}
-        loading={isLoginIn}
-        title={"Login"}
+        // loading={isLoginIn}
+        title={"Continue"}
+        type={"primary2"}
       />
-      <div className={classes.forgotPasswordText} onClick={onForgetPassword}>
-        <span>Forgot your password?</span>
+      <div
+        className={`${classes.forgotPasswordText} m-auto `}
+        onClick={onForgetPassword}
+      >
+        <span className={classes.errorText2}>Forgot your password?</span>
+      </div>
+      </div></div>
+
+      <div className="d-flex align-items-center gap-2">
+        <h6 className={classes.bottomGroup_graytxt}>
+          Don't have an account yet?
+        </h6>
+        <h6 className={classes.bottomGroup_login} onClick={handleGoToSignup}>
+          Sign up
+        </h6>
       </div>
     </div>
   );

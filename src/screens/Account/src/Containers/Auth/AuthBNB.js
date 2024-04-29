@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { LoginCard } from "../../Components/LoginCard";
-import LoginWrapper from "../../Components/LoginWrapper/LoginWrapper";
+import LoginCardBNB from "../../Components/LoginCard/LoginCardBNB";
 import { styled } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -62,7 +62,7 @@ function AuthBNB({
   isSuccess,
   onWalletLinkComplete,
 }) {
-  const { isAuthenticated, loginError, setLoginValues, playerId } = useAuth();
+  const { isAuthenticated, loginError, setLoginValues, playerId,email } = useAuth();
 
   const {
     data,
@@ -72,12 +72,14 @@ function AuthBNB({
     fetchPolicy: "network-only",
   });
 
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(1);
   const [playerCreation, setplayerCreation] = useState(false);
   const [forgotPassword, setforgotPassword] = useState(false);
   const [isLogin, setisLogin] = useState(false);
   const navigate = useNavigate();
   const [linkWallet, setLinkWallet] = useState(false);
+  const [showVerify, setShowVerify] = useState(false);
+  const [successLink, setsuccessLink] = useState(false);
 
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
     useMutation(GENERATE_NONCE);
@@ -87,6 +89,7 @@ function AuthBNB({
   useEffect(() => {
     if (isAuthenticated && !playerId) {
       setplayerCreation(true);
+      setShowVerify(true);
     }
   }, [isAuthenticated, playerId]);
 
@@ -100,9 +103,25 @@ function AuthBNB({
     ) {
       setLinkWallet(true);
       setplayerCreation(true);
+      setShowVerify(true);
     }
   }, [data]);
 
+  useEffect(() => {
+    if (
+      isAuthenticated &&
+      playerId &&
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress
+    ) {
+      navigate("/account");
+    }
+  }, [data, playerId, isAuthenticated, isLogin]);
+ 
   useEffect(() => {
     if (dataNonce?.generateWalletNonce) {
       signWalletPublicAddress();
@@ -125,20 +144,8 @@ function AuthBNB({
     });
   };
 
-  if (
-    isAuthenticated &&
-    playerId &&
-    data &&
-    data.getPlayer &&
-    data.getPlayer.displayName &&
-    data.getPlayer.playerId &&
-    data.getPlayer.wallet &&
-    data.getPlayer.wallet.publicAddress
-  ) {
-    return <Navigate to={"/account"} />;
-  }
-
   const handleManageLoginStates = () => {
+    refetchPlayer()
     if (
       isAuthenticated &&
       playerId &&
@@ -177,7 +184,11 @@ function AuthBNB({
       });
     if (result && result.status === 200) {
       console.log(result);
-      navigate("/account");
+      setsuccessLink(true);
+      setTimeout(() => {
+        // window.location.reload();
+        navigate("/account");
+      }, 3000);
     }
   };
 
@@ -211,68 +222,116 @@ function AuthBNB({
   // }
 
   return (
-    <>
-      {playerCreation === true ? (
-        <PlayerCreationBNB
-          linkWallet={linkWallet}
-          onLinkWallet={handleLinkWallet}
-        />
-      ) : playerCreation === false && forgotPassword === true ? (
-        <ForgotPasswordBNB
-          onSuccess={() => {
-            setforgotPassword(false);
-            handleChange("click", 0);
-          }}
-        />
-      ) : (
-        <LoginWrapper style={{ margin: "auto" }}>
-          <LoginCard
-            containerStyles={{
-              height: 500,
-            }}
-            cardStyles={{
-              height: 470,
-            }}
-          >
-            <StyledTabs
-              value={value}
-              onChange={handleChange}
-              variant="fullWidth"
-              aria-label="styled tabs example"
-            >
-              <StyledTab label="Sign In" />
-              <StyledTab label="Create Account" />
-            </StyledTabs>
-            {value === 0 &&
-              playerCreation === false &&
-              forgotPassword === false && (
-                <LoginBNB
-                  onForgetPassword={() => {
-                    setforgotPassword(true);
-                  }}
-                  onLoginTry={() => {
-                    setisLogin(true);
-                  }}
-                  onSuccessLogin={handleManageLoginStates}
-                />
-              )}
+    <div className="mx-0 container-nft w-100 container-fluid d-flex align-items-start px-0 px-lg-5 flex-column">
+      <div className="d-flex flex-column container-lg gap-2 w-100">
+        <div className="nft-page-wrapper bg-transparent d-flex flex-column flex-lg-row gap-3 mb-3">
+          <div className="col-12 col-md-12 col-lg-8 mt-0 px-0 nft-page-wrapperbnb"></div>
+          <div className="col-12 col-md-12 col-lg-4 mt-0 px-0 px-lg-2">
+            <div style={{ margin: "auto" }}>
+              <LoginCardBNB
+                containerStyles={{
+                  height: 500,
+                }}
+                cardStyles={{
+                  height:
+                    linkWallet === true || value === 0 ? "100%" : "fit-content",
+                }}
+              >
+                {successLink === false && (
+                  <div className="mt-3">
+                    <ul class="timeline m-0 p-0" id="timeline">
+                      <li class="col-3 li complete">
+                        <div class="status">
+                          <h4 className="listtext"> Register </h4>
+                        </div>
+                      </li>
+                      <li class={`col-3 li ${showVerify && "complete"} `}>
+                        <div class="status">
+                          <h4 className="listtext"> Verify </h4>
+                        </div>
+                      </li>
+                      <li class={`col-3 li ${playerCreation && "complete"} `}>
+                        <div class="status">
+                          <h4 className="listtext"> Profile </h4>
+                        </div>
+                      </li>
+                      <li
+                        class={`col-2 li ${linkWallet && "complete"}`}
+                        style={{ width: 0 }}
+                      >
+                        <div class="status">
+                          <h4
+                            className="listtext"
+                            style={{ width: 0, whiteSpace: "nowrap" }}
+                          >
+                            Link Wallet
+                          </h4>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+                {playerCreation === true ? (
+                  <PlayerCreationBNB
+                    linkWallet={linkWallet}
+                    onLinkWallet={handleLinkWallet}
+                    successLink={successLink}
+                    onShowLinkWallet={() => {
+                      setLinkWallet(true);
+                    }}
+                  />
+                ) : playerCreation === false && forgotPassword === true ? (
+                  <ForgotPasswordBNB
+                    onSuccess={() => {
+                      setforgotPassword(false);
+                      handleChange("click", 0);
+                    }}
+                  />
+                ) : (
+                  <>
+                    {value === 0 &&
+                      playerCreation === false &&
+                      forgotPassword === false && (
+                        <LoginBNB
+                          onForgetPassword={() => {
+                            setforgotPassword(true);
+                          }}
+                          onLoginTry={() => {
+                            setisLogin(true);
+                          }}
+                          onSuccessLogin={handleManageLoginStates}
+                          handleGoToSignup={() => {
+                            handleChange("click", 1);
+                          }}
+                        />
+                      )}
 
-            {value === 1 && playerCreation === false && (
-              <SingUpBNB
-                onUserExists={() => {
-                  handleChange("click", 0);
-                }}
-                onVerifySuccess={() => {
-                  setplayerCreation(true);
-                }}
-                isLogin={isLogin}
-              />
-            )}
-          </LoginCard>
-          <ErrorAlert error={loginError} />
-        </LoginWrapper>
-      )}
-    </>
+                    {value === 1 && playerCreation === false && (
+                      <SingUpBNB
+                        onUserExists={() => {
+                          handleChange("click", 0);
+                        }}
+                        onVerifySuccess={() => {
+                          setplayerCreation(true);
+                        }}
+                        isLogin={isLogin}
+                        handleGoToLogin={() => {
+                          handleChange("click", 0);
+                        }}
+                        onShowVerify={(value) => {
+                          setShowVerify(value);
+                        }}
+                      />
+                    )}
+                  </>
+                )}
+              </LoginCardBNB>
+              <ErrorAlert error={loginError} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
