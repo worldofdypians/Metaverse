@@ -1,0 +1,137 @@
+.community-title {
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 43px;
+  color: #ffffff;
+  font-family: "Organetto" !important;
+  white-space: normal !important;
+}
+
+.community-desc {
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.community-items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+
+  @media screen and (max-width: 786px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.community-item-card {
+  background: #181636;
+  border: 2px solid #181636;
+  border-radius: 8px;
+  height: 100%;
+  transition: all .25s;
+}
+
+.banner-holder{
+  --mask: linear-gradient(-135deg, #0000 20px, #000 0);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}
+
+.community-card-banner {
+  --mask: linear-gradient(-135deg, #0000 20px, #000 0);
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  object-fit: cover;
+  transition: all 0.25s;
+  width: 100%;
+  height: 100%;
+}
+
+.community-item-card:hover{
+  border: 2px solid #d9fa86;
+  .community-card-banner{
+    scale: 1.2;
+  }
+}
+
+.community-card-title {
+  font-weight: 800;
+  font-size: 16px;
+  line-height: normal;
+  color: #ffffff;
+  font-family: "montserrat" !important;
+}
+
+.community-card-desc {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: normal;
+  color: #ffffff;
+  margin-bottom: 0;
+}
+
+.community-card-date {
+  color: #f7f7f7;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -0.018em;
+  line-height: 18px;
+  white-space: pre;
+}
+
+
+.community-active-banner{
+    background: #181636;
+    border: 2px solid #181636;
+    border-radius: 12px;
+}
+
+.community-active-image{
+    border-radius: 12px 0px 0px 12px;
+
+}
+
+.community-active-info{
+
+}
+
+.community-active-title{
+    font-weight: 800;
+    font-size: 26px;
+    line-height: normal;
+    color: #ffffff;
+    font-family: "montserrat" !important;
+}
+
+.community-status-btn{
+  border-radius: 8px;
+  transition: all .25s;
+  cursor: pointer;
+}
+
+.community-status-btn:hover{
+background: #363087;
+
+}
+
+
+.community-status-active{
+background: #363087;
+}
+
+.community-events-grid{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 20px;
+}
+
+.secondary-card{
+  min-height: 480px;
+
+  @media screen and (max-width: 786px) {
+    min-height: fit-content;
+  }
+}
