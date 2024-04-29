@@ -17,6 +17,10 @@ const Footer = () => {
       link: "https://twitter.com/worldofdypians",
     },
     {
+      icon: "medium",
+      link: "https://medium.com/@worldofdypians",
+    },
+    {
       icon: "telegram",
       link: "https://t.me/worldofdypians",
     },
@@ -116,7 +120,7 @@ const Footer = () => {
       <hr className="footer-divider mt-0 mb-4" />
 
       <div className="d-flex w-100  justify-content-center mb-4 flex-column gap-2">
-      <div className="d-flex align-items-center justify-content-between flex-column gap-lg-3 flex-lg-row w-100">
+      <div className="d-flex align-items-start align-items-lg-center justify-content-between flex-column gap-lg-3 flex-lg-row w-100">
       <div
           className="d-flex footer-wrapper flex-row align-items-start align-items-lg-center gap-5 justify-content-between"
           style={{ width: "fit-content" }}
@@ -154,7 +158,7 @@ const Footer = () => {
             />
           </a>
         </div>
-        <div className="footer-socials d-flex align-items-center py-5 py-lg-0 gap-4 gap-lg-5">
+        <div className="footer-socials d-flex align-items-center py-2 py-lg-0 gap-4 gap-lg-5">
             {socials.map((item, index) => (
               <a
                 href={item.link}
