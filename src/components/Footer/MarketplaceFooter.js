@@ -16,10 +16,7 @@ const Footer = () => {
       icon: "twitter",
       link: "https://twitter.com/worldofdypians",
     },
-    {
-      icon: "medium",
-      link: "https://medium.com/@worldofdypians",
-    },
+
     {
       icon: "telegram",
       link: "https://t.me/worldofdypians",
@@ -51,6 +48,10 @@ const Footer = () => {
     {
       icon: "youtube",
       link: "https://www.youtube.com/@Dypius",
+    },
+    {
+      icon: "medium",
+      link: "https://medium.com/@worldofdypians",
     },
     {
       icon: "email",
