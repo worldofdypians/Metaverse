@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import ForgotPasswordBNB from "../ForgotPassword/ForgotPasswordBNB";
 import { GENERATE_NONCE, VERIFY_WALLET } from "../Dashboard/Dashboard.schema";
 import axios from "axios";
+import mediumLogo from "../../../../../assets/mediumLogo.svg";
 
 const StyledTabs = styled((props) => (
   <Tabs
@@ -62,7 +63,8 @@ function AuthBNB({
   isSuccess,
   onWalletLinkComplete,
 }) {
-  const { isAuthenticated, loginError, setLoginValues, playerId,email } = useAuth();
+  const { isAuthenticated, loginError, setLoginValues, playerId, email } =
+    useAuth();
 
   const {
     data,
@@ -121,7 +123,7 @@ function AuthBNB({
       navigate("/account");
     }
   }, [data, playerId, isAuthenticated, isLogin]);
- 
+
   useEffect(() => {
     if (dataNonce?.generateWalletNonce) {
       signWalletPublicAddress();
@@ -145,7 +147,7 @@ function AuthBNB({
   };
 
   const handleManageLoginStates = () => {
-    refetchPlayer()
+    refetchPlayer();
     if (
       isAuthenticated &&
       playerId &&
@@ -225,7 +227,18 @@ function AuthBNB({
     <div className="mx-0 container-nft w-100 container-fluid d-flex align-items-start px-0 px-lg-5 flex-column">
       <div className="d-flex flex-column container-lg gap-2 w-100">
         <div className="nft-page-wrapper bg-transparent d-flex flex-column flex-lg-row gap-3 mb-3">
-          <div className="col-12 col-md-12 col-lg-8 mt-0 px-0 nft-page-wrapperbnb"></div>
+          <div className="col-12 col-md-12 col-lg-8 mt-0 p-3 nft-page-wrapperbnb">
+            <div className="d-flex justify-content-end buttonwrapper-bnb-alliance">
+              <a
+                href="https://medium.com/@worldofdypians"
+                target="_blank"
+                rel="noreferrer"
+                className="d-flex gap-2 align-items-center medium-btn-bnb px-3 py-1"
+              >
+                <img src={mediumLogo} alt="" /> Create Account Tutorial
+              </a>
+            </div>
+          </div>
           <div className="col-12 col-md-12 col-lg-4 mt-0 px-0 px-lg-2">
             <div style={{ margin: "auto" }}>
               <LoginCardBNB
@@ -242,16 +255,19 @@ function AuthBNB({
                     <ul class="timeline m-0 p-0" id="timeline">
                       <li class="col-3 li complete">
                         <div class="status">
+                          <span className="text-white statusIndex">1</span>
                           <h4 className="listtext"> Register </h4>
                         </div>
                       </li>
                       <li class={`col-3 li ${showVerify && "complete"} `}>
                         <div class="status">
+                          <span className="text-white statusIndex">2</span>
                           <h4 className="listtext"> Verify </h4>
                         </div>
                       </li>
                       <li class={`col-3 li ${playerCreation && "complete"} `}>
                         <div class="status">
+                          <span className="text-white statusIndex">3</span>
                           <h4 className="listtext"> Profile </h4>
                         </div>
                       </li>
@@ -260,9 +276,14 @@ function AuthBNB({
                         style={{ width: 0 }}
                       >
                         <div class="status">
+                          <span className="text-white statusIndex">4</span>
                           <h4
                             className="listtext"
-                            style={{ width: 0, whiteSpace: "nowrap" }}
+                            style={{
+                              width: 0,
+                              whiteSpace: "nowrap",
+                              left: "-17px",
+                            }}
                           >
                             Link Wallet
                           </h4>
