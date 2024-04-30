@@ -602,7 +602,7 @@ const News = (props) => {
                 />
                 <h3 className="newsletter-title font-organetto">
                   Subscribe to our{" "}
-                  <h3 style={{ color: "#8c56ff" }}>newsletter</h3>
+                  <h3 className="newsletter-title font-organetto" style={{ color: "#8c56ff" }}>newsletter</h3>
                 </h3>
                 <p className="newsletter-content">
                   Stay up-to-date with our latest news, amazing features, and

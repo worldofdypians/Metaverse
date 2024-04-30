@@ -1045,28 +1045,6 @@ const [skalePoints, setSkalePoints] = useState(0);
                           </div>
                         </div>
                       </NavLink>
-                      {/* <NavLink to="/marketplace/events/daily-bonus">
-                        <div className="">
-                          <div
-                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2 ${
-                              selectedPackage === "daily-bonus" &&
-                              eventId === "daily-bonus" &&
-                              "selected-event-package"
-                            }`}
-                            onClick={() => setSelectedPackage("daily-bonus")}
-                          >
-                            <img
-                              src={dailyBonusImg}
-                              className="w-100"
-                              style={{ borderRadius: "16px", height: windowSize.width > 767 ? 145 : 130 }}
-                              alt=""
-                            />
-                            <span className="event-package-title">
-                              Daily Bonus
-                            </span>
-                          </div>
-                        </div>
-                      </NavLink> */}
                       <NavLink to="/marketplace/events/dragon-ruins">
                         <div className="">
                           <div
