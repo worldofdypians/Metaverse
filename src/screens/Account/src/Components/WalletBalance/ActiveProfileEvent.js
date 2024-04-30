@@ -117,20 +117,22 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
           />
           <span className="mb-0 event-bottom-text">{event.eventType}</span>
         </div>
+        {userEarnedUsd &&
         <div className="d-flex align-items-center gap-1 eventusd">
-          {/* {event.title === "Dypius" && event.activeTab !== 'dypiusv2' ? (
-            <img src={dypius} height={15} width={15} alt="" />
-          ) : ( */}
-            <img src={cyanDollar} height={15} width={15} alt="" />
-          {/* )} */}
-          <span className="mb-0 event-bottom-text">
-            {event.title === "Dypius" && event.activeTab !== 'dypiusv2' ? (
-              <>{getFormattedNumber(userEarnedUsd, 0)} DYP</>
-            ) : (
-              <>${getFormattedNumber(userEarnedUsd, 2)}</>
-            )}
-          </span>
-        </div>
+        {/* {event.title === "Dypius" && event.activeTab !== 'dypiusv2' ? (
+          <img src={dypius} height={15} width={15} alt="" />
+        ) : ( */}
+          <img src={cyanDollar} height={15} width={15} alt="" />
+        {/* )} */}
+        <span className="mb-0 event-bottom-text">
+          {event.title === "Dypius" && event.activeTab !== 'dypiusv2' ? (
+            <>{getFormattedNumber(userEarnedUsd, 0)} DYP</>
+          ) : (
+            <>${getFormattedNumber(userEarnedUsd, 2)}</>
+          )}
+        </span>
+      </div>
+        }
         <div className="d-flex align-items-center gap-1">
           <img src={cyanDate} height={15} width={15} alt="" />
           <span className="mb-0 event-bottom-text">{event.date}</span>
