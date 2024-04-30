@@ -436,9 +436,9 @@ const Community = () => {
 
   const dummyBanner = {
     title: "Entry Campaign",
-    status: "Upcoming",
+    status: "Live",
     desc: "Join the World of Dypians (WoD) Entry Campaign from May 1 to May 15 for a chance to win a share of the 100,000 WOD Tokens prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
-    start_date: "May 1, 2024",
+    start_date: "Apr 30, 2024",
     end_date: "May 15, 2024",
     image: entryCampaign,
     link: "/",
@@ -512,24 +512,20 @@ const Community = () => {
                   <p className="community-card-desc">{dummyBanner.desc}</p>
 
                   <div className="d-flex flex-column align-items-start gap-3 justify-content-between">
-                    <HtmlTooltip
-                    enterDelay={0}
-                    enterTouchDelay={0}
-                    leaveDelay={2000}
-                      placement="top"
-                      title={
-                        <span className="card-eth-chain-text">Coming Soon</span>
-                      }
+                    <div
+                      className="linear-border"
+                      style={{ width: "fit-content" }}
                     >
-                      <div
-                        className="linear-border-disabled"
-                        style={{ width: "fit-content" }}
+                      <a
+                        className="btn filled-btn px-5"
+                        href="https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/102-world-of-dypians-entry-campaign"
+                        target="_blank"
+                        rel="noreferrer"
                       >
-                        <button disabled className="btn filled-btn px-5" to="/">
-                          Explore
-                        </button>
-                      </div>
-                    </HtmlTooltip>
+                        Explore
+                      </a>
+                    </div>
+
                     <div className="d-flex align-items-center gap-2 mt-2">
                       <span className="community-card-date">Duration:</span>
                       <div className="d-flex align-items-center gap-2">
@@ -555,9 +551,8 @@ const Community = () => {
             <div className="community-items-grid">
               {dummyData.slice(1, 4).map((item, index) => (
                 <HtmlTooltip
-                enterTouchDelay={0}
-                enterDelay={0}
-              
+                  enterTouchDelay={0}
+                  enterDelay={0}
                   placement="top"
                   title={
                     <span className="card-eth-chain-text">Coming Soon</span>
