@@ -71,6 +71,7 @@ import Web3 from "web3";
 import ChestFlyout from "./components/LandFlyout/ChestFlyout";
 import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
+import Community from "./screens/Community/Community.js";
 
 function App() {
   const CHAINLIST = {
@@ -2388,6 +2389,7 @@ function App() {
               }
             />
             <Route exact path="/roadmap" element={<Roadmap />} />
+            <Route exact path="/community" element={<Community />} />
             <Route
               exact
               path="/explorer"
