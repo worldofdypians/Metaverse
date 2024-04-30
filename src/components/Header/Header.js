@@ -407,6 +407,16 @@ const Header = ({
               Marketplace
             </NavLink>
             <NavLink
+              to="/community"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-anchor font-poppins activenavlink"
+                  : "nav-anchor font-poppins"
+              }
+            >
+              Community
+            </NavLink>
+            <NavLink
               to="/roadmap"
               className={({ isActive }) =>
                 isActive

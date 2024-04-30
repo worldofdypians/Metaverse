@@ -84,21 +84,23 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
               : "Explore & Find"}
           </span>
         </div>
+        {userEarnedUsd &&
         <div className="d-flex align-items-center gap-1">
-          {event.title === "Dypius" ? (
-            <img src={dypius} height={15} width={15} alt="" />
-          ) : (
-            <img src={grayDollar} height={15} width={15} alt="" />
-          )}
+        {event.title === "Dypius" ? (
+          <img src={dypius} height={15} width={15} alt="" />
+        ) : (
+          <img src={grayDollar} height={15} width={15} alt="" />
+        )}
 
-          <span className="mb-0 event-bottom-text" style={{ color: "#B8B8E0" }}>
-            {event.title === "Dypius" ? (
-              <>{getFormattedNumber(userEarnedUsd, 0)} DYP</>
-            ) : (
-              <>${getFormattedNumber(userEarnedUsd, 2)}</>
-            )}
-          </span>
-        </div>
+        <span className="mb-0 event-bottom-text" style={{ color: "#B8B8E0" }}>
+          {event.title === "Dypius" ? (
+            <>{getFormattedNumber(userEarnedUsd, 0)} DYP</>
+          ) : (
+            <>${getFormattedNumber(userEarnedUsd, 2)}</>
+          )}
+        </span>
+      </div>
+        }
 
         <img src={grayArrow} height={15} width={15} alt="" />
       </div>

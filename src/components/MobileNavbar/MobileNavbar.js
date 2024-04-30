@@ -468,7 +468,17 @@ const MobileNavbar = ({
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>
-
+        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+          <NavLink
+            to="/community"
+            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+            style={{ textDecoration: "none" }}
+            onClick={() => setOpenNavbar(false)}
+          >
+            <h6 className="mobile-nav-link font-poppins mb-0">Community</h6>
+            <img src={mobileArrow} alt="arrow" />{" "}
+          </NavLink>
+        </div>
         <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
           <NavLink
             to="/roadmap"
@@ -480,6 +490,7 @@ const MobileNavbar = ({
             <img src={mobileArrow} alt="arrow" />{" "}
           </NavLink>
         </div>
+       
         <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
           <NavLink
             to="/news"
