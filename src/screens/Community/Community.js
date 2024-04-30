@@ -508,6 +508,9 @@ const Community = () => {
 
                   <div className="d-flex flex-column align-items-start gap-3 justify-content-between">
                     <HtmlTooltip
+                    enterDelay={0}
+                    enterTouchDelay={0}
+                    leaveDelay={2000}
                       placement="top"
                       title={
                         <span className="card-eth-chain-text">Coming Soon</span>
@@ -547,6 +550,9 @@ const Community = () => {
             <div className="community-items-grid">
               {dummyData.slice(1, 4).map((item, index) => (
                 <HtmlTooltip
+                enterTouchDelay={0}
+                enterDelay={0}
+              
                   placement="top"
                   title={
                     <span className="card-eth-chain-text">Coming Soon</span>
