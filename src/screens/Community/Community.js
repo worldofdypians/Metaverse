@@ -15,15 +15,89 @@ import skaleLogo from "../Account/src/Components/WalletBalance/assets/skaleLogo.
 import gate from "../Account/src/Components/WalletBalance/assets/gate.svg";
 import conflux from "../Account/src/Components/WalletBalance/assets/conflux.svg";
 import upcomingDyp2 from "../Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
-import cmc from '../Marketplace/MarketNFTs/assets/cmc.svg'
-import doge from '../Marketplace/MarketNFTs/assets/dogeLogo.svg'
+import cmc from "../Marketplace/MarketNFTs/assets/cmc.svg";
+import doge from "../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import ActiveProfileEvent from "../Account/src/Components/WalletBalance/ActiveProfileEvent";
 import ExpiredProfileEvent from "../Account/src/Components/WalletBalance/ExpiredProfileEvent";
+import discord from "./assets/discord.png";
+import youtube from "./assets/youtube.png";
+import twitter from "./assets/twitter.png";
+import telegram from "./assets/telegram.png";
+import criticalHit from "../Marketplace/MarketNFTs/assets/criticalHit2.webp";
+import goldenPass from "../Marketplace/MarketNFTs/assets/goldenPass.webp";
+import puzzleMadness from "../Account/src/Components/BundleCard/assets/puzzleMadness2.webp";
+import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon2.webp";
+import OutsideClickHandler from "react-outside-click-handler";
+import newsletterIcon from "../../assets/newsAssets/newsletterIcon.svg";
+import newsLetterImage from "../../assets/newsAssets/newsLetterImage.svg";
+import modalClose from "../../assets/newsAssets/modalClose.svg";
+import newsLetterModal from "../../assets/newsAssets/newsLetterModal.svg";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import styled from "styled-components";
+import { TextField } from "@mui/material";
+import axios from "axios";
+import validateEmail from "../../hooks/validateEmail";
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#080b2a",
+    },
+  },
+});
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "8px",
+  },
+  "& .MuiInputLabel-root": {
+    color: "#080B2A",
+    fontWeight: 400,
+    fontFamily: "Poppins",
+  },
+}));
+
 
 const Community = () => {
   const [active, setActive] = useState(true);
+  const [popup, setPopup] = useState(false);
+  const [email, setEmail] = useState("")
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState(false)
 
-  const navigate = useNavigate()
+
+
+
+  const subscribe = async (e) => {
+    e.preventDefault();
+    setError(validateEmail(email));
+    if (Object.keys(validateEmail(email)).length === 0) {
+      const postEmail = {
+        email: email,
+      };
+
+      if (email !== "") {
+        axios
+          .post("https://api3.dyp.finance/api/newsletter/insert", postEmail)
+          .then((result) => {
+            if (result.data.status === 1) {
+              setSuccess(true);
+            } else {
+              setSuccess(false);
+              setError({ email: result.data.message });
+            }
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+      }
+    }
+  };
+
+
+
+  const navigate = useNavigate();
 
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -34,7 +108,6 @@ const Community = () => {
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
-
 
   const dummyBetaPassData2 = [
     {
@@ -47,7 +120,7 @@ const Community = () => {
       eventDate: "Feb 26, 2024",
       date: "Feb 26, 2024",
       backgroundImage: upcomingDyp2,
-    eventDuration: dypius2LastDay,
+      eventDuration: dypius2LastDay,
       activeTab: "dypiusv2",
       popupInfo: {
         title: "Dypius Premium",
@@ -69,14 +142,14 @@ const Community = () => {
         activeTab: "dypiusv2",
       },
     },
- 
+
     {
       title: "SKALE",
       logo: skaleLogo,
       eventStatus: "Live",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
-    eventDuration: skaleLastDay,
+      eventDuration: skaleLastDay,
       eventType: "Explore & Mine",
       eventDate: "Apr 15, 2024",
       date: "Apr 15, 2024",
@@ -96,7 +169,7 @@ const Community = () => {
         minPoints: "5,000",
         maxPoints: "30,000",
         learnMore:
-        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
         eventDate: "Apr 15, 2024",
       },
     },
@@ -108,7 +181,7 @@ const Community = () => {
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 26, 2023",
-    eventDuration: cmcLastDay,
+      eventDuration: cmcLastDay,
       // backgroundImage: upcomingCmc,
       popupInfo: {
         title: "CoinMarketCap",
@@ -177,7 +250,7 @@ const Community = () => {
       myEarnings: 126.45,
       eventType: "Explore & Mine",
       eventDate: "Nov 01, 2023",
-    eventDuration: baseLastDay,
+      eventDuration: baseLastDay,
 
       // backgroundImage: baseUpcoming,
       popupInfo: {
@@ -207,7 +280,7 @@ const Community = () => {
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Ended",
-    eventDuration: coingeckoLastDay,
+      eventDuration: coingeckoLastDay,
 
       // backgroundImage: coingeckoUpcoming,
       popupInfo: {
@@ -236,7 +309,7 @@ const Community = () => {
       myEarnings: 0.0,
       eventType: "Explore & Find",
       eventDate: "Ended",
-    eventDuration: dypiusLastDay,
+      eventDuration: dypiusLastDay,
 
       // backgroundImage: upcomingDyp,
       popupInfo: {
@@ -263,7 +336,7 @@ const Community = () => {
       myEarnings: 0,
       eventType: "Explore & Mine",
       eventDate: "Ended",
-    eventDuration: gateLastDay,
+      eventDuration: gateLastDay,
 
       // backgroundImage: gateUpcoming,
       popupInfo: {
@@ -293,7 +366,7 @@ const Community = () => {
       myEarnings: 0,
       eventType: "Explore & Mine",
       eventDate: "Ended",
-    eventDuration: confluxLastDay,
+      eventDuration: confluxLastDay,
 
       // backgroundImage: confluxUpcoming,
       popupInfo: {
@@ -316,107 +389,9 @@ const Community = () => {
     },
   ];
 
+ 
 
-  const dypv2 = {
-    title: "Dypius Premium",
-    logo: dypius,
-    eventStatus: "Live",
-    totalRewards: "$50,000 in BNB Rewards",
-    myEarnings: 0.0,
-    eventDate: "Feb 26, 2024",
-    date: "Feb 26, 2024",
-    backgroundImage: upcomingDyp2,
-    activeTab: "dypiusv2",
-    chain: "BNB Chain",
-    linkState: "dypius2",
-    rewards: "BNB",
-    status: "Live",
-    id: "event9",
-    eventType: "Explore & Find",
-    eventDuration: dypius2LastDay,
-    minRewards: "1",
-    maxRewards: "100",
-    minPoints: "5,000",
-    maxPoints: "50,000",
-    learnMore:
-      "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-  };
-
-
-  const dummyCmc = {
-    title: "CoinMarketCap",
-    chain: "BNB Chain",
-    linkState: "coinmarketcap",
-    rewards: "BNB",
-    status: "Expired",
-    id: "event8",
-    eventType: "Explore & Mine",
-    eventDate: "Dec 26, 2023",
-    date: "Dec 26, 2023",
-    logo: cmc,
-    totalRewards: "$20,000 in BNB Rewards",
-    eventDuration: cmcLastDay,
-    minRewards: "1",
-    maxRewards: "100",
-    minPoints: "5,000",
-    maxPoints: "50,000",
-    learnMore:
-      "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
-  };
-
-  const dummySkale = {
-    title: "SKALE",
-    chain: "SKALE Nebula Hub",
-    linkState: "skale",
-    rewards: "SKL",
-    status: "Live",
-    id: "event11",
-    eventType: "Explore & Mine",
-    eventDate: "Apr 15, 2024",
-    date: "Apr 15, 2024",
-    logo: skaleLogo,
-    totalRewards: "$20,000 in SKL Rewards",
-    eventDuration: skaleLastDay,
-    minRewards: "0.5",
-    maxRewards: "20",
-    minPoints: "5,000",
-    maxPoints: "50,000",
-    learnMore:
-      "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
-  };
-
-
-
-  
-  const socials = [
-    {
-      icon: "twitter",
-      link: "https://twitter.com/worldofdypians",
-    },
-    {
-      icon: "telegram",
-      link: "https://t.me/worldofdypians",
-    },
-    {
-      icon: "discord",
-      link: "https://discord.gg/worldofdypians",
-    },
-
-    {
-      icon: "instagram",
-      link: "https://www.instagram.com/worldofdypians",
-    },
-    {
-      icon: "facebook",
-      link: "https://www.facebook.com/worldofdypians",
-    },
-
-    {
-      icon: "youtube",
-      link: "https://www.youtube.com/@Dypius",
-    },
-  ];
-
+ 
   const dummyData = [
     {
       title: "Entry Campaign",
@@ -463,6 +438,7 @@ const Community = () => {
   };
 
   return (
+   <>
     <div className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5">
       <div className=" px-0 w-100 d-flex flex-column">
         <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5 mt-5 mt-lg-0">
@@ -605,8 +581,12 @@ const Community = () => {
             ))}
           </div>
           <div className="col-12 col-lg-6 mt-5">
-            <div className="community-item-card secondary-card p-3">
-              <div className="d-flex align-items-center gap-2">
+            <h6 className="community-title">Join Our Community</h6>
+            <div className="community-item-card d-flex align-items-center justify-content-center  position-relative secondary-card p-3">
+              <div
+                className="d-flex align-items-center gap-2"
+                style={{ position: "absolute", top: "4%", left: "4%" }}
+              >
                 <h6 className="community-active-title mb-0">
                   Daily Active Users:
                 </h6>
@@ -617,36 +597,102 @@ const Community = () => {
                   100,000+
                 </h6>
               </div>
-              <div className="row">
-                {socials.map((item, index) => (
-                  <a
-                    href={item.link}
-                    key={index}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="col-4 d-flex align-items-center justify-content-center py-4"
-                  >
+              <div className="row w-100 mt-5 mt-lg-0">
+                <a
+                  href="https://discord.gg/worldofdypians"
+                  target="_blank"
+                  className="col-12 col-lg-6 mb-3"
+                >
+                  <div className="d-flex flex-column align-items-center gap-1">
                     <img
-                      width={50}
-                      height={50}
-                      src={require(`../../assets/footerIcons/${item.icon}.svg`)}
-                      alt={item.icon}
+                      src={discord}
+                      className="community-social-img"
+                      alt=""
                     />
-                    {/* <span>{item.icon}</span> */}
-                  </a>
-                ))}
+                    <span className="follower-amount">22,200+</span>
+                    <span className="follower-type">Members</span>
+                  </div>
+                </a>
+                <a
+                  href="https://www.youtube.com/@Dypius"
+                  target="_blank"
+                  className="col-12 col-lg-6 mb-3"
+                >
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <img
+                      src={youtube}
+                      className="community-social-img"
+                      alt=""
+                    />
+                    <span className="follower-amount">330,000+</span>
+                    <span className="follower-type">Subscribers</span>
+                  </div>
+                </a>
+                <a
+                  href="https://twitter.com/worldofdypians"
+                  target="_blank"
+                  className="col-12 col-lg-6 mb-3"
+                >
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <img
+                      src={twitter}
+                      className="community-social-img"
+                      alt=""
+                    />
+                    <span className="follower-amount">46,900+</span>
+                    <span className="follower-type">Followers</span>
+                  </div>
+                </a>
+                <a
+                  href="https://t.me/worldofdypians"
+                  target="_blank"
+                  className="col-12 col-lg-6 mb-3"
+                >
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <img
+                      src={telegram}
+                      className="community-social-img"
+                      alt=""
+                    />
+                    <span className="follower-amount">28,000+</span>
+                    <span className="follower-type">Members</span>
+                  </div>
+                </a>
+                <a
+                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                  target="_blank"
+                  className="col-12 col-lg-6 mb-3 mt-3 mt-lg-0 d-flex justify-content-center"
+                >
+                  <img
+                    src={
+                      require("../../assets/footerIcons/epicgames.svg").default
+                    }
+                    width={109}
+                    height={109}
+                    alt=""
+                    className="epic-games-community"
+                  />
+                </a>
               </div>
             </div>
           </div>
           <div className="col-12 col-lg-6 mt-5">
-            <div className="community-item-card secondary-card h-100">
-              <div className="d-flex align-items-center">
+            <h6 className="community-title">Our Events</h6>
+            <div className="community-item-card d-flex align-items-center justify-content-center  position-relative secondary-card h-100">
+              <div
+                className="d-flex align-items-center w-100"
+                style={{ position: "absolute", top: 0 }}
+              >
                 <div
-                  className={`community-status-btn community-card-title w-50 p-3 d-flex align-items-center justify-content-center ${
+                  className={`community-status-btn community-card-title w-50 p-3 d-flex align-items-center justify-content-center gap-2 ${
                     active ? "community-status-active" : ""
                   }  `}
                   onClick={() => setActive(true)}
                 >
+                  <div
+                    class="pulsatingDot"
+                    style={{ width: 7, height: 7, marginRight: 5 }}
+                  ></div>
                   Live
                 </div>
                 <div
@@ -658,40 +704,188 @@ const Community = () => {
                   Past
                 </div>
               </div>
-              {active ? 
-              <div className="community-events-grid p-3">
-              {dummyBetaPassData2.slice(0, 2).map((item, index) => (
-                  <ActiveProfileEvent
-                  onOpenEvent={() => {
-                    navigate('/marketplace/events/treasure-hunt')
-                  }}
-                  data={item}
-                  event={item}
-                />
-              ))}
-             
-           
-              </div> 
-                : 
-                <div className="community-events-grid p-3">
-              {dummyBetaPassData2.slice(2, dummyBetaPassData2.length).map((item, index) => (
-                  <ExpiredProfileEvent
-                  onOpenEvent={() => {
-                    navigate('/marketplace/events/past')
-                  }}
-                  data={item}
-                  event={item}
-                />
-              ))}
-             
-           
-              </div> 
-                }
+              {active ? (
+                <div className="w-100 d-flex flex-column justify-content-between mt-5">
+                  <div className="new-packages-grid community-packages-grid mt-3 mt-lg-0 w-100">
+                    <NavLink to="/marketplace/events/dragon-ruins">
+                      <div className="">
+                        <div
+                          className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                        >
+                          <img
+                            src={dragonPackage}
+                            className="w-100"
+                            style={{ borderRadius: "16px" }}
+                            alt=""
+                          />
+                          <span className="event-package-title">
+                            Dragon Ruins
+                          </span>
+                        </div>
+                      </div>
+                    </NavLink>
+                    <NavLink to="/marketplace/events/golden-pass">
+                      <div className="">
+                        <div
+                          className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                        >
+                          <img
+                            src={goldenPass}
+                            className="w-100"
+                            style={{ borderRadius: "16px" }}
+                            alt=""
+                          />
+                          <span className="event-package-title">
+                            Golden Pass
+                          </span>
+                        </div>
+                      </div>
+                    </NavLink>
+                    <NavLink to="/marketplace/events/puzzle-madness">
+                      <div className="">
+                        <div
+                          className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                        >
+                          <img
+                            src={puzzleMadness}
+                            className="w-100"
+                            style={{ borderRadius: "16px" }}
+                            alt=""
+                          />
+                          <span className="event-package-title">
+                            Puzzle Madness
+                          </span>
+                        </div>
+                      </div>
+                    </NavLink>
+                    <NavLink to="/marketplace/events/critical-hit">
+                      <div className="">
+                        <div
+                          className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                        >
+                          <img
+                            src={criticalHit}
+                            className="w-100"
+                            style={{ borderRadius: "16px" }}
+                            alt=""
+                          />
+                          <span className="event-package-title">
+                            Critical Hit
+                          </span>
+                        </div>
+                      </div>
+                    </NavLink>
+                  </div>
+                  <h6 className="community-title ms-3 mb-0 mt-3">
+                    Treasure Hunt
+                  </h6>
+                  <div className="community-events-grid w-100 p-3">
+                    {dummyBetaPassData2.slice(0, 2).map((item, index) => (
+                      <ActiveProfileEvent
+                        onOpenEvent={() => {
+                          navigate("/marketplace/events/treasure-hunt");
+                        }}
+                        data={item}
+                        event={item}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="community-events-grid mt-5  w-100 p-3">
+                  {dummyBetaPassData2
+                    .slice(2, dummyBetaPassData2.length)
+                    .map((item, index) => (
+                      <ExpiredProfileEvent
+                        onOpenEvent={() => {
+                          navigate("/marketplace/events/past");
+                        }}
+                        data={item}
+                        event={item}
+                      />
+                    ))}
+                </div>
+              )}
             </div>
+          </div>
+          <div className="col-12">
+          <div
+            className="newsletter-wrapper d-flex mb-5 p-3"
+            style={{ marginTop: 80 }}
+          >
+            <div className="col-12 col-lg-6">
+              <div className="d-flex flex-column gap-3">
+                <img
+                  src={newsletterIcon}
+                  width={56}
+                  height={56}
+                  alt="newsletter icon"
+                />
+                <h3 className="newsletter-title font-organetto">
+                  Subscribe to our{" "}
+                  <h3 className="newsletter-title font-organetto" style={{ color: "#8c56ff" }}>newsletter</h3>
+                </h3>
+                <p className="newsletter-content">
+                  Stay up-to-date with our latest news, amazing features, and
+                  exciting events delivered straight to your inbox.
+                </p>
+                <div className="d-flex flex-column flex-lg-row align-items-start justify-content-start gap-3 gap-lg-5">
+                  <div className="newsletter-input-container">
+                    <ThemeProvider theme={theme}>
+                      <StyledTextField
+                        style={{ width: "100%" }}
+                        error={error.email ? true : false}
+                        label="Email Address"
+                        variant="outlined"
+                        size="small"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        helperText={error.email}
+                      />
+                    </ThemeProvider>
+                  </div>
+                  <button
+                    className="btn filled-btn px-5"
+                    style={{ background: "black", color: "white" }}
+                    onClick={subscribe}
+                  >
+                    Register
+                  </button>
+                </div>
+                <span className="newsletter-span">
+                  By submitting this form, you are consenting to receive
+                  marketing emails from Dypius. You may unsubscribe at anytime.
+                </span>
+              </div>
+            </div>
+            <div className="col-12 col-lg-6 d-none d-lg-flex align-items-center justify-content-center">
+              <img src={newsLetterImage} alt="newsletter" />
+            </div>
+          </div>
           </div>
         </div>
       </div>
     </div>
+    {success && (
+        <OutsideClickHandler onOutsideClick={() => setSuccess(false)}>
+          <div className="success-modal d-flex flex-column p-3 justify-content-center align-items-center gap-4">
+            <div className="d-flex w-100 justify-content-end">
+              <img
+                src={modalClose}
+                alt="close modal"
+                onClick={() => setSuccess(false)}
+                style={{ cursor: "pointer" }}
+              />
+            </div>
+            <img src={newsLetterModal} alt="success" />
+            <h6 className="newsletter-modal-title font-poppins">Thank you</h6>
+            <span className="newsletter-modal-span font-poppins">
+              You’ve subscribed to World of Dypians newsletter
+            </span>
+          </div>
+        </OutsideClickHandler>
+      )}
+   </>
   );
 };
 
