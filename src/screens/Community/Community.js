@@ -454,6 +454,11 @@ const Community = () => {
     }
   }, [success]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = "Community";
+  }, []);
+
   return (
     <>
       <div className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5">
