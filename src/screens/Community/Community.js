@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./_community.scss";
 import testBanner from "./assets/testBanner.png";
 import calendar from "./assets/calendar.svg";
@@ -34,10 +34,11 @@ import modalClose from "../../assets/newsAssets/modalClose.svg";
 import newsLetterModal from "../../assets/newsAssets/newsLetterModal.svg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
-import { TextField } from "@mui/material";
+import { TextField, Tooltip, tooltipClasses } from "@mui/material";
 import axios from "axios";
 import validateEmail from "../../hooks/validateEmail";
-
+import Countdown from "react-countdown";
+import epicblack from "../../assets/epicblack.svg";
 
 const theme = createTheme({
   palette: {
@@ -58,16 +59,25 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "150px !important",
+    minWidth: "100px !important",
+    fontSize: "14px",
+  },
+}));
 
 const Community = () => {
   const [active, setActive] = useState(true);
   const [popup, setPopup] = useState(false);
-  const [email, setEmail] = useState("")
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState(false)
-
-
-
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [countdown, setCountdown] = useState(false);
 
   const subscribe = async (e) => {
     e.preventDefault();
@@ -95,8 +105,6 @@ const Community = () => {
     }
   };
 
-
-
   const navigate = useNavigate();
 
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -108,6 +116,8 @@ const Community = () => {
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
+
+  let activeDay = new Date("2024-05-01T11:35:00.000+02:00");
 
   const dummyBetaPassData2 = [
     {
@@ -389,9 +399,6 @@ const Community = () => {
     },
   ];
 
- 
-
- 
   const dummyData = [
     {
       title: "Entry Campaign",
@@ -437,436 +444,473 @@ const Community = () => {
     link: "/",
   };
 
-  return (
-   <>
-    <div className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5">
-      <div className=" px-0 w-100 d-flex flex-column">
-        <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5 mt-5 mt-lg-0">
-          <div className="col-12 col-lg-4 mb-5">
-            <h6 className="community-title">
-              <mark
-                className="community-title"
-                style={{ color: "#eebf06", background: "none" }}
-              >
-                BNB CHAIN
-              </mark>{" "}
-              AIRDROP ALLIANCE PROGRAM
-            </h6>
-            {/* <p className="community-desc">
-            Here you will find all the Alliance Program quests
-          </p> */}
-          </div>
-          <div className="col-12 col-lg-8 mb-5">
-            <div className="community-active-banner d-flex flex-column flex-lg-row align-items-center">
-              <div className="col-12 col-lg-6">
-                <img
-                  src={dummyBanner.image}
-                  className="w-100 community-active-image"
-                  alt=""
-                />
-              </div>
-              <div className="community-active-info col-12 col-lg-6 p-3 d-flex flex-column justify-content-between gap-3">
-                <div className="d-flex align-items-center justify-content-between">
-                  <h6 className="community-active-title mb-0">
-                    {dummyBanner.title}
-                  </h6>
-                  <div
-                    className={`position-relative ${
-                      dummyBanner.status === "Live"
-                        ? "events-page-status-tag-live"
-                        : dummyBanner.status === "Upcoming"
-                        ? "events-page-status-tag-upcoming"
-                        : "events-page-status-tag-expired"
-                    }
-                 px-2 d-flex align-items-center justify-content-center gap-0`}
-                    style={{ top: 0 }}
-                  >
-                    {dummyBanner.status === "Live" && (
-                      <div
-                        class="pulsatingDot"
-                        style={{ width: 7, height: 7, marginRight: 5 }}
-                      ></div>
-                    )}
-                    <span>{dummyBanner.status}</span>
-                  </div>
-                </div>
-                <p className="community-card-desc">{dummyBanner.desc}</p>
+  const html = document.querySelector("html");
 
-                <div className="d-flex flex-column align-items-start gap-3 justify-content-between">
-                  <div
-                    className="linear-border"
-                    style={{ width: "fit-content" }}
-                  >
-                    <NavLink className="btn filled-btn px-5" to="/">
-                      Explore
-                    </NavLink>
-                  </div>
-                  <div className="d-flex align-items-center gap-2 mt-2">
-                    <span className="community-card-date">Duration:</span>
-                    <div className="d-flex align-items-center gap-2">
-                      <div className="d-flex align-items-center gap-1">
-                        <img src={calendar} width={16} height={16} alt="" />
-                        <span className="community-card-date">
-                          {dummyBanner.start_date}
-                        </span>
-                      </div>
-                      <span className="community-card-date">-</span>
-                      <div className="d-flex align-items-center gap-1">
-                        <img src={calendar} width={16} height={16} alt="" />
-                        <span className="community-card-date">
-                          {dummyBanner.end_date}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+  useEffect(() => {
+    if (success === true) {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [success]);
+
+  return (
+    <>
+      <div className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5">
+        <div className=" px-0 w-100 d-flex flex-column">
+          <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5 mt-5 mt-lg-0">
+            <div className="col-12 col-lg-4 mb-5">
+              <h6 className="community-title">
+                <mark
+                  className="community-title"
+                  style={{ color: "#eebf06", background: "none" }}
+                >
+                  BNB CHAIN
+                </mark>{" "}
+                AIRDROP ALLIANCE PROGRAM
+              </h6>
             </div>
-          </div>
-          <div className="community-items-grid">
-            {dummyData.slice(1, 4).map((item, index) => (
-              <NavLink
-                to={item.link}
-                key={index}
-                className="community-item-card d-flex flex-column gap-2 p-3"
-              >
-                <div className="w-100 h-100 banner-holder overflow-hidden">
+            <div className="col-12 col-lg-8 mb-5">
+              <div className="community-active-banner d-flex flex-column flex-lg-row align-items-center">
+                <div className="col-12 col-lg-6">
                   <img
-                    src={item.image}
-                    className="community-card-banner"
+                    src={dummyBanner.image}
+                    className="w-100 community-active-image"
                     alt=""
                   />
                 </div>
-                <div className="d-flex align-items-center justify-content-between">
-                  <div className="community-card-title">{item.title}</div>
-                  <div
-                    className={`position-relative ${
-                      item.status === "Live"
-                        ? "events-page-status-tag-live"
-                        : item.status === "Upcoming"
-                        ? "events-page-status-tag-upcoming"
-                        : "events-page-status-tag-expired"
-                    }
+                <div className="community-active-info col-12 col-lg-6 p-3 d-flex flex-column justify-content-between gap-3">
+                  <div className="d-flex align-items-center justify-content-between">
+                    <h6 className="community-active-title mb-0">
+                      {dummyBanner.title}
+                    </h6>
+                    <div
+                      className={`position-relative ${
+                        dummyBanner.status === "Live"
+                          ? "events-page-status-tag-live"
+                          : dummyBanner.status === "Upcoming"
+                          ? "events-page-status-tag-upcoming"
+                          : "events-page-status-tag-expired"
+                      }
                  px-2 d-flex align-items-center justify-content-center gap-0`}
-                    style={{ top: 0 }}
-                  >
-                    {item.status === "Live" && (
+                      style={{ top: 0 }}
+                    >
+                      {dummyBanner.status === "Live" && (
+                        <div
+                          class="pulsatingDot"
+                          style={{ width: 7, height: 7, marginRight: 5 }}
+                        ></div>
+                      )}
+                      <span>{dummyBanner.status}</span>
+                    </div>
+                  </div>
+                  <p className="community-card-desc">{dummyBanner.desc}</p>
+
+                  <div className="d-flex flex-column align-items-start gap-3 justify-content-between">
+                    <HtmlTooltip
+                      placement="top"
+                      title={
+                        <span className="card-eth-chain-text">Coming Soon</span>
+                      }
+                    >
                       <div
-                        class="pulsatingDot"
-                        style={{ width: 7, height: 7, marginRight: 5 }}
-                      ></div>
-                    )}
-                    <span>{item.status}</span>
+                        className="linear-border-disabled"
+                        style={{ width: "fit-content" }}
+                      >
+                        <button disabled className="btn filled-btn px-5" to="/">
+                          Explore
+                        </button>
+                      </div>
+                    </HtmlTooltip>
+                    <div className="d-flex align-items-center gap-2 mt-2">
+                      <span className="community-card-date">Duration:</span>
+                      <div className="d-flex align-items-center gap-2">
+                        <div className="d-flex align-items-center gap-1">
+                          <img src={calendar} width={16} height={16} alt="" />
+                          <span className="community-card-date">
+                            {dummyBanner.start_date}
+                          </span>
+                        </div>
+                        <span className="community-card-date">-</span>
+                        <div className="d-flex align-items-center gap-1">
+                          <img src={calendar} width={16} height={16} alt="" />
+                          <span className="community-card-date">
+                            {dummyBanner.end_date}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="d-flex align-items-center justify-content-between mt-2">
-                  <span className="community-card-date">Duration:</span>
-                  <div className="d-flex align-items-center gap-2">
-                    <div className="d-flex align-items-center gap-1">
-                      <img src={calendar} width={16} height={16} alt="" />
-                      <span className="community-card-date">
-                        {item.start_date}
-                      </span>
-                    </div>
-                    <span className="community-card-date">-</span>
-                    <div className="d-flex align-items-center gap-1">
-                      <img src={calendar} width={16} height={16} alt="" />
-                      <span className="community-card-date">
-                        {item.end_date}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </NavLink>
-            ))}
-          </div>
-          <div className="col-12 col-lg-6 mt-5">
-            <h6 className="community-title">Join Our Community</h6>
-            <div className="community-item-card d-flex align-items-center justify-content-center  position-relative secondary-card p-3">
-              <div
-                className="d-flex align-items-center gap-2"
-                style={{ position: "absolute", top: "4%", left: "4%" }}
-              >
-                <h6 className="community-active-title mb-0">
-                  Daily Active Users:
-                </h6>
-                <h6
-                  className="community-active-title mb-0"
-                  style={{ color: "#d9fa86" }}
-                >
-                  100,000+
-                </h6>
-              </div>
-              <div className="row w-100 mt-5 mt-lg-0">
-                <a
-                  href="https://discord.gg/worldofdypians"
-                  target="_blank"
-                  className="col-12 col-lg-6 mb-3"
-                >
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <img
-                      src={discord}
-                      className="community-social-img"
-                      alt=""
-                    />
-                    <span className="follower-amount">22,200+</span>
-                    <span className="follower-type">Members</span>
-                  </div>
-                </a>
-                <a
-                  href="https://www.youtube.com/@Dypius"
-                  target="_blank"
-                  className="col-12 col-lg-6 mb-3"
-                >
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <img
-                      src={youtube}
-                      className="community-social-img"
-                      alt=""
-                    />
-                    <span className="follower-amount">330,000+</span>
-                    <span className="follower-type">Subscribers</span>
-                  </div>
-                </a>
-                <a
-                  href="https://twitter.com/worldofdypians"
-                  target="_blank"
-                  className="col-12 col-lg-6 mb-3"
-                >
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <img
-                      src={twitter}
-                      className="community-social-img"
-                      alt=""
-                    />
-                    <span className="follower-amount">46,900+</span>
-                    <span className="follower-type">Followers</span>
-                  </div>
-                </a>
-                <a
-                  href="https://t.me/worldofdypians"
-                  target="_blank"
-                  className="col-12 col-lg-6 mb-3"
-                >
-                  <div className="d-flex flex-column align-items-center gap-1">
-                    <img
-                      src={telegram}
-                      className="community-social-img"
-                      alt=""
-                    />
-                    <span className="follower-amount">28,000+</span>
-                    <span className="follower-type">Members</span>
-                  </div>
-                </a>
-                <a
-                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                  target="_blank"
-                  className="col-12 col-lg-6 mb-3 mt-3 mt-lg-0 d-flex justify-content-center"
-                >
-                  <img
-                    src={
-                      require("../../assets/footerIcons/epicgames.svg").default
-                    }
-                    width={109}
-                    height={109}
-                    alt=""
-                    className="epic-games-community"
-                  />
-                </a>
               </div>
             </div>
-          </div>
-          <div className="col-12 col-lg-6 mt-5">
-            <h6 className="community-title">Our Events</h6>
-            <div className="community-item-card d-flex align-items-center justify-content-center  position-relative secondary-card h-100">
-              <div
-                className="d-flex align-items-center w-100"
-                style={{ position: "absolute", top: 0 }}
-              >
-                <div
-                  className={`community-status-btn community-card-title w-50 p-3 d-flex align-items-center justify-content-center gap-2 ${
-                    active ? "community-status-active" : ""
-                  }  `}
-                  onClick={() => setActive(true)}
+            <div className="community-items-grid">
+              {dummyData.slice(1, 4).map((item, index) => (
+                <HtmlTooltip
+                  placement="top"
+                  title={
+                    <span className="card-eth-chain-text">Coming Soon</span>
+                  }
                 >
                   <div
-                    class="pulsatingDot"
-                    style={{ width: 7, height: 7, marginRight: 5 }}
-                  ></div>
-                  Live
-                </div>
-                <div
-                  className={`community-status-btn community-card-title w-50 p-3 d-flex align-items-center justify-content-center ${
-                    !active ? "community-status-active" : ""
-                  }  `}
-                  onClick={() => setActive(false)}
-                >
-                  Past
-                </div>
-              </div>
-              {active ? (
-                <div className="w-100 d-flex flex-column justify-content-between mt-5">
-                  <div className="new-packages-grid community-packages-grid mt-3 mt-lg-0 w-100">
-                    <NavLink to="/marketplace/events/dragon-ruins">
-                      <div className="">
-                        <div
-                          className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                        >
-                          <img
-                            src={dragonPackage}
-                            className="w-100"
-                            style={{ borderRadius: "16px" }}
-                            alt=""
-                          />
-                          <span className="event-package-title">
-                            Dragon Ruins
-                          </span>
-                        </div>
-                      </div>
-                    </NavLink>
-                    <NavLink to="/marketplace/events/golden-pass">
-                      <div className="">
-                        <div
-                          className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                        >
-                          <img
-                            src={goldenPass}
-                            className="w-100"
-                            style={{ borderRadius: "16px" }}
-                            alt=""
-                          />
-                          <span className="event-package-title">
-                            Golden Pass
-                          </span>
-                        </div>
-                      </div>
-                    </NavLink>
-                    <NavLink to="/marketplace/events/puzzle-madness">
-                      <div className="">
-                        <div
-                          className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                        >
-                          <img
-                            src={puzzleMadness}
-                            className="w-100"
-                            style={{ borderRadius: "16px" }}
-                            alt=""
-                          />
-                          <span className="event-package-title">
-                            Puzzle Madness
-                          </span>
-                        </div>
-                      </div>
-                    </NavLink>
-                    <NavLink to="/marketplace/events/critical-hit">
-                      <div className="">
-                        <div
-                          className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                        >
-                          <img
-                            src={criticalHit}
-                            className="w-100"
-                            style={{ borderRadius: "16px" }}
-                            alt=""
-                          />
-                          <span className="event-package-title">
-                            Critical Hit
-                          </span>
-                        </div>
-                      </div>
-                    </NavLink>
-                  </div>
-                  <h6 className="community-title ms-3 mb-0 mt-3">
-                    Treasure Hunt
-                  </h6>
-                  <div className="community-events-grid w-100 p-3">
-                    {dummyBetaPassData2.slice(0, 2).map((item, index) => (
-                      <ActiveProfileEvent
-                        onOpenEvent={() => {
-                          navigate("/marketplace/events/treasure-hunt");
-                        }}
-                        data={item}
-                        event={item}
-                      />
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div className="community-events-grid mt-5  w-100 p-3">
-                  {dummyBetaPassData2
-                    .slice(2, dummyBetaPassData2.length)
-                    .map((item, index) => (
-                      <ExpiredProfileEvent
-                        onOpenEvent={() => {
-                          navigate("/marketplace/events/past");
-                        }}
-                        data={item}
-                        event={item}
-                      />
-                    ))}
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="col-12">
-          <div
-            className="newsletter-wrapper d-flex mb-5 p-3"
-            style={{ marginTop: 80 }}
-          >
-            <div className="col-12 col-lg-6">
-              <div className="d-flex flex-column gap-3">
-                <img
-                  src={newsletterIcon}
-                  width={56}
-                  height={56}
-                  alt="newsletter icon"
-                />
-                <h3 className="newsletter-title font-organetto">
-                  Subscribe to our{" "}
-                  <h3 className="newsletter-title font-organetto" style={{ color: "#8c56ff" }}>newsletter</h3>
-                </h3>
-                <p className="newsletter-content">
-                  Stay up-to-date with our latest news, amazing features, and
-                  exciting events delivered straight to your inbox.
-                </p>
-                <div className="d-flex flex-column flex-lg-row align-items-start justify-content-start gap-3 gap-lg-5">
-                  <div className="newsletter-input-container">
-                    <ThemeProvider theme={theme}>
-                      <StyledTextField
-                        style={{ width: "100%" }}
-                        error={error.email ? true : false}
-                        label="Email Address"
-                        variant="outlined"
-                        size="small"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        helperText={error.email}
-                      />
-                    </ThemeProvider>
-                  </div>
-                  <button
-                    className="btn filled-btn px-5"
-                    style={{ background: "black", color: "white" }}
-                    onClick={subscribe}
+                    key={index}
+                    className="community-item-card d-flex flex-column gap-2 p-3"
                   >
-                    Register
-                  </button>
+                    <div className="w-100 h-100 banner-holder overflow-hidden">
+                      <img
+                        src={item.image}
+                        className="community-card-banner"
+                        alt=""
+                      />
+                    </div>
+                    <div className="d-flex align-items-center justify-content-between">
+                      <div className="community-card-title">{item.title}</div>
+                      <div
+                        className={`position-relative ${
+                          item.status === "Live"
+                            ? "events-page-status-tag-live"
+                            : item.status === "Upcoming"
+                            ? "events-page-status-tag-upcoming"
+                            : "events-page-status-tag-expired"
+                        }
+                 px-2 d-flex align-items-center justify-content-center gap-0`}
+                        style={{ top: 0 }}
+                      >
+                        {item.status === "Live" && (
+                          <div
+                            class="pulsatingDot"
+                            style={{ width: 7, height: 7, marginRight: 5 }}
+                          ></div>
+                        )}
+                        <span>{item.status}</span>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-between mt-2">
+                      <span className="community-card-date">Duration:</span>
+                      <div className="d-flex align-items-center gap-2">
+                        <div className="d-flex align-items-center gap-1">
+                          <img src={calendar} width={16} height={16} alt="" />
+                          <span className="community-card-date">
+                            {item.start_date}
+                          </span>
+                        </div>
+                        <span className="community-card-date">-</span>
+                        <div className="d-flex align-items-center gap-1">
+                          <img src={calendar} width={16} height={16} alt="" />
+                          <span className="community-card-date">
+                            {item.end_date}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </HtmlTooltip>
+              ))}
+            </div>
+            <div className="col-12 col-lg-6 mt-5">
+              <h6 className="community-title">Join Our Community</h6>
+              <div className="community-item-card d-flex align-items-center justify-content-center  position-relative secondary-card p-3">
+                <div
+                  className="d-flex align-items-center gap-2"
+                  style={{ position: "absolute", top: "4%", left: "4%" }}
+                >
+                  <h6 className="community-active-title mb-0">
+                    Daily Active Users:
+                  </h6>
+                  <h6
+                    className="community-active-title mb-0"
+                    style={{ color: "#d9fa86" }}
+                  >
+                    100,000+
+                  </h6>
                 </div>
-                <span className="newsletter-span">
-                  By submitting this form, you are consenting to receive
-                  marketing emails from Dypius. You may unsubscribe at anytime.
-                </span>
+                <div className="row w-100 mt-5 mt-lg-0">
+                  <a
+                    href="https://discord.gg/worldofdypians"
+                    target="_blank"
+                    className="col-12 col-lg-6 mb-3"
+                  >
+                    <div className="d-flex flex-column align-items-center gap-1">
+                      <img
+                        src={discord}
+                        className="community-social-img"
+                        alt=""
+                      />
+                      <span className="follower-amount">22,200+</span>
+                      <span className="follower-type">Members</span>
+                    </div>
+                  </a>
+                  <a
+                    href="https://www.youtube.com/@Dypius"
+                    target="_blank"
+                    className="col-12 col-lg-6 mb-3"
+                  >
+                    <div className="d-flex flex-column align-items-center gap-1">
+                      <img
+                        src={youtube}
+                        className="community-social-img"
+                        alt=""
+                      />
+                      <span className="follower-amount">330,000+</span>
+                      <span className="follower-type">Subscribers</span>
+                    </div>
+                  </a>
+                  <a
+                    href="https://twitter.com/worldofdypians"
+                    target="_blank"
+                    className="col-12 col-lg-6 mb-3"
+                  >
+                    <div className="d-flex flex-column align-items-center gap-1">
+                      <img
+                        src={twitter}
+                        className="community-social-img"
+                        alt=""
+                      />
+                      <span className="follower-amount">46,900+</span>
+                      <span className="follower-type">Followers</span>
+                    </div>
+                  </a>
+                  <a
+                    href="https://t.me/worldofdypians"
+                    target="_blank"
+                    className="col-12 col-lg-6 mb-3"
+                  >
+                    <div className="d-flex flex-column align-items-center gap-1">
+                      <img
+                        src={telegram}
+                        className="community-social-img"
+                        alt=""
+                      />
+                      <span className="follower-amount">28,000+</span>
+                      <span className="follower-type">Members</span>
+                    </div>
+                  </a>
+                  <div className="col-12 col-lg-6 epic-games-community mb-3 mt-3 mt-lg-0 d-flex flex-column align-items-center gap-3 justify-content-center">
+                    <a
+                      href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                      target="_blank"
+                    >
+                      <img
+                        src={
+                          require("../../assets/footerIcons/epicgames.svg")
+                            .default
+                        }
+                        width={109}
+                        height={109}
+                        alt=""
+                      />
+                    </a>
+                    <div className="opacitywrapper5 download-filled-btn m-0 px-3">
+                      <a
+                        className="game-event-download d-flex align-items-center gap-2"
+                        href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                        target="_blank"
+                      >
+                        <img src={epicblack} alt="icon" className="epicgame2" />
+                        Download
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="col-12 col-lg-6 d-none d-lg-flex align-items-center justify-content-center">
-              <img src={newsLetterImage} alt="newsletter" />
+            <div className="col-12 col-lg-6 mt-5">
+              <h6 className="community-title">Our Events</h6>
+              <div className="community-item-card d-flex align-items-center justify-content-center  position-relative secondary-card h-100">
+                <div
+                  className="d-flex align-items-center w-100"
+                  style={{ position: "absolute", top: 0 }}
+                >
+                  <div
+                    className={`community-status-btn community-card-title w-50 p-3 d-flex align-items-center justify-content-center gap-2 ${
+                      active ? "community-status-active" : ""
+                    }  `}
+                    onClick={() => setActive(true)}
+                  >
+                    <div
+                      class="pulsatingDot"
+                      style={{ width: 7, height: 7, marginRight: 5 }}
+                    ></div>
+                    Live
+                  </div>
+                  <div
+                    className={`community-status-btn community-card-title w-50 p-3 d-flex align-items-center justify-content-center ${
+                      !active ? "community-status-active" : ""
+                    }  `}
+                    onClick={() => setActive(false)}
+                  >
+                    Past
+                  </div>
+                </div>
+                {active ? (
+                  <div className="w-100 d-flex flex-column justify-content-between mt-5">
+                    <div className="new-packages-grid community-packages-grid mt-3 mt-lg-0 w-100">
+                      <NavLink to="/marketplace/events/dragon-ruins">
+                        <div className="">
+                          <div
+                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                          >
+                            <img
+                              src={dragonPackage}
+                              className="w-100"
+                              style={{ borderRadius: "16px" }}
+                              alt=""
+                            />
+                            <span className="event-package-title">
+                              Dragon Ruins
+                            </span>
+                          </div>
+                        </div>
+                      </NavLink>
+                      <NavLink to="/marketplace/events/golden-pass">
+                        <div className="">
+                          <div
+                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                          >
+                            <img
+                              src={goldenPass}
+                              className="w-100"
+                              style={{ borderRadius: "16px" }}
+                              alt=""
+                            />
+                            <span className="event-package-title">
+                              Golden Pass
+                            </span>
+                          </div>
+                        </div>
+                      </NavLink>
+                      <NavLink to="/marketplace/events/puzzle-madness">
+                        <div className="">
+                          <div
+                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                          >
+                            <img
+                              src={puzzleMadness}
+                              className="w-100"
+                              style={{ borderRadius: "16px" }}
+                              alt=""
+                            />
+                            <span className="event-package-title">
+                              Puzzle Madness
+                            </span>
+                          </div>
+                        </div>
+                      </NavLink>
+                      <NavLink to="/marketplace/events/critical-hit">
+                        <div className="">
+                          <div
+                            className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
+                          >
+                            <img
+                              src={criticalHit}
+                              className="w-100"
+                              style={{ borderRadius: "16px" }}
+                              alt=""
+                            />
+                            <span className="event-package-title">
+                              Critical Hit
+                            </span>
+                          </div>
+                        </div>
+                      </NavLink>
+                    </div>
+                    <h6 className="community-title ms-3 mb-0 mt-3">
+                      Treasure Hunt
+                    </h6>
+                    <div className="community-events-grid w-100 p-3">
+                      {dummyBetaPassData2.slice(0, 2).map((item, index) => (
+                        <ActiveProfileEvent
+                          onOpenEvent={() => {
+                            navigate("/marketplace/events/treasure-hunt");
+                          }}
+                          data={item}
+                          event={item}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="community-events-grid mt-5  w-100 p-3">
+                    {dummyBetaPassData2
+                      .slice(2, dummyBetaPassData2.length)
+                      .map((item, index) => (
+                        <ExpiredProfileEvent
+                          onOpenEvent={() => {
+                            navigate("/marketplace/events/past");
+                          }}
+                          data={item}
+                          event={item}
+                        />
+                      ))}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+            <div className="col-12">
+              <div
+                className="newsletter-wrapper d-flex mb-5 p-3"
+                style={{ marginTop: 80 }}
+              >
+                <div className="col-12 col-lg-6">
+                  <div className="d-flex flex-column gap-3">
+                    <img
+                      src={newsletterIcon}
+                      width={56}
+                      height={56}
+                      alt="newsletter icon"
+                    />
+                    <h3 className="newsletter-title font-organetto">
+                      Subscribe to our{" "}
+                      <h3
+                        className="newsletter-title font-organetto"
+                        style={{ color: "#8c56ff" }}
+                      >
+                        newsletter
+                      </h3>
+                    </h3>
+                    <p className="newsletter-content">
+                      Stay up-to-date with our latest news, amazing features,
+                      and exciting events delivered straight to your inbox.
+                    </p>
+                    <div className="d-flex flex-column flex-lg-row align-items-start justify-content-start gap-3 gap-lg-5">
+                      <div className="newsletter-input-container">
+                        <ThemeProvider theme={theme}>
+                          <StyledTextField
+                            style={{ width: "100%" }}
+                            error={error.email ? true : false}
+                            label="Email Address"
+                            variant="outlined"
+                            size="small"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            helperText={error.email}
+                          />
+                        </ThemeProvider>
+                      </div>
+                      <button
+                        className="btn filled-btn px-5"
+                        style={{ background: "black", color: "white" }}
+                        onClick={subscribe}
+                      >
+                        Register
+                      </button>
+                    </div>
+                    <span className="newsletter-span">
+                      By submitting this form, you are consenting to receive
+                      marketing emails from Dypius. You may unsubscribe at
+                      anytime.
+                    </span>
+                  </div>
+                </div>
+                <div className="col-12 col-lg-6 d-none d-lg-flex align-items-center justify-content-center">
+                  <img src={newsLetterImage} alt="newsletter" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    {success && (
+      {success && (
         <OutsideClickHandler onOutsideClick={() => setSuccess(false)}>
           <div className="success-modal d-flex flex-column p-3 justify-content-center align-items-center gap-4">
             <div className="d-flex w-100 justify-content-end">
@@ -885,7 +929,7 @@ const Community = () => {
           </div>
         </OutsideClickHandler>
       )}
-   </>
+    </>
   );
 };
 
