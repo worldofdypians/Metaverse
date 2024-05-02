@@ -171,11 +171,16 @@ const NewBundleCard = ({
   const [goldenPassDypAmountV2, setGoldenPassDypAmountV2] = useState(0);
   const [puzzleMadnessDypAmount, setPuzzleMadnessDypAmount] = useState(0);
   let twentyfiveApril = new Date("2024-04-25 23:59:00 GMT+02:00");
+  let twentyfiveMay = new Date("2024-05-25 23:59:00 GMT+02:00");
+
   let today = new Date();
  
   let oneApril = new Date("2024-04-01 11:11:00 GMT+02:00");
 
-  let oneMay = new Date("2024-05-01 11:11:00 GMT+02:00"); 
+  let oneMay = new Date("2024-05-01 11:11:00 GMT+02:00");
+  let oneJune = new Date("2024-06-01 11:11:00 GMT+02:00"); 
+  let oneJuly = new Date("2024-07-01 11:11:00 GMT+02:00"); 
+
 
 
   const getBundlePrizes = async () => {
@@ -863,10 +868,10 @@ const NewBundleCard = ({
         //     Number(additional_remaining_time_timestamp * 1000);
 
         setcountdown700(
-          today < oneApril ? oneApril.getTime() : oneMay.getTime()
+          today < oneJune? oneJune.getTime() : oneJuly.getTime()
         );
         handleSetAvailableTime(
-          today < oneApril ? oneApril.getTime() : oneMay.getTime()
+          today < oneJune? oneJune.getTime() : oneJuly.getTime()
         );
         setisAtlimit(true);
         setStatus700(
@@ -892,10 +897,10 @@ const NewBundleCard = ({
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
         setcountdown700(
-          today < oneApril ? oneApril.getTime() : oneMay.getTime()
+          today < oneJune? oneJune.getTime() : oneJuly.getTime()
         );
         handleSetAvailableTime(
-          today < oneApril ? oneApril.getTime() : oneMay.getTime()
+          today < oneJune? oneJune.getTime() : oneJuly.getTime()
         );
         setisAtlimit(true);
         setStatus700(
@@ -949,10 +954,10 @@ const NewBundleCard = ({
           today.getFullYear() === finalDateofBundleFormatted.getFullYear()
         ) {
           setcountdown700(
-            today < oneApril ? oneApril.getTime() : oneMay.getTime()
+            today < oneJune ? oneJune.getTime() : oneJuly.getTime()
           );
           handleSetAvailableTime(
-            today < oneApril ? oneApril.getTime() : oneMay.getTime()
+            today < oneJune ? oneJune.getTime() : oneJuly.getTime()
           );
           setisAtlimit(true);
           setStatusColor700("#FE7A00");
@@ -1013,10 +1018,10 @@ const NewBundleCard = ({
 
         if (today < finalDateofBundle) {
           setcountdown700(
-            today < oneApril ? oneApril.getTime() : oneMay.getTime()
+            today < oneJune ? oneJune.getTime() : oneJuly.getTime()
           );
           handleSetAvailableTime(
-            today < oneApril ? oneApril.getTime() : oneMay.getTime()
+            today < oneJune ? oneJune.getTime() : oneJuly.getTime()
           );
           setisAtlimit(true);
           setStatusColor700("#FE7A00");
@@ -1050,10 +1055,10 @@ const NewBundleCard = ({
             handleSetAvailableTime(finalDateofBundle);
           } else {
             setcountdown700(
-              today < oneApril ? oneApril.getTime() : oneMay.getTime()
+              today < oneJune ? oneJune.getTime() : oneJuly.getTime()
             );
             handleSetAvailableTime(
-              today < oneApril ? oneApril.getTime() : oneMay.getTime()
+              today < oneJune ? oneJune.getTime() : oneJuly.getTime()
             );
             setisAtlimit(true);
             setStatusColor700("#FE7A00");
@@ -1078,10 +1083,10 @@ const NewBundleCard = ({
       if (today < finalDateofBundle) {
         setisAtlimit(true);
         setcountdown700(
-          today < oneApril ? oneApril.getTime() : oneMay.getTime()
+          today < oneJune ? oneJune.getTime() : oneJuly.getTime()
         );
         handleSetAvailableTime(
-          today < oneApril ? oneApril.getTime() : oneMay.getTime()
+          today < oneJune ? oneJune.getTime() : oneJuly.getTime()
         );
         setStatus700(
           "The Golden Pass bundle is currently not available for purchase. Please check back next month."
@@ -1210,10 +1215,10 @@ const NewBundleCard = ({
     ) {
       setisAtlimit(true);
       setcountdown700(
-        today < oneApril ? oneApril.getTime() : oneMay.getTime()
+        today < oneJune ? oneJune.getTime() : oneJuly.getTime()
       );
       handleSetAvailableTime(
-        today < oneApril ? oneApril.getTime() : oneMay.getTime()
+        today < oneJune ? oneJune.getTime() : oneJuly.getTime()
       );
       setStatus700(
         "The Golden Pass bundle is currently not available for purchase. Please check back next month."
@@ -1223,7 +1228,7 @@ const NewBundleCard = ({
 
   useEffect(() => {
     getTokenData();
-    if (today > twentyfiveApril) {
+    if (today > twentyfiveMay) {
       setisAtlimit(true);
       setStatus700(
         "The Golden Pass bundle is currently not available for purchase. Please check back next month."
