@@ -84,7 +84,7 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
               : "Explore & Find"}
           </span>
         </div>
-        {userEarnedUsd &&
+        {userEarnedUsd  != undefined &&
         <div className="d-flex align-items-center gap-1">
         {event.title === "Dypius" ? (
           <img src={dypius} height={15} width={15} alt="" />
