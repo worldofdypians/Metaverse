@@ -367,7 +367,7 @@ const Header = ({
 
   return (
     <>
-      <div className="d-none d-lg-flex px-5 navbar-wrapper py-4">
+      <div className="d-none d-lg-flex px-5 navbar-wrapper py-4 w-100">
         <div className="row justify-content-between mx-0 w-100">
           <div className="col-7 col-xl-7 col-xxl-7 d-flex align-items-center justify-content-between ps-0">
             <NavLink to="/">
@@ -405,6 +405,16 @@ const Header = ({
               }
             >
               Marketplace
+            </NavLink>
+            <NavLink
+              to="/community"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-anchor font-poppins activenavlink"
+                  : "nav-anchor font-poppins"
+              }
+            >
+              Community
             </NavLink>
             <NavLink
               to="/roadmap"
