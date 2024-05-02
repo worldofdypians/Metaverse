@@ -45,10 +45,10 @@ const MintPopup = ({ active, onClose, data }) => {
           <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              Live
+              100,000 WOD Tokens
             </h6>
           </div>
-          <h6 className="mint-popup-title m-0"> SKALE Beta Pass NFT</h6>
+          <h6 className="mint-popup-title m-0"> Entry Campaign</h6>
         </div>
         </>
       ) : data.title === "DogeCoin" ? (
@@ -105,7 +105,7 @@ const MintPopup = ({ active, onClose, data }) => {
 
       <img
         src={data.img}
-        className={`mint-popup-img ${
+        className={`mint-popup-img mt-5 ${
           data.title === "Daily Bonus" && "bottom-auto-bg"
         } `}
         style={{
@@ -163,8 +163,7 @@ const MintPopup = ({ active, onClose, data }) => {
           //   Explore the downtown area and use your <img src={whiteExplore} className="white-explore" alt=""/> to generate rewards!
           // </span>
           <span className="popup-available-mint">
-          Get access to the game and a unique event filled with surprises
-          and rewards!
+       Participate in the BNB Chain Airdrop Alliance Program and complete the tasks to receive WOD tokens airdrop.
         </span>
         )}
       </div>
@@ -189,14 +188,14 @@ const MintPopup = ({ active, onClose, data }) => {
             <button className="btn filled-btn px-4">More</button>
           </Link>
         ) : data.title === "SKALE" ? (
-          <Link
+          <a
             onClick={onClose}
-            to={"/marketplace/mint/skale"}
-            state={{ event: data.state }}
+            href="https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/102-world-of-dypians-entry-campaign"
+            target="_blank"
             className="linear-border"
           >
             <button className="btn filled-btn px-4">More</button>
-          </Link>
+          </a>
         ) : data.title === "CoinMarketCap" ? (
           <Link
             onClick={onClose}
