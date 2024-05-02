@@ -686,7 +686,7 @@ const MyRewardsPopupNew = ({
                       Number(dypiusRewardsUSD) +
                       Number(gateRewardsUSD) +
                       Number(confluxRewardsUSD) +
-                      Number(dogeRewardsUSD) +
+                      Number(dogeRewardsUSD) + 
                       Number(cmcRewardsUSD),
                     2
                   )
@@ -698,7 +698,7 @@ const MyRewardsPopupNew = ({
                       Number(dailyplayerData) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
-                      Number(genesisData) +
+                      Number(genesisData) + Number(userRankRewards)  +
                       Number(dypiusPremiumEarnUsd) +
                       Number(cawsPremiumRewards),
                     2
@@ -984,7 +984,7 @@ const MyRewardsPopupNew = ({
               $
               {previousRewards
                 ? getFormattedNumber(pastSpecialRewards, 2)
-                : getFormattedNumber(userSocialRewardsCached, 2)}
+                : getFormattedNumber(Number(userSocialRewardsCached) + Number(userRankRewards), 2)}
             </span>
           </div>
         </div>
