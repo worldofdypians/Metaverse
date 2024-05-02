@@ -411,8 +411,8 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
       style={{ alignSelf: "baseline", minWidth: "92%", maxWidth: "92%" }}
     >
-      <div className="nft-hover">
-        <div className="d-flex flex-column align-items-center gap-4">
+      <div className="nft-hover d">
+        <div className="d-flex flex-column align-items-center gap-2">
           <div className="nft-hover-wrapper d-flex flex-column align-items-center">
             <div className="d-flex align-items-center nft-badges-wrapper gap-4 gap-lg-0">
               <a
@@ -435,6 +435,12 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
               CAWS and WOD owners are granted VIP access and also benefit from
               appealing rewards.
             </span>
+          </div>
+          <div className="global-total-wrapper py-3 w-100 d-flex flex-column align-items-center justify-content-center">
+            <h6 className="global-total-players mb-0">
+              45,500
+            </h6>
+            <span className="global-total-span">Monthly Beta Players</span>
           </div>
         </div>
       </div>

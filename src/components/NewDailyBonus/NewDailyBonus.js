@@ -1670,7 +1670,7 @@ const NewDailyBonus = ({
                                   ? "new-chain-active-btn"
                                   : "new-chain-inactive-btn"
                               } d-flex gap-1 align-items-center`}
-                              onClick={handleSkalePool}
+                              onClick={handleBnbPool}
                             >
                               {" "}
                               <img src={coreIcon} width={20} height={20} alt="" /> CORE
@@ -1876,37 +1876,78 @@ const NewDailyBonus = ({
                             </button>
                           </div>
                         </div>
-                        <div className={`position-relative chain-item  w-100`}>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "core" && "chain-item-active"
+                          } w-100`}
+                        >
                           <img
-                            src={comingSoon}
-                            className={`chain-img`}
+                            src={coreBg}
+                            className={`chain-img ${
+                              chain === "core" && "chain-img-active"
+                            }`}
+                            onClick={() => {
+                              setChain("core");
+                              setIsActive();
+                              setIsActiveIndex();
+                            }}
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === "comingSoon" &&
-                              "chain-title-wrapper-active"
+                              chain === "core" && "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center justify-content-between`}
                           >
-                            <h6 className="chain-title-position mb-0">
-                              Coming Soon
-                            </h6>
-                            {/* <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageEmpty} height={8} alt="" />
-                                <img src={percentageEmpty} height={8} alt="" />
-                              </div>
-                              <span className="percentage-span">62%</span>
-                            </div> */}
+                            <h6 className="chain-title-position mb-0">CORE</h6>
                           </div>
-                          <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column">
-                            <h6 className="desc-title mb-0">Magic Battle</h6>
-                            <span className="chain-desc mb-0">
-                              A world full of possibilities
-                            </span>
+                          <div
+                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
+                            style={{ width: "fit-content" }}
+                          >
+                            <button
+                              className={`chain-inactive-btn d-flex gap-1 align-items-center`}
+                              onClick={handleBnbPool}
+                            >
+                              {" "}
+                              <img src={coreIcon} alt="" /> CORE
+                            </button>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "viction" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={victionBg}
+                            className={`chain-img ${
+                              chain === "viction" && "chain-img-active"
+                            }`}
+                            onClick={() => {
+                              setChain("viction");
+                              setIsActive();
+                              setIsActiveIndex();
+                            }}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "viction" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                          >
+                            <h6 className="chain-title-position mb-0">VICTION</h6>
+                          </div>
+                          <div
+                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
+                            style={{ width: "fit-content" }}
+                          >
+                            <button
+                              className={`chain-inactive-btn d-flex gap-1 align-items-center`}
+                              onClick={handleSkalePool}
+                            >
+                              {" "}
+                              <img src={victionIcon} alt="" /> VICTION
+                            </button>
                           </div>
                         </div>
                       </Slider>
