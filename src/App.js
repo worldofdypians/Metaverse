@@ -116,7 +116,6 @@ function App() {
 
       blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
     },
-
     1482601649: {
       chainId: 1482601649,
       chainName: "SKALE Nebula Hub",
@@ -129,6 +128,26 @@ function App() {
       blockExplorerUrls: [
         "https://green-giddy-denebola.explorer.mainnet.skalenodes.com",
       ],
+    },
+    1116: {
+      chainId: 1116,
+      chainName: "CORE",
+      rpcUrls: ["https://rpc.coredao.org/"],
+      nativeCurrency: {
+        symbol: "CORE",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://scan.coredao.org"],
+    },
+    88: {
+      chainId: 88,
+      chainName: "Viction",
+      rpcUrls: ["https://rpc.viction.xyz"],
+      nativeCurrency: {
+        symbol: "VIC",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https:/vicscan.xyz"],
     },
   };
 

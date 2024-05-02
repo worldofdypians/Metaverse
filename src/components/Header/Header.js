@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 import bellIcon from "./assets/bellIcon.svg";
 import axios from "axios";
 import viewAllArrow from "./assets/viewAllArrow.svg";
+import core from "./assets/core.svg";
+import viction from "./assets/viction.svg";
 import allIcon from "../../screens/Marketplace/Notifications/assets/allIcon.svg";
 import allIconActive from "../../screens/Marketplace/Notifications/assets/allIconActive.svg";
 import cartIcon from "../../screens/Marketplace/Notifications/assets/cartIcon.svg";
@@ -76,11 +78,12 @@ const Header = ({
   const [ethState, setEthState] = useState(true);
   const [bnbState, setBnbState] = useState(false);
   const [opbnbState, setopBnbState] = useState(false);
-
+  const [coreState, setCoreState] = useState(false)
   const [avaxState, setAvaxState] = useState(false);
   const [baseState, setBaseState] = useState(false);
   const [confluxState, setConfluxState] = useState(false);
   const [skaleState, setSkaleState] = useState(false);
+  const [victionState, setVictionState] = useState(false)
 
   // const [domainPopup, setDomainPopup] = useState(false);
 
@@ -102,9 +105,11 @@ const Header = ({
         setAvaxState(false);
         setBnbState(false);
         setEthState(true);
+        setCoreState(false);
         setBaseState(false);
         setopBnbState(false);
         setSkaleState(false);
+        setVictionState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
@@ -112,6 +117,8 @@ const Header = ({
         setBaseState(false);
         setopBnbState(false);
         setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
@@ -119,6 +126,8 @@ const Header = ({
         setBaseState(true);
         setopBnbState(false);
         setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
@@ -126,6 +135,8 @@ const Header = ({
         setBaseState(false);
         setopBnbState(false);
         setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
@@ -133,6 +144,8 @@ const Header = ({
         setBaseState(false);
         setopBnbState(true);
         setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -141,6 +154,8 @@ const Header = ({
         setConfluxState(true);
         setopBnbState(false);
         setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
       } else if (chainId === 1482601649 ) {
         setAvaxState(false);
         setBnbState(false);
@@ -149,16 +164,45 @@ const Header = ({
         setConfluxState(false);
         setopBnbState(false);
         setSkaleState(true);
-      } else {
+        setCoreState(false);
+        setVictionState(false);
+      } 
+      else if (chainId === 1116 ) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(true);
+        setVictionState(false);
+      }
+      else if (chainId === 88 ) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(true);
+      }
+      else {
         setAvaxState(false);
         setBnbState(false);
         setBaseState(false);
         setEthState(false);
         setopBnbState(false);
         setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
       }
     }
   };
+
+
 
   const handleEthPool = async () => {
     if (window.ethereum) {
@@ -172,6 +216,40 @@ const Header = ({
           });
       } else {
         handleSwitchChainGateWallet(1);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+  const handleCorePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x45c")
+          .then(() => {
+            handleSwitchNetwork(1116);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(1116);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+  const handleVictionPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x58")
+          .then(() => {
+            handleSwitchNetwork(88);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(88);
       }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
@@ -354,6 +432,13 @@ const Header = ({
 
     if (chainId === 1482601649 ) {
       handleSwitchNetwork(1482601649);
+    }
+
+    if (chainId === 1116 ) {
+      handleSwitchNetwork(1116);
+    }
+    if (chainId === 88 ) {
+      handleSwitchNetwork(88);
     }
   }, [chainId, coinbase]);
 
@@ -694,6 +779,10 @@ const Header = ({
                               ? conflux
                               : skaleState === true
                               ? skale
+                              : coreState === true
+                              ? core
+                              : victionState === true
+                              ? viction
                               : error
                           }
                           height={16}
@@ -715,6 +804,10 @@ const Header = ({
                             ? "Conflux"
                             : skaleState === true
                             ? "SKALE"
+                            : coreState === true
+                            ? "CORE"
+                            : victionState === true
+                            ? "Viction"
                             : "Unsupported"}
                         </span>
                       </div>
@@ -736,14 +829,15 @@ const Header = ({
                     <img src={bnb} alt="" />
                     opBNB Chain
                   </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleCorePool()}>
+                    <img src={core} width={20} height={20} alt="" />
+                    CORE
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleSkalePool()}>
                     <img src={skale} alt="" />
                     SKALE
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleAvaxPool()}>
-                    <img src={avax} alt="" />
-                    Avalanche
-                  </Dropdown.Item>
+              
                   <Dropdown.Item onClick={() => handleConfluxPool()}>
                     <img src={conflux} alt="" />
                     Conflux
@@ -751,6 +845,15 @@ const Header = ({
                   <Dropdown.Item onClick={() => handleBasePool()}>
                     <img src={base} alt="" />
                     Base
+                  </Dropdown.Item>
+      
+                  <Dropdown.Item onClick={() => handleVictionPool()}>
+                    <img src={viction} width={20} height={20} alt="" />
+                    Viction
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleAvaxPool()}>
+                    <img src={avax} alt="" />
+                    Avalanche
                   </Dropdown.Item>
                 </DropdownButton>
                 <Clipboard

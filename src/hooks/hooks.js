@@ -88,6 +88,28 @@ export const handleSwitchNetworkhook = async (chainID) => {
       "https://green-giddy-denebola.explorer.mainnet.skalenodes.com",
     ],
   };
+  const COREPARAMS = {
+    chainId: "0x45c", // A 0x-prefixed hexadecimal string
+    chainName: "CORE",
+    nativeCurrency: {
+      name: "CORE",
+      symbol: "CORE", // 2-6 characters long
+      decimals: 18,
+    },
+    rpcUrls: ["https://rpc.coredao.org/"],
+    blockExplorerUrls: ["https://scan.coredao.org"],
+  };
+  const VICTIONPARAMS = {
+    chainId: "0x58", // A 0x-prefixed hexadecimal string
+    chainName: "Viction",
+    nativeCurrency: {
+      name: "Viction",
+      symbol: "VIC", // 2-6 characters long
+      decimals: 18,
+    },
+    rpcUrls: ["https://rpc.viction.xyz"],
+    blockExplorerUrls: ["https:/vicscan.xyz"],
+  };
 
   try {
     await ethereum.request({
@@ -105,6 +127,8 @@ export const handleSwitchNetworkhook = async (chainID) => {
       (chainID === "0x406" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x2105" && switchError.code.toString().includes("32603")) ||
       (chainID === "0xcc" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0x45c" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0x58" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x585eb4b1" &&
         switchError.code.toString().includes("32603")) ||
       (switchError.code === 4902 &&
@@ -128,6 +152,10 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [CONFLUXPARAMS]
               : chainID === "0x585eb4b1"
               ? [SKALE_MAINNET]
+              : chainID === "0x45c"
+              ? [COREPARAMS]
+              : chainID === "0x58"
+              ? [VICTIONPARAMS]
               : "",
         });
         if (window.ethereum && window.ethereum.isTrust === true) {

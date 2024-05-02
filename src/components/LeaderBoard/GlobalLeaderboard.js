@@ -438,9 +438,9 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
           </div>
           <div className="global-total-wrapper py-3 w-100 d-flex flex-column align-items-center justify-content-center">
             <h6 className="global-total-players mb-0">
-              45,500
+              100,000+
             </h6>
-            <span className="global-total-span">Monthly Beta Players</span>
+            <span className="global-total-span">Daily Active Users</span>
           </div>
         </div>
       </div>
