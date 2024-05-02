@@ -390,8 +390,6 @@ function Dashboard({
               const response2 = await axios.get(
                 `https://api.worldofdypians.com/api/userRanks/${coinbase}`
               );
-              console.log(data.data, "data2");
-
               setRankData(response2.data.data);
             });
         }
@@ -2123,7 +2121,7 @@ function Dashboard({
           ? "SUBSCRIPTION_SKALE"
           : "",
     });
-
+const today = new Date.now();
     setloadspinnerSub(true);
     if (chainId === 56 && nftPremium_total > 0 && discountPercentage == "100") {
       await window
@@ -2161,6 +2159,8 @@ function Dashboard({
               `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
               {
                 multiplier: "yes",
+                chain: chainId.toString(),
+                timestamp: today.toString(),
               }
             )
             .then(() => {
@@ -2207,7 +2207,6 @@ function Dashboard({
                 ? "skale"
                 : "";
             setselectedChainforPremium(selectedchain);
-
             setTimeout(() => {
               setgetPremiumPopup(false);
             }, 2000);
@@ -2221,6 +2220,8 @@ function Dashboard({
               `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
               {
                 multiplier: "yes",
+                chain: chainId.toString(),
+                timestamp: today.toString(),
               }
             )
             .then(() => {
