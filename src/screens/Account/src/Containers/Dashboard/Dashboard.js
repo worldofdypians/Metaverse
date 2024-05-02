@@ -1987,6 +1987,7 @@ function Dashboard({
     });
 
     setloadspinnerSub(true);
+    const today = new Date.now();
 
     await subscriptionContract.methods
       .subscribe(selectedSubscriptionToken, price)
@@ -2023,6 +2024,8 @@ function Dashboard({
             `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
             {
               multiplier: "yes",
+              chain: chainId.toString(),
+              timestamp: today.toString(),
             }
           )
           .then(() => {
@@ -2514,7 +2517,7 @@ function Dashboard({
     }
   }, [dailyBonusPopup]);
 
- const hashValue = window.location.hash
+  const hashValue = window.location.hash;
 
   return (
     <div
@@ -3761,7 +3764,7 @@ function Dashboard({
                 </div>
               </OutsideClickHandler>
             )} */}
-            {(dailyBonusPopup || hashValue==="#dailybonus" )&& (
+            {(dailyBonusPopup || hashValue === "#dailybonus") && (
               // <OutsideClickHandler
               //   onOutsideClick={() => {
               //     setdailyBonusPopup(false);
@@ -3778,7 +3781,7 @@ function Dashboard({
                 listedNFTS={listedNFTS}
                 onclose={() => {
                   setdailyBonusPopup(false);
-                  window.location.hash = ""
+                  window.location.hash = "";
                 }}
                 coinbase={coinbase}
                 standardChests={standardChests}
