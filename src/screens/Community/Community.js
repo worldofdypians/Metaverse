@@ -427,8 +427,8 @@ const Community = () => {
     {
       title: "BNB Chain Game Expedition",
       status: "Upcoming",
-      start_date: "May 11, 2024",
-      end_date: "Aug 11, 2024",
+      start_date: "June 12, 2024",
+      end_date: "June 28, 2024",
       image: bnbExpedition,
       link: "/",
     },
