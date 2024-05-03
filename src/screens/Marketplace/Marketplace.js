@@ -1258,11 +1258,9 @@ const Marketplace = ({
                         </div>
                         <div className="d-flex flex-column gap-2 mb-3">
                         <h6 className="newminttitlehome m-0 position-relative">
-                          CAWS
+                          CAWS Timepiece
                         </h6>
-                        <h6 className="newminttitlehome m-0 position-relative">
-                          Timepiece
-                        </h6>
+                        
                         </div>
                         <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
                           <div className="mint-benefits-grid">
