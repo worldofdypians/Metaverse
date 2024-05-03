@@ -182,10 +182,16 @@ const MarketMint = ({
       window.config.nft_base_address
     );
 
-    const confluxresult = await confluxContract.methods.totalSupply().call();
+    const confluxresult = await confluxContract.methods.totalSupply().call().catch((e) => {
+      console.error(e);
+      return 0;
+    });;
     setconfluxSold(confluxresult);
 
-    const baseresult = await baseContract.methods.totalSupply().call();
+    const baseresult = await baseContract.methods.totalSupply().call().catch((e) => {
+      console.error(e);
+      return 0;
+    });;
     setcBaseSold(baseresult);
   };
 

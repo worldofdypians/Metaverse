@@ -508,6 +508,7 @@ const TimepieceNFT = ({
       .call()
       .catch((e) => {
         console.error(e);
+        return 0;
       });
 
     settotalSupply(parseInt(result));
