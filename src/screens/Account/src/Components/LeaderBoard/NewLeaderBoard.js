@@ -20,10 +20,14 @@ import skaleIcon from "./assets/skaleIcon.png";
 import skaleIconGray from "./assets/skaleIconGray.svg";
 import wodIcon from "./assets/wodIcon.png";
 import bnbIcon from "./assets/bnbIcon.svg";
+import arrowLeft from "./assets/arrowLeft.svg";
+import arrowRight from "./assets/arrowRight.svg";
 import coreActive from "./assets/coreActive.svg";
 import coreInactive from "./assets/coreInactive.svg";
 import victionActive from "./assets/victionActive.svg";
 import victionInactive from "./assets/victionInactive.svg";
+import seiActive from "./assets/seiActive.svg";
+import seiInactive from "./assets/seiInactive.svg";
 import Slider from "react-slick";
 import bnbActive from "./assets/bnbActive.svg";
 import bnbInactive from "./assets/bnbInactive.svg";
@@ -43,6 +47,14 @@ import basicPlayer from "./assets/basicPlayer.png";
 import premiumPlayer from "./assets/premiumPlayer.png";
 import goldenPlayer from "./assets/goldenPlayer.png";
 import goldenPremiumPlayer from "./assets/goldenPremiumPlayer.png";
+import bnbWhite from "./assets/bnbWhite.svg";
+import victionWhite from "./assets/victionWhite.svg";
+import coreWhite from "./assets/coreWhite.svg";
+import skaleWhite from "./assets/skaleWhite.svg";
+import seiWhite from "./assets/seiWhite.svg";
+
+
+
 
 
 const renderer = ({ hours, minutes, seconds }) => {
@@ -76,80 +88,33 @@ const NewLeaderBoard = ({
   coinbase,
   isPremium,
 }) => {
-  const playerData = [
+  const chainItems = [
     {
-      position: "1",
-      displayName: "...",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
+      title: "BNB Chain",
+      id: 0,
+      image: bnbActive,
     },
     {
-      position: "2",
-      displayName: "DarkSliffer",
-      reward: "$500",
-      premium: false,
-      statValue: "7757920",
+      title: "SKALE",
+      id: 1,
+      image: skaleActive,
     },
     {
-      position: "3",
-      displayName: "DarkSliffer",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
+      title: "CORE",
+      id: 2,
+      image: coreActive,
     },
     {
-      position: "4",
-      displayName: "DarkSliffer",
-      reward: "500",
-      statValue: "7757920",
-      premium: false,
-    },
-
-    {
-      position: "5",
-      displayName: "DarkSliffer",
-      reward: "50",
-      premium: false,
-      statValue: "7757920",
+      title: "SEI",
+      id: 3,
+      image: seiActive,
     },
     {
-      position: "6",
-      displayName: "DarkSliffer",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
-    },
-    {
-      position: "7",
-      displayName: "DarkSliffer",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
-    },
-    {
-      position: "8",
-      displayName: "DarkSliffer",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
-    },
-    {
-      position: "9",
-      displayName: "DarkSliffer",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
-    },
-    {
-      position: "10",
-      displayName: "DarkSliffer",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
+      title: "Viction",
+      id: 4,
+      image: victionActive,
     },
   ];
-  const [tooltip, setTooltip] = useState(false);
 
   const placeholderplayerData = [
     {
@@ -305,7 +270,6 @@ const NewLeaderBoard = ({
     "15",
     "15",
   ];
-
   const monthlyPrizesBnb = [
     "200",
     "100",
@@ -318,7 +282,6 @@ const NewLeaderBoard = ({
     "10",
     "10",
   ];
-
   const monthlyPrizesGolden = [
     "300",
     "200",
@@ -331,7 +294,6 @@ const NewLeaderBoard = ({
     "30",
     "30",
   ];
-
   const skaleStars = [
     "70",
     "60",
@@ -356,7 +318,6 @@ const NewLeaderBoard = ({
     "30",
     "30",
   ];
-
   const skalePrizesWeekly = [
     "15",
     "10",
@@ -405,7 +366,6 @@ const NewLeaderBoard = ({
     "15",
     "15",
   ];
-
   const genesisPrizes = [
     "100",
     "100",
@@ -418,11 +378,10 @@ const NewLeaderBoard = ({
     "20",
     "20",
   ];
-
   const [optionText, setOptionText] = useState("daily");
   const [optionText2, setOptionText2] = useState("bnb");
   const [dailyrecords, setRecords] = useState([]);
-
+  const [hoverState, setHoverState] = useState("")
   const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
   const [activePlayer, setActivePlayer] = useState(false);
   const [activePlayerWeekly, setActivePlayerWeekly] = useState(false);
@@ -430,7 +389,7 @@ const NewLeaderBoard = ({
   const [activePlayerGenesis, setActivePlayerGenesis] = useState(false);
 
   const [activeSkalePlayer, setActiveSkalePlayer] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({});
   const [userDataWeekly, setUserDataWeekly] = useState({});
   const [userDataMonthly, setUserDataMonthly] = useState({});
@@ -457,8 +416,9 @@ const NewLeaderBoard = ({
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
   const [bundlesBought, setbundlesBought] = useState(0);
-  const [allData, setAllData] = useState([])
+  const [allData, setAllData] = useState([]);
   const [allBnbData, setAllBnbData] = useState([]);
+  const [selectedChain, setSelectedChain] = useState(chainItems[0]);
   const [allSkaleData, setAllSkaleData] = useState([
     {
       title: "DAILY",
@@ -469,7 +429,7 @@ const NewLeaderBoard = ({
       activeData: [],
       previousData: [],
       player_data: [],
-      is_active: null
+      is_active: null,
     },
     {
       title: "WEEKLY",
@@ -480,7 +440,7 @@ const NewLeaderBoard = ({
       activeData: [],
       previousData: [],
       player_data: [],
-      is_active: null
+      is_active: null,
     },
     {
       title: "MONTHLY",
@@ -491,11 +451,22 @@ const NewLeaderBoard = ({
       activeData: [],
       previousData: [],
       player_data: [],
-      is_active: null
+      is_active: null,
     },
   ]);
   const sliderRef = useRef(null);
   const windowSize = useWindowSize();
+
+
+
+  const handleMouseEnter = (chain) => {
+    setHoverState(chain);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverState("");
+  };
+
 
   const getBundles = async () => {
     if (address) {
@@ -559,13 +530,11 @@ const NewLeaderBoard = ({
         if (testArray.length > 0 && testArray2.length === 0) {
           setActivePlayer(false);
           setUserData(...testArray);
-    
         }
       }
       if (testArray.length > 0) {
         setActivePlayer(false);
         setUserData(...testArray);
-      
       }
     }
   };
@@ -889,7 +858,6 @@ const NewLeaderBoard = ({
       const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
       const finalData = [...testArray, ...placeholderArray];
       setdailyplayerData(finalData);
-
     }
   };
 
@@ -1054,6 +1022,30 @@ const NewLeaderBoard = ({
     }
   };
 
+
+  const handlePrevChain = () => {
+    if(selectedChain.id === 0){
+      return
+    }else{
+      if(selectedChain.id - 1 === 0) {
+        setAllData(allBnbData);
+      }else if(selectedChain.id - 1 === 1){
+        setAllData(allSkaleData);
+      }
+      setSelectedChain(chainItems[selectedChain.id - 1])
+    } 
+  }
+  const handleNextChain = () => {
+    if(selectedChain.id === 4){
+      return
+    }else{
+      if(selectedChain.id + 1 === 1) {
+        setAllData(allSkaleData);
+      }
+      setSelectedChain(chainItems[selectedChain.id + 1])
+    } 
+  }
+
   useEffect(() => {
     fetchDailyRecords();
     fetchWeeklyRecords();
@@ -1150,7 +1142,7 @@ const NewLeaderBoard = ({
         activeData: dailyrecords,
         previousData: dailyplayerData,
         player_data: userData,
-        is_active: activePlayer
+        is_active: activePlayer,
       },
       {
         title: "WEEKLY",
@@ -1161,7 +1153,7 @@ const NewLeaderBoard = ({
         activeData: weeklyrecords,
         previousData: weeklyplayerData,
         player_data: userDataWeekly,
-        is_active: activePlayerWeekly
+        is_active: activePlayerWeekly,
       },
       {
         title: "MONTHLY",
@@ -1172,11 +1164,9 @@ const NewLeaderBoard = ({
         activeData: monthlyrecords,
         previousData: monthlyplayerData,
         player_data: userDataMonthly,
-        is_active: activePlayerMonthly
-      }
-    ]
-    
-    );
+        is_active: activePlayerMonthly,
+      },
+    ]);
     setAllData([
       {
         title: "DAILY",
@@ -1187,7 +1177,7 @@ const NewLeaderBoard = ({
         activeData: dailyrecords,
         previousData: dailyplayerData,
         player_data: userData,
-        is_active: activePlayer
+        is_active: activePlayer,
       },
       {
         title: "WEEKLY",
@@ -1198,7 +1188,7 @@ const NewLeaderBoard = ({
         activeData: weeklyrecords,
         previousData: weeklyplayerData,
         player_data: userDataWeekly,
-        is_active: activePlayerWeekly
+        is_active: activePlayerWeekly,
       },
       {
         title: "MONTHLY",
@@ -1209,11 +1199,9 @@ const NewLeaderBoard = ({
         activeData: monthlyrecords,
         previousData: monthlyplayerData,
         player_data: userDataMonthly,
-        is_active: activePlayerMonthly
-      }
-    ]
-    
-    );
+        is_active: activePlayerMonthly,
+      },
+    ]);
   }, [
     dailyrecords,
     dailyplayerData,
@@ -1236,7 +1224,7 @@ const NewLeaderBoard = ({
         activeData: dailyrecords,
         previousData: dailyplayerData,
         player_data: userData,
-        is_active: activeSkalePlayer
+        is_active: activeSkalePlayer,
       },
       {
         title: "WEEKLY",
@@ -1247,7 +1235,7 @@ const NewLeaderBoard = ({
         activeData: skaleRecords,
         previousData: skalePreviousRecords,
         player_data: userDataSkale,
-        is_active: activeSkalePlayer
+        is_active: activeSkalePlayer,
       },
       {
         title: "MONTHLY",
@@ -1258,10 +1246,9 @@ const NewLeaderBoard = ({
         activeData: skaleMonthlyData,
         previousData: skalePreviousMonthlyData,
         player_data: userDataSkaleMonthly,
-        is_active: activeSkalePlayer
-      }
-    ]
-    );
+        is_active: activeSkalePlayer,
+      },
+    ]);
   }, [
     skaleRecords,
     skalePreviousRecords,
@@ -1272,13 +1259,9 @@ const NewLeaderBoard = ({
     userDataSkaleMonthly,
   ]);
 
-
-
   return (
     <>
-      <div className="row w-100 justify-content-start">
-   
-      </div>
+      <div className="row w-100 justify-content-start"></div>
       <div
         className="main-wrapper py-4 w-100 d-flex gap-4 mt-xxl-0 mt-lg-0 justify-content-center align-items-start"
         style={{ minHeight: "560px" }}
@@ -1297,699 +1280,815 @@ const NewLeaderBoard = ({
                 />
               )}
             </div>
-            <div className="d-flex align-items-center gap-1">
-              <div className="optionsWrapper position-relative col-12">
-                <div
-                  className={`optionswrapper-bg ${
-                    optionText2 === "skale"
-                      ? "move-1"
-                      : optionText2 === "core"
-                      ? "move-2"
-                      : optionText2 === "viction"
-                      ? "move-3"
-                      : ""
-                  }`}
-                ></div>
-                <div
-                  className="d-flex gap-1 align-items-center justify-content-between position-relative"
-                  style={{ height: 38 }}
-                >
-                  <span
-                    className={`
+            {windowSize.width > 786 ? (
+              <div className="d-flex align-items-center gap-1">
+                <div className="optionsWrapper position-relative col-12">
+                  <div
+                    className={`optionswrapper-bg ${
+                      optionText2 === "skale"
+                        ? "move-1"
+                        : optionText2 === "core"
+                        ? "move-2"
+                        : optionText2 === "sei"
+                        ? "move-3"
+                        : optionText2 === "viction"
+                        ? "move-4"
+                        : ""
+                    }`}
+                  ></div>
+                  <div
+                    className="d-flex gap-1 align-items-center justify-content-between position-relative"
+                    style={{ height: 38 }}
+                  >
+                    <span
+                    onMouseEnter={() => handleMouseEnter("bnb")}
+                    onMouseLeave={handleMouseLeave}
+                      className={`
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "bnb" && "otheroptionsActive"
+                     } optionText col-3`}
+                      onClick={() => {
+                        handleOption("bnb");
+                        setAllData(allBnbData);
+                      }}
+                      style={{ width: "20%" }}
+                    >
+                      <img
+                        src={optionText2 === "bnb" ? bnbActive : optionText2 !== "bnb" && hoverState === "bnb" ? bnbWhite : bnbInactive}
+                        className={`${
+                          optionText2 === "bnb"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "BNB Chain"
+                        : windowSize.width < 786 && optionText2 === "bnb"
+                        ? "BNB Chain"
+                        : ""}
+                    </span>
+                    <span
+                    onMouseEnter={() => handleMouseEnter("skale")}
+                    onMouseLeave={handleMouseLeave}
+                      className={` 
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "skale" && "otheroptionsActive"
+                     } optionText col-3`}
+                      style={{ width: "20%" }}
+                      onClick={() => {
+                        handleOption("skale");
+                        setAllData(allSkaleData);
+                      }}
+                    >
+                      <img
+                     src={optionText2 === "skale" ? skaleActive : optionText2 !== "skale" && hoverState === "skale" ? skaleWhite : skaleInactive}
+
+                        className={`${
+                          optionText2 === "skale"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "SKALE"
+                        : windowSize.width < 786 && optionText2 === "skale"
+                        ? "SKALE"
+                        : ""}
+                    </span>
+                    <span
+                       onMouseEnter={() => handleMouseEnter("core")}
+                       onMouseLeave={handleMouseLeave}
+                      className={` 
                     d-flex align-items-center gap-2
                     ${
-                      optionText2 === "bnb" && "otheroptionsActive"
+                      optionText2 === "core" && "otheroptionsActive"
                     } optionText col-3`}
-                    onClick={() => {
-                      handleOption("bnb");
-                      setAllData(allBnbData)
-                    }}
-                    style={{ width: "25%" }}
-                  >
-                    <img
-                      src={optionText2 === "bnb" ? bnbActive : bnbInactive}
-                      className={`${
-                        optionText2 === "bnb"
-                          ? "leaderboard-icon leaderboard-icon-active"
-                          : "leaderboard-icon"
-                      }`}
-                      width={20}
-                      height={20}
-                      alt=""
-                    />
-                    {windowSize.width > 768
-                      ? "BNB Chain"
-                      : windowSize.width < 786 && optionText2 === "bnb"
-                      ? "BNB Chain"
-                      : ""}
-                  </span>
-                  <span
-                    className={` 
-                    d-flex align-items-center gap-2
-                    ${
-                      optionText2 === "skale" && "otheroptionsActive"
-                    } optionText col-3`}
-                    style={{ width: "25%" }}
-                    onClick={() => {
-                      handleOption("skale");
-                      setAllData(allSkaleData)
-                    }}
-                  >
-                    <img
-                      src={
-                        optionText2 === "skale" ? skaleActive : skaleInactive
-                      }
-                      className={`${
-                        optionText2 === "skale"
-                          ? "leaderboard-icon leaderboard-icon-active"
-                          : "leaderboard-icon"
-                      }`}
-                      width={20}
-                      height={20}
-                      alt=""
-                    />
-                    {windowSize.width > 768
-                      ? "SKALE"
-                      : windowSize.width < 786 && optionText2 === "skale"
-                      ? "SKALE"
-                      : ""}
-                  </span>
-                  <span
-                    className={` 
-                   d-flex align-items-center gap-2
-                   ${
-                     optionText2 === "core" && "otheroptionsActive"
-                   } optionText col-3`}
-                    style={{ width: "25%" }}
-                    onClick={() => {
-                      handleOption("core");
-                      fetchDailyRecords();
-                    }}
-                  >
-                    <img
-                      src={optionText2 === "core" ? coreActive : coreInactive}
-                      className={`${
-                        optionText2 === "core"
-                          ? "leaderboard-icon leaderboard-icon-active"
-                          : "leaderboard-icon"
-                      }`}
-                      width={20}
-                      height={20}
-                      alt=""
-                    />
-                    {windowSize.width > 768
-                      ? "CORE"
-                      : windowSize.width < 786 && optionText2 === "core"
-                      ? "CORE"
-                      : ""}
-                  </span>
-                  <span
-                    className={`
-                    d-flex align-items-center gap-2
-                    
-                    ${
-                      optionText2 === "viction" && "otheroptionsActive"
-                    } optionText col-3`}
-                    style={{ width: "25%" }}
-                    onClick={() => {
-                      handleOption("viction");
-                      fetchGenesisRecords();
-                    }}
-                  >
-                    <img
-                      src={
-                        optionText2 === "viction"
-                          ? victionActive
-                          : victionInactive
-                      }
-                      className={`${
-                        optionText2 === "viction"
-                          ? "leaderboard-icon leaderboard-icon-active"
-                          : "leaderboard-icon"
-                      }`}
-                      width={20}
-                      height={20}
-                      style={{ borderRadius: "50%" }}
-                      alt=""
-                    />
-                    {windowSize.width > 768
-                      ? "Viction"
-                      : windowSize.width < 786 && optionText2 === "viction"
-                      ? "Viction"
-                      : ""}
-                  </span>
+                      style={{ width: "20%" }}
+                      onClick={() => {
+                        handleOption("core");
+                        fetchDailyRecords();
+                      }}
+                    >
+                      <img
+                        src={optionText2 === "core" ? coreActive : optionText2 !== "core" && hoverState === "core" ? coreWhite : coreInactive}
+
+                        className={`${
+                          optionText2 === "core"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "CORE"
+                        : windowSize.width < 786 && optionText2 === "core"
+                        ? "CORE"
+                        : ""}
+                    </span>
+                    <span
+                    onMouseEnter={() => handleMouseEnter("sei")}
+                    onMouseLeave={handleMouseLeave}
+                      className={`
+                     d-flex align-items-center gap-2
+                     
+                     ${
+                       optionText2 === "sei" && "otheroptionsActive"
+                     } optionText col-3`}
+                      style={{ width: "20%" }}
+                      onClick={() => {
+                        handleOption("sei");
+                        fetchGenesisRecords();
+                      }}
+                    >
+                      <img
+                      src={optionText2 === "sei" ? seiActive : optionText2 !== "sei" && hoverState === "sei" ? seiWhite : seiInactive}
+                        className={`${
+                          optionText2 === "sei"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        style={{ borderRadius: "50%" }}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "Sei"
+                        : windowSize.width < 786 && optionText2 === "sei"
+                        ? "Sei"
+                        : ""}
+                    </span>
+                    <span
+                          onMouseEnter={() => handleMouseEnter("viction")}
+                          onMouseLeave={handleMouseLeave}
+                      className={`
+                     d-flex align-items-center gap-2
+                     
+                     ${
+                       optionText2 === "viction" && "otheroptionsActive"
+                     } optionText col-3`}
+                      style={{ width: "20%" }}
+                      onClick={() => {
+                        handleOption("viction");
+                        fetchGenesisRecords();
+                      }}
+                    >
+                      <img
+                        src={optionText2 === "viction" ? victionActive : optionText2 !== "viction" && hoverState === "viction" ? victionWhite : victionInactive}
+
+                        className={`${
+                          optionText2 === "viction"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        style={{ borderRadius: "50%" }}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "Viction"
+                        : windowSize.width < 786 && optionText2 === "viction"
+                        ? "Viction"
+                        : ""}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="d-flex align-items-center gap-1">
+                <div className="optionsWrapper position-relative col-12">
+                  <div className={`optionswrapper-bg w-100`}></div>
+                  <div
+                    className="d-flex gap-1 align-items-center justify-content-between position-relative"
+                    style={{ height: 38 }}
+                  >
+                    <img
+                      src={arrowLeft}
+                      className="select-chain-arrow-left p-3"
+                      onClick={handlePrevChain}
+                      alt=""
+                    />
+                    <img
+                      src={arrowRight}
+                      className="select-chain-arrow-right p-3"
+                      onClick={handleNextChain}
+                      alt=""
+                    />
+                    <span
+                      className={`
+                   d-flex align-items-center gap-2
+                   ${
+                     optionText2 === "bnb" && "otheroptionsActive"
+                   } optionText col-3`}
+                      onClick={() => {
+                        handleOption("bnb");
+                        setAllData(allBnbData);
+                      }}
+                      style={{ width: "100%" }}
+                    >
+                      <img
+                        src={selectedChain.image}
+                        className={`${
+                          optionText2 === "bnb"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {selectedChain.title}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
             <div
               className="d-flex flex-column gap-2 tablewrapper"
               style={{ height: optionText === "genesis" ? "345px" : "384px" }}
             >
               {optionText !== "genesis" ? (
                 <div className="position-relative">
-                  <img src={leftArrow}  onClick={prevSlide} className="left-arrow-leaderboard d-flex d-lg-none" alt="" />
-                  <img src={rightArrow} onClick={nextSlide} className="right-arrow-leaderboard d-flex d-lg-none" alt="" />
-                      <Slider {...settings} ref={sliderRef}>
-                  {allData.map((leaderboard, index) => (
-                    <div
-                    key={index}
-                    className={`leaderboard-item monthly-skale d-flex flex-column gap-2 p-0`}
-                  >
-                    <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
-                      <h6 className="leaderboard-title  text-white font-oxanium mb-0">
-                        {leaderboard.title}
-                      </h6>
-                      <div className="d-flex flex-column px-2 reset-time-wrapper">
-                        <span className="reset-time-lb">Reset time</span>
-                        <span className="reset-time-lb-value">
-                          {leaderboard.reset}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="p-2">
-                      <table className="playerTable w-100">
-                        <tbody>
-                          <tr className="playerRow">
-                            <th className="playerHeader font-montserrat">
-                              Rank
-                            </th>
-                            <th className="playerHeader font-montserrat">
-                              Player
-                            </th>
-                            <th className="playerHeader text-center font-montserrat">
-                              Score
-                            </th>
-
-                            <th className="playerHeader text-center font-montserrat">
-                              Standard
-                            </th>
-                            <th className="playerHeader text-center font-montserrat">
-                              {leaderboard.type === "stars" ? "Premium" : "Golden Pass"}
-                            </th>
-                          </tr>
-                          {allData &&
-                            allData.length > 0 &&
-                            inactiveBoard === false &&
-                            leaderboard.activeData.map((item, index) => {
-                              return (
-                                <tr
-                                  key={index}
-                                  className={`playerInnerRow ${
-                                    inactiveBoard ||
-                                    item.displayName === username
-                                      ? "playerInnerRow-inactive"
-                                      : null
-                                  }`}
-                                >
-                                  <td className="playerData col-1 font-montserrat">
-                                    {parseInt(item.position) + 1}
-                                  </td>
-                                  <td className="playerName col-3 font-montserrat">
-                                    {item.displayName === username ? (
-                                      <div className="position-relative d-flex align-items-center">
-                                        <img
-                                          src={premiumAvatar}
-                                          alt=""
-                                          className="playerAvatar"
-                                        />
-                                        <span>
-                                          {" "}
-                                          {item.displayName?.slice(0, 10)}
-                                          {item.displayName?.length > 10 &&
-                                            "..."}
-                                        </span>
-                                      </div>
-                                    ) : (
-                                      <div className="position-relative d-flex align-items-center">
-                                        <img
-                                          src={playerAvatar}
-                                          alt=""
-                                          className="playerAvatar"
-                                        />{" "}
-                                        {item.displayName?.slice(0, 10)}
-                                        {item.displayName?.length > 10 &&
-                                          "..."}
-                                      </div>
-                                    )}
-                                  </td>
-                                  <td className="playerScore col-2 text-center font-montserrat">
-                                    {getFormattedNumber(item.statValue, 0)}
-                                  </td>
-                                  {leaderboard.type === "stars" ? 
-                                <td
-                                className={`playerReward text-center col-2 font-montserrat ${
-                                  username === item.displayName
-                                    ? "goldenscore"
-                                    : "playerReward"
-                                }`}
-                              >
-                                <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                  <img src={starIcon} alt="" />
-                                  <span
-                                    className="leaderboard-text"
-                                    style={{ color: "#fff" }}
-                                  >
-                                    {getFormattedNumber(
-                                      leaderboard.rewards[index],
-                                      0
-                                    )}
-                                  </span>
-                                </div>
-                              </td>
-                              :
-                              <td
-                                    className={`playerReward text-center col-2 font-montserrat ${
-                                      username === item.displayName
-                                        ? "goldenscore"
-                                        : "playerReward"
-                                    }`}
-                                  >
-                                    <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                      <span
-                                        className="leaderboard-text"
-                                        style={{ color: "#fff" }}
-                                      >
-                                        $
-                                        {getFormattedNumber(
-                                          leaderboard.rewards[index],
-                                          0
-                                        )}
-                                      </span>
-                                    </div>
-                                  </td>  
-                                }
-                               {leaderboard.type === "stars" ?
-                                 <td
-                                 className={`playerReward text-center col-2 font-montserrat ${
-                                   username === item.displayName
-                                     ? "goldenscore"
-                                     : "playerReward"
-                                 }`}
-                               >
-                                 <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                   <span
-                                     className="leaderboard-text"
-                                     style={{
-                                       color: "rgb(243, 192, 9)",
-                                     }}
-                                   >
-                                     
-                                     {getFormattedNumber(
-                                       leaderboard.premium_rewards[index],
-                                       0
-                                     )}
-                                   </span>
-                                   <img src={premiumInactive} alt="" />
-                                 </div>
-                               </td>
-                               :
-                               <td
-                               className={`playerReward text-center col-2 font-montserrat ${
-                                 username === item.displayName
-                                   ? "goldenscore"
-                                   : "playerReward"
-                               }`}
-                             >
-                               <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
-                                 <span
-                                   className="leaderboard-text"
-                                   style={{
-                                     color: "rgb(243, 192, 9)",
-                                     width: 35
-                                   }}
-                                 >
-                                   $
-                                   {getFormattedNumber(
-                                     leaderboard.premium_rewards[index],
-                                     0
-                                   )}
-                                 </span>
-                               <img src={goldenInactive} alt="" />
-
-                               </div>
-                             </td> 
-                              }
-                                </tr>
-                              );
-                            })}
-
-                          {allData &&
-                            inactiveBoard === true &&
-                            allData.length > 0 &&
-                            leaderboard.previousData.map((item, index) => {
-                              return (
-                                <tr
-                                  key={index}
-                                  className={`playerInnerRow ${
-                                    inactiveBoard ||
-                                    item.displayName === username
-                                      ? "playerInnerRow-inactive"
-                                      : null
-                                  }`}
-                                >
-                                  <td className="playerData col-1 font-montserrat">
-                                    {parseInt(item.position) + 1}
-                                  </td>
-                                  <td className="playerName col-3 font-montserrat">
-                                    {item.displayName === username ? (
-                                      <div className="position-relative d-flex align-items-center">
-                                        <img
-                                          src={premiumAvatar}
-                                          alt=""
-                                          className="playerAvatar"
-                                        />
-                                        <span>
-                                          {" "}
-                                          {item.displayName?.slice(0, 10)}
-                                          {item.displayName?.length > 10 &&
-                                            "..."}
-                                        </span>
-                                      </div>
-                                    ) : (
-                                      <div className="position-relative d-flex align-items-center">
-                                        <img
-                                          src={playerAvatar}
-                                          alt=""
-                                          className="playerAvatar"
-                                        />{" "}
-                                        {item.displayName?.slice(0, 10)}
-                                        {item.displayName?.length > 10 &&
-                                          "..."}
-                                      </div>
-                                    )}
-                                  </td>
-                                  <td className="playerScore col-2 text-center font-montserrat">
-                                    {getFormattedNumber(item.statValue, 0)}
-                                  </td>
-                                  {leaderboard.type === "stars" ? 
-                                <td
-                                className={`playerReward text-center col-2 font-montserrat ${
-                                  username === item.displayName
-                                    ? "goldenscore"
-                                    : "playerReward"
-                                }`}
-                              >
-                                <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                  <img src={starIcon} alt="" />
-                                  <span
-                                    className="leaderboard-text"
-                                    style={{ color: "#fff" }}
-                                  >
-                                    
-                                    {getFormattedNumber(
-                                      leaderboard.rewards[index],
-                                      0
-                                    )}
-                                  </span>
-                                </div>
-                              </td>
-                              :
-                              <td
-                                    className={`playerReward text-center col-2 font-montserrat ${
-                                      username === item.displayName
-                                        ? "goldenscore"
-                                        : "playerReward"
-                                    }`}
-                                  >
-                                    <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                      <span
-                                        className="leaderboard-text"
-                                        style={{ color: "#fff" }}
-                                      >
-                                        $
-                                        {getFormattedNumber(
-                                          leaderboard.rewards[index],
-                                          0
-                                        )}
-                                      </span>
-                                    </div>
-                                  </td>  
-                                }
-                                {leaderboard.type === "stars" ? 
-                                <td
-                                className={`playerReward text-center col-2 font-montserrat ${
-                                  username === item.displayName
-                                    ? "goldenscore"
-                                    : "playerReward"
-                                }`}
-                              >
-                                <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                  <span
-                                    className="leaderboard-text"
-                                    style={{
-                                      color: "rgb(243, 192, 9)",
-                                    }}
-                                  >
-                                    
-                                    {getFormattedNumber(
-                                      leaderboard.premium_rewards[index],
-                                      0
-                                    )}
-                                  </span>
-                                  <img src={premiumInactive} alt="" />
-                                </div>
-                              </td>
-                              :
-                              <td
-                              className={`playerReward text-center col-2 font-montserrat ${
-                                username === item.displayName
-                                  ? "goldenscore"
-                                  : "playerReward"
-                              }`}
-                            >
-                              <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
-                                <span
-                                  className="leaderboard-text"
-                                  style={{
-                                    color: "rgb(243, 192, 9)",
-                                    width: 35
-                                  }}
-                                >
-                                  $
-                                  {getFormattedNumber(
-                                    leaderboard.premium_rewards[index],
-                                    0
-                                  )}
-                                </span>
-                                <img src={goldenInactive} alt="" />
-                              </div>
-                            </td>  
-                              }
-                                </tr>
-                              );
-                            })}
-
-                          {inactiveBoard === true &&
-                            ((dailyplayerData.length === 0 &&
-                              optionText === "daily") ||
-                              (weeklyplayerData.length === 0 &&
-                                optionText === "weekly") ||
-                              (monthlyplayerData.length === 0 &&
-                                optionText === "monthly")) &&
-                            optionText !== "genesis" && (
-                              <CircularProgress
-                                size={20}
-                                style={{
-                                  alignSelf: "center",
-                                  margin: "auto",
-                                }}
-                              />
-                            )}
-                        </tbody>
-                      </table>
-                      {leaderboard.is_active === false &&
-                        email &&
-                        inactiveBoard === false &&
-                        optionText !== "genesis" && (
-                          <table
-                            className="playerTable w-100"
-                          >
-                            <tbody>
-                              <tr className={`playerInnerRow-inactive`}>
-                                <td
-                                  className={`playerData font-montserrat ${
-                                    optionText === "genesis"
-                                      ? "col-2"
-                                      : "col-1"
-                                  }`}
-                                >
-                                  {parseInt(leaderboard.player_data.position) + 1}
-                                </td>
-                                <td className="playerName col-3 font-montserrat">
-                                  <div className="position-relative  d-flex align-items-center">
-                                    {availableTime !== "0" &&
-                                    availableTime &&
-                                    availableTime >= today1.getTime() &&
-                                    availableTime !== undefined ? (
-                                      <div className="position-relative d-flex align-items-center">
-                                        <img
-                                          src={premiumAvatar}
-                                          alt=""
-                                          className="playerAvatar"
-                                        />
-                                        <img
-                                          src={premiumStar}
-                                          alt=""
-                                          className="premium-star"
-                                        />
-                                        <span>
-                                          {" "}
-                                          {leaderboard.player_data.displayName?.slice(
-                                            0,
-                                            13
-                                          )}
-                                          {leaderboard.player_data.displayName
-                                            ?.length > 13 && "..."}
-                                        </span>
-                                      </div>
-                                    ) : (
-                                      <>
-                                        <img
-                                          src={playerAvatar}
-                                          alt=""
-                                          className="playerAvatar"
-                                        />
-                                        {leaderboard.player_data.displayName?.slice(
-                                          0,
-                                          13
-                                        )}
-                                        {leaderboard.player_data.displayName
-                                          ?.length > 13 && "..."}
-                                      </>
-                                    )}
-                                  </div>
-                                </td>
-                                <td className="playerScore col-2 text-center font-montserrat">
-                                  {getFormattedNumber(
-                                    leaderboard.player_data.statValue,
-                                    0
-                                  )}
-                                </td>
-                              {leaderboard.type === "stars" ? 
-                              <td
-                              className={`playerReward text-center col-2 font-montserrat ${
-                                username ===
-                                leaderboard.player_data.displayName
-                                  ? "playerReward"
-                                  : "playerReward"
-                              }`}
-                            >
-                              <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                <img src={starIcon} alt="" />
-                                <span
-                                  className="leaderboard-text"
-                                  style={{ color: "#fff" }}
-                                >
-                                  
-                                  {getFormattedNumber(
-                                    leaderboard.rewards[
-                                      leaderboard.player_data.position
-                                    ]
-                                      ? leaderboard.rewards[
-                                          leaderboard.player_data.position
-                                        ]
-                                      : 0,
-                                    0
-                                  )}
-                                </span>
-                              </div>
-                            </td>
-                            :
-                            <td
-                            className={`playerReward text-center col-2 font-montserrat ${
-                              username ===
-                              leaderboard.player_data.displayName
-                                ? "playerReward"
-                                : "playerReward"
-                            }`}
-                          >
-                            <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                              <span
-                                className="leaderboard-text"
-                                style={{ color: "#fff" }}
-                              >
-                                $
-                                {getFormattedNumber(
-                                  leaderboard.rewards[
-                                    leaderboard.player_data.position
-                                  ]
-                                    ? leaderboard.rewards[
-                                        leaderboard.player_data.position
-                                      ]
-                                    : 0,
-                                  0
-                                )}
-                              </span>
-                            </div>
-                          </td>  
-                            }
-                            {leaderboard.type === "stars" ?
-                          <td
-                          className={`playerReward text-center col-2 font-montserrat ${
-                            username ===
-                            leaderboard.player_data.displayName
-                              ? "playerReward"
-                              : "playerReward"
-                          }`}
-                        >
-                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                            <span
-                              className="leaderboard-text"
-                              style={{ color: "gray" }}
-                            >
-                              
-                              {getFormattedNumber(
-                                leaderboard.rewards[
-                                  leaderboard.player_data.position
-                                ]
-                                  ? leaderboard.rewards[
-                                      leaderboard.player_data.position
-                                    ]
-                                  : 0,
-                                0
-                              )}
+                  <img
+                    src={leftArrow}
+                    onClick={prevSlide}
+                    className="left-arrow-leaderboard d-flex d-lg-none"
+                    alt=""
+                  />
+                  <img
+                    src={rightArrow}
+                    onClick={nextSlide}
+                    className="right-arrow-leaderboard d-flex d-lg-none"
+                    alt=""
+                  />
+                  <Slider {...settings} ref={sliderRef}>
+                    {allData.map((leaderboard, index) => (
+                      <div
+                        key={index}
+                        className={`leaderboard-item monthly-skale d-flex flex-column gap-2 p-0`}
+                      >
+                        <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
+                          <h6 className="leaderboard-title  text-white font-oxanium mb-0">
+                            {leaderboard.title}
+                          </h6>
+                          <div className="d-flex flex-column px-2 reset-time-wrapper">
+                            <span className="reset-time-lb">Reset time</span>
+                            <span className="reset-time-lb-value">
+                              {leaderboard.reset}
                             </span>
-                            <img src={isPremium ? premiumIcon : premiumInactive} alt="" />
                           </div>
-                        </td>
-                        :
-                        <td
-                                  className={`playerReward text-center col-2 font-montserrat ${
-                                    username ===
-                                    leaderboard.player_data.displayName
-                                      ? "playerReward"
-                                      : "playerReward"
-                                  }`}
-                                >
-                                  <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                    <span
-                                      className="leaderboard-text"
-                                      style={{ color: "gray" }}
-                                    >
-                                      $
-                                      {getFormattedNumber(
-                                        leaderboard.rewards[
-                                          leaderboard.player_data.position
-                                        ]
-                                          ? leaderboard.rewards[
-                                              leaderboard.player_data.position
-                                            ]
-                                          : 0,
-                                        0
-                                      )}
-                                    </span>
-                                    <img src={goldenInactive} alt="" />
-                                  </div>
-                                </td>  
-                          }
+                        </div>
+                        <div className="p-2">
+                          <table className="playerTable w-100">
+                            <tbody>
+                              <tr className="playerRow">
+                                <th className="playerHeader font-montserrat">
+                                  Rank
+                                </th>
+                                <th className="playerHeader font-montserrat">
+                                  Player
+                                </th>
+                                <th className="playerHeader text-center font-montserrat">
+                                  Score
+                                </th>
+
+                                <th className="playerHeader text-center font-montserrat">
+                                  Standard
+                                </th>
+                                <th className="playerHeader text-center font-montserrat">
+                                  {leaderboard.type === "stars"
+                                    ? "Premium"
+                                    : "Golden Pass"}
+                                </th>
                               </tr>
+                              {allData &&
+                                allData.length > 0 &&
+                                inactiveBoard === false &&
+                                leaderboard.activeData.map((item, index) => {
+                                  return (
+                                    <tr
+                                      key={index}
+                                      className={`playerInnerRow ${
+                                        inactiveBoard ||
+                                        item.displayName === username
+                                          ? "playerInnerRow-inactive"
+                                          : null
+                                      }`}
+                                    >
+                                      <td className="playerData col-1 font-montserrat">
+                                        {parseInt(item.position) + 1}
+                                      </td>
+                                      <td className="playerName col-3 font-montserrat">
+                                        {item.displayName === username ? (
+                                          <div className="position-relative d-flex align-items-center">
+                                            <img
+                                              src={premiumAvatar}
+                                              alt=""
+                                              className="playerAvatar"
+                                            />
+                                            <span>
+                                              {" "}
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
+                                                "..."}
+                                            </span>
+                                          </div>
+                                        ) : (
+                                          <div className="position-relative d-flex align-items-center">
+                                            <img
+                                              src={playerAvatar}
+                                              alt=""
+                                              className="playerAvatar"
+                                            />{" "}
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
+                                              "..."}
+                                          </div>
+                                        )}
+                                      </td>
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
+                                      {leaderboard.type === "stars" ? (
+                                        <td
+                                          className={`playerReward text-center col-2 font-montserrat ${
+                                            username === item.displayName
+                                              ? "goldenscore"
+                                              : "playerReward"
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                            <img src={starIcon} alt="" />
+                                            <span
+                                              className="leaderboard-text"
+                                              style={{ color: "#fff" }}
+                                            >
+                                              {getFormattedNumber(
+                                                leaderboard.rewards[index],
+                                                0
+                                              )}
+                                            </span>
+                                          </div>
+                                        </td>
+                                      ) : (
+                                        <td
+                                          className={`playerReward text-center col-2 font-montserrat ${
+                                            username === item.displayName
+                                              ? "goldenscore"
+                                              : "playerReward"
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                            <span
+                                              className="leaderboard-text"
+                                              style={{ color: "#fff" }}
+                                            >
+                                              $
+                                              {getFormattedNumber(
+                                                leaderboard.rewards[index],
+                                                0
+                                              )}
+                                            </span>
+                                          </div>
+                                        </td>
+                                      )}
+                                      {leaderboard.type === "stars" ? (
+                                        <td
+                                          className={`playerReward text-center col-2 font-montserrat ${
+                                            username === item.displayName
+                                              ? "goldenscore"
+                                              : "playerReward"
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                            <span
+                                              className="leaderboard-text"
+                                              style={{
+                                                color: "rgb(243, 192, 9)",
+                                              }}
+                                            >
+                                              {getFormattedNumber(
+                                                leaderboard.premium_rewards[
+                                                  index
+                                                ],
+                                                0
+                                              )}
+                                            </span>
+                                            <img src={premiumInactive} alt="" />
+                                          </div>
+                                        </td>
+                                      ) : (
+                                        <td
+                                          className={`playerReward text-center col-2 font-montserrat ${
+                                            username === item.displayName
+                                              ? "goldenscore"
+                                              : "playerReward"
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
+                                            <span
+                                              className="leaderboard-text"
+                                              style={{
+                                                color: "rgb(243, 192, 9)",
+                                                width: 35,
+                                              }}
+                                            >
+                                              $
+                                              {getFormattedNumber(
+                                                leaderboard.premium_rewards[
+                                                  index
+                                                ],
+                                                0
+                                              )}
+                                            </span>
+                                            <img src={goldenInactive} alt="" />
+                                          </div>
+                                        </td>
+                                      )}
+                                    </tr>
+                                  );
+                                })}
+
+                              {allData &&
+                                inactiveBoard === true &&
+                                allData.length > 0 &&
+                                leaderboard.previousData.map((item, index) => {
+                                  return (
+                                    <tr
+                                      key={index}
+                                      className={`playerInnerRow ${
+                                        inactiveBoard ||
+                                        item.displayName === username
+                                          ? "playerInnerRow-inactive"
+                                          : null
+                                      }`}
+                                    >
+                                      <td className="playerData col-1 font-montserrat">
+                                        {parseInt(item.position) + 1}
+                                      </td>
+                                      <td className="playerName col-3 font-montserrat">
+                                        {item.displayName === username ? (
+                                          <div className="position-relative d-flex align-items-center">
+                                            <img
+                                              src={premiumAvatar}
+                                              alt=""
+                                              className="playerAvatar"
+                                            />
+                                            <span>
+                                              {" "}
+                                              {item.displayName?.slice(0, 10)}
+                                              {item.displayName?.length > 10 &&
+                                                "..."}
+                                            </span>
+                                          </div>
+                                        ) : (
+                                          <div className="position-relative d-flex align-items-center">
+                                            <img
+                                              src={playerAvatar}
+                                              alt=""
+                                              className="playerAvatar"
+                                            />{" "}
+                                            {item.displayName?.slice(0, 10)}
+                                            {item.displayName?.length > 10 &&
+                                              "..."}
+                                          </div>
+                                        )}
+                                      </td>
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(item.statValue, 0)}
+                                      </td>
+                                      {leaderboard.type === "stars" ? (
+                                        <td
+                                          className={`playerReward text-center col-2 font-montserrat ${
+                                            username === item.displayName
+                                              ? "goldenscore"
+                                              : "playerReward"
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                            <img src={starIcon} alt="" />
+                                            <span
+                                              className="leaderboard-text"
+                                              style={{ color: "#fff" }}
+                                            >
+                                              {getFormattedNumber(
+                                                leaderboard.rewards[index],
+                                                0
+                                              )}
+                                            </span>
+                                          </div>
+                                        </td>
+                                      ) : (
+                                        <td
+                                          className={`playerReward text-center col-2 font-montserrat ${
+                                            username === item.displayName
+                                              ? "goldenscore"
+                                              : "playerReward"
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                            <span
+                                              className="leaderboard-text"
+                                              style={{ color: "#fff" }}
+                                            >
+                                              $
+                                              {getFormattedNumber(
+                                                leaderboard.rewards[index],
+                                                0
+                                              )}
+                                            </span>
+                                          </div>
+                                        </td>
+                                      )}
+                                      {leaderboard.type === "stars" ? (
+                                        <td
+                                          className={`playerReward text-center col-2 font-montserrat ${
+                                            username === item.displayName
+                                              ? "goldenscore"
+                                              : "playerReward"
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                            <span
+                                              className="leaderboard-text"
+                                              style={{
+                                                color: "rgb(243, 192, 9)",
+                                              }}
+                                            >
+                                              {getFormattedNumber(
+                                                leaderboard.premium_rewards[
+                                                  index
+                                                ],
+                                                0
+                                              )}
+                                            </span>
+                                            <img src={premiumInactive} alt="" />
+                                          </div>
+                                        </td>
+                                      ) : (
+                                        <td
+                                          className={`playerReward text-center col-2 font-montserrat ${
+                                            username === item.displayName
+                                              ? "goldenscore"
+                                              : "playerReward"
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
+                                            <span
+                                              className="leaderboard-text"
+                                              style={{
+                                                color: "rgb(243, 192, 9)",
+                                                width: 35,
+                                              }}
+                                            >
+                                              $
+                                              {getFormattedNumber(
+                                                leaderboard.premium_rewards[
+                                                  index
+                                                ],
+                                                0
+                                              )}
+                                            </span>
+                                            <img src={goldenInactive} alt="" />
+                                          </div>
+                                        </td>
+                                      )}
+                                    </tr>
+                                  );
+                                })}
+
+                              {inactiveBoard === true &&
+                                ((dailyplayerData.length === 0 &&
+                                  optionText === "daily") ||
+                                  (weeklyplayerData.length === 0 &&
+                                    optionText === "weekly") ||
+                                  (monthlyplayerData.length === 0 &&
+                                    optionText === "monthly")) &&
+                                optionText !== "genesis" && (
+                                  <CircularProgress
+                                    size={20}
+                                    style={{
+                                      alignSelf: "center",
+                                      margin: "auto",
+                                    }}
+                                  />
+                                )}
                             </tbody>
                           </table>
-                        )}
-                    </div>
-                  </div>
-                  ))}
-                </Slider>
+                          {leaderboard.is_active === false &&
+                            email &&
+                            inactiveBoard === false &&
+                            optionText !== "genesis" && (
+                              <table className="playerTable w-100">
+                                <tbody>
+                                  <tr className={`playerInnerRow-inactive`}>
+                                    <td
+                                      className={`playerData font-montserrat ${
+                                        optionText === "genesis"
+                                          ? "col-2"
+                                          : "col-1"
+                                      }`}
+                                    >
+                                      {parseInt(
+                                        leaderboard.player_data.position
+                                      ) + 1}
+                                    </td>
+                                    <td className="playerName col-3 font-montserrat">
+                                      <div className="position-relative  d-flex align-items-center">
+                                        {availableTime !== "0" &&
+                                        availableTime &&
+                                        availableTime >= today1.getTime() &&
+                                        availableTime !== undefined ? (
+                                          <div className="position-relative d-flex align-items-center">
+                                            <img
+                                              src={premiumAvatar}
+                                              alt=""
+                                              className="playerAvatar"
+                                            />
+                                            <img
+                                              src={premiumStar}
+                                              alt=""
+                                              className="premium-star"
+                                            />
+                                            <span>
+                                              {" "}
+                                              {leaderboard.player_data.displayName?.slice(
+                                                0,
+                                                13
+                                              )}
+                                              {leaderboard.player_data
+                                                .displayName?.length > 13 &&
+                                                "..."}
+                                            </span>
+                                          </div>
+                                        ) : (
+                                          <>
+                                            <img
+                                              src={playerAvatar}
+                                              alt=""
+                                              className="playerAvatar"
+                                            />
+                                            {leaderboard.player_data.displayName?.slice(
+                                              0,
+                                              13
+                                            )}
+                                            {leaderboard.player_data.displayName
+                                              ?.length > 13 && "..."}
+                                          </>
+                                        )}
+                                      </div>
+                                    </td>
+                                    <td className="playerScore col-2 text-center font-montserrat">
+                                      {getFormattedNumber(
+                                        leaderboard.player_data.statValue,
+                                        0
+                                      )}
+                                    </td>
+                                    {leaderboard.type === "stars" ? (
+                                      <td
+                                        className={`playerReward text-center col-2 font-montserrat ${
+                                          username ===
+                                          leaderboard.player_data.displayName
+                                            ? "playerReward"
+                                            : "playerReward"
+                                        }`}
+                                      >
+                                        <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                          <img src={starIcon} alt="" />
+                                          <span
+                                            className="leaderboard-text"
+                                            style={{ color: "#fff" }}
+                                          >
+                                            {getFormattedNumber(
+                                              leaderboard.rewards[
+                                                leaderboard.player_data.position
+                                              ]
+                                                ? leaderboard.rewards[
+                                                    leaderboard.player_data
+                                                      .position
+                                                  ]
+                                                : 0,
+                                              0
+                                            )}
+                                          </span>
+                                        </div>
+                                      </td>
+                                    ) : (
+                                      <td
+                                        className={`playerReward text-center col-2 font-montserrat ${
+                                          username ===
+                                          leaderboard.player_data.displayName
+                                            ? "playerReward"
+                                            : "playerReward"
+                                        }`}
+                                      >
+                                        <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                          <span
+                                            className="leaderboard-text"
+                                            style={{ color: "#fff" }}
+                                          >
+                                            $
+                                            {getFormattedNumber(
+                                              leaderboard.rewards[
+                                                leaderboard.player_data.position
+                                              ]
+                                                ? leaderboard.rewards[
+                                                    leaderboard.player_data
+                                                      .position
+                                                  ]
+                                                : 0,
+                                              0
+                                            )}
+                                          </span>
+                                        </div>
+                                      </td>
+                                    )}
+                                    {leaderboard.type === "stars" ? (
+                                      <td
+                                        className={`playerReward text-center col-2 font-montserrat ${
+                                          username ===
+                                          leaderboard.player_data.displayName
+                                            ? "playerReward"
+                                            : "playerReward"
+                                        }`}
+                                      >
+                                        <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                          <span
+                                            className="leaderboard-text"
+                                            style={{ color: "gray" }}
+                                          >
+                                            {getFormattedNumber(
+                                              leaderboard.rewards[
+                                                leaderboard.player_data.position
+                                              ]
+                                                ? leaderboard.rewards[
+                                                    leaderboard.player_data
+                                                      .position
+                                                  ]
+                                                : 0,
+                                              0
+                                            )}
+                                          </span>
+                                          <img
+                                            src={
+                                              isPremium
+                                                ? premiumIcon
+                                                : premiumInactive
+                                            }
+                                            alt=""
+                                          />
+                                        </div>
+                                      </td>
+                                    ) : (
+                                      <td
+                                        className={`playerReward text-center col-2 font-montserrat ${
+                                          username ===
+                                          leaderboard.player_data.displayName
+                                            ? "playerReward"
+                                            : "playerReward"
+                                        }`}
+                                      >
+                                        <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                          <span
+                                            className="leaderboard-text"
+                                            style={{ color: "gray" }}
+                                          >
+                                            $
+                                            {getFormattedNumber(
+                                              leaderboard.rewards[
+                                                leaderboard.player_data.position
+                                              ]
+                                                ? leaderboard.rewards[
+                                                    leaderboard.player_data
+                                                      .position
+                                                  ]
+                                                : 0,
+                                              0
+                                            )}
+                                          </span>
+                                          <img src={goldenInactive} alt="" />
+                                        </div>
+                                      </td>
+                                    )}
+                                  </tr>
+                                </tbody>
+                              </table>
+                            )}
+                        </div>
+                      </div>
+                    ))}
+                  </Slider>
                 </div>
               ) : (
                 <ComingSoon
