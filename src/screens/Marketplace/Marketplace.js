@@ -244,6 +244,7 @@ const Marketplace = ({
       .call()
       .catch((e) => {
         console.error(e);
+        return 0;
       });
 
     let base_contract = new window.baseWeb3.eth.Contract(
@@ -256,6 +257,7 @@ const Marketplace = ({
       .call()
       .catch((e) => {
         console.error(e);
+        return 0;
       });
 
     const confluxContract = new window.confluxWeb3.eth.Contract(
@@ -282,11 +284,26 @@ const Marketplace = ({
       window.config.nft_skale_address
     );
 
-    const confluxresult = await confluxContract.methods.totalSupply().call();
-    const gateresult = await gateContract.methods.totalSupply().call();
-    const dogeresult = await dogeContract.methods.totalSupply().call();
-    const cmcresult = await cmcContract.methods.totalSupply().call();
-    const skaleresult = await skaleContract.methods.totalSupply().call();
+    const confluxresult = await confluxContract.methods.totalSupply().call() .catch((e) => {
+      console.error(e);
+      return 0;
+    });;
+    const gateresult = await gateContract.methods.totalSupply().call() .catch((e) => {
+      console.error(e);
+      return 0;
+    });;
+    const dogeresult = await dogeContract.methods.totalSupply().call() .catch((e) => {
+      console.error(e);
+      return 0;
+    });;
+    const cmcresult = await cmcContract.methods.totalSupply().call() .catch((e) => {
+      console.error(e);
+      return 0;
+    });;
+    const skaleresult = await skaleContract.methods.totalSupply().call() .catch((e) => {
+      console.error(e);
+      return 0;
+    });;
 
     //20000 = 10000 caws + 1000 genesis + 9000 coingecko
     setTotalSupply(
