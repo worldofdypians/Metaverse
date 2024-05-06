@@ -161,6 +161,8 @@ const MarketMint = ({
   const [activeTab, setActiveTab] = useState("live");
   const [confluxSold, setconfluxSold] = useState(0);
   const [baseSold, setcBaseSold] = useState(0);
+  const [skaleSold, setskaleSold] = useState(0);
+
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(false);
@@ -185,14 +187,29 @@ const MarketMint = ({
     const confluxresult = await confluxContract.methods.totalSupply().call().catch((e) => {
       console.error(e);
       return 0;
-    });;
+    });
+
     setconfluxSold(confluxresult);
 
     const baseresult = await baseContract.methods.totalSupply().call().catch((e) => {
       console.error(e);
       return 0;
-    });;
-    setcBaseSold(baseresult);
+    });
+ setcBaseSold(baseresult);
+
+    const skaleContract = new window.skaleWeb3.eth.Contract(
+      window.SKALE_NFT_ABI,
+      window.config.nft_skale_address
+    );
+
+
+    const skaleresult = await skaleContract.methods.totalSupply().call() .catch((e) => {
+      console.error(e);
+      return 0;
+    });
+setskaleSold(skaleresult)
+
+   
   };
 
   useEffect(() => {
@@ -546,9 +563,10 @@ const MarketMint = ({
                       activeTab === "live" && "stake-tab-active"
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
-                  >  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                  > 
+                   {/* <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
-                    </div>
+                    </div> */}
                     Live
                   </h6>
                   <h6
@@ -574,7 +592,7 @@ const MarketMint = ({
 
               {activeTab === "live" && (
                 <>
-                  <div className="pb-5 px-0 position-relative">
+                  {/* <div className="pb-5 px-0 position-relative">
                     {activeSlide > 0 && (
                       <div className="prev-arrow-nft" onClick={firstPrev}>
                         <img src={nextArrow} alt="" />
@@ -610,7 +628,7 @@ const MarketMint = ({
                         />
                       ))}
                     </Slider>
-                  </div>
+                  </div> */}
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -1499,6 +1517,24 @@ const MarketMint = ({
                             {getFormattedNumber(baseSold, 0)}
                           </h6>
                           <span className="past-conflux-mint-desc">
+                            SOLD OUT
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-skale-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">SKALE Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-skale-mint-amount">
+                            {getFormattedNumber(skaleSold, 0)}
+                          </h6>
+                          <span className="past-skale-mint-desc">
                             SOLD OUT
                           </span>
                         </div>
