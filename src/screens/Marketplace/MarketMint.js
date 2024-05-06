@@ -213,13 +213,13 @@ setskaleSold(skaleresult)
   };
 
   useEffect(() => {
-    if (params.id === "skale") {
-      setSelectedMint(baseData);
-      setMintTitle("skale");
-    } else if (params.id === "timepiece") {
+    //if (params.id === "skale") {
+    //  setSelectedMint(baseData);
+    //  setMintTitle("skale");
+    //} else if (params.id === "timepiece") {
       setSelectedMint(timepieceData);
       setMintTitle("timepiece");
-    }
+    //}
     getTotalSupply();
   }, []);
 
