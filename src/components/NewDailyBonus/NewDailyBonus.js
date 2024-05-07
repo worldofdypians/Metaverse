@@ -107,7 +107,7 @@ const NewDailyBonus = ({
   onPremiumClickOther,
   premiumTxHash,
   selectedChainforPremium,
-  images,
+  
   claimedCoreChests,
   claimedCorePremiumChests,
   claimedVictionChests,
@@ -116,8 +116,19 @@ const NewDailyBonus = ({
   openedVictionChests,
   onCoreChestClaimed,
   onVictionChestClaimed,
+  onSeiChestClaimed,
   allCoreChests,
   allVictionChests,
+  standardSeiChests,
+  premiumSeiChests,
+  claimedSeiChests,
+  claimedSeiPremiumChests,
+  openedSeiChests,
+  allSeiChests,
+  bnbImages,
+  seiImages,
+  victionImages,
+  coreImages
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -137,6 +148,16 @@ const NewDailyBonus = ({
 
   const skaleClaimed = claimedSkaleChests + claimedSkalePremiumChests;
   const skalePercentage = (skaleClaimed / 20) * 100;
+
+
+  const coreClaimed = claimedCoreChests + claimedCorePremiumChests;
+  const corePercentage = (coreClaimed / 20) * 100;
+
+  const victionClaimed = claimedVictionChests + claimedVictionPremiumChests;
+  const victionPercentage = (victionClaimed / 20) * 100;
+
+  const seiClaimed = claimedSeiChests + claimedSeiPremiumChests;
+  const seiPercentage = (seiClaimed / 20) * 100;
 
   var settings = {
     dots: false,
@@ -351,6 +372,8 @@ const NewDailyBonus = ({
   const [totalCoreUsd, settotalCoreUsd] = useState(0);
   const [totalVictionPoints, settotalVictionPoints] = useState(0);
   const [totalVictionUsd, settotalVictionUsd] = useState(0);
+  const [totalSeiPoints, settotalSeiPoints] = useState(0);
+  const [totalSeiUsd, settotalSeiUsd] = useState(0);
 
   const [tooltip, setTooltip] = useState(false);
   const [claimingChest, setClaimingChest] = useState(false);
@@ -491,6 +514,39 @@ const NewDailyBonus = ({
       settotalVictionPoints(resultVictionPoints);
       settotalVictionUsd(resultVictionUsd);
     }
+    if (allSeiChests && allSeiChests.length > 0) {
+      let resultSeiPoints = 0;
+      let resultSeiUsd = 0;
+
+      allSeiChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultSeiPoints += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                resultSeiUsd += Number(innerChest.reward);
+              }
+            });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultSeiPoints += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+
+      settotalSeiPoints(resultSeiPoints);
+      settotalSeiUsd(resultSeiUsd);
+    }
   };
 
   const handleOpBnbPool = async () => {
@@ -604,6 +660,22 @@ const NewDailyBonus = ({
         await handleSwitchNetworkhook("0x58")
           .then(() => {
             handleSwitchNetwork(88);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleSeiPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xae3f3")
+          .then(() => {
+            handleSwitchNetwork(713715);
           })
           .catch((e) => {
             console.log(e);
@@ -1344,6 +1416,121 @@ const NewDailyBonus = ({
       setLiveRewardData([]);
     }
   };
+  const showSingleRewardDataSei = (chestID, chestIndex) => {
+    const filteredResult = openedSeiChests.find(
+      (el) =>
+        el.chestId === chestID && allSeiChests.indexOf(el) === chestIndex
+    );
+    setIsActive(chestID);
+    setIsActiveIndex(chestIndex + 1);
+    if (filteredResult) {
+      const result = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "CAWS"
+        );
+      });
+
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LAND"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return obj.rewardType === "Money" && obj.status === "Claimed";
+      });
+
+      const resultPoints = filteredResult.rewards.length === 1;
+
+      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
+        );
+      });
+
+      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+          );
+        }
+      );
+
+      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
+          );
+        }
+      );
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+        );
+      });
+
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+        );
+      });
+
+      if (result) {
+        setMessage("caws");
+      } else if (resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if (resultWon) {
+        setMessage("won");
+      } else if (resultPoints) {
+        setMessage("wonPoints");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
+      } else if (resultWonMoneyNotEnoughLands) {
+        setMessage("winDangerNotEnoughLand");
+      } else if (resultWonMoneyhasNftsNoPremium) {
+        setMessage("winDangerHasNftsNoPremium");
+      } else if (resultWonMoneyhasNftsNoDyp) {
+        setMessage("winDangerHasNftsPremiumNoDyp");
+      }
+
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
+  };
 
   useEffect(() => {
     countEarnedRewards();
@@ -1608,6 +1795,68 @@ const NewDailyBonus = ({
         setMessage("login");
         setDisable(true);
       }
+    }  else if (chain === "sei") {
+      if (email && coinbase && address) {
+        if (coinbase.toLowerCase() === address.toLowerCase()) {
+          if (isPremium) {
+            if (
+              claimedSeiChests + claimedSeiPremiumChests === 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase()
+            ) {
+              setMessage("complete");
+            } else if (
+              claimedSeiChests + claimedSeiPremiumChests < 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 713715
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedSeiChests + claimedSeiPremiumChests < 20 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 713715
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
+          } else if (!isPremium) {
+            if (
+              claimedSeiChests === 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 713715
+            ) {
+              setMessage("premium");
+              setDisable(true);
+            } else if (
+              claimedSeiChests < 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 713715
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedSeiChests < 10 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 713715
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
+          }
+        } else {
+          setMessage("switchAccount");
+          setDisable(true);
+        }
+      } else {
+        setMessage("login");
+        setDisable(true);
+      }
     }
   }, [
     email,
@@ -1624,8 +1873,11 @@ const NewDailyBonus = ({
     claimedCorePremiumChests,
     claimedVictionChests,
     claimedVictionPremiumChests,
+    claimedSeiChests,
+    claimedSeiPremiumChests,
     rewardData,
   ]);
+
 
   return (
     <>
@@ -1748,6 +2000,8 @@ const NewDailyBonus = ({
                       ? totalCorePoints
                       : chain === "viction"
                       ? totalVictionPoints
+                      : chain === "sei"
+                      ? totalSeiPoints
                       : totalSkalePoints,
                     0
                   )}{" "}
@@ -1766,6 +2020,8 @@ const NewDailyBonus = ({
                       ? totalCoreUsd
                       : chain === "viction"
                       ? totalVictionUsd
+                      : chain === "sei"
+                      ? totalSeiUsd
                       : totalSkaleUsd,
                     2
                   )}{" "}
@@ -1796,7 +2052,6 @@ const NewDailyBonus = ({
                             className={`chain-img ${
                               chain === "bnb" && "chain-img-active"
                             }`}
-                          
                             alt=""
                           />
                           <div
@@ -1813,33 +2068,33 @@ const NewDailyBonus = ({
                             {/* <h6 className="chain-title-position mb-0">
                               BNB CHAIN
                             </h6> */}
-                                 <div
-                            className="d-flex align-items-center gap-2"
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
-                              className={` ${
-                                chainId === 56
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleBnbPool}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
                             >
-                              {" "}
-                              <img src={bnbIcon} alt="" /> BNB
-                            </button>
+                              <button
+                                className={` ${
+                                  chainId === 56
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleBnbPool}
+                              >
+                                {" "}
+                                <img src={bnbIcon} alt="" /> BNB
+                              </button>
 
-                            <button
-                              className={` ${
-                                chainId === 204
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleOpBnbPool}
-                            >
-                              <img src={bnbIcon} alt="" /> opBNB
-                            </button>
-                          </div>
+                              <button
+                                className={` ${
+                                  chainId === 204
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleOpBnbPool}
+                              >
+                                <img src={bnbIcon} alt="" /> opBNB
+                              </button>
+                            </div>
                             <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
                                 <img
@@ -1898,7 +2153,6 @@ const NewDailyBonus = ({
                               </span>
                             </div>
                           </div>
-                     
                         </div>
                         <div
                           className={`position-relative chain-item ${
@@ -1910,7 +2164,6 @@ const NewDailyBonus = ({
                             className={`chain-img ${
                               chain === "skale" && "chain-img-active"
                             }`}
-                          
                             alt=""
                           />
                           <div
@@ -1927,21 +2180,21 @@ const NewDailyBonus = ({
                           >
                             {/* <h6 className="chain-title-position mb-0">SKALE</h6> */}
                             <div
-                            className=" d-flex align-items-center gap-2 "
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
-                              className={`${
-                                chainId === 1482601649
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleSkalePool}
+                              className=" d-flex align-items-center gap-2 "
+                              style={{ width: "fit-content" }}
                             >
-                              {" "}
-                              <img src={skaleIcon} alt="" /> SKALE
-                            </button>
-                          </div>
+                              <button
+                                className={`${
+                                  chainId === 1482601649
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSkalePool}
+                              >
+                                {" "}
+                                <img src={skaleIcon} alt="" /> SKALE
+                              </button>
+                            </div>
                             <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
                                 <img
@@ -2000,11 +2253,10 @@ const NewDailyBonus = ({
                               </span>
                             </div>
                           </div>
-                       
                         </div>
                         <div
                           className={`position-relative chain-item ${
-                            chain === 'core' && "chain-item-active"
+                            chain === "core" && "chain-item-active"
                           } w-100`}
                         >
                           <img
@@ -2012,7 +2264,6 @@ const NewDailyBonus = ({
                             className={`chain-img ${
                               chain === "core" && "chain-img-active"
                             }`}
-                       
                             alt=""
                           />
                           <div
@@ -2029,27 +2280,33 @@ const NewDailyBonus = ({
                           >
                             {/* <h6 className="chain-title-position mb-0">CORE</h6> */}
                             <div
-                            className=" d-flex align-items-center gap-2"
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
-                              className={`${
-                                chainId === 1482601649
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleBnbPool}
+                              className=" d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
                             >
-                              {" "}
-                              <img src={coreIcon} width={20} height={20} alt="" /> CORE
-                            </button>
-                          </div>
+                              <button
+                                className={`${
+                                  chainId === 1116
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleCorePool}
+                              >
+                                {" "}
+                                <img
+                                  src={coreIcon}
+                                  width={20}
+                                  height={20}
+                                  alt=""
+                                />{" "}
+                                CORE
+                              </button>
+                            </div>
                             <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage >= 20
+                                    corePercentage >= 20
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2059,7 +2316,7 @@ const NewDailyBonus = ({
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage >= 40
+                                    corePercentage >= 40
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2069,7 +2326,7 @@ const NewDailyBonus = ({
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage >= 60
+                                    corePercentage >= 60
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2079,7 +2336,7 @@ const NewDailyBonus = ({
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage >= 80
+                                    corePercentage >= 80
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2089,7 +2346,7 @@ const NewDailyBonus = ({
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage === 100
+                                    corePercentage === 100
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2098,11 +2355,10 @@ const NewDailyBonus = ({
                                 />
                               </div>
                               <span className="percentage-span">
-                                {parseInt(skalePercentage)}%
+                                {parseInt(corePercentage)}%
                               </span>
                             </div>
                           </div>
-                        
                         </div>
                         <div
                           className={`position-relative chain-item ${
@@ -2114,7 +2370,6 @@ const NewDailyBonus = ({
                             className={`chain-img ${
                               chain === "sei" && "chain-img-active"
                             }`}
-                          
                             alt=""
                           />
                           <div
@@ -2131,28 +2386,33 @@ const NewDailyBonus = ({
                           >
                             {/* <h6 className="chain-title-position mb-0">VICTION</h6> */}
                             <div
-                            className=" d-flex align-items-center gap-2"
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
-                              className={`${
-                                chainId === 1116
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleSkalePool}
+                              className=" d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
                             >
-                              {" "}
-                              <img src={seiIcon} width={20} height={20} alt="" /> SEI
-                            </button>
-                      
-                          </div>
+                              <button
+                                className={`${
+                                  chainId === 713715
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSeiPool}
+                              >
+                                {" "}
+                                <img
+                                  src={seiIcon}
+                                  width={20}
+                                  height={20}
+                                  alt=""
+                                />{" "}
+                                SEI
+                              </button>
+                            </div>
                             <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage >= 20
+                                    seiPercentage >= 20
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2162,7 +2422,7 @@ const NewDailyBonus = ({
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage >= 40
+                                    seiPercentage >= 40
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2172,7 +2432,7 @@ const NewDailyBonus = ({
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage >= 60
+                                    seiPercentage >= 60
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2182,7 +2442,7 @@ const NewDailyBonus = ({
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage >= 80
+                                    seiPercentage >= 80
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2192,7 +2452,7 @@ const NewDailyBonus = ({
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage === 100
+                                    seiPercentage === 100
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2201,15 +2461,14 @@ const NewDailyBonus = ({
                                 />
                               </div>
                               <span className="percentage-span">
-                                {parseInt(skalePercentage)}%
+                                {parseInt(seiPercentage)}%
                               </span>
                             </div>
                           </div>
-                         
                         </div>
                         <div
                           className={`position-relative chain-item ${
-                            chain === 'viction' && "chain-item-active"
+                            chain === "viction" && "chain-item-active"
                           } w-100`}
                         >
                           <img
@@ -2217,12 +2476,11 @@ const NewDailyBonus = ({
                             className={`chain-img ${
                               chain === "viction" && "chain-img-active"
                             }`}
-                          
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === 'viction' &&
+                              chain === "viction" &&
                               "chain-title-wrapper-active-skale"
                             } p-2 d-flex align-items-center justify-content-between`}
                             onClick={() => {
@@ -2232,72 +2490,7 @@ const NewDailyBonus = ({
                               setRewardData([]);
                             }}
                           >
-                            <h6 className="chain-title-position mb-0">
-                              VICTION
-                            </h6>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(skalePercentage)}%
-                              </span>
-                            </div>
-                          </div>
-                          <div
-                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
+                               <button
                               className={`${
                                 chainId === 88
                                   ? "new-chain-active-btn"
@@ -2314,23 +2507,66 @@ const NewDailyBonus = ({
                               />{" "}
                               VICTION
                             </button>
-                            {/* <a href="https://www.sfuelstation.com/" target="_blank">
-                         <button
-                            className={`${
-                              chainId === 2046399126
-                                ? "new-chain-active-btn"
-                                : "new-chain-inactive-btn"
-                            } d-flex gap-2 align-items-center`}
-                          >
-                            {" "}
-                            Get SFuel
-                            <img src={gasRightArrow} alt="" /> 
-                          </button>
-                         </a> */}
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(victionPercentage)}%
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        
                        
+                        </div>
                       </div>
                     ) : (
                       <Slider {...settings}>
@@ -2340,44 +2576,54 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={bnbChain}
+                            src={bnbBg}
                             className={`chain-img ${
                               chain === "bnb" && "chain-img-active"
                             }`}
-                            onClick={() => {
-                              setChain("bnb");
-                              setIsActive();
-                              setIsActiveIndex();
-                            }}
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
                               chain === "bnb" && "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("bnb");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
                           >
-                            <h6 className="chain-title-position mb-0">
-                              BNB Chain
-                            </h6>
-                          </div>
-                          <div
-                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
-                              className={`chain-active-btn d-flex gap-1 align-items-center`}
-                              onClick={handleBnbPool}
+                            {/* <h6 className="chain-title-position mb-0">
+                              BNB CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
                             >
-                              {" "}
-                              <img src={bnbIcon} alt="" /> BNB
-                            </button>
+                              <button
+                                className={` ${
+                                  chainId === 56
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleBnbPool}
+                              >
+                                {" "}
+                                <img src={bnbIcon} alt="" /> BNB
+                              </button>
 
-                            <button
-                              className={`chain-inactive-btn d-flex gap-1 align-items-center`}
-                              onClick={handleOpBnbPool}
-                            >
-                              <img src={bnbIcon} alt="" /> opBNB
-                            </button>
+                              <button
+                                className={` ${
+                                  chainId === 204
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleOpBnbPool}
+                              >
+                                <img src={bnbIcon} alt="" /> opBNB
+                              </button>
+                            </div>
+                  
                           </div>
                         </div>
                         <div
@@ -2386,35 +2632,42 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={skaleChain}
+                            src={skaleBg}
                             className={`chain-img ${
                               chain === "skale" && "chain-img-active"
                             }`}
-                            onClick={() => {
-                              setChain("skale");
-                              setIsActive();
-                              setIsActiveIndex();
-                            }}
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === "skale" && "chain-title-wrapper-active"
+                              chain === "skale" &&
+                              "chain-title-wrapper-active-skale"
                             } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("skale");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
                           >
-                            <h6 className="chain-title-position mb-0">SKALE</h6>
-                          </div>
-                          <div
-                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
-                              className={`chain-inactive-btn d-flex gap-1 align-items-center`}
-                              onClick={handleSkalePool}
+                            {/* <h6 className="chain-title-position mb-0">SKALE</h6> */}
+                            <div
+                              className=" d-flex align-items-center gap-2 "
+                              style={{ width: "fit-content" }}
                             >
-                              {" "}
-                              <img src={skaleIcon} alt="" /> SKALE
-                            </button>
+                              <button
+                                className={`${
+                                  chainId === 1482601649
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSkalePool}
+                              >
+                                {" "}
+                                <img src={skaleIcon} alt="" /> SKALE
+                              </button>
+                            </div>
+                        
                           </div>
                         </div>
                         <div
@@ -2427,31 +2680,94 @@ const NewDailyBonus = ({
                             className={`chain-img ${
                               chain === "core" && "chain-img-active"
                             }`}
-                            onClick={() => {
-                              setChain("core");
-                              setIsActive();
-                              setIsActiveIndex();
-                            }}
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === "core" && "chain-title-wrapper-active"
+                              chain === "core" &&
+                              "chain-title-wrapper-active-skale"
                             } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("core");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
                           >
-                            <h6 className="chain-title-position mb-0">CORE</h6>
-                          </div>
-                          <div
-                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
-                              className={`chain-inactive-btn d-flex gap-1 align-items-center`}
-                              onClick={handleCorePool}
+                            {/* <h6 className="chain-title-position mb-0">CORE</h6> */}
+                            <div
+                              className=" d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
                             >
-                              {" "}
-                              <img src={coreIcon} alt="" /> CORE
-                            </button>
+                              <button
+                                className={`${
+                                  chainId === 1116
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleCorePool}
+                              >
+                                {" "}
+                                <img
+                                  src={coreIcon}
+                                  width={20}
+                                  height={20}
+                                  alt=""
+                                />{" "}
+                                CORE
+                              </button>
+                            </div>
+                         
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "sei" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={victionBg}
+                            className={`chain-img ${
+                              chain === "sei" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "sei" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("sei");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">VICTION</h6> */}
+                            <div
+                              className=" d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={`${
+                                  chainId === 713715
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSeiPool}
+                              >
+                                {" "}
+                                <img
+                                  src={seiIcon}
+                                  width={20}
+                                  height={20}
+                                  alt=""
+                                />{" "}
+                                SEI
+                              </button>
+                            </div>
+                          
                           </div>
                         </div>
                         <div
@@ -2464,35 +2780,40 @@ const NewDailyBonus = ({
                             className={`chain-img ${
                               chain === "viction" && "chain-img-active"
                             }`}
-                            onClick={() => {
-                              setChain("viction");
-                              setIsActive();
-                              setIsActiveIndex();
-                            }}
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
                               chain === "viction" &&
-                              "chain-title-wrapper-active"
+                              "chain-title-wrapper-active-skale"
                             } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("viction");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
                           >
-                            <h6 className="chain-title-position mb-0">
-                              VICTION
-                            </h6>
-                          </div>
-                          <div
-                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
-                              className={`chain-inactive-btn d-flex gap-1 align-items-center`}
+                               <button
+                              className={`${
+                                chainId === 88
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
                               onClick={handleVictionPool}
                             >
                               {" "}
-                              <img src={victionIcon} alt="" /> VICTION
+                              <img
+                                src={victionIcon}
+                                width={20}
+                                height={20}
+                                alt=""
+                              />{" "}
+                              VICTION
                             </button>
+                          
                           </div>
+                       
                         </div>
                       </Slider>
                     )}
@@ -2511,7 +2832,7 @@ const NewDailyBonus = ({
                                   chain={chain}
                                   key={index}
                                   item={item}
-                                  image={images[index]}
+                                  image={bnbImages[index]}
                                   // openChest={openChest}
                                   selectedChest={selectedChest}
                                   isPremium={isPremium}
@@ -2557,6 +2878,7 @@ const NewDailyBonus = ({
                                   chain={chain}
                                   key={index}
                                   item={item}
+                                  image={bnbImages[index]}
                                   // openChest={openChest}
                                   selectedChest={selectedChest}
                                   isPremium={isPremium}
@@ -2605,6 +2927,7 @@ const NewDailyBonus = ({
                                   setClaimingChest={setClaimingChest}
                                   buyNftPopup={buyNftPopup}
                                   chainId={chainId}
+                                  image={coreImages[index]}
                                   chain={chain}
                                   key={index}
                                   item={item}
@@ -2653,6 +2976,7 @@ const NewDailyBonus = ({
                                   chain={chain}
                                   key={index}
                                   item={item}
+                                  image={coreImages[index]}
                                   // openChest={openChest}
                                   selectedChest={selectedChest}
                                   isPremium={isPremium}
@@ -2702,6 +3026,7 @@ const NewDailyBonus = ({
                                   buyNftPopup={buyNftPopup}
                                   chainId={chainId}
                                   chain={chain}
+                                  image={victionImages[index]}
                                   key={index}
                                   item={item}
                                   // openChest={openChest}
@@ -2751,6 +3076,8 @@ const NewDailyBonus = ({
                                   item={item}
                                   // openChest={openChest}
                                   selectedChest={selectedChest}
+                                  image={victionImages[index]}
+
                                   isPremium={isPremium}
                                   onClaimRewards={(value) => {
                                     // setRewardData(value);
@@ -2789,6 +3116,105 @@ const NewDailyBonus = ({
                                   }
                                 />
                               ))
+                              : chain === "sei"
+                              ? allSeiChests && allSeiChests.length > 0
+                                ? allSeiChests.map((item, index) => (
+                                    <NewChestItem
+                                      claimingChest={claimingChest}
+                                      setClaimingChest={setClaimingChest}
+                                      buyNftPopup={buyNftPopup}
+                                      chainId={chainId}
+                                      image={seiImages[index]}
+                                      chain={chain}
+                                      key={index}
+                                      item={item}
+                                      // openChest={openChest}
+                                      selectedChest={selectedChest}
+                                      isPremium={isPremium}
+                                      onClaimRewards={(value) => {
+                                        // setRewardData(value);
+                                        setLiveRewardData(value);
+                                        onSeiChestClaimed();
+                                        showLiveRewardData(value);
+                                        setIsActive(item.chestId);
+                                        setIsActiveIndex(index + 1);
+                                      }}
+                                      handleShowRewards={(value, value2) => {
+                                        showSingleRewardDataSei(value, value2);
+                                        setIsActive(value);
+                                        setIsActiveIndex(index + 1);
+                                      }}
+                                      onLoadingChest={(value) => {
+                                        // setDisable(value);
+                                      }}
+                                      onChestStatus={(val) => {
+                                        setMessage(val);
+                                      }}
+                                      address={address}
+                                      email={email}
+                                      rewardTypes={item.chestType?.toLowerCase()}
+                                      chestId={item.chestId}
+                                      chestIndex={index + 1}
+                                      open={item.isOpened}
+                                      disableBtn={disable}
+                                      isActive={isActive}
+                                      isActiveIndex={isActiveIndex}
+                                      dummypremiumChests={
+                                        dummypremiumChests[index - 10]?.closedImg
+                                      }
+                                    />
+                                  ))
+                                : window.range(0, 19).map((item, index) => (
+                                    <NewChestItem
+                                      claimingChest={claimingChest}
+                                      setClaimingChest={setClaimingChest}
+                                      buyNftPopup={buyNftPopup}
+                                      chainId={chainId}
+                                      chain={chain}
+                                      image={seiImages[index]}
+
+                                      key={index}
+                                      item={item}
+                                      // openChest={openChest}
+                                      selectedChest={selectedChest}
+                                      isPremium={isPremium}
+                                      onClaimRewards={(value) => {
+                                        // setRewardData(value);
+                                        setLiveRewardData(value);
+                                        onSeiChestClaimed();
+                                        showLiveRewardData(value);
+                                        setIsActive(item.chestId);
+                                        // setIsActiveIndex(index + 1);
+                                      }}
+                                      handleShowRewards={(value, value2) => {
+                                        showSingleRewardDataSei(value, value2);
+                                        setIsActive(value);
+                                        // setIsActiveIndex(index + 1);
+                                      }}
+                                      onLoadingChest={(value) => {
+                                        // setDisable(value);
+                                      }}
+                                      onChestStatus={(val) => {
+                                        setMessage(val);
+                                      }}
+                                      address={address}
+                                      email={email}
+                                      rewardTypes={
+                                        index + 1 <= 10 ? "standard" : "premium"
+                                      }
+                                      chestId={item.chestId}
+                                      chestIndex={index + 1}
+                                      open={item.opened}
+                                      disableBtn={true}
+                                      isActive={isActive}
+                                      openChest={() => {
+                                        console.log("test");
+                                      }}
+                                      dummypremiumChests={
+                                        dummypremiumChests[index - 10]?.closedImg
+                                      }
+                                    />
+                                  ))
                           : chain === "skale" &&
                             allSkaleChests &&
                             allSkaleChests.length > 0
@@ -2986,7 +3412,8 @@ const NewDailyBonus = ({
                               opBNB Chain
                             </span>
                           </h6>
-                        ) : (
+                        ) : chain === "skale" ? 
+                        (
                           <h6
                             className="loader-text mb-0"
                             style={{ color: "#ce5d1b" }}
@@ -3002,7 +3429,62 @@ const NewDailyBonus = ({
                               SKALE Network
                             </span>
                           </h6>
-                        )}
+                        )
+                        : chain === "core" ? 
+
+                        (
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                            Switch to{" "}
+                            <span
+                              style={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
+                              onClick={handleCorePool}
+                            >
+                              CORE Network
+                            </span>
+                          </h6>
+                        ) : chain === "viction" ? 
+                        (
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                            Switch to{" "}
+                            <span
+                              style={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
+                              onClick={handleVictionPool}
+                            >
+                              Viction Network
+                            </span>
+                          </h6>
+                        ) : chain === "sei" ?
+                        (
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                            Switch to{" "}
+                            <span
+                              style={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
+                              onClick={handleSeiPool}
+                            >
+                              Sei Network
+                            </span>
+                          </h6>
+                        ) : 
+                        <></>
+                      }
                         <div className="loader red-loader">
                           <div className="dot" style={{ "--i": 0 }}></div>
                           <div className="dot" style={{ "--i": 1 }}></div>
@@ -5107,9 +5589,15 @@ const NewDailyBonus = ({
               chain === "bnb"
                 ? showSingleRewardData(rewardData.chestId, isActiveIndex - 1)
                 : chain === "core"
-                ? showSingleRewardDataCore(rewardData.chestId, isActiveIndex - 1)
+                ? showSingleRewardDataCore(
+                    rewardData.chestId,
+                    isActiveIndex - 1
+                  )
                 : chain === "viction"
-                ? showSingleRewardDataViction(rewardData.chestId, isActiveIndex - 1)
+                ? showSingleRewardDataViction(
+                    rewardData.chestId,
+                    isActiveIndex - 1
+                  )
                 : showSingleRewardDataSkale(
                     rewardData.chestId,
                     isActiveIndex - 1

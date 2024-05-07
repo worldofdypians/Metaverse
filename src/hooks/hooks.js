@@ -110,6 +110,17 @@ export const handleSwitchNetworkhook = async (chainID) => {
     rpcUrls: ["https://rpc.viction.xyz"],
     blockExplorerUrls: ["https:/vicscan.xyz"],
   };
+  const SEIPARAMS = {
+    chainId: "0xae3f3", // A 0x-prefixed hexadecimal string
+    chainName: "Sei EVM Devnet",
+    nativeCurrency: {
+      name: "Sei",
+      symbol: "SEI", // 2-6 characters long
+      decimals: 18,
+    },
+    rpcUrls: ["https://evm-rpc-arctic-1.sei-apis.com"],
+    blockExplorerUrls: ["https://seistream.app/"],
+  };
 
   try {
     await ethereum.request({
@@ -129,6 +140,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
       (chainID === "0xcc" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x45c" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x58" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0xae3f3" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x585eb4b1" &&
         switchError.code.toString().includes("32603")) ||
       (switchError.code === 4902 &&
@@ -156,6 +168,8 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [COREPARAMS]
               : chainID === "0x58"
               ? [VICTIONPARAMS]
+              : chainID === "0xae3f3"
+              ? [SEIPARAMS]
               : "",
         });
         if (window.ethereum && window.ethereum.isTrust === true) {

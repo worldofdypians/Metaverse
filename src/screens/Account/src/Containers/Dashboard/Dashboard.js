@@ -118,6 +118,32 @@ function Dashboard({
     },
   ];
 
+
+  const chestImagesBnb = ["0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+  const chestImagesCore = ["0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+  const chestImagesSei = ["0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+  const chestImagesViction = ["0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+
+
+  function shuffle(array) {
+    let currentIndex = array.length,
+      randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+    return array;
+  }
+
   const [tokensState, setTokensState] = useState({});
   const [showChecklistModal, setshowChecklistModal] = useState(false);
   const [showChecklistLandNftModal, setshowChecklistLandNftModal] =
@@ -209,13 +235,15 @@ function Dashboard({
 
   const [standardVictionChests, setStandardVictionChests] = useState([]);
   const [premiumVictionChests, setPremiumVictionChests] = useState([]);
-
+  const [standardSeiChests, setStandardSeiChests] = useState([]);
+  const [premiumSeiChests, setPremiumSeiChests] = useState([])
   const [standardCoreChests, setStandardCoreChests] = useState([]);
   const [premiumCoreChests, setPremiumCoreChests] = useState([]);
 
   const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
   const [openedVictionChests, setOpenedVictionChests] = useState([]);
   const [openedCoreChests, setOpenedCoreChests] = useState([]);
+  const [openedSeiChests, setOpenedSeiChests] = useState([])
 
   const [kittyDashRecords, setkittyDashRecords] = useState([]);
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
@@ -261,7 +289,11 @@ function Dashboard({
   const [claimedCorePremiumChests, setclaimedCorePremiumChests] = useState(0);
 
   const [claimedVictionChests, setclaimedVictionChests] = useState(0);
+  const [claimedSeiChests, setclaimedSeiChests] = useState(0);
+
   const [claimedVictionPremiumChests, setclaimedVictionPremiumChests] =
+    useState(0);
+    const [claimedSeiPremiumChests, setclaimedSeiPremiumChests] =
     useState(0);
 
   const [dailyplayerData, setdailyplayerData] = useState(0);
@@ -275,6 +307,7 @@ function Dashboard({
   const [allSkaleChests, setallSkaleChests] = useState([]);
   const [allCoreChests, setallCoreChests] = useState([]);
   const [allVictionChests, setallVictionChests] = useState([]);
+  const [allSeiChests, setallSeiChests] = useState([]);
 
   const [countdown700, setcountdown700] = useState();
   const [bundlesBought, setbundlesBought] = useState(0);
@@ -296,7 +329,12 @@ function Dashboard({
   const [dateofBundlev1, setdateofBundlev1] = useState(0);
   const [datewhenBundleBought, setdatewhenBundleBought] = useState(0);
   const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
-  const [images, setImages] = useState([])
+  const [bnbImages, setBnbImages] = useState(shuffle(chestImagesBnb))
+  const [skaleImages, setSkaleImages] = useState([])
+  const [coreImages, setCoreImages] = useState(shuffle(chestImagesCore))
+  const [victionImages, setVictionImages] = useState(shuffle(chestImagesViction))
+  const [seiImages, setSeiImages] = useState(shuffle(chestImagesSei))
+ 
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -747,7 +785,6 @@ function Dashboard({
     },
   ];
 
-  const chestImages = ["0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
 
   const getRankData = async () => {
     await axios
@@ -1843,6 +1880,53 @@ function Dashboard({
     }
   };
 
+  const getAllSeiChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "sei" };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedSeiChests(openedChests);
+        setStandardSeiChests(standardChestsArray);
+        setPremiumSeiChests(premiumChestsArray);
+
+        setclaimedSeiChests(openedStandardChests.length);
+        setclaimedSeiPremiumChests(openedPremiumChests.length);
+        setallSeiChests(chestOrder);
+      }
+    }
+  };
+
   const handleShowSyncModal = () => {
     setshowSyncModal(true);
   };
@@ -2732,7 +2816,6 @@ function Dashboard({
   useEffect(() => {
     setDummyPremiumChests(shuffle(dummyPremiums));
     fetchReleases();
-    setImages(shuffle(chestImages))
   }, []);
 
   useEffect(() => {
@@ -2744,6 +2827,11 @@ function Dashboard({
         now.getSeconds() === 0
       ) {
         setDummyPremiumChests(shuffle(dummyPremiums));
+    setBnbImages(shuffle(chestImagesBnb))
+    setVictionImages(shuffle(chestImagesViction))
+    setCoreImages(shuffle(chestImagesCore))
+    setSeiImages(shuffle(chestImagesSei))
+
         clearInterval(interval);
       }
     };
@@ -2998,6 +3086,7 @@ function Dashboard({
       getAllChests(email);
       getAllCoreChests(email);
       getAllVictionChests(email);
+      getAllSeiChests(email);
     }
   }, [email, count]);
 
@@ -4359,7 +4448,10 @@ function Dashboard({
               // >
               <NewDailyBonus
                 isPremium={isPremium}
-                images={images}
+                bnbImages={bnbImages}
+                seiImages={seiImages}
+                victionImages={victionImages}
+                coreImages={coreImages}
                 chainId={chainId}
                 dypTokenData={dypTokenData}
                 ethTokenData={ethTokenData}
@@ -4380,6 +4472,8 @@ function Dashboard({
                 premiumCoreChests={premiumCoreChests}
                 standardVictionChests={standardVictionChests}
                 premiumVictionChests={premiumVictionChests}
+                standardSeiChests={standardSeiChests}
+                premiumSeiChests={premiumSeiChests}
                 claimedChests={claimedChests}
                 claimedPremiumChests={claimedPremiumChests}
                 claimedSkaleChests={claimedSkaleChests}
@@ -4388,17 +4482,20 @@ function Dashboard({
                 claimedCorePremiumChests={claimedCorePremiumChests}
                 claimedVictionChests={claimedVictionChests}
                 claimedVictionPremiumChests={claimedVictionPremiumChests}
+                claimedSeiChests={claimedSeiChests}
+                claimedSeiPremiumChests={claimedSeiPremiumChests}
                 email={email}
                 openedChests={openedChests}
                 openedSkaleChests={openedSkaleChests}
                 openedCoreChests={openedCoreChests}
                 openedVictionChests={openedVictionChests}
+                openedSeiChests={openedSeiChests}
                 canBuy={canBuy}
                 address={data?.getPlayer?.wallet?.publicAddress}
                 allChests={allChests}
                 allSkaleChests={allSkaleChests}
                 allCoreChests={allCoreChests}
-                allVictionChests={allVictionChests}
+                allSeiChests={allSeiChests}
 
                 onChestClaimed={() => {
                   setCount(count + 1);
@@ -4410,6 +4507,9 @@ function Dashboard({
                   setCount(count + 1);
                 }}
                 onVictionChestClaimed={() => {
+                  setCount(count + 1);
+                }}
+                onSeiChestClaimed={() => {
                   setCount(count + 1);
                 }}
                 dummypremiumChests={dummypremiumChests}

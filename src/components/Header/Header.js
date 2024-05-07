@@ -49,6 +49,7 @@ import skale from "./assets/skale.svg";
 import eth from "./assets/eth.svg";
 import base from "./assets/base.svg";
 import conflux from "./assets/conflux.svg";
+import sei from "./assets/sei.svg";
 
 import error from "./assets/error.svg";
 import dropdown from "./assets/dropdown.svg";
@@ -78,12 +79,13 @@ const Header = ({
   const [ethState, setEthState] = useState(true);
   const [bnbState, setBnbState] = useState(false);
   const [opbnbState, setopBnbState] = useState(false);
-  const [coreState, setCoreState] = useState(false)
+  const [coreState, setCoreState] = useState(false);
   const [avaxState, setAvaxState] = useState(false);
   const [baseState, setBaseState] = useState(false);
   const [confluxState, setConfluxState] = useState(false);
   const [skaleState, setSkaleState] = useState(false);
-  const [victionState, setVictionState] = useState(false)
+  const [victionState, setVictionState] = useState(false);
+  const [seiState, setSeiState] = useState(false)
 
   // const [domainPopup, setDomainPopup] = useState(false);
 
@@ -110,6 +112,7 @@ const Header = ({
         setopBnbState(false);
         setSkaleState(false);
         setVictionState(false);
+        setSeiState(false)
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
@@ -119,6 +122,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
+        setSeiState(false)
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
@@ -128,6 +132,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
+        setSeiState(false)
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
@@ -137,6 +142,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
+        setSeiState(false)
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
@@ -146,6 +152,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
+        setSeiState(false)
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -156,6 +163,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
+        setSeiState(false)
       } else if (chainId === 1482601649 ) {
         setAvaxState(false);
         setBnbState(false);
@@ -166,6 +174,7 @@ const Header = ({
         setSkaleState(true);
         setCoreState(false);
         setVictionState(false);
+        setSeiState(false)
       } 
       else if (chainId === 1116 ) {
         setAvaxState(false);
@@ -177,6 +186,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(true);
         setVictionState(false);
+        setSeiState(false)
       }
       else if (chainId === 88 ) {
         setAvaxState(false);
@@ -188,6 +198,19 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(true);
+        setSeiState(false)
+      }
+      else if (chainId === 713715 ) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(true)
       }
       else {
         setAvaxState(false);
@@ -198,6 +221,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
+        setSeiState(false)
       }
     }
   };
@@ -233,6 +257,24 @@ const Header = ({
           });
       } else {
         handleSwitchChainGateWallet(1116);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleSeiPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xae3f3")
+          .then(() => {
+            handleSwitchNetwork(713715);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(713715);
       }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
@@ -783,6 +825,8 @@ const Header = ({
                               ? core
                               : victionState === true
                               ? viction
+                              : seiState === true
+                              ? sei
                               : error
                           }
                           height={16}
@@ -808,6 +852,8 @@ const Header = ({
                             ? "CORE"
                             : victionState === true
                             ? "Viction"
+                            : seiState === true
+                            ? "Sei"
                             : "Unsupported"}
                         </span>
                       </div>
@@ -824,7 +870,6 @@ const Header = ({
                     <img src={bnb} alt="" />
                     BNB Chain
                   </Dropdown.Item>
-                  
                   <Dropdown.Item onClick={() => handleOpBnbPool()}>
                     <img src={bnb} alt="" />
                     opBNB Chain
@@ -836,8 +881,7 @@ const Header = ({
                   <Dropdown.Item onClick={() => handleSkalePool()}>
                     <img src={skale} alt="" />
                     SKALE
-                  </Dropdown.Item>
-              
+                  </Dropdown.Item> 
                   <Dropdown.Item onClick={() => handleConfluxPool()}>
                     <img src={conflux} alt="" />
                     Conflux
@@ -846,7 +890,10 @@ const Header = ({
                     <img src={base} alt="" />
                     Base
                   </Dropdown.Item>
-      
+                  <Dropdown.Item onClick={() => handleSeiPool()}>
+                    <img src={sei} width={20} height={20} alt="" />
+                    Sei
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleVictionPool()}>
                     <img src={viction} width={20} height={20} alt="" />
                     Viction
