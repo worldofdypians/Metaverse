@@ -27,6 +27,7 @@ import bnbIcon from "./assets/bnbIcon.svg";
 import greenCheck from "./assets/greenCheck.svg";
 import infoIcon from "./assets/infoIcon.svg";
 import skaleIcon from "./assets/skaleIcon.svg";
+import seiIcon from "./assets/seiIcon.svg";
 import danger from "./assets/danger.svg";
 import warning from "./assets/warning.svg";
 import redX from "./assets/redX.svg";
@@ -106,6 +107,7 @@ const NewDailyBonus = ({
   onPremiumClickOther,
   premiumTxHash,
   selectedChainforPremium,
+  images,
   claimedCoreChests,
   claimedCorePremiumChests,
   claimedVictionChests,
@@ -1794,22 +1796,50 @@ const NewDailyBonus = ({
                             className={`chain-img ${
                               chain === "bnb" && "chain-img-active"
                             }`}
-                            onClick={() => {
-                              setChain("bnb");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
+                          
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
                               chain === "bnb" && "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("bnb");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
                           >
-                            <h6 className="chain-title-position mb-0">
+                            {/* <h6 className="chain-title-position mb-0">
                               BNB CHAIN
-                            </h6>
+                            </h6> */}
+                                 <div
+                            className="d-flex align-items-center gap-2"
+                            style={{ width: "fit-content" }}
+                          >
+                            <button
+                              className={` ${
+                                chainId === 56
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
+                              onClick={handleBnbPool}
+                            >
+                              {" "}
+                              <img src={bnbIcon} alt="" /> BNB
+                            </button>
+
+                            <button
+                              className={` ${
+                                chainId === 204
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
+                              onClick={handleOpBnbPool}
+                            >
+                              <img src={bnbIcon} alt="" /> opBNB
+                            </button>
+                          </div>
                             <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
                                 <img
@@ -1868,33 +1898,7 @@ const NewDailyBonus = ({
                               </span>
                             </div>
                           </div>
-                          <div
-                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
-                              className={` ${
-                                chainId === 56
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleBnbPool}
-                            >
-                              {" "}
-                              <img src={bnbIcon} alt="" /> BNB
-                            </button>
-
-                            <button
-                              className={` ${
-                                chainId === 204
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleOpBnbPool}
-                            >
-                              <img src={bnbIcon} alt="" /> opBNB
-                            </button>
-                          </div>
+                     
                         </div>
                         <div
                           className={`position-relative chain-item ${
@@ -1906,12 +1910,7 @@ const NewDailyBonus = ({
                             className={`chain-img ${
                               chain === "skale" && "chain-img-active"
                             }`}
-                            onClick={() => {
-                              setChain("skale");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
+                          
                             alt=""
                           />
                           <div
@@ -1919,68 +1918,16 @@ const NewDailyBonus = ({
                               chain === "skale" &&
                               "chain-title-wrapper-active-skale"
                             } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("skale");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
                           >
-                            <h6 className="chain-title-position mb-0">SKALE</h6>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(skalePercentage)}%
-                              </span>
-                            </div>
-                          </div>
-                          <div
-                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
+                            {/* <h6 className="chain-title-position mb-0">SKALE</h6> */}
+                            <div
+                            className=" d-flex align-items-center gap-2 "
                             style={{ width: "fit-content" }}
                           >
                             <button
@@ -1994,46 +1941,7 @@ const NewDailyBonus = ({
                               {" "}
                               <img src={skaleIcon} alt="" /> SKALE
                             </button>
-                            {/* <a href="https://www.sfuelstation.com/" target="_blank">
-                         <button
-                            className={`${
-                              chainId === 2046399126
-                                ? "new-chain-active-btn"
-                                : "new-chain-inactive-btn"
-                            } d-flex gap-2 align-items-center`}
-                          >
-                            {" "}
-                            Get SFuel
-                            <img src={gasRightArrow} alt="" /> 
-                          </button>
-                         </a> */}
                           </div>
-                        </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === 'core' && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={coreBg}
-                            className={`chain-img ${
-                              chain === "core" && "chain-img-active"
-                            }`}
-                            onClick={() => {
-                              setChain("core");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "core" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center justify-content-between`}
-                          >
-                            <h6 className="chain-title-position mb-0">CORE</h6>
                             <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
                                 <img
@@ -2092,8 +2000,138 @@ const NewDailyBonus = ({
                               </span>
                             </div>
                           </div>
+                       
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === 'core' && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={coreBg}
+                            className={`chain-img ${
+                              chain === "core" && "chain-img-active"
+                            }`}
+                       
+                            alt=""
+                          />
                           <div
-                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
+                            className={`chain-title-wrapper ${
+                              chain === "core" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("core");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">CORE</h6> */}
+                            <div
+                            className=" d-flex align-items-center gap-2"
+                            style={{ width: "fit-content" }}
+                          >
+                            <button
+                              className={`${
+                                chainId === 1482601649
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
+                              onClick={handleBnbPool}
+                            >
+                              {" "}
+                              <img src={coreIcon} width={20} height={20} alt="" /> CORE
+                            </button>
+                          </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(skalePercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "sei" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={victionBg}
+                            className={`chain-img ${
+                              chain === "sei" && "chain-img-active"
+                            }`}
+                          
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "sei" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("sei");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">VICTION</h6> */}
+                            <div
+                            className=" d-flex align-items-center gap-2"
                             style={{ width: "fit-content" }}
                           >
                             <button
@@ -2102,18 +2140,72 @@ const NewDailyBonus = ({
                                   ? "new-chain-active-btn"
                                   : "new-chain-inactive-btn"
                               } d-flex gap-1 align-items-center`}
-                              onClick={handleCorePool}
+                              onClick={handleSkalePool}
                             >
                               {" "}
-                              <img
-                                src={coreIcon}
-                                width={20}
-                                height={20}
-                                alt=""
-                              />{" "}
-                              CORE
+                              <img src={seiIcon} width={20} height={20} alt="" /> SEI
                             </button>
+                      
                           </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(skalePercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                         
                         </div>
                         <div
                           className={`position-relative chain-item ${
@@ -2125,12 +2217,7 @@ const NewDailyBonus = ({
                             className={`chain-img ${
                               chain === "viction" && "chain-img-active"
                             }`}
-                            onClick={() => {
-                              setChain("viction");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
+                          
                             alt=""
                           />
                           <div
@@ -2138,6 +2225,12 @@ const NewDailyBonus = ({
                               chain === 'viction' &&
                               "chain-title-wrapper-active-skale"
                             } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("viction");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
                           >
                             <h6 className="chain-title-position mb-0">
                               VICTION
@@ -2236,6 +2329,8 @@ const NewDailyBonus = ({
                          </a> */}
                           </div>
                         </div>
+                        
+                       
                       </div>
                     ) : (
                       <Slider {...settings}>
@@ -2416,6 +2511,7 @@ const NewDailyBonus = ({
                                   chain={chain}
                                   key={index}
                                   item={item}
+                                  image={images[index]}
                                   // openChest={openChest}
                                   selectedChest={selectedChest}
                                   isPremium={isPremium}

@@ -27,6 +27,7 @@ const NewChestItem = ({
   dummypremiumChests,
   claimingChest,
   setClaimingChest,
+  image
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -670,7 +671,7 @@ const NewChestItem = ({
           src={
             chain === "bnb"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
-                  open ? chestIndex + "open" : chestIndex
+                  open ? image + "open" : image
                 }.png`)
               : require(`../../screens/Account/src/Components/WalletBalance/chestImages/skale/${
                   open ? chestIndex + "open" : chestIndex
