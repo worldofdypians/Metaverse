@@ -148,7 +148,7 @@ const BetaPassNFT = ({
   totalseiNft,
   myseiNfts,
   totalVictionNft,
-  myVictionNfts,
+  myVictionNfts,totalImmutableNft, totalMultiversNft
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -199,6 +199,21 @@ const BetaPassNFT = ({
     title: "Viction Beta Pass",
     background: "skale2-mint-bg",
   };
+
+  const multiversData = {
+    id: "multiversx",
+    cardTitle: "MultiversX Beta Pass",
+    title: "MultiversX Beta Pass",
+    background: "skale2-mint-bg",
+  };
+
+  const immutableData = {
+    id: "immutable",
+    cardTitle: "Immutable Beta Pass",
+    title: "Immutable Beta Pass",
+    background: "skale2-mint-bg",
+  };
+
 
   const seiData = {
     id: "sei",
@@ -631,6 +646,14 @@ const BetaPassNFT = ({
       setSelectedMint(victionData);
       setMintTitle("viction");
     }
+    else if (locationState.includes("/beta-pass/multiversx")) {
+      setSelectedMint(multiversData);
+      setMintTitle("multiversx");
+    }
+    else if (locationState.includes("/beta-pass/immutable")) {
+      setSelectedMint(immutableData);
+      setMintTitle("immutable");
+    }
   }, [locationState]);
 
   useEffect(() => {
@@ -745,6 +768,10 @@ const BetaPassNFT = ({
                           ? "Gate.io"
                           : mintTitle === "core"
                           ? "CORE"
+                          : mintTitle === "multiversx"
+                          ? "MultiversX"
+                          : mintTitle === "immutable"
+                          ? "Immutable"
                           : mintTitle === "sei"
                           ? "SEI"
                           : mintTitle === "viction"
@@ -819,11 +846,11 @@ const BetaPassNFT = ({
                 </div>
               </div>
               <div
-                className="filters-container d-flex flex-column flex-lg-row align-items-center justify-content-center my-4 p-3 position-relative gap-3"
+                className="filters-container d-flex flex-column align-items-center justify-content-center my-4 p-3 position-relative gap-3"
                 style={{ zIndex: 2 }}
               >
                 <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
-                  <NavLink
+                <NavLink
                     to={"/marketplace/beta-pass/core"}
                     className={`${
                       location.pathname.includes("core") &&
@@ -873,6 +900,39 @@ const BetaPassNFT = ({
                     <img src={seiLogo} className="beta-pass-chain-img" alt="" />
                     <span>SEI</span>
                   </NavLink>
+                  <NavLink
+                    to={"/marketplace/beta-pass/immutable"}
+                    className={`${
+                      location.pathname.includes("immutable") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(immutableData);
+                      setMintTitle("immutable");
+                    }}
+                  >
+                    <img src={seiLogo} className="beta-pass-chain-img" alt="" />
+                    <span>Immutable</span>
+                  </NavLink>
+                  <NavLink
+                    to={"/marketplace/beta-pass/multiversx"}
+                    className={`${
+                      location.pathname.includes("multiversx") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(multiversData);
+                      setMintTitle("multiversx");
+                    }}
+                  >
+                    <img src={seiLogo} className="beta-pass-chain-img" alt="" />
+                    <span>MultiversX</span>
+                  </NavLink>
+
+                </div>
+                <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
+                 
+
                   <NavLink
                     to={"/marketplace/beta-pass/skale"}
                     className={`${
@@ -1020,7 +1080,9 @@ const BetaPassNFT = ({
                   mintTitle !== "skale" &&
                   mintTitle !== "core" &&
                   mintTitle !== "viction" &&
-                  mintTitle !== "sei" && (
+                  mintTitle !== "sei"&&
+                  mintTitle !== "multiversx"&&
+                  mintTitle !== "immutable" && (
                     <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
                       <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
                         <div className="d-flex flex-column position-relative">
@@ -1096,7 +1158,9 @@ const BetaPassNFT = ({
                     mintTitle === "skale" ||
                     mintTitle === "viction" ||
                     mintTitle === "core" ||
-                    mintTitle === "sei"
+                    mintTitle === "sei"||
+                    mintTitle === "multiversx"||
+                    mintTitle === "immutable"
                       ? "col-12 col-md-12 col-xxl-7 mt-0 px-0"
                       : "col-12 col-md-12 col-xxl-5 mt-0 px-0"
                   }
@@ -1125,7 +1189,9 @@ const BetaPassNFT = ({
                         mintTitle !== "skale" &&
                         mintTitle !== "sei" &&
                         mintTitle !== "core" &&
-                        mintTitle !== "viction" && (
+                        mintTitle !== "viction"&&
+                        mintTitle !== "immutable"&&
+                        mintTitle !== "multiversx" && (
                           <>
                             Mint your {selectedMint.title}{" "}
                             <br className="d-none d-lg-flex" />
@@ -1143,7 +1209,9 @@ const BetaPassNFT = ({
                         mintTitle === "skale" ||
                         mintTitle === "core" ||
                         mintTitle === "sei" ||
-                        mintTitle === "viction") && (
+                        mintTitle === "viction"||
+                        mintTitle === "multiversx"||
+                        mintTitle === "immutable") && (
                         <>
                           Get your {selectedMint.title}{" "}
                           <br className="d-none d-lg-flex" />
@@ -1220,7 +1288,9 @@ const BetaPassNFT = ({
                           mintTitle === "skale" ||
                           mintTitle === "sei" ||
                           mintTitle === "core" ||
-                          mintTitle === "viction") && (
+                          mintTitle === "viction" ||
+                          mintTitle === "multiversx" ||
+                          mintTitle === "immutable") && (
                           <div className="position-relative">
                             <img src={pinkAreaBase} alt="" />
                           </div>
@@ -1354,7 +1424,9 @@ const BetaPassNFT = ({
                     mintTitle === "skale" ||
                     mintTitle === "sei" ||
                     mintTitle === "core" ||
-                    mintTitle === "viction"
+                    mintTitle === "viction"||
+                    mintTitle === "multiversx"||
+                    mintTitle === "immutable"
                       ? "col-12 col-md-12 col-xxl-5 mt-0 px-0 px-lg-2"
                       : "col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2"
                   }
@@ -1368,7 +1440,9 @@ const BetaPassNFT = ({
                   mintTitle !== "skale" &&
                   mintTitle !== "core" &&
                   mintTitle !== "sei" &&
-                  mintTitle !== "viction" ? (
+                  mintTitle !== "viction"&&
+                  mintTitle !== "multiversx"&&
+                  mintTitle !== "immutable" ? (
                     <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
                       <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
                         <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
@@ -1637,7 +1711,9 @@ const BetaPassNFT = ({
                       {!alreadyRegistered &&
                         (mintTitle === "core" ||
                           mintTitle === "viction" ||
-                          mintTitle === "sei") && (
+                          mintTitle === "sei"||
+                          mintTitle === "immutable" ||
+                          mintTitle === "multiversx") && (
                           <div className="d-flex align-items-center justify-content-around gap-2">
                             <button
                               className={
@@ -2538,7 +2614,9 @@ const BetaPassNFT = ({
                             <h6 className="land-name">
                               {(mintTitle === "core" && totalCoreNft > 0) ||
                               (mintTitle === "sei" && totalseiNft > 0) ||
-                              (mintTitle === "viction" && totalVictionNft > 0)
+                              (mintTitle === "viction" && totalVictionNft > 0)||
+                              (mintTitle === "immutable" && totalImmutableNft > 0) ||
+                              (mintTitle === "multiversx" && totalMultiversNft > 0)
                                 ? "My NFT"
                                 : "Registered"}{" "}
                             </h6>
@@ -2554,7 +2632,9 @@ const BetaPassNFT = ({
                           activeTab === "create" &&
                           (mintTitle === "core" ||
                             mintTitle === "viction" ||
-                            mintTitle === "sei") && (
+                            mintTitle === "sei" ||
+                            mintTitle === "multiversx" ||
+                            mintTitle === "immutable") && (
                             <div>
                               <ul class="timeline m-0 p-0" id="timeline">
                                 <li class="col-3 li complete">
@@ -2600,7 +2680,9 @@ const BetaPassNFT = ({
                           !alreadyRegistered &&
                           (mintTitle === "core" ||
                             mintTitle === "viction" ||
-                            mintTitle === "sei") && (
+                            mintTitle === "sei" ||
+                            mintTitle === "multiversx" ||
+                            mintTitle === "immutable") && (
                             <SignUpGecko
                               onSuccessVerify={(value) => {
                                 setplayerCreation(value);
@@ -2629,7 +2711,9 @@ const BetaPassNFT = ({
                           !alreadyRegistered &&
                           (mintTitle === "core" ||
                             mintTitle === "viction" ||
-                            mintTitle === "sei") && (
+                            mintTitle === "sei" ||
+                            mintTitle === "immutable" ||
+                            mintTitle === "multiversx") && (
                             <PlayerCreationGecko
                               onSuccessCreation={() => {
                                 setLinkWallet(true);
@@ -2642,7 +2726,9 @@ const BetaPassNFT = ({
                           !alreadyRegistered &&
                           (mintTitle === "core" ||
                             mintTitle === "viction" ||
-                            mintTitle === "sei") && (
+                            mintTitle === "sei" ||
+                            mintTitle === "multiversx" ||
+                            mintTitle === "immutable") && (
                             <div className="d-flex flex-column gap-4 justify-content-between p-4">
                               <span className={"createplayertxt"}>
                                 *Make sure to connect the same wallet address as
@@ -2683,12 +2769,16 @@ const BetaPassNFT = ({
                         {alreadyRegistered &&
                           (mintTitle === "core" ||
                             mintTitle === "viction" ||
-                            mintTitle === "sei") && (
+                            mintTitle === "sei" ||
+                            mintTitle === "multiversx" ||
+                            mintTitle === "immutable") && (
                             <div className="d-flex flex-column justify-content-between h-100">
                               {(mintTitle === "core" && totalCoreNft === 0) ||
                               (mintTitle === "viction" &&
                                 totalVictionNft === 0) ||
-                              (mintTitle === "sei" && totalseiNft === 0) ? (
+                              (mintTitle === "sei" && totalseiNft === 0) ||
+                              (mintTitle === "multiversx" && totalMultiversNft === 0) ||
+                              (mintTitle === "immutable" && totalImmutableNft === 0) ? (
                                 <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
                                   <div
                                     className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}

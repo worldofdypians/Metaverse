@@ -210,6 +210,8 @@ function App() {
   const [totalCoreNft, setTotalCoreNft] = useState(0);
   const [totalseiNft, setTotalseiNft] = useState(0);
   const [totalVictionNft, setTotalVictionNft] = useState(0);
+  const [totalImmutableNft, setTotalImmutableNft] = useState(0);
+  const [totalMultiversNft, setTotalMultiversNft] = useState(0);
 
   const [baseMintAllowed, setbaseMintAllowed] = useState(1);
   const [skaleMintAllowed, setSkaleMintAllowed] = useState(1);
@@ -254,7 +256,8 @@ function App() {
   const [myseiNfts, setMyseiNfts] = useState([]);
   const [myCoreNfts, setMyCoreNfts] = useState([]);
   const [myVictionNfts, setMyVictionNfts] = useState([]);
-
+  const [myMultiversNfts, setMyMultiversNfts] = useState([]);
+  const [myImmutableNfts, setMyImmutableNfts] = useState([]);
 
   const [myDogeNFTs, setmyDogeNFTs] = useState([]);
   const [myCmcNFTs, setmyCmcNFTs] = useState([]);
@@ -2754,16 +2757,67 @@ function App() {
                   myBaseNFTs={myBaseNFTs}
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
-
                   totalCoreNft={totalCoreNft}
                   myCoreNfts={myCoreNfts}
-
                   totalseiNft={totalseiNft}
                   myseiNfts={myseiNfts}
-
                   totalVictionNft={totalVictionNft}
                   myVictionNfts={myVictionNfts}
+                  totalMultiversNft={totalMultiversNft}
+                  totalImmutableNft={totalImmutableNft}
+                  myImmutableNfts={myImmutableNfts}
+                  myMultiversNfts={myMultiversNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                />
+              }
+            />
 
+            <Route
+              exact
+              path="/marketplace/beta-pass/immutable"
+              element={
+                <BetaPassNFT
+                  type={"immutable"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  totalCoreNft={totalCoreNft}
+                  myCoreNfts={myCoreNfts}
+                  totalMultiversNft={totalMultiversNft}
+                  totalImmutableNft={totalImmutableNft}
+                  myImmutableNfts={myImmutableNfts}
+                  myMultiversNfts={myMultiversNfts}
+                  totalseiNft={totalseiNft}
+                  myseiNfts={myseiNfts}
+                  totalVictionNft={totalVictionNft}
+                  myVictionNfts={myVictionNfts}
                   timepieceMetadata={timepieceMetadata}
                   handleSwitchNetwork={handleSwitchNetwork}
                   success={success}
@@ -2804,13 +2858,65 @@ function App() {
                   totalBaseNft={totalBaseNft}
                   totalCoreNft={totalCoreNft}
                   myCoreNfts={myCoreNfts}
-
+                  totalMultiversNft={totalMultiversNft}
+                  totalImmutableNft={totalImmutableNft}
+                  myImmutableNfts={myImmutableNfts}
+                  myMultiversNfts={myMultiversNfts}
                   totalseiNft={totalseiNft}
                   myseiNfts={myseiNfts}
-
                   totalVictionNft={totalVictionNft}
                   myVictionNfts={myVictionNfts}
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                />
+              }
+            />
 
+            <Route
+              exact
+              path="/marketplace/beta-pass/multiversx"
+              element={
+                <BetaPassNFT
+                  type={"multiversx"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  totalCoreNft={totalCoreNft}
+                  myCoreNfts={myCoreNfts}
+                  totalMultiversNft={totalMultiversNft}
+                  totalImmutableNft={totalImmutableNft}
+                  myImmutableNfts={myImmutableNfts}
+                  myMultiversNfts={myMultiversNfts}
+                  totalseiNft={totalseiNft}
+                  myseiNfts={myseiNfts}
+                  totalVictionNft={totalVictionNft}
+                  myVictionNfts={myVictionNfts}
                   myBaseNFTs={myBaseNFTs}
                   totalConfluxNft={totalConfluxNft}
                   myConfluxNfts={myConfluxNfts}
@@ -2845,16 +2951,16 @@ function App() {
                   handleMint={handleTimepieceMint}
                   mintStatus={mintStatus}
                   textColor={textColor}
-                  
                   totalCoreNft={totalCoreNft}
                   myCoreNfts={myCoreNfts}
-
                   totalseiNft={totalseiNft}
                   myseiNfts={myseiNfts}
-
                   totalVictionNft={totalVictionNft}
                   myVictionNfts={myVictionNfts}
-
+                  totalMultiversNft={totalMultiversNft}
+                  totalImmutableNft={totalImmutableNft}
+                  myImmutableNfts={myImmutableNfts}
+                  myMultiversNfts={myMultiversNfts}
                   calculateCaws={calculateCaws}
                   totalCreated={totalTimepieceCreated}
                   totalCoingeckoNft={totalCoingeckoNft}
