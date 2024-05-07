@@ -207,6 +207,10 @@ function App() {
   const [totalCmcNft, settotalCmcNft] = useState(0);
 
   const [totalConfluxNft, setTotalConfluxNft] = useState(0);
+  const [totalCoreNft, setTotalCoreNft] = useState(0);
+  const [totalseiNft, setTotalseiNft] = useState(0);
+  const [totalVictionNft, setTotalVictionNft] = useState(0);
+
   const [baseMintAllowed, setbaseMintAllowed] = useState(1);
   const [skaleMintAllowed, setSkaleMintAllowed] = useState(1);
 
@@ -247,6 +251,10 @@ function App() {
   const [myConfluxNfts, setMyConfluxNfts] = useState([]);
   const [myBaseNFTs, setmyBaseNFTs] = useState([]);
   const [myskaleNFTs, setmySkaleNFTs] = useState([]);
+  const [myseiNfts, setMyseiNfts] = useState([]);
+  const [myCoreNfts, setMyCoreNfts] = useState([]);
+  const [myVictionNfts, setMyVictionNfts] = useState([]);
+
 
   const [myDogeNFTs, setmyDogeNFTs] = useState([]);
   const [myCmcNFTs, setmyCmcNFTs] = useState([]);
@@ -1839,7 +1847,6 @@ function App() {
     const web3core = window.coreWeb3;
     const web3viction = window.victionWeb3;
 
-
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const BaseABI = window.SUBSCRIPTION_BASE_ABI;
     const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
@@ -1849,7 +1856,6 @@ function App() {
     const CoreABI = window.SUBSCRIPTION_SKALE_ABI;
     const VicitonABI = window.SUBSCRIPTION_SKALE_ABI;
 
-
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const basesubscribeAddress = window.config.subscription_base_address;
@@ -1858,7 +1864,6 @@ function App() {
     const skalesubscribeAddress = window.config.subscription_skale_address;
     const coresubscribeAddress = window.config.subscription_core_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
-
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
@@ -1883,12 +1888,10 @@ function App() {
       coresubscribeAddress
     );
 
-
     const victioncontract = new web3viction.eth.Contract(
       VicitonABI,
       victionsubscribeAddress
     );
-
 
     if (addr) {
       const result = window.checkPremium(addr);
@@ -1941,7 +1944,7 @@ function App() {
           return 0;
         });
 
-        subscribedPlatformTokenAmountCore = await corecontract.methods
+      subscribedPlatformTokenAmountCore = await corecontract.methods
         .subscriptionPlatformTokenAmount(addr)
         .call()
         .catch((e) => {
@@ -1949,7 +1952,7 @@ function App() {
           return 0;
         });
 
-        subscribedPlatformTokenAmountViction = await victioncontract.methods
+      subscribedPlatformTokenAmountViction = await victioncontract.methods
         .subscriptionPlatformTokenAmount(addr)
         .call()
         .catch((e) => {
@@ -2722,6 +2725,158 @@ function App() {
 
             <Route
               exact
+              path="/marketplace/beta-pass/sei"
+              element={
+                <BetaPassNFT
+                  type={"sei"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+
+                  totalCoreNft={totalCoreNft}
+                  myCoreNfts={myCoreNfts}
+
+                  totalseiNft={totalseiNft}
+                  myseiNfts={myseiNfts}
+
+                  totalVictionNft={totalVictionNft}
+                  myVictionNfts={myVictionNfts}
+
+                  timepieceMetadata={timepieceMetadata}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                />
+              }
+            />
+
+            <Route
+              exact
+              path="/marketplace/beta-pass/core"
+              element={
+                <BetaPassNFT
+                  type={"core"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  totalCoreNft={totalCoreNft}
+                  myCoreNfts={myCoreNfts}
+
+                  totalseiNft={totalseiNft}
+                  myseiNfts={myseiNfts}
+
+                  totalVictionNft={totalVictionNft}
+                  myVictionNfts={myVictionNfts}
+
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                />
+              }
+            />
+
+            <Route
+              exact
+              path="/marketplace/beta-pass/viction"
+              element={
+                <BetaPassNFT
+                  type={"viction"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  
+                  totalCoreNft={totalCoreNft}
+                  myCoreNfts={myCoreNfts}
+
+                  totalseiNft={totalseiNft}
+                  myseiNfts={myseiNfts}
+
+                  totalVictionNft={totalVictionNft}
+                  myVictionNfts={myVictionNfts}
+
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                />
+              }
+            />
+
+            <Route
+              exact
               path="/marketplace/beta-pass/skale"
               element={
                 <BetaPassNFT
@@ -3170,8 +3325,10 @@ function App() {
 
         {!location.pathname.includes("account") &&
           !location.pathname.includes("auth") &&
-          !location.pathname.includes("explorer")&&
-          !location.pathname.includes("bnbchain-alliance-program") && <ChestFlyout />}
+          !location.pathname.includes("explorer") &&
+          !location.pathname.includes("bnbchain-alliance-program") && (
+            <ChestFlyout />
+          )}
         {domainPopup && (
           <DomainModal
             onClose={() => setDomainPopup(false)}
