@@ -9,72 +9,79 @@ const WodBuilders = () => {
     {
       name: "Avalanche",
       icon: "avaxIcon",
-      banner: "avalancheBanner",
+      banner: "avalancheBanner.png",
       link: "https://twitter.com/ArtOnAvax/status/1666852593480658944",
     },
     {
       name: "Chainlink",
       icon: "chainlinkIcon",
-      banner: "chainlinkBanner",
+      banner: "chainlinkBanner.png",
       link: "https://twitter.com/smartcontract/status/1639280913870893056?s=46&t=nb0doR-1o7k9PQ3EaZE8aw",
     },
     {
       name: "Conflux",
       icon: "confluxIcon",
-      banner: "confluxBanner",
+      banner: "confluxBanner.png",
       link: "https://twitter.com/Conflux_Network/status/1677017988497563660",
     },
     {
       name: "BNB Chain",
       icon: "bnbIcon",
-      banner: "bnbChainBanner",
+      banner: "bnbChainBanner.png",
       link: "https://twitter.com/BNBCHAIN/status/1705265706747548051?t=7iSDimripaRiwq6A_Z6ViQ&s=19",
     },
     {
       name: "CoinMarketCap",
       icon: "cmcIcon",
-      banner: "coinmarketcapBanner",
+      banner: "coinmarketcapBanner.png",
       link: "https://twitter.com/CoinMarketCap/status/1736697110073119098",
     },
     {
       name: "CoinGecko",
       icon: "coingeckoIcon",
-      banner: "coingeckoBanner",
+      banner: "coingeckoBanner.png",
       link: "https://twitter.com/coingecko/status/1702286607846682909",
     },
     {
       name: "Coin98",
       icon: "coin98Icon",
-      banner: "coin98Banner",
+      banner: "coin98Banner.png",
       link: "https://twitter.com/coin98_wallet/status/1628742662047272961",
     },
     {
       name: "Gate.io",
       icon: "gateIcon",
-      banner: "gateBanner",
+      banner: "gateBanner.png",
       link: "https://twitter.com/gate_io/status/1628384476496527361?s=20",
     },
     {
       name: "MEXC Global",
       icon: "mexcIcon",
-      banner: "mexcBanner",
+      banner: "mexcBanner.png",
       link: "https://twitter.com/MEXC_Official/status/1651888989098455043",
     },
     {
       name: "Easy2Stake",
       icon: "easy2stakeIcon",
-      banner: "easy2stakeBanner",
+      banner: "easy2stakeBanner.png",
       link: "https://twitter.com/Easy2Stake/status/1654120741221326850"
     },
     {
       name: "KuCoin",
       icon: "kucoinIcon",
-      banner: "kucoinBanner",
+      banner: "kucoinBanner.png",
     },
     {
-      name: "Skale Network",
+      name: "SKALE",
       icon: "skaleIcon",
-      // banner: "kucoinBanner",
+      banner: "skaleBanner.webp",
+      link: "https://twitter.com/SkaleNetwork/status/1777372050832658644"
+    },
+    {
+      name: "BabyDoge",
+      icon: "babydogeIcon",
+      banner: "babyDogeBanner.webp",
+      link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
     },
 
   ];
@@ -106,7 +113,7 @@ const WodBuilders = () => {
                 className="builder-item p-3 d-flex flex-column gap-2"
               >
                 <img
-                  src={require(`./assets/${item.banner}.png`)}
+                  src={require(`./assets/${item.banner}`)}
                   className="w-100"
                   alt=""
                 />
@@ -121,7 +128,7 @@ const WodBuilders = () => {
           <div className="d-flex justify-content-center mt-3">
             <div
               className="linear-border"
-              onClick={() => (slice === 2 ? setSlice(11) : setSlice(2))}
+              onClick={() => (slice === 2 ? setSlice(13) : setSlice(2))}
             >
               <button className="btn filled-btn px-5">
                 {slice === 2 ? "View More" : "View Less"}
@@ -132,7 +139,7 @@ const WodBuilders = () => {
           <div className="d-flex justify-content-center mt-3">
             <div
               className="linear-border"
-              onClick={() => (slice === 8 ? setSlice(11) : setSlice(8))}
+              onClick={() => (slice === 8 ? setSlice(13) : setSlice(8))}
             >
               <button className="btn filled-btn px-5">
                 {slice === 8 ? "View More" : "View Less"}
