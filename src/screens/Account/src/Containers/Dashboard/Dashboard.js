@@ -54,7 +54,6 @@ import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import { dyp700Address, dyp700v1Address } from "../../web3";
 import { NavLink } from "react-router-dom";
 
-
 function Dashboard({
   account,
   isConnected,
@@ -207,7 +206,17 @@ function Dashboard({
 
   const [standardSkaleChests, setStandardSkaleChests] = useState([]);
   const [premiumSkaleChests, setPremiumSkaleChests] = useState([]);
+
+  const [standardVictionChests, setStandardVictionChests] = useState([]);
+  const [premiumVictionChests, setPremiumVictionChests] = useState([]);
+
+  const [standardCoreChests, setStandardCoreChests] = useState([]);
+  const [premiumCoreChests, setPremiumCoreChests] = useState([]);
+
   const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
+  const [openedVictionChests, setOpenedVictionChests] = useState([]);
+  const [openedCoreChests, setOpenedCoreChests] = useState([]);
+
   const [kittyDashRecords, setkittyDashRecords] = useState([]);
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
   const [skaleEarnToken, setSkaleEarnToken] = useState(0);
@@ -248,6 +257,13 @@ function Dashboard({
   const [claimedSkaleChests, setclaimedSkaleChests] = useState(0);
   const [claimedSkalePremiumChests, setclaimedSkalePremiumChests] = useState(0);
 
+  const [claimedCoreChests, setclaimedCoreChests] = useState(0);
+  const [claimedCorePremiumChests, setclaimedCorePremiumChests] = useState(0);
+
+  const [claimedVictionChests, setclaimedVictionChests] = useState(0);
+  const [claimedVictionPremiumChests, setclaimedVictionPremiumChests] =
+    useState(0);
+
   const [dailyplayerData, setdailyplayerData] = useState(0);
   const [weeklyplayerData, setweeklyplayerData] = useState(0);
   const [userSocialRewards, setuserSocialRewards] = useState(0);
@@ -257,6 +273,9 @@ function Dashboard({
 
   const [allChests, setallChests] = useState([]);
   const [allSkaleChests, setallSkaleChests] = useState([]);
+  const [allCoreChests, setallCoreChests] = useState([]);
+  const [allVictionChests, setallVictionChests] = useState([]);
+
   const [countdown700, setcountdown700] = useState();
   const [bundlesBought, setbundlesBought] = useState(0);
   const [count, setCount] = useState(0);
@@ -288,7 +307,7 @@ function Dashboard({
 
   const handleSetAvailableTime = (value) => {
     setGoldenPassRemainingTime(value);
-  }
+  };
 
   const handleRefreshCountdown700 = async () => {
     if (bundlesBought === 0) {
@@ -630,7 +649,6 @@ function Dashboard({
       }
     }
   };
-
 
   const fetchSkalePrice = async () => {
     await axios
@@ -1456,6 +1474,8 @@ function Dashboard({
     let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBase;
     let subscribedPlatformTokenAmountSkale;
+    let subscribedPlatformTokenAmountCore;
+    let subscribedPlatformTokenAmountViction;
 
     const web3eth = window.infuraWeb3;
     const web3cfx = window.confluxWeb3;
@@ -1463,6 +1483,8 @@ function Dashboard({
     const web3bnb = window.bscWeb3;
     const web3avax = window.avaxWeb3;
     const web3skale = window.skaleWeb3;
+    const web3core = window.coreWeb3;
+    const web3viction = window.victionWeb3;
 
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const BaseABI = window.SUBSCRIPTION_BASE_ABI;
@@ -1470,6 +1492,8 @@ function Dashboard({
     const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
     const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
     const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
+    const CoreABI = window.SUBSCRIPTION_SKALE_ABI;
+    const VicitonABI = window.SUBSCRIPTION_SKALE_ABI;
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
@@ -1477,6 +1501,8 @@ function Dashboard({
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
     const skalesubscribeAddress = window.config.subscription_skale_address;
+    const coresubscribeAddress = window.config.subscription_core_address;
+    const victionsubscribeAddress = window.config.subscription_viction_address;
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
@@ -1494,6 +1520,16 @@ function Dashboard({
     const avaxcontract = new web3avax.eth.Contract(
       AvaxABI,
       avaxsubscribeAddress
+    );
+
+    const corecontract = new web3core.eth.Contract(
+      CoreABI,
+      coresubscribeAddress
+    );
+
+    const victioncontract = new web3viction.eth.Contract(
+      VicitonABI,
+      victionsubscribeAddress
     );
 
     if (addr) {
@@ -1545,12 +1581,30 @@ function Dashboard({
           return 0;
         });
 
+      subscribedPlatformTokenAmountCore = await corecontract.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
+      subscribedPlatformTokenAmountViction = await victioncontract.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
       if (
         subscribedPlatformTokenAmountCfx == "0" &&
         subscribedPlatformTokenAmountETH == "0" &&
         subscribedPlatformTokenAmountBase == "0" &&
         subscribedPlatformTokenAmountBNB == "0" &&
         subscribedPlatformTokenAmountAvax == "0" &&
+        subscribedPlatformTokenAmountCore == "0" &&
+        subscribedPlatformTokenAmountViction == "0" &&
         subscribedPlatformTokenAmountSkale == "0" &&
         result === false
       ) {
@@ -1562,6 +1616,8 @@ function Dashboard({
         subscribedPlatformTokenAmountBase != "0" ||
         subscribedPlatformTokenAmountBNB != "0" ||
         subscribedPlatformTokenAmountAvax != "0" ||
+        subscribedPlatformTokenAmountCore != "0" ||
+        subscribedPlatformTokenAmountViction != "0" ||
         subscribedPlatformTokenAmountSkale != "0" ||
         result === true
       ) {
@@ -1686,6 +1742,100 @@ function Dashboard({
         setclaimedSkaleChests(openedStandardChests.length);
         setclaimedSkalePremiumChests(openedPremiumChests.length);
         setallSkaleChests(chestOrder);
+      }
+    }
+  };
+
+  const getAllCoreChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "core" };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedCoreChests(openedChests);
+        setStandardCoreChests(standardChestsArray);
+        setPremiumCoreChests(premiumChestsArray);
+
+        setclaimedCoreChests(openedStandardChests.length);
+        setclaimedCorePremiumChests(openedPremiumChests.length);
+        setallCoreChests(chestOrder);
+      }
+    }
+  };
+
+  const getAllVictionChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "viction" };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedVictionChests(openedChests);
+        setStandardVictionChests(standardChestsArray);
+        setPremiumVictionChests(premiumChestsArray);
+
+        setclaimedVictionChests(openedStandardChests.length);
+        setclaimedVictionPremiumChests(openedPremiumChests.length);
+        setallVictionChests(chestOrder);
       }
     }
   };
@@ -2840,13 +2990,10 @@ function Dashboard({
 
   useEffect(() => {
     if (email) {
-      getAllChests(email);
-    }
-  }, [email, count]);
-
-  useEffect(() => {
-    if (email) {
       getAllSkaleChests(email);
+      getAllChests(email);
+      getAllCoreChests(email);
+      getAllVictionChests(email);
     }
   }, [email, count]);
 
@@ -2953,9 +3100,17 @@ function Dashboard({
                           setIsPremium(false);
                           setclaimedChests(0);
                           setclaimedPremiumChests(0);
+                          setclaimedCorePremiumChests(0);
+                          setclaimedCoreChests(0);
+                          setclaimedVictionPremiumChests(0);
+                          setclaimedVictionChests(0);
                           setallChests([]);
                           setallSkaleChests([]);
+                          setallCoreChests([]);
+                          setallVictionChests([]);
                           setOpenedChests([]);
+                          setOpenedCoreChests([]);
+                          setOpenedVictionChests([]);
                           setOpenedSkaleChests([]);
                           setclaimedSkaleChests(0);
                           setclaimedSkalePremiumChests(0);
@@ -3011,6 +3166,12 @@ function Dashboard({
                         claimedPremiumChests={claimedPremiumChests}
                         claimedSkaleChests={claimedSkaleChests}
                         claimedSkalePremiumChests={claimedSkalePremiumChests}
+                        claimedCoreChests={claimedCoreChests}
+                        claimedCorePremiumChests={claimedCorePremiumChests}
+                        claimedVictionChests={claimedVictionChests}
+                        claimedVictionPremiumChests={
+                          claimedVictionPremiumChests
+                        }
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
@@ -3043,6 +3204,8 @@ function Dashboard({
                         canBuy={canBuy}
                         openedChests={openedChests}
                         openedSkaleChests={openedSkaleChests}
+                        openedCoreChests={openedCoreChests}
+                        openedVictionChests={openedVictionChests}
                         onDailyBonusInfoClick={() => {
                           setdailyBonusInfo(true);
                         }}
@@ -3259,27 +3422,33 @@ function Dashboard({
                               </mark>{" "}
                               Leaderboard
                             </h2>
-                            {windowSize.width > 786 &&
+                            {windowSize.width > 786 && (
                               <div className="d-flex align-items-center gap-2">
-                              <div className="buy-premium-tag  px-4 py-1 d-flex flex-column justify-content-center align-items-center position-relative" onClick={() => {
-                                setLeaderboard(false);
-                                setgetPremiumPopup(true);
-                              }}>
-                                <span>Premium Subscriber</span>
-                                <h6>x2</h6>
-                                <div className="activate-premium-btn px-3 d-flex align-items-center justify-content-center">
+                                <div
+                                  className="buy-premium-tag  px-4 py-1 d-flex flex-column justify-content-center align-items-center position-relative"
+                                  onClick={() => {
+                                    setLeaderboard(false);
+                                    setgetPremiumPopup(true);
+                                  }}
+                                >
+                                  <span>Premium Subscriber</span>
+                                  <h6>x2</h6>
+                                  <div className="activate-premium-btn px-3 d-flex align-items-center justify-content-center">
                                     Activate
+                                  </div>
                                 </div>
+                                <NavLink
+                                  to={"/marketplace/events/golden-pass"}
+                                  className="buy-golden-tag  px-4 py-1 d-flex flex-column justify-content-center align-items-center position-relative"
+                                >
+                                  <span>Golden Pass - Double</span>
+                                  <h6>Double Rewards</h6>
+                                  <div className="activate-golden-btn px-3 d-flex align-items-center justify-content-center">
+                                    Activate
+                                  </div>
+                                </NavLink>
                               </div>
-                              <NavLink to={'/marketplace/events/golden-pass'} className="buy-golden-tag  px-4 py-1 d-flex flex-column justify-content-center align-items-center position-relative">
-                                <span>Golden Pass - Double</span>
-                                <h6>Double Rewards</h6>
-                                <div className="activate-golden-btn px-3 d-flex align-items-center justify-content-center">
-                                    Activate
-                                </div>
-                              </NavLink>
-                            </div>
-                            }
+                            )}
                             <img
                               src={xMark}
                               onClick={() => setLeaderboard(false)}
@@ -3287,29 +3456,33 @@ function Dashboard({
                               style={{ cursor: "pointer" }}
                             />
                           </div>
-                          {windowSize.width < 786 &&
-                              <div className="d-flex align-items-center gap-2">
-                              <div className="buy-premium-tag px-4 py-1 d-flex flex-column align-items-center justify-content-center position-relative"
-                              onClick={() => {
-                                setLeaderboard(false);
-                                setgetPremiumPopup(true);
-                              }}
+                          {windowSize.width < 786 && (
+                            <div className="d-flex align-items-center gap-2">
+                              <div
+                                className="buy-premium-tag px-4 py-1 d-flex flex-column align-items-center justify-content-center position-relative"
+                                onClick={() => {
+                                  setLeaderboard(false);
+                                  setgetPremiumPopup(true);
+                                }}
                               >
                                 <span>Premium Subscriber</span>
                                 <h6>x2</h6>
                                 <div className="activate-premium-btn px-3 d-flex align-items-center justify-content-center">
-                                    Activate
+                                  Activate
                                 </div>
                               </div>
-                              <NavLink  to={'/marketplace/events/golden-pass'} className="buy-golden-tag px-4 py-1 d-flex flex-column align-items-center justify-content-center position-relative">
+                              <NavLink
+                                to={"/marketplace/events/golden-pass"}
+                                className="buy-golden-tag px-4 py-1 d-flex flex-column align-items-center justify-content-center position-relative"
+                              >
                                 <span>Golden Pass - Double</span>
                                 <h6>Double Rewards</h6>
                                 <div className="activate-golden-btn px-3 d-flex align-items-center justify-content-center">
-                                    Activate
+                                  Activate
                                 </div>
                               </NavLink>
                             </div>
-                            }
+                          )}
                           <NewLeaderBoard
                             username={data?.getPlayer?.displayName}
                             userId={data?.getPlayer?.playerId}
@@ -3362,8 +3535,12 @@ function Dashboard({
                             ethTokenData={ethTokenData}
                             openedChests={openedChests}
                             openedSkaleChests={openedSkaleChests}
+                            openedCoreChests={openedCoreChests}
+                            openedVictionChests={openedVictionChests}
                             allChests={allChests}
                             allSkaleChests={allSkaleChests}
+                            allCoreChests={allCoreChests}
+                            allVictionChests={allVictionChests}
                             availableTime={goldenPassRemainingTime}
                             userSocialRewards={userSocialRewards}
                             dogePrice={dogePrice}
@@ -4194,22 +4371,41 @@ function Dashboard({
                 premiumChests={premiumChests}
                 standardSkaleChests={standardSkaleChests}
                 premiumSkaleChests={premiumSkaleChests}
+                standardCoreChests={standardCoreChests}
+                premiumCoreChests={premiumCoreChests}
+                standardVictionChests={standardVictionChests}
+                premiumVictionChests={premiumVictionChests}
                 claimedChests={claimedChests}
                 claimedPremiumChests={claimedPremiumChests}
                 claimedSkaleChests={claimedSkaleChests}
                 claimedSkalePremiumChests={claimedSkalePremiumChests}
+                claimedCoreChests={claimedCoreChests}
+                claimedCorePremiumChests={claimedCorePremiumChests}
+                claimedVictionChests={claimedVictionChests}
+                claimedVictionPremiumChests={claimedVictionPremiumChests}
                 email={email}
                 openedChests={openedChests}
                 openedSkaleChests={openedSkaleChests}
+                openedCoreChests={openedCoreChests}
+                openedVictionChests={openedVictionChests}
                 canBuy={canBuy}
                 address={data?.getPlayer?.wallet?.publicAddress}
                 allChests={allChests}
                 allSkaleChests={allSkaleChests}
+                allCoreChests={allCoreChests}
+                allVictionChests={allVictionChests}
+
                 onChestClaimed={() => {
                   setCount(count + 1);
                 }}
                 onSkaleChestClaimed={() => {
-                  setskalecount(skalecount + 1);
+                  setCount(count + 1);
+                }}
+                onCoreChestClaimed={() => {
+                  setCount(count + 1);
+                }}
+                onVictionChestClaimed={() => {
+                  setCount(count + 1);
                 }}
                 dummypremiumChests={dummypremiumChests}
                 onPremiumClick={() => {

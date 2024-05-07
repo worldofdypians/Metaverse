@@ -106,6 +106,16 @@ const NewDailyBonus = ({
   onPremiumClickOther,
   premiumTxHash,
   selectedChainforPremium,
+  claimedCoreChests,
+  claimedCorePremiumChests,
+  claimedVictionChests,
+  claimedVictionPremiumChests,
+  openedCoreChests,
+  openedVictionChests,
+  onCoreChestClaimed,
+  onVictionChestClaimed,
+  allCoreChests,
+  allVictionChests,
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -334,8 +344,14 @@ const NewDailyBonus = ({
   const [nft, setNft] = useState({});
   const [totalSkalePoints, settotalSkalePoints] = useState(0);
   const [totalSkaleUsd, settotalSkaleUsd] = useState(0);
+
+  const [totalCorePoints, settotalCorePoints] = useState(0);
+  const [totalCoreUsd, settotalCoreUsd] = useState(0);
+  const [totalVictionPoints, settotalVictionPoints] = useState(0);
+  const [totalVictionUsd, settotalVictionUsd] = useState(0);
+
   const [tooltip, setTooltip] = useState(false);
-  const [claimingChest, setClaimingChest] = useState(false)
+  const [claimingChest, setClaimingChest] = useState(false);
 
   const countEarnedRewards = () => {
     if (allChests && allChests.length > 0) {
@@ -405,6 +421,74 @@ const NewDailyBonus = ({
       settotalSkalePoints(resultSkalePoints);
       settotalSkaleUsd(resultSkaleUsd);
     }
+
+    if (allCoreChests && allCoreChests.length > 0) {
+      let resultCorePoints = 0;
+      let resultCoreUsd = 0;
+
+      allCoreChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultCorePoints += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                resultCoreUsd += Number(innerChest.reward);
+              }
+            });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultCorePoints += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+
+      settotalCorePoints(resultCorePoints);
+      settotalCoreUsd(resultCoreUsd);
+    }
+
+    if (allVictionChests && allVictionChests.length > 0) {
+      let resultVictionPoints = 0;
+      let resultVictionUsd = 0;
+
+      allVictionChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultVictionPoints += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                resultVictionUsd += Number(innerChest.reward);
+              }
+            });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultVictionPoints += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+
+      settotalVictionPoints(resultVictionPoints);
+      settotalVictionUsd(resultVictionUsd);
+    }
   };
 
   const handleOpBnbPool = async () => {
@@ -450,6 +534,10 @@ const NewDailyBonus = ({
         showSingleRewardData(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "skale") {
         showSingleRewardDataSkale(rewardData.chestId, isActiveIndex - 1);
+      } else if (chain === "core") {
+        showSingleRewardDataCore(rewardData.chestId, isActiveIndex - 1);
+      } else if (chain === "viction") {
+        showSingleRewardDataViction(rewardData.chestId, isActiveIndex - 1);
       }
     }
   };
@@ -483,6 +571,37 @@ const NewDailyBonus = ({
           .then(() => {
             handleSwitchNetwork(1482601649);
             setRewardData([]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleCorePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x45c")
+          .then(() => {
+            handleSwitchNetwork(1116);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+  const handleVictionPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x58")
+          .then(() => {
+            handleSwitchNetwork(88);
           })
           .catch((e) => {
             console.log(e);
@@ -765,6 +884,118 @@ const NewDailyBonus = ({
     new Audio(successSound).play();
   };
 
+  const showLiveRewardDataSkale = (value) => {
+    const filteredResult = value;
+
+    if (filteredResult) {
+      const result = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "CAWS"
+        );
+      });
+
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LAND"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return obj.rewardType === "Money" && obj.status === "Claimed";
+      });
+      const resultPoints = filteredResult.rewards.length === 1;
+
+      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
+        );
+      });
+
+      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+          );
+        }
+      );
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+        );
+      });
+
+      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
+          );
+        }
+      );
+
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+        );
+      });
+
+      if (result) {
+        setMessage("caws");
+      } else if (!result && resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if (resultWon) {
+        setMessage("won");
+      } else if (resultPoints) {
+        setMessage("wonPoints");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
+      } else if (resultWonMoneyNotEnoughLands) {
+        setMessage("winDangerNotEnoughLand");
+      } else if (resultWonMoneyhasNftsNoPremium) {
+        setMessage("winDangerHasNftsNoPremium");
+      } else if (resultWonMoneyhasNftsNoDyp) {
+        setMessage("winDangerHasNftsPremiumNoDyp");
+      }
+
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
+    new Audio(successSound).play();
+  };
+
   const showSingleRewardDataSkale = (chestID, chestIndex) => {
     const filteredResult = openedSkaleChests.find(
       (el) =>
@@ -881,9 +1112,12 @@ const NewDailyBonus = ({
     }
   };
 
-  const showLiveRewardDataSkale = (value) => {
-    const filteredResult = value;
-
+  const showSingleRewardDataCore = (chestID, chestIndex) => {
+    const filteredResult = openedCoreChests.find(
+      (el) => el.chestId === chestID && allCoreChests.indexOf(el) === chestIndex
+    );
+    setIsActive(chestID);
+    setIsActiveIndex(chestIndex + 1);
     if (filteredResult) {
       const result = filteredResult.rewards.find((obj) => {
         return (
@@ -912,6 +1146,7 @@ const NewDailyBonus = ({
       const resultWon = filteredResult.rewards.find((obj) => {
         return obj.rewardType === "Money" && obj.status === "Claimed";
       });
+
       const resultPoints = filteredResult.rewards.length === 1;
 
       const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
@@ -934,15 +1169,6 @@ const NewDailyBonus = ({
         }
       );
 
-      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
-        );
-      });
-
       const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
         (obj) => {
           return (
@@ -953,6 +1179,15 @@ const NewDailyBonus = ({
           );
         }
       );
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+        );
+      });
 
       const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
         return (
@@ -965,7 +1200,7 @@ const NewDailyBonus = ({
 
       if (result) {
         setMessage("caws");
-      } else if (!result && resultLand) {
+      } else if (resultLand) {
         setMessage("wod");
       } else if (!result && !resultLand && resultPremium) {
         setMessage("needPremium");
@@ -990,7 +1225,122 @@ const NewDailyBonus = ({
     } else {
       setLiveRewardData([]);
     }
-    new Audio(successSound).play();
+  };
+
+  const showSingleRewardDataViction = (chestID, chestIndex) => {
+    const filteredResult = openedVictionChests.find(
+      (el) =>
+        el.chestId === chestID && allVictionChests.indexOf(el) === chestIndex
+    );
+    setIsActive(chestID);
+    setIsActiveIndex(chestIndex + 1);
+    if (filteredResult) {
+      const result = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "CAWS"
+        );
+      });
+
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LAND"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return obj.rewardType === "Money" && obj.status === "Claimed";
+      });
+
+      const resultPoints = filteredResult.rewards.length === 1;
+
+      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
+        );
+      });
+
+      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+          );
+        }
+      );
+
+      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
+          );
+        }
+      );
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+        );
+      });
+
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+        );
+      });
+
+      if (result) {
+        setMessage("caws");
+      } else if (resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if (resultWon) {
+        setMessage("won");
+      } else if (resultPoints) {
+        setMessage("wonPoints");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
+      } else if (resultWonMoneyNotEnoughLands) {
+        setMessage("winDangerNotEnoughLand");
+      } else if (resultWonMoneyhasNftsNoPremium) {
+        setMessage("winDangerHasNftsNoPremium");
+      } else if (resultWonMoneyhasNftsNoDyp) {
+        setMessage("winDangerHasNftsPremiumNoDyp");
+      }
+
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
   };
 
   useEffect(() => {
@@ -1132,6 +1482,130 @@ const NewDailyBonus = ({
         setMessage("login");
         setDisable(true);
       }
+    } else if (chain === "core") {
+      if (email && coinbase && address) {
+        if (coinbase.toLowerCase() === address.toLowerCase()) {
+          if (isPremium) {
+            if (
+              claimedCoreChests + claimedCorePremiumChests === 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase()
+            ) {
+              setMessage("complete");
+            } else if (
+              claimedCoreChests + claimedCorePremiumChests < 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 1116
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedCoreChests + claimedCorePremiumChests < 20 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 1116
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
+          } else if (!isPremium) {
+            if (
+              claimedCoreChests === 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 1116
+            ) {
+              setMessage("premium");
+              setDisable(true);
+            } else if (
+              claimedCoreChests < 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 1116
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedCoreChests < 10 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 1116
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
+          }
+        } else {
+          setMessage("switchAccount");
+          setDisable(true);
+        }
+      } else {
+        setMessage("login");
+        setDisable(true);
+      }
+    } else if (chain === "viction") {
+      if (email && coinbase && address) {
+        if (coinbase.toLowerCase() === address.toLowerCase()) {
+          if (isPremium) {
+            if (
+              claimedVictionChests + claimedVictionPremiumChests === 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase()
+            ) {
+              setMessage("complete");
+            } else if (
+              claimedVictionChests + claimedVictionPremiumChests < 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 88
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedVictionChests + claimedVictionPremiumChests < 20 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 88
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
+          } else if (!isPremium) {
+            if (
+              claimedVictionChests === 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 88
+            ) {
+              setMessage("premium");
+              setDisable(true);
+            } else if (
+              claimedVictionChests < 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 88
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedVictionChests < 10 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 88
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
+          }
+        } else {
+          setMessage("switchAccount");
+          setDisable(true);
+        }
+      } else {
+        setMessage("login");
+        setDisable(true);
+      }
     }
   }, [
     email,
@@ -1144,6 +1618,10 @@ const NewDailyBonus = ({
     claimedPremiumChests,
     claimedSkaleChests,
     claimedSkalePremiumChests,
+    claimedCoreChests,
+    claimedCorePremiumChests,
+    claimedVictionChests,
+    claimedVictionPremiumChests,
     rewardData,
   ]);
 
@@ -1262,7 +1740,13 @@ const NewDailyBonus = ({
               <div className="new-total-points-wrapper d-flex align-items-center gap-2">
                 <h6 className="new-total-points  mb-0">
                   {getFormattedNumber(
-                    chain === "bnb" ? totalPoints : totalSkalePoints,
+                    chain === "bnb"
+                      ? totalPoints
+                      : chain === "core"
+                      ? totalCorePoints
+                      : chain === "viction"
+                      ? totalVictionPoints
+                      : totalSkalePoints,
                     0
                   )}{" "}
                 </h6>
@@ -1274,7 +1758,13 @@ const NewDailyBonus = ({
                 <h6 className="new-total-points  mb-0">
                   $
                   {getFormattedNumber(
-                    chain === "bnb" ? totalUsd : totalSkaleUsd,
+                    chain === "bnb"
+                      ? totalUsd
+                      : chain === "core"
+                      ? totalCoreUsd
+                      : chain === "viction"
+                      ? totalVictionUsd
+                      : totalSkaleUsd,
                     2
                   )}{" "}
                 </h6>
@@ -1521,7 +2011,7 @@ const NewDailyBonus = ({
                         </div>
                         <div
                           className={`position-relative chain-item ${
-                            chain === "core" && "chain-item-active"
+                            chain === 'core' && "chain-item-active"
                           } w-100`}
                         >
                           <img
@@ -1608,20 +2098,26 @@ const NewDailyBonus = ({
                           >
                             <button
                               className={`${
-                                chainId === 1482601649
+                                chainId === 1116
                                   ? "new-chain-active-btn"
                                   : "new-chain-inactive-btn"
                               } d-flex gap-1 align-items-center`}
-                              onClick={handleBnbPool}
+                              onClick={handleCorePool}
                             >
                               {" "}
-                              <img src={coreIcon} width={20} height={20} alt="" /> CORE
+                              <img
+                                src={coreIcon}
+                                width={20}
+                                height={20}
+                                alt=""
+                              />{" "}
+                              CORE
                             </button>
                           </div>
                         </div>
                         <div
                           className={`position-relative chain-item ${
-                            chain === "viction" && "chain-item-active"
+                            chain === 'viction' && "chain-item-active"
                           } w-100`}
                         >
                           <img
@@ -1639,11 +2135,13 @@ const NewDailyBonus = ({
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === "viction" &&
+                              chain === 'viction' &&
                               "chain-title-wrapper-active-skale"
                             } p-2 d-flex align-items-center justify-content-between`}
                           >
-                            <h6 className="chain-title-position mb-0">VICTION</h6>
+                            <h6 className="chain-title-position mb-0">
+                              VICTION
+                            </h6>
                             <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
                                 <img
@@ -1708,14 +2206,20 @@ const NewDailyBonus = ({
                           >
                             <button
                               className={`${
-                                chainId === 1482601649
+                                chainId === 88
                                   ? "new-chain-active-btn"
                                   : "new-chain-inactive-btn"
                               } d-flex gap-1 align-items-center`}
-                              onClick={handleSkalePool}
+                              onClick={handleVictionPool}
                             >
                               {" "}
-                              <img src={victionIcon} width={20} height={20} alt="" /> VICTION
+                              <img
+                                src={victionIcon}
+                                width={20}
+                                height={20}
+                                alt=""
+                              />{" "}
+                              VICTION
                             </button>
                             {/* <a href="https://www.sfuelstation.com/" target="_blank">
                          <button
@@ -1848,7 +2352,7 @@ const NewDailyBonus = ({
                           >
                             <button
                               className={`chain-inactive-btn d-flex gap-1 align-items-center`}
-                              onClick={handleBnbPool}
+                              onClick={handleCorePool}
                             >
                               {" "}
                               <img src={coreIcon} alt="" /> CORE
@@ -1874,10 +2378,13 @@ const NewDailyBonus = ({
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === "viction" && "chain-title-wrapper-active"
+                              chain === "viction" &&
+                              "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center justify-content-between`}
                           >
-                            <h6 className="chain-title-position mb-0">VICTION</h6>
+                            <h6 className="chain-title-position mb-0">
+                              VICTION
+                            </h6>
                           </div>
                           <div
                             className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
@@ -1885,7 +2392,7 @@ const NewDailyBonus = ({
                           >
                             <button
                               className={`chain-inactive-btn d-flex gap-1 align-items-center`}
-                              onClick={handleSkalePool}
+                              onClick={handleVictionPool}
                             >
                               {" "}
                               <img src={victionIcon} alt="" /> VICTION
@@ -1947,8 +2454,8 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                claimingChest={claimingChest}
-                                setClaimingChest={setClaimingChest}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
                                   buyNftPopup={buyNftPopup}
                                   chainId={chainId}
                                   chain={chain}
@@ -1994,13 +2501,205 @@ const NewDailyBonus = ({
                                   }
                                 />
                               ))
+                          : chain === "core"
+                          ? allCoreChests && allCoreChests.length > 0
+                            ? allCoreChests.map((item, index) => (
+                                <NewChestItem
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onCoreChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataCore(value, value2);
+                                    setIsActive(value);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.isOpened}
+                                  disableBtn={disable}
+                                  isActive={isActive}
+                                  isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                            : window.range(0, 19).map((item, index) => (
+                                <NewChestItem
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onCoreChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataCore(value, value2);
+                                    setIsActive(value);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.opened}
+                                  disableBtn={true}
+                                  isActive={isActive}
+                                  openChest={() => {
+                                    console.log("test");
+                                  }}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                          : chain === "viction"
+                          ? allVictionChests && allVictionChests.length > 0
+                            ? allVictionChests.map((item, index) => (
+                                <NewChestItem
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onVictionChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataViction(value, value2);
+                                    setIsActive(value);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.isOpened}
+                                  disableBtn={disable}
+                                  isActive={isActive}
+                                  isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                            : window.range(0, 19).map((item, index) => (
+                                <NewChestItem
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onVictionChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataViction(value, value2);
+                                    setIsActive(value);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.opened}
+                                  disableBtn={true}
+                                  isActive={isActive}
+                                  openChest={() => {
+                                    console.log("test");
+                                  }}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
                           : chain === "skale" &&
                             allSkaleChests &&
                             allSkaleChests.length > 0
                           ? allSkaleChests.map((item, index) => (
                               <NewChestItem
-                              claimingChest={claimingChest}
-                              setClaimingChest={setClaimingChest}
+                                claimingChest={claimingChest}
+                                setClaimingChest={setClaimingChest}
                                 buyNftPopup={buyNftPopup}
                                 chainId={chainId}
                                 chain={chain}
@@ -2043,8 +2742,8 @@ const NewDailyBonus = ({
                             ))
                           : window.range(0, 19).map((item, index) => (
                               <NewChestItem
-                              claimingChest={claimingChest}
-                              setClaimingChest={setClaimingChest}
+                                claimingChest={claimingChest}
+                                setClaimingChest={setClaimingChest}
                                 buyNftPopup={buyNftPopup}
                                 chainId={chainId}
                                 chain={chain}
@@ -4311,6 +5010,10 @@ const NewDailyBonus = ({
             setTimeout(() => {
               chain === "bnb"
                 ? showSingleRewardData(rewardData.chestId, isActiveIndex - 1)
+                : chain === "core"
+                ? showSingleRewardDataCore(rewardData.chestId, isActiveIndex - 1)
+                : chain === "viction"
+                ? showSingleRewardDataViction(rewardData.chestId, isActiveIndex - 1)
                 : showSingleRewardDataSkale(
                     rewardData.chestId,
                     isActiveIndex - 1

@@ -60,7 +60,7 @@ const MyRewardsPopupNew = ({
   allSkaleChests,
   kittyDashRecords,
   userRankRewards,
-  cawsPremiumRewards,
+  cawsPremiumRewards,openedCoreChests,openedVictionChests,allCoreChests,allVictionChests
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);

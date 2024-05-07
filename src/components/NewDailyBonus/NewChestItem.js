@@ -266,6 +266,16 @@ const NewChestItem = ({
       window.config.daily_bonus_skale_address
     );
 
+    const daily_bonus_contract_core = new window.web3.eth.Contract(
+      window.DAILY_BONUS_CORE_ABI,
+      window.config.daily_bonus_core_address
+    );
+
+    const daily_bonus_contract_viction = new window.web3.eth.Contract(
+      window.DAILY_BONUS_VICTION_ABI,
+      window.config.daily_bonus_viction_address
+    );
+
     // console.log(daily_bonus_contract);
     if (chainId === 204) {
       if (rewardTypes === "premium" && isPremium) {
@@ -306,6 +316,110 @@ const NewChestItem = ({
               data.transactionHash,
               chestIndex - 1,
               "opbnb"
+            );
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+          });
+      }
+    } else if (chainId === 1116) {
+      if (rewardTypes === "premium" && isPremium) {
+        await daily_bonus_contract_core.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "core"
+            );
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+        await daily_bonus_contract_core.methods
+          .openChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "core"
+            );
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+          });
+      }
+    } else if (chainId === 88) {
+      if (rewardTypes === "premium" && isPremium) {
+        await daily_bonus_contract_viction.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "viction"
+            );
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+        await daily_bonus_contract_viction.methods
+          .openChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "viction"
             );
           })
           .catch((e) => {
