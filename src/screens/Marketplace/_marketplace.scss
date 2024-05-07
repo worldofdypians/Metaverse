@@ -2164,6 +2164,20 @@ line-height: normal;
   }
 }
 
+.past-skale-mint {
+  background-image: url("./assets/skaleMintDesktop.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/skaleMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
+
 .sold-out-tag {
   border-radius: 20px;
   background: linear-gradient(90deg, #830e47 0%, #5065c3 100%);
@@ -2241,6 +2255,19 @@ line-height: normal;
   }
 }
 
+.past-skale-mint-amount {
+  color: #00FFE0;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+
 .past-conflux-mint-desc {
   color: #fff;
   text-shadow: 0px 3px 4px rgba(144, 28, 119, 0.7);
@@ -2254,6 +2281,21 @@ line-height: normal;
     font-size: 26px;
   }
 }
+
+.past-skale-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(17, 80, 23, 0.7);
+  font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
 
 .past-land-mint-desc {
   color: #fff;
