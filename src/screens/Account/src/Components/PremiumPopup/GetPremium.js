@@ -502,7 +502,7 @@ const GetPremiumPopup = ({
       });
   };
 
-  console.log(chainId, chainDropdowns, dropdownIcon);
+ 
 
   useEffect(() => {
     if (chainId === 1) {

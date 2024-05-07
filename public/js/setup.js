@@ -1516,6 +1516,9 @@ window.config = {
   daily_bonus_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
   daily_bonus_bnb_address: "0xF4435c244A292a8E8D56767bf6DF9b9c4D59aEED",
   daily_bonus_skale_address: "0x620655Ee8320bA51cf4cc06bf6a7C14022271764",
+  daily_bonus_core_address: "0x620655Ee8320bA51cf4cc06bf6a7C14022271764",
+  daily_bonus_viction_address: "0x620655Ee8320bA51cf4cc06bf6a7C14022271764",
+
 
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
   vote_duration_in_seconds: 259200, // 5 minutes for test
@@ -1540,6 +1543,9 @@ window.config = {
   conflux_endpoint: "https://evm.confluxrpc.com/",
   base_endpoint: "https://mainnet.base.org",
   opbnb_endpoint: "https://opbnb.publicnode.com",
+  core_endpoint: "https://rpc.coredao.org",
+  viction_endpoint: "https://rpc.viction.xyz",
+
 
   BUSD_address: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
   USDCe_address: "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
@@ -1560,6 +1566,9 @@ window.config = {
   subscription_base_address: "0x9c13Dbc8f0fA8ceD8C1B53c4237A08445eca32fe",
 
   subscription_skale_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
+  subscription_core_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
+  subscription_viction_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
+
 
   //DYP-ETH 3 days
   token_address: "0xBa7872534a6C9097d805d8BEE97e030f4e372e54",
@@ -2102,6 +2111,8 @@ window.avaxWeb3 = new Web3(window.config.avax_endpoint);
 window.confluxWeb3 = new Web3(window.config.conflux_endpoint);
 window.baseWeb3 = new Web3(window.config.base_endpoint);
 window.opBnbWeb3 = new Web3(window.config.opbnb_endpoint);
+window.coreWeb3 = new Web3(window.config.core_endpoint);
+window.victionWeb3 = new Web3(window.config.viction_endpoint);
 
 window.REWARD_TOKEN_ABI = window.TOKEN_ABI;
 window.REWARD_TOKENAVAX_ABI = window.TOKENAVAX_ABI;
@@ -8781,6 +8792,268 @@ window.DAILY_BONUS_BNB_ABI = [
 ];
 
 window.DAILY_BONUS_SKALE_ABI = [
+  {
+    type: "constructor",
+    stateMutability: "nonpayable",
+    inputs: [
+      {
+        type: "address[]",
+        name: "initialPremiumUsers",
+        internalType: "address[]",
+      },
+    ],
+  },
+  {
+    type: "event",
+    name: "ChestOpened",
+    inputs: [
+      { type: "address", name: "user", internalType: "address", indexed: true },
+      {
+        type: "uint256",
+        name: "timestamp",
+        internalType: "uint256",
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "PremiumChestOpened",
+    inputs: [
+      { type: "address", name: "user", internalType: "address", indexed: true },
+      {
+        type: "uint256",
+        name: "timestamp",
+        internalType: "uint256",
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "PremiumUserAdded",
+    inputs: [
+      {
+        type: "address",
+        name: "user",
+        internalType: "address",
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "PremiumUserRemoved",
+    inputs: [
+      {
+        type: "address",
+        name: "user",
+        internalType: "address",
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "addPremiumUser",
+    inputs: [{ type: "address", name: "user", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "bool", name: "", internalType: "bool" }],
+    name: "isPremiumUser",
+    inputs: [{ type: "address", name: "user", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "uint256", name: "", internalType: "uint256" }],
+    name: "lifetimeChestCount",
+    inputs: [{ type: "address", name: "", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "uint256", name: "", internalType: "uint256" }],
+    name: "lifetimePremiumChestCount",
+    inputs: [{ type: "address", name: "", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "openChest",
+    inputs: [],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "openPremiumChest",
+    inputs: [],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "address", name: "", internalType: "address" }],
+    name: "owner",
+    inputs: [],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "bool", name: "", internalType: "bool" }],
+    name: "premiumUsers",
+    inputs: [{ type: "address", name: "", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "removePremiumUser",
+    inputs: [{ type: "address", name: "user", internalType: "address" }],
+  },
+];
+
+window.DAILY_BONUS_CORE_ABI = [
+  {
+    type: "constructor",
+    stateMutability: "nonpayable",
+    inputs: [
+      {
+        type: "address[]",
+        name: "initialPremiumUsers",
+        internalType: "address[]",
+      },
+    ],
+  },
+  {
+    type: "event",
+    name: "ChestOpened",
+    inputs: [
+      { type: "address", name: "user", internalType: "address", indexed: true },
+      {
+        type: "uint256",
+        name: "timestamp",
+        internalType: "uint256",
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "PremiumChestOpened",
+    inputs: [
+      { type: "address", name: "user", internalType: "address", indexed: true },
+      {
+        type: "uint256",
+        name: "timestamp",
+        internalType: "uint256",
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "PremiumUserAdded",
+    inputs: [
+      {
+        type: "address",
+        name: "user",
+        internalType: "address",
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "PremiumUserRemoved",
+    inputs: [
+      {
+        type: "address",
+        name: "user",
+        internalType: "address",
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "addPremiumUser",
+    inputs: [{ type: "address", name: "user", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "bool", name: "", internalType: "bool" }],
+    name: "isPremiumUser",
+    inputs: [{ type: "address", name: "user", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "uint256", name: "", internalType: "uint256" }],
+    name: "lifetimeChestCount",
+    inputs: [{ type: "address", name: "", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "uint256", name: "", internalType: "uint256" }],
+    name: "lifetimePremiumChestCount",
+    inputs: [{ type: "address", name: "", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "openChest",
+    inputs: [],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "openPremiumChest",
+    inputs: [],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "address", name: "", internalType: "address" }],
+    name: "owner",
+    inputs: [],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "bool", name: "", internalType: "bool" }],
+    name: "premiumUsers",
+    inputs: [{ type: "address", name: "", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "removePremiumUser",
+    inputs: [{ type: "address", name: "user", internalType: "address" }],
+  },
+];
+
+window.DAILY_BONUS_VICTION_ABI = [
   {
     type: "constructor",
     stateMutability: "nonpayable",

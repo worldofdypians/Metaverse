@@ -241,8 +241,12 @@ const NewWalletBalance = ({
   openedSkaleChests,
   cawsPremiumRewards,
   skaleEarnToken,
-skaleEarnUsd,
-skalePoints,
+  skaleEarnUsd,
+  skalePoints,
+  claimedCoreChests,
+  claimedCorePremiumChests,
+  claimedVictionChests,
+  claimedVictionPremiumChests,openedCoreChests,openedVictionChests
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -355,7 +359,7 @@ skalePoints,
         activeTab: "dypiusv2",
       },
     },
- 
+
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -380,7 +384,7 @@ skalePoints,
         minPoints: "5,000",
         maxPoints: "30,000",
         learnMore:
-        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
         eventDate: "Apr 15, 2024",
       },
     },
@@ -1140,7 +1144,6 @@ skalePoints,
                 event={dypv2}
                 userEarnedUsd={dypiusPremiumEarnUsd}
               />
-             
               <ActiveProfileEvent
                 data={dummySkale}
                 event={dummySkale}
@@ -1150,7 +1153,7 @@ skalePoints,
                   setEventPopup(true);
                 }}
               />
-               <ExpiredProfileEvent
+              <ExpiredProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyCmc);
                   setEventPopup(true);
@@ -1605,8 +1608,8 @@ skalePoints,
                           Number(userRank2) +
                           Number(genesisRank2) +
                           Number(dypiusPremiumEarnUsd) +
-                           Number(treasureRewardMoney) +
-                           Number(skaleEarnUsd) ,
+                          Number(treasureRewardMoney) +
+                          Number(skaleEarnUsd),
                         2
                       )}
                     </h6>
@@ -2147,12 +2150,13 @@ skalePoints,
                         rewards
                       </li>
                     )}
-                    {dummyEvent.id !== "event5" && dummyEvent.id !== "event11" && (
-                      <li className="popup-event-desc">
-                        Get global leaderboard points
-                      </li>
-                    )}
-                     {dummyEvent.id === "event11" && (
+                    {dummyEvent.id !== "event5" &&
+                      dummyEvent.id !== "event11" && (
+                        <li className="popup-event-desc">
+                          Get global leaderboard points
+                        </li>
+                      )}
+                    {dummyEvent.id === "event11" && (
                       <li className="popup-event-desc">
                         Get global SKALE leaderboard points
                       </li>
