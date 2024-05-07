@@ -277,6 +277,7 @@ function Dashboard({
   const [dateofBundlev1, setdateofBundlev1] = useState(0);
   const [datewhenBundleBought, setdatewhenBundleBought] = useState(0);
   const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
+  const [images, setImages] = useState([])
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -727,6 +728,8 @@ function Dashboard({
       chestId: 10,
     },
   ];
+
+  const chestImages = ["0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
 
   const getRankData = async () => {
     await axios
@@ -2579,6 +2582,7 @@ function Dashboard({
   useEffect(() => {
     setDummyPremiumChests(shuffle(dummyPremiums));
     fetchReleases();
+    setImages(shuffle(chestImages))
   }, []);
 
   useEffect(() => {
@@ -4178,6 +4182,7 @@ function Dashboard({
               // >
               <NewDailyBonus
                 isPremium={isPremium}
+                images={images}
                 chainId={chainId}
                 dypTokenData={dypTokenData}
                 ethTokenData={ethTokenData}
