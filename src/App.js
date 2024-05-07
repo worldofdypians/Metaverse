@@ -1827,12 +1827,18 @@ function App() {
     let subscribedPlatformTokenAmountBase;
     let subscribedPlatformTokenAmountSkale;
 
+    let subscribedPlatformTokenAmountCore;
+    let subscribedPlatformTokenAmountViction;
+
     const web3eth = window.infuraWeb3;
     const web3cfx = window.confluxWeb3;
     const web3base = window.baseWeb3;
     const web3bnb = window.bscWeb3;
     const web3avax = window.avaxWeb3;
     const web3skale = window.skaleWeb3;
+    const web3core = window.coreWeb3;
+    const web3viction = window.victionWeb3;
+
 
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const BaseABI = window.SUBSCRIPTION_BASE_ABI;
@@ -1840,6 +1846,9 @@ function App() {
     const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
     const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
     const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
+    const CoreABI = window.SUBSCRIPTION_SKALE_ABI;
+    const VicitonABI = window.SUBSCRIPTION_SKALE_ABI;
+
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
@@ -1847,6 +1856,9 @@ function App() {
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
     const skalesubscribeAddress = window.config.subscription_skale_address;
+    const coresubscribeAddress = window.config.subscription_core_address;
+    const victionsubscribeAddress = window.config.subscription_viction_address;
+
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
@@ -1865,6 +1877,18 @@ function App() {
       AvaxABI,
       avaxsubscribeAddress
     );
+
+    const corecontract = new web3core.eth.Contract(
+      CoreABI,
+      coresubscribeAddress
+    );
+
+
+    const victioncontract = new web3viction.eth.Contract(
+      VicitonABI,
+      victionsubscribeAddress
+    );
+
 
     if (addr) {
       const result = window.checkPremium(addr);
@@ -1917,6 +1941,22 @@ function App() {
           return 0;
         });
 
+        subscribedPlatformTokenAmountCore = await corecontract.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
+        subscribedPlatformTokenAmountViction = await victioncontract.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
       if (
         subscribedPlatformTokenAmountCfx == "0" &&
         subscribedPlatformTokenAmountETH == "0" &&
@@ -1924,6 +1964,8 @@ function App() {
         subscribedPlatformTokenAmountBNB == "0" &&
         subscribedPlatformTokenAmountAvax == "0" &&
         subscribedPlatformTokenAmountSkale == "0" &&
+        subscribedPlatformTokenAmountCore == "0" &&
+        subscribedPlatformTokenAmountViction == "0" &&
         result === false
       ) {
         setIsPremium(false);
@@ -1935,6 +1977,8 @@ function App() {
         subscribedPlatformTokenAmountBNB != "0" ||
         subscribedPlatformTokenAmountAvax != "0" ||
         subscribedPlatformTokenAmountSkale != "0" ||
+        subscribedPlatformTokenAmountCore != "0" ||
+        subscribedPlatformTokenAmountViction != "0" ||
         result === true
       ) {
         setIsPremium(true);
