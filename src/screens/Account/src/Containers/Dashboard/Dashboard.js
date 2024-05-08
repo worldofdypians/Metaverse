@@ -396,7 +396,18 @@ function Dashboard({
     shuffle(chestImagesViction)
   );
   const [seiImages, setSeiImages] = useState(shuffle(chestImagesSei));
-
+  const [seiEarnUsd, setSeiEarnUsd] = useState(0)
+  const [seiPrice, setSeiPrice] = useState(0)
+  const [seiEarnToken, setSeiEarnToken] = useState(0)
+  const [seiPoints, setSeiPoints] = useState(0)
+  const [coreEarnUsd, setCoreEarnUsd] = useState(0)
+  const [corePrice, setCorePrice] = useState(0)
+  const [coreEarnToken, setCoreEarnToken] = useState(0)
+  const [corePoints, setCorePoints] = useState(0)
+  const [victionEarnUsd, setVictionEarnUsd] = useState(0)
+  const [victionPrice, setVictionPrice] = useState(0)
+  const [victionEarnToken, setVictionEarnToken] = useState(0)
+  const [victionPoints, setVictionPoints] = useState(0)
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
   const leaderboardId = document.querySelector("#leaderboard");
@@ -757,6 +768,35 @@ function Dashboard({
       )
       .then((obj) => {
         setSkalePrice(obj.data.skale.usd);
+      });
+  };
+  const fetchSeiPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=sei-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setSeiPrice(obj.data["sei-network"].usd.usd);
+      });
+  };
+
+  const fetchCorePrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=core&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setCorePrice(obj.data.core.usd);
+      });
+  };
+
+  const fetchVictionPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=tomochain&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setVictionPrice(obj.data.tomochain.usd);
       });
   };
 
@@ -1427,6 +1467,15 @@ function Dashboard({
           const skaleEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "skale";
           });
+          const seiEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "sei";
+          });
+          const victionEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "viction";
+          });
+          const coreEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "core";
+          });
           const gateEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "gate";
           });
@@ -1480,6 +1529,40 @@ function Dashboard({
               setSkaleEarnToken(usdValue / skalePrice);
             }
           }
+          if (seiEvent && seiEvent[0]) {
+            const points = seiEvent[0].reward.earn.totalPoints;
+            setSeiPoints(points);
+            const usdValue =
+              seiEvent[0].reward.earn.total /
+              seiEvent[0].reward.earn.multiplier;
+            setSeiEarnUsd(usdValue);
+            if (seiPrice !== 0) {
+              setSeiEarnToken(usdValue / seiPrice);
+            }
+          }
+          if (coreEvent && coreEvent[0]) {
+            const points = coreEvent[0].reward.earn.totalPoints;
+            setCorePoints(points);
+            const usdValue =
+              coreEvent[0].reward.earn.total /
+              coreEvent[0].reward.earn.multiplier;
+            setCoreEarnUsd(usdValue);
+            if (corePrice !== 0) {
+              setCoreEarnToken(usdValue / corePrice);
+            }
+          }
+          if (victionEvent && victionEvent[0]) {
+            const points = victionEvent[0].reward.earn.totalPoints;
+            setVictionPoints(points);
+            const usdValue =
+              victionEvent[0].reward.earn.total /
+              victionEvent[0].reward.earn.multiplier;
+            setVictionEarnUsd(usdValue);
+            if (victionPrice !== 0) {
+              setVictionEarnToken(usdValue / victionPrice);
+            }
+          }
+
 
           if (coingeckoEvent && coingeckoEvent[0]) {
             const points = coingeckoEvent[0].reward.earn.totalPoints;
@@ -3045,6 +3128,9 @@ function Dashboard({
 
   useEffect(() => {
     fetchSkalePrice();
+    fetchSeiPrice();
+    fetchCorePrice();
+    fetchVictionPrice();
   }, []);
 
   useEffect(() => {
@@ -3529,6 +3615,9 @@ function Dashboard({
                         dailyplayerData={dailyplayerData}
                         skaleEarnToken={skaleEarnToken}
                         skaleEarnUsd={skaleEarnUsd}
+                        seiEarnUsd={seiEarnUsd}
+                        coreEarnUsd={coreEarnUsd}
+                        victionEarnUsd={victionEarnUsd}
                         skalePoints={skalePoints}
                         userRank2={userRank2}
                         genesisRank2={genesisRank2}
@@ -3942,6 +4031,9 @@ function Dashboard({
                             baseEarnUSD={baseEarnUSD}
                             baseEarnETH={baseEarnETH}
                             skaleEarnUsd={skaleEarnUsd}
+                            seiEarnUsd={seiEarnUsd}
+                            victionEarnUsd={victionEarnUsd}
+                            coreEarnUsd={coreEarnUsd}
                             dypiusEarnUsd={dypiusEarnUsd}
                             dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
                             dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}

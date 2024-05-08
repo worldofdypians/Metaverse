@@ -56,6 +56,9 @@ const MyRewardsPopupNew = ({
   baseEarnETH,
   dypiusEarnUsd,
   skaleEarnUsd,
+  seiEarnUsd,
+  coreEarnUsd,
+  victionEarnUsd,
   cmcuserEarnETH,
   cmcuserEarnUsd,
   dypiusPremiumEarnUsd,
@@ -692,6 +695,9 @@ const MyRewardsPopupNew = ({
                       Number(treasureRewardMoney) +
                       Number(treasureRewardMoneySkale) +
                       Number(skaleEarnUsd) +
+                      Number(seiEarnUsd) +
+                      Number(coreEarnUsd) +
+                      Number(victionEarnUsd) +
                       Number(dailyplayerData) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
@@ -931,7 +937,7 @@ const MyRewardsPopupNew = ({
                     2
                   )
                 : getFormattedNumber(
-                    Number(skaleEarnUsd) + Number(dypiusPremiumEarnUsd),
+                    Number(skaleEarnUsd) + Number(dypiusPremiumEarnUsd) + Number(coreEarnUsd) + Number(seiEarnUsd) + Number(victionEarnUsd) ,
                     2
                   )}
             </span>
@@ -1286,7 +1292,7 @@ const MyRewardsPopupNew = ({
                       CORE
                     </span>
                     <span className="item-name-right">
-                      ${getFormattedNumber(0, 2)}
+                      ${getFormattedNumber(coreEarnUsd, 2)}
                     </span>
                   </div>
                 </div>
@@ -1298,7 +1304,7 @@ const MyRewardsPopupNew = ({
                       SEI
                     </span>
                     <span className="item-name-right">
-                      ${getFormattedNumber(0, 2)}
+                      ${getFormattedNumber(seiEarnUsd, 2)}
                     </span>
                   </div>
 
@@ -1308,7 +1314,7 @@ const MyRewardsPopupNew = ({
                       Viction
                     </span>
                     <span className="item-name-right">
-                      ${getFormattedNumber(0, 2)}
+                      ${getFormattedNumber(victionEarnUsd, 2)}
                     </span>
                   </div>
                 </div>
