@@ -23,6 +23,10 @@ import base from "./myrewardsAssets/newAssets/treasureHunt/base.svg";
 import cmc from "./myrewardsAssets/newAssets/treasureHunt/cmc.svg";
 import coingecko from "./myrewardsAssets/newAssets/treasureHunt/coingecko.svg";
 import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
+import seiIcon from '../../../../../components/NewDailyBonus/assets/seiIcon.svg';
+import coreIcon from '../../../../../components/NewDailyBonus/assets/coreIcon.svg';
+import victionIcon from '../../../../../components/NewDailyBonus/assets/victionIcon.svg';
+
 import dypius from "./myrewardsAssets/newAssets/treasureHunt/dypius.svg";
 import gate from "./myrewardsAssets/newAssets/treasureHunt/gate.svg";
 import conflux from "./myrewardsAssets/newAssets/treasureHunt/conflux.svg";
@@ -1162,7 +1166,7 @@ const MyRewardsPopupNew = ({
               : "item-name-wrapper p-2"
           }
         >
-          <div className="d-flex justify-content-between gap-4 align-items-center">
+          <div className="d-flex justify-content-between gap-4 align-items-start">
             <div className="d-flex flex-column gap-2 w-50">
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">BNB Chain</span>
@@ -1185,6 +1189,24 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(0, 2)}
                 </span>
               </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">CORE</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(0, 2)}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Viction</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(0, 2)}
+                </span>
+              </div>
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
@@ -1202,6 +1224,15 @@ const MyRewardsPopupNew = ({
                 <span className="item-name-right">
                   $
                   {kittyDashRecords.position > 10
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(0, 2)}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">SEI</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(0, 2)}
                 </span>
@@ -1229,24 +1260,57 @@ const MyRewardsPopupNew = ({
             }
           >
             <div className="treasure-hunt-item-wrapper-active">
-              <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center justify-content-between gap-2">
-                <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={skale} alt="" />
-                    SKALE
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(skaleEarnUsd, 2)}
-                  </span>
+              <div className="d-flex justify-content-between gap-4 align-items-start">
+                <div className="d-flex flex-column gap-2 w-50">
+                  <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img src={skale} alt="" />
+                      SKALE
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(skaleEarnUsd, 2)}
+                    </span>
+                  </div>
+                  <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img src={dypiusPremium} alt="" />
+                      Premium
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(dypiusPremiumEarnUsd, 2)}
+                    </span>
+                  </div>
+                  <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img src={coreIcon} alt="" style={{width: 16, height: 16}}/>
+                      CORE
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(0, 2)}
+                    </span>
+                  </div>
                 </div>
-                <div className="d-flex gap-2 align-items-center justify-content-between col-lg-3">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={dypiusPremium} alt="" />
-                    Premium
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(dypiusPremiumEarnUsd, 2)}
-                  </span>
+
+                <div className="d-flex flex-column gap-2 w-50">
+                  <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img src={seiIcon} alt="" style={{width: 16, height: 16}}/>
+                      SEI
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(0, 2)}
+                    </span>
+                  </div>
+
+                  <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img src={victionIcon} alt="" style={{width: 16, height: 16}}/>
+                      Viction
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(0, 2)}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
