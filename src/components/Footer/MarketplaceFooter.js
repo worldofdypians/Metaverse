@@ -169,6 +169,9 @@ const Footer = () => {
                 >
                   Dypius
                 </a>
+                <NavLink to="/team" style={{ textDecoration: "none" }}>
+                  <span className="footer-link font-poppins">Team</span>
+                </NavLink>
                 <NavLink
                   to="/terms-conditions"
                   style={{ textDecoration: "none" }}
@@ -192,6 +195,7 @@ const Footer = () => {
                 <NavLink to="/join-beta" style={{ textDecoration: "none" }}>
                   <span className="footer-link font-poppins">Join Beta</span>
                 </NavLink>
+               
                 <a
                   href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                   target="_blank"
