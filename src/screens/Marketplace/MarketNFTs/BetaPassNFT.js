@@ -2926,7 +2926,7 @@ const BetaPassNFT = ({
                                         ? 'COBP'
                                         : mintTitle === "immutable"
                                         ? 'IMBP'
-                                        : 'MVBP'
+                                        : 'MXBP'
                                       }
                                          {`#${mintTitle === "sei"
                                         ? myseiNfts[0]
