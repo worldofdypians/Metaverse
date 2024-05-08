@@ -21,6 +21,10 @@ import confluxLogo from "../assets/confluxLogo.svg";
 import baseLogo from "../assets/baseLogo.svg";
 import bnbLogo from "../assets/bnbLogo.svg";
 import skaleLogo from "../assets/skaleLogo.svg";
+import coreLogo from "../assets/coreLogo.svg";
+import victionLogo from "../assets/victionLogo.svg";
+import seiLogo from "../assets/seiLogo.svg";
+
 import comingSoon from "../assets/comingSoon.svg";
 
 import wodLogo from "../assets/wodIcon.png";
@@ -139,6 +143,12 @@ const BetaPassNFT = ({
   myCmcNFTs,
   totalSkaleNft,
   mySkaleNfts,
+  totalCoreNft,
+  myCoreNfts,
+  totalseiNft,
+  myseiNfts,
+  totalVictionNft,
+  myVictionNfts,totalImmutableNft, totalMultiversNft
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -176,6 +186,42 @@ const BetaPassNFT = ({
     background: "avalanche-mint-bg",
   };
 
+  const coreData = {
+    id: "core",
+    cardTitle: "CORE Beta Pass",
+    title: "CORE Beta Pass",
+    background: "skale2-mint-bg",
+  };
+
+  const victionData = {
+    id: "viction",
+    cardTitle: "Viction Beta Pass",
+    title: "Viction Beta Pass",
+    background: "skale2-mint-bg",
+  };
+
+  const multiversData = {
+    id: "multiversx",
+    cardTitle: "MultiversX Beta Pass",
+    title: "MultiversX Beta Pass",
+    background: "skale2-mint-bg",
+  };
+
+  const immutableData = {
+    id: "immutable",
+    cardTitle: "Immutable Beta Pass",
+    title: "Immutable Beta Pass",
+    background: "skale2-mint-bg",
+  };
+
+
+  const seiData = {
+    id: "sei",
+    cardTitle: "SEI Beta Pass",
+    title: "SEI Beta Pass",
+    background: "skale2-mint-bg",
+  };
+
   const dogeData = {
     id: "doge",
     cardTitle: "Dogecoin Beta Pass",
@@ -189,7 +235,6 @@ const BetaPassNFT = ({
     title: "CoinMarketCap Beta Pass",
     background: "cmc-mint-bg2",
   };
-
 
   const coin98Data = {
     id: "coin98",
@@ -272,7 +317,7 @@ const BetaPassNFT = ({
   const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
   const [cmcEarnUSD, setCmcEarnUSD] = useState(0);
   const [isSkaleLive, setisSkaleLive] = useState(true);
-  const [skaleEarnUsd, setSkaleEarnUsd] = useState(0)
+  const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
 
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
@@ -591,6 +636,23 @@ const BetaPassNFT = ({
     } else if (locationState.includes("/beta-pass/coinmarketcap")) {
       setSelectedMint(cmcData);
       setMintTitle("cmc");
+    } else if (locationState.includes("/beta-pass/sei")) {
+      setSelectedMint(seiData);
+      setMintTitle("sei");
+    } else if (locationState.includes("/beta-pass/core")) {
+      setSelectedMint(coreData);
+      setMintTitle("core");
+    } else if (locationState.includes("/beta-pass/viction")) {
+      setSelectedMint(victionData);
+      setMintTitle("viction");
+    }
+    else if (locationState.includes("/beta-pass/multiversx")) {
+      setSelectedMint(multiversData);
+      setMintTitle("multiversx");
+    }
+    else if (locationState.includes("/beta-pass/immutable")) {
+      setSelectedMint(immutableData);
+      setMintTitle("immutable");
     }
   }, [locationState]);
 
@@ -704,6 +766,16 @@ const BetaPassNFT = ({
                           ? "Doge"
                           : mintTitle === "gate"
                           ? "Gate.io"
+                          : mintTitle === "core"
+                          ? "CORE"
+                          : mintTitle === "multiversx"
+                          ? "MultiversX"
+                          : mintTitle === "immutable"
+                          ? "Immutable"
+                          : mintTitle === "sei"
+                          ? "SEI"
+                          : mintTitle === "viction"
+                          ? "VICTION"
                           : mintTitle === "coingecko"
                           ? "CoinGecko"
                           : mintTitle === "skale"
@@ -774,28 +846,93 @@ const BetaPassNFT = ({
                 </div>
               </div>
               <div
-                className="filters-container d-flex flex-column flex-lg-row align-items-center justify-content-center my-4 p-3 position-relative gap-3"
+                className="filters-container d-flex flex-column align-items-center justify-content-center my-4 p-3 position-relative gap-3"
                 style={{ zIndex: 2 }}
               >
                 <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
-                  {/* <NavLink
-                    to={"/marketplace/beta-pass/avalanche"}
+                <NavLink
+                    to={"/marketplace/beta-pass/core"}
                     className={`${
-                      location.pathname.includes("avalanche") &&
+                      location.pathname.includes("core") &&
                       "selected-beta-pass-item"
                     } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
                     onClick={() => {
-                      setSelectedMint(avaxData);
-                      setMintTitle("avalanche");
+                      setSelectedMint(coreData);
+                      setMintTitle("core");
                     }}
                   >
                     <img
-                      src={avaxLogo}
-                      className="beta-pass- -img"
+                      src={coreLogo}
+                      className="beta-pass-chain-img"
                       alt=""
                     />
-                    <span>Avalanche</span>
-                  </NavLink> */}
+                    <span>CORE</span>
+                  </NavLink>
+                  <NavLink
+                    to={"/marketplace/beta-pass/viction"}
+                    className={`${
+                      location.pathname.includes("viction") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(victionData);
+                      setMintTitle("viction");
+                    }}
+                  >
+                    <img
+                      src={victionLogo}
+                      className="beta-pass-chain-img"
+                      alt=""
+                    />
+                    <span>VICTION</span>
+                  </NavLink>
+                  <NavLink
+                    to={"/marketplace/beta-pass/sei"}
+                    className={`${
+                      location.pathname.includes("sei") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(seiData);
+                      setMintTitle("sei");
+                    }}
+                  >
+                    <img src={seiLogo} className="beta-pass-chain-img" alt="" />
+                    <span>SEI</span>
+                  </NavLink>
+                  <NavLink
+                    to={"/marketplace/beta-pass/immutable"}
+                    className={`${
+                      location.pathname.includes("immutable") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(immutableData);
+                      setMintTitle("immutable");
+                    }}
+                  >
+                    <img src={seiLogo} className="beta-pass-chain-img" alt="" />
+                    <span>Immutable</span>
+                  </NavLink>
+                  <NavLink
+                    to={"/marketplace/beta-pass/multiversx"}
+                    className={`${
+                      location.pathname.includes("multiversx") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(multiversData);
+                      setMintTitle("multiversx");
+                    }}
+                  >
+                    <img src={seiLogo} className="beta-pass-chain-img" alt="" />
+                    <span>MultiversX</span>
+                  </NavLink>
+
+                </div>
+                <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
+                 
+
                   <NavLink
                     to={"/marketplace/beta-pass/skale"}
                     className={`${
@@ -940,7 +1077,12 @@ const BetaPassNFT = ({
                   mintTitle !== "base" &&
                   mintTitle !== "doge" &&
                   mintTitle !== "cmc" &&
-                  mintTitle !== "skale" && (
+                  mintTitle !== "skale" &&
+                  mintTitle !== "core" &&
+                  mintTitle !== "viction" &&
+                  mintTitle !== "sei"&&
+                  mintTitle !== "multiversx"&&
+                  mintTitle !== "immutable" && (
                     <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
                       <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
                         <div className="d-flex flex-column position-relative">
@@ -1013,7 +1155,12 @@ const BetaPassNFT = ({
                     mintTitle === "doge" ||
                     mintTitle === "base" ||
                     mintTitle === "cmc" ||
-                    mintTitle === "skale"
+                    mintTitle === "skale" ||
+                    mintTitle === "viction" ||
+                    mintTitle === "core" ||
+                    mintTitle === "sei"||
+                    mintTitle === "multiversx"||
+                    mintTitle === "immutable"
                       ? "col-12 col-md-12 col-xxl-7 mt-0 px-0"
                       : "col-12 col-md-12 col-xxl-5 mt-0 px-0"
                   }
@@ -1039,7 +1186,12 @@ const BetaPassNFT = ({
                         mintTitle !== "base" &&
                         mintTitle !== "doge" &&
                         mintTitle !== "cmc" &&
-                        mintTitle !== "skale" && (
+                        mintTitle !== "skale" &&
+                        mintTitle !== "sei" &&
+                        mintTitle !== "core" &&
+                        mintTitle !== "viction"&&
+                        mintTitle !== "immutable"&&
+                        mintTitle !== "multiversx" && (
                           <>
                             Mint your {selectedMint.title}{" "}
                             <br className="d-none d-lg-flex" />
@@ -1054,7 +1206,12 @@ const BetaPassNFT = ({
                         mintTitle === "doge" ||
                         mintTitle === "base" ||
                         mintTitle === "cmc" ||
-                        mintTitle === "skale") && (
+                        mintTitle === "skale" ||
+                        mintTitle === "core" ||
+                        mintTitle === "sei" ||
+                        mintTitle === "viction"||
+                        mintTitle === "multiversx"||
+                        mintTitle === "immutable") && (
                         <>
                           Get your {selectedMint.title}{" "}
                           <br className="d-none d-lg-flex" />
@@ -1127,7 +1284,13 @@ const BetaPassNFT = ({
                             <img src={pinkAreaConflux} alt="" />
                           </div>
                         )}
-                        {(mintTitle === "base" || mintTitle === "skale") && (
+                        {(mintTitle === "base" ||
+                          mintTitle === "skale" ||
+                          mintTitle === "sei" ||
+                          mintTitle === "core" ||
+                          mintTitle === "viction" ||
+                          mintTitle === "multiversx" ||
+                          mintTitle === "immutable") && (
                           <div className="position-relative">
                             <img src={pinkAreaBase} alt="" />
                           </div>
@@ -1258,7 +1421,12 @@ const BetaPassNFT = ({
                     mintTitle === "doge" ||
                     mintTitle === "base" ||
                     mintTitle === "cmc" ||
-                    mintTitle === "skale"
+                    mintTitle === "skale" ||
+                    mintTitle === "sei" ||
+                    mintTitle === "core" ||
+                    mintTitle === "viction"||
+                    mintTitle === "multiversx"||
+                    mintTitle === "immutable"
                       ? "col-12 col-md-12 col-xxl-5 mt-0 px-0 px-lg-2"
                       : "col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2"
                   }
@@ -1269,7 +1437,12 @@ const BetaPassNFT = ({
                   mintTitle !== "gate" &&
                   mintTitle !== "base" &&
                   mintTitle !== "cmc" &&
-                  mintTitle !== "skale" ? (
+                  mintTitle !== "skale" &&
+                  mintTitle !== "core" &&
+                  mintTitle !== "sei" &&
+                  mintTitle !== "viction"&&
+                  mintTitle !== "multiversx"&&
+                  mintTitle !== "immutable" ? (
                     <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
                       <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
                         <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
@@ -1535,34 +1708,39 @@ const BetaPassNFT = ({
                       className={`  justify-content-start
                      mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
                     >
-                      {/* {!alreadyRegistered && mintTitle === "skale" && (
-                        <div className="d-flex align-items-center justify-content-around gap-2">
-                          <button
-                            className={
-                              activeTab === "create"
-                                ? "land-name2-active w-100"
-                                : "land-name2-passive w-100"
-                            }
-                            onClick={() => {
-                              setactiveTab("create");
-                            }}
-                          >
-                            Create Account
-                          </button>
-                          <button
-                            className={
-                              activeTab === "login"
-                                ? "land-name2-active w-100"
-                                : "land-name2-passive w-100"
-                            }
-                            onClick={() => {
-                              setactiveTab("login");
-                            }}
-                          >
-                            Sign in
-                          </button>
-                        </div>
-                      )} */}
+                      {!alreadyRegistered &&
+                        (mintTitle === "core" ||
+                          mintTitle === "viction" ||
+                          mintTitle === "sei"||
+                          mintTitle === "immutable" ||
+                          mintTitle === "multiversx") && (
+                          <div className="d-flex align-items-center justify-content-around gap-2">
+                            <button
+                              className={
+                                activeTab === "create"
+                                  ? "land-name2-active w-100"
+                                  : "land-name2-passive w-100"
+                              }
+                              onClick={() => {
+                                setactiveTab("create");
+                              }}
+                            >
+                              Create Account
+                            </button>
+                            <button
+                              className={
+                                activeTab === "login"
+                                  ? "land-name2-active w-100"
+                                  : "land-name2-passive w-100"
+                              }
+                              onClick={() => {
+                                setactiveTab("login");
+                              }}
+                            >
+                              Sign in
+                            </button>
+                          </div>
+                        )}
 
                       <div className="p-4 d-flex flex-column gap-3 h-100">
                         {mintTitle === "coingecko" && (
@@ -2302,7 +2480,6 @@ const BetaPassNFT = ({
 
                                   <span>Live</span>
                                 </div>
-                             
                               </div>
                               <div className="skl-eventwrapper p-3">
                                 <div className="d-flex flex-column gap-4">
@@ -2430,13 +2607,20 @@ const BetaPassNFT = ({
                       </button>
                     </div> */}
 
-                        {/* {alreadyRegistered && mintTitle === "skale" && (
-                          <h6 className="land-name">
-                            {mintTitle === "skale" && totalSkaleNft > 0
-                              ? "My NFT"
-                              : "Registered"}{" "}
-                          </h6>
-                        )} */}
+                        {alreadyRegistered &&
+                          (mintTitle === "core" ||
+                            mintTitle === "viction" ||
+                            mintTitle === "sei") && (
+                            <h6 className="land-name">
+                              {(mintTitle === "core" && totalCoreNft > 0) ||
+                              (mintTitle === "sei" && totalseiNft > 0) ||
+                              (mintTitle === "viction" && totalVictionNft > 0)||
+                              (mintTitle === "immutable" && totalImmutableNft > 0) ||
+                              (mintTitle === "multiversx" && totalMultiversNft > 0)
+                                ? "My NFT"
+                                : "Registered"}{" "}
+                            </h6>
+                          )}
                         {/* {mintTitle === "doge" && (
                           <h6 className="land-name">
                             {mintTitle === "doge" && totalDogeNft > 0
@@ -2444,9 +2628,13 @@ const BetaPassNFT = ({
                               : "Registered"}{" "}
                           </h6>
                         )} */}
-                        {/* {!alreadyRegistered &&
+                        {!alreadyRegistered &&
                           activeTab === "create" &&
-                          mintTitle === "skale" && (
+                          (mintTitle === "core" ||
+                            mintTitle === "viction" ||
+                            mintTitle === "sei" ||
+                            mintTitle === "multiversx" ||
+                            mintTitle === "immutable") && (
                             <div>
                               <ul class="timeline m-0 p-0" id="timeline">
                                 <li class="col-3 li complete">
@@ -2490,7 +2678,11 @@ const BetaPassNFT = ({
                           )}
                         {playerCreation === false &&
                           !alreadyRegistered &&
-                          mintTitle === "skale" && (
+                          (mintTitle === "core" ||
+                            mintTitle === "viction" ||
+                            mintTitle === "sei" ||
+                            mintTitle === "multiversx" ||
+                            mintTitle === "immutable") && (
                             <SignUpGecko
                               onSuccessVerify={(value) => {
                                 setplayerCreation(value);
@@ -2517,7 +2709,11 @@ const BetaPassNFT = ({
                         {playerCreation === true &&
                           linkWallet === false &&
                           !alreadyRegistered &&
-                          mintTitle === "skale" && (
+                          (mintTitle === "core" ||
+                            mintTitle === "viction" ||
+                            mintTitle === "sei" ||
+                            mintTitle === "immutable" ||
+                            mintTitle === "multiversx") && (
                             <PlayerCreationGecko
                               onSuccessCreation={() => {
                                 setLinkWallet(true);
@@ -2528,11 +2724,16 @@ const BetaPassNFT = ({
 
                         {linkWallet === true &&
                           !alreadyRegistered &&
-                          mintTitle === "skale" && (
+                          (mintTitle === "core" ||
+                            mintTitle === "viction" ||
+                            mintTitle === "sei" ||
+                            mintTitle === "multiversx" ||
+                            mintTitle === "immutable") && (
                             <div className="d-flex flex-column gap-4 justify-content-between p-4">
                               <span className={"createplayertxt"}>
                                 *Make sure to connect the same wallet address as
-                                the one you used for SKALE Giveaway .
+                                the one you used for {selectedMint.cardTitle}{" "}
+                                Giveaway.
                               </span>
                               <div
                                 className="walletconnectBtn w-100"
@@ -2565,53 +2766,22 @@ const BetaPassNFT = ({
                               <div className="summaryseparator"></div>
                             </div>
                           )}
-                        {alreadyRegistered && mintTitle === "skale" && (
-                          <div className="d-flex flex-column justify-content-between h-100">
-                            {totalSkaleNft === 0 && mintTitle === "skale" ? (
-                              <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
-                                <div
-                                  className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}
-                                  style={{
-                                    height: windowSize.width > 991 ? 210 : 295,
-                                  }}
-                                ></div>
-                                <div
-                                  className="genesis-desc nomask px-3 py-2 position-relative"
-                                  style={{
-                                    bottom: "5px",
-                                    minWidth: "100%",
-                                    maxWidth: "100%",
-                                  }}
-                                >
-                                  <h6
-                                    className="land-desc w-75 m-auto text-center justify-content-center"
-                                    style={{ fontWeight: 500, fontSize: 16 }}
-                                  >
-                                    {selectedMint.cardTitle}
-                                  </h6>
-                                </div>
-                              </div>
-                            ) : (
-                              <NavLink
-                                to={`/marketplace/nft/${mySkaleNfts[0]}/${window.config.nft_skale_address}`}
-                                onClick={() => {
-                                  updateViewCount(
-                                    mySkaleNfts[0],
-                                    window.config.nft_skale_address
-                                  );
-                                }}
-                              >
-                                <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
+                        {alreadyRegistered &&
+                          (mintTitle === "core" ||
+                            mintTitle === "viction" ||
+                            mintTitle === "sei" ||
+                            mintTitle === "multiversx" ||
+                            mintTitle === "immutable") && (
+                            <div className="d-flex flex-column justify-content-between h-100">
+                              {(mintTitle === "core" && totalCoreNft === 0) ||
+                              (mintTitle === "viction" &&
+                                totalVictionNft === 0) ||
+                              (mintTitle === "sei" && totalseiNft === 0) ||
+                              (mintTitle === "multiversx" && totalMultiversNft === 0) ||
+                              (mintTitle === "immutable" && totalImmutableNft === 0) ? (
+                                <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
                                   <div
-                                    className={`coingeckoempty-wrapper  ${
-                                      totalSkaleNft === 0 &&
-                                      mintTitle === "skale"
-                                        ? "conflux-empty"
-                                        : totalSkaleNft > 0 &&
-                                          mintTitle === "skale"
-                                        ? "skale-active"
-                                        : "conflux-empty"
-                                    } d-flex justify-content-center align-items-center p-3 position-relative`}
+                                    className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}
                                     style={{
                                       height:
                                         windowSize.width > 991 ? 210 : 295,
@@ -2620,54 +2790,96 @@ const BetaPassNFT = ({
                                   <div
                                     className="genesis-desc nomask px-3 py-2 position-relative"
                                     style={{
-                                      bottom: "20px",
+                                      bottom: "5px",
                                       minWidth: "100%",
                                       maxWidth: "100%",
                                     }}
                                   >
                                     <h6
                                       className="land-desc w-75 m-auto text-center justify-content-center"
-                                      style={{
-                                        fontWeight: 500,
-                                        fontSize: 16,
-                                      }}
+                                      style={{ fontWeight: 500, fontSize: 16 }}
                                     >
-                                      SKBP {`#${mySkaleNfts[0]}`}
+                                      {selectedMint.cardTitle}
                                     </h6>
                                   </div>
                                 </div>
-                              </NavLink>
-                            )}
-                            <span className="footertxt-coingecko">
-                              After NFT distribution, you can view{" "}
-                              {selectedMint.cardTitle}.
-                            </span>
-                            <div className="summaryseparator mt-3 mb-3"></div>
-                            <div className="d-flex align-items-center gap-2 justify-content-between">
-                              <div className="opacitywrapper4 m-0">
-                                <a
-                                  className="game-event-download text-white  d-flex align-items-center gap-2"
-                                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                                  target="_blank"
+                              ) : (
+                                <NavLink
+                                  to={`/marketplace/nft/${mySkaleNfts[0]}/${window.config.nft_skale_address}`}
+                                  onClick={() => {
+                                    updateViewCount(
+                                      mySkaleNfts[0],
+                                      window.config.nft_skale_address
+                                    );
+                                  }}
                                 >
-                                  <img
-                                    src={epicwhite}
-                                    alt="icon"
-                                    className="epicgame2"
-                                  />
-                                  Download
-                                </a>
+                                  <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
+                                    <div
+                                      className={`coingeckoempty-wrapper  ${
+                                        totalSkaleNft === 0 &&
+                                        mintTitle === "skale"
+                                          ? "conflux-empty"
+                                          : totalSkaleNft > 0 &&
+                                            mintTitle === "skale"
+                                          ? "skale-active"
+                                          : "conflux-empty"
+                                      } d-flex justify-content-center align-items-center p-3 position-relative`}
+                                      style={{
+                                        height:
+                                          windowSize.width > 991 ? 210 : 295,
+                                      }}
+                                    ></div>
+                                    <div
+                                      className="genesis-desc nomask px-3 py-2 position-relative"
+                                      style={{
+                                        bottom: "20px",
+                                        minWidth: "100%",
+                                        maxWidth: "100%",
+                                      }}
+                                    >
+                                      <h6
+                                        className="land-desc w-75 m-auto text-center justify-content-center"
+                                        style={{
+                                          fontWeight: 500,
+                                          fontSize: 16,
+                                        }}
+                                      >
+                                        SKBP {`#${mySkaleNfts[0]}`}
+                                      </h6>
+                                    </div>
+                                  </div>
+                                </NavLink>
+                              )}
+                              <span className="footertxt-coingecko">
+                                After NFT distribution, you can view{" "}
+                                {selectedMint.cardTitle}.
+                              </span>
+                              <div className="summaryseparator mt-3 mb-3"></div>
+                              <div className="d-flex align-items-center gap-2 justify-content-between">
+                                <div className="opacitywrapper4 m-0">
+                                  <a
+                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={epicwhite}
+                                      alt="icon"
+                                      className="epicgame2"
+                                    />
+                                    Download
+                                  </a>
+                                </div>
+                                <NavLink
+                                  to="/account"
+                                  className="accountbtn-coingecko btn d-flex align-items-center gap-1"
+                                >
+                                  <img src={user} alt="" className="user2" />
+                                  My Account
+                                </NavLink>
                               </div>
-                              <NavLink
-                                to="/account"
-                                className="accountbtn-coingecko btn d-flex align-items-center gap-1"
-                              >
-                                <img src={user} alt="" className="user2" />
-                                My Account
-                              </NavLink>
                             </div>
-                          </div>
-                        )} */}
+                          )}
                       </div>
                     </div>
                   )}

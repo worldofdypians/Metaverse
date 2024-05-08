@@ -49,6 +49,11 @@ import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
+import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
+import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
+import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
+
+
 import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import { dyp700Address, dyp700v1Address } from "../../web3";
@@ -116,14 +121,70 @@ function Dashboard({
       name: "SKALE",
       symbol: "skale",
     },
+    {
+      name: "CORE",
+      symbol: "core",
+    },    {
+      name: "Viction",
+      symbol: "viction",
+    },    {
+      name: "SEI",
+      symbol: "sei",
+    },
   ];
 
-
-  const chestImagesBnb = ["0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-  const chestImagesCore = ["0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-  const chestImagesSei = ["0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-  const chestImagesViction = ["0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-
+  const chestImagesBnb = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+  const chestImagesCore = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+  const chestImagesSei = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+  const chestImagesViction = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
 
   function shuffle(array) {
     let currentIndex = array.length,
@@ -236,14 +297,14 @@ function Dashboard({
   const [standardVictionChests, setStandardVictionChests] = useState([]);
   const [premiumVictionChests, setPremiumVictionChests] = useState([]);
   const [standardSeiChests, setStandardSeiChests] = useState([]);
-  const [premiumSeiChests, setPremiumSeiChests] = useState([])
+  const [premiumSeiChests, setPremiumSeiChests] = useState([]);
   const [standardCoreChests, setStandardCoreChests] = useState([]);
   const [premiumCoreChests, setPremiumCoreChests] = useState([]);
 
   const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
   const [openedVictionChests, setOpenedVictionChests] = useState([]);
   const [openedCoreChests, setOpenedCoreChests] = useState([]);
-  const [openedSeiChests, setOpenedSeiChests] = useState([])
+  const [openedSeiChests, setOpenedSeiChests] = useState([]);
 
   const [kittyDashRecords, setkittyDashRecords] = useState([]);
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
@@ -293,8 +354,7 @@ function Dashboard({
 
   const [claimedVictionPremiumChests, setclaimedVictionPremiumChests] =
     useState(0);
-    const [claimedSeiPremiumChests, setclaimedSeiPremiumChests] =
-    useState(0);
+  const [claimedSeiPremiumChests, setclaimedSeiPremiumChests] = useState(0);
 
   const [dailyplayerData, setdailyplayerData] = useState(0);
   const [weeklyplayerData, setweeklyplayerData] = useState(0);
@@ -329,12 +389,13 @@ function Dashboard({
   const [dateofBundlev1, setdateofBundlev1] = useState(0);
   const [datewhenBundleBought, setdatewhenBundleBought] = useState(0);
   const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
-  const [bnbImages, setBnbImages] = useState(shuffle(chestImagesBnb))
-  const [skaleImages, setSkaleImages] = useState([])
-  const [coreImages, setCoreImages] = useState(shuffle(chestImagesCore))
-  const [victionImages, setVictionImages] = useState(shuffle(chestImagesViction))
-  const [seiImages, setSeiImages] = useState(shuffle(chestImagesSei))
- 
+  const [bnbImages, setBnbImages] = useState(shuffle(chestImagesBnb));
+  const [skaleImages, setSkaleImages] = useState([]);
+  const [coreImages, setCoreImages] = useState(shuffle(chestImagesCore));
+  const [victionImages, setVictionImages] = useState(
+    shuffle(chestImagesViction)
+  );
+  const [seiImages, setSeiImages] = useState(shuffle(chestImagesSei));
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -716,6 +777,9 @@ function Dashboard({
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
   let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
+  let wseiAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
+  let wvictionAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
+  let wcoreAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
 
@@ -784,7 +848,6 @@ function Dashboard({
       chestId: 10,
     },
   ];
-
 
   const getRankData = async () => {
     await axios
@@ -1516,6 +1579,7 @@ function Dashboard({
     let subscribedPlatformTokenAmountSkale;
     let subscribedPlatformTokenAmountCore;
     let subscribedPlatformTokenAmountViction;
+    let subscribedPlatformTokenAmountSei;
 
     const web3eth = window.infuraWeb3;
     const web3cfx = window.confluxWeb3;
@@ -1525,6 +1589,7 @@ function Dashboard({
     const web3skale = window.skaleWeb3;
     const web3core = window.coreWeb3;
     const web3viction = window.victionWeb3;
+    const web3sei = window.seiWeb3;
 
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const BaseABI = window.SUBSCRIPTION_BASE_ABI;
@@ -1534,6 +1599,7 @@ function Dashboard({
     const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
     const CoreABI = window.SUBSCRIPTION_SKALE_ABI;
     const VicitonABI = window.SUBSCRIPTION_SKALE_ABI;
+    const SeiABI = window.SUBSCRIPTION_SKALE_ABI;
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
@@ -1543,6 +1609,7 @@ function Dashboard({
     const skalesubscribeAddress = window.config.subscription_skale_address;
     const coresubscribeAddress = window.config.subscription_core_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
+    const seisubscribeAddress = window.config.subscription_sei_address;
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
@@ -1571,6 +1638,8 @@ function Dashboard({
       VicitonABI,
       victionsubscribeAddress
     );
+
+    const seicontract = new web3sei.eth.Contract(SeiABI, seisubscribeAddress);
 
     if (addr) {
       subscribedPlatformTokenAmountETH = await ethcontract.methods
@@ -1637,6 +1706,14 @@ function Dashboard({
           return 0;
         });
 
+      subscribedPlatformTokenAmountSei = await seicontract.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
       if (
         subscribedPlatformTokenAmountCfx == "0" &&
         subscribedPlatformTokenAmountETH == "0" &&
@@ -1646,6 +1723,7 @@ function Dashboard({
         subscribedPlatformTokenAmountCore == "0" &&
         subscribedPlatformTokenAmountViction == "0" &&
         subscribedPlatformTokenAmountSkale == "0" &&
+        subscribedPlatformTokenAmountSei == "0" &&
         result === false
       ) {
         setIsPremium(false);
@@ -1659,6 +1737,7 @@ function Dashboard({
         subscribedPlatformTokenAmountCore != "0" ||
         subscribedPlatformTokenAmountViction != "0" ||
         subscribedPlatformTokenAmountSkale != "0" ||
+        subscribedPlatformTokenAmountSei != "0" ||
         result === true
       ) {
         setIsPremium(true);
@@ -1670,22 +1749,39 @@ function Dashboard({
     if (email) {
       if (isPremium) {
         if (
-          claimedChests + claimedPremiumChests < 20 ||
-          claimedSkaleChests + claimedSkalePremiumChests < 20
+          (claimedChests + claimedPremiumChests < 20) ||
+          (claimedSkaleChests + claimedSkalePremiumChests < 20) ||
+          (claimedCoreChests + claimedCorePremiumChests < 20) ||
+          (claimedVictionChests + claimedVictionPremiumChests < 20) ||
+          (claimedSeiChests + claimedSeiPremiumChests < 20)
         ) {
           setCanBuy(true);
         } else if (
-          claimedChests + claimedPremiumChests === 20 &&
-          claimedSkaleChests + claimedSkalePremiumChests === 20
+          (claimedChests + claimedPremiumChests === 20) &&
+          (claimedSkaleChests + claimedSkalePremiumChests === 20) &&
+          (claimedCoreChests + claimedCorePremiumChests === 20) &&
+          (claimedVictionChests + claimedVictionPremiumChests === 20) &&
+          (claimedSeiChests + claimedSeiPremiumChests === 20)
         ) {
           setCanBuy(false);
         }
       } else if (!isPremium) {
-        if (claimedChests < 10 || claimedSkaleChests < 10) {
+        if (
+          claimedChests < 10 ||
+          claimedSkaleChests < 10 ||
+          claimedCoreChests < 10 ||
+          claimedVictionChests < 10 ||
+          claimedSeiChests < 10
+        ) {
           setCanBuy(true);
-        } else if (claimedChests === 10 && claimedSkaleChests === 10) {
-          setCanBuy(true);
-          //change later
+        } else if (
+          claimedChests === 10 &&
+          claimedSkaleChests === 10 &&
+          claimedCoreChests === 10 &&
+          claimedVictionChests === 10 &&
+          claimedSeiChests === 10
+        ) {
+          setCanBuy(false);
         }
       }
     } else {
@@ -2311,6 +2407,12 @@ function Dashboard({
         ? window.config.subscription_tokens[token]?.decimals
         : chainId === 1482601649
         ? window.config.subscriptionskale_tokens[token]?.decimals
+        : chainId === 1116
+        ? window.config.subscriptioncore_tokens[token]?.decimals
+        : chainId === 713715
+        ? window.config.subscriptionsei_tokens[token]?.decimals
+        : chainId === 88
+        ? window.config.subscriptionviction_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -2330,6 +2432,12 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmountBase(token)
         : chainId === 1482601649
         ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
+        : chainId === 1116
+        ? await window.getEstimatedTokenSubscriptionAmountCore(token)
+        : chainId === 88
+        ? await window.getEstimatedTokenSubscriptionAmountViction(token)
+        : chainId === 713715
+        ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
@@ -2352,6 +2460,10 @@ function Dashboard({
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
     const skalesubscribeAddress = window.config.subscription_skale_address;
+    const seisubscribeAddress = window.config.subscription_sei_address;
+    const victionsubscribeAddress = window.config.subscription_viction_address;
+    const coresubscribeAddress = window.config.subscription_core_address;
+
 
     const web3 = new Web3(window.ethereum);
 
@@ -2375,6 +2487,12 @@ function Dashboard({
           ? avaxsubscribeAddress
           : chainId === 1482601649
           ? skalesubscribeAddress
+          : chainId === 88
+          ? victionsubscribeAddress
+          : chainId === 1116
+          ? coresubscribeAddress
+          : chainId === 713715
+          ? seisubscribeAddress
           : cfxsubscribeAddress,
         price
       )
@@ -2413,6 +2531,10 @@ function Dashboard({
     const cfxWeb3 = new Web3(window.config.conflux_endpoint);
     const baseWeb3 = new Web3(window.config.base_endpoint);
     const skaleWeb3 = new Web3(window.config.skale_endpoint);
+    const seiWeb3 = new Web3(window.config.sei_endpoint);
+    const coreWeb3 = new Web3(window.config.core_endpoint);
+    const victionWeb3 = new Web3(window.config.viction_endpoint);
+
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
@@ -2421,6 +2543,10 @@ function Dashboard({
 
     const basesubscribeAddress = window.config.subscription_base_address;
     const skalesubscribeAddress = window.config.subscription_skale_address;
+    const seisubscribeAddress = window.config.subscription_sei_address;
+    const coresubscribeAddress = window.config.subscription_core_address;
+    const victionsubscribeAddress = window.config.subscription_viction_address;
+
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -2453,6 +2579,21 @@ function Dashboard({
       subscribeToken
     );
 
+    const subscribeTokencontractsei = new seiWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
+    const subscribeTokencontractcore = new coreWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
+    const subscribeTokencontractviction = new victionWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
     let tokenprice =
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
@@ -2466,6 +2607,12 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmountBase(token)
         : chainId === 1482601649
         ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
+        : chainId === 88
+        ? await window.getEstimatedTokenSubscriptionAmountViction(token)
+        : chainId === 1116
+        ? await window.getEstimatedTokenSubscriptionAmountCore(token)
+        : chainId === 713715
+        ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
@@ -2485,8 +2632,49 @@ function Dashboard({
           setisApproved(false);
           setapproveStatus("initial");
         }
-      }
-      if (chainId === 56) {
+      } else if (chainId === 88) {
+        const result = await subscribeTokencontractviction.methods
+          .allowance(coinbase, victionsubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } else if (chainId === 1116) {
+        const result = await subscribeTokencontractcore.methods
+          .allowance(coinbase, coresubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } else if (chainId === 713715) {
+        const result = await subscribeTokencontractsei.methods
+          .allowance(coinbase, seisubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } else if (chainId === 56) {
         const result = await subscribeTokencontractbnb.methods
           .allowance(coinbase, bnbsubscribeAddress)
           .call()
@@ -2578,6 +2766,12 @@ function Dashboard({
           ? "SUBSCRIPTION_BASE"
           : chainId === 1482601649
           ? "SUBSCRIPTION_SKALE"
+          : chainId === 88
+          ? "SUBSCRIPTION_SKALE"
+          : chainId === 1116
+          ? "SUBSCRIPTION_SKALE"
+          : chainId === 713715
+          ? "SUBSCRIPTION_SKALE"
           : "",
     });
 
@@ -2603,6 +2797,12 @@ function Dashboard({
               ? "base"
               : chainId === 1482601649
               ? "skale"
+              : chainId === 88
+              ? "viction"
+              : chainId === 1116
+              ? "core"
+              : chainId === 713715
+              ? "sei"
               : "";
           setselectedChainforPremium(selectedchain);
 
@@ -2768,6 +2968,58 @@ function Dashboard({
     }
   };
 
+  const handleCorePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x45c")
+          .then(() => {
+            handleSwitchNetwork(1116);
+            setChainDropdown(chainDropdowns[6]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } 
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleSeiPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xae3f3")
+          .then(() => {
+            handleSwitchNetwork(713715);
+            setChainDropdown(chainDropdowns[8]);
+
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } 
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+  const handleVictionPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x58")
+          .then(() => {
+            handleSwitchNetwork(88);
+            setChainDropdown(chainDropdowns[7]);
+
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } 
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
   const handleRankRewards = () => {
     let totalScore = userBnbScore + userSkaleScore;
     if (totalScore > 6000000) {
@@ -2827,10 +3079,10 @@ function Dashboard({
         now.getSeconds() === 0
       ) {
         setDummyPremiumChests(shuffle(dummyPremiums));
-    setBnbImages(shuffle(chestImagesBnb))
-    setVictionImages(shuffle(chestImagesViction))
-    setCoreImages(shuffle(chestImagesCore))
-    setSeiImages(shuffle(chestImagesSei))
+        setBnbImages(shuffle(chestImagesBnb));
+        setVictionImages(shuffle(chestImagesViction));
+        setCoreImages(shuffle(chestImagesCore));
+        setSeiImages(shuffle(chestImagesSei));
 
         clearInterval(interval);
       }
@@ -2849,6 +3101,33 @@ function Dashboard({
       );
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
+    } else if (chainId === 88) {
+      setChainDropdown(chainDropdowns[7]);
+      setdropdownIcon("usdc");
+      setdropdownTitle("USDC");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionviction_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wvictionAddress);
+      handleCheckIfAlreadyApproved(wvictionAddress);
+    } else if (chainId === 1116) {
+      setChainDropdown(chainDropdowns[6]);
+      setdropdownIcon("usdc");
+      setdropdownTitle("USDC");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptioncore_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wcoreAddress);
+      handleCheckIfAlreadyApproved(wcoreAddress);
+    } else if (chainId === 713715) {
+      setChainDropdown(chainDropdowns[8]);
+      setdropdownIcon("usdc");
+      setdropdownTitle("USDC");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionsei_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wseiAddress);
+      handleCheckIfAlreadyApproved(wseiAddress);
     } else if (chainId === 56) {
       setChainDropdown(chainDropdowns[1]);
       setdropdownIcon("usdt");
@@ -2931,6 +3210,21 @@ function Dashboard({
     } else if (chainId === 1482601649 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionskale_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 88 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionviction_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptioncore_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 713715 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionsei_tokens[selectedSubscriptionToken]
           ?.decimals
       );
     }
@@ -3298,6 +3592,7 @@ function Dashboard({
                         openedChests={openedChests}
                         openedSkaleChests={openedSkaleChests}
                         openedCoreChests={openedCoreChests}
+                        openedSeiChests={openedSeiChests}
                         openedVictionChests={openedVictionChests}
                         onDailyBonusInfoClick={() => {
                           setdailyBonusInfo(true);
@@ -3634,6 +3929,7 @@ function Dashboard({
                             allSkaleChests={allSkaleChests}
                             allCoreChests={allCoreChests}
                             allVictionChests={allVictionChests}
+                            allSeiChests={allSeiChests}
                             availableTime={goldenPassRemainingTime}
                             userSocialRewards={userSocialRewards}
                             dogePrice={dogePrice}
@@ -3771,6 +4067,36 @@ function Dashboard({
                                     />
                                     <span className="subscription-chain mb-0">
                                       SKALE
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={coreIcon}
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      CORE
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={vicitonIcon}
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Viction
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={seiIcon}
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      SEI
                                     </span>
                                   </div>
                                 </div>
@@ -3921,6 +4247,48 @@ function Dashboard({
                                       />
                                       SKALE
                                     </li>
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleCorePool}
+                                    >
+                                      <img
+                                        src={coreIcon}
+                                        alt=""
+                                        style={{
+                                          width: "18px",
+                                          height: "18px",
+                                        }}
+                                      />
+                                      CORE
+                                    </li>
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleVictionPool}
+                                    >
+                                      <img
+                                        src={vicitonIcon}
+                                        alt=""
+                                        style={{
+                                          width: "18px",
+                                          height: "18px",
+                                        }}
+                                      />
+                                      Viction
+                                    </li>
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleSeiPool}
+                                    >
+                                      <img
+                                        src={seiIcon}
+                                        alt=""
+                                        style={{
+                                          width: "18px",
+                                          height: "18px",
+                                        }}
+                                      />
+                                      SEI
+                                    </li>
                                   </ul>
                                 </div>
                               </div>
@@ -3982,6 +4350,15 @@ function Dashboard({
                                             : chainId === 1482601649
                                             ? window.config
                                                 .subscriptionskale_tokens
+                                            : chainId === 88
+                                            ? window.config
+                                                .subscriptionviction_tokens
+                                            : chainId === 1116
+                                            ? window.config
+                                                .subscriptioncore_tokens
+                                            : chainId === 713715
+                                                ? window.config
+                                                    .subscriptionsei_tokens
                                             : window.config.subscription_tokens
                                         ).map((t, i) => (
                                           <li
@@ -4021,6 +4398,21 @@ function Dashboard({
                                                         .subscriptionskale_tokens[
                                                         t
                                                       ]?.symbol
+                                                   : chainId === 88
+                                                      ? window.config
+                                                          .subscriptionviction_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                  : chainId === 1116
+                                                        ? window.config
+                                                            .subscriptioncore_tokens[
+                                                            t
+                                                          ]?.symbol
+                                                 : chainId === 713715
+                                                        ? window.config
+                                                            .subscriptionsei_tokens[
+                                                            t
+                                                          ]?.symbol
                                                     : window.config
                                                         .subscription_tokens[t]
                                                         ?.symbol
@@ -4055,6 +4447,20 @@ function Dashboard({
                                                         .subscriptionskale_tokens[
                                                         t
                                                       ]?.symbol
+                                                    : chainId === 88
+                                                      ? window.config
+                                                          .subscriptionviction_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                   : chainId === 713715
+                                                        ? window.config
+                                                            .subscriptionsei_tokens[
+                                                            t
+                                                          ]?.symbol
+                                                 : chainId === 1116
+                                                 ? window.config.subscriptionsei_tokens[
+                                                              t
+                                                            ]?.symbol
                                                     : window.config
                                                         .subscription_tokens[t]
                                                         ?.symbol
@@ -4094,6 +4500,18 @@ function Dashboard({
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
+                                                 : chainId === 1116
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                : chainId === 88
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptionviciton_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                : chainId === 713715
+                                                      ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
+                                                          t
+                                                        ]?.symbol.toLowerCase()}Icon.svg`)
                                                   : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
@@ -4125,6 +4543,18 @@ function Dashboard({
                                               ? window.config
                                                   .subscriptionskale_tokens[t]
                                                   ?.symbol
+                                            : chainId === 1116
+                                                  ? window.config
+                                                      .subscriptioncore_tokens[t]
+                                                      ?.symbol
+                                        : chainId === 88
+                                                      ? window.config
+                                                          .subscriptionviction_tokens[t]
+                                                          ?.symbol
+                                          : chainId === 713715
+                                                          ? window.config
+                                                              .subscriptionsei_tokens[t]
+                                                              ?.symbol
                                               : window.config
                                                   .subscription_tokens[t]
                                                   ?.symbol}
@@ -4496,7 +4926,6 @@ function Dashboard({
                 allSkaleChests={allSkaleChests}
                 allCoreChests={allCoreChests}
                 allSeiChests={allSeiChests}
-
                 onChestClaimed={() => {
                   setCount(count + 1);
                 }}

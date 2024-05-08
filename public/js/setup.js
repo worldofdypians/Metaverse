@@ -1545,6 +1545,7 @@ window.config = {
   opbnb_endpoint: "https://opbnb.publicnode.com",
   core_endpoint: "https://rpc.coredao.org",
   viction_endpoint: "https://rpc.viction.xyz",
+  sei_endpoint: "https://evm-rpc-arctic-1.sei-apis.com",
 
 
   BUSD_address: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
@@ -1568,6 +1569,7 @@ window.config = {
   subscription_skale_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
   subscription_core_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
   subscription_viction_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
+  subscription_sei_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
 
 
   //DYP-ETH 3 days
@@ -1949,6 +1951,28 @@ window.config = {
     },
   },
 
+  
+  subscriptionviction_tokens: {
+    "0xCC205196288B7A26f6D43bBD68AaA98dde97276d": {
+      symbol: "USDC",
+      decimals: 6,
+    },
+  },
+  
+  subscriptioncore_tokens: {
+    "0xCC205196288B7A26f6D43bBD68AaA98dde97276d": {
+      symbol: "USDC",
+      decimals: 6,
+    },
+  },
+
+  subscriptionsei_tokens: {
+    "0xCC205196288B7A26f6D43bBD68AaA98dde97276d": {
+      symbol: "USDC",
+      decimals: 6,
+    },
+  },
+
   automated_trust_scores: {
     perfect_scoring: {
       // minimum numbers for 100% scores
@@ -2113,6 +2137,8 @@ window.baseWeb3 = new Web3(window.config.base_endpoint);
 window.opBnbWeb3 = new Web3(window.config.opbnb_endpoint);
 window.coreWeb3 = new Web3(window.config.core_endpoint);
 window.victionWeb3 = new Web3(window.config.viction_endpoint);
+window.seiWeb3 = new Web3(window.config.sei_endpoint);
+
 
 window.REWARD_TOKEN_ABI = window.TOKEN_ABI;
 window.REWARD_TOKENAVAX_ABI = window.TOKENAVAX_ABI;
@@ -43148,6 +43174,38 @@ async function getEstimatedTokenSubscriptionAmountSkale(tokenAddress) {
     .getEstimatedTokenSubscriptionAmount(tokenAddress)
     .call();
 }
+
+async function getEstimatedTokenSubscriptionAmountSei(tokenAddress) {
+  const seiContract = new window.seiWeb3.eth.Contract(
+    window.SUBSCRIPTION_SKALE_ABI,
+    window.config.subscription_sei_address
+  );
+  return await seiContract.methods
+    .getEstimatedTokenSubscriptionAmount(tokenAddress)
+    .call();
+}
+
+
+async function getEstimatedTokenSubscriptionAmountViction(tokenAddress) {
+  const vicitonContract = new window.victionWeb3.eth.Contract(
+    window.SUBSCRIPTION_SKALE_ABI,
+    window.config.subscription_viction_address
+  );
+  return await vicitonContract.methods
+    .getEstimatedTokenSubscriptionAmount(tokenAddress)
+    .call();
+}
+
+async function getEstimatedTokenSubscriptionAmountCore(tokenAddress) {
+  const coreContract = new window.coreWeb3.eth.Contract(
+    window.SUBSCRIPTION_SKALE_ABI,
+    window.config.subscription_core_address
+  );
+  return await coreContract.methods
+    .getEstimatedTokenSubscriptionAmount(tokenAddress)
+    .call();
+}
+
 
 // ===================== end subscription contract functions ================================
 

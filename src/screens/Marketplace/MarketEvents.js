@@ -29,6 +29,10 @@ import coin98 from "../Account/src/Components/WalletBalance/assets/coin98.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
 import base from "./assets/baseLogo.svg";
 import skaleLogo from "./assets/skaleLogo.svg";
+import seiLogo from "./assets/seiLogo.svg";
+import coreLogo from "./assets/coreLogo.svg";
+import victionLogo from "./assets/victionLogo.svg";
+
 import avaxLogo from "./assets/avaxLogo.svg";
 
 import betaMyEarnings from "./assets/betaMyEarnings.png";
@@ -182,13 +186,13 @@ const MarketEvents = ({
   const [baseEarnETH, setBaseEarnETH] = useState(0);
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
-  const [skalePrice, setSkalePrice] = useState(0)
+  const [skalePrice, setSkalePrice] = useState(0);
   const [dypiusPremiumEarnTokens, setdypiusPremiumEarnTokens] = useState(0);
   const [dypiusPremiumEarnUsd, setdypiusPremiumEarnUsd] = useState(0);
   const [dypiusPremiumPoints, setdypiusPremiumPoints] = useState(0);
-const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
-const [skaleEarnToken, setSkaleEarnToken] = useState(0);
-const [skalePoints, setSkalePoints] = useState(0);
+  const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
+  const [skaleEarnToken, setSkaleEarnToken] = useState(0);
+  const [skalePoints, setSkalePoints] = useState(0);
   const [dailyBonusPopup, setDailyBonusPopup] = useState(false);
   const [activePopup, setActivePopup] = useState(false);
 
@@ -223,6 +227,93 @@ const [skalePoints, setSkalePoints] = useState(0);
 
   const dummyBetaPassData2 = [
     {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$50,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "May 26, 2024",
+      backgroundImage: upcomingDyp2,
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Coming Soon",
+        id: "event12",
+        eventType: "Explore & Find",
+        totalRewards: "$50,000 in SEI Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "May 26, 2024",
+      },
+    },
+
+    {
+      title: "SEI",
+      logo: seiLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$50,000 in SEI Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "May 26, 2024",
+      backgroundImage: upcomingDyp2,
+      popupInfo: {
+        title: "SEI",
+        chain: "SEI Chain",
+        linkState: "sei",
+        rewards: "SEI",
+        status: "Coming Soon",
+        id: "event13",
+        eventType: "Explore & Find",
+        totalRewards: "$50,000 in SEI Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "May 26, 2024",
+      },
+    },
+
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$50,000 in SEI Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "May 26, 2024",
+      backgroundImage: upcomingDyp2,
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Coming Soon",
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$50,000 in VIC Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "May 26, 2024",
+      },
+    },
+
+    {
       title: "Dypius Premium",
       logo: dypiusPremium36,
       eventStatus: "Live",
@@ -252,7 +343,7 @@ const [skalePoints, setSkalePoints] = useState(0);
         activeTab: "dypiusv2",
       },
     },
-   
+
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -500,20 +591,13 @@ const [skalePoints, setSkalePoints] = useState(0);
     },
   };
 
-
-
-
-
-
-
-// if (dypEvent && dypEvent[0]) {
-//   const userEarnedDyp =
-//     dypEvent[0].reward.earn.total /
-//     dypEvent[0].reward.earn.multiplier;
-//   setDypiusEarnUsd(dyptokenDatabnb * userEarnedDyp);
-//   setDypiusEarnTokens(userEarnedDyp);
-// }
-
+  // if (dypEvent && dypEvent[0]) {
+  //   const userEarnedDyp =
+  //     dypEvent[0].reward.earn.total /
+  //     dypEvent[0].reward.earn.multiplier;
+  //   setDypiusEarnUsd(dyptokenDatabnb * userEarnedDyp);
+  //   setDypiusEarnTokens(userEarnedDyp);
+  // }
 
   const dailyBonusData = {
     eventType: "6 Available Rewards",
@@ -695,10 +779,14 @@ const [skalePoints, setSkalePoints] = useState(0);
   };
 
   const fetchSkalePrice = async () => {
-    await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd`).then((obj) => {
-      setSkalePrice(obj.data.skale.usd)
-    })
-  }
+    await axios
+      .get(
+        `https://api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd`
+      )
+      .then((obj) => {
+        setSkalePrice(obj.data.skale.usd);
+      });
+  };
 
   const fetchCFXPrice = async () => {
     await axios
@@ -716,7 +804,7 @@ const [skalePoints, setSkalePoints] = useState(0);
     fetchSkalePrice();
     fetchCFXPrice();
   }, []);
-  
+
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
       const response = await fetch(
@@ -724,14 +812,14 @@ const [skalePoints, setSkalePoints] = useState(0);
         {
           body: JSON.stringify(
             {
-            email: email,
-            publicAddress: userAddress,
-          }
-          // {
-          //   "email": "renato@outerlynx.com",
-          //   "publicAddress": "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0"
-          // }
-        ),
+              email: email,
+              publicAddress: userAddress,
+            }
+            // {
+            //   "email": "renato@outerlynx.com",
+            //   "publicAddress": "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0"
+            // }
+          ),
           headers: {
             "Content-Type": "application/json",
           },
@@ -752,7 +840,7 @@ const [skalePoints, setSkalePoints] = useState(0);
           const skaleEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "skale";
           });
-          
+
           const gateEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "gate";
           });
@@ -992,7 +1080,6 @@ const [skalePoints, setSkalePoints] = useState(0);
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                   
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1138,7 +1225,7 @@ const [skalePoints, setSkalePoints] = useState(0);
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 5).map((item, index) => (
                           <BetaEventCard
                             activeTab={item.activeTab}
                             data={item}
@@ -1252,6 +1339,66 @@ const [skalePoints, setSkalePoints] = useState(0);
                       <p className="upcoming-mint-desc">
                         Join the BabyDoge Treasure Hunt event for a chance to
                         grab a share of the $20,000 BabyDoge reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingBabyDoge}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={upcomingBabyDogeMobile}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+
+                  <div className="border-0 upcoming-mint-wrapper upcoming-babydoge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">CORE</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the CORE Treasure Hunt event for a chance to grab a
+                        share of the $50,000 CORE reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingBabyDoge}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={upcomingBabyDogeMobile}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+
+                  <div className="border-0 upcoming-mint-wrapper upcoming-babydoge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">SEI</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the SEI Treasure Hunt event for a chance to grab a
+                        share of the $50,000 SEI reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingBabyDoge}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={upcomingBabyDogeMobile}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+
+                  <div className="border-0 upcoming-mint-wrapper upcoming-babydoge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">VICTION</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the Viction Treasure Hunt event for a chance to
+                        grab a share of the $50,000 VIC reward pool.
                       </p>
                     </div>
                     <img
@@ -1624,12 +1771,13 @@ const [skalePoints, setSkalePoints] = useState(0);
                         rewards
                       </li>
                     )}
-                    {dummyEvent.id !== "event5" && dummyEvent.id !== "event11" && (
-                      <li className="popup-event-desc">
-                        Get global leaderboard points
-                      </li>
-                    )}
-                     {dummyEvent.id === "event11" && (
+                    {dummyEvent.id !== "event5" &&
+                      dummyEvent.id !== "event11" && (
+                        <li className="popup-event-desc">
+                          Get global leaderboard points
+                        </li>
+                      )}
+                    {dummyEvent.id === "event11" && (
                       <li className="popup-event-desc">
                         Get global SKALE leaderboard points
                       </li>

@@ -246,7 +246,10 @@ const NewWalletBalance = ({
   claimedCoreChests,
   claimedCorePremiumChests,
   claimedVictionChests,
-  claimedVictionPremiumChests,openedCoreChests,openedVictionChests
+  claimedVictionPremiumChests,
+  openedCoreChests,
+  openedVictionChests,
+  openedSeiChests,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -650,9 +653,14 @@ const NewWalletBalance = ({
   // const skalePercentage = (skaleClaimed / 20) * 100;
 
   const totalClaimedChests =
-    claimedChests + claimedPremiumChests + openedSkaleChests.length;
+    claimedChests +
+    claimedPremiumChests +
+    openedSkaleChests.length +
+    openedCoreChests.length +
+    openedVictionChests.length +
+    openedSeiChests.length;
 
-  const chestPercentage = (totalClaimedChests / 40) * 100;
+  const chestPercentage = (totalClaimedChests / 100) * 100;
 
   const dummyEvents = [
     {
