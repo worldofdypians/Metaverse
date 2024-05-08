@@ -659,6 +659,67 @@
   }
 }
 
+.core-mint-bg {
+  background-image: url("./assets/coreBackground.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+.sei-mint-bg {
+  background-image: url("./assets/seiBackground.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+.viction-mint-bg {
+  background-image: url("./assets/victionBackground.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+.immutable-mint-bg {
+  background-image: url("./assets/immutableBackground.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+.multivers-mint-bg {
+  background-image: url("./assets/multiversBackground.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+
 
 // .mint-wrappernew::before {
 //   content: "";
@@ -1083,6 +1144,41 @@
 
 .skale-active {
   background-image: url("../../assets/skaleActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.core-active {
+  background-image: url("../../assets/coreActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.sei-active {
+  background-image: url("../../assets/seiActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.multivers-active {
+  background-image: url("../../assets/multiversActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.viction-active {
+  background-image: url("../../assets/victionActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.immutable-active {
+  background-image: url("../../assets/immutableActive.webp");
   background-repeat: no-repeat;
   background-size: cover !important;
   background-position: center;
