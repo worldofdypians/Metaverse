@@ -1987,7 +1987,7 @@ function Dashboard({
     });
 
     setloadspinnerSub(true);
-    const today = new Date.now();
+    const today =  Date.now();
 
     await subscriptionContract.methods
       .subscribe(selectedSubscriptionToken, price)
