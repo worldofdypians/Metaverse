@@ -1847,9 +1847,9 @@ function App() {
     let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBase;
     let subscribedPlatformTokenAmountSkale;
-
     let subscribedPlatformTokenAmountCore;
     let subscribedPlatformTokenAmountViction;
+    let subscribedPlatformTokenAmountSei;
 
     const web3eth = window.infuraWeb3;
     const web3cfx = window.confluxWeb3;
@@ -1859,6 +1859,7 @@ function App() {
     const web3skale = window.skaleWeb3;
     const web3core = window.coreWeb3;
     const web3viction = window.victionWeb3;
+    const web3sei = window.seiWeb3;
 
     const CfxABI = window.SUBSCRIPTION_CFX_ABI;
     const BaseABI = window.SUBSCRIPTION_BASE_ABI;
@@ -1868,6 +1869,7 @@ function App() {
     const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
     const CoreABI = window.SUBSCRIPTION_SKALE_ABI;
     const VicitonABI = window.SUBSCRIPTION_SKALE_ABI;
+    const SeiABI = window.SUBSCRIPTION_SKALE_ABI;
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
@@ -1877,6 +1879,7 @@ function App() {
     const skalesubscribeAddress = window.config.subscription_skale_address;
     const coresubscribeAddress = window.config.subscription_core_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
+    const seisubscribeAddress = window.config.subscription_sei_address;
 
     const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
     const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
@@ -1905,6 +1908,8 @@ function App() {
       VicitonABI,
       victionsubscribeAddress
     );
+
+    const seicontract = new web3sei.eth.Contract(SeiABI, seisubscribeAddress);
 
     if (addr) {
       const result = window.checkPremium(addr);
@@ -1973,6 +1978,16 @@ function App() {
           return 0;
         });
 
+        
+      subscribedPlatformTokenAmountSei = await seicontract.methods
+      .subscriptionPlatformTokenAmount(addr)
+      .call()
+      .catch((e) => {
+        console.log(e);
+        return 0;
+      });
+
+
       if (
         subscribedPlatformTokenAmountCfx == "0" &&
         subscribedPlatformTokenAmountETH == "0" &&
@@ -1982,6 +1997,7 @@ function App() {
         subscribedPlatformTokenAmountSkale == "0" &&
         subscribedPlatformTokenAmountCore == "0" &&
         subscribedPlatformTokenAmountViction == "0" &&
+        subscribedPlatformTokenAmountSei == "0"  &&
         result === false
       ) {
         setIsPremium(false);
@@ -1995,6 +2011,7 @@ function App() {
         subscribedPlatformTokenAmountSkale != "0" ||
         subscribedPlatformTokenAmountCore != "0" ||
         subscribedPlatformTokenAmountViction != "0" ||
+        subscribedPlatformTokenAmountSei != "0"  ||
         result === true
       ) {
         setIsPremium(true);

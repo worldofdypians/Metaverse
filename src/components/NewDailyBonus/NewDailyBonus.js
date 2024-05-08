@@ -1795,7 +1795,7 @@ const NewDailyBonus = ({
         setMessage("login");
         setDisable(true);
       }
-    }  else if (chain === "sei") {
+    } else if (chain === "sei") {
       if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {

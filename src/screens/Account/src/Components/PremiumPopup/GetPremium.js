@@ -7,6 +7,10 @@ import greenCheck from "../../Images/premium/greenCheck.svg";
 import premiumIcon from "../../Images/premium/premiumIcon.svg";
 import Web3 from "web3";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
+import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
+import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
+import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
+
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
@@ -45,6 +49,18 @@ const GetPremiumPopup = ({
       name: "SKALE",
       symbol: "skale",
     },
+    {
+      name: "CORE",
+      symbol: "core",
+    },
+    {
+      name: "Viction",
+      symbol: "viction",
+    },
+    {
+      name: "SEI",
+      symbol: "sei",
+    },
   ];
 
   const { BigNumber } = window;
@@ -55,6 +71,9 @@ const GetPremiumPopup = ({
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
   let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
+  let wseiAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
+  let wvictionAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
+  let wcoreAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
 
   const metaverseBenefits = [
     "Exclusive access to World of Dypians",
@@ -207,6 +226,12 @@ const GetPremiumPopup = ({
         ? window.config.subscription_tokens[token]?.decimals
         : chainId === 1482601649
         ? window.config.subscriptionskale_tokens[token]?.decimals
+        : chainId === 1116
+        ? window.config.subscriptioncore_tokens[token]?.decimals
+        : chainId === 713715
+        ? window.config.subscriptionsei_tokens[token]?.decimals
+        : chainId === 88
+        ? window.config.subscriptionviction_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -226,6 +251,12 @@ const GetPremiumPopup = ({
         ? await window.getEstimatedTokenSubscriptionAmountBase(token)
         : chainId === 1482601649
         ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
+        : chainId === 1116
+        ? await window.getEstimatedTokenSubscriptionAmountCore(token)
+        : chainId === 88
+        ? await window.getEstimatedTokenSubscriptionAmountViction(token)
+        : chainId === 713715
+        ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
@@ -248,6 +279,9 @@ const GetPremiumPopup = ({
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
     const skalesubscribeAddress = window.config.subscription_skale_address;
+    const seisubscribeAddress = window.config.subscription_sei_address;
+    const victionsubscribeAddress = window.config.subscription_viction_address;
+    const coresubscribeAddress = window.config.subscription_core_address;
 
     const web3 = new Web3(window.ethereum);
 
@@ -271,6 +305,12 @@ const GetPremiumPopup = ({
           ? avaxsubscribeAddress
           : chainId === 1482601649
           ? skalesubscribeAddress
+          : chainId === 88
+          ? victionsubscribeAddress
+          : chainId === 1116
+          ? coresubscribeAddress
+          : chainId === 713715
+          ? seisubscribeAddress
           : cfxsubscribeAddress,
         price
       )
@@ -301,14 +341,19 @@ const GetPremiumPopup = ({
     const cfxWeb3 = new Web3(window.config.conflux_endpoint);
     const baseWeb3 = new Web3(window.config.base_endpoint);
     const skaleWeb3 = new Web3(window.config.skale_endpoint);
+    const seiWeb3 = new Web3(window.config.sei_endpoint);
+    const coreWeb3 = new Web3(window.config.core_endpoint);
+    const victionWeb3 = new Web3(window.config.viction_endpoint);
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
-
     const basesubscribeAddress = window.config.subscription_base_address;
     const skalesubscribeAddress = window.config.subscription_skale_address;
+    const seisubscribeAddress = window.config.subscription_sei_address;
+    const coresubscribeAddress = window.config.subscription_core_address;
+    const victionsubscribeAddress = window.config.subscription_viction_address;
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -340,6 +385,20 @@ const GetPremiumPopup = ({
       window.ERC20_ABI,
       subscribeToken
     );
+    const subscribeTokencontractsei = new seiWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
+    const subscribeTokencontractcore = new coreWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
+    const subscribeTokencontractviction = new victionWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
 
     let tokenprice =
       chainId === 1
@@ -354,6 +413,12 @@ const GetPremiumPopup = ({
         ? await window.getEstimatedTokenSubscriptionAmountBase(token)
         : chainId === 1482601649
         ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
+        : chainId === 88
+        ? await window.getEstimatedTokenSubscriptionAmountViction(token)
+        : chainId === 1116
+        ? await window.getEstimatedTokenSubscriptionAmountCore(token)
+        : chainId === 713715
+        ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
@@ -373,8 +438,49 @@ const GetPremiumPopup = ({
           setisApproved(false);
           setapproveStatus("initial");
         }
-      }
-      if (chainId === 56) {
+      } else if (chainId === 88) {
+        const result = await subscribeTokencontractviction.methods
+          .allowance(coinbase, victionsubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } else if (chainId === 1116) {
+        const result = await subscribeTokencontractcore.methods
+          .allowance(coinbase, coresubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } else if (chainId === 713715) {
+        const result = await subscribeTokencontractsei.methods
+          .allowance(coinbase, seisubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } else if (chainId === 56) {
         const result = await subscribeTokencontractbnb.methods
           .allowance(coinbase, bnbsubscribeAddress)
           .call()
@@ -466,6 +572,12 @@ const GetPremiumPopup = ({
           ? "SUBSCRIPTION_BASE"
           : chainId === 1482601649
           ? "SUBSCRIPTION_SKALE"
+          : chainId === 88
+          ? "SUBSCRIPTION_SKALE"
+          : chainId === 1116
+          ? "SUBSCRIPTION_SKALE"
+          : chainId === 713715
+          ? "SUBSCRIPTION_SKALE"
           : "",
     });
 
@@ -502,7 +614,56 @@ const GetPremiumPopup = ({
       });
   };
 
- 
+  const handleCorePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x45c")
+          .then(() => {
+            handleSwitchNetwork(1116);
+            setChainDropdown(chainDropdowns[6]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleSeiPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xae3f3")
+          .then(() => {
+            handleSwitchNetwork(713715);
+            setChainDropdown(chainDropdowns[8]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleVictionPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x58")
+          .then(() => {
+            handleSwitchNetwork(88);
+            setChainDropdown(chainDropdowns[7]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
 
   useEffect(() => {
     if (chainId === 1) {
@@ -523,6 +684,33 @@ const GetPremiumPopup = ({
       );
       handleSubscriptionTokenChange(wbnbAddress);
       handleCheckIfAlreadyApproved(wbnbAddress);
+    } else if (chainId === 88) {
+      setChainDropdown(chainDropdowns[7]);
+      setdropdownIcon("usdc");
+      setdropdownTitle("USDC");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionviction_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wvictionAddress);
+      handleCheckIfAlreadyApproved(wvictionAddress);
+    } else if (chainId === 1116) {
+      setChainDropdown(chainDropdowns[6]);
+      setdropdownIcon("usdc");
+      setdropdownTitle("USDC");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptioncore_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wcoreAddress);
+      handleCheckIfAlreadyApproved(wcoreAddress);
+    } else if (chainId === 713715) {
+      setChainDropdown(chainDropdowns[8]);
+      setdropdownIcon("usdc");
+      setdropdownTitle("USDC");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionsei_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wseiAddress);
+      handleCheckIfAlreadyApproved(wseiAddress);
     } else if (chainId === 1030) {
       setChainDropdown(chainDropdowns[3]);
       setdropdownIcon("usdt");
@@ -598,6 +786,21 @@ const GetPremiumPopup = ({
         window.config.subscriptionskale_tokens[selectedSubscriptionToken]
           ?.decimals
       );
+    } else if (chainId === 88 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionviction_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptioncore_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 713715 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionsei_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
     }
   }, [chainId, selectedSubscriptionToken]);
 
@@ -666,6 +869,22 @@ const GetPremiumPopup = ({
               <div className="d-flex align-items-center gap-2">
                 <img src={skaleIcon} alt="" style={{ width: 18, height: 18 }} />
                 <span className="subscription-chain mb-0">SKALE</span>
+              </div>
+              <div className="d-flex align-items-center gap-2">
+                <img src={coreIcon} alt="" style={{ width: 18, height: 18 }} />
+                <span className="subscription-chain mb-0">CORE</span>
+              </div>
+              <div className="d-flex align-items-center gap-2">
+                <img
+                  src={victionIcon}
+                  alt=""
+                  style={{ width: 18, height: 18 }}
+                />
+                <span className="subscription-chain mb-0">Viction</span>
+              </div>
+              <div className="d-flex align-items-center gap-2">
+                <img src={seiIcon} alt="" style={{ width: 18, height: 18 }} />
+                <span className="subscription-chain mb-0">SEI</span>
               </div>
             </div>
             <img src={premiumIcon} alt="" />
@@ -804,6 +1023,48 @@ const GetPremiumPopup = ({
                   />
                   SKALE
                 </li>
+                <li
+                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                  onClick={handleCorePool}
+                >
+                  <img
+                    src={coreIcon}
+                    alt=""
+                    style={{
+                      width: "18px",
+                      height: "18px",
+                    }}
+                  />
+                  CORE
+                </li>
+                <li
+                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                  onClick={handleVictionPool}
+                >
+                  <img
+                    src={victionIcon}
+                    alt=""
+                    style={{
+                      width: "18px",
+                      height: "18px",
+                    }}
+                  />
+                  Viction
+                </li>
+                <li
+                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                  onClick={handleSeiPool}
+                >
+                  <img
+                    src={seiIcon}
+                    alt=""
+                    style={{
+                      width: "18px",
+                      height: "18px",
+                    }}
+                  />
+                  SEI
+                </li>
               </ul>
             </div>
           </div>
@@ -834,13 +1095,11 @@ const GetPremiumPopup = ({
                       className="d-flex align-items-center gap-2"
                       style={{ color: "#fff" }}
                     >
-                      {dropdownIcon !== "" && (
-                        <img
-                          src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
-                          alt=""
-                          style={{ width: 20, height: 20 }}
-                        />
-                      )}
+                      <img
+                        src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                        alt=""
+                        style={{ width: 20, height: 20 }}
+                      />
                       {/* {dropdownTitle} */}
                     </div>
                     <img src={launchpadIndicator} alt="" />
@@ -859,6 +1118,12 @@ const GetPremiumPopup = ({
                         ? window.config.subscriptionbase_tokens
                         : chainId === 1482601649
                         ? window.config.subscriptionskale_tokens
+                        : chainId === 88
+                        ? window.config.subscriptionviction_tokens
+                        : chainId === 1116
+                        ? window.config.subscriptioncore_tokens
+                        : chainId === 713715
+                        ? window.config.subscriptionsei_tokens
                         : window.config.subscription_tokens
                     ).map((t, i) => (
                       <li
@@ -885,6 +1150,15 @@ const GetPremiumPopup = ({
                                 : chainId === 1482601649
                                 ? window.config.subscriptionskale_tokens[t]
                                     ?.symbol
+                                : chainId === 88
+                                ? window.config.subscriptionviction_tokens[t]
+                                    ?.symbol
+                                : chainId === 1116
+                                ? window.config.subscriptioncore_tokens[t]
+                                    ?.symbol
+                                : chainId === 713715
+                                ? window.config.subscriptionsei_tokens[t]
+                                    ?.symbol
                                 : window.config.subscription_tokens[t]?.symbol
                             );
                             setdropdownTitle(
@@ -904,6 +1178,15 @@ const GetPremiumPopup = ({
                                     ?.symbol
                                 : chainId === 1482601649
                                 ? window.config.subscriptionskale_tokens[t]
+                                    ?.symbol
+                                : chainId === 88
+                                ? window.config.subscriptionviction_tokens[t]
+                                    ?.symbol
+                                : chainId === 713715
+                                ? window.config.subscriptionsei_tokens[t]
+                                    ?.symbol
+                                : chainId === 1116
+                                ? window.config.subscriptionsei_tokens[t]
                                     ?.symbol
                                 : window.config.subscription_tokens[t]?.symbol
                             );
@@ -940,6 +1223,18 @@ const GetPremiumPopup = ({
                               ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
                                   t
                                 ]?.symbol.toLowerCase()}Icon.svg`)
+                              : chainId === 1116
+                              ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
+                                  t
+                                ]?.symbol.toLowerCase()}Icon.svg`)
+                              : chainId === 88
+                              ? require(`../../Images/premium/tokens/${window.config.subscriptionviciton_tokens[
+                                  t
+                                ]?.symbol.toLowerCase()}Icon.svg`)
+                              : chainId === 713715
+                              ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
+                                  t
+                                ]?.symbol.toLowerCase()}Icon.svg`)
                               : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
                                   t
                                 ]?.symbol.toLowerCase()}Icon.svg`)
@@ -959,17 +1254,23 @@ const GetPremiumPopup = ({
                           ? window.config.subscriptionbase_tokens[t]?.symbol
                           : chainId === 1482601649
                           ? window.config.subscriptionskale_tokens[t]?.symbol
+                          : chainId === 1116
+                          ? window.config.subscriptioncore_tokens[t]?.symbol
+                          : chainId === 88
+                          ? window.config.subscriptionviction_tokens[t]?.symbol
+                          : chainId === 713715
+                          ? window.config.subscriptionsei_tokens[t]?.symbol
                           : window.config.subscription_tokens[t]?.symbol}
                       </li>
                     ))}
                   </ul>
                 </div>
                 {/* <img
-                    src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
-                    height={16}
-                    width={16}
-                    alt="usdt"
-                  /> */}
+                src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                height={16}
+                width={16}
+                alt="usdt"
+              /> */}
                 <span className="subscription-price-token mb-0">
                   {formattedPrice.slice(0, 5)}
                 </span>
@@ -979,38 +1280,38 @@ const GetPremiumPopup = ({
           </div>
 
           {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
-              <span className="token-balance-placeholder">
-                Token Balance
-              </span>
-              <h6 className="account-token-amount">
-                {" "}
-                {getFormattedNumber(
-                  tokenBalance / 10 ** tokenDecimals,
-                  6
-                )}
-              </h6>
-            </div> */}
+          <span className="token-balance-placeholder">
+            Token Balance
+          </span>
+          <h6 className="account-token-amount">
+            {" "}
+            {getFormattedNumber(
+              tokenBalance / 10 ** tokenDecimals,
+              6
+            )}
+          </h6>
+        </div> */}
         </div>
         {/* <div
-            className="subscription-token-wrapper  p-2 d-flex align-items-center justify-content-between  mt-3"
-            style={{ width: "100%" }}
-          >
-            <span className="token-amount-placeholder">
-              Subscription price:
-            </span>
-            <div className="d-flex align-items-center gap-2">
-              <span className="usdt-text">
-                {formattedPrice.slice(0, 9)}
-              </span>
+        className="subscription-token-wrapper  p-2 d-flex align-items-center justify-content-between  mt-3"
+        style={{ width: "100%" }}
+      >
+        <span className="token-amount-placeholder">
+          Subscription price:
+        </span>
+        <div className="d-flex align-items-center gap-2">
+          <span className="usdt-text">
+            {formattedPrice.slice(0, 9)}
+          </span>
 
-              <img
-                src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
-                height={24}
-                width={24}
-                alt="usdt"
-              />
-            </div>
-          </div> */}
+          <img
+            src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+            height={24}
+            width={24}
+            alt="usdt"
+          />
+        </div>
+      </div> */}
         {chainId === 1482601649 && (
           <div className="gotoNebula-wrapper p-3 mb-3">
             <div className="d-flex w-100 justify-content-between gap-2">
