@@ -2635,7 +2635,9 @@ const BetaPassNFT = ({
                         {alreadyRegistered &&
                           (mintTitle === "core" ||
                             mintTitle === "viction" ||
-                            mintTitle === "sei") && (
+                            mintTitle === "sei"||
+                            mintTitle === "immutable"||
+                            mintTitle === "multiversx") && (
                             <h6 className="land-name">
                               {(mintTitle === "core" && totalCoreNft > 0) ||
                               (mintTitle === "sei" && totalseiNft > 0) ||
