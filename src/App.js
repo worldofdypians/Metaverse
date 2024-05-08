@@ -266,6 +266,7 @@ function App() {
   const [myseiNfts, setMyseiNfts] = useState([]);
   const [myCoreNfts, setMyCoreNfts] = useState([]);
   const [myVictionNfts, setMyVictionNfts] = useState([]);
+
   const [myMultiversNfts, setMyMultiversNfts] = useState([]);
   const [myImmutableNfts, setMyImmutableNfts] = useState([]);
 

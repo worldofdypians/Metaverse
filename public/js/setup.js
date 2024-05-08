@@ -1476,6 +1476,12 @@ window.config = {
   nft_doge_address: "0x317538113E19dE1567A4b05357BAA2534353e9B2",
   nft_cmc_address: "0x05e2Efe472176f17167c93eCdEe324eF3da57Db8",
   nft_skale_address: "0x5C3581fDB05E3A20fb109864DaE75A5665A7F92d",
+  nft_core_address: "0x5C3581fDB05E3A20fb109864DaE75A5665A7F92d",
+  nft_viction_address: "0x5C3581fDB05E3A20fb109864DaE75A5665A7F92d",
+  nft_sei_address: "0x5C3581fDB05E3A20fb109864DaE75A5665A7F92d",
+  nft_immutable_address: "0x5C3581fDB05E3A20fb109864DaE75A5665A7F92d",
+  nft_multivers_address: "0x5C3581fDB05E3A20fb109864DaE75A5665A7F92d",
+
 
   ccip_eth_caws_address: "0x2824Ac0Eab15744396E763A698b55F4Fe983a757",
   ccip_bnb_caws_address: "0x0C5E19B9147c39d196bC6c88D087A7A84f99563E",
