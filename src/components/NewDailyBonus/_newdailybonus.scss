@@ -867,6 +867,9 @@
   font-weight: 600;
   line-height: normal;
   padding: 5px 10px;
+  @media screen and (max-width: 786px) {
+    font-size: 14px;
+  }
 }
 
 .new-chain-inactive-btn {
@@ -879,6 +882,9 @@
   font-weight: 600;
   line-height: normal;
   padding: 5px 10px;
+  @media screen and (max-width: 786px) {
+    font-size: 14px;
+  }
 }
 
 @media screen and (max-width: 991px) {

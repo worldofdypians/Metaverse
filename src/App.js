@@ -149,6 +149,16 @@ function App() {
       },
       blockExplorerUrls: ["https:/vicscan.xyz"],
     },
+    713715: {
+      chainId: 713715,
+      chainName: "Sei EVM Devnet",
+      rpcUrls: ["https://evm-rpc-arctic-1.sei-apis.com"],
+      nativeCurrency: {
+        symbol: "SEI",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://seistream.app/"],
+    },
   };
 
   const [showWalletModal, setShowWalletModal] = useState(false);

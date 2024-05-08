@@ -210,6 +210,7 @@ const NewChestItem = ({
 
   let count = 1;
 
+
   const handleCheckIfTxExists = async (
     email,
     txHash,
@@ -638,6 +639,7 @@ const NewChestItem = ({
     }, 1000);
   };
 
+
   return (
     <div
       className={`new-chest-item ${open && "new-chest-item-open"}  ${
@@ -669,7 +671,7 @@ const NewChestItem = ({
             loading ? (chain === "bnb" ? "chest-shake" : "chest-pulsate") : ""
           }`}
           src={
-            chain === "bnb"
+            chain === "bnb" || chain === "sei" || chain === "viction" || chain === "core"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
                   open ? image + "open" : image
                 }.png`)
@@ -690,7 +692,7 @@ const NewChestItem = ({
             loading ? (chain === "bnb" ? "chest-shake" : "chest-pulsate") : ""
           }`}
           src={
-            chain === "bnb"
+            chain === "bnb" || chain === "core" || chain === "viction" ||  chain === "sei" 
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
                   open
                     ? chestIndex % 2 === 1
