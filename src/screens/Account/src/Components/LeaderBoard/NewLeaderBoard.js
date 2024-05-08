@@ -419,41 +419,7 @@ const NewLeaderBoard = ({
   const [allData, setAllData] = useState([]);
   const [allBnbData, setAllBnbData] = useState([]);
   const [selectedChain, setSelectedChain] = useState(chainItems[0]);
-  const [allSkaleData, setAllSkaleData] = useState([
-    {
-      title: "DAILY",
-      reset: "Daily (00:00 UTC)",
-      type: "stars",
-      rewards: skaleStars,
-      premium_rewards: skaleStarsPremium,
-      activeData: [],
-      previousData: [],
-      player_data: [],
-      is_active: null,
-    },
-    {
-      title: "WEEKLY",
-      reset: "Monday (00:00 UTC)",
-      type: "cash",
-      rewards: skalePrizesWeekly,
-      premium_rewards: skalePrizesWeeklyGolden,
-      activeData: [],
-      previousData: [],
-      player_data: [],
-      is_active: null,
-    },
-    {
-      title: "MONTHLY",
-      reset: "Monthly (00:00 UTC)",
-      type: "cash",
-      rewards: skalePrizesMonthly,
-      premium_rewards: skalePrizesMonthlyGolden,
-      activeData: [],
-      previousData: [],
-      player_data: [],
-      is_active: null,
-    },
-  ]);
+  const [allSkaleData, setAllSkaleData] = useState([]);
   const sliderRef = useRef(null);
   const windowSize = useWindowSize();
 
