@@ -31,6 +31,14 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
           ? "upcoming-dyp-event2"
           : data.title === "SKALE"
           ? "upcoming-skale-event"
+          : data.title === "SEI"
+          ? "upcoming-sei-event"
+          : data.title === "CORE"
+          ? "upcoming-core-event"
+          : data.title === "VICTION"
+          ? "upcoming-viction-event"
+          : data.title === "Immutable"
+          ? "upcoming-immutable-event"
           : "upcoming-mint-wrapper-coin98"
       } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column flex-lg-row gap-3 d-flex align-items-center justify-content-between px-0`}
       onClick={onOpenPopup}
