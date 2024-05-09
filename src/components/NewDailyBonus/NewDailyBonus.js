@@ -108,7 +108,7 @@ const NewDailyBonus = ({
   onPremiumClickOther,
   premiumTxHash,
   selectedChainforPremium,
-  
+  skaleImages,
   claimedCoreChests,
   claimedCorePremiumChests,
   claimedVictionChests,
@@ -3228,6 +3228,7 @@ const NewDailyBonus = ({
                                 chain={chain}
                                 key={index}
                                 item={item}
+                                image={skaleImages[index]}
                                 // openChest={openChest}
                                 selectedChest={selectedChest}
                                 isPremium={isPremium}
@@ -3272,7 +3273,7 @@ const NewDailyBonus = ({
                                 chain={chain}
                                 key={index}
                                 item={item}
-                                // openChest={openChest}
+                                image={skaleImages[index]}
                                 selectedChest={selectedChest}
                                 isPremium={isPremium}
                                 onClaimRewards={(value) => {

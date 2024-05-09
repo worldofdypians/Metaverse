@@ -72,8 +72,8 @@ const GetPremiumPopup = ({
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
   let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
   let wseiAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
-  let wvictionAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
-  let wcoreAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
+  let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
+  let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
 
   const metaverseBenefits = [
     "Exclusive access to World of Dypians",
@@ -573,9 +573,9 @@ const GetPremiumPopup = ({
           : chainId === 1482601649
           ? "SUBSCRIPTION_SKALE"
           : chainId === 88
-          ? "SUBSCRIPTION_SKALE"
+          ? "SUBSCRIPTION_VICTION"
           : chainId === 1116
-          ? "SUBSCRIPTION_SKALE"
+          ? "SUBSCRIPTION_CORE"
           : chainId === 713715
           ? "SUBSCRIPTION_SKALE"
           : "",
@@ -686,8 +686,8 @@ const GetPremiumPopup = ({
       handleCheckIfAlreadyApproved(wbnbAddress);
     } else if (chainId === 88) {
       setChainDropdown(chainDropdowns[7]);
-      setdropdownIcon("usdc");
-      setdropdownTitle("USDC");
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
       setselectedSubscriptionToken(
         Object.keys(window.config.subscriptionviction_tokens)[0]
       );
@@ -695,8 +695,8 @@ const GetPremiumPopup = ({
       handleCheckIfAlreadyApproved(wvictionAddress);
     } else if (chainId === 1116) {
       setChainDropdown(chainDropdowns[6]);
-      setdropdownIcon("usdc");
-      setdropdownTitle("USDC");
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
       setselectedSubscriptionToken(
         Object.keys(window.config.subscriptioncore_tokens)[0]
       );
@@ -937,6 +937,7 @@ const GetPremiumPopup = ({
                   <img
                     src={require(`../../Images/premium/tokens/${chainDropdown.symbol}Icon.svg`)}
                     alt=""
+                    style={{width: 18, height: 18}}
                   />
                   {chainDropdown.name}
                 </div>
@@ -952,6 +953,7 @@ const GetPremiumPopup = ({
                       require(`../../Images/premium/tokens/ethIcon.svg`).default
                     }
                     alt=""
+                    style={{width: 18, height: 18}}
                   />
                   Ethereum
                 </li>
@@ -964,6 +966,7 @@ const GetPremiumPopup = ({
                       require(`../../Images/premium/tokens/wbnbIcon.svg`)
                         .default
                     }
+                    style={{width: 18, height: 18}}
                     alt=""
                   />
                   BNB Chain
@@ -977,6 +980,7 @@ const GetPremiumPopup = ({
                       require(`../../Images/premium/tokens/wavaxIcon.svg`)
                         .default
                     }
+                    style={{width: 18, height: 18}}
                     alt=""
                   />
                   Avalanche
@@ -1098,7 +1102,7 @@ const GetPremiumPopup = ({
                       <img
                         src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
                         alt=""
-                        style={{ width: 20, height: 20 }}
+                        style={{width: 18, height: 18}}
                       />
                       {/* {dropdownTitle} */}
                     </div>
@@ -1240,7 +1244,7 @@ const GetPremiumPopup = ({
                                 ]?.symbol.toLowerCase()}Icon.svg`)
                           }
                           alt=""
-                          style={{ width: 20, height: 20 }}
+                          style={{width: 18, height: 18}}
                         />
                         {chainId === 1
                           ? window.config.subscriptioneth_tokens[t]?.symbol
