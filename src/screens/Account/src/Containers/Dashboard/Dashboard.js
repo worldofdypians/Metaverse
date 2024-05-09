@@ -49,6 +49,8 @@ import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
+import immutableIcon from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
+
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
 import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
@@ -4163,6 +4165,16 @@ function Dashboard({
                                   </div>
                                   <div className="d-flex align-items-center gap-2">
                                     <img
+                                      src={immutableIcon}
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Immutable
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
                                       src={coreIcon}
                                       alt=""
                                       style={{ width: 18, height: 18 }}
@@ -4597,7 +4609,7 @@ function Dashboard({
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
                                                 : chainId === 88
-                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptionviciton_tokens[
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
                                                         t
                                                       ]?.symbol.toLowerCase()}Icon.svg`)
                                                 : chainId === 713715

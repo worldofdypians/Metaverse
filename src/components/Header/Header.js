@@ -86,6 +86,8 @@ const Header = ({
   const [skaleState, setSkaleState] = useState(false);
   const [victionState, setVictionState] = useState(false);
   const [seiState, setSeiState] = useState(false)
+  const [immutableState, setImmutableState] = useState(false)
+
 
   // const [domainPopup, setDomainPopup] = useState(false);
 
@@ -401,6 +403,25 @@ const Header = ({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
+
+  const handleImmutablePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x343b")
+          .then(() => {
+            handleSwitchNetwork(13371);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet();
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
 
   async function markNotificationAsRead(walletAddress, notificationId) {
     try {

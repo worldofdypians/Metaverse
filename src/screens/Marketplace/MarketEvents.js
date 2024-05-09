@@ -32,6 +32,7 @@ import skaleLogo from "./assets/skaleLogo.svg";
 import seiLogo from "./assets/seiLogo.svg";
 import coreLogo from "./assets/coreLogo.svg";
 import victionLogo from "./assets/victionLogo.svg";
+import immutableLogo from "./assets/immutableLogo.svg"
 
 import avaxLogo from "./assets/avaxLogo.svg";
 
@@ -91,6 +92,12 @@ import upcomingBabyDogeMobile from "./assets/upomingBabyDogeMobile.webp";
 import upcomingDyp from "./assets/upcomingDyp.webp";
 import upcomingCmc from "./assets/upcomingCmc.webp";
 import upcomingDyp2 from "./assets/dypiusBgPic2.webp";
+import immutableBg from "./assets/immutableBg.webp";
+import seiBg from "./assets/seiBg.webp";
+import coreBg from "./assets/coreBg.webp";
+import victionBg from "./assets/victionBg.webp";
+
+
 
 import dailyBonus from "./assets/dailyBonus.webp";
 import MintPopup from "../../components/TimepieceMint/MintPopup";
@@ -226,73 +233,16 @@ const MarketEvents = ({
   };
 
   const dummyBetaPassData2 = [
-    {
-      title: "CORE",
-      logo: coreLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$50,000 in CORE Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "May 26, 2024",
-      backgroundImage: upcomingDyp2,
-      popupInfo: {
-        title: "CORE",
-        chain: "CORE Chain",
-        linkState: "core",
-        rewards: "CORE",
-        status: "Coming Soon",
-        id: "event12",
-        eventType: "Explore & Find",
-        totalRewards: "$50,000 in SEI Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "May 26, 2024",
-      },
-    },
-
-    {
-      title: "SEI",
-      logo: seiLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$50,000 in SEI Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "May 26, 2024",
-      backgroundImage: upcomingDyp2,
-      popupInfo: {
-        title: "SEI",
-        chain: "SEI Chain",
-        linkState: "sei",
-        rewards: "SEI",
-        status: "Coming Soon",
-        id: "event13",
-        eventType: "Explore & Find",
-        totalRewards: "$50,000 in SEI Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "May 26, 2024",
-      },
-    },
-
+    
     {
       title: "VICTION",
       logo: victionLogo,
       eventStatus: "Coming Soon",
-      totalRewards: "$50,000 in SEI Rewards",
+      totalRewards: "$20,000 in VIC Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate: "May 26, 2024",
-      backgroundImage: upcomingDyp2,
+      eventDate: "XXX XX, XXXX",
+      backgroundImage: victionBg,
       popupInfo: {
         title: "VICTION",
         chain: "VICTION Chain",
@@ -301,7 +251,7 @@ const MarketEvents = ({
         status: "Coming Soon",
         id: "event14",
         eventType: "Explore & Find",
-        totalRewards: "$50,000 in VIC Rewards",
+        totalRewards: "$20,000 in VIC Rewards",
         eventDuration: dypius2LastDay,
         minRewards: "1",
         maxRewards: "100",
@@ -309,9 +259,128 @@ const MarketEvents = ({
         maxPoints: "50,000",
         learnMore:
           "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "May 26, 2024",
+        eventDate: "XXX XX, XXXX",
       },
     },
+   {
+      title: "Immutable",
+      logo: immutableLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in IMX Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      backgroundImage: immutableBg,
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable Chain",
+        linkState: "immutable",
+        rewards: "IMX",
+        status: "Coming Soon",
+        id: "event15",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in IMX Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
+     {
+      title: "SEI",
+      logo: seiLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in SEI Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      backgroundImage: seiBg,
+      popupInfo: {
+        title: "SEI",
+        chain: "SEI Chain",
+        linkState: "sei",
+        rewards: "SEI",
+        status: "Coming Soon",
+        id: "event13",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in SEI Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
+    {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      backgroundImage: coreBg,
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Coming Soon",
+        id: "event12",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in SEI Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
+
+ 
+
+
+
+
+
+    // {
+    //   title: "MultiversX",
+    //   logo: victionLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$50,000 in IMX Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "May 26, 2024",
+    //   backgroundImage: upcomingDyp2,
+    //   popupInfo: {
+    //     title: "Immutable",
+    //     chain: "Immutable Chain",
+    //     linkState: "immutable",
+    //     rewards: "IMX",
+    //     status: "Coming Soon",
+    //     id: "event15",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$50,000 in IMX Rewards",
+    //     eventDuration: dypius2LastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //     eventDate: "May 26, 2024",
+    //   },
+    // },
 
     {
       title: "Dypius Premium",
@@ -1225,7 +1294,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 5).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 6).map((item, index) => (
                           <BetaEventCard
                             activeTab={item.activeTab}
                             data={item}
@@ -1438,7 +1507,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(5, dummyBetaPassData2.length)
+                    .slice(6, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}

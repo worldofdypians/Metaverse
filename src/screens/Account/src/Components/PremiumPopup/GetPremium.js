@@ -1228,7 +1228,7 @@ const GetPremiumPopup = ({
                                   t
                                 ]?.symbol.toLowerCase()}Icon.svg`)
                               : chainId === 88
-                              ? require(`../../Images/premium/tokens/${window.config.subscriptionviciton_tokens[
+                              ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
                                   t
                                 ]?.symbol.toLowerCase()}Icon.svg`)
                               : chainId === 713715

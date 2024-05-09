@@ -870,25 +870,39 @@ const BetaPassNFT = ({
                 style={{ zIndex: 2 }}
               >
                 <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
-                  <NavLink
-                    to={"/marketplace/beta-pass/core"}
+                       <NavLink
+                    to={"/marketplace/beta-pass/multiversx"}
                     className={`${
-                      location.pathname.includes("core") &&
+                      location.pathname.includes("multiversx") &&
                       "selected-beta-pass-item"
                     } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
                     onClick={() => {
-                      setSelectedMint(coreData);
-                      setMintTitle("core");
+                      setSelectedMint(multiversData);
+                      setMintTitle("multiversx");
                     }}
                   >
                     <img
-                      src={coreLogo}
+                      src={multiversLogo}
                       className="beta-pass-chain-img"
                       alt=""
                     />
-                    <span>CORE</span>
+                    <span>MultiversX</span>
                   </NavLink>
-                  <NavLink
+                    <NavLink
+                    to={"/marketplace/beta-pass/sei"}
+                    className={`${
+                      location.pathname.includes("sei") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(seiData);
+                      setMintTitle("sei");
+                    }}
+                  >
+                    <img src={seiLogo} className="beta-pass-chain-img" alt="" />
+                    <span>SEI</span>
+                  </NavLink> 
+                       <NavLink
                     to={"/marketplace/beta-pass/viction"}
                     className={`${
                       location.pathname.includes("viction") &&
@@ -906,20 +920,26 @@ const BetaPassNFT = ({
                     />
                     <span>VICTION</span>
                   </NavLink>
-                  <NavLink
-                    to={"/marketplace/beta-pass/sei"}
+                   <NavLink
+                    to={"/marketplace/beta-pass/core"}
                     className={`${
-                      location.pathname.includes("sei") &&
+                      location.pathname.includes("core") &&
                       "selected-beta-pass-item"
                     } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
                     onClick={() => {
-                      setSelectedMint(seiData);
-                      setMintTitle("sei");
+                      setSelectedMint(coreData);
+                      setMintTitle("core");
                     }}
                   >
-                    <img src={seiLogo} className="beta-pass-chain-img" alt="" />
-                    <span>SEI</span>
+                    <img
+                      src={coreLogo}
+                      className="beta-pass-chain-img"
+                      alt=""
+                    />
+                    <span>CORE</span>
                   </NavLink>
+                
+              
                   <NavLink
                     to={"/marketplace/beta-pass/immutable"}
                     className={`${
@@ -938,24 +958,7 @@ const BetaPassNFT = ({
                     />
                     <span>Immutable</span>
                   </NavLink>
-                  <NavLink
-                    to={"/marketplace/beta-pass/multiversx"}
-                    className={`${
-                      location.pathname.includes("multiversx") &&
-                      "selected-beta-pass-item"
-                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
-                    onClick={() => {
-                      setSelectedMint(multiversData);
-                      setMintTitle("multiversx");
-                    }}
-                  >
-                    <img
-                      src={multiversLogo}
-                      className="beta-pass-chain-img"
-                      alt=""
-                    />
-                    <span>MultiversX</span>
-                  </NavLink>
+          
                 </div>
                 <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
                   <NavLink

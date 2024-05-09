@@ -23,6 +23,12 @@ import confluxActive from "./assets/confluxActive.png";
 import coin98Active from "./assets/coin98Active.png";
 import coingeckoActive from "./assets/coingeckoActive.png";
 import skaleActive from "./assets/upcomingSkaleMobile.webp";
+import immutableActive from "./assets/immutableActive.webp";
+import coreActive from "./assets/coreActive.webp";
+import victionActive from "./assets/victionActive.webp";
+import seiActive from "./assets/seiActive.webp";
+
+
 import timepieceActive from "./assets/timepieceActive.png";
 import gateActive from "./assets/gateActive.png";
 import kucoinActive from "./assets/kucoinActive.png";
@@ -30,6 +36,12 @@ import blockChainIcon from "./assets/blockChainIcon.svg";
 import confluxLogo from "./assets/confluxLogo.svg";
 import baseLogo from "./assets/baseLogo.svg";
 import skaleLogo from "./assets/skaleIcon.svg";
+import immutableLogo from "./assets/immutableLogo.svg";
+import coreLogo from "./assets/coreLogo.svg";
+import victionLogo from "./assets/victionLogo.svg";
+import seiLogo from "./assets/seiLogo.svg";
+
+
 
 import avaxLogo from "./assets/avaxLogo.svg";
 import bnbLogo from "./assets/bnbLogo.svg";
@@ -119,28 +131,41 @@ const MarketMint = ({
     background: "market-mint-bg",
     mobileBg: "timepieceMobileBg.png",
   };
-  // const coin98Data = {
-  //   id: "coin98",
-  //   cardTitle: "Coin98 Beta Pass",
-  //   title: "Coin98 Beta Pass",
-  //   background: "coin98-mint-bg",
-  //   mobileBg: "coin98MobileBg.png",
-  // };
-  // const coingeckoData = {
-  //   id: "coingecko",
-  //   cardTitle: "Coingecko Beta Pass",
-  //   title: "Coingecko Beta Pass",
-  //   background: "coingecko-mint-bg",
-  //   mobileBg: "coingeckoMobileBg.png",
-  // };
 
-  const baseData = {
-    id: "skale",
-    cardTitle: "SKALE Beta Pass",
-    title: "SKALE Beta Pass",
-    background: "skale-mint-bg",
-    mobileBg: "skaleMobileBg.webp",
+  const immutableData = {
+    id: "immutable",
+    cardTitle: "Immutable Beta Pass",
+    title: "Immutable Beta Pass",
+    background: "immutable-mint-bg",
+    mobileBg: "immutableMobileBg.webp",
   };
+
+  const coreData = {
+    id: "core",
+    cardTitle: "CORE Beta Pass",
+    title: "Core Beta Pass",
+    background: "core-mint-bg",
+    mobileBg: "coreMobileBg.webp",
+  };
+
+  const seiData = {
+    id: "sei",
+    cardTitle: "SEI Beta Pass",
+    title: "SEI Beta Pass",
+    background: "sei-mint-bg",
+    mobileBg: "seiMobileBg.webp",
+  };
+
+
+
+  const victionData = {
+    id: "viction",
+    cardTitle: "Viction Beta Pass",
+    title: "Viction Beta Pass",
+    background: "viction-mint-bg",
+    mobileBg: "victionMobileBg.webp",
+  };
+
 
   const windowSize = useWindowSize();
   const params = useParams();
@@ -281,14 +306,49 @@ setskaleSold(skaleresult)
     //   data: coingeckoData,
     //   class: "mint-6",
     // },
-    {
-      title: "SKALE Pass",
-      eventId: "skale",
-      desc: "Gain entry to metaverse, and join exclusive SKALE event with special ticket.",
-      img: skaleActive,
-      data: baseData,
-      class: "mint-skale",
+    // {
+    //   title: "SKALE Pass",
+    //   eventId: "skale",
+    //   desc: "Gain entry to metaverse, and join exclusive SKALE event with special ticket.",
+    //   img: skaleActive,
+    //   data: baseData,
+    //   class: "mint-skale",
+    // },
+    // {
+    //   title: "Immutable Pass",
+    //   eventId: "immutable",
+    //   desc: "Gain entry to metaverse, and join exclusive Immutable event with special ticket.",
+    //   img: immutableActive,
+    //   data: immutableData,
+    //   class: "mint-immutable",
+    // },
+    // {
+    //   title: "CORE Pass",
+    //   eventId: "core",
+    //   desc: "Gain entry to metaverse, and join exclusive CORE event with special ticket.",
+    //   img: coreActive,
+    //   data: coreData,
+    //   class: "mint-core",
+    // },
+
+    // {
+    //   title: "Viction Pass",
+    //   eventId: "immutable",
+    //   desc: "Gain entry to metaverse, and join exclusive Viction event with special ticket.",
+    //   img: victionActive,
+    //   data: victionData,
+    //   class: "mint-viction",
+    // },
+
+        {
+      title: "SEI Pass",
+      eventId: "sei",
+      desc: "Gain entry to metaverse, and join exclusive SEI event with special ticket.",
+      img: seiActive,
+      data: seiData,
+      class: "mint-sei",
     },
+    
     {
       title: "CAWS Timepiece",
       eventId: "timepiece",
@@ -592,7 +652,7 @@ setskaleSold(skaleresult)
 
               {activeTab === "live" && (
                 <>
-                  {/* <div className="pb-5 px-0 position-relative">
+                  <div className="pb-5 px-0 position-relative">
                     {activeSlide > 0 && (
                       <div className="prev-arrow-nft" onClick={firstPrev}>
                         <img src={nextArrow} alt="" />
@@ -628,7 +688,7 @@ setskaleSold(skaleresult)
                         />
                       ))}
                     </Slider>
-                  </div> */}
+                  </div>
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -659,7 +719,7 @@ setskaleSold(skaleresult)
                                   : selectedMint.id === "skale" &&
                                     myskaleNFTsCreated.length === 0
                                   ? "conflux-empty"
-                                  : "skale-active"
+                                  : "sei-active"
                               } d-flex justify-content-center align-items-center p-3 position-relative`}
                               style={{ height: 312 }}
                             >
@@ -709,13 +769,13 @@ setskaleSold(skaleresult)
                               </button>
                             </div>
                           )}
-                          {selectedMint.id === "skale" && (
+                          {selectedMint.id === "sei" && (
                             <div
                               className={
                                 isConnected === false ||
                                 activeButton === false ||
                                 myskaleNFTsCreated.length === 0
-                                  ? "linear-border-disabled"
+                                  ? "linear-border"
                                   : "linear-border"
                               }
                             >
@@ -724,7 +784,7 @@ setskaleSold(skaleresult)
                                   isConnected === false ||
                                   activeButton === false ||
                                   myskaleNFTsCreated.length === 0
-                                    ? "outline-btn-disabled"
+                                    ? "outline-btn"
                                     : "outline-btn"
                                 } px-5 w-100`}
                                 disabled={
@@ -967,8 +1027,8 @@ setskaleSold(skaleresult)
                                 className="limit-span position-relative d-flex align-items-center gap-2"
                                 style={{ bottom: "0px" }}
                               >
-                                Available only on SKALE
-                                <img src={skaleLogo} alt="" />
+                                Available only on SEI
+                                <img src={seiLogo} alt="" />
                               </span>
                             ) : mintTitle === "coin98" ||
                               mintTitle === "coingecko" ||
@@ -1175,7 +1235,7 @@ setskaleSold(skaleresult)
                             )}
 
                             <span className="latest-mint-currency mb-0">
-                              *Important: You can only mint one SKALE Beta Pass
+                              *Important: You can only mint one SEI Beta Pass
                               NFT per wallet.
                             </span>
                             <hr className="gray-divider" />
@@ -1183,8 +1243,8 @@ setskaleSold(skaleresult)
                               className="limit-span position-relative d-flex align-items-center gap-2"
                               style={{ bottom: "0px" }}
                             >
-                              Available only on SKALE
-                              <img src={skaleLogo} alt="" />
+                              Available only on SEI
+                              <img src={seiLogo} alt="" />
                             </span>
                             {mintStatus.length > 0 && (
                               <span

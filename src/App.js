@@ -1979,15 +1979,13 @@ function App() {
           return 0;
         });
 
-        
       subscribedPlatformTokenAmountSei = await seicontract.methods
-      .subscriptionPlatformTokenAmount(addr)
-      .call()
-      .catch((e) => {
-        console.log(e);
-        return 0;
-      });
-
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
 
       if (
         subscribedPlatformTokenAmountCfx == "0" &&
@@ -1998,7 +1996,7 @@ function App() {
         subscribedPlatformTokenAmountSkale == "0" &&
         subscribedPlatformTokenAmountCore == "0" &&
         subscribedPlatformTokenAmountViction == "0" &&
-        subscribedPlatformTokenAmountSei == "0"  &&
+        subscribedPlatformTokenAmountSei == "0" &&
         result === false
       ) {
         setIsPremium(false);
@@ -2012,7 +2010,7 @@ function App() {
         subscribedPlatformTokenAmountSkale != "0" ||
         subscribedPlatformTokenAmountCore != "0" ||
         subscribedPlatformTokenAmountViction != "0" ||
-        subscribedPlatformTokenAmountSei != "0"  ||
+        subscribedPlatformTokenAmountSei != "0" ||
         result === true
       ) {
         setIsPremium(true);
@@ -3415,6 +3413,97 @@ function App() {
             <Route
               exact
               path="/marketplace/mint/timepiece"
+              element={
+                <MarketMint
+                  coinbase={coinbase}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  timepieceMetadata={timepieceMetadata}
+                  myConfluxNFTsCreated={myConfluxNFTsCreated}
+                  mybaseNFTsCreated={mybaseNFTsCreated}
+                  myskaleNFTsCreated={myskaleNFTsCreated}
+                  handleConfluxMint={handleConfluxNftMint}
+                  handleBaseNftMint={handleBaseNftMint}
+                  confluxMintAllowed={confluxMintAllowed}
+                  baseMintAllowed={baseMintAllowed}
+                  skaleMintAllowed={skaleMintAllowed}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/mint/immutable"
+              element={
+                <MarketMint
+                  coinbase={coinbase}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  timepieceMetadata={timepieceMetadata}
+                  myConfluxNFTsCreated={myConfluxNFTsCreated}
+                  mybaseNFTsCreated={mybaseNFTsCreated}
+                  myskaleNFTsCreated={myskaleNFTsCreated}
+                  handleConfluxMint={handleConfluxNftMint}
+                  handleBaseNftMint={handleBaseNftMint}
+                  confluxMintAllowed={confluxMintAllowed}
+                  baseMintAllowed={baseMintAllowed}
+                  skaleMintAllowed={skaleMintAllowed}
+                />
+              }
+            />
+
+            <Route
+              exact
+              path="/marketplace/mint/core"
+              element={
+                <MarketMint
+                  coinbase={coinbase}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  timepieceMetadata={timepieceMetadata}
+                  myConfluxNFTsCreated={myConfluxNFTsCreated}
+                  mybaseNFTsCreated={mybaseNFTsCreated}
+                  myskaleNFTsCreated={myskaleNFTsCreated}
+                  handleConfluxMint={handleConfluxNftMint}
+                  handleBaseNftMint={handleBaseNftMint}
+                  confluxMintAllowed={confluxMintAllowed}
+                  baseMintAllowed={baseMintAllowed}
+                  skaleMintAllowed={skaleMintAllowed}
+                />
+              }
+            />
+              <Route
+              exact
+              path="/marketplace/mint/sei"
               element={
                 <MarketMint
                   coinbase={coinbase}
