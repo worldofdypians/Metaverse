@@ -15,6 +15,7 @@ import dypRound from "./assets/dypRound.png";
 
 import completedBg from "./assets/completedBg.png";
 import bnbBg from "./assets/bnbBg.png";
+import seiBg from "./assets/seiBg.png";
 import skaleBg from "./assets/skaleBg.png";
 import coreBg from "./assets/coreBg.png";
 import victionBg from "./assets/victionBg.png";
@@ -2366,7 +2367,7 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={victionBg}
+                            src={seiBg}
                             className={`chain-img ${
                               chain === "sei" && "chain-img-active"
                             }`}
@@ -2726,7 +2727,7 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={victionBg}
+                            src={seiBg}
                             className={`chain-img ${
                               chain === "sei" && "chain-img-active"
                             }`}
