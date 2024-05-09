@@ -73,6 +73,14 @@ import upcomingDyp from "./assets/upcomingDyp.webp";
 import upcomingDyp2 from "./assets/dypiuspopup2.png";
 import dypeventPopupImage from "./assets/dypEventImage.png";
 import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
+import victionLogo from "./assets/victionLogo.svg";
+import victionBg from "./assets/victionBg.webp";
+import seiLogo from "./assets/seiLogo.svg";
+import seiBg from "./assets/seiBg.webp";
+import coreLogo from "./assets/coreLogo.svg";
+import coreBg from "./assets/coreBg.webp";
+import immutableLogo from "./assets/immutableLogo.svg";
+import immutableBg from "./assets/immutableBg.webp";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -332,6 +340,136 @@ const NewWalletBalance = ({
   };
 
   const dummyBetaPassData2 = [
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      backgroundImage: victionBg,
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Coming Soon",
+        logo: victionLogo,
+        backgroundImage: victionBg,
+      date: "XXX XX, XXXX",
+
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
+    {
+      title: "Immutable",
+      logo: immutableLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in IMX Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      backgroundImage: immutableBg,
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable Chain",
+        linkState: "immutable",
+        rewards: "IMX",
+        status: "Coming Soon",
+        id: "event15",
+        logo: immutableLogo,
+        backgroundImage: immutableBg,
+      date: "XXX XX, XXXX",
+
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in IMX Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
+    {
+      title: "SEI",
+      logo: seiLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in SEI Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      backgroundImage: seiBg,
+      popupInfo: {
+        title: "SEI",
+        chain: "SEI Chain",
+        linkState: "sei",
+        rewards: "SEI",
+        logo: seiLogo,
+        backgroundImage: seiBg,
+      date: "XXX XX, XXXX",
+
+        status: "Coming Soon",
+        id: "event13",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in SEI Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
+    {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      backgroundImage: coreBg,
+      eventDate: "XXX XX, XXXX",
+
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Coming Soon",
+        backgroundImage: coreBg,
+        logo: coreLogo,
+        date: "XXX XX, XXXX",
+
+        id: "event12",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in SEI Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
     {
       title: "Dypius Premium",
       logo: dypius,
@@ -1143,6 +1281,24 @@ const NewWalletBalance = ({
               >
                 Treasure Hunt
               </h6>{" "}
+              <UpcomingProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyBetaPassData2[2].popupInfo);
+                  setEventPopup(true);
+                }}
+                data={dummyBetaPassData2[2].popupInfo}
+                event={dummyBetaPassData2[2].popupInfo}
+                userEarnedUsd={0}
+              />
+              <UpcomingProfileEvent
+                onOpenEvent={() => {
+                  setDummyEvent(dummyBetaPassData2[3].popupInfo);
+                  setEventPopup(true);
+                }}
+                data={dummyBetaPassData2[3].popupInfo}
+                event={dummyBetaPassData2[3].popupInfo}
+                userEarnedUsd={0}
+              />
               <ActiveProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dypv2);
@@ -1152,7 +1308,7 @@ const NewWalletBalance = ({
                 event={dypv2}
                 userEarnedUsd={dypiusPremiumEarnUsd}
               />
-              <ActiveProfileEvent
+              {/* <ActiveProfileEvent
                 data={dummySkale}
                 event={dummySkale}
                 userEarnedUsd={skaleEarnUsd}
@@ -1169,7 +1325,7 @@ const NewWalletBalance = ({
                 data={dummyCmc}
                 event={dummyCmc}
                 userEarnedUsd={cmcuserEarnUsd}
-              />
+              /> */}
               {/* <ExpiredProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
@@ -2099,6 +2255,54 @@ const NewWalletBalance = ({
                       BNB. Remember to log in to the game daily and venture into
                       the downtown area to uncover hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event14" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Viction Beta Pass NFT</b>. You can get the
+                      Viction Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Viction area, players not only stand a
+                      chance to secure daily rewards in VIC, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Viction area to uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event15" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Immutable Beta Pass NFT</b>. You can get the
+                      Immutable Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Immutable area, players not only stand a
+                      chance to secure daily rewards in IMX, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Immutable area to uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event13" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a SEI Beta Pass NFT</b>. You can get the SEI Beta
+                      Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      SEI area, players not only stand a chance to secure daily
+                      rewards in SEI, but also earn points for their placement
+                      on the global leaderboard. Remember to log in to the game
+                      daily and venture into the SEI area to uncover hidden
+                      treasures.
+                    </p>
+                  ) : dummyEvent.id === "event12" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a CORE Beta Pass NFT</b>. You can get the CORE
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      CORE area, players not only stand a chance to secure daily
+                      rewards in CORE, but also earn points for their placement
+                      on the global leaderboard. Remember to log in to the game
+                      daily and venture into the CORE area to uncover hidden
+                      treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -2154,6 +2358,14 @@ const NewWalletBalance = ({
                           ? "DOGE"
                           : dummyEvent.id === "event11"
                           ? "SKL"
+                          : dummyEvent.id === "event14"
+                          ? "VIC"
+                          : dummyEvent.id === "event15"
+                          ? "IMX"
+                          : dummyEvent.id === "event13"
+                          ? "SEI"
+                          : dummyEvent.id === "event12"
+                          ? "CORE"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2193,6 +2405,14 @@ const NewWalletBalance = ({
                 ? "CoinMarketCap"
                 : dummyEvent.id === "event11"
                 ? "SKALE"
+                : dummyEvent.id === "event14"
+                ? "VIction"
+                : dummyEvent.id === "event15"
+                ? "Immutable"
+                : dummyEvent.id === "event13"
+                ? "SEI"
+                : dummyEvent.id === "event12"
+                ? "CORE"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2284,6 +2504,46 @@ const NewWalletBalance = ({
                 blockchains without compromising on speed, security, or
                 decentralization.
               </p>
+            ) : dummyEvent.id === "event14" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Viction, an efficient, rapidly growing blockchain ecosystem, is
+                poised to expand vision and encourage mass adoption. Explore the
+                expansive ecosystem we're building.
+              </p>
+            ) : dummyEvent.id === "event15" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Immutable is a global leader in gaming on a mission to bring
+                digital ownership to every player by making it safe and easy to
+                build great web3 games.
+              </p>
+            ) : dummyEvent.id === "event13" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Sei is recognized as the fastest Layer 1 blockchain, setting new
+                benchmarks in blockchain performance and scalability. Supporting
+                multiple execution environments, including the innovative
+                parallelized Ethereum Virtual Machine,
+              </p>
+            ) : dummyEvent.id === "event12" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Core DAO started as a community looking for better solutions,
+                and that’s what it remains. With principles grounded in the
+                premises of both Bitcoin and Ethereum, our power comes from
+                embracing multiple ideas and communities. The opposite of a
+                winner-take-all mentality - Core is focused instead on platform
+                growth and driving the global adoption of blockchain technology.
+              </p>
             ) : dummyEvent.id === "event8" ? (
               <p
                 className="popup-event-desc"
@@ -2328,6 +2588,14 @@ const NewWalletBalance = ({
                     ? "https://twitter.com/CoinMarketCap"
                     : dummyEvent.id === "event11"
                     ? "https://twitter.com/SkaleNetwork"
+                    : dummyEvent.id === "event14"
+                    ? "https://viction.link/twitter"
+                    : dummyEvent.id === "event15"
+                    ? "https://twitter.com/Immutable"
+                    : dummyEvent.id === "event13"
+                    ? "https://twitter.com/SeiNetwork"
+                    : dummyEvent.id === "event12"
+                    ? "https://twitter.com/Coredao_Org"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2353,6 +2621,14 @@ const NewWalletBalance = ({
                     ? "https://discord.gg/dogecoin"
                     : dummyEvent.id === "event11"
                     ? "https://discord.com/invite/gM5XBy6"
+                    : dummyEvent.id === "event14"
+                    ? "https://viction.link/telegram"
+                    : dummyEvent.id === "event15"
+                    ? "https://discord.gg/CYsjMdctsP"
+                    : dummyEvent.id === "event13"
+                    ? "https://t.me/seinetwork?ref=blog.sei.io"
+                    : dummyEvent.id === "event12"
+                    ? "https://t.me/CoreDAOTelegram"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -2387,6 +2663,14 @@ const NewWalletBalance = ({
                     ? "https://coinmarketcap.com/"
                     : dummyEvent.id === "event11"
                     ? "https://skale.space/"
+                    : dummyEvent.id === "event14"
+                    ? "https://www.viction.xyz/"
+                    : dummyEvent.id === "event15"
+                    ? "https://www.immutable.com/"
+                    : dummyEvent.id === "event13"
+                    ? "https://www.sei.io/"
+                    : dummyEvent.id === "event12"
+                    ? "https://coredao.org/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -2504,6 +2788,14 @@ const NewWalletBalance = ({
                             ? "DOGE"
                             : dummyEvent.id === "event11"
                             ? "SKL"
+                            : dummyEvent.id === "event14"
+                            ? "VIC"
+                            : dummyEvent.id === "event15"
+                            ? "IMX"
+                            : dummyEvent.id === "event13"
+                            ? "SEI"
+                            : dummyEvent.id === "event12"
+                            ? "CORE"
                             : "ETH"}
                         </>
                       )}

@@ -32,7 +32,7 @@ import skaleLogo from "./assets/skaleLogo.svg";
 import seiLogo from "./assets/seiLogo.svg";
 import coreLogo from "./assets/coreLogo.svg";
 import victionLogo from "./assets/victionLogo.svg";
-import immutableLogo from "./assets/immutableLogo.svg"
+import immutableLogo from "./assets/immutableLogo.svg";
 
 import avaxLogo from "./assets/avaxLogo.svg";
 
@@ -96,8 +96,6 @@ import immutableBg from "./assets/immutableBg.webp";
 import seiBg from "./assets/seiBg.webp";
 import coreBg from "./assets/coreBg.webp";
 import victionBg from "./assets/victionBg.webp";
-
-
 
 import dailyBonus from "./assets/dailyBonus.webp";
 import MintPopup from "../../components/TimepieceMint/MintPopup";
@@ -221,7 +219,6 @@ const MarketEvents = ({
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
-
   let dogeLastDay = new Date("2024-04-02T13:00:00.000+02:00");
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
@@ -233,7 +230,6 @@ const MarketEvents = ({
   };
 
   const dummyBetaPassData2 = [
-    
     {
       title: "VICTION",
       logo: victionLogo,
@@ -262,7 +258,7 @@ const MarketEvents = ({
         eventDate: "XXX XX, XXXX",
       },
     },
-   {
+    {
       title: "Immutable",
       logo: immutableLogo,
       eventStatus: "Coming Soon",
@@ -290,7 +286,7 @@ const MarketEvents = ({
         eventDate: "XXX XX, XXXX",
       },
     },
-     {
+    {
       title: "SEI",
       logo: seiLogo,
       eventStatus: "Coming Soon",
@@ -346,12 +342,6 @@ const MarketEvents = ({
         eventDate: "XXX XX, XXXX",
       },
     },
-
- 
-
-
-
-
 
     // {
     //   title: "MultiversX",
@@ -1781,6 +1771,54 @@ const MarketEvents = ({
                       the game daily and venture into the SKALE area to uncover
                       hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event14" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Viction Beta Pass NFT</b>. You can get the
+                      Viction Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Viction area, players not only stand a
+                      chance to secure daily rewards in VIC, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Viction area to uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event15" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Immutable Beta Pass NFT</b>. You can get the
+                      Immutable Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Immutable area, players not only stand a
+                      chance to secure daily rewards in IMX, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Immutable area to uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event13" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a SEI Beta Pass NFT</b>. You can get the SEI Beta
+                      Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      SEI area, players not only stand a chance to secure daily
+                      rewards in SEI, but also earn points for their placement
+                      on the global leaderboard. Remember to log in to the game
+                      daily and venture into the SEI area to uncover hidden
+                      treasures.
+                    </p>
+                  ) : dummyEvent.id === "event12" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a CORE Beta Pass NFT</b>. You can get the CORE
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      CORE area, players not only stand a chance to secure daily
+                      rewards in CORE, but also earn points for their placement
+                      on the global leaderboard. Remember to log in to the game
+                      daily and venture into the CORE area to uncover hidden
+                      treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -1836,6 +1874,14 @@ const MarketEvents = ({
                           ? "DOGE"
                           : dummyEvent.id === "event11"
                           ? "SKL"
+                          : dummyEvent.id === "event14"
+                          ? "VIC"
+                          : dummyEvent.id === "event15"
+                          ? "IMX"
+                          : dummyEvent.id === "event13"
+                          ? "SEI"
+                          : dummyEvent.id === "event12"
+                          ? "CORE"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -1875,6 +1921,14 @@ const MarketEvents = ({
                 ? "CoinMarketCap"
                 : dummyEvent.id === "event11"
                 ? "SKALE"
+                : dummyEvent.id === "event14"
+                ? "VIction"
+                : dummyEvent.id === "event15"
+                ? "Immutable"
+                : dummyEvent.id === "event13"
+                ? "SEI"
+                : dummyEvent.id === "event12"
+                ? "CORE"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -1979,6 +2033,46 @@ const MarketEvents = ({
                 blockchains without compromising on speed, security, or
                 decentralization.
               </p>
+            ) : dummyEvent.id === "event14" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Viction, an efficient, rapidly growing blockchain ecosystem, is
+                poised to expand vision and encourage mass adoption. Explore the
+                expansive ecosystem we're building.
+              </p>
+            ) : dummyEvent.id === "event15" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Immutable is a global leader in gaming on a mission to bring
+                digital ownership to every player by making it safe and easy to
+                build great web3 games.
+              </p>
+            ) : dummyEvent.id === "event13" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Sei is recognized as the fastest Layer 1 blockchain, setting new
+                benchmarks in blockchain performance and scalability. Supporting
+                multiple execution environments, including the innovative
+                parallelized Ethereum Virtual Machine,
+              </p>
+            ) : dummyEvent.id === "event12" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Core DAO started as a community looking for better solutions,
+                and that’s what it remains. With principles grounded in the
+                premises of both Bitcoin and Ethereum, our power comes from
+                embracing multiple ideas and communities. The opposite of a
+                winner-take-all mentality - Core is focused instead on platform
+                growth and driving the global adoption of blockchain technology.
+              </p>
             ) : (
               <p
                 className="popup-event-desc"
@@ -2010,6 +2104,14 @@ const MarketEvents = ({
                     ? "https://twitter.com/CoinMarketCap"
                     : dummyEvent.id === "event11"
                     ? "https://twitter.com/SkaleNetwork"
+                    : dummyEvent.id === "event14"
+                    ? "https://viction.link/twitter"
+                    : dummyEvent.id === "event15"
+                    ? "https://twitter.com/Immutable"
+                    : dummyEvent.id === "event13"
+                    ? "https://twitter.com/SeiNetwork"
+                    : dummyEvent.id === "event12"
+                    ? "https://twitter.com/Coredao_Org"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2035,6 +2137,14 @@ const MarketEvents = ({
                     ? "https://discord.gg/dogecoin"
                     : dummyEvent.id === "event11"
                     ? "https://discord.com/invite/gM5XBy6"
+                    : dummyEvent.id === "event14"
+                    ? "https://viction.link/telegram"
+                    : dummyEvent.id === "event15"
+                    ? "https://discord.gg/CYsjMdctsP"
+                    : dummyEvent.id === "event13"
+                    ? "https://t.me/seinetwork?ref=blog.sei.io"
+                    : dummyEvent.id === "event12"
+                    ? "https://t.me/CoreDAOTelegram"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -2069,6 +2179,14 @@ const MarketEvents = ({
                     ? "https://coinmarketcap.com/"
                     : dummyEvent.id === "event11"
                     ? "https://skale.space/"
+                    : dummyEvent.id === "event14"
+                    ? "https://www.viction.xyz/"
+                    : dummyEvent.id === "event15"
+                    ? "https://www.immutable.com/"
+                    : dummyEvent.id === "event13"
+                    ? "https://www.sei.io/"
+                    : dummyEvent.id === "event12"
+                    ? "https://coredao.org/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -2188,6 +2306,14 @@ const MarketEvents = ({
                             ? "DOGE"
                             : dummyEvent.id === "event11"
                             ? "SKL"
+                            : dummyEvent.id === "event14"
+                            ? "VIC"
+                            : dummyEvent.id === "event15"
+                            ? "IMX"
+                            : dummyEvent.id === "event13"
+                            ? "SEI"
+                            : dummyEvent.id === "event12"
+                            ? "CORE"
                             : "ETH"}
                         </>
                       )}

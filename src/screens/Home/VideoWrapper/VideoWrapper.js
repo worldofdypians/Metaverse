@@ -14,6 +14,14 @@ import cmc from "../../Marketplace/MarketNFTs/assets/cmc.svg";
 import multiplayer from "../../../assets/multiplayer.svg";
 import whiteCircleArrow from "../../../assets/whiteCircleArrow.svg";
 import skaleLogo from '../../Marketplace/MarketNFTs/assets/skaleLogo.svg'
+import victionLogo from "./assets/victionLogo.svg";
+import victionBg from "./assets/victionBg.webp";
+import seiLogo from "./assets/seiLogo.svg";
+import seiBg from "./assets/seiBg.webp";
+import coreLogo from "./assets/coreLogo.svg";
+import coreBg from "./assets/coreBg.webp";
+import immutableLogo from "./assets/immutableLogo.svg";
+import immutableBg from "./assets/immutableBg.webp";
 
 import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
 import Slider from "react-slick";
@@ -46,7 +54,136 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
       "https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp";
   };
 
+
+  let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
+
+
+  
   const dummyBetaPassData2 = [
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "VIC Rewards",
+
+      backgroundImage: victionBg,
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Coming Soon",
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
+   {
+      title: "Immutable",
+      logo: immutableLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in IMX Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "IMX Rewards",
+
+      backgroundImage: immutableBg,
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable Chain",
+        linkState: "immutable",
+        rewards: "IMX",
+        status: "Coming Soon",
+        id: "event15",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in IMX Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
+     {
+      title: "SEI",
+      logo: seiLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in SEI Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "SEI Rewards",
+
+      backgroundImage: seiBg,
+      popupInfo: {
+        title: "SEI",
+        chain: "SEI Chain",
+        linkState: "sei",
+        rewards: "SEI",
+        status: "Coming Soon",
+        id: "event13",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in SEI Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
+    {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "CORE Rewards",
+
+      backgroundImage: coreBg,
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Coming Soon",
+        id: "event12",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in SEI Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
     {
       title: "Dypius",
       logo: dypius,
@@ -444,7 +581,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   </span>
 
                   <Slider {...settings} ref={betaSlider}>
-                    {dummyBetaPassData2.map((item, index) => (
+                    {dummyBetaPassData2.slice(0,4).map((item, index) => (
                       <NavLink to={`/marketplace/events/treasure-hunt`}>
                         <BetaEventCardHome
                           data={item}
@@ -489,7 +626,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
               </span>
 
               <Slider {...settings} ref={betaSlider}>
-                {dummyBetaPassData2.map((item, index) => (
+                {dummyBetaPassData2.slice(0,4).map((item, index) => (
                   <NavLink to={`/marketplace/events/treasure-hunt`}>
                     <BetaEventCardHome
                       data={item}
