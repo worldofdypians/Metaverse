@@ -99,6 +99,11 @@ import seiBg from "./assets/seiBg.webp";
 import coreBg from "./assets/coreBg.webp";
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
+import immutableMobileBg from "./assets/immutableActive.webp";
+import seiMobileBg from "./assets/seiActive.webp";
+import coreMobileBg from "./assets/coreActive.webp";
+import victionMobileBg from "./assets/victionActive.webp";
+import multiversMobileBg from "./assets/multiversActive.webp";
 
 import dailyBonus from "./assets/dailyBonus.webp";
 import MintPopup from "../../components/TimepieceMint/MintPopup";
@@ -1368,30 +1373,7 @@ const MarketEvents = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">New events are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
-                //   </div>
-                // </div>
-
-                // <BetaEventCard
-                //   activeTab={activeTab}
-                //   data={newBetaEvent}
-                //   userEarnUsd={
-                //     newBetaEvent.title === "Conflux"
-                //       ? confluxEarnUSD
-                //       : newBetaEvent.title === "CoinGecko"
-                //       ? userEarnUsd
-                //       : newBetaEvent.title === "Gate.io"
-                //       ? gateEarnUSD
-                //       : newBetaEvent.title === "Dypius"
-                //       ? dypiusEarnTokens
-                //       : 0
-                //   }
-                // />
+            
                 <div className="d-flex flex-column gap-4">
                   <div className="border-0 upcoming-mint-wrapper upcoming-babydoge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
@@ -1412,81 +1394,105 @@ const MarketEvents = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
-
-                  <div className="border-0 upcoming-mint-wrapper upcoming-babydoge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  <div className="border-0 upcoming-mint-wrapper upcoming-core-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">CORE</h6>
                       <p className="upcoming-mint-desc">
                         Join the CORE Treasure Hunt event for a chance to grab a
-                        share of the $50,000 CORE reward pool.
+                        share of the $20,000 CORE reward pool.
                       </p>
                     </div>
                     <img
-                      src={upcomingBabyDoge}
+                      src={coreBg}
                       alt=""
                       className="upcoming-mint-img d-none d-lg-block"
                     />
                     <img
-                      src={upcomingBabyDogeMobile}
+                      src={coreMobileBg}
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
-
-                  <div className="border-0 upcoming-mint-wrapper upcoming-babydoge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  <div className="border-0 upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">SEI</h6>
                       <p className="upcoming-mint-desc">
                         Join the SEI Treasure Hunt event for a chance to grab a
-                        share of the $50,000 SEI reward pool.
+                        share of the $20,000 SEI reward pool.
                       </p>
                     </div>
                     <img
-                      src={upcomingBabyDoge}
+                      src={seiBg}
                       alt=""
                       className="upcoming-mint-img d-none d-lg-block"
                     />
                     <img
-                      src={upcomingBabyDogeMobile}
+                      src={seiMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+                  <div className="border-0 upcoming-mint-wrapper upcoming-viction-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">VICTION</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the Viction Treasure Hunt event for a chance to
+                        grab a share of the $20,000 VIC reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={victionBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={victionMobileBg}
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
 
-                  <div className="border-0 upcoming-mint-wrapper upcoming-babydoge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  <div className="border-0 upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">VICTION</h6>
+                      <h6 className="upcoming-mint-title">MultiversX</h6>
                       <p className="upcoming-mint-desc">
-                        Join the Viction Treasure Hunt event for a chance to
-                        grab a share of the $50,000 VIC reward pool.
+                        Join the MultiversX Treasure Hunt event for a chance to
+                        grab a share of the $20,000 EGLD reward pool.
                       </p>
                     </div>
                     <img
-                      src={upcomingBabyDoge}
+                      src={multiversBg}
                       alt=""
                       className="upcoming-mint-img d-none d-lg-block"
                     />
                     <img
-                      src={upcomingBabyDogeMobile}
+                      src={multiversMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+
+                  <div className="border-0 upcoming-mint-wrapper upcoming-immutable-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Immutable</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the Immutable Treasure Hunt event for a chance to
+                        grab a share of the $20,000 IMX reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={immutableBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={immutableMobileBg}
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
                 </div>
-                // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                //   {dummyBetaPassData2.slice(3, 4).map((item, index) => (
-                //     <BetaEventCard
-                //       data={item}
-                //       key={index}
-                //       onOpenPopup={() => {
-                //         setEventPopup(true);
-                //         setDummyEvent(item.popupInfo);
-                //       }}
-                //       userEarnUsd={userEarnUsd}
-                //     />
-                //   ))}
-                // </div>
-                // <BetaPassEvents />
+      
               )}
               {activeTab === "past" && (
                 // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
