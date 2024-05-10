@@ -70,12 +70,15 @@ import dypeventPopupImage from "../Account/src/Components/WalletBalance/assets/d
 import gatePopupImage from "../Account/src/Components/WalletBalance/assets/gatePopupImage.png";
 import cmcPopupImage from "../Account/src/Components/WalletBalance/assets/cmcPopupImage.png";
 import skalePopupImage from "../Account/src/Components/WalletBalance/assets/skalePopupImage.png";
-
 import eventPopupImageAvax from "../Account/src/Components/WalletBalance/assets/eventPopupImageAvax.png";
 import eventPopupImageGecko from "../Account/src/Components/WalletBalance/assets/eventPopupImageGecko.png";
-import eventPopupImageDypius2 from "../Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
-
 import eventPopupImageBase from "../Account/src/Components/WalletBalance/assets/eventPopupImageBase.png";
+import eventPopupImageDypius2 from "../Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
+import victionThumb from "../Account/src/Components/WalletBalance/assets/victionThumb.png";
+import seiThumb from "../Account/src/Components/WalletBalance/assets/seiThumb.png";
+import multiversThumb from "../Account/src/Components/WalletBalance/assets/multiversThumb.png";
+import immutableThumb from "../Account/src/Components/WalletBalance/assets/immutableThumb.png";
+import coreThumb from "../Account/src/Components/WalletBalance/assets/coreThumb.png";
 
 import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.svg";
@@ -1605,10 +1608,25 @@ const MarketEvents = ({
                         ? cmcPopupImage
                         : dummyEvent.linkState === "skale"
                         ? skalePopupImage
+                        : dummyEvent.linkState === "core"
+                        ? coreThumb
+                        : dummyEvent.linkState === "sei"
+                        ? seiThumb
+                        : dummyEvent.linkState === "immutable"
+                        ? immutableThumb
+                        : dummyEvent.linkState === "viction"
+                        ? victionThumb
+                        : dummyEvent.linkState === "multiversx"
+                        ? multiversThumb
                         : eventPopupImage
                     }
                     alt=""
-                    style={{ width: 80, height: 80 }}
+                    style={{
+                      width: 90,
+                      height: 90,
+                      borderRadius: "8px",
+                      objectFit: "cover",
+                    }}
                   />
                   <div className="d-flex flex-column justify-content-between">
                     <div className="d-flex flex-column">
@@ -1824,6 +1842,18 @@ const MarketEvents = ({
                       daily and venture into the CORE area to uncover hidden
                       treasures.
                     </p>
+                  ) : dummyEvent.id === "event16" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a MultiversX Beta Pass NFT</b>. You can get the
+                      MultiversX Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the MultiversX area, players not only stand a
+                      chance to secure daily rewards in EGLD, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      MultiversX area to uncover hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -1887,6 +1917,8 @@ const MarketEvents = ({
                           ? "SEI"
                           : dummyEvent.id === "event12"
                           ? "CORE"
+                          : dummyEvent.id === "event16"
+                          ? "ELGD"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -1934,6 +1966,8 @@ const MarketEvents = ({
                 ? "SEI"
                 : dummyEvent.id === "event12"
                 ? "CORE"
+                : dummyEvent.id === "event16"
+                ? "MultiversX"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2051,6 +2085,15 @@ const MarketEvents = ({
                 token standard, alongside speed, security, and scalability, all
                 contributing to a more secure and open world.
               </p>
+            ) : dummyEvent.id === "event16" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                MultiversX is a distributed blockchain network for next-gen
+                applications. Decentralized via 3000+ nodes, scalable through
+                sharding, fast, secure & green.
+              </p>
             ) : dummyEvent.id === "event15" ? (
               <p
                 className="popup-event-desc"
@@ -2121,6 +2164,8 @@ const MarketEvents = ({
                     ? "https://twitter.com/SeiNetwork"
                     : dummyEvent.id === "event12"
                     ? "https://twitter.com/Coredao_Org"
+                    : dummyEvent.id === "event16"
+                    ? "https://twitter.com/MultiversX"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2154,6 +2199,8 @@ const MarketEvents = ({
                     ? "https://t.me/seinetwork?ref=blog.sei.io"
                     : dummyEvent.id === "event12"
                     ? "https://t.me/CoreDAOTelegram"
+                    : dummyEvent.id === "event16"
+                    ? "https://t.me/MultiversX"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -2196,6 +2243,8 @@ const MarketEvents = ({
                     ? "https://www.sei.io/"
                     : dummyEvent.id === "event12"
                     ? "https://coredao.org/"
+                    : dummyEvent.id === "event16"
+                    ? "https://multiversx.com/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -2323,6 +2372,8 @@ const MarketEvents = ({
                             ? "SEI"
                             : dummyEvent.id === "event12"
                             ? "CORE"
+                            : dummyEvent.id === "event16"
+                            ? "ELGD"
                             : "ETH"}
                         </>
                       )}
