@@ -30,6 +30,8 @@ import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.
 import base from "./assets/baseLogo.svg";
 import skaleLogo from "./assets/skaleLogo.svg";
 import seiLogo from "./assets/seiLogo.svg";
+import multiversLogo from "./assets/multiversLogo.svg";
+
 import coreLogo from "./assets/coreLogo.svg";
 import victionLogo from "./assets/victionLogo.svg";
 import immutableLogo from "./assets/immutableLogo.svg";
@@ -96,6 +98,7 @@ import immutableBg from "./assets/immutableBg.webp";
 import seiBg from "./assets/seiBg.webp";
 import coreBg from "./assets/coreBg.webp";
 import victionBg from "./assets/victionBg.webp";
+import multiversBg from "./assets/multiversBg.webp";
 
 import dailyBonus from "./assets/dailyBonus.webp";
 import MintPopup from "../../components/TimepieceMint/MintPopup";
@@ -231,6 +234,34 @@ const MarketEvents = ({
 
   const dummyBetaPassData2 = [
     {
+      title: "MultiversX",
+      logo: multiversLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in EGLD Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      backgroundImage: multiversBg,
+      popupInfo: {
+        title: "MultiversX",
+        chain: "MultiversX Chain",
+        linkState: "multiversx",
+        rewards: "EGLD",
+        status: "Coming Soon",
+        id: "event16",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in EGLD Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
+    {
       title: "VICTION",
       logo: victionLogo,
       eventStatus: "Coming Soon",
@@ -342,36 +373,6 @@ const MarketEvents = ({
         eventDate: "XXX XX, XXXX",
       },
     },
-
-    // {
-    //   title: "MultiversX",
-    //   logo: victionLogo,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$50,000 in IMX Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Find",
-    //   eventDate: "May 26, 2024",
-    //   backgroundImage: upcomingDyp2,
-    //   popupInfo: {
-    //     title: "Immutable",
-    //     chain: "Immutable Chain",
-    //     linkState: "immutable",
-    //     rewards: "IMX",
-    //     status: "Coming Soon",
-    //     id: "event15",
-    //     eventType: "Explore & Find",
-    //     totalRewards: "$50,000 in IMX Rewards",
-    //     eventDuration: dypius2LastDay,
-    //     minRewards: "1",
-    //     maxRewards: "100",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore:
-    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-    //     eventDate: "May 26, 2024",
-    //   },
-    // },
-
     {
       title: "Dypius Premium",
       logo: dypiusPremium36,
@@ -1284,7 +1285,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 6).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 7).map((item, index) => (
                           <BetaEventCard
                             activeTab={item.activeTab}
                             data={item}
@@ -1497,7 +1498,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(6, dummyBetaPassData2.length)
+                    .slice(7, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
