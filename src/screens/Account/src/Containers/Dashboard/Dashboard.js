@@ -2126,8 +2126,9 @@ function Dashboard({
           ? "SUBSCRIPTION_SKALE"
           : "",
     });
-    const today = new Date.now();
+    const today =  Date.now();
     setloadspinnerSub(true);
+
     if (chainId === 56 && nftPremium_total > 0) {
       await window
         .subscribeNFT(nftPremium_tokenId)
@@ -2149,7 +2150,6 @@ function Dashboard({
                 ? "skale"
                 : "";
             setselectedChainforPremium(selectedchain);
-
             setTimeout(() => {
               setgetPremiumPopup(false);
             }, 2000);
@@ -2158,7 +2158,6 @@ function Dashboard({
           setIsPremium(true);
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
-
           await axios
             .patch(
               `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
