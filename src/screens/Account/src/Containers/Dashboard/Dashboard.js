@@ -661,7 +661,9 @@ const [userDataSkaleMonthly, setUserDataSkaleMonthly] = useState({});
 const [userDataGenesis, setUserDataGenesis] = useState({});
 const [inactiveBoard, setInactiveBoard] = useState(false);
 const [dailyplayerData, setdailyplayerData] = useState([]);
+const [dailyplayerDataAmount, setdailyplayerDataAmount] = useState([]);
 const [weeklyplayerData, setweeklyplayerData] = useState([]);
+const [weeklyplayerDataAmount, setweeklyplayerDataAmount] = useState([]);
 const [monthlyplayerData, setmonthlyplayerData] = useState([]);
 const [skaleRecords, setskaleRecords] = useState([]);
 const [skalePreviousRecords, setskalePreviousRecords] = useState([]);
@@ -2345,7 +2347,7 @@ useEffect(() => {
           const userPosition = testArray[0].position;
 
       if (goldenPassRemainingTime) {
-        setdailyplayerData(
+        setdailyplayerDataAmount(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
@@ -2355,7 +2357,7 @@ useEffect(() => {
             : 0
         );
       } else if (!goldenPassRemainingTime) {
-        setdailyplayerData(
+        setdailyplayerDataAmount(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
@@ -2423,7 +2425,7 @@ useEffect(() => {
 
         const userPosition = testArray[0].position;
     if (goldenPassRemainingTime) {
-      setweeklyplayerData(
+      setweeklyplayerDataAmount(
         testArray[0].statValue !== 0
           ? userPosition > 10
             ? 0
@@ -2433,7 +2435,7 @@ useEffect(() => {
           : 0
       );
     } else if (!goldenPassRemainingTime) {
-      setweeklyplayerData(
+      setweeklyplayerDataAmount(
         testArray[0].statValue !== 0
           ? userPosition > 10
             ? 0
@@ -4639,8 +4641,8 @@ useEffect(() => {
                           setdailyBonusPopup(true);
                         }}
                         dogePrice={dogePrice}
-                        weeklyplayerData={weeklyplayerData}
-                        dailyplayerData={dailyplayerData}
+                        weeklyplayerData={weeklyplayerDataAmount}
+                        dailyplayerData={dailyplayerDataAmount}
                         skaleEarnToken={skaleEarnToken}
                         skaleEarnUsd={skaleEarnUsd}
                         seiEarnUsd={seiEarnUsd}
@@ -5037,8 +5039,8 @@ useEffect(() => {
                             username={data?.getPlayer?.displayName}
                             userId={data?.getPlayer?.playerId}
                             address={data?.getPlayer?.wallet?.publicAddress}
-                            weeklyplayerData={weeklyplayerData}
-                            dailyplayerData={dailyplayerData}
+                            weeklyplayerData={weeklyplayerDataAmount}
+                            dailyplayerData={dailyplayerDataAmount}
                             userRank2={userRank2}
                             email={email}
                             bnbPrice={bnbPrice}
