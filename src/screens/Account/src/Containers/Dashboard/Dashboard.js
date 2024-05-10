@@ -2164,12 +2164,22 @@ function Dashboard({
               {
                 multiplier: "yes",
                 chain: chainId.toString(),
-                timestamp: today.toString(),
+                premiumTimestamp: today.toString(),
               }
             )
             .then(() => {
               getRankData();
             });
+          setTimeout(() => {
+            setgetPremiumPopup(false);
+          }, 2000);
+        }).catch(()=>{
+          
+          setloadspinnerSub(false);
+          setapproveStatus("failsubscribe");
+          setstatus(e?.message);
+          window.alertify.error(e?.message);
+
           setTimeout(() => {
             setloadspinnerSub(false);
             setloadspinner(false);
@@ -2177,18 +2187,8 @@ function Dashboard({
             setstatus("");
           }, 5000);
         })
-        .catch((e) => {
-          setloadspinnerSub(false);
-          setapproveStatus("failsubscribe");
-          setstatus(e?.message);
-          window.alertify.error(e?.message);
-          setTimeout(() => {
-            setloadspinnerSub(false);
-            setloadspinner(false);
-            setapproveStatus("initial");
-            setstatus("");
-          }, 5000);
-        });
+      
+   
     } else {
       await subscriptionContract.methods
         .subscribe(selectedSubscriptionToken, price)

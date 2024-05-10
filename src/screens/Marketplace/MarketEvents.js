@@ -1221,14 +1221,14 @@ const [skalePoints, setSkalePoints] = useState(0);
                 </>
               )}
               {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">New events are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
-                //   </div>
-                // </div>
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">New events are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
+                  </div>
+                </div>
 
                 // <BetaEventCard
                 //   activeTab={activeTab}
@@ -1245,27 +1245,7 @@ const [skalePoints, setSkalePoints] = useState(0);
                 //       : 0
                 //   }
                 // />
-                <div className="d-flex flex-column gap-4">
-                  <div className="border-0 upcoming-mint-wrapper upcoming-babydoge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">BabyDoge</h6>
-                      <p className="upcoming-mint-desc">
-                        Join the BabyDoge Treasure Hunt event for a chance to
-                        grab a share of the $20,000 BabyDoge reward pool.
-                      </p>
-                    </div>
-                    <img
-                      src={upcomingBabyDoge}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-block"
-                    />
-                    <img
-                      src={upcomingBabyDogeMobile}
-                      alt=""
-                      className="upcoming-mint-img d-block d-lg-none d-md-none"
-                    />
-                  </div>
-                </div>
+               
                 // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                 //   {dummyBetaPassData2.slice(3, 4).map((item, index) => (
                 //     <BetaEventCard
