@@ -148,6 +148,19 @@ function Dashboard({
     "9",
     "10",
   ];
+  const chestImagesSkale = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
   const chestImagesCore = [
     "0",
     "1",
@@ -464,7 +477,7 @@ function Dashboard({
   const [datewhenBundleBought, setdatewhenBundleBought] = useState(0);
   const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
   const [bnbImages, setBnbImages] = useState(shuffle(chestImagesBnb));
-  const [skaleImages, setSkaleImages] = useState([]);
+  const [skaleImages, setSkaleImages] = useState(shuffle(chestImagesSkale));
   const [coreImages, setCoreImages] = useState(shuffle(chestImagesCore));
   const [victionImages, setVictionImages] = useState(
     shuffle(chestImagesViction)
@@ -1670,8 +1683,8 @@ useEffect(() => {
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
   let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
   let wseiAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
-  let wvictionAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
-  let wcoreAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
+  let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
+  let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
   const dailyPrizesGolden = [10, 8, 5, 5, 5, 5, 5, 5, 5, 5];
@@ -2696,8 +2709,8 @@ useEffect(() => {
     const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
     const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
     const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
-    const CoreABI = window.SUBSCRIPTION_SKALE_ABI;
-    const VicitonABI = window.SUBSCRIPTION_SKALE_ABI;
+    const CoreABI = window.SUBSCRIPTION_CORE_ABI;
+    const VicitonABI = window.SUBSCRIPTION_VICTION_ABI;
     const SeiABI = window.SUBSCRIPTION_SKALE_ABI;
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
@@ -3866,9 +3879,9 @@ useEffect(() => {
           : chainId === 1482601649
           ? "SUBSCRIPTION_SKALE"
           : chainId === 88
-          ? "SUBSCRIPTION_SKALE"
+          ? "SUBSCRIPTION_VICTION"
           : chainId === 1116
-          ? "SUBSCRIPTION_SKALE"
+          ? "SUBSCRIPTION_CORE"
           : chainId === 713715
           ? "SUBSCRIPTION_SKALE"
           : "",
@@ -4182,6 +4195,7 @@ useEffect(() => {
       ) {
         setDummyPremiumChests(shuffle(dummyPremiums));
         setBnbImages(shuffle(chestImagesBnb));
+        setSkaleImages(shuffle(chestImagesSkale))
         setVictionImages(shuffle(chestImagesViction));
         setCoreImages(shuffle(chestImagesCore));
         setSeiImages(shuffle(chestImagesSei));
@@ -4205,8 +4219,8 @@ useEffect(() => {
       handleCheckIfAlreadyApproved(wethAddress);
     } else if (chainId === 88) {
       setChainDropdown(chainDropdowns[7]);
-      setdropdownIcon("usdc");
-      setdropdownTitle("USDC");
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
       setselectedSubscriptionToken(
         Object.keys(window.config.subscriptionviction_tokens)[0]
       );
@@ -4214,8 +4228,8 @@ useEffect(() => {
       handleCheckIfAlreadyApproved(wvictionAddress);
     } else if (chainId === 1116) {
       setChainDropdown(chainDropdowns[6]);
-      setdropdownIcon("usdc");
-      setdropdownTitle("USDC");
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
       setselectedSubscriptionToken(
         Object.keys(window.config.subscriptioncore_tokens)[0]
       );
@@ -4223,8 +4237,8 @@ useEffect(() => {
       handleCheckIfAlreadyApproved(wcoreAddress);
     } else if (chainId === 713715) {
       setChainDropdown(chainDropdowns[8]);
-      setdropdownIcon("usdc");
-      setdropdownTitle("USDC");
+      setdropdownIcon("usdt");
+      setdropdownTitle("usdt");
       setselectedSubscriptionToken(
         Object.keys(window.config.subscriptionsei_tokens)[0]
       );
@@ -5284,6 +5298,7 @@ useEffect(() => {
                                       <img
                                         src={require(`../../Images/premium/tokens/${chainDropdown.symbol}Icon.svg`)}
                                         alt=""
+                                        style={{width: 18, height: 18}}
                                       />
                                       {chainDropdown.name}
                                     </div>
@@ -5299,6 +5314,7 @@ useEffect(() => {
                                           require(`../../Images/premium/tokens/ethIcon.svg`)
                                             .default
                                         }
+                                        style={{width: 18, height: 18}}
                                         alt=""
                                       />
                                       Ethereum
@@ -5312,6 +5328,7 @@ useEffect(() => {
                                           require(`../../Images/premium/tokens/wbnbIcon.svg`)
                                             .default
                                         }
+                                        style={{width: 18, height: 18}}
                                         alt=""
                                       />
                                       BNB Chain
@@ -5325,6 +5342,7 @@ useEffect(() => {
                                           require(`../../Images/premium/tokens/wavaxIcon.svg`)
                                             .default
                                         }
+                                        style={{width: 18, height: 18}}
                                         alt=""
                                       />
                                       Avalanche
@@ -5449,7 +5467,7 @@ useEffect(() => {
                                           <img
                                             src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
                                             alt=""
-                                            style={{ width: 20, height: 20 }}
+                                            style={{width: 18, height: 18}}
                                           />
                                           {/* {dropdownTitle} */}
                                         </div>
@@ -5641,7 +5659,7 @@ useEffect(() => {
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
                                               }
                                               alt=""
-                                              style={{ width: 20, height: 20 }}
+                                              style={{width: 18, height: 18}}
                                             />
                                             {chainId === 1
                                               ? window.config
@@ -6003,6 +6021,7 @@ useEffect(() => {
               <NewDailyBonus
                 isPremium={isPremium}
                 bnbImages={bnbImages}
+                skaleImages={skaleImages}
                 seiImages={seiImages}
                 victionImages={victionImages}
                 coreImages={coreImages}
