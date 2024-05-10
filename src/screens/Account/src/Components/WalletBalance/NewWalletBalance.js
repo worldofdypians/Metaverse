@@ -44,6 +44,12 @@ import confluxUpcoming from "./assets/confluxUpcoming.png";
 import gateUpcoming from "../../../../Marketplace/assets/gateUpcoming.webp";
 import eventPopupImage from "./assets/eventPopupImage.png";
 import coin98Upcoming from "./assets/coin98Upcoming.png";
+import victionThumb from "./assets/victionThumb.png";
+import seiThumb from "./assets/seiThumb.png";
+import multiversThumb from "./assets/multiversThumb.png";
+import immutableThumb from "./assets/immutableThumb.png";
+import coreThumb from "./assets/coreThumb.png";
+
 import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
 import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
@@ -2105,6 +2111,16 @@ const NewWalletBalance = ({
                         ? dogePopupImage
                         : dummyEvent.linkState === "coinmarketcap"
                         ? cmcPopupImage
+                        : dummyEvent.linkState === "core"
+                        ? coreThumb
+                        : dummyEvent.linkState === "sei"
+                        ? seiThumb
+                        : dummyEvent.linkState === "immutable"
+                        ? immutableThumb
+                        : dummyEvent.linkState === "viction"
+                        ? victionThumb
+                        : dummyEvent.linkState === "multiversx"
+                        ? multiversThumb
                         : eventPopupImage
                     }
                     alt=""
@@ -2335,7 +2351,21 @@ const NewWalletBalance = ({
                       daily and venture into the CORE area to uncover hidden
                       treasures.
                     </p>
-                  ) : (
+                  )
+                  : dummyEvent.id === "event16" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a MultiversX Beta Pass NFT</b>. You can get the
+                      MultiversX Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the MultiversX area, players not only stand a
+                      chance to secure daily rewards in EGLD, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      MultiversX area to uncover hidden treasures.
+                    </p>
+                  )
+                  : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
                       <b>hold a Base Beta Pass NFT</b>. You can get the Base
@@ -2398,6 +2428,8 @@ const NewWalletBalance = ({
                           ? "SEI"
                           : dummyEvent.id === "event12"
                           ? "CORE"
+                          : dummyEvent.id === "event16"
+                          ? "ELGD"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2445,6 +2477,8 @@ const NewWalletBalance = ({
                 ? "SEI"
                 : dummyEvent.id === "event12"
                 ? "CORE"
+                : dummyEvent.id === "event16"
+                ? "MultiversX"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2580,7 +2614,18 @@ const NewWalletBalance = ({
                 winner-take-all mentality - Core is focused instead on platform
                 growth and driving the global adoption of blockchain technology.
               </p>
-            ) : dummyEvent.id === "event8" ? (
+            ) 
+            : dummyEvent.id === "event16" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                MultiversX is a distributed blockchain network for next-gen
+                applications. Decentralized via 3000+ nodes, scalable through
+                sharding, fast, secure & green.
+              </p>
+            )
+            : dummyEvent.id === "event8" ? (
               <p
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
@@ -2632,6 +2677,8 @@ const NewWalletBalance = ({
                     ? "https://twitter.com/SeiNetwork"
                     : dummyEvent.id === "event12"
                     ? "https://twitter.com/Coredao_Org"
+                    : dummyEvent.id === "event16"
+                    ? "https://twitter.com/MultiversX"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2665,6 +2712,8 @@ const NewWalletBalance = ({
                     ? "https://t.me/seinetwork?ref=blog.sei.io"
                     : dummyEvent.id === "event12"
                     ? "https://t.me/CoreDAOTelegram"
+                    : dummyEvent.id === "event16"
+                    ? "https://t.me/MultiversX"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -2707,6 +2756,8 @@ const NewWalletBalance = ({
                     ? "https://www.sei.io/"
                     : dummyEvent.id === "event12"
                     ? "https://coredao.org/"
+                    : dummyEvent.id === "event16"
+                    ? "https://multiversx.com/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -2832,6 +2883,8 @@ const NewWalletBalance = ({
                             ? "SEI"
                             : dummyEvent.id === "event12"
                             ? "CORE"
+                            : dummyEvent.id === "event16"
+                            ? "ELGD"
                             : "ETH"}
                         </>
                       )}
