@@ -15,6 +15,11 @@
   src: url("./fonts/Iceland.ttf");
 }
 
+@font-face {
+  font-family: "Oxanium";
+  src: url("./fonts/Oxanium.ttf");
+}
+
 .font-oxanium {
   font-family: "Oxanium" !important;
 }
@@ -33,6 +38,78 @@ html {
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.premium-discount-bg {
+  background: url(./assets/premiumBgDesktop.webp);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 12px;
+}
+
+@media only screen and (max-width: 600px) {
+  .premium-discount-bg {
+    background: url(./assets/premiumBgMobile.webp);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+    height: 174px;
+  }
+}
+
+.lifetime-plan-text {
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 14px;
+}
+
+.discount-price {
+  color: #fff;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.old-price-text {
+  color: #968ab6;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px;
+  text-decoration-line: line-through;
+}
+
+.premiumRedTag {
+  top: -11px;
+  left: calc(50% - 55px);
+}
+
+.discount-price2 {
+  color: #f7f7ff;
+  text-align: center;
+  // font-family: Oxanium;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 15px;
+}
+.discountwrap {
+  top: 4px;
+  left: calc(50% - 18px);
+}
+
+.discount-price-bottom {
+  color: #fff;
+  text-align: center;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 12px;
 }
 
 #root {

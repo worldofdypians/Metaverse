@@ -1805,6 +1805,8 @@ function App() {
     let subscribedPlatformTokenAmountETH;
     let subscribedPlatformTokenAmountCfx;
     let subscribedPlatformTokenAmountBNB;
+    let subscribedPlatformTokenAmountBNB2;
+
     let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBase;
     let subscribedPlatformTokenAmountSkale;
@@ -1827,6 +1829,8 @@ function App() {
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    const bnbsubscribeAddress2 = window.config.subscription_newbnb2_address;
+
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
     const skalesubscribeAddress = window.config.subscription_skale_address;
 
@@ -1843,6 +1847,8 @@ function App() {
     );
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
+    const bnbcontract2 = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress2);
+
     const avaxcontract = new web3avax.eth.Contract(
       AvaxABI,
       avaxsubscribeAddress
@@ -1883,6 +1889,14 @@ function App() {
           return 0;
         });
 
+        subscribedPlatformTokenAmountBNB2 = await bnbcontract2.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
       subscribedPlatformTokenAmountAvax = await avaxcontract.methods
         .subscriptionPlatformTokenAmount(addr)
         .call()
@@ -1904,6 +1918,7 @@ function App() {
         subscribedPlatformTokenAmountETH == "0" &&
         subscribedPlatformTokenAmountBase == "0" &&
         subscribedPlatformTokenAmountBNB == "0" &&
+        subscribedPlatformTokenAmountBNB2 == "0" &&
         subscribedPlatformTokenAmountAvax == "0" &&
         subscribedPlatformTokenAmountSkale == "0" &&
         result === false
@@ -1914,7 +1929,8 @@ function App() {
         subscribedPlatformTokenAmountCfx != "0" ||
         subscribedPlatformTokenAmountETH != "0" ||
         subscribedPlatformTokenAmountBase != "0" ||
-        subscribedPlatformTokenAmountBNB != "0" ||
+        subscribedPlatformTokenAmountBNB != "0"||
+        subscribedPlatformTokenAmountBNB2 != "0" ||
         subscribedPlatformTokenAmountAvax != "0" ||
         subscribedPlatformTokenAmountSkale != "0" ||
         result === true
@@ -3109,8 +3125,10 @@ function App() {
 
         {!location.pathname.includes("account") &&
           !location.pathname.includes("auth") &&
-          !location.pathname.includes("explorer")&&
-          !location.pathname.includes("bnbchain-alliance-program") && <ChestFlyout />}
+          !location.pathname.includes("explorer") &&
+          !location.pathname.includes("bnbchain-alliance-program") &&
+          !location.pathname.includes("forgotPassword") &&
+          !location.pathname.includes("player") && <ChestFlyout />}
         {domainPopup && (
           <DomainModal
             onClose={() => setDomainPopup(false)}
