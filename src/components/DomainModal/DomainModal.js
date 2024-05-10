@@ -359,10 +359,10 @@ const DomainModal = ({
                       >
                         {loading ? (
                           <div
-                            class="spinner-border text-light spinner-border-sm"
+                          className="spinner-border text-light spinner-border-sm"
                             role="status"
                           >
-                            <span class="sr-only"></span>
+                            <span className="sr-only"></span>
                           </div>
                         ) : (
                           "Register"

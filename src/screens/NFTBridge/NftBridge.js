@@ -1476,11 +1476,11 @@ const NFTBridge = ({
                   </span>
                   <div>
                     <div>
-                      <ul class="timeline-bridge mt-4" id="timeline">
+                      <ul className="timeline-bridge mt-4" id="timeline">
                         <li
                           class={`li ${isConnected && coinbase && "complete"} `}
                         >
-                          <div class="status">
+                          <div className="status">
                             <div className="gap-1 d-flex flex-column gap-2 align-items-start timeline-wrapper-item">
                               <h4 className="listtext"> Connect Wallet </h4>
                               <span className="status-desc">
@@ -1498,7 +1498,7 @@ const NFTBridge = ({
                             "complete"
                           } `}
                         >
-                          <div class="status">
+                          <div className="status">
                             <div className="gap-1 d-flex flex-column gap-2 align-items-start timeline-wrapper-item">
                               <h4 className="listtext">
                                 {" "}
@@ -1521,7 +1521,7 @@ const NFTBridge = ({
                             "complete"
                           } `}
                         >
-                          <div class="status">
+                          <div className="status">
                             <div className="gap-1 d-flex flex-column gap-2 align-items-start timeline-wrapper-item">
                               <h4 className="listtext">
                                 Select NFT and Approve
@@ -1545,7 +1545,7 @@ const NFTBridge = ({
                             "complete"
                           } `}
                         >
-                          <div class="status">
+                          <div className="status">
                             <div className="gap-1 d-flex flex-column gap-2 align-items-start timeline-wrapper-item">
                               <h4 className="listtext">
                                 Start Transfering your NFT
@@ -1565,7 +1565,7 @@ const NFTBridge = ({
                           style={{ height: windowSize.width > 992 ? 0 : "" }}
                         >
                           <div
-                            class="status p-0"
+                            className="status p-0"
                             style={{ height: windowSize.width > 992 ? 0 : "" }}
                           >
                             <div className="gap-1 d-flex flex-column gap-2 align-items-start timeline-wrapper-item2">

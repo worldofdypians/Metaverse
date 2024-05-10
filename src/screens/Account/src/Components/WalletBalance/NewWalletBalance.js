@@ -1939,10 +1939,10 @@ const NewWalletBalance = ({
                     >
                       {loading ? (
                         <div
-                          class="spinner-border text-light spinner-border-sm"
+                        className="spinner-border text-light spinner-border-sm"
                           role="status"
                         >
-                          <span class="visually-hidden">Loading...</span>
+                          <span className="visually-hidden">Loading...</span>
                         </div>
                       ) : (
                         "Submit"
@@ -2038,7 +2038,7 @@ const NewWalletBalance = ({
                 >
                   {dummyEvent.status === "Live" && (
                     <div
-                      class="pulsatingDot"
+                    className="pulsatingDot"
                       style={{ width: 7, height: 7, marginRight: 5 }}
                     ></div>
                   )}

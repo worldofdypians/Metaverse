@@ -55,7 +55,6 @@ import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg"
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
 import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 
-
 import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import { dyp700Address, dyp700v1Address } from "../../web3";
@@ -126,10 +125,12 @@ function Dashboard({
     {
       name: "CORE",
       symbol: "core",
-    },    {
+    },
+    {
       name: "Viction",
       symbol: "viction",
-    },    {
+    },
+    {
       name: "SEI",
       symbol: "sei",
     },
@@ -333,6 +334,9 @@ function Dashboard({
   const [myDogeNfts, setmyDogeNfts] = useState([]);
   const [myCmcNfts, setmyCmcNfts] = useState([]);
   const [mySkaleNfts, setmySkaleNfts] = useState([]);
+  const [myCoreNfts, setmyCoreNfts] = useState([]);
+  const [myVictionNfts, setmyVictionNfts] = useState([]);
+
   const [latestVersion, setLatestVersion] = useState(0);
 
   const [userPoints, setuserPoints] = useState(0);
@@ -483,800 +487,778 @@ function Dashboard({
     shuffle(chestImagesViction)
   );
   const [seiImages, setSeiImages] = useState(shuffle(chestImagesSei));
-  const [seiEarnUsd, setSeiEarnUsd] = useState(0)
-  const [seiPrice, setSeiPrice] = useState(0)
-  const [seiEarnToken, setSeiEarnToken] = useState(0)
-  const [seiPoints, setSeiPoints] = useState(0)
-  const [coreEarnUsd, setCoreEarnUsd] = useState(0)
-  const [corePrice, setCorePrice] = useState(0)
-  const [coreEarnToken, setCoreEarnToken] = useState(0)
-  const [corePoints, setCorePoints] = useState(0)
-  const [victionEarnUsd, setVictionEarnUsd] = useState(0)
-  const [victionPrice, setVictionPrice] = useState(0)
-  const [victionEarnToken, setVictionEarnToken] = useState(0)
-  const [victionPoints, setVictionPoints] = useState(0)
+  const [seiEarnUsd, setSeiEarnUsd] = useState(0);
+  const [seiPrice, setSeiPrice] = useState(0);
+  const [seiEarnToken, setSeiEarnToken] = useState(0);
+  const [seiPoints, setSeiPoints] = useState(0);
+  const [coreEarnUsd, setCoreEarnUsd] = useState(0);
+  const [corePrice, setCorePrice] = useState(0);
+  const [coreEarnToken, setCoreEarnToken] = useState(0);
+  const [corePoints, setCorePoints] = useState(0);
+  const [victionEarnUsd, setVictionEarnUsd] = useState(0);
+  const [victionPrice, setVictionPrice] = useState(0);
+  const [victionEarnToken, setVictionEarnToken] = useState(0);
+  const [victionPoints, setVictionPoints] = useState(0);
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
   const leaderboardId = document.querySelector("#leaderboard");
   const { BigNumber } = window;
 
+  //leaderboard calls
 
-//leaderboard calls
+  const bnbStars = ["50", "40", "30", "20", "20", "20", "20", "20", "20", "20"];
+  const bnbStarsPremium = [
+    "50",
+    "40",
+    "30",
+    "20",
+    "20",
+    "20",
+    "20",
+    "20",
+    "20",
+    "20",
+  ];
+  const weeklyPrizesBnb = ["30", "20", "10", "5", "5", "5", "5", "5", "5", "5"];
+  const weeklyPrizesGolden = [
+    "40",
+    "30",
+    "20",
+    "15",
+    "15",
+    "15",
+    "15",
+    "15",
+    "15",
+    "15",
+    "15",
+  ];
+  const monthlyPrizesBnb = [
+    "200",
+    "100",
+    "60",
+    "30",
+    "30",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+  ];
+  const monthlyPrizesGolden = [
+    "300",
+    "200",
+    "140",
+    "70",
+    "70",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+  ];
+  const skaleStars = [
+    "70",
+    "60",
+    "50",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+  ];
+  const skaleStarsPremium = [
+    "70",
+    "60",
+    "50",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+  ];
+  const skalePrizesWeekly = [
+    "15",
+    "10",
+    "5",
+    "4",
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+  ];
+  const skalePrizesWeeklyGolden = [
+    "25",
+    "20",
+    "15",
+    "12",
+    "8",
+    "8",
+    "8",
+    "8",
+    "8",
+    "8",
+  ];
+  const skalePrizesMonthly = [
+    "60",
+    "30",
+    "20",
+    "10",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+  ];
+  const skalePrizesMonthlyGolden = [
+    "140",
+    "70",
+    "30",
+    "20",
+    "15",
+    "15",
+    "15",
+    "15",
+    "15",
+    "15",
+  ];
+  const genesisPrizes = [
+    "100",
+    "100",
+    "80",
+    "80",
+    "80",
+    "60",
+    "50",
+    "40",
+    "20",
+    "20",
+  ];
 
+  const userId = data?.getPlayer?.playerId;
+  const username = data?.getPlayer?.displayName;
 
-const bnbStars = ["50", "40", "30", "20", "20", "20", "20", "20", "20", "20"];
-const bnbStarsPremium = [
-  "50",
-  "40",
-  "30",
-  "20",
-  "20",
-  "20",
-  "20",
-  "20",
-  "20",
-  "20",
-];
-const weeklyPrizesBnb = ["30", "20", "10", "5", "5", "5", "5", "5", "5", "5"];
-const weeklyPrizesGolden = [
-  "40",
-  "30",
-  "20",
-  "15",
-  "15",
-  "15",
-  "15",
-  "15",
-  "15",
-  "15",
-  "15",
-];
-const monthlyPrizesBnb = [
-  "200",
-  "100",
-  "60",
-  "30",
-  "30",
-  "10",
-  "10",
-  "10",
-  "10",
-  "10",
-];
-const monthlyPrizesGolden = [
-  "300",
-  "200",
-  "140",
-  "70",
-  "70",
-  "30",
-  "30",
-  "30",
-  "30",
-  "30",
-];
-const skaleStars = [
-  "70",
-  "60",
-  "50",
-  "30",
-  "30",
-  "30",
-  "30",
-  "30",
-  "30",
-  "30",
-];
-const skaleStarsPremium = [
-  "70",
-  "60",
-  "50",
-  "30",
-  "30",
-  "30",
-  "30",
-  "30",
-  "30",
-  "30",
-];
-const skalePrizesWeekly = [
-  "15",
-  "10",
-  "5",
-  "4",
-  "2",
-  "2",
-  "2",
-  "2",
-  "2",
-  "2",
-];
-const skalePrizesWeeklyGolden = [
-  "25",
-  "20",
-  "15",
-  "12",
-  "8",
-  "8",
-  "8",
-  "8",
-  "8",
-  "8",
-];
-const skalePrizesMonthly = [
-  "60",
-  "30",
-  "20",
-  "10",
-  "5",
-  "5",
-  "5",
-  "5",
-  "5",
-  "5",
-];
-const skalePrizesMonthlyGolden = [
-  "140",
-  "70",
-  "30",
-  "20",
-  "15",
-  "15",
-  "15",
-  "15",
-  "15",
-  "15",
-];
-const genesisPrizes = [
-  "100",
-  "100",
-  "80",
-  "80",
-  "80",
-  "60",
-  "50",
-  "40",
-  "20",
-  "20",
-];
+  const [allData, setAllData] = useState([]);
+  const [allBnbData, setAllBnbData] = useState([]);
+  const [allSkaleData, setAllSkaleData] = useState([]);
+  const [dailyrecords, setRecords] = useState([]);
+  const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
+  const [activePlayer, setActivePlayer] = useState(false);
+  const [activePlayerWeekly, setActivePlayerWeekly] = useState(false);
+  const [activePlayerMonthly, setActivePlayerMonthly] = useState(false);
+  const [activePlayerGenesis, setActivePlayerGenesis] = useState(false);
+  const [activeSkalePlayer, setActiveSkalePlayer] = useState(false);
+  const [userData, setUserData] = useState({});
+  const [userDataWeekly, setUserDataWeekly] = useState({});
+  const [userDataMonthly, setUserDataMonthly] = useState({});
+  const [userDataSkale, setUserDataSkale] = useState({});
+  const [userDataSkaleMonthly, setUserDataSkaleMonthly] = useState({});
+  const [userDataGenesis, setUserDataGenesis] = useState({});
+  const [inactiveBoard, setInactiveBoard] = useState(false);
+  const [dailyplayerData, setdailyplayerData] = useState([]);
+  const [dailyplayerDataAmount, setdailyplayerDataAmount] = useState([]);
+  const [weeklyplayerData, setweeklyplayerData] = useState([]);
+  const [weeklyplayerDataAmount, setweeklyplayerDataAmount] = useState([]);
+  const [monthlyplayerData, setmonthlyplayerData] = useState([]);
+  const [skaleRecords, setskaleRecords] = useState([]);
+  const [skalePreviousRecords, setskalePreviousRecords] = useState([]);
+  const [skalepreviousVersion, setskalepreviousVersion] = useState(0);
+  const [previousVersion, setpreviousVersion] = useState(0);
+  const [previousWeeklyVersion, setpreviousWeeklyVersion] = useState(0);
+  const [previousMonthlyVersion, setpreviousMonthlyVersion] = useState(0);
+  const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
+  const [weeklyrecords, setWeeklyRecords] = useState([]);
+  const [monthlyrecords, setMonthlyRecords] = useState([]);
+  const [genesisData, setgenesisData] = useState([]);
+  const [previousgenesisData, setpreviousgenesisData] = useState([]);
+  const [skaleMonthlyData, setSkaleMonthlyData] = useState([]);
+  const [skalePreviousMonthlyData, setSkalePreviousMonthlyData] = useState([]);
 
-const userId= data?.getPlayer?.playerId
-const username= data?.getPlayer?.displayName
-
-const [allData, setAllData] = useState([]);
-const [allBnbData, setAllBnbData] = useState([]);
-const [allSkaleData, setAllSkaleData] = useState([]);
-const [dailyrecords, setRecords] = useState([]);
-const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
-const [activePlayer, setActivePlayer] = useState(false);
-const [activePlayerWeekly, setActivePlayerWeekly] = useState(false);
-const [activePlayerMonthly, setActivePlayerMonthly] = useState(false);
-const [activePlayerGenesis, setActivePlayerGenesis] = useState(false);
-const [activeSkalePlayer, setActiveSkalePlayer] = useState(false);
-const [userData, setUserData] = useState({});
-const [userDataWeekly, setUserDataWeekly] = useState({});
-const [userDataMonthly, setUserDataMonthly] = useState({});
-const [userDataSkale, setUserDataSkale] = useState({});
-const [userDataSkaleMonthly, setUserDataSkaleMonthly] = useState({});
-const [userDataGenesis, setUserDataGenesis] = useState({});
-const [inactiveBoard, setInactiveBoard] = useState(false);
-const [dailyplayerData, setdailyplayerData] = useState([]);
-const [dailyplayerDataAmount, setdailyplayerDataAmount] = useState([]);
-const [weeklyplayerData, setweeklyplayerData] = useState([]);
-const [weeklyplayerDataAmount, setweeklyplayerDataAmount] = useState([]);
-const [monthlyplayerData, setmonthlyplayerData] = useState([]);
-const [skaleRecords, setskaleRecords] = useState([]);
-const [skalePreviousRecords, setskalePreviousRecords] = useState([]);
-const [skalepreviousVersion, setskalepreviousVersion] = useState(0);
-const [previousVersion, setpreviousVersion] = useState(0);
-const [previousWeeklyVersion, setpreviousWeeklyVersion] = useState(0);
-const [previousMonthlyVersion, setpreviousMonthlyVersion] = useState(0);
-const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
-const [weeklyrecords, setWeeklyRecords] = useState([]);
-const [monthlyrecords, setMonthlyRecords] = useState([]);
-const [genesisData, setgenesisData] = useState([]);
-const [previousgenesisData, setpreviousgenesisData] = useState([]);
-const [skaleMonthlyData, setSkaleMonthlyData] = useState([]);
-const [skalePreviousMonthlyData, setSkalePreviousMonthlyData] = useState([]);
-
-
-const fillRecords = (itemData) => {
-  if (itemData.length === 0) {
-    setRecords(placeholderplayerData);
-  } else if (itemData.length <= 10) {
-    const testArray = itemData;
-    const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-    const finalData = [...testArray, ...placeholderArray];
-    setRecords(finalData);
-  }
-};
-const fillRecordsWeekly = (itemData) => {
-  if (itemData.length === 0) {
-    setWeeklyRecords(placeholderplayerData);
-  } else if (itemData.length <= 10) {
-    const testArray = itemData;
-    const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-    const finalData = [...testArray, ...placeholderArray];
-    setWeeklyRecords(finalData);
-  }
-};
-const fillRecordsMonthly = (itemData) => {
-  if (itemData.length === 0) {
-    setMonthlyRecords(placeholderplayerData);
-  } else if (itemData.length <= 10) {
-    const testArray = itemData;
-    const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-    const finalData = [...testArray, ...placeholderArray];
-    setMonthlyRecords(finalData);
-  }
-};
-
-const fillRecordsDaily = (itemData) => {
-  if (itemData.length === 0) {
-    setdailyplayerData(placeholderplayerData);
-  } else if (itemData.length <= 10) {
-    const testArray = itemData;
-    const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-    const finalData = [...testArray, ...placeholderArray];
-    setdailyplayerData(finalData);
-  }
-};
-
-const fillRecordsGenesis = (itemData) => {
-  if (itemData.length === 0) {
-    setgenesisData(placeholderplayerData);
-  } else if (itemData.length <= 10) {
-    const testArray = itemData;
-    const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-    const finalData = [...testArray, ...placeholderArray];
-    setgenesisData(finalData);
-  }
-};
-
-const fillRecordsSkaleMonthly = (itemData) => {
-  if (itemData.length === 0) {
-    setSkaleMonthlyData(placeholderplayerData);
-  } else if (itemData.length < 10) {
-    const testArray = itemData;
-    const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-    const finalData = [...testArray, ...placeholderArray];
-    setSkaleMonthlyData(finalData);
-  }
-};
-
-const fillPreviousRecordsSkaleMonthly = (itemData) => {
-  if (itemData.length === 0) {
-    setSkalePreviousMonthlyData(placeholderplayerData);
-  } else if (itemData.length < 10) {
-    const testArray = itemData;
-    const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-    const finalData = [...testArray, ...placeholderArray];
-    setSkalePreviousMonthlyData(finalData);
-  }
-};
-
-const fetchPreviousWinners = async () => {
-  if (previousVersion != 0) {
-    const data = {
-      StatisticName: "DailyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-      Version: previousVersion - 1,
-    };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data
-    );
-    fillRecordsDaily(result.data.data.leaderboard);
-  }
-
-  // setdailyplayerData(result.data.data.leaderboard);
-};
-const fillRecordsSkale = (itemData) => {
-  if (itemData.length === 0) {
-    setskaleRecords(placeholderplayerData);
-  } else if (itemData.length < 10) {
-    const testArray = itemData;
-    const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-    const finalData = [...testArray, ...placeholderArray];
-    setskaleRecords(finalData);
-  }
-};
-
-const fillPreviousRecordsSkale = (itemData) => {
-  if (itemData.length === 0) {
-    setskalePreviousRecords(placeholderplayerData);
-  } else if (itemData.length < 10) {
-    const testArray = itemData;
-    const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-    const finalData = [...testArray, ...placeholderArray];
-    setskalePreviousRecords(finalData);
-  }
-};
-
-const fetchSkaleRecords = async () => {
-  const data = {
-    StatisticName: "LeaderboardSkaleWeekly",
-    StartPosition: 0,
-    MaxResultsCount: 10,
+  const fillRecords = (itemData) => {
+    if (itemData.length === 0) {
+      setRecords(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setRecords(finalData);
+    }
   };
-  const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-  var testArray = result.data.data.leaderboard.filter(
-    (item) => item.displayName === username
-  );
-  setskalepreviousVersion(result.data.data.version);
+  const fillRecordsWeekly = (itemData) => {
+    if (itemData.length === 0) {
+      setWeeklyRecords(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setWeeklyRecords(finalData);
+    }
+  };
+  const fillRecordsMonthly = (itemData) => {
+    if (itemData.length === 0) {
+      setMonthlyRecords(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setMonthlyRecords(finalData);
+    }
+  };
 
-  setskaleRecords(result.data.data.leaderboard);
-  fillRecordsSkale(result.data.data.leaderboard);
-  fetchSkaleRecordsAroundPlayer(result.data.data.leaderboard);
-};
+  const fillRecordsDaily = (itemData) => {
+    if (itemData.length === 0) {
+      setdailyplayerData(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setdailyplayerData(finalData);
+    }
+  };
 
-const fetchPreviousSkaleRecords = async () => {
-  if (skalepreviousVersion != 0) {
+  const fillRecordsGenesis = (itemData) => {
+    if (itemData.length === 0) {
+      setgenesisData(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setgenesisData(finalData);
+    }
+  };
+
+  const fillRecordsSkaleMonthly = (itemData) => {
+    if (itemData.length === 0) {
+      setSkaleMonthlyData(placeholderplayerData);
+    } else if (itemData.length < 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setSkaleMonthlyData(finalData);
+    }
+  };
+
+  const fillPreviousRecordsSkaleMonthly = (itemData) => {
+    if (itemData.length === 0) {
+      setSkalePreviousMonthlyData(placeholderplayerData);
+    } else if (itemData.length < 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setSkalePreviousMonthlyData(finalData);
+    }
+  };
+
+  const fetchPreviousWinners = async () => {
+    if (previousVersion != 0) {
+      const data = {
+        StatisticName: "DailyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: previousVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      fillRecordsDaily(result.data.data.leaderboard);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+  const fillRecordsSkale = (itemData) => {
+    if (itemData.length === 0) {
+      setskaleRecords(placeholderplayerData);
+    } else if (itemData.length < 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setskaleRecords(finalData);
+    }
+  };
+
+  const fillPreviousRecordsSkale = (itemData) => {
+    if (itemData.length === 0) {
+      setskalePreviousRecords(placeholderplayerData);
+    } else if (itemData.length < 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setskalePreviousRecords(finalData);
+    }
+  };
+
+  const fetchSkaleRecords = async () => {
     const data = {
       StatisticName: "LeaderboardSkaleWeekly",
       StartPosition: 0,
       MaxResultsCount: 10,
-      Version: skalepreviousVersion - 1,
     };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard`,
-      data
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
     );
-    // setpreviousVersion(parseInt(result.data.data.version));
-    // console.log(result.data.data.leaderboard)
-    setskalePreviousRecords(result.data.data.leaderboard);
-    fillPreviousRecordsSkale(result.data.data.leaderboard);
-    fetchSkaleRecordsMonthlyAroundPlayer(result.data.data.leaderboard);
-  }
-};
+    setskalepreviousVersion(result.data.data.version);
 
-const fetchGenesisPreviousWinners = async () => {
-  if (previousGenesisVersion != 0) {
+    setskaleRecords(result.data.data.leaderboard);
+    fillRecordsSkale(result.data.data.leaderboard);
+    fetchSkaleRecordsAroundPlayer(result.data.data.leaderboard);
+  };
+
+  const fetchPreviousSkaleRecords = async () => {
+    if (skalepreviousVersion != 0) {
+      const data = {
+        StatisticName: "LeaderboardSkaleWeekly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: skalepreviousVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+      // setpreviousVersion(parseInt(result.data.data.version));
+      // console.log(result.data.data.leaderboard)
+      setskalePreviousRecords(result.data.data.leaderboard);
+      fillPreviousRecordsSkale(result.data.data.leaderboard);
+      fetchSkaleRecordsMonthlyAroundPlayer(result.data.data.leaderboard);
+    }
+  };
+
+  const fetchGenesisPreviousWinners = async () => {
+    if (previousGenesisVersion != 0) {
+      const data = {
+        StatisticName: "GenesisLandRewards",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: previousGenesisVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      fillRecordsGenesis(result.data.data.leaderboard);
+
+      setpreviousgenesisData(result.data.data.leaderboard);
+    }
+  };
+
+  const fetchPreviousWeeklyWinners = async () => {
+    if (previousWeeklyVersion != 0) {
+      const data = {
+        StatisticName: "WeeklyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: previousWeeklyVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setweeklyplayerData(result.data.data.leaderboard);
+    }
+  };
+
+  const fetchPreviousMonthlyWinners = async () => {
+    if (previousMonthlyVersion != 0) {
+      const data = {
+        StatisticName: "MonthlyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: previousMonthlyVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setmonthlyplayerData(result.data.data.leaderboard);
+    }
+  };
+
+  const fetchDailyRecords = async () => {
     const data = {
-      StatisticName: "GenesisLandRewards",
+      StatisticName: "DailyLeaderboard",
       StartPosition: 0,
       MaxResultsCount: 10,
-      Version: previousGenesisVersion - 1,
     };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    setpreviousVersion(parseInt(result.data.data.version));
+    setRecords(result.data.data.leaderboard);
+    fillRecords(result.data.data.leaderboard);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
     );
-    fillRecordsGenesis(result.data.data.leaderboard);
+    if (testArray.length > 0) {
+      setActivePlayer(true);
+    } else if (testArray.length === 0) {
+      setActivePlayer(false);
+      fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
+    }
+  };
 
-    setpreviousgenesisData(result.data.data.leaderboard);
-  }
-};
-
-const fetchPreviousWeeklyWinners = async () => {
-  if (previousWeeklyVersion != 0) {
+  const fetchWeeklyRecords = async () => {
     const data = {
       StatisticName: "WeeklyLeaderboard",
       StartPosition: 0,
       MaxResultsCount: 10,
-      Version: previousWeeklyVersion - 1,
     };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    setWeeklyRecords(result.data.data.leaderboard);
+    setpreviousWeeklyVersion(result.data.data.version);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
     );
+    fillRecordsWeekly(result.data.data.leaderboard);
 
-    setweeklyplayerData(result.data.data.leaderboard);
-  }
-};
-
-const fetchPreviousMonthlyWinners = async () => {
-  if (previousMonthlyVersion != 0) {
+    if (testArray.length > 0) {
+      setActivePlayerWeekly(true);
+    }
+    if (testArray.length === 0) {
+      setActivePlayerWeekly(false);
+      fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
+    }
+  };
+  const fetchMonthlyRecords = async () => {
     const data = {
       StatisticName: "MonthlyLeaderboard",
       StartPosition: 0,
       MaxResultsCount: 10,
-      Version: previousMonthlyVersion - 1,
     };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard?Version=-1`,
-      data
-    );
-
-    setmonthlyplayerData(result.data.data.leaderboard);
-  }
-};
-
-const fetchDailyRecords = async () => {
-  const data = {
-    StatisticName: "DailyLeaderboard",
-    StartPosition: 0,
-    MaxResultsCount: 10,
-  };
-  const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-  setpreviousVersion(parseInt(result.data.data.version));
-  setRecords(result.data.data.leaderboard);
-  fillRecords(result.data.data.leaderboard);
-  var testArray = result.data.data.leaderboard.filter(
-    (item) => item.displayName === username
-  );
-  if (testArray.length > 0) {
-    setActivePlayer(true);
-  } else if (testArray.length === 0) {
-    setActivePlayer(false);
-    fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
-  }
-};
-
-const fetchWeeklyRecords = async () => {
-  const data = {
-    StatisticName: "WeeklyLeaderboard",
-    StartPosition: 0,
-    MaxResultsCount: 10,
-  };
-  const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-  setWeeklyRecords(result.data.data.leaderboard);
-  setpreviousWeeklyVersion(result.data.data.version);
-  var testArray = result.data.data.leaderboard.filter(
-    (item) => item.displayName === username
-  );
-  fillRecordsWeekly(result.data.data.leaderboard);
-
-  if (testArray.length > 0) {
-    setActivePlayerWeekly(true);
-  }
-  if (testArray.length === 0) {
-    setActivePlayerWeekly(false);
-    fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
-  }
-};
-const fetchMonthlyRecords = async () => {
-  const data = {
-    StatisticName: "MonthlyLeaderboard",
-    StartPosition: 0,
-    MaxResultsCount: 10,
-  };
-  const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-  setMonthlyRecords(result.data.data.leaderboard);
-  setpreviousMonthlyVersion(result.data.data.version);
-  var testArray = result.data.data.leaderboard.filter(
-    (item) => item.displayName === username
-  );
-  if (testArray.length > 0) {
-    setActivePlayerMonthly(true);
-  }
-  fillRecordsMonthly(result.data.data.leaderboard);
-
-  if (testArray.length === 0) {
-    setActivePlayerMonthly(false);
-    fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
-  }
-};
-
-
-const fetchSkaleRecondsAroundPlayer = async (itemData) => {
-  const data = {
-    StatisticName: "LeaderboardSkaleWeekly",
-    MaxResultsCount: 6,
-    PlayerId: userId,
-  };
-  if (userId) {
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
-
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    setMonthlyRecords(result.data.data.leaderboard);
+    setpreviousMonthlyVersion(result.data.data.version);
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
+    if (testArray.length > 0) {
+      setActivePlayerMonthly(true);
+    }
+    fillRecordsMonthly(result.data.data.leaderboard);
 
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter(
+    if (testArray.length === 0) {
+      setActivePlayerMonthly(false);
+      fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
+    }
+  };
+
+  const fetchSkaleRecondsAroundPlayer = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardSkaleWeekly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      setRecordsAroundPlayer(result.data.data.leaderboard);
+
+      var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
 
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActiveSkalePlayer(true);
-      } else if (testArray.length > 0 && testArray2.length === 0) {
+      if (itemData.length > 0) {
+        var testArray2 = itemData.filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActiveSkalePlayer(true);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActiveSkalePlayer(false);
+          setUserDataSkale(...testArray);
+        }
+      } else if (testArray.length > 0) {
         setActiveSkalePlayer(false);
         setUserDataSkale(...testArray);
       }
-    } else if (testArray.length > 0) {
-      setActiveSkalePlayer(false);
-      setUserDataSkale(...testArray);
     }
-  }
-};
-
-const fetchSkaleRecondsMonthlyAroundPlayer = async (itemData) => {
-  const data = {
-    StatisticName: "LeaderboardSkaleMonthly",
-    MaxResultsCount: 6,
-    PlayerId: userId,
   };
-  if (userId) {
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-    setRecordsAroundPlayer(result.data.data.leaderboard);
 
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+  const fetchSkaleRecondsMonthlyAroundPlayer = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardSkaleMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      setRecordsAroundPlayer(result.data.data.leaderboard);
 
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter(
+      var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
 
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActiveSkalePlayer(true);
-      } else if (testArray.length > 0 && testArray2.length === 0) {
+      if (itemData.length > 0) {
+        var testArray2 = itemData.filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActiveSkalePlayer(true);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActiveSkalePlayer(false);
+          setUserDataSkaleMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
         setActiveSkalePlayer(false);
         setUserDataSkaleMonthly(...testArray);
       }
-    } else if (testArray.length > 0) {
-      setActiveSkalePlayer(false);
-      setUserDataSkaleMonthly(...testArray);
     }
-  }
-};
-
-const fetchSkaleRecordsMonthly = async () => {
-  const data = {
-    StatisticName: "LeaderboardSkaleMonthly",
-    StartPosition: 0,
-    MaxResultsCount: 10,
-  };
-  const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-  setskalepreviousVersion(result.data.data.version);
-
-  setSkaleMonthlyData(result.data.data.leaderboard);
-  fillRecordsSkaleMonthly(result.data.data.leaderboard);
-};
-
-const fetchGenesisRecords = async () => {
-  const data2 = {
-    StatisticName: "GenesisLandRewards",
-    StartPosition: 0,
-    MaxResultsCount: 10,
   };
 
-  const result2 = await axios
-    .post(`${backendApi}/auth/GetLeaderboard`, data2)
-    .catch((err) => {
-      console.log(err);
-    });
-  if (result2) {
-    setpreviousGenesisVersion(result2.data.data.version);
-
-    setgenesisData(result2.data.data.leaderboard);
-    fillRecordsGenesis(result2.data.data.leaderboard);
-  }
-
-  fetchMonthlyGenesisRecordsAroundPlayer(result2.data.data.leaderboard);
-};
-
-const fetchMonthlyGenesisRecordsAroundPlayer = async (itemData) => {
-  const data = {
-    StatisticName: "GenesisLandRewards",
-    MaxResultsCount: 6,
-    PlayerId: userId,
-  };
-  if (userId) {
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-
-    if (itemData.length > 0) {
-      var testArray2 = itemData.filter(
-        (item) => item.displayName === username
-      );
-
-      if (testArray.length > 0 && testArray2.length > 0) {
-        setActivePlayerGenesis(true);
-      } else if (testArray.length > 0 && testArray2.length === 0) {
-        setActivePlayerGenesis(false);
-        // setUserDataMonthly(...testArray);
-        setUserDataGenesis(...testArray);
-      }
-    } else if (testArray.length > 0) {
-      setActivePlayerGenesis(false);
-      // setUserDataMonthly(...testArray);
-      setUserDataGenesis(...testArray);
-    }
-  }
-};
-const fetchPreviousSkaleRecordsMonthly = async () => {
-  if (skalepreviousVersion != 0) {
+  const fetchSkaleRecordsMonthly = async () => {
     const data = {
       StatisticName: "LeaderboardSkaleMonthly",
       StartPosition: 0,
       MaxResultsCount: 10,
-      Version: skalepreviousVersion - 1,
     };
-    const result = await axios.post(
-      `${backendApi}/auth/GetLeaderboard`,
-      data
-    );
-    // setpreviousVersion(parseInt(result.data.data.version));
-    setSkalePreviousMonthlyData(result.data.data.leaderboard);
-    fillPreviousRecordsSkaleMonthly(result.data.data.leaderboard);
-  }
-};
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    setskalepreviousVersion(result.data.data.version);
 
+    setSkaleMonthlyData(result.data.data.leaderboard);
+    fillRecordsSkaleMonthly(result.data.data.leaderboard);
+  };
 
+  const fetchGenesisRecords = async () => {
+    const data2 = {
+      StatisticName: "GenesisLandRewards",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
 
+    const result2 = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data2)
+      .catch((err) => {
+        console.log(err);
+      });
+    if (result2) {
+      setpreviousGenesisVersion(result2.data.data.version);
 
+      setgenesisData(result2.data.data.leaderboard);
+      fillRecordsGenesis(result2.data.data.leaderboard);
+    }
 
+    fetchMonthlyGenesisRecordsAroundPlayer(result2.data.data.leaderboard);
+  };
 
-useEffect(() => {
-  fetchDailyRecords();
-  fetchWeeklyRecords();
-  fetchMonthlyRecords();
-  fetchGenesisRecords();
-  fetchSkaleRecords();
-  fetchSkaleRecordsMonthly();
-}, [username, userId]);
+  const fetchMonthlyGenesisRecordsAroundPlayer = async (itemData) => {
+    const data = {
+      StatisticName: "GenesisLandRewards",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
 
-useEffect(() => {
-  fetchGenesisPreviousWinners();
-  fetchPreviousWinners();
-  fetchPreviousWeeklyWinners();
-  fetchPreviousMonthlyWinners();
-  fetchPreviousSkaleRecords();
-  fetchPreviousSkaleRecordsMonthly();
-}, [
-  previousGenesisVersion,
-  previousMonthlyVersion,
-  previousVersion,
-  previousWeeklyVersion,
-  skalepreviousVersion,
-]);
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-useEffect(() => {
-  setAllBnbData([
-    {
-      title: "DAILY",
-      reset: "Daily (00:00 UTC)",
-      type: "stars",
-      rewards: bnbStars,
-      premium_rewards: bnbStarsPremium,
-      activeData: dailyrecords,
-      previousData: dailyplayerData,
-      player_data: userData,
-      is_active: activePlayer,
-    },
-    {
-      title: "WEEKLY",
-      reset: "Monday (00:00 UTC)",
-      type: "cash",
-      rewards: weeklyPrizesBnb,
-      premium_rewards: weeklyPrizesGolden,
-      activeData: weeklyrecords,
-      previousData: weeklyplayerData,
-      player_data: userDataWeekly,
-      is_active: activePlayerWeekly,
-    },
-    {
-      title: "MONTHLY",
-      reset: "Monthly (00:00 UTC)",
-      type: "cash",
-      rewards: monthlyPrizesBnb,
-      premium_rewards: monthlyPrizesGolden,
-      activeData: monthlyrecords,
-      previousData: monthlyplayerData,
-      player_data: userDataMonthly,
-      is_active: activePlayerMonthly,
-    },
+      if (itemData.length > 0) {
+        var testArray2 = itemData.filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerGenesis(true);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerGenesis(false);
+          // setUserDataMonthly(...testArray);
+          setUserDataGenesis(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerGenesis(false);
+        // setUserDataMonthly(...testArray);
+        setUserDataGenesis(...testArray);
+      }
+    }
+  };
+  const fetchPreviousSkaleRecordsMonthly = async () => {
+    if (skalepreviousVersion != 0) {
+      const data = {
+        StatisticName: "LeaderboardSkaleMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: skalepreviousVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+      // setpreviousVersion(parseInt(result.data.data.version));
+      setSkalePreviousMonthlyData(result.data.data.leaderboard);
+      fillPreviousRecordsSkaleMonthly(result.data.data.leaderboard);
+    }
+  };
+
+  useEffect(() => {
+    fetchDailyRecords();
+    fetchWeeklyRecords();
+    fetchMonthlyRecords();
+    fetchGenesisRecords();
+    fetchSkaleRecords();
+    fetchSkaleRecordsMonthly();
+  }, [username, userId]);
+
+  useEffect(() => {
+    fetchGenesisPreviousWinners();
+    fetchPreviousWinners();
+    fetchPreviousWeeklyWinners();
+    fetchPreviousMonthlyWinners();
+    fetchPreviousSkaleRecords();
+    fetchPreviousSkaleRecordsMonthly();
+  }, [
+    previousGenesisVersion,
+    previousMonthlyVersion,
+    previousVersion,
+    previousWeeklyVersion,
+    skalepreviousVersion,
   ]);
-  setAllData([
-    {
-      title: "DAILY",
-      reset: "Daily (00:00 UTC)",
-      type: "stars",
-      rewards: bnbStars,
-      premium_rewards: bnbStarsPremium,
-      activeData: dailyrecords,
-      previousData: dailyplayerData,
-      player_data: userData,
-      is_active: activePlayer,
-    },
-    {
-      title: "WEEKLY",
-      reset: "Monday (00:00 UTC)",
-      type: "cash",
-      rewards: weeklyPrizesBnb,
-      premium_rewards: weeklyPrizesGolden,
-      activeData: weeklyrecords,
-      previousData: weeklyplayerData,
-      player_data: userDataWeekly,
-      is_active: activePlayerWeekly,
-    },
-    {
-      title: "MONTHLY",
-      reset: "Monthly (00:00 UTC)",
-      type: "cash",
-      rewards: monthlyPrizesBnb,
-      premium_rewards: monthlyPrizesGolden,
-      activeData: monthlyrecords,
-      previousData: monthlyplayerData,
-      player_data: userDataMonthly,
-      is_active: activePlayerMonthly,
-    },
+
+  useEffect(() => {
+    setAllBnbData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: bnbStars,
+        premium_rewards: bnbStarsPremium,
+        activeData: dailyrecords,
+        previousData: dailyplayerData,
+        player_data: userData,
+        is_active: activePlayer,
+      },
+      {
+        title: "WEEKLY",
+        reset: "Monday (00:00 UTC)",
+        type: "cash",
+        rewards: weeklyPrizesBnb,
+        premium_rewards: weeklyPrizesGolden,
+        activeData: weeklyrecords,
+        previousData: weeklyplayerData,
+        player_data: userDataWeekly,
+        is_active: activePlayerWeekly,
+      },
+      {
+        title: "MONTHLY",
+        reset: "Monthly (00:00 UTC)",
+        type: "cash",
+        rewards: monthlyPrizesBnb,
+        premium_rewards: monthlyPrizesGolden,
+        activeData: monthlyrecords,
+        previousData: monthlyplayerData,
+        player_data: userDataMonthly,
+        is_active: activePlayerMonthly,
+      },
+    ]);
+    setAllData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: bnbStars,
+        premium_rewards: bnbStarsPremium,
+        activeData: dailyrecords,
+        previousData: dailyplayerData,
+        player_data: userData,
+        is_active: activePlayer,
+      },
+      {
+        title: "WEEKLY",
+        reset: "Monday (00:00 UTC)",
+        type: "cash",
+        rewards: weeklyPrizesBnb,
+        premium_rewards: weeklyPrizesGolden,
+        activeData: weeklyrecords,
+        previousData: weeklyplayerData,
+        player_data: userDataWeekly,
+        is_active: activePlayerWeekly,
+      },
+      {
+        title: "MONTHLY",
+        reset: "Monthly (00:00 UTC)",
+        type: "cash",
+        rewards: monthlyPrizesBnb,
+        premium_rewards: monthlyPrizesGolden,
+        activeData: monthlyrecords,
+        previousData: monthlyplayerData,
+        player_data: userDataMonthly,
+        is_active: activePlayerMonthly,
+      },
+    ]);
+  }, [
+    dailyrecords,
+    dailyplayerData,
+    userData,
+    weeklyrecords,
+    weeklyplayerData,
+    userDataWeekly,
+    monthlyrecords,
+    monthlyplayerData,
+    userDataMonthly,
   ]);
-}, [
-  dailyrecords,
-  dailyplayerData,
-  userData,
-  weeklyrecords,
-  weeklyplayerData,
-  userDataWeekly,
-  monthlyrecords,
-  monthlyplayerData,
-  userDataMonthly,
-]);
-useEffect(() => {
-  setAllSkaleData([
-    {
-      title: "DAILY",
-      reset: "Daily (00:00 UTC)",
-      type: "stars",
-      rewards: skaleStars,
-      premium_rewards: skaleStarsPremium,
-      activeData: dailyrecords,
-      previousData: dailyplayerData,
-      player_data: userData,
-      is_active: activeSkalePlayer,
-    },
-    {
-      title: "WEEKLY",
-      reset: "Monday (00:00 UTC)",
-      type: "cash",
-      rewards: skalePrizesWeekly,
-      premium_rewards: skalePrizesWeeklyGolden,
-      activeData: skaleRecords,
-      previousData: skalePreviousRecords,
-      player_data: userDataSkale,
-      is_active: activeSkalePlayer,
-    },
-    {
-      title: "MONTHLY",
-      reset: "Monthly (00:00 UTC)",
-      type: "cash",
-      rewards: skalePrizesMonthly,
-      premium_rewards: skalePrizesMonthlyGolden,
-      activeData: skaleMonthlyData,
-      previousData: skalePreviousMonthlyData,
-      player_data: userDataSkaleMonthly,
-      is_active: activeSkalePlayer,
-    },
+  useEffect(() => {
+    setAllSkaleData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: skaleStars,
+        premium_rewards: skaleStarsPremium,
+        activeData: dailyrecords,
+        previousData: dailyplayerData,
+        player_data: userData,
+        is_active: activeSkalePlayer,
+      },
+      {
+        title: "WEEKLY",
+        reset: "Monday (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesWeekly,
+        premium_rewards: skalePrizesWeeklyGolden,
+        activeData: skaleRecords,
+        previousData: skalePreviousRecords,
+        player_data: userDataSkale,
+        is_active: activeSkalePlayer,
+      },
+      {
+        title: "MONTHLY",
+        reset: "Monthly (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesMonthly,
+        premium_rewards: skalePrizesMonthlyGolden,
+        activeData: skaleMonthlyData,
+        previousData: skalePreviousMonthlyData,
+        player_data: userDataSkaleMonthly,
+        is_active: activeSkalePlayer,
+      },
+    ]);
+  }, [
+    skaleRecords,
+    skalePreviousRecords,
+    userDataSkale,
+    activeSkalePlayer,
+    skaleMonthlyData,
+    skalePreviousMonthlyData,
+    userDataSkaleMonthly,
   ]);
-}, [
-  skaleRecords,
-  skalePreviousRecords,
-  userDataSkale,
-  activeSkalePlayer,
-  skaleMonthlyData,
-  skalePreviousMonthlyData,
-  userDataSkaleMonthly,
-]);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   let oneApril = new Date("2024-04-01 11:11:00 GMT+02:00");
   let oneMay = new Date("2024-05-01 11:11:00 GMT+02:00");
@@ -1691,7 +1673,6 @@ useEffect(() => {
   const weeklyPrizes = [25, 15, 10, 8, 0, 0, 0, 0, 0, 0];
   const monthlyPrizes = [250, 150, 100, 50, 50, 20, 20, 10, 10, 10];
 
-
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
@@ -2104,7 +2085,7 @@ useEffect(() => {
   //   var testArray = result.data.data.leaderboard.filter(
   //     (item) => item.displayName === userName
   //   );
- 
+
   // };
 
   const fetchMonthlyRecordsAroundPlayer = async (itemData) => {
@@ -2124,37 +2105,36 @@ useEffect(() => {
         (item) => item.displayName === username
       );
 
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
 
-         const userPosition = testArray[0].position;
-    // console.log(userPosition)
+      if (goldenPassRemainingTime) {
+        setUserRank2(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? monthlyPrizes[9] + monthlyPrizesGolden[9]
+              : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setUserRank2(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? monthlyPrizes[9]
+              : monthlyPrizes[userPosition]
+            : 0
+        );
+      }
 
-    if (goldenPassRemainingTime) {
-      setUserRank2(
-        testArray[0].statValue !== 0
-          ? userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? monthlyPrizes[9] + monthlyPrizesGolden[9]
-            : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
-          : 0
-      );
-    } else if (!goldenPassRemainingTime) {
-      setUserRank2(
-        testArray[0].statValue !== 0
-          ? userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? monthlyPrizes[9]
-            : monthlyPrizes[userPosition]
-          : 0
-      );
-    }
-
-    setUserRank(testArray[0].position);
-    setUserBnbScore(testArray[0].statValue);
+      setUserRank(testArray[0].position);
+      setUserBnbScore(testArray[0].statValue);
 
       if (itemData.length > 0) {
-        var testArray2 = itemData.filter(
+        var testArray2 = Object.values(itemData).filter(
           (item) => item.displayName === username
         );
 
@@ -2173,7 +2153,6 @@ useEffect(() => {
       }
     }
   };
-
 
   const fetchSkaleRecordsMonthlyAroundPlayer = async (itemData) => {
     const data = {
@@ -2270,10 +2249,10 @@ useEffect(() => {
         (item) => item.displayName === username
       );
 
-      if (itemData.length > 0) {
-        var testArray2 = itemData.filter(
-          (item) => item.displayName === username
-        );
+      if (itemData && itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter((item) => {
+          return item.displayName === username;
+        });
 
         if (testArray.length > 0 && testArray2.length > 0) {
           setActiveSkalePlayer(true);
@@ -2326,8 +2305,6 @@ useEffect(() => {
     // setGenesisRank2(testArray[0].statValue);
   };
 
- 
-
   const fetchDailyRecordsAroundPlayer = async (itemData) => {
     const data = {
       StatisticName: "DailyLeaderboard",
@@ -2344,7 +2321,7 @@ useEffect(() => {
         (item) => item.displayName === username
       );
 
-          const userPosition = testArray[0].position;
+      const userPosition = testArray[0].position;
 
       if (goldenPassRemainingTime) {
         setdailyplayerDataAmount(
@@ -2369,7 +2346,7 @@ useEffect(() => {
       }
 
       if (itemData.length > 0) {
-        var testArray2 = itemData.filter(
+        var testArray2 = Object.values(itemData).filter(
           (item) => item.displayName === username
         );
 
@@ -2404,7 +2381,6 @@ useEffect(() => {
   //     (item) => item.displayName === userName
   //   );
 
-  
   // };
 
   const fetchWeeklyRecordsAroundPlayer = async (itemData) => {
@@ -2423,31 +2399,31 @@ useEffect(() => {
         (item) => item.displayName === username
       );
 
-        const userPosition = testArray[0].position;
-    if (goldenPassRemainingTime) {
-      setweeklyplayerDataAmount(
-        testArray[0].statValue !== 0
-          ? userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? weeklyPrizes[9] + weeklyPrizesGolden[9]
-            : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
-          : 0
-      );
-    } else if (!goldenPassRemainingTime) {
-      setweeklyplayerDataAmount(
-        testArray[0].statValue !== 0
-          ? userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? weeklyPrizes[9]
-            : weeklyPrizes[userPosition]
-          : 0
-      );
-    }
+      const userPosition = testArray[0].position;
+      if (goldenPassRemainingTime) {
+        setweeklyplayerDataAmount(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? weeklyPrizes[9] + weeklyPrizesGolden[9]
+              : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setweeklyplayerDataAmount(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? weeklyPrizes[9]
+              : weeklyPrizes[userPosition]
+            : 0
+        );
+      }
 
       if (itemData.length > 0) {
-        var testArray2 = itemData.filter(
+        var testArray2 = Object.values(itemData).filter(
           (item) => item.displayName === username
         );
 
@@ -2591,7 +2567,6 @@ useEffect(() => {
               setVictionEarnToken(usdValue / victionPrice);
             }
           }
-
 
           if (coingeckoEvent && coingeckoEvent[0]) {
             const points = coingeckoEvent[0].reward.earn.totalPoints;
@@ -2861,19 +2836,19 @@ useEffect(() => {
     if (email) {
       if (isPremium) {
         if (
-          (claimedChests + claimedPremiumChests < 20) ||
-          (claimedSkaleChests + claimedSkalePremiumChests < 20) ||
-          (claimedCoreChests + claimedCorePremiumChests < 20) ||
-          (claimedVictionChests + claimedVictionPremiumChests < 20) ||
-          (claimedSeiChests + claimedSeiPremiumChests < 20)
+          claimedChests + claimedPremiumChests < 20 ||
+          claimedSkaleChests + claimedSkalePremiumChests < 20 ||
+          claimedCoreChests + claimedCorePremiumChests < 20 ||
+          claimedVictionChests + claimedVictionPremiumChests < 20 ||
+          claimedSeiChests + claimedSeiPremiumChests < 20
         ) {
           setCanBuy(true);
         } else if (
-          (claimedChests + claimedPremiumChests === 20) &&
-          (claimedSkaleChests + claimedSkalePremiumChests === 20) &&
-          (claimedCoreChests + claimedCorePremiumChests === 20) &&
-          (claimedVictionChests + claimedVictionPremiumChests === 20) &&
-          (claimedSeiChests + claimedSeiPremiumChests === 20)
+          claimedChests + claimedPremiumChests === 20 &&
+          claimedSkaleChests + claimedSkalePremiumChests === 20 &&
+          claimedCoreChests + claimedCorePremiumChests === 20 &&
+          claimedVictionChests + claimedVictionPremiumChests === 20 &&
+          claimedSeiChests + claimedSeiPremiumChests === 20
         ) {
           setCanBuy(false);
         }
@@ -3212,6 +3187,14 @@ useEffect(() => {
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cmc").then((NFTS) =>
       setmyCmcNfts(NFTS)
+    );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "core").then((NFTS) =>
+      setmyCoreNfts(NFTS)
+    );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "viction").then((NFTS) =>
+      setmyVictionNfts(NFTS)
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "skale").then((NFTS) =>
@@ -3576,7 +3559,6 @@ useEffect(() => {
     const victionsubscribeAddress = window.config.subscription_viction_address;
     const coresubscribeAddress = window.config.subscription_core_address;
 
-
     const web3 = new Web3(window.ethereum);
 
     let tokenContract = new web3.eth.Contract(
@@ -3647,7 +3629,6 @@ useEffect(() => {
     const coreWeb3 = new Web3(window.config.core_endpoint);
     const victionWeb3 = new Web3(window.config.viction_endpoint);
 
-
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
@@ -3658,7 +3639,6 @@ useEffect(() => {
     const seisubscribeAddress = window.config.subscription_sei_address;
     const coresubscribeAddress = window.config.subscription_core_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
-
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -3888,7 +3868,7 @@ useEffect(() => {
     });
 
     setloadspinnerSub(true);
-    const today =  Date.now();
+    const today = Date.now();
 
     await subscriptionContract.methods
       .subscribe(selectedSubscriptionToken, price)
@@ -4091,7 +4071,7 @@ useEffect(() => {
           .catch((e) => {
             console.log(e);
           });
-      } 
+      }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -4104,12 +4084,11 @@ useEffect(() => {
           .then(() => {
             handleSwitchNetwork(713715);
             setChainDropdown(chainDropdowns[8]);
-
           })
           .catch((e) => {
             console.log(e);
           });
-      } 
+      }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -4121,12 +4100,11 @@ useEffect(() => {
           .then(() => {
             handleSwitchNetwork(88);
             setChainDropdown(chainDropdowns[7]);
-
           })
           .catch((e) => {
             console.log(e);
           });
-      } 
+      }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -4195,7 +4173,7 @@ useEffect(() => {
       ) {
         setDummyPremiumChests(shuffle(dummyPremiums));
         setBnbImages(shuffle(chestImagesBnb));
-        setSkaleImages(shuffle(chestImagesSkale))
+        setSkaleImages(shuffle(chestImagesSkale));
         setVictionImages(shuffle(chestImagesViction));
         setCoreImages(shuffle(chestImagesCore));
         setSeiImages(shuffle(chestImagesSei));
@@ -4782,6 +4760,9 @@ useEffect(() => {
                       myBaseNfts={myBaseNfts}
                       myDogeNfts={myDogeNfts}
                       myCmcNfts={myCmcNfts}
+                      myCoreNfts={myCoreNfts}
+                      myVictionNfts={myVictionNfts}
+
                       mySkaleNfts={mySkaleNfts}
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
@@ -4931,19 +4912,22 @@ useEffect(() => {
                             </h2>
                             {windowSize.width > 786 && (
                               <div className="d-flex align-items-center gap-2">
-                                <div
-                                  className="buy-premium-tag  px-4 py-1 d-flex flex-column justify-content-center align-items-center position-relative"
-                                  onClick={() => {
-                                    setLeaderboard(false);
-                                    setgetPremiumPopup(true);
-                                  }}
-                                >
-                                  <span>Premium Subscriber</span>
-                                  <h6>x2</h6>
-                                  <div className="activate-premium-btn px-3 d-flex align-items-center justify-content-center">
-                                    Activate
+                                {!isPremium && (
+                                  <div
+                                    className="buy-premium-tag  px-4 py-1 d-flex flex-column justify-content-center align-items-center position-relative"
+                                    onClick={() => {
+                                      setLeaderboard(false);
+                                      setgetPremiumPopup(true);
+                                    }}
+                                  >
+                                    <span>Premium Subscriber</span>
+                                    <h6>x2</h6>
+                                    <div className="activate-premium-btn px-3 d-flex align-items-center justify-content-center">
+                                      Activate
+                                    </div>
                                   </div>
-                                </div>
+                                )}
+
                                 <NavLink
                                   to={"/marketplace/events/golden-pass"}
                                   className="buy-golden-tag  px-4 py-1 d-flex flex-column justify-content-center align-items-center position-relative"
@@ -4965,19 +4949,21 @@ useEffect(() => {
                           </div>
                           {windowSize.width < 786 && (
                             <div className="d-flex align-items-center gap-2">
-                              <div
-                                className="buy-premium-tag px-4 py-1 d-flex flex-column align-items-center justify-content-center position-relative"
-                                onClick={() => {
-                                  setLeaderboard(false);
-                                  setgetPremiumPopup(true);
-                                }}
-                              >
-                                <span>Premium Subscriber</span>
-                                <h6>x2</h6>
-                                <div className="activate-premium-btn px-3 d-flex align-items-center justify-content-center">
-                                  Activate
+                              {!isPremium && (
+                                <div
+                                  className="buy-premium-tag px-4 py-1 d-flex flex-column align-items-center justify-content-center position-relative"
+                                  onClick={() => {
+                                    setLeaderboard(false);
+                                    setgetPremiumPopup(true);
+                                  }}
+                                >
+                                  <span>Premium Subscriber</span>
+                                  <h6>x2</h6>
+                                  <div className="activate-premium-btn px-3 d-flex align-items-center justify-content-center">
+                                    Activate
+                                  </div>
                                 </div>
-                              </div>
+                              )}
                               <NavLink
                                 to={"/marketplace/events/golden-pass"}
                                 className="buy-golden-tag px-4 py-1 d-flex flex-column align-items-center justify-content-center position-relative"
@@ -5284,7 +5270,7 @@ useEffect(() => {
                                 <span className="token-amount-placeholder">
                                   Select chain
                                 </span>
-                                <div class="dropdown position relative">
+                                <div className="dropdown position relative">
                                   <button
                                     class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle`}
                                     type="button"
@@ -5298,13 +5284,13 @@ useEffect(() => {
                                       <img
                                         src={require(`../../Images/premium/tokens/${chainDropdown.symbol}Icon.svg`)}
                                         alt=""
-                                        style={{width: 18, height: 18}}
+                                        style={{ width: 18, height: 18 }}
                                       />
                                       {chainDropdown.name}
                                     </div>
                                     <img src={launchpadIndicator} alt="" />
                                   </button>
-                                  <ul class="dropdown-menu w-100">
+                                  <ul className="dropdown-menu w-100">
                                     <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={handleEthPool}
@@ -5314,7 +5300,7 @@ useEffect(() => {
                                           require(`../../Images/premium/tokens/ethIcon.svg`)
                                             .default
                                         }
-                                        style={{width: 18, height: 18}}
+                                        style={{ width: 18, height: 18 }}
                                         alt=""
                                       />
                                       Ethereum
@@ -5328,7 +5314,7 @@ useEffect(() => {
                                           require(`../../Images/premium/tokens/wbnbIcon.svg`)
                                             .default
                                         }
-                                        style={{width: 18, height: 18}}
+                                        style={{ width: 18, height: 18 }}
                                         alt=""
                                       />
                                       BNB Chain
@@ -5342,7 +5328,7 @@ useEffect(() => {
                                           require(`../../Images/premium/tokens/wavaxIcon.svg`)
                                             .default
                                         }
-                                        style={{width: 18, height: 18}}
+                                        style={{ width: 18, height: 18 }}
                                         alt=""
                                       />
                                       Avalanche
@@ -5453,7 +5439,7 @@ useEffect(() => {
                                   </span>
 
                                   <div className="d-flex align-items-center gap-2">
-                                    <div class="dropdown position relative">
+                                    <div className="dropdown position relative">
                                       <button
                                         class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
                                         type="button"
@@ -5467,13 +5453,13 @@ useEffect(() => {
                                           <img
                                             src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
                                             alt=""
-                                            style={{width: 18, height: 18}}
+                                            style={{ width: 18, height: 18 }}
                                           />
                                           {/* {dropdownTitle} */}
                                         </div>
                                         <img src={launchpadIndicator} alt="" />
                                       </button>
-                                      <ul class="dropdown-menu w-100">
+                                      <ul className="dropdown-menu w-100">
                                         {Object.keys(
                                           chainId === 1
                                             ? window.config
@@ -5499,8 +5485,8 @@ useEffect(() => {
                                             ? window.config
                                                 .subscriptioncore_tokens
                                             : chainId === 713715
-                                                ? window.config
-                                                    .subscriptionsei_tokens
+                                            ? window.config
+                                                .subscriptionsei_tokens
                                             : window.config.subscription_tokens
                                         ).map((t, i) => (
                                           <li
@@ -5540,21 +5526,21 @@ useEffect(() => {
                                                         .subscriptionskale_tokens[
                                                         t
                                                       ]?.symbol
-                                                   : chainId === 88
-                                                      ? window.config
-                                                          .subscriptionviction_tokens[
-                                                          t
-                                                        ]?.symbol
-                                                  : chainId === 1116
-                                                        ? window.config
-                                                            .subscriptioncore_tokens[
-                                                            t
-                                                          ]?.symbol
-                                                 : chainId === 713715
-                                                        ? window.config
-                                                            .subscriptionsei_tokens[
-                                                            t
-                                                          ]?.symbol
+                                                    : chainId === 88
+                                                    ? window.config
+                                                        .subscriptionviction_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 1116
+                                                    ? window.config
+                                                        .subscriptioncore_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 713715
+                                                    ? window.config
+                                                        .subscriptionsei_tokens[
+                                                        t
+                                                      ]?.symbol
                                                     : window.config
                                                         .subscription_tokens[t]
                                                         ?.symbol
@@ -5590,19 +5576,20 @@ useEffect(() => {
                                                         t
                                                       ]?.symbol
                                                     : chainId === 88
-                                                      ? window.config
-                                                          .subscriptionviction_tokens[
-                                                          t
-                                                        ]?.symbol
-                                                   : chainId === 713715
-                                                        ? window.config
-                                                            .subscriptionsei_tokens[
-                                                            t
-                                                          ]?.symbol
-                                                 : chainId === 1116
-                                                 ? window.config.subscriptionsei_tokens[
-                                                              t
-                                                            ]?.symbol
+                                                    ? window.config
+                                                        .subscriptionviction_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 713715
+                                                    ? window.config
+                                                        .subscriptionsei_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 1116
+                                                    ? window.config
+                                                        .subscriptionsei_tokens[
+                                                        t
+                                                      ]?.symbol
                                                     : window.config
                                                         .subscription_tokens[t]
                                                         ?.symbol
@@ -5642,24 +5629,24 @@ useEffect(() => {
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
-                                                 : chainId === 1116
+                                                  : chainId === 1116
                                                   ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
-                                                : chainId === 88
-                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
-                                                        t
-                                                      ]?.symbol.toLowerCase()}Icon.svg`)
-                                                : chainId === 713715
-                                                      ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
-                                                          t
-                                                        ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 88
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 713715
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
                                                   : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
                                                       t
                                                     ]?.symbol.toLowerCase()}Icon.svg`)
                                               }
                                               alt=""
-                                              style={{width: 18, height: 18}}
+                                              style={{ width: 18, height: 18 }}
                                             />
                                             {chainId === 1
                                               ? window.config
@@ -5685,18 +5672,18 @@ useEffect(() => {
                                               ? window.config
                                                   .subscriptionskale_tokens[t]
                                                   ?.symbol
-                                            : chainId === 1116
-                                                  ? window.config
-                                                      .subscriptioncore_tokens[t]
-                                                      ?.symbol
-                                        : chainId === 88
-                                                      ? window.config
-                                                          .subscriptionviction_tokens[t]
-                                                          ?.symbol
-                                          : chainId === 713715
-                                                          ? window.config
-                                                              .subscriptionsei_tokens[t]
-                                                              ?.symbol
+                                              : chainId === 1116
+                                              ? window.config
+                                                  .subscriptioncore_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 88
+                                              ? window.config
+                                                  .subscriptionviction_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 713715
+                                              ? window.config
+                                                  .subscriptionsei_tokens[t]
+                                                  ?.symbol
                                               : window.config
                                                   .subscription_tokens[t]
                                                   ?.symbol}
