@@ -1373,7 +1373,6 @@ const MarketEvents = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-            
                 <div className="d-flex flex-column gap-4">
                   <div className="border-0 upcoming-mint-wrapper upcoming-babydoge-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
@@ -1492,7 +1491,6 @@ const MarketEvents = ({
                     />
                   </div>
                 </div>
-      
               )}
               {activeTab === "past" && (
                 // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
@@ -1572,7 +1570,7 @@ const MarketEvents = ({
                 >
                   {dummyEvent.status === "Live" && (
                     <div
-                    className="pulsatingDot"
+                      className="pulsatingDot"
                       style={{ width: 7, height: 7, marginRight: 5 }}
                     ></div>
                   )}
@@ -2045,9 +2043,13 @@ const MarketEvents = ({
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
-                Viction, an efficient, rapidly growing blockchain ecosystem, is
-                poised to expand vision and encourage mass adoption. Explore the
-                expansive ecosystem we're building.
+                Viction, previously known as TomoChain, is a people-centric
+                layer-1 blockchain that provides zero-gas transactions and
+                heightened security, making Web3 accessible and safe for
+                everyone. With a design emphasis on user experience, Viction
+                prioritizes zero-gas transactions through the innovative TRC25
+                token standard, alongside speed, security, and scalability, all
+                contributing to a more secure and open world.
               </p>
             ) : dummyEvent.id === "event15" ? (
               <p

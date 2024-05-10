@@ -74,7 +74,11 @@ import upcomingDyp2 from "./assets/dypiuspopup2.png";
 import dypeventPopupImage from "./assets/dypEventImage.png";
 import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
 import victionLogo from "./assets/victionLogo.svg";
+import multiversLogo from "./assets/multiversLogo.svg";
+
 import victionBg from "./assets/victionBg.webp";
+import multiversBg from "./assets/multiversBg.webp";
+
 import seiLogo from "./assets/seiLogo.svg";
 import seiBg from "./assets/seiBg.webp";
 import coreLogo from "./assets/coreLogo.svg";
@@ -341,6 +345,34 @@ const NewWalletBalance = ({
 
   const dummyBetaPassData2 = [
     {
+      title: "MultiversX",
+      logo: multiversLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in EGLD Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      backgroundImage: multiversBg,
+      popupInfo: {
+        title: "MultiversX",
+        chain: "MultiversX Chain",
+        linkState: "multiversx",
+        rewards: "EGLD",
+        status: "Coming Soon",
+        id: "event16",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in EGLD Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
+    {
       title: "VICTION",
       logo: victionLogo,
       eventStatus: "Coming Soon",
@@ -357,7 +389,7 @@ const NewWalletBalance = ({
         status: "Coming Soon",
         logo: victionLogo,
         backgroundImage: victionBg,
-      date: "XXX XX, XXXX",
+        date: "XXX XX, XXXX",
 
         id: "event14",
         eventType: "Explore & Find",
@@ -390,7 +422,7 @@ const NewWalletBalance = ({
         id: "event15",
         logo: immutableLogo,
         backgroundImage: immutableBg,
-      date: "XXX XX, XXXX",
+        date: "XXX XX, XXXX",
 
         eventType: "Explore & Find",
         totalRewards: "$20,000 in IMX Rewards",
@@ -420,7 +452,7 @@ const NewWalletBalance = ({
         rewards: "SEI",
         logo: seiLogo,
         backgroundImage: seiBg,
-      date: "XXX XX, XXXX",
+        date: "XXX XX, XXXX",
 
         status: "Coming Soon",
         id: "event13",
@@ -1283,20 +1315,20 @@ const NewWalletBalance = ({
               </h6>{" "}
               <UpcomingProfileEvent
                 onOpenEvent={() => {
-                  setDummyEvent(dummyBetaPassData2[2].popupInfo);
+                  setDummyEvent(dummyBetaPassData2[1].popupInfo);
                   setEventPopup(true);
                 }}
-                data={dummyBetaPassData2[2].popupInfo}
-                event={dummyBetaPassData2[2].popupInfo}
+                data={dummyBetaPassData2[1].popupInfo}
+                event={dummyBetaPassData2[1].popupInfo}
                 userEarnedUsd={0}
               />
               <UpcomingProfileEvent
                 onOpenEvent={() => {
-                  setDummyEvent(dummyBetaPassData2[3].popupInfo);
+                  setDummyEvent(dummyBetaPassData2[4].popupInfo);
                   setEventPopup(true);
                 }}
-                data={dummyBetaPassData2[3].popupInfo}
-                event={dummyBetaPassData2[3].popupInfo}
+                data={dummyBetaPassData2[4].popupInfo}
+                event={dummyBetaPassData2[4].popupInfo}
                 userEarnedUsd={0}
               />
               <ActiveProfileEvent
@@ -1939,7 +1971,7 @@ const NewWalletBalance = ({
                     >
                       {loading ? (
                         <div
-                        className="spinner-border text-light spinner-border-sm"
+                          className="spinner-border text-light spinner-border-sm"
                           role="status"
                         >
                           <span className="visually-hidden">Loading...</span>
@@ -2038,7 +2070,7 @@ const NewWalletBalance = ({
                 >
                   {dummyEvent.status === "Live" && (
                     <div
-                    className="pulsatingDot"
+                      className="pulsatingDot"
                       style={{ width: 7, height: 7, marginRight: 5 }}
                     ></div>
                   )}
@@ -2509,9 +2541,13 @@ const NewWalletBalance = ({
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
-                Viction, an efficient, rapidly growing blockchain ecosystem, is
-                poised to expand vision and encourage mass adoption. Explore the
-                expansive ecosystem we're building.
+                Viction, previously known as TomoChain, is a people-centric
+                layer-1 blockchain that provides zero-gas transactions and
+                heightened security, making Web3 accessible and safe for
+                everyone. With a design emphasis on user experience, Viction
+                prioritizes zero-gas transactions through the innovative TRC25
+                token standard, alongside speed, security, and scalability, all
+                contributing to a more secure and open world.
               </p>
             ) : dummyEvent.id === "event15" ? (
               <p
