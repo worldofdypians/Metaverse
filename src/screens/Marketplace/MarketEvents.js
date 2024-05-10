@@ -1566,7 +1566,7 @@ const MarketEvents = ({
                 >
                   {dummyEvent.status === "Live" && (
                     <div
-                      class="pulsatingDot"
+                    className="pulsatingDot"
                       style={{ width: 7, height: 7, marginRight: 5 }}
                     ></div>
                   )}

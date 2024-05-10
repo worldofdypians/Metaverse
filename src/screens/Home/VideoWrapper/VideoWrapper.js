@@ -572,7 +572,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   style={{ width: "90%" }}
                 >
                   <span
-                    class="popup-rewards d-flex text-white mb-2"
+                    className="popup-rewards d-flex text-white mb-2"
                     style={{
                       fontSize: windowSize.width < 992 ? "18px" : "24px",
                     }}
@@ -619,7 +619,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
           <NavLink to={`/marketplace/events/treasure-hunt`}>
             <div className="opacitywrapper">
               <span
-                class="popup-rewards d-flex text-white mb-2"
+                className="popup-rewards d-flex text-white mb-2"
                 style={{ fontSize: "24px" }}
               >
                 Treasure Hunt
