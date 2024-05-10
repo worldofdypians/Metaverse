@@ -50,6 +50,7 @@ import eth from "./assets/eth.svg";
 import base from "./assets/base.svg";
 import conflux from "./assets/conflux.svg";
 import sei from "./assets/sei.svg";
+import multiversx from "./assets/multiversx.svg";
 
 import error from "./assets/error.svg";
 import dropdown from "./assets/dropdown.svg";

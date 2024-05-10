@@ -26,6 +26,7 @@ import coreActive from "./assets/coreActive.svg";
 import coreInactive from "./assets/coreInactive.svg";
 import victionActive from "./assets/victionActive.svg";
 import victionInactive from "./assets/victionInactive.svg";
+import multiversxActive from "./assets/multiversxActive.svg";
 import seiActive from "./assets/seiActive.svg";
 import seiInactive from "./assets/seiInactive.svg";
 import Slider from "react-slick";

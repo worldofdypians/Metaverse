@@ -29,6 +29,7 @@ import greenCheck from "./assets/greenCheck.svg";
 import infoIcon from "./assets/infoIcon.svg";
 import skaleIcon from "./assets/skaleIcon.svg";
 import seiIcon from "./assets/seiIcon.svg";
+import multiversxIcon from "./assets/multiversxIcon.svg";
 import danger from "./assets/danger.svg";
 import warning from "./assets/warning.svg";
 import redX from "./assets/redX.svg";
