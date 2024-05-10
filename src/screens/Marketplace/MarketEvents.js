@@ -1622,10 +1622,9 @@ const MarketEvents = ({
                     }
                     alt=""
                     style={{
-                      width: 90,
-                      height: 90,
-                      borderRadius: "8px",
-                      objectFit: "cover",
+                      width: 80,
+                      height: 80,
+                  
                     }}
                   />
                   <div className="d-flex flex-column justify-content-between">
