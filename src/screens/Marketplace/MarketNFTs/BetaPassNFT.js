@@ -1811,19 +1811,19 @@ const BetaPassNFT = ({
                                     <div className="d-flex flex-column gap-2">
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whitePickaxe} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Explore &amp; Mine
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Start: Sep. 25, 2023
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           End: Dec. 24, 2023
                                         </span>
                                       </div>
@@ -1927,19 +1927,19 @@ const BetaPassNFT = ({
                                     <div className="d-flex flex-column gap-2">
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whitePickaxe} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Explore &amp; Mine
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Start: Oct. 06, 2023
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           End: Nov. 06, 2023
                                         </span>
                                       </div>
@@ -2045,19 +2045,19 @@ const BetaPassNFT = ({
                                     <div className="d-flex flex-column gap-2">
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whitePickaxe} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Explore &amp; Mine
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Start: Oct. 20, 2023
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           End: Nov. 20, 2023
                                         </span>
                                       </div>
@@ -2163,19 +2163,19 @@ const BetaPassNFT = ({
                                     <div className="d-flex flex-column gap-2">
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whitePickaxe} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Explore &amp; Mine
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Start: Dec. 22, 2023
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           End: Apr. 02, 2024
                                         </span>
                                       </div>
@@ -2281,19 +2281,19 @@ const BetaPassNFT = ({
                                     <div className="d-flex flex-column gap-2">
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whitePickaxe} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Explore &amp; Mine
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Start: Nov. 01, 2023
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           End: Feb. 01, 2024
                                         </span>
                                       </div>
@@ -2366,7 +2366,7 @@ const BetaPassNFT = ({
                                   style={{ top: 0 }}
                                 >
                                   <div
-                                    class="pulsatingDot"
+                                    className="pulsatingDot"
                                     style={{
                                       width: 7,
                                       height: 7,
@@ -2414,19 +2414,19 @@ const BetaPassNFT = ({
                                     <div className="d-flex flex-column gap-2">
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whitePickaxe} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Explore &amp; Mine
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Start: Dec. 26, 2023
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           End: Apr. 11, 2024
                                         </span>
                                       </div>
@@ -2498,7 +2498,7 @@ const BetaPassNFT = ({
                                   style={{ top: 0 }}
                                 >
                                   <div
-                                    class="pulsatingDot"
+                                    className="pulsatingDot"
                                     style={{
                                       width: 7,
                                       height: 7,
@@ -2540,19 +2540,19 @@ const BetaPassNFT = ({
                                     <div className="d-flex flex-column gap-2">
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whitePickaxe} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Explore &amp; Mine
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           Start: Apr. 15, 2024
                                         </span>
                                       </div>
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
-                                        <span class="white-events-text mb-0">
+                                        <span className="white-events-text mb-0">
                                           End: Jul. 14, 2024
                                         </span>
                                       </div>
@@ -2669,9 +2669,9 @@ const BetaPassNFT = ({
                             mintTitle === "multiversx" ||
                             mintTitle === "immutable") && (
                             <div>
-                              <ul class="timeline m-0 p-0" id="timeline">
-                                <li class="col-3 li complete">
-                                  <div class="status">
+                              <ul className="timeline m-0 p-0" id="timeline">
+                                <li className="col-3 li complete">
+                                  <div className="status">
                                     <h4 className="listtext"> Create </h4>
                                   </div>
                                 </li>
@@ -2680,7 +2680,7 @@ const BetaPassNFT = ({
                                     showVerify && "complete"
                                   } `}
                                 >
-                                  <div class="status">
+                                  <div className="status">
                                     <h4 className="listtext"> Verify </h4>
                                   </div>
                                 </li>
@@ -2689,7 +2689,7 @@ const BetaPassNFT = ({
                                     playerCreation && "complete"
                                   } `}
                                 >
-                                  <div class="status">
+                                  <div className="status">
                                     <h4 className="listtext"> Profile </h4>
                                   </div>
                                 </li>
@@ -2697,7 +2697,7 @@ const BetaPassNFT = ({
                                   class={`col-2 li ${linkWallet && "complete"}`}
                                   style={{ width: 0 }}
                                 >
-                                  <div class="status">
+                                  <div className="status">
                                     <h4
                                       className="listtext"
                                       style={{ width: 0, whiteSpace: "nowrap" }}

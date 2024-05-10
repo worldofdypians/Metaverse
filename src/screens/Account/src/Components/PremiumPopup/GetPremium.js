@@ -923,7 +923,7 @@ const GetPremiumPopup = ({
         <div className="d-flex mt-4 mb-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
           <div className="d-flex flex-column gap-3 subscribe-input-container">
             <span className="token-amount-placeholder">Select chain</span>
-            <div class="dropdown position relative">
+            <div className="dropdown position relative">
               <button
                 class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle`}
                 type="button"
@@ -943,7 +943,7 @@ const GetPremiumPopup = ({
                 </div>
                 <img src={launchpadIndicator} alt="" />
               </button>
-              <ul class="dropdown-menu w-100">
+              <ul className="dropdown-menu w-100">
                 <li
                   className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                   onClick={handleEthPool}
@@ -1088,7 +1088,7 @@ const GetPremiumPopup = ({
               </span>
 
               <div className="d-flex align-items-center gap-2">
-                <div class="dropdown position relative">
+                <div className="dropdown position relative">
                   <button
                     class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
                     type="button"
@@ -1108,7 +1108,7 @@ const GetPremiumPopup = ({
                     </div>
                     <img src={launchpadIndicator} alt="" />
                   </button>
-                  <ul class="dropdown-menu w-100">
+                  <ul className="dropdown-menu w-100">
                     {Object.keys(
                       chainId === 1
                         ? window.config.subscriptioneth_tokens

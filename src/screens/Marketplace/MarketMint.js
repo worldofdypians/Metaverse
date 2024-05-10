@@ -571,6 +571,22 @@ const MarketMint = ({
             setactiveButton(true);
             setStatus("");
           }
+        } else if (selectedMint.id === "core") {
+          if (chainId !== 1116) {
+            setactiveButton(false);
+            setStatus("Switch to CORE to continue minting.");
+          } else if (chainId === 1116) {
+            setactiveButton(true);
+            setStatus("");
+          }
+        } else if (selectedMint.id === "viction") {
+          if (chainId !== 88) {
+            setactiveButton(false);
+            setStatus("Switch to Viction to continue minting.");
+          } else if (chainId === 88) {
+            setactiveButton(true);
+            setStatus("");
+          }
         }
       }
     }
@@ -606,6 +622,7 @@ const MarketMint = ({
     document.title = "NFT Mint";
   }, []);
 
+  console.log(totalCoreNft, status, selectedMint)
   return (
     <>
       <div
@@ -1520,7 +1537,7 @@ const MarketMint = ({
                                     }  px-4 w-100`}
                                     onClick={() => {
                                       isConnected === true && chainId === 88
-                                        ? handleBaseNftMint()
+                                        ? handleMint()
                                         : showWalletConnect();
                                     }}
                                     disabled={
@@ -1567,6 +1584,7 @@ const MarketMint = ({
                                         <div
                                           className="spinner-border "
                                           role="status"
+                                          style={{ height: "1.5rem", width: "1.5rem" }}
                                         ></div>
                                       </>
                                     ) : mintloading === "error" &&
@@ -1616,7 +1634,7 @@ const MarketMint = ({
                                     }  px-4 w-100`}
                                     onClick={() => {
                                       isConnected === true && chainId === 1116
-                                        ? handleBaseNftMint()
+                                        ? handleMint()
                                         : showWalletConnect();
                                     }}
                                     disabled={
@@ -1661,8 +1679,9 @@ const MarketMint = ({
                                       chainId === 1116 ? (
                                       <>
                                         <div
-                                          className="spinner-border "
+                                          className="spinner-border"
                                           role="status"
+                                          style={{ height: "1.5rem", width: "1.5rem" }}
                                         ></div>
                                       </>
                                     ) : mintloading === "error" &&

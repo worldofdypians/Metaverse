@@ -856,6 +856,21 @@ function App() {
         setmyskaleNFTsCreated(NFTS);
       });
 
+      getMyNFTS(coinbase, "core").then((NFTS) => {
+        settotalCoreNft(NFTS.length);
+        setMyCoreNfts(NFTS);
+        setcoreMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setmycoreNFTsCreated(NFTS);
+      });
+
+
+      getMyNFTS(coinbase, "viction").then((NFTS) => {
+        settotalVictionNft(NFTS.length);
+        setMyVictionNfts(NFTS);
+        setvictionMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setmyVictionNFTsCreated(NFTS);
+      });
+
       //setmyBaseNFTs
     } else {
       setMyNFTSCaws([]);
@@ -867,6 +882,10 @@ function App() {
       setMyGateNfts([]);
       setTotalConfluxNft(0);
       setMyConfluxNfts([]);
+      setMyVictionNfts([]);
+      settotalVictionNft(0);
+      setMyCoreNfts([]);
+      settotalCoreNft(0);
     }
   };
 
