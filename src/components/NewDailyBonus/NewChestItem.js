@@ -27,6 +27,7 @@ const NewChestItem = ({
   dummypremiumChests,
   claimingChest,
   setClaimingChest,
+  image,
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -266,6 +267,16 @@ const NewChestItem = ({
       window.config.daily_bonus_skale_address
     );
 
+    const daily_bonus_contract_core = new window.web3.eth.Contract(
+      window.DAILY_BONUS_CORE_ABI,
+      window.config.daily_bonus_core_address
+    );
+
+    const daily_bonus_contract_viction = new window.web3.eth.Contract(
+      window.DAILY_BONUS_VICTION_ABI,
+      window.config.daily_bonus_viction_address
+    );
+
     // console.log(daily_bonus_contract);
     if (chainId === 204) {
       if (rewardTypes === "premium" && isPremium) {
@@ -306,6 +317,110 @@ const NewChestItem = ({
               data.transactionHash,
               chestIndex - 1,
               "opbnb"
+            );
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+          });
+      }
+    } else if (chainId === 1116) {
+      if (rewardTypes === "premium" && isPremium) {
+        await daily_bonus_contract_core.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "core"
+            );
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+        await daily_bonus_contract_core.methods
+          .openChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "core"
+            );
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+          });
+      }
+    } else if (chainId === 88) {
+      if (rewardTypes === "premium" && isPremium) {
+        await daily_bonus_contract_viction.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "viction"
+            );
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+        await daily_bonus_contract_viction.methods
+          .openChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "viction"
             );
           })
           .catch((e) => {
@@ -506,7 +621,9 @@ const NewChestItem = ({
   };
 
   useEffect(() => {
-    if (!isPremium && rewardTypes === "premium") {
+    if (
+      (!isPremium && rewardTypes === "premium")
+    ) {
       setIsChestOpen(false);
     }
   }, [isPremium, rewardTypes]);
@@ -554,9 +671,12 @@ const NewChestItem = ({
             loading ? (chain === "bnb" ? "chest-shake" : "chest-pulsate") : ""
           }`}
           src={
-            chain === "bnb"
+            chain === "bnb" ||
+            chain === "sei" ||
+            chain === "viction" ||
+            chain === "core"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
-                  open ? chestIndex + "open" : chestIndex
+                  open ? image + "open" : image
                 }.png`)
               : require(`../../screens/Account/src/Components/WalletBalance/chestImages/skale/${
                   open ? chestIndex + "open" : chestIndex
@@ -566,7 +686,10 @@ const NewChestItem = ({
           style={{
             position: "relative",
             bottom: "5px",
-            filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
+            filter:
+              ((rewardTypes === "premium" && !isPremium) ||
+                (chain !== "bnb" && chain !== "skale")) &&
+              "blur(5px)",
           }}
         />
       ) : rewardTypes === "premium" && dummypremiumChests ? (
@@ -575,7 +698,10 @@ const NewChestItem = ({
             loading ? (chain === "bnb" ? "chest-shake" : "chest-pulsate") : ""
           }`}
           src={
-            chain === "bnb"
+            chain === "bnb" ||
+            chain === "core" ||
+            chain === "viction" ||
+            chain === "sei"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
                   open
                     ? chestIndex % 2 === 1
@@ -591,13 +717,19 @@ const NewChestItem = ({
           style={{
             position: "relative",
             bottom: "5px",
-            filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
+            filter:
+              ((rewardTypes === "premium" && !isPremium) ||
+                (chain !== "bnb" && chain !== "skale")) &&
+              "blur(5px)",
           }}
         />
       ) : (
         <></>
       )}
-      {rewardTypes === "premium" && !isPremium && (
+      {((rewardTypes === "premium" && !isPremium) ||
+        (chain !== "bnb" &&
+          chain !== "skale" &&
+          rewardTypes === "premium")) && (
         <img
           src={premiumLock}
           className={`premium-lock ${shake && "shake-lock"}`}

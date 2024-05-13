@@ -19,6 +19,9 @@ import eth from "../Header/assets/eth.svg";
 import base from "../Header/assets/base.svg";
 import conflux from "../Header/assets/conflux.svg";
 import skale from "../Header/assets/skale.svg";
+import sei from "../Header/assets/sei.svg";
+import viction from "../Header/assets/viction.svg";
+import core from "../Header/assets/core.svg";
 
 import error from "../Header/assets/error.svg";
 import dropdown from "../Header/assets/dropdown.svg";
@@ -44,12 +47,16 @@ const MobileNavbar = ({
   const [unreadNotifications, setunreadNotifications] = useState(0);
   const [ethState, setEthState] = useState(true);
   const [bnbState, setBnbState] = useState(false);
-  const [opbnbState, setOpBnbState] = useState(false);
-
+  const [opbnbState, setopBnbState] = useState(false);
   const [avaxState, setAvaxState] = useState(false);
   const [baseState, setBaseState] = useState(false);
   const [confluxState, setConfluxState] = useState(false);
   const [skaleState, setSkaleState] = useState(false);
+  const [coreState, setCoreState] = useState(false);
+  const [victionState, setVictionState] = useState(false);
+  const [seiState, setSeiState] = useState(false);
+  
+
 
 
   const bgmenu = document.querySelector("#bgmenu");
@@ -70,60 +77,121 @@ const MobileNavbar = ({
         setAvaxState(false);
         setBnbState(false);
         setEthState(true);
+        setCoreState(false);
         setBaseState(false);
-        setOpBnbState(false);
+        setopBnbState(false);
         setSkaleState(false);
+        setVictionState(false);
+        setSeiState(false)
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
         setEthState(false);
         setBaseState(false);
-        setOpBnbState(false);
+        setopBnbState(false);
         setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false)
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
         setBaseState(true);
-        setOpBnbState(false);
+        setopBnbState(false);
         setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false)
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
         setEthState(false);
         setBaseState(false);
-        setOpBnbState(false);
+        setopBnbState(false);
         setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false)
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
         setBaseState(false);
-        setOpBnbState(true);
+        setopBnbState(true);
         setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false)
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
         setBaseState(false);
         setConfluxState(true);
-        setOpBnbState(false);
+        setopBnbState(false);
         setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false)
       } else if (chainId === 1482601649 ) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
         setBaseState(false);
         setConfluxState(false);
-        setOpBnbState(false);
+        setopBnbState(false);
         setSkaleState(true);
-      } else {
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false)
+      } 
+      // else if (chainId === 1116 ) {
+      //   setAvaxState(false);
+      //   setBnbState(false);
+      //   setEthState(false);
+      //   setBaseState(false);
+      //   setConfluxState(false);
+      //   setopBnbState(false);
+      //   setSkaleState(false);
+      //   setCoreState(true);
+      //   setVictionState(false);
+      //   setSeiState(false)
+      // }
+      // else if (chainId === 88 ) {
+      //   setAvaxState(false);
+      //   setBnbState(false);
+      //   setEthState(false);
+      //   setBaseState(false);
+      //   setConfluxState(false);
+      //   setopBnbState(false);
+      //   setSkaleState(false);
+      //   setCoreState(false);
+      //   setVictionState(true);
+      //   setSeiState(false)
+      // }
+      // else if (chainId === 713715 ) {
+      //   setAvaxState(false);
+      //   setBnbState(false);
+      //   setEthState(false);
+      //   setBaseState(false);
+      //   setConfluxState(false);
+      //   setopBnbState(false);
+      //   setSkaleState(false);
+      //   setCoreState(false);
+      //   setVictionState(false);
+      //   setSeiState(true)
+      // }
+      else {
         setAvaxState(false);
         setBnbState(false);
         setBaseState(false);
         setEthState(false);
-        setOpBnbState(false);
+        setopBnbState(false);
         setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false)
       }
     }
   };
@@ -140,6 +208,58 @@ const MobileNavbar = ({
           });
       } else {
         handleSwitchChainGateWallet(1);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+  const handleCorePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x45c")
+          .then(() => {
+            handleSwitchNetwork(1116);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(1116);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleSeiPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xae3f3")
+          .then(() => {
+            handleSwitchNetwork(713715);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(713715);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+  const handleVictionPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x58")
+          .then(() => {
+            handleSwitchNetwork(88);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(88);
       }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
@@ -329,23 +449,29 @@ const MobileNavbar = ({
                 title={
                   <span className="dropdown-title">
                     <img
-                      src={
-                        ethState === true
-                              ? eth
-                              : bnbState === true
-                              ? bnb
-                              : opbnbState === true
-                              ? bnb
-                              : avaxState === true
-                              ? avax
-                              : baseState === true
-                              ? base
-                              : confluxState === true
-                              ? conflux
-                              : skaleState === true
-                              ? skale
-                              : error
-                      }
+                     src={
+                      ethState === true
+                        ? eth
+                        : bnbState === true
+                        ? bnb
+                        : opbnbState === true
+                        ? bnb
+                        : avaxState === true
+                        ? avax
+                        : baseState === true
+                        ? base
+                        : confluxState === true
+                        ? conflux
+                        : skaleState === true
+                        ? skale
+                        // : coreState === true
+                        // ? core
+                        // : victionState === true
+                        // ? viction
+                        // : seiState === true
+                        // ? sei
+                        : error
+                    }
                       height={16}
                       width={16}
                       alt=""
@@ -365,6 +491,12 @@ const MobileNavbar = ({
                             ? "Conflux"
                             : skaleState === true
                             ? "SKALE"
+                            // : coreState === true
+                            // ? "CORE"
+                            // : victionState === true
+                            // ? "Viction"
+                            // : seiState === true
+                            // ? "Sei"
                             : "Unsupported"}
                     </span>
 
@@ -373,33 +505,45 @@ const MobileNavbar = ({
                 }
               >
                 <Dropdown.Item onClick={() => handleEthPool()}>
-                  <img src={eth} alt="" />
-                  Ethereum
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleBnbPool()}>
-                  <img src={bnb} alt="" />
-                  BNB Chain
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleOpBnbPool()}>
-                  <img src={bnb} alt="" />
-                  opBNB Chain
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleSkalePool()}>
+                    <img src={eth} alt="" />
+                    Ethereum
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleBnbPool()}>
+                    <img src={bnb} alt="" />
+                    BNB Chain
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleOpBnbPool()}>
+                    <img src={bnb} alt="" />
+                    opBNB Chain
+                  </Dropdown.Item>
+                  {/* <Dropdown.Item onClick={() => handleCorePool()}>
+                    <img src={core} width={20} height={20} alt="" />
+                    CORE
+                  </Dropdown.Item> */}
+                  <Dropdown.Item onClick={() => handleSkalePool()}>
                     <img src={skale} alt="" />
                     SKALE
+                  </Dropdown.Item> 
+                  <Dropdown.Item onClick={() => handleConfluxPool()}>
+                    <img src={conflux} alt="" />
+                    Conflux
                   </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleAvaxPool()}>
-                  <img src={avax} alt="" />
-                  Avalanche
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleConfluxPool()}>
-                  <img src={conflux} alt="" />
-                  Conflux
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleBasePool()}>
-                  <img src={base} alt="" />
-                  Base
-                </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleBasePool()}>
+                    <img src={base} alt="" />
+                    Base
+                  </Dropdown.Item>
+                  {/* <Dropdown.Item onClick={() => handleSeiPool()}>
+                    <img src={sei} width={20} height={20} alt="" />
+                    Sei
+                  </Dropdown.Item> */}
+                  {/* <Dropdown.Item onClick={() => handleVictionPool()}>
+                    <img src={viction} width={20} height={20} alt="" />
+                    Viction
+                  </Dropdown.Item> */}
+                  <Dropdown.Item onClick={() => handleAvaxPool()}>
+                    <img src={avax} alt="" />
+                    Avalanche
+                  </Dropdown.Item>
               </DropdownButton>
             </>
           )}

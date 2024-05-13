@@ -8,7 +8,7 @@
   right: 0%;
   margin: auto;
   z-index: 1000;
-  background: #1A1C39;
+  background: #1a1c39;
   border-radius: 16px;
   pointer-events: auto !important;
   transition: all 1s ease-in-out;
@@ -18,10 +18,10 @@
     width: 55%;
   }
   @media screen and (max-width: 1300px) {
-    width: 70% ;
+    width: 70%;
   }
   @media screen and (max-width: 786px) {
-    width: 90% ;
+    width: 90%;
   }
 }
 
@@ -35,7 +35,7 @@
   right: 0%;
   margin: auto;
   z-index: 1000;
-  background: #1A1C39;
+  background: #1a1c39;
   border-radius: 16px;
   pointer-events: auto !important;
   transition: all 1s ease-in-out;
@@ -52,8 +52,8 @@
   }
 }
 
-.leaderboard-popup{
-  background-image: url('./newLeaderboardBg.jpg');
+.leaderboard-popup {
+  background-image: url("./newLeaderboardBg.jpg");
   background-size: 100%;
   background-repeat: no-repeat;
   @media screen and (max-width: 1525px) {
@@ -61,19 +61,16 @@
   }
   @media screen and (max-width: 786px) {
     width: 98% !important;
-  background-size: cover;
-
+    background-size: cover;
   }
- 
 }
-.rank-popup{
+.rank-popup {
   @media screen and (max-width: 1455px) {
     width: 95% !important;
   }
   @media screen and (max-width: 786px) {
     width: 98% !important;
   }
- 
 }
 
 .popup-active {
@@ -145,3 +142,120 @@
     width: 75% !important;
   }
 }
+
+
+@keyframes premium {
+  0% {
+  }
+
+  50% {
+    filter: drop-shadow(0px 5px 10px rgba(0, 136, 135, 1));
+  }
+
+  100% {
+
+  }
+}
+@keyframes golden {
+  0% {
+  }
+
+  50% {
+    filter: drop-shadow(0px 5px 10px rgba(88, 37, 112, 1));
+  }
+
+  100% {
+
+  }
+}
+
+.buy-premium-tag {
+  height: 65px;
+  width: 180px;
+  cursor: pointer;
+  background-color: rgba(0, 136, 135, 1);
+  background-image: url("../../screens/Account/src/Containers/Dashboard/assets/premiumStarsBg.svg");
+  background-size: 100% 100%;
+  border-radius: 12px;
+  animation: premium 4s infinite ease-in-out;
+  span {
+    color: #fff;
+    text-align: center;
+    font-family: "Oxanium" !important;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+  h6 {
+    color: #f3bf09;
+    text-align: center;
+    font-family: "Oxanium" !important;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+}
+
+.activate-premium-btn {
+  border-radius: 12px;
+  border: 1px solid #f3bf09;
+  background: radial-gradient(50% 50% at 50% 50%, #008887 0%, #006776 100%);
+  color: #f3bf09;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  position: absolute;
+  bottom: -10px;
+}
+.buy-golden-tag {
+  height: 65px;
+  width: 180px;
+  cursor: pointer;
+  background-image: url("../../screens/Account/src/Containers/Dashboard/assets/goldenPassBg.png");
+  background-size: 100% 100%;
+  border-radius: 12px;
+  transition: all 0.25s;
+  animation: golden 4s ease-in-out infinite;
+
+  span {
+    color: #fff;
+    text-align: center;
+    font-family: "Oxanium" !important;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+  h6 {
+    color: #ffe8ff;
+    text-align: center;
+    font-family: "Oxanium" !important;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    @media screen and (max-width: 380px) {
+      font-size: 12px;
+    }
+  }
+}
+
+.activate-golden-btn {
+  border-radius: 12px;
+  border: 1px solid #ffe8ff;
+  background: radial-gradient(50% 50% at 50% 50%, #582570 0%, #582570 100%);
+  color: #ffe8ff;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  position: absolute;
+  bottom: -10px;
+}
+
+

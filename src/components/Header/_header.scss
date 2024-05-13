@@ -106,7 +106,7 @@
 }
 
 .dropdown-toggle {
-  background: transparent !important; 
+  background: transparent !important;
   border-radius: 10px;
   height: 32px;
   padding: 8px;
@@ -124,9 +124,8 @@
   display: none !important;
 }
 
-
 .dropdown-toggle2 {
-  background: transparent !important; 
+  background: transparent !important;
   border-radius: 10px;
   height: 32px;
   padding: 8px;
@@ -171,7 +170,12 @@
   border-bottom: 1px solid #3b3c68 !important;
 }
 
-.dropdown-item:nth-child(3),.dropdown-item:nth-child(4),.dropdown-item:nth-child(5),.dropdown-item:nth-child(6) {
+.dropdown-item:nth-child(3),
+.dropdown-item:nth-child(4),
+.dropdown-item:nth-child(5),
+.dropdown-item:nth-child(6),
+.dropdown-item:nth-child(7),
+.dropdown-item:nth-child(8) {
   border-bottom: 1px solid #3b3c68 !important;
 }
 
@@ -398,7 +402,7 @@
 
 .domain-search-item {
   border-bottom: 2px solid #8e97cd;
-  background: #15172F;
+  background: #15172f;
 }
 
 .domain-search-item:last-child {
@@ -477,20 +481,20 @@
   }
 }
 
-.domain-price{
-  color: #F7F7FC;
-text-align: right;
-font-size: 20px;
-font-style: normal;
-font-weight: 500;
-line-height: 16px; /* 80% */
+.domain-price {
+  color: #f7f7fc;
+  text-align: right;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 80% */
 }
 
-.domain-register{
-  color: #7DD9AF;
-text-align: right;
-font-size: 10px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+.domain-register {
+  color: #7dd9af;
+  text-align: right;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
