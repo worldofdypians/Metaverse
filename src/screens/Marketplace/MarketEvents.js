@@ -29,6 +29,13 @@ import coin98 from "../Account/src/Components/WalletBalance/assets/coin98.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
 import base from "./assets/baseLogo.svg";
 import skaleLogo from "./assets/skaleLogo.svg";
+import seiLogo from "./assets/seiLogo.svg";
+import multiversLogo from "./assets/multiversLogo.svg";
+
+import coreLogo from "./assets/coreLogo.svg";
+import victionLogo from "./assets/victionLogo.svg";
+import immutableLogo from "./assets/immutableLogo.svg";
+
 import avaxLogo from "./assets/avaxLogo.svg";
 
 import betaMyEarnings from "./assets/betaMyEarnings.png";
@@ -63,12 +70,15 @@ import dypeventPopupImage from "../Account/src/Components/WalletBalance/assets/d
 import gatePopupImage from "../Account/src/Components/WalletBalance/assets/gatePopupImage.png";
 import cmcPopupImage from "../Account/src/Components/WalletBalance/assets/cmcPopupImage.png";
 import skalePopupImage from "../Account/src/Components/WalletBalance/assets/skalePopupImage.png";
-
 import eventPopupImageAvax from "../Account/src/Components/WalletBalance/assets/eventPopupImageAvax.png";
 import eventPopupImageGecko from "../Account/src/Components/WalletBalance/assets/eventPopupImageGecko.png";
-import eventPopupImageDypius2 from "../Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
-
 import eventPopupImageBase from "../Account/src/Components/WalletBalance/assets/eventPopupImageBase.png";
+import eventPopupImageDypius2 from "../Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
+import victionThumb from "../Account/src/Components/WalletBalance/assets/victionThumb.png";
+import seiThumb from "../Account/src/Components/WalletBalance/assets/seiThumb.png";
+import multiversThumb from "../Account/src/Components/WalletBalance/assets/multiversThumb.png";
+import immutableThumb from "../Account/src/Components/WalletBalance/assets/immutableThumb.png";
+import coreThumb from "../Account/src/Components/WalletBalance/assets/coreThumb.png";
 
 import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.svg";
@@ -87,6 +97,16 @@ import upcomingBabyDogeMobile from "./assets/upomingBabyDogeMobile.webp";
 import upcomingDyp from "./assets/upcomingDyp.webp";
 import upcomingCmc from "./assets/upcomingCmc.webp";
 import upcomingDyp2 from "./assets/dypiusBgPic2.webp";
+import immutableBg from "./assets/immutableBg.webp";
+import seiBg from "./assets/seiBg.webp";
+import coreBg from "./assets/coreBg.webp";
+import victionBg from "./assets/victionBg.webp";
+import multiversBg from "./assets/multiversBg.webp";
+import immutableMobileBg from "./assets/immutableActive.webp";
+import seiMobileBg from "./assets/seiActive.webp";
+import coreMobileBg from "./assets/coreActive.webp";
+import victionMobileBg from "./assets/victionActive.webp";
+import multiversMobileBg from "./assets/multiversActive.webp";
 
 import dailyBonus from "./assets/dailyBonus.webp";
 import MintPopup from "../../components/TimepieceMint/MintPopup";
@@ -182,13 +202,13 @@ const MarketEvents = ({
   const [baseEarnETH, setBaseEarnETH] = useState(0);
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
-  const [skalePrice, setSkalePrice] = useState(0)
+  const [skalePrice, setSkalePrice] = useState(0);
   const [dypiusPremiumEarnTokens, setdypiusPremiumEarnTokens] = useState(0);
   const [dypiusPremiumEarnUsd, setdypiusPremiumEarnUsd] = useState(0);
   const [dypiusPremiumPoints, setdypiusPremiumPoints] = useState(0);
-const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
-const [skaleEarnToken, setSkaleEarnToken] = useState(0);
-const [skalePoints, setSkalePoints] = useState(0);
+  const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
+  const [skaleEarnToken, setSkaleEarnToken] = useState(0);
+  const [skalePoints, setSkalePoints] = useState(0);
   const [dailyBonusPopup, setDailyBonusPopup] = useState(false);
   const [activePopup, setActivePopup] = useState(false);
 
@@ -210,7 +230,6 @@ const [skalePoints, setSkalePoints] = useState(0);
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
-
   let dogeLastDay = new Date("2024-04-02T13:00:00.000+02:00");
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
@@ -222,6 +241,118 @@ const [skalePoints, setSkalePoints] = useState(0);
   };
 
   const dummyBetaPassData2 = [
+    // {
+    //   title: "MultiversX",
+    //   logo: multiversLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$20,000 in EGLD Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "XXX XX, XXXX",
+    //   backgroundImage: multiversBg,
+    //   popupInfo: {
+    //     title: "MultiversX",
+    //     chain: "MultiversX Chain",
+    //     linkState: "multiversx",
+    //     rewards: "EGLD",
+    //     status: "Coming Soon",
+    //     id: "event16",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in EGLD Rewards",
+    //     eventDuration: dypius2LastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //     eventDate: "XXX XX, XXXX",
+    //   },
+    // },
+    // {
+    //   title: "VICTION",
+    //   logo: victionLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$20,000 in VIC Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "XXX XX, XXXX",
+    //   backgroundImage: victionBg,
+    //   popupInfo: {
+    //     title: "VICTION",
+    //     chain: "VICTION Chain",
+    //     linkState: "viction",
+    //     rewards: "VIC",
+    //     status: "Coming Soon",
+    //     id: "event14",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in VIC Rewards",
+    //     eventDuration: dypius2LastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //     eventDate: "XXX XX, XXXX",
+    //   },
+    // },
+    // {
+    //   title: "SEI",
+    //   logo: seiLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$20,000 in SEI Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "XXX XX, XXXX",
+    //   backgroundImage: seiBg,
+    //   popupInfo: {
+    //     title: "SEI",
+    //     chain: "SEI Chain",
+    //     linkState: "sei",
+    //     rewards: "SEI",
+    //     status: "Coming Soon",
+    //     id: "event13",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in SEI Rewards",
+    //     eventDuration: dypius2LastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //     eventDate: "XXX XX, XXXX",
+    //   },
+    // },
+    // {
+    //   title: "CORE",
+    //   logo: coreLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$20,000 in CORE Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "XXX XX, XXXX",
+    //   backgroundImage: coreBg,
+    //   popupInfo: {
+    //     title: "CORE",
+    //     chain: "CORE Chain",
+    //     linkState: "core",
+    //     rewards: "CORE",
+    //     status: "Coming Soon",
+    //     id: "event12",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in SEI Rewards",
+    //     eventDuration: dypius2LastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //     eventDate: "XXX XX, XXXX",
+    //   },
+    // },
     {
       title: "Dypius Premium",
       logo: dypiusPremium36,
@@ -252,7 +383,7 @@ const [skalePoints, setSkalePoints] = useState(0);
         activeTab: "dypiusv2",
       },
     },
-   
+
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -500,20 +631,13 @@ const [skalePoints, setSkalePoints] = useState(0);
     },
   };
 
-
-
-
-
-
-
-// if (dypEvent && dypEvent[0]) {
-//   const userEarnedDyp =
-//     dypEvent[0].reward.earn.total /
-//     dypEvent[0].reward.earn.multiplier;
-//   setDypiusEarnUsd(dyptokenDatabnb * userEarnedDyp);
-//   setDypiusEarnTokens(userEarnedDyp);
-// }
-
+  // if (dypEvent && dypEvent[0]) {
+  //   const userEarnedDyp =
+  //     dypEvent[0].reward.earn.total /
+  //     dypEvent[0].reward.earn.multiplier;
+  //   setDypiusEarnUsd(dyptokenDatabnb * userEarnedDyp);
+  //   setDypiusEarnTokens(userEarnedDyp);
+  // }
 
   const dailyBonusData = {
     eventType: "6 Available Rewards",
@@ -695,10 +819,14 @@ const [skalePoints, setSkalePoints] = useState(0);
   };
 
   const fetchSkalePrice = async () => {
-    await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd`).then((obj) => {
-      setSkalePrice(obj.data.skale.usd)
-    })
-  }
+    await axios
+      .get(
+        `https://api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd`
+      )
+      .then((obj) => {
+        setSkalePrice(obj.data.skale.usd);
+      });
+  };
 
   const fetchCFXPrice = async () => {
     await axios
@@ -716,7 +844,7 @@ const [skalePoints, setSkalePoints] = useState(0);
     fetchSkalePrice();
     fetchCFXPrice();
   }, []);
-  
+
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
       const response = await fetch(
@@ -724,14 +852,14 @@ const [skalePoints, setSkalePoints] = useState(0);
         {
           body: JSON.stringify(
             {
-            email: email,
-            publicAddress: userAddress,
-          }
-          // {
-          //   "email": "renato@outerlynx.com",
-          //   "publicAddress": "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0"
-          // }
-        ),
+              email: email,
+              publicAddress: userAddress,
+            }
+            // {
+            //   "email": "renato@outerlynx.com",
+            //   "publicAddress": "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0"
+            // }
+          ),
           headers: {
             "Content-Type": "application/json",
           },
@@ -752,7 +880,7 @@ const [skalePoints, setSkalePoints] = useState(0);
           const skaleEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "skale";
           });
-          
+
           const gateEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "gate";
           });
@@ -977,9 +1105,7 @@ const [skalePoints, setSkalePoints] = useState(0);
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -992,7 +1118,9 @@ const [skalePoints, setSkalePoints] = useState(0);
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                   
+                     <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1221,45 +1349,85 @@ const [skalePoints, setSkalePoints] = useState(0);
                 </>
               )}
               {activeTab === "upcoming" && (
-                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <h6 className="upcoming-stake">New events are coming...</h6>
-                    <span className="upcoming-stake-desc">
-                      Check back soon!
-                    </span>
+                <div className="d-flex flex-column gap-4">
+                  <div className="border-0 upcoming-mint-wrapper upcoming-core-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">CORE</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the CORE Treasure Hunt event for a chance to grab a
+                        share of the $20,000 CORE reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={coreBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={coreMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
                   </div>
-                </div>
+                  <div className="border-0 upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">SEI</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the SEI Treasure Hunt event for a chance to grab a
+                        share of the $20,000 SEI reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={seiBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={seiMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+                  <div className="border-0 upcoming-mint-wrapper upcoming-viction-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">VICTION</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the Viction Treasure Hunt event for a chance to
+                        grab a share of the $20,000 VIC reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={victionBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={victionMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+                  <div className="border-0 upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">MultiversX</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the MultiversX Treasure Hunt event for a chance to
+                        grab a share of the $20,000 EGLD reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={multiversBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={multiversMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
 
-                // <BetaEventCard
-                //   activeTab={activeTab}
-                //   data={newBetaEvent}
-                //   userEarnUsd={
-                //     newBetaEvent.title === "Conflux"
-                //       ? confluxEarnUSD
-                //       : newBetaEvent.title === "CoinGecko"
-                //       ? userEarnUsd
-                //       : newBetaEvent.title === "Gate.io"
-                //       ? gateEarnUSD
-                //       : newBetaEvent.title === "Dypius"
-                //       ? dypiusEarnTokens
-                //       : 0
-                //   }
-                // />
-               
-                // <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                //   {dummyBetaPassData2.slice(3, 4).map((item, index) => (
-                //     <BetaEventCard
-                //       data={item}
-                //       key={index}
-                //       onOpenPopup={() => {
-                //         setEventPopup(true);
-                //         setDummyEvent(item.popupInfo);
-                //       }}
-                //       userEarnUsd={userEarnUsd}
-                //     />
-                //   ))}
-                // </div>
-                // <BetaPassEvents />
+                </div>
               )}
               {activeTab === "past" && (
                 // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
@@ -1339,7 +1507,7 @@ const [skalePoints, setSkalePoints] = useState(0);
                 >
                   {dummyEvent.status === "Live" && (
                     <div
-                      class="pulsatingDot"
+                      className="pulsatingDot"
                       style={{ width: 7, height: 7, marginRight: 5 }}
                     ></div>
                   )}
@@ -1374,10 +1542,24 @@ const [skalePoints, setSkalePoints] = useState(0);
                         ? cmcPopupImage
                         : dummyEvent.linkState === "skale"
                         ? skalePopupImage
+                        : dummyEvent.linkState === "core"
+                        ? coreThumb
+                        : dummyEvent.linkState === "sei"
+                        ? seiThumb
+                        : dummyEvent.linkState === "immutable"
+                        ? immutableThumb
+                        : dummyEvent.linkState === "viction"
+                        ? victionThumb
+                        : dummyEvent.linkState === "multiversx"
+                        ? multiversThumb
                         : eventPopupImage
                     }
                     alt=""
-                    style={{ width: 80, height: 80 }}
+                    style={{
+                      width: 80,
+                      height: 80,
+                  
+                    }}
                   />
                   <div className="d-flex flex-column justify-content-between">
                     <div className="d-flex flex-column">
@@ -1545,6 +1727,66 @@ const [skalePoints, setSkalePoints] = useState(0);
                       the game daily and venture into the SKALE area to uncover
                       hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event14" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Viction Beta Pass NFT</b>. You can get the
+                      Viction Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Viction area, players not only stand a
+                      chance to secure daily rewards in VIC, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Viction area to uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event15" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Immutable Beta Pass NFT</b>. You can get the
+                      Immutable Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Immutable area, players not only stand a
+                      chance to secure daily rewards in IMX, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Immutable area to uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event13" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a SEI Beta Pass NFT</b>. You can get the SEI Beta
+                      Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      SEI area, players not only stand a chance to secure daily
+                      rewards in SEI, but also earn points for their placement
+                      on the global leaderboard. Remember to log in to the game
+                      daily and venture into the SEI area to uncover hidden
+                      treasures.
+                    </p>
+                  ) : dummyEvent.id === "event12" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a CORE Beta Pass NFT</b>. You can get the CORE
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      CORE area, players not only stand a chance to secure daily
+                      rewards in CORE, but also earn points for their placement
+                      on the global leaderboard. Remember to log in to the game
+                      daily and venture into the CORE area to uncover hidden
+                      treasures.
+                    </p>
+                  ) : dummyEvent.id === "event16" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a MultiversX Beta Pass NFT</b>. You can get the
+                      MultiversX Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the MultiversX area, players not only stand a
+                      chance to secure daily rewards in EGLD, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      MultiversX area to uncover hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -1600,16 +1842,27 @@ const [skalePoints, setSkalePoints] = useState(0);
                           ? "DOGE"
                           : dummyEvent.id === "event11"
                           ? "SKL"
+                          : dummyEvent.id === "event14"
+                          ? "VIC"
+                          : dummyEvent.id === "event15"
+                          ? "IMX"
+                          : dummyEvent.id === "event13"
+                          ? "SEI"
+                          : dummyEvent.id === "event12"
+                          ? "CORE"
+                          : dummyEvent.id === "event16"
+                          ? "ELGD"
                           : "ETH"}{" "}
                         rewards
                       </li>
                     )}
-                    {dummyEvent.id !== "event5" && dummyEvent.id !== "event11" && (
-                      <li className="popup-event-desc">
-                        Get global leaderboard points
-                      </li>
-                    )}
-                     {dummyEvent.id === "event11" && (
+                    {dummyEvent.id !== "event5" &&
+                      dummyEvent.id !== "event11" && (
+                        <li className="popup-event-desc">
+                          Get global leaderboard points
+                        </li>
+                      )}
+                    {dummyEvent.id === "event11" && (
                       <li className="popup-event-desc">
                         Get global SKALE leaderboard points
                       </li>
@@ -1638,6 +1891,16 @@ const [skalePoints, setSkalePoints] = useState(0);
                 ? "CoinMarketCap"
                 : dummyEvent.id === "event11"
                 ? "SKALE"
+                : dummyEvent.id === "event14"
+                ? "VIction"
+                : dummyEvent.id === "event15"
+                ? "Immutable"
+                : dummyEvent.id === "event13"
+                ? "SEI"
+                : dummyEvent.id === "event12"
+                ? "CORE"
+                : dummyEvent.id === "event16"
+                ? "MultiversX"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -1742,6 +2005,59 @@ const [skalePoints, setSkalePoints] = useState(0);
                 blockchains without compromising on speed, security, or
                 decentralization.
               </p>
+            ) : dummyEvent.id === "event14" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Viction, previously known as TomoChain, is a people-centric
+                layer-1 blockchain that provides zero-gas transactions and
+                heightened security, making Web3 accessible and safe for
+                everyone. With a design emphasis on user experience, Viction
+                prioritizes zero-gas transactions through the innovative TRC25
+                token standard, alongside speed, security, and scalability, all
+                contributing to a more secure and open world.
+              </p>
+            ) : dummyEvent.id === "event16" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                MultiversX is a distributed blockchain network for next-gen
+                applications. Decentralized via 3000+ nodes, scalable through
+                sharding, fast, secure & green.
+              </p>
+            ) : dummyEvent.id === "event15" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Immutable is a global leader in gaming on a mission to bring
+                digital ownership to every player by making it safe and easy to
+                build great web3 games.
+              </p>
+            ) : dummyEvent.id === "event13" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Sei is recognized as the fastest Layer 1 blockchain, setting new
+                benchmarks in blockchain performance and scalability. Supporting
+                multiple execution environments, including the innovative
+                parallelized Ethereum Virtual Machine,
+              </p>
+            ) : dummyEvent.id === "event12" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Core DAO started as a community looking for better solutions,
+                and that’s what it remains. With principles grounded in the
+                premises of both Bitcoin and Ethereum, our power comes from
+                embracing multiple ideas and communities. The opposite of a
+                winner-take-all mentality - Core is focused instead on platform
+                growth and driving the global adoption of blockchain technology.
+              </p>
             ) : (
               <p
                 className="popup-event-desc"
@@ -1773,6 +2089,16 @@ const [skalePoints, setSkalePoints] = useState(0);
                     ? "https://twitter.com/CoinMarketCap"
                     : dummyEvent.id === "event11"
                     ? "https://twitter.com/SkaleNetwork"
+                    : dummyEvent.id === "event14"
+                    ? "https://viction.link/twitter"
+                    : dummyEvent.id === "event15"
+                    ? "https://twitter.com/Immutable"
+                    : dummyEvent.id === "event13"
+                    ? "https://twitter.com/SeiNetwork"
+                    : dummyEvent.id === "event12"
+                    ? "https://twitter.com/Coredao_Org"
+                    : dummyEvent.id === "event16"
+                    ? "https://twitter.com/MultiversX"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -1798,6 +2124,16 @@ const [skalePoints, setSkalePoints] = useState(0);
                     ? "https://discord.gg/dogecoin"
                     : dummyEvent.id === "event11"
                     ? "https://discord.com/invite/gM5XBy6"
+                    : dummyEvent.id === "event14"
+                    ? "https://viction.link/telegram"
+                    : dummyEvent.id === "event15"
+                    ? "https://discord.gg/CYsjMdctsP"
+                    : dummyEvent.id === "event13"
+                    ? "https://t.me/seinetwork?ref=blog.sei.io"
+                    : dummyEvent.id === "event12"
+                    ? "https://t.me/CoreDAOTelegram"
+                    : dummyEvent.id === "event16"
+                    ? "https://t.me/MultiversX"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -1832,6 +2168,16 @@ const [skalePoints, setSkalePoints] = useState(0);
                     ? "https://coinmarketcap.com/"
                     : dummyEvent.id === "event11"
                     ? "https://skale.space/"
+                    : dummyEvent.id === "event14"
+                    ? "https://www.viction.xyz/"
+                    : dummyEvent.id === "event15"
+                    ? "https://www.immutable.com/"
+                    : dummyEvent.id === "event13"
+                    ? "https://www.sei.io/"
+                    : dummyEvent.id === "event12"
+                    ? "https://coredao.org/"
+                    : dummyEvent.id === "event16"
+                    ? "https://multiversx.com/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -1951,6 +2297,16 @@ const [skalePoints, setSkalePoints] = useState(0);
                             ? "DOGE"
                             : dummyEvent.id === "event11"
                             ? "SKL"
+                            : dummyEvent.id === "event14"
+                            ? "VIC"
+                            : dummyEvent.id === "event15"
+                            ? "IMX"
+                            : dummyEvent.id === "event13"
+                            ? "SEI"
+                            : dummyEvent.id === "event12"
+                            ? "CORE"
+                            : dummyEvent.id === "event16"
+                            ? "ELGD"
                             : "ETH"}
                         </>
                       )}

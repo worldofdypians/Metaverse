@@ -66,6 +66,14 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
               ? dypiusBanner2
               : data.linkState == "skale"
               ? skaleProfileBanner
+              : data.linkState == "viction"
+              ? data.backgroundImage
+              : data.linkState == "immutable"
+              ? data.backgroundImage
+              : data.linkState == "sei"
+              ? data.backgroundImage
+              : data.linkState == "core"
+              ? data.backgroundImage
               : coingeckoProfileBanner
           }
           style={{ height: "50px", width: "25%" }}
