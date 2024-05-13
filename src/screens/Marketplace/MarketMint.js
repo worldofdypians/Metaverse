@@ -1998,46 +1998,18 @@ const MarketMint = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">Mints are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
-                //   </div>
-                // </div>
-                <div className="d-flex flex-column gap-4">
-                  {/* <div className="upcoming-mint-wrapper skale-upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                  <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                    <h6 className="upcoming-mint-title">SKALE Beta Pass</h6>
-                    <p className="upcoming-mint-desc">
-                    Gain entry to metaverse, and join exclusive SKALE event with special ticket.
-                    </p>
-                  </div>
-                  <img
-                    src={skaleUpcoming}
-                    alt=""
-                    className="upcoming-mint-img"
-                  />
-                </div> */}
-
-                  <div className="upcoming-mint-wrapper babydoge-upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">
-                        BabyDoge Beta Pass
-                      </h6>
-                      <p className="upcoming-mint-desc">
-                        Gain entry to metaverse, and join exclusive BabyDoge
-                        event with special ticket.
-                      </p>
-                    </div>
-                    <img
-                      src={babydogeUpcoming}
-                      alt=""
-                      className="upcoming-mint-img"
-                    />
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">Mints are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
                   </div>
                 </div>
+                // <div className="d-flex flex-column gap-4">
+                
+                // </div>
+
 
                 // <div className="d-flex flex-column gap-4">
                 //   {/* <div className="upcoming-mint-wrapper d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">

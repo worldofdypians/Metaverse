@@ -3912,7 +3912,7 @@ function Dashboard({
             {
               multiplier: "yes",
               chain: chainId.toString(),
-              timestamp: today.toString(),
+              premiumTimestamp: today.toString(),
             }
           )
           .then(() => {
