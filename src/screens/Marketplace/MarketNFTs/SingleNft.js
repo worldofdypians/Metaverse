@@ -23,6 +23,8 @@ import confluxLogo from "../assets/confluxLogo.svg";
 import baseLogo from "../assets/baseLogo.svg";
 import avaxLogo from "../assets/avaxLogo.svg";
 import skaleLogo from "../assets/skaleIcon.svg";
+import coreLogo from "../assets/coreLogo.svg";
+import victionLogo from "../assets/victionLogo.svg";
 
 
 import { GET_PLAYER } from "../../Account/src/Containers/Dashboard/Dashboard.schema";
@@ -203,9 +205,10 @@ const SingleNft = ({
       type !== "cmc" &&
       type !== "coingecko" &&
       type !== "gate" &&
-      type !== "base"
-      &&
-      type !== "skale"
+      type !== "base" &&
+      type !== "skale" &&
+      type !== "core" &&
+      type !== "viction"
     ) {
       const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
       const token_address_old = "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17";
@@ -531,7 +534,7 @@ const SingleNft = ({
       console.log(owner);
 
       setowner(owner);
-    }  else if (type === "skale") {
+    } else if (type === "skale") {
       const nft_contract = new window.skaleWeb3.eth.Contract(
         window.SKALE_NFT_ABI,
         window.config.nft_skale_address
@@ -550,6 +553,32 @@ const SingleNft = ({
       const nft_contract = new window.bscWeb3.eth.Contract(
         window.CMC_NFT_ABI,
         window.config.nft_cmc_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      setowner(owner);
+    } else if (type === "core") {
+      const nft_contract = new window.bscWeb3.eth.Contract(
+        window.CORE_NFT_ABI,
+        window.config.nft_core_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      setowner(owner);
+    }  else if (type === "viction") {
+      const nft_contract = new window.bscWeb3.eth.Contract(
+        window.VICTION_NFT_ABI,
+        window.config.nft_viction_address
       );
       const owner = await nft_contract.methods
         .ownerOf(Id)
@@ -1449,35 +1478,39 @@ const SingleNft = ({
 
   useEffect(() => {
     getNftOwner(
-      nftAddress === window.config.nft_timepiece_address
+      nftAddress.toLowerCase() === window.config.nft_timepiece_address.toLowerCase()
         ? "timepiece"
-        : nftAddress === window.config.nft_land_address
+        : nftAddress.toLowerCase() === window.config.nft_land_address.toLowerCase()
         ? "land"
-        : nftAddress === window.config.nft_coingecko_address
+        : nftAddress.toLowerCase() === window.config.nft_coingecko_address.toLowerCase()
         ? "coingecko"
-        : nftAddress === window.config.nft_gate_address
+        : nftAddress.toLowerCase() === window.config.nft_gate_address.toLowerCase()
         ? "gate"
-        : nftAddress === window.config.nft_conflux_address
+        : nftAddress.toLowerCase() === window.config.nft_conflux_address.toLowerCase()
         ? "conflux"
-        : nftAddress === window.config.nft_doge_address
+        : nftAddress.toLowerCase() === window.config.nft_doge_address.toLowerCase()
         ? "doge"
-        : nftAddress === window.config.nft_skale_address
+        : nftAddress.toLowerCase() === window.config.nft_skale_address.toLowerCase()
         ? "skale"
-        : nftAddress === window.config.nft_cmc_address
+        : nftAddress.toLowerCase() === window.config.nft_cmc_address.toLowerCase()
         ? "cmc"
-        : nftAddress === window.config.nft_base_address
+        : nftAddress.toLowerCase() === window.config.nft_core_address.toLowerCase()
+        ? "core"
+        : nftAddress.toLowerCase() === window.config.nft_viction_address.toLowerCase()
+        ? "viction"
+        : nftAddress.toLowerCase() === window.config.nft_base_address.toLowerCase()
         ? "base"
-        : nftAddress === window.config.nft_caws_bnb_address
+        : nftAddress.toLowerCase() === window.config.nft_caws_bnb_address.toLowerCase()
         ? "cawsbnb"
-        : nftAddress === window.config.nft_caws_avax_address
+        : nftAddress.toLowerCase() === window.config.nft_caws_avax_address.toLowerCase()
         ? "cawsavax"
-        : nftAddress === window.config.nft_caws_base_address
+        : nftAddress.toLowerCase() === window.config.nft_caws_base_address.toLowerCase()
         ? "cawsbase"
-        : nftAddress === window.config.nft_land_bnb_address
+        : nftAddress.toLowerCase() === window.config.nft_land_bnb_address.toLowerCase()
         ? "landbnb"
-        : nftAddress === window.config.nft_land_avax_address
+        : nftAddress.toLowerCase() === window.config.nft_land_avax_address.toLowerCase()
         ? "landavax"
-        : nftAddress === window.config.nft_land_base_address
+        : nftAddress.toLowerCase() === window.config.nft_land_base_address.toLowerCase()
         ? "landbase"
         : "caws",
       nftId
@@ -1492,28 +1525,7 @@ const SingleNft = ({
     getLatest20BoughtNFTS(nftAddress, nftId);
 
     getListedNtsAsc();
-    getOldNftOwner(
-      nftAddress === window.config.nft_caws_address
-        ? "caws"
-        : nftAddress === window.config.nft_timepiece_address
-        ? "timepiece"
-        : nftAddress === window.config.nft_coingecko_address
-        ? "coingecko"
-        : nftAddress === window.config.nft_gate_address
-        ? "gate"
-        : nftAddress === window.config.nft_conflux_address
-        ? "conflux"
-        : nftAddress === window.config.nft_doge_address
-        ? "doge"
-        : nftAddress === window.config.nft_skale_address
-        ? "skale"
-        : nftAddress === window.config.nft_cmc_address
-        ? "cmc"
-        : nftAddress === window.config.nft_base_address
-        ? "base"
-        : "land",
-      nftId
-    );
+
   }, []);
 
   useEffect(() => {
@@ -1521,39 +1533,41 @@ const SingleNft = ({
   }, [nftId, nftAddress]);
 
   useEffect(() => {
-    if (nftAddress === window.config.nft_caws_address) {
+    if (nftAddress.toLowerCase() === window.config.nft_caws_address.toLowerCase()) {
       setType("caws");
-    } else if (nftAddress === window.config.nft_timepiece_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_timepiece_address.toLowerCase()) {
       setType("timepiece");
-    } else if (nftAddress === window.config.nft_land_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_land_address.toLowerCase()) {
       setType("land");
-    } else if (nftAddress === window.config.nft_coingecko_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_coingecko_address.toLowerCase()) {
       setType("coingecko");
-    } else if (nftAddress === window.config.nft_conflux_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_conflux_address.toLowerCase()) {
       setType("conflux");
-    } else if (nftAddress === window.config.nft_doge_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_doge_address.toLowerCase()) {
       setType("doge");
-    } 
-    else if (nftAddress === window.config.nft_skale_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_skale_address.toLowerCase()) {
       setType("skale");
-    } 
-    else if (nftAddress === window.config.nft_cmc_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_cmc_address.toLowerCase()) {
       setType("cmc");
-    } else if (nftAddress === window.config.nft_base_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_core_address.toLowerCase()) {
+      setType("core");
+    } else if (nftAddress.toLowerCase() === window.config.nft_viction_address.toLowerCase()) {
+      setType("viction");
+    } else if (nftAddress.toLowerCase() === window.config.nft_base_address.toLowerCase()) {
       setType("base");
-    } else if (nftAddress === window.config.nft_gate_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_gate_address.toLowerCase()) {
       setType("gate");
-    } else if (nftAddress === window.config.nft_caws_bnb_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_caws_bnb_address.toLowerCase()) {
       setType("cawsbnb");
-    } else if (nftAddress === window.config.nft_caws_avax_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_caws_avax_address.toLowerCase()) {
       setType("cawsavax");
-    } else if (nftAddress === window.config.nft_caws_base_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_caws_base_address.toLowerCase()) {
       setType("cawsbase");
-    } else if (nftAddress === window.config.nft_land_bnb_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_land_bnb_address.toLowerCase()) {
       setType("landbnb");
-    } else if (nftAddress === window.config.nft_land_avax_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_land_avax_address.toLowerCase()) {
       setType("landavax");
-    } else if (nftAddress === window.config.nft_land_base_address) {
+    } else if (nftAddress.toLowerCase() === window.config.nft_land_base_address.toLowerCase()) {
       setType("landbase");
     }
 
@@ -1696,8 +1710,7 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
-            ) 
-            : type === "skale" ? (
+            ) : type === "skale" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   SKALE{" "}
@@ -1709,11 +1722,34 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
-            ) 
-            : type === "cmc" ? (
+            ) : type === "cmc" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   CoinMarketCap{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
+            ) : type === "core" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  CORE{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
+            ) : type === "viction" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  Viction{" "}
                   <h6
                     className="market-banner-title m-0"
                     style={{ color: "#8C56FF", lineHeight: "80%" }}
@@ -1744,29 +1780,33 @@ const SingleNft = ({
                   <img
                     className="blur-img blur-img-big"
                     src={
-                      nftAddress === window.config.nft_caws_address ||
-                      nftAddress === window.config.nft_caws_bnb_address ||
-                      nftAddress === window.config.nft_caws_avax_address ||
-                      nftAddress === window.config.nft_caws_base_address
+                      nftAddress.toLowerCase() === window.config.nft_caws_address.toLowerCase() ||
+                      nftAddress.toLowerCase() === window.config.nft_caws_bnb_address.toLowerCase() ||
+                      nftAddress.toLowerCase() === window.config.nft_caws_avax_address.toLowerCase() ||
+                      nftAddress.toLowerCase() === window.config.nft_caws_base_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nftId}.png`
-                        : nftAddress === window.config.nft_land_address ||
-                          nftAddress === window.config.nft_land_bnb_address ||
-                          nftAddress === window.config.nft_land_avax_address ||
-                          nftAddress === window.config.nft_land_base_address
+                        : nftAddress.toLowerCase() === window.config.nft_land_address.toLowerCase() ||
+                          nftAddress.toLowerCase() === window.config.nft_land_bnb_address.toLowerCase() ||
+                          nftAddress.toLowerCase() === window.config.nft_land_avax_address.toLowerCase() ||
+                          nftAddress.toLowerCase() === window.config.nft_land_base_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
-                        : nftAddress === window.config.nft_coingecko_address
+                        : nftAddress.toLowerCase() === window.config.nft_coingecko_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/400x400_cg_pass.png`
-                        : nftAddress === window.config.nft_gate_address
+                        : nftAddress.toLowerCase() === window.config.nft_gate_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate400.png`
-                        : nftAddress === window.config.nft_conflux_address
+                        : nftAddress.toLowerCase() === window.config.nft_conflux_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
-                        : nftAddress === window.config.nft_doge_address
+                        : nftAddress.toLowerCase() === window.config.nft_doge_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
-                        : nftAddress === window.config.nft_cmc_address
+                        : nftAddress.toLowerCase() === window.config.nft_cmc_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
-                        : nftAddress === window.config.nft_base_address
+                        : nftAddress.toLowerCase() === window.config.nft_core_address.toLowerCase()
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
+                        : nftAddress.toLowerCase() === window.config.nft_viction_address.toLowerCase()
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
+                        : nftAddress.toLowerCase() === window.config.nft_base_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
-                        : nftAddress === window.config.nft_skale_address
+                        : nftAddress.toLowerCase() === window.config.nft_skale_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+400x400.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
@@ -1801,6 +1841,10 @@ const SingleNft = ({
                           ? avaxLogo
                           : type === "skale"
                           ? skaleLogo
+                          : type === "core"
+                          ? coreLogo
+                          : type === "viction"
+                          ? victionLogo
                           : ethIcon
                       }
                       alt=""
@@ -1823,6 +1867,10 @@ const SingleNft = ({
                       ? "Avalanche"
                       : type === "skale"
                       ? "SKALE"
+                      : type === "viction"
+                      ? "Viction"
+                      : type === "core"
+                      ? "CORE"
                       : "Ethereum"}
                   </span>
                   <span className="seller-addr d-flex gap-1 align-items-center">
@@ -1857,6 +1905,10 @@ const SingleNft = ({
                         ? "SKALE Beta Pass"
                         : type === "cmc"
                         ? "CoinMarketCap Beta Pass"
+                        : type === "core"
+                        ? "CORE Beta Pass"
+                        : type === "viction"
+                        ? "Viction Beta Pass"
                         : type === "base"
                         ? "Base Beta Pass"
                         : "CAWS Timepiece"}{" "}
@@ -2003,8 +2055,16 @@ const SingleNft = ({
                       type !== "cawsbase" &&
                       type !== "landavax" &&
                       type !== "landbnb" &&
-                      type !== "landbase"&&
-                      type !== "skale" &&
+                      type !== "landbase" &&
+                      type !== "coingecko" &&
+                      type !== "gate" &&
+                      type !== "conflux" &&
+                      type !== "base" &&
+                      type !== "doge" &&
+                      type !== "cmc" &&
+                      type !== "core" &&
+                      type !== "viction" &&
+                      type !== "skale"  &&
                       loadingNft === false && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
@@ -2173,15 +2233,15 @@ const SingleNft = ({
                       type !== "base" &&
                       type !== "doge" &&
                       type !== "cmc" &&
+                      type !== "core" &&
+                      type !== "viction" &&
                       type !== "cawsbnb" &&
                       type !== "cawsavax" &&
                       type !== "cawsbase" &&
                       type !== "landavax" &&
                       type !== "landbnb" &&
-                      type !== "landbase"
-                      &&
+                      type !== "landbase" &&
                       type !== "skale" && (
-
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                           <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
                             <div className="d-flex w-100 justify-content-between flex-column ">
@@ -2371,6 +2431,8 @@ const SingleNft = ({
                         type === "doge" ||
                         type === "skale" ||
                         type === "cmc" ||
+                        type === "core" ||
+                        type === "viction" ||
                         type === "cawsbnb" ||
                         type === "cawsavax" ||
                         type === "cawsbase" ||
@@ -2408,7 +2470,10 @@ const SingleNft = ({
                                 ? `https://snowtrace.io/address/${owner}`
                                 : type === "skale"
                                 ? `https://lanky-ill-funny-testnet.explorer.testnet.skalenodes.com/address/${owner}`
-
+                                : type === 'viction'
+                                ? `https://www.vicscan.xyz/address/${owner}`
+                                : type === 'core'
+                                ? `https://scan.coredao.org/address/${owner}`
                                 : `https://etherscan.io/address/${owner}`
                             }
                             target="_blank"
@@ -2598,6 +2663,8 @@ const SingleNft = ({
                         type !== "conflux" &&
                         type !== "base" &&
                         type !== "cmc" &&
+                        type !== "viction" &&
+                        type !== "core" &&
                         type !== "doge" &&
                         type !== "skale" &&
                         type !== "cawsbnb" &&
@@ -2669,6 +2736,8 @@ const SingleNft = ({
                         type !== "doge" &&
                         type !== "skale" &&
                         type !== "cmc" &&
+                        type !== "core" &&
+                        type !== "viction" &&
                         type !== "cawsbnb" &&
                         type !== "cawsavax" &&
                         type !== "cawsbase" &&
@@ -2696,6 +2765,8 @@ const SingleNft = ({
                         type !== "doge" &&
                         type !== "skale" &&
                         type !== "cmc" &&
+                        type !== "core" &&
+                        type !== "viction" &&
                         type !== "cawsbnb" &&
                         type !== "cawsavax" &&
                         type !== "cawsbase" &&
@@ -2738,7 +2809,8 @@ const SingleNft = ({
             type !== "base" &&
             type !== "doge" &&
             type !== "skale" &&
-            type !== "cmc" && (
+            type !== "cmc" &&  type !== "core" &&
+            type !== "viction" && (
               <div className="px-2">
                 <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                   <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -3002,7 +3074,9 @@ const SingleNft = ({
             type === "base" ||
             type === "doge" ||
             type === "skale" ||
-            type === "cmc") && (
+            type === "cmc"||
+            type === "core"||
+            type === "viction") && (
             <div className="px-2">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -3033,6 +3107,10 @@ const SingleNft = ({
                             ? "ETH"
                             : type === "skale"
                             ? "SKL"
+                            : type === "core"
+                            ? "CORE"
+                            : type === "viction"
+                            ? "VIC"
                             : "BNB"}{" "}
                           rewards
                         </span>

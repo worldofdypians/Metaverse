@@ -23,6 +23,12 @@ import confluxActive from "./assets/confluxActive.png";
 import coin98Active from "./assets/coin98Active.png";
 import coingeckoActive from "./assets/coingeckoActive.png";
 import skaleActive from "./assets/upcomingSkaleMobile.webp";
+import immutableActive from "./assets/immutableActive.webp";
+import coreActive from "./assets/coreActive.webp";
+import victionActive from "./assets/victionActive.webp";
+import seiActive from "./assets/seiActive.webp";
+import multiversActive from "./assets/multiversActive.webp";
+
 import timepieceActive from "./assets/timepieceActive.png";
 import gateActive from "./assets/gateActive.png";
 import kucoinActive from "./assets/kucoinActive.png";
@@ -30,6 +36,11 @@ import blockChainIcon from "./assets/blockChainIcon.svg";
 import confluxLogo from "./assets/confluxLogo.svg";
 import baseLogo from "./assets/baseLogo.svg";
 import skaleLogo from "./assets/skaleIcon.svg";
+import immutableLogo from "./assets/immutableLogo.svg";
+import coreLogo from "./assets/coreLogo.svg";
+import victionLogo from "./assets/victionLogo.svg";
+import seiLogo from "./assets/seiLogo.svg";
+import multiversLogo from "./assets/multiversLogo.svg";
 
 import avaxLogo from "./assets/avaxLogo.svg";
 import bnbLogo from "./assets/bnbLogo.svg";
@@ -82,6 +93,18 @@ const MarketMint = ({
   baseMintAllowed,
   myskaleNFTsCreated,
   skaleMintAllowed,
+  coreMintAllowed,
+  victionMintAllowed,
+  totalseiNft,
+  totalVictionNft,
+  totalImmutableNft,
+  totalMultiversNft,
+  totalCoreNft,
+  myVictionNfts,
+  myMultiversNfts,
+  myImmutableNfts,
+  myCoreNfts,
+  myseiNfts,
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -119,27 +142,45 @@ const MarketMint = ({
     background: "market-mint-bg",
     mobileBg: "timepieceMobileBg.png",
   };
-  // const coin98Data = {
-  //   id: "coin98",
-  //   cardTitle: "Coin98 Beta Pass",
-  //   title: "Coin98 Beta Pass",
-  //   background: "coin98-mint-bg",
-  //   mobileBg: "coin98MobileBg.png",
-  // };
-  // const coingeckoData = {
-  //   id: "coingecko",
-  //   cardTitle: "Coingecko Beta Pass",
-  //   title: "Coingecko Beta Pass",
-  //   background: "coingecko-mint-bg",
-  //   mobileBg: "coingeckoMobileBg.png",
-  // };
 
-  const baseData = {
-    id: "skale",
-    cardTitle: "SKALE Beta Pass",
-    title: "SKALE Beta Pass",
-    background: "skale-mint-bg",
-    mobileBg: "skaleMobileBg.webp",
+  const immutableData = {
+    id: "immutable",
+    cardTitle: "Immutable Beta Pass",
+    title: "Immutable Beta Pass",
+    background: "immutable-mint-bg",
+    mobileBg: "immutableMobileBg.webp",
+  };
+
+  const multiversData = {
+    id: "multiversx",
+    cardTitle: "MultiversX Beta Pass",
+    title: "MultiversX Beta Pass",
+    background: "multivers-mint-bg",
+    mobileBg: "multiversMobileBg.webp",
+  };
+
+  const coreData = {
+    id: "core",
+    cardTitle: "CORE Beta Pass",
+    title: "Core Beta Pass",
+    background: "core-mint-bg",
+    mobileBg: "coreMobileBg.webp",
+  };
+
+  const seiData = {
+    id: "sei",
+    cardTitle: "SEI Beta Pass",
+    title: "SEI Beta Pass",
+    background: "sei-mint-bg",
+    mobileBg: "seiMobileBg.webp",
+  };
+
+  const victionData = {
+    id: "viction",
+    cardTitle: "Viction Beta Pass",
+    title: "Viction Beta Pass",
+    background: "viction-mint-bg",
+    mobileBg: "victionMobileBg.webp",
   };
 
   const windowSize = useWindowSize();
@@ -163,9 +204,8 @@ const MarketMint = ({
   const [baseSold, setcBaseSold] = useState(0);
   const [skaleSold, setskaleSold] = useState(0);
 
-
   const [activeSlide, setActiveSlide] = useState(0);
-  const [showFirstNext, setShowFirstNext] = useState(false);
+  const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(timepieceData);
   const [mintTitle, setMintTitle] = useState("timepiece");
   const [sliderCut, setSliderCut] = useState();
@@ -184,32 +224,38 @@ const MarketMint = ({
       window.config.nft_base_address
     );
 
-    const confluxresult = await confluxContract.methods.totalSupply().call().catch((e) => {
-      console.error(e);
-      return 0;
-    });
+    const confluxresult = await confluxContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
 
     setconfluxSold(confluxresult);
 
-    const baseresult = await baseContract.methods.totalSupply().call().catch((e) => {
-      console.error(e);
-      return 0;
-    });
- setcBaseSold(baseresult);
+    const baseresult = await baseContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+    setcBaseSold(baseresult);
 
     const skaleContract = new window.skaleWeb3.eth.Contract(
       window.SKALE_NFT_ABI,
       window.config.nft_skale_address
     );
 
-
-    const skaleresult = await skaleContract.methods.totalSupply().call() .catch((e) => {
-      console.error(e);
-      return 0;
-    });
-setskaleSold(skaleresult)
-
-   
+    const skaleresult = await skaleContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+    setskaleSold(skaleresult);
   };
 
   useEffect(() => {
@@ -217,8 +263,8 @@ setskaleSold(skaleresult)
     //  setSelectedMint(baseData);
     //  setMintTitle("skale");
     //} else if (params.id === "timepiece") {
-      setSelectedMint(timepieceData);
-      setMintTitle("timepiece");
+    setSelectedMint(timepieceData);
+    setMintTitle("timepiece");
     //}
     getTotalSupply();
   }, []);
@@ -281,14 +327,57 @@ setskaleSold(skaleresult)
     //   data: coingeckoData,
     //   class: "mint-6",
     // },
+    // {
+    //   title: "SKALE Pass",
+    //   eventId: "skale",
+    //   desc: "Gain entry to metaverse, and join exclusive SKALE event with special ticket.",
+    //   img: skaleActive,
+    //   data: baseData,
+    //   class: "mint-skale",
+    // },
     {
-      title: "SKALE Pass",
-      eventId: "skale",
-      desc: "Gain entry to metaverse, and join exclusive SKALE event with special ticket.",
-      img: skaleActive,
-      data: baseData,
-      class: "mint-skale",
+      title: "Immutable Pass",
+      eventId: "immutable",
+      desc: "Gain entry to metaverse, and join exclusive Immutable event with special ticket.",
+      img: immutableActive,
+      data: immutableData,
+      class: "mint-immutable",
     },
+    {
+      title: "MultiversX Pass",
+      eventId: "multiversx",
+      desc: "Gain entry to metaverse, and join exclusive MultiversX event with special ticket.",
+      img: multiversActive,
+      data: multiversData,
+      class: "mint-multivers",
+    },
+    {
+      title: "CORE Pass",
+      eventId: "core",
+      desc: "Gain entry to metaverse, and join exclusive CORE event with special ticket.",
+      img: coreActive,
+      data: coreData,
+      class: "mint-core",
+    },
+
+    {
+      title: "Viction Pass",
+      eventId: "viction",
+      desc: "Gain entry to metaverse, and join exclusive Viction event with special ticket.",
+      img: victionActive,
+      data: victionData,
+      class: "mint-viction",
+    },
+
+    {
+      title: "SEI Pass",
+      eventId: "sei",
+      desc: "Gain entry to metaverse, and join exclusive SEI event with special ticket.",
+      img: seiActive,
+      data: seiData,
+      class: "mint-sei",
+    },
+
     {
       title: "CAWS Timepiece",
       eventId: "timepiece",
@@ -482,6 +571,22 @@ setskaleSold(skaleresult)
             setactiveButton(true);
             setStatus("");
           }
+        } else if (selectedMint.id === "core") {
+          if (chainId !== 1116) {
+            setactiveButton(false);
+            setStatus("Switch to CORE to continue minting.");
+          } else if (chainId === 1116) {
+            setactiveButton(true);
+            setStatus("");
+          }
+        } else if (selectedMint.id === "viction") {
+          if (chainId !== 88) {
+            setactiveButton(false);
+            setStatus("Switch to Viction to continue minting.");
+          } else if (chainId === 88) {
+            setactiveButton(true);
+            setStatus("");
+          }
         }
       }
     }
@@ -517,6 +622,7 @@ setskaleSold(skaleresult)
     document.title = "NFT Mint";
   }, []);
 
+  console.log(totalCoreNft, status, selectedMint)
   return (
     <>
       <div
@@ -563,10 +669,10 @@ setskaleSold(skaleresult)
                       activeTab === "live" && "stake-tab-active"
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
-                  > 
-                   {/* <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                  >
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
-                    </div> */}
+                    </div>
                     Live
                   </h6>
                   <h6
@@ -575,7 +681,6 @@ setskaleSold(skaleresult)
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
-                  
                     Upcoming
                   </h6>
                   <h6
@@ -592,7 +697,7 @@ setskaleSold(skaleresult)
 
               {activeTab === "live" && (
                 <>
-                  {/* <div className="pb-5 px-0 position-relative">
+                  <div className="pb-5 px-0 position-relative">
                     {activeSlide > 0 && (
                       <div className="prev-arrow-nft" onClick={firstPrev}>
                         <img src={nextArrow} alt="" />
@@ -628,7 +733,7 @@ setskaleSold(skaleresult)
                         />
                       ))}
                     </Slider>
-                  </div> */}
+                  </div>
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -656,10 +761,36 @@ setskaleSold(skaleresult)
                                   : selectedMint.id === "timepiece" &&
                                     totalCreated === 0
                                   ? "genesis-land-empty"
-                                  : selectedMint.id === "skale" &&
-                                    myskaleNFTsCreated.length === 0
+                                  : selectedMint.id === "sei" && totalseiNft > 0
+                                  ? "sei-active"
+                                  : selectedMint.id === "sei" &&
+                                    totalseiNft === 0
                                   ? "conflux-empty"
-                                  : "skale-active"
+                                  : selectedMint.id === "core" &&
+                                    totalCoreNft === 0
+                                  ? "conflux-empty"
+                                  : selectedMint.id === "core" &&
+                                    totalCoreNft > 0
+                                  ? "core-active"
+                                  : selectedMint.id === "viction" &&
+                                    totalVictionNft > 0
+                                  ? "viction-active"
+                                  : selectedMint.id === "viction" &&
+                                    totalVictionNft === 0
+                                  ? "conflux-empty"
+                                  : selectedMint.id === "immutable" &&
+                                    totalImmutableNft === 0
+                                  ? "conflux-empty"
+                                  : selectedMint.id === "immutable" &&
+                                    totalImmutableNft > 0
+                                  ? "immutable-active"
+                                  : selectedMint.id === "multiversx" &&
+                                    totalMultiversNft > 0
+                                  ? "multivers-active"
+                                  : selectedMint.id === "multiversx" &&
+                                    totalMultiversNft === 0
+                                  ? "conflux-empty"
+                                  : "multivers-active"
                               } d-flex justify-content-center align-items-center p-3 position-relative`}
                               style={{ height: 312 }}
                             >
@@ -709,12 +840,12 @@ setskaleSold(skaleresult)
                               </button>
                             </div>
                           )}
-                          {selectedMint.id === "skale" && (
+                          {selectedMint.id === "multiversx" && (
                             <div
                               className={
                                 isConnected === false ||
                                 activeButton === false ||
-                                myskaleNFTsCreated.length === 0
+                                totalMultiversNft === 0
                                   ? "linear-border-disabled"
                                   : "linear-border"
                               }
@@ -723,20 +854,160 @@ setskaleSold(skaleresult)
                                 className={`btn ${
                                   isConnected === false ||
                                   activeButton === false ||
-                                  myskaleNFTsCreated.length === 0
+                                  totalMultiversNft === 0
                                     ? "outline-btn-disabled"
                                     : "outline-btn"
                                 } px-5 w-100`}
                                 disabled={
                                   isConnected === false ||
                                   activeButton === false ||
-                                  myskaleNFTsCreated.length === 0
+                                  totalMultiversNft === 0
                                 }
-                                to={`/marketplace/nft/${myskaleNFTsCreated[0]}/${window.config.nft_skale_address}`}
+                                to={`/marketplace/nft/${myMultiversNfts[0]}/${window.config.nft_multivers_address}`}
                                 onClick={() => {
                                   updateViewCount(
-                                    myskaleNFTsCreated[0],
-                                    window.config.nft_skale_address
+                                    myMultiversNfts[0],
+                                    window.config.nft_multivers_address
+                                  );
+                                }}
+                              >
+                                View NFT
+                              </NavLink>
+                            </div>
+                          )}
+                          {selectedMint.id === "core" && (
+                            <div
+                              className={
+                                isConnected === false ||
+                                activeButton === false ||
+                                myCoreNfts.length === 0
+                                  ? "linear-border-disabled"
+                                  : "linear-border"
+                              }
+                            >
+                              <NavLink
+                                className={`btn ${
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myCoreNfts.length === 0
+                                    ? "outline-btn-disabled"
+                                    : "outline-btn"
+                                } px-5 w-100`}
+                                disabled={
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myCoreNfts.length === 0
+                                }
+                                to={`/marketplace/nft/${myCoreNfts[0]}/${window.config.nft_core_address}`}
+                                onClick={() => {
+                                  updateViewCount(
+                                    myCoreNfts[0],
+                                    window.config.nft_core_address
+                                  );
+                                }}
+                              >
+                                View NFT
+                              </NavLink>
+                            </div>
+                          )}
+                          {selectedMint.id === "sei" && (
+                            <div
+                              className={
+                                isConnected === false ||
+                                activeButton === false ||
+                                myseiNfts.length === 0
+                                  ? "linear-border-disabled"
+                                  : "linear-border"
+                              }
+                            >
+                              <NavLink
+                                className={`btn ${
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myseiNfts.length === 0
+                                    ? "outline-btn-disabled"
+                                    : "outline-btn"
+                                } px-5 w-100`}
+                                disabled={
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myseiNfts.length === 0
+                                }
+                                to={`/marketplace/nft/${myseiNfts[0]}/${window.config.nft_sei_address}`}
+                                onClick={() => {
+                                  updateViewCount(
+                                    myseiNfts[0],
+                                    window.config.nft_sei_address
+                                  );
+                                }}
+                              >
+                                View NFT
+                              </NavLink>
+                            </div>
+                          )}
+                          {selectedMint.id === "immutable" && (
+                            <div
+                              className={
+                                isConnected === false ||
+                                activeButton === false ||
+                                myImmutableNfts.length === 0
+                                  ? "linear-border-disabled"
+                                  : "linear-border"
+                              }
+                            >
+                              <NavLink
+                                className={`btn ${
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myImmutableNfts.length === 0
+                                    ? "outline-btn-disabled"
+                                    : "outline-btn"
+                                } px-5 w-100`}
+                                disabled={
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myImmutableNfts.length === 0
+                                }
+                                to={`/marketplace/nft/${myImmutableNfts[0]}/${window.config.nft_immutable_address}`}
+                                onClick={() => {
+                                  updateViewCount(
+                                    myImmutableNfts[0],
+                                    window.config.nft_immutable_address
+                                  );
+                                }}
+                              >
+                                View NFT
+                              </NavLink>
+                            </div>
+                          )}
+                          {selectedMint.id === "viction" && (
+                            <div
+                              className={
+                                isConnected === false ||
+                                activeButton === false ||
+                                myVictionNfts.length === 0
+                                  ? "linear-border-disabled"
+                                  : "linear-border"
+                              }
+                            >
+                              <NavLink
+                                className={`btn ${
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myVictionNfts.length === 0
+                                    ? "outline-btn-disabled"
+                                    : "outline-btn"
+                                } px-5 w-100`}
+                                disabled={
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myVictionNfts.length === 0
+                                }
+                                to={`/marketplace/nft/${myVictionNfts[0]}/${window.config.nft_viction_address}`}
+                                onClick={() => {
+                                  updateViewCount(
+                                    myVictionNfts[0],
+                                    window.config.nft_viction_address
                                   );
                                 }}
                               >
@@ -967,8 +1238,16 @@ setskaleSold(skaleresult)
                                 className="limit-span position-relative d-flex align-items-center gap-2"
                                 style={{ bottom: "0px" }}
                               >
-                                Available only on SKALE
-                                <img src={skaleLogo} alt="" />
+                                Available only on SEI
+                                <img src={seiLogo} alt="" />
+                              </span>
+                            ) : mintTitle === "multiversx" ? (
+                              <span
+                                className="limit-span position-relative d-flex align-items-center gap-2"
+                                style={{ bottom: "0px" }}
+                              >
+                                Available only on MultiversX
+                                <img src={multiversLogo} alt="" />
                               </span>
                             ) : mintTitle === "coin98" ||
                               mintTitle === "coingecko" ||
@@ -1156,7 +1435,14 @@ setskaleSold(skaleresult)
                                   </span>
                                   <div className="d-flex align-items-center gap-2">
                                     <h6 className="latest-mint-number mb-0">
-                                      {skaleMintAllowed} NFT
+                                      {mintTitle === "core"
+                                        ? coreMintAllowed
+                                        : mintTitle === "viction"
+                                        ? victionMintAllowed
+                                        : mintTitle === "multiversx"
+                                        ? 1
+                                        : 0}{" "}
+                                      NFT
                                     </h6>
                                   </div>
                                 </div>
@@ -1175,16 +1461,41 @@ setskaleSold(skaleresult)
                             )}
 
                             <span className="latest-mint-currency mb-0">
-                              *Important: You can only mint one SKALE Beta Pass
-                              NFT per wallet.
+                              *Important: You can only mint one{" "}
+                              {selectedMint.title} NFT per wallet.
                             </span>
                             <hr className="gray-divider" />
                             <span
                               className="limit-span position-relative d-flex align-items-center gap-2"
                               style={{ bottom: "0px" }}
                             >
-                              Available only on SKALE
-                              <img src={skaleLogo} alt="" />
+                              Available only on{" "}
+                              {mintTitle === "core"
+                                ? "CORE"
+                                : mintTitle === "viction"
+                                ? "Viction"
+                                : mintTitle === "immutable"
+                                ? "Immutable"
+                                : mintTitle === "multiversx"
+                                ? "MultiversX"
+                                : "SEI"}
+                              <img
+                                style={{ width: 24, height: 24 }}
+                                src={
+                                  mintTitle === "multiversx"
+                                    ? multiversLogo
+                                    : mintTitle === "sei"
+                                    ? seiLogo
+                                    : mintTitle === "viction"
+                                    ? victionLogo
+                                    : mintTitle === "core"
+                                    ? coreLogo
+                                    : mintTitle === "immutable"
+                                    ? immutableLogo
+                                    : seiLogo
+                                }
+                                alt=""
+                              />
                             </span>
                             {mintStatus.length > 0 && (
                               <span
@@ -1200,15 +1511,14 @@ setskaleSold(skaleresult)
                             )}
                             <hr className="gray-divider" />
                             <div className="d-flex w-100 justify-content-center">
-                              {confluxLive && (
+                              {selectedMint.id === "viction" && (
                                 <div
                                   className={
-                                    (isConnected === true &&
-                                      chainId !== 1482601649) ||
+                                    (isConnected === true && chainId !== 88) ||
                                     (status !== "Connect your wallet." &&
                                       status !== "") ||
                                     mintloading === "error" ||
-                                    skaleMintAllowed === 0
+                                    victionMintAllowed === 0
                                       ? "linear-border-disabled"
                                       : "linear-border"
                                   }
@@ -1218,27 +1528,26 @@ setskaleSold(skaleresult)
                                       mintloading === "error"
                                         ? "filled-error-btn"
                                         : (isConnected === true &&
-                                            chainId !== 1482601649) ||
+                                            chainId !== 88) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
-                                          skaleMintAllowed === 0
+                                          victionMintAllowed === 0
                                         ? "outline-btn-disabled"
                                         : "filled-btn"
                                     }  px-4 w-100`}
                                     onClick={() => {
-                                      isConnected === true &&
-                                      chainId === 1482601649
-                                        ? handleBaseNftMint()
+                                      isConnected === true && chainId === 88
+                                        ? handleMint()
                                         : showWalletConnect();
                                     }}
                                     disabled={
                                       mintloading === "error" ||
                                       mintloading === "success" ||
                                       (isConnected === true &&
-                                        chainId !== 1482601649) ||
+                                        chainId !== 88) ||
                                       (status !== "Connect your wallet." &&
                                         status !== "") ||
-                                      skaleMintAllowed === 0
+                                      victionMintAllowed === 0
                                         ? true
                                         : false
                                     }
@@ -1250,7 +1559,7 @@ setskaleSold(skaleresult)
                                     }}
                                   >
                                     {(isConnected === false ||
-                                      chainId !== 1482601649) && (
+                                      chainId !== 88) && (
                                       <img
                                         src={
                                           mouseOver === false
@@ -1266,11 +1575,205 @@ setskaleSold(skaleresult)
                                     )}{" "}
                                     {mintloading === "initial" &&
                                     isConnected === true &&
-                                    chainId === 1482601649 ? (
+                                    chainId === 88 ? (
                                       "Mint"
                                     ) : mintloading === "mint" &&
                                       isConnected === true &&
-                                      chainId === 1482601649 ? (
+                                      chainId === 88 ? (
+                                      <>
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                          style={{ height: "1.5rem", width: "1.5rem" }}
+                                        ></div>
+                                      </>
+                                    ) : mintloading === "error" &&
+                                      isConnected === true &&
+                                      chainId === 88 ? (
+                                      "Failed"
+                                    ) : mintloading === "success" &&
+                                      isConnected === true &&
+                                      activeButton ===
+                                        (isConnected === true &&
+                                          chainId === 88) ? (
+                                      "Success"
+                                    ) : isConnected === true &&
+                                      chainId !== 88 ? (
+                                      " Switch Chain"
+                                    ) : (
+                                      "Connect wallet"
+                                    )}
+                                  </button>
+                                </div>
+                              )}
+
+                              {selectedMint.id === "core" && (
+                                <div
+                                  className={
+                                    (isConnected === true &&
+                                      chainId !== 1116) ||
+                                    (status !== "Connect your wallet." &&
+                                      status !== "") ||
+                                    mintloading === "error" ||
+                                    totalCoreNft > 0
+                                      ? "linear-border-disabled"
+                                      : "linear-border"
+                                  }
+                                >
+                                  <button
+                                    className={`btn ${
+                                      mintloading === "error"
+                                        ? "filled-error-btn"
+                                        : (isConnected === true &&
+                                            chainId !== 1116) ||
+                                          (status !== "Connect your wallet." &&
+                                            status !== "") ||
+                                            totalCoreNft > 0
+                                        ? "outline-btn-disabled"
+                                        : "filled-btn"
+                                    }  px-4 w-100`}
+                                    onClick={() => {
+                                      isConnected === true && chainId === 1116
+                                        ? handleMint()
+                                        : showWalletConnect();
+                                    }}
+                                    disabled={
+                                      mintloading === "error" ||
+                                      mintloading === "success" ||
+                                      (isConnected === true &&
+                                        chainId !== 1116) ||
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                        totalCoreNft > 0
+                                        ? true
+                                        : false
+                                    }
+                                    onMouseEnter={() => {
+                                      setMouseOver(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                      setMouseOver(false);
+                                    }}
+                                  >
+                                    {(isConnected === false ||
+                                      chainId !== 1116) && (
+                                      <img
+                                        src={
+                                          mouseOver === false
+                                            ? blackWallet
+                                            : whitewallet
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "23px",
+                                          height: "23px",
+                                        }}
+                                      />
+                                    )}{" "}
+                                    {mintloading === "initial" &&
+                                    isConnected === true &&
+                                    chainId === 1116 ? (
+                                      "Mint"
+                                    ) : mintloading === "mint" &&
+                                      isConnected === true &&
+                                      chainId === 1116 ? (
+                                      <>
+                                        <div
+                                          className="spinner-border"
+                                          role="status"
+                                          style={{ height: "1.5rem", width: "1.5rem" }}
+                                        ></div>
+                                      </>
+                                    ) : mintloading === "error" &&
+                                      isConnected === true &&
+                                      chainId === 1116 ? (
+                                      "Failed"
+                                    ) : mintloading === "success" &&
+                                      isConnected === true &&
+                                      activeButton ===
+                                        (isConnected === true &&
+                                          chainId === 1116) ? (
+                                      "Success"
+                                    ) : isConnected === true &&
+                                      chainId !== 1116 ? (
+                                      " Switch Chain"
+                                    ) : (
+                                      "Connect wallet"
+                                    )}
+                                  </button>
+                                </div>
+                              )}
+
+                              {selectedMint.id === "sei" && (
+                                <div
+                                  className={
+                                    (isConnected === true &&
+                                      chainId !== 713715) ||
+                                    (status !== "Connect your wallet." &&
+                                      status !== "") ||
+                                    mintloading === "error" ||
+                                    totalseiNft > 0
+                                      ? "linear-border-disabled"
+                                      : "linear-border"
+                                  }
+                                >
+                                  <button
+                                    className={`btn ${
+                                      mintloading === "error"
+                                        ? "filled-error-btn"
+                                        : (isConnected === true &&
+                                            chainId !== 713715) ||
+                                          (status !== "Connect your wallet." &&
+                                            status !== "") ||
+                                          totalseiNft > 0
+                                        ? "outline-btn-disabled"
+                                        : "filled-btn"
+                                    }  px-4 w-100`}
+                                    onClick={() => {
+                                      isConnected === true && chainId === 713715
+                                        ? handleBaseNftMint()
+                                        : showWalletConnect();
+                                    }}
+                                    disabled={
+                                      mintloading === "error" ||
+                                      mintloading === "success" ||
+                                      (isConnected === true &&
+                                        chainId !== 713715) ||
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      totalseiNft > 0
+                                        ? true
+                                        : false
+                                    }
+                                    onMouseEnter={() => {
+                                      setMouseOver(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                      setMouseOver(false);
+                                    }}
+                                  >
+                                    {(isConnected === false ||
+                                      chainId !== 713715) && (
+                                      <img
+                                        src={
+                                          mouseOver === false
+                                            ? blackWallet
+                                            : whitewallet
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "23px",
+                                          height: "23px",
+                                        }}
+                                      />
+                                    )}{" "}
+                                    {mintloading === "initial" &&
+                                    isConnected === true &&
+                                    chainId === 713715 ? (
+                                      "Mint"
+                                    ) : mintloading === "mint" &&
+                                      isConnected === true &&
+                                      chainId === 713715 ? (
                                       <>
                                         <div
                                           className="spinner-border "
@@ -1279,16 +1782,206 @@ setskaleSold(skaleresult)
                                       </>
                                     ) : mintloading === "error" &&
                                       isConnected === true &&
-                                      chainId === 1482601649 ? (
+                                      chainId === 713715 ? (
                                       "Failed"
                                     ) : mintloading === "success" &&
                                       isConnected === true &&
                                       activeButton ===
                                         (isConnected === true &&
-                                          chainId === 1482601649) ? (
+                                          chainId === 713715) ? (
                                       "Success"
                                     ) : isConnected === true &&
-                                      chainId !== 1482601649 ? (
+                                      chainId !== 713715 ? (
+                                      " Switch Chain"
+                                    ) : (
+                                      "Connect wallet"
+                                    )}
+                                  </button>
+                                </div>
+                              )}
+
+                              {selectedMint.id === "immutable" && (
+                                <div
+                                  className={
+                                    (isConnected === true &&
+                                      chainId !== 13371) ||
+                                    (status !== "Connect your wallet." &&
+                                      status !== "") ||
+                                    mintloading === "error" ||
+                                    totalImmutableNft > 0
+                                      ? "linear-border-disabled"
+                                      : "linear-border"
+                                  }
+                                >
+                                  <button
+                                    className={`btn ${
+                                      mintloading === "error"
+                                        ? "filled-error-btn"
+                                        : (isConnected === true &&
+                                            chainId !== 13371) ||
+                                          (status !== "Connect your wallet." &&
+                                            status !== "") ||
+                                          totalImmutableNft > 0
+                                        ? "outline-btn-disabled"
+                                        : "filled-btn"
+                                    }  px-4 w-100`}
+                                    onClick={() => {
+                                      isConnected === true && chainId === 13371
+                                        ? handleBaseNftMint()
+                                        : showWalletConnect();
+                                    }}
+                                    disabled={
+                                      mintloading === "error" ||
+                                      mintloading === "success" ||
+                                      (isConnected === true &&
+                                        chainId !== 13371) ||
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      totalImmutableNft > 0
+                                        ? true
+                                        : false
+                                    }
+                                    onMouseEnter={() => {
+                                      setMouseOver(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                      setMouseOver(false);
+                                    }}
+                                  >
+                                    {(isConnected === false ||
+                                      chainId !== 13371) && (
+                                      <img
+                                        src={
+                                          mouseOver === false
+                                            ? blackWallet
+                                            : whitewallet
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "23px",
+                                          height: "23px",
+                                        }}
+                                      />
+                                    )}{" "}
+                                    {mintloading === "initial" &&
+                                    isConnected === true &&
+                                    chainId === 13371 ? (
+                                      "Mint"
+                                    ) : mintloading === "mint" &&
+                                      isConnected === true &&
+                                      chainId === 13371 ? (
+                                      <>
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                        ></div>
+                                      </>
+                                    ) : mintloading === "error" &&
+                                      isConnected === true &&
+                                      chainId === 13371 ? (
+                                      "Failed"
+                                    ) : mintloading === "success" &&
+                                      isConnected === true &&
+                                      activeButton ===
+                                        (isConnected === true &&
+                                          chainId === 13371) ? (
+                                      "Success"
+                                    ) : isConnected === true &&
+                                      chainId !== 13371 ? (
+                                      " Switch Chain"
+                                    ) : (
+                                      "Connect wallet"
+                                    )}
+                                  </button>
+                                </div>
+                              )}
+
+                              {selectedMint.id === "multiversx" && (
+                                <div
+                                  className={
+                                    (isConnected === true && chainId !== 1) ||
+                                    (status !== "Connect your wallet." &&
+                                      status !== "") ||
+                                    mintloading === "error" ||
+                                    totalMultiversNft > 0
+                                      ? "linear-border-disabled"
+                                      : "linear-border"
+                                  }
+                                >
+                                  <button
+                                    className={`btn ${
+                                      mintloading === "error"
+                                        ? "filled-error-btn"
+                                        : (isConnected === true &&
+                                            chainId !== 1) ||
+                                          (status !== "Connect your wallet." &&
+                                            status !== "") ||
+                                          totalMultiversNft > 0
+                                        ? "outline-btn-disabled"
+                                        : "filled-btn"
+                                    }  px-4 w-100`}
+                                    onClick={() => {
+                                      isConnected === true && chainId === 1
+                                        ? handleBaseNftMint()
+                                        : showWalletConnect();
+                                    }}
+                                    disabled={
+                                      mintloading === "error" ||
+                                      mintloading === "success" ||
+                                      (isConnected === true && chainId !== 1) ||
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      totalMultiversNft > 0
+                                        ? true
+                                        : false
+                                    }
+                                    onMouseEnter={() => {
+                                      setMouseOver(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                      setMouseOver(false);
+                                    }}
+                                  >
+                                    {(isConnected === false ||
+                                      chainId !== 1) && (
+                                      <img
+                                        src={
+                                          mouseOver === false
+                                            ? blackWallet
+                                            : whitewallet
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "23px",
+                                          height: "23px",
+                                        }}
+                                      />
+                                    )}{" "}
+                                    {mintloading === "initial" &&
+                                    isConnected === true &&
+                                    chainId === 1 ? (
+                                      "Mint"
+                                    ) : mintloading === "mint" &&
+                                      isConnected === true &&
+                                      chainId === 1 ? (
+                                      <>
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                        ></div>
+                                      </>
+                                    ) : mintloading === "error" &&
+                                      isConnected === true &&
+                                      chainId === 1 ? (
+                                      "Failed"
+                                    ) : mintloading === "success" &&
+                                      isConnected === true &&
+                                      activeButton ===
+                                        (isConnected === true &&
+                                          chainId === 1) ? (
+                                      "Success"
+                                    ) : isConnected === true &&
+                                      chainId !== 1 ? (
                                       " Switch Chain"
                                     ) : (
                                       "Connect wallet"
@@ -1313,6 +2006,9 @@ setskaleSold(skaleresult)
                     </span>
                   </div>
                 </div>
+                // <div className="d-flex flex-column gap-4">
+                
+                // </div>
 
 
                 // <div className="d-flex flex-column gap-4">
@@ -1505,9 +2201,7 @@ setskaleSold(skaleresult)
                           <h6 className="past-skale-mint-amount">
                             {getFormattedNumber(skaleSold, 0)}
                           </h6>
-                          <span className="past-skale-mint-desc">
-                            SOLD OUT
-                          </span>
+                          <span className="past-skale-mint-desc">SOLD OUT</span>
                         </div>
                       </div>
                     </div>

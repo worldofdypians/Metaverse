@@ -107,7 +107,7 @@
 
 .optionText:hover,
 .activeoption {
-  color: #FFF;
+  color: #fff;
 }
 
 .optionTextGolden {
@@ -166,7 +166,7 @@
 
 .optionsWrapper {
   border-radius: 12px;
-  background: #1E2237;
+  background: #1e2237;
   padding: 2px;
 }
 
@@ -213,19 +213,22 @@
   letter-spacing: -0.018em;
   color: rgba(243, 192, 9, 1);
   height: 32px;
+  @media screen and (max-width: 400px) {
+    font-size: 12px;
+  }
 }
 .goldenscore-inactive2 {
-  color: #fff ;
+  color: #fff;
   text-align: center;
 }
 
 .golden-score-disabled {
   color: #8f8e99 !important;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-letter-spacing: -0.252px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.252px;
 }
 
 .playerName {
@@ -353,7 +356,7 @@ letter-spacing: -0.252px;
   border-radius: 12px;
   white-space: nowrap;
   // border-bottom: 1px solid #09f3d2 !important;
-  color: #FFF;
+  color: #fff;
 }
 
 .comingsoon {
@@ -432,7 +435,21 @@ letter-spacing: -0.252px;
 
 .optionswrapper-bg {
   position: absolute;
-  width: 33%;
+  width: 20%;
+  height: 100%;
+  border-radius: 12px;
+  border: 1px solid #f4e07b;
+  background: #341553;
+  transition: all 0.25s ease-in-out;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
+.optionswrapper-bg-2 {
+  position: absolute;
+  width: 50%;
   height: 100%;
   border-radius: 12px;
   border: 1px solid #f4e07b;
@@ -446,15 +463,18 @@ letter-spacing: -0.252px;
 }
 
 .move-1 {
-  transform: translateX(101.5%);
+  transform: translateX(100%);
 }
 
 .move-2 {
-  transform: translateX(203%);
+  transform: translateX(200%);
 }
 
 .move-3 {
   transform: translateX(300%);
+}
+.move-4 {
+  transform: translateX(400%);
 }
 .leaderboard-icon {
   transition: all 0.25s;
@@ -464,12 +484,12 @@ letter-spacing: -0.252px;
   filter: grayscale(0);
 }
 
-.blur-leaderboard{
+.blur-leaderboard {
   filter: blur(10px);
   pointer-events: none;
 }
-.reset-time-lb{
-  color: #B1A8B9;
+.reset-time-lb {
+  color: #b1a8b9;
   font-family: "Montserrat";
   font-size: 10px;
   font-style: normal;
@@ -480,8 +500,8 @@ letter-spacing: -0.252px;
   }
 }
 
-.reset-time-lb-value{
-  color: #F4E27B;
+.reset-time-lb-value {
+  color: #f4e27b;
   font-family: "Montserrat";
   font-size: 10px;
   font-style: normal;
@@ -492,11 +512,61 @@ letter-spacing: -0.252px;
   }
 }
 
-.reset-time-wrapper{
+.reset-time-wrapper {
   position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
   margin: auto;
   justify-content: center;
+}
+
+.global-tooltip-position {
+  position: absolute;
+  left: 2%;
+}
+
+.leaderboard-text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.018em;
+  font-family: "Montserrat" !important;
+
+  @media screen and (max-width: 400px) {
+    font-size: 12px;
+  }
+}
+.left-arrow-leaderboard{
+  position: absolute;
+  left: -4%;
+  top: 50%;
+  z-index: 1;
+  width: 30px;
+  cursor: pointer;
+}
+.right-arrow-leaderboard{
+  position: absolute;
+  right: -4%;
+  top: 50%;
+  z-index: 1;
+  width: 30px;
+  cursor: pointer;
+}
+
+
+.select-chain-arrow-left{
+position: absolute;
+left: 3%;
+top: 0;
+bottom: 0;
+margin: auto;
+}
+
+.select-chain-arrow-right{
+  position: absolute;
+  right: 3%;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }
