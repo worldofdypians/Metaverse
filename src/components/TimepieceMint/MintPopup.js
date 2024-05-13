@@ -42,13 +42,15 @@ const MintPopup = ({ active, onClose, data }) => {
       ) : data.title === "SKALE" ? (
         <>
          <div className="d-flex align-items-center gap-2 mt-3 mt-lg-0 mb-4 mb-lg-0">
-          <div className="d-flex align-items-center justify-content-center">
+         <div className="d-flex flex-column align-items-center">
+         <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              100,000 WOD Tokens
+            150,000 WOD Tokens
             </h6>
           </div>
-          <h6 className="mint-popup-title m-0"> Entry Campaign</h6>
+          <h6 className="mint-popup-title m-0">$50,000 Premium Subscriptions</h6>
+         </div>
         </div>
         </>
       ) : data.title === "DogeCoin" ? (
@@ -86,7 +88,7 @@ const MintPopup = ({ active, onClose, data }) => {
           <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              $50,000 BNB Rewards
+            150,000 WOD Tokens & 500 Premium Subscriptions
             </h6>
           </div>
           <h6 className="mint-popup-title">Dypius Treasure Hunt</h6>

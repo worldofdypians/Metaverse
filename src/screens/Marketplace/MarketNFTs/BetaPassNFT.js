@@ -108,6 +108,7 @@ import whitePickaxe from "../assets/whitePickAxe.svg";
 import whiteCalendar from "../assets/whiteCalendar.svg";
 import epicwhite from "../assets/epicwhite.svg";
 import Countdown from "react-countdown";
+import axios from "axios";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -552,6 +553,18 @@ const BetaPassNFT = ({
     }
   }
 
+
+  const handleFirstTask = async (wallet) => {
+    await axios
+      .get(
+        `https://api.worldofdypians.com/api/airdrop-alliance/task1/${wallet}`
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+  
+  };
+
   const signWalletPublicAddress = async () => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -566,6 +579,8 @@ const BetaPassNFT = ({
         },
       }).then(() => {
         setalreadyRegistered(true);
+        handleFirstTask(coinbase);
+
       });
     } catch (error) {
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
