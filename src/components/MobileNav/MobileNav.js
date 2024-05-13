@@ -129,7 +129,7 @@ const MobileNav = () => {
             );
           }}
         />
-          <NavLink
+        <NavLink
           to="/marketplace/nft-bridge"
           end
           className={({ isActive }) =>
@@ -176,7 +176,7 @@ const MobileNav = () => {
           } nft-outer-wrapper-1 mobile-nft-wrapper d-flex flex-column p-3 gap-3 w-100`}
         >
           <NavLink
-            to={"/marketplace/beta-pass/skale"}
+            to={"/marketplace/beta-pass/core"}
             className={({ isActive }) =>
               isActive
                 ? "nft-link-active d-flex align-items-center justify-content-between"

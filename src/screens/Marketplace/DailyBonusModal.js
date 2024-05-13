@@ -64,7 +64,7 @@ const DailyBonusModal = ({ data, onClose }) => {
           >
             {data.status === "Live" && (
               <div
-                class="pulsatingDot"
+              className="pulsatingDot"
                 style={{ width: 7, height: 7, marginRight: 5 }}
               ></div>
             )}

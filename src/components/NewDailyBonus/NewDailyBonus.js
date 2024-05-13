@@ -14,13 +14,22 @@ import premiumRound from "./assets/premiumRound.png";
 import dypRound from "./assets/dypRound.png";
 
 import completedBg from "./assets/completedBg.png";
+import bnbBg from "./assets/bnbBg.png";
+import seiBg from "./assets/seiBg.png";
+import skaleBg from "./assets/skaleBg.png";
+import coreBg from "./assets/coreBg.png";
+import victionBg from "./assets/victionBg.png";
 import winConfetti from "./assets/winConfetti.png";
 import xMark from "./assets/xMark2.svg";
+import coreIcon from "./assets/coreIcon.svg";
+import victionIcon from "./assets/victionIcon.svg";
 import emptyXmark from "./assets/emptyXmark.svg";
 import bnbIcon from "./assets/bnbIcon.svg";
 import greenCheck from "./assets/greenCheck.svg";
 import infoIcon from "./assets/infoIcon.svg";
 import skaleIcon from "./assets/skaleIcon.svg";
+import seiIcon from "./assets/seiIcon.svg";
+import multiversxIcon from "./assets/multiversxIcon.svg";
 import danger from "./assets/danger.svg";
 import warning from "./assets/warning.svg";
 import redX from "./assets/redX.svg";
@@ -100,6 +109,28 @@ const NewDailyBonus = ({
   onPremiumClickOther,
   premiumTxHash,
   selectedChainforPremium,
+  skaleImages,
+  claimedCoreChests,
+  claimedCorePremiumChests,
+  claimedVictionChests,
+  claimedVictionPremiumChests,
+  openedCoreChests,
+  openedVictionChests,
+  onCoreChestClaimed,
+  onVictionChestClaimed,
+  onSeiChestClaimed,
+  allCoreChests,
+  allVictionChests,
+  standardSeiChests,
+  premiumSeiChests,
+  claimedSeiChests,
+  claimedSeiPremiumChests,
+  openedSeiChests,
+  allSeiChests,
+  bnbImages,
+  seiImages,
+  victionImages,
+  coreImages,
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -119,6 +150,15 @@ const NewDailyBonus = ({
 
   const skaleClaimed = claimedSkaleChests + claimedSkalePremiumChests;
   const skalePercentage = (skaleClaimed / 20) * 100;
+
+  const coreClaimed = claimedCoreChests + claimedCorePremiumChests;
+  const corePercentage = (coreClaimed / 20) * 100;
+
+  const victionClaimed = claimedVictionChests + claimedVictionPremiumChests;
+  const victionPercentage = (victionClaimed / 20) * 100;
+
+  const seiClaimed = claimedSeiChests + claimedSeiPremiumChests;
+  const seiPercentage = (seiClaimed / 20) * 100;
 
   var settings = {
     dots: false,
@@ -328,8 +368,16 @@ const NewDailyBonus = ({
   const [nft, setNft] = useState({});
   const [totalSkalePoints, settotalSkalePoints] = useState(0);
   const [totalSkaleUsd, settotalSkaleUsd] = useState(0);
+
+  const [totalCorePoints, settotalCorePoints] = useState(0);
+  const [totalCoreUsd, settotalCoreUsd] = useState(0);
+  const [totalVictionPoints, settotalVictionPoints] = useState(0);
+  const [totalVictionUsd, settotalVictionUsd] = useState(0);
+  const [totalSeiPoints, settotalSeiPoints] = useState(0);
+  const [totalSeiUsd, settotalSeiUsd] = useState(0);
+
   const [tooltip, setTooltip] = useState(false);
-  const [claimingChest, setClaimingChest] = useState(false)
+  const [claimingChest, setClaimingChest] = useState(false);
 
   const countEarnedRewards = () => {
     if (allChests && allChests.length > 0) {
@@ -399,6 +447,107 @@ const NewDailyBonus = ({
       settotalSkalePoints(resultSkalePoints);
       settotalSkaleUsd(resultSkaleUsd);
     }
+
+    if (allCoreChests && allCoreChests.length > 0) {
+      let resultCorePoints = 0;
+      let resultCoreUsd = 0;
+
+      allCoreChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultCorePoints += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                resultCoreUsd += Number(innerChest.reward);
+              }
+            });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultCorePoints += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+
+      settotalCorePoints(resultCorePoints);
+      settotalCoreUsd(resultCoreUsd);
+    }
+
+    if (allVictionChests && allVictionChests.length > 0) {
+      let resultVictionPoints = 0;
+      let resultVictionUsd = 0;
+
+      allVictionChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultVictionPoints += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                resultVictionUsd += Number(innerChest.reward);
+              }
+            });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultVictionPoints += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+
+      settotalVictionPoints(resultVictionPoints);
+      settotalVictionUsd(resultVictionUsd);
+    }
+    if (allSeiChests && allSeiChests.length > 0) {
+      let resultSeiPoints = 0;
+      let resultSeiUsd = 0;
+
+      allSeiChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultSeiPoints += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                resultSeiUsd += Number(innerChest.reward);
+              }
+            });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultSeiPoints += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+
+      settotalSeiPoints(resultSeiPoints);
+      settotalSeiUsd(resultSeiUsd);
+    }
   };
 
   const handleOpBnbPool = async () => {
@@ -444,6 +593,10 @@ const NewDailyBonus = ({
         showSingleRewardData(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "skale") {
         showSingleRewardDataSkale(rewardData.chestId, isActiveIndex - 1);
+      } else if (chain === "core") {
+        showSingleRewardDataCore(rewardData.chestId, isActiveIndex - 1);
+      } else if (chain === "viction") {
+        showSingleRewardDataViction(rewardData.chestId, isActiveIndex - 1);
       }
     }
   };
@@ -477,6 +630,53 @@ const NewDailyBonus = ({
           .then(() => {
             handleSwitchNetwork(1482601649);
             setRewardData([]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleCorePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x45c")
+          .then(() => {
+            handleSwitchNetwork(1116);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+  const handleVictionPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x58")
+          .then(() => {
+            handleSwitchNetwork(88);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleSeiPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xae3f3")
+          .then(() => {
+            handleSwitchNetwork(713715);
           })
           .catch((e) => {
             console.log(e);
@@ -759,6 +959,118 @@ const NewDailyBonus = ({
     new Audio(successSound).play();
   };
 
+  const showLiveRewardDataSkale = (value) => {
+    const filteredResult = value;
+
+    if (filteredResult) {
+      const result = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "CAWS"
+        );
+      });
+
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LAND"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return obj.rewardType === "Money" && obj.status === "Claimed";
+      });
+      const resultPoints = filteredResult.rewards.length === 1;
+
+      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
+        );
+      });
+
+      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+          );
+        }
+      );
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+        );
+      });
+
+      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
+          );
+        }
+      );
+
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+        );
+      });
+
+      if (result) {
+        setMessage("caws");
+      } else if (!result && resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if (resultWon) {
+        setMessage("won");
+      } else if (resultPoints) {
+        setMessage("wonPoints");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
+      } else if (resultWonMoneyNotEnoughLands) {
+        setMessage("winDangerNotEnoughLand");
+      } else if (resultWonMoneyhasNftsNoPremium) {
+        setMessage("winDangerHasNftsNoPremium");
+      } else if (resultWonMoneyhasNftsNoDyp) {
+        setMessage("winDangerHasNftsPremiumNoDyp");
+      }
+
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
+    new Audio(successSound).play();
+  };
+
   const showSingleRewardDataSkale = (chestID, chestIndex) => {
     const filteredResult = openedSkaleChests.find(
       (el) =>
@@ -875,9 +1187,12 @@ const NewDailyBonus = ({
     }
   };
 
-  const showLiveRewardDataSkale = (value) => {
-    const filteredResult = value;
-
+  const showSingleRewardDataCore = (chestID, chestIndex) => {
+    const filteredResult = openedCoreChests.find(
+      (el) => el.chestId === chestID && allCoreChests.indexOf(el) === chestIndex
+    );
+    setIsActive(chestID);
+    setIsActiveIndex(chestIndex + 1);
     if (filteredResult) {
       const result = filteredResult.rewards.find((obj) => {
         return (
@@ -906,6 +1221,7 @@ const NewDailyBonus = ({
       const resultWon = filteredResult.rewards.find((obj) => {
         return obj.rewardType === "Money" && obj.status === "Claimed";
       });
+
       const resultPoints = filteredResult.rewards.length === 1;
 
       const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
@@ -928,15 +1244,6 @@ const NewDailyBonus = ({
         }
       );
 
-      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
-        );
-      });
-
       const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
         (obj) => {
           return (
@@ -947,6 +1254,15 @@ const NewDailyBonus = ({
           );
         }
       );
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+        );
+      });
 
       const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
         return (
@@ -959,7 +1275,7 @@ const NewDailyBonus = ({
 
       if (result) {
         setMessage("caws");
-      } else if (!result && resultLand) {
+      } else if (resultLand) {
         setMessage("wod");
       } else if (!result && !resultLand && resultPremium) {
         setMessage("needPremium");
@@ -984,7 +1300,236 @@ const NewDailyBonus = ({
     } else {
       setLiveRewardData([]);
     }
-    new Audio(successSound).play();
+  };
+
+  const showSingleRewardDataViction = (chestID, chestIndex) => {
+    const filteredResult = openedVictionChests.find(
+      (el) =>
+        el.chestId === chestID && allVictionChests.indexOf(el) === chestIndex
+    );
+    setIsActive(chestID);
+    setIsActiveIndex(chestIndex + 1);
+    if (filteredResult) {
+      const result = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "CAWS"
+        );
+      });
+
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LAND"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return obj.rewardType === "Money" && obj.status === "Claimed";
+      });
+
+      const resultPoints = filteredResult.rewards.length === 1;
+
+      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
+        );
+      });
+
+      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+          );
+        }
+      );
+
+      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
+          );
+        }
+      );
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+        );
+      });
+
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+        );
+      });
+
+      if (result) {
+        setMessage("caws");
+      } else if (resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if (resultWon) {
+        setMessage("won");
+      } else if (resultPoints) {
+        setMessage("wonPoints");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
+      } else if (resultWonMoneyNotEnoughLands) {
+        setMessage("winDangerNotEnoughLand");
+      } else if (resultWonMoneyhasNftsNoPremium) {
+        setMessage("winDangerHasNftsNoPremium");
+      } else if (resultWonMoneyhasNftsNoDyp) {
+        setMessage("winDangerHasNftsPremiumNoDyp");
+      }
+
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
+  };
+  const showSingleRewardDataSei = (chestID, chestIndex) => {
+    const filteredResult = openedSeiChests.find(
+      (el) => el.chestId === chestID && allSeiChests.indexOf(el) === chestIndex
+    );
+    setIsActive(chestID);
+    setIsActiveIndex(chestIndex + 1);
+    if (filteredResult) {
+      const result = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "CAWS"
+        );
+      });
+
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LAND"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return obj.rewardType === "Money" && obj.status === "Claimed";
+      });
+
+      const resultPoints = filteredResult.rewards.length === 1;
+
+      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
+        );
+      });
+
+      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+          );
+        }
+      );
+
+      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
+          );
+        }
+      );
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+        );
+      });
+
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+        );
+      });
+
+      if (result) {
+        setMessage("caws");
+      } else if (resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if (resultWon) {
+        setMessage("won");
+      } else if (resultPoints) {
+        setMessage("wonPoints");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
+      } else if (resultWonMoneyNotEnoughLands) {
+        setMessage("winDangerNotEnoughLand");
+      } else if (resultWonMoneyhasNftsNoPremium) {
+        setMessage("winDangerHasNftsNoPremium");
+      } else if (resultWonMoneyhasNftsNoDyp) {
+        setMessage("winDangerHasNftsPremiumNoDyp");
+      }
+
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
   };
 
   useEffect(() => {
@@ -1127,6 +1672,196 @@ const NewDailyBonus = ({
         setDisable(true);
       }
     }
+    //  else if (chain === "core") {
+    //   if (email && coinbase && address) {
+    //     if (coinbase.toLowerCase() === address.toLowerCase()) {
+    //       if (isPremium) {
+    //         if (
+    //           claimedCoreChests + claimedCorePremiumChests === 20 &&
+    //           rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase()
+    //         ) {
+    //           setMessage("complete");
+    //         } else if (
+    //           claimedCoreChests + claimedCorePremiumChests < 20 &&
+    //           rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId === 1116
+    //         ) {
+    //           setMessage("");
+    //           setDisable(false);
+    //         } else if (
+    //           claimedCoreChests + claimedCorePremiumChests < 20 &&
+    //           // rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId !== 1116
+    //         ) {
+    //           setMessage("switch");
+    //           setDisable(true);
+    //         }
+    //       } else if (!isPremium) {
+    //         if (
+    //           claimedCoreChests === 10 &&
+    //           rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId === 1116
+    //         ) {
+    //           setMessage("premium");
+    //           setDisable(true);
+    //         } else if (
+    //           claimedCoreChests < 10 &&
+    //           rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId === 1116
+    //         ) {
+    //           setMessage("");
+    //           setDisable(false);
+    //         } else if (
+    //           claimedCoreChests < 10 &&
+    //           // rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId !== 1116
+    //         ) {
+    //           setMessage("switch");
+    //           setDisable(true);
+    //         }
+    //       }
+    //     } else {
+    //       setMessage("switchAccount");
+    //       setDisable(true);
+    //     }
+    //     setMessage("comingsoon");
+    //   } else {
+    //     setMessage("login");
+    //     setDisable(true);
+    //   }
+    // } else if (chain === "viction") {
+    //   if (email && coinbase && address) {
+    //     if (coinbase.toLowerCase() === address.toLowerCase()) {
+    //       if (isPremium) {
+    //         if (
+    //           claimedVictionChests + claimedVictionPremiumChests === 20 &&
+    //           rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase()
+    //         ) {
+    //           setMessage("complete");
+    //         } else if (
+    //           claimedVictionChests + claimedVictionPremiumChests < 20 &&
+    //           rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId === 88
+    //         ) {
+    //           setMessage("");
+    //           setDisable(false);
+    //         } else if (
+    //           claimedVictionChests + claimedVictionPremiumChests < 20 &&
+    //           // rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId !== 88
+    //         ) {
+    //           setMessage("switch");
+    //           setDisable(true);
+    //         }
+    //       } else if (!isPremium) {
+    //         if (
+    //           claimedVictionChests === 10 &&
+    //           rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId === 88
+    //         ) {
+    //           setMessage("premium");
+    //           setDisable(true);
+    //         } else if (
+    //           claimedVictionChests < 10 &&
+    //           rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId === 88
+    //         ) {
+    //           setMessage("");
+    //           setDisable(false);
+    //         } else if (
+    //           claimedVictionChests < 10 &&
+    //           // rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId !== 88
+    //         ) {
+    //           setMessage("switch");
+    //           setDisable(true);
+    //         }
+    //       }
+    //     } else {
+    //       setMessage("switchAccount");
+    //       setDisable(true);
+    //     }
+    //     setMessage("comingsoon");
+    //   } else {
+    //     setMessage("login");
+    //     setDisable(true);
+    //   }
+    // } else if (chain === "sei") {
+    //   if (email && coinbase && address) {
+    //     if (coinbase.toLowerCase() === address.toLowerCase()) {
+    //       if (isPremium) {
+    //         if (
+    //           claimedSeiChests + claimedSeiPremiumChests === 20 &&
+    //           rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase()
+    //         ) {
+    //           setMessage("complete");
+    //         } else if (
+    //           claimedSeiChests + claimedSeiPremiumChests < 20 &&
+    //           rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId === 713715
+    //         ) {
+    //           setMessage("");
+    //           setDisable(false);
+    //         } else if (
+    //           claimedSeiChests + claimedSeiPremiumChests < 20 &&
+    //           // rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId !== 713715
+    //         ) {
+    //           setMessage("switch");
+    //           setDisable(true);
+    //         }
+    //       } else if (!isPremium) {
+    //         if (
+    //           claimedSeiChests === 10 &&
+    //           rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId === 713715
+    //         ) {
+    //           setMessage("premium");
+    //           setDisable(true);
+    //         } else if (
+    //           claimedSeiChests < 10 &&
+    //           rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId === 713715
+    //         ) {
+    //           setMessage("");
+    //           setDisable(false);
+    //         } else if (
+    //           claimedSeiChests < 10 &&
+    //           // rewardData.length === 0 &&
+    //           address.toLowerCase() === coinbase.toLowerCase() &&
+    //           chainId !== 713715
+    //         ) {
+    //           setMessage("switch");
+    //           setDisable(true);
+    //         }
+    //       }
+    //     } else {
+    //       setMessage("switchAccount");
+    //       setDisable(true);
+    //     }
+    //     setMessage("comingsoon");
+    //   } else {
+    //     setMessage("login");
+    //     setDisable(true);
+    //   }
+    // }
   }, [
     email,
     chain,
@@ -1138,9 +1873,15 @@ const NewDailyBonus = ({
     claimedPremiumChests,
     claimedSkaleChests,
     claimedSkalePremiumChests,
+    // claimedCoreChests,
+    // claimedCorePremiumChests,
+    // claimedVictionChests,
+    // claimedVictionPremiumChests,
+    // claimedSeiChests,
+    // claimedSeiPremiumChests,
     rewardData,
   ]);
-
+  
   return (
     <>
       <div className={`package-popup-wrapper2 `}>
@@ -1256,7 +1997,15 @@ const NewDailyBonus = ({
               <div className="new-total-points-wrapper d-flex align-items-center gap-2">
                 <h6 className="new-total-points  mb-0">
                   {getFormattedNumber(
-                    chain === "bnb" ? totalPoints : totalSkalePoints,
+                    chain === "bnb"
+                      ? totalPoints
+                      : chain === "core"
+                      ? 0
+                      : chain === "viction"
+                      ? 0
+                      : chain === "sei"
+                      ? 0
+                      : totalSkalePoints,
                     0
                   )}{" "}
                 </h6>
@@ -1268,7 +2017,15 @@ const NewDailyBonus = ({
                 <h6 className="new-total-points  mb-0">
                   $
                   {getFormattedNumber(
-                    chain === "bnb" ? totalUsd : totalSkaleUsd,
+                    chain === "bnb"
+                      ? totalUsd
+                      : chain === "core"
+                      ? 0
+                      : chain === "viction"
+                      ? 0
+                      : chain === "sei"
+                      ? 0
+                      : totalSkaleUsd,
                     2
                   )}{" "}
                 </h6>
@@ -1294,26 +2051,53 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={bnbChain}
+                            src={bnbBg}
                             className={`chain-img ${
                               chain === "bnb" && "chain-img-active"
                             }`}
-                            onClick={() => {
-                              setChain("bnb");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
                               chain === "bnb" && "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("bnb");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
                           >
-                            <h6 className="chain-title-position mb-0">
-                              BNB Chain
-                            </h6>
+                            {/* <h6 className="chain-title-position mb-0">
+                              BNB CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 56
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleBnbPool}
+                              >
+                                {" "}
+                                <img src={bnbIcon} alt="" /> BNB
+                              </button>
+
+                              <button
+                                className={` ${
+                                  chainId === 204
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleOpBnbPool}
+                              >
+                                <img src={bnbIcon} alt="" /> opBNB
+                              </button>
+                            </div>
                             <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
                                 <img
@@ -1372,33 +2156,6 @@ const NewDailyBonus = ({
                               </span>
                             </div>
                           </div>
-                          <div
-                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
-                              className={` ${
-                                chainId === 56
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleBnbPool}
-                            >
-                              {" "}
-                              <img src={bnbIcon} alt="" /> BNB
-                            </button>
-
-                            <button
-                              className={` ${
-                                chainId === 204
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleOpBnbPool}
-                            >
-                              <img src={bnbIcon} alt="" /> opBNB
-                            </button>
-                          </div>
                         </div>
                         <div
                           className={`position-relative chain-item ${
@@ -1406,16 +2163,10 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={skaleChain}
+                            src={skaleBg}
                             className={`chain-img ${
                               chain === "skale" && "chain-img-active"
                             }`}
-                            onClick={() => {
-                              setChain("skale");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
                             alt=""
                           />
                           <div
@@ -1423,8 +2174,30 @@ const NewDailyBonus = ({
                               chain === "skale" &&
                               "chain-title-wrapper-active-skale"
                             } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("skale");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
                           >
-                            <h6 className="chain-title-position mb-0">SKALE</h6>
+                            {/* <h6 className="chain-title-position mb-0">SKALE</h6> */}
+                            <div
+                              className=" d-flex align-items-center gap-2 "
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={`${
+                                  chainId === 1482601649
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSkalePool}
+                              >
+                                {" "}
+                                <img src={skaleIcon} alt="" /> SKALE
+                              </button>
+                            </div>
                             <div className="d-flex align-items-center gap-2">
                               <div className="d-flex align-items-center">
                                 <img
@@ -1483,71 +2256,322 @@ const NewDailyBonus = ({
                               </span>
                             </div>
                           </div>
-                          <div
-                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
-                              className={`${
-                                chainId === 1482601649
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleSkalePool}
-                            >
-                              {" "}
-                              <img src={skaleIcon} alt="" /> SKALE
-                            </button>
-                            {/* <a href="https://www.sfuelstation.com/" target="_blank">
-                         <button
-                            className={`${
-                              chainId === 2046399126
-                                ? "new-chain-active-btn"
-                                : "new-chain-inactive-btn"
-                            } d-flex gap-2 align-items-center`}
-                          >
-                            {" "}
-                            Get SFuel
-                            <img src={gasRightArrow} alt="" /> 
-                          </button>
-                         </a> */}
-                          </div>
                         </div>
                         <div
-                          className={`position-relative chain-item  w-100`}
-                          style={{ pointerEvents: "none" }}
+                          className={`position-relative chain-item ${
+                            chain === "core" && "chain-item-active"
+                          } w-100`}
                         >
                           <img
-                            src={comingSoon}
-                            className={`chain-img`}
+                            src={coreBg}
+                            className={`chain-img ${
+                              chain === "core" && "chain-img-active"
+                            }`}
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === "comingSoon" &&
-                              "chain-title-wrapper-active"
+                              chain === "core" &&
+                              "chain-title-wrapper-active-skale"
                             } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("core");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
                           >
-                            <h6 className="chain-title-position mb-0">
-                              Coming Soon
-                            </h6>
-                            {/* <div className="d-flex align-items-center gap-2">
-                          <div className="d-flex align-items-center">
-                            <img src={percentageFilled} height={8} alt="" />
-                            <img src={percentageFilled} height={8} alt="" />
-                            <img src={percentageFilled} height={8} alt="" />
-                            <img src={percentageEmpty} height={8} alt="" />
-                            <img src={percentageEmpty} height={8} alt="" />
+                            {/* <h6 className="chain-title-position mb-0">CORE</h6> */}
+                            <div
+                              className=" d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={`${
+                                  chainId === 1116
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                // onClick={handleCorePool}
+                              >
+                                {" "}
+                                <img
+                                  src={coreIcon}
+                                  width={20}
+                                  height={20}
+                                  alt=""
+                                />{" "}
+                                CORE
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    corePercentage >= 20
+                                      ? percentageFilled
+                                      : 
+                                      percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    corePercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    corePercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    corePercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    corePercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span" style={{color: chain === "core" ? "#fff" : "gray"}}>
+                                {/* {parseInt(corePercentage)}% */}
+                                Coming Soon
+                              </span>
+                            </div>
                           </div>
-                          <span className="percentage-span">62%</span>
-                        </div> */}
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "sei" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={seiBg}
+                            className={`chain-img ${
+                              chain === "sei" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "sei" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("sei");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">VICTION</h6> */}
+                            <div
+                              className=" d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={`${
+                                  chainId === 713715
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                // onClick={handleSeiPool}
+                              >
+                                {" "}
+                                <img
+                                  src={seiIcon}
+                                  width={20}
+                                  height={20}
+                                  alt=""
+                                />{" "}
+                                SEI
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span" style={{color: chain === "sei" ? "#fff" : "gray"}}>
+                                {/* {parseInt(seiPercentage)}% */}
+                                Coming Soon
+                              </span>
+                            </div>
                           </div>
-                          {/* <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column">
-                        <h6 className="desc-title mb-0">Magic Battle</h6>
-                        <span className="chain-desc mb-0">
-                          A world full of possibilities
-                        </span>
-                      </div> */}
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "viction" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={victionBg}
+                            className={`chain-img ${
+                              chain === "viction" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "viction" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("viction");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <button
+                              className={`${
+                                chainId === 88
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
+                              // onClick={handleVictionPool}
+                            >
+                              {" "}
+                              <img
+                                src={victionIcon}
+                                width={20}
+                                height={20}
+                                alt=""
+                              />{" "}
+                              VICTION
+                            </button>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span" style={{color: chain === "viction" ? "#fff" : "gray"}}>
+                                {/* {parseInt(victionPercentage)}% */}
+                                Coming Soon
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     ) : (
@@ -1558,44 +2582,53 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={bnbChain}
+                            src={bnbBg}
                             className={`chain-img ${
                               chain === "bnb" && "chain-img-active"
                             }`}
-                            onClick={() => {
-                              setChain("bnb");
-                              setIsActive();
-                              setIsActiveIndex();
-                            }}
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
                               chain === "bnb" && "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("bnb");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
                           >
-                            <h6 className="chain-title-position mb-0">
-                              BNB Chain
-                            </h6>
-                          </div>
-                          <div
-                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
-                              className={`chain-active-btn d-flex gap-1 align-items-center`}
-                              onClick={handleBnbPool}
+                            {/* <h6 className="chain-title-position mb-0">
+                              BNB CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
                             >
-                              {" "}
-                              <img src={bnbIcon} alt="" /> BNB
-                            </button>
+                              <button
+                                className={` ${
+                                  chainId === 56
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleBnbPool}
+                              >
+                                {" "}
+                                <img src={bnbIcon} alt="" /> BNB
+                              </button>
 
-                            <button
-                              className={`chain-inactive-btn d-flex gap-1 align-items-center`}
-                              onClick={handleOpBnbPool}
-                            >
-                              <img src={bnbIcon} alt="" /> opBNB
-                            </button>
+                              <button
+                                className={` ${
+                                  chainId === 204
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleOpBnbPool}
+                              >
+                                <img src={bnbIcon} alt="" /> opBNB
+                              </button>
+                            </div>
                           </div>
                         </div>
                         <div
@@ -1604,68 +2637,182 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={skaleChain}
+                            src={skaleBg}
                             className={`chain-img ${
                               chain === "skale" && "chain-img-active"
                             }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "skale" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center justify-content-between`}
                             onClick={() => {
                               setChain("skale");
                               setIsActive();
                               setIsActiveIndex();
+                              setRewardData([]);
                             }}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "skale" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center justify-content-between`}
                           >
-                            <h6 className="chain-title-position mb-0">SKALE</h6>
-                          </div>
-                          <div
-                            className="chain-button-wrapper d-flex align-items-center gap-2 mt-2"
-                            style={{ width: "fit-content" }}
-                          >
-                            <button
-                              className={`chain-inactive-btn d-flex gap-1 align-items-center`}
-                              onClick={handleSkalePool}
+                            {/* <h6 className="chain-title-position mb-0">SKALE</h6> */}
+                            <div
+                              className=" d-flex align-items-center gap-2 "
+                              style={{ width: "fit-content" }}
                             >
-                              {" "}
-                              <img src={skaleIcon} alt="" /> SKALE
-                            </button>
+                              <button
+                                className={`${
+                                  chainId === 1482601649
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSkalePool}
+                              >
+                                {" "}
+                                <img src={skaleIcon} alt="" /> SKALE
+                              </button>
+                            </div>
                           </div>
                         </div>
-                        <div className={`position-relative chain-item  w-100`}>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "core" && "chain-item-active"
+                          } w-100`}
+                        >
                           <img
-                            src={comingSoon}
-                            className={`chain-img`}
+                            src={coreBg}
+                            className={`chain-img ${
+                              chain === "core" && "chain-img-active"
+                            }`}
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === "comingSoon" &&
-                              "chain-title-wrapper-active"
+                              chain === "core" &&
+                              "chain-title-wrapper-active-skale"
                             } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("core");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
                           >
-                            <h6 className="chain-title-position mb-0">
-                              Coming Soon
-                            </h6>
-                            {/* <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageFilled} height={8} alt="" />
-                                <img src={percentageEmpty} height={8} alt="" />
-                                <img src={percentageEmpty} height={8} alt="" />
-                              </div>
-                              <span className="percentage-span">62%</span>
-                            </div> */}
+                            {/* <h6 className="chain-title-position mb-0">CORE</h6> */}
+                            <div
+                              className=" d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={`${
+                                  chainId === 1116
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                // onClick={handleCorePool}
+                              >
+                                {" "}
+                                <img
+                                  src={coreIcon}
+                                  width={20}
+                                  height={20}
+                                  alt=""
+                                />{" "}
+                                CORE
+                              </button>
+                            </div>
                           </div>
-                          <div className="chain-desc-wrapper d-none d-lg-flex p-2 d-flex flex-column">
-                            <h6 className="desc-title mb-0">Magic Battle</h6>
-                            <span className="chain-desc mb-0">
-                              A world full of possibilities
-                            </span>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "sei" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={seiBg}
+                            className={`chain-img ${
+                              chain === "sei" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "sei" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("sei");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">VICTION</h6> */}
+                            <div
+                              className=" d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={`${
+                                  chainId === 713715
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                // onClick={handleSeiPool}
+                              >
+                                {" "}
+                                <img
+                                  src={seiIcon}
+                                  width={20}
+                                  height={20}
+                                  alt=""
+                                />{" "}
+                                SEI
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "viction" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={victionBg}
+                            className={`chain-img ${
+                              chain === "viction" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "viction" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("viction");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <button
+                              className={`${
+                                chainId === 88
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
+                              // onClick={handleVictionPool}
+                            >
+                              {" "}
+                              <img
+                                src={victionIcon}
+                                width={20}
+                                height={20}
+                                alt=""
+                              />{" "}
+                              VICTION
+                            </button>
                           </div>
                         </div>
                       </Slider>
@@ -1685,6 +2832,7 @@ const NewDailyBonus = ({
                                   chain={chain}
                                   key={index}
                                   item={item}
+                                  image={bnbImages[index]}
                                   // openChest={openChest}
                                   selectedChest={selectedChest}
                                   isPremium={isPremium}
@@ -1723,13 +2871,14 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                claimingChest={claimingChest}
-                                setClaimingChest={setClaimingChest}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
                                   buyNftPopup={buyNftPopup}
                                   chainId={chainId}
                                   chain={chain}
                                   key={index}
                                   item={item}
+                                  image={bnbImages[index]}
                                   // openChest={openChest}
                                   selectedChest={selectedChest}
                                   isPremium={isPremium}
@@ -1770,18 +2919,313 @@ const NewDailyBonus = ({
                                   }
                                 />
                               ))
+                          : chain === "core"
+                          ? allCoreChests && allCoreChests.length > 0
+                            ? allCoreChests.map((item, index) => (
+                                <NewChestItem
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  image={coreImages[index]}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onCoreChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataCore(value, value2);
+                                    setIsActive(value);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.isOpened}
+                                  disableBtn={disable}
+                                  isActive={isActive}
+                                  isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                            : window.range(0, 19).map((item, index) => (
+                                <NewChestItem
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  image={coreImages[index]}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onCoreChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataCore(value, value2);
+                                    setIsActive(value);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.opened}
+                                  disableBtn={true}
+                                  isActive={isActive}
+                                  openChest={() => {
+                                    console.log("test");
+                                  }}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                          : chain === "viction"
+                          ? allVictionChests && allVictionChests.length > 0
+                            ? allVictionChests.map((item, index) => (
+                                <NewChestItem
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  image={victionImages[index]}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onVictionChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataViction(value, value2);
+                                    setIsActive(value);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.isOpened}
+                                  disableBtn={disable}
+                                  isActive={isActive}
+                                  isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                            : window.range(0, 19).map((item, index) => (
+                                <NewChestItem
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  image={victionImages[index]}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onVictionChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataViction(value, value2);
+                                    setIsActive(value);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.opened}
+                                  disableBtn={true}
+                                  isActive={isActive}
+                                  openChest={() => {
+                                    console.log("test");
+                                  }}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                          : chain === "sei"
+                          ? allSeiChests && allSeiChests.length > 0
+                            ? allSeiChests.map((item, index) => (
+                                <NewChestItem
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  image={seiImages[index]}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onSeiChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataSei(value, value2);
+                                    setIsActive(value);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.isOpened}
+                                  disableBtn={disable}
+                                  isActive={isActive}
+                                  isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                            : window.range(0, 19).map((item, index) => (
+                                <NewChestItem
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  image={seiImages[index]}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onSeiChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataSei(value, value2);
+                                    setIsActive(value);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.opened}
+                                  disableBtn={true}
+                                  isActive={isActive}
+                                  openChest={() => {
+                                    console.log("test");
+                                  }}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
                           : chain === "skale" &&
                             allSkaleChests &&
                             allSkaleChests.length > 0
                           ? allSkaleChests.map((item, index) => (
                               <NewChestItem
-                              claimingChest={claimingChest}
-                              setClaimingChest={setClaimingChest}
+                                claimingChest={claimingChest}
+                                setClaimingChest={setClaimingChest}
                                 buyNftPopup={buyNftPopup}
                                 chainId={chainId}
                                 chain={chain}
                                 key={index}
                                 item={item}
+                                image={skaleImages[index]}
                                 // openChest={openChest}
                                 selectedChest={selectedChest}
                                 isPremium={isPremium}
@@ -1819,14 +3263,14 @@ const NewDailyBonus = ({
                             ))
                           : window.range(0, 19).map((item, index) => (
                               <NewChestItem
-                              claimingChest={claimingChest}
-                              setClaimingChest={setClaimingChest}
+                                claimingChest={claimingChest}
+                                setClaimingChest={setClaimingChest}
                                 buyNftPopup={buyNftPopup}
                                 chainId={chainId}
                                 chain={chain}
                                 key={index}
                                 item={item}
-                                // openChest={openChest}
+                                image={skaleImages[index]}
                                 selectedChest={selectedChest}
                                 isPremium={isPremium}
                                 onClaimRewards={(value) => {
@@ -1870,9 +3314,52 @@ const NewDailyBonus = ({
                     </div>
                   </div>
                   <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper">
-                    {message === "" ||
+                 { (chain === 'core' || chain === 'viction' || chain === 'sei') && (
+                      <div
+                        className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
+                        style={{
+                          background: "#1A1C39",
+                          border: "1px solid #ce5d1b",
+                        }}
+                      >
+                        <div className="loader red-loader">
+                          <div className="dot" style={{ "--i": 0 }}></div>
+                          <div className="dot" style={{ "--i": 1 }}></div>
+                          <div className="dot" style={{ "--i": 2 }}></div>
+                          <div className="dot" style={{ "--i": 3 }}></div>
+                          <div className="dot" style={{ "--i": 4 }}></div>
+                          <div className="dot" style={{ "--i": 5 }}></div>
+                          <div className="dot" style={{ "--i": 6 }}></div>
+                          <div className="dot" style={{ "--i": 7 }}></div>
+                          <div className="dot" style={{ "--i": 8 }}></div>
+                          <div className="dot" style={{ "--i": 9 }}></div>
+                        </div>
+                        <h6
+                          className="loader-text mb-0"
+                          style={{ color: "#ce5d1b" }}
+                        >
+                          Coming Soon
+                        </h6>
+
+                        <></>
+
+                        <div className="loader red-loader">
+                          <div className="dot" style={{ "--i": 0 }}></div>
+                          <div className="dot" style={{ "--i": 1 }}></div>
+                          <div className="dot" style={{ "--i": 2 }}></div>
+                          <div className="dot" style={{ "--i": 3 }}></div>
+                          <div className="dot" style={{ "--i": 4 }}></div>
+                          <div className="dot" style={{ "--i": 5 }}></div>
+                          <div className="dot" style={{ "--i": 6 }}></div>
+                          <div className="dot" style={{ "--i": 7 }}></div>
+                          <div className="dot" style={{ "--i": 8 }}></div>
+                          <div className="dot" style={{ "--i": 9 }}></div>
+                        </div>
+                      </div>
+                    )}
+                    {(message === "" ||
                     message === "initial" ||
-                    message === "waiting" ? (
+                    message === "waiting") && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div
                         className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -1918,7 +3405,7 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 9 }}></div>
                         </div>
                       </div>
-                    ) : message === "switch" ? (
+                    ) : message === "switch" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div
                         className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -1967,7 +3454,7 @@ const NewDailyBonus = ({
                               opBNB Chain
                             </span>
                           </h6>
-                        ) : (
+                        ) : chain === "skale" ? (
                           <h6
                             className="loader-text mb-0"
                             style={{ color: "#ce5d1b" }}
@@ -1983,6 +3470,58 @@ const NewDailyBonus = ({
                               SKALE Network
                             </span>
                           </h6>
+                        ) 
+                        // : chain === "core" ? (
+                        //   <h6
+                        //     className="loader-text mb-0"
+                        //     style={{ color: "#ce5d1b" }}
+                        //   >
+                        //     Switch to{" "}
+                        //     <span
+                        //       style={{
+                        //         textDecoration: "underline",
+                        //         cursor: "pointer",
+                        //       }}
+                        //       // onClick={handleCorePool}
+                        //     >
+                        //       CORE Network
+                        //     </span>
+                        //   </h6>
+                        // ) : chain === "viction" ? (
+                        //   <h6
+                        //     className="loader-text mb-0"
+                        //     style={{ color: "#ce5d1b" }}
+                        //   >
+                        //     Switch to{" "}
+                        //     <span
+                        //       style={{
+                        //         textDecoration: "underline",
+                        //         cursor: "pointer",
+                        //       }}
+                        //       // onClick={handleVictionPool}
+                        //     >
+                        //       Viction Network
+                        //     </span>
+                        //   </h6>
+                        // ) : chain === "sei" ? (
+                        //   <h6
+                        //     className="loader-text mb-0"
+                        //     style={{ color: "#ce5d1b" }}
+                        //   >
+                        //     Switch to{" "}
+                        //     <span
+                        //       style={{
+                        //         textDecoration: "underline",
+                        //         cursor: "pointer",
+                        //       }}
+                        //       // onClick={handleSeiPool}
+                        //     >
+                        //       Sei Network
+                        //     </span>
+                        //   </h6>
+                        // ) 
+                        : (
+                          <></>
                         )}
                         <div className="loader red-loader">
                           <div className="dot" style={{ "--i": 0 }}></div>
@@ -1997,7 +3536,7 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 9 }}></div>
                         </div>
                       </div>
-                    ) : message === "switchAccount" ? (
+                    )  : message === "switchAccount" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div
                         className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -2040,7 +3579,7 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 10 }}></div>
                         </div>
                       </div>
-                    ) : message === "error" ? (
+                    ) : message === "error" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div
                         className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -2079,11 +3618,11 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 9 }}></div>
                         </div>
                       </div>
-                    ) : message === "complete" ? (
+                    ) : message === "complete" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div className="d-flex align-items-center justify-content-center complete-bg p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <h6 className="completed-text mb-0">Completed</h6>
                       </div>
-                    ) : message === "needPremium" ? (
+                    ) : message === "needPremium"  && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -2162,7 +3701,7 @@ const NewDailyBonus = ({
                           </button>
                         </div>
                       </div>
-                    ) : message === "caws" ? (
+                    ) : message === "caws"  && chain !== 'core' && chain!=='viction' && chain !== 'sei'? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -2258,7 +3797,7 @@ const NewDailyBonus = ({
                           ))}
                         </div>
                       </div>
-                    ) : message === "won" ? (
+                    ) : message === "won" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -2310,7 +3849,7 @@ const NewDailyBonus = ({
                           className="win-confetti"
                         />
                       </div>
-                    ) : message === "wonPoints" ? (
+                    ) : message === "wonPoints"  && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -2345,7 +3884,7 @@ const NewDailyBonus = ({
                           className="win-confetti"
                         />
                       </div>
-                    ) : message === "premium" ? (
+                    ) : message === "premium"  && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div
                         className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -2386,7 +3925,7 @@ const NewDailyBonus = ({
                           </button>
                         </div>
                       </div>
-                    ) : message === "login" ? (
+                    ) : message === "login"  && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div
                         className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -2425,7 +3964,7 @@ const NewDailyBonus = ({
                           </NavLink>
                         </div>
                       </div>
-                    ) : message === "winDanger" ? (
+                    ) : message === "winDanger" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -2534,7 +4073,7 @@ const NewDailyBonus = ({
                             )}
                         </div>
                       </div>
-                    ) : message === "winDangerCaws" ? (
+                    ) : message === "winDangerCaws" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -2727,7 +4266,7 @@ const NewDailyBonus = ({
                             })}
                         </div>
                       </div>
-                    ) : message === "winDangerLand" ? (
+                    ) : message === "winDangerLand" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -2919,200 +4458,7 @@ const NewDailyBonus = ({
                             })}
                         </div>
                       </div>
-                    ) : message === "winDangerNotEnoughLand" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6 className="win-text mb-0">You won</h6>
-                          <div className="d-flex align-items-center gap-2">
-                            <img src={danger} alt="" width={20} height={20} />
-                            <span className="win-desc mb-0">
-                              The{" "}
-                              <span style={{ color: "#F2C624" }}>
-                                $
-                                {getFormattedNumber(
-                                  rewardData.rewards
-                                    ? rewardData.rewards.find((obj) => {
-                                        return obj.rewardType === "Money";
-                                      }).reward
-                                    : 0,
-                                  2
-                                )}
-                              </span>{" "}
-                              reward has not been assigned due to incomplete
-                              fulfillment of all the requirements.
-                            </span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
-                          </div>
-                          <h6 className="win-amount mb-0">+</h6>
-                          <div className="d-flex flex-column align-items-center danger-border p-1">
-                            <h6 className="win-amount mb-0">
-                              $
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).reward
-                                  : 0,
-                                2
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Rewards</span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === false ? (
-                                  <></>
-                                ) : (
-                                  <div
-                                    className="nft-reward-container"
-                                    key={index}
-                                  >
-                                    <img
-                                      className="nft-reward-img"
-                                      src={
-                                        item.type === "PREMIUM"
-                                          ? premiumRound
-                                          : item.type === "CAWS"
-                                          ? cawsRound
-                                          : item.type === "LAND"
-                                          ? wodRound
-                                          : dypRound
-                                      }
-                                      alt=""
-                                      width={70}
-                                      height={70}
-                                      style={{
-                                        borderRadius: "50%",
-                                      }}
-                                    />
-                                    <img
-                                      src={greenCheck}
-                                      alt=""
-                                      className="holder-check"
-                                    />
-                                  </div>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === true ? (
-                                  <></>
-                                ) : (
-                                  <HtmlTooltip
-                                    placement="top"
-                                    key={index}
-                                    title={
-                                      <div
-                                        className="d-flex align-items-center gap-2"
-                                        style={{ width: "fit-content" }}
-                                      >
-                                        <span
-                                          className="win-desc"
-                                          style={{ fontSize: "12px" }}
-                                        >
-                                          {rewardData.rewards
-                                            ? rewardData.rewards.find((obj) => {
-                                                return (
-                                                  obj.rewardType === "Money"
-                                                );
-                                              }).details
-                                            : ""}
-                                        </span>
-                                      </div>
-                                    }
-                                  >
-                                    <div
-                                      className="nft-reward-container"
-                                      key={index}
-                                    >
-                                      <img
-                                        className="nft-reward-img"
-                                        src={
-                                          item.type === "PREMIUM"
-                                            ? premiumRound
-                                            : item.type === "CAWS"
-                                            ? cawsRound
-                                            : item.type === "LAND"
-                                            ? wodRound
-                                            : dypRound
-                                        }
-                                        alt=""
-                                        width={70}
-                                        height={70}
-                                        style={{
-                                          borderRadius: "50%",
-                                          filter: "opacity(0.5)",
-                                        }}
-                                      />
-                                      <img
-                                        src={redX}
-                                        alt=""
-                                        className="holder-check"
-                                      />
-                                    </div>
-                                  </HtmlTooltip>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-                          {window
-                            .range(
-                              0,
-                              rewardData.rewards
-                                ? 3 -
-                                    rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).requirements.length
-                                : 0
-                            )
-                            .map((item, index) => {
-                              return (
-                                <div
-                                  className="required-item-placeholder"
-                                  key={index}
-                                ></div>
-                              );
-                            })}
-                        </div>
-                      </div>
-                    ) : message === "winDangerHasNftsNoPremium" ? (
+                    ) : message === "winDangerNotEnoughLand" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -3305,7 +4651,7 @@ const NewDailyBonus = ({
                             })}
                         </div>
                       </div>
-                    ) : message === "winDangerHasNftsPremiumNoDyp" ? (
+                    ) : message === "winDangerHasNftsNoPremium" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -3498,7 +4844,200 @@ const NewDailyBonus = ({
                             })}
                         </div>
                       </div>
-                    ) : message === "wod" ? (
+                    ) : message === "winDangerHasNftsPremiumNoDyp"  && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                        <div
+                          className="chain-desc-wrapper p-2 d-flex flex-column"
+                          style={{
+                            filter: "brightness(1)",
+                            position: "relative",
+                          }}
+                        >
+                          <h6 className="win-text mb-0">You won</h6>
+                          <div className="d-flex align-items-center gap-2">
+                            <img src={danger} alt="" width={20} height={20} />
+                            <span className="win-desc mb-0">
+                              The{" "}
+                              <span style={{ color: "#F2C624" }}>
+                                $
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </span>{" "}
+                              reward has not been assigned due to incomplete
+                              fulfillment of all the requirements.
+                            </span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2 win-rewards-container">
+                          <div className="d-flex flex-column align-items-center neutral-border p-1">
+                            <h6 className="win-amount mb-0">
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
+                                0
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">
+                              Leaderboard Points
+                            </span>
+                          </div>
+                          <h6 className="win-amount mb-0">+</h6>
+                          <div className="d-flex flex-column align-items-center danger-border p-1">
+                            <h6 className="win-amount mb-0">
+                              $
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).reward
+                                  : 0,
+                                2
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">Rewards</span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === false ? (
+                                  <></>
+                                ) : (
+                                  <div
+                                    className="nft-reward-container"
+                                    key={index}
+                                  >
+                                    <img
+                                      className="nft-reward-img"
+                                      src={
+                                        item.type === "PREMIUM"
+                                          ? premiumRound
+                                          : item.type === "CAWS"
+                                          ? cawsRound
+                                          : item.type === "LAND"
+                                          ? wodRound
+                                          : dypRound
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                      style={{
+                                        borderRadius: "50%",
+                                      }}
+                                    />
+                                    <img
+                                      src={greenCheck}
+                                      alt=""
+                                      className="holder-check"
+                                    />
+                                  </div>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === true ? (
+                                  <></>
+                                ) : (
+                                  <HtmlTooltip
+                                    placement="top"
+                                    key={index}
+                                    title={
+                                      <div
+                                        className="d-flex align-items-center gap-2"
+                                        style={{ width: "fit-content" }}
+                                      >
+                                        <span
+                                          className="win-desc"
+                                          style={{ fontSize: "12px" }}
+                                        >
+                                          {rewardData.rewards
+                                            ? rewardData.rewards.find((obj) => {
+                                                return (
+                                                  obj.rewardType === "Money"
+                                                );
+                                              }).details
+                                            : ""}
+                                        </span>
+                                      </div>
+                                    }
+                                  >
+                                    <div
+                                      className="nft-reward-container"
+                                      key={index}
+                                    >
+                                      <img
+                                        className="nft-reward-img"
+                                        src={
+                                          item.type === "PREMIUM"
+                                            ? premiumRound
+                                            : item.type === "CAWS"
+                                            ? cawsRound
+                                            : item.type === "LAND"
+                                            ? wodRound
+                                            : dypRound
+                                        }
+                                        alt=""
+                                        width={70}
+                                        height={70}
+                                        style={{
+                                          borderRadius: "50%",
+                                          filter: "opacity(0.5)",
+                                        }}
+                                      />
+                                      <img
+                                        src={redX}
+                                        alt=""
+                                        className="holder-check"
+                                      />
+                                    </div>
+                                  </HtmlTooltip>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+                          {window
+                            .range(
+                              0,
+                              rewardData.rewards
+                                ? 3 -
+                                    rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).requirements.length
+                                : 0
+                            )
+                            .map((item, index) => {
+                              return (
+                                <div
+                                  className="required-item-placeholder"
+                                  key={index}
+                                ></div>
+                              );
+                            })}
+                        </div>
+                      </div>
+                    ) : message === "wod" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -4087,6 +5626,16 @@ const NewDailyBonus = ({
             setTimeout(() => {
               chain === "bnb"
                 ? showSingleRewardData(rewardData.chestId, isActiveIndex - 1)
+                : chain === "core"
+                ? showSingleRewardDataCore(
+                    rewardData.chestId,
+                    isActiveIndex - 1
+                  )
+                : chain === "viction"
+                ? showSingleRewardDataViction(
+                    rewardData.chestId,
+                    isActiveIndex - 1
+                  )
                 : showSingleRewardDataSkale(
                     rewardData.chestId,
                     isActiveIndex - 1

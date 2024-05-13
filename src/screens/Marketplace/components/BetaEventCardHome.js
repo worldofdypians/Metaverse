@@ -32,7 +32,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
         >
           {data.eventStatus === "Live" && (
             <div
-              class="pulsatingDot"
+            className="pulsatingDot"
               style={{ width: 7, height: 7, marginRight: 5 }}
             ></div>
           )}
