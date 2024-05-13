@@ -4915,7 +4915,7 @@ function Dashboard({
                               </mark>{" "}
                               Leaderboard
                             </h2>
-                            {windowSize.width > 786 && (
+                            {/* {windowSize.width > 786 && (
                               <div className="d-flex align-items-center gap-2">
                                 {!isPremium && (
                                   <div
@@ -4944,7 +4944,7 @@ function Dashboard({
                                   </div>
                                 </NavLink>
                               </div>
-                            )}
+                            )} */}
                             <img
                               src={xMark}
                               onClick={() => setLeaderboard(false)}
@@ -4952,7 +4952,7 @@ function Dashboard({
                               style={{ cursor: "pointer" }}
                             />
                           </div>
-                          {windowSize.width < 786 && (
+                          {/* {windowSize.width < 786 && (
                             <div className="d-flex align-items-center gap-2">
                               {!isPremium && (
                                 <div
@@ -4980,7 +4980,7 @@ function Dashboard({
                                 </div>
                               </NavLink>
                             </div>
-                          )}
+                          )} */}
                           <NewLeaderBoard
                             username={data?.getPlayer?.displayName}
                             userId={data?.getPlayer?.playerId}
