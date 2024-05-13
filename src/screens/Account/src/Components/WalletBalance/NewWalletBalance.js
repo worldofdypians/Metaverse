@@ -799,12 +799,12 @@ const NewWalletBalance = ({
   const totalClaimedChests =
     claimedChests +
     claimedPremiumChests +
-    openedSkaleChests.length +
-    openedCoreChests.length +
-    openedVictionChests.length +
-    openedSeiChests.length;
+    openedSkaleChests.length 
+    // +openedCoreChests.length +
+    // openedVictionChests.length +
+    // openedSeiChests.length;
 
-  const chestPercentage = (totalClaimedChests / 100) * 100;
+  const chestPercentage = (totalClaimedChests / 40) * 100;
 
   const dummyEvents = [
     {
