@@ -906,3 +906,26 @@ width: fit-content;
 
 //   }
 // }
+
+.total-stars-wrapper{
+background-image: url('./assets/totalStarsBg.svg');
+border-radius: 12px;
+background-size: 100% 100%;
+}
+
+.total-stars-span{
+  color: #FFEFCA;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.total-stars-amount{
+  color: #F3BF09;
+  text-align: right;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}

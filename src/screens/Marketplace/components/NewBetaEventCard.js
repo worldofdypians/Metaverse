@@ -31,6 +31,16 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
           ? "upcoming-dyp-event"
           : activeTab === "dypiusv2"
           ? "upcoming-dyp-event2"
+          : data.title === "SEI"
+          ? "upcoming-sei-event"
+          : data.title === "CORE"
+          ? "upcoming-core-event"
+          : data.title === "VICTION"
+          ? "upcoming-viction-event"
+          : data.title === "Immutable"
+          ? "upcoming-immutable-event"
+          : data.title === "MultiversX"
+          ? "upcoming-multivers-event"
           : "upcoming-mint-wrapper-coin98"
       } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column d-flex align-items-center justify-content-between px-0`}
       onClick={onOpenPopup}
@@ -54,7 +64,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
               >
                 {data.eventStatus === "Live" && (
                   <div
-                    class="pulsatingDot"
+                  className="pulsatingDot"
                     style={{ width: 7, height: 7, marginRight: 5 }}
                   ></div>
                 )}
