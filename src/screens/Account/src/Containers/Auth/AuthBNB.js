@@ -254,21 +254,21 @@ function AuthBNB({
               >
                 {successLink === false && (
                   <div className="mt-3">
-                    <ul class="timeline m-0 p-0" id="timeline">
-                      <li class="col-3 li complete">
-                        <div class="status">
+                    <ul className="timeline m-0 p-0" id="timeline">
+                      <li className="col-3 li complete">
+                        <div className="status">
                           <span className="text-white statusIndex">1</span>
                           <h4 className="listtext"> Register </h4>
                         </div>
                       </li>
                       <li class={`col-3 li ${showVerify && "complete"} `}>
-                        <div class="status">
+                        <div className="status">
                           <span className="text-white statusIndex">2</span>
                           <h4 className="listtext"> Verify </h4>
                         </div>
                       </li>
                       <li class={`col-3 li ${playerCreation && "complete"} `}>
-                        <div class="status">
+                        <div className="status">
                           <span className="text-white statusIndex">3</span>
                           <h4 className="listtext"> Profile </h4>
                         </div>
@@ -277,7 +277,7 @@ function AuthBNB({
                         class={`col-2 li ${linkWallet && "complete"}`}
                         style={{ width: 0 }}
                       >
-                        <div class="status">
+                        <div className="status">
                           <span className="text-white statusIndex">4</span>
                           <h4
                             className="listtext"
