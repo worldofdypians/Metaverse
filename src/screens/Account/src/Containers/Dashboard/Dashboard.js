@@ -47,6 +47,7 @@ import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
+import GenesisLeaderboard from "../../Components/LeaderBoard/GenesisLeaderboard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 import immutableIcon from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
@@ -404,6 +405,7 @@ function Dashboard({
   const [skaleEarnToken, setSkaleEarnToken] = useState(0);
   const [skalePoints, setSkalePoints] = useState(0);
   const [leaderboard, setLeaderboard] = useState(false);
+  const [genesisLeaderboard, setGenesisLeaderboard] = useState(false)
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
@@ -4605,7 +4607,7 @@ function Dashboard({
                           setLeaderboard(true);
                         }}
                         onOpenGenesisLeaderboard={() => {
-                          setLeaderboard(true);
+                          setGenesisLeaderboard(true);
                         }}
                         onPremiumClick={() => {
                           setgetPremiumPopup(true);
@@ -4997,6 +4999,53 @@ function Dashboard({
                         </div>
                       </OutsideClickHandler>
                     )}
+
+{genesisLeaderboard && (
+                      <OutsideClickHandler
+                        onOutsideClick={() => setGenesisLeaderboard(false)}
+                      >
+                        <div
+                          className="popup-wrapper leaderboard-popup popup-active p-3"
+                          id="leaderboard"
+                          style={{ width: "35%", pointerEvents: "auto" }}
+                        >
+                          <div className="d-flex align-items-center justify-content-between">
+                            <h2
+                              className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+                            >
+                              <mark className={`font-organetto bundletag`}>
+                                Genesis
+                              </mark>{" "}
+                              Leaderboard
+                            </h2>
+                        
+                            <img
+                              src={xMark}
+                              onClick={() => setGenesisLeaderboard(false)}
+                              alt=""
+                              style={{ cursor: "pointer" }}
+                            />
+                          </div>
+                        
+                          <GenesisLeaderboard
+                            username={data?.getPlayer?.displayName}
+                            userId={data?.getPlayer?.playerId}
+                            dypBalancebnb={dypBalancebnb}
+                            address={data?.getPlayer?.wallet?.publicAddress}
+                            availableTime={goldenPassRemainingTime}
+                            email={email}
+                            isPremium={isPremium}
+                            allBnbData={allBnbData}
+                            allSkaleData={allSkaleData}
+                            dailyplayerData={dailyplayerData}
+                            weeklyplayerData={weeklyplayerData}
+                            monthlyplayerData={monthlyplayerData}
+                            genesisData={genesisData}
+                          />
+                        </div>
+                      </OutsideClickHandler>
+                    )}
+
 
                     {myRewardsPopup && (
                       <OutsideClickHandler

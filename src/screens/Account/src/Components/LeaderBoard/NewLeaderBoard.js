@@ -662,9 +662,17 @@ const NewLeaderBoard = ({
               </div>
             )}
             <div
-              className="d-flex flex-column gap-2 tablewrapper"
+              className="d-flex flex-column gap-2 tablewrapper position-relative"
               style={{ height: optionText === "genesis" ? "345px" : "384px" }}
             >
+              {optionText2 === "bnb" || optionText2 === "skale" ?
+            <>
+            </>
+            :
+            <div className="coming-soon-position d-flex align-items-center justify-content-center">
+              <h6 className="mb-0">Coming Soon</h6>
+            </div>  
+            }
               {optionText !== "genesis" ? (
                 <div className="position-relative">
                   <img
@@ -683,7 +691,7 @@ const NewLeaderBoard = ({
                     {allData.map((leaderboard, index) => (
                       <div
                         key={index}
-                        className={`leaderboard-item monthly-skale d-flex flex-column gap-2 p-0`}
+                        className={`leaderboard-item ${optionText2 === "bnb" || optionText2 === "skale" ? "" : "blur-leaderboard"} monthly-skale d-flex flex-column gap-2 p-0`}
                       >
                         <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
                           <h6 className="leaderboard-title  text-white font-oxanium mb-0">
@@ -1330,7 +1338,7 @@ const NewLeaderBoard = ({
                 />
               )}
             </div>
-            <div className="optionsWrapper2 p-2">
+            <div className={`optionsWrapper2 ${optionText2 === "bnb" || optionText2 === "skale" ? "" : "blur-leaderboard"} p-2`}>
               <div className="d-flex flex-column">
                 <div className="d-flex justify-content-between gap-2 align-items-center">
                   <span className="viewWinners">View previous winners</span>
