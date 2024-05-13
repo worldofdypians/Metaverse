@@ -666,47 +666,47 @@ const NewChestItem = ({
       {rewardTypes !== "premium" ? (
         <img
           className={` ${
-            // chain === "bnb" ? 
+            chain === "bnb" ? 
             "new-chest-item-img"
-            // :"new-chest-item-img-skale"
+            :"new-chest-item-img-skale"
           } ${
             loading ?
-            // (chain === "bnb" ?
+            (chain === "bnb" ?
              "chest-shake" 
-            //  : "chest-pulsate") 
+             : "chest-pulsate") 
             : ""
           }`}
           src={
 
-            // chain === "bnb" || chain === "sei" || chain === "viction" || chain === "core" ?
+            chain === "bnb" || chain === "sei" || chain === "viction" || chain === "core" ?
 
                require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
                   open ? image + "open" : image
                 }.png`)
 
-              // : require(`../../screens/Account/src/Components/WalletBalance/chestImages/skale/${
-              //     open ? chestIndex + "open" : chestIndex
-              //   }.png`)
+              : require(`../../screens/Account/src/Components/WalletBalance/chestImages/skale/${
+                  open ? chestIndex + "open" : chestIndex
+                }.png`)
           }
           alt=""
           style={{
             position: "relative",
             bottom: "5px",
-            filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
+            filter: (rewardTypes === "premium" || (chain !== 'bnb' && chain!=='skale')) && !isPremium && "blur(5px)",
           }}
         />
       ) : rewardTypes === "premium" && dummypremiumChests ? (
         <img
           className={`new-chest-item-img ${
             loading ?
-            // (chain === "bnb" ?
+            (chain === "bnb" ?
              "chest-shake" 
-            //  : "chest-pulsate") 
+             : "chest-pulsate") 
             : ""
           }`}
           src={
-            // chain === "bnb" || chain === "core" || chain === "viction" ||  chain === "sei" 
-            //   ? 
+            chain === "bnb" || chain === "core" || chain === "viction" ||  chain === "sei" 
+              ? 
               require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
                   open
                     ? chestIndex % 2 === 1
@@ -715,9 +715,9 @@ const NewChestItem = ({
                     : dummypremiumChests
                 }.png`)
 
-              // : require(`../../screens/Account/src/Components/WalletBalance/chestImages/skale/premium/${
-              //     open ? chestIndex - 10 + "open" : chestIndex - 10
-              //   }.png`)
+              : require(`../../screens/Account/src/Components/WalletBalance/chestImages/skale/premium/${
+                  open ? chestIndex - 10 + "open" : chestIndex - 10
+                }.png`)
           }
           alt=""
           style={{
