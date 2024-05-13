@@ -23,9 +23,9 @@ import base from "./myrewardsAssets/newAssets/treasureHunt/base.svg";
 import cmc from "./myrewardsAssets/newAssets/treasureHunt/cmc.svg";
 import coingecko from "./myrewardsAssets/newAssets/treasureHunt/coingecko.svg";
 import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
-import seiIcon from '../../../../../components/NewDailyBonus/assets/seiIcon.svg';
-import coreIcon from '../../../../../components/NewDailyBonus/assets/coreIcon.svg';
-import victionIcon from '../../../../../components/NewDailyBonus/assets/victionIcon.svg';
+import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
+import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
+import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 
 import dypius from "./myrewardsAssets/newAssets/treasureHunt/dypius.svg";
 import gate from "./myrewardsAssets/newAssets/treasureHunt/gate.svg";
@@ -937,7 +937,11 @@ const MyRewardsPopupNew = ({
                     2
                   )
                 : getFormattedNumber(
-                    Number(skaleEarnUsd) + Number(dypiusPremiumEarnUsd) + Number(coreEarnUsd) + Number(seiEarnUsd) + Number(victionEarnUsd) ,
+                    Number(skaleEarnUsd) +
+                      Number(dypiusPremiumEarnUsd) +
+                      Number(coreEarnUsd) +
+                      Number(seiEarnUsd) +
+                      Number(victionEarnUsd),
                     2
                   )}
             </span>
@@ -1107,7 +1111,21 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(treasureRewardMoney, 2)}
                 </span>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
+             
+
+              {/* <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">CORE</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(treasureRewardMoneyCore, 2)}
+                </span>
+              </div> */}
+            </div>
+
+            <div className="d-flex flex-column gap-2 w-50">
+               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SKALE</span>
                 <span className="item-name-right">
                   $
@@ -1116,20 +1134,7 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(treasureRewardMoneySkale, 2)}
                 </span>
               </div>
-
-              <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">CORE</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(treasureRewardMoneyCore, 2)}
-                </span>
-              </div>
-            </div>
-
-            <div className="d-flex flex-column gap-2 w-50">
-              <div className="d-flex w-100 justify-content-between gap-2">
+              {/* <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Viction</span>
                 <span className="item-name-right">
                   $
@@ -1146,7 +1151,7 @@ const MyRewardsPopupNew = ({
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(treasureRewardMoneySei, 2)}
                 </span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -1195,7 +1200,7 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(0, 2)}
                 </span>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
+              {/* <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CORE</span>
                 <span className="item-name-right">
                   $
@@ -1212,7 +1217,7 @@ const MyRewardsPopupNew = ({
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(0, 2)}
                 </span>
-              </div>
+              </div> */}
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
@@ -1234,7 +1239,7 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(0, 2)}
                 </span>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
+              {/* <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
                 <span className="item-name-right">
                   $
@@ -1242,7 +1247,7 @@ const MyRewardsPopupNew = ({
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(0, 2)}
                 </span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -1268,15 +1273,7 @@ const MyRewardsPopupNew = ({
             <div className="treasure-hunt-item-wrapper-active">
               <div className="d-flex justify-content-between gap-4 align-items-start">
                 <div className="d-flex flex-column gap-2 w-50">
-                  <div className="d-flex w-100 justify-content-between gap-2">
-                    <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img src={skale} alt="" />
-                      SKALE
-                    </span>
-                    <span className="item-name-right">
-                      ${getFormattedNumber(skaleEarnUsd, 2)}
-                    </span>
-                  </div>
+         
                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
                       <img src={dypiusPremium} alt="" />
@@ -1286,21 +1283,38 @@ const MyRewardsPopupNew = ({
                       ${getFormattedNumber(dypiusPremiumEarnUsd, 2)}
                     </span>
                   </div>
-                  <div className="d-flex w-100 justify-content-between gap-2">
+                  {/* <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img src={coreIcon} alt="" style={{width: 16, height: 16}}/>
+                      <img
+                        src={coreIcon}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
                       CORE
                     </span>
                     <span className="item-name-right">
                       ${getFormattedNumber(coreEarnUsd, 2)}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="d-flex flex-column gap-2 w-50">
-                  <div className="d-flex w-100 justify-content-between gap-2">
+                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img src={seiIcon} alt="" style={{width: 16, height: 16}}/>
+                      <img src={skale} alt="" />
+                      SKALE
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(skaleEarnUsd, 2)}
+                    </span>
+                  </div>
+                  {/* <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={seiIcon}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
                       SEI
                     </span>
                     <span className="item-name-right">
@@ -1310,13 +1324,17 @@ const MyRewardsPopupNew = ({
 
                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img src={victionIcon} alt="" style={{width: 16, height: 16}}/>
+                      <img
+                        src={victionIcon}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
                       Viction
                     </span>
                     <span className="item-name-right">
                       ${getFormattedNumber(victionEarnUsd, 2)}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

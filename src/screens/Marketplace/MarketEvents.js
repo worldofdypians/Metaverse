@@ -241,146 +241,118 @@ const MarketEvents = ({
   };
 
   const dummyBetaPassData2 = [
-    {
-      title: "MultiversX",
-      logo: multiversLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in EGLD Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "XXX XX, XXXX",
-      backgroundImage: multiversBg,
-      popupInfo: {
-        title: "MultiversX",
-        chain: "MultiversX Chain",
-        linkState: "multiversx",
-        rewards: "EGLD",
-        status: "Coming Soon",
-        id: "event16",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in EGLD Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "XXX XX, XXXX",
-      },
-    },
-    {
-      title: "VICTION",
-      logo: victionLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in VIC Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "XXX XX, XXXX",
-      backgroundImage: victionBg,
-      popupInfo: {
-        title: "VICTION",
-        chain: "VICTION Chain",
-        linkState: "viction",
-        rewards: "VIC",
-        status: "Coming Soon",
-        id: "event14",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in VIC Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "XXX XX, XXXX",
-      },
-    },
-    {
-      title: "Immutable",
-      logo: immutableLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in IMX Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "XXX XX, XXXX",
-      backgroundImage: immutableBg,
-      popupInfo: {
-        title: "Immutable",
-        chain: "Immutable Chain",
-        linkState: "immutable",
-        rewards: "IMX",
-        status: "Coming Soon",
-        id: "event15",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in IMX Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "XXX XX, XXXX",
-      },
-    },
-    {
-      title: "SEI",
-      logo: seiLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in SEI Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "XXX XX, XXXX",
-      backgroundImage: seiBg,
-      popupInfo: {
-        title: "SEI",
-        chain: "SEI Chain",
-        linkState: "sei",
-        rewards: "SEI",
-        status: "Coming Soon",
-        id: "event13",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in SEI Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "XXX XX, XXXX",
-      },
-    },
-    {
-      title: "CORE",
-      logo: coreLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in CORE Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "XXX XX, XXXX",
-      backgroundImage: coreBg,
-      popupInfo: {
-        title: "CORE",
-        chain: "CORE Chain",
-        linkState: "core",
-        rewards: "CORE",
-        status: "Coming Soon",
-        id: "event12",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in SEI Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "XXX XX, XXXX",
-      },
-    },
+    // {
+    //   title: "MultiversX",
+    //   logo: multiversLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$20,000 in EGLD Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "XXX XX, XXXX",
+    //   backgroundImage: multiversBg,
+    //   popupInfo: {
+    //     title: "MultiversX",
+    //     chain: "MultiversX Chain",
+    //     linkState: "multiversx",
+    //     rewards: "EGLD",
+    //     status: "Coming Soon",
+    //     id: "event16",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in EGLD Rewards",
+    //     eventDuration: dypius2LastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //     eventDate: "XXX XX, XXXX",
+    //   },
+    // },
+    // {
+    //   title: "VICTION",
+    //   logo: victionLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$20,000 in VIC Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "XXX XX, XXXX",
+    //   backgroundImage: victionBg,
+    //   popupInfo: {
+    //     title: "VICTION",
+    //     chain: "VICTION Chain",
+    //     linkState: "viction",
+    //     rewards: "VIC",
+    //     status: "Coming Soon",
+    //     id: "event14",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in VIC Rewards",
+    //     eventDuration: dypius2LastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //     eventDate: "XXX XX, XXXX",
+    //   },
+    // },
+    // {
+    //   title: "SEI",
+    //   logo: seiLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$20,000 in SEI Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "XXX XX, XXXX",
+    //   backgroundImage: seiBg,
+    //   popupInfo: {
+    //     title: "SEI",
+    //     chain: "SEI Chain",
+    //     linkState: "sei",
+    //     rewards: "SEI",
+    //     status: "Coming Soon",
+    //     id: "event13",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in SEI Rewards",
+    //     eventDuration: dypius2LastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //     eventDate: "XXX XX, XXXX",
+    //   },
+    // },
+    // {
+    //   title: "CORE",
+    //   logo: coreLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$20,000 in CORE Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "XXX XX, XXXX",
+    //   backgroundImage: coreBg,
+    //   popupInfo: {
+    //     title: "CORE",
+    //     chain: "CORE Chain",
+    //     linkState: "core",
+    //     rewards: "CORE",
+    //     status: "Coming Soon",
+    //     id: "event12",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in SEI Rewards",
+    //     eventDuration: dypius2LastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //     eventDate: "XXX XX, XXXX",
+    //   },
+    // },
     {
       title: "Dypius Premium",
       logo: dypiusPremium36,
@@ -1133,9 +1105,7 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -1148,6 +1118,9 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
+                     <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1293,7 +1266,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 7).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
                           <BetaEventCard
                             activeTab={item.activeTab}
                             data={item}
@@ -1434,7 +1407,6 @@ const MarketEvents = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
-
                   <div className="border-0 upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">MultiversX</h6>
@@ -1455,25 +1427,6 @@ const MarketEvents = ({
                     />
                   </div>
 
-                  <div className="border-0 upcoming-mint-wrapper upcoming-immutable-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">Immutable</h6>
-                      <p className="upcoming-mint-desc">
-                        Join the Immutable Treasure Hunt event for a chance to
-                        grab a share of the $20,000 IMX reward pool.
-                      </p>
-                    </div>
-                    <img
-                      src={immutableBg}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-block"
-                    />
-                    <img
-                      src={immutableMobileBg}
-                      alt=""
-                      className="upcoming-mint-img d-block d-lg-none d-md-none"
-                    />
-                  </div>
                 </div>
               )}
               {activeTab === "past" && (
@@ -1486,7 +1439,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(7, dummyBetaPassData2.length)
+                    .slice(2, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}

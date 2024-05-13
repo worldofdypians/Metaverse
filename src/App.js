@@ -2972,56 +2972,7 @@ function App() {
               }
             />
 
-            <Route
-              exact
-              path="/marketplace/beta-pass/immutable"
-              element={
-                <BetaPassNFT
-                  type={"immutable"}
-                  ethTokenData={ethTokenData}
-                  dypTokenData={dypTokenData}
-                  isConnected={isConnected}
-                  handleConnect={handleShowWalletModal}
-                  listedNFTS={listedNFTS}
-                  coinbase={coinbase}
-                  timepieceBought={timepieceBought}
-                  handleRefreshListing={handleRefreshList}
-                  nftCount={nftCount}
-                  cawsArray={allCawsForTimepieceMint}
-                  mintloading={mintloading}
-                  chainId={chainId}
-                  handleMint={handleTimepieceMint}
-                  mintStatus={mintStatus}
-                  textColor={textColor}
-                  calculateCaws={calculateCaws}
-                  totalCreated={totalTimepieceCreated}
-                  totalCoingeckoNft={totalCoingeckoNft}
-                  myNFTSCoingecko={MyNFTSCoingecko}
-                  myGateNfts={myGateNfts}
-                  totalGateNft={totalGateNft}
-                  totalBaseNft={totalBaseNft}
-                  myBaseNFTs={myBaseNFTs}
-                  totalConfluxNft={totalConfluxNft}
-                  myConfluxNfts={myConfluxNfts}
-                  totalCoreNft={totalCoreNft}
-                  myCoreNfts={myCoreNfts}
-                  totalMultiversNft={totalMultiversNft}
-                  totalImmutableNft={totalImmutableNft}
-                  myImmutableNfts={myImmutableNfts}
-                  myMultiversNfts={myMultiversNfts}
-                  totalseiNft={totalseiNft}
-                  myseiNfts={myseiNfts}
-                  totalVictionNft={totalVictionNft}
-                  myVictionNfts={myVictionNfts}
-                  timepieceMetadata={timepieceMetadata}
-                  handleSwitchNetwork={handleSwitchNetwork}
-                  success={success}
-                  showWalletConnect={() => {
-                    setwalletModal(true);
-                  }}
-                />
-              }
-            />
+      
 
             <Route
               exact
@@ -3621,49 +3572,8 @@ function App() {
                 />
               }
             />
-            <Route
-              exact
-              path="/marketplace/mint/immutable"
-              element={
-                <MarketMint
-                  coinbase={coinbase}
-                  showWalletConnect={() => {
-                    setwalletModal(true);
-                  }}
-                  cawsArray={allCawsForTimepieceMint}
-                  mintloading={mintloading}
-                  isConnected={isConnected}
-                  chainId={chainId}
-                  handleMint={handleTimepieceMint}
-                  mintStatus={mintStatus}
-                  textColor={textColor}
-                  calculateCaws={calculateCaws}
-                  totalCreated={totalTimepieceCreated}
-                  timepieceMetadata={timepieceMetadata}
-                  myConfluxNFTsCreated={myConfluxNFTsCreated}
-                  mybaseNFTsCreated={mybaseNFTsCreated}
-                  myskaleNFTsCreated={myskaleNFTsCreated}
-                  handleConfluxMint={handleConfluxNftMint}
-                  handleBaseNftMint={handleBaseNftMint}
-                  confluxMintAllowed={confluxMintAllowed}
-                  baseMintAllowed={baseMintAllowed}
-                  skaleMintAllowed={skaleMintAllowed}
-                  coreMintAllowed={coreMintAllowed}
-                  victionMintAllowed={victionMintAllowed}
-                  totalCoreNft={totalCoreNft}
-                  myCoreNfts={myCoreNfts}
-                  totalMultiversNft={totalMultiversNft}
-                  totalImmutableNft={totalImmutableNft}
-                  myImmutableNfts={myImmutableNfts}
-                  myMultiversNfts={myMultiversNfts}
-                  totalseiNft={totalseiNft}
-                  myseiNfts={myseiNfts}
-                  totalVictionNft={totalVictionNft}
-                  myVictionNfts={myVictionNfts}
-                />
-              }
-            />
-            <Route
+  
+            {/* <Route
               exact
               path="/marketplace/mint/viction"
               element={
@@ -3704,9 +3614,9 @@ function App() {
                   myVictionNfts={myVictionNfts}
                 />
               }
-            />
+            /> */}
 
-            <Route
+            {/* <Route
               exact
               path="/marketplace/mint/multiversx"
               element={
@@ -3747,9 +3657,9 @@ function App() {
                   myVictionNfts={myVictionNfts}
                 />
               }
-            />
+            /> */}
 
-            <Route
+            {/* <Route
               exact
               path="/marketplace/mint/core"
               element={
@@ -3790,8 +3700,8 @@ function App() {
                   myVictionNfts={myVictionNfts}
                 />
               }
-            />
-            <Route
+            /> */}
+            {/* <Route
               exact
               path="/marketplace/mint/sei"
               element={
@@ -3830,7 +3740,7 @@ function App() {
                   myVictionNfts={myVictionNfts}
                 />
               }
-            />
+            /> */}
           </Routes>
           {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
           <ScrollTop />
