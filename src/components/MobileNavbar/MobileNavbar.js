@@ -146,42 +146,42 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false)
       } 
-      else if (chainId === 1116 ) {
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(true);
-        setVictionState(false);
-        setSeiState(false)
-      }
-      else if (chainId === 88 ) {
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(true);
-        setSeiState(false)
-      }
-      else if (chainId === 713715 ) {
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(true)
-      }
+      // else if (chainId === 1116 ) {
+      //   setAvaxState(false);
+      //   setBnbState(false);
+      //   setEthState(false);
+      //   setBaseState(false);
+      //   setConfluxState(false);
+      //   setopBnbState(false);
+      //   setSkaleState(false);
+      //   setCoreState(true);
+      //   setVictionState(false);
+      //   setSeiState(false)
+      // }
+      // else if (chainId === 88 ) {
+      //   setAvaxState(false);
+      //   setBnbState(false);
+      //   setEthState(false);
+      //   setBaseState(false);
+      //   setConfluxState(false);
+      //   setopBnbState(false);
+      //   setSkaleState(false);
+      //   setCoreState(false);
+      //   setVictionState(true);
+      //   setSeiState(false)
+      // }
+      // else if (chainId === 713715 ) {
+      //   setAvaxState(false);
+      //   setBnbState(false);
+      //   setEthState(false);
+      //   setBaseState(false);
+      //   setConfluxState(false);
+      //   setopBnbState(false);
+      //   setSkaleState(false);
+      //   setCoreState(false);
+      //   setVictionState(false);
+      //   setSeiState(true)
+      // }
       else {
         setAvaxState(false);
         setBnbState(false);
@@ -464,12 +464,12 @@ const MobileNavbar = ({
                         ? conflux
                         : skaleState === true
                         ? skale
-                        : coreState === true
-                        ? core
-                        : victionState === true
-                        ? viction
-                        : seiState === true
-                        ? sei
+                        // : coreState === true
+                        // ? core
+                        // : victionState === true
+                        // ? viction
+                        // : seiState === true
+                        // ? sei
                         : error
                     }
                       height={16}
@@ -491,12 +491,12 @@ const MobileNavbar = ({
                             ? "Conflux"
                             : skaleState === true
                             ? "SKALE"
-                            : coreState === true
-                            ? "CORE"
-                            : victionState === true
-                            ? "Viction"
-                            : seiState === true
-                            ? "Sei"
+                            // : coreState === true
+                            // ? "CORE"
+                            // : victionState === true
+                            // ? "Viction"
+                            // : seiState === true
+                            // ? "Sei"
                             : "Unsupported"}
                     </span>
 
@@ -516,10 +516,10 @@ const MobileNavbar = ({
                     <img src={bnb} alt="" />
                     opBNB Chain
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleCorePool()}>
+                  {/* <Dropdown.Item onClick={() => handleCorePool()}>
                     <img src={core} width={20} height={20} alt="" />
                     CORE
-                  </Dropdown.Item>
+                  </Dropdown.Item> */}
                   <Dropdown.Item onClick={() => handleSkalePool()}>
                     <img src={skale} alt="" />
                     SKALE
@@ -532,14 +532,14 @@ const MobileNavbar = ({
                     <img src={base} alt="" />
                     Base
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleSeiPool()}>
+                  {/* <Dropdown.Item onClick={() => handleSeiPool()}>
                     <img src={sei} width={20} height={20} alt="" />
                     Sei
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleVictionPool()}>
+                  </Dropdown.Item> */}
+                  {/* <Dropdown.Item onClick={() => handleVictionPool()}>
                     <img src={viction} width={20} height={20} alt="" />
                     Viction
-                  </Dropdown.Item>
+                  </Dropdown.Item> */}
                   <Dropdown.Item onClick={() => handleAvaxPool()}>
                     <img src={avax} alt="" />
                     Avalanche

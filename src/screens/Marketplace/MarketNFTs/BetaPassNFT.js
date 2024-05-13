@@ -50,7 +50,6 @@ import immutableBanner from "./assets/immutableBanner.webp";
 import multiversBanner from "./assets/multiversBanner.webp";
 import coreBanner from "./assets/coreBanner.webp";
 
-
 import avaxbetapassBanner from "./assets/betapassAvax.png";
 import geckobetapassBanner from "./assets/betaPassBannerGecko.png";
 import SignUpGecko from "../../Account/src/Containers/SingUp/SignUpGecko";
@@ -660,9 +659,6 @@ const BetaPassNFT = ({
     } else if (locationState.includes("/beta-pass/multiversx")) {
       setSelectedMint(multiversData);
       setMintTitle("multiversx");
-    } else if (locationState.includes("/beta-pass/immutable")) {
-      setSelectedMint(immutableData);
-      setMintTitle("immutable");
     }
   }, [locationState]);
 
@@ -780,8 +776,6 @@ const BetaPassNFT = ({
                           ? "CORE"
                           : mintTitle === "multiversx"
                           ? "MultiversX"
-                          : mintTitle === "immutable"
-                          ? "Immutable"
                           : mintTitle === "sei"
                           ? "SEI"
                           : mintTitle === "viction"
@@ -856,8 +850,6 @@ const BetaPassNFT = ({
                         ? coreBanner
                         : mintTitle === "sei"
                         ? seiBanner
-                        : mintTitle === "immutable"
-                        ? immutableBanner
                         : betapassBanner
                     }
                     className="w-100"
@@ -870,57 +862,7 @@ const BetaPassNFT = ({
                 style={{ zIndex: 2 }}
               >
                 <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
-                       <NavLink
-                    to={"/marketplace/beta-pass/multiversx"}
-                    className={`${
-                      location.pathname.includes("multiversx") &&
-                      "selected-beta-pass-item"
-                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
-                    onClick={() => {
-                      setSelectedMint(multiversData);
-                      setMintTitle("multiversx");
-                    }}
-                  >
-                    <img
-                      src={multiversLogo}
-                      className="beta-pass-chain-img"
-                      alt=""
-                    />
-                    <span>MultiversX</span>
-                  </NavLink>
-                    <NavLink
-                    to={"/marketplace/beta-pass/sei"}
-                    className={`${
-                      location.pathname.includes("sei") &&
-                      "selected-beta-pass-item"
-                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
-                    onClick={() => {
-                      setSelectedMint(seiData);
-                      setMintTitle("sei");
-                    }}
-                  >
-                    <img src={seiLogo} className="beta-pass-chain-img" alt="" />
-                    <span>SEI</span>
-                  </NavLink> 
-                       <NavLink
-                    to={"/marketplace/beta-pass/viction"}
-                    className={`${
-                      location.pathname.includes("viction") &&
-                      "selected-beta-pass-item"
-                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
-                    onClick={() => {
-                      setSelectedMint(victionData);
-                      setMintTitle("viction");
-                    }}
-                  >
-                    <img
-                      src={victionLogo}
-                      className="beta-pass-chain-img"
-                      alt=""
-                    />
-                    <span>VICTION</span>
-                  </NavLink>
-                   <NavLink
+                  <NavLink
                     to={"/marketplace/beta-pass/core"}
                     className={`${
                       location.pathname.includes("core") &&
@@ -938,27 +880,56 @@ const BetaPassNFT = ({
                     />
                     <span>CORE</span>
                   </NavLink>
-                
-              
                   <NavLink
-                    to={"/marketplace/beta-pass/immutable"}
+                    to={"/marketplace/beta-pass/multiversx"}
                     className={`${
-                      location.pathname.includes("immutable") &&
+                      location.pathname.includes("multiversx") &&
                       "selected-beta-pass-item"
                     } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
                     onClick={() => {
-                      setSelectedMint(immutableData);
-                      setMintTitle("immutable");
+                      setSelectedMint(multiversData);
+                      setMintTitle("multiversx");
                     }}
                   >
                     <img
-                      src={immutableLogo}
+                      src={multiversLogo}
                       className="beta-pass-chain-img"
                       alt=""
                     />
-                    <span>Immutable</span>
+                    <span>MultiversX</span>
                   </NavLink>
-          
+                  <NavLink
+                    to={"/marketplace/beta-pass/sei"}
+                    className={`${
+                      location.pathname.includes("sei") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(seiData);
+                      setMintTitle("sei");
+                    }}
+                  >
+                    <img src={seiLogo} className="beta-pass-chain-img" alt="" />
+                    <span>SEI</span>
+                  </NavLink>
+                  <NavLink
+                    to={"/marketplace/beta-pass/viction"}
+                    className={`${
+                      location.pathname.includes("viction") &&
+                      "selected-beta-pass-item"
+                    } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                    onClick={() => {
+                      setSelectedMint(victionData);
+                      setMintTitle("viction");
+                    }}
+                  >
+                    <img
+                      src={victionLogo}
+                      className="beta-pass-chain-img"
+                      alt=""
+                    />
+                    <span>VICTION</span>
+                  </NavLink>
                 </div>
                 <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
                   <NavLink
@@ -1109,8 +1080,7 @@ const BetaPassNFT = ({
                   mintTitle !== "core" &&
                   mintTitle !== "viction" &&
                   mintTitle !== "sei" &&
-                  mintTitle !== "multiversx" &&
-                  mintTitle !== "immutable" && (
+                  mintTitle !== "multiversx" && (
                     <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
                       <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
                         <div className="d-flex flex-column position-relative">
@@ -1187,8 +1157,7 @@ const BetaPassNFT = ({
                     mintTitle === "viction" ||
                     mintTitle === "core" ||
                     mintTitle === "sei" ||
-                    mintTitle === "multiversx" ||
-                    mintTitle === "immutable"
+                    mintTitle === "multiversx"
                       ? "col-12 col-md-12 col-xxl-7 mt-0 px-0"
                       : "col-12 col-md-12 col-xxl-5 mt-0 px-0"
                   }
@@ -1218,7 +1187,6 @@ const BetaPassNFT = ({
                         mintTitle !== "sei" &&
                         mintTitle !== "core" &&
                         mintTitle !== "viction" &&
-                        mintTitle !== "immutable" &&
                         mintTitle !== "multiversx" && (
                           <>
                             Mint your {selectedMint.title}{" "}
@@ -1238,8 +1206,7 @@ const BetaPassNFT = ({
                         mintTitle === "core" ||
                         mintTitle === "sei" ||
                         mintTitle === "viction" ||
-                        mintTitle === "multiversx" ||
-                        mintTitle === "immutable") && (
+                        mintTitle === "multiversx") && (
                         <>
                           Get your {selectedMint.title}{" "}
                           <br className="d-none d-lg-flex" />
@@ -1317,8 +1284,7 @@ const BetaPassNFT = ({
                           mintTitle === "sei" ||
                           mintTitle === "core" ||
                           mintTitle === "viction" ||
-                          mintTitle === "multiversx" ||
-                          mintTitle === "immutable") && (
+                          mintTitle === "multiversx") && (
                           <div className="position-relative">
                             <img src={pinkAreaBase} alt="" />
                           </div>
@@ -1334,6 +1300,29 @@ const BetaPassNFT = ({
                           </div>
                         )}
                       </div>
+                      {(mintTitle === "core" ||
+                        mintTitle === "viction" ||
+                        mintTitle === "sei" ||
+                        mintTitle === "multiversx") && (
+                        <span
+                          className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
+                        >
+                          <img
+                            src={
+                              mintTitle === "core"
+                                ? coreLogo
+                                : mintTitle === "viction"
+                                ? victionLogo
+                                : mintTitle === "multiversx"
+                                ? multiversLogo
+                                : seiLogo
+                            }
+                            style={{width: 20, height: 20}}
+                            alt=""
+                          />{" "}
+                          Coming Soon
+                        </span>
+                      )}
                       {/* <img
                         src={
                           mintTitle === "avalanche"
@@ -1453,8 +1442,7 @@ const BetaPassNFT = ({
                     mintTitle === "sei" ||
                     mintTitle === "core" ||
                     mintTitle === "viction" ||
-                    mintTitle === "multiversx" ||
-                    mintTitle === "immutable"
+                    mintTitle === "multiversx"
                       ? "col-12 col-md-12 col-xxl-5 mt-0 px-0 px-lg-2"
                       : "col-12 col-md-12 col-xxl-4 mt-0 px-0 px-lg-2"
                   }
@@ -1469,8 +1457,7 @@ const BetaPassNFT = ({
                   mintTitle !== "core" &&
                   mintTitle !== "sei" &&
                   mintTitle !== "viction" &&
-                  mintTitle !== "multiversx" &&
-                  mintTitle !== "immutable" ? (
+                  mintTitle !== "multiversx" ? (
                     <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
                       <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
                         <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
@@ -1740,7 +1727,6 @@ const BetaPassNFT = ({
                         (mintTitle === "core" ||
                           mintTitle === "viction" ||
                           mintTitle === "sei" ||
-                          mintTitle === "immutable" ||
                           mintTitle === "multiversx") && (
                           <div className="d-flex align-items-center justify-content-around gap-2">
                             <button
@@ -2638,16 +2624,13 @@ const BetaPassNFT = ({
                         {alreadyRegistered &&
                           (mintTitle === "core" ||
                             mintTitle === "viction" ||
-                            mintTitle === "sei"||
-                            mintTitle === "immutable"||
+                            mintTitle === "sei" ||
                             mintTitle === "multiversx") && (
                             <h6 className="land-name">
                               {(mintTitle === "core" && totalCoreNft > 0) ||
                               (mintTitle === "sei" && totalseiNft > 0) ||
                               (mintTitle === "viction" &&
                                 totalVictionNft > 0) ||
-                              (mintTitle === "immutable" &&
-                                totalImmutableNft > 0) ||
                               (mintTitle === "multiversx" &&
                                 totalMultiversNft > 0)
                                 ? "My NFT"
@@ -2666,8 +2649,7 @@ const BetaPassNFT = ({
                           (mintTitle === "core" ||
                             mintTitle === "viction" ||
                             mintTitle === "sei" ||
-                            mintTitle === "multiversx" ||
-                            mintTitle === "immutable") && (
+                            mintTitle === "multiversx") && (
                             <div>
                               <ul className="timeline m-0 p-0" id="timeline">
                                 <li className="col-3 li complete">
@@ -2714,8 +2696,7 @@ const BetaPassNFT = ({
                           (mintTitle === "core" ||
                             mintTitle === "viction" ||
                             mintTitle === "sei" ||
-                            mintTitle === "multiversx" ||
-                            mintTitle === "immutable") && (
+                            mintTitle === "multiversx") && (
                             <SignUpGecko
                               onSuccessVerify={(value) => {
                                 setplayerCreation(value);
@@ -2745,7 +2726,6 @@ const BetaPassNFT = ({
                           (mintTitle === "core" ||
                             mintTitle === "viction" ||
                             mintTitle === "sei" ||
-                            mintTitle === "immutable" ||
                             mintTitle === "multiversx") && (
                             <PlayerCreationGecko
                               onSuccessCreation={() => {
@@ -2760,8 +2740,7 @@ const BetaPassNFT = ({
                           (mintTitle === "core" ||
                             mintTitle === "viction" ||
                             mintTitle === "sei" ||
-                            mintTitle === "multiversx" ||
-                            mintTitle === "immutable") && (
+                            mintTitle === "multiversx") && (
                             <div className="d-flex flex-column gap-4 justify-content-between p-4">
                               <span className={"createplayertxt"}>
                                 *Make sure to connect the same wallet address as
@@ -2803,17 +2782,14 @@ const BetaPassNFT = ({
                           (mintTitle === "core" ||
                             mintTitle === "viction" ||
                             mintTitle === "sei" ||
-                            mintTitle === "multiversx" ||
-                            mintTitle === "immutable") && (
+                            mintTitle === "multiversx") && (
                             <div className="d-flex flex-column justify-content-between h-100">
                               {(mintTitle === "core" && totalCoreNft === 0) ||
                               (mintTitle === "viction" &&
                                 totalVictionNft === 0) ||
                               (mintTitle === "sei" && totalseiNft === 0) ||
                               (mintTitle === "multiversx" &&
-                                totalMultiversNft === 0) ||
-                              (mintTitle === "immutable" &&
-                                totalImmutableNft === 0) ? (
+                                totalMultiversNft === 0) ? (
                                 <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
                                   <div
                                     className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}
@@ -2847,8 +2823,6 @@ const BetaPassNFT = ({
                                       ? myVictionNfts[0]
                                       : mintTitle === "core"
                                       ? myCoreNfts[0]
-                                      : mintTitle === "immutable"
-                                      ? myImmutableNfts[0]
                                       : myMultiversNfts[0]
                                   }/${
                                     mintTitle === "sei"
@@ -2857,8 +2831,6 @@ const BetaPassNFT = ({
                                       ? window.config.nft_viction_address
                                       : mintTitle === "core"
                                       ? window.config.nft_core_address
-                                      : mintTitle === "immutable"
-                                      ? window.config.nft_immutable_address
                                       : window.config.nft_multivers_address
                                   }`}
                                   onClick={() => {
@@ -2869,8 +2841,6 @@ const BetaPassNFT = ({
                                         ? myVictionNfts[0]
                                         : mintTitle === "core"
                                         ? myCoreNfts[0]
-                                        : mintTitle === "immutable"
-                                        ? myImmutableNfts[0]
                                         : myMultiversNfts[0],
                                       mintTitle === "sei"
                                         ? window.config.nft_sei_address
@@ -2878,8 +2848,6 @@ const BetaPassNFT = ({
                                         ? window.config.nft_viction_address
                                         : mintTitle === "core"
                                         ? window.config.nft_core_address
-                                        : mintTitle === "immutable"
-                                        ? window.config.nft_immutable_address
                                         : window.config.nft_multivers_address
                                     );
                                   }}
@@ -2895,9 +2863,6 @@ const BetaPassNFT = ({
                                           : totalCoreNft > 0 &&
                                             mintTitle === "core"
                                           ? "core-active"
-                                          : totalImmutableNft > 0 &&
-                                            mintTitle === "immutable"
-                                          ? "immutable-active"
                                           : totalMultiversNft > 0 &&
                                             mintTitle === "multiversx"
                                           ? "multivers-active"
@@ -2923,25 +2888,22 @@ const BetaPassNFT = ({
                                           fontSize: 16,
                                         }}
                                       >
-                                        { mintTitle === "sei"
-                                        ? 'SEIBP'
-                                        : mintTitle === "viction"
-                                        ? 'VCBP'
-                                        : mintTitle === "core"
-                                        ? 'COBP'
-                                        : mintTitle === "immutable"
-                                        ? 'IMBP'
-                                        : 'MXBP'
-                                      }
-                                         {`#${mintTitle === "sei"
-                                        ? myseiNfts[0]
-                                        : mintTitle === "viction"
-                                        ? myVictionNfts[0]
-                                        : mintTitle === "core"
-                                        ? myCoreNfts[0]
-                                        : mintTitle === "immutable"
-                                        ? myImmutableNfts[0]
-                                        : myMultiversNfts[0]}`}
+                                        {mintTitle === "sei"
+                                          ? "SEIBP"
+                                          : mintTitle === "viction"
+                                          ? "VCBP"
+                                          : mintTitle === "core"
+                                          ? "COBP"
+                                          : "MXBP"}
+                                        {`#${
+                                          mintTitle === "sei"
+                                            ? myseiNfts[0]
+                                            : mintTitle === "viction"
+                                            ? myVictionNfts[0]
+                                            : mintTitle === "core"
+                                            ? myCoreNfts[0]
+                                            : myMultiversNfts[0]
+                                        }`}
                                       </h6>
                                     </div>
                                   </div>

@@ -870,7 +870,7 @@ const GetPremiumPopup = ({
                 <img src={skaleIcon} alt="" style={{ width: 18, height: 18 }} />
                 <span className="subscription-chain mb-0">SKALE</span>
               </div>
-              <div className="d-flex align-items-center gap-2">
+              {/* <div className="d-flex align-items-center gap-2">
                 <img src={coreIcon} alt="" style={{ width: 18, height: 18 }} />
                 <span className="subscription-chain mb-0">CORE</span>
               </div>
@@ -885,7 +885,7 @@ const GetPremiumPopup = ({
               <div className="d-flex align-items-center gap-2">
                 <img src={seiIcon} alt="" style={{ width: 18, height: 18 }} />
                 <span className="subscription-chain mb-0">SEI</span>
-              </div>
+              </div> */}
             </div>
             <img src={premiumIcon} alt="" />
           </div>
