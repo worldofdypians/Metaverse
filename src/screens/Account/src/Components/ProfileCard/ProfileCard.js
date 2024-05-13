@@ -109,6 +109,8 @@ const ProfileCard = ({
   isPremium,
   isConnected,
   onOpenLeaderboard,
+  onOpenGenesisLeaderboard,
+
   onPremiumClick,
   handleSetAvailableTime,
   userRank,
@@ -721,7 +723,7 @@ const ProfileCard = ({
                         }
                     position-relative
                     d-flex  align-items-center justify-content-between gap-3 position-relative mt-3 mt-lg-0`}
-                        onClick={onOpenLeaderboard}
+                        onClick={onOpenGenesisLeaderboard}
                       >
                          <img
                           src={globe}

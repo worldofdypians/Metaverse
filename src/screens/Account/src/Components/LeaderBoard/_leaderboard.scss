@@ -507,7 +507,7 @@
 }
 
 .blur-leaderboard {
-  filter: blur(10px);
+  filter: blur(5px);
   pointer-events: none;
 }
 .reset-time-lb {
@@ -601,6 +601,23 @@ margin: auto;
     margin-bottom: 0;
     font-family: "Oxanium" !important;
     font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+  }
+}
+
+.coming-soon-position{
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  z-index: 5;
+  h6{
+    margin-bottom: 0;
+    font-family: "Oxanium" !important;
+    font-size: 30px;
     font-weight: 500;
     color: #fff;
   }
