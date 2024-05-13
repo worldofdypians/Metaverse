@@ -4197,34 +4197,36 @@ function Dashboard({
       );
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
-    } else if (chainId === 88) {
-      setChainDropdown(chainDropdowns[7]);
-      setdropdownIcon("usdt");
-      setdropdownTitle("USDT");
-      setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptionviction_tokens)[0]
-      );
-      handleSubscriptionTokenChange(wvictionAddress);
-      handleCheckIfAlreadyApproved(wvictionAddress);
-    } else if (chainId === 1116) {
-      setChainDropdown(chainDropdowns[6]);
-      setdropdownIcon("usdt");
-      setdropdownTitle("USDT");
-      setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptioncore_tokens)[0]
-      );
-      handleSubscriptionTokenChange(wcoreAddress);
-      handleCheckIfAlreadyApproved(wcoreAddress);
-    } else if (chainId === 713715) {
-      setChainDropdown(chainDropdowns[8]);
-      setdropdownIcon("usdt");
-      setdropdownTitle("usdt");
-      setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptionsei_tokens)[0]
-      );
-      handleSubscriptionTokenChange(wseiAddress);
-      handleCheckIfAlreadyApproved(wseiAddress);
-    } else if (chainId === 56) {
+    }
+    //  else if (chainId === 88) {
+    //   setChainDropdown(chainDropdowns[7]);
+    //   setdropdownIcon("usdt");
+    //   setdropdownTitle("USDT");
+    //   setselectedSubscriptionToken(
+    //     Object.keys(window.config.subscriptionviction_tokens)[0]
+    //   );
+    //   handleSubscriptionTokenChange(wvictionAddress);
+    //   handleCheckIfAlreadyApproved(wvictionAddress);
+    // } else if (chainId === 1116) {
+    //   setChainDropdown(chainDropdowns[6]);
+    //   setdropdownIcon("usdt");
+    //   setdropdownTitle("USDT");
+    //   setselectedSubscriptionToken(
+    //     Object.keys(window.config.subscriptioncore_tokens)[0]
+    //   );
+    //   handleSubscriptionTokenChange(wcoreAddress);
+    //   handleCheckIfAlreadyApproved(wcoreAddress);
+    // } else if (chainId === 713715) {
+    //   setChainDropdown(chainDropdowns[8]);
+    //   setdropdownIcon("usdt");
+    //   setdropdownTitle("usdt");
+    //   setselectedSubscriptionToken(
+    //     Object.keys(window.config.subscriptionsei_tokens)[0]
+    //   );
+    //   handleSubscriptionTokenChange(wseiAddress);
+    //   handleCheckIfAlreadyApproved(wseiAddress);
+    // }
+     else if (chainId === 56) {
       setChainDropdown(chainDropdowns[1]);
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -4308,22 +4310,23 @@ function Dashboard({
         window.config.subscriptionskale_tokens[selectedSubscriptionToken]
           ?.decimals
       );
-    } else if (chainId === 88 && selectedSubscriptionToken !== "") {
-      settokenDecimals(
-        window.config.subscriptionviction_tokens[selectedSubscriptionToken]
-          ?.decimals
-      );
-    } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
-      settokenDecimals(
-        window.config.subscriptioncore_tokens[selectedSubscriptionToken]
-          ?.decimals
-      );
-    } else if (chainId === 713715 && selectedSubscriptionToken !== "") {
-      settokenDecimals(
-        window.config.subscriptionsei_tokens[selectedSubscriptionToken]
-          ?.decimals
-      );
     }
+    //  else if (chainId === 88 && selectedSubscriptionToken !== "") {
+    //   settokenDecimals(
+    //     window.config.subscriptionviction_tokens[selectedSubscriptionToken]
+    //       ?.decimals
+    //   );
+    // } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
+    //   settokenDecimals(
+    //     window.config.subscriptioncore_tokens[selectedSubscriptionToken]
+    //       ?.decimals
+    //   );
+    // } else if (chainId === 713715 && selectedSubscriptionToken !== "") {
+    //   settokenDecimals(
+    //     window.config.subscriptionsei_tokens[selectedSubscriptionToken]
+    //       ?.decimals
+    //   );
+    // }
   }, [chainId, selectedSubscriptionToken]);
 
   useEffect(() => {
