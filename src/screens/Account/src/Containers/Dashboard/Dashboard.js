@@ -4472,9 +4472,9 @@ function Dashboard({
     if (email) {
       getAllSkaleChests(email);
       getAllChests(email);
-      getAllCoreChests(email);
-      getAllVictionChests(email);
-      getAllSeiChests(email);
+      // getAllCoreChests(email);
+      // getAllVictionChests(email);
+      // getAllSeiChests(email);
     }
   }, [email, count]);
 
