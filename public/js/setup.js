@@ -1568,7 +1568,7 @@ window.config = {
   subscription_newbnb_address: "0xA297c8c8094354c49E93e072DaDCa846a00148d0",
 
   //new premium contract with discount + nft
-  subscription_newbnb2_address: "0x71a94d93A1F645a061B870936d898375f22a9E8C",
+  subscription_newbnb2_address: "0xA297c8c8094354c49E93e072DaDCa846a00148d0",
 
   subscription_cfx_address: "0x56c83c9308b066627866bba9cd2322f3e01b16bf",
   subscription_base_address: "0x9c13Dbc8f0fA8ceD8C1B53c4237A08445eca32fe",
@@ -10798,12 +10798,7 @@ window.SUBSCRIPTION_NEWBNB_ABI = [
 ];
 
 window.SUBSCRIPTION_NEWBNB2_ABI = [
-  {
-    inputs: [],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     anonymous: false,
     inputs: [
@@ -10823,7 +10818,6 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
     name: "OwnershipTransferred",
     type: "event",
   },
-
   {
     anonymous: false,
     inputs: [
@@ -10843,7 +10837,6 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
     name: "Subscribe",
     type: "event",
   },
-
   {
     anonymous: false,
     inputs: [
@@ -10857,7 +10850,6 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
     name: "SubscriptionFeeSet",
     type: "event",
   },
-
   {
     anonymous: false,
     inputs: [
@@ -10900,62 +10892,43 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
   {
     inputs: [],
     name: "ONE_HUNDRED_X_100",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "SLIPPAGE_TOLERANCE_X_100",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "TRUSTED_DAI_ADDRESS",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "TRUSTED_PLATFORM_TOKEN_ADDRESS",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
+      { internalType: "address[]", name: "subscribers", type: "address[]" },
+    ],
+    name: "addSubscribersInBulk",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "tokenAddress", type: "address" },
     ],
     name: "addSupportedToken",
     outputs: [],
@@ -10965,74 +10938,36 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
   {
     inputs: [],
     name: "discountPercentage",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
+      { internalType: "address", name: "tokenAddress", type: "address" },
     ],
     name: "getEstimatedTokenSubscriptionAmount",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
+    inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "isTokenSupported",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "owner",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
+      { internalType: "address", name: "tokenAddress", type: "address" },
     ],
     name: "removeSupportedToken",
     outputs: [],
@@ -11048,11 +10983,7 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: "uint256",
-        name: "_newDiscount",
-        type: "uint256",
-      },
+      { internalType: "uint256", name: "_newDiscount", type: "uint256" },
     ],
     name: "setDiscountPercentage",
     outputs: [],
@@ -11074,16 +11005,8 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
+      { internalType: "address", name: "tokenAddress", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
     ],
     name: "subscribe",
     outputs: [],
@@ -11091,13 +11014,7 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "tokenID",
-        type: "uint256",
-      },
-    ],
+    inputs: [{ internalType: "uint256", name: "tokenID", type: "uint256" }],
     name: "subscribeNFT",
     outputs: [],
     stateMutability: "nonpayable",
@@ -11106,52 +11023,22 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
   {
     inputs: [],
     name: "subscriptionFeeInDai",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
+    inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "subscriptionPlatformTokenAmount",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "token",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "recipient",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
+      { internalType: "address", name: "token", type: "address" },
+      { internalType: "address", name: "recipient", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
     ],
     name: "transferAnyERC20Token",
     outputs: [],
@@ -11159,13 +11046,7 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
     name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
@@ -11175,22 +11056,14 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
     inputs: [],
     name: "uniswapRouterV2",
     outputs: [
-      {
-        internalType: "contract IUniswapV2Router",
-        name: "",
-        type: "address",
-      },
+      { internalType: "contract IUniswapV2Router", name: "", type: "address" },
     ],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "accountAddress",
-        type: "address",
-      },
+      { internalType: "address", name: "accountAddress", type: "address" },
     ],
     name: "unsubscribeAddress",
     outputs: [],
