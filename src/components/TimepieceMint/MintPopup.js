@@ -83,8 +83,8 @@ const MintPopup = ({ active, onClose, data }) => {
         </>
       ) : data.title === "Treasure Hunt" ? (
         <>
-          <div class="d-flex align-items-center justify-content-center">
-            <div class="pulsatingDot"></div>
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
               $50,000 BNB Rewards
             </h6>

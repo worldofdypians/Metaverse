@@ -502,7 +502,7 @@ const Community = () => {
                     >
                       {dummyBanner.status === "Live" && (
                         <div
-                          class="pulsatingDot"
+                        className="pulsatingDot"
                           style={{ width: 7, height: 7, marginRight: 5 }}
                         ></div>
                       )}
@@ -584,7 +584,7 @@ const Community = () => {
                       >
                         {item.status === "Live" && (
                           <div
-                            class="pulsatingDot"
+                          className="pulsatingDot"
                             style={{ width: 7, height: 7, marginRight: 5 }}
                           ></div>
                         )}
@@ -734,7 +734,7 @@ const Community = () => {
                     onClick={() => setActive(true)}
                   >
                     <div
-                      class="pulsatingDot"
+                      className="pulsatingDot"
                       style={{ width: 7, height: 7, marginRight: 5 }}
                     ></div>
                     Live
