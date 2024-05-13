@@ -93,7 +93,7 @@ const MarketStake = ({
       setTotalLocked(result.data);
     }
   };
-  
+
   const fetchTotalRewars = async () => {
     const result = await axios.get(
       `https://api.worldofdypians.com/api/stakeRewards`
@@ -102,7 +102,6 @@ const MarketStake = ({
       setTotalRewards(result.data);
     }
   };
-
 
   const totalStakedNft = async () => {
     let staking_contract = await new window.infuraWeb3.eth.Contract(
@@ -600,12 +599,16 @@ const MarketStake = ({
                   </div>
                 </div>
                 <div className="col-12 px-0 mt-4">
-               
                   <div className="new-caws-stake-wrapper d-flex position-relative align-items-center w-100 ">
-                      {myCawsstakes && myCawsstakes.length > 0 && (
-                    <img src={instake} alt="" className="position-absolute" style={{top: '-12px', left: '15px'}}/>
-                  )} 
-                  <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                    {myCawsstakes && myCawsstakes.length > 0 && (
+                      <img
+                        src={instake}
+                        alt=""
+                        className="position-absolute"
+                        style={{ top: "-12px", left: "15px" }}
+                      />
+                    )}
+                    <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
                       <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
                         <div className="d-flex flex-column gap-2">
                           <h6 className="market-stake-title">
@@ -622,7 +625,10 @@ const MarketStake = ({
                               onClick={() => {
                                 setCawsStakeModal(true);
                               }}
-                              disabled={myCawsstakes.length === 4 || totalStakesCawsPremium === 200}
+                              disabled={
+                                myCawsstakes.length === 4 ||
+                                totalStakesCawsPremium === 200
+                              }
                             >
                               Deposit
                             </button>
@@ -964,7 +970,6 @@ const MarketStake = ({
           isStake={false}
           handleConnect={handleConnect}
           myCawsstakes={myCawsstakes}
-
         />
       )}
 
@@ -983,7 +988,6 @@ const MarketStake = ({
           }}
           isStake={true}
           handleConnect={handleConnect}
-          
         />
       )}
       {cawsUnstakeModal && (
@@ -1015,7 +1019,12 @@ const MarketStake = ({
             chainId={chainId}
             coinbase={coinbase}
             handleSwitchNetwork={handleSwitchNetwork}
-            onSuccessDeposit={onSuccessDeposit}
+            onSuccessDeposit={() => {
+              onSuccessDeposit();
+              setTimeout(() => {
+                setgetPremiumPopup(false);
+              }, 2000);
+            }}
             onClose={() => {
               setgetPremiumPopup(false);
             }}
