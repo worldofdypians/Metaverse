@@ -1881,7 +1881,7 @@ const NewDailyBonus = ({
     // claimedSeiPremiumChests,
     rewardData,
   ]);
-console.log(message, chain, email, address, coinbase)
+  
   return (
     <>
       <div className={`package-popup-wrapper2 `}>
