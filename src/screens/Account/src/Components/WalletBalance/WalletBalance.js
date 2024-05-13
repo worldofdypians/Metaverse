@@ -1898,9 +1898,9 @@ const WalletBalance = ({
                                   : item.type === "cmc"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
                                   : item.type === "core"
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+50.png`
                                   : item.type === "viction"
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                   : item.type === "base"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                   : item.type === "gate"
@@ -2964,10 +2964,10 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_core_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_viction_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
@@ -3256,10 +3256,10 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
                                     : nft.nftAddress ===
                                       window.config.nft_core_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_viction_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
