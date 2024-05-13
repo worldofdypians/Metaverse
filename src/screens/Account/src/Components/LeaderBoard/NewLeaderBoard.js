@@ -54,10 +54,6 @@ import coreWhite from "./assets/coreWhite.svg";
 import skaleWhite from "./assets/skaleWhite.svg";
 import seiWhite from "./assets/seiWhite.svg";
 
-
-
-
-
 const renderer = ({ hours, minutes, seconds }) => {
   return (
     <div className="timer-wrapper d-none align-items-start gap-3 justify-content-center">
@@ -250,12 +246,11 @@ const NewLeaderBoard = ({
     ],
   };
 
-
   const [optionText, setOptionText] = useState("daily");
   const [optionText2, setOptionText2] = useState("bnb");
-    const [hoverState, setHoverState] = useState("")
-    const [inactiveBoard, setInactiveBoard] = useState(false);
-    const [isactive, setisActive] = useState(false);
+  const [hoverState, setHoverState] = useState("");
+  const [inactiveBoard, setInactiveBoard] = useState(false);
+  const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
   const [bundlesBought, setbundlesBought] = useState(0);
   const [allData, setAllData] = useState([]);
@@ -264,8 +259,6 @@ const NewLeaderBoard = ({
   const windowSize = useWindowSize();
   const label = { inputProps: { "aria-label": "Switch demo" } };
 
-
-
   const handleMouseEnter = (chain) => {
     setHoverState(chain);
   };
@@ -273,8 +266,6 @@ const NewLeaderBoard = ({
   const handleMouseLeave = () => {
     setHoverState("");
   };
-
-
 
   const handleOption = (item) => {
     setOptionText2(item);
@@ -293,30 +284,56 @@ const NewLeaderBoard = ({
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
+  const handlePrevChain = () => {
+    if (selectedChain.id === 0) {
+      return;
+    } else {
+      if (selectedChain.id - 1 === 0) {
+        setAllData(allBnbData);
+        setOptionText2("bnb")
+      } else if (selectedChain.id - 1 === 1) {
+        setAllData(allSkaleData);
+        setOptionText2("skale")
+      }
+      else if (selectedChain.id - 1 === 2) {
+        setAllData(allSkaleData);
+        setOptionText2("core")
+      }
+      else if (selectedChain.id - 1 === 3) {
+        setAllData(allSkaleData);
+        setOptionText2("sei")
+      }
+      else if (selectedChain.id - 1 === 4) {
+        setAllData(allSkaleData);
+        setOptionText2("viction")
+      }
+      setSelectedChain(chainItems[selectedChain.id - 1]);
+    }
+  };
+  const handleNextChain = () => {
+    if (selectedChain.id === 4) {
+      return;
+    } else {
+      if (selectedChain.id + 1 === 1) {
+        setAllData(allSkaleData);
+        setOptionText2("skale")
+      }
+      if (selectedChain.id + 1 === 2) {
+        setAllData(allSkaleData);
+        setOptionText2("core")
+      }
+      if (selectedChain.id + 1 === 3) {
+        setAllData(allSkaleData);
+        setOptionText2("sei")
+      }
+      if (selectedChain.id + 1 === 4) {
+        setAllData(allSkaleData);
+        setOptionText2("viction")
+      }
+      setSelectedChain(chainItems[selectedChain.id + 1]);
+    }
+  };
 
-    const handlePrevChain = () => {
-      if(selectedChain.id === 0){
-        return
-      }else{
-        if(selectedChain.id - 1 === 0) {
-          setAllData(allBnbData);
-        }else if(selectedChain.id - 1 === 1){
-          setAllData(allSkaleData);
-        }
-        setSelectedChain(chainItems[selectedChain.id - 1])
-      } 
-    }
-    const handleNextChain = () => {
-      if(selectedChain.id === 4){
-        return
-      }else{
-        if(selectedChain.id + 1 === 1) {
-          setAllData(allSkaleData);
-        }
-        setSelectedChain(chainItems[selectedChain.id + 1])
-      } 
-    }
-  
   useEffect(() => {
     handleOption(optionText2);
   }, [inactiveBoard]);
@@ -354,11 +371,9 @@ const NewLeaderBoard = ({
 
   const today1 = new Date();
 
-
   useEffect(() => {
-    setAllData(allBnbData)
-  }, [])
-  
+    setAllData(allBnbData);
+  }, []);
 
   return (
     <>
@@ -402,8 +417,8 @@ const NewLeaderBoard = ({
                     style={{ height: 38 }}
                   >
                     <span
-                    onMouseEnter={() => handleMouseEnter("bnb")}
-                    onMouseLeave={handleMouseLeave}
+                      onMouseEnter={() => handleMouseEnter("bnb")}
+                      onMouseLeave={handleMouseLeave}
                       className={`
                      d-flex align-items-center gap-2
                      ${
@@ -416,7 +431,13 @@ const NewLeaderBoard = ({
                       style={{ width: "20%" }}
                     >
                       <img
-                        src={optionText2 === "bnb" ? bnbActive : optionText2 !== "bnb" && hoverState === "bnb" ? bnbWhite : bnbInactive}
+                        src={
+                          optionText2 === "bnb"
+                            ? bnbActive
+                            : optionText2 !== "bnb" && hoverState === "bnb"
+                            ? bnbWhite
+                            : bnbInactive
+                        }
                         className={`${
                           optionText2 === "bnb"
                             ? "leaderboard-icon leaderboard-icon-active"
@@ -433,8 +454,8 @@ const NewLeaderBoard = ({
                         : ""}
                     </span>
                     <span
-                    onMouseEnter={() => handleMouseEnter("skale")}
-                    onMouseLeave={handleMouseLeave}
+                      onMouseEnter={() => handleMouseEnter("skale")}
+                      onMouseLeave={handleMouseLeave}
                       className={` 
                      d-flex align-items-center gap-2
                      ${
@@ -447,8 +468,13 @@ const NewLeaderBoard = ({
                       }}
                     >
                       <img
-                     src={optionText2 === "skale" ? skaleActive : optionText2 !== "skale" && hoverState === "skale" ? skaleWhite : skaleInactive}
-
+                        src={
+                          optionText2 === "skale"
+                            ? skaleActive
+                            : optionText2 !== "skale" && hoverState === "skale"
+                            ? skaleWhite
+                            : skaleInactive
+                        }
                         className={`${
                           optionText2 === "skale"
                             ? "leaderboard-icon leaderboard-icon-active"
@@ -465,8 +491,8 @@ const NewLeaderBoard = ({
                         : ""}
                     </span>
                     <span
-                       onMouseEnter={() => handleMouseEnter("core")}
-                       onMouseLeave={handleMouseLeave}
+                      onMouseEnter={() => handleMouseEnter("core")}
+                      onMouseLeave={handleMouseLeave}
                       className={` 
                     d-flex align-items-center gap-2
                     ${
@@ -475,11 +501,18 @@ const NewLeaderBoard = ({
                       style={{ width: "20%" }}
                       onClick={() => {
                         handleOption("core");
+                        setAllData(allSkaleData);
+
                       }}
                     >
                       <img
-                        src={optionText2 === "core" ? coreActive : optionText2 !== "core" && hoverState === "core" ? coreWhite : coreInactive}
-
+                        src={
+                          optionText2 === "core"
+                            ? coreActive
+                            : optionText2 !== "core" && hoverState === "core"
+                            ? coreWhite
+                            : coreInactive
+                        }
                         className={`${
                           optionText2 === "core"
                             ? "leaderboard-icon leaderboard-icon-active"
@@ -496,8 +529,8 @@ const NewLeaderBoard = ({
                         : ""}
                     </span>
                     <span
-                    onMouseEnter={() => handleMouseEnter("sei")}
-                    onMouseLeave={handleMouseLeave}
+                      onMouseEnter={() => handleMouseEnter("sei")}
+                      onMouseLeave={handleMouseLeave}
                       className={`
                      d-flex align-items-center gap-2
                      
@@ -507,10 +540,18 @@ const NewLeaderBoard = ({
                       style={{ width: "20%" }}
                       onClick={() => {
                         handleOption("sei");
+                        setAllData(allSkaleData);
+
                       }}
                     >
                       <img
-                      src={optionText2 === "sei" ? seiActive : optionText2 !== "sei" && hoverState === "sei" ? seiWhite : seiInactive}
+                        src={
+                          optionText2 === "sei"
+                            ? seiActive
+                            : optionText2 !== "sei" && hoverState === "sei"
+                            ? seiWhite
+                            : seiInactive
+                        }
                         className={`${
                           optionText2 === "sei"
                             ? "leaderboard-icon leaderboard-icon-active"
@@ -528,8 +569,8 @@ const NewLeaderBoard = ({
                         : ""}
                     </span>
                     <span
-                          onMouseEnter={() => handleMouseEnter("viction")}
-                          onMouseLeave={handleMouseLeave}
+                      onMouseEnter={() => handleMouseEnter("viction")}
+                      onMouseLeave={handleMouseLeave}
                       className={`
                      d-flex align-items-center gap-2
                      
@@ -539,11 +580,19 @@ const NewLeaderBoard = ({
                       style={{ width: "20%" }}
                       onClick={() => {
                         handleOption("viction");
+                        setAllData(allSkaleData);
+
                       }}
                     >
                       <img
-                        src={optionText2 === "viction" ? victionActive : optionText2 !== "viction" && hoverState === "viction" ? victionWhite : victionInactive}
-
+                        src={
+                          optionText2 === "viction"
+                            ? victionActive
+                            : optionText2 !== "viction" &&
+                              hoverState === "viction"
+                            ? victionWhite
+                            : victionInactive
+                        }
                         className={`${
                           optionText2 === "viction"
                             ? "leaderboard-icon leaderboard-icon-active"
@@ -696,10 +745,20 @@ const NewLeaderBoard = ({
                                               className="playerAvatar"
                                             />
                                             <span>
-                                              {" "}
-                                              {item.displayName?.slice(0, 10)}
-                                              {item.displayName?.length > 10 &&
-                                                "..."}
+                                              {optionText2 === "bnb" ||
+                                              optionText2 === "skale" ? (
+                                                <>
+                                                  {" "}
+                                                  {item.displayName?.slice(
+                                                    0,
+                                                    10
+                                                  )}
+                                                  {item.displayName?.length >
+                                                    10 && "..."}
+                                                </>
+                                              ) : (
+                                                "--"
+                                              )}
                                             </span>
                                           </div>
                                         ) : (
@@ -708,15 +767,33 @@ const NewLeaderBoard = ({
                                               src={playerAvatar}
                                               alt=""
                                               className="playerAvatar"
-                                            />{" "}
-                                            {item.displayName?.slice(0, 10)}
-                                            {item.displayName?.length > 10 &&
-                                              "..."}
+                                            />
+                                            {optionText2 === "bnb" ||
+                                            optionText2 === "skale" ? (
+                                              <>
+                                                {" "}
+                                                {item.displayName?.slice(0, 10)}
+                                                {item.displayName?.length >
+                                                  10 && "..."}
+                                              </>
+                                            ) : (
+                                              "--"
+                                            )}
                                           </div>
                                         )}
                                       </td>
                                       <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
+                                        {optionText2 === "bnb" ||
+                                        optionText2 === "skale" ? (
+                                          <>
+                                            {getFormattedNumber(
+                                              item.statValue,
+                                              0
+                                            )}
+                                          </>
+                                        ) : (
+                                          "--"
+                                        )}
                                       </td>
                                       {leaderboard.type === "stars" ? (
                                         <td
@@ -844,10 +921,20 @@ const NewLeaderBoard = ({
                                               className="playerAvatar"
                                             />
                                             <span>
-                                              {" "}
-                                              {item.displayName?.slice(0, 10)}
-                                              {item.displayName?.length > 10 &&
-                                                "..."}
+                                              {optionText2 === "bnb" ||
+                                              optionText2 === "skale" ? (
+                                                <>
+                                                  {" "}
+                                                  {item.displayName?.slice(
+                                                    0,
+                                                    10
+                                                  )}
+                                                  {item.displayName?.length >
+                                                    10 && "..."}
+                                                </>
+                                              ) : (
+                                                "--"
+                                              )}
                                             </span>
                                           </div>
                                         ) : (
@@ -856,15 +943,33 @@ const NewLeaderBoard = ({
                                               src={playerAvatar}
                                               alt=""
                                               className="playerAvatar"
-                                            />{" "}
-                                            {item.displayName?.slice(0, 10)}
-                                            {item.displayName?.length > 10 &&
-                                              "..."}
+                                            />
+                                            {optionText2 === "bnb" ||
+                                            optionText2 === "skale" ? (
+                                              <>
+                                                {" "}
+                                                {item.displayName?.slice(0, 10)}
+                                                {item.displayName?.length >
+                                                  10 && "..."}
+                                              </>
+                                            ) : (
+                                              "--"
+                                            )}
                                           </div>
                                         )}
                                       </td>
                                       <td className="playerScore col-2 text-center font-montserrat">
-                                        {getFormattedNumber(item.statValue, 0)}
+                                        {optionText2 === "bnb" ||
+                                        optionText2 === "skale" ? (
+                                          <>
+                                            {getFormattedNumber(
+                                              item.statValue,
+                                              0
+                                            )}
+                                          </>
+                                        ) : (
+                                          "--"
+                                        )}
                                       </td>
                                       {leaderboard.type === "stars" ? (
                                         <td
@@ -998,9 +1103,14 @@ const NewLeaderBoard = ({
                                           : "col-1"
                                       }`}
                                     >
+                                    {optionText2 === "bnb" || optionText2 === "skale" ? 
+                                    <>
                                       {parseInt(
                                         leaderboard.player_data.position
                                       ) + 1}
+                                    </>  
+                                    : "--"
+                                  }
                                     </td>
                                     <td className="playerName col-3 font-montserrat">
                                       <div className="position-relative  d-flex align-items-center">
@@ -1020,14 +1130,21 @@ const NewLeaderBoard = ({
                                               className="premium-star"
                                             />
                                             <span>
-                                              {" "}
-                                              {leaderboard.player_data.displayName?.slice(
-                                                0,
-                                                13
+                                              {optionText2 === "bnb" ||
+                                              optionText2 === "skale" ? (
+                                                <>
+                                                  {" "}
+                                                  {leaderboard.player_data.displayName?.slice(
+                                                    0,
+                                                    13
+                                                  )}
+                                                  {leaderboard.player_data
+                                                    .displayName?.length > 13 &&
+                                                    "..."}
+                                                </>
+                                              ) : (
+                                                "--"
                                               )}
-                                              {leaderboard.player_data
-                                                .displayName?.length > 13 &&
-                                                "..."}
                                             </span>
                                           </div>
                                         ) : (
@@ -1037,20 +1154,36 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />
-                                            {leaderboard.player_data.displayName?.slice(
-                                              0,
-                                              13
+                                            {optionText2 === "bnb" ||
+                                            optionText2 === "skale" ? (
+                                              <>
+                                                {" "}
+                                                {leaderboard.player_data.displayName?.slice(
+                                                  0,
+                                                  13
+                                                )}
+                                                {leaderboard.player_data
+                                                  .displayName?.length > 13 &&
+                                                  "..."}
+                                              </>
+                                            ) : (
+                                              "--"
                                             )}
-                                            {leaderboard.player_data.displayName
-                                              ?.length > 13 && "..."}
                                           </>
                                         )}
                                       </div>
                                     </td>
                                     <td className="playerScore col-2 text-center font-montserrat">
-                                      {getFormattedNumber(
-                                        leaderboard.player_data.statValue,
-                                        0
+                                      {optionText2 === "bnb" ||
+                                      optionText2 === "skale" ? (
+                                        <>
+                                          {getFormattedNumber(
+                                            leaderboard.player_data.statValue,
+                                            0
+                                          )}
+                                        </>
+                                      ) : (
+                                        "--"
                                       )}
                                     </td>
                                     {leaderboard.type === "stars" ? (

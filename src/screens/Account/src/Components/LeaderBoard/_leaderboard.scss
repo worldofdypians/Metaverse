@@ -447,6 +447,21 @@
   left: 0;
   margin: auto;
 }
+
+.optionswrapper-bg-home {
+  position: absolute;
+  width: 33%;
+  height: 100%;
+  border-radius: 12px;
+  border: 1px solid #f4e07b;
+  background: #341553;
+  transition: all 0.25s ease-in-out;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
 .optionswrapper-bg-2 {
   position: absolute;
   width: 50%;
@@ -467,6 +482,13 @@
 }
 
 .move-2 {
+  transform: translateX(200%);
+}
+.move-1-home {
+  transform: translateX(100%);
+}
+
+.move-2-home {
   transform: translateX(200%);
 }
 
@@ -569,4 +591,17 @@ margin: auto;
   top: 0;
   bottom: 0;
   margin: auto;
+}
+
+.coming-soon-wrapper{
+  height: 442px;
+  background: rgba(151, 89, 192, 0.3);
+  border-radius: 12px;
+  h6{
+    margin-bottom: 0;
+    font-family: "Oxanium" !important;
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+  }
 }

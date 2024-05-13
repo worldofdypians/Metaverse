@@ -26,6 +26,7 @@ import pointerArrow from "./assets/pointerArrow.svg";
 import tooltipIcon from "./assets/tooltipIcon.svg";
 import player from "./assets/explorePlayer.png";
 import triangle from "./assets/triangle.svg";
+import globe from "./assets/globe.png";
 import rankYellowArrow from "./assets/rankYellowArrow.svg";
 import rankBlueArrow from "./assets/rankBlueArrow.svg";
 import sync from "./assets/sync.svg";
@@ -439,7 +440,7 @@ const ProfileCard = ({
                 }`}
               >
                 <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row flex-sm-row  justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
-                  <div className="d-flex gap-2 justify-content-between align-items-center  w-75">
+                  <div className="d-flex gap-2 justify-content-between align-items-center  w-50">
                     <div className="d-flex align-items-center gap-2 w-100">
                       {(coinbase && !email) ||
                       (!coinbase && !email) ||
@@ -711,6 +712,33 @@ const ProfileCard = ({
                   )}
                   {email && address && (
                     <>
+                      <div
+                        style={{ height: "79px" }}
+                        className={`${
+                          isPremium
+                            ? "wallet-wrapper-active-premium hoverpremium"
+                            : "wallet-wrapper-active hoveractive"
+                        }
+                    position-relative
+                    d-flex  align-items-center justify-content-between gap-3 position-relative mt-3 mt-lg-0`}
+                        onClick={onOpenLeaderboard}
+                      >
+                         <img
+                          src={globe}
+                          alt=""
+                          style={{ height: "54px", width: "50px" }}
+                        />
+                        <div className="d-flex flex-column">
+                          <span className="leaderboard-title-span">Genesis</span>
+                          <span
+                            className="leaderboard-title-span"
+                            style={{ color: isPremium ? "#FFBF00" : "#1BF5FF" }}
+                          >
+                            Leaderboard
+                          </span>
+                        </div>
+                       
+                      </div>
                       <div
                         style={{ height: "79px" }}
                         className={`${

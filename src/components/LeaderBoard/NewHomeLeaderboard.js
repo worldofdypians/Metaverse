@@ -862,13 +862,11 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       <div className="d-flex align-items-center gap-1">
         <div className="optionsWrapper position-relative col-12">
           <div
-            className={`optionswrapper-bg ${
+            className={`optionswrapper-bg-home ${
               optionText2 === "skale"
-                ? "move-1"
+                ? "move-1-home"
                 : optionText2 === "wod"
-                ? "move-2"
-                : optionText2 === "global"
-                ? "w-100"
+                ? "move-2-home"
                 : ""
             }`}
           ></div>
@@ -1064,8 +1062,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-                              {getFormattedNumber(dailyPrizes[index], 0)}
+                              ${getFormattedNumber(dailyPrizes[index], 0)}
                             </div>
                           </td>
                           <td
@@ -1078,9 +1075,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-
-                              {getFormattedNumber(dailyPrizesGolden[index], 0)}
+                              ${getFormattedNumber(dailyPrizesGolden[index], 0)}
                             </div>
                           </td>
                         </tr>
@@ -1140,8 +1135,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-                              {getFormattedNumber(dailyPrizes[index], 0)}
+                              ${getFormattedNumber(dailyPrizes[index], 0)}
                             </div>
                           </td>
                           <td
@@ -1154,9 +1148,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-
-                              {getFormattedNumber(dailyPrizesGolden[index], 0)}
+                              ${getFormattedNumber(dailyPrizesGolden[index], 0)}
                             </div>
                           </td>
                         </tr>
@@ -1284,7 +1276,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                                 : "playerReward"
                             }`}
                           >
-                              ${getFormattedNumber(weeklyPrizes[index], 0)}
+                            ${getFormattedNumber(weeklyPrizes[index], 0)}
                           </td>
                           <td
                             className={`playerReward  mb-0 ${
@@ -1295,8 +1287,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                                 : "goldenscore-inactive2"
                             }`}
                           >
-
-                              ${getFormattedNumber(weeklyPrizesGolden[index], 0)}
+                            ${getFormattedNumber(weeklyPrizesGolden[index], 0)}
                           </td>
                         </tr>
                       );
@@ -1354,8 +1345,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-                              {getFormattedNumber(weeklyPrizes[index], 0)}
+                              ${getFormattedNumber(weeklyPrizes[index], 0)}
                             </div>
                           </td>
                           <td
@@ -1368,8 +1358,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-
+                              $
                               {getFormattedNumber(weeklyPrizesGolden[index], 0)}
                             </div>
                           </td>
@@ -1501,8 +1490,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-                              {getFormattedNumber(monthlyPrizes[index], 0)}
+                              ${getFormattedNumber(monthlyPrizes[index], 0)}
                             </div>
                           </td>
                           <td
@@ -1515,8 +1503,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-
+                              $
                               {getFormattedNumber(
                                 monthlyPrizesGolden[index],
                                 0
@@ -1580,8 +1567,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-                              {getFormattedNumber(monthlyPrizes[index], 0)}
+                              ${getFormattedNumber(monthlyPrizes[index], 0)}
                             </div>
                           </td>
                           <td
@@ -1594,8 +1580,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-
+                              $
                               {getFormattedNumber(
                                 monthlyPrizesGolden[index],
                                 0
@@ -1896,8 +1881,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-                              {getFormattedNumber(prizeSkale[index], 0)}
+                              ${getFormattedNumber(prizeSkale[index], 0)}
                             </div>
                           </td>
                           <td
@@ -1910,9 +1894,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-
-                              {getFormattedNumber(prizeSkale[index], 0)}
+                              ${getFormattedNumber(prizeSkale[index], 0)}
                               <img src={premiumIcon} alt="" />
                             </div>
                           </td>
@@ -1996,8 +1978,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-                              {getFormattedNumber(prizeSkale[index], 0)}
+                              ${getFormattedNumber(prizeSkale[index], 0)}
                             </div>
                           </td>
                           <td
@@ -2010,9 +1991,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-
-                              {getFormattedNumber(prizeSkale[index], 0)}
+                              ${getFormattedNumber(prizeSkale[index], 0)}
                               <img src={premiumIcon} alt="" />
                             </div>
                           </td>
@@ -2141,8 +2120,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-                              {getFormattedNumber(prizeSkale[index], 0)}
+                              ${getFormattedNumber(prizeSkale[index], 0)}
                             </div>
                           </td>
                           <td
@@ -2155,9 +2133,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-
-                              {getFormattedNumber(prizeSkale[index], 0)}
+                              ${getFormattedNumber(prizeSkale[index], 0)}
                               <img src={premiumIcon} alt="" />
                             </div>
                           </td>
@@ -2241,8 +2217,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-                              {getFormattedNumber(prizeSkale[index], 0)}
+                              ${getFormattedNumber(prizeSkale[index], 0)}
                             </div>
                           </td>
                           <td
@@ -2255,9 +2230,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-
-                              {getFormattedNumber(prizeSkale[index], 0)}
+                              ${getFormattedNumber(prizeSkale[index], 0)}
                               <img src={premiumIcon} alt="" />
                             </div>
                           </td>
@@ -2355,7 +2328,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                    
+
                           <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
@@ -2364,8 +2337,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-                              {getFormattedNumber(prizeSkale[index], 0)}
+                              ${getFormattedNumber(prizeSkale[index], 0)}
                             </div>
                           </td>
                           <td
@@ -2378,9 +2350,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-
-                              {getFormattedNumber(prizeSkale[index], 0)}
+                              ${getFormattedNumber(prizeSkale[index], 0)}
                               <img src={premiumIcon} alt="" />
                             </div>
                           </td>
@@ -2441,8 +2411,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-                              {getFormattedNumber(prizeSkale[index], 0)}
+                              ${getFormattedNumber(prizeSkale[index], 0)}
                             </div>
                           </td>
                           <td
@@ -2455,9 +2424,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             }`}
                           >
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              <img src={star} width={15} height={15} alt="" />
-
-                              {getFormattedNumber(prizeSkale[index], 0)}
+                              ${getFormattedNumber(prizeSkale[index], 0)}
                               <img src={premiumIcon} alt="" />
                             </div>
                           </td>
@@ -2471,7 +2438,6 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
         </Slider>
       )}
 
-    
       <div className="optionsWrapper p-2">
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-between gap-2 align-items-center">
