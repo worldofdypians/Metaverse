@@ -504,7 +504,7 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
             CHALLENGER
           </h6>
           <h6 className="global-leaderboard-title" style={{color: "#F4E27B"}}>
-            GLOBAL RANK
+            GLOBAL LEADERBOARD
           </h6>
         </div>
       </div>

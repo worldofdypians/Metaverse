@@ -812,7 +812,8 @@ const NewLeaderBoard = ({
                                           }`}
                                         >
                                           <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                            <img src={starIcon} alt="" />
+                                            {/* <img src={starIcon} alt="" /> */}
+                                            $
                                             <span
                                               className="leaderboard-text"
                                               style={{ color: "#fff" }}
@@ -988,7 +989,8 @@ const NewLeaderBoard = ({
                                           }`}
                                         >
                                           <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                            <img src={starIcon} alt="" />
+                                            {/* <img src={starIcon} alt="" /> */}
+                                            $
                                             <span
                                               className="leaderboard-text"
                                               style={{ color: "#fff" }}
@@ -1204,7 +1206,8 @@ const NewLeaderBoard = ({
                                         }`}
                                       >
                                         <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                          <img src={starIcon} alt="" />
+                                          {/* <img src={starIcon} alt="" /> */}
+                                          $
                                           <span
                                             className="leaderboard-text"
                                             style={{ color: "#fff" }}

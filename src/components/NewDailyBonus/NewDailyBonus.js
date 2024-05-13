@@ -2358,7 +2358,7 @@ console.log(message, chain, email, address, coinbase)
                                   alt=""
                                 />
                               </div>
-                              <span className="percentage-span">
+                              <span className="percentage-span" style={{color: chain === "core" ? "#fff" : "gray"}}>
                                 {/* {parseInt(corePercentage)}% */}
                                 Coming Soon
                               </span>
@@ -2465,7 +2465,7 @@ console.log(message, chain, email, address, coinbase)
                                   alt=""
                                 />
                               </div>
-                              <span className="percentage-span">
+                              <span className="percentage-span" style={{color: chain === "sei" ? "#fff" : "gray"}}>
                                 {/* {parseInt(seiPercentage)}% */}
                                 Coming Soon
                               </span>
@@ -2566,7 +2566,7 @@ console.log(message, chain, email, address, coinbase)
                                   alt=""
                                 />
                               </div>
-                              <span className="percentage-span">
+                              <span className="percentage-span" style={{color: chain === "viction" ? "#fff" : "gray"}}>
                                 {/* {parseInt(victionPercentage)}% */}
                                 Coming Soon
                               </span>
