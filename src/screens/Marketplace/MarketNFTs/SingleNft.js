@@ -1801,9 +1801,9 @@ const SingleNft = ({
                         : nftAddress.toLowerCase() === window.config.nft_cmc_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
                         : nftAddress.toLowerCase() === window.config.nft_core_address.toLowerCase()
-                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+400.png`
                         : nftAddress.toLowerCase() === window.config.nft_viction_address.toLowerCase()
-                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+400.png`
                         : nftAddress.toLowerCase() === window.config.nft_base_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
                         : nftAddress.toLowerCase() === window.config.nft_skale_address.toLowerCase()
