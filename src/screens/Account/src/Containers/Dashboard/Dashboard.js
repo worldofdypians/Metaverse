@@ -122,18 +122,18 @@ function Dashboard({
       name: "SKALE",
       symbol: "skale",
     },
-    {
-      name: "CORE",
-      symbol: "core",
-    },
-    {
-      name: "Viction",
-      symbol: "viction",
-    },
-    {
-      name: "SEI",
-      symbol: "sei",
-    },
+    // {
+    //   name: "CORE",
+    //   symbol: "core",
+    // },
+    // {
+    //   name: "Viction",
+    //   symbol: "viction",
+    // },
+    // {
+    //   name: "SEI",
+    //   symbol: "sei",
+    // },
   ];
 
   const chestImagesBnb = [
@@ -4604,6 +4604,9 @@ function Dashboard({
                         onOpenLeaderboard={() => {
                           setLeaderboard(true);
                         }}
+                        onOpenGenesisLeaderboard={() => {
+                          setLeaderboard(true);
+                        }}
                         onPremiumClick={() => {
                           setgetPremiumPopup(true);
                         }}
@@ -5183,7 +5186,7 @@ function Dashboard({
                                       SKALE
                                     </span>
                                   </div>
-                                  <div className="d-flex align-items-center gap-2">
+                                  {/* <div className="d-flex align-items-center gap-2">
                                     <img
                                       src={immutableIcon}
                                       alt=""
@@ -5222,7 +5225,7 @@ function Dashboard({
                                     <span className="subscription-chain mb-0">
                                       SEI
                                     </span>
-                                  </div>
+                                  </div> */}
                                 </div>
                                 <img src={premiumIcon} alt="" />
                               </div>
@@ -5375,7 +5378,7 @@ function Dashboard({
                                       />
                                       SKALE
                                     </li>
-                                    <li
+                                    {/* <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={handleCorePool}
                                     >
@@ -5416,7 +5419,7 @@ function Dashboard({
                                         }}
                                       />
                                       SEI
-                                    </li>
+                                    </li> */}
                                   </ul>
                                 </div>
                               </div>
