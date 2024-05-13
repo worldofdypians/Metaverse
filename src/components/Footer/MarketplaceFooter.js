@@ -217,6 +217,7 @@ const Footer = () => {
                 <a
                   href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                   target="_blank"
+                  className="epic-logo-footer-wrapper"
                 >
                   <img
                     src={
