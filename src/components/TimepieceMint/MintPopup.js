@@ -192,7 +192,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "SKALE" ? (
           <a
             onClick={onClose}
-            href="https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/102-world-of-dypians-entry-campaign"
+            href="https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/103-daily-game-delight"
             target="_blank"
             className="linear-border"
           >
