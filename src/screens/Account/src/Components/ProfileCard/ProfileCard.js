@@ -441,7 +441,7 @@ const ProfileCard = ({
                   email && coinbase && username ? "" : "border-bottom-0"
                 }`}
               >
-                <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row flex-sm-row  justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
+                <div className="d-flex   profile-header-wrapper justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
                   <div className="d-flex gap-2 justify-content-between align-items-center  w-50">
                     <div className="d-flex align-items-center gap-2 w-100">
                       {(coinbase && !email) ||
@@ -694,7 +694,8 @@ const ProfileCard = ({
                     </div>
                   )}
 
-                  {email && address && coinbase && !isPremium && (
+             <div className="buttons-grid w-100">
+             {email && address && coinbase && !isPremium && (
                     <div
                       className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
@@ -1048,6 +1049,7 @@ const ProfileCard = ({
                       </div>
                     </>
                   )}
+             </div>
                   {/* {availableTime !== "0" && availableTime && availableTime!==undefined &&  (
             <div className="d-flex flex-column">
             <span className="emailtext" style={{color: '#ffbf00'}}>*Golden Pass</span>

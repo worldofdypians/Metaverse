@@ -83,6 +83,24 @@ const WodBuilders = () => {
       banner: "babyDogeBanner.webp",
       link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
     },
+    {
+      name: "Core",
+      icon: "core",
+      banner: "coreBanner.png",
+      link: 'https://x.com/Coredao_Org/status/1790336632823910804'
+    },
+    {
+      name: "MultiversX",
+      icon: "multiversx",
+      banner: "multiversBanner.png",
+      link: 'https://x.com/MultiversX/status/1790422563849466280'
+    },
+    {
+      name: "Viction",
+      icon: "viction",
+      banner: "victionBanner.png",
+      link: 'https://x.com/VictionEco/status/1789987120083562640'
+    },
 
   ];
 
