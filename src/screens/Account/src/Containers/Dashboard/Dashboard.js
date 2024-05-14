@@ -2842,36 +2842,40 @@ function Dashboard({
       if (isPremium) {
         if (
           claimedChests + claimedPremiumChests < 20 ||
-          claimedSkaleChests + claimedSkalePremiumChests < 20 ||
-          claimedCoreChests + claimedCorePremiumChests < 20 ||
-          claimedVictionChests + claimedVictionPremiumChests < 20 ||
-          claimedSeiChests + claimedSeiPremiumChests < 20
+          claimedSkaleChests + claimedSkalePremiumChests < 20
+          //  ||
+          // claimedCoreChests + claimedCorePremiumChests < 20 ||
+          // claimedVictionChests + claimedVictionPremiumChests < 20 ||
+          // claimedSeiChests + claimedSeiPremiumChests < 20
         ) {
           setCanBuy(true);
         } else if (
           claimedChests + claimedPremiumChests === 20 &&
-          claimedSkaleChests + claimedSkalePremiumChests === 20 &&
-          claimedCoreChests + claimedCorePremiumChests === 20 &&
-          claimedVictionChests + claimedVictionPremiumChests === 20 &&
-          claimedSeiChests + claimedSeiPremiumChests === 20
+          claimedSkaleChests + claimedSkalePremiumChests === 20 
+          // &&
+          // claimedCoreChests + claimedCorePremiumChests === 20 &&
+          // claimedVictionChests + claimedVictionPremiumChests === 20 &&
+          // claimedSeiChests + claimedSeiPremiumChests === 20
         ) {
           setCanBuy(false);
         }
       } else if (!isPremium) {
         if (
           claimedChests < 10 ||
-          claimedSkaleChests < 10 ||
-          claimedCoreChests < 10 ||
-          claimedVictionChests < 10 ||
-          claimedSeiChests < 10
+          claimedSkaleChests < 10 
+          // ||
+          // claimedCoreChests < 10 ||
+          // claimedVictionChests < 10 ||
+          // claimedSeiChests < 10
         ) {
           setCanBuy(true);
         } else if (
           claimedChests === 10 &&
-          claimedSkaleChests === 10 &&
-          claimedCoreChests === 10 &&
-          claimedVictionChests === 10 &&
-          claimedSeiChests === 10
+          claimedSkaleChests === 10
+          //  &&
+          // claimedCoreChests === 10 &&
+          // claimedVictionChests === 10 &&
+          // claimedSeiChests === 10
         ) {
           setCanBuy(false);
         }
