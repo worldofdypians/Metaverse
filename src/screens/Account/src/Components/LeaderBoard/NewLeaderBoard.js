@@ -893,7 +893,11 @@ const NewLeaderBoard = ({
                                                     )}
                                                   </span>
                                                   <img
-                                                    src={premiumInactive}
+                                                    src={
+                                                      isPremium
+                                                        ? premiumIcon
+                                                        : premiumInactive
+                                                    }
                                                     alt=""
                                                   />
                                                 </div>
@@ -923,7 +927,11 @@ const NewLeaderBoard = ({
                                                   </span>
                                                   {optionText2 === "skale" ? (
                                                     <img
-                                                      src={premiumInactive}
+                                                      src={
+                                                        isPremium
+                                                          ? premiumIcon
+                                                          : premiumInactive
+                                                      }
                                                       alt=""
                                                     />
                                                   ) : (
@@ -1091,7 +1099,11 @@ const NewLeaderBoard = ({
                                                     )}
                                                   </span>
                                                   <img
-                                                    src={premiumInactive}
+                                                    src={
+                                                      isPremium
+                                                        ? premiumIcon
+                                                        : premiumInactive
+                                                    }
                                                     alt=""
                                                   />
                                                 </div>
@@ -1119,10 +1131,21 @@ const NewLeaderBoard = ({
                                                       0
                                                     )}
                                                   </span>
-                                                  <img
-                                                    src={goldenInactive}
-                                                    alt=""
-                                                  />
+                                                  {optionText2 === "skale" ? (
+                                                    <img
+                                                      src={
+                                                        isPremium
+                                                          ? premiumIcon
+                                                          : premiumInactive
+                                                      }
+                                                      alt=""
+                                                    />
+                                                  ) : (
+                                                    <img
+                                                      src={goldenInactive}
+                                                      alt=""
+                                                    />
+                                                  )}
                                                 </div>
                                               </td>
                                             )}
@@ -1380,10 +1403,21 @@ const NewLeaderBoard = ({
                                                   0
                                                 )}
                                               </span>
-                                              <img
-                                                src={goldenInactive}
-                                                alt=""
-                                              />
+                                              {optionText2 === "skale" ? (
+                                                <img
+                                                  src={
+                                                    isPremium
+                                                      ? premiumIcon
+                                                      : premiumInactive
+                                                  }
+                                                  alt=""
+                                                />
+                                              ) : (
+                                                <img
+                                                  src={goldenInactive}
+                                                  alt=""
+                                                />
+                                              )}
                                             </div>
                                           </td>
                                         )}
@@ -1589,7 +1623,11 @@ const NewLeaderBoard = ({
                                                     )}
                                                   </span>
                                                   <img
-                                                    src={premiumInactive}
+                                                    src={
+                                                      isPremium
+                                                        ? premiumIcon
+                                                        : premiumInactive
+                                                    }
                                                     alt=""
                                                   />
                                                 </div>
@@ -1619,7 +1657,11 @@ const NewLeaderBoard = ({
                                                   </span>
                                                   {optionText2 === "skale" ? (
                                                     <img
-                                                      src={premiumInactive}
+                                                      src={
+                                                        isPremium
+                                                          ? premiumIcon
+                                                          : premiumInactive
+                                                      }
                                                       alt=""
                                                     />
                                                   ) : (
@@ -1787,7 +1829,11 @@ const NewLeaderBoard = ({
                                                     )}
                                                   </span>
                                                   <img
-                                                    src={premiumInactive}
+                                                    src={
+                                                      isPremium
+                                                        ? premiumIcon
+                                                        : premiumInactive
+                                                    }
                                                     alt=""
                                                   />
                                                 </div>
@@ -1815,10 +1861,21 @@ const NewLeaderBoard = ({
                                                       0
                                                     )}
                                                   </span>
-                                                  <img
-                                                    src={goldenInactive}
-                                                    alt=""
-                                                  />
+                                                  {optionText2 === "skale" ? (
+                                                    <img
+                                                      src={
+                                                        isPremium
+                                                          ? premiumIcon
+                                                          : premiumInactive
+                                                      }
+                                                      alt=""
+                                                    />
+                                                  ) : (
+                                                    <img
+                                                      src={goldenInactive}
+                                                      alt=""
+                                                    />
+                                                  )}
                                                 </div>
                                               </td>
                                             )}
@@ -2076,10 +2133,21 @@ const NewLeaderBoard = ({
                                                   0
                                                 )}
                                               </span>
-                                              <img
-                                                src={goldenInactive}
-                                                alt=""
-                                              />
+                                              {optionText2 === "skale" ? (
+                                                <img
+                                                  src={
+                                                    isPremium
+                                                      ? premiumIcon
+                                                      : premiumInactive
+                                                  }
+                                                  alt=""
+                                                />
+                                              ) : (
+                                                <img
+                                                  src={goldenInactive}
+                                                  alt=""
+                                                />
+                                              )}
                                             </div>
                                           </td>
                                         )}
