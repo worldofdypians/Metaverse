@@ -894,7 +894,9 @@ const NewLeaderBoard = ({
                                                   </span>
                                                   <img
                                                     src={
-                                                      isPremium && username === item.displayName
+                                                      isPremium &&
+                                                      username ===
+                                                        item.displayName
                                                         ? premiumIcon
                                                         : premiumInactive
                                                     }
@@ -928,7 +930,9 @@ const NewLeaderBoard = ({
                                                   {optionText2 === "skale" ? (
                                                     <img
                                                       src={
-                                                        isPremium && username === item.displayName
+                                                        isPremium &&
+                                                        username ===
+                                                          item.displayName
                                                           ? premiumIcon
                                                           : premiumInactive
                                                       }
@@ -1100,7 +1104,9 @@ const NewLeaderBoard = ({
                                                   </span>
                                                   <img
                                                     src={
-                                                      isPremium && username === item.displayName
+                                                      isPremium &&
+                                                      username ===
+                                                        item.displayName
                                                         ? premiumIcon
                                                         : premiumInactive
                                                     }
@@ -1134,7 +1140,9 @@ const NewLeaderBoard = ({
                                                   {optionText2 === "skale" ? (
                                                     <img
                                                       src={
-                                                        isPremium && username === item.displayName
+                                                        isPremium &&
+                                                        username ===
+                                                          item.displayName
                                                           ? premiumIcon
                                                           : premiumInactive
                                                       }
@@ -1366,9 +1374,10 @@ const NewLeaderBoard = ({
                                               </span>
                                               <img
                                                 src={
-                                                  isPremium && username ===
-                                                  leaderboard.player_data
-                                                    .displayName
+                                                  isPremium &&
+                                                  username ===
+                                                    leaderboard.player_data
+                                                      .displayName
                                                     ? premiumIcon
                                                     : premiumInactive
                                                 }
@@ -1408,9 +1417,10 @@ const NewLeaderBoard = ({
                                               {optionText2 === "skale" ? (
                                                 <img
                                                   src={
-                                                    isPremium && username ===
-                                                    leaderboard.player_data
-                                                      .displayName
+                                                    isPremium &&
+                                                    username ===
+                                                      leaderboard.player_data
+                                                        .displayName
                                                       ? premiumIcon
                                                       : premiumInactive
                                                   }
@@ -1628,7 +1638,9 @@ const NewLeaderBoard = ({
                                                   </span>
                                                   <img
                                                     src={
-                                                      isPremium && username === item.displayName
+                                                      isPremium &&
+                                                      username ===
+                                                        item.displayName
                                                         ? premiumIcon
                                                         : premiumInactive
                                                     }
@@ -1662,7 +1674,9 @@ const NewLeaderBoard = ({
                                                   {optionText2 === "skale" ? (
                                                     <img
                                                       src={
-                                                        isPremium && username === item.displayName
+                                                        isPremium &&
+                                                        username ===
+                                                          item.displayName
                                                           ? premiumIcon
                                                           : premiumInactive
                                                       }
@@ -1834,7 +1848,9 @@ const NewLeaderBoard = ({
                                                   </span>
                                                   <img
                                                     src={
-                                                      isPremium && username === item.displayName
+                                                      isPremium &&
+                                                      username ===
+                                                        item.displayName
                                                         ? premiumIcon
                                                         : premiumInactive
                                                     }
@@ -1868,7 +1884,9 @@ const NewLeaderBoard = ({
                                                   {optionText2 === "skale" ? (
                                                     <img
                                                       src={
-                                                        isPremium && username === item.displayName
+                                                        isPremium &&
+                                                        username ===
+                                                          item.displayName
                                                           ? premiumIcon
                                                           : premiumInactive
                                                       }
@@ -2100,9 +2118,10 @@ const NewLeaderBoard = ({
                                               </span>
                                               <img
                                                 src={
-                                                  isPremium && username ===
-                                                  leaderboard.player_data
-                                                    .displayName
+                                                  isPremium &&
+                                                  username ===
+                                                    leaderboard.player_data
+                                                      .displayName
                                                     ? premiumIcon
                                                     : premiumInactive
                                                 }
@@ -2142,9 +2161,10 @@ const NewLeaderBoard = ({
                                               {optionText2 === "skale" ? (
                                                 <img
                                                   src={
-                                                    isPremium && username ===
-                                                    leaderboard.player_data
-                                                      .displayName
+                                                    isPremium &&
+                                                    username ===
+                                                      leaderboard.player_data
+                                                        .displayName
                                                       ? premiumIcon
                                                       : premiumInactive
                                                   }
