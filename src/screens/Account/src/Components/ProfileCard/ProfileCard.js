@@ -813,13 +813,13 @@ const ProfileCard = ({
                             onOutsideClick={() => setRankDropdown(false)}
                           >
                             <div className="player-rank-dropdown p-3 d-flex flex-column gap-2">
-                              <div className="total-stars-wrapper d-flex align-items-center justify-content-between p-2">
+                              {/* <div className="total-stars-wrapper d-flex align-items-center justify-content-between p-2">
                                   <img src={star} style={{width: "30px", height: "30px"}} alt="" />
                                   <div className="d-flex flex-column align-items-end">
                                     <span className="total-stars-span">Collected Stars</span>
                                     <h6 className="total-stars-amount mb-0">{getFormattedNumber(4562, 0)}</h6>
                                   </div>
-                              </div>
+                              </div> */}
                               <div className="bnb-rank-wrapper d-flex align-items-center justify-content-between p-2 position-relative">
                                 <img
                                   src={bnbActive}
