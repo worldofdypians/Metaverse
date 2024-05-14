@@ -1132,6 +1132,7 @@ function Dashboard({
     previousVersion,
     previousWeeklyVersion,
     skalepreviousVersion,
+    userId
   ]);
 
   useEffect(() => {
@@ -2172,7 +2173,9 @@ function Dashboard({
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
-
+      
+      setUserSkaleScore(testArray[0].statValue);
+      setUserRankSkale(testArray[0].position);
       if (itemData.length > 0) {
         var testArray2 = itemData.filter(
           (item) => item.displayName === username
