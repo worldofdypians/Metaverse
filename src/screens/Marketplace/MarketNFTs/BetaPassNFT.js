@@ -2725,6 +2725,7 @@ const BetaPassNFT = ({
                               onSuccessLogin={() => {
                                 setalreadyRegistered(true);
                                 refetchPlayer();
+                                handleFirstTask(coinbase)
                               }}
                               mintTitle={selectedMint.cardTitle}
                               chainId={chainId}
