@@ -84,30 +84,30 @@ const WodBuilders = () => {
       banner: "babyDogeBanner.webp",
       link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
     },
-    {
-      name: "CORE",
-      icon: "core",
-      banner: "babyDogeBanner.webp",
-      link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
-    },
-    {
-      name: "Sei",
-      icon: "sei",
-      banner: "babyDogeBanner.webp",
-      link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
-    },
-    {
-      name: "Viction",
-      icon: "viction",
-      banner: "babyDogeBanner.webp",
-      link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
-    },
-    {
-      name: "MultiversX",
-      icon: "multiversx",
-      banner: "babyDogeBanner.webp",
-      link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
-    },
+    // {
+    //   name: "CORE",
+    //   icon: "core",
+    //   banner: "babyDogeBanner.webp",
+    //   link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
+    // },
+    // {
+    //   name: "Sei",
+    //   icon: "sei",
+    //   banner: "babyDogeBanner.webp",
+    //   link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
+    // },
+    // {
+    //   name: "Viction",
+    //   icon: "viction",
+    //   banner: "babyDogeBanner.webp",
+    //   link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
+    // },
+    // {
+    //   name: "MultiversX",
+    //   icon: "multiversx",
+    //   banner: "babyDogeBanner.webp",
+    //   link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
+    // },
    
 
   ];
