@@ -179,7 +179,7 @@ function AuthBNB({
   const handleFirstTask = async (wallet) => {
     const result = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task1/${wallet}`
+        `https://api.worldofdypians.com/api/airdrop-alliance/task3/${wallet}`
       )
       .catch((e) => {
         console.error(e);
@@ -230,7 +230,9 @@ function AuthBNB({
           <div className="d-flex flex-column gap-4 col-12 col-md-12 col-lg-8 mt-0">
             <div className="p-3 nft-page-wrapperbnb h-100"></div>
             <div className="d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center gap-0 gap-lg-1 gap-md-1 ">
-              <span className="detailsgreen-txt text-white">For any issues submit a ticket on:{" "} </span>
+              <span className="detailsgreen-txt text-white">
+                For any issues submit a ticket on:{" "}
+              </span>
               <a
                 href="https://discord.gg/worldofdypians"
                 className="detailsgreen-txt d-flex"
@@ -322,7 +324,10 @@ function AuthBNB({
                           onLoginTry={() => {
                             setisLogin(true);
                           }}
-                          onSuccessLogin={handleManageLoginStates}
+                          onSuccessLogin={() => {
+                            handleManageLoginStates();
+                            handleFirstTask(coinbase);
+                          }}
                           handleGoToSignup={() => {
                             handleChange("click", 1);
                           }}

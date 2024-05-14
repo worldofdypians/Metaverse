@@ -400,14 +400,7 @@ const Community = () => {
   ];
 
   const dummyData = [
-    {
-      title: "Entry Campaign",
-      status: "Live",
-      start_date: "May 1, 2024",
-      end_date: "May 15, 2024",
-      image: entryCampaign,
-      link: "/",
-    },
+    
     {
       title: "Daily Game Delight",
       status: "Upcoming",
@@ -432,16 +425,24 @@ const Community = () => {
       image: bnbExpedition,
       link: "/",
     },
+    {
+      title: "Entry Campaign",
+      status: "Expired",
+      start_date: "May 1, 2024",
+      end_date: "May 15, 2024",
+      image: entryCampaign,
+      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/102-world-of-dypians-entry-campaign",
+    },
   ];
 
   const dummyBanner = {
-    title: "Entry Campaign",
-    status: "Live",
-    desc: "Join the World of Dypians (WoD) Entry Campaign from May 1 to May 15 for a chance to win a share of the 100,000 WOD Tokens prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
-    start_date: "Apr 30, 2024",
-    end_date: "May 15, 2024",
-    image: entryCampaign,
-    link: "/",
+    title: "Daily Game Delight",
+      status: "Live",
+      desc: "Join the World of Dypians (WoD) Daily Game Delight Campaign from May 15 to May 29 for a chance to win a share of the 150,000 WOD Tokens & 500 Premium Subscription prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
+      start_date: "May 15, 2024",
+      end_date: "May 29, 2024",
+      image: dailyGameDelight,
+      link: "/",
   };
 
   const html = document.querySelector("html");
@@ -518,7 +519,7 @@ const Community = () => {
                     >
                       <a
                         className="btn filled-btn px-5"
-                        href="https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/102-world-of-dypians-entry-campaign"
+                        href="https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/103-daily-game-delight"
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -550,67 +551,123 @@ const Community = () => {
             </div>
             <div className="community-items-grid">
               {dummyData.slice(1, 4).map((item, index) => (
-                <HtmlTooltip
-                  enterTouchDelay={0}
-                  enterDelay={0}
-                  placement="top"
-                  title={
-                    <span className="card-eth-chain-text">Coming Soon</span>
-                  }
-                >
+              item.status === "Expired" ? 
+                <a href={item.link} target="_blank">
+                    <div
+                key={index}
+                className="community-item-card d-flex flex-column gap-2 p-3"
+              >
+                <div className="w-100 h-100 banner-holder overflow-hidden">
+                  <img
+                    src={item.image}
+                    className="community-card-banner"
+                    alt=""
+                  />
+                </div>
+                <div className="d-flex align-items-center justify-content-between">
+                  <div className="community-card-title">{item.title}</div>
                   <div
-                    key={index}
-                    className="community-item-card d-flex flex-column gap-2 p-3"
+                    className={`position-relative ${
+                      item.status === "Live"
+                        ? "events-page-status-tag-live"
+                        : item.status === "Upcoming"
+                        ? "events-page-status-tag-upcoming"
+                        : "events-page-status-tag-expired"
+                    }
+             px-2 d-flex align-items-center justify-content-center gap-0`}
+                    style={{ top: 0 }}
                   >
-                    <div className="w-100 h-100 banner-holder overflow-hidden">
-                      <img
-                        src={item.image}
-                        className="community-card-banner"
-                        alt=""
-                      />
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="community-card-title">{item.title}</div>
+                    {item.status === "Live" && (
                       <div
-                        className={`position-relative ${
-                          item.status === "Live"
-                            ? "events-page-status-tag-live"
-                            : item.status === "Upcoming"
-                            ? "events-page-status-tag-upcoming"
-                            : "events-page-status-tag-expired"
-                        }
-                 px-2 d-flex align-items-center justify-content-center gap-0`}
-                        style={{ top: 0 }}
-                      >
-                        {item.status === "Live" && (
-                          <div
-                          className="pulsatingDot"
-                            style={{ width: 7, height: 7, marginRight: 5 }}
-                          ></div>
-                        )}
-                        <span>{item.status}</span>
-                      </div>
+                      className="pulsatingDot"
+                        style={{ width: 7, height: 7, marginRight: 5 }}
+                      ></div>
+                    )}
+                    <span>{item.status}</span>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center justify-content-between mt-2">
+                  <span className="community-card-date">Duration:</span>
+                  <div className="d-flex align-items-center gap-2">
+                    <div className="d-flex align-items-center gap-1">
+                      <img src={calendar} width={16} height={16} alt="" />
+                      <span className="community-card-date">
+                        {item.start_date}
+                      </span>
                     </div>
-                    <div className="d-flex align-items-center justify-content-between mt-2">
-                      <span className="community-card-date">Duration:</span>
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="d-flex align-items-center gap-1">
-                          <img src={calendar} width={16} height={16} alt="" />
-                          <span className="community-card-date">
-                            {item.start_date}
-                          </span>
-                        </div>
-                        <span className="community-card-date">-</span>
-                        <div className="d-flex align-items-center gap-1">
-                          <img src={calendar} width={16} height={16} alt="" />
-                          <span className="community-card-date">
-                            {item.end_date}
-                          </span>
-                        </div>
-                      </div>
+                    <span className="community-card-date">-</span>
+                    <div className="d-flex align-items-center gap-1">
+                      <img src={calendar} width={16} height={16} alt="" />
+                      <span className="community-card-date">
+                        {item.end_date}
+                      </span>
                     </div>
                   </div>
-                </HtmlTooltip>
+                </div>
+              </div>
+                </a>
+            :
+            <HtmlTooltip
+            enterTouchDelay={0}
+            enterDelay={0}
+            placement="top"
+            title={
+              <span className="card-eth-chain-text d-flex align-items-center justify-content-center">{item.status === "Expired" ? "Expired" : "Coming Soon"}</span>
+            }
+          >
+            <div
+              key={index}
+              className="community-item-card d-flex flex-column gap-2 p-3"
+            >
+              <div className="w-100 h-100 banner-holder overflow-hidden">
+                <img
+                  src={item.image}
+                  className="community-card-banner"
+                  alt=""
+                />
+              </div>
+              <div className="d-flex align-items-center justify-content-between">
+                <div className="community-card-title">{item.title}</div>
+                <div
+                  className={`position-relative ${
+                    item.status === "Live"
+                      ? "events-page-status-tag-live"
+                      : item.status === "Upcoming"
+                      ? "events-page-status-tag-upcoming"
+                      : "events-page-status-tag-expired"
+                  }
+           px-2 d-flex align-items-center justify-content-center gap-0`}
+                  style={{ top: 0 }}
+                >
+                  {item.status === "Live" && (
+                    <div
+                    className="pulsatingDot"
+                      style={{ width: 7, height: 7, marginRight: 5 }}
+                    ></div>
+                  )}
+                  <span>{item.status}</span>
+                </div>
+              </div>
+              <div className="d-flex align-items-center justify-content-between mt-2">
+                <span className="community-card-date">Duration:</span>
+                <div className="d-flex align-items-center gap-2">
+                  <div className="d-flex align-items-center gap-1">
+                    <img src={calendar} width={16} height={16} alt="" />
+                    <span className="community-card-date">
+                      {item.start_date}
+                    </span>
+                  </div>
+                  <span className="community-card-date">-</span>
+                  <div className="d-flex align-items-center gap-1">
+                    <img src={calendar} width={16} height={16} alt="" />
+                    <span className="community-card-date">
+                      {item.end_date}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </HtmlTooltip>
               ))}
             </div>
             <div className="col-12 col-lg-6 mt-5">
