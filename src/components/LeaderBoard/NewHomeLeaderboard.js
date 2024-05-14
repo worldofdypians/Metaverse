@@ -1786,7 +1786,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
 
       {optionText2 === "skale" && (
         <Slider {...settings} ref={sliderRef}>
-          <div className="leaderboard-item d-flex flex-column gap-2 p-0">
+          {/* <div className="leaderboard-item d-flex flex-column gap-2 p-0">
             <div className="d-flex w-100 position-relative justify-content-between leaderboard-title-wrapper p-2">
               <img
                 src={leftArrow}
@@ -1947,29 +1947,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                          {/* <td
-                            className={`playerReward text-center col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "playerReward"
-                            }`}
-                          >
-                            ${getFormattedNumber(prizeSkale[index], 0)}
-                          </td>
-                          <td
-                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
-                              optionText2 === "skale" && "premium-goldenscore"
-                            } col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "goldenscore-inactive2"
-                            }`}
-                            style={{ width: "100%" }}
-                          >
-                            +$
-                            {getFormattedNumber(prizeSkale[index], 0)}
-                            <img src={premiumIcon} alt="" />
-                          </td> */}
+                        
                           <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
@@ -2001,24 +1979,24 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div> */}
           <div className="leaderboard-item d-flex flex-column gap-2 p-0">
-            <div className="d-flex w-100 position-relative justify-content-between leaderboard-title-wrapper p-2">
-              <img
+            <div className="d-flex w-100 position-relative justify-content-center leaderboard-title-wrapper p-2">
+              {/* <img
                 src={leftArrow}
                 alt=""
                 style={{ cursor: "pointer" }}
                 onClick={prevSlide}
-              />
+              /> */}
               <h6 className="leaderboard-title  text-white font-oxanium mb-0">
                 WEEKLY
               </h6>
-              <img
+              {/* <img
                 src={rightArrow}
                 alt=""
                 style={{ cursor: "pointer" }}
                 onClick={nextSlide}
-              />
+              /> */}
               <div
                 className="d-flex flex-column px-2 reset-time-wrapper"
                 style={{ right: "8%" }}
@@ -2089,29 +2067,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                          {/* <td
-                            className={`playerReward text-center col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "playerReward"
-                            }`}
-                          >
-                            ${getFormattedNumber(prizeSkale[index], 0)}
-                          </td>
-                          <td
-                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
-                              optionText2 === "skale" && "premium-goldenscore"
-                            } col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "goldenscore-inactive2"
-                            }`}
-                            style={{ width: "100%" }}
-                          >
-                            +$
-                            {getFormattedNumber(prizeSkale[index], 0)}
-                            <img src={premiumIcon} alt="" />
-                          </td> */}
+                       
                           <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
@@ -2186,29 +2142,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                          {/* <td
-                            className={`playerReward text-center col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "playerReward"
-                            }`}
-                          >
-                            ${getFormattedNumber(prizeSkale[index], 0)}
-                          </td>
-                          <td
-                            className={`playerReward d-flex align-items-center justify-content-center gap-2 mb-0 ${
-                              optionText2 === "skale" && "premium-goldenscore"
-                            } col-2 font-montserrat ${
-                              username === item.displayName
-                                ? "goldenscore"
-                                : "goldenscore-inactive2"
-                            }`}
-                            style={{ width: "100%" }}
-                          >
-                            +$
-                            {getFormattedNumber(prizeSkale[index], 0)}
-                            <img src={premiumIcon} alt="" />
-                          </td> */}
+                  
                           <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
@@ -2241,7 +2175,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
               </table>
             </div>
           </div>
-          <div className="leaderboard-item d-flex flex-column gap-2 p-0">
+          {/* <div className="leaderboard-item d-flex flex-column gap-2 p-0">
             <div className="d-flex w-100 position-relative justify-content-between leaderboard-title-wrapper p-2">
               <img
                 src={leftArrow}
@@ -2434,7 +2368,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div> */}
         </Slider>
       )}
 
