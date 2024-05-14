@@ -479,7 +479,7 @@ const News = (props) => {
             <div className="d-flex flex-column flex-lg-row align-items-start gap-3 gap-lg-0 align-items-lg-center justify-content-between">
               <h2 className="news-header font-organetto px-0 py-3 pt-lg-5 d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2">
                 Patch{" "}
-                <h2 className="mb-0 news-header" style={{ color: "#8c56ff" }}>
+                <h2 className="mb-0 news-header font-organetto" style={{ color: "#8c56ff" }}>
                   Notes
                 </h2>
               </h2>
