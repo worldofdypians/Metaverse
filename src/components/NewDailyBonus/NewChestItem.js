@@ -118,7 +118,7 @@ const NewChestItem = ({
   const handleSecondTask = async (wallet) => {
     const result = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task2/${wallet}`
+        `https://api.worldofdypians.com/api/airdrop-alliance/task4/${wallet}`
       )
       .catch((err) => {
         console.error(err);

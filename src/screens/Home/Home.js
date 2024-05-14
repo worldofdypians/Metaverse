@@ -18,6 +18,7 @@ import coin98Popup from "../../components/TimepieceMint/assets/coin98Popup.png";
 import basePopup from "../../components/TimepieceMint/assets/basePopup.png";
 import confluxPopup from "../../components/TimepieceMint/assets/confluxPopup.png";
 import entryCampaignBanner from "../../components/TimepieceMint/assets/entryCampaignBanner.png";
+import dailyGameDelightBanner from "../../components/TimepieceMint/assets/dailyGameDelightBanner.png";
 import dogePopup from "../../components/TimepieceMint/assets/dogePopup.png";
 import gatePopup from "../../components/TimepieceMint/assets/gatePopup.webp";
 import cmcPopup from "../../components/TimepieceMint/assets/cmcPopup.webp";
@@ -85,7 +86,7 @@ const Home = ({
   };
   const entryCampaignPopup = {
     title: "SKALE",
-    img: entryCampaignBanner,
+    img: dailyGameDelightBanner,
     state: "skale",
   };
 
