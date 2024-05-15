@@ -1,6 +1,5 @@
 .diagonal-button-wrapper{
     height: 300px;
-    background: white;
     border-radius: 12px;
     position: relative;
 }
@@ -8,21 +7,32 @@
 .first-diagonal-btn{
     position: absolute;
 width: 100%;
+left: 0;
 height: 100%;
-background-color: red;
---mask: linear-gradient(225deg, #0000 28.28px, #000 0);
--webkit-mask: var(--mask);
-mask: var(--mask);
-z-index: 1;
+// background-color: #1a1c39;
+clip-path: polygon(0 0, 0% 100%, 100% 0);
+
+border-radius: 12px;
+transition: all .25s ease;
+}
+
+.first-diagonal-btn:hover{
+// background-color: #1bf5ff;
 }
 
 .second-diagonal-btn{
     position: absolute;
 width: 100%;
+right: 0;
 height: 100%;
-background-color: blue;
---mask: linear-gradient(60deg, #0000 260px, #000 0);
--webkit-mask: var(--mask);
-mask: var(--mask);
-z-index: 2;
+background-color: #1a1c39;
+
+clip-path: polygon(100% 100%, 0% 100%, 100% 0);
+border-radius: 12px;
+transition: all .25s ease;
+}
+
+.second-diagonal-btn:hover{
+    // background-color: #1bf5ff;
+
 }
