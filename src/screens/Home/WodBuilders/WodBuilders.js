@@ -7,28 +7,22 @@ const WodBuilders = () => {
   const windowSize = useWindowSize();
   const builders = [
     {
-      name: "Avalanche",
-      icon: "avaxIcon",
-      banner: "avalancheBanner.png",
-      link: "https://twitter.com/ArtOnAvax/status/1666852593480658944",
-    },
-    {
-      name: "Chainlink",
-      icon: "chainlinkIcon",
-      banner: "chainlinkBanner.png",
-      link: "https://twitter.com/smartcontract/status/1639280913870893056?s=46&t=nb0doR-1o7k9PQ3EaZE8aw",
-    },
-    {
-      name: "Conflux",
-      icon: "confluxIcon",
-      banner: "confluxBanner.png",
-      link: "https://twitter.com/Conflux_Network/status/1677017988497563660",
-    },
-    {
       name: "BNB Chain",
       icon: "bnbIcon",
       banner: "bnbChainBanner.png",
       link: "https://twitter.com/BNBCHAIN/status/1705265706747548051?t=7iSDimripaRiwq6A_Z6ViQ&s=19",
+    },
+    {
+      name: "CORE",
+      icon: "core",
+      banner: "coreBanner.png",
+      link: 'https://x.com/Coredao_Org/status/1790336632823910804'
+    },
+    {
+      name: "MultiversX",
+      icon: "multiversx",
+      banner: "multiversBanner.png",
+      link: 'https://x.com/MultiversX/status/1790422563849466280'
     },
     {
       name: "CoinMarketCap",
@@ -42,6 +36,43 @@ const WodBuilders = () => {
       banner: "coingeckoBanner.png",
       link: "https://twitter.com/coingecko/status/1702286607846682909",
     },
+    {
+      name: "Viction",
+      icon: "viction",
+      banner: "victionBanner.png",
+      link: 'https://x.com/VictionEco/status/1789987120083562640'
+    },
+    {
+      name: "SKALE",
+      icon: "skaleIcon",
+      banner: "skaleBanner.webp",
+      link: "https://twitter.com/SkaleNetwork/status/1777372050832658644"
+    },
+    {
+      name: "Conflux",
+      icon: "confluxIcon",
+      banner: "confluxBanner.png",
+      link: "https://twitter.com/Conflux_Network/status/1677017988497563660",
+    },
+    {
+      name: "BabyDoge",
+      icon: "babydogeIcon",
+      banner: "babyDogeBanner.webp",
+      link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
+    },
+    {
+      name: "Avalanche",
+      icon: "avaxIcon",
+      banner: "avalancheBanner.png",
+      link: "https://twitter.com/ArtOnAvax/status/1666852593480658944",
+    },
+    {
+      name: "Chainlink",
+      icon: "chainlinkIcon",
+      banner: "chainlinkBanner.png",
+      link: "https://twitter.com/smartcontract/status/1639280913870893056?s=46&t=nb0doR-1o7k9PQ3EaZE8aw",
+    },
+
     {
       name: "Coin98",
       icon: "coin98Icon",
@@ -71,37 +102,6 @@ const WodBuilders = () => {
       icon: "kucoinIcon",
       banner: "kucoinBanner.png",
     },
-    {
-      name: "SKALE",
-      icon: "skaleIcon",
-      banner: "skaleBanner.webp",
-      link: "https://twitter.com/SkaleNetwork/status/1777372050832658644"
-    },
-    {
-      name: "BabyDoge",
-      icon: "babydogeIcon",
-      banner: "babyDogeBanner.webp",
-      link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
-    },
-    {
-      name: "Core",
-      icon: "core",
-      banner: "coreBanner.png",
-      link: 'https://x.com/Coredao_Org/status/1790336632823910804'
-    },
-    {
-      name: "MultiversX",
-      icon: "multiversx",
-      banner: "multiversBanner.png",
-      link: 'https://x.com/MultiversX/status/1790422563849466280'
-    },
-    {
-      name: "Viction",
-      icon: "viction",
-      banner: "victionBanner.png",
-      link: 'https://x.com/VictionEco/status/1789987120083562640'
-    },
-
   ];
 
   useEffect(() => {
@@ -132,7 +132,7 @@ const WodBuilders = () => {
               >
                 <img
                   src={require(`./assets/${item.banner}`)}
-                  className="w-100"
+                  className="w-100 partner-banner"
                   alt=""
                 />
                 <div className="d-flex align-items-center gap-2">
@@ -146,7 +146,7 @@ const WodBuilders = () => {
           <div className="d-flex justify-content-center mt-3">
             <div
               className="linear-border"
-              onClick={() => (slice === 2 ? setSlice(13) : setSlice(2))}
+              onClick={() => (slice === 2 ? setSlice(16) : setSlice(2))}
             >
               <button className="btn filled-btn px-5">
                 {slice === 2 ? "View More" : "View Less"}
@@ -157,7 +157,7 @@ const WodBuilders = () => {
           <div className="d-flex justify-content-center mt-3">
             <div
               className="linear-border"
-              onClick={() => (slice === 8 ? setSlice(13) : setSlice(8))}
+              onClick={() => (slice === 8 ? setSlice(16) : setSlice(8))}
             >
               <button className="btn filled-btn px-5">
                 {slice === 8 ? "View More" : "View Less"}

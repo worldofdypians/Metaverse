@@ -694,7 +694,7 @@ const ProfileCard = ({
                     </div>
                   )}
 
-             <div className="buttons-grid w-100">
+             <div className={`${isPremium ? "buttons-grid-premium" : "buttons-grid"} w-100`}>
              {email && address && coinbase && !isPremium && (
                     <div
                       className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between

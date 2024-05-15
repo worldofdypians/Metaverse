@@ -939,10 +939,21 @@ background-size: 100% 100%;
   }
 }
 
+
+
 .buttons-grid{
   display: grid;
   grid-template-columns: repeat(4,1fr);
-  gap: 25px;
+  gap: 10px;
+  @media screen and (max-width: 786px) {
+    grid-template-columns: auto;
+  
+  }
+}
+.buttons-grid-premium{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
   @media screen and (max-width: 786px) {
     grid-template-columns: auto;
   
