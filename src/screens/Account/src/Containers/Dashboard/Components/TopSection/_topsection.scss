@@ -1,0 +1,28 @@
+.diagonal-button-wrapper{
+    height: 300px;
+    background: white;
+    border-radius: 12px;
+    position: relative;
+}
+
+.first-diagonal-btn{
+    position: absolute;
+width: 100%;
+height: 100%;
+background-color: red;
+--mask: linear-gradient(225deg, #0000 28.28px, #000 0);
+-webkit-mask: var(--mask);
+mask: var(--mask);
+z-index: 1;
+}
+
+.second-diagonal-btn{
+    position: absolute;
+width: 100%;
+height: 100%;
+background-color: blue;
+--mask: linear-gradient(60deg, #0000 260px, #000 0);
+-webkit-mask: var(--mask);
+mask: var(--mask);
+z-index: 2;
+}

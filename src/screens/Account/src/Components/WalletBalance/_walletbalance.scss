@@ -2685,3 +2685,27 @@
   font-weight: 400;
   line-height: normal;
 }
+
+.new-bundle-btn{
+  border: 2px solid #41435a;
+  background: linear-gradient(
+    155.14deg,
+    rgba(255, 255, 255, 0) -2.13%,
+    rgba(255, 255, 255, 0.15) 136.58%
+  );
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #e2e2e2;
+}
+
+.portfolio{
+  height: 0px;
+  transition: all .25s ease-in-out;
+  overflow: hidden;
+}
+
+.portfolio-open{
+  height: fit-content;
+}

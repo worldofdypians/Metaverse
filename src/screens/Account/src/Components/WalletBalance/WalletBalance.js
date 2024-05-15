@@ -1394,9 +1394,9 @@ const WalletBalance = ({
 
   return (
     <>
-      <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 justify-content-center align-items-center">
+      <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 justify-content-center align-items-center">
         <div className="row w-100 gap-5 gap-lg-0 mx-0">
-          <div className="col-12 col-lg-4 px-0 pe-lg-3 position-relative mt-3 mt-lg-0">
+          {/* <div className="col-12 col-lg-4 px-0 pe-lg-3 position-relative mt-3 mt-lg-0">
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
               style={{ position: "absolute", top: "-35px" }}
@@ -1509,15 +1509,9 @@ const WalletBalance = ({
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          <div className="col-12 col-lg-8 px-0 position-relative mt-3 mt-lg-0">
-            <h6
-              className="new-bundle-title ms-0 ms-lg-4"
-              style={{ position: "absolute", top: "-35px" }}
-            >
-              My Portfolio
-            </h6>
+          <div className="col-12 col-lg- px-0 position-relative mt-lg-0">
             <div className="nft-outer-wrapper2 nft-outer-wrapper22 p-4  d-flex flex-column gap-2 position-relative h-100">
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
                 <h6
@@ -3720,7 +3714,6 @@ const WalletBalance = ({
             </div>
           </OutsideClickHandler>
         )}
-
         {multiplayerModal === true && (
           <OutsideClickHandler
             onOutsideClick={() => setmultiplayerModal(false)}

@@ -60,6 +60,7 @@ import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import { dyp700Address, dyp700v1Address } from "../../web3";
 import { NavLink } from "react-router-dom";
+import TopSection from "./Components/TopSection/TopSection";
 
 function Dashboard({
   account,
@@ -480,6 +481,7 @@ function Dashboard({
   const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
   const [dateofBundle, setdateofBundle] = useState(0);
   const [dateofBundlev1, setdateofBundlev1] = useState(0);
+  const [portfolio, setPortfolio] = useState(false)
   const [datewhenBundleBought, setdatewhenBundleBought] = useState(0);
   const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
   const [bnbImages, setBnbImages] = useState(shuffle(chestImagesBnb));
@@ -4568,6 +4570,7 @@ function Dashboard({
                     >
                       <ProfileCard
                         getRankData={getRankData}
+                        setPortfolio={() => setPortfolio(!portfolio)}
                         rankData={rankData}
                         userRank={userRank}
                         userRankSkale={userRankSkale}
@@ -4628,7 +4631,61 @@ function Dashboard({
                         handleOpenDomains={handleOpenDomains}
                         domainName={domainName}
                       />
+                   
+                      <div className={`portfolio ${portfolio && 'portfolio-open'}`}>
+                      <WalletBalance
+                      ethTokenData={ethTokenData}
+                      dypTokenData={dypTokenData}
+                      onOpenNfts={onOpenNfts}
+                      listedNFTS={listedNFTS}
+                      myBoughtNfts={myBoughtNfts}
+                      address={data?.getPlayer?.wallet?.publicAddress}
+                      coinbase={account}
+                      isVerified={data?.getPlayer?.wallet}
+                      favoritesArray={favorites}
+                      dypBalance={dypBalance}
+                      dypBalancebnb={dypBalancebnb}
+                      dypBalanceavax={dypBalanceavax}
+                      idypBalance={idypBalance}
+                      idypBalancebnb={idypBalancebnb}
+                      idypBalanceavax={idypBalanceavax}
+                      showNfts={showNfts}
+                      handleShowWalletPopup={() => {
+                        setshowWalletModal(true);
+                      }}
+                      email={email}
+                      userId={data?.getPlayer?.playerId}
+                      username={data?.getPlayer?.displayName}
+                      myCawsCollected={MyNFTSCaws}
+                      myCawsOldCollected={MyNFTSCawsOld}
+                      myLandCollected={MyNFTSLand}
+                      myTimepieceCollected={MyNFTSTimepiece}
+                      landStaked={landstakes}
+                      myCawsWodStakes={myCawsWodStakesAll}
+                      myWodWodStakes={myWodWodStakesAll}
+                      myNFTSCoingecko={MyNFTSCoingecko}
+                      myGateNfts={myGateNfts}
+                      myConfluxNfts={myConfluxNfts}
+                      myBaseNfts={myBaseNfts}
+                      myDogeNfts={myDogeNfts}
+                      myCmcNfts={myCmcNfts}
+                      myCoreNfts={myCoreNfts}
+                      myVictionNfts={myVictionNfts}
 
+                      mySkaleNfts={mySkaleNfts}
+                      latestBoughtNFTS={latest20BoughtNFTS}
+                      myOffers={myOffers}
+                      allActiveOffers={allActiveOffers}
+                      latestVersion={latestVersion}
+                      MyNFTSLandBNB={MyNFTSLandBNB}
+                      MyNFTSCawsBNB={MyNFTSCawsBNB}
+                      MyNFTSLandAvax={MyNFTSLandAvax}
+                      MyNFTSCawsAvax={MyNFTSCawsAvax}
+                      MyNFTSLandBase={MyNFTSLandBase}
+                      MyNFTSCawsBase={MyNFTSCawsBase}
+                    />
+                      </div>
+                      <TopSection />
                       <NewWalletBalance
                         onDailyRewardsPopupOpen={() => {
                           setdailyBonusPopup(true);
@@ -4739,57 +4796,7 @@ function Dashboard({
                         cawsPremiumRewards={cawsPremiumRewards}
                       />
                     </div>
-                    <WalletBalance
-                      ethTokenData={ethTokenData}
-                      dypTokenData={dypTokenData}
-                      onOpenNfts={onOpenNfts}
-                      listedNFTS={listedNFTS}
-                      myBoughtNfts={myBoughtNfts}
-                      address={data?.getPlayer?.wallet?.publicAddress}
-                      coinbase={account}
-                      isVerified={data?.getPlayer?.wallet}
-                      favoritesArray={favorites}
-                      dypBalance={dypBalance}
-                      dypBalancebnb={dypBalancebnb}
-                      dypBalanceavax={dypBalanceavax}
-                      idypBalance={idypBalance}
-                      idypBalancebnb={idypBalancebnb}
-                      idypBalanceavax={idypBalanceavax}
-                      showNfts={showNfts}
-                      handleShowWalletPopup={() => {
-                        setshowWalletModal(true);
-                      }}
-                      email={email}
-                      userId={data?.getPlayer?.playerId}
-                      username={data?.getPlayer?.displayName}
-                      myCawsCollected={MyNFTSCaws}
-                      myCawsOldCollected={MyNFTSCawsOld}
-                      myLandCollected={MyNFTSLand}
-                      myTimepieceCollected={MyNFTSTimepiece}
-                      landStaked={landstakes}
-                      myCawsWodStakes={myCawsWodStakesAll}
-                      myWodWodStakes={myWodWodStakesAll}
-                      myNFTSCoingecko={MyNFTSCoingecko}
-                      myGateNfts={myGateNfts}
-                      myConfluxNfts={myConfluxNfts}
-                      myBaseNfts={myBaseNfts}
-                      myDogeNfts={myDogeNfts}
-                      myCmcNfts={myCmcNfts}
-                      myCoreNfts={myCoreNfts}
-                      myVictionNfts={myVictionNfts}
-
-                      mySkaleNfts={mySkaleNfts}
-                      latestBoughtNFTS={latest20BoughtNFTS}
-                      myOffers={myOffers}
-                      allActiveOffers={allActiveOffers}
-                      latestVersion={latestVersion}
-                      MyNFTSLandBNB={MyNFTSLandBNB}
-                      MyNFTSCawsBNB={MyNFTSCawsBNB}
-                      MyNFTSLandAvax={MyNFTSLandAvax}
-                      MyNFTSCawsAvax={MyNFTSCawsAvax}
-                      MyNFTSLandBase={MyNFTSLandBase}
-                      MyNFTSCawsBase={MyNFTSCawsBase}
-                    />
+                 
                     {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
                   <h2
