@@ -83,6 +83,7 @@ function Dashboard({
   dogePrice,
   dyptokenData_old,
   handleSwitchChain,
+  logoutCount,
 }) {
   const { email, logout } = useAuth();
 
@@ -1112,6 +1113,30 @@ function Dashboard({
       fillPreviousRecordsSkaleMonthly(result.data.data.leaderboard);
     }
   };
+
+  useEffect(() => {
+   if(logoutCount > 0){
+    setIsPremium(false);
+    setclaimedChests(0);
+    setclaimedPremiumChests(0);
+    setclaimedCorePremiumChests(0);
+    setclaimedCoreChests(0);
+    setclaimedVictionPremiumChests(0);
+    setclaimedVictionChests(0);
+    setallChests([]);
+    setallSkaleChests([]);
+    setallCoreChests([]);
+    setallVictionChests([]);
+    setOpenedChests([]);
+    setOpenedCoreChests([]);
+    setOpenedVictionChests([]);
+    setOpenedSkaleChests([]);
+    setclaimedSkaleChests(0);
+    setclaimedSkalePremiumChests(0);
+    refetchPlayer();
+   }
+  }, [logoutCount])
+  
 
   useEffect(() => {
     fetchDailyRecords();
@@ -4634,7 +4659,30 @@ function Dashboard({
                       />
                    
                     {portfolio && 
-                      <Portfolio
+                     <OutsideClickHandler
+                     onOutsideClick={() => setPortfolio(false)}
+                   >
+                     <div
+                       className="popup-wrapper  popup-active p-3"
+                       id="portfolio"
+                       style={{ width: "70%", pointerEvents: "auto" }}
+                     >
+                       <div className="d-flex align-items-center justify-content-between">
+                         <h2
+                           className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+                         >
+                           My Portfolio
+                         </h2>
+                  
+                         <img
+                           src={xMark}
+                           onClick={() => setPortfolio(false)}
+                           alt=""
+                           style={{ cursor: "pointer" }}
+                         />
+                       </div>
+                 
+                       <Portfolio
                       ethTokenData={ethTokenData}
                       dypTokenData={dypTokenData}
                       onOpenNfts={onOpenNfts}
@@ -4685,6 +4733,9 @@ function Dashboard({
                       MyNFTSLandBase={MyNFTSLandBase}
                       MyNFTSCawsBase={MyNFTSCawsBase}
                     />
+                     </div>
+                   </OutsideClickHandler>
+                    
                     }
                       <TopSection />
                       <NewWalletBalance

@@ -1,7 +1,10 @@
 .diagonal-button-wrapper{
-    height: 300px;
+    height: 100%;
     border-radius: 12px;
     position: relative;
+    @media screen and (max-width: 786px) {
+        height: 100px;
+    }
 }
 
 .first-diagonal-btn{
@@ -9,30 +12,63 @@
 width: 100%;
 left: 0;
 height: 100%;
-// background-color: #1a1c39;
-clip-path: polygon(0 0, 0% 100%, 100% 0);
+background: linear-gradient(90deg, #181b38 0%, #481150 100%);
+
+clip-path: polygon(0 0, 25% 0, 75% 100%, 0% 100%);
+
 
 border-radius: 12px;
 transition: all .25s ease;
 }
 
-.first-diagonal-btn:hover{
-// background-color: #1bf5ff;
-}
+
 
 .second-diagonal-btn{
     position: absolute;
 width: 100%;
 right: 0;
 height: 100%;
-background-color: #1a1c39;
-
-clip-path: polygon(100% 100%, 0% 100%, 100% 0);
+background: linear-gradient(90deg, #181b38 0%, #1d438d 100%);
+clip-path: polygon(25% 0, 100% 0, 100% 100%, 75% 100%);
 border-radius: 12px;
 transition: all .25s ease;
 }
 
-.second-diagonal-btn:hover{
-    // background-color: #1bf5ff;
+.promotion-img{
+    width: 75px;
+    height: 75px;
+    border-radius: 8px;
+    border: 2px solid #1a1c39;
+    transition: all .25s;
+}
 
+.promotion-header{
+    color: #fff;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.promotion-item-title{
+    color: #fff;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.promotion-item-price{
+    color: #7dd9af;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+}
+
+.promotion-container{
+    @media screen and (max-width: 786px) {
+        height: fit-content;
+    }
 }

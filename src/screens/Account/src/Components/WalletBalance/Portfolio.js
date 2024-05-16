@@ -1512,7 +1512,7 @@ const Portfolio = ({
           </div> */}
 
           <div className="col-12 col-lg- px-0 position-relative mt-lg-0">
-            <div className="nft-outer-wrapper2 nft-outer-wrapper22 p-4  d-flex flex-column gap-2 position-relative h-100">
+            <div className="nft-outer-wrapper2 nft-outer-wrapper22 p-4  d-flex flex-column gap-2 position-relative h-100" style={{minHeight: "300px"}}>
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
                 <h6
                   className={`account-nft-sort ${

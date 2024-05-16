@@ -1145,18 +1145,13 @@ const ProfileCard = ({
                             : "Error"}
                         </button>
                       )}
-                         <div className="d-flex w-100 align-items-center">
+                    
+                    {address && email && (
+                        <div className="d-flex w-100 align-items-center">
                         <button className="new-bundle-btn px-2" onClick={setPortfolio}>
-                          Portfolio
+                          My Portfolio
                         </button>
                       </div>
-                    {address && email && (
-                      <button
-                        className="logoutbtn px-3 py-1 w-100"
-                        onClick={onLogoutClick}
-                      >
-                        <img src={logouticon} alt="" /> Log Out
-                      </button>
                     )}
                   </div>
                 </div>

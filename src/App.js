@@ -279,6 +279,7 @@ function App() {
   const [myCmcNFTs, setmyCmcNFTs] = useState([]);
   const [isBnb, setisBnb] = useState(false);
   const [isBnbSuccess, setisBnbSuccess] = useState(false);
+  const [logoutCount, setLogoutCount] = useState(0)
 
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
   const [
@@ -2551,6 +2552,7 @@ function App() {
         <div className="container-fluid p-0 main-wrapper2 position-relative">
           <Header
             handleSignUp={handleShowWalletModal}
+            onLogout={() => setLogoutCount(logoutCount + 1)}
             coinbase={coinbase}
             avatar={avatar}
             handleRedirect={() => {
@@ -2559,6 +2561,7 @@ function App() {
             handleDisconnect={handleDisconnect}
             myOffers={myNftsOffer}
             handleRefreshList={handleRefreshList}
+            
             nftCount={nftCount}
             isConnected={isConnected}
             chainId={chainId}
@@ -2753,6 +2756,7 @@ function App() {
               path="/account"
               element={
                 <Dashboard
+                logoutCount={logoutCount}
                   ethTokenData={ethTokenData}
                   dypTokenData={dypTokenData}
                   handleSwitchChain={handleSwitchChain}
