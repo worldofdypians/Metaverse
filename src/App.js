@@ -2551,6 +2551,7 @@ function App() {
       <AuthProvider>
         <div className="container-fluid p-0 main-wrapper2 position-relative">
           <Header
+          onSigninClick={checkData}
             handleSignUp={handleShowWalletModal}
             onLogout={() => setLogoutCount(logoutCount + 1)}
             coinbase={coinbase}

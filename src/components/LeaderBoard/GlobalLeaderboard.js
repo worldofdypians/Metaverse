@@ -13,6 +13,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import Countdown from "react-countdown";
 import useWindowSize from "../../hooks/useWindowSize";
 import globalIcon from './assets/globalRanks/globalIcon.png'
+import { useLocation } from "react-router-dom";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -324,6 +325,8 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
     "10",
   ];
 
+const location = useLocation()
+
   const [optionText2, setOptionText2] = useState("bnb");
   const [inactiveBoard, setInactiveBoard] = useState(false);
   const [genesisData, setgenesisData] = useState([]);
@@ -409,41 +412,43 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
   return (
     <div
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
-      style={{ alignSelf: "baseline", minWidth: "92%", maxWidth: "92%" }}
+      style={{ alignSelf:  !location.pathname.includes("account") && "baseline", minWidth: !location.pathname.includes("account") && "92%", maxWidth: !location.pathname.includes("account") && "92%" }}
     >
+      {!location.pathname.includes("account") &&
       <div className="nft-hover d">
-        <div className="d-flex flex-column align-items-center gap-2">
-          <div className="nft-hover-wrapper d-flex flex-column align-items-center">
-            <div className="d-flex align-items-center nft-badges-wrapper gap-4 gap-lg-0">
-              <a
-                href="https://opensea.io/collection/catsandwatchessocietycaws"
-                target="_blank"
-              >
-                <img src={cawsBadge} alt="" className="opensea-badge" />
-              </a>
-              <a
-                href="https://opensea.io/collection/worldofdypians"
-                target="_blank"
-              >
-                <img src={genesisBadge} alt="" className="opensea-badge" />
-              </a>
-            </div>
-            <span
-              className="nft-hover-desc"
-              style={{ position: "relative", top: "-22px" }}
+      <div className="d-flex flex-column align-items-center gap-2">
+        <div className="nft-hover-wrapper d-flex flex-column align-items-center">
+          <div className="d-flex align-items-center nft-badges-wrapper gap-4 gap-lg-0">
+            <a
+              href="https://opensea.io/collection/catsandwatchessocietycaws"
+              target="_blank"
             >
-              CAWS and WOD owners are granted VIP access and also benefit from
-              appealing rewards.
-            </span>
+              <img src={cawsBadge} alt="" className="opensea-badge" />
+            </a>
+            <a
+              href="https://opensea.io/collection/worldofdypians"
+              target="_blank"
+            >
+              <img src={genesisBadge} alt="" className="opensea-badge" />
+            </a>
           </div>
-          <div className="global-total-wrapper py-3 w-100 d-flex flex-column align-items-center justify-content-center">
-            <h6 className="global-total-players mb-0">
-              100,000+
-            </h6>
-            <span className="global-total-span">Daily Active Users</span>
-          </div>
+          <span
+            className="nft-hover-desc"
+            style={{ position: "relative", top: "-22px" }}
+          >
+            CAWS and WOD owners are granted VIP access and also benefit from
+            appealing rewards.
+          </span>
+        </div>
+        <div className="global-total-wrapper py-3 w-100 d-flex flex-column align-items-center justify-content-center">
+          <h6 className="global-total-players mb-0">
+            100,000+
+          </h6>
+          <span className="global-total-span">Daily Active Users</span>
         </div>
       </div>
+    </div>
+      }
       {countdown !== "0" && countdown && (
         <Countdown
           date={Number(countdown) * 1000}

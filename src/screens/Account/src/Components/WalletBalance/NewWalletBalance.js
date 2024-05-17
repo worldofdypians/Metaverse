@@ -63,6 +63,7 @@ import discord from "./assets/greenDiscord.svg";
 import grayDollar from "./assets/grayDollar.svg";
 import eventsArrow from "./assets/eventsArrow.svg";
 import mageStarter from "./assets/mageStarter.png";
+import globe from "./newAssets/globe.png";
 import mageGoing from "./assets/mageGoing.png";
 import mageFinish from "./assets/mageFinish.png";
 import infoIcon from "../../../../Marketplace/assets/infoIcon.svg";
@@ -268,6 +269,7 @@ const NewWalletBalance = ({
   openedCoreChests,
   openedVictionChests,
   openedSeiChests,
+  onOpenGenesisLeaderboard,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -1746,14 +1748,15 @@ const NewWalletBalance = ({
               <div className="col-12 col-lg-4">
                 <div
                   className="profile-staking-wrapper d-flex"
-                  onClick={() => setStakePopup(true)}
+                  onClick={onOpenGenesisLeaderboard}
+                  // onClick={() => setStakePopup(true)}
                 >
                   <div className="green-div"></div>
-                  <img src={stakeNft} alt="" className="profile-staking-img" />
+                  <img src={globe} alt="" className="profile-staking-img" />
                   <div className="d-flex flex-column gap-3 h-100 p-3 justify-content-between">
-                    <h6 className="profile-div-title mb-0">Stake NFT</h6>
+                    <h6 className="profile-div-title mb-0">Genesis Rewards</h6>
                     <p className="profile-div-desc mb-0">
-                      Earn ETH daily rewards by staking your NFTs
+                      Earn monthly rewards by using your Genesis Land NFT
                     </p>
 
                     <div className="d-flex align-items-center gap-2 green-link">

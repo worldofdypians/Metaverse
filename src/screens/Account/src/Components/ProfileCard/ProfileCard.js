@@ -694,7 +694,7 @@ const ProfileCard = ({
                     </div>
                   )}
 
-             <div className={`${isPremium ? "buttons-grid-premium" : "buttons-grid"} w-100`}>
+             <div className={`d-flex gap-3 justify-content-end w-100`}>
              {email && address && coinbase && !isPremium && (
                     <div
                       className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
@@ -715,7 +715,7 @@ const ProfileCard = ({
                   )}
                   {email && address && (
                     <>
-                      <div
+                      {/* <div
                         style={{ height: "79px" }}
                         className={`${
                           isPremium
@@ -768,7 +768,7 @@ const ProfileCard = ({
                           alt=""
                           style={{ height: "54px", width: "50px" }}
                         />
-                      </div>
+                      </div> */}
                       <div className="position-relative rank-outer-wrapper">
                         <div
                           className={`${
@@ -1148,7 +1148,8 @@ const ProfileCard = ({
                     
                     {address && email && (
                         <div className="d-flex w-100 align-items-center">
-                        <button className="new-bundle-btn px-2" onClick={setPortfolio}>
+                        <button className="new-bundle-btn d-flex align-items-center gap-2 px-2" onClick={setPortfolio}>
+                          <img src={walletIcon} alt="" />
                           My Portfolio
                         </button>
                       </div>

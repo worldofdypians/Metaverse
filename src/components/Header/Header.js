@@ -74,7 +74,7 @@ const Header = ({
   handleSwitchChainGateWallet,
   handleOpenDomains,
   domainName,
-  onSignInClick,
+  onSigninClick,
   onLogout,
 }) => {
   const [tooltip, setTooltip] = useState(false);
@@ -947,16 +947,26 @@ const Header = ({
                     alt=""
                   />
                 </NavLink>
-                <button
-                  className="logoutbtn px-3 py-1 w-100 position-absolute"
-                  style={{ inset: "0px 0px -65px -40px" }}
-                  onClick={() => {
-                    logout();
-                    onLogout();
-                  }}
-                >
-                  <img src={logouticon} alt="" /> Log Out
-                </button>
+              {email ? 
+              <button
+              className="logoutbtn px-3 py-1 w-100 position-absolute"
+              style={{ inset: "0px 0px -65px -40px" }}
+              onClick={() => {
+                logout();
+                onLogout();
+              }}
+            >
+              <img src={logouticon} alt="" /> Log Out
+            </button>
+            :
+            <button
+            className="logoutbtn px-3 py-1 w-100 position-absolute"
+            style={{ inset: "0px 0px -65px -40px", color: "#18ffff" }}
+            onClick={onSigninClick}
+          >
+            <img src={logouticon} alt="" /> Sign in
+          </button>  
+            }
               </div>
             )}
 

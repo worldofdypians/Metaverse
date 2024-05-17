@@ -28,6 +28,8 @@ import { Skeleton } from "@mui/material";
 import ActiveProfileEvent from "./ActiveProfileEvent";
 import UpcomingProfileEvent from "./UpcomingProfileEvent";
 import ExpiredProfileEvent from "./ExpiredProfileEvent";
+import stakeNft from "./newAssets/stakeNft.png";
+
 import eventPopupImage from "./assets/eventPopupImage.png";
 import OutsideClickHandler from "react-outside-click-handler";
 import confluxActive from "../../../../Marketplace/assets/confluxActive.png";
@@ -1396,13 +1398,7 @@ const WalletBalance = ({
     <>
       <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 justify-content-center align-items-center">
         <div className="row w-100 gap-5 gap-lg-0 mx-0">
-          <div className="col-12 col-lg-4 px-0 pe-lg-3 position-relative mt-3 mt-lg-3">
-            <h6
-              className="new-bundle-title ms-0 ms-lg-4"
-              style={{ position: "absolute", top: "-35px" }}
-            >
-              Game activity
-            </h6>
+          <div className="col-12 col-lg-4 px-0 pe-lg-3 position-relative">
             <div className="game-activity-wrapper h-100">
               <div className="d-flex flex-column gap-5 justify-content-between h-100">
                 <div className="d-flex flex-column gap-2 p-3">
@@ -1510,7 +1506,26 @@ const WalletBalance = ({
               </div>
             </div>
           </div>
+          <div className="col-12 col-lg-4 px-0">
+                <NavLink to={"/marketplace/stake"}
+                  className="profile-staking-wrapper d-flex h-100"
+                  // onClick={onOpenGenesisLeaderboard}
+                  // onClick={() => setStakePopup(true)}
+                >
+                  <div className="green-div"></div>
+                  <img src={stakeNft} alt="" className="profile-staking-img" />
+                  <div className="d-flex flex-column gap-3 h-100 p-3 justify-content-between">
+                    <h6 className="profile-div-title mb-0">Stake NFT</h6>
+                    <p className="profile-div-desc mb-0">
+                      Earn monthly rewards by staking your NFT's
+                    </p>
 
+                    <div className="d-flex align-items-center gap-2 green-link">
+                      <img src={arrowCircle} alt="" />
+                    </div>
+                  </div>
+                </NavLink>
+              </div>
           
         </div>
       
