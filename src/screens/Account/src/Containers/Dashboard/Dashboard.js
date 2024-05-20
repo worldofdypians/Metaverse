@@ -81,7 +81,7 @@ function Dashboard({
   handleOpenDomains,
   dogePrice,
   dyptokenData_old,
-  handleSwitchChain,
+  handleSwitchChain,onSubscribeSuccess
 }) {
   const { email, logout } = useAuth();
 
@@ -2029,7 +2029,7 @@ function Dashboard({
   const handleFirstTask = async (wallet) => {
     const result = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task1/${wallet}`
+        `https://api.worldofdypians.com/api/airdrop-alliance/task3/${wallet}`
       )
       .catch((e) => {
         console.error(e);
@@ -4064,6 +4064,7 @@ function Dashboard({
             });
           setTimeout(() => {
             setgetPremiumPopup(false);
+            onSubscribeSuccess();
           }, 2000);
         })
         .catch(() => {
@@ -4109,6 +4110,7 @@ function Dashboard({
             setselectedChainforPremium(selectedchain);
             setTimeout(() => {
               setgetPremiumPopup(false);
+              onSubscribeSuccess();
             }, 2000);
           }
           setloadspinnerSub(false);

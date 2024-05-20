@@ -2784,6 +2784,9 @@ function App() {
                   handleOpenDomains={() => setDomainPopup(true)}
                   domainName={domainName}
                   dogePrice={dogePrice}
+                  onSubscribeSuccess={() => {
+                    setCount55(count55 + 1);
+                  }}
                 />
               }
             />
