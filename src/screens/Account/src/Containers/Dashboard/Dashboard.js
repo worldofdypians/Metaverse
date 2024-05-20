@@ -80,7 +80,7 @@ function Dashboard({
   handleOpenDomains,
   dogePrice,
   dyptokenData_old,
-  handleSwitchChain,
+  handleSwitchChain,onSubscribeSuccess
 }) {
   const { email, logout } = useAuth();
 
@@ -2026,7 +2026,7 @@ function Dashboard({
   const handleFirstTask = async (wallet) => {
     const result = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task1/${wallet}`
+        `https://api.worldofdypians.com/api/airdrop-alliance/task3/${wallet}`
       )
       .catch((e) => {
         console.error(e);
@@ -3932,6 +3932,8 @@ function Dashboard({
           setloadspinner(false);
           setapproveStatus("initial");
           setstatus("");
+          setgetPremiumPopup(false);
+          onSubscribeSuccess();
         }, 5000);
         // this.props.onSubscribe();
         // window.location.href = "https://app.dypius.com/account";

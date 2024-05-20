@@ -7,7 +7,7 @@ import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./Login.module.css";
 import { Redirect } from "react-router-dom";
 
-function Login() {
+function Login({onSuccessLogin}) {
   const {
     isAuthenticated,
     login: LoginGlobal,
@@ -22,7 +22,9 @@ function Login() {
   const [disabled, setDisabled] = useState(false);
 
   const login = async () => {
-    await LoginGlobal(username, password);
+    await LoginGlobal(username, password).then(()=>{
+      onSuccessLogin()
+    })
   };
 
   useEffect(() => {

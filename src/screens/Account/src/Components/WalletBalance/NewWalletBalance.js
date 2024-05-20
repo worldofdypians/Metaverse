@@ -812,7 +812,7 @@ const NewWalletBalance = ({
       img: "treasureHunt",
       id: "treasure-hunt",
       desc: "The Treasure Hunt event is a series of local events organized by Partners in the World of Dypians. Players need to visit partner areas daily to complete tasks and earn rewards. There are different reward pools available for each partner.",
-      button: "Get Beta Pass",
+      button: "View More",
     },
     {
       name: "Dragon Ruins",
@@ -2671,7 +2671,7 @@ const NewWalletBalance = ({
                     : dummyEvent.id === "event7"
                     ? "https://discord.gg/dogecoin"
                     : dummyEvent.id === "event11"
-                    ? "https://discord.com/invite/gM5XBy6"
+                    ? "https://t.me/skaleofficial"
                     : dummyEvent.id === "event14"
                     ? "https://viction.link/telegram"
                     : dummyEvent.id === "event15"
