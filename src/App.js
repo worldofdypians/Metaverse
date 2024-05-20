@@ -1067,11 +1067,10 @@ function App() {
             index
           ));
 
-        const tokenMetaDataURI =
-          await window.caws_timepiece.getCawsTimepieceURI(tokenId);
-
-        const dataURI = await axios.get(tokenMetaDataURI);
-        metadataArray.push(dataURI.data);
+        metadataArray.push({
+          name: `CAWS Timepiece #${tokenId}`,
+          image: `https://timepiece.worldofdypians.com/thumbs150/${tokenId}.png`,
+        });
       }
       settimepieceMetadata(metadataArray);
     } else {
@@ -2478,7 +2477,7 @@ function App() {
     getAllData();
     fetchDogeCoinPrice();
     refreshSubscription(coinbase);
-  }, [coinbase, count55]);
+  }, [coinbase, count55, isConnected]);
 
   useEffect(() => {
     getDomains();
@@ -2769,6 +2768,9 @@ function App() {
                   handleOpenDomains={() => setDomainPopup(true)}
                   domainName={domainName}
                   dogePrice={dogePrice}
+                  onSubscribeSuccess={() => {
+                    setCount55(count55 + 1);
+                  }}
                 />
               }
             />

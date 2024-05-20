@@ -80,7 +80,7 @@ function Dashboard({
   handleOpenDomains,
   dogePrice,
   dyptokenData_old,
-  handleSwitchChain,
+  handleSwitchChain,onSubscribeSuccess
 }) {
   const { email, logout } = useAuth();
 
@@ -3932,6 +3932,8 @@ function Dashboard({
           setloadspinner(false);
           setapproveStatus("initial");
           setstatus("");
+          setgetPremiumPopup(false);
+          onSubscribeSuccess();
         }, 5000);
         // this.props.onSubscribe();
         // window.location.href = "https://app.dypius.com/account";
