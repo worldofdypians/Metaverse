@@ -81,7 +81,8 @@ function Dashboard({
   handleOpenDomains,
   dogePrice,
   dyptokenData_old,
-  handleSwitchChain,onSubscribeSuccess
+  handleSwitchChain,
+  onSubscribeSuccess,
 }) {
   const { email, logout } = useAuth();
 
@@ -514,18 +515,7 @@ function Dashboard({
   //leaderboard calls
 
   const bnbStars = ["10", "8", "5", "5", "0", "0", "0", "0", "0", "0"];
-  const bnbStarsPremium = [
-    "10",
-    "8",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-  ];
+  const bnbStarsPremium = ["10", "8", "5", "5", "5", "5", "5", "5", "5", "5"];
   const weeklyPrizesBnb = ["25", "15", "10", "8", "0", "0", "0", "0", "0", "0"];
   const weeklyPrizesGolden = [
     "25",
@@ -1137,7 +1127,7 @@ function Dashboard({
     previousVersion,
     previousWeeklyVersion,
     skalepreviousVersion,
-    userId
+    userId,
   ]);
 
   useEffect(() => {
@@ -2176,7 +2166,7 @@ function Dashboard({
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
-      
+
       setUserSkaleScore(testArray[0].statValue);
       setUserRankSkale(testArray[0].position);
       if (itemData.length > 0) {
@@ -2924,7 +2914,7 @@ function Dashboard({
           setCanBuy(true);
         } else if (
           claimedChests + claimedPremiumChests === 20 &&
-          claimedSkaleChests + claimedSkalePremiumChests === 20 
+          claimedSkaleChests + claimedSkalePremiumChests === 20
           // &&
           // claimedCoreChests + claimedCorePremiumChests === 20 &&
           // claimedVictionChests + claimedVictionPremiumChests === 20 &&
@@ -2935,7 +2925,7 @@ function Dashboard({
       } else if (!isPremium) {
         if (
           claimedChests < 10 ||
-          claimedSkaleChests < 10 
+          claimedSkaleChests < 10
           // ||
           // claimedCoreChests < 10 ||
           // claimedVictionChests < 10 ||
@@ -4073,6 +4063,78 @@ function Dashboard({
           setstatus(e?.message);
           window.alertify.error(e?.message);
 
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        });
+    } else if (
+      chainId === 56 &&
+      selectedSubscriptionToken.toLowerCase() ===
+        "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+    ) {
+      await subscriptionContract.methods
+        .subscribeWithBNB(price)
+        .send({ from: await window.getCoinbase() })
+        .then(async (data) => {
+          if (dailyBonusPopup === true) {
+            setPremiumTxHash(data.transactionHash);
+            const selectedchain =
+              chainId === 1
+                ? "eth"
+                : chainId === 56
+                ? "bnb"
+                : chainId === 43114
+                ? "avax"
+                : chainId === 1030
+                ? "cfx"
+                : chainId === 8453
+                ? "base"
+                : chainId === 1482601649
+                ? "skale"
+                : chainId === 88
+                ? "viction"
+                : chainId === 1116
+                ? "core"
+                : chainId === 713715
+                ? "sei"
+                : "";
+            setselectedChainforPremium(selectedchain);
+          }
+          setloadspinnerSub(false);
+          setIsPremium(true);
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          await axios
+            .patch(
+              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+              {
+                multiplier: "yes",
+                chain: chainId.toString(),
+                premiumTimestamp: today.toString(),
+              }
+            )
+            .then(() => {
+              getRankData();
+            });
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+            setgetPremiumPopup(false);
+            onSubscribeSuccess();
+          }, 5000);
+          // this.props.onSubscribe();
+          // window.location.href = "https://app.dypius.com/account";
+        })
+        .catch((e) => {
+          setloadspinnerSub(false);
+          setapproveStatus("failsubscribe");
+          setstatus(e?.message);
+          window.alertify.error(e?.message);
           setTimeout(() => {
             setloadspinnerSub(false);
             setloadspinner(false);

@@ -1568,7 +1568,7 @@ window.config = {
   subscription_newbnb_address: "0xA297c8c8094354c49E93e072DaDCa846a00148d0",
 
   //new premium contract with discount + nft
-  subscription_newbnb2_address: "0xA297c8c8094354c49E93e072DaDCa846a00148d0",
+  subscription_newbnb2_address: "0x25DD41c43aff42C30aF7a0ea50fb4c1a7DbdB347",
 
   subscription_cfx_address: "0x56c83c9308b066627866bba9cd2322f3e01b16bf",
   subscription_base_address: "0x9c13Dbc8f0fA8ceD8C1B53c4237A08445eca32fe",
@@ -1910,7 +1910,7 @@ window.config = {
       decimals: 18,
     },
     "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c": {
-      symbol: "WBNB",
+      symbol: "BNB",
       decimals: 18,
     },
     "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56": {
@@ -10918,6 +10918,13 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "WBNB_ADDRESS",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address[]", name: "subscribers", type: "address[]" },
     ],
@@ -11022,6 +11029,13 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
   },
   {
     inputs: [],
+    name: "subscribeWithBNB",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "subscriptionFeeInDai",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
@@ -11070,6 +11084,7 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
     stateMutability: "nonpayable",
     type: "function",
   },
+  { stateMutability: "payable", type: "receive" },
 ];
 
 window.SUBSCRIPTION_CFX_ABI = [
@@ -45368,6 +45383,14 @@ async function subscribeNFT(tokenId) {
   let subscriptionContract = await getContract({ key: "SUBSCRIPTION_NEWBNB2" });
   return await subscriptionContract.methods
     .subscribeNFT(tokenId)
+    .send({ from: await getCoinbase() });
+}
+
+
+async function subscribeBNB(amount) {
+  let subscriptionContract = await getContract({ key: "SUBSCRIPTION_NEWBNB2" });
+  return await subscriptionContract.methods
+    .subscribeWithBNB(amount)
     .send({ from: await getCoinbase() });
 }
 

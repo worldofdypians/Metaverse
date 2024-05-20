@@ -713,6 +713,38 @@ const GetPremiumPopup = ({
             setstatus("");
           }, 5000);
         });
+    } else if (
+      chainId === 56 &&
+      selectedSubscriptionToken.toLowerCase() ===
+        "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+    ) {
+      await subscriptionContract.methods
+        .subscribeWithBNB(price)
+        .send({ from: await window.getCoinbase() })
+        .then(async (data) => {
+          setloadspinnerSub(false);
+          onSuccessDeposit();
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        })
+        .catch((e) => {
+          setloadspinnerSub(false);
+          setapproveStatus("failsubscribe");
+          setstatus(e?.message);
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        });
     } else {
       await subscriptionContract.methods
         .subscribe(selectedSubscriptionToken, price)
