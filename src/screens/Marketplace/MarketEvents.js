@@ -2123,7 +2123,7 @@ const MarketEvents = ({
                     : dummyEvent.id === "event7"
                     ? "https://discord.gg/dogecoin"
                     : dummyEvent.id === "event11"
-                    ? "https://discord.com/invite/gM5XBy6"
+                    ? "https://t.me/skaleofficial"
                     : dummyEvent.id === "event14"
                     ? "https://viction.link/telegram"
                     : dummyEvent.id === "event15"

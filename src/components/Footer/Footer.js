@@ -67,6 +67,12 @@ const Footer = () => {
     }
   }, [location]);
 
+const scrollToTop = (name) => {
+  if(location.pathname.includes(name)){
+    window.scrollTo(0,0)
+  }
+}
+
   return (
     <div
       className={`${
@@ -105,22 +111,22 @@ const Footer = () => {
             >
               Dypius
             </a>
-            <NavLink to="/team" style={{ textDecoration: "none" }}>
+            <NavLink to="/team" onClick={() => scrollToTop("team")} style={{ textDecoration: "none" }}>
               <span className="footer-link font-poppins">Team</span>
             </NavLink>
-            <NavLink to="/terms-conditions" style={{ textDecoration: "none" }}>
+            <NavLink to="/terms-conditions" onClick={() => scrollToTop("terms")} style={{ textDecoration: "none" }}>
               <span className="footer-link font-poppins">
                 Terms & Conditions
               </span>
             </NavLink>
-            <NavLink to="/privacy-policy" style={{ textDecoration: "none" }}>
+            <NavLink to="/privacy-policy" onClick={() => scrollToTop("privacy")} style={{ textDecoration: "none" }}>
               <span className="footer-link font-poppins">Privacy Policy</span>
             </NavLink>
             <NavLink to="/contact-us" style={{ textDecoration: "none" }}>
               <span className="footer-link font-poppins"> Contact Us</span>
             </NavLink>
 
-            <NavLink to="/join-beta" style={{ textDecoration: "none" }}>
+            <NavLink to="/join-beta" onClick={() => scrollToTop("join-beta")} style={{ textDecoration: "none" }}>
               <span className="footer-link font-poppins">Join Beta</span>
             </NavLink>
        
