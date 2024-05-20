@@ -9,6 +9,7 @@ import SingUp from "../SingUp/SingUp";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import ErrorAlert from "../../Components/ErrorAlert/ErrorAlert";
+import axios from "axios";
 
 const StyledTabs = styled((props) => (
   <Tabs
@@ -73,6 +74,20 @@ function Auth({ isConnected, coinbase }) {
   // if (!playerId) {
   //   return <Navigate to={"/player"} />;
   // }
+
+  const handleFirstTask = async (wallet) => {
+    const result = await axios
+      .get(
+        `https://api.worldofdypians.com/api/airdrop-alliance/task3/${wallet}`
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result && result.status === 200) {
+      console.log(result);
+    }
+  };
+
   return (
     <>
       <LoginWrapper style={{ margin: "auto" }}>
@@ -93,7 +108,13 @@ function Auth({ isConnected, coinbase }) {
             <StyledTab label="Sign In" />
             <StyledTab label="Create Account" />
           </StyledTabs>
-          {value === 0 && <Login />}
+          {value === 0 && (
+            <Login
+              onSuccessLogin={() => {
+                handleFirstTask(coinbase);
+              }}
+            />
+          )}
           {value === 1 && <SingUp />}
         </LoginCard>
         <ErrorAlert error={loginError} />

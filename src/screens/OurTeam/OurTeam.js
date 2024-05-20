@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./_ourteam.scss";
 import TeamCard from "./components/TeamCard";
 import michael from "./assets/team/mihai.jpg";
@@ -171,6 +171,11 @@ const OurTeam = () => {
         "Constantin Bogdan graduated from the University of Bucharest in 2007 and he holds a Master in Human Resource Psychology. Bogdan has ten years of experience in enterprise in a variety of roles at startups, private companies, and ANOFM Bucharest including product management, product marketing, and sales management, and is the Marketing Manager for Dypius.",
     },
   ];
+
+useEffect(() => {
+window.scrollTo(0,0)
+}, [])
+
 
   return (
     <div className="container-fluid our-team my-5 px-0" id="ourteam">
