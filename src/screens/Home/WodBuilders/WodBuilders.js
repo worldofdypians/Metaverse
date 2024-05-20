@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "./_wodbuilders.scss";
 import { useState } from "react";
 import useWindowSize from "../../../hooks/useWindowSize";
+
 const WodBuilders = () => {
   const [slice, setSlice] = useState(2);
   const windowSize = useWindowSize();
@@ -102,6 +103,32 @@ const WodBuilders = () => {
       icon: "kucoinIcon",
       banner: "kucoinBanner.png",
     },
+    // {
+    //   name: "CORE",
+    //   icon: "core",
+    //   banner: "babyDogeBanner.webp",
+    //   link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
+    // },
+    // {
+    //   name: "Sei",
+    //   icon: "sei",
+    //   banner: "babyDogeBanner.webp",
+    //   link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
+    // },
+    // {
+    //   name: "Viction",
+    //   icon: "viction",
+    //   banner: "babyDogeBanner.webp",
+    //   link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
+    // },
+    // {
+    //   name: "MultiversX",
+    //   icon: "multiversx",
+    //   banner: "babyDogeBanner.webp",
+    //   link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
+    // },
+   
+
   ];
 
   useEffect(() => {
