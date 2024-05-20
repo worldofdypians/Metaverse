@@ -28,7 +28,7 @@ const GetPremiumPopup = ({
     },
     {
       name: "BNB Chain",
-      symbol: "wbnb",
+      symbol: "bnb",
     },
     {
       name: "Avalanche",
