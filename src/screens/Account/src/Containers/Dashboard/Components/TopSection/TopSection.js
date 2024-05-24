@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./_topsection.scss";
 import globe from "./assets/globe.png";
 import leaderboardIcon from "./assets/leaderboardIcon.svg";
@@ -8,6 +8,8 @@ import Countdown from "react-countdown";
 import dypIcon from "./assets/dypIcon.svg";
 import iDypIcon from "./assets/iDypIcon.svg";
 import Slider from "react-slick";
+import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
+
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -75,7 +77,8 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard }) => {
     ],
   };
 
-  const fakearr = [1, 2, 3];
+
+const slider = useRef(null)
 
   const dummyPromotions = [
     {
@@ -104,6 +107,13 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard }) => {
     },
   ];
 
+  const firstNext = () => {
+    slider.current.slickNext();
+  };
+  const firstPrev = () => {
+    slider.current.slickPrev();
+  };
+
   return (
     <div className="row">
       <div className="col-12 col-lg-4">
@@ -130,8 +140,14 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard }) => {
         </div>
       </div>
       <div className="col-12 col-lg-8 ps-lg-0 mt-3 mt-lg-0">
-        <div className="purple-container promotion-container p-3">
-          <Slider {...settings}>
+        <div className="purple-container promotion-container position-relative p-3">
+        {/* <div className="prev-arrow-nft" onClick={firstPrev} style={{width: "30px", height: "30px"}}>
+              <img src={nextArrow} alt="" style={{width: "15px", height: "15px"}} />
+            </div>
+            <div className="next-arrow-nft" onClick={firstNext} style={{width: "30px", height: "30px"}}>
+              <img src={nextArrow} alt="1"  style={{width: "15px", height: "15px"}}/>
+            </div> */}
+          <Slider {...settings} ref={slider}>
             {dummyPromotions.map((item, index) => (
               <div
                 key={index}

@@ -66,9 +66,9 @@
   border-radius: 10px;
 }
 
-.become-premium-img {
-  scale: 1.6;
-}
+// .become-premium-img {
+//   scale: 1.6;
+// }
 
 .wallet-wrapper-alert {
   background: rgba(237, 130, 37, 0.15);
@@ -2256,6 +2256,40 @@
   background-position: right;
   pointer-events: none;
 }
+.profile-mint-wrapper {
+  position: relative;
+  height: 170px;
+  background: linear-gradient(90deg, #181b38 0%, #11503d 168.67%);
+  border-radius: 10px;
+  border: 2px solid #080b2a;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  @media screen and (max-width: 991px) {
+    margin-top: 40px;
+  }
+}
+
+.profile-mint-wrapper:hover {
+  border: 2px solid #7dd9af;
+  .profile-div-link {
+    text-decoration: underline;
+  }
+}
+.profile-mint-wrapper:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  // background-image: url("./newAssets/stakingBg.png");
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: right;
+  pointer-events: none;
+}
 
 .special-rewards-wrapper {
   position: relative;
@@ -2587,7 +2621,7 @@
   right: 3%;
   width: 47%;
   @media screen and (max-width: 991px) {
-    width: auto;
+    width: 50%;
     bottom: 10%;
   }
 }
