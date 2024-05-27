@@ -10,7 +10,6 @@ import iDypIcon from "./assets/iDypIcon.svg";
 import Slider from "react-slick";
 import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
 
-
 const renderer = ({ days, hours, minutes }) => {
   return (
     <span className="livein-timer" style={{ fontSize: "18px" }}>
@@ -77,8 +76,7 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard }) => {
     ],
   };
 
-
-const slider = useRef(null)
+  const slider = useRef(null);
 
   const dummyPromotions = [
     {
@@ -118,7 +116,10 @@ const slider = useRef(null)
     <div className="row">
       <div className="col-12 col-lg-4">
         <div className="diagonal-button-wrapper  d-flex align-items-center">
-          <div className="first-diagonal-btn purple-container p-2  d-flex align-items-end" onClick={onOpenLeaderboard}>
+          <div
+            className="first-diagonal-btn purple-container p-2  d-flex align-items-end"
+            onClick={onOpenLeaderboard}
+          >
             <div className="d-flex align-items-end gap-2">
               <img src={leaderboardIcon} width={60} height={60} alt="" />
               <h6 className="mb-0 leaderboard-title-span diagonal-title font-oxanium">
@@ -126,7 +127,10 @@ const slider = useRef(null)
               </h6>
             </div>
           </div>
-          <div className="second-diagonal-btn purple-container p-2  d-flex justify-content-end" onClick={onOpenGlobalLeaderboard}>
+          <div
+            className="second-diagonal-btn purple-container p-2  d-flex justify-content-end"
+            onClick={onOpenGlobalLeaderboard}
+          >
             <div
               className="d-flex  align-items-start gap-2"
               style={{ height: "fit-content" }}
@@ -140,13 +144,44 @@ const slider = useRef(null)
         </div>
       </div>
       <div className="col-12 col-lg-8 ps-lg-0 mt-3 mt-lg-0">
-        <div className="purple-container promotion-container position-relative p-3">
-        {/* <div className="prev-arrow-nft" onClick={firstPrev} style={{width: "30px", height: "30px"}}>
-              <img src={nextArrow} alt="" style={{width: "15px", height: "15px"}} />
-            </div>
-            <div className="next-arrow-nft" onClick={firstNext} style={{width: "30px", height: "30px"}}>
-              <img src={nextArrow} alt="1"  style={{width: "15px", height: "15px"}}/>
-            </div> */}
+        <div className="purple-container promotion-container position-relative px-4 px-lg-5 py-3">
+          <div
+            className="prev-arrow-nft"
+            onClick={firstPrev}
+            style={{
+              width: "30px",
+              height: "30px",
+              top: "0",
+              left: "1%",
+              bottom: "0",
+              margin: "auto",
+            }}
+          >
+            <img src={nextArrow} alt="" />
+          </div>
+          <div
+            className="next-arrow-nft"
+            onClick={firstNext}
+            style={{
+              width: "30px",
+              height: "30px",
+              top: "0",
+              right: "1%",
+              bottom: "0",
+              margin: "auto",
+            }}
+          >
+            <img
+              src={nextArrow}
+              alt="1"
+              style={{
+                top: "0",
+                right: "1.5%",
+                bottom: "0",
+                margin: "auto",
+              }}
+            />
+          </div>
           <Slider {...settings} ref={slider}>
             {dummyPromotions.map((item, index) => (
               <div
