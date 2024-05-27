@@ -947,10 +947,13 @@ const Header = ({
                     alt=""
                   />
                 </NavLink>
+            
+              </div>
+            )}
               {email ? 
               <button
-              className="logoutbtn px-3 py-1 w-100 position-absolute"
-              style={{ inset: "0px 0px -65px -40px" }}
+              className="logoutbtn px-3 py-1  position-absolute"
+              style={{ width: "fit-content", bottom: "-23px", right: "-15px" }}
               onClick={() => {
                 logout();
                 onLogout();
@@ -960,15 +963,13 @@ const Header = ({
             </button>
             :
             <button
-            className="logoutbtn px-3 py-1 w-100 position-absolute"
-            style={{ inset: "0px 0px -65px -40px", color: "#18ffff" }}
+            className="logoutbtn px-3 py-1  position-absolute"
+            style={{ width: "fit-content", bottom: "-23px", right: "-15px", color: "#18ffff" }}
             onClick={onSigninClick}
           >
             <img src={logouticon} alt="" /> Sign in
           </button>  
             }
-              </div>
-            )}
 
             {showmenu === true && (
               <div className="position-absolute" style={{ width: "210px" }}>

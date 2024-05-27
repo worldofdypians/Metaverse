@@ -1506,7 +1506,7 @@ const WalletBalance = ({
               </div>
             </div>
           </div>
-          <div className="col-12 col-lg-4 px-0">
+          <div className="col-12 col-lg-4 h-50 px-0">
             <NavLink
               to={"/marketplace/stake"}
               className="profile-staking-wrapper d-flex h-100"
@@ -1519,7 +1519,7 @@ const WalletBalance = ({
                 <h6 className="profile-div-title mb-0">Stake NFT</h6>
                 <p
                   className="profile-div-desc mb-0"
-                  style={{ fontSize: "16px" }}
+                  style={{ fontSize: "14px" }}
                 >
                   Earn monthly rewards by staking your NFT's
                 </p>
@@ -1530,7 +1530,7 @@ const WalletBalance = ({
               </div>
             </NavLink>
           </div>
-          <div className="col-12 col-lg-4 px-0 ps-lg-3">
+          <div className="col-12 col-lg-4 h-50 px-0 ps-lg-3">
             <NavLink
               to={"/marketplace/mint/timepiece"}
               className="profile-mint-wrapper d-flex h-100"
@@ -1538,12 +1538,12 @@ const WalletBalance = ({
               // onClick={() => setStakePopup(true)}
             >
               <div className="green-div"></div>
-              <img src={mintColl} alt="" className="profile-staking-img w-50" />
+              <img src={mintColl} alt="" className="profile-staking-img" style={{width: "65%", right: "-5%"}} />
               <div className="d-flex flex-column gap-3 h-100 p-3 justify-content-between">
                 <h6 className="profile-div-title mb-0">Mint NFT</h6>
                 <p
                   className="profile-div-desc mb-0"
-                  style={{ fontSize: "16px" }}
+                  style={{ fontSize: "14px" }}
                 >
                   Mint Beta Pass NFT's to participate in the Treasure Hunt
                   Events
