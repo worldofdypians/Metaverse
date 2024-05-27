@@ -1228,7 +1228,7 @@ function Dashboard({
         activeData: dailyrecords,
         previousData: dailyplayerData,
         player_data: userData,
-        is_active: activeSkalePlayer,
+        is_active: true, //change when apis are ready
       },
       {
         title: "WEEKLY",
@@ -1250,7 +1250,7 @@ function Dashboard({
         activeData: skaleMonthlyData,
         previousData: skalePreviousMonthlyData,
         player_data: userDataSkaleMonthly,
-        is_active: activeSkalePlayer,
+        is_active: true, //change when apis are ready
       },
     ]);
   }, [
@@ -2261,6 +2261,7 @@ function Dashboard({
 
         if (testArray.length > 0 && testArray2.length > 0) {
           setActiveSkalePlayer(true);
+          setUserDataSkale([]);
         } else if (testArray.length > 0 && testArray2.length === 0) {
           setActiveSkalePlayer(false);
           setUserDataSkale(...testArray);
@@ -2354,16 +2355,17 @@ function Dashboard({
         var testArray2 = Object.values(itemData).filter(
           (item) => item.displayName === username
         );
-
+        
         if (testArray.length > 0 && testArray2.length > 0) {
           setActivePlayer(true);
+          setUserData([]);
         }
-        if (testArray.length > 0 && testArray2.length === 0) {
+        else if (testArray.length > 0 && testArray2.length === 0) {
           setActivePlayer(false);
           setUserData(...testArray);
         }
       }
-      if (testArray.length > 0) {
+      else if (testArray.length > 0) {
         setActivePlayer(false);
         setUserData(...testArray);
       }
@@ -4375,31 +4377,27 @@ function Dashboard({
       email
     ) {
       fetchMonthlyRecordsAroundPlayer(
-        data.getPlayer.playerId,
-        data.getPlayer.displayName
+        monthlyrecords
       );
       fetchSkaleRecordsAroundPlayer(
-        data.getPlayer.playerId,
-        data.getPlayer.displayName
+        skaleRecords
       );
       fetchGenesisAroundPlayer(
         data.getPlayer.playerId,
         data.getPlayer.displayName
       );
       fetchWeeklyRecordsAroundPlayer(
-        data.getPlayer.playerId,
-        data.getPlayer.displayName
+        weeklyrecords
       );
       fetchDailyRecordsAroundPlayer(
-        data.getPlayer.playerId,
-        data.getPlayer.displayName
+        dailyrecords
       );
       fetchKittyDashAroundPlayer(
         data.getPlayer.playerId,
         data.getPlayer.displayName
       );
     }
-  }, [data, email, count, goldenPassRemainingTime]);
+  }, [data, email,weeklyrecords,skaleRecords, count, goldenPassRemainingTime,monthlyrecords, dailyrecords, userId, username]);
 
   useEffect(() => {
     if (
