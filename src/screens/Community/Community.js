@@ -120,38 +120,7 @@ const Community = () => {
   let activeDay = new Date("2024-05-01T11:35:00.000+02:00");
 
   const dummyBetaPassData2 = [
-    {
-      title: "Dypius Premium",
-      logo: dypius,
-      eventStatus: "Live",
-      totalRewards: "$50,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "Feb 26, 2024",
-      date: "Feb 26, 2024",
-      backgroundImage: upcomingDyp2,
-      eventDuration: dypius2LastDay,
-      activeTab: "dypiusv2",
-      popupInfo: {
-        title: "Dypius Premium",
-        chain: "BNB Chain",
-        linkState: "dypius",
-        rewards: "BNB",
-        status: "Live",
-        id: "event9",
-        eventType: "Explore & Find",
-        totalRewards: "$50,000 in BNB Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "Feb 26, 2024",
-        activeTab: "dypiusv2",
-      },
-    },
+ 
 
     {
       title: "SKALE",
@@ -181,6 +150,38 @@ const Community = () => {
         learnMore:
           "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
         eventDate: "Apr 15, 2024",
+      },
+    },
+    {
+      title: "Dypius Premium",
+      logo: dypius,
+      eventStatus: "Expired",
+      totalRewards: "$50,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Feb 26, 2024",
+      date: "Feb 26, 2024",
+      backgroundImage: upcomingDyp2,
+      eventDuration: dypius2LastDay,
+      activeTab: "dypiusv2",
+      popupInfo: {
+        title: "Dypius Premium",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event9",
+        eventType: "Explore & Find",
+        totalRewards: "$50,000 in BNB Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Feb 26, 2024",
+        activeTab: "dypiusv2",
       },
     },
     {
@@ -881,7 +882,7 @@ const Community = () => {
                       Treasure Hunt
                     </h6>
                     <div className="community-events-grid w-100 p-3">
-                      {dummyBetaPassData2.slice(0, 2).map((item, index) => (
+                      {dummyBetaPassData2.slice(0, 1).map((item, index) => (
                         <ActiveProfileEvent
                           onOpenEvent={() => {
                             navigate("/marketplace/events/treasure-hunt");
@@ -895,7 +896,7 @@ const Community = () => {
                 ) : (
                   <div className="community-events-grid mt-5  w-100 p-3">
                     {dummyBetaPassData2
-                      .slice(2, dummyBetaPassData2.length)
+                      .slice(1, dummyBetaPassData2.length)
                       .map((item, index) => (
                         <ExpiredProfileEvent
                           onOpenEvent={() => {

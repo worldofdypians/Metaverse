@@ -562,8 +562,8 @@ const ProfileCard = ({
                                       <span className="wallet-address">
                                         {windowSize.width > 991
                                           ? isVerified && email
-                                            ? address
-                                            : coinbase
+                                            ? shortAddress(address)
+                                            : shortAddress(coinbase)
                                           : isVerified && email
                                           ? shortAddress(address)
                                           : shortAddress(coinbase)}

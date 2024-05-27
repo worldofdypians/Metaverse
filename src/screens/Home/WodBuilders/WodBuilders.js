@@ -102,6 +102,11 @@ const WodBuilders = () => {
       icon: "kucoinIcon",
       banner: "kucoinBanner.png",
     },
+    {
+      name: "Midle",
+      icon: "midle",
+      banner: "kucoinBanner.png",
+    },
   ];
 
   useEffect(() => {
