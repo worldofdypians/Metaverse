@@ -402,21 +402,14 @@ const Community = () => {
 
   const dummyData = [
     
-    {
-      title: "Daily Game Delight",
-      status: "Upcoming",
-      start_date: "May 15, 2024",
-      end_date: "May 29, 2024",
-      image: dailyGameDelight,
-      link: "/",
-    },
+
     {
       title: "Dypians Discovery Quest",
-      status: "Upcoming",
+      status: "Live",
       start_date: "May 29, 2024",
       end_date: "June 12, 2024",
       image: dypiansDiscovery,
-      link: "/",
+      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/104-dypians-discovery-quest",
     },
     {
       title: "BNB Chain Game Expedition",
@@ -433,17 +426,24 @@ const Community = () => {
       end_date: "May 15, 2024",
       image: entryCampaign,
       link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/102-world-of-dypians-entry-campaign",
+    },    {
+      title: "Daily Game Delight",
+      status: "Expired",
+      start_date: "May 15, 2024",
+      end_date: "May 29, 2024",
+      image: dailyGameDelight,
+      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/103-daily-game-delight",
     },
   ];
 
   const dummyBanner = {
-    title: "Daily Game Delight",
+    title: "Dypians Discovery Quest",
       status: "Live",
-      desc: "Join the World of Dypians (WoD) Daily Game Delight Campaign from May 15 to May 29 for a chance to win a share of the 150,000 WOD Tokens & 500 Premium Subscription prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
-      start_date: "May 15, 2024",
-      end_date: "May 29, 2024",
-      image: dailyGameDelight,
-      link: "/",
+      desc: "Join the World of Dypians (WoD) Dypians Discovery Quest Campaign from May 29 to June 12 for a chance to win a share of the 200,000 WOD Tokens & 750 Premium Subscription prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
+      start_date: "May 29, 2024",
+      end_date: "June 12, 2024",
+      image: dypiansDiscovery,
+      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/104-dypians-discovery-quest",
   };
 
   const html = document.querySelector("html");
@@ -520,7 +520,7 @@ const Community = () => {
                     >
                       <a
                         className="btn filled-btn px-5"
-                        href="https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/103-daily-game-delight"
+                        href={dummyBanner.link}
                         target="_blank"
                         rel="noreferrer"
                       >
