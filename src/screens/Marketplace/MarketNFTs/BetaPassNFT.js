@@ -562,7 +562,14 @@ const BetaPassNFT = ({
       .catch((e) => {
         console.error(e);
       });
-  
+      await axios
+      .get(
+        `https://api.worldofdypians.com/api/airdrop-alliance/task5/${wallet}`
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+
   };
 
   const signWalletPublicAddress = async () => {
