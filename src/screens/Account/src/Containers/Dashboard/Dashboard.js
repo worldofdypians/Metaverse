@@ -2031,7 +2031,16 @@ function Dashboard({
       .catch((e) => {
         console.error(e);
       });
-    if (result && result.status === 200) {
+
+      const result2 = await axios
+      .get(
+        `https://api.worldofdypians.com/api/airdrop-alliance/task5/${wallet}`
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200 && result2 && result2.status === 200) {
       console.log(result.data.result);
       setTimeout(() => {
         if (isonlink) {
