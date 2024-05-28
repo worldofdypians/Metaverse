@@ -80,7 +80,8 @@ function Dashboard({
   handleOpenDomains,
   dogePrice,
   dyptokenData_old,
-  handleSwitchChain,onSubscribeSuccess
+  handleSwitchChain,
+  onSubscribeSuccess,
 }) {
   const { email, logout } = useAuth();
 
@@ -90,7 +91,7 @@ function Dashboard({
     borderColor: "#554fd8",
   };
 
-  const {
+  let {
     data,
     refetch: refetchPlayer,
     loading: loadingPlayer,
@@ -405,7 +406,7 @@ function Dashboard({
   const [skaleEarnToken, setSkaleEarnToken] = useState(0);
   const [skalePoints, setSkalePoints] = useState(0);
   const [leaderboard, setLeaderboard] = useState(false);
-  const [genesisLeaderboard, setGenesisLeaderboard] = useState(false)
+  const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
@@ -509,18 +510,7 @@ function Dashboard({
   //leaderboard calls
 
   const bnbStars = ["10", "8", "5", "5", "0", "0", "0", "0", "0", "0"];
-  const bnbStarsPremium = [
-    "10",
-    "8",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-  ];
+  const bnbStarsPremium = ["10", "8", "5", "5", "5", "5", "5", "5", "5", "5"];
   const weeklyPrizesBnb = ["25", "15", "10", "8", "0", "0", "0", "0", "0", "0"];
   const weeklyPrizesGolden = [
     "25",
@@ -1132,7 +1122,7 @@ function Dashboard({
     previousVersion,
     previousWeeklyVersion,
     skalepreviousVersion,
-    userId
+    userId,
   ]);
 
   useEffect(() => {
@@ -2173,7 +2163,7 @@ function Dashboard({
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
-      
+
       setUserSkaleScore(testArray[0].statValue);
       setUserRankSkale(testArray[0].position);
       if (itemData.length > 0) {
@@ -2193,7 +2183,7 @@ function Dashboard({
       }
     }
   };
-
+  
   // const fetchSkaleRecordsAroundPlayer = async (userId, userName) => {
   //   const data = {
   //     StatisticName: "LeaderboardSkaleMonthly",
@@ -2355,17 +2345,15 @@ function Dashboard({
         var testArray2 = Object.values(itemData).filter(
           (item) => item.displayName === username
         );
-        
+
         if (testArray.length > 0 && testArray2.length > 0) {
           setActivePlayer(true);
           setUserData([]);
-        }
-        else if (testArray.length > 0 && testArray2.length === 0) {
+        } else if (testArray.length > 0 && testArray2.length === 0) {
           setActivePlayer(false);
           setUserData(...testArray);
         }
-      }
-      else if (testArray.length > 0) {
+      } else if (testArray.length > 0) {
         setActivePlayer(false);
         setUserData(...testArray);
       }
@@ -2853,7 +2841,7 @@ function Dashboard({
           setCanBuy(true);
         } else if (
           claimedChests + claimedPremiumChests === 20 &&
-          claimedSkaleChests + claimedSkalePremiumChests === 20 
+          claimedSkaleChests + claimedSkalePremiumChests === 20
           // &&
           // claimedCoreChests + claimedCorePremiumChests === 20 &&
           // claimedVictionChests + claimedVictionPremiumChests === 20 &&
@@ -2864,7 +2852,7 @@ function Dashboard({
       } else if (!isPremium) {
         if (
           claimedChests < 10 ||
-          claimedSkaleChests < 10 
+          claimedSkaleChests < 10
           // ||
           // claimedCoreChests < 10 ||
           // claimedVictionChests < 10 ||
@@ -3204,8 +3192,8 @@ function Dashboard({
       setmyCoreNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "viction").then((NFTS) =>
-      setmyVictionNfts(NFTS)
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "viction").then(
+      (NFTS) => setmyVictionNfts(NFTS)
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "skale").then((NFTS) =>
@@ -4237,7 +4225,7 @@ function Dashboard({
     //   handleSubscriptionTokenChange(wseiAddress);
     //   handleCheckIfAlreadyApproved(wseiAddress);
     // }
-     else if (chainId === 56) {
+    else if (chainId === 56) {
       setChainDropdown(chainDropdowns[1]);
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -4363,8 +4351,10 @@ function Dashboard({
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
       refreshSubscription(data.getPlayer.wallet.publicAddress);
       setuserWallet(data.getPlayer.wallet.publicAddress);
+    } else if (coinbase) {
+      refreshSubscription(coinbase);
     }
-  }, [data, email]);
+  }, [data, email, coinbase]);
 
   useEffect(() => {
     if (
@@ -4376,28 +4366,31 @@ function Dashboard({
       data.getPlayer.wallet.publicAddress &&
       email
     ) {
-      fetchMonthlyRecordsAroundPlayer(
-        monthlyrecords
-      );
-      fetchSkaleRecordsAroundPlayer(
-        skaleRecords
-      );
+      fetchMonthlyRecordsAroundPlayer(monthlyrecords);
+      fetchSkaleRecordsAroundPlayer(skaleRecords);
       fetchGenesisAroundPlayer(
         data.getPlayer.playerId,
         data.getPlayer.displayName
       );
-      fetchWeeklyRecordsAroundPlayer(
-        weeklyrecords
-      );
-      fetchDailyRecordsAroundPlayer(
-        dailyrecords
-      );
+      fetchWeeklyRecordsAroundPlayer(weeklyrecords);
+      fetchDailyRecordsAroundPlayer(dailyrecords);
       fetchKittyDashAroundPlayer(
         data.getPlayer.playerId,
         data.getPlayer.displayName
       );
     }
-  }, [data, email,weeklyrecords,skaleRecords, count, goldenPassRemainingTime,monthlyrecords, dailyrecords, userId, username]);
+  }, [
+    data,
+    email,
+    weeklyrecords,
+    skaleRecords,
+    count,
+    goldenPassRemainingTime,
+    monthlyrecords,
+    dailyrecords,
+    userId,
+    username,
+  ]);
 
   useEffect(() => {
     if (
@@ -4455,8 +4448,11 @@ function Dashboard({
     window.scrollTo(0, 0);
     getTokenDatabnb();
     fetchCFXPrice();
-    refetchPlayer();
   }, []);
+
+  useEffect(() => {
+    refetchPlayer();
+  }, [email]);
 
   useEffect(() => {
     if (
@@ -4590,7 +4586,7 @@ function Dashboard({
                         onSigninClick={onSigninClick}
                         onLogoutClick={() => {
                           logout();
-                          setIsPremium(false);
+                          refreshSubscription(coinbase);
                           setclaimedChests(0);
                           setclaimedPremiumChests(0);
                           setclaimedCorePremiumChests(0);
@@ -4777,7 +4773,6 @@ function Dashboard({
                       myCmcNfts={myCmcNfts}
                       myCoreNfts={myCoreNfts}
                       myVictionNfts={myVictionNfts}
-
                       mySkaleNfts={mySkaleNfts}
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
@@ -5010,7 +5005,7 @@ function Dashboard({
                       </OutsideClickHandler>
                     )}
 
-{genesisLeaderboard && (
+                    {genesisLeaderboard && (
                       <OutsideClickHandler
                         onOutsideClick={() => setGenesisLeaderboard(false)}
                       >
@@ -5028,7 +5023,7 @@ function Dashboard({
                               </mark>{" "}
                               Leaderboard
                             </h2>
-                        
+
                             <img
                               src={xMark}
                               onClick={() => setGenesisLeaderboard(false)}
@@ -5036,7 +5031,7 @@ function Dashboard({
                               style={{ cursor: "pointer" }}
                             />
                           </div>
-                        
+
                           <GenesisLeaderboard
                             username={data?.getPlayer?.displayName}
                             userId={data?.getPlayer?.playerId}
@@ -5055,7 +5050,6 @@ function Dashboard({
                         </div>
                       </OutsideClickHandler>
                     )}
-
 
                     {myRewardsPopup && (
                       <OutsideClickHandler
