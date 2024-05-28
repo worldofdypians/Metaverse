@@ -438,7 +438,7 @@ const ProfileCard = ({
                 <div className="d-flex   profile-header-wrapper justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
                   <div className="d-flex gap-2 justify-content-between align-items-center" style={{width: windowSize.width > 991 ? '50%' : '100%'}}>
                     <div className="d-flex align-items-center gap-2 w-100">
-                      {(coinbase && !email) ||
+                      {(coinbase && !email && !isPremium) ||
                       (!coinbase && !email) ||
                       (coinbase && email && !address && !username) ||
                       (!coinbase &&
@@ -446,7 +446,7 @@ const ProfileCard = ({
                         address &&
                         username &&
                         !isPremium) ||
-                      !address ? (
+                        (!address && !isPremium) ? (
                         <img
                           src={defaultAvatar}
                           alt=""
@@ -468,6 +468,14 @@ const ProfileCard = ({
                         />
                       )}
                       {address && email && isPremium && coinbase && (
+                        <img
+                          src={defaultAvatarPremium}
+                          alt=""
+                          className="userAvatarPremium"
+                        />
+                      )}
+
+{!email && isPremium && coinbase && (
                         <img
                           src={defaultAvatarPremium}
                           alt=""
@@ -697,8 +705,7 @@ const ProfileCard = ({
                         ? ""
                         : coinbase && isPremium && !email
                         ? "d-none"
-                        : !coinbase && !email
-                        ? "d-none"
+                        
                         : ""
                     }`}
                     style={{
@@ -710,7 +717,7 @@ const ProfileCard = ({
                           : "repeat(3, 1fr)",
                     }}
                   >
-                    {coinbase && !isPremium && (
+                    {!isPremium && (
                       <div
                         className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
