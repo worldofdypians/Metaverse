@@ -14,6 +14,7 @@ import grayArrow from "./assets/grayArrow.svg";
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import dypiusProfileBanner from "./assets/dypiusProfileBanner.png";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
+import dypiusPremium16 from "./assets/dypiusPremium16.svg";
 
 const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
   return (
@@ -39,6 +40,8 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
                 ? dypius
                 : event.title === "Dogecoin"
                 ? doge
+                : event.title === "Dypius" || event.title === "Dypius Premium"
+                ? dypiusPremium16
                 : event.title === "CoinMarketCap"
                 ? cmc
                 : gate

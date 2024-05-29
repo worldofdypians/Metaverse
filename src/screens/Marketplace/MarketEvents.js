@@ -353,36 +353,7 @@ const MarketEvents = ({
     //     eventDate: "XXX XX, XXXX",
     //   },
     // },
-    {
-      title: "Dypius Premium",
-      logo: dypiusPremium36,
-      eventStatus: "Live",
-      totalRewards: "$50,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "Feb 26, 2024",
-      backgroundImage: upcomingDyp2,
-      activeTab: "dypiusv2",
-      popupInfo: {
-        title: "Dypius Premium",
-        chain: "BNB Chain",
-        linkState: "dypius",
-        rewards: "BNB",
-        status: "Live",
-        id: "event9",
-        eventType: "Explore & Find",
-        totalRewards: "$50,000 in BNB Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "Feb 26, 2024",
-        activeTab: "dypiusv2",
-      },
-    },
+   
 
     {
       title: "SKALE",
@@ -410,6 +381,36 @@ const MarketEvents = ({
         learnMore:
           "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
         eventDate: "Apr 15, 2024",
+      },
+    },
+     {
+      title: "Dypius Premium",
+      logo: dypiusPremium36,
+      eventStatus: "Expired",
+      totalRewards: "$50,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Feb 26, 2024",
+      backgroundImage: upcomingDyp2,
+      activeTab: "dypiusv2",
+      popupInfo: {
+        title: "Dypius Premium",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event9",
+        eventType: "Explore & Find",
+        totalRewards: "$50,000 in BNB Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Feb 26, 2024",
+        activeTab: "dypiusv2",
       },
     },
     {
@@ -1266,9 +1267,8 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 1).map((item, index) => (
                           <BetaEventCard
-                            activeTab={item.activeTab}
                             data={item}
                             key={index}
                             onOpenPopup={() => {
@@ -1278,8 +1278,7 @@ const MarketEvents = ({
                             userEarnUsd={
                               item.title === "CoinMarketCap"
                                 ? cmcuserEarnUsd
-                                : item.title === "Dypius Premium"
-                                ? dypiusPremiumEarnUsd
+                                
                                 : item.title === "SKALE"
                                 ? skaleEarnUsd
                                 : 0
@@ -1439,7 +1438,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(2, dummyBetaPassData2.length)
+                    .slice(1, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
@@ -1448,6 +1447,7 @@ const MarketEvents = ({
                           setEventPopup(true);
                           setDummyEvent(item.popupInfo);
                         }}
+                        activeTab={item.activeTab}
                         userEarnUsd={
                           item.title === "Base"
                             ? baseEarnUSD
@@ -1461,6 +1461,8 @@ const MarketEvents = ({
                             ? gateEarnUSD
                             : item.title === "Dypius"
                             ? dypiusEarnTokens
+                            : item.title === "Dypius Premium"
+                            ? dypiusPremiumEarnUsd
                             : 0
                         }
                       />
@@ -2334,13 +2336,13 @@ const MarketEvents = ({
                 </div>
               )}
 
-            {dummyEvent.id === "event9" && (
+            {/* {dummyEvent.id === "event9" && (
               <div className="w-100 d-flex justify-content-end mt-3">
                 <NavLink to={`/account`}>
                   <button className="btn get-beta-btn">Get Premium</button>
                 </NavLink>
               </div>
-            )}
+            )} */}
           </div>
         </OutsideClickHandler>
       )}

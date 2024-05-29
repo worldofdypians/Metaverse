@@ -945,8 +945,9 @@ background-size: 100% 100%;
   display: grid;
   grid-template-columns: repeat(4,1fr);
   gap: 10px;
-  @media screen and (max-width: 786px) {
-    grid-template-columns: auto;
+  @media screen and (max-width: 991px) {
+    grid-template-columns: auto !important;
+    width: 100%;
   
   }
 }
@@ -954,8 +955,10 @@ background-size: 100% 100%;
   display: grid;
   grid-template-columns: repeat(3,1fr);
   gap: 10px;
-  @media screen and (max-width: 786px) {
-    grid-template-columns: auto;
+  @media screen and (max-width: 991px) {
+    grid-template-columns: auto !important;
+    width: 100%;
+
   
   }
 }

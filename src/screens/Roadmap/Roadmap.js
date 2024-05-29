@@ -415,11 +415,11 @@ const Roadmap = () => {
           completed: false,
         },
 
-        {
-          title: "Introduction of Shop v1",
-          desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
-          completed: false,
-        },
+        // {
+        //   title: "Introduction of Shop v1",
+        //   desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
+        //   completed: false,
+        // },
         {
           title: "Improving Tracking Rewards",
           desc: "Enhance the tracking of historic data rewards earned by players to improve their gaming experience.",
@@ -458,9 +458,14 @@ const Roadmap = () => {
           desc: "Create a new environment, such as an island, for players to explore, complete tasks, and engage in battles.",
           completed: false,
         },
+        // {
+        //   title: "Introduction of Shop v2",
+        //   desc: "Improve and expand the in-game shop with new features and offerings.",
+        //   completed: false,
+        // },
         {
-          title: "Introduction of Shop v2",
-          desc: "Improve and expand the in-game shop with new features and offerings.",
+          title: "Introduction of Shop v1",
+          desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
           completed: false,
         },
         {
