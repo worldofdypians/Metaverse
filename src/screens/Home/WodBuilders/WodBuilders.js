@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "./_wodbuilders.scss";
 import { useState } from "react";
 import useWindowSize from "../../../hooks/useWindowSize";
+
 const WodBuilders = () => {
   const [slice, setSlice] = useState(2);
   const windowSize = useWindowSize();
