@@ -20,7 +20,7 @@ import CawsStakeModal from "../../components/StakeModal/CawsStakeModal";
 import { useNavigate } from "react-router-dom";
 import GetPremiumPopup from "../Account/src/Components/PremiumPopup/GetPremium";
 import OutsideClickHandler from "react-outside-click-handler";
-
+import { handleSwitchNetworkhook } from "../../hooks/hooks";
 const MarketStake = ({
   coinbase,
   chainId,
@@ -100,6 +100,22 @@ const MarketStake = ({
     );
     if (result) {
       setTotalRewards(result.data);
+    }
+  };
+
+  const handleEthPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x1")
+          .then(() => {
+            handleSwitchNetwork(1);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
@@ -618,17 +634,20 @@ const MarketStake = ({
                             Stake your CAWS NFTs to earn daily ETH rewards.
                           </span>
                         </div>
-                        {isPremium && isConnected && (
+                        {isPremium && isConnected && chainId === 1 && (
                           <div className="d-flex align-items-center gap-3">
                             <button
                               className="btn pill-btn px-4 py-2"
                               onClick={() => {
-                                setCawsStakeModal(true);
-                              }}
-                              disabled={
                                 myCawsstakes.length === 4 ||
                                 totalStakesCawsPremium === 200
-                              }
+                                  ? window.alertify.error(
+                                      myCawsstakes.length === 4
+                                        ? "You have already reached maximum deposit per wallet."
+                                        : "There are already 200 NFTs staked. Pool cap has been reached."
+                                    )
+                                  : setCawsStakeModal(true);
+                              }}
                             >
                               Deposit
                             </button>
@@ -653,7 +672,7 @@ const MarketStake = ({
                             Connect Wallet
                           </button>
                         )}
-                        {isConnected && !isPremium && (
+                        {isConnected && !isPremium && chainId === 1 && (
                           <button
                             className="btn pill-btn px-4 py-2"
                             style={{ width: "fit-content" }}
@@ -662,6 +681,18 @@ const MarketStake = ({
                             }}
                           >
                             Become Premium
+                          </button>
+                        )}
+
+{isConnected && chainId !== 1 && (
+                          <button
+                            className="btn pill-btn px-4 py-2"
+                            style={{ width: "fit-content" }}
+                            onClick={() => {
+                              handleEthPool();
+                            }}
+                          >
+                            Switch to Ethereum
                           </button>
                         )}
                         <div className="d-flex align-items-center gap-3"></div>
