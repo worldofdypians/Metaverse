@@ -1174,7 +1174,7 @@ const ProfileCard = ({
                             : "Error"}
                         </button>
                       )}
-                    {address && email && (
+                    {email && (
                       <button
                         className="logoutbtn px-3 py-1"
                         onClick={onLogoutClick}
