@@ -748,6 +748,16 @@ function Dashboard({
     }
   };
 
+  const getBundles = async (address) => {
+    if (address) {
+      const result = await axios.get(
+        `https://api3.dyp.finance/api/bundles/count/${address}`
+      );
+      const result_formatted = result.data.count; 
+      setbundlesBought(result_formatted);
+    }
+  };
+  
   const fetchPreviousWinners = async () => {
     if (previousVersion != 0) {
       const data = {
@@ -1253,8 +1263,8 @@ function Dashboard({
     userDataSkaleMonthly,
   ]);
 
-  let oneApril = new Date("2024-04-01 11:11:00 GMT+02:00");
-  let oneMay = new Date("2024-05-01 11:11:00 GMT+02:00");
+  let oneJune = new Date("2024-06-01 11:11:00 GMT+02:00"); 
+  let oneJuly = new Date("2024-07-01 11:11:00 GMT+02:00"); 
 
   const handleSetAvailableTime = (value) => {
     setGoldenPassRemainingTime(value);
@@ -1347,6 +1357,122 @@ function Dashboard({
     }
   };
 
+  const setlastDay = async () => {
+    const dypv1 = new window.infuraWeb3.eth.Contract(
+      DYP_700V1_ABI,
+      dyp700v1Address
+    );
+ 
+    const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
+    const timeofDeposit = await dypv2.methods.getTimeOfDeposit(coinbase).call();
+
+    const timeofDepositv1 = await dypv1.methods
+      .getTimeOfDeposit(coinbase)
+      .call();
+
+    if (timeofDeposit !== 0 || timeofDepositv1 !== 0) {
+      const timeofDeposit_miliseconds = timeofDeposit * 1000;
+      const timeofDeposit_milisecondsv1 = timeofDepositv1 * 1000;
+
+      const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(timeofDeposit_miliseconds);
+
+      const timeofbundleBought_Datev1 = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(timeofDeposit_milisecondsv1);
+
+      const timeofbundleBought_Date_formatted = new Date(
+        timeofbundleBought_Date
+      );
+
+      const timeofbundleBought_Date_formattedv1 = new Date(
+        timeofbundleBought_Datev1
+      );
+
+      const timeofbundleBought_day =
+        timeofbundleBought_Date_formatted.getDate();
+
+      const timeofbundleBought_dayv1 =
+        timeofbundleBought_Date_formattedv1.getDate();
+
+      setdatewhenBundleBought(timeofbundleBought_day);
+      setdatewhenBundleBoughtv1(timeofbundleBought_dayv1);
+
+      const expiringTime = await dypv2.methods
+        .getTimeOfExpireBuff(coinbase)
+        .call();
+
+      const expiringTimev1 = await dypv1.methods
+        .getTimeOfExpireBuff(coinbase)
+        .call();
+
+      const expiringTime_miliseconds = expiringTime * 1000;
+      const expiringTime_milisecondsv1 = expiringTimev1 * 1000;
+
+      const expiringTime_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(expiringTime_miliseconds);
+
+      const expiringTime_Datev1 = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(expiringTime_milisecondsv1);
+
+      const expiringTime_Date_formatted = new Date(expiringTime_Date);
+      const expiringTime_Date_formattedv1 = new Date(expiringTime_Datev1);
+ 
+      setdateofBundle(expiringTime_Date_formatted);
+      setdateofBundlev1(expiringTime_Date_formattedv1);
+
+      // const expiringTime_day = expiringTime_Date_formatted.getDate();
+      // setbundleExpireDay(expiringTime_day);
+      // setbundleExpireMiliseconds(expiringTime_miliseconds);
+
+      const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }).format(expiringTime_miliseconds);
+
+      const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
+      const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
+      const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
+      const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
+      const final = timeofDeposit_Hours - 11;
+      // setlastDayofBundleHours(final);
+
+      const finalMinutes = timeofDeposit_Minutes - 11;
+
+      // setlastDayofBundleMinutes(finalMinutes);
+      setdateofBundle(timeofDeposit_day);
+      // setlastDayofBundleMilliseconds(expiringTime_miliseconds);
+    }
+  };
+
+
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
     //he can buy until the 22 regular bundles (7days)
@@ -1405,10 +1531,10 @@ function Dashboard({
         //     Number(additional_remaining_time_timestamp * 1000);
 
         setcountdown700(
-          today < oneApril ? oneApril.getTime() : oneMay.getTime()
+          today < oneJune? oneJune.getTime() : oneJuly.getTime()
         );
         handleSetAvailableTime(
-          today < oneApril ? oneApril.getTime() : oneMay.getTime()
+          today < oneJune? oneJune.getTime() : oneJuly.getTime()
         );
 
         // }
@@ -1433,10 +1559,10 @@ function Dashboard({
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
         setcountdown700(
-          today < oneApril ? oneApril.getTime() : oneMay.getTime()
+          today < oneJune? oneJune.getTime() : oneJuly.getTime()
         );
         handleSetAvailableTime(
-          today < oneApril ? oneApril.getTime() : oneMay.getTime()
+          today < oneJune? oneJune.getTime() : oneJuly.getTime()
         );
 
         // }
@@ -1489,10 +1615,10 @@ function Dashboard({
           today.getFullYear() === finalDateofBundleFormatted.getFullYear()
         ) {
           setcountdown700(
-            today < oneApril ? oneApril.getTime() : oneMay.getTime()
+            today < oneJune? oneJune.getTime() : oneJuly.getTime()
           );
           handleSetAvailableTime(
-            today < oneApril ? oneApril.getTime() : oneMay.getTime()
+            today < oneJune? oneJune.getTime() : oneJuly.getTime()
           );
 
           // if (
@@ -1545,10 +1671,10 @@ function Dashboard({
 
         if (today < finalDateofBundle && bundlesBought !== 0) {
           setcountdown700(
-            today < oneApril ? oneApril.getTime() : oneMay.getTime()
+            today < oneJune? oneJune.getTime() : oneJuly.getTime()
           );
           handleSetAvailableTime(
-            today < oneApril ? oneApril.getTime() : oneMay.getTime()
+            today < oneJune? oneJune.getTime() : oneJuly.getTime()
           );
         } else if (today > finalDateofBundle && bundlesBought > 0) {
           setcountdown700();
@@ -1572,10 +1698,10 @@ function Dashboard({
             handleSetAvailableTime(finalDateofBundle);
           } else {
             setcountdown700(
-              today < oneApril ? oneApril.getTime() : oneMay.getTime()
+              today < oneJune? oneJune.getTime() : oneJuly.getTime()
             );
             handleSetAvailableTime(
-              today < oneApril ? oneApril.getTime() : oneMay.getTime()
+              today < oneJune? oneJune.getTime() : oneJuly.getTime()
             );
           }
         } else if (today > finalDateofBundle && bundlesBought > 0) {
@@ -1586,13 +1712,13 @@ function Dashboard({
     } else if (today_date > 25) {
       const finalDateofBundle =
         dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
-
-      if (today < finalDateofBundle) {
+ 
+      if (today_date < finalDateofBundle) {
         setcountdown700(
-          today < oneApril ? oneApril.getTime() : oneMay.getTime()
+          today < oneJune? oneJune.getTime() : oneJuly.getTime()
         );
         handleSetAvailableTime(
-          today < oneApril ? oneApril.getTime() : oneMay.getTime()
+          today < oneJune? oneJune.getTime() : oneJuly.getTime()
         );
       } else {
         setcountdown700();
@@ -4140,8 +4266,10 @@ function Dashboard({
   useEffect(() => {
     if (coinbase) {
       getRankData();
+      getBundles(coinbase)
+      setlastDay();
     }
-  }, [coinbase]);
+  }, [coinbase, bundlesBought]);
 
   useEffect(() => {
     fetchSkalePrice();
@@ -4152,7 +4280,7 @@ function Dashboard({
 
   useEffect(() => {
     checkBundleDates();
-  }, [bundlesBought, coinbase]);
+  }, [bundlesBought, coinbase, dateofBundle, dateofBundlev1]);
 
   useEffect(() => {
     if (
