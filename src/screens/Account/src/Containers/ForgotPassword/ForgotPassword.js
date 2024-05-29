@@ -39,7 +39,7 @@ const ForgotPassword = () => {
 
   if (isEmailSentSucces) {
     return (
-      <LoginWrapper style={{ margin:'auto' }}>
+      <LoginWrapper style={{ margin:'6rem 0rem' }}>
         <LoginCard>
           <div className={classes.container}>
             <h1 className={classes.succesfulMessageTitle}>

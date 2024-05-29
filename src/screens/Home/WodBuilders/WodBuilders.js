@@ -5,6 +5,7 @@ import useWindowSize from "../../../hooks/useWindowSize";
 const WodBuilders = () => {
   const [slice, setSlice] = useState(2);
   const windowSize = useWindowSize();
+
   const builders = [
     {
       name: "BNB Chain",
@@ -16,13 +17,13 @@ const WodBuilders = () => {
       name: "CORE",
       icon: "core",
       banner: "coreBanner.png",
-      link: 'https://x.com/Coredao_Org/status/1790336632823910804'
+      link: "https://x.com/Coredao_Org/status/1790336632823910804",
     },
     {
       name: "MultiversX",
       icon: "multiversx",
       banner: "multiversBanner.png",
-      link: 'https://x.com/MultiversX/status/1790422563849466280'
+      link: "https://x.com/MultiversX/status/1790422563849466280",
     },
     {
       name: "CoinMarketCap",
@@ -40,13 +41,13 @@ const WodBuilders = () => {
       name: "Viction",
       icon: "viction",
       banner: "victionBanner.png",
-      link: 'https://x.com/VictionEco/status/1789987120083562640'
+      link: "https://x.com/VictionEco/status/1789987120083562640",
     },
     {
       name: "SKALE",
       icon: "skaleIcon",
       banner: "skaleBanner.webp",
-      link: "https://twitter.com/SkaleNetwork/status/1777372050832658644"
+      link: "https://twitter.com/SkaleNetwork/status/1777372050832658644",
     },
     {
       name: "Conflux",
@@ -58,7 +59,7 @@ const WodBuilders = () => {
       name: "BabyDoge",
       icon: "babydogeIcon",
       banner: "babyDogeBanner.webp",
-      link: 'https://twitter.com/BabyDogeCoin/status/1777714397667893544'
+      link: "https://twitter.com/BabyDogeCoin/status/1777714397667893544",
     },
     {
       name: "Avalanche",
@@ -95,11 +96,23 @@ const WodBuilders = () => {
       name: "Easy2Stake",
       icon: "easy2stakeIcon",
       banner: "easy2stakeBanner.png",
-      link: "https://twitter.com/Easy2Stake/status/1654120741221326850"
+      link: "https://twitter.com/Easy2Stake/status/1654120741221326850",
     },
     {
       name: "KuCoin",
       icon: "kucoinIcon",
+      banner: "kucoinBanner.png",
+    },
+
+    {
+      name: "SEI",
+      icon: "seiLogo",
+      banner: "seiBanner.webp",
+      link: 'https://x.com/worldofdypians/status/1795177907821617607'
+    },
+    {
+      name: "Midle",
+      icon: "midle",
       banner: "kucoinBanner.png",
     },
   ];
@@ -121,32 +134,30 @@ const WodBuilders = () => {
           </h2>
         </div>
         <div className="wod-builders-grid">
-          {builders
-            .slice(0, slice)
-            .map((item, index) => (
-              <a
-                href={item.link}
-                target="_blank"
-                key={index}
-                className="builder-item p-3 d-flex flex-column gap-2"
-              >
-                <img
-                  src={require(`./assets/${item.banner}`)}
-                  className="w-100 partner-banner"
-                  alt=""
-                />
-                <div className="d-flex align-items-center gap-2">
-                  <img src={require(`./assets/${item.icon}.svg`)} alt="" />
-                  <span className="builder-title mb-0">{item.name}</span>
-                </div>
-              </a>
-            ))}
+          {builders.slice(0, slice).map((item, index) => (
+            <a
+              href={item.link}
+              target="_blank"
+              key={index}
+              className="builder-item p-3 d-flex flex-column gap-2"
+            >
+              <img
+                src={require(`./assets/${item.banner}`)}
+                className="w-100 partner-banner"
+                alt=""
+              />
+              <div className="d-flex align-items-center gap-2">
+                <img src={require(`./assets/${item.icon}.svg`)} alt="" />
+                <span className="builder-title mb-0">{item.name}</span>
+              </div>
+            </a>
+          ))}
         </div>
         {windowSize.width < 786 ? (
           <div className="d-flex justify-content-center mt-3">
             <div
               className="linear-border"
-              onClick={() => (slice === 2 ? setSlice(16) : setSlice(2))}
+              onClick={() => (slice === 2 ? setSlice(17) : setSlice(2))}
             >
               <button className="btn filled-btn px-5">
                 {slice === 2 ? "View More" : "View Less"}
@@ -157,7 +168,7 @@ const WodBuilders = () => {
           <div className="d-flex justify-content-center mt-3">
             <div
               className="linear-border"
-              onClick={() => (slice === 8 ? setSlice(16) : setSlice(8))}
+              onClick={() => (slice === 8 ? setSlice(17) : setSlice(8))}
             >
               <button className="btn filled-btn px-5">
                 {slice === 8 ? "View More" : "View Less"}
