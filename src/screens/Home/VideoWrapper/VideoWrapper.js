@@ -57,34 +57,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
 
   const dummyBetaPassData2 = [
-    {
-      title: "Dypius",
-      logo: dypius,
-      eventStatus: "Live",
-      totalRewards: "300,000 in DYPv2 Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "September xx, 2023",
-      rewardsAmount: "$50,000",
-      rewardsCurrency: "BNB Rewards",
-      // backgroundImage: upcomingDyp,
-      popupInfo: {
-        title: "Dypius",
-        chain: "BNB Chain",
-        linkState: "dypius",
-        rewards: "DYP",
-        status: "Expired",
-        id: "event5",
-        eventType: "Explore & Find",
-        totalRewards: "300,000 in DYPv2 Rewards",
-        // eventDuration: coingeckoLastDay,
-        minRewards: "25",
-        maxRewards: "50",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "Ended",
-      },
-    },
+  
     {
       title: "SKALE",
       chain: "SKALE Nebula Hub",
@@ -184,6 +157,34 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         learnMore:
           "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
         eventDate: "XXX XX, XXXX",
+      },
+    },
+      {
+      title: "Dypius",
+      logo: dypius,
+      eventStatus: "Expired",
+      totalRewards: "300,000 in DYPv2 Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "September xx, 2023",
+      rewardsAmount: "$50,000",
+      rewardsCurrency: "BNB Rewards",
+      // backgroundImage: upcomingDyp,
+      popupInfo: {
+        title: "Dypius",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "DYP",
+        status: "Expired",
+        id: "event5",
+        eventType: "Explore & Find",
+        totalRewards: "300,000 in DYPv2 Rewards",
+        // eventDuration: coingeckoLastDay,
+        minRewards: "25",
+        maxRewards: "50",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Ended",
       },
     },
     {
