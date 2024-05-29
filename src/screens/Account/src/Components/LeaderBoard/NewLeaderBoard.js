@@ -1335,10 +1335,10 @@ const NewLeaderBoard = ({
                                              : "playerReward"
                                          }`}
                                        >
-                                         <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                         <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
                                            <span
                                              className="leaderboard-text"
-                                             style={{ color: "gray" }}
+                                             style={{ color: "gray", width: 35 }}
                                            >
                                              {getFormattedNumber(
                                                leaderboard.rewards[
@@ -1375,10 +1375,10 @@ const NewLeaderBoard = ({
                                              : "playerReward"
                                          }`}
                                        >
-                                         <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                         <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
                                            <span
                                              className="leaderboard-text"
-                                             style={{ color: "gray" }}
+                                             style={{ color: "gray", width: 35 }}
                                            >
                                              $
                                              {getFormattedNumber(
@@ -2069,10 +2069,10 @@ const NewLeaderBoard = ({
                                              : "playerReward"
                                          }`}
                                        >
-                                         <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                         <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
                                            <span
                                              className="leaderboard-text"
-                                             style={{ color: "gray" }}
+                                             style={{ color: "gray", width: 35 }}
                                            >
                                              {getFormattedNumber(
                                                leaderboard.rewards[
@@ -2109,10 +2109,10 @@ const NewLeaderBoard = ({
                                              : "playerReward"
                                          }`}
                                        >
-                                         <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                         <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
                                            <span
                                              className="leaderboard-text"
-                                             style={{ color: "gray" }}
+                                             style={{ color: "gray", width: 35 }}
                                            >
                                              $
                                              {getFormattedNumber(
@@ -2837,10 +2837,10 @@ const NewLeaderBoard = ({
                                            : "playerReward"
                                        }`}
                                      >
-                                       <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                       <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
                                          <span
                                            className="leaderboard-text"
-                                           style={{ color: "gray" }}
+                                           style={{ color: "gray", width: 35 }}
                                          >
                                            {getFormattedNumber(
                                              leaderboard.rewards[
@@ -2877,10 +2877,10 @@ const NewLeaderBoard = ({
                                            : "playerReward"
                                        }`}
                                      >
-                                       <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                       <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
                                          <span
                                            className="leaderboard-text"
-                                           style={{ color: "gray" }}
+                                           style={{ color: "gray", width: 35 }}
                                          >
                                            $
                                            {getFormattedNumber(
@@ -3571,10 +3571,10 @@ const NewLeaderBoard = ({
                                            : "playerReward"
                                        }`}
                                      >
-                                       <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                       <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
                                          <span
                                            className="leaderboard-text"
-                                           style={{ color: "gray" }}
+                                           style={{ color: "gray", width: 35 }}
                                          >
                                            {getFormattedNumber(
                                              leaderboard.rewards[
@@ -3611,10 +3611,10 @@ const NewLeaderBoard = ({
                                            : "playerReward"
                                        }`}
                                      >
-                                       <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                       <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
                                          <span
                                            className="leaderboard-text"
-                                           style={{ color: "gray" }}
+                                           style={{ color: "gray", width: 35 }}
                                          >
                                            $
                                            {getFormattedNumber(

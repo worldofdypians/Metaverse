@@ -602,7 +602,8 @@ const MyRewardsPopupNew = ({
                 Number(gateRewardsUSD) +
                 Number(confluxRewardsUSD) +
                 Number(dogeRewardsUSD) +
-                Number(cmcRewardsUSD),
+                Number(cmcRewardsUSD)+
+                Number(dypiusPremiumEarnUsd),
               2
             )}
           </span>
@@ -685,7 +686,8 @@ const MyRewardsPopupNew = ({
                       Number(gateRewardsUSD) +
                       Number(confluxRewardsUSD) +
                       Number(dogeRewardsUSD) +
-                      Number(cmcRewardsUSD),
+                      Number(cmcRewardsUSD) +
+                      Number(dypiusPremiumEarnUsd),
                     2
                   )
                 : getFormattedNumber(
@@ -703,7 +705,6 @@ const MyRewardsPopupNew = ({
                       Number(userRank2) +
                       Number(genesisData) +
                       Number(userRankRewards) +
-                      Number(dypiusPremiumEarnUsd) +
                       Number(cawsPremiumRewards),
                     2
                   )}
@@ -933,12 +934,12 @@ const MyRewardsPopupNew = ({
                       Number(gateRewardsUSD) +
                       Number(confluxRewardsUSD) +
                       Number(dogeRewardsUSD) +
-                      Number(cmcRewardsUSD),
+                      Number(cmcRewardsUSD) +
+                      Number(dypiusPremiumEarnUsd),
                     2
                   )
                 : getFormattedNumber(
                     Number(skaleEarnUsd) +
-                      Number(dypiusPremiumEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(seiEarnUsd) +
                       Number(victionEarnUsd),
@@ -1111,7 +1112,6 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(treasureRewardMoney, 2)}
                 </span>
               </div>
-             
 
               {/* <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CORE</span>
@@ -1125,7 +1125,7 @@ const MyRewardsPopupNew = ({
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
-               <div className="d-flex w-100 justify-content-between gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SKALE</span>
                 <span className="item-name-right">
                   $
@@ -1273,33 +1273,7 @@ const MyRewardsPopupNew = ({
             <div className="treasure-hunt-item-wrapper-active">
               <div className="d-flex justify-content-between gap-4 align-items-start">
                 <div className="d-flex flex-column gap-2 w-50">
-         
                   <div className="d-flex w-100 justify-content-between gap-2">
-                    <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img src={dypiusPremium} alt="" />
-                      Premium
-                    </span>
-                    <span className="item-name-right">
-                      ${getFormattedNumber(dypiusPremiumEarnUsd, 2)}
-                    </span>
-                  </div>
-                  {/* <div className="d-flex w-100 justify-content-between gap-2">
-                    <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img
-                        src={coreIcon}
-                        alt=""
-                        style={{ width: 16, height: 16 }}
-                      />
-                      CORE
-                    </span>
-                    <span className="item-name-right">
-                      ${getFormattedNumber(coreEarnUsd, 2)}
-                    </span>
-                  </div> */}
-                </div>
-
-                <div className="d-flex flex-column gap-2 w-50">
-                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
                       <img src={skale} alt="" />
                       SKALE
@@ -1336,6 +1310,7 @@ const MyRewardsPopupNew = ({
                     </span>
                   </div> */}
                 </div>
+                <div className="d-flex flex-column gap-2 w-50"></div>
               </div>
             </div>
           </div>
@@ -1362,6 +1337,30 @@ const MyRewardsPopupNew = ({
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={dypiusPremium} alt="" />
+                    Premium
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(dypiusPremiumEarnUsd, 2)}
+                  </span>
+                </div>
+
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
+           <span className="d-flex align-items-center gap-2 item-name-left">
+             <img
+               src={coreIcon}
+               alt=""
+               style={{ width: 16, height: 16 }}
+             />
+             CORE
+           </span>
+           <span className="item-name-right">
+             ${getFormattedNumber(coreEarnUsd, 2)}
+           </span>
+         </div> */}
+
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
                     <img src={base} alt="" />
                     Base
                   </span>
@@ -1377,16 +1376,6 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(coingeckoRewardsUSD, 2)}
-                  </span>
-                </div>
-                <div className="d-flex gap-2 align-items-center justify-content-between">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={cmc} alt="" />
-                    CMC
-                  </span>
-                  <span className="item-name-right">
-                    {" "}
-                    ${getFormattedNumber(cmcRewardsUSD, 2)}
                   </span>
                 </div>
               </div>
@@ -1409,6 +1398,16 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(gateRewardsUSD, 2)}
+                  </span>
+                </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={cmc} alt="" />
+                    CMC
+                  </span>
+                  <span className="item-name-right">
+                    {" "}
+                    ${getFormattedNumber(cmcRewardsUSD, 2)}
                   </span>
                 </div>
               </div>
