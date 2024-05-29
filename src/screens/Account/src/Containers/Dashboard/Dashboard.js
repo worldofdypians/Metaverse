@@ -91,7 +91,7 @@ function Dashboard({
     borderColor: "#554fd8",
   };
 
-  let {
+  const {
     data,
     refetch: refetchPlayer,
     loading: loadingPlayer,
