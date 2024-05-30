@@ -4,8 +4,6 @@ import TeamCard from "./components/TeamCard";
 import michael from "./assets/team/mihai.jpg";
 import razvan from "./assets/team/razvan.jpg";
 import teki from "./assets/team/teki.jpg";
-import gino from "./assets/team/gino.jpg";
-import fatjon from "./assets/team/fatjon.jpg";
 import lorena from "./assets/team/lorena.jpg";
 import aldi from "./assets/team/aldi.jpg";
 import gazmend from "./assets/team/gazmend.jpg";
@@ -17,6 +15,7 @@ import cristian from "./assets/team/cristian.jpg";
 import soni from "./assets/team/soni.jpeg";
 import samuel from "./assets/team/samuel.jpeg";
 import arben from "./assets/team/arben.jpg";
+import jeff from "./assets/team/jeff.jpg";
 
 import { useState } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -67,6 +66,7 @@ const OurTeam = () => {
       
                     “When the wind blows, some people build walls, others build windmills” - Gazmend.`,
     },
+   
     {
       id: "toni",
       name: "Renato Toni",
@@ -133,6 +133,14 @@ const OurTeam = () => {
             I keep sharpening my skills, learn new stuff and
             update my self to the latest Technologies.`,
     },
+     {
+      id: "jeff",
+      name: "Jeff Nowak",
+      position: "Advisor, Founder of Maven Capital",
+      photo: jeff,
+      link: "https://www.linkedin.com/in/redheadjeff/",
+      content: `Software engineer with over a decade of experience in AI, IoT, and Web3, Jeff offers founders strategic advisory and GTM expertise. He has worked with top blockchain projects including Filecoin, IPFS, R3, Polygon, KCC, Telos, and more, with a focus on collaborative innovation that results in mass adoption.`,
+    },
     {
       id: "soni",
       name: "Soni Seli",
@@ -172,10 +180,9 @@ const OurTeam = () => {
     },
   ];
 
-useEffect(() => {
-window.scrollTo(0,0)
-}, [])
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="container-fluid our-team my-5 px-0" id="ourteam">

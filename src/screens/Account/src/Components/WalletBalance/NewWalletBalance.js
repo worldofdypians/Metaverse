@@ -270,6 +270,7 @@ const NewWalletBalance = ({
   openedCoreChests,
   openedVictionChests,
   openedSeiChests,
+  userRankRewards,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -1787,6 +1788,7 @@ const NewWalletBalance = ({
                           Number(userRank2) +
                           Number(genesisRank2) +
                           Number(treasureRewardMoney) +
+                          Number(userRankRewards) +
                           Number(skaleEarnUsd),
                         2
                       )}
