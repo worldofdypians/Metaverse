@@ -753,7 +753,7 @@ function Dashboard({
       const result = await axios.get(
         `https://api3.dyp.finance/api/bundles/count/${address}`
       );
-      const result_formatted = result.data.count; 
+      const result_formatted = result.data.count;
       setbundlesBought(result_formatted);
     }
   };
@@ -1263,8 +1263,15 @@ function Dashboard({
     userDataSkaleMonthly,
   ]);
 
-  let oneJune = new Date("2024-06-01 11:11:00 GMT+02:00"); 
-  let oneJuly = new Date("2024-07-01 11:11:00 GMT+02:00"); 
+  let today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth();
+
+  // Calculate the first day of the next month
+  const nextMonth = (currentMonth + 1) % 12;
+  const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
+  const firstOfNextMonth = new Date(nextYear, nextMonth, 1, 11, 11, 0);
+
 
   const handleSetAvailableTime = (value) => {
     setGoldenPassRemainingTime(value);
@@ -1440,7 +1447,7 @@ function Dashboard({
 
       const expiringTime_Date_formatted = new Date(expiringTime_Date);
       const expiringTime_Date_formattedv1 = new Date(expiringTime_Datev1);
- 
+
       setdateofBundle(expiringTime_Date_formatted);
       setdateofBundlev1(expiringTime_Date_formattedv1);
 
@@ -1471,7 +1478,6 @@ function Dashboard({
       // setlastDayofBundleMilliseconds(expiringTime_miliseconds);
     }
   };
-
 
   const checkBundleDates = async () => {
     //you can check how many bundles the user has bought
@@ -1531,10 +1537,10 @@ function Dashboard({
         //     Number(additional_remaining_time_timestamp * 1000);
 
         setcountdown700(
-          today < oneJune? oneJune.getTime() : oneJuly.getTime()
+          firstOfNextMonth.getTime()
         );
         handleSetAvailableTime(
-          today < oneJune? oneJune.getTime() : oneJuly.getTime()
+          firstOfNextMonth.getTime()
         );
 
         // }
@@ -1559,10 +1565,10 @@ function Dashboard({
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
         setcountdown700(
-          today < oneJune? oneJune.getTime() : oneJuly.getTime()
+          firstOfNextMonth.getTime()
         );
         handleSetAvailableTime(
-          today < oneJune? oneJune.getTime() : oneJuly.getTime()
+          firstOfNextMonth.getTime()
         );
 
         // }
@@ -1615,10 +1621,10 @@ function Dashboard({
           today.getFullYear() === finalDateofBundleFormatted.getFullYear()
         ) {
           setcountdown700(
-            today < oneJune? oneJune.getTime() : oneJuly.getTime()
+            firstOfNextMonth.getTime()
           );
           handleSetAvailableTime(
-            today < oneJune? oneJune.getTime() : oneJuly.getTime()
+            firstOfNextMonth.getTime()
           );
 
           // if (
@@ -1671,10 +1677,10 @@ function Dashboard({
 
         if (today < finalDateofBundle && bundlesBought !== 0) {
           setcountdown700(
-            today < oneJune? oneJune.getTime() : oneJuly.getTime()
+            firstOfNextMonth.getTime()
           );
           handleSetAvailableTime(
-            today < oneJune? oneJune.getTime() : oneJuly.getTime()
+            firstOfNextMonth.getTime()
           );
         } else if (today > finalDateofBundle && bundlesBought > 0) {
           setcountdown700();
@@ -1698,10 +1704,10 @@ function Dashboard({
             handleSetAvailableTime(finalDateofBundle);
           } else {
             setcountdown700(
-              today < oneJune? oneJune.getTime() : oneJuly.getTime()
+              firstOfNextMonth.getTime()
             );
             handleSetAvailableTime(
-              today < oneJune? oneJune.getTime() : oneJuly.getTime()
+              firstOfNextMonth.getTime()
             );
           }
         } else if (today > finalDateofBundle && bundlesBought > 0) {
@@ -1712,13 +1718,12 @@ function Dashboard({
     } else if (today_date > 25) {
       const finalDateofBundle =
         dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
- 
       if (today_date < finalDateofBundle) {
         setcountdown700(
-          today < oneJune? oneJune.getTime() : oneJuly.getTime()
+          firstOfNextMonth.getTime()
         );
         handleSetAvailableTime(
-          today < oneJune? oneJune.getTime() : oneJuly.getTime()
+          firstOfNextMonth.getTime()
         );
       } else {
         setcountdown700();
@@ -2148,7 +2153,7 @@ function Dashboard({
         console.error(e);
       });
 
-      const result2 = await axios
+    const result2 = await axios
       .get(
         `https://api.worldofdypians.com/api/airdrop-alliance/task5/${wallet}`
       )
@@ -2243,7 +2248,8 @@ function Dashboard({
               ? 0
               : userPosition === 10
               ? Number(monthlyPrizes[9]) + Number(monthlyPrizesGolden[9])
-              : Number(monthlyPrizes[userPosition]) + Number(monthlyPrizesGolden[userPosition])
+              : Number(monthlyPrizes[userPosition]) +
+                Number(monthlyPrizesGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2268,14 +2274,12 @@ function Dashboard({
 
         if (testArray.length > 0 && testArray2.length > 0) {
           setActivePlayerMonthly(true);
-        }
-
-        if (testArray.length > 0 && testArray2.length === 0) {
+          setUserDataMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
           setActivePlayerMonthly(false);
           setUserDataMonthly(...testArray);
         }
-      }
-      if (testArray.length > 0) {
+      } else if (testArray.length > 0) {
         setActivePlayerMonthly(false);
         setUserDataMonthly(...testArray);
       }
@@ -2461,7 +2465,8 @@ function Dashboard({
               ? 0
               : userPosition === 10
               ? Number(dailyPrizes[9]) + Number(dailyPrizesGolden[9])
-              : Number(dailyPrizes[userPosition])+ Number(dailyPrizesGolden[userPosition])
+              : Number(dailyPrizes[userPosition]) +
+                Number(dailyPrizesGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2537,7 +2542,8 @@ function Dashboard({
               ? 0
               : userPosition === 10
               ? Number(weeklyPrizes[9]) + Number(weeklyPrizesGolden[9])
-              : Number(weeklyPrizes[userPosition]) + Number(weeklyPrizesGolden[userPosition])
+              : Number(weeklyPrizes[userPosition]) +
+                Number(weeklyPrizesGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2559,13 +2565,12 @@ function Dashboard({
 
         if (testArray.length > 0 && testArray2.length > 0) {
           setActivePlayerWeekly(true);
-        }
-        if (testArray.length > 0 && testArray2.length === 0) {
+          setUserDataWeekly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
           setActivePlayerWeekly(false);
           setUserDataWeekly(...testArray);
         }
-      }
-      if (testArray.length > 0) {
+      } else if (testArray.length > 0) {
         setActivePlayerWeekly(false);
         setUserDataWeekly(...testArray);
       }
@@ -4266,7 +4271,7 @@ function Dashboard({
   useEffect(() => {
     if (coinbase) {
       getRankData();
-      getBundles(coinbase)
+      getBundles(coinbase);
       setlastDay();
     }
   }, [coinbase, bundlesBought]);
@@ -4635,15 +4640,13 @@ function Dashboard({
     }
   }, [email, count]);
 
-  // useEffect(() => {
-  //   if (window.ethereum && !window.coin98) {
-  //     if (window.ethereum.isConnected() === true) {
-  //       localStorage.setItem("logout", "false");
-  //     } else {
-  //       localStorage.setItem("logout", "true");
-  //     }
-  //   }
-  // }, [coinbase, chainId]);
+  useEffect(() => {
+    if (bundlesBought === 4) {
+      handleSetAvailableTime(
+        firstOfNextMonth.getTime()
+      );
+    }
+  }, [bundlesBought]);
 
   const onOpenLeaderboard = () => {
     setLeaderboard(true);
@@ -4882,6 +4885,7 @@ function Dashboard({
                           setgetPremiumPopup(true);
                         }}
                         cawsPremiumRewards={cawsPremiumRewards}
+                        userRankRewards={userRankRewards}
                       />
                     </div>
                     <WalletBalance
@@ -5267,6 +5271,7 @@ function Dashboard({
                             kittyDashRecords={kittyDashRecords}
                             userRankRewards={userRankRewards}
                             cawsPremiumRewards={cawsPremiumRewards}
+                            genesisRank2={genesisRank2}
                           />
                         </div>
                       </OutsideClickHandler>
