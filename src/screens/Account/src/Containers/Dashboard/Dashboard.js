@@ -2242,8 +2242,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? monthlyPrizes[9] + monthlyPrizesGolden[9]
-              : monthlyPrizes[userPosition] + monthlyPrizesGolden[userPosition]
+              ? Number(monthlyPrizes[9]) + Number(monthlyPrizesGolden[9])
+              : Number(monthlyPrizes[userPosition]) + Number(monthlyPrizesGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2252,8 +2252,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? monthlyPrizes[9]
-              : monthlyPrizes[userPosition]
+              ? Number(monthlyPrizes[9])
+              : Number(monthlyPrizes[userPosition])
             : 0
         );
       }
@@ -2460,8 +2460,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? dailyPrizes[9] + dailyPrizesGolden[9]
-              : dailyPrizes[userPosition] + dailyPrizesGolden[userPosition]
+              ? Number(dailyPrizes[9]) + Number(dailyPrizesGolden[9])
+              : Number(dailyPrizes[userPosition])+ Number(dailyPrizesGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2470,8 +2470,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? dailyPrizes[9]
-              : dailyPrizes[userPosition]
+              ? Number(dailyPrizes[9])
+              : Number(dailyPrizes[userPosition])
             : 0
         );
       }
@@ -2536,8 +2536,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? weeklyPrizes[9] + weeklyPrizesGolden[9]
-              : weeklyPrizes[userPosition] + weeklyPrizesGolden[userPosition]
+              ? Number(weeklyPrizes[9]) + Number(weeklyPrizesGolden[9])
+              : Number(weeklyPrizes[userPosition]) + Number(weeklyPrizesGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2546,8 +2546,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? weeklyPrizes[9]
-              : weeklyPrizes[userPosition]
+              ? Number(weeklyPrizes[9])
+              : Number(weeklyPrizes[userPosition])
             : 0
         );
       }
