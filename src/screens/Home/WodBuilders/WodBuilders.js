@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import "./_wodbuilders.scss";
 import { useState } from "react";
 import useWindowSize from "../../../hooks/useWindowSize";
+import playground from "./assets/playground.svg";
+
 const WodBuilders = () => {
   const [slice, setSlice] = useState(2);
   const windowSize = useWindowSize();
@@ -108,11 +110,16 @@ const WodBuilders = () => {
       name: "SEI",
       icon: "seiLogo",
       banner: "seiBanner.webp",
-      link: 'https://x.com/worldofdypians/status/1795177907821617607'
+      link: "https://x.com/worldofdypians/status/1795177907821617607",
     },
     {
       name: "Midle",
       icon: "midle",
+      banner: "kucoinBanner.png",
+    },
+    {
+      name: "Playground",
+      icon: "playground",
       banner: "kucoinBanner.png",
     },
   ];
@@ -147,7 +154,11 @@ const WodBuilders = () => {
                 alt=""
               />
               <div className="d-flex align-items-center gap-2">
-                <img src={require(`./assets/${item.icon}.svg`)} alt="" />
+                {item.icon === "playground" ? (
+                  <img src={playground} alt="" />
+                ) : (
+                  <img src={require(`./assets/${item.icon}.svg`)} alt="" />
+                )}
                 <span className="builder-title mb-0">{item.name}</span>
               </div>
             </a>
@@ -188,7 +199,12 @@ const WodBuilders = () => {
               <div className="builders-second-half">
                 {builders.map((item, index) => (
                   <div key={index} className="d-flex align-items-center gap-2">
-                    <img src={require(`./assets/${item.icon}.svg`)} alt="" />
+                    {item.icon === "playground" ? (
+                      <img src={playground} alt="" />
+                    ) : (
+                      <img src={require(`./assets/${item.icon}.svg`)} alt="" />
+                    )}
+
                     <span
                       className="builder-title mb-0"
                       style={{ fontWeight: "400" }}
