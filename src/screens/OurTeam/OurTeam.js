@@ -16,6 +16,7 @@ import soni from "./assets/team/soni.jpeg";
 import samuel from "./assets/team/samuel.jpeg";
 import arben from "./assets/team/arben.jpg";
 import jeff from "./assets/team/jeff.jpg";
+import alex from "./assets/team/alex.png";
 
 import { useState } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -133,13 +134,21 @@ const OurTeam = () => {
             I keep sharpening my skills, learn new stuff and
             update my self to the latest Technologies.`,
     },
+    {
+      id: "alex",
+      name: "Alex Fatuliaj",
+      position: "Advisor",
+      photo: alex,
+      link: "https://www.linkedin.com/in/afatuliaj/",
+      content: `Co-Founder of Simplicity Group, a tokenomics and research consultancy with a VC arm. Alex is a specialist in behaviour economics, guiding projects from ideation to a launch.`,
+    },
      {
       id: "jeff",
       name: "Jeff Nowak",
-      position: "Advisor, Founder of Maven Capital",
+      position: "Advisor",
       photo: jeff,
       link: "https://www.linkedin.com/in/redheadjeff/",
-      content: `Software engineer with over a decade of experience in AI, IoT, and Web3, Jeff offers founders strategic advisory and GTM expertise. He has worked with top blockchain projects including Filecoin, IPFS, R3, Polygon, KCC, Telos, and more, with a focus on collaborative innovation that results in mass adoption.`,
+      content: `Jeff, the Founder of Maven Capital, is a seasoned software engineer boasting over a decade of expertise in cutting-edge technologies such as AI, IoT, and Web3. Leveraging his extensive experience, Jeff provides founders with invaluable strategic advisory services and unparalleled expertise in Go-To-Market (GTM) strategies. His impressive portfolio includes collaborations with leading blockchain projects like Filecoin, IPFS, R3, Polygon, KCC, Telos, among others. Jeff is dedicated to fostering collaborative innovation aimed at achieving widespread adoption within the industry.`,
     },
     {
       id: "soni",
