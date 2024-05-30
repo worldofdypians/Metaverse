@@ -147,7 +147,7 @@ const OurTeam = () => {
       name: "Jeff Nowak",
       position: "Advisor",
       photo: jeff,
-      link: "https://www.linkedin.com/in/redheadjeff/",
+      link: "",
       content: `Jeff, the Founder of Maven Capital, is a seasoned software engineer boasting over a decade of expertise in cutting-edge technologies such as AI, IoT, and Web3. Leveraging his extensive experience, Jeff provides founders with invaluable strategic advisory services and unparalleled expertise in Go-To-Market (GTM) strategies. His impressive portfolio includes collaborations with leading blockchain projects like Filecoin, IPFS, R3, Polygon, KCC, Telos, among others. Jeff is dedicated to fostering collaborative innovation aimed at achieving widespread adoption within the industry.`,
     },
     {
