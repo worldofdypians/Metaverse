@@ -109,11 +109,21 @@ const WodBuilders = () => {
       name: "SEI",
       icon: "seiLogo",
       banner: "seiBanner.webp",
-      link: 'https://x.com/worldofdypians/status/1795177907821617607'
+      link: "https://x.com/worldofdypians/status/1795177907821617607",
     },
     {
       name: "Midle",
       icon: "midle",
+      banner: "kucoinBanner.png",
+    },
+    {
+      name: "Playground",
+      icon: "playground",
+      banner: "kucoinBanner.png",
+    },
+    {
+      name: "Cookie3",
+      icon: "cookie3",
       banner: "kucoinBanner.png",
     },
   ];
@@ -149,6 +159,7 @@ const WodBuilders = () => {
               />
               <div className="d-flex align-items-center gap-2">
                 <img src={require(`./assets/${item.icon}.svg`)} alt="" />
+
                 <span className="builder-title mb-0">{item.name}</span>
               </div>
             </a>
@@ -190,6 +201,7 @@ const WodBuilders = () => {
                 {builders.map((item, index) => (
                   <div key={index} className="d-flex align-items-center gap-2">
                     <img src={require(`./assets/${item.icon}.svg`)} alt="" />
+
                     <span
                       className="builder-title mb-0"
                       style={{ fontWeight: "400" }}
