@@ -10,7 +10,7 @@ const TimepieceHero = () => {
               <h6 className="timepiece-title font-organetto d-flex flex-column flex-lg-row gap-2">
                 Caws Timepiece
                 <span
-                  className="timepiece-title"
+                  className="timepiece-title font-organetto"
                   style={{ color: "rgb(140, 86, 255)" }}
                 >
                   Collection
