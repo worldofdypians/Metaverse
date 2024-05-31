@@ -343,7 +343,7 @@ const NewLeaderBoard = ({
       setisActive(false);
     } else setisActive(true);
   }, [availableTime]);
-console.log(availableTime)
+
   useEffect(() => {
     getBundles();
   }, [address]);
@@ -661,7 +661,7 @@ console.log(availableTime)
               )}
               {optionText !== "genesis" ? (
                 windowSize.width > 1100 ? (
-                  <div className="position-relative d-flex align-items-center justify-content-between">
+                  <div className="position-relative d-flex align-items-start justify-content-between">
                     {allData
                       .slice(
                         windowSize.width < 786 && optionText2 === "skale"
