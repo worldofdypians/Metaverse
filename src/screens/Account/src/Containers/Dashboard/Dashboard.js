@@ -2145,13 +2145,7 @@ function Dashboard({
   }
 
   const handleFirstTask = async (wallet) => {
-    const result = await axios
-      .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task3/${wallet}`
-      )
-      .catch((e) => {
-        console.error(e);
-      });
+   
 
     const result2 = await axios
       .get(
@@ -2161,8 +2155,8 @@ function Dashboard({
         console.error(e);
       });
 
-    if (result && result.status === 200 && result2 && result2.status === 200) {
-      console.log(result.data.result);
+    if (result2 && result2.status === 200) {
+      console.log(result2.data.result);
       setTimeout(() => {
         if (isonlink) {
           window.location.reload();
