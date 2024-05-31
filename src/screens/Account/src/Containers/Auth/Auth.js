@@ -76,13 +76,7 @@ function Auth({ isConnected, coinbase }) {
   // }
 
   const handleFirstTask = async (wallet) => {
-    const result = await axios
-      .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task3/${wallet}`
-      )
-      .catch((e) => {
-        console.error(e);
-      });
+     
       const result2 = await axios
       .get(
         `https://api.worldofdypians.com/api/airdrop-alliance/task5/${wallet}`
@@ -90,8 +84,8 @@ function Auth({ isConnected, coinbase }) {
       .catch((e) => {
         console.error(e);
       });
-    if (result && result.status === 200 && result2 && result2.status === 200) {
-      console.log(result);
+    if (result2 && result2.status === 200) {
+      console.log(result2);
     }
   };
 

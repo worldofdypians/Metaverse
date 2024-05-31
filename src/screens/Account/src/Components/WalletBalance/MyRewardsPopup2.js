@@ -72,7 +72,7 @@ const MyRewardsPopupNew = ({
   openedVictionChests,
   allCoreChests,
   allVictionChests,
-  allSeiChests,
+  allSeiChests,genesisRank2
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -138,26 +138,7 @@ const MyRewardsPopupNew = ({
     }
   };
 
-  const fetchMonthlyGenesisRecordsAroundPlayer = async () => {
-    const data = {
-      StatisticName: "GenesisLandRewards",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    if (userId) {
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
-      const userPosition = testArray[0].statValue;
-      setgenesisData(userPosition);
-    }
-  };
-
+ 
   const fetchConfluxUSDRewards = async (addr) => {
     await axios
       .get(`https://api.worldofdypians.com/api/conflux_rewards/${addr}`)
@@ -544,9 +525,6 @@ const MyRewardsPopupNew = ({
     }
   };
 
-  useEffect(() => {
-    fetchMonthlyGenesisRecordsAroundPlayer();
-  }, [userId, bundlesBought]);
 
   useEffect(() => {
     getTreasureChestsInfo();
@@ -602,7 +580,7 @@ const MyRewardsPopupNew = ({
                 Number(gateRewardsUSD) +
                 Number(confluxRewardsUSD) +
                 Number(dogeRewardsUSD) +
-                Number(cmcRewardsUSD)+
+                Number(cmcRewardsUSD) +
                 Number(dypiusPremiumEarnUsd),
               2
             )}
@@ -703,8 +681,9 @@ const MyRewardsPopupNew = ({
                       Number(dailyplayerData) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
-                      Number(genesisData) +
+                      Number(genesisRank2) +
                       Number(userRankRewards) +
+                      Number(userSocialRewardsCached) +
                       Number(cawsPremiumRewards),
                     2
                   )}
@@ -875,7 +854,7 @@ const MyRewardsPopupNew = ({
                     Number(dailyplayerData) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
-                      Number(genesisData),
+                      Number(genesisRank2),
                     2
                   )}
             </span>
@@ -1227,7 +1206,7 @@ const MyRewardsPopupNew = ({
                   $
                   {previousRewards
                     ? getFormattedNumber(gemRewards, 2)
-                    : getFormattedNumber(genesisData, 2)}
+                    : getFormattedNumber(genesisRank2, 2)}
                 </span>
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
