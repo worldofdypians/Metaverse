@@ -76,7 +76,7 @@ const LandHero = () => {
           <div className="col-12 ps-2 ps-lg-0">
             <h6 className="land-hero-title font-organetto d-flex flex-column flex-lg-row gap-2">
               Genesis Land{" "}
-              <h6 className="land-hero-title" style={{ color: "#8c56ff" }}>
+              <h6 className="land-hero-title font-organetto" style={{ color: "#8c56ff" }}>
                 Benefits
               </h6>
             </h6>
