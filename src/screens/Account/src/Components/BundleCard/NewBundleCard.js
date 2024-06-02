@@ -1244,9 +1244,9 @@ const NewBundleCard = ({
 
   return (
     <>
-      <div className="row m-0 align-items-center gap-4 gap-lg-0">
-        <div className="col-12 col-lg-7 custom-height px-0 px-lg-2">
-          <div className="nft-outer-wrapper new-bundle-wrapper py-3 px-3 py-lg-4 px-lg-5 custom-height position-relative">
+      <div className="row m-0 flex-column align-items-center gap-4 gap-lg-3">
+        <div className="col-12   px-0 px-lg-2">
+          <div className="nft-outer-wrapper new-bundle-wrapper py-3 px-3 py-lg-4 px-lg-5  position-relative">
             <img
               src={require(`../../../../Marketplace/assets/${
                 windowSize.width > 786
@@ -1298,26 +1298,23 @@ const NewBundleCard = ({
             </div>
           </div>
         </div>
-        <div className="col-12 col-lg-5 custom-height px-0 px-lg-2">
-          <div className="nft-outer-wrapper new-bundle-wrapper py-3 px-3 py-lg-4 px-lg-5 custom-height">
-            <div className="d-flex flex-column custom-height justify-content-start gap-3">
-              {packageData.title === "Critical Hit" ? (
+        <div className="col-12   px-0 px-lg-2">
+          <div className="nft-outer-wrapper new-bundle-wrapper py-3 px-3 py-lg-4 px-lg-5 ">
+            <div className="d-flex flex-column  justify-content-start gap-3">
+            <h6 className="new-bundle-title purchase-bundle-title">
+                    Purchase
+                  </h6>
+            <div className="d-flex align-items-center justify-content-between">
+            {packageData.title === "Critical Hit" ? (
                 <div
-                  className="d-flex flex-column align-items-center gap-4 position-relative"
-                  style={{ top: "30px" }}
+                  className="d-flex  align-items-center gap-4 position-relative w-100 justify-content-center"
                 >
-                  <div
-                    className="position-relative package-blur"
-                    style={{ pointerEvents: "none" }}
-                  >
-                    <div className="first-box-blur d-flex align-items-end justify-content-center"></div>
-                    <div className="second-box-blur"></div>
+              
                     <img
                       src={require("./assets/newGenesis.webp")}
+                      style={{height: "150px", width: "150px", borderRadius: "12px"}}
                       alt=""
-                      className="blur-img"
                     />
-                  </div>
                   <NavLink
                     className="btn purple-pill"
                     to="/marketplace/land"
@@ -1328,9 +1325,7 @@ const NewBundleCard = ({
                 </div>
               ) : (
                 <>
-                  <h6 className="new-bundle-title purchase-bundle-title">
-                    Purchase
-                  </h6>
+                 
                   <div className="d-flex flex-column gap-2">
                     <div className="purchase-wrapper p-3">
                       <span className="purchase-price-title">Event price</span>
@@ -1709,6 +1704,7 @@ const NewBundleCard = ({
                     </div>
                   )}
               </div>
+            </div>
             </div>
           </div>
         </div>

@@ -73,6 +73,7 @@ import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
 import OurTeam from "./screens/OurTeam/OurTeam.js";
+import NewEvents from "./screens/Marketplace/NewEvents.js";
 
 function App() {
   const CHAINLIST = {
@@ -3453,7 +3454,7 @@ function App() {
               exact
               path="/marketplace/events/:eventId"
               element={
-                <MarketEvents
+                <NewEvents
                   tabState={"live"}
                   isConnected={isConnected}
                   handleConnect={handleShowWalletModal}
