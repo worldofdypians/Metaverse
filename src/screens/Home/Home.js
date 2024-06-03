@@ -46,65 +46,10 @@ const Home = ({
   coinbase,
   ethTokenData,
   dyptokenDatabnb,
-  idyptokenDatabnb,dyptokenDatabnb_old
+  idyptokenDatabnb,
+  dyptokenDatabnb_old,
 }) => {
-  const avaxPopupInfo = {
-    title: "Avalanche",
-    img: avalanchePopup,
-    state: "avax",
-  };
-  const confluxPopupInfo = {
-    title: "Conflux",
-    img: confluxPopup,
-    state: "conflux",
-  };
-
-  const gatePopupInfo = {
-    title: "Gate",
-    img: gatePopup,
-    state: "gate",
-  };
-
-  const coin98PopupInfo = {
-    title: "Coin98",
-    img: coin98Popup,
-    state: "coin98",
-  };
-  const basePopupInfo = {
-    title: "Base ",
-    img: basePopup,
-    state: "base",
-  };
-  const coingeckoPopupInfo = {
-    title: "CoinGecko",
-    img: coingeckoPopup,
-    state: "coingecko",
-  };
-
-  const skalePopupInfo = {
-    title: "SKALE",
-    img: skalePopup,
-    state: "skale",
-  };
-  const entryCampaignPopup = {
-    title: "SKALE",
-    img: dypiansDiscoveryQuest,
-    state: "skale",
-  };
-
-
-
-  const treasureHuntPopupInfo = {
-    title: "Treasure Hunt",
-    img: dypiusPopup,
-    state: "dypius",
-  };
-  const dypiusPopupInfo = {
-    title: "Treasure Hunt",
-    img: dypiusPopup,
-    state: "dyp",
-  };
-
+ 
   const cmcPopupInfo = {
     title: "Treasure Hunt",
     img: cmcTreasureHuntPopup,

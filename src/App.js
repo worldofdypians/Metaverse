@@ -1328,6 +1328,7 @@ function App() {
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress &&
       isConnected &&
+      coinbase &&
       coinbase.toLowerCase() ===
         data.getPlayer.wallet.publicAddress.toLowerCase()
     ) {
@@ -1348,6 +1349,7 @@ function App() {
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress &&
       isConnected &&
+      coinbase &&
       coinbase.toLowerCase() !==
         data.getPlayer.wallet.publicAddress.toLowerCase()
     ) {
@@ -3813,12 +3815,12 @@ function App() {
         )}
       </div>
 
-      {!location.pathname.includes("account") &&
+      {/* {!location.pathname.includes("account") &&
         !location.pathname.includes("auth") &&
         !location.pathname.includes("explorer") &&
         !location.pathname.includes("bnbchain-alliance-program") && (
           <ChestFlyout />
-        )}
+        )} */}
       {domainPopup && (
         <DomainModal
           onClose={() => setDomainPopup(false)}
