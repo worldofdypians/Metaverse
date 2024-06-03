@@ -518,7 +518,7 @@ const Header = ({
             </NavLink>
             <div
               className={
-                "nav-anchor font-poppins header-dropdown-link position-relative d-flex align-items-center gap-2"
+                "nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2"
               }
               style={{ cursor: "pointer" }}
               onMouseEnter={() => handleDropdown("wod")}
@@ -573,15 +573,15 @@ const Header = ({
                 </NavLink>
               </div>
             </div>
-            {/* <a href="#marketplace" className="nav-anchor font-poppins">Marketplace</a> */}
-            {/* <div className="nav-anchor font-poppins">Roadmap</div> */}
+            {/* <a href="#marketplace" className="nav-anchor">Marketplace</a> */}
+            {/* <div className="nav-anchor">Roadmap</div> */}
 
             <NavLink
               to="/game"
               className={({ isActive }) =>
                 isActive
-                  ? "nav-anchor font-poppins activenavlink"
-                  : "nav-anchor font-poppins"
+                  ? "nav-anchor activenavlink"
+                  : "nav-anchor"
               }
             >
               Game
@@ -590,15 +590,15 @@ const Header = ({
               to="/marketplace"
               className={({ isActive }) =>
                 isActive
-                  ? "nav-anchor font-poppins activenavlink"
-                  : "nav-anchor font-poppins"
+                  ? "nav-anchor activenavlink"
+                  : "nav-anchor"
               }
             >
               Marketplace
             </NavLink>
             <div
               className={
-                "nav-anchor font-poppins header-dropdown-link position-relative d-flex align-items-center gap-2"
+                "nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2"
               }
               style={{ cursor: "pointer" }}
               onMouseEnter={() => handleDropdown("community")}
@@ -637,7 +637,7 @@ const Header = ({
             </div>
             <div
               className={
-                "nav-anchor font-poppins header-dropdown-link position-relative d-flex align-items-center gap-2"
+                "nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2"
               }
               style={{ cursor: "pointer" }}
               onMouseEnter={() => handleDropdown("about")}

@@ -65,7 +65,7 @@ a {
 
 body {
   background: #080b2a;
-  font-family: "Poppins", sans-serif !important;
+  font-family: "Montserrat", sans-serif !important;
 
   .font-poppins {
     font-family: "Poppins", sans-serif !important;
@@ -292,7 +292,8 @@ body {
       calc(100% - 19px) 100%,
       0 100%
     );
-    background: linear-gradient(89.7deg, #7b2eb0 0.23%, #142d8e 99.72%);
+    background: linear-gradient(90deg, #7B2EB0 0.23%, #2647C9 99.72%);
+filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.25));
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
@@ -528,7 +529,7 @@ body {
   .multiplayer-linear-border {
     position: relative;
     padding: 2px;
-    background: linear-gradient(89.7deg, #7b2eb0 0.23%, #142d8e 99.72%);
+    background: linear-gradient(90deg, #7B2EB0 0.23%, #2647C9 99.72%);;
     border-radius: 8px;
     clip-path: polygon(
       0 20px,

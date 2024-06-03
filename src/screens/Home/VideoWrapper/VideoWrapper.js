@@ -28,6 +28,7 @@ import Slider from "react-slick";
 import useWindowSize from "../../../hooks/useWindowSize";
 import NewHomeLeaderboard from "../../../components/LeaderBoard/NewHomeLeaderboard";
 import GlobalLeaderboard from "../../../components/LeaderBoard/GlobalLeaderboard";
+import wodToken from "../../../assets/wodAssets/wodToken.svg";
 
 const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const [modal, setModal] = useState(false);
@@ -49,146 +50,30 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const reqmodal = document.querySelector("#reqmodal");
   const html = document.querySelector("html");
 
-  const gotoDownload = () => {
-    window.location.href =
-      "https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp";
-  };
-
-  let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
-
   const dummyBetaPassData2 = [
     {
-      link: '/token',
+      link: "/token",
       title: "TOKEN",
-      chain: "SKALE Nebula Hub",
-      linkState: "skale",
-      rewards: "SKL",
-      status: "Live",
-      eventStatus: "Live",
-      id: "event11",
-      eventType: "Explore & Mine",
-      date: "December 22, 2023",
-      logo: skaleLogo,
-      totalRewards: "$20,000 in SKL Rewards",
-      rewardsAmount: "$20,000",
-      rewardsCurrency: "SKL Rewards",
-      minRewards: "1",
-      maxRewards: "100",
-      minPoints: "5,000",
-      maxPoints: "50,000",
-      learnMore:
-        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
-      popupInfo: {
-        title: "SKALE",
-        chain: "SKALE Nebula Hub",
-        linkState: "doge",
-        rewards: "SKL",
-        status: "Live",
-        id: "event11",
-        eventStatus: "Live",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in SKL Rewards",
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
-        eventDate: "December 22, 2023",
-      },
+      desc: 'Power your gameplay with WOD',
+      class: 'tokenClass',
     },
     {
-      link: '/earn',
-      title: "EARN",
-      logo: coreLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in CORE Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "XXX XX, XXXX",
-      rewardsAmount: "$20,000",
-      rewardsCurrency: "CORE Rewards",
-
-      backgroundImage: coreBg,
-      popupInfo: {
-        title: "CORE",
-        chain: "CORE Chain",
-        linkState: "core",
-        rewards: "CORE",
-        status: "Coming Soon",
-        id: "event12",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in SEI Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "XXX XX, XXXX",
-      },
+      link: "/earn",
+      title: "Stake",
+      desc: 'Earn rewards by staking WOD tokens',
+      class: 'earnClass',
     },
     {
-      link: '/marketplace/events/treasure-hunt',
+      link: "/marketplace/events/treasure-hunt",
       title: "EVENTS",
-      logo: victionLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in VIC Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "XXX XX, XXXX",
-      rewardsAmount: "$20,000",
-      rewardsCurrency: "VIC Rewards",
-
-      backgroundImage: victionBg,
-      popupInfo: {
-        title: "VICTION",
-        chain: "VICTION Chain",
-        linkState: "viction",
-        rewards: "VIC",
-        status: "Coming Soon",
-        id: "event14",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in VIC Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "XXX XX, XXXX",
-      },
+      desc: 'Join exciting in-game events',
+      class: 'eventClass',
     },
     {
-      link: '/',
+      link: "/",
       title: "LEADERBOARD",
-      logo: dypius,
-      eventStatus: "Expired",
-      totalRewards: "300,000 in DYPv2 Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "September xx, 2023",
-      rewardsAmount: "$50,000",
-      rewardsCurrency: "BNB Rewards",
-      // backgroundImage: upcomingDyp,
-      popupInfo: {
-        title: "Dypius",
-        chain: "BNB Chain",
-        linkState: "dypius",
-        rewards: "DYP",
-        status: "Expired",
-        id: "event5",
-        eventType: "Explore & Find",
-        totalRewards: "300,000 in DYPv2 Rewards",
-        // eventDuration: coingeckoLastDay,
-        minRewards: "25",
-        maxRewards: "50",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "Ended",
-      },
+      desc: 'Compete for top player rankings',
+      class: 'leaderboardClass',
     },
   ];
 
@@ -263,13 +148,18 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
       <div className="video-wrapper position-relative">
         {/* <div
           className="row leaderboard-bg gap-4 gap-lg-0"
-          style={{ minHeight: "90vh" }}
+         
         > */}
         <div className="">
           <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center">
+            <h4 className="main-hero-title font-montserrat">
+              The Biggest Metaverse
+              <br />
+              Ever built
+            </h4>
             <div className="d-flex m-0 gap-5 align-items-center justify-content-center">
               <div
-                className="linear-border-download p-0"
+                className="linear-border p-0"
                 style={{
                   width: "fit-content",
                   zIndex: 5,
@@ -277,9 +167,9 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                   textDecoration: "none",
                 }}
               >
-                <div className="opacitywrapper5 download-filled-btn m-0 px-3">
+                <div className="opacitywrapper5 filled-btn m-0 px-3">
                   <a
-                    className="game-event-download d-flex align-items-center gap-2"
+                    className="game-event-download py-1 d-flex align-items-center gap-2"
                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                     target="_blank"
                   >
@@ -297,12 +187,13 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
                 }}
               >
                 <button
-                  className="btn multiplayer-btn px-3 w-100 gap-2"
+                  className="btn multiplayer-btn py-1 px-3 d-flex align-items-center w-100 gap-2 justify-content-center"
                   onClick={() => {
                     setmultiplayerModal(true);
                   }}
                 >
-                  BUY
+                  <img src={wodToken} alt="" />
+                  Buy WoD
                 </button>
               </div>
             </div>
@@ -318,25 +209,29 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
               </div> */}
           </div>
           {windowSize.width < 992 && (
-          
-                <div
-                  className="opacitywrapper position-relative"
-                  style={{ width: "90%" }}
-                >
-                  <Slider {...settings} ref={betaSlider}>
-                    {dummyBetaPassData2.slice(0, 4).map((item, index) => (
-                       <NavLink to={`${item.link}`} onClick={()=>{item.link ==='/' && setModal(true)}}>
-                        <BetaEventCardHome
-                          data={item}
-                          key={index}
-                          isFrontPage={true}
-                        />
-                      </NavLink>
-                    ))}
-                  </Slider>
-                </div>
-            )}
-          <video
+            <div
+              className="opacitywrapper position-relative"
+              style={{ width: "90%" }}
+            >
+              <Slider {...settings} ref={betaSlider}>
+                {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                  <NavLink
+                    to={`${item.link}`}
+                    onClick={() => {
+                      item.link === "/" && setModal(true);
+                    }}
+                  >
+                    <BetaEventCardHome
+                      data={item}
+                      key={index}
+                      isFrontPage={true}
+                    />
+                  </NavLink>
+                ))}
+              </Slider>
+            </div>
+          )}
+          {/* <video
             preload="auto"
             className="d-none d-lg-flex d-xl-flex elementor-video"
             src="https://dypmeta.s3.us-east-2.amazonaws.com/dypius.mov"
@@ -351,7 +246,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
               height: "90vh",
               objectFit: "cover",
             }}
-          ></video>
+          ></video> */}
         </div>
         {/* <div className="col-12 col-lg-4  d-flex align-items-center justify-content-center justify-content-lg-start"> */}
         {/* <GlobalLeaderboard /> */}
@@ -359,10 +254,15 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         {/* </div> */}
         {/* </div> */}
         {windowSize.width > 992 && (
-          <div className="opacitywrapper">
+          <div className="opacitywrapper container-lg">
             <Slider {...settings} ref={betaSlider}>
               {dummyBetaPassData2.slice(0, 4).map((item, index) => (
-                <NavLink to={`${item.link}`} onClick={()=>{item.link ==='/' && setModal(true)}}>
+                <NavLink
+                  to={`${item.link}`}
+                  onClick={() => {
+                    item.link === "/" && setModal(true);
+                  }}
+                >
                   <BetaEventCardHome
                     data={item}
                     key={index}
@@ -379,7 +279,6 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         <OutsideClickHandler onOutsideClick={() => setModal(false)}>
           <div className="system-requirements-modal p-3" id="reqmodal">
             <div className="d-flex align-items-start justify-content-end">
-             
               <img
                 src={xMark}
                 alt="x mark"
@@ -390,7 +289,6 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
             </div>
 
             <NewHomeLeaderboard />
-            
           </div>
         </OutsideClickHandler>
       ) : (
