@@ -73,6 +73,15 @@ import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
 import OurTeam from "./screens/OurTeam/OurTeam.js";
+import Token from "./screens/Wod/Token/Token.js";
+import Bridge from "./screens/Wod/Bridge/Bridge.js";
+import Earn from "./screens/Wod/Earn/Earn.js";
+import Buy from "./screens/Wod/Buy/Buy.js";
+import Governance from "./screens/Community/Governance/Governance.js";
+import GameUpdates from "./screens/Community/GameUpdates/GameUpdates.js";
+import Brand from "./screens/About/Brand/Brand.js";
+import Partners from "./screens/About/Partners/Partners.js";
+import Tokenomics from "./screens/About/Tokenomics/Tokenomics.js";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 
@@ -3407,212 +3416,221 @@ function App() {
                   />
                 }
               /> */}
-          <Route
-            exact
-            path="/marketplace/beta-pass/coingecko/:terms?"
-            element={
-              <BetaPassNFT
-                type={"coingecko"}
-                ethTokenData={ethTokenData}
-                dypTokenData={dypTokenData}
-                cawsArray={allCawsForTimepieceMint}
-                mintloading={mintloading}
-                isConnected={isConnected}
-                chainId={chainId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                totalCoingeckoNft={totalCoingeckoNft}
-                myNFTSCoingecko={MyNFTSCoingecko}
-                myGateNfts={myGateNfts}
-                totalGateNft={totalGateNft}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                totalConfluxNft={totalConfluxNft}
-                myConfluxNfts={myConfluxNfts}
-                timepieceMetadata={timepieceMetadata}
-                handleConnect={handleShowWalletModal}
-                listedNFTS={listedNFTS}
-                coinbase={coinbase}
-                timepieceBought={timepieceBought}
-                handleRefreshListing={handleRefreshList}
-                nftCount={nftCount}
-                handleSwitchNetwork={handleSwitchNetwork}
-                success={success}
-                showWalletConnect={() => {
-                  setwalletModal(true);
-                }}
-              />
-            }
-          />
-          <Route
-            exact
-            path="/marketplace/beta-pass/base"
-            element={
-              <BetaPassNFT
-                type={"base"}
-                ethTokenData={ethTokenData}
-                dypTokenData={dypTokenData}
-                cawsArray={allCawsForTimepieceMint}
-                mintloading={mintloading}
-                isConnected={isConnected}
-                chainId={chainId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                totalCoingeckoNft={totalCoingeckoNft}
-                myNFTSCoingecko={MyNFTSCoingecko}
-                myGateNfts={myGateNfts}
-                totalGateNft={totalGateNft}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                totalConfluxNft={totalConfluxNft}
-                myConfluxNfts={myConfluxNfts}
-                timepieceMetadata={timepieceMetadata}
-                handleConnect={handleShowWalletModal}
-                listedNFTS={listedNFTS}
-                coinbase={coinbase}
-                timepieceBought={timepieceBought}
-                handleRefreshListing={handleRefreshList}
-                nftCount={nftCount}
-                handleSwitchNetwork={handleSwitchNetwork}
-              />
-            }
-          />
-          <Route
-            exact
-            path="/marketplace/events/:eventId"
-            element={
-              <MarketEvents
-                tabState={"live"}
-                isConnected={isConnected}
-                handleConnect={handleShowWalletModal}
-                listedNFTS={listedNFTS}
-                account={coinbase?.toLowerCase()}
-                chainId={chainId}
-                dyptokenDatabnb={dyptokenDatabnb}
-                dyptokenDatabnb_old={dyptokenDatabnb_old}
-                idyptokenDatabnb={idyptokenDatabnb}
-                handleAvailableTime={(value) => {
-                  setavailTime(value);
-                }}
-                ethTokenData={ethTokenData}
-                dyptokenData_old={dypTokenData_old}
-                dogePrice={dogePrice}
-              />
-            }
-          />
-          <Route
-            exact
-            path="/marketplace/events/upcoming"
-            element={
-              <MarketEvents
-                tabState={"upcoming"}
-                isConnected={isConnected}
-                handleConnect={handleShowWalletModal}
-                listedNFTS={listedNFTS}
-                account={coinbase?.toLowerCase()}
-                chainId={chainId}
-                dyptokenDatabnb={dyptokenDatabnb}
-                idyptokenDatabnb={idyptokenDatabnb}
-                dyptokenDatabnb_old={dyptokenDatabnb_old}
-                dyptokenData_old={dypTokenData_old}
-                handleAvailableTime={(value) => {
-                  setavailTime(value);
-                }}
-                ethTokenData={ethTokenData}
-                dogePrice={dogePrice}
-              />
-            }
-          />
-          <Route
-            exact
-            path="/marketplace/events/past"
-            element={
-              <MarketEvents
-                tabState={"past"}
-                isConnected={isConnected}
-                handleConnect={handleShowWalletModal}
-                listedNFTS={listedNFTS}
-                account={coinbase?.toLowerCase()}
-                chainId={chainId}
-                dyptokenDatabnb={dyptokenDatabnb}
-                dyptokenDatabnb_old={dyptokenDatabnb_old}
-                idyptokenDatabnb={idyptokenDatabnb}
-                handleAvailableTime={(value) => {
-                  setavailTime(value);
-                }}
-                dyptokenData_old={dypTokenData_old}
-                ethTokenData={ethTokenData}
-                dogePrice={dogePrice}
-              />
-            }
-          />
-          <Route
-            exact
-            path="/marketplace/stake"
-            element={
-              <MarketStake
-                isConnected={isConnected}
-                handleConnect={handleConnectWallet}
-                chainId={chainId}
-                coinbase={coinbase}
-                isPremium={isPremium}
-                handleSwitchNetwork={handleSwitchNetwork}
-                onSuccessDeposit={() => {
-                  setCount55(count55 + 1);
-                }}
-              />
-            }
-          />
-          <Route
-            exact
-            path="/marketplace/mint/timepiece"
-            element={
-              <MarketMint
-                coinbase={coinbase}
-                showWalletConnect={() => {
-                  setwalletModal(true);
-                }}
-                cawsArray={allCawsForTimepieceMint}
-                mintloading={mintloading}
-                isConnected={isConnected}
-                chainId={chainId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                timepieceMetadata={timepieceMetadata}
-                myConfluxNFTsCreated={myConfluxNFTsCreated}
-                mybaseNFTsCreated={mybaseNFTsCreated}
-                myskaleNFTsCreated={myskaleNFTsCreated}
-                handleConfluxMint={handleConfluxNftMint}
-                handleBaseNftMint={handleBaseNftMint}
-                confluxMintAllowed={confluxMintAllowed}
-                baseMintAllowed={baseMintAllowed}
-                skaleMintAllowed={skaleMintAllowed}
-                coreMintAllowed={coreMintAllowed}
-                victionMintAllowed={victionMintAllowed}
-                totalCoreNft={totalCoreNft}
-                myCoreNfts={myCoreNfts}
-                totalMultiversNft={totalMultiversNft}
-                totalImmutableNft={totalImmutableNft}
-                myImmutableNfts={myImmutableNfts}
-                myMultiversNfts={myMultiversNfts}
-                totalseiNft={totalseiNft}
-                myseiNfts={myseiNfts}
-                totalVictionNft={totalVictionNft}
-                myVictionNfts={myVictionNfts}
-              />
-            }
-          />
+            <Route
+              exact
+              path="/marketplace/beta-pass/coingecko/:terms?"
+              element={
+                <BetaPassNFT
+                  type={"coingecko"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  success={success}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/beta-pass/base"
+              element={
+                <BetaPassNFT
+                  type={"base"}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  totalCoingeckoNft={totalCoingeckoNft}
+                  myNFTSCoingecko={MyNFTSCoingecko}
+                  myGateNfts={myGateNfts}
+                  totalGateNft={totalGateNft}
+                  totalBaseNft={totalBaseNft}
+                  myBaseNFTs={myBaseNFTs}
+                  totalConfluxNft={totalConfluxNft}
+                  myConfluxNfts={myConfluxNfts}
+                  timepieceMetadata={timepieceMetadata}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  coinbase={coinbase}
+                  timepieceBought={timepieceBought}
+                  handleRefreshListing={handleRefreshList}
+                  nftCount={nftCount}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/events/:eventId"
+              element={
+                <MarketEvents
+                  tabState={"live"}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  account={coinbase?.toLowerCase()}
+                  chainId={chainId}
+                  dyptokenDatabnb={dyptokenDatabnb}
+                  dyptokenDatabnb_old={dyptokenDatabnb_old}
+                  idyptokenDatabnb={idyptokenDatabnb}
+                  handleAvailableTime={(value) => {
+                    setavailTime(value);
+                  }}
+                  ethTokenData={ethTokenData}
+                  dyptokenData_old={dypTokenData_old}
+                  dogePrice={dogePrice}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/events/upcoming"
+              element={
+                <MarketEvents
+                  tabState={"upcoming"}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  account={coinbase?.toLowerCase()}
+                  chainId={chainId}
+                  dyptokenDatabnb={dyptokenDatabnb}
+                  idyptokenDatabnb={idyptokenDatabnb}
+                  dyptokenDatabnb_old={dyptokenDatabnb_old}
+                  dyptokenData_old={dypTokenData_old}
+                  handleAvailableTime={(value) => {
+                    setavailTime(value);
+                  }}
+                  ethTokenData={ethTokenData}
+                  dogePrice={dogePrice}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/events/past"
+              element={
+                <MarketEvents
+                  tabState={"past"}
+                  isConnected={isConnected}
+                  handleConnect={handleShowWalletModal}
+                  listedNFTS={listedNFTS}
+                  account={coinbase?.toLowerCase()}
+                  chainId={chainId}
+                  dyptokenDatabnb={dyptokenDatabnb}
+                  dyptokenDatabnb_old={dyptokenDatabnb_old}
+                  idyptokenDatabnb={idyptokenDatabnb}
+                  handleAvailableTime={(value) => {
+                    setavailTime(value);
+                  }}
+                  dyptokenData_old={dypTokenData_old}
+                  ethTokenData={ethTokenData}
+                  dogePrice={dogePrice}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/stake"
+              element={
+                <MarketStake
+                  isConnected={isConnected}
+                  handleConnect={handleConnectWallet}
+                  chainId={chainId}
+                  coinbase={coinbase}
+                  isPremium={isPremium}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  onSuccessDeposit={() => {
+                    setCount55(count55 + 1);
+                  }}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/marketplace/mint/timepiece"
+              element={
+                <MarketMint
+                  coinbase={coinbase}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleTimepieceMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  timepieceMetadata={timepieceMetadata}
+                  myConfluxNFTsCreated={myConfluxNFTsCreated}
+                  mybaseNFTsCreated={mybaseNFTsCreated}
+                  myskaleNFTsCreated={myskaleNFTsCreated}
+                  handleConfluxMint={handleConfluxNftMint}
+                  handleBaseNftMint={handleBaseNftMint}
+                  confluxMintAllowed={confluxMintAllowed}
+                  baseMintAllowed={baseMintAllowed}
+                  skaleMintAllowed={skaleMintAllowed}
+                  coreMintAllowed={coreMintAllowed}
+                  victionMintAllowed={victionMintAllowed}
+                  totalCoreNft={totalCoreNft}
+                  myCoreNfts={myCoreNfts}
+                  totalMultiversNft={totalMultiversNft}
+                  totalImmutableNft={totalImmutableNft}
+                  myImmutableNfts={myImmutableNfts}
+                  myMultiversNfts={myMultiversNfts}
+                  totalseiNft={totalseiNft}
+                  myseiNfts={myseiNfts}
+                  totalVictionNft={totalVictionNft}
+                  myVictionNfts={myVictionNfts}
+                />
+              }
+            />
+            <Route exact path="/token" element={<Token />} />
+            <Route exact path="/bridge" element={<Bridge />} />
+            <Route exact path="/earn" element={<Earn />} />
+            <Route exact path="/buy" element={<Buy />} />
+            <Route exact path="/governance" element={<Governance />} />
+            <Route exact path="/game-updates" element={<GameUpdates />} />
+            <Route exact path="/brand" element={<Brand />} />
+            <Route exact path="/partners" element={<Partners />} />
+            <Route exact path="/tokenomics" element={<Tokenomics />} />
 
-          {/* <Route
+            {/* <Route
               exact
               path="/marketplace/mint/viction"
               element={

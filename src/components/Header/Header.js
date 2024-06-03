@@ -6,7 +6,7 @@ import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import person from "./assets/person.svg";
 import personCoinbase from "./assets/personCoinbase.png";
 import personNoCoinbase from "./assets/personNoCoinbase.png";
-
+import headerArrow from "./assets/headerArrow.svg";
 import copy from "./assets/copy.svg";
 import check from "./assets/check.svg";
 import user from "./assets/user.svg";
@@ -86,9 +86,14 @@ const Header = ({
   const [confluxState, setConfluxState] = useState(false);
   const [skaleState, setSkaleState] = useState(false);
   const [victionState, setVictionState] = useState(false);
-  const [seiState, setSeiState] = useState(false)
-  const [immutableState, setImmutableState] = useState(false)
-
+  const [seiState, setSeiState] = useState(false);
+  const [immutableState, setImmutableState] = useState(false);
+  const [dropdown, setDropdown] = useState({
+    wod: null,
+    game: null,
+    community: null,
+    about: null,
+  });
 
   // const [domainPopup, setDomainPopup] = useState(false);
 
@@ -115,7 +120,7 @@ const Header = ({
         setopBnbState(false);
         setSkaleState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
@@ -125,7 +130,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
@@ -135,7 +140,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
@@ -145,7 +150,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
@@ -155,7 +160,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -166,8 +171,8 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
-      } else if (chainId === 1482601649 ) {
+        setSeiState(false);
+      } else if (chainId === 1482601649) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
@@ -177,8 +182,8 @@ const Header = ({
         setSkaleState(true);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
-      } 
+        setSeiState(false);
+      }
 
       // else if (chainId === 1116 ) {
       //   setAvaxState(false);
@@ -225,12 +230,19 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
       }
     }
   };
 
-
+  const handleDropdown = (key) => {
+    setDropdown((prevState) => ({
+      ...Object.keys(prevState).reduce((acc, curr) => {
+        acc[curr] = curr === key ? key : null;
+        return acc;
+      }, {}),
+    }));
+  };
 
   const handleEthPool = async () => {
     if (window.ethereum) {
@@ -476,7 +488,7 @@ const Header = ({
       handleSwitchNetwork(8453);
     }
 
-    if (chainId === 1482601649 ) {
+    if (chainId === 1482601649) {
       handleSwitchNetwork(1482601649);
     }
 
@@ -504,28 +516,75 @@ const Header = ({
             <NavLink to="/">
               <img src={metaverse} alt="metaverse" />
             </NavLink>
-            <NavLink
-              to="/explorer"
-              className={({ isActive }) =>
-                isActive
-                  ? "nav-anchor font-poppins activenavlink"
-                  : "nav-anchor font-poppins"
+            <div
+              className={
+                "nav-anchor font-poppins header-dropdown-link position-relative d-flex align-items-center gap-2"
               }
+              style={{ cursor: "pointer" }}
+              onMouseEnter={() => handleDropdown("wod")}
+              onMouseLeave={() => handleDropdown(null)}
             >
-              Explore
-            </NavLink>
+              WOD
+              <img src={headerArrow} alt="" />
+              <div
+                className={`header-dropdown p-2 d-flex flex-column gap-2 ${
+                  dropdown.wod === "wod" ? "header-dropdown-active" : ""
+                }`}
+              >
+                <NavLink
+                  to={"/token"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Token
+                </NavLink>
+                <NavLink
+                  to={"/earn"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Earn
+                </NavLink>
+                <NavLink
+                  to={"/bridge"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Bridge
+                </NavLink>
+                <NavLink
+                  to={"/buy"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Buy
+                </NavLink>
+              </div>
+            </div>
             {/* <a href="#marketplace" className="nav-anchor font-poppins">Marketplace</a> */}
             {/* <div className="nav-anchor font-poppins">Roadmap</div> */}
 
             <NavLink
-              to="/land"
+              to="/game"
               className={({ isActive }) =>
                 isActive
                   ? "nav-anchor font-poppins activenavlink"
                   : "nav-anchor font-poppins"
               }
             >
-              Land
+              Game
             </NavLink>
             <NavLink
               to="/marketplace"
@@ -537,36 +596,112 @@ const Header = ({
             >
               Marketplace
             </NavLink>
-            <NavLink
-              to="/community"
-              className={({ isActive }) =>
-                isActive
-                  ? "nav-anchor font-poppins activenavlink"
-                  : "nav-anchor font-poppins"
+            <div
+              className={
+                "nav-anchor font-poppins header-dropdown-link position-relative d-flex align-items-center gap-2"
               }
+              style={{ cursor: "pointer" }}
+              onMouseEnter={() => handleDropdown("community")}
+              onMouseLeave={() => handleDropdown(null)}
             >
               Community
-            </NavLink>
-            <NavLink
-              to="/roadmap"
-              className={({ isActive }) =>
-                isActive
-                  ? "nav-anchor font-poppins activenavlink"
-                  : "nav-anchor font-poppins"
+              <img src={headerArrow} alt="" />
+              <div
+                className={`header-dropdown p-2 d-flex flex-column gap-2 ${
+                  dropdown.community === "community"
+                    ? "header-dropdown-active"
+                    : ""
+                }`}
+              >
+                <NavLink
+                  to={"/governance"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Governance
+                </NavLink>
+                <NavLink
+                  to={"/game-updates"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Game Updates
+                </NavLink>
+              </div>
+            </div>
+            <div
+              className={
+                "nav-anchor font-poppins header-dropdown-link position-relative d-flex align-items-center gap-2"
               }
+              style={{ cursor: "pointer" }}
+              onMouseEnter={() => handleDropdown("about")}
+              onMouseLeave={() => handleDropdown(null)}
             >
-              Roadmap
-            </NavLink>
-            <NavLink
-              to="/news"
-              className={({ isActive }) =>
-                isActive
-                  ? "nav-anchor font-poppins activenavlink"
-                  : "nav-anchor font-poppins"
-              }
-            >
-              News
-            </NavLink>
+              About
+              <img src={headerArrow} alt="" />
+              <div
+                className={`header-dropdown p-2 d-flex flex-column gap-2 ${
+                  dropdown.about === "about" ? "header-dropdown-active" : ""
+                }`}
+              >
+                <NavLink
+                  to={"/partners"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Partners
+                </NavLink>
+                <NavLink
+                  to={"/roadmap"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Roadmap
+                </NavLink>
+                <NavLink
+                  to={"/tokenomics"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Tokenomics
+                </NavLink>
+                <NavLink
+                  to={"/team"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Team
+                </NavLink>
+                <NavLink
+                  to={"/brand"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Brand
+                </NavLink>
+              </div>
+            </div>
           </div>
           <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
             {!coinbase ? (
@@ -825,13 +960,13 @@ const Header = ({
                               ? conflux
                               : skaleState === true
                               ? skale
-                              // : coreState === true
-                              // ? core
-                              // : victionState === true
-                              // ? viction
-                              // : seiState === true
-                              // ? sei
-                              : error
+                              : // : coreState === true
+                                // ? core
+                                // : victionState === true
+                                // ? viction
+                                // : seiState === true
+                                // ? sei
+                                error
                           }
                           height={16}
                           width={16}
@@ -852,13 +987,13 @@ const Header = ({
                             ? "Conflux"
                             : skaleState === true
                             ? "SKALE"
-                            // : coreState === true
-                            // ? "CORE"
-                            // : victionState === true
-                            // ? "Viction"
-                            // : seiState === true
-                            // ? "Sei"
-                            : "Unsupported"}
+                            : // : coreState === true
+                              // ? "CORE"
+                              // : victionState === true
+                              // ? "Viction"
+                              // : seiState === true
+                              // ? "Sei"
+                              "Unsupported"}
                         </span>
                       </div>
 
@@ -885,7 +1020,7 @@ const Header = ({
                   <Dropdown.Item onClick={() => handleSkalePool()}>
                     <img src={skale} alt="" />
                     SKALE
-                  </Dropdown.Item> 
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleConfluxPool()}>
                     <img src={conflux} alt="" />
                     Conflux
