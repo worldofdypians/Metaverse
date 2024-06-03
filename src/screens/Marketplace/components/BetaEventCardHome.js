@@ -17,10 +17,10 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
     >
       <div className="d-flex align-items-center justify-content-between w-100">
        <div className="d-flex align-items-center gap-2">
-       <img src={data.logo} width={24} height={24} alt="" />
+       {/* <img src={data.logo} width={24} height={24} alt="" /> */}
         <h6 className="events-page-title mb-0">{data.title}</h6>
        </div>
-        <div
+        {/* <div
           className={`position-relative ${
             data.eventStatus === "Live"
               ? "events-page-status-tag-live"
@@ -37,23 +37,23 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
             ></div>
           )}
           <span style={{fontSize: data.eventStatus === 'Coming Soon' && '10px'}}>{data.eventStatus}</span>
-        </div>
+        </div> */}
       </div>
       <div className="d-flex col-12 align-items-start pt-3 gap-3">
         <div className="d-flex flex-column justify-content-between gap-2 gap-lg-0">
-            <div className="d-flex align-items-center gap-2">
+            {/* <div className="d-flex align-items-center gap-2">
                 <span className="home-card-rewards-amount mb-0">{data.rewardsAmount}</span>
                 <span className="home-card-rewards-currency mb-0">{data.rewardsCurrency}</span>
             
-            </div>
+            </div> */}
           
-          <span
+          {/* <span
             className="events-page-details d-none align-items-center gap-2"
             onClick={onOpenPopup}
           >
             Details
             <img src={eventsArrow} alt="" />
-          </span>
+          </span> */}
         </div>
       </div>
       {!isFrontPage && (
