@@ -117,6 +117,7 @@ const MyRewardsPopupNew = ({
   const [gateRewardsUSD, setGateRewardsUSD] = useState(0);
   const [baseRewardsUSD, setBaseRewardsUSD] = useState(0);
   const [dypPremiumUSD, setdypPremiumUSD] = useState(0);
+  const [pastUserRankUsd, setpastUserRankUsd] = useState(0);
 
   const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
 
@@ -221,6 +222,18 @@ const MyRewardsPopupNew = ({
           setpastSpecialRewards(data.data.userRewards);
         } else {
           setpastSpecialRewards(0);
+        }
+      });
+  };
+
+  const fetchPastUserRankRewards = async (addr) => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/past-user-rank-rewards/${addr}`)
+      .then((data) => {
+        if (data.data.userRewards) {
+          setpastUserRankUsd(data.data.userRewards);
+        } else {
+          setpastUserRankUsd(0);
         }
       });
   };
@@ -557,6 +570,7 @@ const MyRewardsPopupNew = ({
     fetchDypiusPremiumUSDRewards(address);
     fetchCoingeckoUSDRewards(address);
     fetchPastSpecialRewards(address);
+    fetchPastUserRankRewards(address);
     fetchPastDailyBonusMoney(address);
     fetchPastDailyBonusBetaPass(address);
     fetchPastDailyBonusCaws(address);
@@ -585,6 +599,7 @@ const MyRewardsPopupNew = ({
                 Number(cawsRewards) +
                 Number(pasttreasureRewardMoney) +
                 Number(gemRewards) +
+                Number(pastUserRankUsd) +
                 Number(leaderboardTotalData) +
                 Number(leaderboardSkaleTotalData) +
                 Number(baseRewardsUSD) +
@@ -667,6 +682,7 @@ const MyRewardsPopupNew = ({
                     Number(wodRewards) +
                       Number(wodCawsRewards) +
                       Number(cawsRewards) +
+                      Number(pastUserRankUsd) +
                       Number(pasttreasureRewardMoney) +
                       Number(gemRewards) +
                       Number(leaderboardTotalData) +
@@ -987,7 +1003,10 @@ const MyRewardsPopupNew = ({
             >
               $
               {previousRewards
-                ? getFormattedNumber(pastSpecialRewards, 2)
+                ? getFormattedNumber(
+                    Number(pastUserRankUsd) + Number(pastSpecialRewards),
+                    2
+                  )
                 : getFormattedNumber(
                     Number(userSocialRewardsCached) + Number(userRankRewards),
                     2
@@ -1464,7 +1483,7 @@ const MyRewardsPopupNew = ({
               <span className="item-name-right">
                 $
                 {previousRewards
-                  ? getFormattedNumber(0, 2)
+                  ? getFormattedNumber(pastUserRankUsd, 2)
                   : getFormattedNumber(userRankRewards, 2)}
               </span>
             </div>
