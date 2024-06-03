@@ -82,6 +82,7 @@ function Dashboard({
   dyptokenData_old,
   handleSwitchChain,
   onSubscribeSuccess,
+  isPremium,
 }) {
   const { email, logout } = useAuth();
 
@@ -412,7 +413,7 @@ function Dashboard({
   const [allActiveOffers, setallOffers] = useState([]);
   const [showSyncModal, setshowSyncModal] = useState(false);
   const [isonlink, setIsOnLink] = useState(false);
-  const [isPremium, setIsPremium] = useState(false);
+  // const [isPremium, setIsPremium] = useState(false);
   const [myRewardsPopup, setmyRewardsPopup] = useState(false);
   const [getPremiumPopup, setgetPremiumPopup] = useState(false);
   const [balancePopup, setBalancePopup] = useState(false);
@@ -757,7 +758,7 @@ function Dashboard({
       setbundlesBought(result_formatted);
     }
   };
-  
+
   const fetchPreviousWinners = async () => {
     if (previousVersion != 0) {
       const data = {
@@ -1272,7 +1273,6 @@ function Dashboard({
   const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
   const firstOfNextMonth = new Date(nextYear, nextMonth, 1, 11, 11, 0);
 
-
   const handleSetAvailableTime = (value) => {
     setGoldenPassRemainingTime(value);
   };
@@ -1369,7 +1369,7 @@ function Dashboard({
       DYP_700V1_ABI,
       dyp700v1Address
     );
- 
+
     const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
     const timeofDeposit = await dypv2.methods.getTimeOfDeposit(coinbase).call();
 
@@ -1536,12 +1536,8 @@ function Dashboard({
         //     Number(remainingTime_miliseconds) +
         //     Number(additional_remaining_time_timestamp * 1000);
 
-        setcountdown700(
-          firstOfNextMonth.getTime()
-        );
-        handleSetAvailableTime(
-          firstOfNextMonth.getTime()
-        );
+        setcountdown700(firstOfNextMonth.getTime());
+        handleSetAvailableTime(firstOfNextMonth.getTime());
 
         // }
       } else if (
@@ -1564,12 +1560,8 @@ function Dashboard({
         //     Number(remainingTime_miliseconds2) +
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
-        setcountdown700(
-          firstOfNextMonth.getTime()
-        );
-        handleSetAvailableTime(
-          firstOfNextMonth.getTime()
-        );
+        setcountdown700(firstOfNextMonth.getTime());
+        handleSetAvailableTime(firstOfNextMonth.getTime());
 
         // }
       } else if (
@@ -1620,12 +1612,8 @@ function Dashboard({
           today < finalDateofBundle &&
           today.getFullYear() === finalDateofBundleFormatted.getFullYear()
         ) {
-          setcountdown700(
-            firstOfNextMonth.getTime()
-          );
-          handleSetAvailableTime(
-            firstOfNextMonth.getTime()
-          );
+          setcountdown700(firstOfNextMonth.getTime());
+          handleSetAvailableTime(firstOfNextMonth.getTime());
 
           // if (
           //   bundlesBought <= 3 &&
@@ -1676,12 +1664,8 @@ function Dashboard({
             : datewhenBundleBoughtv1;
 
         if (today < finalDateofBundle && bundlesBought !== 0) {
-          setcountdown700(
-            firstOfNextMonth.getTime()
-          );
-          handleSetAvailableTime(
-            firstOfNextMonth.getTime()
-          );
+          setcountdown700(firstOfNextMonth.getTime());
+          handleSetAvailableTime(firstOfNextMonth.getTime());
         } else if (today > finalDateofBundle && bundlesBought > 0) {
           setcountdown700();
           handleSetAvailableTime();
@@ -1703,12 +1687,8 @@ function Dashboard({
 
             handleSetAvailableTime(finalDateofBundle);
           } else {
-            setcountdown700(
-              firstOfNextMonth.getTime()
-            );
-            handleSetAvailableTime(
-              firstOfNextMonth.getTime()
-            );
+            setcountdown700(firstOfNextMonth.getTime());
+            handleSetAvailableTime(firstOfNextMonth.getTime());
           }
         } else if (today > finalDateofBundle && bundlesBought > 0) {
           setcountdown700();
@@ -1719,12 +1699,8 @@ function Dashboard({
       const finalDateofBundle =
         dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
       if (today_date < finalDateofBundle) {
-        setcountdown700(
-          firstOfNextMonth.getTime()
-        );
-        handleSetAvailableTime(
-          firstOfNextMonth.getTime()
-        );
+        setcountdown700(firstOfNextMonth.getTime());
+        handleSetAvailableTime(firstOfNextMonth.getTime());
       } else {
         setcountdown700();
         handleSetAvailableTime();
@@ -2145,8 +2121,6 @@ function Dashboard({
   }
 
   const handleFirstTask = async (wallet) => {
-   
-
     const result2 = await axios
       .get(
         `https://api.worldofdypians.com/api/airdrop-alliance/task5/${wallet}`
@@ -2183,6 +2157,7 @@ function Dashboard({
           setshowSyncModal(false);
           setsyncStatus("initial");
         }, 1000);
+        onSubscribeSuccess(account);
 
         if (isonlink) {
           handleFirstTask(account);
@@ -2784,182 +2759,182 @@ function Dashboard({
     }
   };
 
-  const refreshSubscription = async (addr) => {
-    const result = window.checkPremium(addr);
+  // const refreshSubscription = async (addr) => {
+  //   const result = window.checkPremium(addr);
 
-    let subscribedPlatformTokenAmountETH;
-    let subscribedPlatformTokenAmountCfx;
-    let subscribedPlatformTokenAmountBNB;
-    let subscribedPlatformTokenAmountAvax;
-    let subscribedPlatformTokenAmountBase;
-    let subscribedPlatformTokenAmountSkale;
-    let subscribedPlatformTokenAmountCore;
-    let subscribedPlatformTokenAmountViction;
-    let subscribedPlatformTokenAmountSei;
+  //   let subscribedPlatformTokenAmountETH;
+  //   let subscribedPlatformTokenAmountCfx;
+  //   let subscribedPlatformTokenAmountBNB;
+  //   let subscribedPlatformTokenAmountAvax;
+  //   let subscribedPlatformTokenAmountBase;
+  //   let subscribedPlatformTokenAmountSkale;
+  //   let subscribedPlatformTokenAmountCore;
+  //   let subscribedPlatformTokenAmountViction;
+  //   let subscribedPlatformTokenAmountSei;
 
-    const web3eth = window.infuraWeb3;
-    const web3cfx = window.confluxWeb3;
-    const web3base = window.baseWeb3;
-    const web3bnb = window.bscWeb3;
-    const web3avax = window.avaxWeb3;
-    const web3skale = window.skaleWeb3;
-    const web3core = window.coreWeb3;
-    const web3viction = window.victionWeb3;
-    const web3sei = window.seiWeb3;
+  //   const web3eth = window.infuraWeb3;
+  //   const web3cfx = window.confluxWeb3;
+  //   const web3base = window.baseWeb3;
+  //   const web3bnb = window.bscWeb3;
+  //   const web3avax = window.avaxWeb3;
+  //   const web3skale = window.skaleWeb3;
+  //   const web3core = window.coreWeb3;
+  //   const web3viction = window.victionWeb3;
+  //   const web3sei = window.seiWeb3;
 
-    const CfxABI = window.SUBSCRIPTION_CFX_ABI;
-    const BaseABI = window.SUBSCRIPTION_BASE_ABI;
-    const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
-    const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
-    const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
-    const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
-    const CoreABI = window.SUBSCRIPTION_CORE_ABI;
-    const VicitonABI = window.SUBSCRIPTION_VICTION_ABI;
-    const SeiABI = window.SUBSCRIPTION_SKALE_ABI;
+  //   const CfxABI = window.SUBSCRIPTION_CFX_ABI;
+  //   const BaseABI = window.SUBSCRIPTION_BASE_ABI;
+  //   const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
+  //   const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
+  //   const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
+  //   const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
+  //   const CoreABI = window.SUBSCRIPTION_CORE_ABI;
+  //   const VicitonABI = window.SUBSCRIPTION_VICTION_ABI;
+  //   const SeiABI = window.SUBSCRIPTION_SKALE_ABI;
 
-    const ethsubscribeAddress = window.config.subscription_neweth_address;
-    const cfxsubscribeAddress = window.config.subscription_cfx_address;
-    const basesubscribeAddress = window.config.subscription_base_address;
-    const bnbsubscribeAddress = window.config.subscription_newbnb_address;
-    const avaxsubscribeAddress = window.config.subscription_newavax_address;
-    const skalesubscribeAddress = window.config.subscription_skale_address;
-    const coresubscribeAddress = window.config.subscription_core_address;
-    const victionsubscribeAddress = window.config.subscription_viction_address;
-    const seisubscribeAddress = window.config.subscription_sei_address;
+  //   const ethsubscribeAddress = window.config.subscription_neweth_address;
+  //   const cfxsubscribeAddress = window.config.subscription_cfx_address;
+  //   const basesubscribeAddress = window.config.subscription_base_address;
+  //   const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+  //   const avaxsubscribeAddress = window.config.subscription_newavax_address;
+  //   const skalesubscribeAddress = window.config.subscription_skale_address;
+  //   const coresubscribeAddress = window.config.subscription_core_address;
+  //   const victionsubscribeAddress = window.config.subscription_viction_address;
+  //   const seisubscribeAddress = window.config.subscription_sei_address;
 
-    const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
-    const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
-    const skalecontract = new web3skale.eth.Contract(
-      SkaleABI,
-      skalesubscribeAddress
-    );
+  //   const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
+  //   const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
+  //   const skalecontract = new web3skale.eth.Contract(
+  //     SkaleABI,
+  //     skalesubscribeAddress
+  //   );
 
-    const basecontract = new web3base.eth.Contract(
-      BaseABI,
-      basesubscribeAddress
-    );
+  //   const basecontract = new web3base.eth.Contract(
+  //     BaseABI,
+  //     basesubscribeAddress
+  //   );
 
-    const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
-    const avaxcontract = new web3avax.eth.Contract(
-      AvaxABI,
-      avaxsubscribeAddress
-    );
+  //   const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
+  //   const avaxcontract = new web3avax.eth.Contract(
+  //     AvaxABI,
+  //     avaxsubscribeAddress
+  //   );
 
-    const corecontract = new web3core.eth.Contract(
-      CoreABI,
-      coresubscribeAddress
-    );
+  //   const corecontract = new web3core.eth.Contract(
+  //     CoreABI,
+  //     coresubscribeAddress
+  //   );
 
-    const victioncontract = new web3viction.eth.Contract(
-      VicitonABI,
-      victionsubscribeAddress
-    );
+  //   const victioncontract = new web3viction.eth.Contract(
+  //     VicitonABI,
+  //     victionsubscribeAddress
+  //   );
 
-    const seicontract = new web3sei.eth.Contract(SeiABI, seisubscribeAddress);
+  //   const seicontract = new web3sei.eth.Contract(SeiABI, seisubscribeAddress);
 
-    if (addr) {
-      subscribedPlatformTokenAmountETH = await ethcontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
+  //   if (addr) {
+  //     subscribedPlatformTokenAmountETH = await ethcontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-      subscribedPlatformTokenAmountCfx = await cfxcontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
+  //     subscribedPlatformTokenAmountCfx = await cfxcontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-      subscribedPlatformTokenAmountBase = await basecontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
+  //     subscribedPlatformTokenAmountBase = await basecontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-      subscribedPlatformTokenAmountBNB = await bnbcontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
+  //     subscribedPlatformTokenAmountBNB = await bnbcontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-      subscribedPlatformTokenAmountAvax = await avaxcontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
+  //     subscribedPlatformTokenAmountAvax = await avaxcontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-      subscribedPlatformTokenAmountSkale = await skalecontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
+  //     subscribedPlatformTokenAmountSkale = await skalecontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-      subscribedPlatformTokenAmountCore = await corecontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
+  //     subscribedPlatformTokenAmountCore = await corecontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-      subscribedPlatformTokenAmountViction = await victioncontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
+  //     subscribedPlatformTokenAmountViction = await victioncontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-      subscribedPlatformTokenAmountSei = await seicontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
+  //     subscribedPlatformTokenAmountSei = await seicontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-      if (
-        subscribedPlatformTokenAmountCfx == "0" &&
-        subscribedPlatformTokenAmountETH == "0" &&
-        subscribedPlatformTokenAmountBase == "0" &&
-        subscribedPlatformTokenAmountBNB == "0" &&
-        subscribedPlatformTokenAmountAvax == "0" &&
-        subscribedPlatformTokenAmountCore == "0" &&
-        subscribedPlatformTokenAmountViction == "0" &&
-        subscribedPlatformTokenAmountSkale == "0" &&
-        subscribedPlatformTokenAmountSei == "0" &&
-        result === false
-      ) {
-        setIsPremium(false);
-      }
-      if (
-        subscribedPlatformTokenAmountCfx != "0" ||
-        subscribedPlatformTokenAmountETH != "0" ||
-        subscribedPlatformTokenAmountBase != "0" ||
-        subscribedPlatformTokenAmountBNB != "0" ||
-        subscribedPlatformTokenAmountAvax != "0" ||
-        subscribedPlatformTokenAmountCore != "0" ||
-        subscribedPlatformTokenAmountViction != "0" ||
-        subscribedPlatformTokenAmountSkale != "0" ||
-        subscribedPlatformTokenAmountSei != "0" ||
-        result === true
-      ) {
-        setIsPremium(true);
-      }
-    }
-  };
+  //     if (
+  //       subscribedPlatformTokenAmountCfx == "0" &&
+  //       subscribedPlatformTokenAmountETH == "0" &&
+  //       subscribedPlatformTokenAmountBase == "0" &&
+  //       subscribedPlatformTokenAmountBNB == "0" &&
+  //       subscribedPlatformTokenAmountAvax == "0" &&
+  //       subscribedPlatformTokenAmountCore == "0" &&
+  //       subscribedPlatformTokenAmountViction == "0" &&
+  //       subscribedPlatformTokenAmountSkale == "0" &&
+  //       subscribedPlatformTokenAmountSei == "0" &&
+  //       result === false
+  //     ) {
+  //       setIsPremium(false);
+  //     }
+  //     if (
+  //       subscribedPlatformTokenAmountCfx != "0" ||
+  //       subscribedPlatformTokenAmountETH != "0" ||
+  //       subscribedPlatformTokenAmountBase != "0" ||
+  //       subscribedPlatformTokenAmountBNB != "0" ||
+  //       subscribedPlatformTokenAmountAvax != "0" ||
+  //       subscribedPlatformTokenAmountCore != "0" ||
+  //       subscribedPlatformTokenAmountViction != "0" ||
+  //       subscribedPlatformTokenAmountSkale != "0" ||
+  //       subscribedPlatformTokenAmountSei != "0" ||
+  //       result === true
+  //     ) {
+  //       setIsPremium(true);
+  //     }
+  //   }
+  // };
 
   const getOpenedChestPerWallet = async () => {
     if (email) {
@@ -4036,7 +4011,7 @@ function Dashboard({
           }, 2000);
         }
         setloadspinnerSub(false);
-        setIsPremium(true);
+        onSubscribeSuccess();
         handleUpdatePremiumUser(coinbase);
         setapproveStatus("successsubscribe");
         await axios
@@ -4057,7 +4032,6 @@ function Dashboard({
           setapproveStatus("initial");
           setstatus("");
           setgetPremiumPopup(false);
-          onSubscribeSuccess();
         }, 5000);
         // this.props.onSubscribe();
         // window.location.href = "https://app.dypius.com/account";
@@ -4476,33 +4450,33 @@ function Dashboard({
     }
   }, [dataNonce]);
 
-  useEffect(() => {
-    if (
-      data &&
-      data.getPlayer &&
-      data.getPlayer.wallet &&
-      data.getPlayer.wallet.publicAddress &&
-      email &&
-      isConnected
-    ) {
-      fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
-      refreshSubscription(data.getPlayer.wallet.publicAddress);
-      setuserWallet(data.getPlayer.wallet.publicAddress);
-    } else if (coinbase && isConnected) {
-      refreshSubscription(coinbase);
-    } else if (
-      data &&
-      data.getPlayer &&
-      data.getPlayer.wallet &&
-      data.getPlayer.wallet.publicAddress &&
-      email &&
-      !isConnected
-    ) {
-      refreshSubscription(data.getPlayer.wallet.publicAddress);
-    } else {
-      setIsPremium(false);
-    }
-  }, [data, email, coinbase, isConnected]);
+  // useEffect(() => {
+  //   if (
+  //     data &&
+  //     data.getPlayer &&
+  //     data.getPlayer.wallet &&
+  //     data.getPlayer.wallet.publicAddress &&
+  //     email &&
+  //     isConnected
+  //   ) {
+  //     fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
+  //     refreshSubscription(data.getPlayer.wallet.publicAddress);
+  //     setuserWallet(data.getPlayer.wallet.publicAddress);
+  //   } else if (coinbase && isConnected) {
+  //     refreshSubscription(coinbase);
+  //   } else if (
+  //     data &&
+  //     data.getPlayer &&
+  //     data.getPlayer.wallet &&
+  //     data.getPlayer.wallet.publicAddress &&
+  //     email &&
+  //     !isConnected
+  //   ) {
+  //     refreshSubscription(data.getPlayer.wallet.publicAddress);
+  //   } else {
+  //     setIsPremium(false);
+  //   }
+  // }, [data, email, coinbase, isConnected]);
 
   useEffect(() => {
     if (
@@ -4636,9 +4610,7 @@ function Dashboard({
 
   useEffect(() => {
     if (bundlesBought === 4) {
-      handleSetAvailableTime(
-        firstOfNextMonth.getTime()
-      );
+      handleSetAvailableTime(firstOfNextMonth.getTime());
     }
   }, [bundlesBought]);
 
@@ -4732,7 +4704,8 @@ function Dashboard({
                         onSigninClick={onSigninClick}
                         onLogoutClick={() => {
                           logout();
-                          refreshSubscription(coinbase);
+                          // refreshSubscription(coinbase);
+                          onSubscribeSuccess();
                           setclaimedChests(0);
                           setclaimedPremiumChests(0);
                           setclaimedCorePremiumChests(0);

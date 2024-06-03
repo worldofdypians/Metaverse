@@ -73,6 +73,8 @@ import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
 import OurTeam from "./screens/OurTeam/OurTeam.js";
+import { useQuery } from "@apollo/client";
+import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 
 function App() {
   const CHAINLIST = {
@@ -225,6 +227,7 @@ function App() {
   const [totalseiNft, setTotalseiNft] = useState(0);
   const [totalImmutableNft, setTotalImmutableNft] = useState(0);
   const [totalMultiversNft, setTotalMultiversNft] = useState(0);
+  const [userWallet, setuserWallet] = useState("");
 
   const [baseMintAllowed, setbaseMintAllowed] = useState(1);
   const [skaleMintAllowed, setSkaleMintAllowed] = useState(1);
@@ -563,6 +566,14 @@ function App() {
     }
   };
 
+  const {
+    data,
+    refetch: refetchPlayer,
+    loading: loadingPlayer,
+  } = useQuery(GET_PLAYER, {
+    fetchPolicy: "network-only",
+  });
+
   const handleConnection = async () => {
     try {
       localStorage.setItem("logout", "false");
@@ -862,7 +873,6 @@ function App() {
         setcoreMintAllowed(NFTS.length > 0 ? 0 : 1);
         setmycoreNFTsCreated(NFTS);
       });
-
 
       getMyNFTS(coinbase, "viction").then((NFTS) => {
         settotalVictionNft(NFTS.length);
@@ -1301,6 +1311,28 @@ function App() {
       }
     }
   };
+
+  useEffect(() => {
+    if (
+      data &&
+      data.getPlayer &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+      isConnected
+    ) {
+      refreshSubscription(data.getPlayer.wallet.publicAddress);
+    } else if (coinbase && isConnected) {
+      refreshSubscription(coinbase);
+    } else if (
+      data &&
+      data.getPlayer &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+      !isConnected
+    ) {
+      refreshSubscription(data.getPlayer.wallet.publicAddress);
+    }
+  }, [data, coinbase, isConnected]);
 
   const handleCoreNftMint = async () => {
     if (isConnected && coinbase) {
@@ -2545,8 +2577,7 @@ function App() {
   }, [count2]);
 
   return (
-    <ApolloProvider client={client}>
-      <AuthProvider>
+ <>
         <div className="container-fluid p-0 main-wrapper2 position-relative">
           <Header
             handleSignUp={handleShowWalletModal}
@@ -2771,6 +2802,7 @@ function App() {
                   onSubscribeSuccess={() => {
                     setCount55(count55 + 1);
                   }}
+                  isPremium={isPremium}
                 />
               }
             />
@@ -2973,8 +3005,6 @@ function App() {
                 />
               }
             />
-
-      
 
             <Route
               exact
@@ -3574,7 +3604,7 @@ function App() {
                 />
               }
             />
-  
+
             {/* <Route
               exact
               path="/marketplace/mint/viction"
@@ -3890,8 +3920,7 @@ function App() {
             }}
           />
         )}
-      </AuthProvider>
-    </ApolloProvider>
+ </>
   );
 }
 

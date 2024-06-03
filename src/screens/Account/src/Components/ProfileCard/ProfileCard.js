@@ -190,16 +190,17 @@ const ProfileCard = ({
       sliderRef?.current?.innerSlider?.slickGoTo(1);
       setUserProgress((allScore / 12000000) * 100);
     } else {
+     
       sliderRef?.current?.innerSlider?.slickGoTo(0);
       setUserProgress((allScore / 6000000) * 100);
     }
   };
-
+  
   const updateUserRank = async () => {
     if (rankData && userRankName) {
-      if (rankData.rank === userRankName.id) {
+      if (rankData.rank == userRankName.id) {
         return;
-      } else {
+      } else if(rankData.rank <userRankName.id ) {
         await axios
           .patch(
             `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
