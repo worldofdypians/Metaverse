@@ -3020,6 +3020,55 @@
   line-height: 24px;
 }
 
+.tokenClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../assets/wodAssets/tokenBg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.earnClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../assets/wodAssets/earnBg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.eventClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../assets/wodAssets/eventsBg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.leaderboardClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../assets/wodAssets/leaderboardBg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bottom-dark-wrapper {
+  border-radius: 10px;
+background: linear-gradient(0deg, #080B2A 15.09%, rgba(8, 11, 42, 0.00) 100%);
+}
+
 .events-page-desc-home {
   color: #eeedff;
   font-size: 10px;

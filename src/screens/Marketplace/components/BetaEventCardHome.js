@@ -9,11 +9,11 @@ import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-n
 const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
   return (
     <div
-      className={` homecard justify-content-end upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column d-flex align-items-center p-3`}
+      className={` ${data.class} justify-content-end flex-column d-flex align-items-center`}
       onClick={onOpenPopup}
       style={{ cursor: "pointer" }}
     >
-      <div className="d-flex align-items-center justify-content-between w-100">
+      <div className="d-flex align-items-center justify-content-between p-3 w-100 bottom-dark-wrapper">
        <div className="d-flex flex-column">
         <h6 className="events-page-title-home mb-0">{data.title}</h6>
         <h6 className="events-page-desc-home mb-0">{data.desc}</h6>
