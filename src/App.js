@@ -1319,6 +1319,7 @@ function App() {
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress &&
       isConnected &&
+      coinbase &&
       coinbase.toLowerCase() ===
         data.getPlayer.wallet.publicAddress.toLowerCase()
     ) {
@@ -1339,6 +1340,7 @@ function App() {
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress &&
       isConnected &&
+      coinbase &&
       coinbase.toLowerCase() !==
         data.getPlayer.wallet.publicAddress.toLowerCase()
     ) {
