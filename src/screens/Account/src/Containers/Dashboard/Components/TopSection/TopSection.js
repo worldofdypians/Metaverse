@@ -81,27 +81,30 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard }) => {
   const dummyPromotions = [
     {
       item_type: "CAWS",
-      item_id: 5,
+      item_id: 26,
       reward_type: "Stars",
       reward_amount: 25,
       expires: testDay,
       price: 0.532,
-    },
-    {
-      item_type: "CAWS",
-      item_id: 7,
-      reward_type: "DYP",
-      reward_amount: 300,
-      expires: testDay,
-      price: 0.637,
+      link: "26/0xd06cf9e1189feab09c844c597abc3767bc12608c"
     },
     {
       item_type: "CAWS",
       item_id: 12,
+      reward_type: "DYP",
+      reward_amount: 300,
+      expires: testDay,
+      price: 0.637,
+      link: "12/0xd06cf9e1189feab09c844c597abc3767bc12608c"
+    },
+    {
+      item_type: "CAWS",
+      item_id: 1897,
       reward_type: "iDYP",
       reward_amount: 3500,
       expires: testDay,
       price: 0.122,
+      link: "1897/0xd06cf9e1189feab09c844c597abc3767bc12608c"
     },
   ];
 
@@ -236,7 +239,7 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard }) => {
                     </div>
                   </div>
                   <NavLink
-                    to={"/marketplace/caws"}
+                    to={`/marketplace/nft/${item.link}`}
                     className={`btn purple-btn2 px-4 d-flex gap-2 align-items-center`}
                   >
                     Buy Now
