@@ -122,14 +122,13 @@ const Home = ({
     }, 500);
   }, []);
 
-  useEffect(() => {
-    if (activePopup) {
-      html.classList.add("hidescroll");
-    } else {
-      // Enable scroll
-      html.classList.remove("hidescroll");
-    }
-  }, [activePopup]);
+  // useEffect(() => {
+  //   if (activePopup) {
+  //     html.classList.add("hidescroll");
+  //   } else {
+  //     html.classList.remove("hidescroll");
+  //   }
+  // }, [activePopup]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -142,11 +141,11 @@ const Home = ({
         id="popup"
         onOutsideClick={() => setActivePopup(false)}
       >
-        <MintPopup
+        {/* <MintPopup
           active={activePopup}
           data={entryCampaignPopup}
           onClose={() => setActivePopup(false)}
-        />
+        /> */}
       </OutsideClickHandler>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex flex-column home-main-wrapper">
@@ -154,25 +153,25 @@ const Home = ({
             handleRegister={handleRegister}
             handleDownload={handleDownload}
           />
-          <LiveEvents />
+          {/* <LiveEvents /> */}
           <WodBuilders />
-          <Utilities />
-          <MarketSection
+          {/* <Utilities /> */}
+          {/* <MarketSection
             coinbase={coinbase}
             ethTokenData={ethTokenData}
             dyptokenDatabnb={dyptokenDatabnb}
             idyptokenDatabnb={idyptokenDatabnb}
-          />
+          /> */}
           <ExplorerGrid />
-          <LandNft />
-          <CawsSociety
+          {/* <LandNft /> */}
+          {/* <CawsSociety
             content="The Cats and Watches Society (CAWS) NFT is a unique collection of
             utility NFTs developed by Dypius. Owners of these NFTs will be able
             to adventure with their CAT companion enhancing the player's
             abilities and increasing rewards."
-          />
-          <CawsWorld />
-          <MarketPlace />
+          /> */}
+          {/* <CawsWorld /> */}
+          {/* <MarketPlace /> */}
           <Discord />
           {/* <Partners /> */}
         </div>
