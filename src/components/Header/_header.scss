@@ -498,3 +498,40 @@
   font-weight: 700;
   line-height: normal;
 }
+
+.header-dropdown {
+  background: #252743;
+  border-radius: 10px;
+  width: 200px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.25s;
+}
+
+.header-dropdown-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdown-nav {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all .25s;
+}
+
+.dropdown-nav:hover{
+  background: rgba(123, 216, 176, 0.3);
+  color: #7bd8b0 !important;
+}
+.nav-active{
+  background: rgba(123, 216, 176, 0.3);
+  color: #7bd8b0 !important;
+
+}

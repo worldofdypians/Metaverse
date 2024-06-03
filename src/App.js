@@ -73,6 +73,15 @@ import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
 import OurTeam from "./screens/OurTeam/OurTeam.js";
+import Token from "./screens/Wod/Token/Token.js";
+import Bridge from "./screens/Wod/Bridge/Bridge.js";
+import Earn from "./screens/Wod/Earn/Earn.js";
+import Buy from "./screens/Wod/Buy/Buy.js";
+import Governance from "./screens/Community/Governance/Governance.js";
+import GameUpdates from "./screens/Community/GameUpdates/GameUpdates.js";
+import Brand from "./screens/About/Brand/Brand.js";
+import Partners from "./screens/About/Partners/Partners.js";
+import Tokenomics from "./screens/About/Tokenomics/Tokenomics.js";
 
 function App() {
   const CHAINLIST = {
@@ -862,7 +871,6 @@ function App() {
         setcoreMintAllowed(NFTS.length > 0 ? 0 : 1);
         setmycoreNFTsCreated(NFTS);
       });
-
 
       getMyNFTS(coinbase, "viction").then((NFTS) => {
         settotalVictionNft(NFTS.length);
@@ -2974,8 +2982,6 @@ function App() {
               }
             />
 
-      
-
             <Route
               exact
               path="/marketplace/beta-pass/core"
@@ -3574,7 +3580,16 @@ function App() {
                 />
               }
             />
-  
+            <Route exact path="/token" element={<Token />} />
+            <Route exact path="/bridge" element={<Bridge />} />
+            <Route exact path="/earn" element={<Earn />} />
+            <Route exact path="/buy" element={<Buy />} />
+            <Route exact path="/governance" element={<Governance />} />
+            <Route exact path="/game-updates" element={<GameUpdates />} />
+            <Route exact path="/brand" element={<Brand />} />
+            <Route exact path="/partners" element={<Partners />} />
+            <Route exact path="/tokenomics" element={<Tokenomics />} />
+
             {/* <Route
               exact
               path="/marketplace/mint/viction"
