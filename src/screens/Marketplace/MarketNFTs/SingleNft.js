@@ -563,7 +563,7 @@ const SingleNft = ({
 
       setowner(owner);
     } else if (type === "core") {
-      const nft_contract = new window.bscWeb3.eth.Contract(
+      const nft_contract = new window.coreWeb3.eth.Contract(
         window.CORE_NFT_ABI,
         window.config.nft_core_address
       );

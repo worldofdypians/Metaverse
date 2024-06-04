@@ -242,6 +242,7 @@ function App() {
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
   const [dyptokenDatabnb_old, setDypTokenDatabnb_old] = useState([]);
+  const [socials, setSocials] = useState([]);
 
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
 
@@ -899,6 +900,19 @@ function App() {
     }
   };
 
+  const fetchSocialData = async () => {
+    const result = await axios
+      .get("https://api.worldofdypians.com/api/socialUsers")
+      .catch((e) => {
+        console.error(e);
+      });
+
+      if(result && result.status === 200) {
+        const socialsData = result.data;
+        setSocials(socialsData)
+      }
+  };
+
   const myCAWNft = async () => {
     if (coinbase !== null && coinbase !== undefined) {
       const infura_web3 = window.infuraWeb3;
@@ -1319,6 +1333,7 @@ function App() {
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress &&
       isConnected &&
+      coinbase &&
       coinbase.toLowerCase() ===
         data.getPlayer.wallet.publicAddress.toLowerCase()
     ) {
@@ -1339,6 +1354,7 @@ function App() {
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress &&
       isConnected &&
+      coinbase &&
       coinbase.toLowerCase() !==
         data.getPlayer.wallet.publicAddress.toLowerCase()
     ) {
@@ -2587,6 +2603,10 @@ function App() {
     }, 300000);
   }, [count2]);
 
+  useEffect(()=>{
+    fetchSocialData()
+  },[])
+
   return (
     <>
       <div className="container-fluid p-0 main-wrapper2 position-relative">
@@ -2677,7 +2697,7 @@ function App() {
             }
           />
           <Route exact path="/roadmap" element={<Roadmap />} />
-          <Route exact path="/community" element={<Community />} />
+          <Route exact path="/community" element={<Community socials={socials} />} />
           <Route exact path="/team" element={<OurTeam />} />
           <Route
             exact
@@ -2832,6 +2852,7 @@ function App() {
                 chainId={chainId}
                 showForms={showForms2}
                 balance={currencyAmount}
+                socials={socials} 
               />
             }
           />
