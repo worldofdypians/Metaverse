@@ -53,6 +53,7 @@ import sei from "./assets/sei.svg";
 import multiversx from "./assets/multiversx.svg";
 
 import error from "./assets/error.svg";
+import personIcon from "./assets/personIcon.svg";
 import dropdown from "./assets/dropdown.svg";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -514,7 +515,7 @@ const Header = ({
         <div className="row justify-content-between mx-0 w-100">
           <div className="col-7 col-xl-7 col-xxl-7 d-flex align-items-center justify-content-between ps-0">
             <NavLink to="/">
-              <img src={metaverse} alt="metaverse" />
+              <img src={metaverse} alt="metaverse" height={32} />
             </NavLink>
             <div
               className={
@@ -704,15 +705,39 @@ const Header = ({
             </div>
           </div>
           <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
+            <NavLink to={"/account"} className="d-flex align-items-center gap-2">
+              <img src={personIcon} alt="" />
+              <h6 className="mb-0 account-txt">Account</h6>
+            </NavLink>
+            {/* {!coinbase ? (
+              <NavLink to={"/account"}>
+                <img src={personNoCoinbase} className="account-icon" alt="" />
+              </NavLink>
+            ) : (
+              <NavLink to={"/account"}>
+                <img
+                  src={avatar ? avatar : personCoinbase}
+                  className="account-icon"
+                  alt=""
+                />
+              </NavLink>
+            )} */}
+            
             {!coinbase ? (
-              <div className="linearborder2">
-                <button
-                  className="btn connectwallet px-3"
-                  onClick={handleSignUp}
-                >
-                  Connect Wallet
-                </button>{" "}
-              </div>
+              // <div className="linearborder2">
+              //   <button
+              //     className="btn connectwallet px-3"
+              //     onClick={handleSignUp}
+              //   >
+              //     Connect Wallet
+              //   </button>{" "}
+              // </div>
+              <button 
+              className="new-connect-btn px-2 py-1"
+              onClick={handleSignUp}
+              >
+                Connect Wallet
+              </button>
             ) : (
               <div className="d-flex align-items-center gap-3">
                 <div className="position-relative">
@@ -1067,19 +1092,7 @@ const Header = ({
                 </Clipboard>
               </div>
             )}
-            {!coinbase ? (
-              <NavLink to={"/account"}>
-                <img src={personNoCoinbase} className="account-icon" alt="" />
-              </NavLink>
-            ) : (
-              <NavLink to={"/account"}>
-                <img
-                  src={avatar ? avatar : personCoinbase}
-                  className="account-icon"
-                  alt=""
-                />
-              </NavLink>
-            )}
+           
 
             {showmenu === true && (
               <div className="position-absolute" style={{ width: "210px" }}>
