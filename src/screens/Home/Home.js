@@ -39,6 +39,8 @@ import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreas
 import confluxTreasureHunt from "../../components/TimepieceMint/assets/confluxTreasureHunt.png";
 import LiveEvents from "./LiveEvents/LiveEvents";
 import WodBuilders from "./WodBuilders/WodBuilders";
+import GameUpdates from "./GameUpdates/GameUpdates";
+import WodPartners from "./WodBuilders/WodPartners";
 
 const Home = ({
   handleRegister,
@@ -49,7 +51,6 @@ const Home = ({
   idyptokenDatabnb,
   dyptokenDatabnb_old,
 }) => {
- 
   const cmcPopupInfo = {
     title: "Treasure Hunt",
     img: cmcTreasureHuntPopup,
@@ -99,6 +100,7 @@ const Home = ({
             handleDownload={handleDownload}
           />
           {/* <LiveEvents /> */}
+          <WodPartners />
           <WodBuilders />
           {/* <Utilities /> */}
           {/* <MarketSection
@@ -108,6 +110,7 @@ const Home = ({
             idyptokenDatabnb={idyptokenDatabnb}
           /> */}
           <ExplorerGrid />
+          <GameUpdates />
           {/* <LandNft /> */}
           {/* <CawsSociety
             content="The Cats and Watches Society (CAWS) NFT is a unique collection of
@@ -116,8 +119,8 @@ const Home = ({
             abilities and increasing rewards."
           /> */}
           {/* <CawsWorld /> */}
-          {/* <MarketPlace /> */}
-          <Discord />
+          <MarketPlace />
+          {/* <Discord /> */}
           {/* <Partners /> */}
         </div>
       </div>
