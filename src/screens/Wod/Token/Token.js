@@ -1,12 +1,21 @@
-import React from 'react'
-import './_token.scss'
+import React from "react";
+import "./_token.scss";
+import Ecosystem from "./Ecosystem/Ecosystem";
+import MainHero from "./MainHero/MainHero";
+import Tokenomics from "./Tokenomics/Tokenomics";
+import Utility from "./Utility/Utility";
 
 const Token = () => {
   return (
-    <div className="d-flex justify-content-center w-100">
-        <h1 className='font-organetto text-white'>Token</h1>
+    <div className="container-fluid token-wrapper px-0">
+      <div className="d-flex flex-column gap-5"> 
+        <MainHero />
+        <Ecosystem />
+        <Tokenomics />
+        <Utility />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Token
+export default Token;
