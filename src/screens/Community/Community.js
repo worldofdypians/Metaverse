@@ -700,7 +700,7 @@ const Community = () => {
                         className="community-social-img"
                         alt=""
                       />
-                      <span className="follower-amount">22,200+</span>
+                      <span className="follower-amount">29,600+</span>
                       <span className="follower-type">Members</span>
                     </div>
                   </a>
@@ -730,7 +730,7 @@ const Community = () => {
                         className="community-social-img"
                         alt=""
                       />
-                      <span className="follower-amount">46,900+</span>
+                      <span className="follower-amount">55,900+</span>
                       <span className="follower-type">Followers</span>
                     </div>
                   </a>
@@ -745,7 +745,7 @@ const Community = () => {
                         className="community-social-img"
                         alt=""
                       />
-                      <span className="follower-amount">28,000+</span>
+                      <span className="follower-amount">53,000+</span>
                       <span className="follower-type">Members</span>
                     </div>
                   </a>
