@@ -53,7 +53,7 @@
 @media screen and (max-width: 786px) {
   .footer-socials {
     grid-template-columns: repeat(7, 1fr) !important;
-    display: grid !important
+    display: grid !important;
   }
 }
 
@@ -96,4 +96,48 @@
   .extra-padding {
     padding-bottom: 50px;
   }
+}
+
+.new-footer-desc {
+  color: #fff;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  width: 75%;
+}
+
+.footer-email {
+  color: #fff !important;
+  transition: all 0.25s;
+}
+
+.footer-email-wrapper:hover {
+  .footer-email {
+    color: #5b4a93 !important;
+  }
+}
+
+.footer-newsletter-title{
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.footer-column-title{
+  color: #fff;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.footer-column-link{
+  color: #fff !important;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
 }

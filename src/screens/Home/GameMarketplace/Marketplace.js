@@ -139,22 +139,26 @@ const MarketPlace = () => {
         //   <CawsItemCard />
         // </div>
         <>
-          <Marquee gradient={false} style={{ gap: "45px" }}>
+          <Marquee gradient={false} >
             {shuffledMedia.slice(0, shuffledMedia.length / 2).map((item, index) => (
-              <img
+             <div className="px-4">
+               <img
                 key={index}
                 src={require(`../../../assets/mediaAssets/${item}`)}
                 alt=""
               />
+             </div>
             ))}
           </Marquee>
-          <Marquee gradient={false} style={{ gap: "45px" }} direction="right">
+          <Marquee  gradient={false}  direction="right">
             {shuffledMedia.slice(shuffledMedia.length / 2, shuffledMedia.length).map((item, index) => (
-              <img
+             <div className="px-4">
+               <img
                 key={index}
                 src={require(`../../../assets/mediaAssets/${item}`)}
                 alt=""
               />
+             </div>
             ))}
           </Marquee>
         </>
