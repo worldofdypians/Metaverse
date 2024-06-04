@@ -71,13 +71,12 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const Community = () => {
+const Community = ({socials}) => {
   const [active, setActive] = useState(true);
   const [popup, setPopup] = useState(false);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [countdown, setCountdown] = useState(false);
 
   const subscribe = async (e) => {
     e.preventDefault();
@@ -105,6 +104,8 @@ const Community = () => {
     }
   };
 
+
+
   const navigate = useNavigate();
 
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -120,8 +121,6 @@ const Community = () => {
   let activeDay = new Date("2024-05-01T11:35:00.000+02:00");
 
   const dummyBetaPassData2 = [
- 
-
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -401,8 +400,6 @@ const Community = () => {
   ];
 
   const dummyData = [
-    
-
     {
       title: "Dypians Discovery Quest",
       status: "Live",
@@ -426,7 +423,8 @@ const Community = () => {
       end_date: "May 15, 2024",
       image: entryCampaign,
       link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/102-world-of-dypians-entry-campaign",
-    },    {
+    },
+    {
       title: "Daily Game Delight",
       status: "Expired",
       start_date: "May 15, 2024",
@@ -438,12 +436,12 @@ const Community = () => {
 
   const dummyBanner = {
     title: "Dypians Discovery Quest",
-      status: "Live",
-      desc: "Join the World of Dypians (WoD) Dypians Discovery Quest Campaign from May 29 to June 12 for a chance to win a share of the 200,000 WOD Tokens & 750 Premium Subscription prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
-      start_date: "May 29, 2024",
-      end_date: "June 12, 2024",
-      image: dypiansDiscovery,
-      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/104-dypians-discovery-quest",
+    status: "Live",
+    desc: "Join the World of Dypians (WoD) Dypians Discovery Quest Campaign from May 29 to June 12 for a chance to win a share of the 200,000 WOD Tokens & 750 Premium Subscription prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
+    start_date: "May 29, 2024",
+    end_date: "June 12, 2024",
+    image: dypiansDiscovery,
+    link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/104-dypians-discovery-quest",
   };
 
   const html = document.querySelector("html");
@@ -504,7 +502,7 @@ const Community = () => {
                     >
                       {dummyBanner.status === "Live" && (
                         <div
-                        className="pulsatingDot"
+                          className="pulsatingDot"
                           style={{ width: 7, height: 7, marginRight: 5 }}
                         ></div>
                       )}
@@ -551,125 +549,128 @@ const Community = () => {
               </div>
             </div>
             <div className="community-items-grid">
-              {dummyData.slice(1, 4).map((item, index) => (
-              item.status === "Expired" ? 
-                <a href={item.link} target="_blank">
+              {dummyData.slice(1, 4).map((item, index) =>
+                item.status === "Expired" ? (
+                  <a href={item.link} target="_blank">
                     <div
-                key={index}
-                className="community-item-card d-flex flex-column gap-2 p-3"
-              >
-                <div className="w-100 h-100 banner-holder overflow-hidden">
-                  <img
-                    src={item.image}
-                    className="community-card-banner"
-                    alt=""
-                  />
-                </div>
-                <div className="d-flex align-items-center justify-content-between">
-                  <div className="community-card-title">{item.title}</div>
-                  <div
-                    className={`position-relative ${
-                      item.status === "Live"
-                        ? "events-page-status-tag-live"
-                        : item.status === "Upcoming"
-                        ? "events-page-status-tag-upcoming"
-                        : "events-page-status-tag-expired"
-                    }
+                      key={index}
+                      className="community-item-card d-flex flex-column gap-2 p-3"
+                    >
+                      <div className="w-100 h-100 banner-holder overflow-hidden">
+                        <img
+                          src={item.image}
+                          className="community-card-banner"
+                          alt=""
+                        />
+                      </div>
+                      <div className="d-flex align-items-center justify-content-between">
+                        <div className="community-card-title">{item.title}</div>
+                        <div
+                          className={`position-relative ${
+                            item.status === "Live"
+                              ? "events-page-status-tag-live"
+                              : item.status === "Upcoming"
+                              ? "events-page-status-tag-upcoming"
+                              : "events-page-status-tag-expired"
+                          }
              px-2 d-flex align-items-center justify-content-center gap-0`}
-                    style={{ top: 0 }}
+                          style={{ top: 0 }}
+                        >
+                          {item.status === "Live" && (
+                            <div
+                              className="pulsatingDot"
+                              style={{ width: 7, height: 7, marginRight: 5 }}
+                            ></div>
+                          )}
+                          <span>{item.status}</span>
+                        </div>
+                      </div>
+                      <div className="d-flex align-items-center justify-content-between mt-2">
+                        <span className="community-card-date">Duration:</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <div className="d-flex align-items-center gap-1">
+                            <img src={calendar} width={16} height={16} alt="" />
+                            <span className="community-card-date">
+                              {item.start_date}
+                            </span>
+                          </div>
+                          <span className="community-card-date">-</span>
+                          <div className="d-flex align-items-center gap-1">
+                            <img src={calendar} width={16} height={16} alt="" />
+                            <span className="community-card-date">
+                              {item.end_date}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                ) : (
+                  <HtmlTooltip
+                    enterTouchDelay={0}
+                    enterDelay={0}
+                    placement="top"
+                    title={
+                      <span className="card-eth-chain-text d-flex align-items-center justify-content-center">
+                        {item.status === "Expired" ? "Expired" : "Coming Soon"}
+                      </span>
+                    }
                   >
-                    {item.status === "Live" && (
-                      <div
-                      className="pulsatingDot"
-                        style={{ width: 7, height: 7, marginRight: 5 }}
-                      ></div>
-                    )}
-                    <span>{item.status}</span>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center justify-content-between mt-2">
-                  <span className="community-card-date">Duration:</span>
-                  <div className="d-flex align-items-center gap-2">
-                    <div className="d-flex align-items-center gap-1">
-                      <img src={calendar} width={16} height={16} alt="" />
-                      <span className="community-card-date">
-                        {item.start_date}
-                      </span>
-                    </div>
-                    <span className="community-card-date">-</span>
-                    <div className="d-flex align-items-center gap-1">
-                      <img src={calendar} width={16} height={16} alt="" />
-                      <span className="community-card-date">
-                        {item.end_date}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-                </a>
-            :
-            <HtmlTooltip
-            enterTouchDelay={0}
-            enterDelay={0}
-            placement="top"
-            title={
-              <span className="card-eth-chain-text d-flex align-items-center justify-content-center">{item.status === "Expired" ? "Expired" : "Coming Soon"}</span>
-            }
-          >
-            <div
-              key={index}
-              className="community-item-card d-flex flex-column gap-2 p-3"
-            >
-              <div className="w-100 h-100 banner-holder overflow-hidden">
-                <img
-                  src={item.image}
-                  className="community-card-banner"
-                  alt=""
-                />
-              </div>
-              <div className="d-flex align-items-center justify-content-between">
-                <div className="community-card-title">{item.title}</div>
-                <div
-                  className={`position-relative ${
-                    item.status === "Live"
-                      ? "events-page-status-tag-live"
-                      : item.status === "Upcoming"
-                      ? "events-page-status-tag-upcoming"
-                      : "events-page-status-tag-expired"
-                  }
-           px-2 d-flex align-items-center justify-content-center gap-0`}
-                  style={{ top: 0 }}
-                >
-                  {item.status === "Live" && (
                     <div
-                    className="pulsatingDot"
-                      style={{ width: 7, height: 7, marginRight: 5 }}
-                    ></div>
-                  )}
-                  <span>{item.status}</span>
-                </div>
-              </div>
-              <div className="d-flex align-items-center justify-content-between mt-2">
-                <span className="community-card-date">Duration:</span>
-                <div className="d-flex align-items-center gap-2">
-                  <div className="d-flex align-items-center gap-1">
-                    <img src={calendar} width={16} height={16} alt="" />
-                    <span className="community-card-date">
-                      {item.start_date}
-                    </span>
-                  </div>
-                  <span className="community-card-date">-</span>
-                  <div className="d-flex align-items-center gap-1">
-                    <img src={calendar} width={16} height={16} alt="" />
-                    <span className="community-card-date">
-                      {item.end_date}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </HtmlTooltip>
-              ))}
+                      key={index}
+                      className="community-item-card d-flex flex-column gap-2 p-3"
+                    >
+                      <div className="w-100 h-100 banner-holder overflow-hidden">
+                        <img
+                          src={item.image}
+                          className="community-card-banner"
+                          alt=""
+                        />
+                      </div>
+                      <div className="d-flex align-items-center justify-content-between">
+                        <div className="community-card-title">{item.title}</div>
+                        <div
+                          className={`position-relative ${
+                            item.status === "Live"
+                              ? "events-page-status-tag-live"
+                              : item.status === "Upcoming"
+                              ? "events-page-status-tag-upcoming"
+                              : "events-page-status-tag-expired"
+                          }
+           px-2 d-flex align-items-center justify-content-center gap-0`}
+                          style={{ top: 0 }}
+                        >
+                          {item.status === "Live" && (
+                            <div
+                              className="pulsatingDot"
+                              style={{ width: 7, height: 7, marginRight: 5 }}
+                            ></div>
+                          )}
+                          <span>{item.status}</span>
+                        </div>
+                      </div>
+                      <div className="d-flex align-items-center justify-content-between mt-2">
+                        <span className="community-card-date">Duration:</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <div className="d-flex align-items-center gap-1">
+                            <img src={calendar} width={16} height={16} alt="" />
+                            <span className="community-card-date">
+                              {item.start_date}
+                            </span>
+                          </div>
+                          <span className="community-card-date">-</span>
+                          <div className="d-flex align-items-center gap-1">
+                            <img src={calendar} width={16} height={16} alt="" />
+                            <span className="community-card-date">
+                              {item.end_date}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </HtmlTooltip>
+                )
+              )}
             </div>
             <div className="col-12 col-lg-6 mt-5">
               <h6 className="community-title">Join Our Community</h6>
@@ -700,7 +701,7 @@ const Community = () => {
                         className="community-social-img"
                         alt=""
                       />
-                      <span className="follower-amount">29,600+</span>
+                      <span className="follower-amount">{getFormattedNumber(socials?.discordMembers,0)}+</span>
                       <span className="follower-type">Members</span>
                     </div>
                   </a>
@@ -715,7 +716,7 @@ const Community = () => {
                         className="community-social-img"
                         alt=""
                       />
-                      <span className="follower-amount">330,000+</span>
+                      <span className="follower-amount">{getFormattedNumber(socials?.youtubeSubscribers,0)}+</span>
                       <span className="follower-type">Subscribers</span>
                     </div>
                   </a>
@@ -730,7 +731,7 @@ const Community = () => {
                         className="community-social-img"
                         alt=""
                       />
-                      <span className="follower-amount">55,900+</span>
+                      <span className="follower-amount">{getFormattedNumber(socials?.twitterFollowers,0)}+</span>
                       <span className="follower-type">Followers</span>
                     </div>
                   </a>
@@ -745,7 +746,7 @@ const Community = () => {
                         className="community-social-img"
                         alt=""
                       />
-                      <span className="follower-amount">53,000+</span>
+                      <span className="follower-amount">{getFormattedNumber(socials?.telegramMembers,0)}+</span>
                       <span className="follower-type">Members</span>
                     </div>
                   </a>

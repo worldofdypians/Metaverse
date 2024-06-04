@@ -242,6 +242,7 @@ function App() {
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
   const [dyptokenDatabnb_old, setDypTokenDatabnb_old] = useState([]);
+  const [socials, setSocials] = useState([]);
 
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
 
@@ -897,6 +898,19 @@ function App() {
       setMyCoreNfts([]);
       settotalCoreNft(0);
     }
+  };
+
+  const fetchSocialData = async () => {
+    const result = await axios
+      .get("https://api.worldofdypians.com/api/socialUsers")
+      .catch((e) => {
+        console.error(e);
+      });
+
+      if(result && result.status === 200) {
+        const socialsData = result.data;
+        setSocials(socialsData)
+      }
   };
 
   const myCAWNft = async () => {
@@ -2589,6 +2603,10 @@ function App() {
     }, 300000);
   }, [count2]);
 
+  useEffect(()=>{
+    fetchSocialData()
+  },[])
+
   return (
     <>
       <div className="container-fluid p-0 main-wrapper2 position-relative">
@@ -2679,7 +2697,7 @@ function App() {
             }
           />
           <Route exact path="/roadmap" element={<Roadmap />} />
-          <Route exact path="/community" element={<Community />} />
+          <Route exact path="/community" element={<Community socials={socials} />} />
           <Route exact path="/team" element={<OurTeam />} />
           <Route
             exact
@@ -2834,6 +2852,7 @@ function App() {
                 chainId={chainId}
                 showForms={showForms2}
                 balance={currencyAmount}
+                socials={socials} 
               />
             }
           />
