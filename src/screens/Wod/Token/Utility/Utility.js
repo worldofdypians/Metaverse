@@ -35,15 +35,12 @@ const Utility = () => {
     {
       title: "Vote2",
       content: "Help shape the future of the metaverse",
-    }, {
-      title: "Vote3",
-      content: "Help shape the future of the metaverse",
-    },
+    }
   ];
 
   return (
-    <div className="utility-wrapper build-business-wrapper py-5 position-relative d-flex align-items-center">
-    <div className="container-lg">
+    <div className="utility-wrapper build-business-wrapper justify-content-center py-5 position-relative d-flex align-items-center">
+    <div className="custom-container">
       <h4 className="main-hero-title font-montserrat text-center mb-3">
         WoD{" "}
         <mark className="font-montserrat main-hero-title explore-tag pe-2">
@@ -54,7 +51,7 @@ const Utility = () => {
           <div className="d-flex align-items-center justify-content-center">
             <span className='tiers-desc'>Possibilities are limited only by your imagination</span>
           </div>
-          <div className="new-benefits-grid2 mt-3">
+          <div className="new-benefits-grid mt-3">
             {interactions.map((item, index) => (
               <div
                 className="new-benefit-card d-flex flex-column align-items-center justify-content-center p-5"
