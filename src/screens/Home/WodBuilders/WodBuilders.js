@@ -144,6 +144,7 @@ const WodBuilders = () => {
             SHAPING THE WORLD OF DYPIANS{" "}
           </h2>
         </div>
+        <div className="custom-container">
         <div className="wod-builders-grid">
           {builders.slice(0, slice).map((item, index) => (
             <a
@@ -164,6 +165,7 @@ const WodBuilders = () => {
               </div>
             </a>
           ))}
+        </div>
         </div>
         {windowSize.width < 786 ? (
           <div className="d-flex justify-content-center mt-3">

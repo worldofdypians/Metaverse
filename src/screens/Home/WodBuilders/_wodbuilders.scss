@@ -111,8 +111,11 @@
 
 
 .partner-logo-container{
-  width: 60px;
+  width: 90px;
   height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .small-partners-title{
