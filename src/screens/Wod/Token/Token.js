@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./_token.scss";
 import Ecosystem from "./Ecosystem/Ecosystem";
 import MainHero from "./MainHero/MainHero";
@@ -6,6 +6,12 @@ import Tokenomics from "./Tokenomics/Tokenomics";
 import Utility from "./Utility/Utility";
 
 const Token = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = "WoD Token";
+  }, []);
+
   return (
     <div className="container-fluid token-wrapper px-0">
       <div className="d-flex flex-column gap-5"> 
