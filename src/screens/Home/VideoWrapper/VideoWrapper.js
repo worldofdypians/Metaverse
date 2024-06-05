@@ -254,7 +254,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         {/* </div> */}
         {/* </div> */}
         {windowSize.width > 992 && (
-          <div className="opacitywrapper container-lg">
+          <div className="opacitywrapper custom-container">
             <Slider {...settings} ref={betaSlider}>
               {dummyBetaPassData2.slice(0, 4).map((item, index) => (
                 <NavLink

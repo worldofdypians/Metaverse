@@ -34,7 +34,8 @@ const GameUpdates = () => {
   }, []);
 
   return (
-    <div className="px-3 px-lg-5" id="explorer">
+    <div className="px-3 px-lg-5 d-flex justify-content-center" id="explorer">
+      <div className="custom-container w-100">
       <div className="w-100">
       <h2 className="font-montserrat builders-title explorer-grid-title px-0">
             <mark className="font-montserrat explore-tag pe-2">GAME</mark>
@@ -64,6 +65,7 @@ const GameUpdates = () => {
               </NavLink>
             );
           })}{" "}
+      </div>
       </div>
     </div>
   );

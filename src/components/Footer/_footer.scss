@@ -2,6 +2,10 @@
   // min-width: 100%;
   // margin: auto;
   max-width: 2400px;
+  height: 650px;
+  background-image: url('./footerBg.webp') !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
   position: relative;
   bottom: 0;
   overflow: hidden;
@@ -118,7 +122,7 @@
   }
 }
 
-.footer-newsletter-title{
+.footer-newsletter-title {
   color: #fff;
   font-size: 16px;
   font-style: normal;
@@ -126,7 +130,7 @@
   line-height: 24px;
 }
 
-.footer-column-title{
+.footer-column-title {
   color: #fff;
   font-size: 20px;
   font-style: normal;
@@ -134,10 +138,60 @@
   line-height: 24px;
 }
 
-.footer-column-link{
+.footer-column-link {
   color: #fff !important;
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
+}
+
+.new-footer-link {
+  color: #eeedff !important;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  text-transform: uppercase;
+}
+
+.epic-games-btn {
+  background: linear-gradient(to right, #b936f5, #c64c85);
+  border-radius: 8px;
+  border: none;
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.copyright-text{
+  color: #A2ADC8;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 200% */
+}
+
+.trademark-text{
+  color: #A2ADC8;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 200% */
+}
+
+.gray-footer-link{
+  color: #A2ADC8 !important;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 200% */
+  text-transform: uppercase;
 }
