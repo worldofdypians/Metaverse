@@ -9,8 +9,8 @@ const Tokenomics = () => {
   const [tooltip, setTooltip] = useState(false);
 
   return (
-    <div className="tokenomics-wrapper py-5 mint-wrappernew container-fluid position-relative d-flex align-items-center">
-      <div className="container-lg">
+    <div className="tokenomics-wrapper py-5 mint-wrappernew container-fluid justify-content-center position-relative d-flex align-items-center">
+      <div className="custom-container">
         <h4 className="main-hero-title font-montserrat text-center mb-3">
           WoD{" "}
           <mark className="font-montserrat main-hero-title explore-tag pe-2">
@@ -55,7 +55,7 @@ const Tokenomics = () => {
                   </Clipboard>
                 </div>
               </div>
-              <div className="allocation-wrapper p-2">
+              <div className="allocation-wrapper p-2 col-lg-7">
                 <span className="marketplace-desc text-secondary">
                   30,000,000 WOD have been minted at Genesis and will become
                   accessible over the course of 2 years. The 2-year allocation
