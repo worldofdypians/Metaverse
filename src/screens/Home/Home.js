@@ -36,6 +36,8 @@ import skalePopup from "../../components/TimepieceMint/assets/skalePopup.webp";
 
 import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreasureHunt.webp";
 import corePopupBg from "../../components/TimepieceMint/assets/corePopupBg.webp";
+import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
+
 
 
 import confluxTreasureHunt from "../../components/TimepieceMint/assets/confluxTreasureHunt.png";
@@ -108,9 +110,9 @@ const Home = ({
   };
 
   const corePopupInfo = {
-    title: "CORE",
-    img: corePopupBg,
-    state: "cmc",
+    title: "VICTION",
+    img: victionPopupBg,
+    state: "viction",
   };
 
   const [activePopup, setActivePopup] = useState(false);
