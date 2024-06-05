@@ -38,7 +38,7 @@ Over $100,000 in distributed rewards, the equivalent of more than 260 BNB.
       image: "genesis.png",
       desc: `
       <p class="utility-desc">
-      The DYP and iDYP tokens will be the main utility within the World of Dypians metaverse. They will be used for in-game purchases, unlocking features and upgrades, and accessing other content. By integrating decentralized utility tokens, the game enhances the player experience and drives growth of the World of Dypians ecosystem.   
+      The WOD tokens will be the main utility within the World of Dypians metaverse. They will be used for in-game purchases, unlocking features and upgrades, and accessing other content. By integrating decentralized utility tokens, the game enhances the player experience and drives growth of the World of Dypians ecosystem.   
       </p>`,
       class: "coins-card",
     },
