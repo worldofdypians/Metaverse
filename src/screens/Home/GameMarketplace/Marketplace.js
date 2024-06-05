@@ -49,28 +49,27 @@ const MarketPlace = () => {
   };
 
   const mediaItems = [
-    "media1.webp",
-    "media2.webp",
-    "media3.webp",
-    "media4.webp",
-    "media5.webp",
-    "media6.webp",
-    "media7.webp",
-    "media8.webp",
-    "media9.webp",
-    "media10.webp",
-    "media11.webp",
-    "media12.webp",
-    "media13.webp",
-    "media14.webp",
-    "media15.webp",
-    "media16.webp",
-    "media17.webp",
-    "media18.webp",
-    "media19.webp",
-    "media20.webp",
-    "media21.webp",
-    "media22.webp",
+    "media1.png",
+    "media2.png",
+    "media3.png",
+    "media4.png",
+    "media5.png",
+    "media6.png",
+    "media7.png",
+    "media8.png",
+    "media9.png",
+    "media10.png",
+    "media11.png",
+    "media12.png",
+    "media13.png",
+    "media14.png",
+    "media15.png",
+    "media16.png",
+    "media17.png",
+    "media18.png",
+    "media19.png",
+    "media20.png",
+
   ]
 
 
@@ -95,49 +94,23 @@ const MarketPlace = () => {
 
   const shuffledMedia = shuffle(mediaItems)
   
-  const firstMarquee = [
-    "firstMedia.webp",
-    "secondMedia.webp",
-    "thirdMedia.webp",
-    "fourthMedia.webp",
-    "fifthMedia.webp",
-  ];
 
-  const second = [
-    "sixthMedia.webp",
-    "seventhMedia.webp",
-    "eightMedia.webp",
-    "ninthMedia.webp",
-    "tenthMedia.webp",
-  ];
 
   const windowSize = useWindowSize();
 
   return (
     <div
-      className="row px-3 px-lg-5 flex-column justify-content-center text-white gap-4"
+      className="row px-3 px-lg-5 flex-column justify-content-center text-white gap-4 mx-2"
       id="marketplace"
     >
       <div className="d-flex justify-content-center align-items-center flex-column gap-2">
-        <h2 className="marketplace-title font-organetto">
-          world of dypians official media
+      <h2 className="font-montserrat builders-title explorer-grid-title px-0">
+          GAME{" "}
+          <mark className="font-montserrat explore-tag pe-2">GALLERY</mark>
         </h2>
-        <p className="marketplace-desc font-poppins">
-          The world of dypians awaits you. experience gameplay like never seen
-          before.
-        </p>
       </div>
       {windowSize.width > 786 ? (
-        // <div className="caws-grid">
-        //   <CawsItemCard />
-        //   <CawsItemCard />
-        //   <CawsItemCard />
-        //   <CawsItemCard />
-        //   <CawsItemCard />
-        //   <CawsItemCard />
-        //   <CawsItemCard />
-        //   <CawsItemCard />
-        // </div>
+    
         <>
           <Marquee gradient={false} >
             {shuffledMedia.slice(0, shuffledMedia.length / 2).map((item, index) => (

@@ -139,9 +139,9 @@ const WodBuilders = () => {
         id="wodbuilders"
       >
         <div className="d-flex  justify-content-center align-items-center mb-4 gap-2">
-          <h2 className="font-organetto builders-title explorer-grid-title px-0">
-            <mark className="font-organetto explore-tag pe-2">Pioneers</mark>
-            shaping the World of Dypians{" "}
+          <h2 className="font-montserrat builders-title explorer-grid-title px-0">
+            <mark className="font-montserrat explore-tag pe-2">PIONEERS</mark>
+            SHAPING THE WORLD OF DYPIANS{" "}
           </h2>
         </div>
         <div className="wod-builders-grid">
