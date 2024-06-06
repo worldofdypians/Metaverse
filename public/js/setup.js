@@ -1568,7 +1568,7 @@ window.config = {
   subscription_newbnb_address: "0xA297c8c8094354c49E93e072DaDCa846a00148d0",
 
   //new premium contract with discount + nft
-  subscription_newbnb2_address: "0x25DD41c43aff42C30aF7a0ea50fb4c1a7DbdB347",
+  subscription_newbnb2_address: "0xc200FAecd0cd5Ae83ECf3F490B6552984b60f2E7",
 
   subscription_cfx_address: "0x56c83c9308b066627866bba9cd2322f3e01b16bf",
   subscription_base_address: "0x9c13Dbc8f0fA8ceD8C1B53c4237A08445eca32fe",
@@ -10912,16 +10912,20 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
   },
   {
     inputs: [],
-    name: "TRUSTED_PLATFORM_TOKEN_ADDRESS",
+    name: "WBNB_ADDRESS",
     outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [],
-    name: "WBNB_ADDRESS",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
+    inputs: [
+      { internalType: "address", name: "nftAddress", type: "address" },
+      { internalType: "uint256", name: "discountPercentage", type: "uint256" },
+      { internalType: "uint256", name: "durationInDays", type: "uint256" },
+    ],
+    name: "addOrUpdateNFTDiscount",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -10944,7 +10948,7 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
   },
   {
     inputs: [],
-    name: "discountPercentage",
+    name: "discountPercentageGlobal",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
@@ -10952,6 +10956,7 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
   {
     inputs: [
       { internalType: "address", name: "tokenAddress", type: "address" },
+      { internalType: "uint256", name: "discountPercentage", type: "uint256" },
     ],
     name: "getEstimatedTokenSubscriptionAmount",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
@@ -10966,10 +10971,28 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "nftDiscounts",
+    outputs: [
+      { internalType: "address", name: "nftAddress", type: "address" },
+      { internalType: "uint256", name: "discountPercentage", type: "uint256" },
+      { internalType: "uint256", name: "expiration", type: "uint256" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "owner",
     outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "nftAddress", type: "address" }],
+    name: "removeNFTDiscount",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -11021,7 +11044,12 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "tokenID", type: "uint256" }],
+    inputs: [
+      { internalType: "address", name: "nftAddress", type: "address" },
+      { internalType: "uint256", name: "tokenID", type: "uint256" },
+      { internalType: "address", name: "tokenAddress", type: "address" },
+      { internalType: "uint256", name: "tokenAmount", type: "uint256" },
+    ],
     name: "subscribeNFT",
     outputs: [],
     stateMutability: "nonpayable",
@@ -45379,13 +45407,12 @@ async function subscribe(tokenAddress, amount) {
     .send({ from: await getCoinbase() });
 }
 
-async function subscribeNFT(tokenId) {
+async function subscribeNFT(nftAddress, tokenId, tokenAddress, tokenAmount) {
   let subscriptionContract = await getContract({ key: "SUBSCRIPTION_NEWBNB2" });
   return await subscriptionContract.methods
-    .subscribeNFT(tokenId)
+    .subscribeNFT(nftAddress, tokenId, tokenAddress, tokenAmount)
     .send({ from: await getCoinbase() });
 }
-
 
 async function subscribeBNB(amount) {
   let subscriptionContract = await getContract({ key: "SUBSCRIPTION_NEWBNB2" });
@@ -45422,10 +45449,10 @@ async function getEstimatedTokenSubscriptionAmountBNB(tokenAddress) {
     .call();
 }
 
-async function getEstimatedTokenSubscriptionAmountBNB2(tokenAddress) {
+async function getEstimatedTokenSubscriptionAmountBNB2(tokenAddress, discountPercentage) {
   let subscriptionContract = await getContract({ key: "SUBSCRIPTION_NEWBNB2" });
   return await subscriptionContract.methods
-    .getEstimatedTokenSubscriptionAmount(tokenAddress)
+    .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
     .call();
 }
 
