@@ -1312,17 +1312,12 @@ const BetaPassNFT = ({
                           </div>
                         )}
                       </div>
-                      {(mintTitle === "sei" ||
-                        mintTitle === "multiversx") && (
+                      {mintTitle === "sei" && (
                         <span
                           className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
                         >
                           <img
-                            src={
-                               mintTitle === "multiversx"
-                                ? multiversLogo
-                                : seiLogo
-                            }
+                            src={seiLogo}
                             style={{ width: 20, height: 20 }}
                             alt=""
                           />{" "}
@@ -1357,6 +1352,22 @@ const BetaPassNFT = ({
                             alt=""
                           />{" "}
                           Viction Giveaway
+                        </a>
+                      )}
+
+                      {mintTitle === "multiversx" && (
+                        <a
+                          className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
+                          href="https://sweepwidget.com/c/multiversx-worldofdypians-giveaway"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <img
+                            src={multiversLogo}
+                            style={{ width: 20, height: 20 }}
+                            alt=""
+                          />{" "}
+                          MULTIVERSX Giveaway
                         </a>
                       )}
                       {/* <img

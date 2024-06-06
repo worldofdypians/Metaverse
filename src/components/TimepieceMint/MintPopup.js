@@ -63,7 +63,7 @@ const MintPopup = ({ active, onClose, data }) => {
           </div>
           <h6 className="mint-popup-title">DogeCoin Beta Pass</h6>
         </>
-      ): data.title === "VICTION" ? (
+      ): data.title === "MULTIVERSX" ? (
         <>
           <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
@@ -71,7 +71,7 @@ const MintPopup = ({ active, onClose, data }) => {
               Live Giveaway
             </h6>
           </div>
-          <h6 className="mint-popup-title">VICTION Beta Pass NFT</h6>
+          <h6 className="mint-popup-title">MULTIVERSX Beta Pass NFT</h6>
         </>
       ) : data.title === "CoinMarketCap" ? (
         <>
@@ -159,9 +159,9 @@ const MintPopup = ({ active, onClose, data }) => {
             </span>
           )}
         </div>
-      ) : data.title === "VICTION" ? (
+      ) : data.title === "MULTIVERSX" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-          {data.title === "VICTION" && (
+          {data.title === "MULTIVERSX" && (
             <span className="popup-available-mint">
               Get access to the game and a unique event filled with surprises
               and rewards!
@@ -208,10 +208,10 @@ const MintPopup = ({ active, onClose, data }) => {
           >
             <button className="btn filled-btn px-4">More</button>
           </Link>
-        ) : data.title === "VICTION" ? (
+        ) : data.title === "MULTIVERSX" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/beta-pass/viction"}
+            to={"/marketplace/beta-pass/multiversx"}
             state={{ event: data.state }}
             className="linear-border"
           >

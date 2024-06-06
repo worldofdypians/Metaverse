@@ -181,6 +181,7 @@ const NewWalletBalance = ({
   dypBalance,
   weeklyplayerData,
   dailyplayerData,
+  skaleplayerDataAmount,
   address,
   coinbase,
   dypBalancebnb,
@@ -1784,7 +1785,7 @@ const NewWalletBalance = ({
                       {getFormattedNumber(
                         Number(userSocialRewardsCached) +
                           Number(weeklyplayerData) +
-                          Number(dailyplayerData) +
+                          Number(dailyplayerData) + Number(skaleplayerDataAmount) +
                           Number(userRank2) +
                           Number(genesisRank2) +
                           Number(treasureRewardMoney) +
