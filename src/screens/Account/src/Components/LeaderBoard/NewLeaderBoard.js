@@ -395,8 +395,7 @@ const NewLeaderBoard = ({
                         ? "move-1"
                         : optionText2 === "core"
                         ? "move-2"
-                        : optionText2 === "sei"
-                        ? "move-3"
+                         
                         : optionText2 === "viction"
                         ? "move-4"
                         : ""
@@ -517,45 +516,7 @@ const NewLeaderBoard = ({
                         ? "CORE"
                         : ""}
                     </span>
-                    <span
-                      onMouseEnter={() => handleMouseEnter("sei")}
-                      onMouseLeave={handleMouseLeave}
-                      className={`
-                     d-flex align-items-center gap-2
-                     
-                     ${
-                       optionText2 === "sei" && "otheroptionsActive"
-                     } optionText col-3`}
-                      style={{ width: "20%" }}
-                      onClick={() => {
-                        handleOption("sei");
-                        setAllData(allSkaleData);
-                      }}
-                    >
-                      <img
-                        src={
-                          optionText2 === "sei"
-                            ? seiActive
-                            : optionText2 !== "sei" && hoverState === "sei"
-                            ? seiWhite
-                            : seiInactive
-                        }
-                        className={`${
-                          optionText2 === "sei"
-                            ? "leaderboard-icon leaderboard-icon-active"
-                            : "leaderboard-icon"
-                        }`}
-                        width={20}
-                        height={20}
-                        style={{ borderRadius: "50%" }}
-                        alt=""
-                      />
-                      {windowSize.width > 768
-                        ? "Sei"
-                        : windowSize.width < 786 && optionText2 === "sei"
-                        ? "Sei"
-                        : ""}
-                    </span>
+                   
                     <span
                       onMouseEnter={() => handleMouseEnter("viction")}
                       onMouseLeave={handleMouseLeave}
