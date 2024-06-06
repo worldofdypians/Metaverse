@@ -4,8 +4,6 @@ import TeamCard from "./components/TeamCard";
 import michael from "./assets/team/mihai.jpg";
 import razvan from "./assets/team/razvan.jpg";
 import teki from "./assets/team/teki.jpg";
-import gino from "./assets/team/gino.jpg";
-import fatjon from "./assets/team/fatjon.jpg";
 import lorena from "./assets/team/lorena.jpg";
 import aldi from "./assets/team/aldi.jpg";
 import gazmend from "./assets/team/gazmend.jpg";
@@ -17,6 +15,8 @@ import cristian from "./assets/team/cristian.jpg";
 import soni from "./assets/team/soni.jpeg";
 import samuel from "./assets/team/samuel.jpeg";
 import arben from "./assets/team/arben.jpg";
+import jeff from "./assets/team/jeff.jpg";
+import alex from "./assets/team/alex.png";
 
 import { useState } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -67,6 +67,7 @@ const OurTeam = () => {
       
                     “When the wind blows, some people build walls, others build windmills” - Gazmend.`,
     },
+   
     {
       id: "toni",
       name: "Renato Toni",
@@ -134,6 +135,22 @@ const OurTeam = () => {
             update my self to the latest Technologies.`,
     },
     {
+      id: "alex",
+      name: "Alex Fatuliaj",
+      position: "Advisor",
+      photo: alex,
+      link: "https://www.linkedin.com/in/afatuliaj/",
+      content: `Co-Founder of Simplicity Group, a tokenomics and research consultancy with a VC arm. Alex is a specialist in behaviour economics, guiding projects from ideation to a launch.`,
+    },
+     {
+      id: "jeff",
+      name: "Jeff Nowak",
+      position: "Advisor",
+      photo: jeff,
+      link: "",
+      content: `Jeff, the Founder of Maven Capital, is a seasoned software engineer boasting over a decade of expertise in cutting-edge technologies such as AI, IoT, and Web3. Leveraging his extensive experience, Jeff provides founders with invaluable strategic advisory services and unparalleled expertise in Go-To-Market (GTM) strategies. His impressive portfolio includes collaborations with leading blockchain projects like Filecoin, IPFS, R3, Polygon, KCC, Telos, among others. Jeff is dedicated to fostering collaborative innovation aimed at achieving widespread adoption within the industry.`,
+    },
+    {
       id: "soni",
       name: "Soni Seli",
       position: "Unity Developer",
@@ -172,10 +189,9 @@ const OurTeam = () => {
     },
   ];
 
-useEffect(() => {
-window.scrollTo(0,0)
-}, [])
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="container-fluid our-team my-5 px-0" id="ourteam">

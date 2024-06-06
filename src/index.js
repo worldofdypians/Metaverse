@@ -6,7 +6,9 @@ import "./app.scss";
 import { BrowserRouter } from "react-router-dom";
 import { Web3ReactProvider } from "web3-connector";
 import { getConnectors } from "web3-connector";
-
+import AuthProvider from "./screens/Account/src/Utils.js/Auth/AuthDetails";
+import { ApolloProvider } from "@apollo/client";
+import client from "./screens/Account/src/apolloConfig";
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 const connectors = getConnectors({
@@ -18,7 +20,11 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
     <Web3ReactProvider connectors={connectors}>
+    <ApolloProvider client={client}>
+      <AuthProvider>
         <App />
+        </AuthProvider>
+    </ApolloProvider>
     </Web3ReactProvider>
     </BrowserRouter>
   </React.StrictMode>

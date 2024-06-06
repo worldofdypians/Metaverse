@@ -116,13 +116,7 @@ const NewChestItem = ({
   };
 
   const handleSecondTask = async (wallet) => {
-    const result = await axios
-      .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task4/${wallet}`
-      )
-      .catch((err) => {
-        console.error(err);
-      });
+
 
       const result2 = await axios
       .get(
@@ -132,8 +126,8 @@ const NewChestItem = ({
         console.error(err);
       });
 
-    if (result && result.status === 200 && result2 && result2.status === 200) {
-      console.log(result);
+    if (result2 && result2.status === 200) {
+      console.log(result2);
     }
   };
 

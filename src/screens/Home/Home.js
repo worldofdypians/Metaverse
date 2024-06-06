@@ -35,6 +35,12 @@ import dogeTreasureHuntPopup from "../../components/TimepieceMint/assets/dogeTre
 import skalePopup from "../../components/TimepieceMint/assets/skalePopup.webp";
 
 import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreasureHunt.webp";
+import corePopupBg from "../../components/TimepieceMint/assets/corePopupBg.webp";
+import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
+import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
+
+
+
 
 import confluxTreasureHunt from "../../components/TimepieceMint/assets/confluxTreasureHunt.png";
 import LiveEvents from "./LiveEvents/LiveEvents";
@@ -105,10 +111,10 @@ const Home = ({
     state: "dyp",
   };
 
-  const cmcPopupInfo = {
-    title: "Treasure Hunt",
-    img: cmcTreasureHuntPopup,
-    state: "cmc",
+  const corePopupInfo = {
+    title: "MULTIVERSX",
+    img: multiversXPopupBg,
+    state: "multiversx",
   };
 
   const [activePopup, setActivePopup] = useState(false);
@@ -144,7 +150,7 @@ const Home = ({
       >
         <MintPopup
           active={activePopup}
-          data={entryCampaignPopup}
+          data={corePopupInfo}
           onClose={() => setActivePopup(false)}
         />
       </OutsideClickHandler>
