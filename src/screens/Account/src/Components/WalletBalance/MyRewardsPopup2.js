@@ -45,6 +45,7 @@ const MyRewardsPopupNew = ({
   allChests,
   weeklyplayerData,
   dailyplayerData,
+  skaleplayerDataAmount,
   userRank2,
   userSocialRewards,
   dogePrice,
@@ -707,7 +708,7 @@ const MyRewardsPopupNew = ({
                       Number(seiEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd) +
-                      Number(dailyplayerData) +
+                      Number(dailyplayerData) + Number(skaleplayerDataAmount) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(genesisRank2) +
@@ -880,7 +881,7 @@ const MyRewardsPopupNew = ({
                     2
                   )
                 : getFormattedNumber(
-                    Number(dailyplayerData) +
+                    Number(dailyplayerData) + Number(skaleplayerDataAmount) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(genesisRank2),
@@ -1197,7 +1198,7 @@ const MyRewardsPopupNew = ({
                   {previousRewards
                     ? getFormattedNumber(leaderboardTotalData, 2)
                     : getFormattedNumber(
-                        dailyplayerData + weeklyplayerData + userRank2,
+                        Number(dailyplayerData) + Number(weeklyplayerData) + Number(userRank2) ,
                         2
                       )}
                 </span>
@@ -1208,7 +1209,7 @@ const MyRewardsPopupNew = ({
                   $
                   {previousRewards
                     ? getFormattedNumber(leaderboardSkaleTotalData, 2)
-                    : getFormattedNumber(0, 2)}
+                    : getFormattedNumber( Number(skaleplayerDataAmount), 2)}
                 </span>
               </div>
               {/* <div className="d-flex w-100 justify-content-between gap-2">
