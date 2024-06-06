@@ -7,7 +7,7 @@ const ExplorerGrid = () => {
 
   return (
     <div className="px-3 px-lg-5 py-4 stats-wrapper d-flex justify-content-center" id="explorer">
-      <div className="custom-container w-100">
+      <div className="custom-container ">
       <div className="row">
       <div className="col-12 col-lg-3 d-flex align-items-center justify-content-start">
         <h2 className="font-montserrat builders-title explorer-grid-title px-0">

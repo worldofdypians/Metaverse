@@ -139,7 +139,7 @@ const MainHero = () => {
   const betaSlider = useRef(null);
   return (
     <div className="mainhero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-end gap-5">
-      <div className="custom-container w-100">
+      <div className="custom-container ">
         <div className="d-flex flex-column w-100">
           <div className="row mx-0 align-items-center justify-content-between gap-2">
             <div className="col-lg-6 ps-0">
@@ -162,7 +162,7 @@ const MainHero = () => {
       </div>
       <div className="opacitywrapper position-relative bottom-0">
         <div className="d-flex flex-column gap-4 position-relative">
-          <div className="custom-container m-auto p-0 w-100">
+          <div className="custom-container m-auto p-0 ">
             <Slider {...settings} ref={betaSlider}>
               {dypProducts.slice(0, 4).map((item, index) => (
                 <NavLink to={`${item.link}`}>
@@ -176,7 +176,7 @@ const MainHero = () => {
             </Slider>
           </div>
           <div className="d-flex flex-column mx-0 align-items-center justify-content-between gap-2 buy-items-all-wrapper p-2">
-            <div className="custom-container w-100 p-0">
+            <div className="custom-container p-0">
               <h4 className="main-hero-subtitle font-montserrat text-start mb-3">
                 Buy $WoD on
               </h4>

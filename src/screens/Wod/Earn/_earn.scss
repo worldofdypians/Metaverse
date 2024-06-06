@@ -1,0 +1,167 @@
+.clickable-div {
+    cursor: pointer;
+  }
+
+  .hero-premium-btn {
+    border-radius: 8px;
+    background: linear-gradient(95deg, #d62267 0.51%, #ea1aa5 100%);
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 6px 12px;
+    border: none;
+    width: fit-content;
+  }
+  
+  .hero-stake-eth-btn {
+    border-radius: 8px;
+    background: linear-gradient(95deg, #00b1d2 0.51%, #00be8c 100%);
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 6px 12px;
+    border: none;
+    width: fit-content;
+  }
+  
+  .hero-stake-bnb-btn {
+    border-radius: 8px;
+    background: linear-gradient(95deg, #83ac40 0.51%, #008657 100%);
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 6px 12px;
+    border: none;
+    width: fit-content;
+  }
+  
+  .hero-stake-avax-btn {
+    border-radius: 8px;
+    background: linear-gradient(95deg, #9b61c3 0.51%, #008de2 100%);
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border: none;
+    width: fit-content;
+    padding: 6px 12px;
+  }
+
+  .earn-other-hero-title {
+    color: #fff;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  
+  .earn-other-hero-desc {
+    color: #fff;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+
+.premiumBgDesktop {
+    background: url(../../../assets/wodAssets/premiumBg.webp);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 150px;
+    border-radius: 8px;
+  }
+  
+  .avaxBgDesktop {
+    background: url(../../../assets/wodAssets/avaxBg.webp);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 150px;
+    border-radius: 8px;
+  }
+  
+  .ethBgDesktop {
+    background: url(../../../assets/wodAssets/ethBg.webp);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 150px;
+    border-radius: 8px;
+  }
+  
+  .bscBgDesktop {
+    background: url(../../../assets/wodAssets/bscBg.webp);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 150px;
+    border-radius: 8px;
+  }
+  
+  .cawsBgDesktop {
+    background: url(../../../assets/wodAssets/cawsBg.webp);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 150px;
+    border-radius: 8px;
+  }
+  
+  @media only screen and (max-width: 500px) {
+    .cawsBgDesktop {
+      background: url(../../../assets/wodAssets/cawsBgMobile.webp);
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      min-height: 350px;
+      border-radius: 8px;
+    }
+  
+    .bscBgDesktop {
+      background: url(../../../assets/wodAssets/bscBgMobile.webp);
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      min-height: 350px;
+    }
+  
+    .ethBgDesktop {
+      background: url(../../../assets/wodAssets/ethBgMobile.webp);
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      min-height: 350px;
+      border-radius: 8px;
+    }
+  
+    .premiumBgDesktop {
+      background: url(../../../assets/wodAssets/premiumBgMobile.webp);
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      min-height: 350px;
+      border-radius: 8px;
+    }
+  
+    .avaxBgDesktop {
+      background: url(../../../assets/wodAssets/avaxBgMobile.webp);
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      min-height: 350px;
+      border-radius: 8px;
+    }
+  }

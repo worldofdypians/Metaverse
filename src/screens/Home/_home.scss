@@ -1,11 +1,14 @@
 .home-main-wrapper {
   gap: 80px;
   max-width: 2400px;
-  min-width: 2400px;
+  width: 100%;
   // background-image: url("../../assets/siteBackground.webp");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   overflow-x: hidden;
+  @media screen and (max-width: 1600px) {
+    width:  fit-content !important;
+  }
 }
 
 .opacitywrapper {
