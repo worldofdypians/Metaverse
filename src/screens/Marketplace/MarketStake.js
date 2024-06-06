@@ -1050,7 +1050,12 @@ const MarketStake = ({
             chainId={chainId}
             coinbase={coinbase}
             handleSwitchNetwork={handleSwitchNetwork}
-            onSuccessDeposit={onSuccessDeposit}
+            onSuccessDeposit={() => {
+              onSuccessDeposit();
+              setTimeout(() => {
+                setgetPremiumPopup(false);
+              }, 2000);
+            }}
             onClose={() => {
               setgetPremiumPopup(false);
             }}
