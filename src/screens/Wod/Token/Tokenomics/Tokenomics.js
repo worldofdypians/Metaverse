@@ -10,7 +10,7 @@ const Tokenomics = () => {
 
   return (
     <div className="tokenomics-wrapper py-5 mint-wrappernew container-fluid justify-content-center position-relative d-flex align-items-center">
-      <div className="custom-container">
+      <div className="custom-container w-100">
         <h4 className="main-hero-title font-montserrat text-center mb-3">
           WoD{" "}
           <mark className="font-montserrat main-hero-title explore-tag pe-2">
