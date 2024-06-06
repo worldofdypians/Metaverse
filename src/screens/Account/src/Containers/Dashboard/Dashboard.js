@@ -3485,6 +3485,15 @@ function Dashboard({
 
   const handleSubscriptionTokenChange = async (tokenAddress) => {
     const token = tokenAddress;
+    if(token.toLowerCase() ===
+    "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()) {
+      if(nftPremium_total>0) {
+        setapproveStatus('initial')
+      } else {
+        setapproveStatus('deposit')
+      }
+      
+    }
     let tokenDecimals =
       chainId === 1
         ? window.config.subscriptioneth_tokens[token]?.decimals
@@ -3579,7 +3588,11 @@ function Dashboard({
         .then(() => {
           setloadspinner(false);
           setisApproved(true);
-          setapproveStatus("approveAmount");
+          if(selectedSubscriptionToken.toLowerCase() ===
+          "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()) {
+            setapproveStatus("deposit");
+          } else setapproveStatus("approveAmount");
+          
         })
         .catch((e) => {
           setstatus(e?.message);
