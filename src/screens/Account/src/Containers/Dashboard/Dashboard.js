@@ -3940,7 +3940,6 @@ function Dashboard({
             }, 2000);
           }
           setloadspinnerSub(false);
-          setIsPremium(true);
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
           await axios
@@ -4079,7 +4078,6 @@ function Dashboard({
             }, 2000);
           }
           setloadspinnerSub(false);
-          setIsPremium(true);
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
           await axios
