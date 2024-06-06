@@ -83,6 +83,7 @@ function Dashboard({
   dyptokenData_old,
   handleSwitchChain,
   onSubscribeSuccess,
+  isPremium,
 }) {
   const { email, logout } = useAuth();
 
@@ -413,7 +414,7 @@ function Dashboard({
   const [allActiveOffers, setallOffers] = useState([]);
   const [showSyncModal, setshowSyncModal] = useState(false);
   const [isonlink, setIsOnLink] = useState(false);
-  const [isPremium, setIsPremium] = useState(false);
+  // const [isPremium, setIsPremium] = useState(false);
   const [myRewardsPopup, setmyRewardsPopup] = useState(false);
   const [getPremiumPopup, setgetPremiumPopup] = useState(false);
   const [balancePopup, setBalancePopup] = useState(false);
@@ -658,7 +659,7 @@ function Dashboard({
   const [userDataSkale, setUserDataSkale] = useState({});
   const [userDataSkaleMonthly, setUserDataSkaleMonthly] = useState({});
   const [userDataGenesis, setUserDataGenesis] = useState({});
-  const [inactiveBoard, setInactiveBoard] = useState(false);
+  const [skaleplayerDataAmount, setskaleplayerDataAmount] = useState([]);
   const [dailyplayerData, setdailyplayerData] = useState([]);
   const [dailyplayerDataAmount, setdailyplayerDataAmount] = useState([]);
   const [weeklyplayerData, setweeklyplayerData] = useState([]);
@@ -1268,8 +1269,14 @@ function Dashboard({
     userDataSkaleMonthly,
   ]);
 
-  let oneJune = new Date("2024-06-01 11:11:00 GMT+02:00");
-  let oneJuly = new Date("2024-07-01 11:11:00 GMT+02:00");
+  let today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth();
+
+  // Calculate the first day of the next month
+  const nextMonth = (currentMonth + 1) % 12;
+  const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
+  const firstOfNextMonth = new Date(nextYear, nextMonth, 1, 11, 11, 0);
 
   const handleSetAvailableTime = (value) => {
     setGoldenPassRemainingTime(value);
@@ -1534,12 +1541,8 @@ function Dashboard({
         //     Number(remainingTime_miliseconds) +
         //     Number(additional_remaining_time_timestamp * 1000);
 
-        setcountdown700(
-          today < oneJune ? oneJune.getTime() : oneJuly.getTime()
-        );
-        handleSetAvailableTime(
-          today < oneJune ? oneJune.getTime() : oneJuly.getTime()
-        );
+        setcountdown700(firstOfNextMonth.getTime());
+        handleSetAvailableTime(firstOfNextMonth.getTime());
 
         // }
       } else if (
@@ -1562,12 +1565,8 @@ function Dashboard({
         //     Number(remainingTime_miliseconds2) +
         //     Number(additional_remaining_time_timestamp2 * 1000);
 
-        setcountdown700(
-          today < oneJune ? oneJune.getTime() : oneJuly.getTime()
-        );
-        handleSetAvailableTime(
-          today < oneJune ? oneJune.getTime() : oneJuly.getTime()
-        );
+        setcountdown700(firstOfNextMonth.getTime());
+        handleSetAvailableTime(firstOfNextMonth.getTime());
 
         // }
       } else if (
@@ -1618,12 +1617,8 @@ function Dashboard({
           today < finalDateofBundle &&
           today.getFullYear() === finalDateofBundleFormatted.getFullYear()
         ) {
-          setcountdown700(
-            today < oneJune ? oneJune.getTime() : oneJuly.getTime()
-          );
-          handleSetAvailableTime(
-            today < oneJune ? oneJune.getTime() : oneJuly.getTime()
-          );
+          setcountdown700(firstOfNextMonth.getTime());
+          handleSetAvailableTime(firstOfNextMonth.getTime());
 
           // if (
           //   bundlesBought <= 3 &&
@@ -1674,12 +1669,8 @@ function Dashboard({
             : datewhenBundleBoughtv1;
 
         if (today < finalDateofBundle && bundlesBought !== 0) {
-          setcountdown700(
-            today < oneJune ? oneJune.getTime() : oneJuly.getTime()
-          );
-          handleSetAvailableTime(
-            today < oneJune ? oneJune.getTime() : oneJuly.getTime()
-          );
+          setcountdown700(firstOfNextMonth.getTime());
+          handleSetAvailableTime(firstOfNextMonth.getTime());
         } else if (today > finalDateofBundle && bundlesBought > 0) {
           setcountdown700();
           handleSetAvailableTime();
@@ -1701,12 +1692,8 @@ function Dashboard({
 
             handleSetAvailableTime(finalDateofBundle);
           } else {
-            setcountdown700(
-              today < oneJune ? oneJune.getTime() : oneJuly.getTime()
-            );
-            handleSetAvailableTime(
-              today < oneJune ? oneJune.getTime() : oneJuly.getTime()
-            );
+            setcountdown700(firstOfNextMonth.getTime());
+            handleSetAvailableTime(firstOfNextMonth.getTime());
           }
         } else if (today > finalDateofBundle && bundlesBought > 0) {
           setcountdown700();
@@ -1716,14 +1703,9 @@ function Dashboard({
     } else if (today_date > 25) {
       const finalDateofBundle =
         dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
-
       if (today_date < finalDateofBundle) {
-        setcountdown700(
-          today < oneJune ? oneJune.getTime() : oneJuly.getTime()
-        );
-        handleSetAvailableTime(
-          today < oneJune ? oneJune.getTime() : oneJuly.getTime()
-        );
+        setcountdown700(firstOfNextMonth.getTime());
+        handleSetAvailableTime(firstOfNextMonth.getTime());
       } else {
         setcountdown700();
         handleSetAvailableTime();
@@ -2142,14 +2124,6 @@ function Dashboard({
   }
 
   const handleFirstTask = async (wallet) => {
-    const result = await axios
-      .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task3/${wallet}`
-      )
-      .catch((e) => {
-        console.error(e);
-      });
-
     const result2 = await axios
       .get(
         `https://api.worldofdypians.com/api/airdrop-alliance/task5/${wallet}`
@@ -2158,8 +2132,8 @@ function Dashboard({
         console.error(e);
       });
 
-    if (result && result.status === 200 && result2 && result2.status === 200) {
-      console.log(result.data.result);
+    if (result2 && result2.status === 200) {
+      console.log(result2.data.result);
       setTimeout(() => {
         if (isonlink) {
           window.location.reload();
@@ -2186,6 +2160,7 @@ function Dashboard({
           setshowSyncModal(false);
           setsyncStatus("initial");
         }, 1000);
+        onSubscribeSuccess(account);
 
         if (isonlink) {
           handleFirstTask(account);
@@ -2245,7 +2220,8 @@ function Dashboard({
               ? 0
               : userPosition === 10
               ? Number(monthlyPrizes[9]) + Number(monthlyPrizesGolden[9])
-              : Number(monthlyPrizes[userPosition]) + Number(monthlyPrizesGolden[userPosition])
+              : Number(monthlyPrizes[userPosition]) +
+                Number(monthlyPrizesGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2270,14 +2246,12 @@ function Dashboard({
 
         if (testArray.length > 0 && testArray2.length > 0) {
           setActivePlayerMonthly(true);
-        }
-
-        if (testArray.length > 0 && testArray2.length === 0) {
+          setUserDataMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
           setActivePlayerMonthly(false);
           setUserDataMonthly(...testArray);
         }
-      }
-      if (testArray.length > 0) {
+      } else if (testArray.length > 0) {
         setActivePlayerMonthly(false);
         setUserDataMonthly(...testArray);
       }
@@ -2397,6 +2371,31 @@ function Dashboard({
         setActiveSkalePlayer(false);
         setUserDataSkale(...testArray);
       }
+      const userPosition = testArray[0].position;
+
+      if (isPremium) {
+        setskaleplayerDataAmount(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesWeekly[9]) + Number(skalePrizesWeeklyGolden[9])
+              : Number(skalePrizesWeekly[userPosition]) +
+                Number(skalePrizesWeeklyGolden[userPosition])
+            : 0
+        );
+      } else if (!isPremium) {
+        setskaleplayerDataAmount(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesWeekly[9])
+              : Number(skalePrizesWeekly[userPosition])
+            : 0
+        );
+      }
+
     }
   };
 
@@ -2514,7 +2513,8 @@ function Dashboard({
               ? 0
               : userPosition === 10
               ? Number(dailyPrizes[9]) + Number(dailyPrizesGolden[9])
-              : Number(dailyPrizes[userPosition])+ Number(dailyPrizesGolden[userPosition])
+              : Number(dailyPrizes[userPosition]) +
+                Number(dailyPrizesGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2590,7 +2590,8 @@ function Dashboard({
               ? 0
               : userPosition === 10
               ? Number(weeklyPrizes[9]) + Number(weeklyPrizesGolden[9])
-              : Number(weeklyPrizes[userPosition]) + Number(weeklyPrizesGolden[userPosition])
+              : Number(weeklyPrizes[userPosition]) +
+                Number(weeklyPrizesGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2612,427 +2613,195 @@ function Dashboard({
 
         if (testArray.length > 0 && testArray2.length > 0) {
           setActivePlayerWeekly(true);
-        }
-        if (testArray.length > 0 && testArray2.length === 0) {
+          setUserDataWeekly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
           setActivePlayerWeekly(false);
           setUserDataWeekly(...testArray);
         }
-      }
-      if (testArray.length > 0) {
+      } else if (testArray.length > 0) {
         setActivePlayerWeekly(false);
         setUserDataWeekly(...testArray);
       }
     }
   };
 
-  const fetchTreasureHuntData = async (email, userAddress) => {
-    try {
-      // console.log(email, window.infuraWeb3.utils.toChecksumAddress(userAddress))
-      const response = await fetch(
-        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
-        {
-          body: JSON.stringify({
-            email: email,
-            publicAddress: userAddress,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          redirect: "follow",
-          mode: "cors",
-        }
-      );
-      if (response.status === 200) {
-        const responseData = await response.json();
-        if (responseData.events) {
-          const coingeckoEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "coingecko";
-          });
-          const confluxEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "conflux";
-          });
-          const skaleEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "skale";
-          });
-          const seiEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "sei";
-          });
-          const victionEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "viction";
-          });
-          const coreEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "core";
-          });
-          const gateEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "gate";
-          });
 
-          const baseEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "base";
-          });
-          const dypEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "all";
-          });
+  // const refreshSubscription = async (addr) => {
+  //   const result = window.checkPremium(addr);
 
-          const dogeEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "dogecoin";
-          });
+  //   let subscribedPlatformTokenAmountETH;
+  //   let subscribedPlatformTokenAmountCfx;
+  //   let subscribedPlatformTokenAmountBNB;
+  //   let subscribedPlatformTokenAmountAvax;
+  //   let subscribedPlatformTokenAmountBase;
+  //   let subscribedPlatformTokenAmountSkale;
+  //   let subscribedPlatformTokenAmountCore;
+  //   let subscribedPlatformTokenAmountViction;
+  //   let subscribedPlatformTokenAmountSei;
 
-          const cmcEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "coinmarketcap";
-          });
+  //   const web3eth = window.infuraWeb3;
+  //   const web3cfx = window.confluxWeb3;
+  //   const web3base = window.baseWeb3;
+  //   const web3bnb = window.bscWeb3;
+  //   const web3avax = window.avaxWeb3;
+  //   const web3skale = window.skaleWeb3;
+  //   const web3core = window.coreWeb3;
+  //   const web3viction = window.victionWeb3;
+  //   const web3sei = window.seiWeb3;
 
-          const dypPremiumEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "subscriber";
-          });
+  //   const CfxABI = window.SUBSCRIPTION_CFX_ABI;
+  //   const BaseABI = window.SUBSCRIPTION_BASE_ABI;
+  //   const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
+  //   const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
+  //   const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
+  //   const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
+  //   const CoreABI = window.SUBSCRIPTION_CORE_ABI;
+  //   const VicitonABI = window.SUBSCRIPTION_VICTION_ABI;
+  //   const SeiABI = window.SUBSCRIPTION_SKALE_ABI;
 
-          if (dypPremiumEvent && dypPremiumEvent[0]) {
-            const userEarnedusd =
-              dypPremiumEvent[0].reward.earn.total /
-              dypPremiumEvent[0].reward.earn.multiplier;
-            const pointsdypius = dypPremiumEvent[0].reward.earn.totalPoints;
+  //   const ethsubscribeAddress = window.config.subscription_neweth_address;
+  //   const cfxsubscribeAddress = window.config.subscription_cfx_address;
+  //   const basesubscribeAddress = window.config.subscription_base_address;
+  //   const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+  //   const avaxsubscribeAddress = window.config.subscription_newavax_address;
+  //   const skalesubscribeAddress = window.config.subscription_skale_address;
+  //   const coresubscribeAddress = window.config.subscription_core_address;
+  //   const victionsubscribeAddress = window.config.subscription_viction_address;
+  //   const seisubscribeAddress = window.config.subscription_sei_address;
 
-            setdypiusPremiumPoints(pointsdypius);
-            setdypiusPremiumEarnUsd(userEarnedusd);
-            setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
-          }
+  //   const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
+  //   const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
+  //   const skalecontract = new web3skale.eth.Contract(
+  //     SkaleABI,
+  //     skalesubscribeAddress
+  //   );
 
-          if (dypEvent && dypEvent[0]) {
-            const userEarnedDyp =
-              dypEvent[0].reward.earn.total /
-              dypEvent[0].reward.earn.multiplier;
-            setDypiusEarnUsd(dypTokenData * userEarnedDyp);
-            setDypiusEarnTokens(userEarnedDyp);
-          }
+  //   const basecontract = new web3base.eth.Contract(
+  //     BaseABI,
+  //     basesubscribeAddress
+  //   );
 
-          if (skaleEvent && skaleEvent[0]) {
-            const points = skaleEvent[0].reward.earn.totalPoints;
-            setSkalePoints(points);
-            const usdValue =
-              skaleEvent[0].reward.earn.total /
-              skaleEvent[0].reward.earn.multiplier;
-            setSkaleEarnUsd(usdValue);
-            if (skalePrice !== 0) {
-              setSkaleEarnToken(usdValue / skalePrice);
-            }
-          }
-          if (seiEvent && seiEvent[0]) {
-            const points = seiEvent[0].reward.earn.totalPoints;
-            setSeiPoints(points);
-            const usdValue =
-              seiEvent[0].reward.earn.total /
-              seiEvent[0].reward.earn.multiplier;
-            setSeiEarnUsd(usdValue);
-            if (seiPrice !== 0) {
-              setSeiEarnToken(usdValue / seiPrice);
-            }
-          }
-          if (coreEvent && coreEvent[0]) {
-            const points = coreEvent[0].reward.earn.totalPoints;
-            setCorePoints(points);
-            const usdValue =
-              coreEvent[0].reward.earn.total /
-              coreEvent[0].reward.earn.multiplier;
-            setCoreEarnUsd(usdValue);
-            if (corePrice !== 0) {
-              setCoreEarnToken(usdValue / corePrice);
-            }
-          }
-          if (victionEvent && victionEvent[0]) {
-            const points = victionEvent[0].reward.earn.totalPoints;
-            setVictionPoints(points);
-            const usdValue =
-              victionEvent[0].reward.earn.total /
-              victionEvent[0].reward.earn.multiplier;
-            setVictionEarnUsd(usdValue);
-            if (victionPrice !== 0) {
-              setVictionEarnToken(usdValue / victionPrice);
-            }
-          }
+  //   const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
+  //   const avaxcontract = new web3avax.eth.Contract(
+  //     AvaxABI,
+  //     avaxsubscribeAddress
+  //   );
 
-          if (coingeckoEvent && coingeckoEvent[0]) {
-            const points = coingeckoEvent[0].reward.earn.totalPoints;
-            setuserPoints(points);
-            const usdValue =
-              coingeckoEvent[0].reward.earn.total /
-              coingeckoEvent[0].reward.earn.multiplier;
-            setuserEarnUsd(usdValue);
-            if (bnbPrice !== 0) {
-              setuserEarnETH(usdValue / bnbPrice);
-            }
-          }
+  //   const corecontract = new web3core.eth.Contract(
+  //     CoreABI,
+  //     coresubscribeAddress
+  //   );
 
-          if (cmcEvent && cmcEvent[0]) {
-            const points = cmcEvent[0].reward.earn.totalPoints;
-            setcmcuserPoints(points);
-            const usdValue =
-              cmcEvent[0].reward.earn.total /
-              cmcEvent[0].reward.earn.multiplier;
-            setcmcuserEarnUsd(usdValue);
-            if (bnbPrice !== 0) {
-              setcmcuserEarnETH(usdValue / bnbPrice);
-            }
-          }
+  //   const victioncontract = new web3viction.eth.Contract(
+  //     VicitonABI,
+  //     victionsubscribeAddress
+  //   );
 
-          if (dogeEvent && dogeEvent[0]) {
-            const points = dogeEvent[0].reward.earn.totalPoints;
-            setDogeUserPoints(points);
-            const usdValue =
-              dogeEvent[0].reward.earn.total /
-              dogeEvent[0].reward.earn.multiplier;
-            setDogeEarnUSD(usdValue);
-            if (dogePrice !== 0) {
-              setDogeEarnBNB(usdValue / dogePrice);
-            }
-          }
+  //   const seicontract = new web3sei.eth.Contract(SeiABI, seisubscribeAddress);
 
-          if (confluxEvent && confluxEvent[0]) {
-            const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
-            setConfluxUserPoints(cfxPoints);
+  //   if (addr) {
+  //     subscribedPlatformTokenAmountETH = await ethcontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-            if (confluxEvent[0].reward.earn.multiplier !== 0) {
-              const cfxUsdValue =
-                confluxEvent[0].reward.earn.total /
-                confluxEvent[0].reward.earn.multiplier;
-              setConfluxEarnUSD(cfxUsdValue);
-              if (cfxPrice !== 0) {
-                setConfluxEarnCFX(cfxUsdValue / cfxPrice);
-              }
-            }
-          }
+  //     subscribedPlatformTokenAmountCfx = await cfxcontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-          if (gateEvent && gateEvent[0]) {
-            const gatePoints = gateEvent[0].reward.earn.totalPoints;
-            setGateUserPoints(gatePoints);
-            if (gateEvent[0].reward.earn.multiplier !== 0) {
-              const gateUsdValue =
-                gateEvent[0].reward.earn.total /
-                gateEvent[0].reward.earn.multiplier;
-              setGateEarnUSD(gateUsdValue);
-              if (bnbPrice !== 0) {
-                setGateEarnBNB(gateUsdValue / bnbPrice);
-              }
-            }
-          }
+  //     subscribedPlatformTokenAmountBase = await basecontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-          if (baseEvent && baseEvent[0]) {
-            const basePoints = baseEvent[0].reward.earn.totalPoints;
-            setBaseUserPoints(basePoints);
-            if (baseEvent[0].reward.earn.multiplier !== 0) {
-              const baseUsdValue =
-                baseEvent[0].reward.earn.total /
-                baseEvent[0].reward.earn.multiplier;
-              setBaseEarnUSD(baseUsdValue);
-              if (ethTokenData !== 0) {
-                setBaseEarnETH(baseUsdValue / ethTokenData);
-              }
-            }
-          }
-        }
-      } else {
-        console.log(`Request failed with status ${response.status}`);
-      }
-    } catch (error) {
-      console.log("Error:", error);
-    }
-  };
+  //     subscribedPlatformTokenAmountBNB = await bnbcontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-  const refreshSubscription = async (addr) => {
-    const result = window.checkPremium(addr);
+  //     subscribedPlatformTokenAmountAvax = await avaxcontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-    let subscribedPlatformTokenAmountETH;
-    let subscribedPlatformTokenAmountCfx;
-    let subscribedPlatformTokenAmountBNB;
-    let subscribedPlatformTokenAmountBNB2;
-    let subscribedPlatformTokenAmountAvax;
-    let subscribedPlatformTokenAmountBase;
-    let subscribedPlatformTokenAmountSkale;
-    let subscribedPlatformTokenAmountCore;
-    let subscribedPlatformTokenAmountViction;
-    let subscribedPlatformTokenAmountSei;
+  //     subscribedPlatformTokenAmountSkale = await skalecontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-    const web3eth = window.infuraWeb3;
-    const web3cfx = window.confluxWeb3;
-    const web3base = window.baseWeb3;
-    const web3bnb = window.bscWeb3;
-    const web3avax = window.avaxWeb3;
-    const web3skale = window.skaleWeb3;
-    const web3core = window.coreWeb3;
-    const web3viction = window.victionWeb3;
-    const web3sei = window.seiWeb3;
+  //     subscribedPlatformTokenAmountCore = await corecontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-    const CfxABI = window.SUBSCRIPTION_CFX_ABI;
-    const BaseABI = window.SUBSCRIPTION_BASE_ABI;
-    const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
-    const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
-    const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
-    const BnbABI2 = window.SUBSCRIPTION_NEWBNB2_ABI;
-    const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
-    const CoreABI = window.SUBSCRIPTION_CORE_ABI;
-    const VicitonABI = window.SUBSCRIPTION_VICTION_ABI;
-    const SeiABI = window.SUBSCRIPTION_SKALE_ABI;
+  //     subscribedPlatformTokenAmountViction = await victioncontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-    const ethsubscribeAddress = window.config.subscription_neweth_address;
-    const cfxsubscribeAddress = window.config.subscription_cfx_address;
-    const basesubscribeAddress = window.config.subscription_base_address;
-    const bnbsubscribeAddress = window.config.subscription_newbnb_address;
-    const bnbsubscribeAddress2 = window.config.subscription_newbnb2_address;
+  //     subscribedPlatformTokenAmountSei = await seicontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
 
-    const avaxsubscribeAddress = window.config.subscription_newavax_address;
-    const skalesubscribeAddress = window.config.subscription_skale_address;
-    const coresubscribeAddress = window.config.subscription_core_address;
-    const victionsubscribeAddress = window.config.subscription_viction_address;
-    const seisubscribeAddress = window.config.subscription_sei_address;
-
-    const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
-    const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
-    const skalecontract = new web3skale.eth.Contract(
-      SkaleABI,
-      skalesubscribeAddress
-    );
-
-    const basecontract = new web3base.eth.Contract(
-      BaseABI,
-      basesubscribeAddress
-    );
-
-    const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
-    const bnbcontract2 = new web3bnb.eth.Contract(
-      BnbABI2,
-      bnbsubscribeAddress2
-    );
-
-    const avaxcontract = new web3avax.eth.Contract(
-      AvaxABI,
-      avaxsubscribeAddress
-    );
-
-    const corecontract = new web3core.eth.Contract(
-      CoreABI,
-      coresubscribeAddress
-    );
-
-    const victioncontract = new web3viction.eth.Contract(
-      VicitonABI,
-      victionsubscribeAddress
-    );
-
-    const seicontract = new web3sei.eth.Contract(SeiABI, seisubscribeAddress);
-
-    if (addr) {
-      subscribedPlatformTokenAmountETH = await ethcontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountCfx = await cfxcontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountBase = await basecontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountBNB = await bnbcontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountBNB2 = await bnbcontract2.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountAvax = await avaxcontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountSkale = await skalecontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountCore = await corecontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountViction = await victioncontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountSei = await seicontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      if (
-        subscribedPlatformTokenAmountCfx == "0" &&
-        subscribedPlatformTokenAmountETH == "0" &&
-        subscribedPlatformTokenAmountBase == "0" &&
-        subscribedPlatformTokenAmountBNB == "0" &&
-        subscribedPlatformTokenAmountBNB2 == "0" &&
-        subscribedPlatformTokenAmountAvax == "0" &&
-        subscribedPlatformTokenAmountCore == "0" &&
-        subscribedPlatformTokenAmountViction == "0" &&
-        subscribedPlatformTokenAmountSkale == "0" &&
-        subscribedPlatformTokenAmountSei == "0" &&
-        result === false
-      ) {
-        setIsPremium(false);
-      }
-      if (
-        subscribedPlatformTokenAmountCfx != "0" ||
-        subscribedPlatformTokenAmountETH != "0" ||
-        subscribedPlatformTokenAmountBase != "0" ||
-        subscribedPlatformTokenAmountBNB != "0" ||
-        subscribedPlatformTokenAmountBNB2 != "0" ||
-        subscribedPlatformTokenAmountAvax != "0" ||
-        subscribedPlatformTokenAmountCore != "0" ||
-        subscribedPlatformTokenAmountViction != "0" ||
-        subscribedPlatformTokenAmountSkale != "0" ||
-        subscribedPlatformTokenAmountSei != "0" ||
-        result === true
-      ) {
-        setIsPremium(true);
-      }
-    }
-  };
+  //     if (
+  //       subscribedPlatformTokenAmountCfx == "0" &&
+  //       subscribedPlatformTokenAmountETH == "0" &&
+  //       subscribedPlatformTokenAmountBase == "0" &&
+  //       subscribedPlatformTokenAmountBNB == "0" &&
+  //       subscribedPlatformTokenAmountAvax == "0" &&
+  //       subscribedPlatformTokenAmountCore == "0" &&
+  //       subscribedPlatformTokenAmountViction == "0" &&
+  //       subscribedPlatformTokenAmountSkale == "0" &&
+  //       subscribedPlatformTokenAmountSei == "0" &&
+  //       result === false
+  //     ) {
+  //       setIsPremium(false);
+  //     }
+  //     if (
+  //       subscribedPlatformTokenAmountCfx != "0" ||
+  //       subscribedPlatformTokenAmountETH != "0" ||
+  //       subscribedPlatformTokenAmountBase != "0" ||
+  //       subscribedPlatformTokenAmountBNB != "0" ||
+  //       subscribedPlatformTokenAmountAvax != "0" ||
+  //       subscribedPlatformTokenAmountCore != "0" ||
+  //       subscribedPlatformTokenAmountViction != "0" ||
+  //       subscribedPlatformTokenAmountSkale != "0" ||
+  //       subscribedPlatformTokenAmountSei != "0" ||
+  //       result === true
+  //     ) {
+  //       setIsPremium(true);
+  //     }
+  //   }
+  // };
 
   const getOpenedChestPerWallet = async () => {
     if (email) {
@@ -4238,7 +4007,7 @@ function Dashboard({
             setselectedChainforPremium(selectedchain);
           }
           setloadspinnerSub(false);
-          setIsPremium(true);
+          onSubscribeSuccess();
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
           await axios
@@ -4749,33 +4518,33 @@ function Dashboard({
     }
   }, [dataNonce]);
 
-  useEffect(() => {
-    if (
-      data &&
-      data.getPlayer &&
-      data.getPlayer.wallet &&
-      data.getPlayer.wallet.publicAddress &&
-      email &&
-      isConnected
-    ) {
-      fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
-      refreshSubscription(data.getPlayer.wallet.publicAddress);
-      setuserWallet(data.getPlayer.wallet.publicAddress);
-    } else if (coinbase && isConnected) {
-      refreshSubscription(coinbase);
-    } else if (
-      data &&
-      data.getPlayer &&
-      data.getPlayer.wallet &&
-      data.getPlayer.wallet.publicAddress &&
-      email &&
-      !isConnected
-    ) {
-      refreshSubscription(data.getPlayer.wallet.publicAddress);
-    } else {
-      setIsPremium(false);
-    }
-  }, [data, email, coinbase, isConnected]);
+  // useEffect(() => {
+  //   if (
+  //     data &&
+  //     data.getPlayer &&
+  //     data.getPlayer.wallet &&
+  //     data.getPlayer.wallet.publicAddress &&
+  //     email &&
+  //     isConnected
+  //   ) {
+  //     fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
+  //     refreshSubscription(data.getPlayer.wallet.publicAddress);
+  //     setuserWallet(data.getPlayer.wallet.publicAddress);
+  //   } else if (coinbase && isConnected) {
+  //     refreshSubscription(coinbase);
+  //   } else if (
+  //     data &&
+  //     data.getPlayer &&
+  //     data.getPlayer.wallet &&
+  //     data.getPlayer.wallet.publicAddress &&
+  //     email &&
+  //     !isConnected
+  //   ) {
+  //     refreshSubscription(data.getPlayer.wallet.publicAddress);
+  //   } else {
+  //     setIsPremium(false);
+  //   }
+  // }, [data, email, coinbase, isConnected]);
 
   useEffect(() => {
     if (
@@ -4811,6 +4580,7 @@ function Dashboard({
     dailyrecords,
     userId,
     username,
+    isPremium
   ]);
 
   useEffect(() => {
@@ -4907,15 +4677,11 @@ function Dashboard({
     }
   }, [email, count]);
 
-  // useEffect(() => {
-  //   if (window.ethereum && !window.coin98) {
-  //     if (window.ethereum.isConnected() === true) {
-  //       localStorage.setItem("logout", "false");
-  //     } else {
-  //       localStorage.setItem("logout", "true");
-  //     }
-  //   }
-  // }, [coinbase, chainId]);
+  useEffect(() => {
+    if (bundlesBought === 4) {
+      handleSetAvailableTime(firstOfNextMonth.getTime());
+    }
+  }, [bundlesBought]);
 
   const onOpenLeaderboard = () => {
     setLeaderboard(true);
@@ -5015,7 +4781,8 @@ function Dashboard({
                         onSigninClick={onSigninClick}
                         onLogoutClick={() => {
                           logout();
-                          refreshSubscription(coinbase);
+                          // refreshSubscription(coinbase);
+                          onSubscribeSuccess();
                           setclaimedChests(0);
                           setclaimedPremiumChests(0);
                           setclaimedCorePremiumChests(0);
@@ -5061,6 +4828,7 @@ function Dashboard({
                         dogePrice={dogePrice}
                         weeklyplayerData={weeklyplayerDataAmount}
                         dailyplayerData={dailyplayerDataAmount}
+                        skaleplayerDataAmount={skaleplayerDataAmount}
                         skaleEarnToken={skaleEarnToken}
                         skaleEarnUsd={skaleEarnUsd}
                         seiEarnUsd={seiEarnUsd}
@@ -5162,6 +4930,7 @@ function Dashboard({
                           setgetPremiumPopup(true);
                         }}
                         cawsPremiumRewards={cawsPremiumRewards}
+                        userRankRewards={userRankRewards}
                       />
                     </div>
                     <WalletBalance
@@ -5512,6 +5281,7 @@ function Dashboard({
                             address={data?.getPlayer?.wallet?.publicAddress}
                             weeklyplayerData={weeklyplayerDataAmount}
                             dailyplayerData={dailyplayerDataAmount}
+                            skaleplayerDataAmount={skaleplayerDataAmount}
                             userRank2={userRank2}
                             email={email}
                             bnbPrice={bnbPrice}
@@ -5547,6 +5317,7 @@ function Dashboard({
                             kittyDashRecords={kittyDashRecords}
                             userRankRewards={userRankRewards}
                             cawsPremiumRewards={cawsPremiumRewards}
+                            genesisRank2={genesisRank2}
                           />
                         </div>
                       </OutsideClickHandler>
