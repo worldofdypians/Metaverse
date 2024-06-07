@@ -1570,7 +1570,7 @@ window.config = {
   subscription_newbnb_address: "0xA297c8c8094354c49E93e072DaDCa846a00148d0",
 
   //new premium contract with discount + nft
-  subscription_newbnb2_address: "0xc200FAecd0cd5Ae83ECf3F490B6552984b60f2E7",
+  subscription_newbnb2_address: "0x0C41A7Dd013B9062Ef38B48E905a985c262B248b",
 
   subscription_cfx_address: "0x56c83c9308b066627866bba9cd2322f3e01b16bf",
   subscription_base_address: "0x9c13Dbc8f0fA8ceD8C1B53c4237A08445eca32fe",

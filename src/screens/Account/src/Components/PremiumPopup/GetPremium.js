@@ -126,7 +126,7 @@ const GetPremiumPopup = ({
           console.error(e);
         });
 
-      if (result && result > 0) {
+      if (result && parseInt(result) > 0) {
         const tokenId = await nftContract.methods
           .tokenOfOwnerByIndex(wallet, 0)
           .call()
@@ -139,25 +139,26 @@ const GetPremiumPopup = ({
           setnftDiscountObject(nftObject);
           if (discount) {
             setdiscountPercentage(
-              Math.max(discount, nftObject.discountPercentage)
+              Math.max(parseInt(discount), parseInt(nftObject.discountPercentage))
             );
           }
         }
 
         setnftPremium_tokenId(tokenId);
-        setnftPremium_total(result);
+        setnftPremium_total(parseInt(result));
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
 
         if (discount) {
-          setdiscountPercentage(discount);
+          setdiscountPercentage(parseInt(discount));
         }
       }
     } else {
       setnftPremium_tokenId(0);
       setnftPremium_total(0);
     }
+    
   };
 
   const handleUpdatePremiumUser = async (wallet) => {
@@ -377,12 +378,15 @@ const GetPremiumPopup = ({
           .then(() => {
             setloadspinner(false);
             setisApproved(true);
-            if (
+            if(discountPercentage<100) {
+                if (
               selectedSubscriptionToken.toLowerCase() ===
               "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
             ) {
               setapproveStatus("deposit");
             } else setapproveStatus("approveAmount");
+            } else {setapproveStatus('deposit')}
+          
           })
           .catch((e) => {
             setstatus(e?.message);
@@ -638,7 +642,8 @@ const GetPremiumPopup = ({
             approved.toLowerCase() === bnbsubscribeAddress.toLowerCase() ||
             approvedAll
           ) {
-            if (
+            if(discountPercentage < 100) {
+               if (
               token.toLowerCase() ===
               "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
             ) {
@@ -655,6 +660,12 @@ const GetPremiumPopup = ({
             setisApproved(false);
             setapproveStatus("initial");
           }
+            } else {
+              setloadspinner(false);
+              setisApproved(false);
+              setapproveStatus("initial");
+            }
+           
         } else {
           if (
             token.toLowerCase() ===
@@ -957,7 +968,7 @@ const GetPremiumPopup = ({
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
     }
-  }, [chainId, nftPremium_total, discountPercentage]);
+  }, [chainId, nftPremium_total, discountPercentage, nftPremium_tokenId]);
 
   useEffect(() => {
     if (chainId === 1 && selectedSubscriptionToken !== "") {

@@ -907,10 +907,10 @@ function App() {
         console.error(e);
       });
 
-      if(result && result.status === 200) {
-        const socialsData = result.data;
-        setSocials(socialsData)
-      }
+    if (result && result.status === 200) {
+      const socialsData = result.data;
+      setSocials(socialsData);
+    }
   };
 
   const myCAWNft = async () => {
@@ -1360,7 +1360,7 @@ function App() {
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
     }
-  }, [data, coinbase, isConnected]);
+  }, [data, coinbase, isConnected, count55]);
 
   const handleCoreNftMint = async () => {
     if (isConnected && coinbase) {
@@ -2128,7 +2128,10 @@ function App() {
     );
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
-    const bnbcontract2 = new web3bnb.eth.Contract(Bnb2ABI, bnbsubscribeAddress2);
+    const bnbcontract2 = new web3bnb.eth.Contract(
+      Bnb2ABI,
+      bnbsubscribeAddress2
+    );
 
     const avaxcontract = new web3avax.eth.Contract(
       AvaxABI,
@@ -2229,7 +2232,7 @@ function App() {
           console.log(e);
           return 0;
         });
-
+       
       if (
         subscribedPlatformTokenAmountCfx == "0" &&
         subscribedPlatformTokenAmountETH == "0" &&
@@ -2621,9 +2624,9 @@ function App() {
     }, 300000);
   }, [count2]);
 
-  useEffect(()=>{
-    fetchSocialData()
-  },[])
+  useEffect(() => {
+    fetchSocialData();
+  }, []);
 
   return (
     <>
@@ -2715,7 +2718,11 @@ function App() {
             }
           />
           <Route exact path="/roadmap" element={<Roadmap />} />
-          <Route exact path="/community" element={<Community socials={socials} />} />
+          <Route
+            exact
+            path="/community"
+            element={<Community socials={socials} />}
+          />
           <Route exact path="/team" element={<OurTeam />} />
           <Route
             exact
@@ -2870,7 +2877,7 @@ function App() {
                 chainId={chainId}
                 showForms={showForms2}
                 balance={currencyAmount}
-                socials={socials} 
+                socials={socials}
               />
             }
           />
