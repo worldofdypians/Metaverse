@@ -89,50 +89,69 @@ const GetPremiumPopup = ({
   const [discountPercentage, setdiscountPercentage] = useState(0);
   const [nftPremium_tokenId, setnftPremium_tokenId] = useState(0);
   const [nftPremium_total, setnftPremium_total] = useState(0);
+  const [nftDiscountObject, setnftDiscountObject] = useState([]);
 
-  const calculatePremiumDiscount = async () => {
-    if (chainId === 56) {
-      const premiumSc = new window.bscWeb3.eth.Contract(
-        window.SUBSCRIPTION_NEWBNB2_ABI,
-        window.config.subscription_newbnb2_address
-      );
+  const calculatePremiumDiscount = async (wallet) => {
+    const premiumSc = new window.bscWeb3.eth.Contract(
+      window.SUBSCRIPTION_NEWBNB2_ABI,
+      window.config.subscription_newbnb2_address
+    );
 
-      const discount = await premiumSc.methods
-        .discountPercentage()
+    const nftContract = new window.bscWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_ABI,
+      window.config.nft_dypius_premium_address
+    );
+
+    if (wallet) {
+      const result = await nftContract.methods
+        .balanceOf(wallet)
         .call()
         .catch((e) => {
           console.error(e);
           return 0;
         });
-      setdiscountPercentage(discount);
-    } else setdiscountPercentage(0);
-  };
 
-  const fetchPremiumNft = async (wallet) => {
-    if (chainId === 56) {
-      const nftContract = new window.bscWeb3.eth.Contract(
-        window.NFT_DYPIUS_PREMIUM_ABI,
-        window.config.nft_dypius_premium_address
-      );
-      if (wallet) {
-        const result = await nftContract.methods
-          .balanceOf(wallet)
+      const discount = await premiumSc.methods
+        .discountPercentageGlobal()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+      const nftObject = await premiumSc.methods
+        .nftDiscounts(window.config.nft_dypius_premium_address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      if (result && result > 0) {
+        const tokenId = await nftContract.methods
+          .tokenOfOwnerByIndex(wallet, 0)
           .call()
           .catch((e) => {
             console.error(e);
             return 0;
           });
 
-        if (result && result > 0) {
-          const tokenId = await nftContract.methods
-            .tokenOfOwnerByIndex(wallet, 0)
-            .call()
-            .catch((e) => {
-              console.error(e);
-              return 0;
-            });
-          setnftPremium_tokenId(tokenId);
-          setnftPremium_total(result);
+        if (nftObject) {
+          setnftDiscountObject(nftObject);
+          if (discount) {
+            setdiscountPercentage(
+              Math.max(discount, nftObject.discountPercentage)
+            );
+          }
+        }
+
+        setnftPremium_tokenId(tokenId);
+        setnftPremium_total(result);
+      } else {
+        setnftPremium_tokenId(0);
+        setnftPremium_total(0);
+
+        if (discount) {
+          setdiscountPercentage(discount);
         }
       }
     } else {
@@ -249,6 +268,16 @@ const GetPremiumPopup = ({
 
   const handleSubscriptionTokenChange = async (tokenAddress) => {
     const token = tokenAddress;
+    if (
+      token.toLowerCase() ===
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+    ) {
+      if (nftPremium_total > 0) {
+        setapproveStatus("initial");
+      } else {
+        setapproveStatus("deposit");
+      }
+    }
     let tokenDecimals =
       chainId === 1
         ? window.config.subscriptioneth_tokens[token]?.decimals
@@ -279,7 +308,10 @@ const GetPremiumPopup = ({
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
         : chainId === 56
         ? // ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
-          await window.getEstimatedTokenSubscriptionAmountBNB2(token)
+          await window.getEstimatedTokenSubscriptionAmountBNB2(
+            token,
+            discountPercentage
+          )
         : chainId === 1030
         ? await window.getEstimatedTokenSubscriptionAmountCFX(token)
         : chainId === 43114
@@ -335,25 +367,55 @@ const GetPremiumPopup = ({
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
-      await nftContract.methods
-        .approve(window.config.subscription_newbnb2_address, nftPremium_tokenId)
-        .send({ from: coinbase })
-        .then(() => {
-          setloadspinner(false);
-          setisApproved(true);
-          setapproveStatus("deposit");
-        })
-        .catch((e) => {
-          setstatus(e?.message);
-          setloadspinner(false);
-          setapproveStatus("fail");
-          window.alertify.error(e?.message);
-          setTimeout(() => {
-            setstatus("");
+      if (approveStatus === "initial") {
+        await nftContract.methods
+          .approve(
+            window.config.subscription_newbnb2_address,
+            nftPremium_tokenId
+          )
+          .send({ from: coinbase })
+          .then(() => {
             setloadspinner(false);
-            setapproveStatus("initial");
-          }, 5000);
-        });
+            setisApproved(true);
+            if (
+              selectedSubscriptionToken.toLowerCase() ===
+              "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+            ) {
+              setapproveStatus("deposit");
+            } else setapproveStatus("approveAmount");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      } else if (approveStatus === "approveAmount") {
+        await tokenContract.methods
+          .approve(bnbsubscribeAddress, price)
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      }
     } else {
       await tokenContract.methods
         .approve(
@@ -470,7 +532,10 @@ const GetPremiumPopup = ({
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
         : chainId === 56
-        ? await window.getEstimatedTokenSubscriptionAmountBNB2(token)
+        ? await window.getEstimatedTokenSubscriptionAmountBNB2(
+            token,
+            discountPercentage
+          )
         : chainId === 1030
         ? await window.getEstimatedTokenSubscriptionAmountCFX(token)
         : chainId === 43114
@@ -573,28 +638,46 @@ const GetPremiumPopup = ({
             approved.toLowerCase() === bnbsubscribeAddress.toLowerCase() ||
             approvedAll
           ) {
-            setloadspinner(false);
-            setisApproved(true);
-            setapproveStatus("deposit");
+            if (
+              token.toLowerCase() ===
+              "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+            ) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            } else {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("approveAmount");
+            }
           } else {
             setloadspinner(false);
             setisApproved(false);
             setapproveStatus("initial");
           }
         } else {
-          const result = await subscribeTokencontractbnb.methods
-            .allowance(coinbase, bnbsubscribeAddress)
-            .call()
-            .then();
-
-          if (result != 0 && Number(result) >= Number(tokenprice)) {
+          if (
+            token.toLowerCase() ===
+            "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+          ) {
             setloadspinner(false);
             setisApproved(true);
             setapproveStatus("deposit");
-          } else if (result == 0 || Number(result) < Number(tokenprice)) {
-            setloadspinner(false);
-            setisApproved(false);
-            setapproveStatus("initial");
+          } else {
+            const result = await subscribeTokencontractbnb.methods
+              .allowance(coinbase, bnbsubscribeAddress)
+              .call()
+              .then();
+
+            if (result != 0 && Number(result) >= Number(tokenprice)) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            } else if (result == 0 || Number(result) < Number(tokenprice)) {
+              setloadspinner(false);
+              setisApproved(false);
+              setapproveStatus("initial");
+            }
           }
         }
       } else if (chainId === 43114) {
@@ -687,7 +770,12 @@ const GetPremiumPopup = ({
     setloadspinnerSub(true);
     if (chainId === 56 && nftPremium_total > 0) {
       await window
-        .subscribeNFT(nftPremium_tokenId)
+        .subscribeNFT(
+          nftDiscountObject.nftAddress,
+          nftPremium_tokenId,
+          selectedSubscriptionToken,
+          price
+        )
         .then(async (data) => {
           setloadspinnerSub(false);
           handleUpdatePremiumUser(coinbase);
@@ -719,8 +807,8 @@ const GetPremiumPopup = ({
         "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
     ) {
       await subscriptionContract.methods
-        .subscribeWithBNB(price)
-        .send({ from: await window.getCoinbase() })
+        .subscribeWithBNB()
+        .send({ from: await window.getCoinbase(), value: price })
         .then(async (data) => {
           setloadspinnerSub(false);
           onSuccessDeposit();
@@ -869,7 +957,7 @@ const GetPremiumPopup = ({
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
     }
-  }, [chainId, nftPremium_total]);
+  }, [chainId, nftPremium_total, discountPercentage]);
 
   useEffect(() => {
     if (chainId === 1 && selectedSubscriptionToken !== "") {
@@ -905,12 +993,8 @@ const GetPremiumPopup = ({
   }, [chainId, selectedSubscriptionToken]);
 
   useEffect(() => {
-    calculatePremiumDiscount();
-  }, [chainId]);
-
-  useEffect(() => {
-    fetchPremiumNft(coinbase);
-  }, [coinbase, chainId]);
+    calculatePremiumDiscount(coinbase);
+  }, [chainId, coinbase]);
 
   return (
     <div
@@ -936,22 +1020,50 @@ const GetPremiumPopup = ({
                 <img src={premiumRedTag} alt="" />
                 <div className="d-flex flex-column position-absolute discountwrap">
                   <span className="discount-price2 font-oxanium">
-                    {nftPremium_total > 0 ? "100" : discountPercentage}%
+                    {discountPercentage}%
                   </span>
                   <span className="discount-price-bottom">Discount</span>
                 </div>
               </div>
             </div>
-            <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column align-items-center align-items-lg-start">
-              <h6 className="lifetime-plan-text m-0">Lifetime plan</h6>
+            <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
+              <div className="d-flex flex-column">
+                <h6 className="lifetime-plan-text m-0">Lifetime plan</h6>
+                {nftPremium_total > 0 && (
+                  <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                    Valid until:{" "}
+                    {new Date(nftDiscountObject.expiration * 1000)
+                      .toDateString()
+                      .slice(
+                        3,
+                        new Date(
+                          nftDiscountObject.expiration * 1000
+                        ).toDateString().length
+                      )}
+                  </h6>
+                )}
+              </div>
               <div className="d-flex align-items-end gap-2">
                 <h6 className="discount-price">
-                  {nftPremium_total > 0
+                  {discountPercentage == 100
                     ? "FREE"
                     : "$" + (100 - Number(discountPercentage))}
                 </h6>
                 <h6 className="old-price-text">$100</h6>
               </div>
+              {nftPremium_total > 0 && (
+                <h6 className="token-amount-placeholder m-0 premium-custom-text">
+                  Valid until:{" "}
+                  {new Date(nftDiscountObject.expiration * 1000)
+                    .toDateString()
+                    .slice(
+                      3,
+                      new Date(
+                        nftDiscountObject.expiration * 1000
+                      ).toDateString().length
+                    )}
+                </h6>
+              )}
             </div>
           </div>
         ) : (
@@ -1229,11 +1341,11 @@ const GetPremiumPopup = ({
             </div>
           </div>
           <div className="d-flex flex-column gap-3 subscribe-input-container"></div>
-          {nftPremium_total == 0 && (
+          {discountPercentage < 100 && (
             <div className="d-flex flex-column align-items-end gap-3">
               <span className="my-premium-balance-text mb-0">
                 My balance:{" "}
-                {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 3)}{" "}
+                {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 5)}{" "}
                 {dropdownIcon.toUpperCase()}
               </span>
               <div
@@ -1432,7 +1544,7 @@ const GetPremiumPopup = ({
                     alt="usdt"
                   /> */}
                   <span className="subscription-price-token mb-0">
-                    {formattedPrice.slice(0, 5)}
+                    {formattedPrice.slice(0, 7)}
                   </span>
                 </div>
                 <span className="subscription-price-usd mb-0">
@@ -1493,86 +1605,213 @@ const GetPremiumPopup = ({
             </div>
           </div>
         )}
-        <div className="d-flex align-items-center gap-3 justify-content-center">
+        {discountPercentage > 0 && chainId === 56 ? (
+          <div className="d-flex align-items-center gap-3 justify-content-center">
+            <div
+              className={` ${
+                approveStatus === "fail" || !coinbase || isApproved
+                  ? "linear-border-disabled"
+                  : "linear-border"
+              }`}
+            >
+              <button
+                className={`btn ${
+                  approveStatus === "fail" || !coinbase || isApproved
+                    ? "outline-btn-disabled"
+                    : "filled-btn"
+                } px-4`}
+                disabled={
+                  approveStatus === "fail" || !coinbase || isApproved
+                    ? true
+                    : false
+                }
+                onClick={(e) => handleApprove(e)}
+              >
+                {loadspinner === false &&
+                (approveStatus === "initial" ||
+                  approveStatus === "deposit" ||
+                  approveStatus === "approveAmount" ||
+                  approveStatus === "failsubscribe" ||
+                  approveStatus === "successsubscribe") ? (
+                  <>
+                    Approve{" "}
+                    {approveStatus === "approveAmount"
+                      ? "token"
+                      : nftPremium_total > 0
+                      ? "NFT"
+                      : ""}
+                  </>
+                ) : loadspinner === false && approveStatus === "fail" ? (
+                  "Failed"
+                ) : (
+                  <div className="d-flex align-items-center gap-2">
+                    Processing
+                    <div
+                      className="spinner-border "
+                      role="status"
+                      style={{
+                        height: "1rem",
+                        width: "1rem",
+                      }}
+                    ></div>{" "}
+                  </div>
+                )}
+              </button>
+            </div>
+            <div
+              className={` ${
+                isApproved === false
+                  ? "linear-border-disabled"
+                  : "linear-border"
+              }`}
+            >
+              <button
+                className={`btn ${
+                  isApproved === false ? "outline-btn-disabled" : "filled-btn"
+                } px-4`}
+                onClick={() => handleSubscribe()}
+              >
+                {loadspinnerSub === false &&
+                (approveStatus === "initial" ||
+                  approveStatus === "fail" ||
+                  approveStatus === "deposit") ? (
+                  <>
+                    {discountPercentage > 0 || nftPremium_total > 0
+                      ? "Redeem"
+                      : "Buy"}
+                  </>
+                ) : loadspinnerSub === false &&
+                  approveStatus === "successsubscribe" ? (
+                  "Success"
+                ) : loadspinnerSub === false &&
+                  approveStatus === "failsubscribe" ? (
+                  "Failed"
+                ) : (
+                  <div
+                    className="spinner-border "
+                    role="status"
+                    style={{
+                      height: "1rem",
+                      width: "1rem",
+                    }}
+                  ></div>
+                )}
+              </button>
+            </div>
+          </div>
+        ) : discountPercentage > 0 && chainId !== 56 ? (
           <div
-            className={` ${
-              approveStatus === "fail" || !coinbase || isApproved
-                ? "linear-border-disabled"
-                : "linear-border"
-            }`}
+            className={`d-flex align-items-center justify-content-center mb-2`}
           >
             <button
-              className={`btn ${
-                approveStatus === "fail" || !coinbase || isApproved
-                  ? "outline-btn-disabled"
-                  : "filled-btn"
-              } px-4`}
-              disabled={
-                approveStatus === "fail" || !coinbase || isApproved
-                  ? true
-                  : false
-              }
-              onClick={(e) => handleApprove(e)}
+              className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+              onClick={() => {
+                handleBnbPool();
+              }}
+              style={{
+                width: "fit-content",
+                whiteSpace: "nowrap",
+                fontSize: 14,
+              }}
             >
-              {loadspinner === false &&
-              (approveStatus === "initial" ||
-                approveStatus === "deposit" ||
-                approveStatus === "failsubscribe" ||
-                approveStatus === "successsubscribe") ? (
-                "Approve"
-              ) : loadspinner === false && approveStatus === "fail" ? (
-                "Failed"
-              ) : (
-                <div
-                  className="spinner-border "
-                  role="status"
-                  style={{
-                    height: "1rem",
-                    width: "1rem",
-                  }}
-                ></div>
-              )}
-            </button>
+              Switch to BNB Chain
+            </button>{" "}
           </div>
-          <div
-            className={` ${
-              isApproved === false ? "linear-border-disabled" : "linear-border"
-            }`}
-          >
-            <button
-              className={`btn ${
-                isApproved === false ? "outline-btn-disabled" : "filled-btn"
-              } px-4`}
-              onClick={() => handleSubscribe()}
+        ) : (
+          <div className="d-flex align-items-center gap-3 justify-content-center">
+            <div
+              className={` ${
+                approveStatus === "fail" || !coinbase || isApproved
+                  ? "linear-border-disabled"
+                  : "linear-border"
+              }`}
             >
-              {loadspinnerSub === false &&
-              (approveStatus === "initial" ||
-                approveStatus === "fail" ||
-                approveStatus === "deposit") ? (
-                <>
-                  {discountPercentage > 0 || nftPremium_total > 0
-                    ? "Redeem"
-                    : "Buy"}
-                </>
-              ) : loadspinnerSub === false &&
-                approveStatus === "successsubscribe" ? (
-                "Success"
-              ) : loadspinnerSub === false &&
-                approveStatus === "failsubscribe" ? (
-                "Failed"
-              ) : (
-                <div
-                  className="spinner-border "
-                  role="status"
-                  style={{
-                    height: "1rem",
-                    width: "1rem",
-                  }}
-                ></div>
-              )}
-            </button>
+              <button
+                className={`btn ${
+                  approveStatus === "fail" || !coinbase || isApproved
+                    ? "outline-btn-disabled"
+                    : "filled-btn"
+                } px-4`}
+                disabled={
+                  approveStatus === "fail" || !coinbase || isApproved
+                    ? true
+                    : false
+                }
+                onClick={(e) => handleApprove(e)}
+              >
+                {loadspinner === false &&
+                (approveStatus === "initial" ||
+                  approveStatus === "deposit" ||
+                  approveStatus === "approveAmount" ||
+                  approveStatus === "failsubscribe" ||
+                  approveStatus === "successsubscribe") ? (
+                  <>
+                    Approve{" "}
+                    {approveStatus === "approveAmount"
+                      ? "token"
+                      : nftPremium_total > 0
+                      ? "NFT"
+                      : ""}
+                  </>
+                ) : loadspinner === false && approveStatus === "fail" ? (
+                  "Failed"
+                ) : (
+                  <div className="d-flex align-items-center gap-2">
+                    Processing
+                    <div
+                      className="spinner-border "
+                      role="status"
+                      style={{
+                        height: "1rem",
+                        width: "1rem",
+                      }}
+                    ></div>{" "}
+                  </div>
+                )}
+              </button>
+            </div>
+            <div
+              className={` ${
+                isApproved === false
+                  ? "linear-border-disabled"
+                  : "linear-border"
+              }`}
+            >
+              <button
+                className={`btn ${
+                  isApproved === false ? "outline-btn-disabled" : "filled-btn"
+                } px-4`}
+                onClick={() => handleSubscribe()}
+              >
+                {loadspinnerSub === false &&
+                (approveStatus === "initial" ||
+                  approveStatus === "fail" ||
+                  approveStatus === "deposit") ? (
+                  <>
+                    {discountPercentage > 0 || nftPremium_total > 0
+                      ? "Redeem"
+                      : "Buy"}
+                  </>
+                ) : loadspinnerSub === false &&
+                  approveStatus === "successsubscribe" ? (
+                  "Success"
+                ) : loadspinnerSub === false &&
+                  approveStatus === "failsubscribe" ? (
+                  "Failed"
+                ) : (
+                  <div
+                    className="spinner-border "
+                    role="status"
+                    style={{
+                      height: "1rem",
+                      width: "1rem",
+                    }}
+                  ></div>
+                )}
+              </button>
+            </div>
           </div>
-        </div>
+        )}
         <div
           className={`d-flex align-items-center ${
             !coinbase ? "justify-content-between" : "justify-content-end"

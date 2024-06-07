@@ -2096,6 +2096,8 @@ function App() {
     const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
     const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
     const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
+    const Bnb2ABI = window.SUBSCRIPTION_NEWBNB2_ABI;
+
     const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
     const CoreABI = window.SUBSCRIPTION_CORE_ABI;
     const VicitonABI = window.SUBSCRIPTION_VICTION_ABI;
@@ -2126,7 +2128,7 @@ function App() {
     );
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
-    const bnbcontract2 = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress2);
+    const bnbcontract2 = new web3bnb.eth.Contract(Bnb2ABI, bnbsubscribeAddress2);
 
     const avaxcontract = new web3avax.eth.Contract(
       AvaxABI,

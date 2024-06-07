@@ -672,7 +672,7 @@ const MarketStake = ({
                             Connect Wallet
                           </button>
                         )}
-                        {isConnected && !isPremium && chainId === 1 && (
+                        {isConnected && !isPremium && (
                           <button
                             className="btn pill-btn px-4 py-2"
                             style={{ width: "fit-content" }}
@@ -684,7 +684,7 @@ const MarketStake = ({
                           </button>
                         )}
 
-{isConnected && chainId !== 1 && (
+{isConnected && chainId !== 1 && isPremium && (
                           <button
                             className="btn pill-btn px-4 py-2"
                             style={{ width: "fit-content" }}

@@ -2401,7 +2401,7 @@ function Dashboard({
   };
 
   const calculatePremiumDiscount = async (wallet) => {
-    if (chainId === 56) {
+    // if (chainId === 56) {
       const premiumSc = new window.bscWeb3.eth.Contract(
         window.SUBSCRIPTION_NEWBNB2_ABI,
         window.config.subscription_newbnb2_address
@@ -2461,14 +2461,14 @@ function Dashboard({
           setnftPremium_total(0);
 
           if (discount) {
-            setdiscountPercentage(20);
+            setdiscountPercentage(discount);
           }
         }
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
       }
-    } else setdiscountPercentage(0);
+    // } else setdiscountPercentage(0);
   };
 
   const fetchGenesisAroundPlayer = async (userId, userName) => {
@@ -2489,7 +2489,6 @@ function Dashboard({
     setGenesisRank(testArray[0].position);
     setGenesisRank2(testArray[0].statValue);
   };
-
 
   const fetchKittyDashAroundPlayer = async (userId, userName) => {
     const data = {
@@ -3485,14 +3484,15 @@ function Dashboard({
 
   const handleSubscriptionTokenChange = async (tokenAddress) => {
     const token = tokenAddress;
-    if(token.toLowerCase() ===
-    "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()) {
-      if(nftPremium_total>0) {
-        setapproveStatus('initial')
+    if (
+      token.toLowerCase() ===
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+    ) {
+      if (nftPremium_total > 0) {
+        setapproveStatus("initial");
       } else {
-        setapproveStatus('deposit')
+        setapproveStatus("deposit");
       }
-      
     }
     let tokenDecimals =
       chainId === 1
@@ -3524,7 +3524,10 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
         : chainId === 56
         ? // ? await window.getEstimatedTokenSubscriptionAmountBNB(token)
-          await window.getEstimatedTokenSubscriptionAmountBNB2(token, discountPercentage)
+          await window.getEstimatedTokenSubscriptionAmountBNB2(
+            token,
+            discountPercentage
+          )
         : chainId === 1030
         ? await window.getEstimatedTokenSubscriptionAmountCFX(token)
         : chainId === 43114
@@ -3540,14 +3543,13 @@ function Dashboard({
         : chainId === 713715
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
- 
+
     tokenprice = new BigNumber(tokenprice).toFixed(0);
-   
 
     let formattedTokenPrice = getFormattedNumber(
       tokenprice / 10 ** tokenDecimals,
       tokenDecimals
-    ); 
+    );
     let tokenBalance2 = await window.getTokenHolderBalance(token, coinbase);
     setprice(tokenprice);
     setformattedPrice(formattedTokenPrice);
@@ -3580,54 +3582,55 @@ function Dashboard({
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
-
-      if(approveStatus === 'initial') {
-         await nftContract.methods
-        .approve(window.config.subscription_newbnb2_address, nftPremium_tokenId)
-        .send({ from: coinbase })
-        .then(() => {
-          setloadspinner(false);
-          setisApproved(true);
-          if(selectedSubscriptionToken.toLowerCase() ===
-          "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()) {
-            setapproveStatus("deposit");
-          } else setapproveStatus("approveAmount");
-          
-        })
-        .catch((e) => {
-          setstatus(e?.message);
-          setloadspinner(false);
-          setapproveStatus("fail");
-          window.alertify.error(e?.message);
-          setTimeout(() => {
-            setstatus("");
+      if (approveStatus === "initial") {
+        await nftContract.methods
+          .approve(
+            window.config.subscription_newbnb2_address,
+            nftPremium_tokenId
+          )
+          .send({ from: coinbase })
+          .then(() => {
             setloadspinner(false);
-            setapproveStatus("initial");
-          }, 5000);
-        });
-      } else if(approveStatus === 'approveAmount') {
+            setisApproved(true);
+            if (
+              selectedSubscriptionToken.toLowerCase() ===
+              "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+            ) {
+              setapproveStatus("deposit");
+            } else setapproveStatus("approveAmount");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      } else if (approveStatus === "approveAmount") {
         await tokenContract.methods
-        .approve( bnbsubscribeAddress,price)
-        .send({ from: coinbase })
-        .then(() => {
-          setloadspinner(false);
-          setisApproved(true);
-          setapproveStatus("deposit");
-        })
-        .catch((e) => {
-          setstatus(e?.message);
-          setloadspinner(false);
-          setapproveStatus("fail");
-          window.alertify.error(e?.message);
-          setTimeout(() => {
-            setstatus("");
+          .approve(bnbsubscribeAddress, price)
+          .send({ from: coinbase })
+          .then(() => {
             setloadspinner(false);
-            setapproveStatus("initial");
-          }, 5000);
-        });
+            setisApproved(true);
+            setapproveStatus("deposit");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
       }
-
-     
     } else {
       await tokenContract.methods
         .approve(
@@ -3752,7 +3755,10 @@ function Dashboard({
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
         : chainId === 56
-        ? await window.getEstimatedTokenSubscriptionAmountBNB2(token)
+        ? await window.getEstimatedTokenSubscriptionAmountBNB2(
+            token,
+            discountPercentage
+          )
         : chainId === 1030
         ? await window.getEstimatedTokenSubscriptionAmountCFX(token)
         : chainId === 43114
@@ -3855,28 +3861,46 @@ function Dashboard({
             approved.toLowerCase() === bnbsubscribeAddress.toLowerCase() ||
             approvedAll
           ) {
-            setloadspinner(false);
-            setisApproved(true);
-            setapproveStatus("deposit");
+            if (
+              token.toLowerCase() ===
+              "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+            ) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            } else {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("approveAmount");
+            }
           } else {
             setloadspinner(false);
             setisApproved(false);
             setapproveStatus("initial");
           }
         } else {
-          const result = await subscribeTokencontractbnb.methods
-            .allowance(coinbase, bnbsubscribeAddress)
-            .call()
-            .then();
-
-          if (result != 0 && Number(result) >= Number(tokenprice)) {
+          if (
+            token.toLowerCase() ===
+            "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+          ) {
             setloadspinner(false);
             setisApproved(true);
             setapproveStatus("deposit");
-          } else if (result == 0 || Number(result) < Number(tokenprice)) {
-            setloadspinner(false);
-            setisApproved(false);
-            setapproveStatus("initial");
+          } else {
+            const result = await subscribeTokencontractbnb.methods
+              .allowance(coinbase, bnbsubscribeAddress)
+              .call()
+              .then();
+
+            if (result != 0 && Number(result) >= Number(tokenprice)) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            } else if (result == 0 || Number(result) < Number(tokenprice)) {
+              setloadspinner(false);
+              setisApproved(false);
+              setapproveStatus("initial");
+            }
           }
         }
       } else if (chainId === 43114) {
@@ -3970,7 +3994,12 @@ function Dashboard({
 
     if (chainId === 56 && nftPremium_total > 0) {
       await window
-        .subscribeNFT(nftPremium_tokenId)
+        .subscribeNFT(
+          nftDiscountObject.nftAddress,
+          nftPremium_tokenId,
+          selectedSubscriptionToken,
+          price
+        )
         .then(async (data) => {
           if (dailyBonusPopup === true) {
             setPremiumTxHash(data.transactionHash);
@@ -4038,8 +4067,8 @@ function Dashboard({
         "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
     ) {
       await subscriptionContract.methods
-        .subscribeWithBNB(price)
-        .send({ from: await window.getCoinbase() })
+        .subscribeWithBNB()
+        .send({ from: await window.getCoinbase(), value: price })
         .then(async (data) => {
           if (dailyBonusPopup === true) {
             setPremiumTxHash(data.transactionHash);
@@ -4513,7 +4542,7 @@ function Dashboard({
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
     }
-  }, [chainId, getPremiumPopup]);
+  }, [chainId, getPremiumPopup, discountPercentage]);
 
   useEffect(() => {
     if (chainId === 1 && selectedSubscriptionToken !== "") {
@@ -4741,11 +4770,6 @@ function Dashboard({
     }
   }, [bundlesBought]);
 
-  const onOpenLeaderboard = () => {
-    setLeaderboard(true);
-    console.log("true");
-  };
-
   useEffect(() => {
     if (success === true) {
       setshowWalletModal(false);
@@ -4812,6 +4836,7 @@ function Dashboard({
                       className={`col-12 d-flex flex-column gap-3  mt-5 mt-lg-0 ${classes.containerPlayer}`}
                     >
                       <ProfileCard
+                      discountPercentage={discountPercentage}
                         getRankData={getRankData}
                         rankData={rankData}
                         userRank={userRank}
@@ -5422,10 +5447,7 @@ function Dashboard({
                                     <img src={premiumRedTag} alt="" />
                                     <div className="d-flex flex-column position-absolute discountwrap">
                                       <span className="discount-price2 font-oxanium">
-                                        {nftPremium_total > 0
-                                          ? "100"
-                                          : discountPercentage}
-                                        %
+                                        {discountPercentage}%
                                       </span>
                                       <span className="discount-price-bottom">
                                         Discount
@@ -5433,19 +5455,52 @@ function Dashboard({
                                     </div>
                                   </div>
                                 </div>
-                                <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column align-items-center align-items-lg-start">
-                                  <h6 className="lifetime-plan-text m-0">
-                                    Lifetime plan
-                                  </h6>
+                                <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
+                                  <div className="d-flex flex-column">
+                                    <h6 className="lifetime-plan-text m-0">
+                                      Lifetime plan
+                                    </h6>
+                                    {nftPremium_total > 0 && (
+                                      <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                                        Valid until:{" "}
+                                        {new Date(
+                                          nftDiscountObject.expiration * 1000
+                                        )
+                                          .toDateString()
+                                          .slice(
+                                            3,
+                                            new Date(
+                                              nftDiscountObject.expiration *
+                                                1000
+                                            ).toDateString().length
+                                          )}
+                                      </h6>
+                                    )}
+                                  </div>
                                   <div className="d-flex align-items-end gap-2">
                                     <h6 className="discount-price">
-                                      {nftPremium_total > 0
+                                      {discountPercentage == 100
                                         ? "FREE"
                                         : "$" +
                                           (100 - Number(discountPercentage))}
                                     </h6>
                                     <h6 className="old-price-text">$100</h6>
                                   </div>
+                                  {nftPremium_total > 0 && (
+                                    <h6 className="token-amount-placeholder m-0 premium-custom-text">
+                                      Valid until:{" "}
+                                      {new Date(
+                                        nftDiscountObject.expiration * 1000
+                                      )
+                                        .toDateString()
+                                        .slice(
+                                          3,
+                                          new Date(
+                                            nftDiscountObject.expiration * 1000
+                                          ).toDateString().length
+                                        )}
+                                    </h6>
+                                  )}
                                 </div>
                               </div>
                             ) : (
@@ -5760,13 +5815,13 @@ function Dashboard({
                                   </div>
 
                                   {/* <div className="d-flex flex-column gap-3 subscribe-input-container"></div> */}
-                                  {nftPremium_total == 0 && (
+                                  {discountPercentage < 100 && (
                                     <div className="d-flex flex-column align-items-end gap-3">
                                       <span className="my-premium-balance-text mb-0">
                                         My balance:{" "}
                                         {getFormattedNumber(
                                           tokenBalance / 10 ** tokenDecimals,
-                                          3
+                                          5
                                         )}{" "}
                                         {dropdownIcon.toUpperCase()}
                                       </span>
@@ -6065,7 +6120,7 @@ function Dashboard({
                                       alt="usdt"
                                     /> */}
                                           <span className="subscription-price-token mb-0">
-                                            {formattedPrice.slice(0, 5)}
+                                            {formattedPrice.slice(0, 7)}
                                           </span>
                                         </div>
                                         <span className="subscription-price-usd mb-0">
@@ -6127,7 +6182,7 @@ function Dashboard({
                                 </div>
                               </div>
                             )}
-                            {isConnected ? (
+                            {isConnected && discountPercentage > 0 && chainId === 56 ? (
                               <div className="d-flex align-items-center gap-3 justify-content-center">
                                 <div
                                   className={` ${
@@ -6159,20 +6214,31 @@ function Dashboard({
                                     (approveStatus === "initial" ||
                                       approveStatus === "deposit" ||
                                       approveStatus === "failsubscribe" ||
+                                      approveStatus === "approveAmount" ||
                                       approveStatus === "successsubscribe") ? (
-                                      "Approve"
+                                      <>
+                                        Approve{" "}
+                                        {approveStatus === "approveAmount"
+                                          ? "token"
+                                          : nftPremium_total > 0
+                                          ? "NFT"
+                                          : ""}
+                                      </>
                                     ) : loadspinner === false &&
                                       approveStatus === "fail" ? (
                                       "Failed"
                                     ) : (
-                                      <div
-                                        className="spinner-border "
-                                        role="status"
-                                        style={{
-                                          height: "1rem",
-                                          width: "1rem",
-                                        }}
-                                      ></div>
+                                      <div className="d-flex align-items-center gap-2">
+                                        Processing
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                          style={{
+                                            height: "1rem",
+                                            width: "1rem",
+                                          }}
+                                        ></div>{" "}
+                                      </div>
                                     )}
                                   </button>
                                 </div>
@@ -6220,7 +6286,127 @@ function Dashboard({
                                   </button>
                                 </div>
                               </div>
-                            ) : (
+                            ) : isConnected && discountPercentage === 0 ? (
+                              <div className="d-flex align-items-center gap-3 justify-content-center">
+                                <div
+                                  className={` ${
+                                    approveStatus === "fail" ||
+                                    !coinbase ||
+                                    isApproved
+                                      ? "linear-border-disabled"
+                                      : "linear-border"
+                                  }`}
+                                >
+                                  <button
+                                    className={`btn ${
+                                      approveStatus === "fail" ||
+                                      !coinbase ||
+                                      isApproved
+                                        ? "outline-btn-disabled"
+                                        : "filled-btn"
+                                    } px-4`}
+                                    disabled={
+                                      approveStatus === "fail" ||
+                                      !coinbase ||
+                                      isApproved
+                                        ? true
+                                        : false
+                                    }
+                                    onClick={(e) => handleApprove(e)}
+                                  >
+                                    {loadspinner === false &&
+                                    (approveStatus === "initial" ||
+                                      approveStatus === "deposit" ||
+                                      approveStatus === "failsubscribe" ||
+                                      approveStatus === "approveAmount" ||
+                                      approveStatus === "successsubscribe") ? (
+                                      <>
+                                        Approve{" "}
+                                        {approveStatus === "approveAmount"
+                                          ? "token"
+                                          : nftPremium_total > 0
+                                          ? "NFT"
+                                          : ""}
+                                      </>
+                                    ) : loadspinner === false &&
+                                      approveStatus === "fail" ? (
+                                      "Failed"
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        Processing
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                          style={{
+                                            height: "1rem",
+                                            width: "1rem",
+                                          }}
+                                        ></div>{" "}
+                                      </div>
+                                    )}
+                                  </button>
+                                </div>
+                                <div
+                                  className={` ${
+                                    isApproved === false
+                                      ? "linear-border-disabled"
+                                      : "linear-border"
+                                  }`}
+                                >
+                                  <button
+                                    className={`btn ${
+                                      isApproved === false
+                                        ? "outline-btn-disabled"
+                                        : "filled-btn"
+                                    } px-4`}
+                                    onClick={() => handleSubscribe()}
+                                  >
+                                    {loadspinnerSub === false &&
+                                    (approveStatus === "initial" ||
+                                      approveStatus === "fail" ||
+                                      approveStatus === "deposit") ? (
+                                      <>
+                                        {discountPercentage > 0 ||
+                                        nftPremium_total > 0
+                                          ? "Redeem"
+                                          : "Buy"}
+                                      </>
+                                    ) : loadspinnerSub === false &&
+                                      approveStatus === "successsubscribe" ? (
+                                      "Success"
+                                    ) : loadspinnerSub === false &&
+                                      approveStatus === "failsubscribe" ? (
+                                      "Failed"
+                                    ) : (
+                                      <div
+                                        className="spinner-border "
+                                        role="status"
+                                        style={{
+                                          height: "1rem",
+                                          width: "1rem",
+                                        }}
+                                      ></div>
+                                    )}
+                                  </button>
+                                </div>
+                              </div>
+                            ): isConnected && discountPercentage > 0 && chainId !==56 ?
+                            <div
+                            className={`d-flex align-items-center justify-content-center mb-2`}
+                          >
+                             <button
+                            className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                            onClick={() => {
+                               handleBnbPool()
+                            }}
+                            style={{
+                              width: "fit-content",
+                              whiteSpace: "nowrap",
+                              fontSize: 14,
+                            }}
+                          >
+                            Switch to BNB Chain
+                          </button> </div> : (
                               <div
                                 className={`d-flex align-items-center justify-content-center mb-2`}
                               >
