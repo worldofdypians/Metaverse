@@ -50,6 +50,8 @@ import Countdown from "react-countdown";
 import { dyp700Address, dyp700v1Address } from "../../web3";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import becomePremium from "./assets/becomePremium.svg";
+import premiumDiscount from "./assets/premiumDiscount.svg";
+
 import OutsideClickHandler from "react-outside-click-handler";
 import Slider from "react-slick";
 import { Tooltip, tooltipClasses } from "@mui/material";
@@ -57,7 +59,7 @@ import styled from "styled-components";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import premiumOfferTag from "./assets/premiumOfferTag2.png";
 import premiumExclusive from "./assets/premiumExclusive2.svg";
-// import premiumExclusive2 from "./assets/premiumExclusive2.svg";
+import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -92,6 +94,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 
 const ProfileCard = ({
   email,
+  discountPercentage,
   username,
   balance,
   address,
@@ -190,17 +193,16 @@ const ProfileCard = ({
       sliderRef?.current?.innerSlider?.slickGoTo(1);
       setUserProgress((allScore / 12000000) * 100);
     } else {
-     
       sliderRef?.current?.innerSlider?.slickGoTo(0);
       setUserProgress((allScore / 6000000) * 100);
     }
   };
-  
+
   const updateUserRank = async () => {
     if (rankData && userRankName) {
       if (rankData.rank == userRankName.id) {
         return;
-      } else if(rankData.rank <userRankName.id ) {
+      } else if (rankData.rank < userRankName.id) {
         await axios
           .patch(
             `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
@@ -437,7 +439,10 @@ const ProfileCard = ({
                 }`}
               >
                 <div className="d-flex   profile-header-wrapper justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
-                  <div className="d-flex gap-2 justify-content-between align-items-center" style={{width: windowSize.width > 991 ? '50%' : '100%'}}>
+                  <div
+                    className="d-flex gap-2 justify-content-between align-items-center"
+                    style={{ width: windowSize.width > 991 ? "50%" : "100%" }}
+                  >
                     <div className="d-flex align-items-center gap-2 w-100">
                       {(coinbase && !email && !isPremium) ||
                       (!coinbase && !email) ||
@@ -447,7 +452,7 @@ const ProfileCard = ({
                         address &&
                         username &&
                         !isPremium) ||
-                        (!address && !isPremium) ? (
+                      (!address && !isPremium) ? (
                         <img
                           src={defaultAvatar}
                           alt=""
@@ -476,7 +481,7 @@ const ProfileCard = ({
                         />
                       )}
 
-{!email && isPremium && coinbase && (
+                      {!email && isPremium && coinbase && (
                         <img
                           src={defaultAvatarPremium}
                           alt=""
@@ -706,7 +711,6 @@ const ProfileCard = ({
                         ? ""
                         : coinbase && isPremium && !email
                         ? "d-none"
-                        
                         : ""
                     }`}
                     style={{
@@ -718,7 +722,7 @@ const ProfileCard = ({
                           : "repeat(3, 1fr)",
                     }}
                   >
-                    {!isPremium && (
+                    {!isPremium && discountPercentage == 0 && (
                       <div
                         className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
@@ -736,6 +740,44 @@ const ProfileCard = ({
                         />
                       </div>
                     )}
+
+                    {!isPremium && discountPercentage > 0 && (
+                      <div
+                        className={` wallet-wrapper-active-discount hoverdiscount position-relative justify-content-between
+                    d-flex align-items-center position-relative mt-3 mt-lg-0`}
+                        onClick={onPremiumClick}
+                      >
+                        <div className="premiumRedTag-profile position-absolute">
+                          <div className="position-relative d-flex flex-column">
+                            <img src={premiumRedTag} alt="" className="premiumtag-img"/>
+                            <div className="d-flex flex-column position-absolute discountwrap-profile">
+                              <span className="discount-price2-profile font-oxanium">
+                                {discountPercentage}%
+                              </span>
+                              <span className="discount-price-bottom">
+                                Discount
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="d-flex flex-column">
+                          <h6 className="lifetime-plan-text2 m-0">
+                            Lifetime plan
+                          </h6>
+
+                          <div className="d-flex align-items-center gap-2">
+                            <h6 className="discount-price-profile m-0">
+                              {discountPercentage == 100
+                                ? "FREE"
+                                : "$" + (100 - Number(discountPercentage))}
+                            </h6>
+                            <h6 className="old-price-text-profile m-0">$100</h6>
+                          </div>
+                        </div>
+                        <img src={premiumDiscount} alt="" className="" />
+                      </div>
+                    )}
+
                     {email && address && (
                       <>
                         <div

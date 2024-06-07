@@ -53,6 +53,15 @@
   height: 79px;
 }
 
+.wallet-wrapper-active-discount {
+  background: linear-gradient(270deg, #7F2B8A 20.08%, #7E2B89 20.66%, #5C257B 37.71%, #412170 55.11%, #2E1E68 72.83%, #231C64 91.02%, #1F1B62 110.38%, #1F1B62 186.38%);
+  border: 2px solid #7F2B8A;
+  padding: 14px 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  height: 79px;
+}
+
 .dypiusprofile-banner {
   aspect-ratio: 1/0.4;
 }
@@ -2161,7 +2170,7 @@
 }
 
 .daily-bonus-wrapper:hover {
-  border: 2px solid #7dd9af;
+  border: 2px solid #b44169;
   .profile-div-link {
     text-decoration: underline;
   }
