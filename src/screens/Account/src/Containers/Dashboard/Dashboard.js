@@ -321,6 +321,7 @@ function Dashboard({
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
+  const [MyNFTSBNB, setMyNFTSBNB] = useState([]);
 
   const [MyNFTSLandBNB, setMyNFTSLandBNB] = useState([]);
   const [MyNFTSCawsBNB, setMyNFTSCawsBNB] = useState([]);
@@ -2402,72 +2403,72 @@ function Dashboard({
 
   const calculatePremiumDiscount = async (wallet) => {
     // if (chainId === 56) {
-      const premiumSc = new window.bscWeb3.eth.Contract(
-        window.SUBSCRIPTION_NEWBNB2_ABI,
-        window.config.subscription_newbnb2_address
-      );
+    const premiumSc = new window.bscWeb3.eth.Contract(
+      window.SUBSCRIPTION_NEWBNB2_ABI,
+      window.config.subscription_newbnb2_address
+    );
 
-      const nftContract = new window.bscWeb3.eth.Contract(
-        window.NFT_DYPIUS_PREMIUM_ABI,
-        window.config.nft_dypius_premium_address
-      );
+    const nftContract = new window.bscWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_ABI,
+      window.config.nft_dypius_premium_address
+    );
 
-      if (wallet) {
-        const result = await nftContract.methods
-          .balanceOf(wallet)
+    if (wallet) {
+      const result = await nftContract.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+      const discount = await premiumSc.methods
+        .discountPercentageGlobal()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+      const nftObject = await premiumSc.methods
+        .nftDiscounts(window.config.nft_dypius_premium_address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      if (result && result > 0) {
+        const tokenId = await nftContract.methods
+          .tokenOfOwnerByIndex(wallet, 0)
           .call()
           .catch((e) => {
             console.error(e);
             return 0;
           });
 
-        const discount = await premiumSc.methods
-          .discountPercentageGlobal()
-          .call()
-          .catch((e) => {
-            console.error(e);
-            return 0;
-          });
-
-        const nftObject = await premiumSc.methods
-          .nftDiscounts(window.config.nft_dypius_premium_address)
-          .call()
-          .catch((e) => {
-            console.error(e);
-          });
-
-        if (result && result > 0) {
-          const tokenId = await nftContract.methods
-            .tokenOfOwnerByIndex(wallet, 0)
-            .call()
-            .catch((e) => {
-              console.error(e);
-              return 0;
-            });
-
-          if (nftObject) {
-            setnftDiscountObject(nftObject);
-            if (discount) {
-              setdiscountPercentage(
-                Math.max(discount, nftObject.discountPercentage)
-              );
-            }
-          }
-
-          setnftPremium_tokenId(tokenId);
-          setnftPremium_total(result);
-        } else {
-          setnftPremium_tokenId(0);
-          setnftPremium_total(0);
-
+        if (nftObject) {
+          setnftDiscountObject(nftObject);
           if (discount) {
-            setdiscountPercentage(discount);
+            setdiscountPercentage(
+              Math.max(parseInt(discount), parseInt(nftObject.discountPercentage))
+            );
           }
         }
+
+        setnftPremium_tokenId(tokenId);
+        setnftPremium_total(result);
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
+
+        if (discount) {
+          setdiscountPercentage(parseInt(discount));
+        }
       }
+    } else {
+      setnftPremium_tokenId(0);
+      setnftPremium_total(0);
+    }
     // } else setdiscountPercentage(0);
   };
 
@@ -3154,6 +3155,10 @@ function Dashboard({
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "land").then((NFTS) =>
       setMyNFTSLand(NFTS)
+    );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "bnb").then((NFTS) =>
+      setMyNFTSBNB(NFTS)
     );
     // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
     //   (NFTS) => setMyNFTSLandBNB(NFTS)
@@ -4836,7 +4841,7 @@ function Dashboard({
                       className={`col-12 d-flex flex-column gap-3  mt-5 mt-lg-0 ${classes.containerPlayer}`}
                     >
                       <ProfileCard
-                      discountPercentage={discountPercentage}
+                        discountPercentage={discountPercentage}
                         getRankData={getRankData}
                         rankData={rankData}
                         userRank={userRank}
@@ -5038,6 +5043,7 @@ function Dashboard({
                       myCawsCollected={MyNFTSCaws}
                       myCawsOldCollected={MyNFTSCawsOld}
                       myLandCollected={MyNFTSLand}
+                      myNFTSBNB={MyNFTSBNB}
                       myTimepieceCollected={MyNFTSTimepiece}
                       landStaked={landstakes}
                       myCawsWodStakes={myCawsWodStakesAll}
@@ -6182,7 +6188,9 @@ function Dashboard({
                                 </div>
                               </div>
                             )}
-                            {isConnected && discountPercentage > 0 && chainId === 56 ? (
+                            {isConnected &&
+                            discountPercentage > 0 &&
+                            chainId === 56 ? (
                               <div className="d-flex align-items-center gap-3 justify-content-center">
                                 <div
                                   className={` ${
@@ -6390,23 +6398,27 @@ function Dashboard({
                                   </button>
                                 </div>
                               </div>
-                            ): isConnected && discountPercentage > 0 && chainId !==56 ?
-                            <div
-                            className={`d-flex align-items-center justify-content-center mb-2`}
-                          >
-                             <button
-                            className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                            onClick={() => {
-                               handleBnbPool()
-                            }}
-                            style={{
-                              width: "fit-content",
-                              whiteSpace: "nowrap",
-                              fontSize: 14,
-                            }}
-                          >
-                            Switch to BNB Chain
-                          </button> </div> : (
+                            ) : isConnected &&
+                              discountPercentage > 0 &&
+                              chainId !== 56 ? (
+                              <div
+                                className={`d-flex align-items-center justify-content-center mb-2`}
+                              >
+                                <button
+                                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                                  onClick={() => {
+                                    handleBnbPool();
+                                  }}
+                                  style={{
+                                    width: "fit-content",
+                                    whiteSpace: "nowrap",
+                                    fontSize: 14,
+                                  }}
+                                >
+                                  Switch to BNB Chain
+                                </button>
+                              </div>
+                            ) : (
                               <div
                                 className={`d-flex align-items-center justify-content-center mb-2`}
                               >

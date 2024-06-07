@@ -70,7 +70,7 @@ const WalletBalance = ({
   dypBalancebnb,
   dypBalanceavax,
   isVerified,
-  email,
+  email,myNFTSBNB,
   // handleConnectWallet,
   handleShowWalletPopup,
   idypBalance,
@@ -459,6 +459,7 @@ const WalletBalance = ({
     let landBnbArray = [];
     let landBaseArray = [];
     let skaleNftsArray = [];
+    let bnbNftsArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -521,6 +522,22 @@ const WalletBalance = ({
               buyer: coinbase,
               tokenId: i,
               type: "landbnb",
+              chain: 56,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (myNFTSBNB && myNFTSBNB.length > 0) {
+        await Promise.all(
+          myNFTSBNB.map(async (i) => {
+            bnbNftsArray.push({
+              nftAddress: window.config.nft_bnb_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "bnb",
               chain: 56,
               isStaked: false,
               isListed: false,
@@ -913,6 +930,7 @@ const WalletBalance = ({
         ...landAvaxArray,
         ...landBnbArray,
         ...landBaseArray,
+        ...bnbNftsArray,
         ...coingeckoNftsArray,
         ...victionNftsArray,
         ...coreNftsArray,
@@ -1126,6 +1144,10 @@ const WalletBalance = ({
         (item) => item.nftAddress === window.config.nft_skale_address
       );
 
+      let bnbFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_bnb_address
+      );
+
       let coreFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_core_address
       );
@@ -1144,6 +1166,7 @@ const WalletBalance = ({
         ...skaleFilter,
         ...victionFilter,
         ...coreFilter,
+        ...bnbFilter
 
       ];
       setcollectedItemsFiltered(allBetapassArray);
@@ -1895,6 +1918,8 @@ const WalletBalance = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
                                   : item.type === "skale"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
+                                  : item.type === "bnb"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
                                   : item.type === "cmc"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
                                   : item.type === "core"
@@ -1930,6 +1955,8 @@ const WalletBalance = ({
                                   ? "BSBP"
                                   : item.type === "doge"
                                   ? "DCBP"
+                                  : item.type === "doge"
+                                  ? "BNBBP"
                                   : item.type === "skale"
                                   ? "SKBP"
                                   : item.type === "cmc"
@@ -2885,6 +2912,9 @@ const WalletBalance = ({
                                   window.config.nft_skale_address
                                 ? "skale"
                                 : nft.nftAddress ===
+                                  window.config.nft_bnb_address
+                                ? "bnb"
+                                : nft.nftAddress ===
                                   window.config.nft_cmc_address
                                 ? "cmc"
                                 : nft.nftAddress ===
@@ -2960,6 +2990,9 @@ const WalletBalance = ({
                                       window.config.nft_skale_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_bnb_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_cmc_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
                                     : nft.nftAddress ===
@@ -3014,6 +3047,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_skale_address
                                     ? "SKBP"
+                                    : nft.nftAddress ===
+                                    window.config.nft_bnb_address
+                                  ? "BNBBP"
                                     : nft.nftAddress ===
                                       window.config.nft_cmc_address
                                     ? "CMCBP"
@@ -3175,6 +3211,9 @@ const WalletBalance = ({
                                   window.config.nft_skale_address
                                 ? "skale"
                                 : nft.nftAddress ===
+                                  window.config.nft_bnb_address
+                                ? "bnb"
+                                : nft.nftAddress ===
                                   window.config.nft_cmc_address
                                 ? "cmc"
                                 : nft.nftAddress ===
@@ -3252,6 +3291,9 @@ const WalletBalance = ({
                                       window.config.nft_skale_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
                                     : nft.nftAddress ===
+                                    window.config.nft_bnb_address
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_cmc_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
                                     : nft.nftAddress ===
@@ -3308,6 +3350,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_skale_address
                                     ? "SKBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb_address
+                                    ? "BNBBP"
                                     : nft.nftAddress ===
                                       window.config.nft_cmc_address
                                     ? "CMCBP"
