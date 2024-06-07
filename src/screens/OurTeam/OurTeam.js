@@ -156,7 +156,7 @@ const OurTeam = () => {
       name: "Wee Yao Liang",
       position: "Advisor",
       photo: wei,
-      link: "",
+      link: "https://www.linkedin.com/in/skywee97/",
       content: `Sky Wee is Managing Partner of VC, Crypto Influencer, Advisor. Sky Wee works closely with venture partners like LDA Capital, Elevate Ventures and ATF Capital.
       Sky Wee has secured over $45 million in funding for an outstanding portfolio of 40+ projects. Official Influencer of Binance, showcasing his exceptional expertise and impact in the industry.`,
     },
