@@ -1554,6 +1554,15 @@
   color: #8c56ff;
 }
 
+.premium-custom-text {
+  height: 1px;
+  position: relative;
+  top: -10px;
+  @media screen and (max-width: 576px) {
+  display: none;
+  }
+}
+
 .new-benefit-card {
   background-image: url("../../assets/landAssets/benefitBg.svg");
   background-size: 350px 150px;

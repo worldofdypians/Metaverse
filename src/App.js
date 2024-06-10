@@ -907,10 +907,10 @@ function App() {
         console.error(e);
       });
 
-      if(result && result.status === 200) {
-        const socialsData = result.data;
-        setSocials(socialsData)
-      }
+    if (result && result.status === 200) {
+      const socialsData = result.data;
+      setSocials(socialsData);
+    }
   };
 
   const myCAWNft = async () => {
@@ -1360,7 +1360,7 @@ function App() {
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
     }
-  }, [data, coinbase, isConnected]);
+  }, [data, coinbase, isConnected, count55]);
 
   const handleCoreNftMint = async () => {
     if (isConnected && coinbase) {
@@ -2072,6 +2072,8 @@ function App() {
     let subscribedPlatformTokenAmountETH;
     let subscribedPlatformTokenAmountCfx;
     let subscribedPlatformTokenAmountBNB;
+    let subscribedPlatformTokenAmountBNB2;
+
     let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBase;
     let subscribedPlatformTokenAmountSkale;
@@ -2094,6 +2096,8 @@ function App() {
     const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
     const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
     const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
+    const Bnb2ABI = window.SUBSCRIPTION_NEWBNB2_ABI;
+
     const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
     const CoreABI = window.SUBSCRIPTION_CORE_ABI;
     const VicitonABI = window.SUBSCRIPTION_VICTION_ABI;
@@ -2103,6 +2107,8 @@ function App() {
     const cfxsubscribeAddress = window.config.subscription_cfx_address;
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+    const bnbsubscribeAddress2 = window.config.subscription_newbnb2_address;
+
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
     const skalesubscribeAddress = window.config.subscription_skale_address;
     const coresubscribeAddress = window.config.subscription_core_address;
@@ -2122,6 +2128,11 @@ function App() {
     );
 
     const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
+    const bnbcontract2 = new web3bnb.eth.Contract(
+      Bnb2ABI,
+      bnbsubscribeAddress2
+    );
+
     const avaxcontract = new web3avax.eth.Contract(
       AvaxABI,
       avaxsubscribeAddress
@@ -2174,6 +2185,14 @@ function App() {
           return 0;
         });
 
+      subscribedPlatformTokenAmountBNB2 = await bnbcontract2.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
       subscribedPlatformTokenAmountAvax = await avaxcontract.methods
         .subscriptionPlatformTokenAmount(addr)
         .call()
@@ -2213,12 +2232,13 @@ function App() {
           console.log(e);
           return 0;
         });
-
+       
       if (
         subscribedPlatformTokenAmountCfx == "0" &&
         subscribedPlatformTokenAmountETH == "0" &&
         subscribedPlatformTokenAmountBase == "0" &&
         subscribedPlatformTokenAmountBNB == "0" &&
+        subscribedPlatformTokenAmountBNB2 == "0" &&
         subscribedPlatformTokenAmountAvax == "0" &&
         subscribedPlatformTokenAmountSkale == "0" &&
         subscribedPlatformTokenAmountCore == "0" &&
@@ -2233,6 +2253,7 @@ function App() {
         subscribedPlatformTokenAmountETH != "0" ||
         subscribedPlatformTokenAmountBase != "0" ||
         subscribedPlatformTokenAmountBNB != "0" ||
+        subscribedPlatformTokenAmountBNB2 != "0" ||
         subscribedPlatformTokenAmountAvax != "0" ||
         subscribedPlatformTokenAmountSkale != "0" ||
         subscribedPlatformTokenAmountCore != "0" ||
@@ -2603,9 +2624,9 @@ function App() {
     }, 300000);
   }, [count2]);
 
-  useEffect(()=>{
-    fetchSocialData()
-  },[])
+  useEffect(() => {
+    fetchSocialData();
+  }, []);
 
   return (
     <>
@@ -2697,7 +2718,11 @@ function App() {
             }
           />
           <Route exact path="/roadmap" element={<Roadmap />} />
-          <Route exact path="/community" element={<Community socials={socials} />} />
+          <Route
+            exact
+            path="/community"
+            element={<Community socials={socials} />}
+          />
           <Route exact path="/team" element={<OurTeam />} />
           <Route
             exact
@@ -2852,7 +2877,7 @@ function App() {
                 chainId={chainId}
                 showForms={showForms2}
                 balance={currencyAmount}
-                socials={socials} 
+                socials={socials}
               />
             }
           />
