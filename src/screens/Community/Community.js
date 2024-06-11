@@ -400,17 +400,10 @@ const Community = ({socials}) => {
   ];
 
   const dummyData = [
-    {
-      title: "Dypians Discovery Quest",
-      status: "Live",
-      start_date: "May 29, 2024",
-      end_date: "June 12, 2024",
-      image: dypiansDiscovery,
-      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/104-dypians-discovery-quest",
-    },
+
     {
       title: "BNB Chain Game Expedition",
-      status: "Upcoming",
+      status: "Live",
       start_date: "June 12, 2024",
       end_date: "June 28, 2024",
       image: bnbExpedition,
@@ -432,16 +425,24 @@ const Community = ({socials}) => {
       image: dailyGameDelight,
       link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/103-daily-game-delight",
     },
+    {
+      title: "Dypians Discovery Quest",
+      status: "Expired",
+      start_date: "May 29, 2024",
+      end_date: "June 12, 2024",
+      image: dypiansDiscovery,
+      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/104-dypians-discovery-quest",
+    },
   ];
 
   const dummyBanner = {
-    title: "Dypians Discovery Quest",
+    title: "BNB Chain Game Expedition",
     status: "Live",
     desc: "Join the World of Dypians (WoD) Dypians Discovery Quest Campaign from May 29 to June 12 for a chance to win a share of the 200,000 WOD Tokens & 750 Premium Subscription prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
-    start_date: "May 29, 2024",
-    end_date: "June 12, 2024",
-    image: dypiansDiscovery,
-    link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/104-dypians-discovery-quest",
+    start_date: "June 12, 2024",
+    end_date: "June 28, 2024",
+    image: bnbExpedition,
+    link: "/",
   };
 
   const html = document.querySelector("html");

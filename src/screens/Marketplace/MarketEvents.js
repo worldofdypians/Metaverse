@@ -107,7 +107,7 @@ import seiMobileBg from "./assets/seiActive.webp";
 import coreMobileBg from "./assets/coreActive.webp";
 import victionMobileBg from "./assets/victionActive.webp";
 import multiversMobileBg from "./assets/multiversActive.webp";
-
+import bnbLogo from "./assets/bnbLogo.svg";
 import dailyBonus from "./assets/dailyBonus.webp";
 import MintPopup from "../../components/TimepieceMint/MintPopup";
 
@@ -208,6 +208,9 @@ const MarketEvents = ({
   const [dypiusPremiumPoints, setdypiusPremiumPoints] = useState(0);
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
   const [skaleEarnToken, setSkaleEarnToken] = useState(0);
+  const [bnbEarnToken, setBnbEarnToken] = useState(0);
+  const [bnbEarnUsd, setBnbEarnUsd] = useState(0);
+  const [bnbPoints, setBnbPoints] = useState(0)
   const [skalePoints, setSkalePoints] = useState(0);
   const [dailyBonusPopup, setDailyBonusPopup] = useState(false);
   const [activePopup, setActivePopup] = useState(false);
@@ -353,8 +356,35 @@ const MarketEvents = ({
     //     eventDate: "XXX XX, XXXX",
     //   },
     // },
-   
 
+    {
+      title: "BNB Chain",
+      logo: bnbLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Apr 15, 2024",
+      backgroundImage: upcomingSkale,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Live",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: skaleLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        eventDate: "Apr 15, 2024",
+      },
+    },
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -383,7 +413,7 @@ const MarketEvents = ({
         eventDate: "Apr 15, 2024",
       },
     },
-     {
+    {
       title: "Dypius Premium",
       logo: dypiusPremium36,
       eventStatus: "Expired",
@@ -1106,7 +1136,6 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                   
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -1119,7 +1148,7 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                     <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div>
                     <NavLink
@@ -1267,7 +1296,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 1).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1278,7 +1307,6 @@ const MarketEvents = ({
                             userEarnUsd={
                               item.title === "CoinMarketCap"
                                 ? cmcuserEarnUsd
-                                
                                 : item.title === "SKALE"
                                 ? skaleEarnUsd
                                 : 0
@@ -1425,7 +1453,6 @@ const MarketEvents = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
-
                 </div>
               )}
               {activeTab === "past" && (
@@ -1560,7 +1587,6 @@ const MarketEvents = ({
                     style={{
                       width: 80,
                       height: 80,
-                  
                     }}
                   />
                   <div className="d-flex flex-column justify-content-between">
@@ -1649,6 +1675,18 @@ const MarketEvents = ({
                       placement on the global leaderboard. Remember to log in to
                       the game daily and venture into the Coin98 area to uncover
                       hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event20" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
+                      Chain Beta Pass NFT from the World of Dypians Marketplace.
+                      By engaging in the game on a daily basis and exploring the
+                      BNB Chain area, players not only stand a chance to secure
+                      daily rewards in C98, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the BNB Chain area to
+                      uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event3" ? (
                     <p className="popup-event-desc">
@@ -1832,6 +1870,8 @@ const MarketEvents = ({
                           ? "CFX"
                           : dummyEvent.id === "event2"
                           ? "C98"
+                          : dummyEvent.id === "event20"
+                          ? "BNB"
                           : dummyEvent.id === "event3"
                           ? "BNB"
                           : dummyEvent.id === "event5"
@@ -1881,6 +1921,8 @@ const MarketEvents = ({
                 ? "Conflux Network"
                 : dummyEvent.id === "event2"
                 ? "Coin98"
+                : dummyEvent.id === "event20"
+                ? "BNB Chain"
                 : dummyEvent.id === "event3"
                 ? "CoinGecko"
                 : dummyEvent.id === "event5" || dummyEvent.id === "event9"
@@ -1928,6 +1970,14 @@ const MarketEvents = ({
                 mission is to fulfill untapped demand and enhance in-demand
                 utilities in the DeFi space, helping people to access DeFi
                 services effortlessly.
+              </p>
+            ) : dummyEvent.id === "event20" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                A community-driven blockchain ecosystem of Layer-1 and Layer-2
+                scaling solutions.
               </p>
             ) : dummyEvent.id === "event3" ? (
               <p
@@ -2091,6 +2141,8 @@ const MarketEvents = ({
                     ? "https://twitter.com/CoinMarketCap"
                     : dummyEvent.id === "event11"
                     ? "https://twitter.com/SkaleNetwork"
+                    : dummyEvent.id === "event20"
+                    ? "https://x.com/BNBChain"
                     : dummyEvent.id === "event14"
                     ? "https://viction.link/twitter"
                     : dummyEvent.id === "event15"
@@ -2126,6 +2178,8 @@ const MarketEvents = ({
                     ? "https://discord.gg/dogecoin"
                     : dummyEvent.id === "event11"
                     ? "https://t.me/skaleofficial"
+                    : dummyEvent.id === "event20"
+                    ? "https://t.me/bnbchain"
                     : dummyEvent.id === "event14"
                     ? "https://viction.link/telegram"
                     : dummyEvent.id === "event15"
@@ -2299,6 +2353,8 @@ const MarketEvents = ({
                             ? "DOGE"
                             : dummyEvent.id === "event11"
                             ? "SKL"
+                            : dummyEvent.id === "event20"
+                            ? "BNB"
                             : dummyEvent.id === "event14"
                             ? "VIC"
                             : dummyEvent.id === "event15"
