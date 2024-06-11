@@ -205,6 +205,7 @@ const MarketMint = ({
 
   const windowSize = useWindowSize();
   const params = useParams();
+  const location = useLocation();
   const [viewCollection, setViewCollection] = useState(false);
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*50 NFT limit");
@@ -279,15 +280,16 @@ const MarketMint = ({
   };
 
   useEffect(() => {
-    //if (params.id === "skale") {
-    //  setSelectedMint(baseData);
-    //  setMintTitle("skale");
-    //} else if (params.id === "timepiece") {
-    setSelectedMint(bnbData);
-    setMintTitle("bnb");
-    //}
+    console.log(location);
+    if (location.pathname.includes("bnb")) {
+     setSelectedMint(bnbData);
+     setMintTitle("bnb");
+    } else if (location.pathname.includes("timepiece")) {
+    setSelectedMint(timepieceData);
+    setMintTitle("timepiece");
+    }
     getTotalSupply();
-  }, []);
+  }, [location]);
 
   useEffect(() => {
     html.classList.remove("hidescroll");

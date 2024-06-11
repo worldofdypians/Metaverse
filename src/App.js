@@ -1448,6 +1448,22 @@ function App() {
   };
 
 
+  const handleSecondTask = async (wallet) => {
+
+
+    const result2 = await axios
+    .get(
+      `https://api.worldofdypians.com/api/airdrop-alliance/task8/${wallet}`
+    )
+    .catch((err) => {
+      console.error(err);
+    });
+
+  if (result2 && result2.status === 200) {
+    console.log(result2);
+  }
+};
+
   const handleBnbNftMint = async () => {
     if (isConnected && coinbase) {
       try {
@@ -1462,6 +1478,7 @@ function App() {
           let tokenId = await window.bnb_nft
             .mintBNBNFT()
             .then(() => {
+              handleSecondTask(coinbase)
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
               settextColor("rgb(123, 216, 176)");
@@ -3782,6 +3799,12 @@ function App() {
                 myseiNfts={myseiNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
+                myBnbNfts={myBnbNfts}
+                myBnbNFTsCreated={myBnbNFTsCreated}
+                bnbMintAllowed={bnbMintAllowed}
+                totalBnbNft={totalBnbNft}
+
+
               />
             }
           />

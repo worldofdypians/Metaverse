@@ -120,7 +120,7 @@ const NewChestItem = ({
 
       const result2 = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task6/${wallet}`
+        `https://api.worldofdypians.com/api/airdrop-alliance/task8/${wallet}`
       )
       .catch((err) => {
         console.error(err);

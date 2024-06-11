@@ -565,7 +565,7 @@ const BetaPassNFT = ({
   const handleFirstTask = async (wallet) => {
     await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task5/${wallet}`
+        `https://api.worldofdypians.com/api/airdrop-alliance/task7/${wallet}`
       )
       .catch((e) => {
         console.error(e);
