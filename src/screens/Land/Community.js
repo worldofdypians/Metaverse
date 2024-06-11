@@ -3,7 +3,7 @@ import nextButton from "../../assets/landAssets/nextButton.svg";
 import ComunityNewsCard from "../../components/CommunityNewsCard/ComunityNewsCard";
 import Slider from "react-slick";
 import axios from "axios";
-import './_community.scss'
+import "./_community.scss";
 
 const Community = () => {
   var settings = {
@@ -43,7 +43,7 @@ const Community = () => {
           slidesToScroll: 1,
           infinite: true,
           autoplay: true,
-          dots: false
+          dots: false,
         },
       },
     ],
@@ -58,17 +58,16 @@ const Community = () => {
         return res.data;
       });
 
-      const datedNews = communityNews.map((item) => {
-        return { ...item, date: new Date(item.date) };
-      });
-      const sortedNews = datedNews.sort(function (a, b) {
-        return b.date - a.date;
-      });
-      
-    setNews(sortedNews)
+    const datedNews = communityNews.map((item) => {
+      return { ...item, date: new Date(item.date) };
+    });
+    const sortedNews = datedNews.sort(function (a, b) {
+      return b.date - a.date;
+    });
+
+    setNews(sortedNews);
   };
 
-  
   const slider = useRef();
 
   const next = () => {
@@ -82,27 +81,51 @@ const Community = () => {
     fetchNews();
   }, []);
 
-  const ref=useRef()
+  const ref = useRef();
 
   // console.log(ref);
   return (
     <div className="row justify-content-between align-items-center w-100 mx-0 px-3 px-lg-5 position-relative">
-      <h6 className="community-title font-organetto d-flex flex-column flex-lg-ro">The World of dypians <span
-            className="community-title font-organetto"
-            style={{ color: "#8c56ff" }}
-          >
-            community
-          </span></h6>
-      <Slider  ref={(c) => (slider.current = c)} {...settings}>
-       {news.map((item, index) => (
-        <ComunityNewsCard key={index} date={item.date} content={item.content} link={item.link} video={item.video} image={item.image} id={item.id} />
-       ))}
+      <h6 className="community-title font-organetto d-flex flex-column flex-lg-ro">
+        The World of dypians{" "}
+        <span
+          className="community-title font-organetto"
+          style={{ color: "#8c56ff" }}
+        >
+          community
+        </span>
+      </h6>
+      <Slider ref={(c) => (slider.current = c)} {...settings}>
+        {news.map((item, index) => (
+          <ComunityNewsCard
+            key={index}
+            date={item.date}
+            content={item.content}
+            link={item.link}
+            video={item.video}
+            image={item.image}
+            id={item.id}
+          />
+        ))}
       </Slider>
       <div className="d-flex align-items-center gap-3 slider-buttons-wrapper">
-      <img src={nextButton} className="prev-button" width={40} height={40} alt="" onClick={previous} />
-      <img src={nextButton} className="next-button" width={40} height={40} alt="" onClick={next} />
+        <img
+          src={nextButton}
+          className="prev-button"
+          width={40}
+          height={40}
+          alt=""
+          onClick={previous}
+        />
+        <img
+          src={nextButton}
+          className="next-button"
+          width={40}
+          height={40}
+          alt=""
+          onClick={next}
+        />
       </div>
-
     </div>
   );
 };

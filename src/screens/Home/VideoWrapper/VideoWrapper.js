@@ -14,6 +14,8 @@ import cmc from "../../Marketplace/MarketNFTs/assets/cmc.svg";
 import multiplayer from "../../../assets/multiplayer.svg";
 import whiteCircleArrow from "../../../assets/whiteCircleArrow.svg";
 import skaleLogo from "../../Marketplace/MarketNFTs/assets/skaleLogo.svg";
+import bnbLogo from "../../Marketplace/MarketNFTs/assets/bnblogo.svg";
+
 import victionLogo from "./assets/victionLogo.svg";
 import victionBg from "./assets/victionBg.webp";
 import seiLogo from "./assets/seiLogo.svg";
@@ -88,6 +90,45 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         eventStatus: "Live",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SKL Rewards",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "December 22, 2023",
+      },
+    },
+    {
+      title: "BNB Chain",
+      chain: "SKALE Nebula Hub",
+      linkState: "skale",
+      rewards: "BNB",
+      status: "Live",
+      eventStatus: "Live",
+      id: "event14",
+      eventType: "Explore & Mine",
+      date: "December 22, 2023",
+      logo: bnbLogo,
+      totalRewards: "$20,000 in BNB Rewards",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "BNB Rewards",
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore:
+        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Live",
+        id: "event14",
+        eventStatus: "Live",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
         minRewards: "1",
         maxRewards: "100",
         minPoints: "5,000",

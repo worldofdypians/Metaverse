@@ -68,7 +68,7 @@ const MintPopup = ({ active, onClose, data }) => {
           <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-            100,000 WOD Tokens
+            350,000 WOD Tokens
             </h6>
           </div>
           <h6 className="mint-popup-title">BNB Chain Game Expedition</h6>
@@ -210,7 +210,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "MULTIVERSX" ? (
           <Link
             onClick={onClose}
-            to={"/community"}
+            to={"https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/105-bnb-chain-game-expedition"}
             state={{ event: data.state }}
             className="linear-border"
           >

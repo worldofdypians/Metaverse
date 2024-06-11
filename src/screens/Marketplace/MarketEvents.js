@@ -210,7 +210,7 @@ const MarketEvents = ({
   const [skaleEarnToken, setSkaleEarnToken] = useState(0);
   const [bnbEarnToken, setBnbEarnToken] = useState(0);
   const [bnbEarnUsd, setBnbEarnUsd] = useState(0);
-  const [bnbPoints, setBnbPoints] = useState(0)
+  const [bnbPoints, setBnbPoints] = useState(0);
   const [skalePoints, setSkalePoints] = useState(0);
   const [dailyBonusPopup, setDailyBonusPopup] = useState(false);
   const [activePopup, setActivePopup] = useState(false);
@@ -1136,6 +1136,9 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -1148,9 +1151,6 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1683,7 +1683,7 @@ const MarketEvents = ({
                       Chain Beta Pass NFT from the World of Dypians Marketplace.
                       By engaging in the game on a daily basis and exploring the
                       BNB Chain area, players not only stand a chance to secure
-                      daily rewards in C98, but also earn points for their
+                      daily rewards in BNB, but also earn points for their
                       placement on the global leaderboard. Remember to log in to
                       the game daily and venture into the BNB Chain area to
                       uncover hidden treasures.
@@ -1870,15 +1870,12 @@ const MarketEvents = ({
                           ? "CFX"
                           : dummyEvent.id === "event2"
                           ? "C98"
-                          : dummyEvent.id === "event20"
-                          ? "BNB"
-                          : dummyEvent.id === "event3"
-                          ? "BNB"
                           : dummyEvent.id === "event5"
                           ? "DYP"
                           : dummyEvent.id === "event6" ||
                             dummyEvent.id === "event8" ||
-                            dummyEvent.id === "event9"
+                            dummyEvent.id === "event9" ||
+                            dummyEvent.id === "event20" ||dummyEvent.id === "event3" 
                           ? "BNB"
                           : dummyEvent.id === "event7"
                           ? "DOGE"
@@ -2230,6 +2227,8 @@ const MarketEvents = ({
                     ? "https://www.immutable.com/"
                     : dummyEvent.id === "event13"
                     ? "https://www.sei.io/"
+                    : dummyEvent.id === "event20"
+                    ? "https://www.bnbchain.org/en"
                     : dummyEvent.id === "event12"
                     ? "https://coredao.org/"
                     : dummyEvent.id === "event16"
