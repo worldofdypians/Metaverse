@@ -367,6 +367,9 @@ function Dashboard({
   const [baseUserPoints, setBaseUserPoints] = useState(0);
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
   const [baseEarnETH, setBaseEarnETH] = useState(0);
+  const [bnbEarnToken, setBnbEarnToken] = useState(0);
+  const [bnbEarnUsd, setBnbEarnUsd] = useState(0);
+  const [bnbPoints, setBnbPoints] = useState(0);
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
 

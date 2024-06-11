@@ -41,6 +41,7 @@ import dummyBadge from "../../../assets/landAssets/dummyBadge.png";
 import avaxLogo from "./assets/avaxLogo.svg";
 import dogeLogo from "./assets/dogeLogo.svg";
 import dogeBetaBanner from "./assets/dogeBetaBanner.png";
+import bnbBetaBanner from "./assets/bnbBetaBanner.png";
 import betapassBanner from "./assets/betaPassBanner.png";
 import betapassBannerConflux from "./assets/betaPassBannerConflux.webp";
 import betapassBannerGate from "./assets/betaPassBannerGate.webp";
@@ -197,7 +198,7 @@ const BetaPassNFT = ({
     id: "bnb",
     cardTitle: "BNB Chain Beta Pass",
     title: "BNB Chain Beta Pass",
-    background: "conflux-mint-bg2",
+    background: "bnb-mint-bg",
   };
 
   const avaxData = {
@@ -878,7 +879,7 @@ const BetaPassNFT = ({
                         : mintTitle === "sei"
                         ? seiBanner
                         : mintTitle === "bnb"
-                        ? seiBanner
+                        ? bnbBetaBanner
                         : betapassBanner
                     }
                     className="w-100"

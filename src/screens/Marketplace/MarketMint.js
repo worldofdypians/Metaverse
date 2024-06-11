@@ -21,6 +21,7 @@ import Slider from "react-slick";
 import nextArrow from "./assets/nextArrow1.svg";
 import confluxActive from "./assets/confluxActive.png";
 import coin98Active from "./assets/coin98Active.png";
+import bnbActive from "./assets/bnbActive.png";
 import coingeckoActive from "./assets/coingeckoActive.png";
 import skaleActive from "./assets/upcomingSkaleMobile.webp";
 import immutableActive from "./assets/immutableActive.webp";
@@ -198,8 +199,8 @@ const MarketMint = ({
     id: "bnb",
     cardTitle: "BNB Chain Beta Pass",
     title: "BNB Chain Beta Pass",
-    background: "sei-mint-bg",
-    mobileBg: "seiMobileBg.webp",
+    background: "bnb-mint-bg",
+    mobileBg: "bnbMobileBg.webp",
   };
 
   const windowSize = useWindowSize();
@@ -400,9 +401,10 @@ const MarketMint = ({
       title: "BNB Chain Pass",
       eventId: "bnb",
       desc: "Gain entry to metaverse, and join exclusive BNB Chain event with special ticket.",
-      img: seiActive,
+      img: bnbActive,
       data: bnbData,
       class: "mint-bnb",
+      id: "bnb"
     },
 
     {
@@ -828,6 +830,9 @@ const MarketMint = ({
                                   : selectedMint.id === "multiversx" &&
                                     totalMultiversNft > 0
                                   ? "multivers-active"
+                                  : selectedMint.id === "bnb" &&
+                                    totalBnbNft > 0
+                                  ? "bnb-active"
                                   : selectedMint.id === "multiversx" &&
                                     totalMultiversNft === 0
                                   ? "conflux-empty"

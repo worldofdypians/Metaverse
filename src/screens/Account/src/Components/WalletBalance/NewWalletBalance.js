@@ -49,6 +49,7 @@ import seiThumb from "./assets/seiThumb.png";
 import multiversThumb from "./assets/multiversThumb.png";
 import immutableThumb from "./assets/immutableThumb.png";
 import coreThumb from "./assets/coreThumb.png";
+import bnbPopupImage from "./assets/bnbPopupImage.png";
 
 import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
 import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
@@ -2140,7 +2141,7 @@ const NewWalletBalance = ({
                         : dummyEvent?.id === "event11"
                         ? upcomingSkale
                         : dummyEvent?.id === "event20"
-                        ? upcomingSkale
+                        ? bnbPopupImage
                         : dummyEvent?.linkState === "coingecko"
                         ? eventPopupImageGecko
                         : dummyEvent.linkState === "gate"
@@ -2161,6 +2162,8 @@ const NewWalletBalance = ({
                         ? victionThumb
                         : dummyEvent.linkState === "multiversx"
                         ? multiversThumb
+                        : dummyEvent.linkState === "bnb"
+                        ? bnbPopupImage
                         : eventPopupImage
                     }
                     alt=""

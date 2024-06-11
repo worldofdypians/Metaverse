@@ -90,6 +90,7 @@ import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
 import upcomingDoge from "./assets/upcomingDoge.webp";
 import upcomingSkale from "./assets/upcomingSkale.webp";
 import upcomingSkaleMobile from "./assets/upcomingSkaleMobile.webp";
+import upcomingBnb from "./assets/upcomingBnb.png";
 
 import upcomingBabyDoge from "./assets/upcomingBabyDoge.webp";
 import upcomingBabyDogeMobile from "./assets/upomingBabyDogeMobile.webp";
@@ -99,6 +100,7 @@ import upcomingCmc from "./assets/upcomingCmc.webp";
 import upcomingDyp2 from "./assets/dypiusBgPic2.webp";
 import immutableBg from "./assets/immutableBg.webp";
 import seiBg from "./assets/seiBg.webp";
+import bnbPopupImage from "./assets/bnbPopupImage.png";
 import coreBg from "./assets/coreBg.webp";
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
@@ -365,7 +367,7 @@ const MarketEvents = ({
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Apr 15, 2024",
-      backgroundImage: upcomingSkale,
+      backgroundImage: upcomingBnb,
       popupInfo: {
         title: "BNB Chain",
         chain: "BNB Chain",
@@ -911,6 +913,9 @@ const MarketEvents = ({
           const skaleEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "skale";
           });
+          const bnbEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "bnb";
+          });
 
           const gateEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "gate";
@@ -945,6 +950,16 @@ const MarketEvents = ({
             setdypiusPremiumPoints(pointsdypius);
             setdypiusPremiumEarnUsd(userEarnedusd);
             setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
+          }
+          if (bnbEvent && bnbEvent[0]) {
+            const userEarnedusd =
+              bnbEvent[0].reward.earn.total /
+              bnbEvent[0].reward.earn.multiplier;
+            const pointsBnb = bnbEvent[0].reward.earn.totalPoints;
+
+            setBnbPoints(pointsBnb);
+            setBnbEarnUsd(userEarnedusd);
+            setBnbEarnToken(userEarnedusd / bnbPrice);
           }
 
           if (dypEvent && dypEvent[0]) {
@@ -1490,6 +1505,8 @@ const MarketEvents = ({
                             ? dypiusEarnTokens
                             : item.title === "Dypius Premium"
                             ? dypiusPremiumEarnUsd
+                            : item.title === "BNB Chain"
+                            ? bnbEarnUsd
                             : 0
                         }
                       />
@@ -1581,6 +1598,8 @@ const MarketEvents = ({
                         ? victionThumb
                         : dummyEvent.linkState === "multiversx"
                         ? multiversThumb
+                        : dummyEvent.linkState === "bnb"
+                        ? bnbPopupImage
                         : eventPopupImage
                     }
                     alt=""
@@ -2271,6 +2290,8 @@ const MarketEvents = ({
                         ? dypiusPremiumPoints
                         : dummyEvent.id === "event11"
                         ? skalePoints
+                        : dummyEvent.id === "event20"
+                        ? bnbPoints
                         : 0,
                       0
                     )}
@@ -2310,6 +2331,8 @@ const MarketEvents = ({
                         ? dypiusPremiumEarnUsd
                         : dummyEvent.id === "event11"
                         ? skaleEarnUsd
+                        : dummyEvent.id === "event20"
+                        ? bnbEarnUsd
                         : 0,
                       2
                     )}
@@ -2333,6 +2356,8 @@ const MarketEvents = ({
                               ? dypiusPremiumEarnTokens
                               : dummyEvent.id === "event11"
                               ? skaleEarnToken
+                              : dummyEvent.id === "event20"
+                              ? bnbEarnToken
                               : 0,
                             2
                           )}
