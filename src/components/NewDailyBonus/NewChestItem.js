@@ -73,9 +73,7 @@ const NewChestItem = ({
       if (result.status === 200) {
         onClaimRewards(result.data);
         setIsChestOpen(true);
-        if (chainText !== "skale") {
-          handleSecondTask(address);
-        }
+         
         // onChestStatus("success");
         onLoadingChest(false);
         setLoading(false);
@@ -170,9 +168,7 @@ const NewChestItem = ({
         });
       if (result.status === 200) {
         onClaimRewards(result.data);
-        if (chainText !== "skale") {
-          handleSecondTask(address);
-        }
+         
         setIsChestOpen(true);
         // onChestStatus("success");
         onLoadingChest(false);

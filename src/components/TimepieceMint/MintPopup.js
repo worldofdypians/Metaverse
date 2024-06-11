@@ -212,6 +212,7 @@ const MintPopup = ({ active, onClose, data }) => {
             onClick={onClose}
             to={"https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/105-bnb-chain-game-expedition"}
             state={{ event: data.state }}
+            target='_blank'
             className="linear-border"
           >
             <button className="btn filled-btn px-4">More</button>
