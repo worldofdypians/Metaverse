@@ -6,7 +6,7 @@ import allImg from "./myrewardsAssets/newAssets/allImg.svg";
 import allActive from "./myrewardsAssets/newAssets/allActive.svg";
 import nftStaking from "./myrewardsAssets/newAssets/nftStaking.svg";
 import nftStakingActive from "./myrewardsAssets/newAssets/nftStakingActive.svg";
-
+import bnbLogo from '../../../../Marketplace/assets/bnbLogo.svg'
 import leaderboard from "./myrewardsAssets/newAssets/leaderboard.svg";
 import leaderboardActive from "./myrewardsAssets/newAssets/leaderboardActive.svg";
 
@@ -56,6 +56,8 @@ const MyRewardsPopupNew = ({
   baseEarnUSD,
   baseEarnETH,
   dypiusEarnUsd,
+  bnbEarnUsd,
+bnbEarnToken,
   skaleEarnUsd,
   seiEarnUsd,
   coreEarnUsd,
@@ -706,6 +708,7 @@ const MyRewardsPopupNew = ({
                       Number(treasureRewardMoneySkale) +
                       Number(skaleEarnUsd) +
                       Number(seiEarnUsd) +
+                      Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd) +
                       Number(dailyplayerData) + Number(skaleplayerDataAmount) +
@@ -951,6 +954,7 @@ const MyRewardsPopupNew = ({
                     Number(skaleEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(seiEarnUsd) +
+                      Number(bnbEarnUsd) +
                       Number(victionEarnUsd),
                     2
                   )}
@@ -1294,6 +1298,7 @@ const MyRewardsPopupNew = ({
                       ${getFormattedNumber(skaleEarnUsd, 2)}
                     </span>
                   </div>
+                
                   {/* <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
                       <img
@@ -1322,7 +1327,17 @@ const MyRewardsPopupNew = ({
                     </span>
                   </div> */}
                 </div>
-                <div className="d-flex flex-column gap-2 w-50"></div>
+                <div className="d-flex flex-column gap-2 w-50">
+                <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img src={bnbLogo} alt="" />
+                      BNB Chain
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(bnbEarnUsd, 2)}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

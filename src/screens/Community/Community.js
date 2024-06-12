@@ -12,6 +12,8 @@ import dypius from "../Account/src/Components/WalletBalance/assets/dypIcon.svg";
 import base from "../Account/src/Components/WalletBalance/assets/baseLogo.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
 import skaleLogo from "../Account/src/Components/WalletBalance/assets/skaleLogo.svg";
+import bnblogo from "../Account/src/Components/WalletBalance/assets/bnblogo.svg";
+
 import gate from "../Account/src/Components/WalletBalance/assets/gate.svg";
 import conflux from "../Account/src/Components/WalletBalance/assets/conflux.svg";
 import upcomingDyp2 from "../Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
@@ -117,10 +119,43 @@ const Community = ({socials}) => {
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
+  let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
+
+
 
   let activeDay = new Date("2024-05-01T11:35:00.000+02:00");
 
   const dummyBetaPassData2 = [
+    {
+      title: "BNB Chain",
+      logo: bnblogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventDuration: bnbLastDay,
+      eventType: "Explore & Mine",
+      eventDate: "Apr 15, 2024",
+      date: "Apr 15, 2024",
+      // backgroundImage: upcomingSkale,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "chain",
+        rewards: "BNB",
+        status: "Live",
+        id: "event14",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore:
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        eventDate: "Apr 15, 2024",
+      },
+    },
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -151,6 +186,7 @@ const Community = ({socials}) => {
         eventDate: "Apr 15, 2024",
       },
     },
+   
     {
       title: "Dypius Premium",
       logo: dypius,
@@ -400,21 +436,14 @@ const Community = ({socials}) => {
   ];
 
   const dummyData = [
-    {
-      title: "Dypians Discovery Quest",
-      status: "Live",
-      start_date: "May 29, 2024",
-      end_date: "June 12, 2024",
-      image: dypiansDiscovery,
-      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/104-dypians-discovery-quest",
-    },
+
     {
       title: "BNB Chain Game Expedition",
-      status: "Upcoming",
+      status: "Live",
       start_date: "June 12, 2024",
       end_date: "June 28, 2024",
       image: bnbExpedition,
-      link: "/",
+      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/105-bnb-chain-game-expedition",
     },
     {
       title: "Entry Campaign",
@@ -432,16 +461,24 @@ const Community = ({socials}) => {
       image: dailyGameDelight,
       link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/103-daily-game-delight",
     },
+    {
+      title: "Dypians Discovery Quest",
+      status: "Expired",
+      start_date: "May 29, 2024",
+      end_date: "June 12, 2024",
+      image: dypiansDiscovery,
+      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/104-dypians-discovery-quest",
+    },
   ];
 
   const dummyBanner = {
-    title: "Dypians Discovery Quest",
+    title: "BNB Chain Game Expedition",
     status: "Live",
     desc: "Join the World of Dypians (WoD) Dypians Discovery Quest Campaign from May 29 to June 12 for a chance to win a share of the 200,000 WOD Tokens & 750 Premium Subscription prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
-    start_date: "May 29, 2024",
-    end_date: "June 12, 2024",
-    image: dypiansDiscovery,
-    link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/104-dypians-discovery-quest",
+    start_date: "June 12, 2024",
+    end_date: "June 28, 2024",
+    image: bnbExpedition,
+    link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/105-bnb-chain-game-expedition",
   };
 
   const html = document.querySelector("html");
@@ -883,7 +920,7 @@ const Community = ({socials}) => {
                       Treasure Hunt
                     </h6>
                     <div className="community-events-grid w-100 p-3">
-                      {dummyBetaPassData2.slice(0, 1).map((item, index) => (
+                      {dummyBetaPassData2.slice(0, 2).map((item, index) => (
                         <ActiveProfileEvent
                           onOpenEvent={() => {
                             navigate("/marketplace/events/treasure-hunt");

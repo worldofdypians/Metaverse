@@ -29,6 +29,7 @@ import ActiveProfileEvent from "./ActiveProfileEvent";
 import UpcomingProfileEvent from "./UpcomingProfileEvent";
 import ExpiredProfileEvent from "./ExpiredProfileEvent";
 import eventPopupImage from "./assets/eventPopupImage.png";
+import bnbPopupImage from "./assets/bnbPopupImage.png";
 import OutsideClickHandler from "react-outside-click-handler";
 import confluxActive from "../../../../Marketplace/assets/confluxActive.png";
 import coin98Active from "../../../../Marketplace/assets/coin98Active.png";

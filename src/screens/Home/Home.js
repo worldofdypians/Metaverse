@@ -38,6 +38,7 @@ import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreas
 import corePopupBg from "../../components/TimepieceMint/assets/corePopupBg.webp";
 import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
 import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
+import bnbPhase4 from './WodBuilders/assets/bnbPhase4.png'
 
 
 
@@ -113,7 +114,7 @@ const Home = ({
 
   const corePopupInfo = {
     title: "MULTIVERSX",
-    img: multiversXPopupBg,
+    img: bnbPhase4,
     state: "multiversx",
   };
 
