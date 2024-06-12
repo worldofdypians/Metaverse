@@ -180,7 +180,7 @@ function AuthBNB({
 
       const result2 = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task5/${wallet}`
+        `https://api.worldofdypians.com/api/airdrop-alliance/task7/${wallet}`
       )
       .catch((e) => {
         console.error(e);

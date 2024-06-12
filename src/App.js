@@ -195,6 +195,11 @@ function App() {
   const [myCAWstakes, setCAWMystakes] = useState([]);
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myConfluxNFTsCreated, setmyConfluxNFTsCreated] = useState([]);
+  const [myBnbNFTsCreated, setMyBnbNFTsCreated] = useState([]);
+  const [totalBnbNft, setTotalBnbNft] = useState(0);
+  const [myBnbNfts, setMyBnbNfts] = useState([]);
+  const [bnbMintAllowed, setBnbMintAllowed] = useState(1)
+
 
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
   const [myskaleNFTsCreated, setmyskaleNFTsCreated] = useState([]);
@@ -854,6 +859,13 @@ function App() {
         setmyConfluxNFTsCreated(NFTS);
       });
 
+      getMyNFTS(coinbase, "bnb").then((NFTS) => {
+        setTotalBnbNft(NFTS.length);
+        setMyBnbNfts(NFTS);
+        setBnbMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setMyBnbNFTsCreated(NFTS);
+      });
+
       getMyNFTS(coinbase, "base").then((NFTS) => {
         settotalBaseNft(NFTS.length);
         setmyBaseNFTs(NFTS);
@@ -899,6 +911,7 @@ function App() {
       settotalCoreNft(0);
     }
   };
+
 
   const fetchSocialData = async () => {
     const result = await axios
@@ -1387,6 +1400,96 @@ function App() {
                 setmycoreNFTsCreated(NFTS);
                 settotalCoreNft(NFTS.length);
                 setcoreMintAllowed(0);
+              });
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+        } else {
+          // setShowWhitelistLoadingModal(true);
+        }
+      } catch (e) {
+        setmintloading("error");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        window.alertify.error(
+          typeof e == "object" && e.message
+            ? e.message
+            : typeof e == "string"
+            ? String(e)
+            : "Oops, something went wrong! Refresh the page and try again!"
+        );
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      }
+    }
+  };
+
+
+  const handleSecondTask = async (wallet) => {
+
+
+    const result2 = await axios
+    .get(
+      `https://api.worldofdypians.com/api/airdrop-alliance/task8/${wallet}`
+    )
+    .catch((err) => {
+      console.error(err);
+    });
+
+  if (result2 && result2.status === 200) {
+    console.log(result2);
+  }
+};
+
+  const handleBnbNftMint = async () => {
+    if (isConnected && coinbase) {
+      try {
+        //Check Whitelist
+        let whitelist = 1;
+
+        if (parseInt(whitelist) === 1) {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+          // console.log(data,finalCaws, totalCawsDiscount);
+          let tokenId = await window.bnb_nft
+            .mintBNBNFT()
+            .then(() => {
+              handleSecondTask(coinbase)
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "bnb").then((NFTS) => {
+                setMyBnbNFTsCreated(NFTS);
+                setTotalBnbNft(NFTS.length);
+                setBnbMintAllowed(0);
               });
             })
             .catch((e) => {
@@ -2840,6 +2943,7 @@ function App() {
             element={
               <Dashboard
                 ethTokenData={ethTokenData}
+                dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
                 handleSwitchChain={handleSwitchChain}
                 dypTokenData_old={dypTokenData_old}
@@ -2964,6 +3068,48 @@ function App() {
                 timepieceBought={timepieceBought}
                 handleRefreshListing={handleRefreshList}
                 nftCount={nftCount}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/marketplace/beta-pass/bnb"
+            element={
+              <BetaPassNFT
+                type={"bnb"}
+                ethTokenData={ethTokenData}
+                dypTokenData={dypTokenData}
+                isConnected={isConnected}
+                handleConnect={handleShowWalletModal}
+                listedNFTS={listedNFTS}
+                coinbase={coinbase}
+                timepieceBought={timepieceBought}
+                handleRefreshListing={handleRefreshList}
+                nftCount={nftCount}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                chainId={chainId}
+                handleMint={handleTimepieceMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                totalCoingeckoNft={totalCoingeckoNft}
+                myNFTSCoingecko={MyNFTSCoingecko}
+                myGateNfts={myGateNfts}
+                totalGateNft={totalGateNft}
+                totalBaseNft={totalBaseNft}
+                totalBnbNft={totalBnbNft}
+                myBaseNFTs={myBaseNFTs}
+                myBnbNfts={myBnbNfts}
+                totalConfluxNft={totalConfluxNft}
+                myConfluxNfts={myConfluxNfts}
+                timepieceMetadata={timepieceMetadata}
+                handleSwitchNetwork={handleSwitchNetwork}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
               />
             }
           />
@@ -3654,10 +3800,63 @@ function App() {
                 myseiNfts={myseiNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
+                myBnbNfts={myBnbNfts}
+                myBnbNFTsCreated={myBnbNFTsCreated}
+                bnbMintAllowed={bnbMintAllowed}
+                totalBnbNft={totalBnbNft}
+
+
               />
             }
           />
 
+          <Route
+              exact
+              path="/marketplace/mint/bnb"
+              element={
+                <MarketMint
+                  coinbase={coinbase}
+                  showWalletConnect={() => {
+                    setwalletModal(true);
+                  }}
+                  cawsArray={allCawsForTimepieceMint}
+                  mintloading={mintloading}
+                  isConnected={isConnected}
+                  chainId={chainId}
+                  handleMint={handleBnbNftMint}
+                  mintStatus={mintStatus}
+                  textColor={textColor}
+                  calculateCaws={calculateCaws}
+                  totalCreated={totalTimepieceCreated}
+                  timepieceMetadata={timepieceMetadata}
+                  myConfluxNFTsCreated={myConfluxNFTsCreated}
+                  myBnbNFTsCreated={myBnbNFTsCreated}
+                  mybaseNFTsCreated={mybaseNFTsCreated}
+                  myskaleNFTsCreated={myskaleNFTsCreated}
+                  handleConfluxMint={handleConfluxNftMint}
+                  handleBaseNftMint={handleBaseNftMint}
+                  handleBnbNftMint={handleBnbNftMint}
+                  confluxMintAllowed={confluxMintAllowed}
+                  baseMintAllowed={baseMintAllowed}
+                  skaleMintAllowed={skaleMintAllowed}
+                  coreMintAllowed={coreMintAllowed}
+                  bnbMintAllowed={bnbMintAllowed}
+                  victionMintAllowed={victionMintAllowed}
+                  totalCoreNft={totalCoreNft}
+                  myCoreNfts={myCoreNfts}
+                  totalMultiversNft={totalMultiversNft}
+                  totalImmutableNft={totalImmutableNft}
+                  totalBnbNft={totalBnbNft}
+                  myImmutableNfts={myImmutableNfts}
+                  myMultiversNfts={myMultiversNfts}
+                  totalseiNft={totalseiNft}
+                  myseiNfts={myseiNfts}
+                  totalVictionNft={totalVictionNft}
+                  myVictionNfts={myVictionNfts}
+                  myBnbNfts={myBnbNfts}
+                />
+              }
+            />
           {/* <Route
               exact
               path="/marketplace/mint/viction"
