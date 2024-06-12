@@ -296,7 +296,7 @@ const MarketMint = ({
   }, []);
 
   let countToLiveConflux = new Date("2023-10-10T11:00:00.000+02:00");
-  let countToExpireConflux = new Date("2024-05-06T14:00:00.000+02:00");
+  let countToExpireConflux = new Date("2024-06-28T02:00:00.000+02:00");
 
   const dummyCards = [
     // {
@@ -1497,6 +1497,8 @@ const MarketMint = ({
                                         ? coreMintAllowed
                                         : mintTitle === "viction"
                                         ? victionMintAllowed
+                                        : mintTitle === "bnb"
+                                        ? bnbMintAllowed
                                         : mintTitle === "multiversx"
                                         ? 1
                                         : 0}{" "}
