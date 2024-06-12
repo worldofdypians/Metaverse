@@ -19,7 +19,7 @@ import { useLocation } from "react-router-dom";
 import blockChainIcon from "../assets/blockChainIcon.svg";
 import confluxLogo from "../assets/confluxLogo.svg";
 import baseLogo from "../assets/baseLogo.svg";
-import bnbLogo from "../assets/bnbLogo.svg";
+import bnbLogo from "../assets/bnbIcon.svg";
 import skaleLogo from "../assets/skaleLogo.svg";
 import coreLogo from "../assets/coreLogo.svg";
 import immutableLogo from "../assets/immutableLogo.svg";

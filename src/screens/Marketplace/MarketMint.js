@@ -401,7 +401,7 @@ const MarketMint = ({
     // },
     {
       title: "BNB Chain Pass",
-      eventId: "bnb",
+      eventId: "bnbchain",
       desc: "Gain entry to metaverse, and join exclusive BNB Chain event with special ticket.",
       img: bnbActive,
       data: bnbData,
