@@ -1222,7 +1222,7 @@ const Marketplace = ({
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
                     <NavLink
-                      to={"/marketplace/mint/bnb"}
+                      to={"/marketplace/mint/bnbchain"}
                       className="w-100 m-0 d-flex flex-column gap-5"
                     >
                       <div className="p-4 mint-wrappernew market-mint-bnb w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
@@ -1239,7 +1239,7 @@ const Marketplace = ({
                   
                       </div>
                     </NavLink>
-                    <NavLink to="/marketplace/mint/bnb">
+                    <NavLink to="/marketplace/mint/bnbchain">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}

@@ -18,7 +18,7 @@ import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 import eye from "../assets/eye.svg";
 import heart from "../assets/heart.svg";
 import ethIcon from "../assets/ethIcon.svg";
-import bnbLogo from "../assets/bnbLogo.svg";
+import bnbLogo from "../assets/bnbIcon.svg";
 import confluxLogo from "../assets/confluxLogo.svg";
 import baseLogo from "../assets/baseLogo.svg";
 import avaxLogo from "../assets/avaxLogo.svg";
