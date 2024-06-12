@@ -2943,6 +2943,7 @@ function App() {
             element={
               <Dashboard
                 ethTokenData={ethTokenData}
+                dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
                 handleSwitchChain={handleSwitchChain}
                 dypTokenData_old={dypTokenData_old}

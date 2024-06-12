@@ -91,6 +91,7 @@ import multiversBg from "./assets/multiversBg.webp";
 import seiLogo from "./assets/seiLogo.svg";
 import seiBg from "./assets/seiBg.webp";
 import coreLogo from "./assets/coreLogo.svg";
+import bnbLogo from './assets/bnbIcon.svg'
 import coreBg from "./assets/coreBg.webp";
 import immutableLogo from "./assets/immutableLogo.svg";
 import immutableBg from "./assets/immutableBg.webp";
@@ -283,6 +284,7 @@ const NewWalletBalance = ({
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
+  let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
@@ -354,7 +356,6 @@ const NewWalletBalance = ({
       "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
   };
 
-
   const dummyBNB = {
     title: "BNB Chain",
     chain: "BNB Chain",
@@ -367,13 +368,12 @@ const NewWalletBalance = ({
     date: "Jun 12, 2024",
     logo: skaleLogo,
     totalRewards: "$20,000 in BNB Rewards",
-    eventDuration: skaleLastDay,
+    eventDuration: bnbLastDay,
     minRewards: "0.5",
     maxRewards: "20",
     minPoints: "5,000",
     maxPoints: "50,000",
-    learnMore:
-      "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
+    learnMore: "/news",
   };
 
   const dummyBetaPassData2 = [
@@ -503,7 +503,34 @@ const NewWalletBalance = ({
     //     eventDate: "XXX XX, XXXX",
     //   },
     // },
-
+    {
+      title: "BNB Chain",
+      logo: bnbLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jun 12, 2024",
+      backgroundImage: upcomingSkale,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Live",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore:
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        eventDate: "Jun 12, 2024",
+      },
+    },
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -532,34 +559,7 @@ const NewWalletBalance = ({
         eventDate: "Apr 15, 2024",
       },
     },
-    {
-      title: "BNB Chain",
-      logo: skaleLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Jun 12, 2024",
-      backgroundImage: upcomingSkale,
-      popupInfo: {
-        title: "BNB Chain",
-        chain: "BNB Chain",
-        linkState: "bnb",
-        rewards: "BNB",
-        status: "Live",
-        id: "event20",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: skaleLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore:
-          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
-        eventDate: "Jun 12, 2024",
-      },
-    },
+  
     {
       title: "Dypius Premium",
       logo: dypiusPremium,
@@ -1367,7 +1367,7 @@ const NewWalletBalance = ({
                 event={dypv2}
                 userEarnedUsd={dypiusPremiumEarnUsd}
               /> */}
-               <ActiveProfileEvent
+              <ActiveProfileEvent
                 data={dummyBNB}
                 event={dummyBNB}
                 userEarnedUsd={0}
@@ -1845,7 +1845,8 @@ const NewWalletBalance = ({
                       {getFormattedNumber(
                         Number(userSocialRewardsCached) +
                           Number(weeklyplayerData) +
-                          Number(dailyplayerData) + Number(skaleplayerDataAmount) +
+                          Number(dailyplayerData) +
+                          Number(skaleplayerDataAmount) +
                           Number(userRank2) +
                           Number(genesisRank2) +
                           Number(treasureRewardMoney) +
@@ -2253,7 +2254,7 @@ const NewWalletBalance = ({
                       the game daily and venture into the BNB Chain area to
                       uncover hidden treasures.
                     </p>
-                  )  : dummyEvent.id === "event2" ? (
+                  ) : dummyEvent.id === "event2" ? (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
                       <b>hold a Coin98 Beta Pass NFT</b>. You can get the Coin98
@@ -2467,7 +2468,7 @@ const NewWalletBalance = ({
                           ? "DYP"
                           : dummyEvent.id === "event6" ||
                             dummyEvent.id === "event8" ||
-                            dummyEvent.id === "event9"||
+                            dummyEvent.id === "event9" ||
                             dummyEvent.id === "event20"
                           ? "BNB"
                           : dummyEvent.id === "event7"
@@ -2533,7 +2534,7 @@ const NewWalletBalance = ({
                 ? "CORE"
                 : dummyEvent.id === "event16"
                 ? "MultiversX"
-                 : dummyEvent.id === "event20"
+                : dummyEvent.id === "event20"
                 ? "BNB Chain"
                 : "Base Network"}
             </h6>
@@ -2599,13 +2600,21 @@ const NewWalletBalance = ({
                 committed to complying with the applicable laws where it
                 operates.
               </p>
-            )  : dummyEvent.id === "event20" ? (
+            ) : dummyEvent.id === "event20" ? (
               <p
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
-                A community-driven blockchain ecosystem of Layer-1 and Layer-2
-                scaling solutions.
+                BNB Chain is a high-performance blockchain designed to support
+                the expansive growth of decentralized applications. It offers a
+                robust infrastructure that combines high throughput, low
+                latency, and low fees, making it the ideal platform for DeFi,
+                NFTs, and gaming. With BNB Chain, developers can leverage
+                advanced functionalities such as cross-chain compatibility,
+                on-chain governance, and scalable smart contracts. The ecosystem
+                empowers projects to build and scale efficiently, ensuring fast,
+                secure, and decentralized solutions without compromising on user
+                experience or innovation.
               </p>
             ) : dummyEvent.id === "event7" ? (
               <p
@@ -2735,7 +2744,7 @@ const NewWalletBalance = ({
                     ? "https://viction.link/twitter"
                     : dummyEvent.id === "event15"
                     ? "https://twitter.com/Immutable"
-                     : dummyEvent.id === "event20"
+                    : dummyEvent.id === "event20"
                     ? "https://x.com/BNBChain"
                     : dummyEvent.id === "event13"
                     ? "https://twitter.com/SeiNetwork"
@@ -2776,7 +2785,6 @@ const NewWalletBalance = ({
                     ? "https://t.me/bnbchain"
                     : dummyEvent.id === "event13"
                     ? "https://t.me/seinetwork?ref=blog.sei.io"
-                    
                     : dummyEvent.id === "event12"
                     ? "https://t.me/CoreDAOTelegram"
                     : dummyEvent.id === "event16"
@@ -2817,7 +2825,7 @@ const NewWalletBalance = ({
                     ? "https://skale.space/"
                     : dummyEvent.id === "event14"
                     ? "https://www.viction.xyz/"
-                     : dummyEvent.id === "event20"
+                    : dummyEvent.id === "event20"
                     ? "https://www.bnbchain.org/en"
                     : dummyEvent.id === "event15"
                     ? "https://www.immutable.com/"
@@ -2938,7 +2946,7 @@ const NewWalletBalance = ({
                             ? "DYP"
                             : dummyEvent.id === "event6" ||
                               dummyEvent.id === "event8" ||
-                              dummyEvent.id === "event9"||
+                              dummyEvent.id === "event9" ||
                               dummyEvent.id === "event20"
                             ? "BNB"
                             : dummyEvent.id === "event7"

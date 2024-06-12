@@ -1335,7 +1335,6 @@ const BetaPassNFT = ({
                           mintTitle === "skale" ||
                           mintTitle === "sei" ||
                           mintTitle === "core" ||
-                          mintTitle === "bnb" ||
                           mintTitle === "viction" ||
                           mintTitle === "multiversx") && (
                           <div className="position-relative">

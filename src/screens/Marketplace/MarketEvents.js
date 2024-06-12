@@ -238,6 +238,7 @@ const MarketEvents = ({
   let dogeLastDay = new Date("2024-04-02T13:00:00.000+02:00");
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
+  let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
 
   const dailyBonusMintData = {
     title: "Daily Bonus",
@@ -377,13 +378,12 @@ const MarketEvents = ({
         id: "event20",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: skaleLastDay,
+        eventDuration: bnbLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore:
-          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        learnMore: "/news",
         eventDate: "Apr 15, 2024",
       },
     },
@@ -904,6 +904,7 @@ const MarketEvents = ({
       if (response.status === 200) {
         const responseData = await response.json();
         if (responseData.events) {
+          console.log(responseData, "Data");
           const coingeckoEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "coingecko";
           });
@@ -1894,7 +1895,8 @@ const MarketEvents = ({
                           : dummyEvent.id === "event6" ||
                             dummyEvent.id === "event8" ||
                             dummyEvent.id === "event9" ||
-                            dummyEvent.id === "event20" ||dummyEvent.id === "event3" 
+                            dummyEvent.id === "event20" ||
+                            dummyEvent.id === "event3"
                           ? "BNB"
                           : dummyEvent.id === "event7"
                           ? "DOGE"
@@ -1992,8 +1994,16 @@ const MarketEvents = ({
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
-                A community-driven blockchain ecosystem of Layer-1 and Layer-2
-                scaling solutions.
+                BNB Chain is a high-performance blockchain designed to support
+                the expansive growth of decentralized applications. It offers a
+                robust infrastructure that combines high throughput, low
+                latency, and low fees, making it the ideal platform for DeFi,
+                NFTs, and gaming. With BNB Chain, developers can leverage
+                advanced functionalities such as cross-chain compatibility,
+                on-chain governance, and scalable smart contracts. The ecosystem
+                empowers projects to build and scale efficiently, ensuring fast,
+                secure, and decentralized solutions without compromising on user
+                experience or innovation.
               </p>
             ) : dummyEvent.id === "event3" ? (
               <p

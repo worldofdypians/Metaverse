@@ -58,47 +58,8 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
 
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
 
+
   const dummyBetaPassData2 = [
-  
-    {
-      title: "SKALE",
-      chain: "SKALE Nebula Hub",
-      linkState: "skale",
-      rewards: "SKL",
-      status: "Live",
-      eventStatus: "Live",
-      id: "event11",
-      eventType: "Explore & Mine",
-      date: "December 22, 2023",
-      logo: skaleLogo,
-      totalRewards: "$20,000 in SKL Rewards",
-      rewardsAmount: "$20,000",
-      rewardsCurrency: "SKL Rewards",
-      minRewards: "1",
-      maxRewards: "100",
-      minPoints: "5,000",
-      maxPoints: "50,000",
-      learnMore:
-        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
-      popupInfo: {
-        title: "SKALE",
-        chain: "SKALE Nebula Hub",
-        linkState: "doge",
-        rewards: "SKL",
-        status: "Live",
-        id: "event11",
-        eventStatus: "Live",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in SKL Rewards",
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
-        eventDate: "December 22, 2023",
-      },
-    },
     {
       title: "BNB Chain",
       chain: "SKALE Nebula Hub",
@@ -138,6 +99,46 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         eventDate: "December 22, 2023",
       },
     },
+    {
+      title: "SKALE",
+      chain: "SKALE Nebula Hub",
+      linkState: "skale",
+      rewards: "SKL",
+      status: "Live",
+      eventStatus: "Live",
+      id: "event11",
+      eventType: "Explore & Mine",
+      date: "December 22, 2023",
+      logo: skaleLogo,
+      totalRewards: "$20,000 in SKL Rewards",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "SKL Rewards",
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore:
+        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+      popupInfo: {
+        title: "SKALE",
+        chain: "SKALE Nebula Hub",
+        linkState: "doge",
+        rewards: "SKL",
+        status: "Live",
+        id: "event11",
+        eventStatus: "Live",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in SKL Rewards",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "December 22, 2023",
+      },
+    },
+  
     {
       title: "CORE",
       logo: coreLogo,

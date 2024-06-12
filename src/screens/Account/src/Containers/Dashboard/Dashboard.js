@@ -84,6 +84,7 @@ function Dashboard({
   handleSwitchChain,
   onSubscribeSuccess,
   isPremium,
+  dyptokenDatabnb
 }) {
   const { email, logout } = useAuth();
 
@@ -512,6 +513,7 @@ function Dashboard({
   const [nftPremium_tokenId, setnftPremium_tokenId] = useState(0);
   const [nftPremium_total, setnftPremium_total] = useState(0);
   const [nftDiscountObject, setnftDiscountObject] = useState([]);
+  
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -519,6 +521,215 @@ function Dashboard({
   const { BigNumber } = window;
 
   //leaderboard calls
+
+
+  const fetchTreasureHuntData = async (email, userAddress) => {
+    try {
+      const response = await fetch(
+        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+        {
+          body: JSON.stringify(
+            {
+              email: email,
+              publicAddress: userAddress,
+            }
+            // {
+            //   "email": "renato@outerlynx.com",
+            //   "publicAddress": "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0"
+            // }
+          ),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          redirect: "follow",
+          mode: "cors",
+        }
+      );
+      if (response.status === 200) {
+        const responseData = await response.json();
+        if (responseData.events) {
+          const coingeckoEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "coingecko";
+          });
+          const confluxEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "conflux";
+          });
+          const skaleEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "skale";
+          });
+          const bnbEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "bnb";
+          });
+
+          const gateEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "gate";
+          });
+
+          const baseEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "base";
+          });
+
+          const dypEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "all";
+          });
+
+          const dogeEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "dogecoin";
+          });
+
+          const cmcEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "coinmarketcap";
+          });
+
+          const dypPremiumEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "subscriber";
+          });
+
+          if (dypPremiumEvent && dypPremiumEvent[0]) {
+            const userEarnedusd =
+              dypPremiumEvent[0].reward.earn.total /
+              dypPremiumEvent[0].reward.earn.multiplier;
+            const pointsdypius = dypPremiumEvent[0].reward.earn.totalPoints;
+
+            setdypiusPremiumPoints(pointsdypius);
+            setdypiusPremiumEarnUsd(userEarnedusd);
+            setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
+          }
+          if (bnbEvent && bnbEvent[0]) {
+            const userEarnedusd =
+              bnbEvent[0].reward.earn.total /
+              bnbEvent[0].reward.earn.multiplier;
+            const pointsBnb = bnbEvent[0].reward.earn.totalPoints;
+
+            setBnbPoints(pointsBnb);
+            setBnbEarnUsd(userEarnedusd);
+            setBnbEarnToken(userEarnedusd / bnbPrice);
+          }
+
+          if (dypEvent && dypEvent[0]) {
+            const userEarnedDyp =
+              dypEvent[0].reward.earn.total /
+              dypEvent[0].reward.earn.multiplier;
+            setDypiusEarnUsd(dyptokenDatabnb * userEarnedDyp);
+            setDypiusEarnTokens(userEarnedDyp);
+          }
+
+          if (coingeckoEvent && coingeckoEvent[0]) {
+            const points = coingeckoEvent[0].reward.earn.totalPoints;
+            setuserPoints(points);
+            const usdValue =
+              coingeckoEvent[0].reward.earn.total /
+              coingeckoEvent[0].reward.earn.multiplier;
+            setuserEarnUsd(usdValue);
+            if (bnbPrice !== 0) {
+              setuserEarnETH(usdValue / bnbPrice);
+            }
+          }
+
+          if (cmcEvent && cmcEvent[0]) {
+            const points = cmcEvent[0].reward.earn.totalPoints;
+            setcmcuserPoints(points);
+            const usdValue =
+              cmcEvent[0].reward.earn.total /
+              cmcEvent[0].reward.earn.multiplier;
+            setcmcuserEarnUsd(usdValue);
+            if (bnbPrice !== 0) {
+              setcmcuserEarnETH(usdValue / bnbPrice);
+            }
+          }
+          if (skaleEvent && skaleEvent[0]) {
+            const points = skaleEvent[0].reward.earn.totalPoints;
+            setSkalePoints(points);
+            const usdValue =
+              skaleEvent[0].reward.earn.total /
+              skaleEvent[0].reward.earn.multiplier;
+            setSkaleEarnUsd(usdValue);
+            if (skalePrice !== 0) {
+              setSkaleEarnToken(usdValue / skalePrice);
+            }
+          }
+
+          if (dogeEvent && dogeEvent[0]) {
+            const points = dogeEvent[0].reward.earn.totalPoints;
+            setDogeUserPoints(points);
+            const usdValue =
+              dogeEvent[0].reward.earn.total /
+              dogeEvent[0].reward.earn.multiplier;
+            setDogeEarnUSD(usdValue);
+            if (dogePrice !== 0) {
+              setDogeEarnBNB(usdValue / dogePrice);
+            }
+          }
+
+          if (confluxEvent && confluxEvent[0]) {
+            const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
+            setConfluxUserPoints(cfxPoints);
+
+            if (confluxEvent[0].reward.earn.multiplier !== 0) {
+              const cfxUsdValue =
+                confluxEvent[0].reward.earn.total /
+                confluxEvent[0].reward.earn.multiplier;
+              setConfluxEarnUSD(cfxUsdValue);
+
+              if (cfxPrice !== 0) {
+                setConfluxEarnCFX(cfxUsdValue / cfxPrice);
+              }
+            }
+          }
+
+          if (gateEvent && gateEvent[0]) {
+            const gatePoints = gateEvent[0].reward.earn.totalPoints;
+            setGateUserPoints(gatePoints);
+            if (gateEvent[0].reward.earn.multiplier !== 0) {
+              const gateUsdValue =
+                gateEvent[0].reward.earn.total /
+                gateEvent[0].reward.earn.multiplier;
+              setGateEarnUSD(gateUsdValue);
+
+              if (bnbPrice !== 0) {
+                setGateEarnBNB(gateUsdValue / bnbPrice);
+              }
+            }
+          }
+
+          if (baseEvent && baseEvent[0]) {
+            const basePoints = baseEvent[0].reward.earn.totalPoints;
+            setBaseUserPoints(basePoints);
+            if (baseEvent[0].reward.earn.multiplier !== 0) {
+              const baseUsdValue =
+                baseEvent[0].reward.earn.total /
+                baseEvent[0].reward.earn.multiplier;
+              setBaseEarnUSD(baseUsdValue);
+              if (ethTokenData !== 0) {
+                setBaseEarnETH(baseUsdValue / ethTokenData);
+              }
+            }
+          }
+        }
+      } else {
+        console.log(`Request failed with status ${response.status}`);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
+  
+  useEffect(() => {
+    if (
+      email &&
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress
+    ) {
+      fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
+    }
+  }, [email, data, cfxPrice, bnbPrice, skalePrice, dyptokenDatabnb]);
+
 
   const bnbStars = ["10", "8", "5", "5", "0", "0", "0", "0", "0", "0"];
   const bnbStarsPremium = ["10", "8", "5", "5", "5", "5", "5", "5", "5", "5"];
@@ -5408,6 +5619,8 @@ function Dashboard({
                             cmcuserEarnETH={cmcuserEarnETH}
                             cmcuserEarnUsd={cmcuserEarnUsd}
                             dogeEarnUSD={dogeEarnUSD}
+                            bnbEarnUsd={bnbEarnUsd}
+                            bnbEarnToken={bnbEarnToken}
                             dogeEarnBNB={dogeEarnBNB}
                             baseEarnUSD={baseEarnUSD}
                             baseEarnETH={baseEarnETH}

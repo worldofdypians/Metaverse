@@ -119,42 +119,13 @@ const Community = ({socials}) => {
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
-  let bnbLastDay = new Date("2024-07-14T13:00:00.000+02:00");
+  let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
+
 
 
   let activeDay = new Date("2024-05-01T11:35:00.000+02:00");
 
   const dummyBetaPassData2 = [
-    {
-      title: "SKALE",
-      logo: skaleLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in SKL Rewards",
-      myEarnings: 0.0,
-      eventDuration: skaleLastDay,
-      eventType: "Explore & Mine",
-      eventDate: "Apr 15, 2024",
-      date: "Apr 15, 2024",
-      // backgroundImage: upcomingSkale,
-      popupInfo: {
-        title: "SKALE",
-        chain: "SKALE Nebula Hub",
-        linkState: "skale",
-        rewards: "SKL",
-        status: "Live",
-        id: "event11",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in SKL Rewards",
-        eventDuration: skaleLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore:
-          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
-        eventDate: "Apr 15, 2024",
-      },
-    },
     {
       title: "BNB Chain",
       logo: bnblogo,
@@ -185,6 +156,37 @@ const Community = ({socials}) => {
         eventDate: "Apr 15, 2024",
       },
     },
+    {
+      title: "SKALE",
+      logo: skaleLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in SKL Rewards",
+      myEarnings: 0.0,
+      eventDuration: skaleLastDay,
+      eventType: "Explore & Mine",
+      eventDate: "Apr 15, 2024",
+      date: "Apr 15, 2024",
+      // backgroundImage: upcomingSkale,
+      popupInfo: {
+        title: "SKALE",
+        chain: "SKALE Nebula Hub",
+        linkState: "skale",
+        rewards: "SKL",
+        status: "Live",
+        id: "event11",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in SKL Rewards",
+        eventDuration: skaleLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore:
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        eventDate: "Apr 15, 2024",
+      },
+    },
+   
     {
       title: "Dypius Premium",
       logo: dypius,
