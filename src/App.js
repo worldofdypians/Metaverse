@@ -3812,7 +3812,7 @@ function App() {
 
           <Route
               exact
-              path="/marketplace/mint/bnb"
+              path="/marketplace/mint/bnbchain"
               element={
                 <MarketMint
                   coinbase={coinbase}

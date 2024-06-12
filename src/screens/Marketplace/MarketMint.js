@@ -54,7 +54,7 @@ import victionMobileBg from "./assets/victionActive.webp";
 import multiversMobileBg from "./assets/multiversActive.webp";
 
 import avaxLogo from "./assets/avaxLogo.svg";
-import bnbLogo from "./assets/bnbLogo.svg";
+import bnbLogo from "./assets/bnbIcon.svg";
 import wodLogo from "./assets/wodIcon.png";
 import openSeaLogo from "./assets/openSeaLogo.png";
 import BetaEventCard from "./components/BetaEventCard";
@@ -838,7 +838,7 @@ const MarketMint = ({
                                   : selectedMint.id === "multiversx" &&
                                     totalMultiversNft === 0
                                   ? "conflux-empty"
-                                  : "multivers-active"
+                                  : "bnb-active"
                               } d-flex justify-content-center align-items-center p-3 position-relative`}
                               style={{ height: 312 }}
                             >
@@ -1296,7 +1296,7 @@ const MarketMint = ({
                                 className="limit-span position-relative d-flex align-items-center gap-2"
                                 style={{ bottom: "0px" }}
                               >
-                                Available only on BNB
+                                Available only on BNB Chain
                                 <img src={bnbLogo} alt="" />
                               </span>
                             ) : mintTitle === "multiversx" ? (
@@ -1537,7 +1537,7 @@ const MarketMint = ({
                                 : mintTitle === "multiversx"
                                 ? "MultiversX"
                                 : mintTitle === "bnb"
-                                ? "BNB"
+                                ? "BNB Chain"
                                 : "SEI"}
                               <img
                                 style={{ width: 24, height: 24 }}

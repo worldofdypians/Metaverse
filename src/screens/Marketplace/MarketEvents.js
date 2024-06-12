@@ -109,7 +109,7 @@ import seiMobileBg from "./assets/seiActive.webp";
 import coreMobileBg from "./assets/coreActive.webp";
 import victionMobileBg from "./assets/victionActive.webp";
 import multiversMobileBg from "./assets/multiversActive.webp";
-import bnbLogo from "./assets/bnbLogo.svg";
+import bnbLogo from "./assets/bnbIcon.svg";
 import dailyBonus from "./assets/dailyBonus.webp";
 import MintPopup from "../../components/TimepieceMint/MintPopup";
 
