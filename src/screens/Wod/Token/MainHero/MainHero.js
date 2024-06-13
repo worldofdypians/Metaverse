@@ -7,6 +7,7 @@ import kucoin from "../../../../assets/wodAssets/buyWod/kuCoin.png";
 import pancake from "../../../../assets/wodAssets/buyWod/pancake.png";
 import coinbaseLogo from "../../../../assets/wodAssets/buyWod/coinbase.png";
 import gateio from "../../../../assets/wodAssets/buyWod/gateio.png";
+import newToken from '../../../../assets/wodAssets/newToken.svg'
 
 const MainHero = () => {
   const dypProducts = [
@@ -152,10 +153,14 @@ const MainHero = () => {
                   World of Dypians ecosystem within a decentralized platform
                   that focuses on scalability, security, and global adoption.
                 </span>
+                <div className="d-flex align-items-center gap-3">
+                  <button className="stake-wod-btn px-4 py-2">Stake WoD</button>
+                  <button className="buy-wod-btn px-4 py-2">Buy WoD</button>
+                </div>
               </div>
             </div>
             <div className="col-lg-5 pe-0">
-              {/* <img src={wodToken} alt='' /> */}
+              <img src={newToken} alt='' />
             </div>
           </div>
         </div>
