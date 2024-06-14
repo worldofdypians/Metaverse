@@ -60,3 +60,40 @@
     font-weight: 700;
     line-height: normal;
 }
+
+.tokenEarnClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../../../assets/wodAssets/tokenEarnBg.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.tokenBridgeClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../../../assets/wodAssets/tokenBridgeBg.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.tokenGovernanceClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../../../assets/wodAssets/tokenGovernanceBg.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.buy-wod-bg{
+  background: rgba(47, 19, 105, 0.50);
+  display: flex;
+  justify-content: center;
+}
