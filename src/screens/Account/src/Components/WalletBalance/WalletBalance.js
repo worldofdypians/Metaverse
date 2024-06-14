@@ -1968,6 +1968,8 @@ const WalletBalance = ({
                                   ? "VCBP"
                                   : item.type === "gate"
                                   ? "GTBP"
+                                  : item.type === "bnb"
+                                  ? "BNBBP"
                                   : "Timepiece"}{" "}
                                 #{item.tokenId}
                               </h6>
