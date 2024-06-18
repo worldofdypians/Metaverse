@@ -1072,7 +1072,7 @@ const Header = ({
                   data-for={id}
                   data-tip="Copied To Clipboard!"
                   data-clipboard-text={coinbase}
-                  className="wallet-wrapper d-flex align-items-center gap-2 position-relative"
+                  className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
                 >
                   <div
                     className="btn connected px-3"

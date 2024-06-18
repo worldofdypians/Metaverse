@@ -6,7 +6,7 @@ import certikBig from "../assets/certikBig.svg";
 
 const Security = () => {
   return (
-    <div className="security-wrapper container-fluid py-5 py-lg-0 d-flex align-items-center">
+    <div className="security-wrapper container-fluid py-5 py-lg-0 d-flex align-items-center" id='security'>
       <div className="d-flex flex-column w-100 justify-content-center align-items-center">
         <div className="custom-container">
           <div className="d-flex flex-column flex-lg-row gap-3 justify-content-between align-items-center">

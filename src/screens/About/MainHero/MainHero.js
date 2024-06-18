@@ -18,43 +18,66 @@ const MainHero = () => {
             variety of heroes, each with unique abilities, and join forces with
             other players to destroy the enemy's bases.
           </p>
-          <div className="opacitywrapper5 filled-btn m-0 px-3">
+          <div className="d-flex align-items-center gap-3">
             <a
-              className="game-event-download py-1 d-flex align-items-center gap-2"
+              className="stake-wod-btn px-4 py-1"
               href="https://store.epicgames.com/p/world-of-dypians-2e0694"
               target="_blank"
             >
-              <img src={epicblack} alt="icon" className="epicgame2" />
+              <img
+                src={epicblack}
+                alt="icon"
+                className="epicgame2"
+                style={{ width: "auto", height: "30px" }}
+              />{" "}
               Download
             </a>
+            <NavLink to="/join-beta" className="buy-wod-btn px-4 py-2">Join Beta</NavLink>
           </div>
         </div>
         <div className="anchors-wrapper flex-wrap py-3 w-100 d-flex align-items-center justify-content-center gap-5">
-          <NavLink to={"/about#partners"} className="d-flex align-items-center gap-2">
+          <NavLink
+            to={"/about#partners"}
+            className="d-flex align-items-center gap-2"
+          >
             <span className="anchor-title">Partners</span>
             <img src={anchorArrow} alt="" />
           </NavLink>
-          <NavLink to={"/about#roadmap"} className="d-flex align-items-center gap-2">
+          <NavLink
+            to={"/about#roadmap"}
+            className="d-flex align-items-center gap-2"
+          >
             <span className="anchor-title">Roadmap</span>
             <img src={anchorArrow} alt="" />
           </NavLink>
-          <NavLink to={"/about#tokenomics"} className="d-flex align-items-center gap-2">
+          <NavLink
+            to={"/about#tokenomics"}
+            className="d-flex align-items-center gap-2"
+          >
             <span className="anchor-title">Tokenomics</span>
             <img src={anchorArrow} alt="" />
           </NavLink>
-          <NavLink to={"/about#security"} className="d-flex align-items-center gap-2">
+          <NavLink
+            to={"/about#security"}
+            className="d-flex align-items-center gap-2"
+          >
             <span className="anchor-title">Security</span>
             <img src={anchorArrow} alt="" />
           </NavLink>
-          <NavLink to={"/about#team"} className="d-flex align-items-center gap-2">
+          <NavLink
+            to={"/about#ourteam"}
+            className="d-flex align-items-center gap-2"
+          >
             <span className="anchor-title">Team</span>
             <img src={anchorArrow} alt="" />
           </NavLink>
-          <NavLink to={"/about#brand"} className="d-flex align-items-center gap-2">
+          <NavLink
+            to={"/about#brand"}
+            className="d-flex align-items-center gap-2"
+          >
             <span className="anchor-title">Brand</span>
             <img src={anchorArrow} alt="" />
           </NavLink>
-   
         </div>
       </div>
     </div>
