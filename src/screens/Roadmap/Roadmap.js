@@ -669,10 +669,10 @@ const Roadmap = () => {
     >
       <div className="roadmap-main-wrapper px-0 w-100 d-flex align-items-center justify-content-center flex-column">
         <div className="row justify-content-center gap-3 align-items-center w-100 mx-0 px-3 px-lg-5 mt-5 mt-lg-0">
-          <h6 className="roadmap-title font-montserrat d-flex flex-column gap-2 justify-content-center align-items-center flex-lg-row">
+          <h6 className="roadmap-title font-montserrat  text-uppercase d-flex flex-column gap-2 justify-content-center align-items-center flex-lg-row">
             Game{" "}
             <span
-              className="roadmap-title font-montserrat"
+              className="roadmap-title font-montserrat text-uppercase"
               style={{ color: "#8c56ff" }}
             >
               Roadmap

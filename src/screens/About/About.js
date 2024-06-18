@@ -6,6 +6,7 @@ import Roadmap from "../Roadmap/Roadmap";
 import OurTeam from "../OurTeam/OurTeam";
 import MainHero from "./MainHero/MainHero";
 import { useLocation } from "react-router-dom";
+import Security from "./Security/Security";
 
 const About = () => {
   const location = useLocation();
@@ -28,10 +29,11 @@ const About = () => {
   return (
     <div className="container-fluid token-wrapper px-0">
       <div className="d-flex flex-column gap-5">
-        <MainHero/>
+        <MainHero />
         <WodPartners full={true} />
         <Roadmap />
         <Tokenomics />
+        <Security />
         <OurTeam />
         <Brand />
       </div>
