@@ -3,7 +3,7 @@ import "./_wodbuilders.scss";
 import partnersRight from './assets/partnersRight.svg'
 import { NavLink } from "react-router-dom";
 
-const WodPartners = () => {
+const WodPartners = ({full}) => {
   const partners = [
     {
       name: "Chainlink",
@@ -61,6 +61,54 @@ const WodPartners = () => {
       name: "Financial Move",
       icon: "financialmove.svg",
     },
+    {
+      name: "BabyDoge",
+      icon: "babydoge.svg",
+    },
+    {
+      name: "Viction",
+      icon: "viction.svg",
+    },
+    {
+      name: "MultiversX",
+      icon: "multiversx.svg",
+    },
+    {
+      name: "Easy2Stake",
+      icon: "easy2stake.svg",
+    },
+    {
+      name: "Midle",
+      icon: "midle.png",
+    },
+    {
+      name: "Cookie3",
+      icon: "cookie3.svg",
+    },
+    {
+      name: "Playground",
+      icon: "playground.svg",
+    },
+    {
+      name: "KlapAi",
+      icon: "klapai.png",
+    },
+    {
+      name: "Magic Store",
+      icon: "magicstore.svg",
+    },
+    {
+      name: "GGG",
+      icon: "ggg.png",
+    },
+    {
+      name: "MPC Education",
+      icon: "mpceducation.svg",
+    },
+    {
+      name: "Crypto Adventure",
+      icon: "cryptoadventure.svg",
+    },
   ];
 
   return (
@@ -72,13 +120,15 @@ const WodPartners = () => {
           PARTNERS AND{" "}
           <mark className="font-montserrat explore-tag pe-2">INVESTORS</mark>
         </h2>
-        <NavLink to={"/partners"} className="d-flex align-items-center gap-2">
-          <span className="view-all-partners">View All</span>
-          <img src={partnersRight} alt="" />
-        </NavLink>
+        {!full &&
+            <NavLink to={"/partners"} className="d-flex align-items-center gap-2">
+            <span className="view-all-partners">View All</span>
+            <img src={partnersRight} alt="" />
+          </NavLink>
+        }
        </div>
-        <div className="d-flex align-items-start justify-content-between flex-wrap">
-          {partners.slice(0, 12).map((partner, index) => (
+        <div className="new-partners-grid">
+          {partners.slice(0, full ? partners.length : 14).map((partner, index) => (
             <div
               key={index}
               className="d-flex align-items-center flex-column gap-2 mb-3 mb-lg-0"
@@ -88,6 +138,7 @@ const WodPartners = () => {
                 <img
                   src={require(`./assets/partners/${partner.icon}`)}
                   alt=""
+                  style={{width: "60px", height: "60px"}}
                 />
               </div>
               <h6 className="mb-0 small-partners-title">{partner.name}</h6>

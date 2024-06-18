@@ -100,7 +100,7 @@ const Home = ({
             handleDownload={handleDownload}
           />
           {/* <LiveEvents /> */}
-          <WodPartners />
+          <WodPartners full={false} />
           <WodBuilders />
           {/* <Utilities /> */}
           {/* <MarketSection
