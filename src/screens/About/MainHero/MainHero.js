@@ -2,6 +2,7 @@ import React from "react";
 import "./_mainheroabout.scss";
 import epicblack from "../../../assets/epicblack.svg";
 import anchorArrow from "../../../assets/anchorArrow.svg";
+import { NavLink } from "react-router-dom";
 
 const MainHero = () => {
   return (
@@ -28,31 +29,32 @@ const MainHero = () => {
             </a>
           </div>
         </div>
-        <div className="anchors-wrapper py-3 w-100 d-flex align-items-center justify-content-center gap-5">
-          <div className="d-flex align-items-center gap-2">
+        <div className="anchors-wrapper flex-wrap py-3 w-100 d-flex align-items-center justify-content-center gap-5">
+          <NavLink to={"/about#partners"} className="d-flex align-items-center gap-2">
             <span className="anchor-title">Partners</span>
             <img src={anchorArrow} alt="" />
-          </div>
-          <div className="d-flex align-items-center gap-2">
+          </NavLink>
+          <NavLink to={"/about#roadmap"} className="d-flex align-items-center gap-2">
             <span className="anchor-title">Roadmap</span>
             <img src={anchorArrow} alt="" />
-          </div>
-          <div className="d-flex align-items-center gap-2">
+          </NavLink>
+          <NavLink to={"/about#tokenomics"} className="d-flex align-items-center gap-2">
             <span className="anchor-title">Tokenomics</span>
             <img src={anchorArrow} alt="" />
-          </div>
-          <div className="d-flex align-items-center gap-2">
+          </NavLink>
+          <NavLink to={"/about#security"} className="d-flex align-items-center gap-2">
             <span className="anchor-title">Security</span>
             <img src={anchorArrow} alt="" />
-          </div>
-          <div className="d-flex align-items-center gap-2">
+          </NavLink>
+          <NavLink to={"/about#team"} className="d-flex align-items-center gap-2">
             <span className="anchor-title">Team</span>
             <img src={anchorArrow} alt="" />
-          </div>
-          <div className="d-flex align-items-center gap-2">
+          </NavLink>
+          <NavLink to={"/about#brand"} className="d-flex align-items-center gap-2">
             <span className="anchor-title">Brand</span>
             <img src={anchorArrow} alt="" />
-          </div>
+          </NavLink>
+   
         </div>
       </div>
     </div>
