@@ -138,3 +138,9 @@ font-weight: 500;
 line-height: normal;
 white-space: nowrap;
 }
+
+.new-partners-grid{
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  gap: 10px;
+}

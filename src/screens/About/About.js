@@ -29,7 +29,7 @@ const About = () => {
     <div className="container-fluid token-wrapper px-0">
       <div className="d-flex flex-column gap-5">
         <MainHero/>
-        <WodPartners />
+        <WodPartners full={true} />
         <Roadmap />
         <Tokenomics />
         <OurTeam />
