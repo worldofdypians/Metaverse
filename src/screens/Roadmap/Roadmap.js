@@ -665,7 +665,7 @@ const Roadmap = () => {
   }, []);
 
   return (
-    <div className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5 roadmapbg">
+    <div className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5 roadmapbg" id='roadmap'>
       <div className="roadmap-main-wrapper px-0 w-100 d-flex flex-column">
         <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5 mt-5 mt-lg-0">
           <h6 className="roadmap-title font-organetto d-flex flex-column gap-2 justify-content-center align-items-center flex-lg-row">
