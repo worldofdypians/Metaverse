@@ -7,6 +7,7 @@ import kucoin from "../../../../assets/wodAssets/buyWod/kuCoin.png";
 import pancake from "../../../../assets/wodAssets/buyWod/pancake.png";
 import coinbaseLogo from "../../../../assets/wodAssets/buyWod/coinbase.png";
 import gateio from "../../../../assets/wodAssets/buyWod/gateio.png";
+import newToken from '../../../../assets/wodAssets/newToken.svg'
 
 const MainHero = () => {
   const dypProducts = [
@@ -14,19 +15,19 @@ const MainHero = () => {
       link: "/earn",
       title: "Earn",
       desc: "Earn rewards by staking WOD tokens",
-      class: "earnClass",
+      class: "tokenEarnClass",
     },
     {
       link: "/bridge",
       title: "Bridge",
       desc: "Bridge your assets securely between chains",
-      class: "eventClass",
+      class: "tokenBridgeClass",
     },
     {
       link: "/governance",
       title: "Governance",
       desc: "Lorem ipsum governance something",
-      class: "tokenClass",
+      class: "tokenGovernanceClass",
     },
   ];
 
@@ -139,10 +140,10 @@ const MainHero = () => {
   const betaSlider = useRef(null);
   return (
     <div className="mainhero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-end gap-5">
-      <div className="custom-container w-100">
+      <div className="custom-container  mt-5 mt-lg-0">
         <div className="d-flex flex-column w-100">
-          <div className="row mx-0 align-items-center justify-content-between gap-2">
-            <div className="col-lg-6 ps-0">
+          <div className="row mx-0 align-items-center justify-content-between gap-2 mt-5 mt-lg-0">
+            <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-start">
                 <h4 className="main-hero-title font-montserrat text-start">
                   WoD Token
@@ -152,17 +153,21 @@ const MainHero = () => {
                   World of Dypians ecosystem within a decentralized platform
                   that focuses on scalability, security, and global adoption.
                 </span>
+                <div className="d-flex align-items-center gap-3">
+                  <button className="stake-wod-btn px-4 py-2">Stake WoD</button>
+                  <button className="buy-wod-btn px-4 py-2">Buy WoD</button>
+                </div>
               </div>
             </div>
-            <div className="col-lg-5 pe-0">
-              {/* <img src={wodToken} alt='' /> */}
+            <div className="col-12 col-lg-5 pe-0">
+              <img src={newToken} className="w-100" alt='' />
             </div>
           </div>
         </div>
       </div>
       <div className="opacitywrapper position-relative bottom-0">
         <div className="d-flex flex-column gap-4 position-relative">
-          <div className="custom-container m-auto p-0 w-100">
+          <div className="custom-container m-auto p-0 ">
             <Slider {...settings} ref={betaSlider}>
               {dypProducts.slice(0, 4).map((item, index) => (
                 <NavLink to={`${item.link}`}>
@@ -176,12 +181,17 @@ const MainHero = () => {
             </Slider>
           </div>
           <div className="d-flex flex-column mx-0 align-items-center justify-content-between gap-2 buy-items-all-wrapper p-2">
-            <div className="custom-container w-100 p-0">
-              <h4 className="main-hero-subtitle font-montserrat text-start mb-3">
-                Buy $WoD on
-              </h4>
+            <div className="container-fluid py-4 buy-wod-bg">
+            <div className="custom-container p-0">
+              <div className="d-flex flex-column flex-lg-row align-items-center gap-4">
+              <h4 className="main-hero-title font-montserrat text-center" style={{width:"fit-content"}}>
+          Buy{" "}
+          <mark className="font-montserrat main-hero-title explore-tag pe-2">
+            WoD
+          </mark>
+        </h4>
               <div className="row w-100 mx-0 align-items-center justify-content-between">
-                <Slider {...settings2} ref={betaSlider}>
+                <Slider {...settings2} ref={betaSlider} className="px-0">
                   <div className="w-100 buy-token-wrapper p-3 rounded">
                     <div className="d-flex align-items-center gap-2">
                       <img src={kucoin} alt="" className="buy-item-logo" />
@@ -212,6 +222,8 @@ const MainHero = () => {
                   </div>
                 </Slider>
               </div>
+              </div>
+            </div>
             </div>
           </div>
         </div>

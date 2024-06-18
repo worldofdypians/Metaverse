@@ -65,7 +65,7 @@ const WodPartners = () => {
 
   return (
     <div className="w-100 px-3 px-lg-5 mx-0 build-business-wrapper py-4 d-flex justify-content-center">
-      <div className="custom-container w-100">
+      <div className="custom-container">
       <div className="d-flex flex-column gap-2">
        <div className="d-flex align-items-center justify-content-between">
        <h2 className="font-montserrat builders-title explorer-grid-title px-0">

@@ -168,7 +168,7 @@ const Footer = () => {
         padding ? "extra-padding" : null
       } footer-container d-flex justify-content-center align-items-end px-3 px-lg-5 w-100 `}
     >
-      <div className="custom-container w-100">
+      <div className="custom-container">
         <div className="d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center gap-5">
             <a href="#" className="new-footer-link">

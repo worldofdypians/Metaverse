@@ -1,35 +1,117 @@
 .tokenomics-wrapper {
-
 }
 
 .allocation-wrapper {
-    background: #fff;
-    border: 4px solid rgba(85, 79, 216, .1);
-    border-radius: 12px 0;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    padding: 16px;
+  background: #fff;
+  border: 4px solid rgba(85, 79, 216, 0.1);
+  border-radius: 12px 0;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 16px;
 }
 
 .circulating-supply-title {
-    color: #b8b8e0;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 21px;
-    text-align: center;
+  color: #b8b8e0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: center;
 }
 
 .circulating-supply-amount {
-    color: #554fd8;
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 30px;
-    text-align: center;
+  color: #554fd8;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 30px;
+  text-align: center;
 }
 
 .circulating-supply-wrapper {
-    background: rgb(253 253 255 / 50%);
-    border-radius: 12px 0;
-    padding: 20px;
-    width: 100%;
+  background: rgb(253 253 255 / 50%);
+  border-radius: 12px 0;
+  padding: 20px;
+  width: 100%;
 }
+
+.tokenomics-wrapper-desc {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 171.429% */
+}
+
+.new-tokenomics-bg {
+  background-image: url(../../../../assets/wodAssets/tokenomicsBg.webp);
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.tokenomics-table-row {
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0px 4px 4px 0px rgba(20, 8, 54, 0.25);
+}
+
+.tokenomics-table-head {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 171.429% */
+}
+
+.tokenomics-table-item {
+  color: #a2adc8;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 171.429% */
+}
+
+.tokenomics-dot{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.tokenomics-table-title{
+    color: #DCFB85;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; /* 171.429% */ 
+}
+
+.wod-copy-span{
+  color: #A2ADC8;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.wod-address{
+  color: #EEEDFF;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration-line: underline;
+}
+
+.wod-chart-wrapper{
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0px 4px 4px 0px rgba(20, 8, 54, 0.25);
+  height: 392px;
+  padding: 40px;
+}
+
