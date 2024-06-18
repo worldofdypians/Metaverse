@@ -26,11 +26,11 @@ const TeamCard = ({ name, position, id, content, photo, link }) => {
           style={{ width: "270px" }}
         >
           <div className={`d-flex flex-column `}>
-            <h4 className={`text-white ${id === "daniel" && "mb-0"}`}>
+            <h4 className={` team-name ${id === "daniel" && "mb-0"}`}>
               {name}
             </h4>
             <p
-              className={`text-white fw-light ${
+              className={`text-position fw-light ${
                 id === "daniel" || id === "toni" ? "mb-0" : ""
               }`}
               style={{
@@ -61,7 +61,7 @@ const TeamCard = ({ name, position, id, content, photo, link }) => {
         className="accordion-collapse collapse position-relative"
         aria-labelledby="headingOne"
         data-bs-parent="#accordionExample"
-        style={{ marginTop: "-20px" }}
+        style={{  zIndex: 1 }}
       >
         <div className="accordion-body team-info d-flex align-items-end">
           <p className="text-secondary">{content}</p>
