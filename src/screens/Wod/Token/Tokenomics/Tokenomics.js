@@ -77,7 +77,7 @@ const Tokenomics = () => {
   ];
 
   return (
-    <div className="d-flex flex-column align-items-center gap-5">
+    <div className="d-flex flex-column align-items-center gap-5" id='tokenomics'>
       <div className="custom-container d-flex flex-column w-100 gap-3">
         <h4 className="main-hero-title font-montserrat text-start mb-0">
           WoD{" "}

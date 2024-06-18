@@ -1,11 +1,17 @@
-import React from 'react'
-import './_bridge.scss'
+import React from "react";
+import "./_bridge.scss";
+import BridgeHero from "./BridgeHero/BridgeHero";
+import BridgeContent from "./BridgeContent/BridgeContent";
+
 const Bridge = () => {
   return (
-    <div className="d-flex justify-content-center w-100">
-    <h1 className='font-organetto text-white'>Bridge</h1>
-</div>
-  )
-}
+    <div className="container-fluid token-wrapper px-0 mt-5 pt-5">
+      <div className="d-flex flex-column gap-5">
+        <BridgeHero/>
+        <BridgeContent/>
+      </div>
+    </div>
+  );
+};
 
-export default Bridge
+export default Bridge;

@@ -580,9 +580,7 @@ const Header = ({
             <NavLink
               to="/game"
               className={({ isActive }) =>
-                isActive
-                  ? "nav-anchor activenavlink"
-                  : "nav-anchor"
+                isActive ? "nav-anchor activenavlink" : "nav-anchor"
               }
             >
               Game
@@ -590,9 +588,7 @@ const Header = ({
             <NavLink
               to="/marketplace"
               className={({ isActive }) =>
-                isActive
-                  ? "nav-anchor activenavlink"
-                  : "nav-anchor"
+                isActive ? "nav-anchor activenavlink" : "nav-anchor"
               }
             >
               Marketplace
@@ -644,7 +640,7 @@ const Header = ({
               onMouseEnter={() => handleDropdown("about")}
               onMouseLeave={() => handleDropdown(null)}
             >
-              About
+              <NavLink to="/about" className='text-white'>About</NavLink>
               <img src={headerArrow} alt="" />
               <div
                 className={`header-dropdown p-2 d-flex flex-column gap-2 ${
@@ -652,9 +648,9 @@ const Header = ({
                 }`}
               >
                 <NavLink
-                  to={"/partners"}
+                  to={"/about#partners"}
                   className={({ isActive }) =>
-                    isActive
+                    isActive && window.location.hash === "#partners"
                       ? "dropdown-nav nav-active p-2"
                       : "dropdown-nav p-2"
                   }
@@ -662,9 +658,9 @@ const Header = ({
                   Partners
                 </NavLink>
                 <NavLink
-                  to={"/roadmap"}
+                  to={"/about#roadmap"}
                   className={({ isActive }) =>
-                    isActive
+                    isActive && window.location.hash === "#roadmap"
                       ? "dropdown-nav nav-active p-2"
                       : "dropdown-nav p-2"
                   }
@@ -672,9 +668,9 @@ const Header = ({
                   Roadmap
                 </NavLink>
                 <NavLink
-                  to={"/tokenomics"}
+                  to={"/about#tokenomics"}
                   className={({ isActive }) =>
-                    isActive
+                    isActive && window.location.hash === "#tokenomics"
                       ? "dropdown-nav nav-active p-2"
                       : "dropdown-nav p-2"
                   }
@@ -682,9 +678,9 @@ const Header = ({
                   Tokenomics
                 </NavLink>
                 <NavLink
-                  to={"/team"}
+                  to={"/about#ourteam"}
                   className={({ isActive }) =>
-                    isActive
+                    isActive && window.location.hash === "#ourteam"
                       ? "dropdown-nav nav-active p-2"
                       : "dropdown-nav p-2"
                   }
@@ -692,9 +688,9 @@ const Header = ({
                   Team
                 </NavLink>
                 <NavLink
-                  to={"/brand"}
+                  to={"/about#brand"}
                   className={({ isActive }) =>
-                    isActive
+                    isActive && window.location.hash === "#brand"
                       ? "dropdown-nav nav-active p-2"
                       : "dropdown-nav p-2"
                   }
@@ -705,7 +701,10 @@ const Header = ({
             </div>
           </div>
           <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
-            <NavLink to={"/account"} className="d-flex align-items-center gap-2">
+            <NavLink
+              to={"/account"}
+              className="d-flex align-items-center gap-2"
+            >
               <img src={personIcon} alt="" />
               <h6 className="mb-0 account-txt">Account</h6>
             </NavLink>
@@ -722,7 +721,7 @@ const Header = ({
                 />
               </NavLink>
             )} */}
-            
+
             {!coinbase ? (
               // <div className="linearborder2">
               //   <button
@@ -732,9 +731,9 @@ const Header = ({
               //     Connect Wallet
               //   </button>{" "}
               // </div>
-              <button 
-              className="new-connect-btn px-2 py-1"
-              onClick={handleSignUp}
+              <button
+                className="new-connect-btn px-2 py-1"
+                onClick={handleSignUp}
               >
                 Connect Wallet
               </button>
@@ -1092,7 +1091,6 @@ const Header = ({
                 </Clipboard>
               </div>
             )}
-           
 
             {showmenu === true && (
               <div className="position-absolute" style={{ width: "210px" }}>
