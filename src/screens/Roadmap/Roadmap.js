@@ -404,11 +404,7 @@ const Roadmap = () => {
           desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
           completed: false,
         },
-        {
-          title: "Introduction of Character Customization",
-          desc: "Allow players to personalize their main avatar/character with facial and body features.",
-          completed: false,
-        },
+      
         {
           title: "Addition of Game Currency",
           desc: "Introduce a new in-game currency to enhance the game's economy and provide more options for players.",
@@ -420,6 +416,11 @@ const Roadmap = () => {
         //   desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
         //   completed: false,
         // },
+        {
+          title: "Challenger Features",
+          desc: "Exciting and engaging new in-game challenger events to enhance overall gameplay experience.",
+          completed: false,
+        },
         {
           title: "Improving Tracking Rewards",
           desc: "Enhance the tracking of historic data rewards earned by players to improve their gaming experience.",
@@ -447,12 +448,12 @@ const Roadmap = () => {
           desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
           completed: false,
         },
+       
         {
-          title: "Introduction of Character NFT Generation",
-          desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
+          title: "Introduction of Character Customization",
+          desc: "Allow players to personalize their main avatar/character with facial and body features.",
           completed: false,
         },
-
         {
           title: "Expanding with a New Environment",
           desc: "Create a new environment, such as an island, for players to explore, complete tasks, and engage in battles.",
@@ -498,6 +499,11 @@ const Roadmap = () => {
         {
           title: "Full Release of the Multiplayer PvP",
           desc: "Launch the full version of the multiplayer player-versus-player mode for competitive gameplay.",
+          completed: false,
+        },
+        {
+          title: "Introduction of Character NFT Generation",
+          desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
           completed: false,
         },
         {
