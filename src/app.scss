@@ -111,6 +111,27 @@ body {
     content: "";
   }
 
+
+  .linear-border-roadmap {
+    position: relative;
+    padding: 3px;
+    background: linear-gradient(90deg, #B936F5 0.23%, #C64C85 99.72%);
+    border-radius: 8px;
+    clip-path: polygon(
+      0 20px,
+      20px 0,
+      100% 0,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0 100%
+    );
+    height: fit-content;
+  }
+
+  .linear-border-roadmap::before {
+    content: "";
+  }
+
   .linear-border-download {
     position: relative;
     padding: 3px;
@@ -291,6 +312,49 @@ body {
     white-space: pre;
   }
 
+
+  .outline-btn-roadmap {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: #080b2a;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12pt;
+    line-height: 24px;
+    text-align: center;
+    color: #ffffff;
+    white-space: pre;
+  }
+
+  .outline-btn-roadmap:hover {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: linear-gradient(90deg, #B936F5 0.23%, #C64C85 99.72%);
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #000;
+    white-space: pre;
+  }
+
+
+
   .multiplayer-btn {
     clip-path: polygon(
       0 19px,
@@ -409,6 +473,29 @@ filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.25));
     white-space: pre;
     transition: all 0.25s;
   }
+
+
+  .filled-btn-roadmap {
+    clip-path: polygon(
+      0 19px,
+      19px 0,
+      100% 0,
+      100% calc(100% - 19px),
+      calc(100% - 19px) 100%,
+      0 100%
+    );
+    background: linear-gradient(90deg, #B936F5 0.23%, #C64C85 99.72%);
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
+    border: none !important;
+    white-space: pre;
+    transition: all 0.25s;
+  }
+
   .timepiece-btn {
     clip-path: polygon(
       0 19px,
