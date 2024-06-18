@@ -186,14 +186,18 @@ const Footer = () => {
             <a href="#" className="new-footer-link">
               Brand
             </a>
-            <a href="#" className="new-footer-link">
+            <NavLink to="/join-beta" className="new-footer-link">
               Join Beta
-            </a>
+            </NavLink>
           </div>
-          <button className="epic-games-btn px-2 py-1 d-flex align-items-center gap-2">
+          <a
+            className="epic-games-btn px-2 py-1 d-flex align-items-center gap-2"
+            href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+            target="_blank"
+          >
             <img src={epicgames} width={24} alt="" />
             Download
-          </button>
+          </a>
         </div>
         <hr className="footer-divider my-4" />
         <div className="d-flex align-items-center justify-content-between mb-5">
