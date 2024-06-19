@@ -891,7 +891,9 @@ const BetaPassNFT = ({
                 className="filters-container d-flex flex-column align-items-center justify-content-center my-4 p-3 position-relative gap-3"
                 style={{ zIndex: 2 }}
               >
-                <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
+              {windowSize.width > 786 ? 
+              <>
+                 <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
                   <NavLink
                     to={"/marketplace/beta-pass/bnb"}
                     className={`${
@@ -1115,6 +1117,218 @@ const BetaPassNFT = ({
                     <span>Coin98</span>
                   </NavLink> */}
                 </div>
+              </>  
+              :
+              <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
+              <NavLink
+                to={"/marketplace/beta-pass/bnb"}
+                className={`${
+                  location.pathname.includes("bnb") &&
+                  "selected-beta-pass-item"
+                } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                onClick={() => {
+                  setSelectedMint(bnbData);
+                  setMintTitle("bnb");
+                }}
+              >
+                <img
+                  src={bnbLogo}
+                  className="beta-pass-chain-img"
+                  alt=""
+                />
+                <span>BNB</span>
+              </NavLink>
+              <NavLink
+                to={"/marketplace/beta-pass/core"}
+                className={`${
+                  location.pathname.includes("core") &&
+                  "selected-beta-pass-item"
+                } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                onClick={() => {
+                  setSelectedMint(coreData);
+                  setMintTitle("core");
+                }}
+              >
+                <img
+                  src={coreLogo}
+                  className="beta-pass-chain-img"
+                  alt=""
+                />
+                <span>CORE</span>
+              </NavLink>
+              <NavLink
+                to={"/marketplace/beta-pass/multiversx"}
+                className={`${
+                  location.pathname.includes("multiversx") &&
+                  "selected-beta-pass-item"
+                } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                onClick={() => {
+                  setSelectedMint(multiversData);
+                  setMintTitle("multiversx");
+                }}
+              >
+                <img
+                  src={multiversLogo}
+                  className="beta-pass-chain-img"
+                  alt=""
+                />
+                <span>MultiversX</span>
+              </NavLink>
+              <NavLink
+                to={"/marketplace/beta-pass/sei"}
+                className={`${
+                  location.pathname.includes("sei") &&
+                  "selected-beta-pass-item"
+                } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                onClick={() => {
+                  setSelectedMint(seiData);
+                  setMintTitle("sei");
+                }}
+              >
+                <img src={seiLogo} className="beta-pass-chain-img" alt="" />
+                <span>SEI</span>
+              </NavLink>
+              <NavLink
+                to={"/marketplace/beta-pass/viction"}
+                className={`${
+                  location.pathname.includes("viction") &&
+                  "selected-beta-pass-item"
+                } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                onClick={() => {
+                  setSelectedMint(victionData);
+                  setMintTitle("viction");
+                }}
+              >
+                <img
+                  src={victionLogo}
+                  className="beta-pass-chain-img"
+                  alt=""
+                />
+                <span>VICTION</span>
+              </NavLink>
+              <NavLink
+                to={"/marketplace/beta-pass/skale"}
+                className={`${
+                  location.pathname.includes("skale") &&
+                  "selected-beta-pass-item"
+                } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2 position-relative`}
+                onClick={() => {
+                  setSelectedMint(skaleData);
+                  setMintTitle("skale");
+                }}
+              >
+                {/* <img src={comingSoon} alt='' className="position-absolute comingSoonimg" /> */}
+                <img
+                  src={skaleLogo}
+                  className="beta-pass-chain-img"
+                  alt=""
+                />
+                <span>SKALE</span>
+              </NavLink>
+              <NavLink
+                to={"/marketplace/beta-pass/coinmarketcap"}
+                className={`${
+                  location.pathname.includes("coinmarketcap") &&
+                  "selected-beta-pass-item"
+                } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
+                onClick={() => {
+                  setSelectedMint(cmcData);
+                  setMintTitle("cmc");
+                }}
+              >
+                <img src={cmc} className="beta-pass-chain-img" alt="" />
+                <span>CoinMarketCap</span>
+              </NavLink>
+              <NavLink
+                to={"/marketplace/beta-pass/doge"}
+                className={`${
+                  location.pathname.includes("doge") &&
+                  "selected-beta-pass-item"
+                } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
+                onClick={() => {
+                  setSelectedMint(dogeData);
+                  setMintTitle("doge");
+                }}
+              >
+                <img
+                  src={dogeLogo}
+                  className="beta-pass-chain-img"
+                  alt=""
+                />
+                <span>Dogecoin</span>
+              </NavLink>
+
+              <NavLink
+                to={"/marketplace/beta-pass/base"}
+                className={`${
+                  location.pathname.includes("base") &&
+                  "selected-beta-pass-item"
+                } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
+                onClick={() => {
+                  setSelectedMint(baseData);
+                  setMintTitle("base");
+                }}
+              >
+                <img
+                  src={coinbaseimg}
+                  className="beta-pass-chain-img"
+                  alt=""
+                />
+                <span>Base</span>
+              </NavLink>
+              <NavLink
+                to={"/marketplace/beta-pass/coingecko"}
+                className={`${
+                  location.pathname.includes("coingecko") &&
+                  "selected-beta-pass-item"
+                } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
+                onClick={() => {
+                  setSelectedMint(coingeckoData);
+                  setMintTitle("coingecko");
+                }}
+              >
+                <img
+                  src={coingecko}
+                  className="beta-pass-chain-img"
+                  alt=""
+                />
+                <span>CoinGecko</span>
+              </NavLink>
+              <NavLink
+                to={"/marketplace/beta-pass/gate"}
+                className={`${
+                  location.pathname.includes("gate") &&
+                  "selected-beta-pass-item"
+                } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
+                onClick={() => {
+                  setSelectedMint(gateData);
+                  setMintTitle("gate");
+                }}
+              >
+                <img
+                  src={gateWallet}
+                  className="beta-pass-chain-img"
+                  alt=""
+                />
+                <span>Gate</span>
+              </NavLink>
+              <NavLink
+                to={"/marketplace/beta-pass/conflux"}
+                className={`${
+                  location.pathname.includes("conflux") &&
+                  "selected-beta-pass-item"
+                } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
+                onClick={() => {
+                  setSelectedMint(confluxData);
+                  setMintTitle("conflux");
+                }}
+              >
+                <img src={conflux} className="beta-pass-chain-img" alt="" />
+                <span>Conflux</span>
+              </NavLink>
+            </div>
+       
+            }
               </div>
 
               <div className=" nft-page-wrapper d-flex flex-column flex-xxl-row gap-3 mb-3">
@@ -1364,7 +1578,7 @@ const BetaPassNFT = ({
                           Coming Soon
                         </span>
                       )}
-                      {mintTitle === "core" && (
+                      {/* {mintTitle === "core" && (
                         <a
                           className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
                           href="https://sweepwidget.com/c/core-wod-giveaway"
@@ -1378,7 +1592,7 @@ const BetaPassNFT = ({
                           />{" "}
                           CORE Giveaway
                         </a>
-                      )}
+                      )} */}
                       {mintTitle === "viction" && (
                         <a
                           className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
