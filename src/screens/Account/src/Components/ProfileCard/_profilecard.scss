@@ -109,6 +109,10 @@
   filter: drop-shadow(0px 0px 6px #00bacc);
 }
 
+.hoverdiscount:hover {
+  filter: drop-shadow(0px 0px 6px #7F2B8A);
+}
+
 .user-cardImg-alert {
   background: linear-gradient(
     180deg,
@@ -943,8 +947,9 @@ background-size: 100% 100%;
   display: grid;
   grid-template-columns: repeat(2,1fr);
   gap: 10px;
-  @media screen and (max-width: 786px) {
-    grid-template-columns: auto;
+  @media screen and (max-width: 991px) {
+    grid-template-columns: auto !important;
+    width: 100%;
   
   }
 }
@@ -952,8 +957,10 @@ background-size: 100% 100%;
   display: grid;
   grid-template-columns: repeat(3,1fr);
   gap: 10px;
-  @media screen and (max-width: 786px) {
-    grid-template-columns: auto;
+  @media screen and (max-width: 991px) {
+    grid-template-columns: auto !important;
+    width: 100%;
+
   
   }
 }

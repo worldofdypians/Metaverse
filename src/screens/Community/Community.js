@@ -12,6 +12,8 @@ import dypius from "../Account/src/Components/WalletBalance/assets/dypIcon.svg";
 import base from "../Account/src/Components/WalletBalance/assets/baseLogo.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
 import skaleLogo from "../Account/src/Components/WalletBalance/assets/skaleLogo.svg";
+import bnblogo from "../Account/src/Components/WalletBalance/assets/bnblogo.svg";
+
 import gate from "../Account/src/Components/WalletBalance/assets/gate.svg";
 import conflux from "../Account/src/Components/WalletBalance/assets/conflux.svg";
 import upcomingDyp2 from "../Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
@@ -71,13 +73,12 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const Community = () => {
+const Community = ({socials}) => {
   const [active, setActive] = useState(true);
   const [popup, setPopup] = useState(false);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [countdown, setCountdown] = useState(false);
 
   const subscribe = async (e) => {
     e.preventDefault();
@@ -105,6 +106,8 @@ const Community = () => {
     }
   };
 
+
+
   const navigate = useNavigate();
 
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -116,43 +119,43 @@ const Community = () => {
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
+  let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
+
+
 
   let activeDay = new Date("2024-05-01T11:35:00.000+02:00");
 
   const dummyBetaPassData2 = [
     {
-      title: "Dypius Premium",
-      logo: dypius,
+      title: "BNB Chain",
+      logo: bnblogo,
       eventStatus: "Live",
-      totalRewards: "$50,000 in BNB Rewards",
+      totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "Feb 26, 2024",
-      date: "Feb 26, 2024",
-      backgroundImage: upcomingDyp2,
-      eventDuration: dypius2LastDay,
-      activeTab: "dypiusv2",
+      eventDuration: bnbLastDay,
+      eventType: "Explore & Mine",
+      eventDate: "Apr 15, 2024",
+      date: "Apr 15, 2024",
+      // backgroundImage: upcomingSkale,
       popupInfo: {
-        title: "Dypius Premium",
+        title: "BNB Chain",
         chain: "BNB Chain",
-        linkState: "dypius",
+        linkState: "chain",
         rewards: "BNB",
         status: "Live",
-        id: "event9",
-        eventType: "Explore & Find",
-        totalRewards: "$50,000 in BNB Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
+        id: "event14",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "50,000",
+        maxPoints: "30,000",
         learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "Feb 26, 2024",
-        activeTab: "dypiusv2",
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        eventDate: "Apr 15, 2024",
       },
     },
-
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -181,6 +184,39 @@ const Community = () => {
         learnMore:
           "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
         eventDate: "Apr 15, 2024",
+      },
+    },
+   
+    {
+      title: "Dypius Premium",
+      logo: dypius,
+      eventStatus: "Expired",
+      totalRewards: "$50,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Feb 26, 2024",
+      date: "Feb 26, 2024",
+      backgroundImage: upcomingDyp2,
+      eventDuration: dypius2LastDay,
+      activeTab: "dypiusv2",
+      popupInfo: {
+        title: "Dypius Premium",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event9",
+        eventType: "Explore & Find",
+        totalRewards: "$50,000 in BNB Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Feb 26, 2024",
+        activeTab: "dypiusv2",
       },
     },
     {
@@ -400,30 +436,14 @@ const Community = () => {
   ];
 
   const dummyData = [
-    
-    {
-      title: "Daily Game Delight",
-      status: "Upcoming",
-      start_date: "May 15, 2024",
-      end_date: "May 29, 2024",
-      image: dailyGameDelight,
-      link: "/",
-    },
-    {
-      title: "Dypians Discovery Quest",
-      status: "Upcoming",
-      start_date: "May 29, 2024",
-      end_date: "June 12, 2024",
-      image: dypiansDiscovery,
-      link: "/",
-    },
+
     {
       title: "BNB Chain Game Expedition",
-      status: "Upcoming",
+      status: "Live",
       start_date: "June 12, 2024",
       end_date: "June 28, 2024",
       image: bnbExpedition,
-      link: "/",
+      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/105-bnb-chain-game-expedition",
     },
     {
       title: "Entry Campaign",
@@ -433,16 +453,32 @@ const Community = () => {
       image: entryCampaign,
       link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/102-world-of-dypians-entry-campaign",
     },
-  ];
-
-  const dummyBanner = {
-    title: "Daily Game Delight",
-      status: "Live",
-      desc: "Join the World of Dypians (WoD) Daily Game Delight Campaign from May 15 to May 29 for a chance to win a share of the 150,000 WOD Tokens & 500 Premium Subscription prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
+    {
+      title: "Daily Game Delight",
+      status: "Expired",
       start_date: "May 15, 2024",
       end_date: "May 29, 2024",
       image: dailyGameDelight,
-      link: "/",
+      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/103-daily-game-delight",
+    },
+    {
+      title: "Dypians Discovery Quest",
+      status: "Expired",
+      start_date: "May 29, 2024",
+      end_date: "June 12, 2024",
+      image: dypiansDiscovery,
+      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/104-dypians-discovery-quest",
+    },
+  ];
+
+  const dummyBanner = {
+    title: "BNB Chain Game Expedition",
+    status: "Live",
+    desc: "Join the World of Dypians (WoD) Dypians Discovery Quest Campaign from May 29 to June 12 for a chance to win a share of the 200,000 WOD Tokens & 750 Premium Subscription prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
+    start_date: "June 12, 2024",
+    end_date: "June 28, 2024",
+    image: bnbExpedition,
+    link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/105-bnb-chain-game-expedition",
   };
 
   const html = document.querySelector("html");
@@ -503,7 +539,7 @@ const Community = () => {
                     >
                       {dummyBanner.status === "Live" && (
                         <div
-                        className="pulsatingDot"
+                          className="pulsatingDot"
                           style={{ width: 7, height: 7, marginRight: 5 }}
                         ></div>
                       )}
@@ -519,7 +555,7 @@ const Community = () => {
                     >
                       <a
                         className="btn filled-btn px-5"
-                        href="https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/103-daily-game-delight"
+                        href={dummyBanner.link}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -550,125 +586,128 @@ const Community = () => {
               </div>
             </div>
             <div className="community-items-grid">
-              {dummyData.slice(1, 4).map((item, index) => (
-              item.status === "Expired" ? 
-                <a href={item.link} target="_blank">
+              {dummyData.slice(1, 4).map((item, index) =>
+                item.status === "Expired" ? (
+                  <a href={item.link} target="_blank">
                     <div
-                key={index}
-                className="community-item-card d-flex flex-column gap-2 p-3"
-              >
-                <div className="w-100 h-100 banner-holder overflow-hidden">
-                  <img
-                    src={item.image}
-                    className="community-card-banner"
-                    alt=""
-                  />
-                </div>
-                <div className="d-flex align-items-center justify-content-between">
-                  <div className="community-card-title">{item.title}</div>
-                  <div
-                    className={`position-relative ${
-                      item.status === "Live"
-                        ? "events-page-status-tag-live"
-                        : item.status === "Upcoming"
-                        ? "events-page-status-tag-upcoming"
-                        : "events-page-status-tag-expired"
-                    }
+                      key={index}
+                      className="community-item-card d-flex flex-column gap-2 p-3"
+                    >
+                      <div className="w-100 h-100 banner-holder overflow-hidden">
+                        <img
+                          src={item.image}
+                          className="community-card-banner"
+                          alt=""
+                        />
+                      </div>
+                      <div className="d-flex align-items-center justify-content-between">
+                        <div className="community-card-title">{item.title}</div>
+                        <div
+                          className={`position-relative ${
+                            item.status === "Live"
+                              ? "events-page-status-tag-live"
+                              : item.status === "Upcoming"
+                              ? "events-page-status-tag-upcoming"
+                              : "events-page-status-tag-expired"
+                          }
              px-2 d-flex align-items-center justify-content-center gap-0`}
-                    style={{ top: 0 }}
+                          style={{ top: 0 }}
+                        >
+                          {item.status === "Live" && (
+                            <div
+                              className="pulsatingDot"
+                              style={{ width: 7, height: 7, marginRight: 5 }}
+                            ></div>
+                          )}
+                          <span>{item.status}</span>
+                        </div>
+                      </div>
+                      <div className="d-flex align-items-center justify-content-between mt-2">
+                        <span className="community-card-date">Duration:</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <div className="d-flex align-items-center gap-1">
+                            <img src={calendar} width={16} height={16} alt="" />
+                            <span className="community-card-date">
+                              {item.start_date}
+                            </span>
+                          </div>
+                          <span className="community-card-date">-</span>
+                          <div className="d-flex align-items-center gap-1">
+                            <img src={calendar} width={16} height={16} alt="" />
+                            <span className="community-card-date">
+                              {item.end_date}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                ) : (
+                  <HtmlTooltip
+                    enterTouchDelay={0}
+                    enterDelay={0}
+                    placement="top"
+                    title={
+                      <span className="card-eth-chain-text d-flex align-items-center justify-content-center">
+                        {item.status === "Expired" ? "Expired" : "Coming Soon"}
+                      </span>
+                    }
                   >
-                    {item.status === "Live" && (
-                      <div
-                      className="pulsatingDot"
-                        style={{ width: 7, height: 7, marginRight: 5 }}
-                      ></div>
-                    )}
-                    <span>{item.status}</span>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center justify-content-between mt-2">
-                  <span className="community-card-date">Duration:</span>
-                  <div className="d-flex align-items-center gap-2">
-                    <div className="d-flex align-items-center gap-1">
-                      <img src={calendar} width={16} height={16} alt="" />
-                      <span className="community-card-date">
-                        {item.start_date}
-                      </span>
-                    </div>
-                    <span className="community-card-date">-</span>
-                    <div className="d-flex align-items-center gap-1">
-                      <img src={calendar} width={16} height={16} alt="" />
-                      <span className="community-card-date">
-                        {item.end_date}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-                </a>
-            :
-            <HtmlTooltip
-            enterTouchDelay={0}
-            enterDelay={0}
-            placement="top"
-            title={
-              <span className="card-eth-chain-text d-flex align-items-center justify-content-center">{item.status === "Expired" ? "Expired" : "Coming Soon"}</span>
-            }
-          >
-            <div
-              key={index}
-              className="community-item-card d-flex flex-column gap-2 p-3"
-            >
-              <div className="w-100 h-100 banner-holder overflow-hidden">
-                <img
-                  src={item.image}
-                  className="community-card-banner"
-                  alt=""
-                />
-              </div>
-              <div className="d-flex align-items-center justify-content-between">
-                <div className="community-card-title">{item.title}</div>
-                <div
-                  className={`position-relative ${
-                    item.status === "Live"
-                      ? "events-page-status-tag-live"
-                      : item.status === "Upcoming"
-                      ? "events-page-status-tag-upcoming"
-                      : "events-page-status-tag-expired"
-                  }
-           px-2 d-flex align-items-center justify-content-center gap-0`}
-                  style={{ top: 0 }}
-                >
-                  {item.status === "Live" && (
                     <div
-                    className="pulsatingDot"
-                      style={{ width: 7, height: 7, marginRight: 5 }}
-                    ></div>
-                  )}
-                  <span>{item.status}</span>
-                </div>
-              </div>
-              <div className="d-flex align-items-center justify-content-between mt-2">
-                <span className="community-card-date">Duration:</span>
-                <div className="d-flex align-items-center gap-2">
-                  <div className="d-flex align-items-center gap-1">
-                    <img src={calendar} width={16} height={16} alt="" />
-                    <span className="community-card-date">
-                      {item.start_date}
-                    </span>
-                  </div>
-                  <span className="community-card-date">-</span>
-                  <div className="d-flex align-items-center gap-1">
-                    <img src={calendar} width={16} height={16} alt="" />
-                    <span className="community-card-date">
-                      {item.end_date}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </HtmlTooltip>
-              ))}
+                      key={index}
+                      className="community-item-card d-flex flex-column gap-2 p-3"
+                    >
+                      <div className="w-100 h-100 banner-holder overflow-hidden">
+                        <img
+                          src={item.image}
+                          className="community-card-banner"
+                          alt=""
+                        />
+                      </div>
+                      <div className="d-flex align-items-center justify-content-between">
+                        <div className="community-card-title">{item.title}</div>
+                        <div
+                          className={`position-relative ${
+                            item.status === "Live"
+                              ? "events-page-status-tag-live"
+                              : item.status === "Upcoming"
+                              ? "events-page-status-tag-upcoming"
+                              : "events-page-status-tag-expired"
+                          }
+           px-2 d-flex align-items-center justify-content-center gap-0`}
+                          style={{ top: 0 }}
+                        >
+                          {item.status === "Live" && (
+                            <div
+                              className="pulsatingDot"
+                              style={{ width: 7, height: 7, marginRight: 5 }}
+                            ></div>
+                          )}
+                          <span>{item.status}</span>
+                        </div>
+                      </div>
+                      <div className="d-flex align-items-center justify-content-between mt-2">
+                        <span className="community-card-date">Duration:</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <div className="d-flex align-items-center gap-1">
+                            <img src={calendar} width={16} height={16} alt="" />
+                            <span className="community-card-date">
+                              {item.start_date}
+                            </span>
+                          </div>
+                          <span className="community-card-date">-</span>
+                          <div className="d-flex align-items-center gap-1">
+                            <img src={calendar} width={16} height={16} alt="" />
+                            <span className="community-card-date">
+                              {item.end_date}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </HtmlTooltip>
+                )
+              )}
             </div>
             <div className="col-12 col-lg-6 mt-5">
               <h6 className="community-title">Join Our Community</h6>
@@ -699,7 +738,7 @@ const Community = () => {
                         className="community-social-img"
                         alt=""
                       />
-                      <span className="follower-amount">22,200+</span>
+                      <span className="follower-amount">{getFormattedNumber(socials?.discordMembers,0)}+</span>
                       <span className="follower-type">Members</span>
                     </div>
                   </a>
@@ -714,7 +753,7 @@ const Community = () => {
                         className="community-social-img"
                         alt=""
                       />
-                      <span className="follower-amount">330,000+</span>
+                      <span className="follower-amount">{getFormattedNumber(socials?.youtubeSubscribers,0)}+</span>
                       <span className="follower-type">Subscribers</span>
                     </div>
                   </a>
@@ -729,7 +768,7 @@ const Community = () => {
                         className="community-social-img"
                         alt=""
                       />
-                      <span className="follower-amount">46,900+</span>
+                      <span className="follower-amount">{getFormattedNumber(socials?.twitterFollowers,0)}+</span>
                       <span className="follower-type">Followers</span>
                     </div>
                   </a>
@@ -744,7 +783,7 @@ const Community = () => {
                         className="community-social-img"
                         alt=""
                       />
-                      <span className="follower-amount">28,000+</span>
+                      <span className="follower-amount">{getFormattedNumber(socials?.telegramMembers,0)}+</span>
                       <span className="follower-type">Members</span>
                     </div>
                   </a>
@@ -895,7 +934,7 @@ const Community = () => {
                 ) : (
                   <div className="community-events-grid mt-5  w-100 p-3">
                     {dummyBetaPassData2
-                      .slice(2, dummyBetaPassData2.length)
+                      .slice(1, dummyBetaPassData2.length)
                       .map((item, index) => (
                         <ExpiredProfileEvent
                           onOpenEvent={() => {
