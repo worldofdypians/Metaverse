@@ -895,36 +895,51 @@ const LandStaking = ({
               </div>
               <div
                 className={
-                  isConnected === false ||
-                  activeButton === false ||
-                  createdNft === 0
-                    ? "linear-border-disabled"
-                    : "linear-border"
+                  // isConnected === false ||
+                  // activeButton === false ||
+                  // createdNft === 0
+                  //   ?
+                     "linear-border-disabled"
+                    // : "linear-border"
                 }
               >
                 <button
                   className={`btn ${
-                    isConnected === false ||
-                    activeButton === false ||
-                    createdNft === 0
-                      ? "outline-btn-disabled"
-                      : "filled-btn"
+                    // isConnected === false ||
+                    // activeButton === false ||
+                    // createdNft === 0
+                    //   ? 
+                      "outline-btn-disabled"
+                      // : "filled-btn"
                   } px-5 w-100`}
                   disabled={
-                    isConnected === false ||
-                    activeButton === false ||
-                    createdNft === 0
+                    // isConnected === false ||
+                    // activeButton === false ||
+                    // createdNft === 0
+                    true
                   }
-                  onClick={() => {
-                    isConnected === true && activeButton === true
-                      ? handleStake()
-                      : console.log();
-                  }}
+                  // onClick={() => {
+                  //   isConnected === true && activeButton === true
+                  //     ? handleStake()
+                  //     : console.log();
+                  // }}
                 >
                   Stake NFT
                 </button>
               </div>
-            </div>
+            
+            </div>  <span className="errormsg w-100">
+                    <img
+                      width={18}
+                      height={18}
+                      src={
+                        require("../../assets/landAssets/alert-triangle.svg")
+                          .default
+                      }
+                      alt=""
+                    />{" "}
+                    Staking is expired. Please claim your rewards and unstake your NFT.
+                  </span>
             <hr className="mint-divider" />
             <div className="d-flex align-items-end flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between  align-items-end gap-2">
               <div className="d-flex flex-column gap-1 w-100">

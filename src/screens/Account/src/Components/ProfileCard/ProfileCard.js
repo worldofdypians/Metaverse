@@ -51,6 +51,8 @@ import Countdown from "react-countdown";
 import { dyp700Address, dyp700v1Address } from "../../web3";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import becomePremium from "./assets/becomePremium.svg";
+import premiumDiscount from "./assets/premiumDiscount.svg";
+
 import OutsideClickHandler from "react-outside-click-handler";
 import Slider from "react-slick";
 import { Tooltip, tooltipClasses } from "@mui/material";
@@ -58,7 +60,7 @@ import styled from "styled-components";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import premiumOfferTag from "./assets/premiumOfferTag2.png";
 import premiumExclusive from "./assets/premiumExclusive2.svg";
-// import premiumExclusive2 from "./assets/premiumExclusive2.svg";
+import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -93,6 +95,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 
 const ProfileCard = ({
   email,
+  discountPercentage,
   username,
   balance,
   address,
@@ -198,9 +201,9 @@ const ProfileCard = ({
 
   const updateUserRank = async () => {
     if (rankData && userRankName) {
-      if (rankData.rank === userRankName.id) {
+      if (rankData.rank == userRankName.id) {
         return;
-      } else {
+      } else if (rankData.rank < userRankName.id) {
         await axios
           .patch(
             `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
@@ -279,8 +282,6 @@ const ProfileCard = ({
     const result_formatted = result.data.count;
     setbundlesBought(result_formatted);
   };
-
-  
 
   const setlastDay = async (addr) => {
     const dypv1 = new window.infuraWeb3.eth.Contract(
@@ -393,8 +394,6 @@ const ProfileCard = ({
     }
   };
 
-
-
   useEffect(() => {
     updateUserRank();
   }, [handleUserRank]);
@@ -403,7 +402,6 @@ const ProfileCard = ({
     countBundle();
     setlastDay(address);
   }, [address]);
-
 
   useEffect(() => {
     handleUserRank();
@@ -422,7 +420,6 @@ const ProfileCard = ({
   return (
     <>
       <div className="main-wrapper py-4 w-100">
-       
         {/* )} */}
         <div className="row justify-content-center gap-3 gap-lg-0">
           <div className="position-relative px-lg-3 col-12">
@@ -445,7 +442,7 @@ const ProfileCard = ({
                 <div className="d-flex flex-column flex-lg-row profile-header-wrapper justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
                   <div className="d-flex gap-2 justify-content-between align-items-center  w-50">
                     <div className="d-flex align-items-center gap-2 w-100">
-                      {(coinbase && !email) ||
+                      {(coinbase && !email && !isPremium) ||
                       (!coinbase && !email) ||
                       (coinbase && email && !address && !username) ||
                       (!coinbase &&
@@ -453,7 +450,7 @@ const ProfileCard = ({
                         address &&
                         username &&
                         !isPremium) ||
-                      !address ? (
+                      (!address && !isPremium) ? (
                         <img
                           src={defaultAvatar}
                           alt=""
@@ -482,11 +479,25 @@ const ProfileCard = ({
                         />
                       )}
 
-                      {isVerified && email ? (
+                      {!email && isPremium && coinbase && (
+                        <img
+                          src={defaultAvatarPremium}
+                          alt=""
+                          className="userAvatarPremium"
+                        />
+                      )}
+
+                      {(isVerified && email) || (coinbase && !email) ? (
                         <div className="d-flex flex-column gap-1 w-100">
                           <div className="d-flex align-items-center gap-2">
                           <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
-                            {username}
+                          {coinbase && !email && (
+                            <div className="d-flex flex-column gap-1 col-lg-9 col-12">
+                              <span className="usernametext font-organetto">
+                                Start your journey now!
+                              </span>
+                            </div>
+                          )}
                             {!domainName && isConnected && (
                               <span
                                 className={`${
@@ -569,10 +580,7 @@ const ProfileCard = ({
                                   (!email && !coinbase && "d-none")
                                 }  d-flex wallet-wrapper align-items-center gap-2 position-relative`}
                               >
-                               
                                 <div className="d-flex flex-column">
-                                
-
                                   <div
                                     className="d-flex flex-column"
                                     onClick={() => {
@@ -585,8 +593,8 @@ const ProfileCard = ({
                                       <span className="wallet-address">
                                         {windowSize.width > 991
                                           ? isVerified && email
-                                            ? address
-                                            : coinbase
+                                            ? shortAddress(address)
+                                            : shortAddress(coinbase)
                                           : isVerified && email
                                           ? shortAddress(address)
                                           : shortAddress(coinbase)}
@@ -609,8 +617,6 @@ const ProfileCard = ({
                                 <p className="tooltip-content m-0">Copied!</p>
                               </div>
                             </>
-
-                     
                           </div>
                           {!coinbase && email && (
                             <button
@@ -717,327 +723,414 @@ const ProfileCard = ({
                     </div>
                   )}
 
-             <div className={`d-flex gap-3 justify-content-end w-100`}>
-          
-                  {email && address && (
-                    <>
-                      {/* <div
-                        style={{ height: "79px" }}
-                        className={`${
-                          isPremium
-                            ? "wallet-wrapper-active-premium hoverpremium"
-                            : "wallet-wrapper-active hoveractive"
-                        }
-                    position-relative
-                    d-flex  align-items-center justify-content-between gap-3 position-relative mt-3 mt-lg-0`}
-                        onClick={onOpenGenesisLeaderboard}
-                      >
-                         <img
-                          src={globe}
-                          alt=""
-                          style={{ height: "54px", width: "50px" }}
-                        />
-                        <div className="d-flex flex-column">
-                          <span className="leaderboard-title-span">Genesis</span>
-                          <span
-                            className="leaderboard-title-span"
-                            style={{ color: isPremium ? "#FFBF00" : "#1BF5FF" }}
-                          >
-                            Leaderboard
-                          </span>
-                        </div>
-                       
-                      </div>
+                  <div
+                    className={`${
+                      isPremium ? "buttons-grid-premium w-100" : "buttons-grid"
+                    } ${
+                      coinbase && !isPremium
+                        ? ""
+                        : coinbase && isPremium && !email
+                        ? "d-none"
+                        : ""
+                    }`}
+                    style={{
+                      gridTemplateColumns:
+                        !email && !isPremium
+                          ? "repeat(1, 1fr)"
+                          : email && !isPremium
+                          ? "repeat(4, 1fr)"
+                          : "repeat(3, 1fr)",
+                    }}
+                  >
+                    {!isPremium && discountPercentage == 0 && (
                       <div
-                        style={{ height: "79px" }}
-                        className={`${
-                          isPremium
-                            ? "wallet-wrapper-active-premium hoverpremium"
-                            : "wallet-wrapper-active hoveractive"
-                        }
-                    position-relative
-                    d-flex  align-items-center justify-content-between gap-3 position-relative mt-3 mt-lg-0`}
-                        onClick={onOpenLeaderboard}
+                        className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
+                    d-flex align-items-center position-relative mt-3 mt-lg-0`}
+                        onClick={onPremiumClick}
                       >
-           
-                        <div className="d-flex flex-column">
-                          <span className="leaderboard-title-span">Game</span>
-                          <span
-                            className="leaderboard-title-span"
-                            style={{ color: isPremium ? "#FFBF00" : "#1BF5FF" }}
-                          >
-                            Leaderboard
-                          </span>
-                        </div>
+                        {/* <div className="table-separator position-absolute"></div> */}
+                        <h6 className="become-premium-title mb-0">
+                          Become a Premium Member
+                        </h6>
+
                         <img
+                          src={becomePremium}
+                          alt=""
+                          className="become-premium-img"
+                        />
+                      </div>
+                    )}
+
+                    {!isPremium && discountPercentage > 0 && (
+                      <div
+                        className={` wallet-wrapper-active-discount hoverdiscount position-relative justify-content-between
+                    d-flex align-items-center position-relative mt-3 mt-lg-0`}
+                        onClick={onPremiumClick}
+                      >
+                        <div className="premiumRedTag-profile position-absolute">
+                          <div className="position-relative d-flex flex-column">
+                            <img src={premiumRedTag} alt="" className="premiumtag-img"/>
+                            <div className="d-flex flex-column position-absolute discountwrap-profile">
+                              <span className="discount-price2-profile font-oxanium">
+                                {discountPercentage}%
+                              </span>
+                              <span className="discount-price-bottom">
+                                Discount
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="d-flex flex-column">
+                          <h6 className="lifetime-plan-text2 m-0">
+                            Lifetime plan
+                          </h6>
+
+                          <div className="d-flex align-items-center gap-2">
+                            <h6 className="discount-price-profile m-0">
+                              {discountPercentage == 100
+                                ? "FREE"
+                                : "$" + (100 - Number(discountPercentage))}
+                            </h6>
+                            <h6 className="old-price-text-profile m-0">$100</h6>
+                          </div>
+                        </div>
+                        <img src={premiumDiscount} alt="" className="" />
+                      </div>
+                    )}
+
+                    {email && address && (
+                      <>
+                        {/* <img
                           src={leaderboardIcon}
                           alt=""
                           style={{ height: "54px", width: "50px" }}
-                        />
-                      </div> */}
+                        /> */}
+                    
                       <div className="position-relative rank-outer-wrapper">
                         <div
+                          style={{ height: "79px" }}
                           className={`${
                             isPremium
                               ? "wallet-wrapper-active-premium hoverpremium"
                               : "wallet-wrapper-active hoveractive"
                           }
-                    position-relative player-rank-wrapper
-                    d-flex flex-column align-items-start justify-content-center position-relative mt-3 mt-lg-0`}
-                          onClick={() => setRankDropdown(!rankDropdown)}
+                    position-relative
+                    d-flex  align-items-center justify-content-between gap-3 position-relative mt-3 mt-lg-0`}
+                          onClick={onOpenGenesisLeaderboard}
                         >
-                          <img
-                            src={
-                              userRankName.name === "starter"
-                                ? starterBust
-                                : userRankName.name === "rookie"
-                                ? rookieBust
-                                : userRankName.name === "underdog"
-                                ? underdogBust
-                                : userRankName.name === "champion"
-                                ? championBust
-                                : userRankName.name === "unstoppable"
-                                ? unstoppableBust
-                                : starterBust
-                            }
-                            alt=""
-                            className="player-bust"
-                          />
                           <div className="d-flex flex-column">
-                            <span className="my-rank-text">My Rank</span>
-                            <h6
-                              className="player-rank-text mb-0"
+                            <span className="leaderboard-title-span">
+                              Genesis
+                            </span>
+                            <span
+                              className="leaderboard-title-span"
                               style={{
                                 color: isPremium ? "#FFBF00" : "#1BF5FF",
                               }}
                             >
-                              {userRankName.name}
-                            </h6>
+                              Leaderboard
+                            </span>
                           </div>
+                          <img
+                            src={globe}
+                            alt=""
+                            style={{ height: "54px", width: "50px" }}
+                          />
                         </div>
-                        {rankDropdown && (
-                          <OutsideClickHandler
-                            onOutsideClick={() => setRankDropdown(false)}
+                        <div
+                          style={{ height: "79px" }}
+                          className={`${
+                            isPremium
+                              ? "wallet-wrapper-active-premium hoverpremium"
+                              : "wallet-wrapper-active hoveractive"
+                          }
+                    position-relative
+                    d-flex  align-items-center justify-content-between gap-3 position-relative mt-3 mt-lg-0`}
+                          onClick={onOpenLeaderboard}
+                        >
+                          <div className="d-flex flex-column">
+                            <span className="leaderboard-title-span">Game</span>
+                            <span
+                              className="leaderboard-title-span"
+                              style={{
+                                color: isPremium ? "#FFBF00" : "#1BF5FF",
+                              }}
+                            >
+                              Leaderboard
+                            </span>
+                          </div>
+                          <img
+                            src={leaderboardIcon}
+                            alt=""
+                            style={{ height: "54px", width: "50px" }}
+                          />
+                        </div>
+                        <div className="position-relative rank-outer-wrapper">
+                          <div
+                            className={`${
+                              isPremium
+                                ? "wallet-wrapper-active-premium hoverpremium"
+                                : "wallet-wrapper-active hoveractive"
+                            }
+                    position-relative player-rank-wrapper
+                    d-flex flex-column align-items-start justify-content-center position-relative mt-3 mt-lg-0`}
+                            onClick={() => setRankDropdown(!rankDropdown)}
                           >
-                            <div className="player-rank-dropdown p-3 d-flex flex-column gap-2">
-                              {/* <div className="total-stars-wrapper d-flex align-items-center justify-content-between p-2">
+                            <img
+                              src={
+                                userRankName.name === "starter"
+                                  ? starterBust
+                                  : userRankName.name === "rookie"
+                                  ? rookieBust
+                                  : userRankName.name === "underdog"
+                                  ? underdogBust
+                                  : userRankName.name === "champion"
+                                  ? championBust
+                                  : userRankName.name === "unstoppable"
+                                  ? unstoppableBust
+                                  : starterBust
+                              }
+                              alt=""
+                              className="player-bust"
+                            />
+                            <div className="d-flex flex-column">
+                              <span className="my-rank-text">My Rank</span>
+                              <h6
+                                className="player-rank-text mb-0"
+                                style={{
+                                  color: isPremium ? "#FFBF00" : "#1BF5FF",
+                                }}
+                              >
+                                {userRankName.name}
+                              </h6>
+                            </div>
+                          </div>
+                          {rankDropdown && (
+                            <OutsideClickHandler
+                              onOutsideClick={() => setRankDropdown(false)}
+                            >
+                              <div className="player-rank-dropdown p-3 d-flex flex-column gap-2">
+                                {/* <div className="total-stars-wrapper d-flex align-items-center justify-content-between p-2">
                                   <img src={star} style={{width: "30px", height: "30px"}} alt="" />
                                   <div className="d-flex flex-column align-items-end">
                                     <span className="total-stars-span">Collected Stars</span>
                                     <h6 className="total-stars-amount mb-0">{getFormattedNumber(4562, 0)}</h6>
                                   </div>
                               </div> */}
-                              <div className="bnb-rank-wrapper d-flex align-items-center justify-content-between p-2 position-relative">
-                                <img
-                                  src={bnbActive}
-                                  className="rank-logo-position"
-                                  alt=""
-                                />
-                                <div className="d-flex flex-column">
-                                  <span className="new-rank-span">
-                                    BNB SCORE
-                                  </span>
-                                  <h6 className="bnb-rank-score mb-0">
-                                    {getFormattedNumber(userBnbScore, 0)}
-                                  </h6>
+                                <div className="bnb-rank-wrapper d-flex align-items-center justify-content-between p-2 position-relative">
+                                  <img
+                                    src={bnbActive}
+                                    className="rank-logo-position"
+                                    alt=""
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <span className="new-rank-span">
+                                      BNB SCORE
+                                    </span>
+                                    <h6 className="bnb-rank-score mb-0">
+                                      {getFormattedNumber(userBnbScore, 0)}
+                                    </h6>
+                                  </div>
+                                  <div className="d-flex flex-column align-items-center">
+                                    <span className="new-rank-span">RANK</span>
+                                    <h6 className="bnb-rank-score mb-0">
+                                      #{userRank + 1}
+                                    </h6>
+                                  </div>
                                 </div>
-                                <div className="d-flex flex-column align-items-center">
-                                  <span className="new-rank-span">RANK</span>
-                                  <h6 className="bnb-rank-score mb-0">
-                                    #{userRank + 1}
-                                  </h6>
+                                <div className="skale-rank-wrapper d-flex align-items-center justify-content-between mt-2 p-2 position-relative">
+                                  <img
+                                    src={skaleActive}
+                                    className="rank-logo-position"
+                                    alt=""
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <span className="new-rank-span">
+                                      SKALE SCORE
+                                    </span>
+                                    <h6 className="skale-rank-score mb-0">
+                                      {getFormattedNumber(userSkaleScore, 0)}
+                                    </h6>
+                                  </div>
+                                  <div className="d-flex flex-column align-items-center">
+                                    <span className="new-rank-span">RANK</span>
+                                    <h6 className="skale-rank-score mb-0">
+                                      #{userRankSkale + 1}
+                                    </h6>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="skale-rank-wrapper d-flex align-items-center justify-content-between mt-2 p-2 position-relative">
-                                <img
-                                  src={skaleActive}
-                                  className="rank-logo-position"
-                                  alt=""
-                                />
-                                <div className="d-flex flex-column">
-                                  <span className="new-rank-span">
-                                    SKALE SCORE
-                                  </span>
-                                  <h6 className="skale-rank-score mb-0">
-                                    {getFormattedNumber(userSkaleScore, 0)}
-                                  </h6>
-                                </div>
-                                <div className="d-flex flex-column align-items-center">
-                                  <span className="new-rank-span">RANK</span>
-                                  <h6 className="skale-rank-score mb-0">
-                                    #{userRankSkale + 1}
-                                  </h6>
-                                </div>
-                              </div>
-                              <hr className="new-rank-divider my-2" />
-                              <div className="d-flex align-items-center justify-content-between">
-                                <span
-                                  className="current-rank"
-                                  style={{ textTransform: "uppercase" }}
-                                >
-                                  {userRankName.name}
+                                <hr className="new-rank-divider my-2" />
+                                <div className="d-flex align-items-center justify-content-between">
                                   <span
                                     className="current-rank"
-                                    style={{
-                                      color:
-                                        rankData?.multiplier === "yes"
-                                          ? "#FFC700"
-                                          : "#1BF5FF",
-                                    }}
+                                    style={{ textTransform: "uppercase" }}
                                   >
-                                    (
-                                    {userRankName?.name === "rookie"
-                                      ? "$5"
-                                      : userRankName?.name === "underdog"
-                                      ? "$10"
-                                      : userRankName?.name === "champion"
-                                      ? "$25"
-                                      : userRankName?.name === "unstoppable"
-                                      ? "$100"
-                                      : "$0"}
-                                    )
+                                    {userRankName.name}
+                                    <span
+                                      className="current-rank"
+                                      style={{
+                                        color:
+                                          rankData?.multiplier === "yes"
+                                            ? "#FFC700"
+                                            : "#1BF5FF",
+                                      }}
+                                    >
+                                      (
+                                      {userRankName?.name === "rookie"
+                                        ? "$5"
+                                        : userRankName?.name === "underdog"
+                                        ? "$10"
+                                        : userRankName?.name === "champion"
+                                        ? "$25"
+                                        : userRankName?.name === "unstoppable"
+                                        ? "$100"
+                                        : "$0"}
+                                      )
+                                    </span>
                                   </span>
-                                </span>
-                                <span
-                                  className="current-rank"
-                                  style={{ textTransform: "uppercase" }}
-                                >
-                                  {userRankName.name === "rookie"
-                                    ? "underdog"
-                                    : userRankName.name === "underdog"
-                                    ? "champion"
-                                    : userRankName.name === "champion"
-                                    ? "unstoppable"
-                                    : userRankName.name === "unstoppable"
-                                    ? ""
-                                    : "rookie"}
                                   <span
                                     className="current-rank"
-                                    style={{
-                                      color:
-                                        rankData?.multiplier === "yes"
-                                          ? "#FFC700"
-                                          : "#1BF5FF",
-                                    }}
+                                    style={{ textTransform: "uppercase" }}
                                   >
-                                    (
+                                    {userRankName.name === "rookie"
+                                      ? "underdog"
+                                      : userRankName.name === "underdog"
+                                      ? "champion"
+                                      : userRankName.name === "champion"
+                                      ? "unstoppable"
+                                      : userRankName.name === "unstoppable"
+                                      ? ""
+                                      : "rookie"}
+                                    <span
+                                      className="current-rank"
+                                      style={{
+                                        color:
+                                          rankData?.multiplier === "yes"
+                                            ? "#FFC700"
+                                            : "#1BF5FF",
+                                      }}
+                                    >
+                                      (
+                                      {userRankName?.name === "rookie"
+                                        ? "$10"
+                                        : userRankName?.name === "underdog"
+                                        ? "$25"
+                                        : userRankName?.name === "champion"
+                                        ? "$100"
+                                        : userRankName?.name === "unstoppable"
+                                        ? ""
+                                        : "$5"}
+                                      )
+                                    </span>
+                                  </span>
+                                </div>
+                                <div
+                                  className={`${
+                                    rankData?.multiplier === "yes"
+                                      ? "rank-progress-bar-active"
+                                      : "rank-progress-bar"
+                                  } d-flex align-items-center px-2 justify-content-between position-relative`}
+                                >
+                                  <div
+                                    className={` ${
+                                      rankData?.multiplier === "yes"
+                                        ? "rank-current-progress-active"
+                                        : "rank-current-progress"
+                                    } d-flex align-items-center justify-content-end`}
+                                    style={{ width: `${userProgress}%` }}
+                                  >
+                                    {rankData?.multiplier === "yes" && (
+                                      <img
+                                        src={x4}
+                                        style={{ marginRight: "5px" }}
+                                        width={25}
+                                        height={17}
+                                        alt=""
+                                      />
+                                    )}
+                                  </div>
+                                  <span className="rank-current-score">
+                                    {rankData?.multiplier === "yes"
+                                      ? getFormattedNumber(
+                                          userTotalScore * 4,
+                                          0
+                                        )
+                                      : getFormattedNumber(userTotalScore, 0)}
+                                  </span>
+                                  <span className="rank-current-score">
                                     {userRankName?.name === "rookie"
-                                      ? "$10"
+                                      ? "12M"
                                       : userRankName?.name === "underdog"
-                                      ? "$25"
+                                      ? "24M"
                                       : userRankName?.name === "champion"
-                                      ? "$100"
+                                      ? "40M"
                                       : userRankName?.name === "unstoppable"
                                       ? ""
-                                      : "$5"}
-                                    )
+                                      : "6M"}
                                   </span>
-                                </span>
-                              </div>
-                              <div
-                                className={`${
-                                  rankData?.multiplier === "yes"
-                                    ? "rank-progress-bar-active"
-                                    : "rank-progress-bar"
-                                } d-flex align-items-center px-2 justify-content-between position-relative`}
-                              >
+                                </div>
+                                {rankData?.multiplier === "no" && !isPremium ? (
+                                  <div className="d-flex justify-content-center">
+                                    <button
+                                      className="activate-bonus-btn d-flex align-items-center gap-2"
+                                      onClick={() => {
+                                        onPremiumClick();
+                                        setRankDropdown(false);
+                                      }}
+                                    >
+                                      Activate
+                                      <img
+                                        src={x4}
+                                        style={{ width: "25px" }}
+                                        alt=""
+                                      />
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <></>
+                                )}
+                                <hr className="new-rank-divider my-2" />
                                 <div
-                                  className={` ${
-                                    rankData?.multiplier === "yes"
-                                      ? "rank-current-progress-active"
-                                      : "rank-current-progress"
-                                  } d-flex align-items-center justify-content-end`}
-                                  style={{ width: `${userProgress}%` }}
+                                  className="rank-popup-btn p-2 d-flex align-items-center justify-content-between"
+                                  style={{
+                                    border:
+                                      rankData?.multiplier === "yes"
+                                        ? "2px solid #FFC700"
+                                        : "2px solid #1BF5FF",
+                                  }}
+                                  onClick={() => {
+                                    setRankPopup(true);
+                                    setRankDropdown(false);
+                                  }}
                                 >
-                                  {rankData?.multiplier === "yes" && (
+                                  <span
+                                    className="open-ranks-text"
+                                    style={{
+                                      color:
+                                        rankData?.multiplier === "yes"
+                                          ? "#FFC700"
+                                          : "#1BF5FF",
+                                    }}
+                                  >
+                                    Rankings and Rewards
+                                  </span>
+                                  {rankData?.multiplier === "yes" ? (
                                     <img
-                                      src={x4}
-                                      style={{ marginRight: "5px" }}
-                                      width={25}
-                                      height={17}
+                                      src={rankYellowArrow}
                                       alt=""
+                                      width={20}
+                                      height={20}
+                                    />
+                                  ) : (
+                                    <img
+                                      src={rankBlueArrow}
+                                      alt=""
+                                      width={20}
+                                      height={20}
                                     />
                                   )}
                                 </div>
-                                <span className="rank-current-score">
-                                  {rankData?.multiplier === "yes"
-                                    ? getFormattedNumber(userTotalScore * 4, 0)
-                                    : getFormattedNumber(userTotalScore, 0)}
-                                </span>
-                                <span className="rank-current-score">
-                                  {userRankName?.name === "rookie"
-                                    ? "12M"
-                                    : userRankName?.name === "underdog"
-                                    ? "24M"
-                                    : userRankName?.name === "champion"
-                                    ? "40M"
-                                    : userRankName?.name === "unstoppable"
-                                    ? ""
-                                    : "6M"}
-                                </span>
-                              </div>
-                              {rankData?.multiplier === "no" && !isPremium ? (
-                                <div className="d-flex justify-content-center">
-                                  <button
-                                    className="activate-bonus-btn d-flex align-items-center gap-2"
-                                    onClick={() => {
-                                      onPremiumClick();
-                                      setRankDropdown(false);
-                                    }}
-                                  >
-                                    Activate
-                                    <img
-                                      src={x4}
-                                      style={{ width: "25px" }}
-                                      alt=""
-                                    />
-                                  </button>
-                                </div>
-                              ) : (
-                                <></>
-                              )}
-                              <hr className="new-rank-divider my-2" />
-                              <div
-                                className="rank-popup-btn p-2 d-flex align-items-center justify-content-between"
-                                style={{
-                                  border:
-                                    rankData?.multiplier === "yes"
-                                      ? "2px solid #FFC700"
-                                      : "2px solid #1BF5FF",
-                                }}
-                                onClick={() => {
-                                  setRankPopup(true);
-                                  setRankDropdown(false);
-                                }}
-                              >
-                                <span
-                                  className="open-ranks-text"
-                                  style={{
-                                    color:
-                                      rankData?.multiplier === "yes"
-                                        ? "#FFC700"
-                                        : "#1BF5FF",
-                                  }}
-                                >
-                                  Rankings and Rewards
-                                </span>
-                                {rankData?.multiplier === "yes" ? (
-                                  <img
-                                    src={rankYellowArrow}
-                                    alt=""
-                                    width={20}
-                                    height={20}
-                                  />
-                                ) : (
-                                  <img
-                                    src={rankBlueArrow}
-                                    alt=""
-                                    width={20}
-                                    height={20}
-                                  />
-                                )}
-                              </div>
-                              {/* <div
+                                {/* <div
                                 className="d-flex align-items-center justify-content-center gap-2 mt-2"
                                 onClick={() => {
                                   setRankPopup(true);
@@ -1049,13 +1142,14 @@ const ProfileCard = ({
                                 </span>
                                 <img src={arrowCircle} alt="" />
                               </div> */}
-                            </div>
-                          </OutsideClickHandler>
-                        )}
-                      </div>
-                    </>
-                  )}
-             </div>
+                              </div>
+                            </OutsideClickHandler>
+                          )}
+                        </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
                   {/* {availableTime !== "0" && availableTime && availableTime!==undefined &&  (
             <div className="d-flex flex-column">
             <span className="emailtext" style={{color: '#ffbf00'}}>*Golden Pass</span>
@@ -1151,7 +1245,14 @@ const ProfileCard = ({
                             : "Error"}
                         </button>
                       )}
-                    
+                    {email && (
+                      <button
+                        className="logoutbtn px-3 py-1"
+                        onClick={onLogoutClick}
+                      >
+                        <img src={logouticon} alt="" /> Log Out
+                      </button>
+                    )}
                     {address && email && (
                         <div className="d-flex w-100 align-items-center">
                         <button className="new-bundle-btn d-flex align-items-center gap-2 px-2" onClick={setPortfolio}>
