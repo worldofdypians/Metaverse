@@ -68,10 +68,10 @@ const MintPopup = ({ active, onClose, data }) => {
           <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              Live Giveaway
+            350,000 WOD Tokens
             </h6>
           </div>
-          <h6 className="mint-popup-title">MULTIVERSX Beta Pass NFT</h6>
+          <h6 className="mint-popup-title">BNB Chain Game Expedition</h6>
         </>
       ) : data.title === "CoinMarketCap" ? (
         <>
@@ -163,8 +163,7 @@ const MintPopup = ({ active, onClose, data }) => {
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           {data.title === "MULTIVERSX" && (
             <span className="popup-available-mint">
-              Get access to the game and a unique event filled with surprises
-              and rewards!
+             Participate in the BNB Chain Airdrop Alliance Program and complete the tasks to receive WOD tokens airdrop.
             </span>
           )}
         </div>
@@ -211,8 +210,9 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "MULTIVERSX" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/beta-pass/multiversx"}
+            to={"https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/105-bnb-chain-game-expedition"}
             state={{ event: data.state }}
+            target='_blank'
             className="linear-border"
           >
             <button className="btn filled-btn px-4">More</button>
