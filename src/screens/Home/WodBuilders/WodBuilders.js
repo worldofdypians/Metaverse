@@ -110,7 +110,8 @@ const WodBuilders = () => {
       icon: "seiLogo",
       banner: "seiBanner.webp",
       link: "https://x.com/worldofdypians/status/1795177907821617607",
-    },
+    }, 
+
     {
       name: "Midle",
       icon: "midle",
@@ -134,6 +135,17 @@ const WodBuilders = () => {
     {
       name: "Magic Store",
       icon: "magic",
+      banner: "kucoinBanner.png",
+    },
+    {
+      name: "GGPLAY",
+      icon: "ggplay",
+      banner: "kucoinBanner.png",
+      link:'https://x.com/GGPlayOfficial/status/1801263235221647731'
+    },
+    {
+      name: "KAPGAMES",
+      icon: "kapgames",
       banner: "kucoinBanner.png",
     },
   
