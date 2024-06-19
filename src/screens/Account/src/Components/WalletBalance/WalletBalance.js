@@ -1421,7 +1421,7 @@ const WalletBalance = ({
 
   return (
     <>
-      <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 justify-content-center align-items-center">
+   <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 justify-content-center align-items-center">
         <div className="row w-100 gap-5 gap-lg-0 mx-0">
           <div className="col-12 col-lg-4 px-0 pe-lg-3 position-relative">
             <div className="game-activity-wrapper h-100">

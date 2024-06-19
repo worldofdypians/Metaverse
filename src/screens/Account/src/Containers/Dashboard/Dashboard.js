@@ -5237,6 +5237,7 @@ function Dashboard({
                               MyNFTSLandAvax={MyNFTSLandAvax}
                               MyNFTSCawsAvax={MyNFTSCawsAvax}
                               MyNFTSLandBase={MyNFTSLandBase}
+                              myNFTSBNB={MyNFTSBNB}
                               MyNFTSCawsBase={MyNFTSCawsBase}
                             />
                           </div>

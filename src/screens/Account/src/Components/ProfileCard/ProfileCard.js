@@ -491,13 +491,7 @@ const ProfileCard = ({
                         <div className="d-flex flex-column gap-1 w-100">
                           <div className="d-flex align-items-center gap-2">
                           <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
-                          {coinbase && !email && (
-                            <div className="d-flex flex-column gap-1 col-lg-9 col-12">
-                              <span className="usernametext font-organetto">
-                                Start your journey now!
-                              </span>
-                            </div>
-                          )}
+                          {username}
                             {!domainName && isConnected && (
                               <span
                                 className={`${
@@ -517,14 +511,13 @@ const ProfileCard = ({
                                 Get domain name
                               </span>
                             )}
-                              {email && address && coinbase && !isPremium && (
+                              {/* {email && address && coinbase && !isPremium && (
                     <div
                       className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
                     d-flex align-items-center position-relative mt-lg-0`}
                       onClick={onPremiumClick}
                       style={{height: "30px"}}
-                    >
-                      {/* <div className="table-separator position-absolute"></div> */}
+                    > 
                       <h6 className="become-premium-title mb-0">
                         Premium Subscription
                       </h6>
@@ -537,7 +530,7 @@ const ProfileCard = ({
                         
                       />
                     </div>
-                  )}
+                  )} */}
                           </span>
                           </div>
 
@@ -738,8 +731,11 @@ const ProfileCard = ({
                         !email && !isPremium
                           ? "repeat(1, 1fr)"
                           : email && !isPremium
-                          ? "repeat(4, 1fr)"
+                          ? "repeat(2, 1fr)"
+                          : isPremium
+                          ? "repeat(1, 1fr)"
                           : "repeat(3, 1fr)",
+                          placeItems: 'flex-end'
                     }}
                   >
                     {!isPremium && discountPercentage == 0 && (
@@ -750,7 +746,7 @@ const ProfileCard = ({
                       >
                         {/* <div className="table-separator position-absolute"></div> */}
                         <h6 className="become-premium-title mb-0">
-                          Become a Premium Member
+                        Premium Subscription
                         </h6>
 
                         <img
@@ -807,65 +803,8 @@ const ProfileCard = ({
                         /> */}
                     
                       <div className="position-relative rank-outer-wrapper">
-                        <div
-                          style={{ height: "79px" }}
-                          className={`${
-                            isPremium
-                              ? "wallet-wrapper-active-premium hoverpremium"
-                              : "wallet-wrapper-active hoveractive"
-                          }
-                    position-relative
-                    d-flex  align-items-center justify-content-between gap-3 position-relative mt-3 mt-lg-0`}
-                          onClick={onOpenGenesisLeaderboard}
-                        >
-                          <div className="d-flex flex-column">
-                            <span className="leaderboard-title-span">
-                              Genesis
-                            </span>
-                            <span
-                              className="leaderboard-title-span"
-                              style={{
-                                color: isPremium ? "#FFBF00" : "#1BF5FF",
-                              }}
-                            >
-                              Leaderboard
-                            </span>
-                          </div>
-                          <img
-                            src={globe}
-                            alt=""
-                            style={{ height: "54px", width: "50px" }}
-                          />
-                        </div>
-                        <div
-                          style={{ height: "79px" }}
-                          className={`${
-                            isPremium
-                              ? "wallet-wrapper-active-premium hoverpremium"
-                              : "wallet-wrapper-active hoveractive"
-                          }
-                    position-relative
-                    d-flex  align-items-center justify-content-between gap-3 position-relative mt-3 mt-lg-0`}
-                          onClick={onOpenLeaderboard}
-                        >
-                          <div className="d-flex flex-column">
-                            <span className="leaderboard-title-span">Game</span>
-                            <span
-                              className="leaderboard-title-span"
-                              style={{
-                                color: isPremium ? "#FFBF00" : "#1BF5FF",
-                              }}
-                            >
-                              Leaderboard
-                            </span>
-                          </div>
-                          <img
-                            src={leaderboardIcon}
-                            alt=""
-                            style={{ height: "54px", width: "50px" }}
-                          />
-                        </div>
-                        <div className="position-relative rank-outer-wrapper">
+                       
+                        
                           <div
                             className={`${
                               isPremium
@@ -1144,8 +1083,7 @@ const ProfileCard = ({
                               </div> */}
                               </div>
                             </OutsideClickHandler>
-                          )}
-                        </div>
+                          )} 
                         </div>
                       </>
                     )}
