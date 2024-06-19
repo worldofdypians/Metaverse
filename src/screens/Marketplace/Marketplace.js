@@ -285,6 +285,11 @@ const Marketplace = ({
       window.config.nft_skale_address
     );
 
+    const bnbContract = new window.bscWeb3.eth.Contract(
+      window.BNB_NFT_ABI,
+      window.config.nft_bnb_address
+    );
+
     const confluxresult = await confluxContract.methods.totalSupply().call() .catch((e) => {
       console.error(e);
       return 0;
@@ -304,6 +309,11 @@ const Marketplace = ({
     const skaleresult = await skaleContract.methods.totalSupply().call() .catch((e) => {
       console.error(e);
       return 0;
+    });
+
+    const bnbresult = await bnbContract.methods.totalSupply().call() .catch((e) => {
+      console.error(e);
+      return 0;
     });;
 
     //20000 = 10000 caws + 1000 genesis + 9000 coingecko
@@ -314,7 +324,8 @@ const Marketplace = ({
         parseInt(gateresult) +
         parseInt(dogeresult) +
         parseInt(cmcresult) +
-        Number(skaleresult) +
+        parseInt(skaleresult) +
+        parseInt(bnbresult) +
         20000
     );
   };

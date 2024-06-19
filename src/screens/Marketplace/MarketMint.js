@@ -228,7 +228,7 @@ const MarketMint = ({
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(bnbData);
-  const [mintTitle, setMintTitle] = useState("bnb");
+  const [mintTitle, setMintTitle] = useState("bnbchain");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -281,9 +281,9 @@ const MarketMint = ({
 
   useEffect(() => {
     console.log(location);
-    if (location.pathname.includes("bnb")) {
+    if (location.pathname.includes("bnbchain")) {
      setSelectedMint(bnbData);
-     setMintTitle("bnb");
+     setMintTitle("bnbchain");
     } else if (location.pathname.includes("timepiece")) {
     setSelectedMint(timepieceData);
     setMintTitle("timepiece");
@@ -1249,7 +1249,7 @@ const MarketMint = ({
                               </div>
                             </div>
                             {mintTitle === "timepiece" ||
-                            mintTitle === "bnb" ? (
+                            mintTitle === "bnbchain" ? (
                               <span
                                 className="limit-span position-relative"
                                 style={{
@@ -1291,7 +1291,7 @@ const MarketMint = ({
                             //     <img src={seiLogo} alt="" />
                             //   </span>
                             // )
-                            mintTitle === "bnb" ? (
+                            mintTitle === "bnbchain" ? (
                               <span
                                 className="limit-span position-relative d-flex align-items-center gap-2"
                                 style={{ bottom: "0px" }}
@@ -1497,7 +1497,7 @@ const MarketMint = ({
                                         ? coreMintAllowed
                                         : mintTitle === "viction"
                                         ? victionMintAllowed
-                                        : mintTitle === "bnb"
+                                        : mintTitle === "bnbchain"
                                         ? bnbMintAllowed
                                         : mintTitle === "multiversx"
                                         ? 1
@@ -1538,7 +1538,7 @@ const MarketMint = ({
                                 ? "Immutable"
                                 : mintTitle === "multiversx"
                                 ? "MultiversX"
-                                : mintTitle === "bnb"
+                                : mintTitle === "bnbchain"
                                 ? "BNB Chain"
                                 : "SEI"}
                               <img
@@ -1554,7 +1554,7 @@ const MarketMint = ({
                                     ? coreLogo
                                     : mintTitle === "immutable"
                                     ? immutableLogo
-                                    : mintTitle === "bnb"
+                                    : mintTitle === "bnbchain"
                                     ? bnbLogo
                                     : seiLogo
                                 }
@@ -1578,7 +1578,7 @@ const MarketMint = ({
                               {selectedMint.id === "bnb" && (
                                 <div
                                   className={
-                                    (isConnected === true && chainId !== 88) ||
+                                    (isConnected === true && chainId !== 56) ||
                                     (status !== "Connect your wallet." &&
                                       status !== "") ||
                                     mintloading === "error" ||
