@@ -1,0 +1,52 @@
+.bridge-token-wrapper{
+background: linear-gradient(148deg, rgba(170, 20, 240, 0.1) 0%, rgba(170, 20, 240, 0.05) 100%);
+border-radius: 12px;
+}
+
+.bridge-btn-inactive{
+    border-radius: 10px;
+    background: linear-gradient(90deg, #D4CDE3 0.23%, #BCADC7 99.72%);
+    border: none;
+    color: #464555;
+    text-align: center;
+    font-family: "Montserrat";
+    text-transform: uppercase;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    transition: all .25s;
+}
+
+.bridge-btn-inactive:hover{
+    background: linear-gradient(240deg, #7B2EB0 0%, #2647C9 100%);
+    color: #EEEDFF;
+}
+
+
+
+.bridge-btn-active{
+    border-radius: 10px;
+    background: linear-gradient(240deg, #7B2EB0 0%, #2647C9 100%);
+    border: none;
+    color: #EEEDFF;
+    text-align: center;
+    font-family: "Montserrat";
+    text-transform: uppercase;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.bridge-wallet-btn{
+    border-radius: 10px;
+    background: none !important;
+    border: none;
+    color: #EEEDFF;
+    text-align: center;
+    font-family: "Montserrat";
+    text-transform: uppercase;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    border: 2px solid #7B2EB0;
+}
