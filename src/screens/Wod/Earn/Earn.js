@@ -85,11 +85,47 @@ const Earn = () => {
   ];
 
   return (
-     <div className="container-fluid d-flex justify-content-center mt-5">
-         <div className="custom-container mt-5">
-          <Slider {...settings} ref={sliderRef}>
-            {type === "defi" &&
-              bannerItems.slice(0, bannerItems.length).map((item, index) => {
+    <div className="container-fluid d-flex justify-content-center mt-5">
+      <div className="custom-container mt-5">
+        <Slider {...settings} ref={sliderRef}>
+          {type === "defi" &&
+            bannerItems.slice(0, bannerItems.length).map((item, index) => {
+              return (
+                <div
+                  className={`d-flex align-items-start align-items-lg-center p-4 justify-content-between position-relative ${item.bannerBgClass} `}
+                  key={index}
+                  // onClick={() => {
+                  //   handleSliderClick(item);
+                  // }}
+                >
+                  <div className="d-flex align-items-center justify-content-between flex-row col-lg-6 ">
+                    <div className="d-flex flex-column gap-2">
+                      <h6 className="earn-other-hero-title">{item.title}</h6>
+                      <h6 className="earn-other-hero-desc">{item.desc}</h6>
+
+                      <button
+                        className={item.buttonClass}
+                        // onClick={() => {
+                        //   handleSliderClick(item);
+                        // }}
+                      >
+                        {item.buttonTitle}
+                      </button>
+                    </div>
+                    {item.apr && item.apr !== "" && (
+                      <img
+                        src={require(`../../../assets/wodAssets/${item.apr}`)}
+                        className="aprimage"
+                      />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          {type === "nft" &&
+            nftbannerItems
+              .slice(0, nftbannerItems.length)
+              .map((item, index) => {
                 return (
                   <div
                     className={`d-flex align-items-start align-items-lg-center p-4 justify-content-between position-relative ${item.bannerBgClass} `}
@@ -102,13 +138,7 @@ const Earn = () => {
                       <div className="d-flex flex-column gap-2">
                         <h6 className="earn-other-hero-title">{item.title}</h6>
                         <h6 className="earn-other-hero-desc">{item.desc}</h6>
-
-                        <button
-                          className={item.buttonClass}
-                          // onClick={() => {
-                          //   handleSliderClick(item);
-                          // }}
-                        >
+                        <button className={item.buttonClass}>
                           {item.buttonTitle}
                         </button>
                       </div>
@@ -122,42 +152,29 @@ const Earn = () => {
                   </div>
                 );
               })}
-            {type === "nft" &&
-              nftbannerItems
-                .slice(0, nftbannerItems.length)
-                .map((item, index) => {
-                  return (
-                    <div
-                      className={`d-flex align-items-start align-items-lg-center p-4 justify-content-between position-relative ${item.bannerBgClass} `}
-                      key={index}
-                      // onClick={() => {
-                      //   handleSliderClick(item);
-                      // }}
-                    >
-                      <div className="d-flex align-items-center justify-content-between flex-row col-lg-6 ">
-                        <div className="d-flex flex-column gap-2">
-                          <h6 className="earn-other-hero-title">
-                            {item.title}
-                          </h6>
-                          <h6 className="earn-other-hero-desc">{item.desc}</h6>
-                          <button className={item.buttonClass}>
-                            {item.buttonTitle}
-                          </button>
-                        </div>
-                        {item.apr && item.apr !== "" && (
-                          <img
-                            src={require(`../../../assets/wodAssets/${item.apr}`)}
-                            className="aprimage"
-                          />
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-          </Slider>
-          <div className="mt-5"></div>
+        </Slider>
+        <div className="mt-5">
+          <div className="d-flex flex-column gap-2 w-100">
+            <div className="d-flex flex-column flex-lg-row flex-md-row mx-0 justify-content-between align-items-center p-2 options-container">
+              <div className="col-lg-6 row d-flex flex-column flex-lg-row flex-md-row gap-0 gap-xl-3 justify-content-start p-2">
+                <div className="option-item col-3 col-xl-2">
+                  <span className="option-text">Stake</span>
+                </div>
+                <div className="option-item col-3 col-xl-2">
+                  <span className="option-text">Farm</span>
+                </div>
+              </div>
+              <div className="earn-tvl-wrapper p-2">
+                <div className="d-flex justify-content-between gap-2 align-items-center">
+                  <span className="tvl-title">Total value locked</span>
+                  <span className="tvl-amount">$500,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-     </div>
+      </div>
+    </div>
   );
 };
 
