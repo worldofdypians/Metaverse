@@ -46,6 +46,7 @@ import skaleActive from "../../Components/LeaderBoard/assets/skaleActive.svg";
 import bnbActive from "../../Components/LeaderBoard/assets/bnbActive.svg";
 import starAlert from "./assets/star-alert.svg";
 import axios from "axios";
+import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
 import Countdown from "react-countdown";
 import { dyp700Address, dyp700v1Address } from "../../web3";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
@@ -113,7 +114,7 @@ const ProfileCard = ({
   isConnected,
   onOpenLeaderboard,
   onOpenGenesisLeaderboard,
-
+  setPortfolio,
   onPremiumClick,
   handleSetAvailableTime,
   userRank,
@@ -438,11 +439,8 @@ const ProfileCard = ({
                   email && coinbase && username ? "" : "border-bottom-0"
                 }`}
               >
-                <div className="d-flex   profile-header-wrapper justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
-                  <div
-                    className="d-flex gap-2 justify-content-between align-items-center"
-                    style={{ width: windowSize.width > 991 ? "50%" : "100%" }}
-                  >
+                <div className="d-flex flex-column flex-lg-row profile-header-wrapper justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
+                  <div className="d-flex gap-2 justify-content-between align-items-center  w-50">
                     <div className="d-flex align-items-center gap-2 w-100">
                       {(coinbase && !email && !isPremium) ||
                       (!coinbase && !email) ||
@@ -491,6 +489,8 @@ const ProfileCard = ({
 
                       {(isVerified && email) || (coinbase && !email) ? (
                         <div className="d-flex flex-column gap-1 w-100">
+                          <div className="d-flex align-items-center gap-2">
+                          <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
                           {coinbase && !email && (
                             <div className="d-flex flex-column gap-1 col-lg-9 col-12">
                               <span className="usernametext font-organetto">
@@ -498,8 +498,6 @@ const ProfileCard = ({
                               </span>
                             </div>
                           )}
-                          <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
-                            {email !== undefined && username}
                             {!domainName && isConnected && (
                               <span
                                 className={`${
@@ -519,7 +517,29 @@ const ProfileCard = ({
                                 Get domain name
                               </span>
                             )}
+                              {email && address && coinbase && !isPremium && (
+                    <div
+                      className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
+                    d-flex align-items-center position-relative mt-lg-0`}
+                      onClick={onPremiumClick}
+                      style={{height: "30px"}}
+                    >
+                      {/* <div className="table-separator position-absolute"></div> */}
+                      <h6 className="become-premium-title mb-0">
+                        Premium Subscription
+                      </h6>
+
+                      <img
+                        src={becomePremium}
+                        alt=""
+                        className="become-premium-img"
+                        width={40}
+                        
+                      />
+                    </div>
+                  )}
                           </span>
+                          </div>
 
                           <div className="wallet-balance d-flex flex-column flex-xxl-row flex-lg-row gap-3 position-relative">
                             <>
@@ -780,6 +800,13 @@ const ProfileCard = ({
 
                     {email && address && (
                       <>
+                        {/* <img
+                          src={leaderboardIcon}
+                          alt=""
+                          style={{ height: "54px", width: "50px" }}
+                        /> */}
+                    
+                      <div className="position-relative rank-outer-wrapper">
                         <div
                           style={{ height: "79px" }}
                           className={`${
@@ -1119,6 +1146,7 @@ const ProfileCard = ({
                             </OutsideClickHandler>
                           )}
                         </div>
+                        </div>
                       </>
                     )}
                   </div>
@@ -1224,6 +1252,14 @@ const ProfileCard = ({
                       >
                         <img src={logouticon} alt="" /> Log Out
                       </button>
+                    )}
+                    {address && email && (
+                        <div className="d-flex w-100 align-items-center">
+                        <button className="new-bundle-btn d-flex align-items-center gap-2 px-2" onClick={setPortfolio}>
+                          <img src={walletIcon} alt="" />
+                          My Portfolio
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>

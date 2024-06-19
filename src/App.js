@@ -75,6 +75,7 @@ import Community from "./screens/Community/Community.js";
 import OurTeam from "./screens/OurTeam/OurTeam.js";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
+import NewEvents from "./screens/Marketplace/NewEvents.js";
 
 function App() {
   const CHAINLIST = {
@@ -288,6 +289,7 @@ function App() {
   const [myCmcNFTs, setmyCmcNFTs] = useState([]);
   const [isBnb, setisBnb] = useState(false);
   const [isBnbSuccess, setisBnbSuccess] = useState(false);
+  const [logoutCount, setLogoutCount] = useState(0)
 
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
   const [
@@ -3255,6 +3257,31 @@ function App() {
               />
             }
           />
+            <Route
+              exact
+              path="/account"
+              element={
+                <Dashboard
+                logoutCount={logoutCount}
+                  ethTokenData={ethTokenData}
+                  dypTokenData={dypTokenData}
+                  handleSwitchChain={handleSwitchChain}
+                  dypTokenData_old={dypTokenData_old}
+                  coinbase={coinbase}
+                  account={coinbase}
+                  isConnected={isConnected}
+                  chainId={chainId}
+                  handleConnect={handleConnectWallet}
+                  onSigninClick={checkData}
+                  success={success}
+                  availableTime={availTime}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  handleOpenDomains={() => setDomainPopup(true)}
+                  domainName={domainName}
+                  dogePrice={dogePrice}
+                />
+              }
+            />
 
           <Route
             exact

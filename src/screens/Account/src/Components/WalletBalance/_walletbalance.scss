@@ -75,9 +75,9 @@
   border-radius: 10px;
 }
 
-.become-premium-img {
-  scale: 1.6;
-}
+// .become-premium-img {
+//   scale: 1.6;
+// }
 
 .wallet-wrapper-alert {
   background: rgba(237, 130, 37, 0.15);
@@ -1378,6 +1378,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  white-space: nowrap;
 }
 
 .profile-rank {
@@ -2265,6 +2266,40 @@
   background-position: right;
   pointer-events: none;
 }
+.profile-mint-wrapper {
+  position: relative;
+  height: 170px;
+  background: linear-gradient(90deg, #181b38 0%, #11503d 168.67%);
+  border-radius: 10px;
+  border: 2px solid #080b2a;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  @media screen and (max-width: 991px) {
+    margin-top: 40px;
+  }
+}
+
+.profile-mint-wrapper:hover {
+  border: 2px solid #7dd9af;
+  .profile-div-link {
+    text-decoration: underline;
+  }
+}
+.profile-mint-wrapper:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  // background-image: url("./newAssets/stakingBg.png");
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: right;
+  pointer-events: none;
+}
 
 .special-rewards-wrapper {
   position: relative;
@@ -2592,11 +2627,11 @@
 
 .profile-staking-img {
   position: absolute;
-  bottom: 25%;
-  right: -5%;
-  width: 70%;
+  bottom: 32%;
+  right: 3%;
+  width: 47%;
   @media screen and (max-width: 991px) {
-    width: auto;
+    width: 50%;
     bottom: 10%;
   }
 }
@@ -2693,4 +2728,28 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+.new-bundle-btn{
+  border: 2px solid #41435a;
+  background: linear-gradient(
+    155.14deg,
+    rgba(255, 255, 255, 0) -2.13%,
+    rgba(255, 255, 255, 0.15) 136.58%
+  );
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #e2e2e2;
+}
+
+.portfolio{
+  height: 0px;
+  transition: all .25s ease-in-out;
+  overflow: hidden;
+}
+
+.portfolio-open{
+  height: fit-content;
 }

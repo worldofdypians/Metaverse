@@ -22,6 +22,7 @@ import EmptyGenesisCard from "../../Components/EmptyGenesisCard/EmptyGenesisCard
 import Web3 from "web3";
 import { ERC20_ABI } from "../../web3/abis";
 import _, { chain } from "lodash";
+import GlobalLeaderboard from "../../../../../components/LeaderBoard/GlobalLeaderboard";
 import WalletModal from "../../../../../components/WalletModal/WalletModal";
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
@@ -61,6 +62,8 @@ import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import { dyp700Address, dyp700v1Address } from "../../web3";
 import { NavLink } from "react-router-dom";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
+import TopSection from "./Components/TopSection/TopSection";
+import Portfolio from "../../Components/WalletBalance/Portfolio";
 
 function Dashboard({
   account,
@@ -84,7 +87,8 @@ function Dashboard({
   handleSwitchChain,
   onSubscribeSuccess,
   isPremium,
-  dyptokenDatabnb
+  dyptokenDatabnb,
+  logoutCount,
 }) {
   const { email, logout } = useAuth();
 
@@ -414,6 +418,7 @@ function Dashboard({
   const [skalePoints, setSkalePoints] = useState(0);
   const [leaderboard, setLeaderboard] = useState(false);
   const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
+  const [globalLeaderboard, setGlobalLeaderboard] = useState(false)
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
@@ -488,6 +493,7 @@ function Dashboard({
   const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
   const [dateofBundle, setdateofBundle] = useState(0);
   const [dateofBundlev1, setdateofBundlev1] = useState(0);
+  const [portfolio, setPortfolio] = useState(false);
   const [datewhenBundleBought, setdatewhenBundleBought] = useState(0);
   const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
   const [bnbImages, setBnbImages] = useState(shuffle(chestImagesBnb));
@@ -1331,6 +1337,29 @@ function Dashboard({
       fillPreviousRecordsSkaleMonthly(result.data.data.leaderboard);
     }
   };
+
+  useEffect(() => {
+    if (logoutCount > 0) {
+      onSubscribeSuccess()
+      setclaimedChests(0);
+      setclaimedPremiumChests(0);
+      setclaimedCorePremiumChests(0);
+      setclaimedCoreChests(0);
+      setclaimedVictionPremiumChests(0);
+      setclaimedVictionChests(0);
+      setallChests([]);
+      setallSkaleChests([]);
+      setallCoreChests([]);
+      setallVictionChests([]);
+      setOpenedChests([]);
+      setOpenedCoreChests([]);
+      setOpenedVictionChests([]);
+      setOpenedSkaleChests([]);
+      setclaimedSkaleChests(0);
+      setclaimedSkalePremiumChests(0);
+      refetchPlayer();
+    }
+  }, [logoutCount]);
 
   useEffect(() => {
     fetchDailyRecords();
@@ -5073,6 +5102,7 @@ function Dashboard({
                       <ProfileCard
                         discountPercentage={discountPercentage}
                         getRankData={getRankData}
+                        setPortfolio={() => setPortfolio(!portfolio)}
                         rankData={rankData}
                         userRank={userRank}
                         userRankSkale={userRankSkale}
@@ -5135,9 +5165,98 @@ function Dashboard({
                         domainName={domainName}
                       />
 
+                      {portfolio && (
+                        <OutsideClickHandler
+                          onOutsideClick={() => setPortfolio(false)}
+                        >
+                          <div
+                            className="popup-wrapper  popup-active p-3"
+                            id="portfolio"
+                            style={{ width: "60%", pointerEvents: "auto" }}
+                          >
+                            <div className="d-flex align-items-center justify-content-between">
+                              <h2
+                                className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+                              >
+                                My Portfolio
+                              </h2>
+
+                              <img
+                                src={xMark}
+                                onClick={() => setPortfolio(false)}
+                                alt=""
+                                style={{ cursor: "pointer" }}
+                              />
+                            </div>
+
+                            <Portfolio
+                              ethTokenData={ethTokenData}
+                              dypTokenData={dypTokenData}
+                              onOpenNfts={onOpenNfts}
+                              listedNFTS={listedNFTS}
+                              myBoughtNfts={myBoughtNfts}
+                              address={data?.getPlayer?.wallet?.publicAddress}
+                              coinbase={account}
+                              isVerified={data?.getPlayer?.wallet}
+                              favoritesArray={favorites}
+                              dypBalance={dypBalance}
+                              dypBalancebnb={dypBalancebnb}
+                              dypBalanceavax={dypBalanceavax}
+                              idypBalance={idypBalance}
+                              idypBalancebnb={idypBalancebnb}
+                              idypBalanceavax={idypBalanceavax}
+                              showNfts={showNfts}
+                              handleShowWalletPopup={() => {
+                                setshowWalletModal(true);
+                              }}
+                              email={email}
+                              userId={data?.getPlayer?.playerId}
+                              username={data?.getPlayer?.displayName}
+                              myCawsCollected={MyNFTSCaws}
+                              myCawsOldCollected={MyNFTSCawsOld}
+                              myLandCollected={MyNFTSLand}
+                              myTimepieceCollected={MyNFTSTimepiece}
+                              landStaked={landstakes}
+                              myCawsWodStakes={myCawsWodStakesAll}
+                              myWodWodStakes={myWodWodStakesAll}
+                              myNFTSCoingecko={MyNFTSCoingecko}
+                              myGateNfts={myGateNfts}
+                              myConfluxNfts={myConfluxNfts}
+                              myBaseNfts={myBaseNfts}
+                              myDogeNfts={myDogeNfts}
+                              myCmcNfts={myCmcNfts}
+                              myCoreNfts={myCoreNfts}
+                              myVictionNfts={myVictionNfts}
+                              mySkaleNfts={mySkaleNfts}
+                              latestBoughtNFTS={latest20BoughtNFTS}
+                              myOffers={myOffers}
+                              allActiveOffers={allActiveOffers}
+                              latestVersion={latestVersion}
+                              MyNFTSLandBNB={MyNFTSLandBNB}
+                              MyNFTSCawsBNB={MyNFTSCawsBNB}
+                              MyNFTSLandAvax={MyNFTSLandAvax}
+                              MyNFTSCawsAvax={MyNFTSCawsAvax}
+                              MyNFTSLandBase={MyNFTSLandBase}
+                              MyNFTSCawsBase={MyNFTSCawsBase}
+                            />
+                          </div>
+                        </OutsideClickHandler>
+                      )}
+                      <TopSection
+                         onOpenLeaderboard={() => {
+                          setLeaderboard(true);
+                        }}
+                         onOpenGlobalLeaderboard={() => {
+                          setGlobalLeaderboard(true);
+                        }}
+                      
+                      />
                       <NewWalletBalance
                         onDailyRewardsPopupOpen={() => {
                           setdailyBonusPopup(true);
+                        }}
+                        onOpenGenesisLeaderboard={() => {
+                          setGenesisLeaderboard(true);
                         }}
                         dogePrice={dogePrice}
                         weeklyplayerData={weeklyplayerDataAmount}
@@ -5246,175 +5365,59 @@ function Dashboard({
                         cawsPremiumRewards={cawsPremiumRewards}
                         userRankRewards={userRankRewards}
                       />
-                    </div>
-                    <WalletBalance
-                      ethTokenData={ethTokenData}
-                      dypTokenData={dypTokenData}
-                      onOpenNfts={onOpenNfts}
-                      listedNFTS={listedNFTS}
-                      myBoughtNfts={myBoughtNfts}
-                      address={data?.getPlayer?.wallet?.publicAddress}
-                      coinbase={account}
-                      isVerified={data?.getPlayer?.wallet}
-                      favoritesArray={favorites}
-                      dypBalance={dypBalance}
-                      dypBalancebnb={dypBalancebnb}
-                      dypBalanceavax={dypBalanceavax}
-                      idypBalance={idypBalance}
-                      idypBalancebnb={idypBalancebnb}
-                      idypBalanceavax={idypBalanceavax}
-                      showNfts={showNfts}
-                      handleShowWalletPopup={() => {
-                        setshowWalletModal(true);
-                      }}
-                      email={email}
-                      userId={data?.getPlayer?.playerId}
-                      username={data?.getPlayer?.displayName}
-                      myCawsCollected={MyNFTSCaws}
-                      myCawsOldCollected={MyNFTSCawsOld}
-                      myLandCollected={MyNFTSLand}
-                      myNFTSBNB={MyNFTSBNB}
-                      myTimepieceCollected={MyNFTSTimepiece}
-                      landStaked={landstakes}
-                      myCawsWodStakes={myCawsWodStakesAll}
-                      myWodWodStakes={myWodWodStakesAll}
-                      myNFTSCoingecko={MyNFTSCoingecko}
-                      myGateNfts={myGateNfts}
-                      myConfluxNfts={myConfluxNfts}
-                      myBaseNfts={myBaseNfts}
-                      myDogeNfts={myDogeNfts}
-                      myCmcNfts={myCmcNfts}
-                      myCoreNfts={myCoreNfts}
-                      myVictionNfts={myVictionNfts}
-                      mySkaleNfts={mySkaleNfts}
-                      latestBoughtNFTS={latest20BoughtNFTS}
-                      myOffers={myOffers}
-                      allActiveOffers={allActiveOffers}
-                      latestVersion={latestVersion}
-                      MyNFTSLandBNB={MyNFTSLandBNB}
-                      MyNFTSCawsBNB={MyNFTSCawsBNB}
-                      MyNFTSLandAvax={MyNFTSLandAvax}
-                      MyNFTSCawsAvax={MyNFTSCawsAvax}
-                      MyNFTSLandBase={MyNFTSLandBase}
-                      MyNFTSCawsBase={MyNFTSCawsBase}
-                    />
-                    {/* <div className="d-flex flex-column align-items-center w-100">
-                <div className="d-flex flex-column gap-2 w-100 mb-4">
-                  <h2
-                    className={`font-organetto d-flex flex-column flex-xl-row gap-1 align-items-center m-0 bundleTitle`}
-                  >
-                    Premium
-                    <mark className={`font-organetto bundletag`}>events</mark>
-                  </h2>
-              
-                </div>
-                <div className="d-flex align-items-start align-items-lg-center gap-2 gap-lg-2 w-100 justify-content-start">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <div
-                      className={`premium-package dyp-package ${
-                        selectedPackage === "dyp" && "selected-premium"
-                      } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
-                      onClick={() => setSelectedPackage("dyp")}
-                    >
-                      <img
-                        src={dypius}
-                        width={40}
-                        height={40}
-                        alt="premium package icon"
-                        className="premium-package-icon"
+                      <WalletBalance
+                        ethTokenData={ethTokenData}
+                        dypTokenData={dypTokenData}
+                        onOpenNfts={onOpenNfts}
+                        listedNFTS={listedNFTS}
+                        myBoughtNfts={myBoughtNfts}
+                        address={data?.getPlayer?.wallet?.publicAddress}
+                        coinbase={account}
+                        isVerified={data?.getPlayer?.wallet}
+                        favoritesArray={favorites}
+                        dypBalance={dypBalance}
+                        dypBalancebnb={dypBalancebnb}
+                        dypBalanceavax={dypBalanceavax}
+                        idypBalance={idypBalance}
+                        idypBalancebnb={idypBalancebnb}
+                        idypBalanceavax={idypBalanceavax}
+                        showNfts={showNfts}
+                        handleShowWalletPopup={() => {
+                          setshowWalletModal(true);
+                        }}
+                        email={email}
+                        userId={data?.getPlayer?.playerId}
+                        username={data?.getPlayer?.displayName}
+                        myCawsCollected={MyNFTSCaws}
+                        myCawsOldCollected={MyNFTSCawsOld}
+                        myLandCollected={MyNFTSLand}
+                        myTimepieceCollected={MyNFTSTimepiece}
+                        landStaked={landstakes}
+                        myCawsWodStakes={myCawsWodStakesAll}
+                        myWodWodStakes={myWodWodStakesAll}
+                        myNFTSCoingecko={MyNFTSCoingecko}
+                        myGateNfts={myGateNfts}
+                        myConfluxNfts={myConfluxNfts}
+                        myBaseNfts={myBaseNfts}
+                        myDogeNfts={myDogeNfts}
+                        myCmcNfts={myCmcNfts}
+                        myCoreNfts={myCoreNfts}
+                        myVictionNfts={myVictionNfts}
+                        mySkaleNfts={mySkaleNfts}
+                        latestBoughtNFTS={latest20BoughtNFTS}
+                        myOffers={myOffers}
+                        allActiveOffers={allActiveOffers}
+                        latestVersion={latestVersion}
+                        MyNFTSLandBNB={MyNFTSLandBNB}
+                        MyNFTSCawsBNB={MyNFTSCawsBNB}
+                        MyNFTSLandAvax={MyNFTSLandAvax}
+                        MyNFTSCawsAvax={MyNFTSCawsAvax}
+                        MyNFTSLandBase={MyNFTSLandBase}
+                        MyNFTSCawsBase={MyNFTSCawsBase}
                       />
                     </div>
-                    <h6
-                      className="bundleTitle mb-0 fw-normal text-center"
-                      style={{ fontSize: "14px", fontFamily: "Poppins" }}
-                    >
-                      Golden Pass
-                    </h6>
-                  </div>
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <div
-                      className={`premium-package ${classes.idypicon} ${
-                        selectedPackage === "idyp" && "selected-premium"
-                      } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
-                      onClick={() => setSelectedPackage("idyp")}
-                    ></div>
-                    <h6
-                      className="bundleTitle mb-0 fw-normal text-center"
-                      style={{ fontSize: "14px", fontFamily: "Poppins" }}
-                    >
-                      Puzzle Madness
-                    </h6>
-                  </div>
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <div
-                      className={`premium-package dragon-package ${
-                        selectedPackage === "dragon" && "selected-premium"
-                      } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
-                      onClick={() => setSelectedPackage("dragon")}
-                    >
-                      <img
-                        src={dragonIcon}
-                        width={40}
-                        height={40}
-                        alt="premium package icon"
-                        className="premium-package-icon"
-                      />
-                    </div>
-                    <h6
-                      className="bundleTitle mb-0 fw-normal text-center"
-                      style={{ fontSize: "14px", fontFamily: "Poppins" }}
-                    >
-                      Dragon Ruins
-                    </h6>
-                  </div>
 
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <div
-                      className={`premium-package criticalhit-package ${
-                        selectedPackage === "criticalHit" && "selected-premium"
-                      } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
-                      onClick={() => setSelectedPackage("criticalHit")}
-                    >
-                      <img
-                        src={dypius}
-                        width={40}
-                        height={40}
-                        alt="premium package icon"
-                        className="premium-package-icon"
-                      />
-                    </div>
-                    <h6
-                      className="bundleTitle mb-0 fw-normal text-center"
-                      style={{ fontSize: "14px", fontFamily: "Poppins" }}
-                    >
-                      Critical Hit
-                    </h6>
-                  </div>
-                </div>
-                <BundleCard
-                  coinbase={account}
-                  wallet={data?.getPlayer?.wallet?.publicAddress}
-                  chainId={chainId}
-                  username={data?.getPlayer?.displayName}
-                  email={email}
-                  getDypBalance={getDypBalance}
-                  getiDypBalance={getDypBalance}
-                  packageData={
-                    selectedPackage === "dragon"
-                      ? dragonData
-                      : selectedPackage === "dyp"
-                      ? dypPackageData
-                      : selectedPackage === "criticalHit"
-                      ? criticalHitPackageData
-                      : iDypPackageData
-                  }
-                  handleSetAvailableTime={(value) => {
-                    setAvailableTime(value);
-                  }}
-                  availableTime={availableTime}
-                />
-              </div> */}
-
+                  
                     {leaderboard && (
                       <OutsideClickHandler
                         onOutsideClick={() => setLeaderboard(false)}
@@ -5517,7 +5520,6 @@ function Dashboard({
                         </div>
                       </OutsideClickHandler>
                     )}
-
                     {genesisLeaderboard && (
                       <OutsideClickHandler
                         onOutsideClick={() => setGenesisLeaderboard(false)}
@@ -5534,7 +5536,7 @@ function Dashboard({
                               <mark className={`font-organetto bundletag`}>
                                 Genesis
                               </mark>{" "}
-                              Leaderboard
+                              Rewards
                             </h2>
 
                             <img
@@ -5560,6 +5562,37 @@ function Dashboard({
                             monthlyplayerData={monthlyplayerData}
                             genesisData={genesisData}
                           />
+                        </div>
+                      </OutsideClickHandler>
+                    )}
+                    {globalLeaderboard && (
+                      <OutsideClickHandler
+                        onOutsideClick={() => setGlobalLeaderboard(false)}
+                      >
+                        <div
+                          className="popup-wrapper leaderboard-popup popup-active p-3"
+                          id="leaderboard"
+                          style={{ width: "35%", pointerEvents: "auto" }}
+                        >
+                          <div className="d-flex align-items-center justify-content-between">
+                            <h2
+                              className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+                            >
+                              <mark className={`font-organetto bundletag`}>
+                                Global
+                              </mark>{" "}
+                              Leaderboard
+                            </h2>
+
+                            <img
+                              src={xMark}
+                              onClick={() => setGlobalLeaderboard(false)}
+                              alt=""
+                              style={{ cursor: "pointer" }}
+                            />
+                          </div>
+
+                        <GlobalLeaderboard />
                         </div>
                       </OutsideClickHandler>
                     )}
