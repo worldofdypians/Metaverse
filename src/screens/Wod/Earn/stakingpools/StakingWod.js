@@ -8,7 +8,7 @@ import moment from "moment";
 import statsLinkIcon from "../assets/statsLinkIcon.svg";
 import "./_stakingWod.scss";
 import { handleSwitchNetworkhook } from "../../../../hooks/hooks";
-import wallet from '../assets/wallet.svg'
+import wallet from "../assets/wallet.svg";
 
 const StakingWod = ({
   selectedTab,
@@ -18,7 +18,9 @@ const StakingWod = ({
   fee,
   expiration_time,
   staking,
-  coinbase, onConnectWallet,handleSwitchNetwork
+  coinbase,
+  onConnectWallet,
+  handleSwitchNetwork,
 }) => {
   const [token_balance, settoken_balance] = useState(0);
   const [pendingDivs, setpendingDivs] = useState("");
@@ -92,7 +94,6 @@ const StakingWod = ({
   const handleReinvest = () => {};
   const getApproxReturn = () => {};
 
-
   const handleEthPool = async () => {
     await handleSwitchNetworkhook("0x1")
       .then(() => {
@@ -102,7 +103,6 @@ const StakingWod = ({
         console.log(e);
       });
   };
-
 
   return (
     <div className="staking-pool-wrapper p-3">
@@ -158,7 +158,7 @@ const StakingWod = ({
                 {errorMsg && <h6 className="errormsg m-0">{errorMsg}</h6>}
                 <div className="d-flex gap-1 align-items-baseline">
                   <span className="bal-smallTxt">Approved:</span>
-                  <span className="bal-bigTxt2">{approvedAmount} DYP</span>
+                  <span className="bal-bigTxt2">{approvedAmount} {token_symbol}</span>
                 </div>
               </div>
             </div>
@@ -168,7 +168,7 @@ const StakingWod = ({
                   <div className="d-flex align-items-center gap-2">
                     <span className="bal-smallTxt">Pool Cap:</span>
                     <span className="deposit-popup-txt d-flex align-items-center gap-1">
-                      1M DYP
+                      1M {token_symbol}
                       <ClickAwayListener onClickAway={poolCapClose}>
                         <Tooltip
                           open={poolCapTooltip}
@@ -192,7 +192,7 @@ const StakingWod = ({
                   <div className="d-flex align-items-center gap-2">
                     <span className="bal-smallTxt">Available Quota:</span>
                     <span className="deposit-popup-txt d-flex align-items-center gap-1">
-                      {getFormattedNumber(availableQuota, 2)} DYP
+                      {getFormattedNumber(availableQuota, 2)} {token_symbol}
                       <ClickAwayListener onClickAway={quotaClose}>
                         <Tooltip
                           open={quotaTooltip}
@@ -249,7 +249,7 @@ const StakingWod = ({
                         ) ?? 0,
                         2
                       )}{" "}
-                      DYP
+                      {token_symbol}
                     </span>
                   </span>
                 </div>
@@ -271,7 +271,7 @@ const StakingWod = ({
                       <div className="d-flex flex-column align-items-baseline">
                         <span className="bal-smallTxt">Rewards</span>
                         <span className="bal-bigTxt2">
-                          {getFormattedNumber(pendingDivs, 5)} DYP
+                          {getFormattedNumber(pendingDivs, 5)} {token_symbol}
                         </span>
                       </div>
                       <button
@@ -540,7 +540,7 @@ const StakingWod = ({
                   <div className="d-flex flex-column align-items-baseline">
                     <span className="bal-smallTxt">Rewards</span>
                     <span className="bal-bigTxt2">
-                      {getFormattedNumber(pendingDivs, 5)} DYP
+                      {getFormattedNumber(pendingDivs, 5)} {token_symbol}
                     </span>
                   </div>
                   <button
