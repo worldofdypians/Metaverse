@@ -404,20 +404,21 @@ const Roadmap = () => {
           desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
           completed: false,
         },
-        {
-          title: "Introduction of Character Customization",
-          desc: "Allow players to personalize their main avatar/character with facial and body features.",
-          completed: false,
-        },
+      
         {
           title: "Addition of Game Currency",
           desc: "Introduce a new in-game currency to enhance the game's economy and provide more options for players.",
           completed: false,
         },
 
+        // {
+        //   title: "Introduction of Shop v1",
+        //   desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
+        //   completed: false,
+        // },
         {
-          title: "Introduction of Shop v1",
-          desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
+          title: "Challenger Features",
+          desc: "Exciting and engaging new in-game challenger events to enhance overall gameplay experience.",
           completed: false,
         },
         {
@@ -447,20 +448,25 @@ const Roadmap = () => {
           desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
           completed: false,
         },
+       
         {
-          title: "Introduction of Character NFT Generation",
-          desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
+          title: "Introduction of Character Customization",
+          desc: "Allow players to personalize their main avatar/character with facial and body features.",
           completed: false,
         },
-
         {
           title: "Expanding with a New Environment",
           desc: "Create a new environment, such as an island, for players to explore, complete tasks, and engage in battles.",
           completed: false,
         },
+        // {
+        //   title: "Introduction of Shop v2",
+        //   desc: "Improve and expand the in-game shop with new features and offerings.",
+        //   completed: false,
+        // },
         {
-          title: "Introduction of Shop v2",
-          desc: "Improve and expand the in-game shop with new features and offerings.",
+          title: "Introduction of Shop v1",
+          desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
           completed: false,
         },
         {
@@ -493,6 +499,11 @@ const Roadmap = () => {
         {
           title: "Full Release of the Multiplayer PvP",
           desc: "Launch the full version of the multiplayer player-versus-player mode for competitive gameplay.",
+          completed: false,
+        },
+        {
+          title: "Introduction of Character NFT Generation",
+          desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
           completed: false,
         },
         {

@@ -110,7 +110,7 @@ const Portfolio = ({
   MyNFTSLandAvax,
   MyNFTSCawsAvax,
   MyNFTSLandBase,
-  MyNFTSCawsBase,
+  MyNFTSCawsBase,myNFTSBNB
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -459,6 +459,7 @@ const Portfolio = ({
     let landBnbArray = [];
     let landBaseArray = [];
     let skaleNftsArray = [];
+    let bnbNftsArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -521,6 +522,22 @@ const Portfolio = ({
               buyer: coinbase,
               tokenId: i,
               type: "landbnb",
+              chain: 56,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (myNFTSBNB && myNFTSBNB.length > 0) {
+        await Promise.all(
+          myNFTSBNB.map(async (i) => {
+            bnbNftsArray.push({
+              nftAddress: window.config.nft_bnb_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "bnb",
               chain: 56,
               isStaked: false,
               isListed: false,
@@ -913,6 +930,7 @@ const Portfolio = ({
         ...landAvaxArray,
         ...landBnbArray,
         ...landBaseArray,
+        ...bnbNftsArray,
         ...coingeckoNftsArray,
         ...victionNftsArray,
         ...coreNftsArray,
@@ -1126,6 +1144,10 @@ const Portfolio = ({
         (item) => item.nftAddress === window.config.nft_skale_address
       );
 
+      let bnbFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_bnb_address
+      );
+
       let coreFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_core_address
       );
@@ -1144,6 +1166,7 @@ const Portfolio = ({
         ...skaleFilter,
         ...victionFilter,
         ...coreFilter,
+        ...bnbFilter
 
       ];
       setcollectedItemsFiltered(allBetapassArray);
@@ -1791,6 +1814,8 @@ const Portfolio = ({
                                 ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+50.png`
                                 : item.type === "viction"
                                 ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
+                                 : item.type === "bnb"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
                                 : item.type === "base"
                                 ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                 : item.type === "gate"
@@ -1828,6 +1853,8 @@ const Portfolio = ({
                                 ? "COBP"
                                 : item.type === "viction"
                                 ? "VCBP"
+                                : item.type === "bnb"
+                                ? "BNBBP"
                                 : item.type === "gate"
                                 ? "GTBP"
                                 : "Timepiece"}{" "}
@@ -2876,6 +2903,9 @@ const Portfolio = ({
                                 window.config.nft_core_address
                               ? "core"
                               : nft.nftAddress ===
+                              window.config.nft_bnb_address
+                            ? "bnb"
+                              : nft.nftAddress ===
                               window.config.nft_viction_address
                             ? "viction"
                                 : "timepiece",
@@ -2947,12 +2977,17 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_core_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+50.png`
+                                     : nft.nftAddress === window.config.nft_bnb_address
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_viction_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
@@ -2993,6 +3028,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_doge_address
                                     ? "DCBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb_address
+                                    ? "BNBBP"
                                     : nft.nftAddress ===
                                       window.config.nft_skale_address
                                     ? "SKBP"
@@ -3160,6 +3198,9 @@ const Portfolio = ({
                                   window.config.nft_cmc_address
                                 ? "cmc"
                                 : nft.nftAddress ===
+                                  window.config.nft_bnb_address
+                                ? "bnb"
+                                : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : nft.nftAddress ===
@@ -3233,6 +3274,11 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_skale_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
+
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
+
                                     : nft.nftAddress ===
                                       window.config.nft_cmc_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
@@ -3287,6 +3333,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_doge_address
                                     ? "DCBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb_address
+                                    ? "BNBBP"
                                     : nft.nftAddress ===
                                       window.config.nft_skale_address
                                     ? "SKBP"

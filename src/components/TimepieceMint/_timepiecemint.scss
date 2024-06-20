@@ -446,6 +446,18 @@
   // }
 }
 
+.market-mint-bnb {
+  background-image: url("./assets/bnbMintBanner5.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  // @media screen and (max-width: 786px) {
+  //   background-image: none;
+  //   background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  // }
+}
+
 .market-stake-bg{
   background-image: url("./assets/cawsMarketplaceBanner.png");
   background-size: cover;
@@ -686,6 +698,17 @@
 
 .sei-mint-bg {
   background-image: url("./assets/seiBackground.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+.bnb-mint-bg {
+  background-image: url("./assets/bnbBackground2.webp");
   background-size: cover;
   background-position: right;
   background-repeat: no-repeat;
@@ -1182,6 +1205,12 @@
   background-size: cover !important;
   background-position: center;
 }
+.bnb-active {
+  background-image: url("../../assets/bnbActive2.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
 
 .viction-active {
   background-image: url("../../assets/victionActive.webp");
@@ -1448,7 +1477,7 @@
 
 .pink-title {
   font-weight: 800;
-  font-size: 34px;
+  font-size: 30px;
   line-height: 37px;
   text-align: center;
   color: #ffffff;
@@ -1552,6 +1581,15 @@
   line-height: 32px;
   text-align: center;
   color: #8c56ff;
+}
+
+.premium-custom-text {
+  height: 1px;
+  position: relative;
+  top: -10px;
+  @media screen and (max-width: 576px) {
+  display: none;
+  }
 }
 
 .new-benefit-card {
