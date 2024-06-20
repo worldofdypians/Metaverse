@@ -7,7 +7,7 @@ import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 import { ClickAwayListener } from "@material-ui/core";
 import Tooltip from "@material-ui/core/Tooltip";
 import moreinfo from "./assets/more-info.svg";
-// import StakingWod from "./stakingpools/StakingWod";
+import StakingWod from "./stakingpools/StakingWod";
 
 const Earn = () => {
   const [option, setOption] = useState("stake");
@@ -290,7 +290,7 @@ const Earn = () => {
                         <div className="d-flex justify-content-between gap-1 align-items-center">
                           <span className="info-pool-left-text">Chain </span>
                           <span className="info-pool-right-text">
-                            BNB Chain
+                            Ethereum
                           </span>
                         </div>
                       </div>
@@ -526,7 +526,15 @@ const Earn = () => {
                     </button>
                   </div>
                 </div>
-                {/* <StakingWod /> */}
+                <StakingWod
+                  selectedTab={selectedTab}
+                  chainId={"1"}
+                  lockTime={30}
+                  is_wallet_connected={true}
+                  fee={0}
+                  staking={window.constant_staking_idyp_2}
+                  expiration_time={"Jul 12 2025"}
+                />
               </div>
             </div>
           </div>

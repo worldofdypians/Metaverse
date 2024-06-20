@@ -3,8 +3,23 @@ import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 import { shortAddress } from "../../../Caws/functions/shortAddress";
 import moreinfo from "../assets/more-info.svg";
 import Tooltip from "@material-ui/core/Tooltip";
+import { ClickAwayListener } from "@material-ui/core";
+import moment from "moment";
+import statsLinkIcon from "../assets/statsLinkIcon.svg";
+import "./_stakingWod.scss";
+import { handleSwitchNetworkhook } from "../../../../hooks/hooks";
+import wallet from '../assets/wallet.svg'
 
-const StakingWod = ({ selectedTab, chainId, is_wallet_connected }) => {
+const StakingWod = ({
+  selectedTab,
+  chainId,
+  is_wallet_connected,
+  lockTime,
+  fee,
+  expiration_time,
+  staking,
+  coinbase, onConnectWallet,handleSwitchNetwork
+}) => {
   const [token_balance, settoken_balance] = useState(0);
   const [pendingDivs, setpendingDivs] = useState("");
   const [cliffTime, setcliffTime] = useState("");
@@ -20,6 +35,74 @@ const StakingWod = ({ selectedTab, chainId, is_wallet_connected }) => {
   const [claimStatus, setclaimStatus] = useState("initial");
   const [withdrawLoading, setwithdrawLoading] = useState(false);
   const [withdrawStatus, setwithdrawStatus] = useState("initial");
+  const [errorMsg, seterrorMsg] = useState("");
+  const [errorMsg2, seterrorMsg2] = useState("");
+  const [errorMsg3, seterrorMsg3] = useState("");
+  const [poolCapTooltip, setPoolCapTooltip] = useState(false);
+  const [quotaTooltip, setQuotaTooltip] = useState(false);
+  const [maxDepositTooltip, setMaxDepositTooltip] = useState(false);
+  const [approvedAmount, setapprovedAmount] = useState("0.00");
+  const [availableQuota, setavailableQuota] = useState(0);
+  const [totalDeposited, settotalDeposited] = useState(0);
+  const [canDeposit, setCanDeposit] = useState(true);
+  const [poolFeeTooltip, setPoolFeeTooltip] = useState(false);
+
+  let canWithdraw = true;
+  let token_symbol = "WOD";
+
+  const poolCapClose = () => {
+    setPoolCapTooltip(false);
+  };
+
+  const poolCapOpen = () => {
+    setPoolCapTooltip(true);
+  };
+
+  const quotaClose = () => {
+    setQuotaTooltip(false);
+  };
+
+  const quotaOpen = () => {
+    setQuotaTooltip(true);
+  };
+
+  const maxDepositClose = () => {
+    setMaxDepositTooltip(false);
+  };
+
+  const maxDepositOpen = () => {
+    setMaxDepositTooltip(true);
+  };
+
+  const poolFeeClose = () => {
+    setPoolFeeTooltip(false);
+  };
+
+  const poolFeeOpen = () => {
+    setPoolFeeTooltip(true);
+  };
+
+  const checkApproval = () => {};
+  const handleWithdraw = () => {};
+  const handleClaimDivs = () => {};
+  const handleSetMaxDeposit = () => {};
+  const handleSetMaxWithdraw = () => {};
+  const handleStake = () => {};
+  const handleApprove = () => {};
+  const handleReinvest = () => {};
+  const getApproxReturn = () => {};
+
+
+  const handleEthPool = async () => {
+    await handleSwitchNetworkhook("0x1")
+      .then(() => {
+        handleSwitchNetwork("1");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
 
   return (
     <div className="staking-pool-wrapper p-3">
@@ -163,7 +246,7 @@ const StakingWod = ({ selectedTab, chainId, is_wallet_connected }) => {
                         getApproxReturn(
                           depositAmount,
                           lockTime === "No Lock" ? 365 : lockTime
-                        ),
+                        ) ?? 0,
                         2
                       )}{" "}
                       DYP
@@ -422,7 +505,7 @@ const StakingWod = ({ selectedTab, chainId, is_wallet_connected }) => {
                       canWithdraw === false
                     ? "disabled-btn"
                     : null
-                } w-25 d-flex align-items-center justify-content-center m-auto`}
+                }   d-flex align-items-center justify-content-center m-auto`}
                 style={{ height: "fit-content" }}
                 onClick={() => {
                   handleWithdraw();
@@ -563,6 +646,24 @@ const StakingWod = ({ selectedTab, chainId, is_wallet_connected }) => {
           </div>
         )}
       </div>
+      {coinbase === null ||
+      coinbase === undefined ||
+      is_wallet_connected === false ? (
+        <button className="connectbtn btn m-auto" onClick={onConnectWallet}>
+          <img src={wallet} alt="" /> Connect wallet
+        </button>
+      ) : chainId !== "1" ? (
+        <button
+          className="connectbtn btn m-auto"
+          onClick={() => {
+            handleEthPool();
+          }}
+        >
+          Change Network
+        </button>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
