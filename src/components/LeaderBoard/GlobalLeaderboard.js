@@ -12,7 +12,9 @@ import "./_leaderboard.scss";
 import OutsideClickHandler from "react-outside-click-handler";
 import Countdown from "react-countdown";
 import useWindowSize from "../../hooks/useWindowSize";
-import globalIcon from './assets/globalRanks/globalIcon.png'
+import globalIcon from "./assets/globalRanks/globalIcon.png";
+import goldenActive from "./assets/goldenActive.png";
+import goldenInactive from "./assets/goldenInactive.png";
 import { useLocation } from "react-router-dom";
 
 const renderer = ({ hours, minutes, seconds }) => {
@@ -313,19 +315,31 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
   ];
 
   const dummyPrizes = [
-    "1000",
-    "500",
-    "10",
-    "10",
-    "10",
-    "10",
-    "10",
-    "10",
-    "10",
-    "10",
+    "200",
+    "100",
+    "60",
+    "30",
+    "20",
+    "20",
+    "20",
+    "20",
+    "20",
+    "20",
+  ];
+  const goldenRewards = [
+    "400",
+    "200",
+    "140",
+    "70",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
   ];
 
-const location = useLocation()
+  const location = useLocation();
 
   const [optionText2, setOptionText2] = useState("bnb");
   const [inactiveBoard, setInactiveBoard] = useState(false);
@@ -412,43 +426,45 @@ const location = useLocation()
   return (
     <div
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
-      style={{ alignSelf:  !location.pathname.includes("account") && "baseline", minWidth: !location.pathname.includes("account") && "92%", maxWidth: !location.pathname.includes("account") && "92%" }}
+      style={{
+        alignSelf: !location.pathname.includes("account") && "baseline",
+        minWidth: !location.pathname.includes("account") && "92%",
+        maxWidth: !location.pathname.includes("account") && "92%",
+      }}
     >
-      {!location.pathname.includes("account") &&
-      <div className="nft-hover d">
-      <div className="d-flex flex-column align-items-center gap-2">
-        <div className="nft-hover-wrapper d-flex flex-column align-items-center">
-          <div className="d-flex align-items-center nft-badges-wrapper gap-4 gap-lg-0">
-            <a
-              href="https://opensea.io/collection/catsandwatchessocietycaws"
-              target="_blank"
-            >
-              <img src={cawsBadge} alt="" className="opensea-badge" />
-            </a>
-            <a
-              href="https://opensea.io/collection/worldofdypians"
-              target="_blank"
-            >
-              <img src={genesisBadge} alt="" className="opensea-badge" />
-            </a>
+      {!location.pathname.includes("account") && (
+        <div className="nft-hover d">
+          <div className="d-flex flex-column align-items-center gap-2">
+            <div className="nft-hover-wrapper d-flex flex-column align-items-center">
+              <div className="d-flex align-items-center nft-badges-wrapper gap-4 gap-lg-0">
+                <a
+                  href="https://opensea.io/collection/catsandwatchessocietycaws"
+                  target="_blank"
+                >
+                  <img src={cawsBadge} alt="" className="opensea-badge" />
+                </a>
+                <a
+                  href="https://opensea.io/collection/worldofdypians"
+                  target="_blank"
+                >
+                  <img src={genesisBadge} alt="" className="opensea-badge" />
+                </a>
+              </div>
+              <span
+                className="nft-hover-desc"
+                style={{ position: "relative", top: "-22px" }}
+              >
+                CAWS and WOD owners are granted VIP access and also benefit from
+                appealing rewards.
+              </span>
+            </div>
+            <div className="global-total-wrapper py-3 w-100 d-flex flex-column align-items-center justify-content-center">
+              <h6 className="global-total-players mb-0">100,000+</h6>
+              <span className="global-total-span">Daily Active Users</span>
+            </div>
           </div>
-          <span
-            className="nft-hover-desc"
-            style={{ position: "relative", top: "-22px" }}
-          >
-            CAWS and WOD owners are granted VIP access and also benefit from
-            appealing rewards.
-          </span>
         </div>
-        <div className="global-total-wrapper py-3 w-100 d-flex flex-column align-items-center justify-content-center">
-          <h6 className="global-total-players mb-0">
-            100,000+
-          </h6>
-          <span className="global-total-span">Daily Active Users</span>
-        </div>
-      </div>
-    </div>
-      }
+      )}
       {countdown !== "0" && countdown && (
         <Countdown
           date={Number(countdown) * 1000}
@@ -502,17 +518,18 @@ const location = useLocation()
       </h2> */}
       {/* <div className="grandPrices-wrapper position-relative"></div> */}
       <div className="leaderboard-item d-flex flex-column gap-2 w-100 p-0">
-      <div className="global-leaderboard-banner d-flex align-items-center w-100 p-3 gap-3">
-        <img src={globalIcon} alt="" />
-        <div className="d-flex flex-column">
-          <h6 className="global-leaderboard-title mb-0">
-            CHALLENGER
-          </h6>
-          <h6 className="global-leaderboard-title" style={{color: "#F4E27B"}}>
-            GLOBAL LEADERBOARD
-          </h6>
+        <div className="global-leaderboard-banner d-flex align-items-center w-100 p-3 gap-3">
+          <img src={globalIcon} alt="" />
+          <div className="d-flex flex-column">
+            <h6 className="global-leaderboard-title mb-0">CHALLENGER</h6>
+            <h6
+              className="global-leaderboard-title"
+              style={{ color: "#F4E27B" }}
+            >
+              GLOBAL LEADERBOARD
+            </h6>
+          </div>
         </div>
-      </div>
         <div className="p-2">
           <table className="playerTable w-100">
             <tbody>
@@ -524,6 +541,9 @@ const location = useLocation()
                 </th>
                 <th className="playerHeader text-center font-montserrat">
                   Reward
+                </th>
+                <th className="playerHeader text-center font-montserrat">
+                  Golden Pass
                 </th>
               </tr>
               {genesisData &&
@@ -543,18 +563,18 @@ const location = useLocation()
                         {item.position + 1}
                       </td>
                       <td className="playerName col-5 font-montserrat">
-                          <img
-                            src={require(`./assets/globalRanks/globalRank${
-                              item.position + 1
-                            }.png`)}
-                            alt=""
-                            className="playerAvatar me-2"
-                          />
-                          <span>
-                            {" "}
-                            {item.displayName?.slice(0, 13)}
-                            {item.displayName?.length > 13 && "..."}
-                          </span>
+                        <img
+                          src={require(`./assets/globalRanks/globalRank${
+                            item.position + 1
+                          }.png`)}
+                          alt=""
+                          className="playerAvatar me-2"
+                        />
+                        <span>
+                          {" "}
+                          {item.displayName?.slice(0, 13)}
+                          {item.displayName?.length > 13 && "..."}
+                        </span>
                       </td>
                       <td className="playerScore col-2 text-center font-montserrat">
                         <div className="d-flex align-items-center justify-content-center gap-2">
@@ -562,8 +582,20 @@ const location = useLocation()
                           {getFormattedNumber(item.statValue, 0)}
                         </div>
                       </td>
-                      <td className="playerScore col-2 text-center font-montserrat" style={{color: "#09F3D2"}}>
-                          ${getFormattedNumber(dummyPrizes[item.position], 0)}
+                      <td
+                        className="playerScore col-2 text-center font-montserrat"
+                        style={{ color: "#09F3D2" }}
+                      >
+                        ${getFormattedNumber(dummyPrizes[item.position], 0)}
+                      </td>
+                      <td
+                        className="playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2"
+                        style={{ color: "#09F3D2" }}
+                      >
+                        <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
+                          ${getFormattedNumber(goldenRewards[item.position], 0)}
+                          <img src={goldenInactive} alt="" />
+                        </div>
                       </td>
                     </tr>
                   );
@@ -605,8 +637,20 @@ const location = useLocation()
                           {getFormattedNumber(item.statValue, 0)}
                         </div>
                       </td>
-                      <td className="playerScore col-2 text-center font-montserrat" style={{color: "#09F3D2"}}>
-                          ${getFormattedNumber(dummyPrizes[item.position], 0)}
+                      <td
+                        className="playerScore col-2 text-center font-montserrat"
+                        style={{ color: "#09F3D2" }}
+                      >
+                        ${getFormattedNumber(dummyPrizes[item.position], 0)}
+                      </td>
+                      <td
+                        className="playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2"
+                        style={{ color: "#09F3D2" }}
+                      >
+                        <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
+                          ${getFormattedNumber(goldenRewards[item.position], 0)}
+                          <img src={goldenInactive} alt="" />
+                        </div>
                       </td>
                     </tr>
                   );

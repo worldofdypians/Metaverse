@@ -737,117 +737,128 @@ function Dashboard({
   }, [email, data, cfxPrice, bnbPrice, skalePrice, dyptokenDatabnb]);
 
 
-  const bnbStars = ["10", "8", "5", "5", "0", "0", "0", "0", "0", "0"];
-  const bnbStarsPremium = ["10", "8", "5", "5", "5", "5", "5", "5", "5", "5"];
-  const weeklyPrizesBnb = ["25", "15", "10", "8", "0", "0", "0", "0", "0", "0"];
+  const bnbStars = ["50", "40", "30", "20", "20", "20", "20", "20", "20", "20"];
+  const bnbStarsPremium = [
+    "50",
+    "40",
+    "30",
+    "20",
+    "20",
+    "20",
+    "20",
+    "20",
+    "20",
+    "20",
+  ];
+  const weeklyPrizesBnb = ["30", "20", "10", "5", "5", "5", "5", "5", "5", "5"];
   const weeklyPrizesGolden = [
-    "25",
+    "40",
+    "30",
+    "20",
     "15",
-    "10",
-    "8",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
+    "15",
+    "15",
+    "15",
+    "15",
+    "15",
+    "15",
+    "15",
   ];
   const monthlyPrizesBnb = [
-    "250",
-    "150",
+    "200",
     "100",
-    "50",
-    "50",
-    "20",
-    "20",
+    "60",
+    "30",
+    "30",
+    "10",
+    "10",
     "10",
     "10",
     "10",
   ];
   const monthlyPrizesGolden = [
-    "250",
-    "150",
-    "100",
-    "50",
-    "50",
-    "20",
-    "20",
-    "10",
-    "10",
-    "10",
+    "300",
+    "200",
+    "140",
+    "70",
+    "70",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
   ];
   const skaleStars = [
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
+    "70",
+    "60",
+    "50",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
   ];
   const skaleStarsPremium = [
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
+    "70",
+    "60",
+    "50",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
+    "30",
   ];
   const skalePrizesWeekly = [
-    "25",
     "15",
     "10",
-    "8",
     "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
+    "4",
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
   ];
   const skalePrizesWeeklyGolden = [
     "25",
+    "20",
     "15",
-    "10",
+    "12",
     "8",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
+    "8",
+    "8",
+    "8",
+    "8",
+    "8",
   ];
   const skalePrizesMonthly = [
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
+    "60",
+    "30",
+    "20",
+    "10",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
   ];
   const skalePrizesMonthlyGolden = [
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
-    "--",
+    "140",
+    "70",
+    "30",
+    "20",
+    "15",
+    "15",
+    "15",
+    "15",
+    "15",
+    "15",
   ];
   const genesisPrizes = [
     "100",
@@ -861,6 +872,7 @@ function Dashboard({
     "20",
     "20",
   ];
+
 
   const userId = data?.getPlayer?.playerId;
   const username = data?.getPlayer?.displayName;
@@ -1391,7 +1403,7 @@ function Dashboard({
       {
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
-        type: "cash",
+        type: "stars",
         rewards: bnbStars,
         premium_rewards: bnbStarsPremium,
         activeData: dailyrecords,
@@ -1426,7 +1438,7 @@ function Dashboard({
       {
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
-        type: "cash",
+        type: "stars",
         rewards: bnbStars,
         premium_rewards: bnbStarsPremium,
         activeData: dailyrecords,
@@ -1473,13 +1485,13 @@ function Dashboard({
       {
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
-        type: "cash",
+        type: "stars",
         rewards: skaleStars,
         premium_rewards: skaleStarsPremium,
         activeData: dailyrecords,
         previousData: dailyplayerData,
         player_data: userData,
-        is_active: true, //change when apis are ready
+        is_active: activeSkalePlayer, //change when apis are ready
       },
       {
         title: "WEEKLY",
@@ -1501,7 +1513,7 @@ function Dashboard({
         activeData: skaleMonthlyData,
         previousData: skalePreviousMonthlyData,
         player_data: userDataSkaleMonthly,
-        is_active: true, //change when apis are ready
+        is_active: activeSkalePlayer, //change when apis are ready
       },
     ]);
   }, [
@@ -5573,7 +5585,7 @@ function Dashboard({
                         <div
                           className="popup-wrapper leaderboard-popup popup-active p-3"
                           id="leaderboard"
-                          style={{ width: "35%", pointerEvents: "auto" }}
+                          style={{ width: "35%", pointerEvents: "auto", backgroundSize: "auto" }}
                         >
                           <div className="d-flex align-items-center justify-content-end">
                            
