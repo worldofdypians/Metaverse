@@ -136,17 +136,17 @@ const GameUpdates = () => {
 
   return (
     <div className="container-fluid d-flex flex-column align-items-center mt-5">
-        <div className="d-flex w-100 flex-column align-items-center justify-content-center mt-5 py-4 game-updates-title-wrapper">
-          <h2 className="font-montserrat builders-title explorer-grid-title px-0 mb-0">
-            UPDATES, STORIES AND ANNOUNCEMENTS FROM
-          </h2>
-          <h2
-            className="font-montserrat builders-title explorer-grid-title px-0"
-            style={{ color: "#8C56FF" }}
-          >
-            WORLD OF DYPIANS
-          </h2>
-        </div>
+      <div className="d-flex w-100 flex-column align-items-center justify-content-center mt-5 py-4 game-updates-title-wrapper">
+        <h2 className="font-montserrat builders-title explorer-grid-title px-0 mb-0">
+          UPDATES, STORIES AND ANNOUNCEMENTS FROM
+        </h2>
+        <h2
+          className="font-montserrat builders-title explorer-grid-title px-0"
+          style={{ color: "#8C56FF" }}
+        >
+          WORLD OF DYPIANS
+        </h2>
+      </div>
       <div className="custom-container mt-5">
         <div className="row">
           <div className="col-12 col-lg-6">
@@ -161,7 +161,7 @@ const GameUpdates = () => {
                     <NavLink
                       className="game-update-card position-relative"
                       style={{ height: "420px" }}
-                    to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
+                      to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
                     >
                       <img
                         src={item.image}
@@ -180,11 +180,10 @@ const GameUpdates = () => {
                         ),
                       }}
                     ></span>
-                    <hr className="update-divider my-0" />
-                    <span
-                      className="announcement-side-content font-montserrat gap-1 mb-0"
-                    
-                    >{item.date.toLocaleDateString("en-US", options)}</span>
+                    <hr className="update-divider mt-0 mb-2" />
+                    <span className="announcement-side-content font-montserrat gap-1 mb-0">
+                      {item.date.toLocaleDateString("en-US", options)}
+                    </span>
                   </div>
                 );
               })}{" "}
@@ -198,8 +197,7 @@ const GameUpdates = () => {
                     <NavLink
                       to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
                       style={{ textDecoration: "none" }}
-                    className="d-flex flex-column gap-2"
-
+                      className="d-flex flex-column gap-1"
                     >
                       <div className="game-update-card position-relative">
                         <img
@@ -208,20 +206,23 @@ const GameUpdates = () => {
                           style={{ objectFit: "cover" }}
                           alt=""
                         />
-                        
                       </div>
+                      <span className="announcement-side-content font-montserrat gap-1 mb-0" style={{fontSize: "14px", color: "#9D9DAB"}}>
+                        {item.date.toLocaleDateString("en-US", options)}
+                      </span>
                       <h6 className="game-update-title mb-0">
-                              {item.title.slice(0, 30) + "..."}
-                            </h6>
-                            <span
-                      className="announcement-side-content font-montserrat gap-1 mb-0"
-                      dangerouslySetInnerHTML={{
-                        __html: item.content.slice(
-                          0,
-                          windowSize.width > 786 ? 120 : 215
-                        ) + "...",
-                      }}
-                    ></span>
+                        {item.title.slice(0, 30) + "..."}
+                      </h6>
+                      <span
+                        className="announcement-side-content font-montserrat gap-1 mb-0"
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            item.content.slice(
+                              0,
+                              windowSize.width > 786 ? 120 : 215
+                            ) + "...",
+                        }}
+                      ></span>
                     </NavLink>
                   );
                 })}{" "}
