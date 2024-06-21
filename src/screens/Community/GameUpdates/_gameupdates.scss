@@ -27,4 +27,21 @@ line-height: 24px; /* 150% */
     height: 2px;
     width: 100%;
   }
+
+  .news-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media only screen and (max-width: 1320px) {
+    .news-grid {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+  }
+  
+  @media only screen and (max-width: 991px) {
+    .news-grid {
+      grid-template-columns: auto !important;
+    }
+  }
+  
   
