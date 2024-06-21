@@ -2176,6 +2176,8 @@ function App() {
     let subscribedPlatformTokenAmountCfx;
     let subscribedPlatformTokenAmountBNB;
     let subscribedPlatformTokenAmountBNB2;
+    let subscribedPlatformTokenAmountBNB1;
+
 
     let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBase;
@@ -2211,6 +2213,8 @@ function App() {
     const basesubscribeAddress = window.config.subscription_base_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb_address;
     const bnbsubscribeAddress2 = window.config.subscription_newbnb2_address;
+    const bnbsubscribeAddress1 = window.config.subscription_newbnb1_address;
+
 
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
     const skalesubscribeAddress = window.config.subscription_skale_address;
@@ -2235,6 +2239,13 @@ function App() {
       Bnb2ABI,
       bnbsubscribeAddress2
     );
+
+    const bnbcontract1 = new web3bnb.eth.Contract(
+      BnbABI,
+      bnbsubscribeAddress1
+    );
+
+    
 
     const avaxcontract = new web3avax.eth.Contract(
       AvaxABI,
@@ -2296,6 +2307,14 @@ function App() {
           return 0;
         });
 
+        subscribedPlatformTokenAmountBNB1 = await bnbcontract1.methods
+        .subscriptionPlatformTokenAmount(addr)
+        .call()
+        .catch((e) => {
+          console.log(e);
+          return 0;
+        });
+
       subscribedPlatformTokenAmountAvax = await avaxcontract.methods
         .subscriptionPlatformTokenAmount(addr)
         .call()
@@ -2328,14 +2347,14 @@ function App() {
           return 0;
         });
 
-      subscribedPlatformTokenAmountSei = await seicontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-       
+      // subscribedPlatformTokenAmountSei = await seicontract.methods
+      //   .subscriptionPlatformTokenAmount(addr)
+      //   .call()
+      //   .catch((e) => {
+      //     console.log(e);
+      //     return 0;
+      //   });
+ 
       if (
         subscribedPlatformTokenAmountCfx == "0" &&
         subscribedPlatformTokenAmountETH == "0" &&
@@ -2345,8 +2364,8 @@ function App() {
         subscribedPlatformTokenAmountAvax == "0" &&
         subscribedPlatformTokenAmountSkale == "0" &&
         subscribedPlatformTokenAmountCore == "0" &&
-        subscribedPlatformTokenAmountViction == "0" &&
-        subscribedPlatformTokenAmountSei == "0" &&
+        subscribedPlatformTokenAmountViction == "0"
+         &&subscribedPlatformTokenAmountBNB1 == "0" &&
         result === false
       ) {
         setIsPremium(false);
@@ -2360,8 +2379,8 @@ function App() {
         subscribedPlatformTokenAmountAvax != "0" ||
         subscribedPlatformTokenAmountSkale != "0" ||
         subscribedPlatformTokenAmountCore != "0" ||
-        subscribedPlatformTokenAmountViction != "0" ||
-        subscribedPlatformTokenAmountSei != "0" ||
+        subscribedPlatformTokenAmountViction != "0" 
+        || subscribedPlatformTokenAmountBNB1 != "0" ||
         result === true
       ) {
         setIsPremium(true);
