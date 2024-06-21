@@ -1,6 +1,11 @@
 .mainhero-wrapper {
   min-height: 85vh !important;
   background-image: url("../../../../assets/wodAssets/newTokenBg.webp") !important;
+
+  @media only screen and (max-width: 991px) {
+    min-height: auto !important;
+   
+}
 }
 
 .buy-item-logo {

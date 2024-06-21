@@ -170,7 +170,7 @@ const Footer = () => {
     >
       <div className="custom-container">
         <div className="d-flex align-items-center justify-content-between">
-          <div className="d-flex align-items-center gap-5">
+          <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2 gap-lg-5 gap-md-5">
             <a href="#" className="new-footer-link">
               Wod Token
             </a>
@@ -200,8 +200,8 @@ const Footer = () => {
           </a>
         </div>
         <hr className="footer-divider my-4" />
-        <div className="d-flex align-items-center justify-content-between mb-5">
-          <div className="d-flex align-items-center gap-5">
+        <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center justify-content-between mb-5">
+          <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2 gap-lg-5">
             <img src={metaverse} height={64} alt="" />
             <div className="d-flex flex-column justify-content-between">
               <span className="copyright-text">©2024 World of Dypians Ltd</span>
@@ -222,7 +222,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="d-flex align-items-center gap-4">
+          <div className="d-flex align-items-center gap-4 footer-socials-wrapper">
             {socials.map((item, index) => (
               <a href={item.link} key={index}>
                 <img

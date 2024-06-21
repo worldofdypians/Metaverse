@@ -111,7 +111,7 @@ const MainHero = () => {
         },
       },
       {
-        breakpoint: 1400,
+        breakpoint: 1530,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
@@ -180,7 +180,7 @@ const MainHero = () => {
               ))}
             </Slider>
           </div>
-          <div className="d-flex flex-column mx-0 align-items-center justify-content-between gap-2 buy-items-all-wrapper p-2">
+          <div className="d-flex flex-column mx-0 align-items-center justify-content-between gap-2 buy-items-all-wrapper py-2">
             <div className="container-fluid py-4 buy-wod-bg">
             <div className="custom-container p-0">
               <div className="d-flex flex-column flex-lg-row align-items-center gap-4">
