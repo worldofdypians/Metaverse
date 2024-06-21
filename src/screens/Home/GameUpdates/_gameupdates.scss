@@ -9,8 +9,6 @@
 
 .game-update-card {
   height: 200px;
-  border-radius: 12px;
-  border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   overflow: hidden;
   img{
@@ -28,4 +26,11 @@
 .updates-text-wrapper{
  position: absolute;
  bottom: 0;
+}
+
+.update-divider-{
+  background: rgba(255, 255, 255, 0.25);
+  opacity: 1 !important;
+  height: 2px;
+  width: 100%;
 }

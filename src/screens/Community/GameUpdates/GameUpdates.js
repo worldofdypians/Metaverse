@@ -17,7 +17,7 @@ const GameUpdates = () => {
 
   const slider = useRef();
 
-  var options = { year: "numeric", month: "short", day: "numeric" };
+  var options = { year: "numeric", month: "long", day: "numeric" };
 
   var settings = {
     dots: false,
@@ -135,24 +135,33 @@ const GameUpdates = () => {
   }, [selectedRelease]);
 
   return (
-    <div className="container-fluid d-flex justify-content-center mt-5">
+    <div className="container-fluid d-flex flex-column align-items-center mt-5">
+        <div className="d-flex w-100 flex-column align-items-center justify-content-center mt-5 py-4 game-updates-title-wrapper">
+          <h2 className="font-montserrat builders-title explorer-grid-title px-0 mb-0">
+            UPDATES, STORIES AND ANNOUNCEMENTS FROM
+          </h2>
+          <h2
+            className="font-montserrat builders-title explorer-grid-title px-0"
+            style={{ color: "#8C56FF" }}
+          >
+            WORLD OF DYPIANS
+          </h2>
+        </div>
       <div className="custom-container mt-5">
-        <h2 className="font-montserrat builders-title explorer-grid-title px-0">
-          GAME <mark className="font-montserrat explore-tag pe-2">UPDATES</mark>
-        </h2>
         <div className="row">
           <div className="col-12 col-lg-6">
             {announcementsNews &&
               announcementsNews.length > 0 &&
               announcementsNews.slice(0, 1).map((item, index) => {
                 return (
-                  <NavLink
-                    to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
+                  <div
                     style={{ textDecoration: "none" }}
+                    className="d-flex flex-column gap-2"
                   >
-                    <div
+                    <NavLink
                       className="game-update-card position-relative"
                       style={{ height: "420px" }}
+                    to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
                     >
                       <img
                         src={item.image}
@@ -160,15 +169,23 @@ const GameUpdates = () => {
                         style={{ objectFit: "cover" }}
                         alt=""
                       />
-                      <div className="d-flex align-items-center justify-content-between p-3 w-100 bottom-dark-wrapper updates-text-wrapper">
-                        <div className="d-flex flex-column">
-                          <h6 className="events-page-title-home mb-0">
-                            {item.title.slice(0, 40) + "..."}
-                          </h6>
-                        </div>
-                      </div>
-                    </div>
-                  </NavLink>
+                    </NavLink>
+                    <h6 className="game-update-title mb-0">{item.title}</h6>
+                    <span
+                      className="announcement-side-content font-montserrat gap-1 mb-0"
+                      dangerouslySetInnerHTML={{
+                        __html: item.content.slice(
+                          0,
+                          windowSize.width > 786 ? 430 : 215
+                        ),
+                      }}
+                    ></span>
+                    <hr className="update-divider my-0" />
+                    <span
+                      className="announcement-side-content font-montserrat gap-1 mb-0"
+                    
+                    >{item.date.toLocaleDateString("en-US", options)}</span>
+                  </div>
                 );
               })}{" "}
           </div>
@@ -181,6 +198,8 @@ const GameUpdates = () => {
                     <NavLink
                       to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
                       style={{ textDecoration: "none" }}
+                    className="d-flex flex-column gap-2"
+
                     >
                       <div className="game-update-card position-relative">
                         <img
@@ -189,14 +208,20 @@ const GameUpdates = () => {
                           style={{ objectFit: "cover" }}
                           alt=""
                         />
-                        <div className="d-flex align-items-center justify-content-between p-3 w-100 bottom-dark-wrapper updates-text-wrapper">
-                          <div className="d-flex flex-column">
-                            <h6 className="events-page-title-home mb-0">
-                              {item.title.slice(0, 40) + "..."}
-                            </h6>
-                          </div>
-                        </div>
+                        
                       </div>
+                      <h6 className="game-update-title mb-0">
+                              {item.title.slice(0, 30) + "..."}
+                            </h6>
+                            <span
+                      className="announcement-side-content font-montserrat gap-1 mb-0"
+                      dangerouslySetInnerHTML={{
+                        __html: item.content.slice(
+                          0,
+                          windowSize.width > 786 ? 120 : 215
+                        ) + "...",
+                      }}
+                    ></span>
                     </NavLink>
                   );
                 })}{" "}
@@ -235,7 +260,11 @@ const GameUpdates = () => {
               </div>
             </div>
 
-            <Slider ref={(c) => (slider.current = c)} {...settings} className="px-0">
+            <Slider
+              ref={(c) => (slider.current = c)}
+              {...settings}
+              className="px-0"
+            >
               {releases.map((item, index) => (
                 <div
                   key={index}
