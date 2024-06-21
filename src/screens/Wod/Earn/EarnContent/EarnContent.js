@@ -6,6 +6,7 @@ import moreinfo from "../assets/more-info.svg";
 import { ClickAwayListener } from "@material-ui/core";
 import Tooltip from "@material-ui/core/Tooltip";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
+import '../_earn.scss'
 
 const EarnContent = ({
   isConnected,
@@ -32,9 +33,9 @@ const EarnContent = ({
       <div className="custom-container  mt-5 mt-lg-0">
         <div className="d-flex flex-column gap-2 w-100 px-2">
           <div className="d-flex flex-column flex-lg-row flex-md-row mx-0 justify-content-between align-items-center p-2 options-container">
-            <div className="col-lg-6 row d-flex flex-column flex-lg-row flex-md-row gap-0 gap-xl-3 justify-content-start p-2">
+            <div className="col-lg-6 row d-flex gap-3 justify-content-start p-2">
               <div
-                className={`option-item col-3 col-xl-2 ${
+                className={`option-item col-6 col-xl-2 ${
                   option === "stake" && "option-item-active"
                 } `}
                 onClick={() => {
@@ -47,7 +48,7 @@ const EarnContent = ({
                 </span>
               </div>
               <div
-                className={`option-item col-3 col-xl-2 ${
+                className={`option-item col-6 col-xl-2 ${
                   option === "farm" && "option-item-active"
                 } `}
                 onClick={() => {
@@ -111,7 +112,7 @@ const EarnContent = ({
           </div>
           <div className="staking-pool-bigwrapper my-3 p-3">
             <div className="d-flex flex-column gap-4">
-              <div className="d-flex gap-2 w-100 align-items-center">
+              <div className="d-flex flex-column flex-lg-row gap-2 w-100 align-items-center">
                 <div className="d-flex align-items-center gap-5 w-100">
                   <span
                     className={
@@ -380,7 +381,7 @@ const EarnContent = ({
               </div>
               <StakingWod
                 selectedTab={selectedTab}
-                chainId={chainId.toString()}
+                chainId={chainId?.toString()}
                 coinbase={coinbase}
                 lockTime={30}
                 is_wallet_connected={isConnected}

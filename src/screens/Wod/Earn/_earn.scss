@@ -119,6 +119,11 @@
   min-height: 100px;
   background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)),
     linear-gradient(90.74deg, #5c4a69, #4f75d8);
+
+
+    @media only screen and (max-width: 991px) {
+      min-height: auto;
+    }
 }
 
 .switchchain-txt {
@@ -131,6 +136,10 @@
   cursor: pointer;
   padding-bottom: 10px;
   border-bottom: 3px solid transparent;
+
+  @media only screen and (max-width: 991px) {
+    font-size: 14px;
+  }
 }
 
 .method-btn {
@@ -151,6 +160,12 @@
 .locktimewrapper {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+
+  @media only screen and (max-width: 991px) {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr) !important;
+      width: 100%;
+  }
 }
 
 .method-btn-disabled {
@@ -254,6 +269,12 @@
   background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)),
     linear-gradient(90.74deg, #aa35ff, #4f75d8);
     filter: drop-shadow(0 4px 5px #4f75d8);
+
+    @media only screen and (max-width: 991px) {
+      min-height: auto;
+
+
+    }
 }
 
 .tvl-title {
