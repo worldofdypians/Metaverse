@@ -618,8 +618,8 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
             ></video>
           </div>
           <div className="col-12 col-lg-4  d-flex align-items-center justify-content-center justify-content-lg-start">
-            {/* <GlobalLeaderboard /> */}
-            <NewHomeLeaderboard />
+            <GlobalLeaderboard />
+            {/* <NewHomeLeaderboard /> */}
           </div>
         </div>
         {windowSize.width > 992 && (

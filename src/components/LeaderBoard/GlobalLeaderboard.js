@@ -543,7 +543,7 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                   Reward
                 </th>
                 <th className="playerHeader text-center font-montserrat">
-                  Golden Pass
+                  Extra Rewards
                 </th>
               </tr>
               {genesisData &&
@@ -589,10 +589,10 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                         ${getFormattedNumber(dummyPrizes[item.position], 0)}
                       </td>
                       <td
-                        className="playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2"
+                        className="playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2 w-100"
                         style={{ color: "#09F3D2" }}
                       >
-                        <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
+                        <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
                           ${getFormattedNumber(goldenRewards[item.position], 0)}
                           <img src={goldenInactive} alt="" />
                         </div>
@@ -644,10 +644,10 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                         ${getFormattedNumber(dummyPrizes[item.position], 0)}
                       </td>
                       <td
-                        className="playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2"
+                        className="playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2 w-100"
                         style={{ color: "#09F3D2" }}
                       >
-                        <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
+                        <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
                           ${getFormattedNumber(goldenRewards[item.position], 0)}
                           <img src={goldenInactive} alt="" />
                         </div>
