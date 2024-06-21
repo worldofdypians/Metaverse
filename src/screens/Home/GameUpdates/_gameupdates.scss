@@ -8,10 +8,11 @@
 }
 
 .game-update-card {
-  height: 200px;
-  border-radius: 12px;
-  border: 1px solid #b8b8e0;
+  height: 290px;
   backdrop-filter: blur(12.5px);
+  border-radius: 12px;
+
+  border: 1px solid gray;
   overflow: hidden;
   img{
     border-radius: 12px;
@@ -29,3 +30,21 @@
  position: absolute;
  bottom: 0;
 }
+
+.other-news-item{
+  border-top: 2px solid gray;
+  img{
+    min-width: 300px;
+    min-height: 170px;
+  }
+
+  .other-news-title{
+    color: #EEEDFF;
+font-family: "Montserrat";
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: 27px; /* 135% */
+  }
+}
+
