@@ -44,6 +44,8 @@ import championBust from "./assets/championBust.png";
 import unstoppableBust from "./assets/unstoppableBust.png";
 import skaleActive from "../../Components/LeaderBoard/assets/skaleActive.svg";
 import bnbActive from "../../Components/LeaderBoard/assets/bnbActive.svg";
+import coreActive from "../../Components/LeaderBoard/assets/coreActive.svg";
+import victionActive from "../../Components/LeaderBoard/assets/victionActive.svg";
 import starAlert from "./assets/star-alert.svg";
 import axios from "axios";
 import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
@@ -490,27 +492,27 @@ const ProfileCard = ({
                       {(isVerified && email) || (coinbase && !email) ? (
                         <div className="d-flex flex-column gap-1 w-100">
                           <div className="d-flex align-items-center gap-2">
-                          <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
-                          {username}
-                            {!domainName && isConnected && (
-                              <span
-                                className={`${
-                                  isPremium
-                                    ? "premiumtext-active"
-                                    : "premiumtext"
-                                }
+                            <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
+                              {username}
+                              {!domainName && isConnected && (
+                                <span
+                                  className={`${
+                                    isPremium
+                                      ? "premiumtext-active"
+                                      : "premiumtext"
+                                  }
                               d-flex align-items-center gap-1`}
-                                style={{ cursor: "pointer" }}
-                                onClick={handleOpenDomains}
-                              >
-                                {address && email && (
-                                  <img
-                                    src={isPremium ? starActive : starDefault}
-                                  />
-                                )}
-                                Get domain name
-                              </span>
-                            )}
+                                  style={{ cursor: "pointer" }}
+                                  onClick={handleOpenDomains}
+                                >
+                                  {address && email && (
+                                    <img
+                                      src={isPremium ? starActive : starDefault}
+                                    />
+                                  )}
+                                  Get domain name
+                                </span>
+                              )}
                               {/* {email && address && coinbase && !isPremium && (
                     <div
                       className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
@@ -531,7 +533,7 @@ const ProfileCard = ({
                       />
                     </div>
                   )} */}
-                          </span>
+                            </span>
                           </div>
 
                           <div className="wallet-balance d-flex flex-column flex-xxl-row flex-lg-row gap-3 position-relative">
@@ -735,7 +737,7 @@ const ProfileCard = ({
                           : isPremium
                           ? "repeat(1, 1fr)"
                           : "repeat(3, 1fr)",
-                          placeItems: 'flex-end'
+                      placeItems: "flex-end",
                     }}
                   >
                     {!isPremium && discountPercentage == 0 && (
@@ -746,7 +748,7 @@ const ProfileCard = ({
                       >
                         {/* <div className="table-separator position-absolute"></div> */}
                         <h6 className="become-premium-title mb-0">
-                        Premium Subscription
+                          Premium Subscription
                         </h6>
 
                         <img
@@ -765,7 +767,11 @@ const ProfileCard = ({
                       >
                         <div className="premiumRedTag-profile position-absolute">
                           <div className="position-relative d-flex flex-column">
-                            <img src={premiumRedTag} alt="" className="premiumtag-img"/>
+                            <img
+                              src={premiumRedTag}
+                              alt=""
+                              className="premiumtag-img"
+                            />
                             <div className="d-flex flex-column position-absolute discountwrap-profile">
                               <span className="discount-price2-profile font-oxanium">
                                 {discountPercentage}%
@@ -801,10 +807,8 @@ const ProfileCard = ({
                           alt=""
                           style={{ height: "54px", width: "50px" }}
                         /> */}
-                    
-                      <div className="position-relative rank-outer-wrapper">
-                       
-                        
+
+                        <div className="position-relative rank-outer-wrapper">
                           <div
                             className={`${
                               isPremium
@@ -849,53 +853,97 @@ const ProfileCard = ({
                               onOutsideClick={() => setRankDropdown(false)}
                             >
                               <div className="player-rank-dropdown p-3 d-flex flex-column gap-2">
-                                {/* <div className="total-stars-wrapper d-flex align-items-center justify-content-between p-2">
-                                  <img src={star} style={{width: "30px", height: "30px"}} alt="" />
-                                  <div className="d-flex flex-column align-items-end">
-                                    <span className="total-stars-span">Collected Stars</span>
-                                    <h6 className="total-stars-amount mb-0">{getFormattedNumber(4562, 0)}</h6>
-                                  </div>
-                              </div> */}
-                                <div className="bnb-rank-wrapper d-flex align-items-center justify-content-between p-2 position-relative">
-                                  <img
-                                    src={bnbActive}
-                                    className="rank-logo-position"
-                                    alt=""
-                                  />
-                                  <div className="d-flex flex-column">
-                                    <span className="new-rank-span">
-                                      BNB SCORE
+                           
+                                <div className="d-flex flex-column gap-1">
+                                  <div className="d-flex align-items-center justify-content-between">
+                                    <div style={{width: "33%"}}></div>
+                                    <span className="rank-dropdown-span" style={{width: "33%"}}>
+                                      Rank
                                     </span>
-                                    <h6 className="bnb-rank-score mb-0">
-                                      {getFormattedNumber(userBnbScore, 0)}
-                                    </h6>
+                                    <span className="rank-dropdown-span" style={{width: "33%"}}>
+                                      Score
+                                    </span>
                                   </div>
-                                  <div className="d-flex flex-column align-items-center">
-                                    <span className="new-rank-span">RANK</span>
-                                    <h6 className="bnb-rank-score mb-0">
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div className="d-flex align-items-center gap-2" style={{width: "33%"}}>
+                                      <img src={bnbActive} width={20} height={20} alt="" />
+                                      <span className="rank-dropdown-text">
+                                        BNB Chain
+                                      </span>
+                                    </div>
+                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
                                       #{userRank + 1}
-                                    </h6>
+                                    </span>
+                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
+                                      {getFormattedNumber(userBnbScore, 0)}
+                                    </span>
+                                  </div>
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div className="d-flex align-items-center gap-2" style={{width: "33%"}}>
+                                      <img src={skaleActive} width={20} height={20} alt="" />
+                                      <span className="rank-dropdown-text">
+                                        SKALE
+                                      </span>
+                                    </div>
+                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
+                                      #{userRankSkale + 1}
+                                    </span>
+                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
+                                      {getFormattedNumber(userSkaleScore, 0)}
+                                    </span>
+                                  </div>
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div className="d-flex align-items-center gap-2" style={{width: "33%"}}>
+                                      <img src={coreActive} width={20} height={20} alt="" />
+                                      <span className="rank-dropdown-text">
+                                        CORE
+                                      </span>
+                                    </div>
+                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
+                                      #{userRankSkale + 1}
+                                    </span>
+                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
+                                      {getFormattedNumber(userSkaleScore, 0)}
+                                    </span>
+                                  </div>
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div className="d-flex align-items-center gap-2" style={{width: "33%"}}>
+                                      <img src={victionActive} width={20} height={20} alt="" />
+                                      <span className="rank-dropdown-text">
+                                        VICTION
+                                      </span>
+                                    </div>
+                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
+                                      #{userRankSkale + 1}
+                                    </span>
+                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
+                                      {getFormattedNumber(userSkaleScore, 0)}
+                                    </span>
                                   </div>
                                 </div>
-                                <div className="skale-rank-wrapper d-flex align-items-center justify-content-between mt-2 p-2 position-relative">
+                                <div className="total-stars-wrapper d-flex align-items-center justify-content-between p-2">
                                   <img
-                                    src={skaleActive}
-                                    className="rank-logo-position"
+                                    src={star}
+                                    style={{ width: "30px", height: "30px" }}
                                     alt=""
                                   />
-                                  <div className="d-flex flex-column">
-                                    <span className="new-rank-span">
-                                      SKALE SCORE
-                                    </span>
-                                    <h6 className="skale-rank-score mb-0">
-                                      {getFormattedNumber(userSkaleScore, 0)}
-                                    </h6>
-                                  </div>
-                                  <div className="d-flex flex-column align-items-center">
-                                    <span className="new-rank-span">RANK</span>
-                                    <h6 className="skale-rank-score mb-0">
-                                      #{userRankSkale + 1}
-                                    </h6>
+                                  <div className="d-flex align-items-center gap-4">
+                                    <div className="d-flex flex-column align-items-end">
+                                      <span className="total-stars-span">
+                                        Rank
+                                      </span>
+                                      <h6 className="total-stars-amount mb-0">
+                                        #5
+                                      </h6>
+                                    </div>
+                                    <div className="d-flex flex-column align-items-end">
+                                      <span className="total-stars-span">
+                                        Collected Stars
+                                      </span>
+                                      <h6 className="total-stars-amount mb-0">
+                                        {getFormattedNumber(4562, 0)}
+                                      </h6>
+                                    </div>
                                   </div>
                                 </div>
                                 <hr className="new-rank-divider my-2" />
@@ -1083,7 +1131,7 @@ const ProfileCard = ({
                               </div> */}
                               </div>
                             </OutsideClickHandler>
-                          )} 
+                          )}
                         </div>
                       </>
                     )}
@@ -1192,8 +1240,11 @@ const ProfileCard = ({
                       </button>
                     )}
                     {address && email && (
-                        <div className="d-flex w-100 align-items-center">
-                        <button className="new-bundle-btn d-flex align-items-center gap-2 px-2" onClick={setPortfolio}>
+                      <div className="d-flex w-100 align-items-center">
+                        <button
+                          className="new-bundle-btn d-flex align-items-center gap-2 px-2"
+                          onClick={setPortfolio}
+                        >
                           <img src={walletIcon} alt="" />
                           My Portfolio
                         </button>

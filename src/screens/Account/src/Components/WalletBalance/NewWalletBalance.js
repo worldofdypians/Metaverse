@@ -1818,20 +1818,32 @@ const NewWalletBalance = ({
               </div>
               <div className="col-12 col-lg-4">
                 <div
-                  className="profile-staking-wrapper d-flex"
-                  onClick={onOpenGenesisLeaderboard}
-                  // onClick={() => setStakePopup(true)}
+                  className="special-rewards-wrapper"
+                  onClick={() => setSpecialRewardsPopup(true)}
                 >
                   <div className="green-div"></div>
-                  <img src={globe} alt="" className="profile-staking-img" />
-                  <div className="d-flex flex-column gap-3 h-100 p-3 justify-content-between">
-                    <h6 className="profile-div-title mb-0">Genesis Rewards</h6>
-                    <p className="profile-div-desc mb-0">
-                      Earn monthly rewards by using your Genesis Land NFT
-                    </p>
 
-                    <div className="d-flex align-items-center gap-2 green-link">
-                      <img src={arrowCircle} alt="" />
+                  <div className="d-flex flex-column justify-content-between h-100 p-3">
+                    <h6 className="profile-div-title mb-0">
+                      Special <br /> Rewards
+                    </h6>
+                    <div className="d-flex flex-column align-items-baseline">
+                      <h6
+                        className="my-total-rewards mb-0 font-iceland"
+                        style={{ fontSize: "20px" }}
+                      >
+                        $
+                        {getFormattedNumber(Number(userSocialRewardsCached), 2)}
+                      </h6>
+                      <span
+                        className="my-total-earned mb-0 font-iceland"
+                        style={{ fontSize: "16px" }}
+                      >
+                        Rewards
+                      </span>
+                    </div>
+                    <div className="instakeWrapper3">
+                      <span className="instaketxt2 mb-0">Submit</span>
                     </div>
                   </div>
                 </div>
@@ -1870,34 +1882,23 @@ const NewWalletBalance = ({
                   </div>
                 </div>
               </div>
+          
               <div className="col-12 col-lg-4">
                 <div
-                  className="special-rewards-wrapper"
-                  onClick={() => setSpecialRewardsPopup(true)}
+                  className="profile-staking-wrapper d-flex"
+                  // onClick={onOpenGenesisLeaderboard}
+                  onClick={() => setStakePopup(true)}
                 >
                   <div className="green-div"></div>
+                  <img src={stakeNft} alt="" className="profile-staking-img" />
+                  <div className="d-flex flex-column gap-3 h-100 p-3 justify-content-between">
+                    <h6 className="profile-div-title mb-0">Stake NFT</h6>
+                    <p className="profile-div-desc mb-0">
+                    Earn monthly rewards by staking your NFT's
+                    </p>
 
-                  <div className="d-flex flex-column justify-content-between h-100 p-3">
-                    <h6 className="profile-div-title mb-0">
-                      Special <br /> Rewards
-                    </h6>
-                    <div className="d-flex flex-column align-items-baseline">
-                      <h6
-                        className="my-total-rewards mb-0 font-iceland"
-                        style={{ fontSize: "20px" }}
-                      >
-                        $
-                        {getFormattedNumber(Number(userSocialRewardsCached), 2)}
-                      </h6>
-                      <span
-                        className="my-total-earned mb-0 font-iceland"
-                        style={{ fontSize: "16px" }}
-                      >
-                        Rewards
-                      </span>
-                    </div>
-                    <div className="instakeWrapper3">
-                      <span className="instaketxt2 mb-0">Submit</span>
+                    <div className="d-flex align-items-center gap-2 green-link">
+                      <img src={arrowCircle} alt="" />
                     </div>
                   </div>
                 </div>

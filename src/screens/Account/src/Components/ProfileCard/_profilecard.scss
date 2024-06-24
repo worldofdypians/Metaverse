@@ -960,7 +960,30 @@ background-size: 100% 100%;
   @media screen and (max-width: 991px) {
     grid-template-columns: auto !important;
     width: 100%;
-
-  
   }
+}
+
+.rank-dropdown-span{
+  color: #FFC700;
+  text-align: center;
+  font-family: "Oxanium";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  
+}
+.rank-dropdown-item{
+  border-radius: 6px;
+  background: #272746;
+}
+
+.rank-dropdown-text{
+  color: #B8B8E0;
+  white-space: nowrap;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: center;
 }

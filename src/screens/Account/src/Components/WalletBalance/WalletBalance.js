@@ -1531,7 +1531,7 @@ const WalletBalance = ({
               </div>
             </div>
           </div>
-          <div className="col-12 col-lg-4 h-50 px-0">
+          {/* <div className="col-12 col-lg-4 h-50 px-0">
             <NavLink
               to={"/marketplace/stake"}
               className="profile-staking-wrapper d-flex h-100"
@@ -1579,7 +1579,7 @@ const WalletBalance = ({
                 </div>
               </div>
             </NavLink>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

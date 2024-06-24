@@ -7,11 +7,11 @@ import { NavLink } from "react-router-dom";
 import Countdown from "react-countdown";
 import dypIcon from "./assets/dypIcon.svg";
 import iDypIcon from "./assets/iDypIcon.svg";
-import chainsFlag from "./assets/chainsFlag.svg";
+import chainsFlag from "./assets/chainsFlag2.svg";
 import chainsIcon from "./assets/chainsIcon.svg";
-import globalFlag from "./assets/globalFlag.svg";
-import globalIcon from "./assets/globalIcon.png";
-import landFlag from "./assets/landFlag.svg";
+import globalFlag from "./assets/globalFlag2.svg";
+import globalIcon from "./assets/globalIcon2.png";
+import landFlag from "./assets/landFlag2.svg";
 import landIcon from "./assets/landIcon.svg";
 import Slider from "react-slick";
 import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
@@ -160,21 +160,21 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
               <img src={globalFlag} className="w-100" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Global</span>
-                <img src={globalIcon} alt="" />
+                <img src={globalIcon} height={60} width={60} alt="" />
               </div>
             </div>
             <div className="flag-wrapper" onClick={onOpenLeaderboard}>
               <img src={chainsFlag} className="w-100" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Chains</span>
-                <img src={chainsIcon} alt="" />
+                <img src={chainsIcon} height={60} width={60} alt="" />
               </div>
             </div>
             <div className="flag-wrapper" onClick={onOpenGenesisLeaderboard}>
               <img src={landFlag} className="w-100" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
-                <span className="flag-title">Land</span>
-                <img src={landIcon} alt="" />
+                <span className="flag-title">Genesis</span>
+                <img src={landIcon} height={60} width={60} alt="" />
               </div>
             </div>
           </div>
