@@ -92,7 +92,7 @@ import multiversBg from "./assets/multiversBg.webp";
 import seiLogo from "./assets/seiLogo.svg";
 import seiBg from "./assets/seiBg.webp";
 import coreLogo from "./assets/coreLogo.svg";
-import bnbLogo from './assets/bnbIcon.svg'
+import bnbLogo from "./assets/bnbIcon.svg";
 import coreBg from "./assets/coreBg.webp";
 import immutableLogo from "./assets/immutableLogo.svg";
 import immutableBg from "./assets/immutableBg.webp";
@@ -561,7 +561,7 @@ const NewWalletBalance = ({
         eventDate: "Apr 15, 2024",
       },
     },
-  
+
     {
       title: "Dypius Premium",
       logo: dypiusPremium,
@@ -858,7 +858,7 @@ const NewWalletBalance = ({
     claimedPremiumChests +
     openedSkaleChests.length +
     openedCoreChests.length +
-    openedVictionChests.length
+    openedVictionChests.length;
 
   const chestPercentage = (totalClaimedChests / 80) * 100;
 
@@ -1360,7 +1360,13 @@ const NewWalletBalance = ({
 
   useEffect(() => {
     getTreasureChestsInfo();
-  }, [openedChests, address]);
+  }, [
+    openedChests,
+    address,
+    openedCoreChests,
+    openedVictionChests,
+    openedSkaleChests,
+  ]);
 
   useEffect(() => {
     fetchUsersocialRewards();
@@ -1921,7 +1927,7 @@ const NewWalletBalance = ({
                   </div>
                 </div>
               </div>
-          
+
               <div className="col-12 col-lg-4">
                 <div
                   className="profile-staking-wrapper d-flex"
@@ -1933,7 +1939,7 @@ const NewWalletBalance = ({
                   <div className="d-flex flex-column gap-3 h-100 p-3 justify-content-between">
                     <h6 className="profile-div-title mb-0">Stake NFT</h6>
                     <p className="profile-div-desc mb-0">
-                    Earn monthly rewards by staking your NFT's
+                      Earn monthly rewards by staking your NFT's
                     </p>
 
                     <div className="d-flex align-items-center gap-2 green-link">
