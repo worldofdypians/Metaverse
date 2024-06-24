@@ -72,3 +72,50 @@ transition: all .25s ease;
         height: fit-content;
     }
 }
+
+.dashboard-title{
+    color: #F7F7FC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.leaderboard-flags-wrapper{
+    border-radius: 10px;
+    background: #141A44;
+}
+
+.flag-wrapper{
+position: relative;
+width: 30%;
+top: -15px;
+cursor: pointer;
+transition: all .25s;
+}
+
+.flag-wrapper:hover{
+    transform: scale(1.1);
+}
+
+.flag-content{
+position: absolute;
+left: 0;
+top: 0;
+right: 0;
+bottom: 0;
+margin: auto;
+height: fit-content;
+
+}
+
+.flag-title{
+    color: #F7F7FC;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 10px; /* 125% */
+    text-transform: uppercase;
+}
+

@@ -5262,7 +5262,9 @@ function Dashboard({
                          onOpenGlobalLeaderboard={() => {
                           setGlobalLeaderboard(true);
                         }}
-                      
+                        onOpenGenesisLeaderboard={() => {
+                          setGenesisLeaderboard(true);
+                        }}
                       />
                       <NewWalletBalance
                         onDailyRewardsPopupOpen={() => {

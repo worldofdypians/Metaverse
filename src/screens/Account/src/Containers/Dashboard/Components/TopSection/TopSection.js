@@ -7,6 +7,12 @@ import { NavLink } from "react-router-dom";
 import Countdown from "react-countdown";
 import dypIcon from "./assets/dypIcon.svg";
 import iDypIcon from "./assets/iDypIcon.svg";
+import chainsFlag from "./assets/chainsFlag.svg";
+import chainsIcon from "./assets/chainsIcon.svg";
+import globalFlag from "./assets/globalFlag.svg";
+import globalIcon from "./assets/globalIcon.png";
+import landFlag from "./assets/landFlag.svg";
+import landIcon from "./assets/landIcon.svg";
 import Slider from "react-slick";
 import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
 
@@ -18,7 +24,7 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard }) => {
+const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisLeaderboard }) => {
   let testDay = new Date("2024-05-20T11:00:00.000+02:00");
 
   var settings = {
@@ -118,7 +124,7 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard }) => {
   return (
     <div className="row">
       <div className="col-12 col-lg-4">
-        <div className="diagonal-button-wrapper  d-flex align-items-center">
+        {/* <div className="diagonal-button-wrapper  d-flex align-items-center">
           <div
             className="first-diagonal-btn purple-container p-2  d-flex align-items-end"
             onClick={onOpenLeaderboard}
@@ -144,10 +150,42 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard }) => {
               <img src={star} width={60} height={60} alt="" />
             </div>
           </div>
+        </div> */}
+        <div className="d-flex flex-column">
+          <h6 className="dashboard-title mb-4">
+            Leaderboards
+          </h6>
+          <div className="leaderboard-flags-wrapper px-3 d-flex align-items-center justify-content-between" style={{height: "120px"}}>
+            <div className="flag-wrapper" onClick={onOpenGlobalLeaderboard}>
+              <img src={globalFlag} className="w-100" alt="" />
+              <div className="flag-content d-flex flex-column gap-2 align-items-center">
+                <span className="flag-title">Global</span>
+                <img src={globalIcon} alt="" />
+              </div>
+            </div>
+            <div className="flag-wrapper" onClick={onOpenLeaderboard}>
+              <img src={chainsFlag} className="w-100" alt="" />
+              <div className="flag-content d-flex flex-column gap-2 align-items-center">
+                <span className="flag-title">Chains</span>
+                <img src={chainsIcon} alt="" />
+              </div>
+            </div>
+            <div className="flag-wrapper" onClick={onOpenGenesisLeaderboard}>
+              <img src={landFlag} className="w-100" alt="" />
+              <div className="flag-content d-flex flex-column gap-2 align-items-center">
+                <span className="flag-title">Land</span>
+                <img src={landIcon} alt="" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="col-12 col-lg-8 ps-lg-0 mt-3 mt-lg-0">
-        <div className="purple-container promotion-container position-relative px-4 px-lg-5 py-3">
+        <div className="d-flex flex-column">
+        <h6 className="dashboard-title mb-4">
+            Today's Promotions
+          </h6>
+        <div className="purple-container promotion-container position-relative px-4 px-lg-5 py-3" style={{height: "120px"}}>
           <div
             className="prev-arrow-nft"
             onClick={firstPrev}
@@ -189,8 +227,8 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard }) => {
             {dummyPromotions.map((item, index) => (
               <div
                 key={index}
-                className="d-flex flex-column flex-lg-row gap-4 gap-lg-0 align-items-center justify-content-between w-100"
-              >
+                className="d-flex flex-column promotion-height flex-lg-row gap-4 gap-lg-0 align-items-center justify-content-between w-100"
+             >
                 <div className="d-flex align-items-center gap-2">
                   <img
                     src={`https://mint.dyp.finance/thumbs150/${item.item_id}.png`}
@@ -248,6 +286,7 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard }) => {
               </div>
             ))}
           </Slider>
+        </div>
         </div>
       </div>
     </div>
