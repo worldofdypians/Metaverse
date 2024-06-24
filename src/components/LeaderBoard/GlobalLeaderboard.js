@@ -517,32 +517,33 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
         </OutsideClickHandler>
       </h2> */}
       {/* <div className="grandPrices-wrapper position-relative"></div> */}
-      <div className="leaderboard-item d-flex flex-column gap-2 w-100 p-0">
-        <div className="global-leaderboard-banner d-flex align-items-center w-100 p-3 gap-3">
-          <img src={globalIcon} alt="" />
+      <div className="leaderboard-item d-flex flex-column  w-100 p-0" style={{background: "none"}}>
+        <div className="global-leaderboard-banner d-flex align-items-center justify-content-between w-100 p-3 gap-3">
           <div className="d-flex flex-column">
-            <h6 className="global-leaderboard-title mb-0">CHALLENGER</h6>
+            <h6 className="global-leaderboard-title mb-0">GLOBAL</h6>
             <h6
               className="global-leaderboard-title"
               style={{ color: "#F4E27B" }}
             >
-              GLOBAL LEADERBOARD
+               LEADERBOARD
             </h6>
+
           </div>
+          <img src={globalIcon} alt="" />
         </div>
-        <div className="p-2">
-          <table className="playerTable w-100">
+        <div className="p-0">
+          <table className="playerTable w-100" style={{position: "relative", top: "-8px"}}>
             <tbody>
-              <tr className="playerRow">
-                <th className="playerHeader font-montserrat">Rank</th>
-                <th className="playerHeader font-montserrat">Player</th>
-                <th className="playerHeader text-center font-montserrat">
+              <tr className="playerRow" style={{background: "#0E111E"}}>
+                <th className="playerHeader font-montserrat" style={{lineHeight: "25px"}}>Rank</th>
+                <th className="playerHeader font-montserrat" style={{lineHeight: "25px"}}>Player</th>
+                <th className="playerHeader text-center font-montserrat" style={{lineHeight: "25px"}}>
                   Collected Stars
                 </th>
-                <th className="playerHeader text-center font-montserrat">
+                <th className="playerHeader text-center font-montserrat" style={{lineHeight: "25px"}}>
                   Reward
                 </th>
-                <th className="playerHeader text-center font-montserrat">
+                <th className="playerHeader text-center font-montserrat" style={{lineHeight: "25px"}}>
                   Extra Rewards
                 </th>
               </tr>
