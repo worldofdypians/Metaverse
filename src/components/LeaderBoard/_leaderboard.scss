@@ -468,19 +468,22 @@ letter-spacing: -0.252px;
 }
 
 .global-leaderboard-banner{
-  border-radius: 16px;
-border: 1px solid #F4E27B;
-background: linear-gradient(90deg, rgba(19, 13, 49, 0.50) 0%, rgba(52, 21, 83, 0.50) 100%);
-backdrop-filter: blur(10.5px);
+  border-radius: 16px 16px 0 0; 
+// border: 1px solid #F4E27B;
+background-image: url(./assets/globalHeaderBg.png);
+background-size: 100% 100%;
+// background: linear-gradient(90deg, rgba(19, 13, 49, 0.50) 0%, rgba(52, 21, 83, 0.50) 100%);
+// backdrop-filter: blur(10.5px);
 }
 
 .global-leaderboard-title{
   color: #FFF;
-font-family: "Organetto" !important;
-font-size: 24px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Montserrat";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
 @media screen and (max-width: 500px) {
   font-size: 15px;
 }
