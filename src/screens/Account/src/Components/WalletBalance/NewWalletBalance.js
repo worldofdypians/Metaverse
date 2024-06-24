@@ -854,12 +854,13 @@ const NewWalletBalance = ({
   // const skalePercentage = (skaleClaimed / 20) * 100;
 
   const totalClaimedChests =
-    claimedChests + claimedPremiumChests + openedSkaleChests.length;
-  // +openedCoreChests.length +
-  // openedVictionChests.length +
-  // openedSeiChests.length;
+    claimedChests +
+    claimedPremiumChests +
+    openedSkaleChests.length +
+    openedCoreChests.length +
+    openedVictionChests.length
 
-  const chestPercentage = (totalClaimedChests / 40) * 100;
+  const chestPercentage = (totalClaimedChests / 80) * 100;
 
   const dummyEvents = [
     {
@@ -958,6 +959,44 @@ const NewWalletBalance = ({
 
     if (openedSkaleChests && openedSkaleChests.length > 0) {
       openedSkaleChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedCoreChests && openedCoreChests.length > 0) {
+      openedCoreChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedVictionChests && openedVictionChests.length > 0) {
+      openedCoreChests.forEach((chest) => {
         if (chest.isOpened === true) {
           if (chest.rewards.length > 1) {
             chest.rewards.forEach((innerChest) => {
