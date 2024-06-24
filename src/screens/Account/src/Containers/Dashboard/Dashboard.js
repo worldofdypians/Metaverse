@@ -5034,8 +5034,8 @@ function Dashboard({
     if (email) {
       getAllSkaleChests(email);
       getAllChests(email);
-      // getAllCoreChests(email);
-      // getAllVictionChests(email);
+      getAllCoreChests(email);
+      getAllVictionChests(email);
       // getAllSeiChests(email);
     }
   }, [email, count]);

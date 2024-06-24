@@ -473,30 +473,12 @@ bnbEarnToken,
       });
     }
 
-    if (allSeiChests && allSeiChests.length > 0) {
-      allSeiChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResultSei += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
+  
 
     setTreasureRewardMoney(moneyResult);
     setTreasureRewardMoneySkale(moneyResultSkale);
     setTreasureRewardMoneyCore(moneyResultCore);
     setTreasureRewardMoneyViction(moneyResultViction);
-    setTreasureRewardMoneySei(moneyResultSei);
   };
 
   const fetchCachedData = () => {
@@ -1129,7 +1111,7 @@ bnbEarnToken,
                 </span>
               </div>
 
-              {/* <div className="d-flex w-100 justify-content-between gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CORE</span>
                 <span className="item-name-right">
                   $
@@ -1137,7 +1119,7 @@ bnbEarnToken,
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(treasureRewardMoneyCore, 2)}
                 </span>
-              </div> */}
+              </div>
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
@@ -1150,7 +1132,7 @@ bnbEarnToken,
                     : getFormattedNumber(treasureRewardMoneySkale, 2)}
                 </span>
               </div>
-              {/* <div className="d-flex w-100 justify-content-between gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Viction</span>
                 <span className="item-name-right">
                   $
@@ -1159,7 +1141,7 @@ bnbEarnToken,
                     : getFormattedNumber(treasureRewardMoneyViction, 2)}
                 </span>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
+             {/*  <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
                 <span className="item-name-right">
                   $
