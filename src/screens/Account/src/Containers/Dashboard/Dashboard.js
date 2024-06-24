@@ -131,14 +131,14 @@ function Dashboard({
       name: "SKALE",
       symbol: "skale",
     },
-    // {
-    //   name: "CORE",
-    //   symbol: "core",
-    // },
-    // {
-    //   name: "Viction",
-    //   symbol: "viction",
-    // },
+    {
+      name: "CORE",
+      symbol: "core",
+    },
+    {
+      name: "Viction",
+      symbol: "viction",
+    },
     // {
     //   name: "SEI",
     //   symbol: "sei",
@@ -418,7 +418,7 @@ function Dashboard({
   const [skalePoints, setSkalePoints] = useState(0);
   const [leaderboard, setLeaderboard] = useState(false);
   const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
-  const [globalLeaderboard, setGlobalLeaderboard] = useState(false)
+  const [globalLeaderboard, setGlobalLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
@@ -519,7 +519,6 @@ function Dashboard({
   const [nftPremium_tokenId, setnftPremium_tokenId] = useState(0);
   const [nftPremium_total, setnftPremium_total] = useState(0);
   const [nftDiscountObject, setnftDiscountObject] = useState([]);
-  
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -527,7 +526,6 @@ function Dashboard({
   const { BigNumber } = window;
 
   //leaderboard calls
-
 
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
@@ -721,7 +719,6 @@ function Dashboard({
     }
   };
 
-  
   useEffect(() => {
     if (
       email &&
@@ -735,7 +732,6 @@ function Dashboard({
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
     }
   }, [email, data, cfxPrice, bnbPrice, skalePrice, dyptokenDatabnb]);
-
 
   const bnbStars = ["50", "40", "30", "20", "20", "20", "20", "20", "20", "20"];
   const bnbStarsPremium = [
@@ -872,7 +868,6 @@ function Dashboard({
     "20",
     "20",
   ];
-
 
   const userId = data?.getPlayer?.playerId;
   const username = data?.getPlayer?.displayName;
@@ -1352,7 +1347,7 @@ function Dashboard({
 
   useEffect(() => {
     if (logoutCount > 0) {
-      onSubscribeSuccess()
+      onSubscribeSuccess();
       setclaimedChests(0);
       setclaimedPremiumChests(0);
       setclaimedCorePremiumChests(0);
@@ -2705,7 +2700,10 @@ function Dashboard({
           setnftDiscountObject(nftObject);
           if (discount) {
             setdiscountPercentage(
-              Math.max(parseInt(discount), parseInt(nftObject.discountPercentage))
+              Math.max(
+                parseInt(discount),
+                parseInt(nftObject.discountPercentage)
+              )
             );
           }
         }
@@ -2902,222 +2900,37 @@ function Dashboard({
     }
   };
 
-  // const refreshSubscription = async (addr) => {
-  //   const result = window.checkPremium(addr);
-
-  //   let subscribedPlatformTokenAmountETH;
-  //   let subscribedPlatformTokenAmountCfx;
-  //   let subscribedPlatformTokenAmountBNB;
-  //   let subscribedPlatformTokenAmountAvax;
-  //   let subscribedPlatformTokenAmountBase;
-  //   let subscribedPlatformTokenAmountSkale;
-  //   let subscribedPlatformTokenAmountCore;
-  //   let subscribedPlatformTokenAmountViction;
-  //   let subscribedPlatformTokenAmountSei;
-
-  //   const web3eth = window.infuraWeb3;
-  //   const web3cfx = window.confluxWeb3;
-  //   const web3base = window.baseWeb3;
-  //   const web3bnb = window.bscWeb3;
-  //   const web3avax = window.avaxWeb3;
-  //   const web3skale = window.skaleWeb3;
-  //   const web3core = window.coreWeb3;
-  //   const web3viction = window.victionWeb3;
-  //   const web3sei = window.seiWeb3;
-
-  //   const CfxABI = window.SUBSCRIPTION_CFX_ABI;
-  //   const BaseABI = window.SUBSCRIPTION_BASE_ABI;
-  //   const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
-  //   const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
-  //   const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
-  //   const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
-  //   const CoreABI = window.SUBSCRIPTION_CORE_ABI;
-  //   const VicitonABI = window.SUBSCRIPTION_VICTION_ABI;
-  //   const SeiABI = window.SUBSCRIPTION_SKALE_ABI;
-
-  //   const ethsubscribeAddress = window.config.subscription_neweth_address;
-  //   const cfxsubscribeAddress = window.config.subscription_cfx_address;
-  //   const basesubscribeAddress = window.config.subscription_base_address;
-  //   const bnbsubscribeAddress = window.config.subscription_newbnb_address;
-  //   const avaxsubscribeAddress = window.config.subscription_newavax_address;
-  //   const skalesubscribeAddress = window.config.subscription_skale_address;
-  //   const coresubscribeAddress = window.config.subscription_core_address;
-  //   const victionsubscribeAddress = window.config.subscription_viction_address;
-  //   const seisubscribeAddress = window.config.subscription_sei_address;
-
-  //   const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
-  //   const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
-  //   const skalecontract = new web3skale.eth.Contract(
-  //     SkaleABI,
-  //     skalesubscribeAddress
-  //   );
-
-  //   const basecontract = new web3base.eth.Contract(
-  //     BaseABI,
-  //     basesubscribeAddress
-  //   );
-
-  //   const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
-  //   const avaxcontract = new web3avax.eth.Contract(
-  //     AvaxABI,
-  //     avaxsubscribeAddress
-  //   );
-
-  //   const corecontract = new web3core.eth.Contract(
-  //     CoreABI,
-  //     coresubscribeAddress
-  //   );
-
-  //   const victioncontract = new web3viction.eth.Contract(
-  //     VicitonABI,
-  //     victionsubscribeAddress
-  //   );
-
-  //   const seicontract = new web3sei.eth.Contract(SeiABI, seisubscribeAddress);
-
-  //   if (addr) {
-  //     subscribedPlatformTokenAmountETH = await ethcontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountCfx = await cfxcontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountBase = await basecontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountBNB = await bnbcontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountAvax = await avaxcontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountSkale = await skalecontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountCore = await corecontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountViction = await victioncontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountSei = await seicontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     if (
-  //       subscribedPlatformTokenAmountCfx == "0" &&
-  //       subscribedPlatformTokenAmountETH == "0" &&
-  //       subscribedPlatformTokenAmountBase == "0" &&
-  //       subscribedPlatformTokenAmountBNB == "0" &&
-  //       subscribedPlatformTokenAmountAvax == "0" &&
-  //       subscribedPlatformTokenAmountCore == "0" &&
-  //       subscribedPlatformTokenAmountViction == "0" &&
-  //       subscribedPlatformTokenAmountSkale == "0" &&
-  //       subscribedPlatformTokenAmountSei == "0" &&
-  //       result === false
-  //     ) {
-  //       setIsPremium(false);
-  //     }
-  //     if (
-  //       subscribedPlatformTokenAmountCfx != "0" ||
-  //       subscribedPlatformTokenAmountETH != "0" ||
-  //       subscribedPlatformTokenAmountBase != "0" ||
-  //       subscribedPlatformTokenAmountBNB != "0" ||
-  //       subscribedPlatformTokenAmountAvax != "0" ||
-  //       subscribedPlatformTokenAmountCore != "0" ||
-  //       subscribedPlatformTokenAmountViction != "0" ||
-  //       subscribedPlatformTokenAmountSkale != "0" ||
-  //       subscribedPlatformTokenAmountSei != "0" ||
-  //       result === true
-  //     ) {
-  //       setIsPremium(true);
-  //     }
-  //   }
-  // };
-
   const getOpenedChestPerWallet = async () => {
     if (email) {
       if (isPremium) {
         if (
           claimedChests + claimedPremiumChests < 20 ||
-          claimedSkaleChests + claimedSkalePremiumChests < 20
-          //  ||
-          // claimedCoreChests + claimedCorePremiumChests < 20 ||
-          // claimedVictionChests + claimedVictionPremiumChests < 20 ||
-          // claimedSeiChests + claimedSeiPremiumChests < 20
+          claimedSkaleChests + claimedSkalePremiumChests < 20 ||
+          claimedCoreChests + claimedCorePremiumChests < 20 ||
+          claimedVictionChests + claimedVictionPremiumChests < 20
         ) {
           setCanBuy(true);
         } else if (
           claimedChests + claimedPremiumChests === 20 &&
-          claimedSkaleChests + claimedSkalePremiumChests === 20
-          // &&
-          // claimedCoreChests + claimedCorePremiumChests === 20 &&
-          // claimedVictionChests + claimedVictionPremiumChests === 20 &&
-          // claimedSeiChests + claimedSeiPremiumChests === 20
+          claimedSkaleChests + claimedSkalePremiumChests === 20 &&
+          claimedCoreChests + claimedCorePremiumChests === 20 &&
+          claimedVictionChests + claimedVictionPremiumChests === 20
         ) {
           setCanBuy(false);
         }
       } else if (!isPremium) {
         if (
           claimedChests < 10 ||
-          claimedSkaleChests < 10
-          // ||
-          // claimedCoreChests < 10 ||
-          // claimedVictionChests < 10 ||
-          // claimedSeiChests < 10
+          claimedSkaleChests < 10 ||
+          claimedCoreChests < 10 ||
+          claimedVictionChests < 10
         ) {
           setCanBuy(true);
         } else if (
           claimedChests === 10 &&
-          claimedSkaleChests === 10
-          //  &&
-          // claimedCoreChests === 10 &&
-          // claimedVictionChests === 10 &&
-          // claimedSeiChests === 10
+          claimedSkaleChests === 10 &&
+          claimedCoreChests === 10 &&
+          claimedVictionChests === 10
         ) {
           setCanBuy(false);
         }
@@ -3852,15 +3665,16 @@ function Dashboard({
           .then(() => {
             setloadspinner(false);
             setisApproved(true);
-            if(discountPercentage<100) {
-                if (
-              selectedSubscriptionToken.toLowerCase() ===
-              "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
-            ) {
+            if (discountPercentage < 100) {
+              if (
+                selectedSubscriptionToken.toLowerCase() ===
+                "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+              ) {
+                setapproveStatus("deposit");
+              } else setapproveStatus("approveAmount");
+            } else {
               setapproveStatus("deposit");
-            } else setapproveStatus("approveAmount");
-            } else {setapproveStatus('deposit')}
-          
+            }
           })
           .catch((e) => {
             setstatus(e?.message);
@@ -4124,30 +3938,29 @@ function Dashboard({
             approved.toLowerCase() === bnbsubscribeAddress.toLowerCase() ||
             approvedAll
           ) {
-            if(discountPercentage < 100) {
-               if (
-              token.toLowerCase() ===
-              "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
-            ) {
-              setloadspinner(false);
-              setisApproved(true);
-              setapproveStatus("deposit");
+            if (discountPercentage < 100) {
+              if (
+                token.toLowerCase() ===
+                "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+              ) {
+                setloadspinner(false);
+                setisApproved(true);
+                setapproveStatus("deposit");
+              } else {
+                setloadspinner(false);
+                setisApproved(true);
+                setapproveStatus("approveAmount");
+              }
             } else {
               setloadspinner(false);
-              setisApproved(true);
-              setapproveStatus("approveAmount");
+              setisApproved(false);
+              setapproveStatus("initial");
             }
           } else {
             setloadspinner(false);
             setisApproved(false);
             setapproveStatus("initial");
           }
-            } else {
-              setloadspinner(false);
-              setisApproved(false);
-              setapproveStatus("initial");
-            }
-           
         } else {
           if (
             token.toLowerCase() ===
@@ -4312,8 +4125,9 @@ function Dashboard({
             )
             .then(() => {
               getRankData();
-            }).catch((e)=>{
-              console.error(e)
+            })
+            .catch((e) => {
+              console.error(e);
             });
           setTimeout(() => {
             setgetPremiumPopup(false);
@@ -4381,8 +4195,9 @@ function Dashboard({
             )
             .then(() => {
               getRankData();
-            }).catch((e)=>{
-              console.error(e)
+            })
+            .catch((e) => {
+              console.error(e);
             });
           setTimeout(() => {
             setloadspinnerSub(false);
@@ -4454,8 +4269,9 @@ function Dashboard({
             )
             .then(() => {
               getRankData();
-            }).catch((e)=>{
-              console.error(e)
+            })
+            .catch((e) => {
+              console.error(e);
             });
           setTimeout(() => {
             setloadspinnerSub(false);
@@ -4617,22 +4433,6 @@ function Dashboard({
     }
   };
 
-  const handleSeiPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0xae3f3")
-          .then(() => {
-            handleSwitchNetwork(713715);
-            setChainDropdown(chainDropdowns[8]);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
   const handleVictionPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
@@ -4649,7 +4449,22 @@ function Dashboard({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-
+  const handleSeiPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xae3f3")
+          .then(() => {
+            handleSwitchNetwork(713715);
+            setChainDropdown(chainDropdowns[8]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
   const handleRankRewards = () => {
     let totalScore = userBnbScore + userSkaleScore;
     if (totalScore > 6000000) {
@@ -4737,26 +4552,26 @@ function Dashboard({
       );
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
+    } else if (chainId === 88) {
+      setChainDropdown(chainDropdowns[7]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionviction_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wvictionAddress);
+      handleCheckIfAlreadyApproved(wvictionAddress);
+    } else if (chainId === 1116) {
+      setChainDropdown(chainDropdowns[6]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptioncore_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wcoreAddress);
+      handleCheckIfAlreadyApproved(wcoreAddress);
     }
-    //  else if (chainId === 88) {
-    //   setChainDropdown(chainDropdowns[7]);
-    //   setdropdownIcon("usdt");
-    //   setdropdownTitle("USDT");
-    //   setselectedSubscriptionToken(
-    //     Object.keys(window.config.subscriptionviction_tokens)[0]
-    //   );
-    //   handleSubscriptionTokenChange(wvictionAddress);
-    //   handleCheckIfAlreadyApproved(wvictionAddress);
-    // } else if (chainId === 1116) {
-    //   setChainDropdown(chainDropdowns[6]);
-    //   setdropdownIcon("usdt");
-    //   setdropdownTitle("USDT");
-    //   setselectedSubscriptionToken(
-    //     Object.keys(window.config.subscriptioncore_tokens)[0]
-    //   );
-    //   handleSubscriptionTokenChange(wcoreAddress);
-    //   handleCheckIfAlreadyApproved(wcoreAddress);
-    // } else if (chainId === 713715) {
+    // else if (chainId === 713715) {
     //   setChainDropdown(chainDropdowns[8]);
     //   setdropdownIcon("usdt");
     //   setdropdownTitle("usdt");
@@ -4818,7 +4633,13 @@ function Dashboard({
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
     }
-  }, [chainId, getPremiumPopup, discountPercentage, nftPremium_total,nftPremium_tokenId]);
+  }, [
+    chainId,
+    getPremiumPopup,
+    discountPercentage,
+    nftPremium_total,
+    nftPremium_tokenId,
+  ]);
 
   useEffect(() => {
     if (chainId === 1 && selectedSubscriptionToken !== "") {
@@ -4850,18 +4671,18 @@ function Dashboard({
         window.config.subscriptionskale_tokens[selectedSubscriptionToken]
           ?.decimals
       );
+    } else if (chainId === 88 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionviction_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptioncore_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
     }
-    //  else if (chainId === 88 && selectedSubscriptionToken !== "") {
-    //   settokenDecimals(
-    //     window.config.subscriptionviction_tokens[selectedSubscriptionToken]
-    //       ?.decimals
-    //   );
-    // } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
-    //   settokenDecimals(
-    //     window.config.subscriptioncore_tokens[selectedSubscriptionToken]
-    //       ?.decimals
-    //   );
-    // } else if (chainId === 713715 && selectedSubscriptionToken !== "") {
+    // else if (chainId === 713715 && selectedSubscriptionToken !== "") {
     //   settokenDecimals(
     //     window.config.subscriptionsei_tokens[selectedSubscriptionToken]
     //       ?.decimals
@@ -4880,34 +4701,6 @@ function Dashboard({
       signWalletPublicAddress();
     }
   }, [dataNonce]);
-
-  // useEffect(() => {
-  //   if (
-  //     data &&
-  //     data.getPlayer &&
-  //     data.getPlayer.wallet &&
-  //     data.getPlayer.wallet.publicAddress &&
-  //     email &&
-  //     isConnected
-  //   ) {
-  //     fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
-  //     refreshSubscription(data.getPlayer.wallet.publicAddress);
-  //     setuserWallet(data.getPlayer.wallet.publicAddress);
-  //   } else if (coinbase && isConnected) {
-  //     refreshSubscription(coinbase);
-  //   } else if (
-  //     data &&
-  //     data.getPlayer &&
-  //     data.getPlayer.wallet &&
-  //     data.getPlayer.wallet.publicAddress &&
-  //     email &&
-  //     !isConnected
-  //   ) {
-  //     refreshSubscription(data.getPlayer.wallet.publicAddress);
-  //   } else {
-  //     setIsPremium(false);
-  //   }
-  // }, [data, email, coinbase, isConnected]);
 
   useEffect(() => {
     if (
@@ -5256,10 +5049,10 @@ function Dashboard({
                         </OutsideClickHandler>
                       )}
                       <TopSection
-                         onOpenLeaderboard={() => {
+                        onOpenLeaderboard={() => {
                           setLeaderboard(true);
                         }}
-                         onOpenGlobalLeaderboard={() => {
+                        onOpenGlobalLeaderboard={() => {
                           setGlobalLeaderboard(true);
                         }}
                         onOpenGenesisLeaderboard={() => {
@@ -5432,7 +5225,6 @@ function Dashboard({
                       />
                     </div>
 
-                  
                     {leaderboard && (
                       <OutsideClickHandler
                         onOutsideClick={() => setLeaderboard(false)}
@@ -5587,11 +5379,13 @@ function Dashboard({
                         <div
                           className="popup-wrapper leaderboard-popup popup-active p-3"
                           id="leaderboard"
-                          style={{ width: "35%", pointerEvents: "auto", backgroundSize: "auto" }}
+                          style={{
+                            width: "35%",
+                            pointerEvents: "auto",
+                            backgroundSize: "auto",
+                          }}
                         >
                           <div className="d-flex align-items-center justify-content-end">
-                           
-
                             <img
                               src={xMark}
                               onClick={() => setGlobalLeaderboard(false)}
@@ -5600,7 +5394,7 @@ function Dashboard({
                             />
                           </div>
 
-                        <GlobalLeaderboard />
+                          <GlobalLeaderboard />
                         </div>
                       </OutsideClickHandler>
                     )}
@@ -5816,7 +5610,6 @@ function Dashboard({
                                         BNB Chain
                                       </span>
                                     </div>
-
                                     <div className="d-flex align-items-center gap-2">
                                       <img
                                         src={
@@ -5829,7 +5622,6 @@ function Dashboard({
                                         Avalanche
                                       </span>
                                     </div>
-
                                     <div className="d-flex align-items-center gap-2">
                                       <img
                                         src={baseLogo}
@@ -5840,7 +5632,6 @@ function Dashboard({
                                         Base
                                       </span>
                                     </div>
-
                                     <div className="d-flex align-items-center gap-2">
                                       <img
                                         src={conflux}
@@ -5860,28 +5651,8 @@ function Dashboard({
                                       <span className="subscription-chain mb-0">
                                         SKALE
                                       </span>
-                                      {/*
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={coreIcon}
-                                      alt=""
-                                      style={{ width: 18, height: 18 }}
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      CORE
-                                    </span>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={vicitonIcon}
-                                      alt=""
-                                      style={{ width: 18, height: 18 }}
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      Viction
-                                    </span>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-2">
+
+                                      {/*   <div className="d-flex align-items-center gap-2">
                                     <img
                                       src={seiIcon}
                                       alt=""
@@ -5891,6 +5662,26 @@ function Dashboard({
                                       SEI
                                     </span>
                                   </div> */}
+                                    </div>{" "}
+                                    <div className="d-flex align-items-center gap-2">
+                                      <img
+                                        src={coreIcon}
+                                        alt=""
+                                        style={{ width: 18, height: 18 }}
+                                      />
+                                      <span className="subscription-chain mb-0">
+                                        CORE
+                                      </span>
+                                    </div>
+                                    <div className="d-flex align-items-center gap-2">
+                                      <img
+                                        src={vicitonIcon}
+                                        alt=""
+                                        style={{ width: 18, height: 18 }}
+                                      />
+                                      <span className="subscription-chain mb-0">
+                                        Viction
+                                      </span>
                                     </div>
                                   </div>
                                   <img src={premiumIcon} alt="" />
@@ -6047,35 +5838,35 @@ function Dashboard({
                                           />
                                           SKALE
                                         </li>
-                                        {/* <li
-                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                      onClick={handleCorePool}
-                                    >
-                                      <img
-                                        src={coreIcon}
-                                        alt=""
-                                        style={{
-                                          width: "18px",
-                                          height: "18px",
-                                        }}
-                                      />
-                                      CORE
-                                    </li>
-                                    <li
-                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                      onClick={handleVictionPool}
-                                    >
-                                      <img
-                                        src={vicitonIcon}
-                                        alt=""
-                                        style={{
-                                          width: "18px",
-                                          height: "18px",
-                                        }}
-                                      />
-                                      Viction
-                                    </li>
-                                    <li
+                                        <li
+                                          className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                          onClick={handleCorePool}
+                                        >
+                                          <img
+                                            src={coreIcon}
+                                            alt=""
+                                            style={{
+                                              width: "18px",
+                                              height: "18px",
+                                            }}
+                                          />
+                                          CORE
+                                        </li>
+                                        <li
+                                          className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                          onClick={handleVictionPool}
+                                        >
+                                          <img
+                                            src={vicitonIcon}
+                                            alt=""
+                                            style={{
+                                              width: "18px",
+                                              height: "18px",
+                                            }}
+                                          />
+                                          Viction
+                                        </li>
+                                        {/*   <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={handleSeiPool}
                                     >
@@ -6274,7 +6065,7 @@ function Dashboard({
                                                             ]?.symbol
                                                           : chainId === 1116
                                                           ? window.config
-                                                              .subscriptionsei_tokens[
+                                                              .subscriptioncore_tokens[
                                                               t
                                                             ]?.symbol
                                                           : window.config
@@ -6556,16 +6347,16 @@ function Dashboard({
                                       "Failed"
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                      Processing
-                                      <div
-                                        className="spinner-border "
-                                        role="status"
-                                        style={{
-                                          height: "1rem",
-                                          width: "1rem",
-                                        }}
-                                      ></div>{" "}
-                                    </div>
+                                        Processing
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                          style={{
+                                            height: "1rem",
+                                            width: "1rem",
+                                          }}
+                                        ></div>{" "}
+                                      </div>
                                     )}
                                   </button>
                                 </div>
@@ -6921,6 +6712,7 @@ function Dashboard({
                 allChests={allChests}
                 allSkaleChests={allSkaleChests}
                 allCoreChests={allCoreChests}
+                allVictionChests={allVictionChests}
                 allSeiChests={allSeiChests}
                 onChestClaimed={() => {
                   setCount(count + 1);
