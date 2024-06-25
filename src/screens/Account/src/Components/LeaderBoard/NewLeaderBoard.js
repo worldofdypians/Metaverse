@@ -53,6 +53,7 @@ import victionWhite from "./assets/victionWhite.svg";
 import coreWhite from "./assets/coreWhite.svg";
 import skaleWhite from "./assets/skaleWhite.svg";
 import seiWhite from "./assets/seiWhite.svg";
+import { Tooltip, styled, tooltipClasses } from "@mui/material";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -74,6 +75,20 @@ const renderer = ({ hours, minutes, seconds }) => {
     </div>
   );
 };
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "150px !important",
+    display:"flex",
+    justifyContent:"center",
+    minWidth: "90px !important",
+    fontSize: theme.typography.pxToRem(12),
+  },
+}));
 
 const NewLeaderBoard = ({
   username,
@@ -817,7 +832,15 @@ const NewLeaderBoard = ({
                                                 0
                                               )}
                                             </span>
-                                            <img
+                                            <HtmlTooltip
+                                            placement="top"
+                                            title={
+                                              <span className="card-eth-chain-text">
+                                                Premium
+                                              </span>
+                                            }
+                                          >
+                                         <img
                                               src={
                                                 isPremium &&
                                                 username === item.displayName
@@ -826,6 +849,8 @@ const NewLeaderBoard = ({
                                               }
                                               alt=""
                                             />
+                                          </HtmlTooltip>
+                                          
                                           </div>
                                         </td>
                                       ) : (
@@ -852,16 +877,25 @@ const NewLeaderBoard = ({
                                                 0
                                               )}
                                             </span>
-                                            <img
-                                              src={
-                                              
-                                                username === item.displayName &&
-                                                isactive === true
-                                                  ? goldenActive
-                                                  : goldenInactive
+                                            <HtmlTooltip
+                                              placement="top"
+                                              title={
+                                                <span className="card-eth-chain-text">
+                                                  Golden Pass
+                                                </span>
                                               }
-                                              alt=""
-                                            />
+                                            >
+                                              <img
+                                                src={
+                                                  username ===
+                                                    item.displayName &&
+                                                  isactive === true
+                                                    ? goldenActive
+                                                    : goldenInactive
+                                                }
+                                                alt=""
+                                              />
+                                            </HtmlTooltip>
                                           </div>
                                         </td>
                                       )}
@@ -1010,7 +1044,15 @@ const NewLeaderBoard = ({
                                                 0
                                               )}
                                             </span>
-                                            <img
+                                            <HtmlTooltip
+                                            placement="top"
+                                            title={
+                                              <span className="card-eth-chain-text">
+                                                Premium
+                                              </span>
+                                            }
+                                          >
+                                         <img
                                               src={
                                                 isPremium &&
                                                 username === item.displayName
@@ -1019,6 +1061,7 @@ const NewLeaderBoard = ({
                                               }
                                               alt=""
                                             />
+                                          </HtmlTooltip>
                                           </div>
                                         </td>
                                       ) : (
@@ -1045,16 +1088,25 @@ const NewLeaderBoard = ({
                                                 0
                                               )}
                                             </span>
-                                            <img
-                                              src={
-                                          
-                                                username === item.displayName &&
-                                                isactive === true
-                                                  ? goldenActive
-                                                  : goldenInactive
+                                            <HtmlTooltip
+                                              placement="top"
+                                              title={
+                                                <span className="card-eth-chain-text">
+                                                  Golden Pass
+                                                </span>
                                               }
-                                              alt=""
-                                            />
+                                            >
+                                              <img
+                                                src={
+                                                  username ===
+                                                    item.displayName &&
+                                                  isactive === true
+                                                    ? goldenActive
+                                                    : goldenInactive
+                                                }
+                                                alt=""
+                                              />
+                                            </HtmlTooltip>
                                           </div>
                                         </td>
                                       )}
@@ -1265,17 +1317,24 @@ const NewLeaderBoard = ({
                                               0
                                             )}
                                           </span>
-                                          <img
-                                            src={
-                                              isPremium &&
-                                              username ===
-                                                leaderboard.player_data
-                                                  .displayName
-                                                ? premiumIcon
-                                                : premiumInactive
+                                          <HtmlTooltip
+                                            placement="top"
+                                            title={
+                                              <span className="card-eth-chain-text">
+                                                Premium
+                                              </span>
                                             }
-                                            alt=""
-                                          />
+                                          >
+                                         <img
+                                              src={
+                                                isPremium &&
+                                                username === leaderboard.player_data.displayName
+                                                  ? premiumIcon
+                                                  : premiumInactive
+                                              }
+                                              alt=""
+                                            />
+                                          </HtmlTooltip>
                                         </div>
                                       </td>
                                     ) : (
@@ -1305,18 +1364,24 @@ const NewLeaderBoard = ({
                                               0
                                             )}
                                           </span>
-                                          <img
-                                            src={
-                                          
-                                              username ===
-                                                leaderboard.player_data
-                                                  .displayName &&
-                                              isactive === true
-                                                ? goldenActive
-                                                : goldenInactive
+                                          <HtmlTooltip
+                                            placement="top"
+                                            title={
+                                              <span className="card-eth-chain-text">
+                                                Golden Pass
+                                              </span>
                                             }
-                                            alt=""
-                                          />
+                                          >
+                                            <img
+                                              src={
+                                                username === leaderboard.player_data.displayName &&
+                                                isactive === true
+                                                  ? goldenActive
+                                                  : goldenInactive
+                                              }
+                                              alt=""
+                                            />
+                                          </HtmlTooltip>
                                         </div>
                                       </td>
                                     )}
