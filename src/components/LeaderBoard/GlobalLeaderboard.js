@@ -16,6 +16,7 @@ import globalIcon from "./assets/globalRanks/globalIcon.png";
 import goldenActive from "./assets/goldenActive.png";
 import goldenInactive from "./assets/goldenInactive.png";
 import { useLocation } from "react-router-dom";
+import { Tooltip, styled, tooltipClasses } from "@mui/material";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -38,7 +39,22 @@ const renderer = ({ hours, minutes, seconds }) => {
   );
 };
 
-const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "150px !important",
+    minWidth: "90px !important",
+    fontSize: theme.typography.pxToRem(12),
+  },
+}));
+
+const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address, genesisData,
+  previousgenesisData,
+  previousGenesisVersion, }) => {
+
   const playerData = [
     {
       position: "1",
@@ -343,71 +359,14 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
 
   const [optionText2, setOptionText2] = useState("bnb");
   const [inactiveBoard, setInactiveBoard] = useState(false);
-  const [genesisData, setgenesisData] = useState([]);
-  const [previousgenesisData, setpreviousgenesisData] = useState([]);
+  // const [genesisData, setgenesisData] = useState([]);
+  // const [previousgenesisData, setpreviousgenesisData] = useState([]);
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
-  const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
+  // const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
-
-  const fetchGenesisRecords = async () => {
-    const data2 = {
-      StatisticName: "GenesisLandRewards",
-      StartPosition: 0,
-      MaxResultsCount: 10,
-    };
-
-    const result2 = await axios
-      .post(`${backendApi}/auth/GetLeaderboard`, data2)
-      .catch((err) => {
-        console.log(err);
-      });
-    if (result2) {
-      setgenesisData(result2.data.data.leaderboard);
-      setpreviousGenesisVersion(result2.data.data.version);
-
-      fillRecordsGenesis(result2.data.data.leaderboard);
-    }
-  };
-
-  const fillRecordsGenesis = (itemData) => {
-    if (itemData.length === 0) {
-      setgenesisData(placeholderplayerData);
-    } else if (itemData.length < 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setgenesisData(finalData);
-    }
-  };
-
-  const fetchGenesisPreviousWinners = async () => {
-    if (previousGenesisVersion != 0) {
-      const data = {
-        StatisticName: "GenesisLandRewards",
-        StartPosition: 0,
-        MaxResultsCount: 10,
-        Version: previousGenesisVersion - 1,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
-      );
-      fillRecordsGenesis(result.data.data.leaderboard);
-
-      setpreviousgenesisData(result.data.data.leaderboard);
-    }
-  };
-
-  useEffect(() => {
-    fetchGenesisRecords();
-  }, []);
-
-  useEffect(() => {
-    fetchGenesisPreviousWinners();
-  }, [previousGenesisVersion]);
 
   // useEffect(() => {
   //   handleOption(optionText);
@@ -517,7 +476,10 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
         </OutsideClickHandler>
       </h2> */}
       {/* <div className="grandPrices-wrapper position-relative"></div> */}
-      <div className="leaderboard-item d-flex flex-column  w-100 p-0" style={{background: "none"}}>
+      <div
+        className="leaderboard-item d-flex flex-column  w-100 p-0"
+        style={{ background: "none" }}
+      >
         <div className="global-leaderboard-banner d-flex align-items-center justify-content-between w-100 p-3 gap-3">
           <div className="d-flex flex-column">
             <h6 className="global-leaderboard-title mb-0">GLOBAL</h6>
@@ -525,25 +487,46 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
               className="global-leaderboard-title"
               style={{ color: "#F4E27B" }}
             >
-               LEADERBOARD
+              LEADERBOARD
             </h6>
-
           </div>
           <img src={globalIcon} alt="" />
         </div>
         <div className="p-0">
-          <table className="playerTable w-100" style={{position: "relative", top: "-8px"}}>
+          <table
+            className="playerTable w-100"
+            style={{ position: "relative", top: "-8px" }}
+          >
             <tbody>
-              <tr className="playerRow" style={{background: "#0E111E"}}>
-                <th className="playerHeader font-montserrat" style={{lineHeight: "25px"}}>Rank</th>
-                <th className="playerHeader font-montserrat" style={{lineHeight: "25px"}}>Player</th>
-                <th className="playerHeader text-center font-montserrat" style={{lineHeight: "25px"}}>
+              <tr className="playerRow" style={{ background: "#0E111E" }}>
+                <th
+                  className="playerHeader font-montserrat d-flex ms-1"
+                  style={{ lineHeight: "25px" }}
+                >
+                  Rank
+                </th>
+                <th
+                  className="playerHeader font-montserrat"
+                  style={{ lineHeight: "25px" }}
+                >
+                  Player
+                </th>
+                <th
+                  className="playerHeader text-center font-montserrat"
+                  style={{ lineHeight: "25px" }}
+                >
                   Collected Stars
                 </th>
-                <th className="playerHeader text-center font-montserrat" style={{lineHeight: "25px"}}>
+                <th
+                  className="playerHeader text-center font-montserrat"
+                  style={{ lineHeight: "25px" }}
+                >
                   Reward
                 </th>
-                <th className="playerHeader text-center font-montserrat" style={{lineHeight: "25px"}}>
+                <th
+                  className="playerHeader text-center font-montserrat"
+                  style={{ lineHeight: "25px" }}
+                >
                   Extra Rewards
                 </th>
               </tr>
@@ -595,12 +578,24 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
                           ${getFormattedNumber(goldenRewards[item.position], 0)}
-                          <img src={    
-                                                        username ===
-                                                          item.displayName &&
-                                                        isactive === true
-                                                          ? goldenActive
-                                                          : goldenInactive} alt="" />
+                          <HtmlTooltip
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Golden Pass
+                              </span>
+                            }
+                          >
+                            <img
+                              src={
+                                username === item.displayName &&
+                                isactive === true
+                                  ? goldenActive
+                                  : goldenInactive
+                              }
+                              alt=""
+                            />
+                          </HtmlTooltip>
                         </div>
                       </td>
                     </tr>
@@ -655,12 +650,14 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
                           ${getFormattedNumber(goldenRewards[item.position], 0)}
-                          <img src={  
-                                                        username ===
-                                                          item.displayName &&
-                                                        isactive === true
-                                                          ? goldenActive
-                                                          : goldenInactive} alt="" />
+                          <img
+                            src={
+                              username === item.displayName && isactive === true
+                                ? goldenActive
+                                : goldenInactive
+                            }
+                            alt=""
+                          />
                         </div>
                       </td>
                     </tr>

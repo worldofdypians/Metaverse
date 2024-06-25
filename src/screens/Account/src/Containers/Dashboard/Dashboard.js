@@ -5394,7 +5394,11 @@ function Dashboard({
                             />
                           </div>
 
-                          <GlobalLeaderboard />
+                          <GlobalLeaderboard 
+                          genesisData={genesisData}
+                          previousgenesisData={previousgenesisData}
+                          previousGenesisVersion={previousGenesisVersion}
+                          />
                         </div>
                       </OutsideClickHandler>
                     )}
