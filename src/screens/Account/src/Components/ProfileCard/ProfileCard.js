@@ -1231,7 +1231,7 @@ const ProfileCard = ({
                             : "Error"}
                         </button>
                       )}
-                    {email && (
+                    {/* {email && (
                       <button
                         className="logoutbtn px-3 py-1"
                         onClick={onLogoutClick}
@@ -1249,7 +1249,7 @@ const ProfileCard = ({
                           My Portfolio
                         </button>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>

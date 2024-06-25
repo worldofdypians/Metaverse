@@ -1,124 +1,146 @@
-.diagonal-button-wrapper{
-    height: 100%;
-    border-radius: 12px;
-    position: relative;
-    @media screen and (max-width: 786px) {
-        height: 100px;
-    }
+.diagonal-button-wrapper {
+  height: 100%;
+  border-radius: 12px;
+  position: relative;
+  @media screen and (max-width: 786px) {
+    height: 100px;
+  }
 }
 
-.first-diagonal-btn{
-    position: absolute;
-width: 100%;
-left: 0;
-height: 100%;
-background: linear-gradient(90deg, #181b38 0%, #481150 100%);
+.first-diagonal-btn {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #181b38 0%, #481150 100%);
 
-clip-path: polygon(0 0, 25% 0, 75% 100%, 0% 100%);
+  clip-path: polygon(0 0, 25% 0, 75% 100%, 0% 100%);
 
+  border-radius: 12px;
+  transition: all 0.25s ease;
+}
 
-border-radius: 12px;
-transition: all .25s ease;
+.second-diagonal-btn {
+  position: absolute;
+  width: 100%;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #181b38 0%, #1d438d 100%);
+  clip-path: polygon(25% 0, 100% 0, 100% 100%, 75% 100%);
+  border-radius: 12px;
+  transition: all 0.25s ease;
+}
+
+.promotion-img {
+  width: 75px;
+  height: 75px;
+  border-radius: 8px;
+  border: 2px solid #1a1c39;
+  transition: all 0.25s;
+}
+
+.promotion-header {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.promotion-item-title {
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.promotion-item-price {
+  color: #7dd9af;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.promotion-container {
+  border-radius: 10px;
+  background: rgba(83, 84, 115, 0.15);
+  border: 2px solid #080b2a;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  @media screen and (max-width: 786px) {
+    height: fit-content;
+  }
+}
+
+.advertisment-img {
+  height: 120px;
+  border-radius: 10px;
+}
+
+.dashboard-title {
+  color: #f7f7fc;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.leaderboard-flags-wrapper {
+  border-radius: 10px;
+  background: #141a44;
+  background-image: url(./assets/leaderboardsBg.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.flag-wrapper {
+  position: relative;
+  width: 30%;
+  top: -18px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.flag-wrapper:hover {
+  transform: scale(1.1);
+}
+
+// .global-flag,
+// .chains-flag,
+// .land-flag{
+//     transition: all .25s;
+// }
+
+.global-flag:hover {
+  filter: drop-shadow(0px 5px 10px rgba(239, 177, 36, 1));
+}
+.chains-flag:hover {
+  filter: drop-shadow(0px 5px 10px rgba(20, 197, 205, 1));
+}
+.land-flag:hover {
+  filter: drop-shadow(0px 5px 10px rgba(1, 152, 47, 1));
 }
 
 
 
-.second-diagonal-btn{
-    position: absolute;
-width: 100%;
-right: 0;
-height: 100%;
-background: linear-gradient(90deg, #181b38 0%, #1d438d 100%);
-clip-path: polygon(25% 0, 100% 0, 100% 100%, 75% 100%);
-border-radius: 12px;
-transition: all .25s ease;
+.flag-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  height: fit-content;
 }
 
-.promotion-img{
-    width: 75px;
-    height: 75px;
-    border-radius: 8px;
-    border: 2px solid #1a1c39;
-    transition: all .25s;
+.flag-title {
+  color: #f7f7fc;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 10px; /* 125% */
+  text-transform: uppercase;
 }
-
-.promotion-header{
-    color: #fff;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-}
-
-.promotion-item-title{
-    color: #fff;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-}
-
-.promotion-item-price{
-    color: #7dd9af;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-
-}
-
-.promotion-container{
-    @media screen and (max-width: 786px) {
-        height: fit-content;
-    }
-}
-
-.dashboard-title{
-    color: #F7F7FC;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-}
-
-.leaderboard-flags-wrapper{
-    border-radius: 10px;
-    background: #141A44;
-    background-image: url(./assets/leaderboardsBg.png);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-}
-
-.flag-wrapper{
-position: relative;
-width: 30%;
-top: -18px;
-cursor: pointer;
-transition: all .25s;
-}
-
-.flag-wrapper:hover{
-    transform: scale(1.1);
-}
-
-.flag-content{
-position: absolute;
-left: 0;
-top: 0;
-right: 0;
-bottom: 0;
-margin: auto;
-height: fit-content;
-
-}
-
-.flag-title{
-    color: #F7F7FC;
-    text-align: center;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 10px; /* 125% */
-    text-transform: uppercase;
-}
-

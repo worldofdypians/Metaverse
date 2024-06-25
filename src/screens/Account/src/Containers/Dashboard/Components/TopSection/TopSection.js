@@ -14,6 +14,10 @@ import globalIcon from "./assets/globalIcon2.png";
 import landFlag from "./assets/landFlag2.svg";
 import landIcon from "./assets/landIcon.svg";
 import Slider from "react-slick";
+import multiversAd from './assets/multiversAd.png'
+import premiumAd from './assets/premiumAd.png'
+import coreAd from './assets/coreAd.png'
+import victionAd from './assets/victionAd.png'
 import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
 
 const renderer = ({ days, hours, minutes }) => {
@@ -33,8 +37,9 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
     dotsClass: "button__bar",
     infinite: true,
     speed: 1000,
-    // autoplay: true,
-    // autoplaySpeed: 5000,
+    fade: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
     slidesToShow: 1,
     slidesToScroll: 1,
     initialSlide: 0,
@@ -156,21 +161,21 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
             Leaderboards
           </h6>
           <div className="leaderboard-flags-wrapper px-3 d-flex align-items-center justify-content-between" style={{height: "120px"}}>
-            <div className="flag-wrapper" onClick={onOpenGlobalLeaderboard}>
+            <div className="flag-wrapper global-flag" onClick={onOpenGlobalLeaderboard}>
               <img src={globalFlag} className="w-100" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Global</span>
                 <img src={globalIcon} height={60} width={60} alt="" />
               </div>
             </div>
-            <div className="flag-wrapper" onClick={onOpenLeaderboard}>
+            <div className="flag-wrapper chains-flag" onClick={onOpenLeaderboard}>
               <img src={chainsFlag} className="w-100" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Chains</span>
                 <img src={chainsIcon} height={60} width={60} alt="" />
               </div>
             </div>
-            <div className="flag-wrapper" onClick={onOpenGenesisLeaderboard}>
+            <div className="flag-wrapper land-flag" onClick={onOpenGenesisLeaderboard}>
               <img src={landFlag} className="w-100" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Genesis</span>
@@ -182,11 +187,11 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
       </div>
       <div className="col-12 col-lg-8 ps-lg-0 mt-3 mt-lg-0">
         <div className="d-flex flex-column">
-        <h6 className="dashboard-title mb-4">
+        <h6 className="dashboard-title mb-5">
             Today's Promotions
           </h6>
-        <div className="purple-container promotion-container position-relative px-4 px-lg-5 py-3" style={{height: "120px"}}>
-          <div
+        <div className="promotion-container position-relative p-0" style={{height: "120px"}}>
+          {/* <div
             className="prev-arrow-nft"
             onClick={firstPrev}
             style={{
@@ -222,9 +227,9 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
                 margin: "auto",
               }}
             />
-          </div>
+          </div> */}
           <Slider {...settings} ref={slider}>
-            {dummyPromotions.map((item, index) => (
+            {/* {dummyPromotions.map((item, index) => (
               <div
                 key={index}
                 className="d-flex flex-column promotion-height flex-lg-row gap-4 gap-lg-0 align-items-center justify-content-between w-100"
@@ -284,7 +289,11 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
                   </NavLink>
                 </div>
               </div>
-            ))}
+            ))} */}
+            <img src={coreAd} className="advertisment-img" alt="" />
+            <img src={victionAd} className="advertisment-img" alt="" />
+            <img src={premiumAd} className="advertisment-img" alt="" />
+            <img src={multiversAd} className="advertisment-img" alt="" />
           </Slider>
         </div>
         </div>

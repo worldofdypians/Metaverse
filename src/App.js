@@ -173,6 +173,9 @@ function App() {
 
   const [betaModal, setBetaModal] = useState(false);
   const [donwloadSelected, setdownloadSelected] = useState(false);
+
+
+
   const [isConnected, setIsConnected] = useState(false);
   const [coinbase, setCoinbase] = useState();
   const [chainId, setChainId] = useState();
@@ -330,7 +333,7 @@ function App() {
   const [totalvolume, setTotalVolume] = useState(0);
   const [bscAmount, setBscAmount] = useState(0);
   const [skaleAmount, setSkaleAmount] = useState(0);
-
+  
   const location = useLocation();
   const navigate = useNavigate();
   const { BigNumber } = window;
@@ -399,6 +402,9 @@ function App() {
         console.log(e);
       });
   };
+
+
+
 
   const getTokenData = async () => {
     await axios
