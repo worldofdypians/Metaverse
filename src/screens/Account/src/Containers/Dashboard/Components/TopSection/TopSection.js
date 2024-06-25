@@ -127,7 +127,7 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
   };
 
   return (
-    <div className="row">
+    <div className="row align-items-end">
       <div className="col-12 col-lg-4">
         {/* <div className="diagonal-button-wrapper  d-flex align-items-center">
           <div
@@ -157,10 +157,13 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
           </div>
         </div> */}
         <div className="d-flex flex-column">
-          <h6 className="dashboard-title mb-5">
-            Leaderboards
-          </h6>
-          <div className="leaderboard-flags-wrapper px-3 d-flex align-items-center justify-content-between" style={{height: "120px"}}>
+        {/* <h6
+              className="new-bundle-title mb-5"
+            >
+              Leaderboards
+            </h6> */}
+          <div className="leaderboard-flags-wrapper px-3 d-flex align-items-center justify-content-between position-relative" style={{height: "135px"}}>
+            <h6 className="leaderboard-inner-title">Leaderboards</h6>
             <div className="flag-wrapper global-flag" onClick={onOpenGlobalLeaderboard}>
               <img src={globalFlag} className="w-100" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
@@ -187,9 +190,7 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
       </div>
       <div className="col-12 col-lg-8 ps-lg-0 mt-3 mt-lg-0">
         <div className="d-flex flex-column">
-        <h6 className="dashboard-title mb-5">
-            Today's Promotions
-          </h6>
+        
         <div className="promotion-container position-relative p-0" style={{height: "120px"}}>
           {/* <div
             className="prev-arrow-nft"
