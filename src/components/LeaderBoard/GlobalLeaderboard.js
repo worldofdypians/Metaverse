@@ -595,7 +595,12 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
                           ${getFormattedNumber(goldenRewards[item.position], 0)}
-                          <img src={goldenInactive} alt="" />
+                          <img src={    
+                                                        username ===
+                                                          item.displayName &&
+                                                        isactive === true
+                                                          ? goldenActive
+                                                          : goldenInactive} alt="" />
                         </div>
                       </td>
                     </tr>
@@ -650,7 +655,12 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
                           ${getFormattedNumber(goldenRewards[item.position], 0)}
-                          <img src={goldenInactive} alt="" />
+                          <img src={  
+                                                        username ===
+                                                          item.displayName &&
+                                                        isactive === true
+                                                          ? goldenActive
+                                                          : goldenInactive} alt="" />
                         </div>
                       </td>
                     </tr>

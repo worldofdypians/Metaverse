@@ -152,7 +152,7 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
           </div>
         </div> */}
         <div className="d-flex flex-column">
-          <h6 className="dashboard-title mb-4">
+          <h6 className="dashboard-title mb-5">
             Leaderboards
           </h6>
           <div className="leaderboard-flags-wrapper px-3 d-flex align-items-center justify-content-between" style={{height: "120px"}}>

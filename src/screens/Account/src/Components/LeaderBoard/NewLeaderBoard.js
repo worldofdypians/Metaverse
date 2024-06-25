@@ -290,22 +290,19 @@ const NewLeaderBoard = ({
     } else {
       if (selectedChain.id - 1 === 0) {
         setAllData(allBnbData);
-        setOptionText2("bnb")
+        setOptionText2("bnb");
       } else if (selectedChain.id - 1 === 1) {
         setAllData(allSkaleData);
-        setOptionText2("skale")
-      }
-      else if (selectedChain.id - 1 === 2) {
+        setOptionText2("skale");
+      } else if (selectedChain.id - 1 === 2) {
         setAllData(allSkaleData);
-        setOptionText2("core")
-      }
-      else if (selectedChain.id - 1 === 3) {
+        setOptionText2("core");
+      } else if (selectedChain.id - 1 === 3) {
         setAllData(allSkaleData);
-        setOptionText2("sei")
-      }
-      else if (selectedChain.id - 1 === 4) {
+        setOptionText2("sei");
+      } else if (selectedChain.id - 1 === 4) {
         setAllData(allSkaleData);
-        setOptionText2("viction")
+        setOptionText2("viction");
       }
       setSelectedChain(chainItems[selectedChain.id - 1]);
     }
@@ -316,19 +313,19 @@ const NewLeaderBoard = ({
     } else {
       if (selectedChain.id + 1 === 1) {
         setAllData(allSkaleData);
-        setOptionText2("skale")
+        setOptionText2("skale");
       }
       if (selectedChain.id + 1 === 2) {
         setAllData(allSkaleData);
-        setOptionText2("core")
+        setOptionText2("core");
       }
       if (selectedChain.id + 1 === 3) {
         setAllData(allSkaleData);
-        setOptionText2("sei")
+        setOptionText2("sei");
       }
       if (selectedChain.id + 1 === 4) {
         setAllData(allSkaleData);
-        setOptionText2("viction")
+        setOptionText2("viction");
       }
       setSelectedChain(chainItems[selectedChain.id + 1]);
     }
@@ -405,7 +402,6 @@ const NewLeaderBoard = ({
                         ? "move-1"
                         : optionText2 === "core"
                         ? "move-2"
-           
                         : optionText2 === "viction"
                         ? "move-3"
                         : ""
@@ -501,7 +497,6 @@ const NewLeaderBoard = ({
                       onClick={() => {
                         handleOption("core");
                         setAllData(allSkaleData);
-
                       }}
                     >
                       <img
@@ -527,7 +522,7 @@ const NewLeaderBoard = ({
                         ? "CORE"
                         : ""}
                     </span>
-              
+
                     <span
                       onMouseEnter={() => handleMouseEnter("viction")}
                       onMouseLeave={handleMouseLeave}
@@ -541,7 +536,6 @@ const NewLeaderBoard = ({
                       onClick={() => {
                         handleOption("viction");
                         setAllData(allSkaleData);
-
                       }}
                     >
                       <img
@@ -625,7 +619,6 @@ const NewLeaderBoard = ({
               className="d-flex flex-column gap-2 tablewrapper position-relative"
               style={{ height: optionText === "genesis" ? "345px" : "384px" }}
             >
-           
               {optionText !== "genesis" ? (
                 <div className="position-relative">
                   <img
@@ -672,7 +665,7 @@ const NewLeaderBoard = ({
                                 </th>
 
                                 <th className="playerHeader text-center font-montserrat">
-                                {leaderboard.type === "stars"
+                                  {leaderboard.type === "stars"
                                     ? "Stars"
                                     : "Standard"}
                                 </th>
@@ -816,6 +809,7 @@ const NewLeaderBoard = ({
                                                 color: "rgb(243, 192, 9)",
                                               }}
                                             >
+                                              $
                                               {getFormattedNumber(
                                                 leaderboard.premium_rewards[
                                                   index
@@ -823,7 +817,15 @@ const NewLeaderBoard = ({
                                                 0
                                               )}
                                             </span>
-                                            <img src={premiumInactive} alt="" />
+                                            <img
+                                              src={
+                                                isPremium &&
+                                                username === item.displayName
+                                                  ? premiumIcon
+                                                  : premiumInactive
+                                              }
+                                              alt=""
+                                            />
                                           </div>
                                         </td>
                                       ) : (
@@ -850,7 +852,16 @@ const NewLeaderBoard = ({
                                                 0
                                               )}
                                             </span>
-                                            <img src={goldenInactive} alt="" />
+                                            <img
+                                              src={
+                                              
+                                                username === item.displayName &&
+                                                isactive === true
+                                                  ? goldenActive
+                                                  : goldenInactive
+                                              }
+                                              alt=""
+                                            />
                                           </div>
                                         </td>
                                       )}
@@ -999,7 +1010,15 @@ const NewLeaderBoard = ({
                                                 0
                                               )}
                                             </span>
-                                            <img src={premiumInactive} alt="" />
+                                            <img
+                                              src={
+                                                isPremium &&
+                                                username === item.displayName
+                                                  ? premiumIcon
+                                                  : premiumInactive
+                                              }
+                                              alt=""
+                                            />
                                           </div>
                                         </td>
                                       ) : (
@@ -1026,7 +1045,16 @@ const NewLeaderBoard = ({
                                                 0
                                               )}
                                             </span>
-                                            <img src={goldenInactive} alt="" />
+                                            <img
+                                              src={
+                                          
+                                                username === item.displayName &&
+                                                isactive === true
+                                                  ? goldenActive
+                                                  : goldenInactive
+                                              }
+                                              alt=""
+                                            />
                                           </div>
                                         </td>
                                       )}
@@ -1066,14 +1094,16 @@ const NewLeaderBoard = ({
                                           : "col-1"
                                       }`}
                                     >
-                                    {optionText2 === "bnb" || optionText2 === "skale" ? 
-                                    <>
-                                      {parseInt(
-                                        leaderboard.player_data.position
-                                      ) + 1}
-                                    </>  
-                                    : "--"
-                                  }
+                                      {optionText2 === "bnb" ||
+                                      optionText2 === "skale" ? (
+                                        <>
+                                          {parseInt(
+                                            leaderboard.player_data.position
+                                          ) + 1}
+                                        </>
+                                      ) : (
+                                        "--"
+                                      )}
                                     </td>
                                     <td className="playerName col-3 font-montserrat">
                                       <div className="position-relative  d-flex align-items-center">
@@ -1222,6 +1252,7 @@ const NewLeaderBoard = ({
                                             className="leaderboard-text"
                                             style={{ color: "#fff" }}
                                           >
+                                            $
                                             {getFormattedNumber(
                                               leaderboard.rewards[
                                                 leaderboard.player_data.position
@@ -1236,7 +1267,10 @@ const NewLeaderBoard = ({
                                           </span>
                                           <img
                                             src={
-                                              isPremium
+                                              isPremium &&
+                                              username ===
+                                                leaderboard.player_data
+                                                  .displayName
                                                 ? premiumIcon
                                                 : premiumInactive
                                             }
@@ -1271,7 +1305,18 @@ const NewLeaderBoard = ({
                                               0
                                             )}
                                           </span>
-                                          <img src={goldenInactive} alt="" />
+                                          <img
+                                            src={
+                                          
+                                              username ===
+                                                leaderboard.player_data
+                                                  .displayName &&
+                                              isactive === true
+                                                ? goldenActive
+                                                : goldenInactive
+                                            }
+                                            alt=""
+                                          />
                                         </div>
                                       </td>
                                     )}
