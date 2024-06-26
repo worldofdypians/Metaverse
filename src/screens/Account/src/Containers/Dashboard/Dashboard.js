@@ -889,11 +889,11 @@ function Dashboard({
   const [prevDataCore, setPrevDataCore] = useState([]);
   const [prevDataCoreWeekly, setPrevDataCoreWeekly] = useState([]);
   const [prevDataCoreMonthly, setPrevDataCoreMonthly] = useState([]);
-  const [prevVersionCore, setPrevVersionCore] = useState(0)
-  const [prevVersionCoreWeekly, setPrevVersionCoreWeekly] = useState(0)
+  const [prevVersionCore, setPrevVersionCore] = useState(0);
+  const [prevVersionCoreWeekly, setPrevVersionCoreWeekly] = useState(0);
   const [prevVersionCoreMonthly, setPrevVersionCoreMonthly] = useState(0);
-  const [dailyDataAmountCore, setDailyDataAmountCore] = useState([])
-  const [weeklyDataAmountCore, setWeeklyDataAmountCore] = useState([])
+  const [dailyDataAmountCore, setDailyDataAmountCore] = useState([]);
+  const [weeklyDataAmountCore, setWeeklyDataAmountCore] = useState([]);
   const [monthlyDataAmountCore, setMonthlyDataAmountCore] = useState([]);
   const [userRankCore, setUserRankCore] = useState("");
   const [userCoreScore, setUserCoreScore] = useState(0);
@@ -901,8 +901,10 @@ function Dashboard({
   const [weeklyRecordsViction, setWeeklyRecordsViction] = useState([]);
   const [monthlyRecordsViction, setMonthlyRecordsViction] = useState([]);
   const [activePlayerViction, setActivePlayerViction] = useState(false);
-  const [activePlayerVictionWeekly, setActivePlayerVictionWeekly] = useState(false);
-  const [activePlayerVictionMonthly, setActivePlayerVictionMonthly] = useState(false);
+  const [activePlayerVictionWeekly, setActivePlayerVictionWeekly] =
+    useState(false);
+  const [activePlayerVictionMonthly, setActivePlayerVictionMonthly] =
+    useState(false);
   const [userDataViction, setUserDataViction] = useState({});
   const [userDataVictionWeekly, setUserDataVictionWeekly] = useState({});
   const [userDataVictionMonthly, setUserDataVictionMonthly] = useState({});
@@ -1088,6 +1090,7 @@ function Dashboard({
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecordsCore(result.data.data.leaderboard);
     setPrevVersionCoreWeekly(result.data.data.version);
+
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -1303,7 +1306,6 @@ function Dashboard({
     }
   };
 
-
   const fillRecordsViction = (itemData) => {
     if (itemData.length === 0) {
       setDailyRecordsViction(placeholderplayerData);
@@ -1348,7 +1350,7 @@ function Dashboard({
       );
       setPrevDataViction(result.data.data.leaderboard);
     }
-  
+
     // setdailyplayerData(result.data.data.leaderboard);
   };
   const fetchPreviousWeeklyWinnersViction = async () => {
@@ -1363,7 +1365,7 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-  
+
       setPrevDataVictionWeekly(result.data.data.leaderboard);
     }
   };
@@ -1379,7 +1381,7 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-  
+
       setPrevDataVictionMonthly(result.data.data.leaderboard);
     }
   };
@@ -1416,7 +1418,7 @@ function Dashboard({
       (item) => item.displayName === username
     );
     fillRecordsWeeklyViction(result.data.data.leaderboard);
-  
+
     if (testArray.length > 0) {
       setActivePlayerVictionWeekly(true);
     }
@@ -1441,7 +1443,7 @@ function Dashboard({
       setActivePlayerVictionMonthly(true);
     }
     fillRecordsMonthlyViction(result.data.data.leaderboard);
-  
+
     if (testArray.length === 0) {
       setActivePlayerVictionMonthly(false);
       fetchMonthlyRecordsAroundPlayerViction(result.data.data.leaderboard);
@@ -1461,9 +1463,9 @@ function Dashboard({
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
-  
+
       const userPosition = testArray[0].position;
-  
+
       if (goldenPassRemainingTime) {
         setDailyDataAmountViction(
           testArray[0].statValue !== 0
@@ -1486,12 +1488,12 @@ function Dashboard({
             : 0
         );
       }
-  
+
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
           (item) => item.displayName === username
         );
-  
+
         if (testArray.length > 0 && testArray2.length > 0) {
           setActivePlayerViction(true);
           setUserDataViction([]);
@@ -1519,7 +1521,7 @@ function Dashboard({
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
-  
+
       const userPosition = testArray[0].position;
       if (goldenPassRemainingTime) {
         setWeeklyDataAmountViction(
@@ -1543,12 +1545,12 @@ function Dashboard({
             : 0
         );
       }
-  
+
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
           (item) => item.displayName === username
         );
-  
+
         if (testArray.length > 0 && testArray2.length > 0) {
           setActivePlayerVictionWeekly(true);
           setUserDataVictionWeekly([]);
@@ -1562,7 +1564,7 @@ function Dashboard({
       }
     }
   };
-  
+
   const fetchMonthlyRecordsAroundPlayerViction = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardVictionMonthly",
@@ -1574,14 +1576,14 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-  
+
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
-  
+
       const userPosition = testArray[0].position;
       // console.log(userPosition)
-  
+
       if (goldenPassRemainingTime) {
         setMonthlyDataAmountViction(
           testArray[0].statValue !== 0
@@ -1604,15 +1606,15 @@ function Dashboard({
             : 0
         );
       }
-  
+
       setUserRankViction(testArray[0].position);
       setUserVictionScore(testArray[0].statValue);
-  
+
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
           (item) => item.displayName === username
         );
-  
+
         if (testArray.length > 0 && testArray2.length > 0) {
           setActivePlayerVictionMonthly(true);
           setUserDataVictionMonthly([]);
@@ -1626,9 +1628,6 @@ function Dashboard({
       }
     }
   };
-
-
-
 
   const fillRecordsDaily = (itemData) => {
     if (itemData.length === 0) {
@@ -1741,6 +1740,7 @@ function Dashboard({
   };
 
   const fetchPreviousSkaleRecords = async () => {
+    console.log("skalepreviousVersion", skalepreviousVersion);
     if (skalepreviousVersion != 0) {
       const data = {
         StatisticName: "LeaderboardSkaleWeekly",
@@ -1748,15 +1748,16 @@ function Dashboard({
         MaxResultsCount: 10,
         Version: skalepreviousVersion - 1,
       };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard`,
-        data
-      );
-      // setpreviousVersion(parseInt(result.data.data.version));
-      // console.log(result.data.data.leaderboard)
-      setskalePreviousRecords(result.data.data.leaderboard);
-      fillPreviousRecordsSkale(result.data.data.leaderboard);
-      fetchSkaleRecordsMonthlyAroundPlayer(result.data.data.leaderboard);
+      const result = await axios
+        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
+        .catch((e) => {
+          console.error(e, skalepreviousVersion);
+        });
+      if (result && result.status === 200) {
+        setskalePreviousRecords(result.data.data.leaderboard);
+        fillPreviousRecordsSkale(result.data.data.leaderboard);
+        fetchSkaleRecordsMonthlyAroundPlayer(result.data.data.leaderboard);
+      }
     }
   };
 
@@ -2027,7 +2028,7 @@ function Dashboard({
         Version: skalepreviousVersion - 1,
       };
       const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard`,
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
       // setpreviousVersion(parseInt(result.data.data.version));
@@ -2072,7 +2073,7 @@ function Dashboard({
     fetchMonthlyRecordsViction();
     fetchSkaleRecords();
     fetchSkaleRecordsMonthly();
-  }, [username, userId]);
+  }, [username,count, userId]);
 
   useEffect(() => {
     fetchGenesisPreviousWinners();
@@ -2314,7 +2315,6 @@ function Dashboard({
     userDataVictionMonthly,
   ]);
 
-
   const handleSetAvailableTime = (value) => {
     setGoldenPassRemainingTime(value);
   };
@@ -2405,10 +2405,6 @@ function Dashboard({
       }
     }
   };
-
-
-
-
 
   const fetchSkalePrice = async () => {
     await axios
@@ -4922,8 +4918,6 @@ function Dashboard({
     fetchVictionPrice();
   }, []);
 
-
-
   useEffect(() => {
     if (
       data &&
@@ -5147,19 +5141,31 @@ function Dashboard({
         data.getPlayer.playerId,
         data.getPlayer.displayName
       );
+      fetchDailyRecordsAroundPlayerCore(dailyRecordsCore);
+      fetchWeeklyRecordsAroundPlayerCore(weeklyRecordsCore);
+      fetchMonthlyRecordsAroundPlayerCore(monthlyRecordsCore);
+      fetchDailyRecordsAroundPlayerViction(dailyRecordsViction);
+      fetchWeeklyRecordsAroundPlayerViction(weeklyRecordsViction);
+      fetchMonthlyRecordsAroundPlayerViction(monthlyRecordsViction);
     }
   }, [
     data,
     email,
     weeklyrecords,
     skaleRecords,
-    count,
+    
     goldenPassRemainingTime,
     monthlyrecords,
     dailyrecords,
     userId,
     username,
     isPremium,
+    dailyRecordsCore,
+    weeklyRecordsCore,
+    monthlyRecordsCore,
+    dailyRecordsViction,
+    weeklyRecordsViction,
+    monthlyRecordsViction,
   ]);
 
   useEffect(() => {
@@ -5339,7 +5345,6 @@ function Dashboard({
                         userCoreScore={userCoreScore}
                         userRankViction={userRankViction}
                         userVictionScore={userVictionScore}
-
                         userSkaleScore={userSkaleScore}
                         genesisRank={genesisRank}
                         email={email}
@@ -5827,11 +5832,11 @@ function Dashboard({
                             />
                           </div>
 
-                          <GlobalLeaderboard 
-                          genesisData={genesisData}
-                          previousgenesisData={previousgenesisData}
-                          previousGenesisVersion={previousGenesisVersion}
-                          screen={"dash"}
+                          <GlobalLeaderboard
+                            genesisData={genesisData}
+                            previousgenesisData={previousgenesisData}
+                            previousGenesisVersion={previousGenesisVersion}
+                            screen={"dash"}
                           />
                         </div>
                       </OutsideClickHandler>
@@ -7236,7 +7241,3 @@ function Dashboard({
 }
 
 export default Dashboard;
-
-
-
-

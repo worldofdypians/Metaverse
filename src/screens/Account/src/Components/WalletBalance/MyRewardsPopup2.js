@@ -1198,7 +1198,7 @@ bnbEarnToken,
                     : getFormattedNumber( Number(skaleplayerDataAmount), 2)}
                 </span>
               </div>
-              {/* <div className="d-flex w-100 justify-content-between gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CORE</span>
                 <span className="item-name-right">
                   $
@@ -1207,15 +1207,7 @@ bnbEarnToken,
                     : getFormattedNumber(0, 2)}
                 </span>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">Viction</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(0, 2)}
-                </span>
-              </div> */}
+             
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
@@ -1228,7 +1220,17 @@ bnbEarnToken,
                     : getFormattedNumber(genesisRank2, 2)}
                 </span>
               </div>
+           
               <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Viction</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(0, 2)}
+                </span>
+              </div>
+                 <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Kitty Dash</span>
                 <span className="item-name-right">
                   $
