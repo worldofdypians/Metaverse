@@ -759,6 +759,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
               genesisData={genesisData}
               previousgenesisData={previousgenesisData}
               previousGenesisVersion={previousGenesisVersion}
+              screen={"home"}
             />
             {/* <NewHomeLeaderboard /> */}
           </div>

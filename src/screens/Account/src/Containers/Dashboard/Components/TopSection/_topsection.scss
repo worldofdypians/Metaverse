@@ -117,7 +117,7 @@
   filter: drop-shadow(0px 5px 10px rgba(239, 177, 36, 1));
 }
 .chains-flag:hover {
-  filter: drop-shadow(0px 5px 10px rgba(20, 197, 205, 1));
+  filter: drop-shadow(0px 5px 10px rgba(20, 197, 205, 0.3));
 }
 .land-flag:hover {
   filter: drop-shadow(0px 5px 10px rgba(1, 152, 47, 1));
@@ -147,18 +147,18 @@
 
 @-webkit-keyframes glowText {
   from {
-    text-shadow: 0 0 2.5px #fff, 0 0 5px #fff, 0 0 7.5px rgba(20, 197, 205, 1), 0 0 10px rgba(20, 197, 205, 1), 0 0 12.5px rgba(20, 197, 205, 1), 0 0 15px rgba(20, 197, 205, 1), 0 0 17.5px rgba(20, 197, 205, 1);
+    text-shadow: 0 0 20 #fff, 0 0 20 #fff, 0 0 20 rgba(20, 197, 205, 0.3), 0 0 20 rgba(20, 197, 205, 0.3), 0 0 12.5px rgba(20, 197, 205, 0.3), 0 0 15px rgba(20, 197, 205, 0.3), 0 0 17.5px rgba(20, 197, 205, 0.3);
   }
   to {
-    text-shadow: 0 0 20px #fff, 0 0 7.5px rgba(20, 197, 205, 1), 0 0 10px rgba(20, 197, 205, 1), 0 0 12.5px rgba(20, 197, 205, 1), 0 0 15px rgba(20, 197, 205, 1), 0 0 17.5px rgba(20, 197, 205, 1), 0 0 20px rgba(20, 197, 205, 1);
+    text-shadow: 0 0 20px #fff, 0 0 7.5px rgba(20, 197, 205, 0.3), 0 0 10px rgba(20, 197, 205, 0.3), 0 0 12.5px rgba(20, 197, 205, 0.3), 0 0 15px rgba(20, 197, 205, 0.3), 0 0 17.5px rgba(20, 197, 205, 0.3), 0 0 20px rgba(20, 197, 205, 0.3);
   }
 }
 @keyframes glowText {
   from {
-    text-shadow: 0 0 2.5px #fff, 0 0 5px #fff, 0 0 7.5px rgba(20, 197, 205, 1), 0 0 10px rgba(20, 197, 205, 1), 0 0 12.5px rgba(20, 197, 205, 1), 0 0 15px rgba(20, 197, 205, 1), 0 0 17.5px rgba(20, 197, 205, 1);
+    text-shadow: 0 0 20 #fff, 0 0 20 #fff, 0 0 20 rgba(20, 197, 205, 0.3), 0 0 20 rgba(20, 197, 205, 0.3), 0 0 12.5px rgba(20, 197, 205, 0.3), 0 0 15px rgba(20, 197, 205, 0.3), 0 0 17.5px rgba(20, 197, 205, 0.3);
   }
   to {
-    text-shadow: 0 0 20px #fff, 0 0 7.5px rgba(20, 197, 205, 1), 0 0 10px rgba(20, 197, 205, 1), 0 0 12.5px rgba(20, 197, 205, 1), 0 0 15px rgba(20, 197, 205, 1), 0 0 17.5px rgba(20, 197, 205, 1), 0 0 20px rgba(20, 197, 205, 1);
+    text-shadow: 0 0 20px #fff, 0 0 7.5px rgba(20, 197, 205, 0.3), 0 0 10px rgba(20, 197, 205, 0.3), 0 0 12.5px rgba(20, 197, 205, 0.3), 0 0 15px rgba(20, 197, 205, 0.3), 0 0 17.5px rgba(20, 197, 205, 0.3), 0 0 20px rgba(20, 197, 205, 0.3);
   }
 }
 

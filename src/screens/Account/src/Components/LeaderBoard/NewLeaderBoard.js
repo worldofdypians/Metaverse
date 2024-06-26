@@ -53,6 +53,7 @@ import victionWhite from "./assets/victionWhite.svg";
 import coreWhite from "./assets/coreWhite.svg";
 import skaleWhite from "./assets/skaleWhite.svg";
 import seiWhite from "./assets/seiWhite.svg";
+import { Tooltip, styled, tooltipClasses } from "@mui/material";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -75,6 +76,20 @@ const renderer = ({ hours, minutes, seconds }) => {
   );
 };
 
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "150px !important",
+    display:"flex",
+    justifyContent:"center",
+    minWidth: "90px !important",
+    fontSize: theme.typography.pxToRem(12),
+  },
+}));
+
 const NewLeaderBoard = ({
   username,
   userId,
@@ -89,8 +104,13 @@ const NewLeaderBoard = ({
   monthlyplayerData,
   genesisData,
   allBnbData,
+  allCoreData,
   allSkaleData,
+  allVictionData,
 }) => {
+
+
+
   const chainItems = [
     {
       title: "BNB Chain",
@@ -295,13 +315,13 @@ const NewLeaderBoard = ({
         setAllData(allSkaleData);
         setOptionText2("skale");
       } else if (selectedChain.id - 1 === 2) {
-        setAllData(allSkaleData);
+        setAllData(allCoreData);
         setOptionText2("core");
       } else if (selectedChain.id - 1 === 3) {
         setAllData(allSkaleData);
         setOptionText2("sei");
       } else if (selectedChain.id - 1 === 4) {
-        setAllData(allSkaleData);
+        setAllData(allVictionData);
         setOptionText2("viction");
       }
       setSelectedChain(chainItems[selectedChain.id - 1]);
@@ -316,7 +336,7 @@ const NewLeaderBoard = ({
         setOptionText2("skale");
       }
       if (selectedChain.id + 1 === 2) {
-        setAllData(allSkaleData);
+        setAllData(allCoreData);
         setOptionText2("core");
       }
       if (selectedChain.id + 1 === 3) {
@@ -324,7 +344,7 @@ const NewLeaderBoard = ({
         setOptionText2("sei");
       }
       if (selectedChain.id + 1 === 4) {
-        setAllData(allSkaleData);
+        setAllData(allVictionData);
         setOptionText2("viction");
       }
       setSelectedChain(chainItems[selectedChain.id + 1]);
@@ -496,7 +516,7 @@ const NewLeaderBoard = ({
                       style={{ width: "25%" }}
                       onClick={() => {
                         handleOption("core");
-                        setAllData(allSkaleData);
+                        setAllData(allCoreData);
                       }}
                     >
                       <img
@@ -535,7 +555,7 @@ const NewLeaderBoard = ({
                       style={{ width: "25%" }}
                       onClick={() => {
                         handleOption("viction");
-                        setAllData(allSkaleData);
+                        setAllData(allVictionData);
                       }}
                     >
                       <img
@@ -701,20 +721,14 @@ const NewLeaderBoard = ({
                                               className="playerAvatar"
                                             />
                                             <span>
-                                              {optionText2 === "bnb" ||
-                                              optionText2 === "skale" ? (
-                                                <>
-                                                  {" "}
+                                            {" "}
                                                   {item.displayName?.slice(
                                                     0,
                                                     10
                                                   )}
                                                   {item.displayName?.length >
                                                     10 && "..."}
-                                                </>
-                                              ) : (
-                                                "--"
-                                              )}
+                                           
                                             </span>
                                           </div>
                                         ) : (
@@ -724,32 +738,21 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />
-                                            {optionText2 === "bnb" ||
-                                            optionText2 === "skale" ? (
-                                              <>
-                                                {" "}
+                                             {" "}
                                                 {item.displayName?.slice(0, 10)}
                                                 {item.displayName?.length >
                                                   10 && "..."}
-                                              </>
-                                            ) : (
-                                              "--"
-                                            )}
+                                       
                                           </div>
                                         )}
                                       </td>
                                       <td className="playerScore col-2 text-center font-montserrat">
-                                        {optionText2 === "bnb" ||
-                                        optionText2 === "skale" ? (
-                                          <>
-                                            {getFormattedNumber(
+                                        
+                                      {getFormattedNumber(
                                               item.statValue,
                                               0
                                             )}
-                                          </>
-                                        ) : (
-                                          "--"
-                                        )}
+                                      
                                       </td>
                                       {leaderboard.type === "stars" ? (
                                         <td
@@ -809,7 +812,7 @@ const NewLeaderBoard = ({
                                                 color: "rgb(243, 192, 9)",
                                               }}
                                             >
-                                              $
+                                              +
                                               {getFormattedNumber(
                                                 leaderboard.premium_rewards[
                                                   index
@@ -817,7 +820,15 @@ const NewLeaderBoard = ({
                                                 0
                                               )}
                                             </span>
-                                            <img
+                                            <HtmlTooltip
+                                            placement="top"
+                                            title={
+                                              <span className="card-eth-chain-text">
+                                                Premium
+                                              </span>
+                                            }
+                                          >
+                                         <img
                                               src={
                                                 isPremium &&
                                                 username === item.displayName
@@ -826,6 +837,8 @@ const NewLeaderBoard = ({
                                               }
                                               alt=""
                                             />
+                                          </HtmlTooltip>
+                                          
                                           </div>
                                         </td>
                                       ) : (
@@ -836,15 +849,15 @@ const NewLeaderBoard = ({
                                               : "playerReward"
                                           }`}
                                         >
-                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
+                                          <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1">
                                             <span
                                               className="leaderboard-text"
                                               style={{
                                                 color: "rgb(243, 192, 9)",
-                                                width: 35,
+                                                // width: 35,
                                               }}
                                             >
-                                              $
+                                              +$
                                               {getFormattedNumber(
                                                 leaderboard.premium_rewards[
                                                   index
@@ -852,16 +865,25 @@ const NewLeaderBoard = ({
                                                 0
                                               )}
                                             </span>
-                                            <img
-                                              src={
-                                              
-                                                username === item.displayName &&
-                                                isactive === true
-                                                  ? goldenActive
-                                                  : goldenInactive
+                                            <HtmlTooltip
+                                              placement="top"
+                                              title={
+                                                <span className="card-eth-chain-text">
+                                                  Golden Pass
+                                                </span>
                                               }
-                                              alt=""
-                                            />
+                                            >
+                                              <img
+                                                src={
+                                                  username ===
+                                                    item.displayName &&
+                                                  isactive === true
+                                                    ? goldenActive
+                                                    : goldenInactive
+                                                }
+                                                alt=""
+                                              />
+                                            </HtmlTooltip>
                                           </div>
                                         </td>
                                       )}
@@ -895,20 +917,14 @@ const NewLeaderBoard = ({
                                               className="playerAvatar"
                                             />
                                             <span>
-                                              {optionText2 === "bnb" ||
-                                              optionText2 === "skale" ? (
-                                                <>
-                                                  {" "}
+                                            {" "}
                                                   {item.displayName?.slice(
                                                     0,
                                                     10
                                                   )}
                                                   {item.displayName?.length >
                                                     10 && "..."}
-                                                </>
-                                              ) : (
-                                                "--"
-                                              )}
+                                           
                                             </span>
                                           </div>
                                         ) : (
@@ -918,32 +934,20 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />
-                                            {optionText2 === "bnb" ||
-                                            optionText2 === "skale" ? (
-                                              <>
-                                                {" "}
+                                              {" "}
                                                 {item.displayName?.slice(0, 10)}
                                                 {item.displayName?.length >
                                                   10 && "..."}
-                                              </>
-                                            ) : (
-                                              "--"
-                                            )}
+                                           
                                           </div>
                                         )}
                                       </td>
                                       <td className="playerScore col-2 text-center font-montserrat">
-                                        {optionText2 === "bnb" ||
-                                        optionText2 === "skale" ? (
-                                          <>
-                                            {getFormattedNumber(
+                                      {getFormattedNumber(
                                               item.statValue,
                                               0
                                             )}
-                                          </>
-                                        ) : (
-                                          "--"
-                                        )}
+                                       
                                       </td>
                                       {leaderboard.type === "stars" ? (
                                         <td
@@ -1003,6 +1007,7 @@ const NewLeaderBoard = ({
                                                 color: "rgb(243, 192, 9)",
                                               }}
                                             >
+                                              +
                                               {getFormattedNumber(
                                                 leaderboard.premium_rewards[
                                                   index
@@ -1010,7 +1015,15 @@ const NewLeaderBoard = ({
                                                 0
                                               )}
                                             </span>
-                                            <img
+                                            <HtmlTooltip
+                                            placement="top"
+                                            title={
+                                              <span className="card-eth-chain-text">
+                                                Premium
+                                              </span>
+                                            }
+                                          >
+                                         <img
                                               src={
                                                 isPremium &&
                                                 username === item.displayName
@@ -1019,6 +1032,7 @@ const NewLeaderBoard = ({
                                               }
                                               alt=""
                                             />
+                                          </HtmlTooltip>
                                           </div>
                                         </td>
                                       ) : (
@@ -1029,15 +1043,15 @@ const NewLeaderBoard = ({
                                               : "playerReward"
                                           }`}
                                         >
-                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-3 gap-1">
+                                          <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1">
                                             <span
                                               className="leaderboard-text"
                                               style={{
                                                 color: "rgb(243, 192, 9)",
-                                                width: 35,
+                                                // width: 35,
                                               }}
                                             >
-                                              $
+                                              +$
                                               {getFormattedNumber(
                                                 leaderboard.premium_rewards[
                                                   index
@@ -1045,16 +1059,25 @@ const NewLeaderBoard = ({
                                                 0
                                               )}
                                             </span>
-                                            <img
-                                              src={
-                                          
-                                                username === item.displayName &&
-                                                isactive === true
-                                                  ? goldenActive
-                                                  : goldenInactive
+                                            <HtmlTooltip
+                                              placement="top"
+                                              title={
+                                                <span className="card-eth-chain-text">
+                                                  Golden Pass
+                                                </span>
                                               }
-                                              alt=""
-                                            />
+                                            >
+                                              <img
+                                                src={
+                                                  username ===
+                                                    item.displayName &&
+                                                  isactive === true
+                                                    ? goldenActive
+                                                    : goldenInactive
+                                                }
+                                                alt=""
+                                              />
+                                            </HtmlTooltip>
                                           </div>
                                         </td>
                                       )}
@@ -1094,16 +1117,10 @@ const NewLeaderBoard = ({
                                           : "col-1"
                                       }`}
                                     >
-                                      {optionText2 === "bnb" ||
-                                      optionText2 === "skale" ? (
-                                        <>
-                                          {parseInt(
+                                       {parseInt(
                                             leaderboard.player_data.position
                                           ) + 1}
-                                        </>
-                                      ) : (
-                                        "--"
-                                      )}
+                                      
                                     </td>
                                     <td className="playerName col-3 font-montserrat">
                                       <div className="position-relative  d-flex align-items-center">
@@ -1123,10 +1140,7 @@ const NewLeaderBoard = ({
                                               className="premium-star"
                                             />
                                             <span>
-                                              {optionText2 === "bnb" ||
-                                              optionText2 === "skale" ? (
-                                                <>
-                                                  {" "}
+                                            {" "}
                                                   {leaderboard.player_data.displayName?.slice(
                                                     0,
                                                     13
@@ -1134,10 +1148,7 @@ const NewLeaderBoard = ({
                                                   {leaderboard.player_data
                                                     .displayName?.length > 13 &&
                                                     "..."}
-                                                </>
-                                              ) : (
-                                                "--"
-                                              )}
+                                       
                                             </span>
                                           </div>
                                         ) : (
@@ -1147,10 +1158,7 @@ const NewLeaderBoard = ({
                                               alt=""
                                               className="playerAvatar"
                                             />
-                                            {optionText2 === "bnb" ||
-                                            optionText2 === "skale" ? (
-                                              <>
-                                                {" "}
+                                             {" "}
                                                 {leaderboard.player_data.displayName?.slice(
                                                   0,
                                                   13
@@ -1158,26 +1166,17 @@ const NewLeaderBoard = ({
                                                 {leaderboard.player_data
                                                   .displayName?.length > 13 &&
                                                   "..."}
-                                              </>
-                                            ) : (
-                                              "--"
-                                            )}
+                                            
                                           </>
                                         )}
                                       </div>
                                     </td>
                                     <td className="playerScore col-2 text-center font-montserrat">
-                                      {optionText2 === "bnb" ||
-                                      optionText2 === "skale" ? (
-                                        <>
-                                          {getFormattedNumber(
+                                    {getFormattedNumber(
                                             leaderboard.player_data.statValue,
                                             0
                                           )}
-                                        </>
-                                      ) : (
-                                        "--"
-                                      )}
+                                     
                                     </td>
                                     {leaderboard.type === "stars" ? (
                                       <td
@@ -1252,7 +1251,7 @@ const NewLeaderBoard = ({
                                             className="leaderboard-text"
                                             style={{ color: "#fff" }}
                                           >
-                                            $
+                                            +
                                             {getFormattedNumber(
                                               leaderboard.rewards[
                                                 leaderboard.player_data.position
@@ -1265,17 +1264,24 @@ const NewLeaderBoard = ({
                                               0
                                             )}
                                           </span>
-                                          <img
-                                            src={
-                                              isPremium &&
-                                              username ===
-                                                leaderboard.player_data
-                                                  .displayName
-                                                ? premiumIcon
-                                                : premiumInactive
+                                          <HtmlTooltip
+                                            placement="top"
+                                            title={
+                                              <span className="card-eth-chain-text">
+                                                Premium
+                                              </span>
                                             }
-                                            alt=""
-                                          />
+                                          >
+                                         <img
+                                              src={
+                                                isPremium &&
+                                                username === leaderboard.player_data.displayName
+                                                  ? premiumIcon
+                                                  : premiumInactive
+                                              }
+                                              alt=""
+                                            />
+                                          </HtmlTooltip>
                                         </div>
                                       </td>
                                     ) : (
@@ -1292,7 +1298,7 @@ const NewLeaderBoard = ({
                                             className="leaderboard-text"
                                             style={{ color: "#fff" }}
                                           >
-                                            $
+                                            +$
                                             {getFormattedNumber(
                                               leaderboard.rewards[
                                                 leaderboard.player_data.position
@@ -1305,18 +1311,24 @@ const NewLeaderBoard = ({
                                               0
                                             )}
                                           </span>
-                                          <img
-                                            src={
-                                          
-                                              username ===
-                                                leaderboard.player_data
-                                                  .displayName &&
-                                              isactive === true
-                                                ? goldenActive
-                                                : goldenInactive
+                                          <HtmlTooltip
+                                            placement="top"
+                                            title={
+                                              <span className="card-eth-chain-text">
+                                                Golden Pass
+                                              </span>
                                             }
-                                            alt=""
-                                          />
+                                          >
+                                            <img
+                                              src={
+                                                username === leaderboard.player_data.displayName &&
+                                                isactive === true
+                                                  ? goldenActive
+                                                  : goldenInactive
+                                              }
+                                              alt=""
+                                            />
+                                          </HtmlTooltip>
                                         </div>
                                       </td>
                                     )}
