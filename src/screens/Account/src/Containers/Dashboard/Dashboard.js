@@ -323,6 +323,8 @@ function Dashboard({
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
   const [MyNFTSBNB, setMyNFTSBNB] = useState([]);
+  const [MyNFTSopBNB, setMyNFTSopBNB] = useState([]);
+
 
   const [MyNFTSLandBNB, setMyNFTSLandBNB] = useState([]);
   const [MyNFTSCawsBNB, setMyNFTSCawsBNB] = useState([]);
@@ -3374,6 +3376,11 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "bnb").then((NFTS) =>
       setMyNFTSBNB(NFTS)
     );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "opbnb").then((NFTS) =>
+      setMyNFTSopBNB(NFTS)
+    );
+
     // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
     //   (NFTS) => setMyNFTSLandBNB(NFTS)
     // );
@@ -5274,6 +5281,7 @@ function Dashboard({
                       myCawsOldCollected={MyNFTSCawsOld}
                       myLandCollected={MyNFTSLand}
                       myNFTSBNB={MyNFTSBNB}
+                      myNFTSopBNB={MyNFTSopBNB}
                       myTimepieceCollected={MyNFTSTimepiece}
                       landStaked={landstakes}
                       myCawsWodStakes={myCawsWodStakesAll}

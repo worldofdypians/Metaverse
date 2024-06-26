@@ -71,7 +71,8 @@ const WalletBalance = ({
   dypBalancebnb,
   dypBalanceavax,
   isVerified,
-  email,myNFTSBNB,
+  email,
+  myNFTSBNB,
   // handleConnectWallet,
   handleShowWalletPopup,
   idypBalance,
@@ -112,6 +113,7 @@ const WalletBalance = ({
   MyNFTSCawsAvax,
   MyNFTSLandBase,
   MyNFTSCawsBase,
+  myNFTSopBNB,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -461,6 +463,7 @@ const WalletBalance = ({
     let landBaseArray = [];
     let skaleNftsArray = [];
     let bnbNftsArray = [];
+    let opbnbNftsArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -540,6 +543,22 @@ const WalletBalance = ({
               tokenId: i,
               type: "bnb",
               chain: 56,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (myNFTSopBNB && myNFTSopBNB.length > 0) {
+        await Promise.all(
+          myNFTSopBNB.map(async (i) => {
+            opbnbNftsArray.push({
+              nftAddress: window.config.nft_opbnb_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "opbnb",
+              chain: 204,
               isStaked: false,
               isListed: false,
             });
@@ -925,14 +944,9 @@ const WalletBalance = ({
       setmyNftsOffer(recievedOffers);
 
       finalCollection = [
-        ...cawsAvaxArray,
-        ...cawsBnbArray,
-        ...cawsBaseArray,
-        ...landAvaxArray,
-        ...landBnbArray,
-        ...landBaseArray,
         ...bnbNftsArray,
-        ...coingeckoNftsArray,
+        ...opbnbNftsArray,
+
         ...victionNftsArray,
         ...coreNftsArray,
         ...confluxNftsArray,
@@ -945,6 +959,13 @@ const WalletBalance = ({
         ...finalLandArray,
         ...finalCawsArray,
         ...stakeArray,
+        ...coingeckoNftsArray,
+        ...cawsAvaxArray,
+        ...cawsBnbArray,
+        ...cawsBaseArray,
+        ...landAvaxArray,
+        ...landBnbArray,
+        ...landBaseArray,
       ];
 
       setcollectedItems(finalCollection);
@@ -1149,6 +1170,10 @@ const WalletBalance = ({
         (item) => item.nftAddress === window.config.nft_bnb_address
       );
 
+      let opbnbFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_opbnb_address
+      );
+
       let coreFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_core_address
       );
@@ -1167,8 +1192,8 @@ const WalletBalance = ({
         ...skaleFilter,
         ...victionFilter,
         ...coreFilter,
-        ...bnbFilter
-
+        ...bnbFilter,
+        ...opbnbFilter,
       ];
       setcollectedItemsFiltered(allBetapassArray);
     } else if (filter1 === "timepiece" && filter2 === "all") {
@@ -1921,6 +1946,8 @@ const WalletBalance = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
                                   : item.type === "bnb"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
+                                  : item.type === "opbnb"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+50.png`
                                   : item.type === "cmc"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
                                   : item.type === "core"
@@ -1970,6 +1997,8 @@ const WalletBalance = ({
                                   ? "GTBP"
                                   : item.type === "bnb"
                                   ? "BNBBP"
+                                  : item.type === "opbnb"
+                                  ? "opBNBBP"
                                   : "Timepiece"}{" "}
                                 #{item.tokenId}
                               </h6>
@@ -2918,17 +2947,20 @@ const WalletBalance = ({
                                   window.config.nft_bnb_address
                                 ? "bnb"
                                 : nft.nftAddress ===
+                                  window.config.nft_opbnb_address
+                                ? "opbnb"
+                                : nft.nftAddress ===
                                   window.config.nft_cmc_address
                                 ? "cmc"
                                 : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : nft.nftAddress ===
-                                window.config.nft_core_address
-                              ? "core"
-                              : nft.nftAddress ===
-                              window.config.nft_viction_address
-                            ? "viction"
+                                  window.config.nft_core_address
+                                ? "core"
+                                : nft.nftAddress ===
+                                  window.config.nft_viction_address
+                                ? "viction"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -2996,6 +3028,9 @@ const WalletBalance = ({
                                       window.config.nft_bnb_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_opbnb_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_cmc_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
                                     : nft.nftAddress ===
@@ -3051,17 +3086,20 @@ const WalletBalance = ({
                                       window.config.nft_skale_address
                                     ? "SKBP"
                                     : nft.nftAddress ===
-                                    window.config.nft_bnb_address
-                                  ? "BNBBP"
+                                      window.config.nft_bnb_address
+                                    ? "BNBBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_opbnb_address
+                                    ? "opBNBBP"
                                     : nft.nftAddress ===
                                       window.config.nft_cmc_address
                                     ? "CMCBP"
                                     : nft.nftAddress ===
-                                    window.config.nft_core_address
-                                  ? "COBP"
-                                  : nft.nftAddress ===
-                                  window.config.nft_viction_address
-                                ? "VCBP"
+                                      window.config.nft_core_address
+                                    ? "COBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_viction_address
+                                    ? "VCBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -3217,17 +3255,20 @@ const WalletBalance = ({
                                   window.config.nft_bnb_address
                                 ? "bnb"
                                 : nft.nftAddress ===
+                                  window.config.nft_opbnb_address
+                                ? "opbnb"
+                                : nft.nftAddress ===
                                   window.config.nft_cmc_address
                                 ? "cmc"
                                 : nft.nftAddress ===
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : nft.nftAddress ===
-                                window.config.nft_core_address
-                              ? "core"
-                              : nft.nftAddress ===
-                              window.config.nft_viction_address
-                            ? "viction"
+                                  window.config.nft_core_address
+                                ? "core"
+                                : nft.nftAddress ===
+                                  window.config.nft_viction_address
+                                ? "viction"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3294,8 +3335,11 @@ const WalletBalance = ({
                                       window.config.nft_skale_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
                                     : nft.nftAddress ===
-                                    window.config.nft_bnb_address
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
+                                      window.config.nft_bnb_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_opbnb_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_cmc_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
@@ -3356,6 +3400,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_bnb_address
                                     ? "BNBBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_opbnb_address
+                                    ? "opBNBBP"
                                     : nft.nftAddress ===
                                       window.config.nft_cmc_address
                                     ? "CMCBP"
