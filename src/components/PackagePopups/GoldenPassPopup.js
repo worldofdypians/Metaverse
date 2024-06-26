@@ -46,8 +46,8 @@ const GoldenPassPopup = ({onClosePopup}) => {
               the bundle in Marketplace using DYP token on BNB Chain.
             </li>
             <li className="package-popup-desc">
-              The Golden Pass bundle is available for 7 days and can be
-              purchased up to 4 times.
+              The Golden Pass bundle is available for a month and can be
+              purchased once a month.
             </li>
             <li className="package-popup-desc">
               If a player purchases the fourth bundle, they will receive the

@@ -174,8 +174,6 @@ function App() {
   const [betaModal, setBetaModal] = useState(false);
   const [donwloadSelected, setdownloadSelected] = useState(false);
 
-
-
   const [isConnected, setIsConnected] = useState(false);
   const [coinbase, setCoinbase] = useState();
   const [chainId, setChainId] = useState();
@@ -202,8 +200,7 @@ function App() {
   const [myBnbNFTsCreated, setMyBnbNFTsCreated] = useState([]);
   const [totalBnbNft, setTotalBnbNft] = useState(0);
   const [myBnbNfts, setMyBnbNfts] = useState([]);
-  const [bnbMintAllowed, setBnbMintAllowed] = useState(1)
-
+  const [bnbMintAllowed, setBnbMintAllowed] = useState(1);
 
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
   const [myskaleNFTsCreated, setmyskaleNFTsCreated] = useState([]);
@@ -292,7 +289,7 @@ function App() {
   const [myCmcNFTs, setmyCmcNFTs] = useState([]);
   const [isBnb, setisBnb] = useState(false);
   const [isBnbSuccess, setisBnbSuccess] = useState(false);
-  const [logoutCount, setLogoutCount] = useState(0)
+  const [logoutCount, setLogoutCount] = useState(0);
 
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
   const [
@@ -333,7 +330,7 @@ function App() {
   const [totalvolume, setTotalVolume] = useState(0);
   const [bscAmount, setBscAmount] = useState(0);
   const [skaleAmount, setSkaleAmount] = useState(0);
-  
+
   const location = useLocation();
   const navigate = useNavigate();
   const { BigNumber } = window;
@@ -402,9 +399,6 @@ function App() {
         console.log(e);
       });
   };
-
-
-
 
   const getTokenData = async () => {
     await axios
@@ -919,7 +913,6 @@ function App() {
       settotalCoreNft(0);
     }
   };
-
 
   const fetchSocialData = async () => {
     const result = await axios
@@ -1455,22 +1448,19 @@ function App() {
     }
   };
 
-
   const handleSecondTask = async (wallet) => {
-
-
     const result2 = await axios
-    .get(
-      `https://api.worldofdypians.com/api/airdrop-alliance/task8/${wallet}`
-    )
-    .catch((err) => {
-      console.error(err);
-    });
+      .get(
+        `https://api.worldofdypians.com/api/airdrop-alliance/task8/${wallet}`
+      )
+      .catch((err) => {
+        console.error(err);
+      });
 
-  if (result2 && result2.status === 200) {
-    console.log(result2);
-  }
-};
+    if (result2 && result2.status === 200) {
+      console.log(result2);
+    }
+  };
 
   const handleBnbNftMint = async () => {
     if (isConnected && coinbase) {
@@ -1486,7 +1476,7 @@ function App() {
           let tokenId = await window.bnb_nft
             .mintBNBNFT()
             .then(() => {
-              handleSecondTask(coinbase)
+              handleSecondTask(coinbase);
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
               settextColor("rgb(123, 216, 176)");
@@ -2343,7 +2333,7 @@ function App() {
           console.log(e);
           return 0;
         });
-       
+
       if (
         subscribedPlatformTokenAmountCfx == "0" &&
         subscribedPlatformTokenAmountETH == "0" &&
@@ -2510,6 +2500,7 @@ function App() {
       setSuccess(false);
       setCoinbase();
       setIsConnected(false);
+      setIsPremium(false);
     } else {
       disconnect(connector);
       localStorage.setItem("logout", "true");
@@ -3263,31 +3254,31 @@ function App() {
               />
             }
           />
-            <Route
-              exact
-              path="/account"
-              element={
-                <Dashboard
+          <Route
+            exact
+            path="/account"
+            element={
+              <Dashboard
                 logoutCount={logoutCount}
-                  ethTokenData={ethTokenData}
-                  dypTokenData={dypTokenData}
-                  handleSwitchChain={handleSwitchChain}
-                  dypTokenData_old={dypTokenData_old}
-                  coinbase={coinbase}
-                  account={coinbase}
-                  isConnected={isConnected}
-                  chainId={chainId}
-                  handleConnect={handleConnectWallet}
-                  onSigninClick={checkData}
-                  success={success}
-                  availableTime={availTime}
-                  handleSwitchNetwork={handleSwitchNetwork}
-                  handleOpenDomains={() => setDomainPopup(true)}
-                  domainName={domainName}
-                  dogePrice={dogePrice}
-                />
-              }
-            />
+                ethTokenData={ethTokenData}
+                dypTokenData={dypTokenData}
+                handleSwitchChain={handleSwitchChain}
+                dypTokenData_old={dypTokenData_old}
+                coinbase={coinbase}
+                account={coinbase}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleConnect={handleConnectWallet}
+                onSigninClick={checkData}
+                success={success}
+                availableTime={availTime}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleOpenDomains={() => setDomainPopup(true)}
+                domainName={domainName}
+                dogePrice={dogePrice}
+              />
+            }
+          />
 
           <Route
             exact
@@ -3837,59 +3828,57 @@ function App() {
                 myBnbNFTsCreated={myBnbNFTsCreated}
                 bnbMintAllowed={bnbMintAllowed}
                 totalBnbNft={totalBnbNft}
-
-
               />
             }
           />
 
           <Route
-              exact
-              path="/marketplace/mint/bnbchain"
-              element={
-                <MarketMint
-                  coinbase={coinbase}
-                  showWalletConnect={() => {
-                    setwalletModal(true);
-                  }}
-                  cawsArray={allCawsForTimepieceMint}
-                  mintloading={mintloading}
-                  isConnected={isConnected}
-                  chainId={chainId}
-                  handleMint={handleBnbNftMint}
-                  mintStatus={mintStatus}
-                  textColor={textColor}
-                  calculateCaws={calculateCaws}
-                  totalCreated={totalTimepieceCreated}
-                  timepieceMetadata={timepieceMetadata}
-                  myConfluxNFTsCreated={myConfluxNFTsCreated}
-                  myBnbNFTsCreated={myBnbNFTsCreated}
-                  mybaseNFTsCreated={mybaseNFTsCreated}
-                  myskaleNFTsCreated={myskaleNFTsCreated}
-                  handleConfluxMint={handleConfluxNftMint}
-                  handleBaseNftMint={handleBaseNftMint}
-                  handleBnbNftMint={handleBnbNftMint}
-                  confluxMintAllowed={confluxMintAllowed}
-                  baseMintAllowed={baseMintAllowed}
-                  skaleMintAllowed={skaleMintAllowed}
-                  coreMintAllowed={coreMintAllowed}
-                  bnbMintAllowed={bnbMintAllowed}
-                  victionMintAllowed={victionMintAllowed}
-                  totalCoreNft={totalCoreNft}
-                  myCoreNfts={myCoreNfts}
-                  totalMultiversNft={totalMultiversNft}
-                  totalImmutableNft={totalImmutableNft}
-                  totalBnbNft={totalBnbNft}
-                  myImmutableNfts={myImmutableNfts}
-                  myMultiversNfts={myMultiversNfts}
-                  totalseiNft={totalseiNft}
-                  myseiNfts={myseiNfts}
-                  totalVictionNft={totalVictionNft}
-                  myVictionNfts={myVictionNfts}
-                  myBnbNfts={myBnbNfts}
-                />
-              }
-            />
+            exact
+            path="/marketplace/mint/bnbchain"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleMint={handleBnbNftMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                myConfluxNFTsCreated={myConfluxNFTsCreated}
+                myBnbNFTsCreated={myBnbNFTsCreated}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                myskaleNFTsCreated={myskaleNFTsCreated}
+                handleConfluxMint={handleConfluxNftMint}
+                handleBaseNftMint={handleBaseNftMint}
+                handleBnbNftMint={handleBnbNftMint}
+                confluxMintAllowed={confluxMintAllowed}
+                baseMintAllowed={baseMintAllowed}
+                skaleMintAllowed={skaleMintAllowed}
+                coreMintAllowed={coreMintAllowed}
+                bnbMintAllowed={bnbMintAllowed}
+                victionMintAllowed={victionMintAllowed}
+                totalCoreNft={totalCoreNft}
+                myCoreNfts={myCoreNfts}
+                totalMultiversNft={totalMultiversNft}
+                totalImmutableNft={totalImmutableNft}
+                totalBnbNft={totalBnbNft}
+                myImmutableNfts={myImmutableNfts}
+                myMultiversNfts={myMultiversNfts}
+                totalseiNft={totalseiNft}
+                myseiNfts={myseiNfts}
+                totalVictionNft={totalVictionNft}
+                myVictionNfts={myVictionNfts}
+                myBnbNfts={myBnbNfts}
+              />
+            }
+          />
           {/* <Route
               exact
               path="/marketplace/mint/viction"
