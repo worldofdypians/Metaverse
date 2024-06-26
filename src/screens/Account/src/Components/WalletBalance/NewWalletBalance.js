@@ -276,6 +276,7 @@ const NewWalletBalance = ({
   openedSeiChests,
   userRankRewards,
   onOpenGenesisLeaderboard,
+  coreEarnUsd,victionEarnUsd,
   adClicked,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -358,6 +359,36 @@ const NewWalletBalance = ({
     maxPoints: "50,000",
     learnMore:
       "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
+  };
+
+
+  const dummyCore = {
+
+    title: "CORE",
+    logo: coreLogo,
+    eventStatus: "Live",
+    totalRewards: "$20,000 in CORE Rewards",
+    myEarnings: 0.0, 
+    backgroundImage: coreBg,
+    eventDate: "Jul 01, 2024",
+
+    id: "event12",
+    eventType: "Explore & Find", 
+    eventDuration: coreLastDay,
+    minRewards: "1",
+    maxRewards: "100",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore:
+      "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+  
+
+
+   
+    chain: "CORE Chain",
+    linkState: "core",
+    rewards: "CORE",
+    status: "Live",   
   };
 
   const dummyBNB = {
@@ -495,7 +526,7 @@ const NewWalletBalance = ({
 
         id: "event12",
         eventType: "Explore & Find",
-        totalRewards: "$20,000 in SEI Rewards",
+        totalRewards: "$20,000 in CORE Rewards",
         eventDuration: coreLastDay,
         minRewards: "1",
         maxRewards: "100",
@@ -1418,7 +1449,18 @@ const NewWalletBalance = ({
                   setEventPopup(true);
                 }}
               />
-              <ExpiredProfileEvent
+
+<ActiveProfileEvent
+                data={dummyCore}
+                event={dummyCore}
+                userEarnedUsd={coreEarnUsd}
+                onOpenEvent={() => {
+                  setDummyEvent(dummyCore);
+                  setEventPopup(true);
+                }}
+              />
+
+              {/* <ExpiredProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dypv2);
                   setEventPopup(true);
@@ -1426,7 +1468,7 @@ const NewWalletBalance = ({
                 data={dypv2}
                 event={dypv2}
                 userEarnedUsd={dypiusPremiumEarnUsd}
-              />
+              /> */}
               {dummyBetaPassData2.length > 3 && (
                 <div
                   className="d-flex align-items-center justify-content-center gap-2"
@@ -1487,6 +1529,10 @@ const NewWalletBalance = ({
                           ? dogeEarnUSD
                           : item.title === "SKALE"
                           ? skaleEarnUsd
+                          : item.title === "VICTION"
+                          ? victionEarnUsd
+                          : item.title === "CORE"
+                          ? coreEarnUsd
                           : item.title === "CMC" ||
                             item.title === "CoinMarketCap"
                           ? cmcuserEarnUsd
@@ -1846,7 +1892,9 @@ const NewWalletBalance = ({
                           Number(genesisRank2) +
                           Number(treasureRewardMoney) +
                           Number(userRankRewards) +
-                          Number(skaleEarnUsd),
+                          Number(skaleEarnUsd)+
+                          Number(coreEarnUsd)+
+                          Number(victionEarnUsd),
                         2
                       )}
                     </h6>
