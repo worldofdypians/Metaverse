@@ -279,7 +279,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
     {
       title: "CORE",
       logo: coreLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -293,7 +293,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
-        status: "Coming Soon",
+        status: "Live",
         id: "event12",
         eventType: "Explore & Find",
         totalRewards: "$20,000 in SEI Rewards",
@@ -310,7 +310,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
     {
       title: "VICTION",
       logo: victionLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in VIC Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",

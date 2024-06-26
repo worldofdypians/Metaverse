@@ -378,6 +378,10 @@ function Dashboard({
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
 
+  
+
+
+
   const [dypiusPremiumEarnTokens, setdypiusPremiumEarnTokens] = useState(0);
   const [dypiusPremiumEarnUsd, setdypiusPremiumEarnUsd] = useState(0);
   const [dypiusPremiumPoints, setdypiusPremiumPoints] = useState(0);
@@ -418,6 +422,8 @@ function Dashboard({
   const [skalePoints, setSkalePoints] = useState(0);
   const [leaderboard, setLeaderboard] = useState(false);
   const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
+  const [adClicked, setadClicked] = useState('');
+
   const [globalLeaderboard, setGlobalLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
@@ -564,6 +570,14 @@ function Dashboard({
             return obj.betapassId === "bnb";
           });
 
+          const coreEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "core";
+          });
+
+          const victionEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "viction";
+          });
+
           const gateEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "gate";
           });
@@ -608,6 +622,26 @@ function Dashboard({
             setBnbEarnUsd(userEarnedusd);
             setBnbEarnToken(userEarnedusd / bnbPrice);
           }
+
+          if (coreEvent && coreEvent[0]) {
+            const userEarnedusd =
+              coreEvent[0].reward.earn.total /
+              coreEvent[0].reward.earn.multiplier;
+            
+            setCoreEarnUsd(userEarnedusd);
+            setCoreEarnToken(userEarnedusd / corePrice);
+          }
+
+
+          if (victionEvent && victionEvent[0]) {
+            const userEarnedusd =
+              victionEvent[0].reward.earn.total /
+              victionEvent[0].reward.earn.multiplier;
+            
+            setVictionEarnUsd(userEarnedusd);
+            setVictionEarnToken(userEarnedusd / victionPrice);
+          }
+
 
           if (dypEvent && dypEvent[0]) {
             const userEarnedDyp =
@@ -729,7 +763,7 @@ function Dashboard({
     ) {
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
     }
-  }, [email, data, cfxPrice, bnbPrice, skalePrice, dyptokenDatabnb]);
+  }, [email, data, cfxPrice, bnbPrice, skalePrice, dyptokenDatabnb, corePrice, victionPrice]);
 
   const bnbStars = ["50", "40", "30", "20", "20", "20", "20", "20", "20", "20"];
   const bnbStarsPremium = [
@@ -5661,6 +5695,8 @@ function Dashboard({
                         onOpenGenesisLeaderboard={() => {
                           setGenesisLeaderboard(true);
                         }}
+                        
+                        handleShowPopup={(value)=>{setadClicked(value)}}
                       />
                       <NewWalletBalance
                         onDailyRewardsPopupOpen={() => {
@@ -5783,6 +5819,7 @@ function Dashboard({
                         }}
                         cawsPremiumRewards={cawsPremiumRewards}
                         userRankRewards={userRankRewards}
+                        adClicked={adClicked}
                       />
                       <WalletBalance
                         ethTokenData={ethTokenData}
