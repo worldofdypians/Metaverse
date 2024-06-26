@@ -239,6 +239,8 @@ const MarketEvents = ({
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
+  let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+
 
   const dailyBonusMintData = {
     title: "Daily Bonus",
@@ -247,62 +249,62 @@ const MarketEvents = ({
   };
 
   const dummyBetaPassData2 = [
-    // {
-    //   title: "MultiversX",
-    //   logo: multiversLogo,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$20,000 in EGLD Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Find",
-    //   eventDate: "XXX XX, XXXX",
-    //   backgroundImage: multiversBg,
-    //   popupInfo: {
-    //     title: "MultiversX",
-    //     chain: "MultiversX Chain",
-    //     linkState: "multiversx",
-    //     rewards: "EGLD",
-    //     status: "Coming Soon",
-    //     id: "event16",
-    //     eventType: "Explore & Find",
-    //     totalRewards: "$20,000 in EGLD Rewards",
-    //     eventDuration: dypius2LastDay,
-    //     minRewards: "1",
-    //     maxRewards: "100",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore:
-    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-    //     eventDate: "XXX XX, XXXX",
-    //   },
-    // },
-    // {
-    //   title: "VICTION",
-    //   logo: victionLogo,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$20,000 in VIC Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Find",
-    //   eventDate: "XXX XX, XXXX",
-    //   backgroundImage: victionBg,
-    //   popupInfo: {
-    //     title: "VICTION",
-    //     chain: "VICTION Chain",
-    //     linkState: "viction",
-    //     rewards: "VIC",
-    //     status: "Coming Soon",
-    //     id: "event14",
-    //     eventType: "Explore & Find",
-    //     totalRewards: "$20,000 in VIC Rewards",
-    //     eventDuration: dypius2LastDay,
-    //     minRewards: "1",
-    //     maxRewards: "100",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore:
-    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-    //     eventDate: "XXX XX, XXXX",
-    //   },
-    // },
+    {
+      title: "MultiversX",
+      logo: multiversLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in EGLD Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: multiversBg,
+      popupInfo: {
+        title: "MultiversX",
+        chain: "MultiversX Chain",
+        linkState: "multiversx",
+        rewards: "EGLD",
+        status: "Live",
+        id: "event16",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in EGLD Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Jul 01, 2024",
+      },
+    },
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: victionBg,
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Live",
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Jul 01, 2024",
+      },
+    },
     // {
     //   title: "SEI",
     //   logo: seiLogo,
@@ -331,34 +333,34 @@ const MarketEvents = ({
     //     eventDate: "XXX XX, XXXX",
     //   },
     // },
-    // {
-    //   title: "CORE",
-    //   logo: coreLogo,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$20,000 in CORE Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Find",
-    //   eventDate: "XXX XX, XXXX",
-    //   backgroundImage: coreBg,
-    //   popupInfo: {
-    //     title: "CORE",
-    //     chain: "CORE Chain",
-    //     linkState: "core",
-    //     rewards: "CORE",
-    //     status: "Coming Soon",
-    //     id: "event12",
-    //     eventType: "Explore & Find",
-    //     totalRewards: "$20,000 in SEI Rewards",
-    //     eventDuration: dypius2LastDay,
-    //     minRewards: "1",
-    //     maxRewards: "100",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore:
-    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-    //     eventDate: "XXX XX, XXXX",
-    //   },
-    // },
+    {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: coreBg,
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Live",
+        id: "event12",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in SEI Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Jul 01, 2024",
+      },
+    },
 
     {
       title: "BNB Chain",
@@ -367,7 +369,7 @@ const MarketEvents = ({
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Apr 15, 2024",
+      eventDate: "Jun 12, 2024",
       backgroundImage: upcomingBnb,
       popupInfo: {
         title: "BNB Chain",
@@ -384,7 +386,7 @@ const MarketEvents = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "/news",
-        eventDate: "Apr 15, 2024",
+        eventDate: "Jun 12, 2024",
       },
     },
     {
@@ -1312,7 +1314,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 5).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1481,7 +1483,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(1, dummyBetaPassData2.length)
+                    .slice(5, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}

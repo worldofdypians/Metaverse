@@ -800,7 +800,8 @@ const NewLeaderBoard = ({
                                       {leaderboard.type === "stars" ? (
                                         <td
                                           className={`playerReward text-center col-2 font-montserrat ${
-                                            username === item.displayName
+                                            isPremium &&
+                                                username === item.displayName
                                               ? "goldenscore"
                                               : "playerReward"
                                           }`}
@@ -809,11 +810,11 @@ const NewLeaderBoard = ({
                                             <span
                                               className="leaderboard-text"
                                               style={{
-                                                color: "rgb(243, 192, 9)",
+                                                color: isPremium &&
+                                                username === item.displayName ? "rgb(243, 192, 9)" : 'gray',
                                               }}
                                             >
-                                              +
-                                              {getFormattedNumber(
+                                              +${getFormattedNumber(
                                                 leaderboard.premium_rewards[
                                                   index
                                                 ],
@@ -844,7 +845,8 @@ const NewLeaderBoard = ({
                                       ) : (
                                         <td
                                           className={`playerReward text-center col-2 font-montserrat ${
-                                            username === item.displayName
+                                            username === item.displayName &&
+                                            isactive === true
                                               ? "goldenscore"
                                               : "playerReward"
                                           }`}
@@ -853,7 +855,8 @@ const NewLeaderBoard = ({
                                             <span
                                               className="leaderboard-text"
                                               style={{
-                                                color: "rgb(243, 192, 9)",
+                                                color:  username === item.displayName &&
+                                                isactive === true ?  "rgb(243, 192, 9)" : 'gray',
                                                 // width: 35,
                                               }}
                                             >
@@ -995,7 +998,7 @@ const NewLeaderBoard = ({
                                       {leaderboard.type === "stars" ? (
                                         <td
                                           className={`playerReward text-center col-2 font-montserrat ${
-                                            username === item.displayName
+                                            username === item.displayName && isPremium
                                               ? "goldenscore"
                                               : "playerReward"
                                           }`}
@@ -1004,11 +1007,10 @@ const NewLeaderBoard = ({
                                             <span
                                               className="leaderboard-text"
                                               style={{
-                                                color: "rgb(243, 192, 9)",
+                                                color:  username === item.displayName && isPremium ? "rgb(243, 192, 9)" : 'gray',
                                               }}
                                             >
-                                              +
-                                              {getFormattedNumber(
+                                              +${getFormattedNumber(
                                                 leaderboard.premium_rewards[
                                                   index
                                                 ],
@@ -1249,10 +1251,10 @@ const NewLeaderBoard = ({
                                         <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
                                           <span
                                             className="leaderboard-text"
-                                            style={{ color: "#fff" }}
+                                            style={{ color:  isPremium &&
+                                                username === leaderboard.player_data.displayName ? "#fff" : 'gray' }}
                                           >
-                                            +
-                                            {getFormattedNumber(
+                                            +${getFormattedNumber(
                                               leaderboard.rewards[
                                                 leaderboard.player_data.position
                                               ]
