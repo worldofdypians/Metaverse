@@ -492,8 +492,15 @@ const ProfileCard = ({
                       {(isVerified && email) || (coinbase && !email) ? (
                         <div className="d-flex flex-column gap-1 w-100">
                           <div className="d-flex align-items-center gap-2">
+                             {coinbase && !email && (
+                            <div className="d-flex flex-column gap-1 col-lg-9 col-12">
+                              <span className="usernametext font-organetto">
+                                Start your journey now!
+                              </span>
+                            </div>
+                          )}
                             <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
-                              {username}
+                            {email !== undefined && username}
                               {!domainName && isConnected && (
                                 <span
                                   className={`${
