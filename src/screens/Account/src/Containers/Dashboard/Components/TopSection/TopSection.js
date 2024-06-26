@@ -14,10 +14,10 @@ import globalIcon from "./assets/globalIcon2.png";
 import landFlag from "./assets/landFlag2.svg";
 import landIcon from "./assets/landIcon.svg";
 import Slider from "react-slick";
-import multiversAd from './assets/multiversAd.png'
-import premiumAd from './assets/premiumAd.png'
-import coreAd from './assets/coreAd.png'
-import victionAd from './assets/victionAd.png'
+import multiversAd from "./assets/multiversAd.png";
+import premiumAd from "./assets/premiumAd.png";
+import coreAd from "./assets/coreAd.png";
+import victionAd from "./assets/victionAd.png";
 import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
 
 const renderer = ({ days, hours, minutes }) => {
@@ -28,7 +28,12 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisLeaderboard }) => {
+const TopSection = ({
+  onOpenLeaderboard,
+  onOpenGlobalLeaderboard,
+  onOpenGenesisLeaderboard,
+  handleShowPopup,
+}) => {
   let testDay = new Date("2024-05-20T11:00:00.000+02:00");
 
   var settings = {
@@ -97,7 +102,7 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
       reward_amount: 25,
       expires: testDay,
       price: 0.532,
-      link: "26/0xd06cf9e1189feab09c844c597abc3767bc12608c"
+      link: "26/0xd06cf9e1189feab09c844c597abc3767bc12608c",
     },
     {
       item_type: "CAWS",
@@ -106,7 +111,7 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
       reward_amount: 300,
       expires: testDay,
       price: 0.637,
-      link: "12/0xd06cf9e1189feab09c844c597abc3767bc12608c"
+      link: "12/0xd06cf9e1189feab09c844c597abc3767bc12608c",
     },
     {
       item_type: "CAWS",
@@ -115,7 +120,7 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
       reward_amount: 3500,
       expires: testDay,
       price: 0.122,
-      link: "1897/0xd06cf9e1189feab09c844c597abc3767bc12608c"
+      link: "1897/0xd06cf9e1189feab09c844c597abc3767bc12608c",
     },
   ];
 
@@ -157,28 +162,40 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
           </div>
         </div> */}
         <div className="d-flex flex-column">
-        {/* <h6
+          {/* <h6
               className="new-bundle-title mb-5"
             >
               Leaderboards
             </h6> */}
-          <div className="leaderboard-flags-wrapper px-3 d-flex align-items-center justify-content-between position-relative" style={{height: "135px"}}>
+          <div
+            className="leaderboard-flags-wrapper px-3 d-flex align-items-center justify-content-between position-relative"
+            style={{ height: "135px" }}
+          >
             <h6 className="leaderboard-inner-title">Leaderboards</h6>
-            <div className="flag-wrapper global-flag" onClick={onOpenGlobalLeaderboard}>
+            <div
+              className="flag-wrapper global-flag"
+              onClick={onOpenGlobalLeaderboard}
+            >
               <img src={globalFlag} className="w-100" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Global</span>
                 <img src={globalIcon} height={60} width={60} alt="" />
               </div>
             </div>
-            <div className="flag-wrapper chains-flag" onClick={onOpenLeaderboard}>
+            <div
+              className="flag-wrapper chains-flag"
+              onClick={onOpenLeaderboard}
+            >
               <img src={chainsFlag} className="w-100" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Chains</span>
                 <img src={chainsIcon} height={60} width={60} alt="" />
               </div>
             </div>
-            <div className="flag-wrapper land-flag" onClick={onOpenGenesisLeaderboard}>
+            <div
+              className="flag-wrapper land-flag"
+              onClick={onOpenGenesisLeaderboard}
+            >
               <img src={landFlag} className="w-100" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Genesis</span>
@@ -190,9 +207,11 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
       </div>
       <div className="col-12 col-lg-8 ps-lg-0 mt-3 mt-lg-0">
         <div className="d-flex flex-column">
-        
-        <div className="promotion-container position-relative p-0" style={{height: "120px"}}>
-          {/* <div
+          <div
+            className="promotion-container position-relative p-0"
+            style={{ height: "120px" }}
+          >
+            {/* <div
             className="prev-arrow-nft"
             onClick={firstPrev}
             style={{
@@ -229,8 +248,8 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
               }}
             />
           </div> */}
-          <Slider {...settings} ref={slider}>
-            {/* {dummyPromotions.map((item, index) => (
+            <Slider {...settings} ref={slider}>
+              {/* {dummyPromotions.map((item, index) => (
               <div
                 key={index}
                 className="d-flex flex-column promotion-height flex-lg-row gap-4 gap-lg-0 align-items-center justify-content-between w-100"
@@ -291,12 +310,32 @@ const TopSection = ({ onOpenLeaderboard, onOpenGlobalLeaderboard, onOpenGenesisL
                 </div>
               </div>
             ))} */}
-            <img src={coreAd} className="advertisment-img" alt="" />
-            <img src={victionAd} className="advertisment-img" alt="" />
-            <img src={premiumAd} className="advertisment-img" alt="" />
-            <img src={multiversAd} className="advertisment-img" alt="" />
-          </Slider>
-        </div>
+              <img
+                src={coreAd}
+                className="advertisment-img"
+                alt=""
+                onClick={()=>{handleShowPopup('core')}}
+              />
+              <img
+                src={victionAd}
+                className="advertisment-img"
+                alt=""
+                onClick={()=>{handleShowPopup('viction')}}
+              />
+              <img
+                src={premiumAd}
+                className="advertisment-img"
+                alt=""
+                onClick={()=>{handleShowPopup('premium')}}
+              />
+              <img
+                src={multiversAd}
+                className="advertisment-img"
+                alt=""
+                onClick={()=>{handleShowPopup('multiversx')}}
+              />
+            </Slider>
+          </div>
         </div>
       </div>
     </div>

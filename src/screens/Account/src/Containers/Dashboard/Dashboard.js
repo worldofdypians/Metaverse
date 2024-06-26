@@ -418,6 +418,8 @@ function Dashboard({
   const [skalePoints, setSkalePoints] = useState(0);
   const [leaderboard, setLeaderboard] = useState(false);
   const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
+  const [adClicked, setadClicked] = useState('');
+
   const [globalLeaderboard, setGlobalLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [myOffers, setmyOffers] = useState([]);
@@ -5491,6 +5493,8 @@ function Dashboard({
                         onOpenGenesisLeaderboard={() => {
                           setGenesisLeaderboard(true);
                         }}
+                        
+                        handleShowPopup={(value)=>{setadClicked(value)}}
                       />
                       <NewWalletBalance
                         onDailyRewardsPopupOpen={() => {
@@ -5608,6 +5612,7 @@ function Dashboard({
                         }}
                         cawsPremiumRewards={cawsPremiumRewards}
                         userRankRewards={userRankRewards}
+                        adClicked={adClicked}
                       />
                       <WalletBalance
                         ethTokenData={ethTokenData}

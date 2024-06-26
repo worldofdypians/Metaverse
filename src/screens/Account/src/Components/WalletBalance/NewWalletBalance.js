@@ -276,6 +276,7 @@ const NewWalletBalance = ({
   openedSeiChests,
   userRankRewards,
   onOpenGenesisLeaderboard,
+  adClicked,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -288,7 +289,6 @@ const NewWalletBalance = ({
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
-
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
@@ -416,7 +416,7 @@ const NewWalletBalance = ({
       totalRewards: "$20,000 in VIC Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate:"Jul 01, 2024",
+      eventDate: "Jul 01, 2024",
       backgroundImage: victionBg,
       popupInfo: {
         title: "VICTION",
@@ -1373,6 +1373,18 @@ const NewWalletBalance = ({
     fetchUsersocialRewards();
   }, [userSocialRewards]);
 
+  useEffect(()=>{
+    if(adClicked && adClicked!=='' && adClicked!=='premium') {
+      const result = dummyBetaPassData2.filter((item)=>{return item.title.toLowerCase() === adClicked}).popupInfo;
+  
+      if(result) {
+      //   setDummyEvent(dummyBetaPassData2.filter((item)=>{return item.title.toLowerCase() === adClicked}).popupInfo);
+      // setEventPopup(true);
+      }
+      
+    }
+  },[adClicked])
+  
   const recaptchaRef = useRef(null);
 
   return (
@@ -1388,33 +1400,6 @@ const NewWalletBalance = ({
               >
                 Treasure Hunt
               </h6>{" "}
-              {/* <UpcomingProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyBetaPassData2[1].popupInfo);
-                  setEventPopup(true);
-                }}
-                data={dummyBetaPassData2[1].popupInfo}
-                event={dummyBetaPassData2[1].popupInfo}
-                userEarnedUsd={0}
-              />
-              <UpcomingProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyBetaPassData2[4].popupInfo);
-                  setEventPopup(true);
-                }}
-                data={dummyBetaPassData2[4].popupInfo}
-                event={dummyBetaPassData2[4].popupInfo}
-                userEarnedUsd={0}
-              /> */}
-              {/* <ActiveProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dypv2);
-                  setEventPopup(true);
-                }}
-                data={dypv2}
-                event={dypv2}
-                userEarnedUsd={dypiusPremiumEarnUsd}
-              /> */}
               <ActiveProfileEvent
                 data={dummyBNB}
                 event={dummyBNB}
@@ -1442,56 +1427,6 @@ const NewWalletBalance = ({
                 event={dypv2}
                 userEarnedUsd={dypiusPremiumEarnUsd}
               />
-              {/* <ExpiredProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyCmc);
-                  setEventPopup(true);
-                }}
-                data={dummyCmc}
-                event={dummyCmc}
-                userEarnedUsd={cmcuserEarnUsd}
-              /> */}
-              {/* <ExpiredProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyBase);
-                  setEventPopup(true);
-                }}
-                data={dummyBase}
-                event={dummyBase}
-                userEarnedUsd={baseEarnUSD}
-              /> */}
-              {/* <ActiveProfileEvent
-                onOpenEvent={() => {
-                  setDummyEvent(dummyBase);
-                  setEventPopup(true);
-                }}
-                data={dummyBase}
-                event={dummyBase}
-                userEarnedUsd={baseEarnUSD}
-              /> */}
-              {/* <img
-                src={eventSkeleton}
-                className="profile-event-item"
-                style={{
-                  background: "none",
-                  borderBottom: "none",
-                  transform: "translateX(0px)",
-                }}
-                alt=""
-              /> */}
-              {/* <img
-                src={eventSkeleton}
-                className="profile-event-item"
-                style={{
-                  background: "none",
-                  borderBottom: "none",
-                  transform: "translateX(0px)",
-                }}
-                alt=""
-              /> */}
-              {/* <div className="d-flex w-100 justify-content-center">
-                <span className="seller-addr">Special events comming soon</span>
-                </div> */}
               {dummyBetaPassData2.length > 3 && (
                 <div
                   className="d-flex align-items-center justify-content-center gap-2"
@@ -1808,8 +1743,7 @@ const NewWalletBalance = ({
 
                     <div
                       className="d-flex flex-column align-items-center"
-                      style={{ width: "fit-content" }}
-                      // onClick={onDailyRewardsPopupOpen}
+                      style={{ width: "fit-content" }} 
                     >
                       <div
                         className="position-relative"
