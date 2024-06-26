@@ -392,6 +392,7 @@
   margin: auto;
   width: 99.3%;
   height: 98%;
+  transform: matrix(1, 0, -0.18, 0.98, 0, 0);
   border-radius: 21.4107px;
   z-index: -1;
 
@@ -464,6 +465,7 @@
   /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 21.4107px;
+  transform: matrix(1, 0, -0.18, 0.98, 0, 0);
 
   @media screen and (max-width: 995px) {
     transform: none !important;
@@ -542,6 +544,7 @@
   /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 21.4107px;
+  transform: matrix(1, 0, -0.18, 0.98, 0, 0);
 
   @media screen and (max-width: 995px) {
     transform: none !important;
@@ -1325,34 +1328,6 @@
     backdrop-filter: none !important;
     width: 150px;
   }
-}
-.nft-event-package-2 {
-  background: linear-gradient(
-    155.14deg,
-    rgba(255, 255, 255, 0) -2.13%,
-    rgba(255, 255, 255, 0.15) 136.58%
-  );
-  width: 165px;
-  // filter: drop-shadow(0px 4.28214px 52.4562px rgba(0, 7, 72, 0.12));
-  // backdrop-filter: blur(13.3817px);
-  border-radius: 21.4107px;
-  border: 2px solid #41435a;
-  cursor: pointer;
-  transition: all 0.35s;
-  img{
-    width: 100px;
-    height: 100px;
-  }
-  @media screen and (max-width: 786px) {
-    transform: none !important;
-    backdrop-filter: none !important;
-  }
-}
-
-.new-event-items-wrapper{
-  height: 60vh;
-  overflow-y: scroll;
-  padding-right: 15px;
 }
 
 .event-package-title {
@@ -3945,12 +3920,4 @@ width: 50%;
 @media screen and (max-width: 786px) {
   width: 100%;
 }
-}
-
-.diagonal-title{
-  font-size: 16px !important; 
-  @media screen and (max-width: 786px) {
-    font-size: 12px !important; 
-
-  }
 }

@@ -1521,14 +1521,6 @@ function Dashboard({
     userDataSkaleMonthly,
   ]);
 
-  let today = new Date();
-  const currentYear = today.getFullYear();
-  const currentMonth = today.getMonth();
-
-  // Calculate the first day of the next month
-  const nextMonth = (currentMonth + 1) % 12;
-  const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
-  const firstOfNextMonth = new Date(nextYear, nextMonth, 1, 11, 11, 0);
 
   const handleSetAvailableTime = (value) => {
     setGoldenPassRemainingTime(value);
@@ -1621,349 +1613,9 @@ function Dashboard({
     }
   };
 
-  const setlastDay = async () => {
-    const dypv1 = new window.infuraWeb3.eth.Contract(
-      DYP_700V1_ABI,
-      dyp700v1Address
-    );
 
-    const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
-    const timeofDeposit = await dypv2.methods.getTimeOfDeposit(coinbase).call();
 
-    const timeofDepositv1 = await dypv1.methods
-      .getTimeOfDeposit(coinbase)
-      .call();
 
-    if (timeofDeposit !== 0 || timeofDepositv1 !== 0) {
-      const timeofDeposit_miliseconds = timeofDeposit * 1000;
-      const timeofDeposit_milisecondsv1 = timeofDepositv1 * 1000;
-
-      const timeofbundleBought_Date = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      }).format(timeofDeposit_miliseconds);
-
-      const timeofbundleBought_Datev1 = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      }).format(timeofDeposit_milisecondsv1);
-
-      const timeofbundleBought_Date_formatted = new Date(
-        timeofbundleBought_Date
-      );
-
-      const timeofbundleBought_Date_formattedv1 = new Date(
-        timeofbundleBought_Datev1
-      );
-
-      const timeofbundleBought_day =
-        timeofbundleBought_Date_formatted.getDate();
-
-      const timeofbundleBought_dayv1 =
-        timeofbundleBought_Date_formattedv1.getDate();
-
-      setdatewhenBundleBought(timeofbundleBought_day);
-      setdatewhenBundleBoughtv1(timeofbundleBought_dayv1);
-
-      const expiringTime = await dypv2.methods
-        .getTimeOfExpireBuff(coinbase)
-        .call();
-
-      const expiringTimev1 = await dypv1.methods
-        .getTimeOfExpireBuff(coinbase)
-        .call();
-
-      const expiringTime_miliseconds = expiringTime * 1000;
-      const expiringTime_milisecondsv1 = expiringTimev1 * 1000;
-
-      const expiringTime_Date = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      }).format(expiringTime_miliseconds);
-
-      const expiringTime_Datev1 = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      }).format(expiringTime_milisecondsv1);
-
-      const expiringTime_Date_formatted = new Date(expiringTime_Date);
-      const expiringTime_Date_formattedv1 = new Date(expiringTime_Datev1);
-
-      setdateofBundle(expiringTime_Date_formatted);
-      setdateofBundlev1(expiringTime_Date_formattedv1);
-
-      // const expiringTime_day = expiringTime_Date_formatted.getDate();
-      // setbundleExpireDay(expiringTime_day);
-      // setbundleExpireMiliseconds(expiringTime_miliseconds);
-
-      const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      }).format(expiringTime_miliseconds);
-
-      const timeofDeposit_Date_formatted = new Date(timeofDeposit_Date);
-      const timeofDeposit_day = timeofDeposit_Date_formatted.getDate();
-      const timeofDeposit_Hours = timeofDeposit_Date_formatted.getHours();
-      const timeofDeposit_Minutes = timeofDeposit_Date_formatted.getMinutes();
-      const final = timeofDeposit_Hours - 11;
-      // setlastDayofBundleHours(final);
-
-      const finalMinutes = timeofDeposit_Minutes - 11;
-
-      // setlastDayofBundleMinutes(finalMinutes);
-      setdateofBundle(timeofDeposit_day);
-      // setlastDayofBundleMilliseconds(expiringTime_miliseconds);
-    }
-  };
-
-  const checkBundleDates = async () => {
-    //you can check how many bundles the user has bought
-    //he can buy until the 22 regular bundles (7days)
-    //on the 23rd the bundle will be 7+4
-    //last week rule: 32 - date => buy on 24rth=>7+1, 25=> 7+0, 26=> 7-1
-    // const dypv1 = new window.infuraWeb3.eth.Contract(
-    //   DYP_700V1_ABI,
-    //   dyp700v1Address
-    // );
-
-    // const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
-
-    const week1 = ["1", "2", "3", "4", "5", "6", "7"];
-    const week2 = ["8", "9", "10", "11", "12", "13", "14"];
-    const week3 = ["15", "16", "17", "18", "19", "20", "21"];
-    const week4 = ["22", "23", "24", "25"];
-
-    // const timeofDepositv1 = await dypv2.methods
-    //   .getTimeOfDeposit(coinbase)
-    //   .call();
-    // const timeofDeposit_milisecondsv1 = timeofDepositv1 * 1000;
-
-    // const timeofDeposit_Date = new Intl.DateTimeFormat("en-US", {
-    //   year: "numeric",
-    //   month: "2-digit",
-    //   day: "2-digit",
-    //   hour: "2-digit",
-    //   minute: "2-digit",
-    //   second: "2-digit",
-    // }).format(timeofDeposit_milisecondsv1);
-
-    const today = new Date();
-    const today_date = today.getDate();
-
-    // const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Date);
-    // const timeofDeposit_date = timeofDeposit_Date_formattedv1
-    //   .getDate()
-    //   .toString();
-
-    if (today_date <= 25) {
-      if (week1.includes(today_date.toString()) && bundlesBought <= 3) {
-        handleRefreshCountdown700();
-      } else if (week1.includes(today_date.toString()) && bundlesBought > 3) {
-        // const remainingTime_day = bundleExpireDay;
-        // const remainingTime_miliseconds = bundleExpireMiliseconds;
-
-        // if (parseInt(remainingTime_day) >= 25) {
-        //   const additional_remainingTime_time = 31 - remainingTime_day;
-        //   const additional_remaining_time_timestamp =
-        //     additional_remainingTime_time * 24 * 60 * 60 -
-        //     lastDayofBundleHours * 60 * 60 -
-        //     lastDayofBundleMinutes * 60;
-
-        //   const final =
-        //     Number(remainingTime_miliseconds) +
-        //     Number(additional_remaining_time_timestamp * 1000);
-
-        setcountdown700(firstOfNextMonth.getTime());
-        handleSetAvailableTime(firstOfNextMonth.getTime());
-
-        // }
-      } else if (
-        week2.includes(today_date.toString()) &&
-        bundlesBought <= 3 &&
-        bundlesBought !== 0
-      ) {
-        handleRefreshCountdown700();
-      } else if (week2.includes(today_date.toString()) && bundlesBought > 3) {
-        // const remainingTime2 = lastDayofBundle;
-        // if (parseInt(remainingTime2) >= 25) {
-        //   const additional_remainingTime_time2 = 31 - remainingTime2;
-        //   const additional_remaining_time_timestamp2 =
-        //     additional_remainingTime_time2 * 24 * 60 * 60 -
-        //     lastDayofBundleHours * 60 * 60 -
-        //     lastDayofBundleMinutes * 60;
-        //   const remainingTime_miliseconds2 = bundleExpireMiliseconds;
-
-        //   const final =
-        //     Number(remainingTime_miliseconds2) +
-        //     Number(additional_remaining_time_timestamp2 * 1000);
-
-        setcountdown700(firstOfNextMonth.getTime());
-        handleSetAvailableTime(firstOfNextMonth.getTime());
-
-        // }
-      } else if (
-        week3.includes(today_date.toString()) &&
-        bundlesBought <= 3 &&
-        bundlesBought !== 0
-      ) {
-        handleRefreshCountdown700();
-      } else if (week3.includes(today_date.toString()) && bundlesBought > 3) {
-        // const remainingTime3 = lastDayofBundle;
-        // const remainingTime_miliseconds3 = bundleExpireMiliseconds;
-
-        // if (parseInt(remainingTime3) >= 25) {
-        //   const additional_remainingTime_time3 = 31 - remainingTime3;
-        //   const additional_remaining_time_timestamp3 =
-        //     additional_remainingTime_time3 * 24 * 60 * 60 -
-        //     lastDayofBundleHours * 60 * 60 -
-        //     lastDayofBundleMinutes * 60;
-
-        //   const final =
-        //     Number(remainingTime_miliseconds3) +
-        //     Number(additional_remaining_time_timestamp3 * 1000);
-
-        //   setcountdown700(final);
-        //   handleSetAvailableTime(final);
-        // setcountdown700(
-        //   today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-        // );
-        // handleSetAvailableTime(
-        //   today < oneNovember ? oneNovember.getTime() : oneDecember.getTime()
-        // );
-        // setisAtlimit(true);
-        // setStatus700(
-        //   "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-        // );
-        // setStatusColor700("#FE7A00");
-
-        const finalDateofBundle =
-          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
-        const finalDateofBundleFormatted = new Date(finalDateofBundle);
-
-        const finalDateofBundleBought =
-          datewhenBundleBought >= datewhenBundleBoughtv1
-            ? datewhenBundleBought
-            : datewhenBundleBoughtv1;
-
-        if (
-          today < finalDateofBundle &&
-          today.getFullYear() === finalDateofBundleFormatted.getFullYear()
-        ) {
-          setcountdown700(firstOfNextMonth.getTime());
-          handleSetAvailableTime(firstOfNextMonth.getTime());
-
-          // if (
-          //   bundlesBought <= 3 &&
-          //   finalDateofBundleBought < today_date &&
-          //   finalDateofBundleBought < 16 &&
-          //   finalDateofBundleBought !== 0
-          // ) {
-          //   setcountdown700(finalDateofBundle);
-          //   setisAtlimit(false);
-          //   handleSetAvailableTime(finalDateofBundle);
-          // } else {
-          //   setcountdown700(
-          //     today < oneNovember
-          //       ? oneNovember.getTime()
-          //       : oneDecember.getTime()
-          //   );
-          //   handleSetAvailableTime(
-          //     today < oneNovember
-          //       ? oneNovember.getTime()
-          //       : oneDecember.getTime()
-          //   );
-          //   setisAtlimit(true);
-          //   setStatusColor700("#FE7A00");
-          //   setStatus700(
-          //     "The Golden Pass bundle is currently not available for purchase. Please check back next month."
-          //   );
-          // }
-        } else if (
-          today > finalDateofBundle &&
-          bundlesBought > 0 &&
-          today.getFullYear() !== finalDateofBundleFormatted.getFullYear()
-        ) {
-          setcountdown700();
-          handleSetAvailableTime();
-        }
-
-        // }
-      } else if (week4.includes(today_date.toString()) && today_date <= 22) {
-        // handleRefreshCountdown700();
-        // setisAtlimit(false);
-        const finalDateofBundle =
-          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
-
-        const finalDateofBundleFormatted = new Date(finalDateofBundle);
-        const finalDateofBundleBought =
-          datewhenBundleBought >= datewhenBundleBoughtv1
-            ? datewhenBundleBought
-            : datewhenBundleBoughtv1;
-
-        if (today < finalDateofBundle && bundlesBought !== 0) {
-          setcountdown700(firstOfNextMonth.getTime());
-          handleSetAvailableTime(firstOfNextMonth.getTime());
-        } else if (today > finalDateofBundle && bundlesBought > 0) {
-          setcountdown700();
-          handleSetAvailableTime();
-        }
-      } else if (week4.includes(today_date.toString()) && today_date > 22) {
-        const finalDateofBundle =
-          dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
-
-        const finalDateofBundleFormatted = new Date(finalDateofBundle);
-
-        const finalDateofBundleBought =
-          datewhenBundleBought >= datewhenBundleBoughtv1
-            ? datewhenBundleBought
-            : datewhenBundleBoughtv1;
-
-        if (today < finalDateofBundle && bundlesBought !== 0) {
-          if (bundlesBought <= 3 && finalDateofBundleBought < today_date) {
-            setcountdown700(finalDateofBundle);
-
-            handleSetAvailableTime(finalDateofBundle);
-          } else {
-            setcountdown700(firstOfNextMonth.getTime());
-            handleSetAvailableTime(firstOfNextMonth.getTime());
-          }
-        } else if (today > finalDateofBundle && bundlesBought > 0) {
-          setcountdown700();
-          handleSetAvailableTime();
-        }
-      }
-    } else if (today_date > 25) {
-      const finalDateofBundle =
-        dateofBundle >= dateofBundlev1 ? dateofBundle : dateofBundlev1;
-      if (today_date < finalDateofBundle) {
-        setcountdown700(firstOfNextMonth.getTime());
-        handleSetAvailableTime(firstOfNextMonth.getTime());
-      } else {
-        setcountdown700();
-        handleSetAvailableTime();
-      }
-    }
-  };
 
   const fetchSkalePrice = async () => {
     await axios
@@ -4486,7 +4138,6 @@ function Dashboard({
     if (coinbase) {
       getRankData();
       getBundles(coinbase);
-      setlastDay();
     }
   }, [coinbase, bundlesBought]);
 
@@ -4497,9 +4148,7 @@ function Dashboard({
     fetchVictionPrice();
   }, []);
 
-  useEffect(() => {
-    checkBundleDates();
-  }, [bundlesBought, coinbase, dateofBundle, dateofBundlev1]);
+
 
   useEffect(() => {
     if (
@@ -4834,8 +4483,8 @@ function Dashboard({
   }, [email, count]);
 
   useEffect(() => {
-    if (bundlesBought === 4) {
-      handleSetAvailableTime(firstOfNextMonth.getTime());
+    if (bundlesBought === 1) {
+      handleRefreshCountdown700();
     }
   }, [bundlesBought]);
 
