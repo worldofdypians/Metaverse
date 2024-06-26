@@ -336,6 +336,8 @@ const BetaPassNFT = ({
   const [isBaseActive, setisBaseActive] = useState(false);
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
   const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
+  const [bnbEarnUSD, setbnbEarnUSD] = useState(0);
+
   const [cmcEarnUSD, setCmcEarnUSD] = useState(0);
   const [isSkaleLive, setisSkaleLive] = useState(true);
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
@@ -447,6 +449,9 @@ const BetaPassNFT = ({
             return obj.betapassId === "coinmarketcap";
           });
 
+          const bnbEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "bnb";
+          });
           if (coingeckoEvent && coingeckoEvent[0]) {
             const usdValue =
               coingeckoEvent[0].reward.earn.total /
@@ -460,6 +465,16 @@ const BetaPassNFT = ({
               cmcEvent[0].reward.earn.multiplier;
             setCmcEarnUSD(usdValue);
           }
+
+          if (bnbEvent && bnbEvent[0]) {
+            const userEarnedusd =
+              bnbEvent[0].reward.earn.total /
+              bnbEvent[0].reward.earn.multiplier;
+              
+ 
+            setbnbEarnUSD(userEarnedusd); 
+          }
+                  
           if (skaleEvent && skaleEvent[0]) {
             const usdValue =
               skaleEvent[0].reward.earn.total /
@@ -2549,7 +2564,7 @@ const BetaPassNFT = ({
                                   <span>Live</span>
                                 </div>
                               </div>
-                              <div className="doge-eventwrapper p-3">
+                              <div className="bnb-eventwrapper  p-3">
                                 <div className="d-flex flex-column gap-4">
                                   <div className="d-flex gap-2 align-items-center">
                                     <img
@@ -2574,7 +2589,7 @@ const BetaPassNFT = ({
                                       style={{ top: 0, bottom: 0 }}
                                     >
                                       <h6 className="event-my-earnings3 mb-3">
-                                        ${getFormattedNumber(dogeEarnUSD, 2)}
+                                        ${getFormattedNumber(bnbEarnUSD, 2)}
                                       </h6>
                                     </div>
                                     <div className="d-flex flex-column gap-2">
