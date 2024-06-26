@@ -211,6 +211,15 @@ const NewWalletBalance = ({
   handleConnect,
   ethTokenData,
   dypTokenData,
+  dailyDataAmountCore,
+  weeklyDataAmountCore,
+  monthlyDataAmountCore,
+  dailyDataAmountViction,
+  weeklyDataAmountViction,
+  monthlyDataAmountViction,
+  dailyDataAmountSkale,
+  weeklyDataAmountSkale,
+  monthlyDataAmountSkale,
   favoritesArray,
   latestBoughtNFTS,
   myOffers,
@@ -288,7 +297,6 @@ const NewWalletBalance = ({
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
-
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
@@ -416,7 +424,7 @@ const NewWalletBalance = ({
       totalRewards: "$20,000 in VIC Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate:"Jul 01, 2024",
+      eventDate: "Jul 01, 2024",
       backgroundImage: victionBg,
       popupInfo: {
         title: "VICTION",
@@ -1907,11 +1915,19 @@ const NewWalletBalance = ({
                         Number(userSocialRewardsCached) +
                           Number(weeklyplayerData) +
                           Number(dailyplayerData) +
-                          Number(skaleplayerDataAmount) +
                           Number(userRank2) +
                           Number(genesisRank2) +
                           Number(treasureRewardMoney) +
                           Number(userRankRewards) +
+                          Number(dailyDataAmountCore) +
+                          Number(weeklyDataAmountCore) +
+                          Number(monthlyDataAmountCore) +
+                          Number(dailyDataAmountSkale) +
+                          Number(weeklyDataAmountSkale) +
+                          Number(monthlyDataAmountSkale) +
+                          Number(dailyDataAmountViction) +
+                          Number(weeklyDataAmountViction) +
+                          Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd),
                         2
                       )}
