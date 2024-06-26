@@ -51,10 +51,16 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address, genesisData,
+const GlobalLeaderboard = ({
+  username,
+  userId,
+  dypBalancebnb,
+  address,
+  genesisData,
   previousgenesisData,
-  previousGenesisVersion, }) => {
-
+  previousGenesisVersion,
+  screen,
+}) => {
   const playerData = [
     {
       position: "1",
@@ -577,25 +583,38 @@ const GlobalLeaderboard = ({ username, userId, dypBalancebnb, address, genesisDa
                         style={{ color: "#09F3D2" }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          ${getFormattedNumber(goldenRewards[item.position], 0)}
-                          <HtmlTooltip
-                            placement="top"
-                            title={
-                              <span className="card-eth-chain-text">
-                                Golden Pass
-                              </span>
-                            }
-                          >
-                            <img
-                              src={
-                                username === item.displayName &&
-                                isactive === true
-                                  ? goldenActive
-                                  : goldenInactive
+                          +${getFormattedNumber(goldenRewards[item.position], 0)}
+                          {screen === "home" ? (
+                            <HtmlTooltip
+                              placement="top"
+                              title={
+                                <span className="card-eth-chain-text">
+                                  Golden Pass
+                                </span>
                               }
-                              alt=""
-                            />
-                          </HtmlTooltip>
+                            >
+                              <img src={goldenActive} alt="" />
+                            </HtmlTooltip>
+                          ) : (
+                            <HtmlTooltip
+                              placement="top"
+                              title={
+                                <span className="card-eth-chain-text">
+                                  Golden Pass
+                                </span>
+                              }
+                            >
+                              <img
+                                src={
+                                  username === item.displayName &&
+                                  isactive === true
+                                    ? goldenActive
+                                    : goldenInactive
+                                }
+                                alt=""
+                              />
+                            </HtmlTooltip>
+                          )}
                         </div>
                       </td>
                     </tr>

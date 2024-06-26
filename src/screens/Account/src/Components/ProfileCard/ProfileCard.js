@@ -123,6 +123,10 @@ const ProfileCard = ({
   userRankSkale,
   userBnbScore,
   userSkaleScore,
+  userRankCore,
+  userCoreScore,
+  userRankViction,
+  userVictionScore,
   genesisRank,
   handleOpenDomains,
   domainName,
@@ -158,7 +162,7 @@ const ProfileCard = ({
   const sliderRef = useRef(null);
   const [rankTooltip, setRankTooltip] = useState(false);
 
-  const userTotalScore = userBnbScore + userSkaleScore;
+  const userTotalScore = userBnbScore + userSkaleScore + userCoreScore + userVictionScore;
 
   const handleUserRank = () => {
     let allScore;
@@ -407,7 +411,7 @@ const ProfileCard = ({
 
   useEffect(() => {
     handleUserRank();
-  }, [userRank, userRankSkale, userBnbScore, userSkaleScore]);
+  }, [userRank, userRankSkale, userBnbScore, userRankCore, userRankViction, userCoreScore, userVictionScore]);
 
   const html = document.querySelector("html");
 
@@ -853,71 +857,132 @@ const ProfileCard = ({
                               onOutsideClick={() => setRankDropdown(false)}
                             >
                               <div className="player-rank-dropdown p-3 d-flex flex-column gap-2">
-                           
                                 <div className="d-flex flex-column gap-1">
                                   <div className="d-flex align-items-center justify-content-between">
-                                    <div style={{width: "33%"}}></div>
-                                    <span className="rank-dropdown-span" style={{width: "33%"}}>
+                                    <div style={{ width: "33%" }}></div>
+                                    <span
+                                      className="rank-dropdown-span"
+                                      style={{ width: "33%" }}
+                                    >
                                       Rank
                                     </span>
-                                    <span className="rank-dropdown-span" style={{width: "33%"}}>
+                                    <span
+                                      className="rank-dropdown-span"
+                                      style={{ width: "33%" }}
+                                    >
                                       Score
                                     </span>
                                   </div>
                                   <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
-                                    <div className="d-flex align-items-center gap-2" style={{width: "33%"}}>
-                                      <img src={bnbActive} width={20} height={20} alt="" />
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
+                                        src={bnbActive}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
                                       <span className="rank-dropdown-text">
                                         BNB Chain
                                       </span>
                                     </div>
-                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
                                       #{userRank + 1}
                                     </span>
-                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
                                       {getFormattedNumber(userBnbScore, 0)}
                                     </span>
                                   </div>
                                   <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
-                                    <div className="d-flex align-items-center gap-2" style={{width: "33%"}}>
-                                      <img src={skaleActive} width={20} height={20} alt="" />
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
+                                        src={skaleActive}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
                                       <span className="rank-dropdown-text">
                                         SKALE
                                       </span>
                                     </div>
-                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
                                       #{userRankSkale + 1}
                                     </span>
-                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
                                       {getFormattedNumber(userSkaleScore, 0)}
                                     </span>
                                   </div>
                                   <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
-                                    <div className="d-flex align-items-center gap-2" style={{width: "33%"}}>
-                                      <img src={coreActive} width={20} height={20} alt="" />
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
+                                        src={coreActive}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
                                       <span className="rank-dropdown-text">
                                         CORE
                                       </span>
                                     </div>
-                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
-                                      #{userRankSkale + 1}
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      #{userRankCore + 1}
                                     </span>
-                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
-                                      {getFormattedNumber(userSkaleScore, 0)}
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      {getFormattedNumber(userCoreScore, 0)}
                                     </span>
                                   </div>
                                   <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
-                                    <div className="d-flex align-items-center gap-2" style={{width: "33%"}}>
-                                      <img src={victionActive} width={20} height={20} alt="" />
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
+                                        src={victionActive}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
                                       <span className="rank-dropdown-text">
                                         VICTION
                                       </span>
                                     </div>
-                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
-                                      #{userRankSkale + 1}
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      #{userRankViction + 1}
                                     </span>
-                                    <span className="rank-dropdown-text" style={{width: "33%"}}>
-                                      {getFormattedNumber(userSkaleScore, 0)}
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      {getFormattedNumber(userVictionScore, 0)}
                                     </span>
                                   </div>
                                 </div>
