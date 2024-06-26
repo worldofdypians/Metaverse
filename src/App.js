@@ -165,6 +165,14 @@ function App() {
     },
   };
 
+  const {
+    data,
+    refetch: refetchPlayer,
+    loading: loadingPlayer,
+  } = useQuery(GET_PLAYER, {
+    fetchPolicy: "network-only",
+  });
+
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [showWalletModalDownload, setShowWalletModalDownload] = useState(false);
   const [showWalletModalRegister, setShowWalletModalRegister] = useState(false);
@@ -338,6 +346,222 @@ function App() {
     useWeb3React();
 
   useEagerlyConnect();
+
+  const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
+  const starPrizesGolden = [400, 200, 140, 70, 30, 30, 30, 30, 30, 30];
+  const placeholderplayerData = [
+    {
+      position: "0",
+      displayName: "...",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: "1",
+      displayName: "...",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: "2",
+      displayName: "...",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: "3",
+      displayName: "...",
+      reward: "---",
+      statValue: "---",
+      premium: false,
+    },
+
+    {
+      position: "4",
+      displayName: "...",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: "5",
+      displayName: "...",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: "6",
+      displayName: "...",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: "7",
+      displayName: "...",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: "8",
+      displayName: "...",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: "9",
+      displayName: "...",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+  ];
+
+  const [allStarData, setAllStarData] = useState({})
+  const [starRecords, setStarRecords] = useState([]);
+  const [activePlayerStar, setActivePlayerStar] = useState([]);
+  const [userDataStar, setUserDataStar] = useState({});
+  const [prevDataStar, setPrevDataStar] = useState([]);
+  const [prevVersionStar, setPrevVersionStar] = useState(0);
+  const [dataAmountStar, setDataAmountStar] = useState([]);
+
+  const userId = data?.getPlayer?.playerId;
+
+  const backendApi =
+    "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
+
+  const fillRecordsStar = (itemData) => {
+    if (itemData.length === 0) {
+      setStarRecords(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setStarRecords(finalData);
+    }
+  };
+  const fetchPreviousWinnersStar = async () => {
+    if (prevVersionStar != 0) {
+      const data = {
+        StatisticName: "LeaderboardStarDaily",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionStar - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      setPrevDataStar(result.data.data.leaderboard);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+  const fetchRecordsStar = async () => {
+    const data = {
+      StatisticName: "LeaderboardStarDaily",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    setPrevVersionStar(parseInt(result.data.data.version));
+    setStarRecords(result.data.data.leaderboard);
+    fillRecordsStar(result.data.data.leaderboard);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    if (testArray.length > 0) {
+      setActivePlayerStar(true);
+    } else if (testArray.length === 0) {
+      setActivePlayerStar(false);
+      fetchDailyRecordsAroundPlayerStar(result.data.data.leaderboard);
+    }
+  };
+  const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardStarDaily",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+
+        setDataAmountStar(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(starPrizes[9])
+              : Number(starPrizes[userPosition])
+            : 0
+        );
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerStar(true);
+          setUserDataStar([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerStar(false);
+          setUserDataStar(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerStar(false);
+        setUserDataStar(...testArray);
+      }
+    }
+  };
+
+
+  useEffect(() => {
+    fetchRecordsStar();
+  }, [username, userId])
+  
+
+
+  useEffect(() => {
+    fetchPreviousWinnersStar();
+  }, [prevVersionStar])
+  
+
+
+  useEffect(() => {
+    setAllStarData(
+      {
+       
+        rewards: starPrizes,
+        premium_rewards: starPrizesGolden,
+        activeData: starRecords,
+        previousData: prevDataStar,
+        player_data: userDataStar,
+        is_active: activePlayerStar, //change when apis are ready
+      },
+
+    );
+  }, [
+    starRecords,
+    prevDataStar,
+    userDataStar,
+    activePlayerStar,
+  ]);
+
 
   const html = document.querySelector("html");
 
@@ -574,13 +798,7 @@ function App() {
     }
   };
 
-  const {
-    data,
-    refetch: refetchPlayer,
-    loading: loadingPlayer,
-  } = useQuery(GET_PLAYER, {
-    fetchPolicy: "network-only",
-  });
+
 
   const handleConnection = async () => {
     try {
@@ -2797,6 +3015,7 @@ function App() {
             element={
               <Home
                 handleRegister={handleRegister}
+                allStarData={allStarData}
                 handleDownload={handleDownload}
                 coinbase={coinbase}
                 ethTokenData={ethTokenData}

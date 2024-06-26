@@ -60,6 +60,7 @@ const GlobalLeaderboard = ({
   previousgenesisData,
   previousGenesisVersion,
   screen,
+  allStarData
 }) => {
   const playerData = [
     {
@@ -388,6 +389,8 @@ const GlobalLeaderboard = ({
     setOptionText2("bnb");
   }, []);
 
+
+
   return (
     <div
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
@@ -536,10 +539,10 @@ const GlobalLeaderboard = ({
                   Extra Rewards
                 </th>
               </tr>
-              {genesisData &&
-                genesisData.length > 0 &&
+              {allStarData.activeData &&
+                allStarData.activeData.length > 0 &&
                 inactiveBoard === false &&
-                genesisData.map((item, index) => {
+                allStarData.activeData.map((item, index) => {
                   return (
                     <tr
                       key={index}
@@ -550,12 +553,12 @@ const GlobalLeaderboard = ({
                       }`}
                     >
                       <td className="playerData col-1 font-montserrat">
-                        {item.position + 1}
+                        {Number(item.position) + 1}
                       </td>
                       <td className="playerName col-5 font-montserrat">
                         <img
                           src={require(`./assets/globalRanks/globalRank${
-                            item.position + 1
+                            index + 1
                           }.png`)}
                           alt=""
                           className="playerAvatar me-2"
@@ -621,10 +624,10 @@ const GlobalLeaderboard = ({
                   );
                 })}
 
-              {previousgenesisData &&
+              {allStarData.previousData &&
                 inactiveBoard === true &&
-                previousgenesisData.length > 0 &&
-                previousgenesisData.map((item, index) => {
+                allStarData.previousData.length > 0 &&
+                allStarData.previousData.map((item, index) => {
                   return (
                     <tr
                       key={index}
@@ -635,12 +638,12 @@ const GlobalLeaderboard = ({
                       }`}
                     >
                       <td className="playerData col-1 font-montserrat">
-                        {item.position + 1}
+                        {Number(item.position) + 1}
                       </td>
                       <td className="playerName col-5 font-montserrat">
                         <img
                           src={require(`./assets/globalRanks/globalRank${
-                            item.position + 1
+                            index + 1
                           }.png`)}
                           alt=""
                           className="playerAvatar me-2"

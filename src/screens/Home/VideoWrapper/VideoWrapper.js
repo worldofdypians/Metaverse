@@ -32,7 +32,7 @@ import NewHomeLeaderboard from "../../../components/LeaderBoard/NewHomeLeaderboa
 import GlobalLeaderboard from "../../../components/LeaderBoard/GlobalLeaderboard";
 import axios from "axios";
 
-const VideoWrapper = ({ handleRegister, handleDownload }) => {
+const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
   const [modal, setModal] = useState(false);
   const [multiplayerModal, setmultiplayerModal] = useState(false);
 
@@ -760,6 +760,8 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
               previousgenesisData={previousgenesisData}
               previousGenesisVersion={previousGenesisVersion}
               screen={"home"}
+              allStarData={allStarData}
+
             />
             {/* <NewHomeLeaderboard /> */}
           </div>
