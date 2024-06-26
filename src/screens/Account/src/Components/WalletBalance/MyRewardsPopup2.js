@@ -77,6 +77,15 @@ bnbEarnToken,
   allVictionChests,
   allSeiChests,
   genesisRank2,
+  dailyDataAmountCore,
+  weeklyDataAmountCore,
+  monthlyDataAmountCore,
+  dailyDataAmountViction,
+  weeklyDataAmountViction,
+  monthlyDataAmountViction,
+  dailyDataAmountSkale,
+  weeklyDataAmountSkale,
+  monthlyDataAmountSkale,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -693,7 +702,16 @@ bnbEarnToken,
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd) +
-                      Number(dailyplayerData) + Number(skaleplayerDataAmount) +
+                      Number(dailyplayerData) + 
+                      Number(dailyDataAmountCore) +
+                      Number(weeklyDataAmountCore) +
+                      Number(monthlyDataAmountCore) +
+                      Number(dailyDataAmountSkale) +
+                      Number(weeklyDataAmountSkale) +
+                      Number(monthlyDataAmountSkale) +
+                      Number(dailyDataAmountViction) +
+                      Number(weeklyDataAmountViction) +
+                      Number(monthlyDataAmountViction) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(genesisRank2) +
@@ -866,7 +884,16 @@ bnbEarnToken,
                     2
                   )
                 : getFormattedNumber(
-                    Number(dailyplayerData) + Number(skaleplayerDataAmount) +
+                    Number(dailyplayerData) + 
+                    Number(dailyDataAmountCore) +
+                    Number(weeklyDataAmountCore) +
+                    Number(monthlyDataAmountCore) +
+                    Number(dailyDataAmountSkale) +
+                    Number(weeklyDataAmountSkale) +
+                    Number(monthlyDataAmountSkale) +
+                    Number(dailyDataAmountViction) +
+                    Number(weeklyDataAmountViction) +
+                    Number(monthlyDataAmountViction) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(genesisRank2),
@@ -1195,7 +1222,7 @@ bnbEarnToken,
                   $
                   {previousRewards
                     ? getFormattedNumber(leaderboardSkaleTotalData, 2)
-                    : getFormattedNumber( Number(skaleplayerDataAmount), 2)}
+                    : getFormattedNumber( Number(dailyDataAmountSkale) + Number(weeklyDataAmountSkale) + Number(monthlyDataAmountSkale), 2)}
                 </span>
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
@@ -1204,7 +1231,8 @@ bnbEarnToken,
                   $
                   {previousRewards
                     ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(0, 2)}
+                    : getFormattedNumber( Number(dailyDataAmountCore) + Number(weeklyDataAmountCore) + Number(monthlyDataAmountCore), 2)}
+
                 </span>
               </div>
              
@@ -1227,7 +1255,8 @@ bnbEarnToken,
                   $
                   {previousRewards
                     ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(0, 2)}
+                    : getFormattedNumber( Number(dailyDataAmountViction) + Number(weeklyDataAmountViction) + Number(monthlyDataAmountViction), 2)}
+
                 </span>
               </div>
                  <div className="d-flex w-100 justify-content-between gap-2">

@@ -528,20 +528,15 @@ function App() {
       }
     }
   };
-
-
+  
   useEffect(() => {
     fetchRecordsStar();
   }, [username, userId])
   
-
-
   useEffect(() => {
     fetchPreviousWinnersStar();
   }, [prevVersionStar])
   
-
-
   useEffect(() => {
     setAllStarData(
       {

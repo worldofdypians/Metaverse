@@ -211,6 +211,15 @@ const NewWalletBalance = ({
   handleConnect,
   ethTokenData,
   dypTokenData,
+  dailyDataAmountCore,
+  weeklyDataAmountCore,
+  monthlyDataAmountCore,
+  dailyDataAmountViction,
+  weeklyDataAmountViction,
+  monthlyDataAmountViction,
+  dailyDataAmountSkale,
+  weeklyDataAmountSkale,
+  monthlyDataAmountSkale,
   favoritesArray,
   latestBoughtNFTS,
   myOffers,
@@ -1887,11 +1896,19 @@ const NewWalletBalance = ({
                         Number(userSocialRewardsCached) +
                           Number(weeklyplayerData) +
                           Number(dailyplayerData) +
-                          Number(skaleplayerDataAmount) +
                           Number(userRank2) +
                           Number(genesisRank2) +
                           Number(treasureRewardMoney) +
                           Number(userRankRewards) +
+                          Number(dailyDataAmountCore) +
+                          Number(weeklyDataAmountCore) +
+                          Number(monthlyDataAmountCore) +
+                          Number(dailyDataAmountSkale) +
+                          Number(weeklyDataAmountSkale) +
+                          Number(monthlyDataAmountSkale) +
+                          Number(dailyDataAmountViction) +
+                          Number(weeklyDataAmountViction) +
+                          Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd)+
                           Number(coreEarnUsd)+
                           Number(victionEarnUsd),
