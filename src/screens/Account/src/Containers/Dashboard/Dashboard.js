@@ -627,7 +627,8 @@ function Dashboard({
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
               coreEvent[0].reward.earn.multiplier;
-            
+              const pointsCore= coreEvent[0].reward.earn.totalPoints;
+            setCorePoints(pointsCore)
             setCoreEarnUsd(userEarnedusd);
             setCoreEarnToken(userEarnedusd / corePrice);
           }
@@ -637,7 +638,8 @@ function Dashboard({
             const userEarnedusd =
               victionEvent[0].reward.earn.total /
               victionEvent[0].reward.earn.multiplier;
-            
+              const pointsViction = victionEvent[0].reward.earn.totalPoints;
+            setVictionPoints(pointsViction)
             setVictionEarnUsd(userEarnedusd);
             setVictionEarnToken(userEarnedusd / victionPrice);
           }
@@ -5705,6 +5707,7 @@ function Dashboard({
                         onOpenGenesisLeaderboard={() => {
                           setGenesisLeaderboard(true);
                         }}
+                        bnbEarnUsd={bnbEarnUsd}
                         dogePrice={dogePrice}
                         weeklyplayerData={weeklyplayerDataAmount}
                         dailyplayerData={dailyplayerDataAmount}
@@ -5814,6 +5817,12 @@ function Dashboard({
                         dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
                         dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
                         dypiusPremiumPoints={dypiusPremiumPoints}
+                        corePoints={corePoints}
+                        victionPoints={victionPoints}
+                        bnbEarnToken={bnbEarnToken}
+                        coreEarnToken={coreEarnToken}
+                        victionEarnToken={victionEarnToken}
+                        bnbPoints={bnbPoints}
                         onPremiumClick={() => {
                           setgetPremiumPopup(true);
                         }}
