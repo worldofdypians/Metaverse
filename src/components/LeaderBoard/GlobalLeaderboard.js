@@ -15,7 +15,8 @@ import useWindowSize from "../../hooks/useWindowSize";
 import globalIcon from "./assets/globalRanks/globalIcon.png";
 import goldenActive from "./assets/goldenActive.png";
 import goldenInactive from "./assets/goldenInactive.png";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import yellowArrow from './assets/yellowArrow.svg'
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
 
 const renderer = ({ hours, minutes, seconds }) => {
@@ -690,19 +691,26 @@ const GlobalLeaderboard = ({
         </div>
       </div>
 
-      <div className="optionsWrapper p-2">
-        <div className="d-flex flex-column">
-          <div className="d-flex justify-content-between gap-2 align-items-center">
-            <span className="viewWinners">View previous winners</span>
-            <Switch
-              {...label}
-              onChange={() => {
-                setInactiveBoard(!inactiveBoard);
-              }}
-            />
-          </div>
-        </div>
+      {screen === "dash" ? 
+    <div className="optionsWrapper p-2">
+    <div className="d-flex flex-column">
+      <div className="d-flex justify-content-between gap-2 align-items-center">
+        <span className="viewWinners">View previous winners</span>
+        <Switch
+          {...label}
+          onChange={() => {
+            setInactiveBoard(!inactiveBoard);
+          }}
+        />
       </div>
+    </div>
+  </div>
+  :
+  <NavLink to={"/account"} className="view-chains-wrapper optionsWrapper p-2 d-flex align-items-center justify-content-between">
+    <span>View Chain Leaderboards</span>
+          <img src={yellowArrow} alt="" />
+  </NavLink>  
+    }
     </div>
   );
 };
