@@ -497,7 +497,7 @@ function App() {
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
-
+      if (testArray.length > 0) {
       const userPosition = testArray[0].position;
 
         setDataAmountStar(
@@ -509,7 +509,7 @@ function App() {
               : Number(starPrizes[userPosition])
             : 0
         );
-
+      }
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
           (item) => item.displayName === username

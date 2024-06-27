@@ -1534,7 +1534,7 @@ const NewDailyBonus = ({
 
   useEffect(() => {
     countEarnedRewards();
-  }, [allChests, allSkaleChests]);
+  }, [allChests, allSkaleChests, allVictionChests, allCoreChests]);
 
   // useEffect(() => {
   //   setChain("bnb");

@@ -1861,7 +1861,7 @@ const NewEvents = ({
                           : dummyEvent.id === "event12"
                           ? "CORE"
                           : dummyEvent.id === "event16"
-                          ? "ELGD"
+                          ? "EGLD"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2316,7 +2316,7 @@ const NewEvents = ({
                             : dummyEvent.id === "event12"
                             ? "CORE"
                             : dummyEvent.id === "event16"
-                            ? "ELGD"
+                            ? "EGLD"
                             : "ETH"}
                         </>
                       )}

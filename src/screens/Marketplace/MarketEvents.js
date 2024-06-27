@@ -224,6 +224,12 @@ const MarketEvents = ({
   const [victionEarnToken, setVictionEarnToken] = useState(0);
   const [victionPoints, setVictionPoints] = useState(0);
 
+  const [multiversEarnUsd, setmultiversEarnUsd] = useState(0);
+  const [multiversPrice, setmultiversPrice] = useState(0);
+  const [multiversEarnToken, setmultiversEarnToken] = useState(0);
+  const [multiversPoints, setmultiversPoints] = useState(0);
+
+
 
   const selected = useRef(null);
   const { email } = useAuth();
@@ -255,6 +261,17 @@ const MarketEvents = ({
       )
       .then((obj) => {
         setVictionPrice(obj.data.tomochain.usd);
+      });
+  };
+
+
+  const fetchEgldPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=tomochain&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setmultiversPrice(obj.data.tomochain.usd);
       });
   };
 
@@ -935,7 +952,7 @@ const MarketEvents = ({
       if (response.status === 200) {
         const responseData = await response.json();
         if (responseData.events) {
-          console.log(responseData, "Data");
+       
           const coingeckoEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "coingecko";
           });
@@ -955,6 +972,10 @@ const MarketEvents = ({
 
           const victionEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "viction";
+          });
+
+          const multiversEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "multivers";
           });
 
           const gateEvent = responseData.events.filter((obj) => {
@@ -1024,6 +1045,17 @@ const MarketEvents = ({
             setVictionEarnUsd(userEarnedusd);
             setVictionEarnToken(userEarnedusd / victionPrice);
           }
+
+          if (multiversEvent && multiversEvent[0]) {
+            const userEarnedusd =
+            multiversEvent[0].reward.earn.total /
+            multiversEvent[0].reward.earn.multiplier;
+              const pointsmultivers = multiversEvent[0].reward.earn.totalPoints;
+            setmultiversPoints(pointsmultivers)
+            setmultiversEarnUsd(userEarnedusd);
+            setmultiversEarnToken(userEarnedusd / multiversPrice);
+          }
+
 
 
           if (dypEvent && dypEvent[0]) {
@@ -1137,12 +1169,14 @@ const MarketEvents = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Events";
+    getTokenDatabnb();
+    fetchVictionPrice();
+    fetchEgldPrice();
+    fetchCorePrice();
   }, []);
 
   useEffect(() => {
-    getTokenDatabnb();
-    fetchVictionPrice();
-    fetchCorePrice();
+
     if (windowSize.width < 786) {
       window.scrollTo(0, 750);
     }
@@ -1458,25 +1492,7 @@ const MarketEvents = ({
               )}
               {activeTab === "upcoming" && (
                 <div className="d-flex flex-column gap-4">
-                  <div className="border-0 upcoming-mint-wrapper upcoming-core-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">CORE</h6>
-                      <p className="upcoming-mint-desc">
-                        Join the CORE Treasure Hunt event for a chance to grab a
-                        share of the $20,000 CORE reward pool.
-                      </p>
-                    </div>
-                    <img
-                      src={coreBg}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-block"
-                    />
-                    <img
-                      src={coreMobileBg}
-                      alt=""
-                      className="upcoming-mint-img d-block d-lg-none d-md-none"
-                    />
-                  </div>
+                  
                   <div className="border-0 upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">SEI</h6>
@@ -1496,44 +1512,8 @@ const MarketEvents = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
-                  <div className="border-0 upcoming-mint-wrapper upcoming-viction-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">VICTION</h6>
-                      <p className="upcoming-mint-desc">
-                        Join the Viction Treasure Hunt event for a chance to
-                        grab a share of the $20,000 VIC reward pool.
-                      </p>
-                    </div>
-                    <img
-                      src={victionBg}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-block"
-                    />
-                    <img
-                      src={victionMobileBg}
-                      alt=""
-                      className="upcoming-mint-img d-block d-lg-none d-md-none"
-                    />
-                  </div>
-                  <div className="border-0 upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">MultiversX</h6>
-                      <p className="upcoming-mint-desc">
-                        Join the MultiversX Treasure Hunt event for a chance to
-                        grab a share of the $20,000 EGLD reward pool.
-                      </p>
-                    </div>
-                    <img
-                      src={multiversBg}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-block"
-                    />
-                    <img
-                      src={multiversMobileBg}
-                      alt=""
-                      className="upcoming-mint-img d-block d-lg-none d-md-none"
-                    />
-                  </div>
+                
+                 
                 </div>
               )}
               {activeTab === "past" && (
@@ -1976,7 +1956,7 @@ const MarketEvents = ({
                           : dummyEvent.id === "event12"
                           ? "CORE"
                           : dummyEvent.id === "event16"
-                          ? "ELGD"
+                          ? "EGLD"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2195,7 +2175,7 @@ const MarketEvents = ({
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
                 Core DAO started as a community looking for better solutions,
-                and that’s what it remains. With principles grounded in the
+                and that's what it remains. With principles grounded in the
                 premises of both Bitcoin and Ethereum, our power comes from
                 embracing multiple ideas and communities. The opposite of a
                 winner-take-all mentality - Core is focused instead on platform
@@ -2367,7 +2347,8 @@ const MarketEvents = ({
                         ? skalePoints
                         : dummyEvent.id === "event20"
                         ? bnbPoints
-                        
+                        : dummyEvent.id === "event16"
+                        ? multiversPoints
                         : dummyEvent.id === "event14"
                         ? victionPoints
                         : dummyEvent.id === "event12"
@@ -2413,6 +2394,8 @@ const MarketEvents = ({
                         ? skaleEarnUsd
                         : dummyEvent.id === "event12"
                         ? coreEarnUsd
+                        : dummyEvent.id === "event16"
+                        ? multiversEarnUsd
                         : dummyEvent.id === "event14"
                         ? victionEarnUsd
                         : dummyEvent.id === "event20"
@@ -2442,6 +2425,8 @@ const MarketEvents = ({
                               ? skaleEarnToken
                               : dummyEvent.id === "event12"
                               ? coreEarnToken
+                              : dummyEvent.id === "event16"
+                              ? multiversEarnToken
                               : dummyEvent.id === "event14"
                               ? victionEarnToken
                               : dummyEvent.id === "event20"
@@ -2476,7 +2461,7 @@ const MarketEvents = ({
                             : dummyEvent.id === "event12"
                             ? "CORE"
                             : dummyEvent.id === "event16"
-                            ? "ELGD"
+                            ? "EGLD"
                             : "ETH"}
                         </>
                       )}
