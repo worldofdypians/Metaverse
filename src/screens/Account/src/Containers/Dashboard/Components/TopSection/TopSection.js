@@ -206,7 +206,7 @@ const TopSection = ({
               <img src={globalFlag} className="w-100" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Global</span>
-                <img src={globalIcon} height={60} width={60} alt="" />
+                <img src={globalIcon} height={50} width={50} alt="" />
               </div>
             </div>
             <div
@@ -216,7 +216,7 @@ const TopSection = ({
               <img src={chainsFlag} className="w-100" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Chains</span>
-                <img src={chainsIcon} height={60} width={60} alt="" />
+                <img src={chainsIcon} height={50} width={50} alt="" />
               </div>
             </div>
             <div
@@ -226,7 +226,7 @@ const TopSection = ({
               <img src={landFlag} className="w-100" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Genesis</span>
-                <img src={landIcon} height={60} width={60} alt="" />
+                <img src={landIcon} height={50} width={50} alt="" />
               </div>
             </div>
           </div>
