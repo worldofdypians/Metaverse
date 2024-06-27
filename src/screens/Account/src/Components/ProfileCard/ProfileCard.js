@@ -446,7 +446,7 @@ const ProfileCard = ({
                 }`}
               >
                 <div className="d-flex flex-column flex-lg-row profile-header-wrapper justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
-                  <div className="d-flex gap-2 justify-content-between align-items-center  w-50">
+                  <div className={`d-flex gap-2 justify-content-between align-items-center ${windowSize.width > 991 && 'w-50'}  `}>
                     <div className="d-flex align-items-center gap-2 w-100">
                       {(coinbase && !email && !isPremium) ||
                       (!coinbase && !email) ||
