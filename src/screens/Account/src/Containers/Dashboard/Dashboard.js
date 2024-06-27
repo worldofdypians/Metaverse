@@ -346,6 +346,8 @@ function Dashboard({
   const [mySkaleNfts, setmySkaleNfts] = useState([]);
   const [myCoreNfts, setmyCoreNfts] = useState([]);
   const [myVictionNfts, setmyVictionNfts] = useState([]);
+  const [myMultiversNfts, setmyMultiversNfts] = useState([]);
+
 
   const [latestVersion, setLatestVersion] = useState(0);
 
@@ -519,6 +521,12 @@ function Dashboard({
   const [victionPrice, setVictionPrice] = useState(0);
   const [victionEarnToken, setVictionEarnToken] = useState(0);
   const [victionPoints, setVictionPoints] = useState(0);
+
+  const [multiversEarnUsd, setmultiversEarnUsd] = useState(0);
+  const [multiversPrice, setmultiversPrice] = useState(0);
+  const [multiversEarnToken, setmultiversEarnToken] = useState(0);
+  const [multiversPoints, setmultiversPoints] = useState(0);
+
   const [discountPercentage, setdiscountPercentage] = useState(0);
   const [nftPremium_tokenId, setnftPremium_tokenId] = useState(0);
   const [nftPremium_total, setnftPremium_total] = useState(0);
@@ -530,6 +538,16 @@ function Dashboard({
   const { BigNumber } = window;
 
   //leaderboard calls
+
+  const fetchEgldPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=tomochain&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setmultiversPrice(obj.data.tomochain.usd);
+      });
+  };
 
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
@@ -576,6 +594,10 @@ function Dashboard({
 
           const victionEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "viction";
+          });
+
+          const multiversEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "multivers";
           });
 
           const gateEvent = responseData.events.filter((obj) => {
@@ -642,6 +664,16 @@ function Dashboard({
             setVictionPoints(pointsViction)
             setVictionEarnUsd(userEarnedusd);
             setVictionEarnToken(userEarnedusd / victionPrice);
+          }
+
+ if (multiversEvent && multiversEvent[0]) {
+            const userEarnedusd =
+            multiversEvent[0].reward.earn.total /
+            multiversEvent[0].reward.earn.multiplier;
+              const pointsmultivers = multiversEvent[0].reward.earn.totalPoints;
+            setmultiversPoints(pointsmultivers)
+            setmultiversEarnUsd(userEarnedusd);
+            setmultiversEarnToken(userEarnedusd / multiversPrice);
           }
 
 
@@ -2042,6 +2074,7 @@ function Dashboard({
     setPrevVersionStar(parseInt(result.data.data.version));
     setStarRecords(result.data.data.leaderboard);
     fillRecordsStar(result.data.data.leaderboard);
+    console.log('result.data.data.leaderboard',result.data.data.leaderboard)
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -2066,7 +2099,7 @@ function Dashboard({
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
-
+      if (testArray.length > 0) {
       const userPosition = testArray[0].position;
 
       setDataAmountStar(
@@ -2078,7 +2111,7 @@ function Dashboard({
             : Number(starPrizes[userPosition])
           : 0
       );
-
+    }
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
           (item) => item.displayName === username
@@ -3891,6 +3924,10 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "viction").then(
       (NFTS) => setmyVictionNfts(NFTS)
     );
+    
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "multivers").then(
+      (NFTS) => setmyMultiversNfts(NFTS)
+    );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "skale").then((NFTS) =>
       setmySkaleNfts(NFTS)
@@ -5121,6 +5158,7 @@ function Dashboard({
     fetchSeiPrice();
     fetchCorePrice();
     fetchVictionPrice();
+    fetchEgldPrice()
   }, []);
 
   useEffect(() => {
@@ -5671,6 +5709,8 @@ function Dashboard({
                               myCmcNfts={myCmcNfts}
                               myCoreNfts={myCoreNfts}
                               myVictionNfts={myVictionNfts}
+                              myMultiversNfts={myMultiversNfts}
+
                               mySkaleNfts={mySkaleNfts}
                               latestBoughtNFTS={latest20BoughtNFTS}
                               myOffers={myOffers}
@@ -5830,6 +5870,9 @@ function Dashboard({
                         userRankRewards={userRankRewards}
                         adClicked={adClicked}
                         onClearAd={()=>{setadClicked('')}}
+                        multiversPoints={multiversPoints}
+                        multiversEarnToken={multiversEarnToken}
+                        multiversEarnUsd={multiversEarnUsd}
                       />
                       <WalletBalance
                         ethTokenData={ethTokenData}
@@ -5869,6 +5912,8 @@ function Dashboard({
                         myCmcNfts={myCmcNfts}
                         myCoreNfts={myCoreNfts}
                         myVictionNfts={myVictionNfts}
+                        myMultiversNfts={myMultiversNfts}
+
                         mySkaleNfts={mySkaleNfts}
                         latestBoughtNFTS={latest20BoughtNFTS}
                         myOffers={myOffers}
@@ -6092,8 +6137,6 @@ function Dashboard({
                             />
                           </div>
                           <MyRewardsPopupNew
-                            username={data?.getPlayer?.displayName}
-                            userId={data?.getPlayer?.playerId}
                             address={data?.getPlayer?.wallet?.publicAddress}
                             weeklyplayerData={weeklyplayerDataAmount}
                             dailyplayerData={dailyplayerDataAmount}
@@ -6108,13 +6151,7 @@ function Dashboard({
                             monthlyDataAmountSkale={monthlyDataAmountSkale}
                             userRank2={userRank2}
                             email={email}
-                            bnbPrice={bnbPrice}
-                            cfxPrice={cfxPrice}
-                            ethTokenData={ethTokenData}
-                            openedChests={openedChests}
-                            openedSkaleChests={openedSkaleChests}
-                            openedCoreChests={openedCoreChests}
-                            openedVictionChests={openedVictionChests}
+                           
                             allChests={allChests}
                             allSkaleChests={allSkaleChests}
                             allCoreChests={allCoreChests}
@@ -6122,24 +6159,12 @@ function Dashboard({
                             allSeiChests={allSeiChests}
                             availableTime={goldenPassRemainingTime}
                             userSocialRewards={userSocialRewards}
-                            dogePrice={dogePrice}
-                            userEarnUsd={userEarnUsd}
-                            userEarnETH={userEarnETH}
-                            cmcuserEarnETH={cmcuserEarnETH}
-                            cmcuserEarnUsd={cmcuserEarnUsd}
-                            dogeEarnUSD={dogeEarnUSD}
                             bnbEarnUsd={bnbEarnUsd}
-                            bnbEarnToken={bnbEarnToken}
-                            dogeEarnBNB={dogeEarnBNB}
-                            baseEarnUSD={baseEarnUSD}
-                            baseEarnETH={baseEarnETH}
                             skaleEarnUsd={skaleEarnUsd}
+                            multiversEarnUsd={multiversEarnUsd}
                             seiEarnUsd={seiEarnUsd}
                             victionEarnUsd={victionEarnUsd}
                             coreEarnUsd={coreEarnUsd}
-                            dypiusEarnUsd={dypiusEarnUsd}
-                            dypiusPremiumEarnUsd={dypiusPremiumEarnUsd}
-                            dypiusPremiumEarnTokens={dypiusPremiumEarnTokens}
                             kittyDashRecords={kittyDashRecords}
                             userRankRewards={userRankRewards}
                             cawsPremiumRewards={cawsPremiumRewards}

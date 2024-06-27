@@ -110,7 +110,7 @@ const Portfolio = ({
   MyNFTSLandAvax,
   MyNFTSCawsAvax,
   MyNFTSLandBase,
-  MyNFTSCawsBase,myNFTSBNB
+  MyNFTSCawsBase,myNFTSBNB,myMultiversNfts
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -460,6 +460,8 @@ const Portfolio = ({
     let landBaseArray = [];
     let skaleNftsArray = [];
     let bnbNftsArray = [];
+    let multiversNftsArray = [];
+
 
     // console.log(allListed, "allListed");
 
@@ -754,6 +756,23 @@ const Portfolio = ({
         );
       }
 
+      if (myMultiversNfts && myMultiversNfts.length > 0) {
+        await Promise.all(
+          myMultiversNfts.map(async (i) => {
+            multiversNftsArray.push({
+              nftAddress: window.config.nft_multivers_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "multivers",
+              chain: 56,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+
       if (mySkaleNfts && mySkaleNfts.length > 0) {
         await Promise.all(
           mySkaleNfts.map(async (i) => {
@@ -924,14 +943,8 @@ const Portfolio = ({
       setmyNftsOffer(recievedOffers);
 
       finalCollection = [
-        ...cawsAvaxArray,
-        ...cawsBnbArray,
-        ...cawsBaseArray,
-        ...landAvaxArray,
-        ...landBnbArray,
-        ...landBaseArray,
+        ...multiversNftsArray,
         ...bnbNftsArray,
-        ...coingeckoNftsArray,
         ...victionNftsArray,
         ...coreNftsArray,
         ...confluxNftsArray,
@@ -939,11 +952,18 @@ const Portfolio = ({
         ...baseNftsArray,
         ...dogeNftsArray,
         ...cmcNftsArray,
+        ...coingeckoNftsArray,
         ...skaleNftsArray,
         ...finalTimepieceArray,
         ...finalLandArray,
         ...finalCawsArray,
         ...stakeArray,
+        ...cawsAvaxArray,
+        ...cawsBnbArray,
+        ...cawsBaseArray,
+        ...landAvaxArray,
+        ...landBnbArray,
+        ...landBaseArray,
       ];
 
       setcollectedItems(finalCollection);
@@ -1156,6 +1176,10 @@ const Portfolio = ({
         (item) => item.nftAddress === window.config.nft_viction_address
       );
 
+      let multiversFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_multivers_address
+      );
+
       const allBetapassArray = [
         ...coingeckoFilter,
         ...confluxFilter,
@@ -1165,6 +1189,7 @@ const Portfolio = ({
         ...baseFilter,
         ...skaleFilter,
         ...victionFilter,
+        ...multiversFilter,
         ...coreFilter,
         ...bnbFilter
 

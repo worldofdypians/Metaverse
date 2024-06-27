@@ -294,7 +294,11 @@ const NewWalletBalance = ({
   bnbEarnUsd,
   bnbEarnToken,
   coreEarnToken,
-  victionEarnToken,onClearAd
+  victionEarnToken,
+  onClearAd,
+  multiversPoints,
+  multiversEarnToken,
+  multiversEarnUsd,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -1421,9 +1425,9 @@ const NewWalletBalance = ({
       const result = dummyBetaPassData2.filter((item) => {
         return item.title.toLowerCase() === adClicked;
       });
-   
+
       if (result) {
-          setDummyEvent(result[0].popupInfo);
+        setDummyEvent(result[0].popupInfo);
         setEventPopup(true);
       }
     }
@@ -2178,7 +2182,10 @@ const NewWalletBalance = ({
                 src={require("./assets/closeMark.svg").default}
                 alt=""
                 style={{ cursor: "pointer" }}
-                onClick={() => {setEventPopup(false); onClearAd()}}
+                onClick={() => {
+                  setEventPopup(false);
+                  onClearAd();
+                }}
               />
             </div>
             <div className="profile-event-popup-wrapper mb-3 p-2 p-lg-3 h-auto">
@@ -2535,7 +2542,7 @@ const NewWalletBalance = ({
                           : dummyEvent.id === "event12"
                           ? "CORE"
                           : dummyEvent.id === "event16"
-                          ? "ELGD"
+                          ? "EGLD"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2930,6 +2937,8 @@ const NewWalletBalance = ({
                         ? victionPoints
                         : dummyEvent.id === "event12"
                         ? corePoints
+                        : dummyEvent.id === "event16"
+                        ? multiversPoints
                         : 0,
                       0
                     )}
@@ -2973,6 +2982,8 @@ const NewWalletBalance = ({
                         ? victionEarnUsd
                         : dummyEvent.id === "event20"
                         ? bnbEarnUsd
+                        : dummyEvent.id === "event16"
+                        ? multiversEarnUsd
                         : 0,
                       2
                     )}
@@ -3002,6 +3013,8 @@ const NewWalletBalance = ({
                               ? victionEarnToken
                               : dummyEvent.id === "event20"
                               ? bnbEarnToken
+                              : dummyEvent.id === "event16"
+                              ? multiversEarnToken
                               : 0,
                             2
                           )}
@@ -3031,7 +3044,7 @@ const NewWalletBalance = ({
                             : dummyEvent.id === "event12"
                             ? "CORE"
                             : dummyEvent.id === "event16"
-                            ? "ELGD"
+                            ? "EGLD"
                             : "ETH"}
                         </>
                       )}
