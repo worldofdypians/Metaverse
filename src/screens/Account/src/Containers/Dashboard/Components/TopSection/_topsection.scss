@@ -97,10 +97,14 @@
 
 .flag-wrapper {
   position: relative;
-  width: 28%;
-  top: -28px;
+  width: 25%;
+  top: -25px;
   cursor: pointer;
   transition: all 0.25s;
+  @media screen and (max-width: 786px) {
+    width: 30%;
+    top: -28px;
+  }
 }
 
 .flag-wrapper:hover {
