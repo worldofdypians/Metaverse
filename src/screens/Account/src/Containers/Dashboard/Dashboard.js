@@ -6185,10 +6185,11 @@ function Dashboard({
                       </OutsideClickHandler>
                     )}
 
-                    {getPremiumPopup && (
+                    {(getPremiumPopup || adClicked === 'premium') && (
                       <OutsideClickHandler
                         onOutsideClick={() => {
                           setgetPremiumPopup(false);
+                          setadClicked('')
                         }}
                       >
                         <div
@@ -6207,7 +6208,7 @@ function Dashboard({
                               </h6>
                               <img
                                 src={xMark}
-                                onClick={() => setgetPremiumPopup(false)}
+                                onClick={() => {setgetPremiumPopup(false);setadClicked('')}}
                                 alt=""
                                 style={{ cursor: "pointer" }}
                               />

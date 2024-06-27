@@ -26,7 +26,7 @@ import goldenAd from "./assets/goldenAd.png";
 import goldenAdMobile from "./assets/goldenAdMobile.png";
 import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
 import useWindowSize from "../../../../Utils.js/hooks/useWindowSize";
-
+import { useNavigate } from "react-router-dom";
 const renderer = ({ days, hours, minutes }) => {
   return (
     <span className="livein-timer" style={{ fontSize: "18px" }}>
@@ -40,9 +40,10 @@ const TopSection = ({
   onOpenGlobalLeaderboard,
   onOpenGenesisLeaderboard,
   handleShowPopup,
-  isPremium
+  isPremium,
 }) => {
   let testDay = new Date("2024-05-20T11:00:00.000+02:00");
+  const navigate = useNavigate();
 
   var settings = {
     dots: false,
@@ -50,7 +51,7 @@ const TopSection = ({
     dotsClass: "button__bar",
     infinite: true,
     speed: 1000,
-    fade: true,
+    fade: false,
     autoplay: true,
     autoplaySpeed: 3000,
     slidesToShow: 1,
@@ -102,7 +103,6 @@ const TopSection = ({
 
   const slider = useRef(null);
 
-
   const windowSize = useWindowSize();
 
   const dummyPromotions = [
@@ -150,8 +150,7 @@ const TopSection = ({
     { title: "goldenPass", image: goldenAd, mobileImage: goldenAdMobile },
   ];
 
-
-  const filteredSliderContent = slidercontent.filter(item => {
+  const filteredSliderContent = slidercontent.filter((item) => {
     if (isPremium) {
       return item.title !== "premium";
     } else {
@@ -277,7 +276,6 @@ const TopSection = ({
             />
           </div> */}
             <Slider {...settings} ref={slider}>
-         
               {filteredSliderContent.map((item, index) => {
                 return (
                   <img
@@ -285,7 +283,9 @@ const TopSection = ({
                     className="advertisment-img"
                     alt=""
                     onClick={() => {
-                      handleShowPopup(item.title);
+                      item.title !== "goldenPass"
+                        ? handleShowPopup(item.title)
+                        : navigate("/marketplace/events/golden-pass");
                     }}
                   />
                 );
