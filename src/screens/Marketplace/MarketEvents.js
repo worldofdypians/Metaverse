@@ -215,7 +215,15 @@ const MarketEvents = ({
   const [bnbPoints, setBnbPoints] = useState(0);
   const [skalePoints, setSkalePoints] = useState(0);
   const [dailyBonusPopup, setDailyBonusPopup] = useState(false);
-  const [activePopup, setActivePopup] = useState(false);
+  const [coreEarnUsd, setCoreEarnUsd] = useState(0);
+  const [corePrice, setCorePrice] = useState(0);
+  const [coreEarnToken, setCoreEarnToken] = useState(0);
+  const [corePoints, setCorePoints] = useState(0);
+  const [victionEarnUsd, setVictionEarnUsd] = useState(0);
+  const [victionPrice, setVictionPrice] = useState(0);
+  const [victionEarnToken, setVictionEarnToken] = useState(0);
+  const [victionPoints, setVictionPoints] = useState(0);
+
 
   const selected = useRef(null);
   const { email } = useAuth();
@@ -226,6 +234,27 @@ const MarketEvents = ({
       .then((data) => {
         const bnb = data.data.the_graph_bsc_v2.usd_per_eth;
         setBnbPrice(bnb);
+      });
+  };
+
+
+  const fetchCorePrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=core&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setCorePrice(obj.data.core.usd);
+      });
+  };
+
+  const fetchVictionPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=tomochain&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setVictionPrice(obj.data.tomochain.usd);
       });
   };
 
@@ -920,6 +949,14 @@ const MarketEvents = ({
             return obj.betapassId === "bnb";
           });
 
+          const coreEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "core";
+          });
+
+          const victionEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "viction";
+          });
+
           const gateEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "gate";
           });
@@ -964,6 +1001,30 @@ const MarketEvents = ({
             setBnbEarnUsd(userEarnedusd);
             setBnbEarnToken(userEarnedusd / bnbPrice);
           }
+
+
+
+          if (coreEvent && coreEvent[0]) {
+            const userEarnedusd =
+              coreEvent[0].reward.earn.total /
+              coreEvent[0].reward.earn.multiplier;
+              const pointsCore= coreEvent[0].reward.earn.totalPoints;
+            setCorePoints(pointsCore)
+            setCoreEarnUsd(userEarnedusd);
+            setCoreEarnToken(userEarnedusd / corePrice);
+          }
+
+
+          if (victionEvent && victionEvent[0]) {
+            const userEarnedusd =
+              victionEvent[0].reward.earn.total /
+              victionEvent[0].reward.earn.multiplier;
+              const pointsViction = victionEvent[0].reward.earn.totalPoints;
+            setVictionPoints(pointsViction)
+            setVictionEarnUsd(userEarnedusd);
+            setVictionEarnToken(userEarnedusd / victionPrice);
+          }
+
 
           if (dypEvent && dypEvent[0]) {
             const userEarnedDyp =
@@ -1080,6 +1141,8 @@ const MarketEvents = ({
 
   useEffect(() => {
     getTokenDatabnb();
+    fetchVictionPrice();
+    fetchCorePrice();
     if (windowSize.width < 786) {
       window.scrollTo(0, 750);
     }
@@ -2304,6 +2367,11 @@ const MarketEvents = ({
                         ? skalePoints
                         : dummyEvent.id === "event20"
                         ? bnbPoints
+                        
+                        : dummyEvent.id === "event14"
+                        ? victionPoints
+                        : dummyEvent.id === "event12"
+                        ? corePoints
                         : 0,
                       0
                     )}
@@ -2343,6 +2411,10 @@ const MarketEvents = ({
                         ? dypiusPremiumEarnUsd
                         : dummyEvent.id === "event11"
                         ? skaleEarnUsd
+                        : dummyEvent.id === "event12"
+                        ? coreEarnUsd
+                        : dummyEvent.id === "event14"
+                        ? victionEarnUsd
                         : dummyEvent.id === "event20"
                         ? bnbEarnUsd
                         : 0,
@@ -2368,6 +2440,10 @@ const MarketEvents = ({
                               ? dypiusPremiumEarnTokens
                               : dummyEvent.id === "event11"
                               ? skaleEarnToken
+                              : dummyEvent.id === "event12"
+                              ? coreEarnToken
+                              : dummyEvent.id === "event14"
+                              ? victionEarnToken
                               : dummyEvent.id === "event20"
                               ? bnbEarnToken
                               : 0,

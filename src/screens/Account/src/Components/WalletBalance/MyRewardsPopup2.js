@@ -1304,7 +1304,7 @@ bnbEarnToken,
                 <div className="d-flex flex-column gap-2 w-50">
                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img src={skale} alt="" />
+                      <img src={skale} alt="" style={{ width: 16, height: 16 }}/>
                       SKALE
                     </span>
                     <span className="item-name-right">
@@ -1324,7 +1324,7 @@ bnbEarnToken,
                     <span className="item-name-right">
                       ${getFormattedNumber(seiEarnUsd, 2)}
                     </span>
-                  </div>
+                  </div>*/}
 
                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
@@ -1338,16 +1338,25 @@ bnbEarnToken,
                     <span className="item-name-right">
                       ${getFormattedNumber(victionEarnUsd, 2)}
                     </span>
-                  </div> */}
+                  </div> 
                 </div>
                 <div className="d-flex flex-column gap-2 w-50">
                 <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img src={bnbLogo} alt="" />
+                      <img src={require('../../../../Marketplace/assets/bnbLogo.svg').default} alt="" style={{ width: 16, height: 16 }}/>
                       BNB Chain
                     </span>
                     <span className="item-name-right">
                       ${getFormattedNumber(bnbEarnUsd, 2)}
+                    </span>
+                  </div>
+                  <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img src={coreIcon} alt="" style={{ width: 16, height: 16 }}/>
+                      CORE
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(coreEarnUsd, 2)}
                     </span>
                   </div>
                 </div>
@@ -1385,19 +1394,7 @@ bnbEarnToken,
                   </span>
                 </div>
 
-                {/* <div className="d-flex w-100 justify-content-between gap-2">
-           <span className="d-flex align-items-center gap-2 item-name-left">
-             <img
-               src={coreIcon}
-               alt=""
-               style={{ width: 16, height: 16 }}
-             />
-             CORE
-           </span>
-           <span className="item-name-right">
-             ${getFormattedNumber(coreEarnUsd, 2)}
-           </span>
-         </div> */}
+                 
 
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">

@@ -285,8 +285,16 @@ const NewWalletBalance = ({
   openedSeiChests,
   userRankRewards,
   onOpenGenesisLeaderboard,
-  coreEarnUsd,victionEarnUsd,
+  coreEarnUsd,
+  victionEarnUsd,
   adClicked,
+  corePoints,
+  victionPoints,
+  bnbPoints,
+  bnbEarnUsd,
+  bnbEarnToken,
+  coreEarnToken,
+  victionEarnToken,onClearAd
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -370,19 +378,17 @@ const NewWalletBalance = ({
       "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
   };
 
-
   const dummyCore = {
-
     title: "CORE",
     logo: coreLogo,
     eventStatus: "Live",
     totalRewards: "$20,000 in CORE Rewards",
-    myEarnings: 0.0, 
+    myEarnings: 0.0,
     backgroundImage: coreBg,
     eventDate: "Jul 01, 2024",
 
     id: "event12",
-    eventType: "Explore & Find", 
+    eventType: "Explore & Find",
     eventDuration: coreLastDay,
     minRewards: "1",
     maxRewards: "100",
@@ -390,14 +396,11 @@ const NewWalletBalance = ({
     maxPoints: "50,000",
     learnMore:
       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-  
 
-
-   
     chain: "CORE Chain",
     linkState: "core",
     rewards: "CORE",
-    status: "Live",   
+    status: "Live",
   };
 
   const dummyBNB = {
@@ -410,7 +413,7 @@ const NewWalletBalance = ({
     eventType: "Explore & Mine",
     eventDate: "Jun 12, 2024",
     date: "Jun 12, 2024",
-    logo: skaleLogo,
+    logo: bnbLogo,
     totalRewards: "$20,000 in BNB Rewards",
     eventDuration: bnbLastDay,
     minRewards: "0.5",
@@ -1413,18 +1416,19 @@ const NewWalletBalance = ({
     fetchUsersocialRewards();
   }, [userSocialRewards]);
 
-  useEffect(()=>{
-    if(adClicked && adClicked!=='' && adClicked!=='premium') {
-      const result = dummyBetaPassData2.filter((item)=>{return item.title.toLowerCase() === adClicked}).popupInfo;
-  
-      if(result) {
-      //   setDummyEvent(dummyBetaPassData2.filter((item)=>{return item.title.toLowerCase() === adClicked}).popupInfo);
-      // setEventPopup(true);
+  useEffect(() => {
+    if (adClicked && adClicked !== "" && adClicked !== "premium") {
+      const result = dummyBetaPassData2.filter((item) => {
+        return item.title.toLowerCase() === adClicked;
+      });
+   
+      if (result) {
+          setDummyEvent(result[0].popupInfo);
+        setEventPopup(true);
       }
-      
     }
-  },[adClicked])
-  
+  }, [adClicked]);
+
   const recaptchaRef = useRef(null);
 
   return (
@@ -1458,8 +1462,7 @@ const NewWalletBalance = ({
                   setEventPopup(true);
                 }}
               />
-
-<ActiveProfileEvent
+              <ActiveProfileEvent
                 data={dummyCore}
                 event={dummyCore}
                 userEarnedUsd={coreEarnUsd}
@@ -1468,7 +1471,6 @@ const NewWalletBalance = ({
                   setEventPopup(true);
                 }}
               />
-
               {/* <ExpiredProfileEvent
                 onOpenEvent={() => {
                   setDummyEvent(dypv2);
@@ -1798,7 +1800,7 @@ const NewWalletBalance = ({
 
                     <div
                       className="d-flex flex-column align-items-center"
-                      style={{ width: "fit-content" }} 
+                      style={{ width: "fit-content" }}
                     >
                       <div
                         className="position-relative"
@@ -1909,8 +1911,8 @@ const NewWalletBalance = ({
                           Number(dailyDataAmountViction) +
                           Number(weeklyDataAmountViction) +
                           Number(monthlyDataAmountViction) +
-                          Number(skaleEarnUsd)+
-                          Number(coreEarnUsd)+
+                          Number(skaleEarnUsd) +
+                          Number(coreEarnUsd) +
                           Number(victionEarnUsd),
                         2
                       )}
@@ -2176,7 +2178,7 @@ const NewWalletBalance = ({
                 src={require("./assets/closeMark.svg").default}
                 alt=""
                 style={{ cursor: "pointer" }}
-                onClick={() => setEventPopup(false)}
+                onClick={() => {setEventPopup(false); onClearAd()}}
               />
             </div>
             <div className="profile-event-popup-wrapper mb-3 p-2 p-lg-3 h-auto">
@@ -2922,6 +2924,12 @@ const NewWalletBalance = ({
                         ? dypiusPremiumPoints
                         : dummyEvent.id === "event11"
                         ? skalePoints
+                        : dummyEvent.id === "event20"
+                        ? bnbPoints
+                        : dummyEvent.id === "event14"
+                        ? victionPoints
+                        : dummyEvent.id === "event12"
+                        ? corePoints
                         : 0,
                       0
                     )}
@@ -2959,6 +2967,12 @@ const NewWalletBalance = ({
                         ? dypiusPremiumEarnUsd
                         : dummyEvent.id === "event11"
                         ? skaleEarnUsd
+                        : dummyEvent.id === "event12"
+                        ? coreEarnUsd
+                        : dummyEvent.id === "event14"
+                        ? victionEarnUsd
+                        : dummyEvent.id === "event20"
+                        ? bnbEarnUsd
                         : 0,
                       2
                     )}
@@ -2982,6 +2996,12 @@ const NewWalletBalance = ({
                               ? dypiusPremiumEarnTokens
                               : dummyEvent.id === "event11"
                               ? skaleEarnToken
+                              : dummyEvent.id === "event12"
+                              ? coreEarnToken
+                              : dummyEvent.id === "event14"
+                              ? victionEarnToken
+                              : dummyEvent.id === "event20"
+                              ? bnbEarnToken
                               : 0,
                             2
                           )}
