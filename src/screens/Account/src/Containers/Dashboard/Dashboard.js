@@ -2073,8 +2073,7 @@ function Dashboard({
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setPrevVersionStar(parseInt(result.data.data.version));
     setStarRecords(result.data.data.leaderboard);
-    fillRecordsStar(result.data.data.leaderboard);
-    console.log('result.data.data.leaderboard',result.data.data.leaderboard)
+    fillRecordsStar(result.data.data.leaderboard); 
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -5476,7 +5475,8 @@ function Dashboard({
 
   useEffect(() => {
     if (
-      (dailyBonusPopup === true && dailyrewardpopup) ||
+      (dailyBonusPopup === true && dailyrewardpopup) 
+      ||
       leaderboard === true
     ) {
       html.classList.add("hidescroll");

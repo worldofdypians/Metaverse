@@ -287,6 +287,7 @@ const TopSection = ({
                         ? handleShowPopup(item.title)
                         : navigate("/marketplace/events/golden-pass");
                     }}
+                    key={index}
                   />
                 );
               })}
