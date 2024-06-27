@@ -77,6 +77,15 @@ bnbEarnToken,
   allVictionChests,
   allSeiChests,
   genesisRank2,
+  dailyDataAmountCore,
+  weeklyDataAmountCore,
+  monthlyDataAmountCore,
+  dailyDataAmountViction,
+  weeklyDataAmountViction,
+  monthlyDataAmountViction,
+  dailyDataAmountSkale,
+  weeklyDataAmountSkale,
+  monthlyDataAmountSkale,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -473,30 +482,12 @@ bnbEarnToken,
       });
     }
 
-    if (allSeiChests && allSeiChests.length > 0) {
-      allSeiChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResultSei += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
+  
 
     setTreasureRewardMoney(moneyResult);
     setTreasureRewardMoneySkale(moneyResultSkale);
     setTreasureRewardMoneyCore(moneyResultCore);
     setTreasureRewardMoneyViction(moneyResultViction);
-    setTreasureRewardMoneySei(moneyResultSei);
   };
 
   const fetchCachedData = () => {
@@ -711,7 +702,16 @@ bnbEarnToken,
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd) +
-                      Number(dailyplayerData) + Number(skaleplayerDataAmount) +
+                      Number(dailyplayerData) + 
+                      Number(dailyDataAmountCore) +
+                      Number(weeklyDataAmountCore) +
+                      Number(monthlyDataAmountCore) +
+                      Number(dailyDataAmountSkale) +
+                      Number(weeklyDataAmountSkale) +
+                      Number(monthlyDataAmountSkale) +
+                      Number(dailyDataAmountViction) +
+                      Number(weeklyDataAmountViction) +
+                      Number(monthlyDataAmountViction) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(genesisRank2) +
@@ -884,7 +884,16 @@ bnbEarnToken,
                     2
                   )
                 : getFormattedNumber(
-                    Number(dailyplayerData) + Number(skaleplayerDataAmount) +
+                    Number(dailyplayerData) + 
+                    Number(dailyDataAmountCore) +
+                    Number(weeklyDataAmountCore) +
+                    Number(monthlyDataAmountCore) +
+                    Number(dailyDataAmountSkale) +
+                    Number(weeklyDataAmountSkale) +
+                    Number(monthlyDataAmountSkale) +
+                    Number(dailyDataAmountViction) +
+                    Number(weeklyDataAmountViction) +
+                    Number(monthlyDataAmountViction) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(genesisRank2),
@@ -1129,7 +1138,7 @@ bnbEarnToken,
                 </span>
               </div>
 
-              {/* <div className="d-flex w-100 justify-content-between gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CORE</span>
                 <span className="item-name-right">
                   $
@@ -1137,7 +1146,7 @@ bnbEarnToken,
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(treasureRewardMoneyCore, 2)}
                 </span>
-              </div> */}
+              </div>
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
@@ -1150,7 +1159,7 @@ bnbEarnToken,
                     : getFormattedNumber(treasureRewardMoneySkale, 2)}
                 </span>
               </div>
-              {/* <div className="d-flex w-100 justify-content-between gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Viction</span>
                 <span className="item-name-right">
                   $
@@ -1159,7 +1168,7 @@ bnbEarnToken,
                     : getFormattedNumber(treasureRewardMoneyViction, 2)}
                 </span>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
+             {/*  <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
                 <span className="item-name-right">
                   $
@@ -1213,27 +1222,20 @@ bnbEarnToken,
                   $
                   {previousRewards
                     ? getFormattedNumber(leaderboardSkaleTotalData, 2)
-                    : getFormattedNumber( Number(skaleplayerDataAmount), 2)}
+                    : getFormattedNumber( Number(dailyDataAmountSkale) + Number(weeklyDataAmountSkale) + Number(monthlyDataAmountSkale), 2)}
                 </span>
               </div>
-              {/* <div className="d-flex w-100 justify-content-between gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CORE</span>
                 <span className="item-name-right">
                   $
                   {previousRewards
                     ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(0, 2)}
+                    : getFormattedNumber( Number(dailyDataAmountCore) + Number(weeklyDataAmountCore) + Number(monthlyDataAmountCore), 2)}
+
                 </span>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">Viction</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(0, 2)}
-                </span>
-              </div> */}
+             
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
@@ -1246,7 +1248,18 @@ bnbEarnToken,
                     : getFormattedNumber(genesisRank2, 2)}
                 </span>
               </div>
+           
               <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Viction</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber( Number(dailyDataAmountViction) + Number(weeklyDataAmountViction) + Number(monthlyDataAmountViction), 2)}
+
+                </span>
+              </div>
+                 <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Kitty Dash</span>
                 <span className="item-name-right">
                   $
@@ -1291,7 +1304,7 @@ bnbEarnToken,
                 <div className="d-flex flex-column gap-2 w-50">
                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img src={skale} alt="" />
+                      <img src={skale} alt="" style={{ width: 16, height: 16 }}/>
                       SKALE
                     </span>
                     <span className="item-name-right">
@@ -1311,7 +1324,7 @@ bnbEarnToken,
                     <span className="item-name-right">
                       ${getFormattedNumber(seiEarnUsd, 2)}
                     </span>
-                  </div>
+                  </div>*/}
 
                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
@@ -1325,16 +1338,25 @@ bnbEarnToken,
                     <span className="item-name-right">
                       ${getFormattedNumber(victionEarnUsd, 2)}
                     </span>
-                  </div> */}
+                  </div> 
                 </div>
                 <div className="d-flex flex-column gap-2 w-50">
                 <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img src={bnbLogo} alt="" />
+                      <img src={require('../../../../Marketplace/assets/bnbLogo.svg').default} alt="" style={{ width: 16, height: 16 }}/>
                       BNB Chain
                     </span>
                     <span className="item-name-right">
                       ${getFormattedNumber(bnbEarnUsd, 2)}
+                    </span>
+                  </div>
+                  <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img src={coreIcon} alt="" style={{ width: 16, height: 16 }}/>
+                      CORE
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(coreEarnUsd, 2)}
                     </span>
                   </div>
                 </div>
@@ -1372,19 +1394,7 @@ bnbEarnToken,
                   </span>
                 </div>
 
-                {/* <div className="d-flex w-100 justify-content-between gap-2">
-           <span className="d-flex align-items-center gap-2 item-name-left">
-             <img
-               src={coreIcon}
-               alt=""
-               style={{ width: 16, height: 16 }}
-             />
-             CORE
-           </span>
-           <span className="item-name-right">
-             ${getFormattedNumber(coreEarnUsd, 2)}
-           </span>
-         </div> */}
+                 
 
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">

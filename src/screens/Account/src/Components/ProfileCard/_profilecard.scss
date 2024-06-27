@@ -61,6 +61,7 @@
 
 .logoutbtn {
   color: #ff6232;
+  white-space: nowrap;
   font-family: "Montserrat";
   font-size: 10px;
   font-style: normal;
@@ -937,17 +938,14 @@ background-size: 100% 100%;
 .profile-header-wrapper{
   flex-direction: row;
   align-items: center !important;
-  @media screen and (max-width: 1650px) {
-    flex-direction: column;
-    align-items: start !important;
-  }
+
 }
 
 
 
 .buttons-grid{
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(2,1fr);
   gap: 10px;
   @media screen and (max-width: 991px) {
     grid-template-columns: auto !important;
@@ -962,7 +960,30 @@ background-size: 100% 100%;
   @media screen and (max-width: 991px) {
     grid-template-columns: auto !important;
     width: 100%;
-
-  
   }
+}
+
+.rank-dropdown-span{
+  color: #FFC700;
+  text-align: center;
+  font-family: "Oxanium";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  
+}
+.rank-dropdown-item{
+  border-radius: 6px;
+  background: #272746;
+}
+
+.rank-dropdown-text{
+  color: #B8B8E0;
+  white-space: nowrap;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: center;
 }

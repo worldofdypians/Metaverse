@@ -28,6 +28,9 @@ import { Skeleton } from "@mui/material";
 import ActiveProfileEvent from "./ActiveProfileEvent";
 import UpcomingProfileEvent from "./UpcomingProfileEvent";
 import ExpiredProfileEvent from "./ExpiredProfileEvent";
+import stakeNft from "./newAssets/stakeNft.png";
+import mintColl from "./newAssets/mintColl.png";
+
 import eventPopupImage from "./assets/eventPopupImage.png";
 import bnbPopupImage from "./assets/bnbPopupImage.png";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -133,7 +136,7 @@ const WalletBalance = ({
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
   const [idyptokenDataAvax, setIDypTokenDataAvax] = useState([]);
   const [dyptokenDataAvax, setDypTokenDataAvax] = useState([]);
-  const [filterTitle, setFilterTitle] = useState("Balance");
+  const [filterTitle, setFilterTitle] = useState("Collected");
   const [nftItems, setNftItems] = useState([]);
 
   const [collectedItems, setcollectedItems] = useState([]);
@@ -1418,7 +1421,7 @@ const WalletBalance = ({
 
   return (
     <>
-      <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 justify-content-center align-items-center">
+    <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 justify-content-center align-items-center">
         <div className="row w-100 gap-5 gap-lg-0 mx-0">
           <div className="col-12 col-lg-4 px-0 pe-lg-3 position-relative mt-3 mt-lg-0">
             <h6
@@ -1544,17 +1547,7 @@ const WalletBalance = ({
             </h6>
             <div className="nft-outer-wrapper2 nft-outer-wrapper22 p-4  d-flex flex-column gap-2 position-relative h-100">
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
-                <h6
-                  className={`account-nft-sort ${
-                    filterTitle === "Balance" && "nft-sort-selected"
-                  } `}
-                  onClick={() => {
-                    sortNfts("balance");
-                    setShowNfts(false);
-                  }}
-                >
-                  Balance
-                </h6>
+               
                 <h6
                   className={`account-nft-sort ${
                     filterTitle === "Collected" && "nft-sort-selected"
@@ -1610,6 +1603,17 @@ const WalletBalance = ({
                   }}
                 >
                   Offers made
+                </h6>
+                <h6
+                  className={`account-nft-sort ${
+                    filterTitle === "Balance" && "nft-sort-selected"
+                  } `}
+                  onClick={() => {
+                    sortNfts("balance");
+                    setShowNfts(false);
+                  }}
+                >
+                  Balance
                 </h6>
               </div>
 

@@ -215,7 +215,15 @@ const MarketEvents = ({
   const [bnbPoints, setBnbPoints] = useState(0);
   const [skalePoints, setSkalePoints] = useState(0);
   const [dailyBonusPopup, setDailyBonusPopup] = useState(false);
-  const [activePopup, setActivePopup] = useState(false);
+  const [coreEarnUsd, setCoreEarnUsd] = useState(0);
+  const [corePrice, setCorePrice] = useState(0);
+  const [coreEarnToken, setCoreEarnToken] = useState(0);
+  const [corePoints, setCorePoints] = useState(0);
+  const [victionEarnUsd, setVictionEarnUsd] = useState(0);
+  const [victionPrice, setVictionPrice] = useState(0);
+  const [victionEarnToken, setVictionEarnToken] = useState(0);
+  const [victionPoints, setVictionPoints] = useState(0);
+
 
   const selected = useRef(null);
   const { email } = useAuth();
@@ -229,6 +237,27 @@ const MarketEvents = ({
       });
   };
 
+
+  const fetchCorePrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=core&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setCorePrice(obj.data.core.usd);
+      });
+  };
+
+  const fetchVictionPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=tomochain&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setVictionPrice(obj.data.tomochain.usd);
+      });
+  };
+
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
@@ -239,6 +268,8 @@ const MarketEvents = ({
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
+  let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+
 
   const dailyBonusMintData = {
     title: "Daily Bonus",
@@ -247,62 +278,62 @@ const MarketEvents = ({
   };
 
   const dummyBetaPassData2 = [
-    // {
-    //   title: "MultiversX",
-    //   logo: multiversLogo,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$20,000 in EGLD Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Find",
-    //   eventDate: "XXX XX, XXXX",
-    //   backgroundImage: multiversBg,
-    //   popupInfo: {
-    //     title: "MultiversX",
-    //     chain: "MultiversX Chain",
-    //     linkState: "multiversx",
-    //     rewards: "EGLD",
-    //     status: "Coming Soon",
-    //     id: "event16",
-    //     eventType: "Explore & Find",
-    //     totalRewards: "$20,000 in EGLD Rewards",
-    //     eventDuration: dypius2LastDay,
-    //     minRewards: "1",
-    //     maxRewards: "100",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore:
-    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-    //     eventDate: "XXX XX, XXXX",
-    //   },
-    // },
-    // {
-    //   title: "VICTION",
-    //   logo: victionLogo,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$20,000 in VIC Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Find",
-    //   eventDate: "XXX XX, XXXX",
-    //   backgroundImage: victionBg,
-    //   popupInfo: {
-    //     title: "VICTION",
-    //     chain: "VICTION Chain",
-    //     linkState: "viction",
-    //     rewards: "VIC",
-    //     status: "Coming Soon",
-    //     id: "event14",
-    //     eventType: "Explore & Find",
-    //     totalRewards: "$20,000 in VIC Rewards",
-    //     eventDuration: dypius2LastDay,
-    //     minRewards: "1",
-    //     maxRewards: "100",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore:
-    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-    //     eventDate: "XXX XX, XXXX",
-    //   },
-    // },
+    {
+      title: "MultiversX",
+      logo: multiversLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in EGLD Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: multiversBg,
+      popupInfo: {
+        title: "MultiversX",
+        chain: "MultiversX Chain",
+        linkState: "multiversx",
+        rewards: "EGLD",
+        status: "Live",
+        id: "event16",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in EGLD Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Jul 01, 2024",
+      },
+    },
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: victionBg,
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Live",
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Jul 01, 2024",
+      },
+    },
     // {
     //   title: "SEI",
     //   logo: seiLogo,
@@ -331,34 +362,34 @@ const MarketEvents = ({
     //     eventDate: "XXX XX, XXXX",
     //   },
     // },
-    // {
-    //   title: "CORE",
-    //   logo: coreLogo,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$20,000 in CORE Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Find",
-    //   eventDate: "XXX XX, XXXX",
-    //   backgroundImage: coreBg,
-    //   popupInfo: {
-    //     title: "CORE",
-    //     chain: "CORE Chain",
-    //     linkState: "core",
-    //     rewards: "CORE",
-    //     status: "Coming Soon",
-    //     id: "event12",
-    //     eventType: "Explore & Find",
-    //     totalRewards: "$20,000 in SEI Rewards",
-    //     eventDuration: dypius2LastDay,
-    //     minRewards: "1",
-    //     maxRewards: "100",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore:
-    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-    //     eventDate: "XXX XX, XXXX",
-    //   },
-    // },
+    {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: coreBg,
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Live",
+        id: "event12",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in SEI Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Jul 01, 2024",
+      },
+    },
 
     {
       title: "BNB Chain",
@@ -367,7 +398,7 @@ const MarketEvents = ({
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Apr 15, 2024",
+      eventDate: "Jun 12, 2024",
       backgroundImage: upcomingBnb,
       popupInfo: {
         title: "BNB Chain",
@@ -384,7 +415,7 @@ const MarketEvents = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "/news",
-        eventDate: "Apr 15, 2024",
+        eventDate: "Jun 12, 2024",
       },
     },
     {
@@ -918,6 +949,14 @@ const MarketEvents = ({
             return obj.betapassId === "bnb";
           });
 
+          const coreEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "core";
+          });
+
+          const victionEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "viction";
+          });
+
           const gateEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "gate";
           });
@@ -962,6 +1001,30 @@ const MarketEvents = ({
             setBnbEarnUsd(userEarnedusd);
             setBnbEarnToken(userEarnedusd / bnbPrice);
           }
+
+
+
+          if (coreEvent && coreEvent[0]) {
+            const userEarnedusd =
+              coreEvent[0].reward.earn.total /
+              coreEvent[0].reward.earn.multiplier;
+              const pointsCore= coreEvent[0].reward.earn.totalPoints;
+            setCorePoints(pointsCore)
+            setCoreEarnUsd(userEarnedusd);
+            setCoreEarnToken(userEarnedusd / corePrice);
+          }
+
+
+          if (victionEvent && victionEvent[0]) {
+            const userEarnedusd =
+              victionEvent[0].reward.earn.total /
+              victionEvent[0].reward.earn.multiplier;
+              const pointsViction = victionEvent[0].reward.earn.totalPoints;
+            setVictionPoints(pointsViction)
+            setVictionEarnUsd(userEarnedusd);
+            setVictionEarnToken(userEarnedusd / victionPrice);
+          }
+
 
           if (dypEvent && dypEvent[0]) {
             const userEarnedDyp =
@@ -1078,6 +1141,8 @@ const MarketEvents = ({
 
   useEffect(() => {
     getTokenDatabnb();
+    fetchVictionPrice();
+    fetchCorePrice();
     if (windowSize.width < 786) {
       window.scrollTo(0, 750);
     }
@@ -1312,7 +1377,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 5).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1481,7 +1546,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(2, dummyBetaPassData2.length)
+                    .slice(5, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
@@ -2302,6 +2367,11 @@ const MarketEvents = ({
                         ? skalePoints
                         : dummyEvent.id === "event20"
                         ? bnbPoints
+                        
+                        : dummyEvent.id === "event14"
+                        ? victionPoints
+                        : dummyEvent.id === "event12"
+                        ? corePoints
                         : 0,
                       0
                     )}
@@ -2341,6 +2411,10 @@ const MarketEvents = ({
                         ? dypiusPremiumEarnUsd
                         : dummyEvent.id === "event11"
                         ? skaleEarnUsd
+                        : dummyEvent.id === "event12"
+                        ? coreEarnUsd
+                        : dummyEvent.id === "event14"
+                        ? victionEarnUsd
                         : dummyEvent.id === "event20"
                         ? bnbEarnUsd
                         : 0,
@@ -2366,6 +2440,10 @@ const MarketEvents = ({
                               ? dypiusPremiumEarnTokens
                               : dummyEvent.id === "event11"
                               ? skaleEarnToken
+                              : dummyEvent.id === "event12"
+                              ? coreEarnToken
+                              : dummyEvent.id === "event14"
+                              ? victionEarnToken
                               : dummyEvent.id === "event20"
                               ? bnbEarnToken
                               : 0,
