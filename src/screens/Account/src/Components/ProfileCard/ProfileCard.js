@@ -505,7 +505,7 @@ const ProfileCard = ({
                           )}
                             <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
                             {email !== undefined && username}
-                              {!domainName && isConnected && (
+                              {!domainName && isConnected && email && (
                                 <span
                                   className={`${
                                     isPremium
