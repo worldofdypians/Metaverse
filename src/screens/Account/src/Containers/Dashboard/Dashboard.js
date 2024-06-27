@@ -5737,7 +5737,7 @@ function Dashboard({
                         onOpenGenesisLeaderboard={() => {
                           setGenesisLeaderboard(true);
                         }}
-                        
+                        isPremium={isPremium}
                         handleShowPopup={(value)=>{setadClicked(value)}}
                       />
                       <NewWalletBalance

@@ -831,8 +831,7 @@ const NewLeaderBoard = ({
                                           >
                                          <img
                                               src={
-                                                isPremium &&
-                                                username === item.displayName
+                                                (isPremium && username === item.displayName) || username !== item.displayName
                                                   ? premiumIcon
                                                   : premiumInactive
                                               }
@@ -878,9 +877,7 @@ const NewLeaderBoard = ({
                                             >
                                               <img
                                                 src={
-                                                  username ===
-                                                    item.displayName &&
-                                                  isactive === true
+                                                  (username === item.displayName && isactive === true) || username !== item.displayName
                                                     ? goldenActive
                                                     : goldenInactive
                                                 }
@@ -1027,8 +1024,7 @@ const NewLeaderBoard = ({
                                           >
                                          <img
                                               src={
-                                                isPremium &&
-                                                username === item.displayName
+                                                (isPremium && username === item.displayName) || username !== item.displayName
                                                   ? premiumIcon
                                                   : premiumInactive
                                               }
@@ -1071,9 +1067,7 @@ const NewLeaderBoard = ({
                                             >
                                               <img
                                                 src={
-                                                  username ===
-                                                    item.displayName &&
-                                                  isactive === true
+                                                  (username === item.displayName && isactive === true) || username !== item.displayName
                                                     ? goldenActive
                                                     : goldenInactive
                                                 }
@@ -1276,8 +1270,7 @@ const NewLeaderBoard = ({
                                           >
                                          <img
                                               src={
-                                                isPremium &&
-                                                username === leaderboard.player_data.displayName
+                                                (isPremium && username === leaderboard.player_data.displayName) || username !== leaderboard.player_data.displayName
                                                   ? premiumIcon
                                                   : premiumInactive
                                               }
@@ -1323,8 +1316,7 @@ const NewLeaderBoard = ({
                                           >
                                             <img
                                               src={
-                                                username === leaderboard.player_data.displayName &&
-                                                isactive === true
+                                                (username === leaderboard.player_data.displayName && isactive === true) || username !== leaderboard.player_data.displayName
                                                   ? goldenActive
                                                   : goldenInactive
                                               }

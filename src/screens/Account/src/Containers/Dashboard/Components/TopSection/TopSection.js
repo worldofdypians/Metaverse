@@ -18,7 +18,14 @@ import multiversAd from "./assets/multiversAd.png";
 import premiumAd from "./assets/premiumAd.png";
 import coreAd from "./assets/coreAd.png";
 import victionAd from "./assets/victionAd.png";
+import multiversAdMobile from "./assets/multiversAdMobile.png";
+import premiumAdMobile from "./assets/premiumAdMobile.png";
+import coreAdMobile from "./assets/coreAdMobile.png";
+import victionAdMobile from "./assets/victionAdMobile.png";
+import goldenAd from "./assets/goldenAd.png";
+import goldenAdMobile from "./assets/goldenAdMobile.png";
 import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
+import useWindowSize from "../../../../Utils.js/hooks/useWindowSize";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -33,6 +40,7 @@ const TopSection = ({
   onOpenGlobalLeaderboard,
   onOpenGenesisLeaderboard,
   handleShowPopup,
+  isPremium
 }) => {
   let testDay = new Date("2024-05-20T11:00:00.000+02:00");
 
@@ -42,7 +50,7 @@ const TopSection = ({
     dotsClass: "button__bar",
     infinite: true,
     speed: 1000,
-    fade: false,
+    fade: true,
     autoplay: true,
     autoplaySpeed: 3000,
     slidesToShow: 1,
@@ -94,6 +102,9 @@ const TopSection = ({
 
   const slider = useRef(null);
 
+
+  const windowSize = useWindowSize();
+
   const dummyPromotions = [
     {
       item_type: "CAWS",
@@ -132,11 +143,21 @@ const TopSection = ({
   };
 
   const slidercontent = [
-    { title: "multiversx", image: multiversAd },
-    { title: "core", image: coreAd },
-    { title: "viction", image: victionAd },
-    { title: "premium", image: premiumAd },
+    { title: "multiversx", image: multiversAd, mobileImage: multiversAdMobile },
+    { title: "core", image: coreAd, mobileImage: coreAdMobile },
+    { title: "viction", image: victionAd, mobileImage: victionAdMobile },
+    { title: "premium", image: premiumAd, mobileImage: premiumAdMobile },
+    { title: "goldenPass", image: goldenAd, mobileImage: goldenAdMobile },
   ];
+
+
+  const filteredSliderContent = slidercontent.filter(item => {
+    if (isPremium) {
+      return item.title !== "premium";
+    } else {
+      return item.title !== "goldenPass";
+    }
+  });
 
   return (
     <div className="row align-items-end">
@@ -176,7 +197,7 @@ const TopSection = ({
             </h6> */}
           <div
             className="leaderboard-flags-wrapper px-3 d-flex align-items-center justify-content-between position-relative"
-            style={{ height: "135px" }}
+            style={{ height: "120px" }}
           >
             <h6 className="leaderboard-inner-title">Leaderboards</h6>
             <div
@@ -256,71 +277,11 @@ const TopSection = ({
             />
           </div> */}
             <Slider {...settings} ref={slider}>
-              {/* {dummyPromotions.map((item, index) => (
-              <div
-                key={index}
-                className="d-flex flex-column promotion-height flex-lg-row gap-4 gap-lg-0 align-items-center justify-content-between w-100"
-             >
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={`https://mint.dyp.finance/thumbs150/${item.item_id}.png`}
-                    className="promotion-img"
-                    alt=""
-                  />
-                  <div className="d-flex flex-column gap-2">
-                    <span className="promotion-header">Today's Promotion:</span>
-                    <div className="d-flex align-items-center gap-2">
-                      <h6 className="promotion-item-title mb-0">
-                        {item.item_type} #{item.item_id}
-                      </h6>
-                      <span className="promotion-item-price">0.532 ETH</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="d-flex flex-column">
-                  <span className="promotion-header">Expires In:</span>
-
-                  <Countdown date={item.expires} renderer={renderer} />
-                </div>
-                <div className="d-flex flex-column align-items-center align-items-lg-end gap-2">
-                  <div className="d-flex align-items-center gap-2">
-                    <span className="promotion-header">
-                      Buy now and recieve:
-                    </span>
-                    <div className="d-flex align-items-center gap-1">
-                      <img
-                        src={
-                          item.reward_type === "Stars"
-                            ? star
-                            : item.reward_type === "DYP"
-                            ? dypIcon
-                            : iDypIcon
-                        }
-                        height={15}
-                        width={15}
-                        alt=""
-                      />
-                      <span
-                        className="promotion-header"
-                        style={{ color: "rgba(244, 226, 123, 1)" }}
-                      >
-                        {item.reward_amount} {item.reward_type}
-                      </span>
-                    </div>
-                  </div>
-                  <NavLink
-                    to={`/marketplace/nft/${item.link}`}
-                    className={`btn purple-btn2 px-4 d-flex gap-2 align-items-center`}
-                  >
-                    Buy Now
-                  </NavLink>
-                </div>
-              </div>
-            ))} */}
-              {slidercontent.map((item, index) => {
+         
+              {filteredSliderContent.map((item, index) => {
                 return (
                   <img
-                    src={item.image}
+                    src={windowSize.width > 786 ? item.image : item.mobileImage}
                     className="advertisment-img"
                     alt=""
                     onClick={() => {
