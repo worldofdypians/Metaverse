@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import price1 from "../../Images/userProfile/price1.svg";
 import price2 from "../../Images/userProfile/price2.svg";
 import price3 from "../../Images/userProfile/price3.svg";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, sliderClasses } from "@mui/material";
 import playerAvatar from "../../Images/userProfile/userAvatar2.png";
 import premiumAvatar from "../../Images/userProfile/premiumAvatar.png";
 import premiumStar from "../../Images/userProfile/premiumStar.png";
@@ -127,14 +127,10 @@ const NewLeaderBoard = ({
       id: 2,
       image: coreActive,
     },
-    {
-      title: "SEI",
-      id: 3,
-      image: seiActive,
-    },
+
     {
       title: "Viction",
-      id: 4,
+      id: 3,
       image: victionActive,
     },
   ];
@@ -318,9 +314,6 @@ const NewLeaderBoard = ({
         setAllData(allCoreData);
         setOptionText2("core");
       } else if (selectedChain.id - 1 === 3) {
-        setAllData(allSkaleData);
-        setOptionText2("sei");
-      } else if (selectedChain.id - 1 === 4) {
         setAllData(allVictionData);
         setOptionText2("viction");
       }
@@ -340,13 +333,10 @@ const NewLeaderBoard = ({
         setOptionText2("core");
       }
       if (selectedChain.id + 1 === 3) {
-        setAllData(allSkaleData);
-        setOptionText2("sei");
-      }
-      if (selectedChain.id + 1 === 4) {
         setAllData(allVictionData);
         setOptionText2("viction");
       }
+    
       setSelectedChain(chainItems[selectedChain.id + 1]);
     }
   };
@@ -354,6 +344,13 @@ const NewLeaderBoard = ({
   useEffect(() => {
     handleOption(optionText2);
   }, [inactiveBoard]);
+
+
+  useEffect(() => {
+   if(windowSize.width < 786){
+    sliderRef.current.slickGoTo(0);
+   }
+  }, [allData, sliderRef, windowSize.width]);
 
   useEffect(() => {
     if (
