@@ -101,7 +101,7 @@ const MarketSidebar = () => {
                 <div className="accordion-body">
                   <div className="d-flex flex-column gap-2">
                     <NavLink
-                      to="/marketplace/beta-pass/core"
+                      to="/marketplace/beta-pass/bnb"
                       end
                       className={({ isActive }) =>
                         isActive
@@ -119,6 +119,7 @@ const MarketSidebar = () => {
                               location.pathname.includes("core") ||
                               location.pathname.includes("viction") ||
                               location.pathname.includes("sei") ||
+                              location.pathname.includes("bnb") ||
                               location.pathname.includes("multivers")
                                 ? "sidebar-item-active nft-active"
                                 : null
