@@ -610,8 +610,7 @@ const GlobalLeaderboard = ({
                             >
                               <img
                                 src={
-                                  username === item.displayName &&
-                                  isactive === true
+                                  (username === item.displayName && isactive === true) || username !== item.displayName
                                     ? goldenActive
                                     : goldenInactive
                                 }
@@ -675,7 +674,7 @@ const GlobalLeaderboard = ({
                           ${getFormattedNumber(goldenRewards[item.position], 0)}
                           <img
                             src={
-                              username === item.displayName && isactive === true
+                              (username === item.displayName && isactive === true) || username !== item.displayName
                                 ? goldenActive
                                 : goldenInactive
                             }
