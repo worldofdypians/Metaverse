@@ -5829,6 +5829,7 @@ function Dashboard({
                         cawsPremiumRewards={cawsPremiumRewards}
                         userRankRewards={userRankRewards}
                         adClicked={adClicked}
+                        onClearAd={()=>{setadClicked('')}}
                       />
                       <WalletBalance
                         ethTokenData={ethTokenData}

@@ -42,7 +42,7 @@ const TopSection = ({
     dotsClass: "button__bar",
     infinite: true,
     speed: 1000,
-    fade: true,
+    fade: false,
     autoplay: true,
     autoplaySpeed: 3000,
     slidesToShow: 1,
@@ -130,6 +130,13 @@ const TopSection = ({
   const firstPrev = () => {
     slider.current.slickPrev();
   };
+
+  const slidercontent = [
+    { title: "multiversx", image: multiversAd },
+    { title: "core", image: coreAd },
+    { title: "viction", image: victionAd },
+    { title: "premium", image: premiumAd },
+  ];
 
   return (
     <div className="row align-items-end">
@@ -310,30 +317,50 @@ const TopSection = ({
                 </div>
               </div>
             ))} */}
-              <img
+              {slidercontent.map((item, index) => {
+                return (
+                  <img
+                    src={item.image}
+                    className="advertisment-img"
+                    alt=""
+                    onClick={() => {
+                      handleShowPopup(item.title);
+                    }}
+                  />
+                );
+              })}
+              {/* <img
                 src={coreAd}
                 className="advertisment-img"
                 alt=""
-                onClick={()=>{handleShowPopup('core')}}
+                onClick={() => {
+                  handleShowPopup("core");
+                }}
               />
               <img
                 src={victionAd}
                 className="advertisment-img"
                 alt=""
-                onClick={()=>{handleShowPopup('viction')}}
+                onClick={() => {
+                  handleShowPopup("viction");
+                }}
               />
               <img
                 src={premiumAd}
                 className="advertisment-img"
                 alt=""
-                onClick={()=>{handleShowPopup('premium')}}
+                onClick={() => {
+                  handleShowPopup("premium");
+                }}
               />
               <img
                 src={multiversAd}
                 className="advertisment-img"
                 alt=""
-                onClick={()=>{handleShowPopup('multiversx')}}
-              />
+                onClick={() => {
+                  handleShowPopup("multiversx");
+                }}
+              /> */}
             </Slider>
           </div>
         </div>

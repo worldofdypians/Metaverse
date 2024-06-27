@@ -294,7 +294,7 @@ const NewWalletBalance = ({
   bnbEarnUsd,
   bnbEarnToken,
   coreEarnToken,
-  victionEarnToken,
+  victionEarnToken,onClearAd
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -1420,11 +1420,11 @@ const NewWalletBalance = ({
     if (adClicked && adClicked !== "" && adClicked !== "premium") {
       const result = dummyBetaPassData2.filter((item) => {
         return item.title.toLowerCase() === adClicked;
-      }).popupInfo;
-
+      });
+   
       if (result) {
-        //   setDummyEvent(dummyBetaPassData2.filter((item)=>{return item.title.toLowerCase() === adClicked}).popupInfo);
-        // setEventPopup(true);
+          setDummyEvent(result[0].popupInfo);
+        setEventPopup(true);
       }
     }
   }, [adClicked]);
@@ -2178,7 +2178,7 @@ const NewWalletBalance = ({
                 src={require("./assets/closeMark.svg").default}
                 alt=""
                 style={{ cursor: "pointer" }}
-                onClick={() => setEventPopup(false)}
+                onClick={() => {setEventPopup(false); onClearAd()}}
               />
             </div>
             <div className="profile-event-popup-wrapper mb-3 p-2 p-lg-3 h-auto">
