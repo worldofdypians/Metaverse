@@ -1113,6 +1113,9 @@ function Dashboard({
         data
       );
       setPrevDataCore(result.data.data.leaderboard);
+    }else{
+      setPrevDataCore(placeholderplayerData);
+
     }
 
     // setdailyplayerData(result.data.data.leaderboard);
@@ -1131,6 +1134,9 @@ function Dashboard({
       );
 
       setPrevDataCoreWeekly(result.data.data.leaderboard);
+    }else{
+      setPrevDataCoreWeekly(placeholderplayerData);
+
     }
   };
   const fetchPreviousMonthlyWinnersCore = async () => {
@@ -1147,6 +1153,9 @@ function Dashboard({
       );
 
       setPrevDataCoreMonthly(result.data.data.leaderboard);
+    }else{
+      setPrevDataCoreMonthly(placeholderplayerData);
+      
     }
   };
   const fetchDailyRecordsCore = async () => {
@@ -1437,6 +1446,9 @@ function Dashboard({
         data
       );
       setPrevDataViction(result.data.data.leaderboard);
+    }else{
+      setPrevDataViction(placeholderplayerData);
+
     }
 
     // setdailyplayerData(result.data.data.leaderboard);
@@ -1455,6 +1467,9 @@ function Dashboard({
       );
 
       setPrevDataVictionWeekly(result.data.data.leaderboard);
+    }else{
+      setPrevDataVictionWeekly(placeholderplayerData);
+
     }
   };
   const fetchPreviousMonthlyWinnersViction = async () => {
@@ -1471,6 +1486,9 @@ function Dashboard({
       );
 
       setPrevDataVictionMonthly(result.data.data.leaderboard);
+    }else{
+      setPrevDataVictionMonthly(placeholderplayerData);
+
     }
   };
   const fetchDailyRecordsViction = async () => {
