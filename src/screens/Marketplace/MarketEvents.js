@@ -295,34 +295,34 @@ const MarketEvents = ({
   };
 
   const dummyBetaPassData2 = [
-    {
-      title: "MultiversX",
-      logo: multiversLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in EGLD Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "Jul 01, 2024",
-      backgroundImage: multiversBg,
-      popupInfo: {
-        title: "MultiversX",
-        chain: "MultiversX Chain",
-        linkState: "multiversx",
-        rewards: "EGLD",
-        status: "Live",
-        id: "event16",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in EGLD Rewards",
-        eventDuration: coreLastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "Jul 01, 2024",
-      },
-    },
+    // {
+    //   title: "MultiversX",
+    //   logo: multiversLogo,
+    //   eventStatus: "Live",
+    //   totalRewards: "$20,000 in EGLD Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "Jul 01, 2024",
+    //   backgroundImage: multiversBg,
+    //   popupInfo: {
+    //     title: "MultiversX",
+    //     chain: "MultiversX Chain",
+    //     linkState: "multiversx",
+    //     rewards: "EGLD",
+    //     status: "Live",
+    //     id: "event16",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in EGLD Rewards",
+    //     eventDuration: coreLastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //     eventDate: "Jul 01, 2024",
+    //   },
+    // },
     {
       title: "VICTION",
       logo: victionLogo,
@@ -1492,7 +1492,25 @@ const MarketEvents = ({
               )}
               {activeTab === "upcoming" && (
                 <div className="d-flex flex-column gap-4">
-                  
+                    <div className="border-0 upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">MultiversX</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the MultiversX Treasure Hunt event for a chance to grab a
+                        share of the $20,000 ELGD reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={multiversBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={multiversMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
                   <div className="border-0 upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">SEI</h6>
@@ -1512,6 +1530,7 @@ const MarketEvents = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
+                
                 
                  
                 </div>
