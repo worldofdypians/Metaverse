@@ -224,11 +224,13 @@ const MarketMint = ({
   const [confluxSold, setconfluxSold] = useState(0);
   const [baseSold, setcBaseSold] = useState(0);
   const [skaleSold, setskaleSold] = useState(0);
+  const [bnbNftsSold, setbnbNftsSold] = useState(0);
+
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(bnbData);
-  const [mintTitle, setMintTitle] = useState("bnbchain");
+  const [selectedMint, setSelectedMint] = useState(timepieceData);
+  const [mintTitle, setMintTitle] = useState("timepiece");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -277,14 +279,32 @@ const MarketMint = ({
         return 0;
       });
     setskaleSold(skaleresult);
+
+
+    const bnbnftContract = new window.bscWeb3.eth.Contract(
+      window.BNB_NFT_ABI,
+      window.config.nft_bnb_address
+    );
+
+    const bnbresult = await bnbnftContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+      
+      console.log('bnbresult',bnbresult)
+    setbnbNftsSold(bnbresult);
+
   };
 
-  useEffect(() => {
-    console.log(location);
-    if (location.pathname.includes("bnbchain")) {
-     setSelectedMint(bnbData);
-     setMintTitle("bnbchain");
-    } else if (location.pathname.includes("timepiece")) {
+  useEffect(() => { 
+    // if (location.pathname.includes("bnbchain")) {
+    //  setSelectedMint(bnbData);
+    //  setMintTitle("bnbchain");
+    // } else
+     if (location.pathname.includes("timepiece")) {
     setSelectedMint(timepieceData);
     setMintTitle("timepiece");
     }
@@ -399,15 +419,15 @@ const MarketMint = ({
     //   data: seiData,
     //   class: "mint-sei",
     // },
-    {
-      title: "BNB Chain Pass",
-      eventId: "bnbchain",
-      desc: "Gain entry to metaverse, and join exclusive BNB Chain event with special ticket.",
-      img: bnbActive,
-      data: bnbData,
-      class: "mint-bnb",
-      id: "bnb"
-    },
+    // {
+    //   title: "BNB Chain Pass",
+    //   eventId: "bnbchain",
+    //   desc: "Gain entry to metaverse, and join exclusive BNB Chain event with special ticket.",
+    //   img: bnbActive,
+    //   data: bnbData,
+    //   class: "mint-bnb",
+    //   id: "bnb"
+    // },
 
     {
       title: "CAWS Timepiece",
@@ -742,7 +762,7 @@ const MarketMint = ({
 
               {activeTab === "live" && (
                 <>
-                  <div className="pb-5 px-0 position-relative">
+                  {/* <div className="pb-5 px-0 position-relative">
                     {activeSlide > 0 && (
                       <div className="prev-arrow-nft" onClick={firstPrev}>
                         <img src={nextArrow} alt="" />
@@ -778,7 +798,7 @@ const MarketMint = ({
                         />
                       ))}
                     </Slider>
-                  </div>
+                  </div> */}
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -2337,6 +2357,22 @@ const MarketMint = ({
                             {getFormattedNumber(skaleSold, 0)}
                           </h6>
                           <span className="past-skale-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-bnb-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">BNB Chain Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-bnb-mint-amount">
+                            {getFormattedNumber(bnbNftsSold, 0)}
+                          </h6>
+                          <span className="past-bnb-mint-desc">SOLD OUT</span>
                         </div>
                       </div>
                     </div>

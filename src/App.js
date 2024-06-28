@@ -3829,7 +3829,7 @@ function App() {
             }
           />
 
-          <Route
+          {/* <Route
               exact
               path="/marketplace/mint/bnbchain"
               element={
@@ -3875,7 +3875,7 @@ function App() {
                   myBnbNfts={myBnbNfts}
                 />
               }
-            />
+            /> */}
           {/* <Route
               exact
               path="/marketplace/mint/viction"
