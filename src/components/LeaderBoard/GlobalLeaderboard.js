@@ -671,7 +671,7 @@ const GlobalLeaderboard = ({
                         style={{ color: "#09F3D2" }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          ${getFormattedNumber(goldenRewards[item.position], 0)}
+                          +${getFormattedNumber(goldenRewards[item.position], 0)}
                           <img
                             src={
                               (username === item.displayName && isactive === true) || username !== item.displayName
