@@ -319,7 +319,7 @@ const MarketEvents = ({
     //     minPoints: "5,000",
     //     maxPoints: "50,000",
     //     learnMore:
-    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //       "",
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
@@ -347,7 +347,7 @@ const MarketEvents = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+          "",
         eventDate: "Jul 01, 2024",
       },
     },
@@ -403,7 +403,7 @@ const MarketEvents = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+          "",
         eventDate: "Jul 01, 2024",
       },
     },
@@ -1722,7 +1722,7 @@ const MarketEvents = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              {dummyEvent.status === "Live" && (
+              {dummyEvent.status === "Live" && dummyEvent.learnMore!=='' && (
                 <NavLink
                   to={dummyEvent.learnMore}
                   className="events-page-details d-flex align-items-center gap-2"
