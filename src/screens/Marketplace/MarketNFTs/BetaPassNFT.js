@@ -2558,7 +2558,7 @@ const BetaPassNFT = ({
                                 </div>
                               </div>
                               <span className="footertxt-coingecko">
-                                Earn daily ETH rewards and global leaderboard
+                                Earn daily DOGE rewards and global leaderboard
                                 points.
                               </span>
                               <div className="summaryseparator mt-3 mb-3"></div>
@@ -2810,7 +2810,7 @@ const BetaPassNFT = ({
                                 </div>
                               </div>
                               <span className="footertxt-coingecko">
-                                Earn daily ETH rewards and global leaderboard
+                                Earn daily CORE rewards and global leaderboard
                                 points.
                               </span>
                               <div className="summaryseparator mt-3 mb-3"></div>
