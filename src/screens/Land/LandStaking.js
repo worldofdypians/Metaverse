@@ -696,7 +696,7 @@ const LandStaking = ({
             <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
               <h6 className="newminttitle font-organetto">
                 Genesis land{" "}
-                <span className="newminttitle-marked">Sold out!</span>
+                <span className="newminttitle-marked font-organetto">Sold out!</span>
               </h6>
 
               <div className="d-flex align-items-center justify-content-between p-3 mint-types">
