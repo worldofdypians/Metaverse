@@ -130,14 +130,13 @@ const Home = ({
     }, 500);
   }, []);
 
-  useEffect(() => {
-    if (activePopup) {
-      html.classList.add("hidescroll");
-    } else {
-      // Enable scroll
-      html.classList.remove("hidescroll");
-    }
-  }, [activePopup]);
+  // useEffect(() => {
+  //   if (activePopup) {
+  //     html.classList.add("hidescroll");
+  //   } else { 
+  //     html.classList.remove("hidescroll");
+  //   }
+  // }, [activePopup]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -150,11 +149,11 @@ const Home = ({
         id="popup"
         onOutsideClick={() => setActivePopup(false)}
       >
-        <MintPopup
+        {/* <MintPopup
           active={activePopup}
           data={corePopupInfo}
           onClose={() => setActivePopup(false)}
-        />
+        /> */}
       </OutsideClickHandler>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex flex-column home-main-wrapper">
