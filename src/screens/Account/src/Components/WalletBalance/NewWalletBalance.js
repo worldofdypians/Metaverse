@@ -314,53 +314,7 @@ const NewWalletBalance = ({
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
-
-  const dypv2 = {
-    title: "Dypius Premium",
-    logo: dypiusPremium,
-    eventStatus: "Expired",
-    totalRewards: "$50,000 in BNB Rewards",
-    myEarnings: 0.0,
-    eventDate: "Feb 26, 2024",
-    date: "Feb 26, 2024",
-    backgroundImage: upcomingDyp2,
-    activeTab: "dypiusv2",
-    chain: "BNB Chain",
-    linkState: "dypius2",
-    rewards: "BNB",
-    status: "Expired",
-    id: "event9",
-    eventType: "Explore & Find",
-    eventDuration: dypius2LastDay,
-    minRewards: "1",
-    maxRewards: "100",
-    minPoints: "5,000",
-    maxPoints: "50,000",
-    learnMore:
-      "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-  };
-
-  const dummyCmc = {
-    title: "CoinMarketCap",
-    chain: "BNB Chain",
-    linkState: "coinmarketcap",
-    rewards: "BNB",
-    status: "Expired",
-    id: "event8",
-    eventType: "Explore & Mine",
-    eventDate: "Dec 26, 2023",
-    date: "Dec 26, 2023",
-    logo: cmc,
-    totalRewards: "$20,000 in BNB Rewards",
-    eventDuration: cmcLastDay,
-    minRewards: "1",
-    maxRewards: "100",
-    minPoints: "5,000",
-    maxPoints: "50,000",
-    learnMore:
-      "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
-  };
-
+ 
   const dummySkale = {
     title: "SKALE",
     chain: "SKALE Nebula Hub",
@@ -452,7 +406,7 @@ const NewWalletBalance = ({
     //     minPoints: "5,000",
     //     maxPoints: "50,000",
     //     learnMore:
-    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //       "",
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
@@ -484,7 +438,7 @@ const NewWalletBalance = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+          "",
         eventDate: "Jul 01, 2024",
       },
     },
@@ -549,7 +503,7 @@ const NewWalletBalance = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+          "",
         eventDate: "Jul 01, 2024",
       },
     },
@@ -2274,7 +2228,7 @@ const NewWalletBalance = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              {dummyEvent.status === "Live" && (
+              {dummyEvent.status === "Live" && dummyEvent.learnMore!=='' && (
                 <NavLink
                   to={dummyEvent.learnMore}
                   className="events-page-details d-flex align-items-center gap-2"
