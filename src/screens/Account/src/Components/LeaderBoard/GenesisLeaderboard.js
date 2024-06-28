@@ -778,8 +778,6 @@ const GenesisLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
       style={{ alignSelf: "baseline", minWidth: "100%", maxWidth: "100%" }}
     >
-      {optionText2 === "wod" && (
-        <Slider {...settings} ref={sliderRef}>
           <div className="leaderboard-item d-flex flex-column gap-2 p-0">
             <div
               className={`d-flex w-100 position-relative  
@@ -950,8 +948,6 @@ const GenesisLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
               </table>
             </div>
           </div>
-        </Slider>
-      )}
       <div className="optionsWrapper p-2">
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-between gap-2 align-items-center">

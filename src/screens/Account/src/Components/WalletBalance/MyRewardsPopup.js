@@ -41,6 +41,8 @@ const MyRewardsPopup = ({
   dypiusPremiumEarnTokens,
   openedSkaleChests,
   allSkaleChests,
+  openedCoreChests,
+  openedVictionChests,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -59,7 +61,9 @@ const MyRewardsPopup = ({
 
   const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
   const [treasureRewardMoneySkale, setTreasureRewardMoneySkale] = useState(0);
- 
+  const [treasureRewardMoneyCore, setTreasureRewardMoneyCore] = useState(0);
+  const [treasureRewardMoneyViction, setTreasureRewardMoneyViction] =
+    useState(0);
 
   const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
   const [pasttreasureRewardNftCaws, setpastTreasureRewardNftCaws] = useState(0);
@@ -97,9 +101,6 @@ const MyRewardsPopup = ({
     }
   };
 
- 
-
- 
   const fetchMonthlyGenesisRecordsAroundPlayer = async () => {
     const data = {
       StatisticName: "GenesisLandRewards",
@@ -295,90 +296,10 @@ const MyRewardsPopup = ({
   };
 
   const getTreasureChestsInfo = async () => {
- 
     var moneyResult = 0;
     var moneyResultSkale = 0;
-    // if (openedChests && openedChests.length > 0) {
-    //   for (let i = 0; i < openedChests.length; i++) {
-    //     if (
-    //       openedChests[i].rewards.find((obj) => obj.rewardType === "Points")
-    //     ) {
-    //       pointsResult += Number(openedChests[i].reward);
-    //     }
-    //     if (openedChests[i].rewards.find((obj) => obj.rewardType === "Money")) {
-    //       if (
-    //         !openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
-    //           ?.details
-    //       ) {
-    //         moneyResult += Number(
-    //           openedChests[i].rewards.find((obj) => obj.rewardType === "Money")
-    //             .reward
-    //         );
-    //       }
-    //     }
-    //     if (openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")) {
-    //       if (
-    //         openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
-    //           .reward === "WoD"
-    //       ) {
-    //         nftLandResult++;
-    //       }
-    //       if (
-    //         openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
-    //           .reward === "CAWS"
-    //       ) {
-    //         nftCawsResult++;
-    //       }
-    //       if (
-    //         openedChests[i].rewards.find((obj) => obj.rewardType === "NFT")
-    //           .reward === "BetaPass"
-    //       ) {
-    //         nftBPResult++;
-    //       }
-    //     }
-    //   }
-    // }
-
-    // if (openedSkaleChests && openedSkaleChests.length > 0) {
-    //   for (let i = 0; i < openedSkaleChests.length; i++) {
-    //     if (
-    //       openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "Points")
-    //     ) {
-    //       pointsResult += Number(openedSkaleChests[i].reward);
-    //     }
-    //     if (openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "Money")) {
-    //       if (
-    //         !openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "Money")
-    //           ?.details
-    //       ) {
-    //         moneyResult += Number(
-    //           openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "Money")
-    //             .reward
-    //         );
-    //       }
-    //     }
-    //     if (openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "NFT")) {
-    //       if (
-    //         openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "NFT")
-    //           .reward === "WoD"
-    //       ) {
-    //         nftLandResult++;
-    //       }
-    //       if (
-    //         openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "NFT")
-    //           .reward === "CAWS"
-    //       ) {
-    //         nftCawsResult++;
-    //       }
-    //       if (
-    //         openedSkaleChests[i].rewards.find((obj) => obj.rewardType === "NFT")
-    //           .reward === "BetaPass"
-    //       ) {
-    //         nftBPResult++;
-    //       }
-    //     }
-    //   }
-    // }
+    var moneyResultCore = 0;
+    var moneyResultViction = 0;
 
     if (allChests && allChests.length > 0) {
       allChests.forEach((chest) => {
@@ -387,13 +308,12 @@ const MyRewardsPopup = ({
             chest.rewards.forEach((innerChest) => {
               if (
                 innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed"&&
-                innerChest.status !== "Unclaimable"  &&  innerChest.status === "Claimed"
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
               ) {
                 moneyResult += Number(innerChest.reward);
               }
-              
-              
             });
           }
         }
@@ -408,11 +328,49 @@ const MyRewardsPopup = ({
               if (
                 innerChest.rewardType === "Money" &&
                 innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable"  &&  innerChest.status === "Claimed"
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
               ) {
                 moneyResultSkale += Number(innerChest.reward);
               }
-              
+            });
+          }
+        }
+      });
+    }
+
+    if (openedCoreChests && openedCoreChests.length > 0) {
+      openedCoreChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResultCore += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedVictionChests && openedVictionChests.length > 0) {
+      openedCoreChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResultViction += Number(innerChest.reward);
+              }
             });
           }
         }
@@ -420,8 +378,9 @@ const MyRewardsPopup = ({
     }
 
     setTreasureRewardMoney(moneyResult);
-    setTreasureRewardMoneySkale(moneyResultSkale)
- 
+    setTreasureRewardMoneySkale(moneyResultSkale);
+    setTreasureRewardMoneyCore(moneyResultCore);
+    setTreasureRewardMoneyViction(moneyResultViction);
   };
 
   const fetchCachedData = () => {
@@ -793,14 +752,10 @@ const MyRewardsPopup = ({
               </td>
               <td className="myrewards-td-second border-0 specialCell topborder text-center">
                 {"$" + getFormattedNumber(treasureRewardMoney, 2)}
-                
               </td>
-              <td className="myrewards-td-second border-0 text-center">
-                USD
-              </td>
+              <td className="myrewards-td-second border-0 text-center">USD</td>
               <td className="myrewards-td-second border-0 text-center">
                 {"$" + getFormattedNumber(pasttreasureRewardMoney, 2)}
-               
               </td>
             </tr>
 
@@ -810,17 +765,12 @@ const MyRewardsPopup = ({
               </td>
               <td className="myrewards-td-second border-0 specialCell bottomborder text-center">
                 {"$" + getFormattedNumber(treasureRewardMoneySkale, 2)}
-                
               </td>
-              <td className="myrewards-td-second border-0 text-center">
-                USD
-              </td>
+              <td className="myrewards-td-second border-0 text-center">USD</td>
               <td className="myrewards-td-second border-0 text-center">
                 {"$" + getFormattedNumber(0, 2)}
-                
               </td>
             </tr>
-
 
             <tr>
               <td className="myrewards-td-main border-0">
@@ -835,7 +785,7 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0"></td>
               <td className="myrewards-td-second border-0 previousRewardsText"></td>
             </tr>
-            
+
             <div className="table-separator"></div>
 
             <tr>
@@ -851,8 +801,6 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(pastSpecialRewards, 2)}
               </td>
-
-              
             </tr>
 
             <tr>
@@ -868,8 +816,6 @@ const MyRewardsPopup = ({
               <td className="myrewards-td-second border-0 text-center">
                 ${getFormattedNumber(0, 2)}
               </td>
-
-              
             </tr>
             <tr>
               <td className="myrewards-td-main border-0">

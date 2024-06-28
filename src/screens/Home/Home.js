@@ -53,6 +53,7 @@ const Home = ({
   coinbase,
   ethTokenData,
   dyptokenDatabnb,
+  allStarData,
   idyptokenDatabnb,dyptokenDatabnb_old
 }) => {
   const avaxPopupInfo = {
@@ -159,6 +160,8 @@ const Home = ({
           <VideoWrapper
             handleRegister={handleRegister}
             handleDownload={handleDownload}
+            allStarData={allStarData}
+
           />
           <LiveEvents />
           <WodBuilders />
