@@ -2073,7 +2073,7 @@ function Dashboard({
   const fetchPreviousWinnersStar = async () => {
     if (prevVersionStar != 0) {
       const data = {
-        StatisticName: "LeaderboardStarDaily",
+        StatisticName: "LeaderboardGlobalStar",
         StartPosition: 0,
         MaxResultsCount: 10,
         Version: prevVersionStar - 1,
@@ -2083,13 +2083,15 @@ function Dashboard({
         data
       );
       setPrevDataStar(result.data.data.leaderboard);
+    } else {
+      setPrevDataStar(placeholderplayerData)
     }
 
     // setdailyplayerData(result.data.data.leaderboard);
   };
   const fetchRecordsStar = async () => {
     const data = {
-      StatisticName: "LeaderboardStarDaily",
+      StatisticName: "LeaderboardGlobalStar",
       StartPosition: 0,
       MaxResultsCount: 10,
     };
@@ -2109,7 +2111,7 @@ function Dashboard({
   };
   const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
     const data = {
-      StatisticName: "LeaderboardStarDaily",
+      StatisticName: "LeaderboardGlobalStar",
       MaxResultsCount: 6,
       PlayerId: userId,
     };

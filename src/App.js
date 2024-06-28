@@ -449,7 +449,7 @@ function App() {
   const fetchPreviousWinnersStar = async () => {
     if (prevVersionStar != 0) {
       const data = {
-        StatisticName: "LeaderboardStarDaily",
+        StatisticName: "LeaderboardGlobalStar",
         StartPosition: 0,
         MaxResultsCount: 10,
         Version: prevVersionStar - 1,
@@ -465,7 +465,7 @@ function App() {
   };
   const fetchRecordsStar = async () => {
     const data = {
-      StatisticName: "LeaderboardStarDaily",
+      StatisticName: "LeaderboardGlobalStar",
       StartPosition: 0,
       MaxResultsCount: 10,
     };
@@ -485,7 +485,7 @@ function App() {
   };
   const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
     const data = {
-      StatisticName: "LeaderboardStarDaily",
+      StatisticName: "LeaderboardGlobalStar",
       MaxResultsCount: 6,
       PlayerId: userId,
     };
