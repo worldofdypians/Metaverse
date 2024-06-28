@@ -24,6 +24,8 @@ import coreAdMobile from "./assets/coreAdMobile.png";
 import victionAdMobile from "./assets/victionAdMobile.png";
 import goldenAd from "./assets/goldenAd.png";
 import goldenAdMobile from "./assets/goldenAdMobile.png";
+import dragonAd from "./assets/dragonAd.png";
+import dragonAdMobile from "./assets/dragonAdMobile.png";
 import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
 import useWindowSize from "../../../../Utils.js/hooks/useWindowSize";
 import { useNavigate } from "react-router-dom";
@@ -143,10 +145,11 @@ const TopSection = ({
   };
 
   const slidercontent = [
-    { title: "multiversx", image: multiversAd, mobileImage: multiversAdMobile },
+    // { title: "multiversx", image: multiversAd, mobileImage: multiversAdMobile },
     { title: "core", image: coreAd, mobileImage: coreAdMobile },
     { title: "viction", image: victionAd, mobileImage: victionAdMobile },
     { title: "premium", image: premiumAd, mobileImage: premiumAdMobile },
+    { title: "dragon", image: dragonAd, mobileImage: dragonAdMobile },
     { title: "goldenPass", image: goldenAd, mobileImage: goldenAdMobile },
   ];
 
@@ -283,9 +286,9 @@ const TopSection = ({
                     className="advertisment-img"
                     alt=""
                     onClick={() => {
-                      item.title !== "goldenPass"
-                        ? handleShowPopup(item.title)
-                        : navigate("/marketplace/events/golden-pass");
+                      item.title === "goldenPass"
+                        ?  navigate("/marketplace/events/golden-pass") 
+                        : item.title === "dragon" ? navigate("/marketplace/events/dragon-ruins") : handleShowPopup(item.title)
                     }}
                     key={index}
                   />
