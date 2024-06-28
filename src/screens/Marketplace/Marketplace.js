@@ -1231,9 +1231,9 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
-                  <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
+                  {/* <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
                     <NavLink
-                      to={"/marketplace/mint/bnbchain"}
+                      to={"/marketplace/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5"
                     >
                       <div className="p-4 mint-wrappernew market-mint-bnb w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
@@ -1258,8 +1258,8 @@ const Marketplace = ({
                         Mint now <img src={greenArrow} alt="" />{" "}
                       </span>
                     </NavLink>
-                  </div>
-                  <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
+                  </div> */}
+                  {/* <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
                     <NavLink
                       to={"/marketplace/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5"
@@ -1286,9 +1286,9 @@ const Marketplace = ({
                         Mint now <img src={greenArrow} alt="" />{" "}
                       </span>
                     </NavLink>
-                  </div>
+                  </div> */}
                   <div className="d-flex flex-column gap-2 w-100">
-                    {/* <NavLink
+                    <NavLink
                       to={"/marketplace/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5"
                     >
@@ -1326,15 +1326,15 @@ const Marketplace = ({
                           className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
                         />
                       </div>
-                    </NavLink> */}
-                    {/* <NavLink to="/marketplace/mint/timepiece">
+                    </NavLink>
+                    <NavLink to="/marketplace/mint/timepiece">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
                       >
                         Mint now <img src={greenArrow} alt="" />{" "}
                       </span>
-                    </NavLink> */}
+                    </NavLink>
                   </div>
                 </div>
                 <div className="w-100 d-flex flex-column gap-2">
