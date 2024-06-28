@@ -580,7 +580,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
   ];
 
   var settings = {
-    dots: true,
+    dots: false,
     arrows: false,
     dotsClass: "button__bar",
     infinite: false,
@@ -632,6 +632,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
+          dots: true
         },
       },
     ],
