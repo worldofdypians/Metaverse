@@ -18,8 +18,7 @@ const SyncModal = ({ open, onclose, onConfirm, onCancel, syncStatus }) => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width:
-      windowSize.width > 1400 ? "21%" : windowSize.width > 786 ? "50%" : "94%",
+    width: (windowSize && windowSize.width && windowSize.width > 786) ? 400  : "94%",
     boxShadow: 24,
     p: 4,
     overflow: "auto",

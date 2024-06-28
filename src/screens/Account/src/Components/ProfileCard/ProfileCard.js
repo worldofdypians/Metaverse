@@ -162,7 +162,8 @@ const ProfileCard = ({
   const sliderRef = useRef(null);
   const [rankTooltip, setRankTooltip] = useState(false);
 
-  const userTotalScore = userBnbScore + userSkaleScore + userCoreScore + userVictionScore;
+  const userTotalScore =
+    userBnbScore + userSkaleScore + userCoreScore + userVictionScore;
 
   const handleUserRank = () => {
     let allScore;
@@ -411,7 +412,15 @@ const ProfileCard = ({
 
   useEffect(() => {
     handleUserRank();
-  }, [userRank, userRankSkale, userBnbScore, userRankCore, userRankViction, userCoreScore, userVictionScore]);
+  }, [
+    userRank,
+    userRankSkale,
+    userBnbScore,
+    userRankCore,
+    userRankViction,
+    userCoreScore,
+    userVictionScore,
+  ]);
 
   const html = document.querySelector("html");
 
@@ -442,11 +451,19 @@ const ProfileCard = ({
             >
               <div
                 className={`bordereddiv ${
-                  email && coinbase && username ? "" : "border-bottom-0"
+                  (email && coinbase && username) ||
+                  (!coinbase && email) ||
+                  (!coinbase && !email)
+                    ? ""
+                    : "border-bottom-0"
                 }`}
               >
                 <div className="d-flex flex-column flex-lg-row profile-header-wrapper justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
-                  <div className={`d-flex gap-2 justify-content-between align-items-center ${windowSize.width > 991 && 'w-50'}  `}>
+                  <div
+                    className={`d-flex gap-2 justify-content-between align-items-center ${
+                      windowSize.width > 991 && "w-50"
+                    }  `}
+                  >
                     <div className="d-flex align-items-center gap-2 w-100">
                       {(coinbase && !email && !isPremium) ||
                       (!coinbase && !email) ||
@@ -496,15 +513,15 @@ const ProfileCard = ({
                       {(isVerified && email) || (coinbase && !email) ? (
                         <div className="d-flex flex-column gap-1 w-100">
                           <div className="d-flex align-items-center gap-2">
-                             {coinbase && !email && (
-                            <div className="d-flex flex-column gap-1 col-lg-9 col-12">
-                              <span className="usernametext font-organetto">
-                                Start your journey now!
-                              </span>
-                            </div>
-                          )}
+                            {coinbase && !email && (
+                              <div className="d-flex flex-column gap-1 col-lg-9 col-12">
+                                <span className="usernametext font-organetto">
+                                  Start your journey now!
+                                </span>
+                              </div>
+                            )}
                             <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
-                            {email !== undefined && username}
+                              {email !== undefined && username}
                               {!domainName && isConnected && email && (
                                 <span
                                   className={`${
@@ -624,7 +641,7 @@ const ProfileCard = ({
                               </div>
                             </>
                           </div>
-                          {!coinbase && email && (
+                          {/* {!coinbase && email && (
                             <button
                               className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
                               onClick={() => {
@@ -643,7 +660,7 @@ const ProfileCard = ({
                               />
                               Connect wallet
                             </button>
-                          )}
+                          )} */}
                         </div>
                       ) : (
                         <div className="d-flex flex-column gap-1 col-lg-7">
@@ -654,7 +671,7 @@ const ProfileCard = ({
                       )}
                     </div>{" "}
                   </div>
-                  {!coinbase && !email && (
+                  {/* {!coinbase && !email && (
                     <button
                       className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
                       onClick={() => {
@@ -669,7 +686,7 @@ const ProfileCard = ({
                       <img src={blackWallet} alt="" style={{ width: 18 }} />
                       Connect wallet
                     </button>
-                  )}
+                  )} */}
                   {coinbase && address && !email && (
                     <button
                       className="d-flex px-3 py-1 align-items-center gap-2 signinbtn text-nowrap"
@@ -1219,12 +1236,19 @@ const ProfileCard = ({
               </div>
               <div
                 className={`bordereddiv border-0 ${
-                  email && coinbase && username ? "py-2" : "p-0"
+                  (email &&
+                    coinbase &&
+                    username &&
+                    address.toLowerCase() !== coinbase.toLowerCase()) ||
+                  (!coinbase && email) ||
+                  (!coinbase && !email)
+                    ? "py-2"
+                    : "p-0"
                 }`}
               >
                 <div
                   className={`d-flex flex-column flex-xxl-row flex-lg-row  align-items-center gap-2 ${
-                    coinbase
+                    coinbase || (!coinbase && email) || (!coinbase && !email)
                       ? "justify-content-between"
                       : "justify-content-end p-2"
                   } `}
@@ -1249,14 +1273,11 @@ const ProfileCard = ({
                         </div>
                       </div>
                     )}
-                  {address &&
-                    coinbase &&
-                    email &&
-                    address?.toLowerCase() === coinbase?.toLowerCase() && (
-                      <p className="walletassoc-txt m-0">
-                        *This wallet is associated to your game account.
-                      </p>
-                    )}
+                  {((!coinbase && email) || (!coinbase && !email)) && (
+                    <p className="walletassoc-txt m-0">
+                      *Connect your wallet to view more info.
+                    </p>
+                  )}
 
                   {!address && coinbase && email && username && (
                     <p className="walletassoc-txt m-0">
@@ -1266,10 +1287,32 @@ const ProfileCard = ({
                     </p>
                   )}
 
+                  {((!coinbase && email) || (!coinbase && !email)) && (
+                    <button
+                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      onClick={() => {
+                        handleShowWalletPopup();
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      <img src={blackWallet} alt="" style={{ width: 18 }} />
+                      Connect wallet
+                    </button>
+                  )}
+
                   <div
-                    className="d-flex align-items-center gap-2"
+                    className=" align-items-center gap-2"
                     style={{
                       width: "fit-content",
+                      display: address &&
+                      email &&
+                      coinbase &&
+                      syncStatus !== "" &&
+                      address.toLowerCase() !== coinbase.toLowerCase() ? 'flex' : 'none',
                       justifyContent:
                         address &&
                         email &&

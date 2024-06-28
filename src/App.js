@@ -1565,16 +1565,6 @@ function App() {
         data.getPlayer.wallet.publicAddress.toLowerCase()
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
-    } else if (coinbase && isConnected && !data) {
-      refreshSubscription(coinbase);
-    } else if (
-      data &&
-      data.getPlayer &&
-      data.getPlayer.wallet &&
-      data.getPlayer.wallet.publicAddress &&
-      !isConnected
-    ) {
-      refreshSubscription(data.getPlayer.wallet.publicAddress);
     } else if (
       data &&
       data.getPlayer &&
@@ -1586,7 +1576,17 @@ function App() {
         data.getPlayer.wallet.publicAddress.toLowerCase()
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
-    }
+    } else if (coinbase && isConnected && !data) {
+      refreshSubscription(coinbase);
+    } else if (
+      data &&
+      data.getPlayer &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+      !isConnected
+    ) {
+      refreshSubscription(data.getPlayer.wallet.publicAddress);
+    } 
   }, [data, coinbase, isConnected, count55]);
 
   const handleCoreNftMint = async () => {
@@ -2982,6 +2982,7 @@ function App() {
           handleSwitchChainGateWallet={handleSwitchNetwork}
           handleOpenDomains={() => setDomainPopup(true)}
           domainName={domainName}
+          onLogout={()=>{setCount55(count55+1)}}
         />
         <MobileNavbar
           handleSignUp={handleShowWalletModal}
