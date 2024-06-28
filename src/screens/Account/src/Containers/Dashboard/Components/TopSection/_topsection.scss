@@ -103,7 +103,11 @@
   transition: all 0.25s;
   @media screen and (max-width: 786px) {
     width: 30%;
-    top: -28px;
+    top: -22px;
+  }
+  @media screen and (max-width: 400px) {
+    width: 30%;
+    top: -27px;
   }
 }
 
