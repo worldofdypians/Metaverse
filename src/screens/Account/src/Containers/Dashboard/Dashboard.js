@@ -1136,7 +1136,6 @@ function Dashboard({
       setPrevDataCoreWeekly(result.data.data.leaderboard);
     }else{
       setPrevDataCoreWeekly(placeholderplayerData);
-
     }
   };
   const fetchPreviousMonthlyWinnersCore = async () => {
@@ -1777,7 +1776,9 @@ function Dashboard({
       );
       setPrevDataSkale(result.data.data.leaderboard);
     }
-
+    else{
+      setPrevDataSkale(placeholderplayerData);
+    }
     // setdailyplayerData(result.data.data.leaderboard);
   };
   const fetchPreviousWeeklyWinnersSkale = async () => {
@@ -1794,6 +1795,8 @@ function Dashboard({
       );
 
       setPrevDataSkaleWeekly(result.data.data.leaderboard);
+    } else{
+      setPrevDataSkaleWeekly(placeholderplayerData);
     }
   };
   const fetchPreviousMonthlyWinnersSkale = async () => {
@@ -1810,6 +1813,8 @@ function Dashboard({
       );
 
       setPrevDataSkaleMonthly(result.data.data.leaderboard);
+    } else{
+      setPrevDataSkaleMonthly(placeholderplayerData);
     }
   };
   const fetchDailyRecordsSkale = async () => {
