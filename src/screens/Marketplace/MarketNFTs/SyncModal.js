@@ -18,7 +18,12 @@ const SyncModal = ({ open, onclose, onConfirm, onCancel, syncStatus }) => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: (windowSize && windowSize.width && windowSize.width > 786) ? 400  : "94%",
+    width:
+      windowSize && windowSize.width && windowSize.width > 786
+        ? 400
+        : windowSize && windowSize.width && windowSize.width <= 786
+        ? "94%"
+        : 400,
     boxShadow: 24,
     p: 4,
     overflow: "auto",
@@ -75,7 +80,11 @@ const SyncModal = ({ open, onclose, onConfirm, onCancel, syncStatus }) => {
             <button
               onClick={onConfirm}
               className={`btn ${
-                !checkbtn ? "disabled-approve-btn" : syncStatus !== 'error' ?  "pill-btn" : "errorbtn"
+                !checkbtn
+                  ? "disabled-approve-btn"
+                  : syncStatus !== "error"
+                  ? "pill-btn"
+                  : "errorbtn"
               } `}
             >
               {syncStatus === "initial" ? (
