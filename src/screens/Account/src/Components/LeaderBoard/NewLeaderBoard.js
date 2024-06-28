@@ -249,7 +249,7 @@ const NewLeaderBoard = ({
     }
   };
   const handleNextChain = () => {
-    if (selectedChain.id === 4) {
+    if (selectedChain.id === 3) {
       return;
     } else {
       if (selectedChain.id + 1 === 1) {
@@ -530,22 +530,13 @@ const NewLeaderBoard = ({
                     <span
                       className={`
                    d-flex align-items-center gap-2
-                   ${
-                     optionText2 === "bnb" && "otheroptionsActive"
-                   } optionText col-3`}
-                      onClick={() => {
-                        handleOption("bnb");
-                        setAllData(allBnbData);
-                      }}
+                   otheroptionsActive optionText col-3`}
+                   
                       style={{ width: "100%" }}
                     >
                       <img
                         src={selectedChain.image}
-                        className={`${
-                          optionText2 === "bnb"
-                            ? "leaderboard-icon leaderboard-icon-active"
-                            : "leaderboard-icon"
-                        }`}
+                        className={`leaderboard-icon leaderboard-icon-active`}
                         width={20}
                         height={20}
                         alt=""
