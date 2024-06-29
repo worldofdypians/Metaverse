@@ -513,7 +513,9 @@
 
 .view-chains-wrapper {
   border-radius: 10px;
-
+  border-bottom: 1px solid rgba(76, 78, 100, 0.5);
+  background: linear-gradient(180deg, rgba(53, 34, 89, 0.4) 99.99%, rgba(52, 35, 87, 0.4) 100%);
+  backdrop-filter: blur(13px);
   span {
     color: #f7f7ff;
     font-family: "Montserrat";

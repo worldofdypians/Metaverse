@@ -16,6 +16,10 @@ import globalIcon from "./assets/globalRanks/globalIcon.png";
 import goldenActive from "./assets/goldenActive.png";
 import goldenInactive from "./assets/goldenInactive.png";
 import { NavLink, useLocation } from "react-router-dom";
+import bnbIcon from './assets/bnbIcon.svg'
+import victionActive from './assets/victionActive.svg'
+import coreIcon from './assets/coreIcon2.svg'
+import skaleActive from './assets/skaleActive.svg'
 import yellowArrow from './assets/yellowArrow.svg'
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
 
@@ -705,9 +709,17 @@ const GlobalLeaderboard = ({
     </div>
   </div>
   :
-  <NavLink to={"/account"} className="view-chains-wrapper optionsWrapper p-2 d-flex align-items-center justify-content-between">
+  <NavLink to={"/account"} className="view-chains-wrapper p-2 d-flex align-items-center justify-content-between">
     <span>View Chain Leaderboards</span>
-          <img src={yellowArrow} alt="" />
+          <div className="d-flex align-items-center gap-2">
+            <div className="d-flex align-items-center gap-1">
+            <img src={bnbIcon}  width={20} height={20} alt="" />
+            <img src={skaleActive} width={20} height={20}  alt="" />
+            <img src={coreIcon} width={20} height={20}  alt="" />
+            <img src={victionActive} width={20} height={20}  alt="" />
+            </div>
+          <img src={yellowArrow} width={20} height={20}  alt="" />
+          </div>
   </NavLink>  
     }
     </div>

@@ -63,17 +63,29 @@ const MintPopup = ({ active, onClose, data }) => {
           </div>
           <h6 className="mint-popup-title">DogeCoin Beta Pass</h6>
         </>
-      ): data.title === "MULTIVERSX" ? (
+      ): data.title === "Viction" ? (
         <>
           <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-            350,000 WOD Tokens
+            Live Viction
             </h6>
           </div>
-          <h6 className="mint-popup-title">BNB Chain Game Expedition</h6>
+          <h6 className="mint-popup-title">Treasure Hunt Event</h6>
         </>
-      ) : data.title === "CoinMarketCap" ? (
+      )
+      : data.title === "CORE" ? (
+        <>
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="pulsatingDot"></div>
+            <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
+            Live CORE
+            </h6>
+          </div>
+          <h6 className="mint-popup-title">Treasure Hunt Event</h6>
+        </>
+      )
+      : data.title === "CoinMarketCap" ? (
         <>
           <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
@@ -159,20 +171,19 @@ const MintPopup = ({ active, onClose, data }) => {
             </span>
           )}
         </div>
-      ) : data.title === "MULTIVERSX" ? (
+      ) : data.title === "Viction" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-          {data.title === "MULTIVERSX" && (
+          {data.title === "Viction" && (
             <span className="popup-available-mint">
-             Participate in the BNB Chain Airdrop Alliance Program and complete the tasks to receive WOD tokens airdrop.
+             Participate in the Viction Treasure Hunt Event!
             </span>
           )}
         </div>
-      ): data.title === "CoinMarketCap" ? (
+      ): data.title === "CORE" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-          {data.title === "CoinMarketCap" && (
+          {data.title === "CORE" && (
             <span className="popup-available-mint">
-              Get access to the game and a unique event filled with surprises
-              and rewards!
+              Participate in the CORE Treasure Hunt Event!
             </span>
           )}
         </div>
@@ -207,12 +218,11 @@ const MintPopup = ({ active, onClose, data }) => {
           >
             <button className="btn filled-btn px-4">More</button>
           </Link>
-        ) : data.title === "MULTIVERSX" ? (
+        ) : data.title === "Viction" || data.title === "CORE" ? (
           <Link
             onClick={onClose}
-            to={"https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/105-bnb-chain-game-expedition"}
+            to={"/marketplace/events/treasure-hunt"}
             state={{ event: data.state }}
-            target='_blank'
             className="linear-border"
           >
             <button className="btn filled-btn px-4">More</button>
