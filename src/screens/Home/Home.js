@@ -56,6 +56,9 @@ const Home = ({
   allStarData,
   idyptokenDatabnb,dyptokenDatabnb_old
 }) => {
+
+
+
   const avaxPopupInfo = {
     title: "Avalanche",
     img: avalanchePopup,
@@ -107,20 +110,20 @@ const Home = ({
     img: dypiusPopup,
     state: "dypius",
   };
-  const dypiusPopupInfo = {
-    title: "Treasure Hunt",
-    img: dypiusPopup,
-    state: "dyp",
+  const victionPopupInfo = {
+    title: "Viction",
+    img: victionPopupBg,
+    state: "viction",
   };
 
   const corePopupInfo = {
-    title: "MULTIVERSX",
-    img: bnbPhase4,
-    state: "multiversx",
+    title: "CORE",
+    img: corePopupBg,
+    state: "core",
   };
 
   const [activePopup, setActivePopup] = useState(false);
-
+  const [popupInfo, setPopupInfo] = useState({})
   const html = document.querySelector("html");
   const hamburger = document.querySelector("#popup");
 
@@ -138,10 +141,25 @@ const Home = ({
   //   }
   // }, [activePopup]);
 
+
+  const randomPopup = () => {
+    const randomNumber = Math.floor(Math.random() * 2) + 1;
+    if(randomNumber === 1){
+      setPopupInfo(corePopupInfo)
+    }else{
+      setPopupInfo(victionPopupInfo)
+    }
+  
+  };
+
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "World of Dypians";
+    randomPopup()
   }, []);
+
+  
 
   return (
     <>
@@ -149,11 +167,11 @@ const Home = ({
         id="popup"
         onOutsideClick={() => setActivePopup(false)}
       >
-        {/* <MintPopup
+         <MintPopup
           active={activePopup}
-          data={corePopupInfo}
+          data={popupInfo}
           onClose={() => setActivePopup(false)}
-        /> */}
+        /> 
       </OutsideClickHandler>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex flex-column home-main-wrapper">
