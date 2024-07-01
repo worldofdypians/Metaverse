@@ -57,6 +57,8 @@ import dropdown from "./assets/dropdown.svg";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
+import logouticon from "./assets/logout.svg";
+import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
 
 const Header = ({
   handleSignUp,
@@ -72,9 +74,13 @@ const Header = ({
   handleSwitchChainGateWallet,
   handleOpenDomains,
   domainName,
+  onSigninClick,
+  onLogout,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
+  const [showmenuAccount, setshowmenuAccount] = useState(false);
+
   const [isUnread, setisUnread] = useState(false);
   const [unreadNotifications, setunreadNotifications] = useState(0);
   const [ethState, setEthState] = useState(true);
@@ -86,15 +92,15 @@ const Header = ({
   const [confluxState, setConfluxState] = useState(false);
   const [skaleState, setSkaleState] = useState(false);
   const [victionState, setVictionState] = useState(false);
-  const [seiState, setSeiState] = useState(false)
-  const [immutableState, setImmutableState] = useState(false)
-
+  const [seiState, setSeiState] = useState(false);
+  const [immutableState, setImmutableState] = useState(false);
 
   // const [domainPopup, setDomainPopup] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
   const [openNotifications, setOpenNotifications] = useState(false);
+  const { email, logout } = useAuth();
 
   let id = Math.random().toString(36);
 
@@ -115,7 +121,7 @@ const Header = ({
         setopBnbState(false);
         setSkaleState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
@@ -125,7 +131,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
@@ -135,7 +141,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
@@ -145,7 +151,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
@@ -155,7 +161,7 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -166,8 +172,8 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
-      } else if (chainId === 1482601649 ) {
+        setSeiState(false);
+      } else if (chainId === 1482601649) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
@@ -177,33 +183,30 @@ const Header = ({
         setSkaleState(true);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
-      } 
-
-      // else if (chainId === 1116 ) {
-      //   setAvaxState(false);
-      //   setBnbState(false);
-      //   setEthState(false);
-      //   setBaseState(false);
-      //   setConfluxState(false);
-      //   setopBnbState(false);
-      //   setSkaleState(false);
-      //   setCoreState(true);
-      //   setVictionState(false);
-      //   setSeiState(false)
-      // }
-      // else if (chainId === 88 ) {
-      //   setAvaxState(false);
-      //   setBnbState(false);
-      //   setEthState(false);
-      //   setBaseState(false);
-      //   setConfluxState(false);
-      //   setopBnbState(false);
-      //   setSkaleState(false);
-      //   setCoreState(false);
-      //   setVictionState(true);
-      //   setSeiState(false)
-      // }
+        setSeiState(false);
+      } else if (chainId === 1116) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(true);
+        setVictionState(false);
+        setSeiState(false);
+      } else if (chainId === 88) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(true);
+        setSeiState(false);
+      }
       // else if (chainId === 713715 ) {
       //   setAvaxState(false);
       //   setBnbState(false);
@@ -225,12 +228,10 @@ const Header = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
       }
     }
   };
-
-
 
   const handleEthPool = async () => {
     if (window.ethereum) {
@@ -476,7 +477,7 @@ const Header = ({
       handleSwitchNetwork(8453);
     }
 
-    if (chainId === 1482601649 ) {
+    if (chainId === 1482601649) {
       handleSwitchNetwork(1482601649);
     }
 
@@ -825,13 +826,13 @@ const Header = ({
                               ? conflux
                               : skaleState === true
                               ? skale
-                              // : coreState === true
-                              // ? core
-                              // : victionState === true
-                              // ? viction
-                              // : seiState === true
-                              // ? sei
-                              : error
+                              : coreState === true
+                              ? core
+                              : victionState === true
+                              ? viction
+                              : // : seiState === true
+                                // ? sei
+                                error
                           }
                           height={16}
                           width={16}
@@ -852,13 +853,13 @@ const Header = ({
                             ? "Conflux"
                             : skaleState === true
                             ? "SKALE"
-                            // : coreState === true
-                            // ? "CORE"
-                            // : victionState === true
-                            // ? "Viction"
-                            // : seiState === true
-                            // ? "Sei"
-                            : "Unsupported"}
+                            : coreState === true
+                            ? "CORE"
+                            : victionState === true
+                            ? "Viction"
+                            : // : seiState === true
+                              // ? "Sei"
+                              "Unsupported"}
                         </span>
                       </div>
 
@@ -878,14 +879,14 @@ const Header = ({
                     <img src={bnb} alt="" />
                     opBNB Chain
                   </Dropdown.Item>
-                  {/* <Dropdown.Item onClick={() => handleCorePool()}>
+                  <Dropdown.Item onClick={() => handleCorePool()}>
                     <img src={core} width={20} height={20} alt="" />
                     CORE
-                  </Dropdown.Item> */}
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleSkalePool()}>
                     <img src={skale} alt="" />
                     SKALE
-                  </Dropdown.Item> 
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleConfluxPool()}>
                     <img src={conflux} alt="" />
                     Conflux
@@ -897,11 +898,11 @@ const Header = ({
                   {/* <Dropdown.Item onClick={() => handleSeiPool()}>
                     <img src={sei} width={20} height={20} alt="" />
                     Sei
-                  </Dropdown.Item> 
+                  </Dropdown.Item>*/}
                   <Dropdown.Item onClick={() => handleVictionPool()}>
                     <img src={viction} width={20} height={20} alt="" />
                     Viction
-                  </Dropdown.Item>*/}
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleAvaxPool()}>
                     <img src={avax} alt="" />
                     Avalanche
@@ -933,18 +934,58 @@ const Header = ({
               </div>
             )}
             {!coinbase ? (
-              <NavLink to={"/account"}>
+              <div
+                onClick={() => {
+                  setshowmenuAccount(true);
+                }}
+              >
                 <img src={personNoCoinbase} className="account-icon" alt="" />
-              </NavLink>
+              </div>
             ) : (
-              <NavLink to={"/account"}>
-                <img
-                  src={avatar ? avatar : personCoinbase}
-                  className="account-icon"
-                  alt=""
-                />
-              </NavLink>
+              <div
+                className="d-flex flex-column align-items-center position-relative  gap-2"
+                onClick={() => {
+                  setshowmenuAccount(true);
+                }}
+              >
+                <div>
+                  <img
+                    src={avatar ? avatar : personCoinbase}
+                    className="account-icon"
+                    alt=""
+                  />
+                </div>
+              </div>
             )}
+            {/* {email ? (
+              <button
+                className="logoutbtn px-3 py-1  position-absolute"
+                style={{
+                  width: "fit-content",
+                  bottom: "-23px",
+                  right: "-15px",
+                }}
+                onClick={() => {
+                  logout();
+                  onLogout();
+                }}
+              >
+                <img src={logouticon} alt="" /> Log Out
+              </button>
+            ) : (
+              <button
+                className="logoutbtn px-3 py-1  position-absolute"
+                style={{
+                  width: "fit-content",
+                  bottom: "-23px",
+                  right: "-15px",
+                  color: "#18ffff",
+                }}
+                onClick={onSigninClick}
+              >
+                <img src={logouticon} alt="" /> Sign in
+              </button>
+            )} */}
 
             {showmenu === true && (
               <div className="position-absolute" style={{ width: "210px" }}>
@@ -984,6 +1025,57 @@ const Header = ({
                       >
                         <img src={logout} alt="" /> Disconnect{" "}
                       </span>
+                    </div>
+                  </div>
+                </OutsideClickHandler>
+              </div>
+            )}
+
+            {showmenuAccount === true && (
+              <div className="position-absolute" style={{ width: "210px" }}>
+                <OutsideClickHandler
+                  onOutsideClick={() => {
+                    setshowmenuAccount(false);
+                  }}
+                >
+                  <div className="menuwrapper2">
+                    <div className="d-flex flex-column gap-2">
+                      <span
+                        className="menuitem2"
+                        onClick={() => {
+                          navigate("/account");
+                          setshowmenuAccount(false);
+                        }}
+                      >
+                        <img src={domainIcon} width={16} height={16} alt="" />{" "}
+                        Account
+                      </span>
+
+                      {email ? (
+                        <button
+                          className="logoutbtn py-1"
+                          onClick={() => {
+                            logout();
+                            onLogout();
+                            setshowmenuAccount(false);
+                          }}
+                        >
+                          <img src={logouticon} alt="" className="logout-icon"/> Log Out
+                        </button>
+                      ) : (
+                        <button
+                          className="logoutbtn py-1"
+                          style={{
+                            color: "#18ffff",
+                          }}
+                          onClick={() => {
+                            onSigninClick();
+                            setshowmenuAccount(false);
+                          }}
+                        >
+                          <img src={logouticon} alt="" /> Sign in
+                        </button>
+                      )}
                     </div>
                   </div>
                 </OutsideClickHandler>

@@ -11,6 +11,10 @@ import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
 import conflux from "../../Components/WalletBalance/assets/conflux.svg";
+import coreIcon from "../../Components/WalletBalance/assets/coreLogo.svg";
+import vicitonIcon from "../../Components/WalletBalance/assets/victionLogo.svg";
+
+
 import axios from "axios";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 
@@ -46,6 +50,14 @@ const GetPremiumPopup = ({
       name: "SKALE",
       symbol: "skale",
     },
+    {
+      name: "CORE",
+      symbol: "core",
+    },
+    {
+      name: "Viction",
+      symbol: "viction",
+    },
   ];
 
   const { BigNumber } = window;
@@ -56,6 +68,8 @@ const GetPremiumPopup = ({
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
   let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
+  let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
+  let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
 
   const metaverseBenefits = [
     "Exclusive access to World of Dypians",
@@ -139,7 +153,10 @@ const GetPremiumPopup = ({
           setnftDiscountObject(nftObject);
           if (discount) {
             setdiscountPercentage(
-              Math.max(parseInt(discount), parseInt(nftObject.discountPercentage))
+              Math.max(
+                parseInt(discount),
+                parseInt(nftObject.discountPercentage)
+              )
             );
           }
         }
@@ -158,7 +175,6 @@ const GetPremiumPopup = ({
       setnftPremium_tokenId(0);
       setnftPremium_total(0);
     }
-    
   };
 
   const handleUpdatePremiumUser = async (wallet) => {
@@ -257,6 +273,41 @@ const GetPremiumPopup = ({
           .then(() => {
             handleSwitchNetwork(1482601649);
             setChainDropdown(chainDropdowns[5]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  
+  const handleCorePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x45c")
+          .then(() => {
+            handleSwitchNetwork(1116);
+            setChainDropdown(chainDropdowns[6]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleVictionPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x58")
+          .then(() => {
+            handleSwitchNetwork(88);
+            setChainDropdown(chainDropdowns[7]);
           })
           .catch((e) => {
             console.log(e);
@@ -378,15 +429,16 @@ const GetPremiumPopup = ({
           .then(() => {
             setloadspinner(false);
             setisApproved(true);
-            if(discountPercentage<100) {
-                if (
-              selectedSubscriptionToken.toLowerCase() ===
-              "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
-            ) {
+            if (discountPercentage < 100) {
+              if (
+                selectedSubscriptionToken.toLowerCase() ===
+                "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+              ) {
+                setapproveStatus("deposit");
+              } else setapproveStatus("approveAmount");
+            } else {
               setapproveStatus("deposit");
-            } else setapproveStatus("approveAmount");
-            } else {setapproveStatus('deposit')}
-          
+            }
           })
           .catch((e) => {
             setstatus(e?.message);
@@ -642,30 +694,29 @@ const GetPremiumPopup = ({
             approved.toLowerCase() === bnbsubscribeAddress.toLowerCase() ||
             approvedAll
           ) {
-            if(discountPercentage < 100) {
-               if (
-              token.toLowerCase() ===
-              "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
-            ) {
-              setloadspinner(false);
-              setisApproved(true);
-              setapproveStatus("deposit");
+            if (discountPercentage < 100) {
+              if (
+                token.toLowerCase() ===
+                "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+              ) {
+                setloadspinner(false);
+                setisApproved(true);
+                setapproveStatus("deposit");
+              } else {
+                setloadspinner(false);
+                setisApproved(true);
+                setapproveStatus("approveAmount");
+              }
             } else {
               setloadspinner(false);
-              setisApproved(true);
-              setapproveStatus("approveAmount");
+              setisApproved(false);
+              setapproveStatus("initial");
             }
           } else {
             setloadspinner(false);
             setisApproved(false);
             setapproveStatus("initial");
           }
-            } else {
-              setloadspinner(false);
-              setisApproved(false);
-              setapproveStatus("initial");
-            }
-           
         } else {
           if (
             token.toLowerCase() ===
@@ -930,26 +981,26 @@ const GetPremiumPopup = ({
         Object.keys(window.config.subscriptionskale_tokens)[0]
       );
       handleSubscriptionTokenChange(wskaleAddress);
+    } else if (chainId === 88) {
+      setChainDropdown(chainDropdowns[7]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionviction_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wvictionAddress);
+      handleCheckIfAlreadyApproved(wvictionAddress);
+    } else if (chainId === 1116) {
+      setChainDropdown(chainDropdowns[6]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptioncore_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wcoreAddress);
+      handleCheckIfAlreadyApproved(wcoreAddress);
     }
-    //  else if (chainId === 88) {
-    //   setChainDropdown(chainDropdowns[7]);
-    //   setdropdownIcon("usdt");
-    //   setdropdownTitle("USDT");
-    //   setselectedSubscriptionToken(
-    //     Object.keys(window.config.subscriptionviction_tokens)[0]
-    //   );
-    //   handleSubscriptionTokenChange(wvictionAddress);
-    //   handleCheckIfAlreadyApproved(wvictionAddress);
-    // } else if (chainId === 1116) {
-    //   setChainDropdown(chainDropdowns[6]);
-    //   setdropdownIcon("usdt");
-    //   setdropdownTitle("USDT");
-    //   setselectedSubscriptionToken(
-    //     Object.keys(window.config.subscriptioncore_tokens)[0]
-    //   );
-    //   handleSubscriptionTokenChange(wcoreAddress);
-    //   handleCheckIfAlreadyApproved(wcoreAddress);
-    // } else if (chainId === 713715) {
+    //else if (chainId === 713715) {
     //   setChainDropdown(chainDropdowns[8]);
     //   setdropdownIcon("usdt");
     //   setdropdownTitle("usdt");
@@ -988,6 +1039,16 @@ const GetPremiumPopup = ({
     } else if (chainId === 1030 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptioncfx_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 88 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionviction_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptioncore_tokens[selectedSubscriptionToken]
           ?.decimals
       );
     } else if (chainId === 8453 && selectedSubscriptionToken !== "") {
@@ -1137,28 +1198,24 @@ const GetPremiumPopup = ({
                   />
                   <span className="subscription-chain mb-0">SKALE</span>
                 </div>
-                {/*
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={coreIcon}
-                                      alt=""
-                                      style={{ width: 18, height: 18 }}
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      CORE
-                                    </span>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={vicitonIcon}
-                                      alt=""
-                                      style={{ width: 18, height: 18 }}
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      Viction
-                                    </span>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-2">
+
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={coreIcon}
+                    alt=""
+                    style={{ width: 18, height: 18 }}
+                  />
+                  <span className="subscription-chain mb-0">CORE</span>
+                </div>
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={vicitonIcon}
+                    alt=""
+                    style={{ width: 18, height: 18 }}
+                  />
+                  <span className="subscription-chain mb-0">Viction</span>
+                </div>
+                {/*   <div className="d-flex align-items-center gap-2">
                                     <img
                                       src={seiIcon}
                                       alt=""
@@ -1306,7 +1363,7 @@ const GetPremiumPopup = ({
                   />
                   SKALE
                 </li>
-                {/* <li
+                <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={handleCorePool}
                                     >
@@ -1334,7 +1391,7 @@ const GetPremiumPopup = ({
                                       />
                                       Viction
                                     </li>
-                                    <li
+                                {/*     <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={handleSeiPool}
                                     >

@@ -23,7 +23,7 @@ const LandFlyout = () => {
         <img src={closeFly} alt="close flyout" className="close-fly p-2" onClick={() => setShow(false)} />
         <NavLink to='/account' className="fly-inner-wrapper p-3 d-flex align-items-center flex-column gap-2" style={{cursor: 'pointer', textDecoration: 'none'}} onClick={() => setShow(false) }>
           <h6 className="fly-title font-organetto">Daily
-          <span style={{color: '#09d7b7', marginLeft: '5px'}}>Rewards</span>
+          <span style={{color: '#09d7b7', marginLeft: '5px'}} className="font-organetto">Rewards</span>
           </h6>
           {/* <video
             preload="auto"

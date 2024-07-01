@@ -84,7 +84,7 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
           <div className="col-12 col-lg-6">
             <h6 className="beta-tester-title font-organetto">
               Beta Tester{" "}
-              <span className="beta-tester-title" style={{ color: "#8c56ff" }}>
+              <span className="beta-tester-title font-organetto" style={{ color: "#8c56ff" }}>
                 Application
               </span>
             </h6>
@@ -106,7 +106,7 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
               <h6 className="font-organetto become-tester-title">
               Apply to become a WoD{" "}
                 <span
-                  className="become-tester-title"
+                  className="become-tester-title font-organetto"
                   style={{ color: "#00fecf" }}
                 >
                   Beta Tester

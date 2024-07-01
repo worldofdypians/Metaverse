@@ -264,7 +264,7 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
     <div className="row w-100 justify-content-center m-0 gap-3">
       <h6 className="genesis-benefits-title font-organetto d-flex flex-column flex-lg-row flex-xxl-row flex-md-row  flex-sm-row  gap-0 gap-lg-2 gap-md-2 gap-sm-2">
         Genesis
-        <h6 className="genesis-benefits-title" style={{ color: "#8c56ff" }}>
+        <h6 className="genesis-benefits-title font-organetto" style={{ color: "#8c56ff" }}>
           Form
         </h6>
       </h6>

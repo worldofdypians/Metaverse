@@ -473,7 +473,7 @@ const Community = ({socials}) => {
 
   const dummyBanner = {
     title: "BNB Chain Game Expedition",
-    status: "Live",
+    status: "Expired",
     desc: "Join the World of Dypians (WoD) Dypians Discovery Quest Campaign from May 29 to June 12 for a chance to win a share of the 200,000 WOD Tokens & 750 Premium Subscription prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
     start_date: "June 12, 2024",
     end_date: "June 28, 2024",
@@ -717,13 +717,13 @@ const Community = ({socials}) => {
                   style={{ position: "absolute", top: "4%", left: "4%" }}
                 >
                   <h6 className="community-active-title mb-0">
-                    Daily Active Users:
+                  Monthly Players:
                   </h6>
                   <h6
                     className="community-active-title mb-0"
                     style={{ color: "#d9fa86" }}
                   >
-                    100,000+
+                    463,692
                   </h6>
                 </div>
                 <div className="row w-100 mt-5 mt-lg-0">
