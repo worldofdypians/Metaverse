@@ -344,6 +344,8 @@ const NewWalletBalance = ({
     myEarnings: 0.0,
     backgroundImage: coreBg,
     eventDate: "Jul 01, 2024",
+    date: "Jul 01, 2024",
+
 
     id: "event12",
     eventType: "Explore & Mine",
