@@ -1229,28 +1229,28 @@ const NewBundleCard = ({
                       <>
                         <button
                           disabled={
-                            // bundleState700 === "deposit" ||
-                            // checkWallet === false ||
-                            // (priceType === 0 && chainId !== 1) ||
-                            // (priceType === 1 && chainId !== 56) ||
-                            // isAtlimit == true
-                            //   ?
+                            bundleState700 === "deposit" ||
+                            checkWallet === false ||
+                            (priceType === 0 && chainId !== 1) ||
+                            (priceType === 1 && chainId !== 56) ||
+                            isAtlimit == true
+                              ?
                                true
-                              // : false
+                              : false
                           }
                           className={`btn ${
-                            // bundleState700 === "deposit" ||
-                            // checkWallet === false ||
-                            // isAtlimit == true ||
-                            // (priceType === 0 && chainId !== 1) ||
-                            // (priceType === 1 && chainId !== 56)
-                            //   ? 
+                            bundleState700 === "deposit" ||
+                            checkWallet === false ||
+                            isAtlimit == true ||
+                            (priceType === 0 && chainId !== 1) ||
+                            (priceType === 1 && chainId !== 56)
+                              ? 
                               "inactive-pill-btn"
-                              // : "pill-btn"
+                              : "pill-btn"
                           }  py-2 px-4`}
-                          // onClick={() => {
-                          //   handleApproval700();
-                          // }}
+                          onClick={() => {
+                            handleApproval700();
+                          }}
                         >
                           {bundleState700 === "loading" ? (
                             <CircularProgress
@@ -1267,32 +1267,32 @@ const NewBundleCard = ({
                     <>
                       <button
                         disabled={
-                          // packageData.title !== "Golden Pass"
-                          //   ? (depositState700 === "deposit" &&
-                          //       checkWallet === true &&
-                          //       priceType === 0 &&
-                          //       chainId === 1) ||
-                          //     (priceType === 1 && chainId === 56)
-                          //     ? false
-                          //     : true
-                          //   : isAtlimit === true ||
-                          //     checkWallet === false ||
-                          //     (priceType === 0 && chainId !== 1) ||
-                          //     (priceType === 1 && chainId !== 56) ||
-                          //     depositState700 !== "deposit"
-                          //   ?
+                          packageData.title !== "Golden Pass"
+                            ? (depositState700 === "deposit" &&
+                                checkWallet === true &&
+                                priceType === 0 &&
+                                chainId === 1) ||
+                              (priceType === 1 && chainId === 56)
+                              ? false
+                              : true
+                            : isAtlimit === true ||
+                              checkWallet === false ||
+                              (priceType === 0 && chainId !== 1) ||
+                              (priceType === 1 && chainId !== 56) ||
+                              depositState700 !== "deposit"
+                            ?
                              true
-                            // : false
+                            : false
                         }
                         className={`btn ${
-                          // (depositState700 === "deposit" ||
-                          //   showApproval700 === false) &&
-                          // ((priceType === 0 && chainId === 1) ||
-                          //   (priceType === 1 && chainId === 56)) &&
-                          // checkWallet === true &&
-                          // isAtlimit === false
-                          //   ? "pill-btn"
-                            // :
+                          (depositState700 === "deposit" ||
+                            showApproval700 === false) &&
+                          ((priceType === 0 && chainId === 1) ||
+                            (priceType === 1 && chainId === 56)) &&
+                          checkWallet === true &&
+                          isAtlimit === false
+                            ? "pill-btn"
+                            :
                              "inactive-pill-btn"
                         }  py-2 px-4`}
                         onClick={() => {

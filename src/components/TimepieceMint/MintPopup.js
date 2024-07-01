@@ -7,7 +7,7 @@ import skaleTreasureHunt from "./assets/skaleTreasureHunt.png";
 import closePopup from "../LandPopup/closePopup.svg";
 import { Link, NavLink } from "react-router-dom";
 import whiteExplore from "../../screens/Account/src/Components/WalletBalance/assets/whiteExplore.svg";
-import coreimg from './assets/corePopupImage.webp'
+import viction from './assets/victionPopupImage.webp'
 import Slider from "react-slick";
 const MintPopup = ({ active, onClose, data }) => {
   var settings = {
@@ -20,6 +20,7 @@ const MintPopup = ({ active, onClose, data }) => {
     slidesToScroll: 1,
     initialSlide: 0,
     autoplay: true,
+    draggable: true
   };
   const sliderRef = useRef(null);
 
@@ -82,8 +83,9 @@ const MintPopup = ({ active, onClose, data }) => {
           </div>
           <h6 className="mint-popup-title">DogeCoin Beta Pass</h6>
         </>
-      ) : data.title === "Viction" ? (
+      ) : data.title === "CORE" ? (
         <Slider {...settings} ref={sliderRef}>
+         
           <div>
             <div className="d-flex align-items-center justify-content-center">
               <div className="pulsatingDot"></div>
@@ -91,7 +93,7 @@ const MintPopup = ({ active, onClose, data }) => {
                 className="mint-popup-title  mb-0"
                 style={{ color: "#18FFFF" }}
               >
-                Live Viction
+                Live CORE
               </h6>
             </div>
             <h6 className="mint-popup-title">Treasure Hunt Event</h6>
@@ -106,29 +108,28 @@ const MintPopup = ({ active, onClose, data }) => {
             }}
             alt=""
           />
-          <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
+           <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
          
             <span className="popup-available-mint">
-              Explore the Viction area and use your{" "}
+              Explore the CORE area and use your{" "}
               <img src={whiteExplore} className="white-explore d-inline" alt="" /> to
               generate rewards!
             </span>
          
         </div>
-          </div>
-          <div>
+          </div> <div>
             <div className="d-flex align-items-center justify-content-center">
               <div className="pulsatingDot"></div>
               <h6
                 className="mint-popup-title  mb-0"
                 style={{ color: "#18FFFF" }}
               >
-                Live CORE
+                Live Viction
               </h6>
             </div>
             <h6 className="mint-popup-title">Treasure Hunt Event</h6>
             <img
-            src={coreimg}
+            src={viction}
             className={`mint-popup-img ${
               data.title === "Daily Bonus" && "bottom-auto-bg"
             } `}
@@ -138,10 +139,10 @@ const MintPopup = ({ active, onClose, data }) => {
             }}
             alt=""
           />
-           <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
+          <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
          
             <span className="popup-available-mint">
-              Explore the CORE area and use your{" "}
+              Explore the Viction area and use your{" "}
               <img src={whiteExplore} className="white-explore d-inline" alt="" /> to
               generate rewards!
             </span>
@@ -190,7 +191,7 @@ const MintPopup = ({ active, onClose, data }) => {
           <h6 className="mint-popup-title m-0"> NFT Giveaway</h6>
         </div>
       )}
-{data.title !== "Viction" &&
+{data.title !== "CORE" &&
       <img
         src={data.img}
         className={`mint-popup-img ${
