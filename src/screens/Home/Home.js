@@ -157,7 +157,7 @@ const Home = ({
       >
         <MintPopup
           active={activePopup}
-          data={popupInfo}
+          data={victionPopupInfo}
           onClose={() => setActivePopup(false)}
         />
       </OutsideClickHandler>
