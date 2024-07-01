@@ -129,7 +129,7 @@ const MintPopup = ({ active, onClose, data }) => {
 
       <img
         src={data.img}
-        className={`mint-popup-img mt-5 ${
+        className={`mint-popup-img ${
           data.title === "Daily Bonus" && "bottom-auto-bg"
         } `}
         style={{
@@ -175,7 +175,7 @@ const MintPopup = ({ active, onClose, data }) => {
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           {data.title === "Viction" && (
             <span className="popup-available-mint">
-             Participate in the Viction Treasure Hunt Event!
+             Explore the Viction area and use your <img src={whiteExplore} className="white-explore" alt=""/> to generate rewards!
             </span>
           )}
         </div>
@@ -183,7 +183,7 @@ const MintPopup = ({ active, onClose, data }) => {
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           {data.title === "CORE" && (
             <span className="popup-available-mint">
-              Participate in the CORE Treasure Hunt Event!
+             Explore the CORE area and use your <img src={whiteExplore} className="white-explore" alt=""/> to generate rewards!
             </span>
           )}
         </div>

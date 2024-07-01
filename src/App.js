@@ -2983,6 +2983,7 @@ function App() {
           handleOpenDomains={() => setDomainPopup(true)}
           domainName={domainName}
           onLogout={()=>{setCount55(count55+1)}}
+          onSigninClick={checkData}
         />
         <MobileNavbar
           handleSignUp={handleShowWalletModal}

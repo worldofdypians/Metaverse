@@ -79,6 +79,8 @@ const Header = ({
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
+  const [showmenuAccount, setshowmenuAccount] = useState(false);
+
   const [isUnread, setisUnread] = useState(false);
   const [unreadNotifications, setunreadNotifications] = useState(0);
   const [ethState, setEthState] = useState(true);
@@ -896,7 +898,7 @@ const Header = ({
                   {/* <Dropdown.Item onClick={() => handleSeiPool()}>
                     <img src={sei} width={20} height={20} alt="" />
                     Sei
-                  </Dropdown.Item>*/} 
+                  </Dropdown.Item>*/}
                   <Dropdown.Item onClick={() => handleVictionPool()}>
                     <img src={viction} width={20} height={20} alt="" />
                     Viction
@@ -932,21 +934,30 @@ const Header = ({
               </div>
             )}
             {!coinbase ? (
-              <NavLink to={"/account"}>
+              <div
+                onClick={() => {
+                  setshowmenuAccount(true);
+                }}
+              >
                 <img src={personNoCoinbase} className="account-icon" alt="" />
-              </NavLink>
+              </div>
             ) : (
-              <div className="d-flex flex-column align-items-center position-relative  gap-2">
-                <NavLink to={"/account"}>
+              <div
+                className="d-flex flex-column align-items-center position-relative  gap-2"
+                onClick={() => {
+                  setshowmenuAccount(true);
+                }}
+              >
+                <div>
                   <img
                     src={avatar ? avatar : personCoinbase}
                     className="account-icon"
                     alt=""
                   />
-                </NavLink>
+                </div>
               </div>
             )}
-            {email ? (
+            {/* {email ? (
               <button
                 className="logoutbtn px-3 py-1  position-absolute"
                 style={{
@@ -974,7 +985,7 @@ const Header = ({
               >
                 <img src={logouticon} alt="" /> Sign in
               </button>
-            )}
+            )} */}
 
             {showmenu === true && (
               <div className="position-absolute" style={{ width: "210px" }}>
@@ -1014,6 +1025,57 @@ const Header = ({
                       >
                         <img src={logout} alt="" /> Disconnect{" "}
                       </span>
+                    </div>
+                  </div>
+                </OutsideClickHandler>
+              </div>
+            )}
+
+            {showmenuAccount === true && (
+              <div className="position-absolute" style={{ width: "210px" }}>
+                <OutsideClickHandler
+                  onOutsideClick={() => {
+                    setshowmenuAccount(false);
+                  }}
+                >
+                  <div className="menuwrapper2">
+                    <div className="d-flex flex-column gap-2">
+                      <span
+                        className="menuitem2"
+                        onClick={() => {
+                          navigate("/account");
+                          setshowmenuAccount(false);
+                        }}
+                      >
+                        <img src={domainIcon} width={16} height={16} alt="" />{" "}
+                        Account
+                      </span>
+
+                      {email ? (
+                        <button
+                          className="logoutbtn py-1"
+                          onClick={() => {
+                            logout();
+                            onLogout();
+                            setshowmenuAccount(false);
+                          }}
+                        >
+                          <img src={logouticon} alt="" className="logout-icon"/> Log Out
+                        </button>
+                      ) : (
+                        <button
+                          className="logoutbtn py-1"
+                          style={{
+                            color: "#18ffff",
+                          }}
+                          onClick={() => {
+                            onSigninClick();
+                            setshowmenuAccount(false);
+                          }}
+                        >
+                          <img src={logouticon} alt="" /> Sign in
+                        </button>
+                      )}
                     </div>
                   </div>
                 </OutsideClickHandler>
