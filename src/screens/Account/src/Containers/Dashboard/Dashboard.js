@@ -348,7 +348,6 @@ function Dashboard({
   const [myVictionNfts, setmyVictionNfts] = useState([]);
   const [myMultiversNfts, setmyMultiversNfts] = useState([]);
 
-
   const [latestVersion, setLatestVersion] = useState(0);
 
   const [userPoints, setuserPoints] = useState(0);
@@ -379,10 +378,6 @@ function Dashboard({
   const [bnbPoints, setBnbPoints] = useState(0);
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
-
-  
-
-
 
   const [dypiusPremiumEarnTokens, setdypiusPremiumEarnTokens] = useState(0);
   const [dypiusPremiumEarnUsd, setdypiusPremiumEarnUsd] = useState(0);
@@ -424,7 +419,7 @@ function Dashboard({
   const [skalePoints, setSkalePoints] = useState(0);
   const [leaderboard, setLeaderboard] = useState(false);
   const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
-  const [adClicked, setadClicked] = useState('');
+  const [adClicked, setadClicked] = useState("");
 
   const [globalLeaderboard, setGlobalLeaderboard] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
@@ -649,33 +644,31 @@ function Dashboard({
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
               coreEvent[0].reward.earn.multiplier;
-              const pointsCore= coreEvent[0].reward.earn.totalPoints;
-            setCorePoints(pointsCore)
+            const pointsCore = coreEvent[0].reward.earn.totalPoints;
+            setCorePoints(pointsCore);
             setCoreEarnUsd(userEarnedusd);
             setCoreEarnToken(userEarnedusd / corePrice);
           }
-
 
           if (victionEvent && victionEvent[0]) {
             const userEarnedusd =
               victionEvent[0].reward.earn.total /
               victionEvent[0].reward.earn.multiplier;
-              const pointsViction = victionEvent[0].reward.earn.totalPoints;
-            setVictionPoints(pointsViction)
+            const pointsViction = victionEvent[0].reward.earn.totalPoints;
+            setVictionPoints(pointsViction);
             setVictionEarnUsd(userEarnedusd);
             setVictionEarnToken(userEarnedusd / victionPrice);
           }
 
- if (multiversEvent && multiversEvent[0]) {
+          if (multiversEvent && multiversEvent[0]) {
             const userEarnedusd =
-            multiversEvent[0].reward.earn.total /
-            multiversEvent[0].reward.earn.multiplier;
-              const pointsmultivers = multiversEvent[0].reward.earn.totalPoints;
-            setmultiversPoints(pointsmultivers)
+              multiversEvent[0].reward.earn.total /
+              multiversEvent[0].reward.earn.multiplier;
+            const pointsmultivers = multiversEvent[0].reward.earn.totalPoints;
+            setmultiversPoints(pointsmultivers);
             setmultiversEarnUsd(userEarnedusd);
             setmultiversEarnToken(userEarnedusd / multiversPrice);
           }
-
 
           if (dypEvent && dypEvent[0]) {
             const userEarnedDyp =
@@ -797,7 +790,16 @@ function Dashboard({
     ) {
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
     }
-  }, [email, data, cfxPrice, bnbPrice, skalePrice, dyptokenDatabnb, corePrice, victionPrice]);
+  }, [
+    email,
+    data,
+    cfxPrice,
+    bnbPrice,
+    skalePrice,
+    dyptokenDatabnb,
+    corePrice,
+    victionPrice,
+  ]);
 
   const bnbStars = ["50", "40", "30", "20", "20", "20", "20", "20", "20", "20"];
   const bnbStarsPremium = [
@@ -1113,9 +1115,8 @@ function Dashboard({
         data
       );
       setPrevDataCore(result.data.data.leaderboard);
-    }else{
+    } else {
       setPrevDataCore(placeholderplayerData);
-
     }
 
     // setdailyplayerData(result.data.data.leaderboard);
@@ -1134,7 +1135,7 @@ function Dashboard({
       );
 
       setPrevDataCoreWeekly(result.data.data.leaderboard);
-    }else{
+    } else {
       setPrevDataCoreWeekly(placeholderplayerData);
     }
   };
@@ -1152,9 +1153,8 @@ function Dashboard({
       );
 
       setPrevDataCoreMonthly(result.data.data.leaderboard);
-    }else{
+    } else {
       setPrevDataCoreMonthly(placeholderplayerData);
-      
     }
   };
   const fetchDailyRecordsCore = async () => {
@@ -1239,7 +1239,7 @@ function Dashboard({
 
       const userPosition = testArray[0].position;
 
-      if (isPremium && testArray[0].statValue !=0) {
+      if (isPremium && testArray[0].statValue != 0) {
         setDailyDataAmountCore(
           testArray[0].statValue !== 0
             ? userPosition > 10
@@ -1250,7 +1250,7 @@ function Dashboard({
                 Number(skaleStarsPremium[userPosition])
             : 0
         );
-      } else if (!isPremium && testArray[0].statValue !=0) {
+      } else if (!isPremium && testArray[0].statValue != 0) {
         setDailyDataAmountCore(
           testArray[0].statValue !== 0
             ? userPosition > 10
@@ -1260,8 +1260,8 @@ function Dashboard({
               : Number(skaleStars[userPosition])
             : 0
         );
-      } else setDailyDataAmountCore(0)
- 
+      } else setDailyDataAmountCore(0);
+
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
           (item) => item.displayName === username
@@ -1296,18 +1296,19 @@ function Dashboard({
       );
 
       const userPosition = testArray[0].position;
-      if (goldenPassRemainingTime && testArray[0].statValue !=0) {
+      if (goldenPassRemainingTime && testArray[0].statValue != 0) {
         setWeeklyDataAmountCore(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesWeekly[9]) + Number(skalePrizesWeeklyGolden[9])
+              ? Number(skalePrizesWeekly[9]) +
+                Number(skalePrizesWeeklyGolden[9])
               : Number(skalePrizesWeekly[userPosition]) +
                 Number(skalePrizesWeeklyGolden[userPosition])
             : 0
         );
-      } else if (!goldenPassRemainingTime && testArray[0].statValue !=0) {
+      } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
         setWeeklyDataAmountCore(
           testArray[0].statValue !== 0
             ? userPosition > 10
@@ -1317,7 +1318,7 @@ function Dashboard({
               : Number(skalePrizesWeekly[userPosition])
             : 0
         );
-      } else setWeeklyDataAmountCore(0)
+      } else setWeeklyDataAmountCore(0);
 
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
@@ -1357,18 +1358,19 @@ function Dashboard({
       const userPosition = testArray[0].position;
       // console.log(userPosition)
 
-      if (goldenPassRemainingTime && testArray[0].statValue !=0) {
+      if (goldenPassRemainingTime && testArray[0].statValue != 0) {
         setMonthlyDataAmountCore(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesMonthly[9]) + Number(skalePrizesMonthlyGolden[9])
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
               : Number(skalePrizesMonthly[userPosition]) +
                 Number(skalePrizesMonthlyGolden[userPosition])
             : 0
         );
-      } else if (!goldenPassRemainingTime && testArray[0].statValue !=0) {
+      } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
         setMonthlyDataAmountCore(
           testArray[0].statValue !== 0
             ? userPosition > 10
@@ -1378,7 +1380,7 @@ function Dashboard({
               : Number(skalePrizesMonthly[userPosition])
             : 0
         );
-      } else setMonthlyDataAmountCore(0)
+      } else setMonthlyDataAmountCore(0);
 
       setUserRankCore(testArray[0].position);
       setUserCoreScore(testArray[0].statValue);
@@ -1445,9 +1447,8 @@ function Dashboard({
         data
       );
       setPrevDataViction(result.data.data.leaderboard);
-    }else{
+    } else {
       setPrevDataViction(placeholderplayerData);
-
     }
 
     // setdailyplayerData(result.data.data.leaderboard);
@@ -1466,9 +1467,8 @@ function Dashboard({
       );
 
       setPrevDataVictionWeekly(result.data.data.leaderboard);
-    }else{
+    } else {
       setPrevDataVictionWeekly(placeholderplayerData);
-
     }
   };
   const fetchPreviousMonthlyWinnersViction = async () => {
@@ -1485,9 +1485,8 @@ function Dashboard({
       );
 
       setPrevDataVictionMonthly(result.data.data.leaderboard);
-    }else{
+    } else {
       setPrevDataVictionMonthly(placeholderplayerData);
-
     }
   };
   const fetchDailyRecordsViction = async () => {
@@ -1571,7 +1570,7 @@ function Dashboard({
 
       const userPosition = testArray[0].position;
 
-      if (isPremium && testArray[0].statValue !=0) {
+      if (isPremium && testArray[0].statValue != 0) {
         setDailyDataAmountViction(
           testArray[0].statValue !== 0
             ? userPosition > 10
@@ -1582,7 +1581,7 @@ function Dashboard({
                 Number(skaleStarsPremium[userPosition])
             : 0
         );
-      } else if (!isPremium && testArray[0].statValue !=0) {
+      } else if (!isPremium && testArray[0].statValue != 0) {
         setDailyDataAmountViction(
           testArray[0].statValue !== 0
             ? userPosition > 10
@@ -1592,7 +1591,7 @@ function Dashboard({
               : Number(skaleStars[userPosition])
             : 0
         );
-      } else setDailyDataAmountViction(0)
+      } else setDailyDataAmountViction(0);
 
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
@@ -1628,18 +1627,19 @@ function Dashboard({
       );
 
       const userPosition = testArray[0].position;
-      if (goldenPassRemainingTime && testArray[0].statValue !=0) {
+      if (goldenPassRemainingTime && testArray[0].statValue != 0) {
         setWeeklyDataAmountViction(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesWeekly[9]) + Number(skalePrizesWeeklyGolden[9])
+              ? Number(skalePrizesWeekly[9]) +
+                Number(skalePrizesWeeklyGolden[9])
               : Number(skalePrizesWeekly[userPosition]) +
                 Number(skalePrizesWeeklyGolden[userPosition])
             : 0
         );
-      } else if (!goldenPassRemainingTime && testArray[0].statValue !=0) {
+      } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
         setWeeklyDataAmountViction(
           testArray[0].statValue !== 0
             ? userPosition > 10
@@ -1649,7 +1649,7 @@ function Dashboard({
               : Number(skalePrizesWeekly[userPosition])
             : 0
         );
-      } else setWeeklyDataAmountViction(0)
+      } else setWeeklyDataAmountViction(0);
 
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
@@ -1670,7 +1670,6 @@ function Dashboard({
     }
   };
 
-  
   const fetchMonthlyRecordsAroundPlayerViction = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardVictionMonthly",
@@ -1696,7 +1695,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesMonthly[9]) + Number(skalePrizesMonthlyGolden[9])
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
               : Number(skalePrizesMonthly[userPosition]) +
                 Number(skalePrizesMonthlyGolden[userPosition])
             : 0
@@ -1777,13 +1777,13 @@ function Dashboard({
         data
       );
       setPrevDataSkale(result.data.data.leaderboard);
-    }
-    else{
+    } else {
       setPrevDataSkale(placeholderplayerData);
     }
     // setdailyplayerData(result.data.data.leaderboard);
   };
   const fetchPreviousWeeklyWinnersSkale = async () => {
+ 
     if (prevVersionSkaleWeekly != 0) {
       const data = {
         StatisticName: "LeaderboardSkaleWeekly",
@@ -1795,9 +1795,10 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
+      
 
       setPrevDataSkaleWeekly(result.data.data.leaderboard);
-    } else{
+    } else {
       setPrevDataSkaleWeekly(placeholderplayerData);
     }
   };
@@ -1815,7 +1816,7 @@ function Dashboard({
       );
 
       setPrevDataSkaleMonthly(result.data.data.leaderboard);
-    } else{
+    } else {
       setPrevDataSkaleMonthly(placeholderplayerData);
     }
   };
@@ -1963,7 +1964,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesWeekly[9]) + Number(skalePrizesWeeklyGolden[9])
+              ? Number(skalePrizesWeekly[9]) +
+                Number(skalePrizesWeeklyGolden[9])
               : Number(skalePrizesWeekly[userPosition]) +
                 Number(skalePrizesWeeklyGolden[userPosition])
             : 0
@@ -2023,7 +2025,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesMonthly[9]) + Number(skalePrizesMonthlyGolden[9])
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
               : Number(skalePrizesMonthly[userPosition]) +
                 Number(skalePrizesMonthlyGolden[userPosition])
             : 0
@@ -2061,7 +2064,7 @@ function Dashboard({
       }
     }
   };
-  
+
   const fillRecordsStar = (itemData) => {
     if (itemData.length === 0) {
       setStarRecords(placeholderplayerData);
@@ -2086,7 +2089,7 @@ function Dashboard({
       );
       setPrevDataStar(result.data.data.leaderboard);
     } else {
-      setPrevDataStar(placeholderplayerData)
+      setPrevDataStar(placeholderplayerData);
     }
 
     // setdailyplayerData(result.data.data.leaderboard);
@@ -2100,7 +2103,7 @@ function Dashboard({
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setPrevVersionStar(parseInt(result.data.data.version));
     setStarRecords(result.data.data.leaderboard);
-    fillRecordsStar(result.data.data.leaderboard); 
+    fillRecordsStar(result.data.data.leaderboard);
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -2126,33 +2129,31 @@ function Dashboard({
         (item) => item.displayName === username
       );
       if (testArray.length > 0) {
-      const userPosition = testArray[0].position;
+        const userPosition = testArray[0].position;
 
-      if (goldenPassRemainingTime) {
-        setDataAmountStar(
-          testArray[0].statValue !== 0
-            ? userPosition > 10
-              ? 0
-              : userPosition === 10
-              ? Number(starPrizes[9]) + Number(starPrizesGolden[9])
-              : Number(starPrizes[userPosition]) +
-                Number(starPrizesGolden[userPosition])
-            : 0
-        );
-      } else if (!goldenPassRemainingTime) {
-        setDataAmountStar(
-          testArray[0].statValue !== 0
-            ? userPosition > 10
-              ? 0
-              : userPosition === 10
-              ? Number(starPrizes[9])
-              : Number(starPrizes[userPosition])
-            : 0
-        );
+        if (goldenPassRemainingTime) {
+          setDataAmountStar(
+            testArray[0].statValue !== 0
+              ? userPosition > 10
+                ? 0
+                : userPosition === 10
+                ? Number(starPrizes[9]) + Number(starPrizesGolden[9])
+                : Number(starPrizes[userPosition]) +
+                  Number(starPrizesGolden[userPosition])
+              : 0
+          );
+        } else if (!goldenPassRemainingTime) {
+          setDataAmountStar(
+            testArray[0].statValue !== 0
+              ? userPosition > 10
+                ? 0
+                : userPosition === 10
+                ? Number(starPrizes[9])
+                : Number(starPrizes[userPosition])
+              : 0
+          );
+        }
       }
-
-     
-    }
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
           (item) => item.displayName === username
@@ -2460,6 +2461,16 @@ function Dashboard({
     previousVersion,
     previousWeeklyVersion,
     userId,
+    prevVersionSkale,
+    prevVersionSkaleWeekly,
+    prevVersionStar,
+    prevVersionSkaleMonthly,
+    prevVersionCore,
+    prevVersionVictionMonthly,
+    prevVersionCoreWeekly,
+    prevVersionCoreMonthly,
+    prevVersionViction,
+    prevVersionVictionWeekly,
   ]);
 
   useEffect(() => {
@@ -2782,7 +2793,7 @@ function Dashboard({
       }
     }
   };
-  
+
   const fetchSkalePrice = async () => {
     await axios
       .get(
@@ -3965,7 +3976,7 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "viction").then(
       (NFTS) => setmyVictionNfts(NFTS)
     );
-    
+
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "multivers").then(
       (NFTS) => setmyMultiversNfts(NFTS)
     );
@@ -5199,7 +5210,7 @@ function Dashboard({
     fetchSeiPrice();
     fetchCorePrice();
     fetchVictionPrice();
-    fetchEgldPrice()
+    fetchEgldPrice();
   }, []);
 
   useEffect(() => {
@@ -5517,8 +5528,7 @@ function Dashboard({
 
   useEffect(() => {
     if (
-      (dailyBonusPopup === true && dailyrewardpopup) 
-      ||
+      (dailyBonusPopup === true && dailyrewardpopup) ||
       leaderboard === true
     ) {
       html.classList.add("hidescroll");
@@ -5752,7 +5762,6 @@ function Dashboard({
                               myCoreNfts={myCoreNfts}
                               myVictionNfts={myVictionNfts}
                               myMultiversNfts={myMultiversNfts}
-
                               mySkaleNfts={mySkaleNfts}
                               latestBoughtNFTS={latest20BoughtNFTS}
                               myOffers={myOffers}
@@ -5780,7 +5789,9 @@ function Dashboard({
                           setGenesisLeaderboard(true);
                         }}
                         isPremium={isPremium}
-                        handleShowPopup={(value)=>{setadClicked(value)}}
+                        handleShowPopup={(value) => {
+                          setadClicked(value);
+                        }}
                       />
                       <NewWalletBalance
                         onDailyRewardsPopupOpen={() => {
@@ -5911,7 +5922,9 @@ function Dashboard({
                         cawsPremiumRewards={cawsPremiumRewards}
                         userRankRewards={userRankRewards}
                         adClicked={adClicked}
-                        onClearAd={()=>{setadClicked('')}}
+                        onClearAd={() => {
+                          setadClicked("");
+                        }}
                         multiversPoints={multiversPoints}
                         multiversEarnToken={multiversEarnToken}
                         multiversEarnUsd={multiversEarnUsd}
@@ -5955,7 +5968,6 @@ function Dashboard({
                         myCoreNfts={myCoreNfts}
                         myVictionNfts={myVictionNfts}
                         myMultiversNfts={myMultiversNfts}
-
                         mySkaleNfts={mySkaleNfts}
                         latestBoughtNFTS={latest20BoughtNFTS}
                         myOffers={myOffers}
@@ -6193,7 +6205,7 @@ function Dashboard({
                             monthlyDataAmountSkale={monthlyDataAmountSkale}
                             userRank2={userRank2}
                             email={email}
-                           userDataStar={dataAmountStar}
+                            userDataStar={dataAmountStar}
                             allChests={allChests}
                             allSkaleChests={allSkaleChests}
                             allCoreChests={allCoreChests}
@@ -6227,11 +6239,11 @@ function Dashboard({
                       </OutsideClickHandler>
                     )}
 
-                    {(getPremiumPopup || adClicked === 'premium') && (
+                    {(getPremiumPopup || adClicked === "premium") && (
                       <OutsideClickHandler
                         onOutsideClick={() => {
                           setgetPremiumPopup(false);
-                          setadClicked('')
+                          setadClicked("");
                         }}
                       >
                         <div
@@ -6250,7 +6262,10 @@ function Dashboard({
                               </h6>
                               <img
                                 src={xMark}
-                                onClick={() => {setgetPremiumPopup(false);setadClicked('')}}
+                                onClick={() => {
+                                  setgetPremiumPopup(false);
+                                  setadClicked("");
+                                }}
                                 alt=""
                                 style={{ cursor: "pointer" }}
                               />
