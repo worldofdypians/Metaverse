@@ -491,8 +491,7 @@ const GlobalLeaderboard = ({
                     new chances to climb and show your skills.
                     <br />
                     <br />
-                    Explore the Global Leaderboard to enhance your World of
-                    Dypians journey and compete globally for glory and rewards.
+                    <b>Leaderboard Update Time: Daily (00:00 UTC)</b>
                   </p>
                 </div>
               </div>
