@@ -487,7 +487,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       StartPosition: 0,
       MaxResultsCount: 10,
     };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((err) => {
+      console.log(err);
+    });
     setpreviousVersion(parseInt(result.data.data.version));
     setRecords(result.data.data.leaderboard);
     fillRecords(result.data.data.leaderboard);
@@ -499,7 +501,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       StartPosition: 0,
       MaxResultsCount: 10,
     };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((err) => {
+      console.log(err);
+    });
     setWeeklyRecords(result.data.data.leaderboard);
     setpreviousWeeklyVersion(result.data.data.version);
     var testArray = result.data.data.leaderboard.filter(
@@ -514,7 +518,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       StartPosition: 0,
       MaxResultsCount: 10,
     };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((err) => {
+      console.log(err);
+    });
     setMonthlyRecords(result.data.data.leaderboard);
     setpreviousMonthlyVersion(result.data.data.version);
     var testArray = result.data.data.leaderboard.filter(
@@ -614,7 +620,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       StartPosition: 0,
       MaxResultsCount: 10,
     };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((err) => {
+      console.log(err);
+    });
     setskalepreviousVersion(result.data.data.version);
 
     setskaleRecords(result.data.data.leaderboard);
@@ -632,7 +640,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
-      );
+      ).catch((err) => {
+        console.log(err);
+      });
       // setpreviousVersion(parseInt(result.data.data.version));
       setskalePreviousRecords(result.data.data.leaderboard);
       fillPreviousRecordsSkale(result.data.data.leaderboard);
@@ -644,7 +654,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       StartPosition: 0,
       MaxResultsCount: 10,
     };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((err) => {
+      console.log(err);
+    });
     setskalepreviousVersion(result.data.data.version);
 
     setSkaleMonthlyData(result.data.data.leaderboard);
@@ -662,7 +674,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
-      );
+      ).catch((err) => {
+        console.log(err);
+      });
       // setpreviousVersion(parseInt(result.data.data.version));
       setSkalePreviousMonthlyData(result.data.data.leaderboard);
       fillPreviousRecordsSkaleMonthly(result.data.data.leaderboard);
@@ -680,7 +694,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
-      );
+      ).catch((err) => {
+        console.log(err);
+      });
 
       setdailyplayerData(result.data.data.leaderboard);
     }
@@ -697,7 +713,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
-      );
+      ).catch((err) => {
+        console.log(err);
+      });
       fillRecordsGenesis(result.data.data.leaderboard);
 
       setpreviousgenesisData(result.data.data.leaderboard);
@@ -715,7 +733,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
-      );
+      ).catch((err) => {
+        console.log(err);
+      });
 
       setweeklyplayerData(result.data.data.leaderboard);
     }
@@ -732,7 +752,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
-      );
+      ).catch((err) => {
+        console.log(err);
+      });
 
       setmonthlyplayerData(result.data.data.leaderboard);
     }

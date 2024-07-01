@@ -717,13 +717,13 @@ const Community = ({socials}) => {
                   style={{ position: "absolute", top: "4%", left: "4%" }}
                 >
                   <h6 className="community-active-title mb-0">
-                    Daily Active Users:
+                  Monthly Players:
                   </h6>
                   <h6
                     className="community-active-title mb-0"
                     style={{ color: "#d9fa86" }}
                   >
-                    100,000+
+                    463,692
                   </h6>
                 </div>
                 <div className="row w-100 mt-5 mt-lg-0">
