@@ -996,6 +996,8 @@ function Dashboard({
   const [prevDataStar, setPrevDataStar] = useState([]);
   const [prevVersionStar, setPrevVersionStar] = useState(0);
   const [dataAmountStar, setDataAmountStar] = useState([]);
+  const [userCollectedStars, setuserCollectedStars] = useState(0);
+
   const [dailyRecordsViction, setDailyRecordsViction] = useState([]);
   const [weeklyRecordsViction, setWeeklyRecordsViction] = useState([]);
   const [monthlyRecordsViction, setMonthlyRecordsViction] = useState([]);
@@ -1154,7 +1156,7 @@ function Dashboard({
 
     //   setPrevDataCoreMonthly(result.data.data.leaderboard);
     // } else {
-      setPrevDataCoreMonthly(placeholderplayerData);
+    setPrevDataCoreMonthly(placeholderplayerData);
     // }
   };
   const fetchDailyRecordsCore = async () => {
@@ -1486,7 +1488,7 @@ function Dashboard({
 
     //   setPrevDataVictionMonthly(result.data.data.leaderboard);
     // } else {
-      setPrevDataVictionMonthly(placeholderplayerData);
+    setPrevDataVictionMonthly(placeholderplayerData);
     // }
   };
   const fetchDailyRecordsViction = async () => {
@@ -1783,7 +1785,6 @@ function Dashboard({
     // setdailyplayerData(result.data.data.leaderboard);
   };
   const fetchPreviousWeeklyWinnersSkale = async () => {
- 
     if (prevVersionSkaleWeekly != 0) {
       const data = {
         StatisticName: "LeaderboardSkaleWeekly",
@@ -1795,7 +1796,6 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-      
 
       setPrevDataSkaleWeekly(result.data.data.leaderboard);
     } else {
@@ -1814,10 +1814,10 @@ function Dashboard({
     //     `${backendApi}/auth/GetLeaderboard?Version=-1`,
     //     data
     //   );
-      
+
     //   setPrevDataSkaleMonthly(result.data.data.leaderboard);
     // } else {
-      setPrevDataSkaleMonthly(placeholderplayerData);
+    setPrevDataSkaleMonthly(placeholderplayerData);
     // }
   };
   const fetchDailyRecordsSkale = async () => {
@@ -2130,7 +2130,7 @@ function Dashboard({
       );
       if (testArray.length > 0) {
         const userPosition = testArray[0].position;
-
+        setuserCollectedStars(testArray[0].statValue);
         if (goldenPassRemainingTime) {
           setDataAmountStar(
             testArray[0].statValue !== 0
@@ -2282,6 +2282,7 @@ function Dashboard({
       MaxResultsCount: 10,
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+
     setpreviousVersion(parseInt(result.data.data.version));
     setRecords(result.data.data.leaderboard);
     fillRecords(result.data.data.leaderboard);
@@ -5655,8 +5656,8 @@ function Dashboard({
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
-                        userDataStar={dataAmountStar}
-                        userDataPosition = {userDataStar?.position }
+                        userDataStar={userCollectedStars}
+                        userDataPosition={userDataStar?.position}
                         onLinkWallet={connectWallet}
                         onSigninClick={onSigninClick}
                         onLogoutClick={() => {
