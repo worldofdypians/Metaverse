@@ -109,8 +109,6 @@ const NewBundleCard = ({
   dyptokenDatabnb_old,
   dyptokenData_old,
 }) => {
-
-
   const [sliderValue, setSliderValue] = useState(1);
   const [sliderValue700, setSliderValue700] = useState(1);
   const [sliderValue3500, setSliderValue3500] = useState(1);
@@ -638,8 +636,6 @@ const NewBundleCard = ({
     setStatus700("Confirm to complete purchase");
     setStatusColor700("#00FECF");
 
-    
-
     if (priceType === 1) {
       await dyp700_abi.methods
         .deposit()
@@ -651,7 +647,7 @@ const NewBundleCard = ({
           getDypBalance();
           insertBundle();
           increaseBundle();
-          handleRefreshCountdown700()
+          handleRefreshCountdown700();
           checkApproval700(priceType);
         })
         .catch((e) => {
@@ -670,7 +666,7 @@ const NewBundleCard = ({
           getDypBalance();
           insertBundle();
           increaseBundle();
-          handleRefreshCountdown700()
+          handleRefreshCountdown700();
           checkApproval700(priceType);
         })
         .catch((e) => {
@@ -800,7 +796,6 @@ const NewBundleCard = ({
       .call();
     setcountdown3500(remainingTime);
   };
- 
 
   useEffect(() => {
     if (packageData.title === "Dragon Ruins") {
@@ -810,7 +805,7 @@ const NewBundleCard = ({
     }
 
     checkWalletAddr();
-    
+
     checkApproval3500();
     checkApproval();
     increaseBundle();
@@ -818,7 +813,6 @@ const NewBundleCard = ({
 
   useEffect(() => {
     checkApproval700(priceType);
-    
   }, [coinbase, chainId, bundlesBought]);
 
   useEffect(() => {
@@ -866,7 +860,7 @@ const NewBundleCard = ({
         setStatus700(
           "You are on the wrong chain. Switch back to Ethereum to purchase the bundle."
         );
-      } else if (priceType === 1  && isAtlimit === false) {
+      } else if (priceType === 1 && isAtlimit === false) {
         setStatus700("");
       }
       setStatus("");
@@ -913,7 +907,7 @@ const NewBundleCard = ({
     ) {
       setisAtlimit(true);
 
-      handleRefreshCountdown700()
+      handleRefreshCountdown700();
       setStatus700(
         "The Golden Pass bundle is currently not available for purchase. Please check back next month."
       );
@@ -1023,14 +1017,19 @@ const NewBundleCard = ({
                       <span className="purchase-price-title">Event price</span>
                       {packageData.title === "Golden Pass" ? (
                         <div className="d-flex flex-column flex-lg-row align-items-lg-center align-items-start gap-4">
-                          <h6 className="purchase-price mb-0">
-                            {getFormattedNumber(
-                              priceType === 0
-                                ? goldenPassDypAmountV1
-                                : goldenPassDypAmountV2,
-                              2
-                            )}
-                          </h6>
+                          <div className="d-flex flex-column">
+                            <h6 className="purchase-price mb-0">
+                              {getFormattedNumber(
+                                priceType === 0
+                                  ? goldenPassDypAmountV1
+                                  : goldenPassDypAmountV2,
+                                2
+                              )}
+                            </h6>
+                            <span className="purchase-price-usd mb-0">
+                              ${getFormattedNumber(packageData.usdPrice)}
+                            </span>
+                          </div>
                           <div className="d-flex flex-row justify-content-around w-100 gap-2">
                             <div
                               className={`d-flex gap-2 align-items-center position-relative ${
@@ -1090,15 +1089,6 @@ const NewBundleCard = ({
                               </span>
                             </div>
                           </div>
-
-                          <span className="purchase-price-usd mb-0">
-                            ${getFormattedNumber(packageData.usdPrice)}
-                            {/* {getFormattedNumber(
-                              priceType === 1
-                                ? packageData.price * dyptokenDatabnb
-                                : 250 * dyptokenData_old
-                            )} */}
-                          </span>
                         </div>
                       ) : (
                         <div className="d-flex align-items-center gap-4">
@@ -1234,8 +1224,7 @@ const NewBundleCard = ({
                             (priceType === 0 && chainId !== 1) ||
                             (priceType === 1 && chainId !== 56) ||
                             isAtlimit == true
-                              ?
-                               true
+                              ? true
                               : false
                           }
                           className={`btn ${
@@ -1244,8 +1233,7 @@ const NewBundleCard = ({
                             isAtlimit == true ||
                             (priceType === 0 && chainId !== 1) ||
                             (priceType === 1 && chainId !== 56)
-                              ? 
-                              "inactive-pill-btn"
+                              ? "inactive-pill-btn"
                               : "pill-btn"
                           }  py-2 px-4`}
                           onClick={() => {
@@ -1280,8 +1268,7 @@ const NewBundleCard = ({
                               (priceType === 0 && chainId !== 1) ||
                               (priceType === 1 && chainId !== 56) ||
                               depositState700 !== "deposit"
-                            ?
-                             true
+                            ? true
                             : false
                         }
                         className={`btn ${
@@ -1292,8 +1279,7 @@ const NewBundleCard = ({
                           checkWallet === true &&
                           isAtlimit === false
                             ? "pill-btn"
-                            :
-                             "inactive-pill-btn"
+                            : "inactive-pill-btn"
                         }  py-2 px-4`}
                         onClick={() => {
                           handleDeposit700(priceType);
@@ -1513,11 +1499,13 @@ const NewBundleCard = ({
             </div>
           </div>
         )}
-      {packageData.title === "Golden Pass" && countdown700 !== 0 && countdown700 && (
-        <div className="col-12 mt-3">
-          <div className="nft-outer-wrapper new-bundle-wrapper p-3 p-lg-5">
-            <div className="d-flex w-100 flex-column flex-lg-row gap-4 align-items-center justify-content-between">
-            <div className="d-flex flex-column gap-3 available-time-wrapper">
+      {packageData.title === "Golden Pass" &&
+        countdown700 !== 0 &&
+        countdown700 && (
+          <div className="col-12 mt-3">
+            <div className="nft-outer-wrapper new-bundle-wrapper p-3 p-lg-5">
+              <div className="d-flex w-100 flex-column flex-lg-row gap-4 align-items-center justify-content-between">
+                <div className="d-flex flex-column gap-3 available-time-wrapper">
                   <div className="d-flex align-items-center gap-3">
                     <div
                       className="new-bundle-title"
@@ -1547,21 +1535,21 @@ const NewBundleCard = ({
                     sync button every time you purchase a bundle
                   </span>
                 </div>
-              {countdown700 !== 0 && countdown700 && (
-                <Countdown
-                  date={Number(countdown700)}
-                  renderer={renderer700}
-                  onComplete={() => {
-                    setcountdown700();
-                    handleSetAvailableTime();
-                    setisAtlimit(false);
-                  }}
-                />
-              )}
+                {countdown700 !== 0 && countdown700 && (
+                  <Countdown
+                    date={Number(countdown700)}
+                    renderer={renderer700}
+                    onComplete={() => {
+                      setcountdown700();
+                      handleSetAvailableTime();
+                      setisAtlimit(false);
+                    }}
+                  />
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
     </>
   );
 };
