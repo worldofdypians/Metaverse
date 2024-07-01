@@ -1858,18 +1858,18 @@ const NewWalletBalance = ({
                       {getFormattedNumber(
                         Number(userSocialRewardsCached) +
                           Number(weeklyplayerData) +
-                          Number(dailyplayerData) +
+                          // Number(dailyplayerData) +
                           Number(userRank2) +
                           Number(genesisRank2) +
                           Number(treasureRewardMoney) +
                           Number(userRankRewards) +
-                          Number(dailyDataAmountCore) +
+                          // Number(dailyDataAmountCore) +
                           Number(weeklyDataAmountCore) +
                           Number(monthlyDataAmountCore) +
-                          Number(dailyDataAmountSkale) +
+                          // Number(dailyDataAmountSkale) +
                           Number(weeklyDataAmountSkale) +
                           Number(monthlyDataAmountSkale) +
-                          Number(dailyDataAmountViction) +
+                          // Number(dailyDataAmountViction) +
                           Number(weeklyDataAmountViction) +
                           Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd) +

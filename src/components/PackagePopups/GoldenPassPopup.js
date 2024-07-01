@@ -28,7 +28,7 @@ const GoldenPassPopup = ({onClosePopup}) => {
           </p>
           <p className="package-popup-desc">
             One of the main benefits of participating in the Golden Pass event
-            is the chance to double rewards. This makes it an essential event
+            is the chance to get extra rewards. This makes it an essential event
             for players who want to make the most of their time in the game and
             improve their gaming experience.
           </p>
@@ -43,7 +43,7 @@ const GoldenPassPopup = ({onClosePopup}) => {
           <ul className="package-popup-desc">
             <li className="package-popup-desc">
               To participate in the Golden Pass event, players need to purchase
-              the bundle in Marketplace using DYP token on BNB Chain.
+              the bundle in Marketplace using DYP token on BNB Chain or Ethereum Chain.
             </li>
             <li className="package-popup-desc">
               The Golden Pass bundle is available for a month and can be
@@ -55,7 +55,7 @@ const GoldenPassPopup = ({onClosePopup}) => {
               month.
             </li>
             <li className="package-popup-desc">
-              Once the bundle is active, players will receive double rewards
+              Once the bundle is active, players will receive extra rewards
               based on their leaderboard ranking.
             </li>
             <li className="package-popup-desc">
@@ -63,10 +63,7 @@ const GoldenPassPopup = ({onClosePopup}) => {
               of the leaderboard reset for players to receive the double
               rewards.
             </li>
-            <li className="package-popup-desc">
-              Bundles will be available for purchase until the date 25 of each
-              month.
-            </li>
+          
             <li className="package-popup-desc">
               Players can earn unique rewards and prizes that can only be earned
               during the Golden Pass event.
@@ -109,7 +106,7 @@ const GoldenPassPopup = ({onClosePopup}) => {
                       textAlign: "center",
                     }}
                   >
-                    Multiper
+                    Extra
                   </th>
                   <th
                     scope="col popup-table-header"
@@ -152,7 +149,7 @@ const GoldenPassPopup = ({onClosePopup}) => {
                       textAlign: "center",
                     }}
                   >
-                    x2
+                    +$400
                   </td>
                   <td
                     style={{
@@ -161,7 +158,7 @@ const GoldenPassPopup = ({onClosePopup}) => {
                       textAlign: "center",
                     }}
                   >
-                    $2,000
+                    $1,400
                   </td>
                 </tr>
                 <tr>
@@ -191,7 +188,7 @@ const GoldenPassPopup = ({onClosePopup}) => {
                       textAlign: "center",
                     }}
                   >
-                    x2
+                    +$300
                   </td>
                   <td
                     style={{
@@ -200,7 +197,7 @@ const GoldenPassPopup = ({onClosePopup}) => {
                       textAlign: "center",
                     }}
                   >
-                    $1,600
+                    $1,100
                   </td>
                 </tr>
                 <tr>
@@ -230,7 +227,7 @@ const GoldenPassPopup = ({onClosePopup}) => {
                       textAlign: "center",
                     }}
                   >
-                    x2
+                    +$200
                   </td>
                   <td
                     style={{
@@ -239,7 +236,7 @@ const GoldenPassPopup = ({onClosePopup}) => {
                       textAlign: "center",
                     }}
                   >
-                    $1,000
+                    $700
                   </td>
                 </tr>
               </tbody>

@@ -1239,29 +1239,29 @@ function Dashboard({
 
       const userPosition = testArray[0].position;
 
-      if (goldenPassRemainingTime) {
+      if (isPremium && testArray[0].statValue !=0) {
         setDailyDataAmountCore(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(dailyPrizes[9]) + Number(dailyPrizesGolden[9])
-              : Number(dailyPrizes[userPosition]) +
-                Number(dailyPrizesGolden[userPosition])
+              ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
+              : Number(skaleStars[userPosition]) +
+                Number(skaleStarsPremium[userPosition])
             : 0
         );
-      } else if (!goldenPassRemainingTime) {
+      } else if (!isPremium && testArray[0].statValue !=0) {
         setDailyDataAmountCore(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(dailyPrizes[9])
-              : Number(dailyPrizes[userPosition])
+              ? Number(skaleStars[9])
+              : Number(skaleStars[userPosition])
             : 0
         );
-      }
-
+      } else setDailyDataAmountCore(0)
+ 
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
           (item) => item.displayName === username
@@ -1296,28 +1296,28 @@ function Dashboard({
       );
 
       const userPosition = testArray[0].position;
-      if (goldenPassRemainingTime) {
+      if (goldenPassRemainingTime && testArray[0].statValue !=0) {
         setWeeklyDataAmountCore(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(weeklyPrizes[9]) + Number(weeklyPrizesGolden[9])
-              : Number(weeklyPrizes[userPosition]) +
-                Number(weeklyPrizesGolden[userPosition])
+              ? Number(skalePrizesWeekly[9]) + Number(skalePrizesWeeklyGolden[9])
+              : Number(skalePrizesWeekly[userPosition]) +
+                Number(skalePrizesWeeklyGolden[userPosition])
             : 0
         );
-      } else if (!goldenPassRemainingTime) {
+      } else if (!goldenPassRemainingTime && testArray[0].statValue !=0) {
         setWeeklyDataAmountCore(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(weeklyPrizes[9])
-              : Number(weeklyPrizes[userPosition])
+              ? Number(skalePrizesWeekly[9])
+              : Number(skalePrizesWeekly[userPosition])
             : 0
         );
-      }
+      } else setWeeklyDataAmountCore(0)
 
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
@@ -1357,28 +1357,28 @@ function Dashboard({
       const userPosition = testArray[0].position;
       // console.log(userPosition)
 
-      if (goldenPassRemainingTime) {
+      if (goldenPassRemainingTime && testArray[0].statValue !=0) {
         setMonthlyDataAmountCore(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(monthlyPrizes[9]) + Number(monthlyPrizesGolden[9])
-              : Number(monthlyPrizes[userPosition]) +
-                Number(monthlyPrizesGolden[userPosition])
+              ? Number(skalePrizesMonthly[9]) + Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
             : 0
         );
-      } else if (!goldenPassRemainingTime) {
+      } else if (!goldenPassRemainingTime && testArray[0].statValue !=0) {
         setMonthlyDataAmountCore(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(monthlyPrizes[9])
-              : Number(monthlyPrizes[userPosition])
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
             : 0
         );
-      }
+      } else setMonthlyDataAmountCore(0)
 
       setUserRankCore(testArray[0].position);
       setUserCoreScore(testArray[0].statValue);
@@ -1571,28 +1571,28 @@ function Dashboard({
 
       const userPosition = testArray[0].position;
 
-      if (goldenPassRemainingTime) {
+      if (isPremium && testArray[0].statValue !=0) {
         setDailyDataAmountViction(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(dailyPrizes[9]) + Number(dailyPrizesGolden[9])
-              : Number(dailyPrizes[userPosition]) +
-                Number(dailyPrizesGolden[userPosition])
+              ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
+              : Number(skaleStars[userPosition]) +
+                Number(skaleStarsPremium[userPosition])
             : 0
         );
-      } else if (!goldenPassRemainingTime) {
+      } else if (!isPremium && testArray[0].statValue !=0) {
         setDailyDataAmountViction(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(dailyPrizes[9])
-              : Number(dailyPrizes[userPosition])
+              ? Number(skaleStars[9])
+              : Number(skaleStars[userPosition])
             : 0
         );
-      }
+      } else setDailyDataAmountViction(0)
 
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
@@ -1628,28 +1628,28 @@ function Dashboard({
       );
 
       const userPosition = testArray[0].position;
-      if (goldenPassRemainingTime) {
+      if (goldenPassRemainingTime && testArray[0].statValue !=0) {
         setWeeklyDataAmountViction(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(weeklyPrizes[9]) + Number(weeklyPrizesGolden[9])
-              : Number(weeklyPrizes[userPosition]) +
-                Number(weeklyPrizesGolden[userPosition])
+              ? Number(skalePrizesWeekly[9]) + Number(skalePrizesWeeklyGolden[9])
+              : Number(skalePrizesWeekly[userPosition]) +
+                Number(skalePrizesWeeklyGolden[userPosition])
             : 0
         );
-      } else if (!goldenPassRemainingTime) {
+      } else if (!goldenPassRemainingTime && testArray[0].statValue !=0) {
         setWeeklyDataAmountViction(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(weeklyPrizes[9])
-              : Number(weeklyPrizes[userPosition])
+              ? Number(skalePrizesWeekly[9])
+              : Number(skalePrizesWeekly[userPosition])
             : 0
         );
-      }
+      } else setWeeklyDataAmountViction(0)
 
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
@@ -1669,6 +1669,8 @@ function Dashboard({
       }
     }
   };
+
+  
   const fetchMonthlyRecordsAroundPlayerViction = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardVictionMonthly",
@@ -1694,9 +1696,9 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(monthlyPrizes[9]) + Number(monthlyPrizesGolden[9])
-              : Number(monthlyPrizes[userPosition]) +
-                Number(monthlyPrizesGolden[userPosition])
+              ? Number(skalePrizesMonthly[9]) + Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -1705,8 +1707,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(monthlyPrizes[9])
-              : Number(monthlyPrizes[userPosition])
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
             : 0
         );
       }
@@ -1898,25 +1900,25 @@ function Dashboard({
 
       const userPosition = testArray[0].position;
 
-      if (goldenPassRemainingTime) {
+      if (isPremium) {
         setDailyDataAmountSkale(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(dailyPrizes[9]) + Number(dailyPrizesGolden[9])
-              : Number(dailyPrizes[userPosition]) +
-                Number(dailyPrizesGolden[userPosition])
+              ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
+              : Number(skaleStars[userPosition]) +
+                Number(skaleStarsPremium[userPosition])
             : 0
         );
-      } else if (!goldenPassRemainingTime) {
+      } else if (!isPremium) {
         setDailyDataAmountSkale(
           testArray[0].statValue !== 0
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(dailyPrizes[9])
-              : Number(dailyPrizes[userPosition])
+              ? Number(skaleStars[9])
+              : Number(skaleStars[userPosition])
             : 0
         );
       }
@@ -1961,9 +1963,9 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(weeklyPrizes[9]) + Number(weeklyPrizesGolden[9])
-              : Number(weeklyPrizes[userPosition]) +
-                Number(weeklyPrizesGolden[userPosition])
+              ? Number(skalePrizesWeekly[9]) + Number(skalePrizesWeeklyGolden[9])
+              : Number(skalePrizesWeekly[userPosition]) +
+                Number(skalePrizesWeeklyGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -1972,8 +1974,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(weeklyPrizes[9])
-              : Number(weeklyPrizes[userPosition])
+              ? Number(skalePrizesWeekly[9])
+              : Number(skalePrizesWeekly[userPosition])
             : 0
         );
       }
@@ -2021,9 +2023,9 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(monthlyPrizes[9]) + Number(monthlyPrizesGolden[9])
-              : Number(monthlyPrizes[userPosition]) +
-                Number(monthlyPrizesGolden[userPosition])
+              ? Number(skalePrizesMonthly[9]) + Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2032,8 +2034,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(monthlyPrizes[9])
-              : Number(monthlyPrizes[userPosition])
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
             : 0
         );
       }
@@ -2059,7 +2061,7 @@ function Dashboard({
       }
     }
   };
-
+  
   const fillRecordsStar = (itemData) => {
     if (itemData.length === 0) {
       setStarRecords(placeholderplayerData);
@@ -2126,15 +2128,30 @@ function Dashboard({
       if (testArray.length > 0) {
       const userPosition = testArray[0].position;
 
-      setDataAmountStar(
-        testArray[0].statValue !== 0
-          ? userPosition > 10
-            ? 0
-            : userPosition === 10
-            ? Number(starPrizes[9])
-            : Number(starPrizes[userPosition])
-          : 0
-      );
+      if (goldenPassRemainingTime) {
+        setDataAmountStar(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(starPrizes[9]) + Number(starPrizesGolden[9])
+              : Number(starPrizes[userPosition]) +
+                Number(starPrizesGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setDataAmountStar(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(starPrizes[9])
+              : Number(starPrizes[userPosition])
+            : 0
+        );
+      }
+
+     
     }
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
@@ -2765,7 +2782,7 @@ function Dashboard({
       }
     }
   };
-
+  
   const fetchSkalePrice = async () => {
     await axios
       .get(
@@ -6176,7 +6193,7 @@ function Dashboard({
                             monthlyDataAmountSkale={monthlyDataAmountSkale}
                             userRank2={userRank2}
                             email={email}
-                           
+                           userDataStar={dataAmountStar}
                             allChests={allChests}
                             allSkaleChests={allSkaleChests}
                             allCoreChests={allCoreChests}

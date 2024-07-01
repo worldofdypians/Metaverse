@@ -866,7 +866,7 @@ const NewBundleCard = ({
         setStatus700(
           "You are on the wrong chain. Switch back to Ethereum to purchase the bundle."
         );
-      } else if (priceType === 1) {
+      } else if (priceType === 1  && isAtlimit === false) {
         setStatus700("");
       }
       setStatus("");
@@ -1513,6 +1513,36 @@ const NewBundleCard = ({
         <div className="col-12 mt-3">
           <div className="nft-outer-wrapper new-bundle-wrapper p-3 p-lg-5">
             <div className="d-flex w-100 flex-column flex-lg-row gap-4 align-items-center justify-content-between">
+            <div className="d-flex flex-column gap-3 available-time-wrapper">
+                  <div className="d-flex align-items-center gap-3">
+                    <div
+                      className="new-bundle-title"
+                      style={{ fontSize: "18px" }}
+                    >
+                      Available Time Remaining
+                    </div>
+                    {/* <div className="position-relative new-tooltip-wrapper ">
+                      <img
+                        src={require("./assets/newTooltip.svg").default}
+                        alt=""
+                      />
+                      <div className="new-tooltip-content-wrapper p-2 d-flex align-items-center justify-content-center">
+                        <p className="new-tooltip-content mb-0">
+                          Additional bundles can be purchased to extend your
+                          usage time.
+                        </p>
+                      </div>
+                    </div> */}
+                  </div>
+                  <span className="new-timer-description ">
+                    Use in-game{" "}
+                    <img
+                      src={require("./assets/syncIcon.svg").default}
+                      alt=""
+                    />{" "}
+                    sync button every time you purchase a bundle
+                  </span>
+                </div>
               {countdown700 !== 0 && countdown700 && (
                 <Countdown
                   date={Number(countdown700)}

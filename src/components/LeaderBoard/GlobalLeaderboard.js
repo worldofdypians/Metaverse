@@ -16,11 +16,11 @@ import globalIcon from "./assets/globalRanks/globalIcon.png";
 import goldenActive from "./assets/goldenActive.png";
 import goldenInactive from "./assets/goldenInactive.png";
 import { NavLink, useLocation } from "react-router-dom";
-import bnbIcon from './assets/bnbIcon.svg'
-import victionActive from './assets/victionActive.svg'
-import coreIcon from './assets/coreIcon2.svg'
-import skaleActive from './assets/skaleActive.svg'
-import yellowArrow from './assets/yellowArrow.svg'
+import bnbIcon from "./assets/bnbIcon.svg";
+import victionActive from "./assets/victionActive.svg";
+import coreIcon from "./assets/coreIcon2.svg";
+import skaleActive from "./assets/skaleActive.svg";
+import yellowArrow from "./assets/yellowArrow.svg";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
 
 const renderer = ({ hours, minutes, seconds }) => {
@@ -65,7 +65,7 @@ const GlobalLeaderboard = ({
   previousgenesisData,
   previousGenesisVersion,
   screen,
-  allStarData
+  allStarData,
 }) => {
   const playerData = [
     {
@@ -394,8 +394,6 @@ const GlobalLeaderboard = ({
     setOptionText2("bnb");
   }, []);
 
-
-
   return (
     <div
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
@@ -432,8 +430,8 @@ const GlobalLeaderboard = ({
               </span>
             </div>
             <div className="global-total-wrapper py-3 w-100 d-flex flex-column align-items-center justify-content-center">
-              <h6 className="global-total-players mb-0">100,000+</h6>
-              <span className="global-total-span">Daily Active Users</span>
+              <h6 className="global-total-players mb-0">463,692</h6>
+              <span className="global-total-span">Monthly Players</span>
             </div>
           </div>
         </div>
@@ -447,58 +445,63 @@ const GlobalLeaderboard = ({
           }}
         />
       )}
-      {/* <h2
-        className={`font-organetto d-flex gap-1 align-items-center  leaderboardTitle justify-content-between`}
-      >
-        Leaderboard
-        <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
-          <div className="d-flex align-items-center gap-2 position-relative">
-            <img
-              src={tooltipIcon}
-              alt=""
-              className="tooltip-icon"
-              style={{ cursor: "pointer", width: "20px", height: "20px" }}
-              onClick={() => setTooltip(!tooltip)}
-            />
-            <div
-              className={`tooltip-wrapper p-3 ${tooltip && "tooltip-active"}`}
-              style={{ width: 350, right: "20%" }}
-            >
-              <p className="tooltip-content">
-                BNB Chain Leaderboard: In World of Dypians, the BNB Chain
-                Leaderboard tracks players' activities related to the BNB Chain,
-                such as in-game activities, Daily Bonus, and different events.
-                This leaderboard operates on a daily, weekly, and monthly basis,
-                with rewards distributed monthly based on players' performance.
-                <br />
-                <br />
-                SKALE Leaderboard: In World of Dypians, the SKALE Leaderboard
-                tracks players' activities related to SKALE, such as Daily Bonus
-                and Treasure Hunt. This leaderboard operates on a weekly basis,
-                with rewards distributed weekly based on players' performance.
-                <br />
-                <br />
-                Genesis Leaderboard: In World of Dypians, the Genesis
-                Leaderboard is a monthly competition exclusive to Genesis Land
-                NFT owners. This leaderboard tracks players' activities on their
-                Genesis Land, such as hitting the gem once a day, to earn points
-                for BNB Chain leaderboard. Players have the opportunity to earn
-                rewards in USD based on the amount that the genesis gem gives.
-              </p>
-            </div>
-          </div>
-        </OutsideClickHandler>
-      </h2> */}
+
       {/* <div className="grandPrices-wrapper position-relative"></div> */}
       <div
         className="leaderboard-item d-flex flex-column  w-100 p-0"
         style={{ background: "none" }}
       >
-        <div className="global-leaderboard-banner d-flex align-items-center justify-content-between w-100 p-3 gap-3">
+        <div className="global-leaderboard-banner d-flex align-items-center justify-content-between w-100 p-3 gap-3 position-relative">
+          <div className="position-absolute" style={{ top: 8, right: 8 }}>
+            <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
+              <div className="d-flex align-items-center gap-2 position-relative">
+                <img
+                  src={tooltipIcon}
+                  alt=""
+                  className="tooltip-icon"
+                  style={{ cursor: "pointer", width: "20px", height: "20px" }}
+                  onClick={() => setTooltip(!tooltip)}
+                />
+                <div
+                  className={`tooltip-wrapper p-3 ${
+                    tooltip && "tooltip-active"
+                  }`}
+                  style={{ width: 350, right: "20%" }}
+                >
+                  <p className="tooltip-content">
+                    Discover the Global Leaderboard in World of Dypians—a
+                    feature for global competition and rewards.
+                    <br />
+                    <br />
+                    Participate in Daily Chain Leaderboards
+                    from BNB Chain, SKALE, Core, and Viction to earn STARS that
+                    will boost your global ranking.
+                    <br />
+                    <br />
+                    Premium Subscribers earn
+                    extra STARS from Daily Leaderboards, improving
+                    competitiveness and progression.
+                    <br />
+                    <br />
+                    Golden Pass Bundle owners earn extra
+                    rewards based on their global leaderboard ranking.
+                    <br />
+                    <br />
+                    The leaderboard resets monthly, offering
+                    new chances to climb and show your skills.
+                    <br />
+                    <br />
+                    Explore the Global Leaderboard to enhance your World of
+                    Dypians journey and compete globally for glory and rewards.
+                  </p>
+                </div>
+              </div>
+            </OutsideClickHandler>
+          </div>
           <div className="d-flex flex-column">
             <h6 className="global-leaderboard-title mb-0">GLOBAL</h6>
             <h6
-              className="global-leaderboard-title"
+              className="global-leaderboard-title d-flex algin-items-center"
               style={{ color: "#F4E27B" }}
             >
               LEADERBOARD
@@ -591,7 +594,8 @@ const GlobalLeaderboard = ({
                         style={{ color: "#09F3D2" }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          +${getFormattedNumber(goldenRewards[item.position], 0)}
+                          +$
+                          {getFormattedNumber(goldenRewards[item.position], 0)}
                           {screen === "home" ? (
                             <HtmlTooltip
                               placement="top"
@@ -614,7 +618,9 @@ const GlobalLeaderboard = ({
                             >
                               <img
                                 src={
-                                  (username === item.displayName && isactive === true) || username !== item.displayName
+                                  (username === item.displayName &&
+                                    isactive === true) ||
+                                  username !== item.displayName
                                     ? goldenActive
                                     : goldenInactive
                                 }
@@ -675,10 +681,13 @@ const GlobalLeaderboard = ({
                         style={{ color: "#09F3D2" }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          +${getFormattedNumber(goldenRewards[item.position], 0)}
+                          +$
+                          {getFormattedNumber(goldenRewards[item.position], 0)}
                           <img
                             src={
-                              (username === item.displayName && isactive === true) || username !== item.displayName
+                              (username === item.displayName &&
+                                isactive === true) ||
+                              username !== item.displayName
                                 ? goldenActive
                                 : goldenInactive
                             }
@@ -694,34 +703,37 @@ const GlobalLeaderboard = ({
         </div>
       </div>
 
-      {screen === "dash" ? 
-    <div className="optionsWrapper p-2">
-    <div className="d-flex flex-column">
-      <div className="d-flex justify-content-between gap-2 align-items-center">
-        <span className="viewWinners">View previous winners</span>
-        <Switch
-          {...label}
-          onChange={() => {
-            setInactiveBoard(!inactiveBoard);
-          }}
-        />
-      </div>
-    </div>
-  </div>
-  :
-  <NavLink to={"/account"} className="view-chains-wrapper p-2 d-flex align-items-center justify-content-between">
-    <span>View Chain Leaderboards</span>
+      {screen === "dash" ? (
+        <div className="optionsWrapper p-2">
+          <div className="d-flex flex-column">
+            <div className="d-flex justify-content-between gap-2 align-items-center">
+              <span className="viewWinners">View previous winners</span>
+              <Switch
+                {...label}
+                onChange={() => {
+                  setInactiveBoard(!inactiveBoard);
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <NavLink
+          to={"/account"}
+          className="view-chains-wrapper p-2 d-flex align-items-center justify-content-between"
+        >
+          <span>View Chain Leaderboards</span>
           <div className="d-flex align-items-center gap-2">
             <div className="d-flex align-items-center gap-1">
-            <img src={bnbIcon}  width={20} height={20} alt="" />
-            <img src={skaleActive} width={20} height={20}  alt="" />
-            <img src={coreIcon} width={20} height={20}  alt="" />
-            <img src={victionActive} width={20} height={20}  alt="" />
+              <img src={bnbIcon} width={20} height={20} alt="" />
+              <img src={skaleActive} width={20} height={20} alt="" />
+              <img src={coreIcon} width={20} height={20} alt="" />
+              <img src={victionActive} width={20} height={20} alt="" />
             </div>
-          <img src={yellowArrow} width={20} height={20}  alt="" />
+            <img src={yellowArrow} width={20} height={20} alt="" />
           </div>
-  </NavLink>  
-    }
+        </NavLink>
+      )}
     </div>
   );
 };

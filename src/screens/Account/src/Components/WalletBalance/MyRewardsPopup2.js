@@ -65,6 +65,7 @@ const MyRewardsPopupNew = ({
   weeklyDataAmountSkale,
   monthlyDataAmountSkale,
   multiversEarnUsd,
+  userDataStar,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -557,7 +558,6 @@ const MyRewardsPopupNew = ({
       behavior: "smooth",
     });
   };
-
   return (
     <div className="d-grid rewardstable-wrapper2 gap-2 mt-3 px-1">
       <div className="total-earnings-purple-wrapper p-2">
@@ -680,20 +680,21 @@ const MyRewardsPopupNew = ({
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd) +
-                      Number(dailyplayerData) +
-                      Number(dailyDataAmountCore) +
+                      // Number(dailyplayerData) +
+                      // Number(dailyDataAmountCore) +
                       Number(weeklyDataAmountCore) +
                       Number(monthlyDataAmountCore) +
-                      Number(dailyDataAmountSkale) +
+                      // Number(dailyDataAmountSkale) +
                       Number(weeklyDataAmountSkale) +
                       Number(monthlyDataAmountSkale) +
-                      Number(dailyDataAmountViction) +
+                      // Number(dailyDataAmountViction) +
                       Number(weeklyDataAmountViction) +
                       Number(monthlyDataAmountViction) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(genesisRank2) +
                       Number(userRankRewards) +
+                      Number(userDataStar) +
                       Number(userSocialRewardsCached) +
                       Number(cawsPremiumRewards),
                     2
@@ -862,18 +863,19 @@ const MyRewardsPopupNew = ({
                     2
                   )
                 : getFormattedNumber(
-                    Number(dailyplayerData) +
-                      Number(dailyDataAmountCore) +
+                    // Number(dailyplayerData) +
+                      // Number(dailyDataAmountCore) +
                       Number(weeklyDataAmountCore) +
                       Number(monthlyDataAmountCore) +
-                      Number(dailyDataAmountSkale) +
+                      // Number(dailyDataAmountSkale) +
                       Number(weeklyDataAmountSkale) +
                       Number(monthlyDataAmountSkale) +
-                      Number(dailyDataAmountViction) +
+                      // Number(dailyDataAmountViction) +
                       Number(weeklyDataAmountViction) +
                       Number(monthlyDataAmountViction) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
+                      Number(userDataStar) +
                       Number(genesisRank2),
                     2
                   )}
@@ -1190,7 +1192,7 @@ const MyRewardsPopupNew = ({
                   {previousRewards
                     ? getFormattedNumber(leaderboardTotalData, 2)
                     : getFormattedNumber(
-                        Number(dailyplayerData) +
+                        // Number(dailyplayerData) +
                           Number(weeklyplayerData) +
                           Number(userRank2),
                         2
@@ -1204,7 +1206,7 @@ const MyRewardsPopupNew = ({
                   {previousRewards
                     ? getFormattedNumber(leaderboardSkaleTotalData, 2)
                     : getFormattedNumber(
-                        Number(dailyDataAmountSkale) +
+                        // Number(dailyDataAmountSkale) +
                           Number(weeklyDataAmountSkale) +
                           Number(monthlyDataAmountSkale),
                         2
@@ -1218,11 +1220,20 @@ const MyRewardsPopupNew = ({
                   {previousRewards
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(
-                        Number(dailyDataAmountCore) +
+                        // Number(dailyDataAmountCore) +
                           Number(weeklyDataAmountCore) +
                           Number(monthlyDataAmountCore),
                         2
                       )}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Global</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(Number(userDataStar), 2)}
                 </span>
               </div>
             </div>
@@ -1245,7 +1256,7 @@ const MyRewardsPopupNew = ({
                   {previousRewards
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(
-                        Number(dailyDataAmountViction) +
+                        // Number(dailyDataAmountViction) +
                           Number(weeklyDataAmountViction) +
                           Number(monthlyDataAmountViction),
                         2

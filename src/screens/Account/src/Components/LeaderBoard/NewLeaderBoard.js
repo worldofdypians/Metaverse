@@ -291,12 +291,12 @@ const NewLeaderBoard = ({
     setOptionText2("bnb");
   }, []);
 
-  useEffect(() => {
-    if (countdown === null || countdown === undefined || countdown === "0") {
-      setisActive(false);
-    } else setisActive(true);
-  }, [countdown]);
-
+  // useEffect(() => {
+  //   if (countdown === null || countdown === undefined || countdown === "0") {
+  //     setisActive(false);
+  //   } else setisActive(true);
+  // }, [countdown]);
+  
   const nextSlide = () => {
     sliderRef.current.slickNext();
   };
@@ -736,7 +736,7 @@ const NewLeaderBoard = ({
                                               >
                                                 <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
                                                   <span
-                                                    className="leaderboard-text"
+                                                    className="leaderboard-text d-flex"
                                                     style={{
                                                       color:
                                                         (isPremium &&
@@ -746,10 +746,10 @@ const NewLeaderBoard = ({
                                                           item.displayName
                                                           ? "rgb(243, 192, 9)"
                                                           : "gray",
+                                                          whiteSpace: 'nowrap'
                                                     }}
                                                   >
-                                                    +$
-                                                    {getFormattedNumber(
+                                                    +<img src={starIcon} alt="" />{getFormattedNumber(
                                                       leaderboard
                                                         .premium_rewards[index],
                                                       0
@@ -956,7 +956,7 @@ const NewLeaderBoard = ({
                                               >
                                                 <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
                                                   <span
-                                                    className="leaderboard-text"
+                                                    className="leaderboard-text d-flex"
                                                     style={{
                                                       color:
                                                         (username ===
@@ -966,9 +966,10 @@ const NewLeaderBoard = ({
                                                           item.displayName
                                                           ? "rgb(243, 192, 9)"
                                                           : "gray",
+                                                          whiteSpace:'nowrap'
                                                     }}
                                                   >
-                                                    +$
+                                                    +<img src={starIcon} alt="" />
                                                     {getFormattedNumber(
                                                       leaderboard
                                                         .premium_rewards[index],
@@ -1220,7 +1221,7 @@ const NewLeaderBoard = ({
                                           >
                                             <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
                                               <span
-                                                className="leaderboard-text"
+                                                className="leaderboard-text d-flex"
                                                 style={{
                                                   color:
                                                     (isPremium &&
@@ -1232,9 +1233,10 @@ const NewLeaderBoard = ({
                                                         .displayName
                                                       ? "#fff"
                                                       : "gray",
+                                                      whiteSpace:'nowrap'
                                                 }}
                                               >
-                                                +$
+                                                + <img src={starIcon} alt="" />
                                                 {getFormattedNumber(
                                                   leaderboard.rewards[
                                                     leaderboard.player_data
