@@ -1689,7 +1689,7 @@ function App() {
           let tokenId = await window.bnb_nft
             .mintBNBNFT()
             .then(() => {
-              handleSecondTask(coinbase);
+              // handleSecondTask(coinbase);
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
               settextColor("rgb(123, 216, 176)");

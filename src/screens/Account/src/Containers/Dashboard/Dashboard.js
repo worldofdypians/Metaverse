@@ -3216,7 +3216,7 @@ function Dashboard({
         onSubscribeSuccess(account);
 
         if (isonlink) {
-          handleFirstTask(account);
+          // handleFirstTask(account);
         }
       });
     } catch (error) {

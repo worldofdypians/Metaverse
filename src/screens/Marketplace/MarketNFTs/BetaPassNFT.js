@@ -640,7 +640,7 @@ const BetaPassNFT = ({
         },
       }).then(() => {
         setalreadyRegistered(true);
-        handleFirstTask(coinbase);
+        // handleFirstTask(coinbase);
       });
     } catch (error) {
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
@@ -3570,7 +3570,7 @@ const BetaPassNFT = ({
                               onSuccessLogin={() => {
                                 setalreadyRegistered(true);
                                 refetchPlayer();
-                                handleFirstTask(coinbase);
+                                // handleFirstTask(coinbase);
                               }}
                               mintTitle={selectedMint.cardTitle}
                               chainId={chainId}
