@@ -778,7 +778,7 @@ const GenesisLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
       style={{ alignSelf: "baseline", minWidth: "100%", maxWidth: "100%" }}
     >
-          <div className="leaderboard-item d-flex flex-column gap-2 p-0">
+          <div className="leaderboard-item d-flex flex-column gap-2 p-0 w-100">
             <div
               className={`d-flex w-100 position-relative  
                    justify-content-between p-2
