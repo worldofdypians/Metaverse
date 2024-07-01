@@ -35,13 +35,10 @@ import dogeTreasureHuntPopup from "../../components/TimepieceMint/assets/dogeTre
 import skalePopup from "../../components/TimepieceMint/assets/skalePopup.webp";
 
 import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreasureHunt.webp";
-import corePopupBg from "../../components/TimepieceMint/assets/corePopupBg.webp";
-import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
+import corePopupBg from "../../components/TimepieceMint/assets/corePopupImage.webp";
+import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupImage.webp";
 import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
-import bnbPhase4 from './WodBuilders/assets/bnbPhase4.png'
-
-
-
+import bnbPhase4 from "./WodBuilders/assets/bnbPhase4.png";
 
 import confluxTreasureHunt from "../../components/TimepieceMint/assets/confluxTreasureHunt.png";
 import LiveEvents from "./LiveEvents/LiveEvents";
@@ -53,7 +50,9 @@ const Home = ({
   coinbase,
   ethTokenData,
   dyptokenDatabnb,
-  idyptokenDatabnb,dyptokenDatabnb_old
+  allStarData,
+  idyptokenDatabnb,
+  dyptokenDatabnb_old,
 }) => {
   const avaxPopupInfo = {
     title: "Avalanche",
@@ -99,27 +98,25 @@ const Home = ({
     state: "skale",
   };
 
-
-
   const treasureHuntPopupInfo = {
     title: "Treasure Hunt",
     img: dypiusPopup,
     state: "dypius",
   };
-  const dypiusPopupInfo = {
-    title: "Treasure Hunt",
-    img: dypiusPopup,
-    state: "dyp",
+  const victionPopupInfo = {
+    title: "Viction",
+    img: victionPopupBg,
+    state: "viction",
   };
 
   const corePopupInfo = {
-    title: "MULTIVERSX",
-    img: bnbPhase4,
-    state: "multiversx",
+    title: "CORE",
+    img: corePopupBg,
+    state: "core",
   };
 
   const [activePopup, setActivePopup] = useState(false);
-
+  const [popupInfo, setPopupInfo] = useState({});
   const html = document.querySelector("html");
   const hamburger = document.querySelector("#popup");
 
@@ -132,14 +129,24 @@ const Home = ({
   // useEffect(() => {
   //   if (activePopup) {
   //     html.classList.add("hidescroll");
-  //   } else { 
+  //   } else {
   //     html.classList.remove("hidescroll");
   //   }
   // }, [activePopup]);
 
+  const randomPopup = () => {
+    const randomNumber = Math.floor(Math.random() * 2) + 1;
+    if (randomNumber === 1) {
+      setPopupInfo(corePopupInfo);
+    } else {
+      setPopupInfo(victionPopupInfo);
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "World of Dypians";
+    randomPopup();
   }, []);
 
   return (
@@ -148,17 +155,18 @@ const Home = ({
         id="popup"
         onOutsideClick={() => setActivePopup(false)}
       >
-        {/* <MintPopup
+        <MintPopup
           active={activePopup}
           data={corePopupInfo}
           onClose={() => setActivePopup(false)}
-        /> */}
+        />
       </OutsideClickHandler>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex flex-column home-main-wrapper">
           <VideoWrapper
             handleRegister={handleRegister}
             handleDownload={handleDownload}
+            allStarData={allStarData}
           />
           <LiveEvents />
           <WodBuilders />

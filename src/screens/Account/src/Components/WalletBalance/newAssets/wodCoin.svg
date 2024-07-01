@@ -1,0 +1,12 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 1261158564">
+<circle id="Ellipse 1434" cx="12" cy="12" r="12" fill="url(#paint0_linear_351_5357)"/>
+<path id="WOD" d="M12.3947 4.39438H9.98973H7.4375V19.9437H15.3396V17.389H17.9164V11.0022L12.3947 4.39438ZM15.3396 17.3644H10.0143V6.97365H11.1922L15.3396 11.9357V17.3644Z" fill="#F7F7FC"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_351_5357" x1="12" y1="0" x2="12" y2="24" gradientUnits="userSpaceOnUse">
+<stop stop-color="#5690FF"/>
+<stop offset="1" stop-color="#8C56FF"/>
+</linearGradient>
+</defs>
+</svg>

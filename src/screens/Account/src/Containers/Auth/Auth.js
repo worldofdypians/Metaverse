@@ -112,7 +112,7 @@ function Auth({ isConnected, coinbase }) {
           {value === 0 && (
             <Login
               onSuccessLogin={() => {
-                handleFirstTask(coinbase);
+                // handleFirstTask(coinbase);
               }}
             />
           )}
