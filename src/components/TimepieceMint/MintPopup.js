@@ -31,7 +31,7 @@ const MintPopup = ({ active, onClose, data }) => {
       } p-4 d-flex flex-column align-items-center justify-content-center`}
     >
       <div
-        className="w-100 d-flex align-items-center justify-content-end"
+        className="w-100 d-flex align-items-center mb-3 justify-content-end"
         style={{ height: 1 }}
       >
         <img

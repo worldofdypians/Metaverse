@@ -22,6 +22,7 @@ import coreIcon from "./assets/coreIcon2.svg";
 import skaleActive from "./assets/skaleActive.svg";
 import yellowArrow from "./assets/yellowArrow.svg";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
+import inactiveUserPfp from "./assets/inactiveUserPfp.png";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -58,289 +59,14 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 
 const GlobalLeaderboard = ({
   username,
-  userId,
-  dypBalancebnb,
-  address,
-  genesisData,
-  previousgenesisData,
-  previousGenesisVersion,
   screen,
   allStarData,
+  availableTime,
+  userDataStar,
 }) => {
-  const playerData = [
-    {
-      position: "1",
-      displayName: "DarkSliffer",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
-    },
-    {
-      position: "2",
-      displayName: "DarkSliffer",
-      reward: "$500",
-      premium: false,
-      statValue: "7757920",
-    },
-    {
-      position: "3",
-      displayName: "DarkSliffer",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
-    },
-    {
-      position: "4",
-      displayName: "DarkSliffer",
-      reward: "500",
-      statValue: "7757920",
-      premium: false,
-    },
-
-    {
-      position: "5",
-      displayName: "DarkSliffer",
-      reward: "50",
-      premium: false,
-      statValue: "7757920",
-    },
-    {
-      position: "6",
-      displayName: "DarkSliffer",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
-    },
-    {
-      position: "7",
-      displayName: "DarkSliffer",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
-    },
-    {
-      position: "8",
-      displayName: "DarkSliffer",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
-    },
-    {
-      position: "9",
-      displayName: "DarkSliffer",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
-    },
-    {
-      position: "10",
-      displayName: "DarkSliffer",
-      reward: "---",
-      premium: false,
-      statValue: "7757920",
-    },
-  ];
   const [tooltip, setTooltip] = useState(false);
-  const sliderRef = useRef(null);
+
   const label = { inputProps: { "aria-label": "Switch demo" } };
-  const placeholderplayerData = [
-    {
-      position: 0,
-      displayName: "---",
-      reward: "---",
-      premium: false,
-      statValue: "---",
-    },
-    {
-      position: 1,
-      displayName: "---",
-      reward: "---",
-      premium: false,
-      statValue: "---",
-    },
-    {
-      position: 2,
-      displayName: "---",
-      reward: "---",
-      premium: false,
-      statValue: "---",
-    },
-    {
-      position: 3,
-      displayName: "---",
-      reward: "---",
-      statValue: "---",
-      premium: false,
-    },
-
-    {
-      position: 4,
-      displayName: "---",
-      reward: "---",
-      premium: false,
-      statValue: "---",
-    },
-    {
-      position: 5,
-      displayName: "---",
-      reward: "---",
-      premium: false,
-      statValue: "---",
-    },
-    {
-      position: 6,
-      displayName: "---",
-      reward: "---",
-      premium: false,
-      statValue: "---",
-    },
-    {
-      position: 7,
-      displayName: "---",
-      reward: "---",
-      premium: false,
-      statValue: "---",
-    },
-    {
-      position: 8,
-      displayName: "---",
-      reward: "---",
-      premium: false,
-      statValue: "---",
-    },
-    {
-      position: 9,
-      displayName: "---",
-      reward: "---",
-      premium: false,
-      statValue: "---",
-    },
-  ];
-
-  const dailyPrizes = ["10", "8", "5", "5", "0", "0", "0", "0", "0", "0"];
-  const previous_dailyPrizes = [
-    "20",
-    "10",
-    "8",
-    "5",
-    "0",
-    "0",
-    "0",
-    "0",
-    "0",
-    "0",
-  ];
-
-  const dailyPrizesGolden = ["10", "8", "5", "5", "5", "5", "5", "5", "5", "5"];
-
-  const prizeSkale = ["25", "15", "10", "8", "5", "5", "5", "5", "5", "5"];
-
-  const previous_dailyPrizesGolden = [
-    "20",
-    "10",
-    "8",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-  ];
-
-  const weeklyPrizes = ["25", "15", "10", "8", "0", "0", "0", "0", "0", "0"];
-  const weeklyPrizesGolden = [
-    "25",
-    "15",
-    "10",
-    "8",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-  ];
-
-  const previous_weeklyPrizes = [
-    "40",
-    "20",
-    "15",
-    "10",
-    "0",
-    "0",
-    "0",
-    "0",
-    "0",
-    "0",
-  ];
-
-  const previous_weeklyPrizesGolden = [
-    "40",
-    "20",
-    "15",
-    "10",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-    "5",
-  ];
-
-  const monthlyPrizes = [
-    "250",
-    "150",
-    "100",
-    "50",
-    "50",
-    "20",
-    "20",
-    "10",
-    "10",
-    "10",
-  ];
-
-  const previous_monthlyPrizes = [
-    "500",
-    "250",
-    "150",
-    "50",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
-  ];
-
-  const monthlyPrizesGolden = [
-    "250",
-    "150",
-    "100",
-    "50",
-    "50",
-    "20",
-    "20",
-    "10",
-    "10",
-    "10",
-  ];
-
-  const previous_monthlyPrizesGolden = [
-    "500",
-    "250",
-    "150",
-    "50",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
-    "25",
-  ];
 
   const dummyPrizes = [
     "200",
@@ -385,15 +111,19 @@ const GlobalLeaderboard = ({
   // }, [inactiveBoard]);
 
   useEffect(() => {
-    if (countdown === null || countdown === undefined || countdown === "0") {
+    if (
+      availableTime === null ||
+      availableTime === undefined ||
+      availableTime == "0"
+    ) {
       setisActive(false);
     } else setisActive(true);
-  }, [countdown]);
+  }, [availableTime]);
 
   useEffect(() => {
     setOptionText2("bnb");
   }, []);
-
+  console.log(allStarData, userDataStar);
   return (
     <div
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
@@ -436,12 +166,13 @@ const GlobalLeaderboard = ({
           </div>
         </div>
       )}
-      {countdown !== "0" && countdown && (
+      {availableTime !== "0" && availableTime && (
         <Countdown
-          date={Number(countdown) * 1000}
+          date={availableTime}
           renderer={renderer}
           onComplete={() => {
             setcountdown();
+            setisActive(false);
           }}
         />
       )}
@@ -473,22 +204,21 @@ const GlobalLeaderboard = ({
                     feature for global competition and rewards.
                     <br />
                     <br />
-                    Participate in Daily Chain Leaderboards
-                    from BNB Chain, SKALE, Core, and Viction to earn STARS that
-                    will boost your global ranking.
+                    Participate in Daily Chain Leaderboards from BNB Chain,
+                    SKALE, Core, and Viction to earn STARS that will boost your
+                    global ranking.
                     <br />
                     <br />
-                    Premium Subscribers earn
-                    extra STARS from Daily Leaderboards, improving
-                    competitiveness and progression.
+                    Premium Subscribers earn extra STARS from Daily
+                    Leaderboards, improving competitiveness and progression.
                     <br />
                     <br />
-                    Golden Pass Bundle owners earn extra
-                    rewards based on their global leaderboard ranking.
+                    Golden Pass Bundle owners earn extra rewards based on their
+                    global leaderboard ranking.
                     <br />
                     <br />
-                    The leaderboard resets monthly, offering
-                    new chances to climb and show your skills.
+                    The leaderboard resets monthly, offering new chances to
+                    climb and show your skills.
                     <br />
                     <br />
                     <b>Leaderboard Update Time: Daily (00:00 UTC)</b>
@@ -583,14 +313,29 @@ const GlobalLeaderboard = ({
                         </div>
                       </td>
                       <td
-                        className="playerScore col-2 text-center font-montserrat"
+                        className={`playerScore col-2 text-center font-montserrat  ${
+                          username === item.displayName
+                            ? "goldenscore"
+                            : "playerReward"
+                        }`}
                         style={{ color: "#09F3D2" }}
                       >
                         ${getFormattedNumber(dummyPrizes[item.position], 0)}
                       </td>
                       <td
-                        className="playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2 w-100"
-                        style={{ color: "#09F3D2" }}
+                        className={`playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2 w-100 ${
+                          username === item.displayName && isactive === true
+                            ? "goldenscore"
+                            : "playerReward"
+                        }`}
+                        style={{
+                          color:
+                            (username === item.displayName &&
+                              isactive === true) ||
+                            username !== item.displayName
+                              ? "#09F3D2"
+                              : "gray",
+                        }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
                           +$
@@ -701,6 +446,48 @@ const GlobalLeaderboard = ({
           </table>
         </div>
       </div>
+
+      {screen === "dash" && allStarData && !allStarData.isactive
+        ? [allStarData.player_data].map((item, index) => {
+            return (
+              <div
+                className="total-stars-wrapper2 d-flex align-items-center gap-5 justify-content-between py-2 px-5"
+                key={index}
+              >
+                <div className="d-flex flex-column"> 
+                  <div className="playerName d-flex align-items-center font-montserrat">
+                    <img
+                      src={inactiveUserPfp}
+                      alt=""
+                      className="playerAvatar me-2"
+                    />
+                    <span>
+                      {" "}
+                      {item.displayName?.slice(0, 13)}
+                      {item.displayName?.length > 13 && "..."}
+                    </span>
+                  </div>
+                </div>
+                <div className="d-flex flex-column">
+                  <span className="total-stars-span">Collected Stars</span>
+                  <div className="playerScore d-flex  text-center font-montserrat">
+                    <div
+                      className="d-flex align-items-center justify-content-center gap-2"
+                      style={{ fontSize: 20 }}
+                    >
+                      <img
+                        src={star}
+                        alt=""
+                        style={{ width: 30, height: 30 }}
+                      />
+                      {getFormattedNumber(item.statValue, 0)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        : null}
 
       {screen === "dash" ? (
         <div className="optionsWrapper p-2">
