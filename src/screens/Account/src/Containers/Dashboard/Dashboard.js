@@ -2100,7 +2100,7 @@ function Dashboard({
       StartPosition: 0,
       MaxResultsCount: 10,
     };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data); 
     setPrevVersionStar(parseInt(result.data.data.version));
     setStarRecords(result.data.data.leaderboard);
     fillRecordsStar(result.data.data.leaderboard);
@@ -2109,6 +2109,33 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerStar(true);
+      const userPosition = testArray[0].position;
+      setuserCollectedStars(testArray[0].statValue);
+      setUserDataStar(...testArray);
+      if (goldenPassRemainingTime) {
+        setDataAmountStar(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(starPrizes[9]) + Number(starPrizesGolden[9])
+              : Number(starPrizes[userPosition]) +
+                Number(starPrizesGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setDataAmountStar(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(starPrizes[9])
+              : Number(starPrizes[userPosition])
+            : 0
+        );
+      }
+
+      
     } else if (testArray.length === 0) {
       setActivePlayerStar(false);
       fetchDailyRecordsAroundPlayerStar(result.data.data.leaderboard);
@@ -2439,7 +2466,7 @@ function Dashboard({
     fetchMonthlyRecordsSkale();
 
     fetchRecordsStar();
-  }, [username, count, userId]);
+  }, [username, count, userId,goldenPassRemainingTime]);
 
   useEffect(() => {
     fetchGenesisPreviousWinners();
@@ -6162,6 +6189,9 @@ function Dashboard({
                             previousGenesisVersion={previousGenesisVersion}
                             allStarData={allStarData}
                             screen={"dash"}
+                            availableTime={goldenPassRemainingTime}
+                            username={data?.getPlayer?.displayName}
+                            userId={data?.getPlayer?.playerId}
                           />
                         </div>
                       </OutsideClickHandler>

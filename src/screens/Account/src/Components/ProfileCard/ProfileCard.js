@@ -134,8 +134,7 @@ const ProfileCard = ({
   setRankData,
   getRankData,userDataStar, userDataPosition
 }) => {
-  let id = Math.random().toString(36);
-
+  let id = Math.random().toString(36); 
   const windowSize = useWindowSize();
   const [exclusivePremium, setExclusivePremium] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -1022,7 +1021,7 @@ const ProfileCard = ({
                                         Rank
                                       </span>
                                       <h6 className="total-stars-amount mb-0">
-                                        #{userDataPosition}
+                                        #{Number(userDataPosition)+1}
                                       </h6>
                                     </div>
                                     <div className="d-flex flex-column align-items-end">
@@ -1135,14 +1134,14 @@ const ProfileCard = ({
                                   </span>
                                   <span className="rank-current-score">
                                     {userRankName?.name === "rookie"
-                                      ? "12M"
+                                      ? "22M"
                                       : userRankName?.name === "underdog"
-                                      ? "24M"
+                                      ? "35M"
                                       : userRankName?.name === "champion"
-                                      ? "40M"
+                                      ? "60M"
                                       : userRankName?.name === "unstoppable"
                                       ? ""
-                                      : "6M"}
+                                      : "10M"}
                                   </span>
                                 </div>
                                 {rankData?.multiplier === "no" && !isPremium ? (
