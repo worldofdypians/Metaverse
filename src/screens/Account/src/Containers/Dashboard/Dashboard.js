@@ -2078,7 +2078,7 @@ function Dashboard({
   const fetchPreviousWinnersStar = async () => {
     if (prevVersionStar != 0) {
       const data = {
-        StatisticName: "LeaderboardGlobalStar",
+        StatisticName: "GlobalStarMonthlyLeaderboard",
         StartPosition: 0,
         MaxResultsCount: 10,
         Version: prevVersionStar - 1,
@@ -2096,7 +2096,7 @@ function Dashboard({
   };
   const fetchRecordsStar = async () => {
     const data = {
-      StatisticName: "LeaderboardGlobalStar",
+      StatisticName: "GlobalStarMonthlyLeaderboard",
       StartPosition: 0,
       MaxResultsCount: 10,
     };
@@ -2116,7 +2116,7 @@ function Dashboard({
   };
   const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
     const data = {
-      StatisticName: "LeaderboardGlobalStar",
+      StatisticName: "GlobalStarMonthlyLeaderboard",
       MaxResultsCount: 6,
       PlayerId: userId,
     };
