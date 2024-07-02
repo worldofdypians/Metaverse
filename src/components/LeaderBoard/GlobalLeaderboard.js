@@ -22,6 +22,7 @@ import coreIcon from "./assets/coreIcon2.svg";
 import skaleActive from "./assets/skaleActive.svg";
 import yellowArrow from "./assets/yellowArrow.svg";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
+import inactiveUserPfp from "./assets/inactiveUserPfp.png";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -58,15 +59,10 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 
 const GlobalLeaderboard = ({
   username,
-  userId,
-  dypBalancebnb,
-  address,
-  genesisData,
-  previousgenesisData,
-  previousGenesisVersion,
   screen,
   allStarData,
   availableTime,
+  userDataStar,
 }) => {
   const [tooltip, setTooltip] = useState(false);
 
@@ -114,7 +110,6 @@ const GlobalLeaderboard = ({
   //   handleOption(optionText);
   // }, [inactiveBoard]);
 
-  
   useEffect(() => {
     if (
       availableTime === null ||
@@ -128,7 +123,7 @@ const GlobalLeaderboard = ({
   useEffect(() => {
     setOptionText2("bnb");
   }, []);
-
+  console.log(allStarData, userDataStar);
   return (
     <div
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
@@ -329,8 +324,7 @@ const GlobalLeaderboard = ({
                       </td>
                       <td
                         className={`playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2 w-100 ${
-                          username === item.displayName &&
-                          isactive === true
+                          username === item.displayName && isactive === true
                             ? "goldenscore"
                             : "playerReward"
                         }`}
@@ -452,6 +446,48 @@ const GlobalLeaderboard = ({
           </table>
         </div>
       </div>
+
+      {screen === "dash" && allStarData && !allStarData.isactive
+        ? [allStarData.player_data].map((item, index) => {
+            return (
+              <div
+                className="total-stars-wrapper2 d-flex align-items-center gap-5 justify-content-between py-2 px-5"
+                key={index}
+              >
+                <div className="d-flex flex-column"> 
+                  <div className="playerName d-flex align-items-center font-montserrat">
+                    <img
+                      src={inactiveUserPfp}
+                      alt=""
+                      className="playerAvatar me-2"
+                    />
+                    <span>
+                      {" "}
+                      {item.displayName?.slice(0, 13)}
+                      {item.displayName?.length > 13 && "..."}
+                    </span>
+                  </div>
+                </div>
+                <div className="d-flex flex-column">
+                  <span className="total-stars-span">Collected Stars</span>
+                  <div className="playerScore d-flex  text-center font-montserrat">
+                    <div
+                      className="d-flex align-items-center justify-content-center gap-2"
+                      style={{ fontSize: 20 }}
+                    >
+                      <img
+                        src={star}
+                        alt=""
+                        style={{ width: 30, height: 30 }}
+                      />
+                      {getFormattedNumber(item.statValue, 0)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        : null}
 
       {screen === "dash" ? (
         <div className="optionsWrapper p-2">

@@ -1016,14 +1016,14 @@ const ProfileCard = ({
                                     alt=""
                                   />
                                   <div className="d-flex align-items-center gap-4">
-                                    <div className="d-flex flex-column align-items-end">
+                                    {/* <div className="d-flex flex-column align-items-end">
                                       <span className="total-stars-span">
                                         Rank
                                       </span>
                                       <h6 className="total-stars-amount mb-0">
                                         #{Number(userDataPosition)+1}
                                       </h6>
-                                    </div>
+                                    </div> */}
                                     <div className="d-flex flex-column align-items-end">
                                       <span className="total-stars-span">
                                         Collected Stars

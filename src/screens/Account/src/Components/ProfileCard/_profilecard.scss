@@ -918,6 +918,14 @@ border-radius: 12px;
 background-size: 100% 100%;
 }
 
+.total-stars-wrapper2 {
+  background-image: url('./assets/totalStarsBg.svg');
+  border-radius: 12px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .total-stars-span{
   color: #FFEFCA;
   font-size: 10px;

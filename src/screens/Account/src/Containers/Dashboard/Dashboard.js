@@ -6192,6 +6192,7 @@ function Dashboard({
                             availableTime={goldenPassRemainingTime}
                             username={data?.getPlayer?.displayName}
                             userId={data?.getPlayer?.playerId}
+                            userDataStar={userDataStar}
                           />
                         </div>
                       </OutsideClickHandler>
