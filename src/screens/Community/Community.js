@@ -934,7 +934,7 @@ const Community = ({socials}) => {
                 ) : (
                   <div className="community-events-grid mt-5  w-100 p-3">
                     {dummyBetaPassData2
-                      .slice(1, dummyBetaPassData2.length)
+                      .slice(2, dummyBetaPassData2.length)
                       .map((item, index) => (
                         <ExpiredProfileEvent
                           onOpenEvent={() => {
