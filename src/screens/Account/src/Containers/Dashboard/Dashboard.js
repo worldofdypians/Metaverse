@@ -6242,11 +6242,12 @@ function Dashboard({
                       </OutsideClickHandler>
                     )}
 
-                    {(getPremiumPopup || adClicked === "premium") && (
+                    {(getPremiumPopup || adClicked === "premium" || hashValue === "#premium") && (
                       <OutsideClickHandler
                         onOutsideClick={() => {
                           setgetPremiumPopup(false);
                           setadClicked("");
+                          window.location.hash = "";
                         }}
                       >
                         <div
@@ -6268,6 +6269,7 @@ function Dashboard({
                                 onClick={() => {
                                   setgetPremiumPopup(false);
                                   setadClicked("");
+                                  window.location.hash = "";
                                 }}
                                 alt=""
                                 style={{ cursor: "pointer" }}
