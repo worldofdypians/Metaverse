@@ -790,7 +790,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -903,7 +903,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -1017,7 +1017,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -1145,7 +1145,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -1260,7 +1260,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -1376,7 +1376,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -1490,7 +1490,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -1544,7 +1544,7 @@ const NewDailyBonus = ({
     filterCawsNfts();
     filterLandNfts();
   }, [listedNFTS]);
-
+ 
   useEffect(() => {
     if (chain === "bnb") {
       if (email && coinbase && address) {
