@@ -85,6 +85,7 @@ import Tokenomics from "./screens/About/Tokenomics/Tokenomics.js";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 import About from "./screens/About/About.js";
+import Game from "./screens/Game/Game.js";
 
 function App() {
   const CHAINLIST = {
@@ -3642,6 +3643,7 @@ function App() {
           />
           <Route exact path="/buy" element={<Buy />} />
           <Route exact path="/governance" element={<Governance />} />
+          <Route exact path="/game" element={<Game />} />
           <Route exact path="/game-updates" element={<GameUpdates />} />
           {/* <Route exact path="/brand" element={<Brand />} /> */}
           {/* <Route exact path="/partners" element={<Partners />} />
