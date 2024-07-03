@@ -49,11 +49,11 @@ const ResetPasswordTest = () => {
   },[])
 
   return (
-    <div>
+    <div className="container-lg">
       {" "}
-      <p id="device">Redirect</p>
+      <p id="device" className="text-white">Redirect</p>
       {/* <a id="myLink" href="#"> */}
-        <h1>Reset your password</h1>
+        <h1 className="text-white">Reset your password</h1>
       {/* </a> */}
     </div>
   );
