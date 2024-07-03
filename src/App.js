@@ -3291,7 +3291,7 @@ function App() {
 
           <Route
             exact
-            path="/reset-password-test"
+            path="/reset-password"
             element={<ResetPasswordTest />}
           />
 
