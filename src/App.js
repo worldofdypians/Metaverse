@@ -75,7 +75,7 @@ import Community from "./screens/Community/Community.js";
 import OurTeam from "./screens/OurTeam/OurTeam.js";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
-import NewEvents from "./screens/Marketplace/NewEvents.js";
+import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 
 function App() {
   const CHAINLIST = {
@@ -3288,6 +3288,13 @@ function App() {
               />
             }
           />
+
+          <Route
+            exact
+            path="/reset-password"
+            element={<ResetPasswordTest />}
+          />
+
           <Route
             exact
             path="/marketplace/beta-pass/bnb"
