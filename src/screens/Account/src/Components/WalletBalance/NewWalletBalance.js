@@ -299,6 +299,7 @@ const NewWalletBalance = ({
   multiversPoints,
   multiversEarnToken,
   multiversEarnUsd,
+  kittyDashRecords,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -314,7 +315,7 @@ const NewWalletBalance = ({
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
- 
+
   const dummySkale = {
     title: "SKALE",
     chain: "SKALE Nebula Hub",
@@ -346,16 +347,14 @@ const NewWalletBalance = ({
     eventDate: "Jul 01, 2024",
     date: "Jul 01, 2024",
 
-
     id: "event12",
     eventType: "Explore & Mine",
     eventDuration: coreLastDay,
     minRewards: "0.5",
-        maxRewards: "20",
+    maxRewards: "20",
     minPoints: "5,000",
     maxPoints: "50,000",
-    learnMore:
-      "",
+    learnMore: "",
 
     chain: "CORE Chain",
     linkState: "core",
@@ -412,7 +411,7 @@ const NewWalletBalance = ({
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
-       {
+    {
       title: "CORE",
       logo: coreLogo,
       eventStatus: "Live",
@@ -440,12 +439,11 @@ const NewWalletBalance = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore:
-          "",
+        learnMore: "",
         eventDate: "Jul 01, 2024",
       },
     },
-     {
+    {
       title: "VICTION",
       logo: victionLogo,
       eventStatus: "Live",
@@ -472,8 +470,7 @@ const NewWalletBalance = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore:
-          "",
+        learnMore: "",
         eventDate: "Jul 01, 2024",
       },
     },
@@ -1391,6 +1388,7 @@ const NewWalletBalance = ({
   }, [adClicked]);
 
   const recaptchaRef = useRef(null);
+  const kittyDashRewards = [30, 20, 10, 10, 5, 5, 5, 5, 5, 5];
 
   return (
     <>
@@ -1868,7 +1866,8 @@ const NewWalletBalance = ({
                           Number(monthlyDataAmountCore) +
                           // Number(dailyDataAmountSkale) +
                           Number(weeklyDataAmountSkale) +
-                          Number(monthlyDataAmountSkale) +
+                          (kittyDashRecords[0] ? kittyDashRecords[0]?.position+1 > 10 ? 0 : kittyDashRewards[kittyDashRecords[0]?.position] : 0) +
+                          +Number(monthlyDataAmountSkale) +
                           // Number(dailyDataAmountViction) +
                           Number(weeklyDataAmountViction) +
                           Number(monthlyDataAmountViction) +
@@ -2231,7 +2230,7 @@ const NewWalletBalance = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              {dummyEvent.status === "Live" && dummyEvent.learnMore!=='' && (
+              {dummyEvent.status === "Live" && dummyEvent.learnMore !== "" && (
                 <NavLink
                   to={dummyEvent.learnMore}
                   className="events-page-details d-flex align-items-center gap-2"
