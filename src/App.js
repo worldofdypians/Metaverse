@@ -423,7 +423,7 @@ function App() {
     },
   ];
 
-  const [allStarData, setAllStarData] = useState({})
+  const [allStarData, setAllStarData] = useState({});
   const [starRecords, setStarRecords] = useState([]);
   const [activePlayerStar, setActivePlayerStar] = useState([]);
   const [userDataStar, setUserDataStar] = useState({});
@@ -498,7 +498,7 @@ function App() {
         (item) => item.displayName === username
       );
       if (testArray.length > 0) {
-      const userPosition = testArray[0].position;
+        const userPosition = testArray[0].position;
 
         setDataAmountStar(
           testArray[0].statValue !== 0
@@ -528,35 +528,25 @@ function App() {
       }
     }
   };
-  
+
   useEffect(() => {
     fetchRecordsStar();
-  }, [username, userId])
-  
+  }, [username, userId]);
+
   useEffect(() => {
     fetchPreviousWinnersStar();
-  }, [prevVersionStar])
-  
+  }, [prevVersionStar]);
+
   useEffect(() => {
-    setAllStarData(
-      {
-       
-        rewards: starPrizes,
-        premium_rewards: starPrizesGolden,
-        activeData: starRecords,
-        previousData: prevDataStar,
-        player_data: userDataStar,
-        is_active: activePlayerStar, //change when apis are ready
-      },
-
-    );
-  }, [
-    starRecords,
-    prevDataStar,
-    userDataStar,
-    activePlayerStar,
-  ]);
-
+    setAllStarData({
+      rewards: starPrizes,
+      premium_rewards: starPrizesGolden,
+      activeData: starRecords,
+      previousData: prevDataStar,
+      player_data: userDataStar,
+      is_active: activePlayerStar, //change when apis are ready
+    });
+  }, [starRecords, prevDataStar, userDataStar, activePlayerStar]);
 
   const html = document.querySelector("html");
 
@@ -792,8 +782,6 @@ function App() {
       setShowWalletModalRegister(true);
     }
   };
-
-
 
   const handleConnection = async () => {
     try {
@@ -1586,7 +1574,7 @@ function App() {
       !isConnected
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
-    } 
+    }
   }, [data, coinbase, isConnected, count55]);
 
   const handleCoreNftMint = async () => {
@@ -2389,7 +2377,6 @@ function App() {
     let subscribedPlatformTokenAmountBNB2;
     let subscribedPlatformTokenAmountBNB1;
 
-
     let subscribedPlatformTokenAmountAvax;
     let subscribedPlatformTokenAmountBase;
     let subscribedPlatformTokenAmountSkale;
@@ -2426,7 +2413,6 @@ function App() {
     const bnbsubscribeAddress2 = window.config.subscription_newbnb2_address;
     const bnbsubscribeAddress1 = window.config.subscription_newbnb1_address;
 
-
     const avaxsubscribeAddress = window.config.subscription_newavax_address;
     const skalesubscribeAddress = window.config.subscription_skale_address;
     const coresubscribeAddress = window.config.subscription_core_address;
@@ -2451,12 +2437,7 @@ function App() {
       bnbsubscribeAddress2
     );
 
-    const bnbcontract1 = new web3bnb.eth.Contract(
-      BnbABI,
-      bnbsubscribeAddress1
-    );
-
-    
+    const bnbcontract1 = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress1);
 
     const avaxcontract = new web3avax.eth.Contract(
       AvaxABI,
@@ -2518,7 +2499,7 @@ function App() {
           return 0;
         });
 
-        subscribedPlatformTokenAmountBNB1 = await bnbcontract1.methods
+      subscribedPlatformTokenAmountBNB1 = await bnbcontract1.methods
         .subscriptionPlatformTokenAmount(addr)
         .call()
         .catch((e) => {
@@ -2565,7 +2546,7 @@ function App() {
       //     console.log(e);
       //     return 0;
       //   });
- 
+
       if (
         subscribedPlatformTokenAmountCfx == "0" &&
         subscribedPlatformTokenAmountETH == "0" &&
@@ -2575,8 +2556,8 @@ function App() {
         subscribedPlatformTokenAmountAvax == "0" &&
         subscribedPlatformTokenAmountSkale == "0" &&
         subscribedPlatformTokenAmountCore == "0" &&
-        subscribedPlatformTokenAmountViction == "0"
-         &&subscribedPlatformTokenAmountBNB1 == "0" &&
+        subscribedPlatformTokenAmountViction == "0" &&
+        subscribedPlatformTokenAmountBNB1 == "0" &&
         result === false
       ) {
         setIsPremium(false);
@@ -2590,8 +2571,8 @@ function App() {
         subscribedPlatformTokenAmountAvax != "0" ||
         subscribedPlatformTokenAmountSkale != "0" ||
         subscribedPlatformTokenAmountCore != "0" ||
-        subscribedPlatformTokenAmountViction != "0" 
-        || subscribedPlatformTokenAmountBNB1 != "0" ||
+        subscribedPlatformTokenAmountViction != "0" ||
+        subscribedPlatformTokenAmountBNB1 != "0" ||
         result === true
       ) {
         setIsPremium(true);
@@ -2982,7 +2963,9 @@ function App() {
           handleSwitchChainGateWallet={handleSwitchNetwork}
           handleOpenDomains={() => setDomainPopup(true)}
           domainName={domainName}
-          onLogout={()=>{setCount55(count55+1)}}
+          onLogout={() => {
+            setCount55(count55 + 1);
+          }}
           onSigninClick={checkData}
         />
         <MobileNavbar

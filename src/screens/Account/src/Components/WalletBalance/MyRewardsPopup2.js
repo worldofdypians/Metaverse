@@ -558,6 +558,9 @@ const MyRewardsPopupNew = ({
       behavior: "smooth",
     });
   };
+
+  const kittyDashRewards = [30, 20, 10, 10, 5, 5, 5, 5, 5, 5];
+
   return (
     <div className="d-grid rewardstable-wrapper2 gap-2 mt-3 px-1">
       <div className="total-earnings-purple-wrapper p-2">
@@ -680,6 +683,11 @@ const MyRewardsPopupNew = ({
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd) +
+                      (kittyDashRecords[0]
+                        ? kittyDashRecords[0]?.position + 1 > 10
+                          ? 0
+                          : kittyDashRewards[kittyDashRecords[0]?.position]
+                        : 0) +
                       // Number(dailyplayerData) +
                       // Number(dailyDataAmountCore) +
                       Number(weeklyDataAmountCore) +
@@ -864,9 +872,14 @@ const MyRewardsPopupNew = ({
                   )
                 : getFormattedNumber(
                     // Number(dailyplayerData) +
-                      // Number(dailyDataAmountCore) +
-                      Number(weeklyDataAmountCore) +
-                      Number(monthlyDataAmountCore) +
+                    // Number(dailyDataAmountCore) +
+                    Number(weeklyDataAmountCore) +
+                      (kittyDashRecords[0]
+                        ? kittyDashRecords[0]?.position + 1 > 10
+                          ? 0
+                          : kittyDashRewards[kittyDashRecords[0]?.position]
+                        : 0) +
+                      +Number(monthlyDataAmountCore) +
                       // Number(dailyDataAmountSkale) +
                       Number(weeklyDataAmountSkale) +
                       Number(monthlyDataAmountSkale) +
@@ -1193,8 +1206,7 @@ const MyRewardsPopupNew = ({
                     ? getFormattedNumber(leaderboardTotalData, 2)
                     : getFormattedNumber(
                         // Number(dailyplayerData) +
-                          Number(weeklyplayerData) +
-                          Number(userRank2),
+                        Number(weeklyplayerData) + Number(userRank2),
                         2
                       )}
                 </span>
@@ -1207,7 +1219,7 @@ const MyRewardsPopupNew = ({
                     ? getFormattedNumber(leaderboardSkaleTotalData, 2)
                     : getFormattedNumber(
                         // Number(dailyDataAmountSkale) +
-                          Number(weeklyDataAmountSkale) +
+                        Number(weeklyDataAmountSkale) +
                           Number(monthlyDataAmountSkale),
                         2
                       )}
@@ -1221,7 +1233,7 @@ const MyRewardsPopupNew = ({
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(
                         // Number(dailyDataAmountCore) +
-                          Number(weeklyDataAmountCore) +
+                        Number(weeklyDataAmountCore) +
                           Number(monthlyDataAmountCore),
                         2
                       )}
@@ -1257,7 +1269,7 @@ const MyRewardsPopupNew = ({
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(
                         // Number(dailyDataAmountViction) +
-                          Number(weeklyDataAmountViction) +
+                        Number(weeklyDataAmountViction) +
                           Number(monthlyDataAmountViction),
                         2
                       )}
@@ -1267,8 +1279,15 @@ const MyRewardsPopupNew = ({
                 <span className="item-name-left">Kitty Dash</span>
                 <span className="item-name-right">
                   $
-                  {kittyDashRecords.position > 10
+                  {previousRewards
                     ? getFormattedNumber(0, 2)
+                    : kittyDashRecords[0]
+                    ? kittyDashRecords[0]?.position + 1 > 10
+                      ? getFormattedNumber(0, 2)
+                      : getFormattedNumber(
+                          kittyDashRewards[kittyDashRecords[0]?.position],
+                          2
+                        )
                     : getFormattedNumber(0, 2)}
                 </span>
               </div>

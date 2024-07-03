@@ -5878,6 +5878,7 @@ function Dashboard({
                         claimedVictionPremiumChests={
                           claimedVictionPremiumChests
                         }
+                        kittyDashRecords={kittyDashRecords}
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
