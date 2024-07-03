@@ -59,7 +59,7 @@ const AmplifySection = () => {
     {
       title: "Unlock 20 Chests on Daily Bonus",
       free: false,
-      betaPass: true,
+      betaPass: false,
       premium: true,
     },
     {
@@ -112,7 +112,7 @@ const AmplifySection = () => {
             Amplify{" "}
             <mark className="font-montserrat explore-tag pe-2">Experience</mark>
           </h2>
-          <span className="classes-desc mb-5" style={{ width: "fit-content" }}>
+          <span className="classes-desc" style={{ width: "fit-content" }}>
             Enhance your gameplay with advanced features and exclusive content.
           </span>
         </div>
