@@ -4,6 +4,9 @@ max-height: 500px;
 position: relative;
 display: flex;
 align-items: center;
+@media screen and (max-width: 786px){
+    width: 100%
+}
 }
 
 .humans-bg{
@@ -35,6 +38,9 @@ align-items: center;
     line-height: normal;
     text-transform: uppercase;
     position: absolute;
+    @media screen and (max-width: 786px) {
+        font-size: 36px;
+    }
 }
 .aliens-class-text{
     -webkit-text-stroke:2px #F40031;
@@ -46,6 +52,9 @@ align-items: center;
     line-height: normal;
     text-transform: uppercase;
     position: absolute;
+    @media screen and (max-width: 786px) {
+        font-size: 36px;
+    }
 
 }
 
@@ -63,6 +72,9 @@ position: relative;
 display: flex;
 align-items: center;
 justify-content: end;
+@media screen and (max-width: 786px){
+    width: 100%
+}
 }
 
 .classes-desc{
@@ -153,7 +165,9 @@ line-height: 24px; /* 171.429% */
 }
 
 .game-table{
-
+@media screen and (max-width: 786px) {
+    min-width: 1000px;
+}
 }
 
 .game-table-header{
@@ -202,4 +216,11 @@ color: #EEEDFF !important;
 .amplify-table-wrapper{
     background-image: url(../../assets/gameAssets/amplifyTableBg.webp);
     background-size: 100% 100%;
+}
+
+.game-table-container{
+    @media screen and (max-width: 786px) {
+        overflow: scroll;
+
+    }
 }

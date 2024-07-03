@@ -16,21 +16,58 @@
   border-radius: 10px;
 
   .nav-anchor {
-    font-weight: 400;
+    font-weight: 600;
     font-size: 16px;
     line-height: 24px;
     color: #ffffff;
     text-decoration: none;
     text-transform: uppercase;
+    transition: all .25s;
   }
 
   .nav-anchor:hover {
-    text-decoration: underline !important;
+    color: #5690FF;
+
   }
 
   .activenavlink {
-    color: #7bd8b0;
-    text-decoration: underline !important;
+    color: #5690FF;
+  }
+}
+
+.marketplace-navbar-wrapper {
+  position: fixed;
+  margin: 0px auto;
+  left: 16px;
+  right: 16px;
+  max-width: 2500px;
+  top: 84px;
+  // left: 50%;
+  // transform: translate(-50%, 0);
+  // right: 0;
+  z-index: 7;
+  border-radius: 10px;
+border: 0.5px solid #525469;
+background: rgba(8, 11, 42, 0.90);
+backdrop-filter: blur(2px);
+
+  .nav-anchor {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all .25s;
+  }
+
+  .nav-anchor:hover {
+    color: #5690FF;
+
+  }
+
+  .activenavlink {
+    color: #5690FF;
   }
 }
 
@@ -507,11 +544,12 @@
 }
 
 .header-dropdown {
-  background: #252743;
-  border-radius: 10px;
+  border-radius: 0px 0px 10px 10px;
+  border: 0.5px solid #525469;
+  background: rgba(8, 11, 42, 0.80);  
   width: 200px;
   position: absolute;
-  top: 100%;
+  top: 190%;
   left: 0;
   visibility: hidden;
   opacity: 0;
@@ -524,7 +562,7 @@
 }
 
 .dropdown-nav {
-  font-weight: 400;
+  font-weight: 600;
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
@@ -534,12 +572,12 @@
 }
 
 .dropdown-nav:hover{
-  background: rgba(123, 216, 176, 0.3);
-  color: #7bd8b0 !important;
+  background: rgba(86, 144, 255, 0.10);
+  color: #5690FF !important;
 }
 .nav-active{
-  background: rgba(123, 216, 176, 0.3);
-  color: #7bd8b0 !important;
+  background: rgba(86, 144, 255, 0.10);
+  color: #5690FF !important;
 
 }
 
@@ -562,4 +600,11 @@ line-height: 24px;
 font-family: "Montserrat";
 color: #ffffff;
 text-decoration: none;
+}
+
+.header-divider{
+  height: 2px;
+  background: #8E97CD;
+  opacity: 0.5 !important
+
 }

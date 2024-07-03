@@ -86,7 +86,7 @@ const AmplifySection = () => {
     <>
       <div className="amplify-ways-wrapper d-flex align-items-center justify-content-center  py-4">
         <div className="custom-container">
-          <div className="row justify-content-center align-items-center">
+          <div className="row justify-content-center align-items-center gap-3 gap-lg-0 mx-3 mx-lg-0">
             <div className="col-12 col-lg-3">
               <h2 className="font-montserrat builders-title explorer-grid-title px-0">
                 Ways to amplify rewards
@@ -118,7 +118,7 @@ const AmplifySection = () => {
         </div>
       </div>
       <div className="container-fluid amplify-table-wrapper py-5 d-flex align-items-center justify-content-center">
-        <div className="custom-container d-flex flex-column w-100">
+        <div className="custom-container game-table-container d-flex flex-column mx-3 mx-lg-0 w-100">
           <table className="game-table">
             <thead>
               <tr>
