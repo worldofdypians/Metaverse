@@ -1,14 +1,14 @@
 import React from "react";
 import "./_governanceHero.scss";
 
-const GovernanceHero = () => {
+const GovernanceHero = ({onCreateProposal}) => {
   return (
     <div className="govhero-wrapper video-wrapper pb-5 position-relative d-flex align-items-center flex-column justify-content-end gap-5">
       <div className="custom-container  my-5 py-5">
         <div className="d-flex flex-column w-100 gap-3">
           <div className="col-lg-5">
             <div className="d-flex flex-column gap-3">
-              <h2 className="font-montserrat builders-title explorer-grid-title px-0">
+              <h2 className="font-montserrat builders-title text-start explorer-grid-title px-0">
                 Get involved and shape The World of Dypians future
               </h2>
               <span className="gov-desc font-montserrat">
@@ -17,7 +17,7 @@ const GovernanceHero = () => {
                 Dypians platform. Participate in the governance and make your
                 voice heard.
               </span>
-              <button className="stake-wod-btn px-4 py-2 auto-button">
+              <button className="stake-wod-btn px-4 py-2 auto-button" onClick={onCreateProposal}>
                 CREATE PROPOSAL
               </button>
             </div>

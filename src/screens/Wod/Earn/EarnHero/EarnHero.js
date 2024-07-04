@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import BetaEventCardHome from "../../../Marketplace/components/BetaEventCardHome";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 
-const EarnHero = ({onSelectFilter}) => {
+const EarnHero = ({ onSelectFilter }) => {
   const dypProducts = [
     {
       link: "/earn",
@@ -90,7 +90,7 @@ const EarnHero = ({onSelectFilter}) => {
           <div className="row mx-0 align-items-center justify-content-center gap-2 my-5">
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-center">
-                <h2 className="font-montserrat builders-title explorer-grid-title px-0 text-center">
+                <h2 className="font-montserrat explorer-grid-title px-0 text-center">
                   <mark className="font-montserrat explore-tag pe-2">
                     World of Dypians
                   </mark>
@@ -125,7 +125,7 @@ const EarnHero = ({onSelectFilter}) => {
             <div className="container-fluid py-4 buy-wod-bg">
               <div className="custom-container p-0">
                 <div className="d-flex flex-column flex-lg-row align-items-center gap-4">
-                  <div className="row w-100 mx-0 align-items-center justify-content-between">
+                  <div className="d-flex flex-column flex-lg-row flex-md-row gap-3 w-100 mx-0 align-items-center justify-content-between">
                     <div className="dropdown filters-dropdown">
                       <button
                         className="btn btn-secondary nft-dropdown w-100
@@ -146,7 +146,7 @@ const EarnHero = ({onSelectFilter}) => {
                           className="nft-dropdown-item"
                           onClick={() => {
                             setFilterTitle("All pools");
-                            onSelectFilter("All pools")
+                            onSelectFilter("All pools");
                           }}
                         >
                           <span>All pools</span>
@@ -155,8 +155,7 @@ const EarnHero = ({onSelectFilter}) => {
                           className="nft-dropdown-item"
                           onClick={() => {
                             setFilterTitle("Token");
-                            onSelectFilter("Token")
-
+                            onSelectFilter("Token");
                           }}
                         >
                           <span>Token</span>
@@ -165,8 +164,7 @@ const EarnHero = ({onSelectFilter}) => {
                           className="nft-dropdown-item"
                           onClick={() => {
                             setFilterTitle("NFT");
-                            onSelectFilter("NFT")
-
+                            onSelectFilter("NFT");
                           }}
                         >
                           <span>NFT</span>
@@ -175,8 +173,7 @@ const EarnHero = ({onSelectFilter}) => {
                           className="nft-dropdown-item"
                           onClick={() => {
                             setFilterTitle("Token + NFT");
-                            onSelectFilter("Token + NFT")
-
+                            onSelectFilter("Token + NFT");
                           }}
                         >
                           <span>Token + NFT</span>
