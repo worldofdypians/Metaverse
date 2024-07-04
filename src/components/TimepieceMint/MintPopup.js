@@ -7,7 +7,7 @@ import skaleTreasureHunt from "./assets/skaleTreasureHunt.png";
 import closePopup from "../LandPopup/closePopup.svg";
 import { Link, NavLink } from "react-router-dom";
 import whiteExplore from "../../screens/Account/src/Components/WalletBalance/assets/whiteExplore.svg";
-import viction from './assets/victionPopupImage.webp'
+import viction from "./assets/victionPopupImage.webp";
 import Slider from "react-slick";
 const MintPopup = ({ active, onClose, data }) => {
   var settings = {
@@ -20,7 +20,7 @@ const MintPopup = ({ active, onClose, data }) => {
     slidesToScroll: 1,
     initialSlide: 0,
     autoplay: true,
-    draggable: true
+    draggable: true,
   };
   const sliderRef = useRef(null);
 
@@ -85,7 +85,6 @@ const MintPopup = ({ active, onClose, data }) => {
         </>
       ) : data.title === "CORE" ? (
         <Slider {...settings} ref={sliderRef}>
-         
           <div>
             <div className="d-flex align-items-center justify-content-center">
               <div className="pulsatingDot"></div>
@@ -98,26 +97,29 @@ const MintPopup = ({ active, onClose, data }) => {
             </div>
             <h6 className="mint-popup-title">Treasure Hunt Event</h6>
             <img
-            src={data.img}
-            className={`mint-popup-img ${
-              data.title === "Daily Bonus" && "bottom-auto-bg"
-            } `}
-            style={{
-              maxWidth: "100%",
-              height: data.title === "Daily Bonus" ? 370 : "",
-            }}
-            alt=""
-          />
-           <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-         
-            <span className="popup-available-mint">
-              Explore the CORE area and use your{" "}
-              <img src={whiteExplore} className="white-explore d-inline" alt="" /> to
-              generate rewards!
-            </span>
-         
-        </div>
-          </div> <div>
+              src={data.img}
+              className={`mint-popup-img ${
+                data.title === "Daily Bonus" && "bottom-auto-bg"
+              } `}
+              style={{
+                maxWidth: "100%",
+                height: data.title === "Daily Bonus" ? 370 : "",
+              }}
+              alt=""
+            />
+            <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
+              <span className="popup-available-mint">
+                Explore the CORE area and use your{" "}
+                <img
+                  src={whiteExplore}
+                  className="white-explore d-inline"
+                  alt=""
+                />{" "}
+                to generate rewards!
+              </span>
+            </div>
+          </div>{" "}
+          <div>
             <div className="d-flex align-items-center justify-content-center">
               <div className="pulsatingDot"></div>
               <h6
@@ -129,25 +131,27 @@ const MintPopup = ({ active, onClose, data }) => {
             </div>
             <h6 className="mint-popup-title">Treasure Hunt Event</h6>
             <img
-            src={viction}
-            className={`mint-popup-img ${
-              data.title === "Daily Bonus" && "bottom-auto-bg"
-            } `}
-            style={{
-              maxWidth: "100%",
-              height: data.title === "Daily Bonus" ? 370 : "",
-            }}
-            alt=""
-          />
-          <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-         
-            <span className="popup-available-mint">
-              Explore the Viction area and use your{" "}
-              <img src={whiteExplore} className="white-explore d-inline" alt="" /> to
-              generate rewards!
-            </span>
-         
-        </div>
+              src={viction}
+              className={`mint-popup-img ${
+                data.title === "Daily Bonus" && "bottom-auto-bg"
+              } `}
+              style={{
+                maxWidth: "100%",
+                height: data.title === "Daily Bonus" ? 370 : "",
+              }}
+              alt=""
+            />
+            <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
+              <span className="popup-available-mint">
+                Explore the Viction area and use your{" "}
+                <img
+                  src={whiteExplore}
+                  className="white-explore d-inline"
+                  alt=""
+                />{" "}
+                to generate rewards!
+              </span>
+            </div>
           </div>
         </Slider>
       ) : data.title === "CoinMarketCap" ? (
@@ -159,6 +163,19 @@ const MintPopup = ({ active, onClose, data }) => {
             </h6>
           </div>
           <h6 className="mint-popup-title">CoinMarketCap Beta Pass</h6>
+        </>
+      ) : data.title === "Viction" ? (
+        <>
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="pulsatingDot"></div>
+            <h6 className="mint-popup-title">Viction Beta Pass</h6>
+          </div>
+
+          <div className="d-flex align-items-center justify-content-center">
+            <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
+              Free Minting
+            </h6>
+          </div>
         </>
       ) : data.title === "Daily Bonus" ? (
         <>
@@ -191,18 +208,19 @@ const MintPopup = ({ active, onClose, data }) => {
           <h6 className="mint-popup-title m-0"> NFT Giveaway</h6>
         </div>
       )}
-{data.title !== "CORE" &&
-      <img
-        src={data.img}
-        className={`mint-popup-img ${
-          data.title === "Daily Bonus" && "bottom-auto-bg"
-        } `}
-        style={{
-          maxWidth: "100%",
-          height: data.title === "Daily Bonus" ? 370 : "",
-        }}
-        alt=""
-      /> }
+      {data.title !== "CORE" && (
+        <img
+          src={data.img}
+          className={`mint-popup-img ${
+            data.title === "Daily Bonus" && "bottom-auto-bg"
+          } `}
+          style={{
+            maxWidth: "100%",
+            height: data.title === "Daily Bonus" ? 370 : "",
+          }}
+          alt=""
+        />
+      )}
       {data.title === "Daily Bonus" && (
         <div className="col-12 mb-3 row mx-0 gap-lg-0 gap-2 align-items-center justify-content-center px-2 py-1">
           <div className="col-lg-4 available-mint-bg d-flex flex-column bottom-auto-bg">
@@ -229,17 +247,14 @@ const MintPopup = ({ active, onClose, data }) => {
             </span>
           )}
         </div>
-      ) : data.title === "DogeCoin" ? (
+      ) : data.title === "DogeCoin" || data.title === "Viction" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-          {data.title === "DogeCoin" && (
-            <span className="popup-available-mint">
-              Get access to the game and a unique event filled with surprises
-              and rewards!
-            </span>
-          )}
+          <span className="popup-available-mint">
+            Get access to the game and a unique event filled with surprises and
+            rewards!
+          </span>
         </div>
-      )
-      //  : data.title === "Viction" ? (
+      ) : //  : data.title === "Viction" ? (
       //   <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
       //     {data.title === "Viction" && (
       //       <span className="popup-available-mint">
@@ -259,8 +274,8 @@ const MintPopup = ({ active, onClose, data }) => {
       //       </span>
       //     )}
       //   </div>
-      // ) 
-      : data.title === "SKALE" ? (
+      // )
+      data.title === "SKALE" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           {data.title === "SKALE" && (
             // <span className="popup-available-mint">
@@ -292,10 +307,19 @@ const MintPopup = ({ active, onClose, data }) => {
           >
             <button className="btn filled-btn px-4">More</button>
           </Link>
-        ) : data.title === "Viction" || data.title === "CORE" ? (
+        ) : data.title === "CORE" ? (
           <Link
             onClick={onClose}
             to={"/marketplace/events/treasure-hunt"}
+            state={{ event: data.state }}
+            className="linear-border"
+          >
+            <button className="btn filled-btn px-4">More</button>
+          </Link>
+        ) : data.title === "Viction" ? (
+          <Link
+            onClick={onClose}
+            to={"/marketplace/mint/viction"}
             state={{ event: data.state }}
             className="linear-border"
           >

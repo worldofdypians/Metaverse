@@ -36,7 +36,7 @@ import skalePopup from "../../components/TimepieceMint/assets/skalePopup.webp";
 
 import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreasureHunt.webp";
 import corePopupBg from "../../components/TimepieceMint/assets/corePopupImage.webp";
-import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupImage.webp";
+import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
 import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
 import bnbPhase4 from "./WodBuilders/assets/bnbPhase4.png";
 
@@ -157,7 +157,7 @@ const Home = ({
       >
         <MintPopup
           active={activePopup}
-          data={corePopupInfo}
+          data={victionPopupInfo}
           onClose={() => setActivePopup(false)}
         />
       </OutsideClickHandler>
