@@ -1,26 +1,27 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Slider from "react-slick";
 import { NavLink } from "react-router-dom";
 import BetaEventCardHome from "../../../Marketplace/components/BetaEventCardHome";
+import dropdownIcon from "../assets/dropdownIcon.svg";
 
-const EarnHero = () => {
+const EarnHero = ({onSelectFilter}) => {
   const dypProducts = [
     {
       link: "/earn",
-      title: "Earn",
-      desc: "Earn rewards by staking WOD tokens",
+      title: "TOKEN",
+      desc: "Boost rewards with WOD tokens",
       class: "tokenEarnClass",
     },
     {
       link: "/bridge",
-      title: "Bridge",
-      desc: "Bridge your assets securely between chains",
+      title: "NFT",
+      desc: "Utilize your NFTs for unique benefits",
       class: "tokenBridgeClass",
     },
     {
       link: "/governance",
-      title: "Governance",
-      desc: "Lorem ipsum governance something",
+      title: "TOKEN & NFT",
+      desc: "Combine tokens and NFTs for maximum rewards",
       class: "tokenGovernanceClass",
     },
   ];
@@ -78,22 +79,24 @@ const EarnHero = () => {
     ],
   };
 
+  const [filterTitle, setFilterTitle] = useState("All pools");
+
   const betaSlider = useRef(null);
 
   return (
-    <div className="mainhero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-end gap-5">
+    <div className="earn-mainhero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-end gap-5">
       <div className="custom-container  mt-5 mt-lg-0">
-        <div className="d-flex flex-column w-100">
-          <div className="row mx-0 align-items-center justify-content-between gap-2 mt-5 mt-lg-0">
+        <div className="d-flex flex-column w-100 gap-5">
+          <div className="row mx-0 align-items-center justify-content-center gap-2 my-5">
             <div className="col-12 col-lg-6 ps-lg-0">
-              <div className="d-flex flex-column gap-2 align-items-start">
-                <h2 className="font-montserrat builders-title explorer-grid-title px-0">
+              <div className="d-flex flex-column gap-2 align-items-center">
+                <h2 className="font-montserrat builders-title explorer-grid-title px-0 text-center">
                   <mark className="font-montserrat explore-tag pe-2">
                     World of Dypians
                   </mark>
                   Earn
                 </h2>
-                <span className="market-banner-desc font-montserrat text-start">
+                <span className="market-banner-desc font-montserrat text-center">
                   Maximize your rewards in the World of Dypians with our Earn
                   solutions. Make the most of your assets to earn additional
                   rewards. Start earning today!
@@ -101,10 +104,6 @@ const EarnHero = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="opacitywrapper position-relative bottom-0">
-        <div className="d-flex flex-column gap-4 position-relative">
           <div className="custom-container m-auto p-0 ">
             <Slider {...settings} ref={betaSlider}>
               {dypProducts.slice(0, 4).map((item, index) => (
@@ -118,13 +117,78 @@ const EarnHero = () => {
               ))}
             </Slider>
           </div>
+        </div>
+      </div>
+      <div className="opacitywrapper position-relative bottom-0">
+        <div className="d-flex flex-column gap-4 position-relative">
           <div className="d-flex flex-column mx-0 align-items-center justify-content-between gap-2 buy-items-all-wrapper py-2">
             <div className="container-fluid py-4 buy-wod-bg">
               <div className="custom-container p-0">
                 <div className="d-flex flex-column flex-lg-row align-items-center gap-4">
-                   
                   <div className="row w-100 mx-0 align-items-center justify-content-between">
-                   
+                    <div className="dropdown filters-dropdown">
+                      <button
+                        className="btn btn-secondary nft-dropdown w-100
+                 d-flex align-items-center justify-content-between dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <div className="d-flex align-items-center gap-2">
+                          <h6 className="filter-nav-title mb-0">
+                            {filterTitle}
+                          </h6>
+                        </div>
+                        <img src={dropdownIcon} alt="" />
+                      </button>
+                      <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                        <li
+                          className="nft-dropdown-item"
+                          onClick={() => {
+                            setFilterTitle("All pools");
+                            onSelectFilter("All pools")
+                          }}
+                        >
+                          <span>All pools</span>
+                        </li>
+                        <li
+                          className="nft-dropdown-item"
+                          onClick={() => {
+                            setFilterTitle("Token");
+                            onSelectFilter("Token")
+
+                          }}
+                        >
+                          <span>Token</span>
+                        </li>
+                        <li
+                          className="nft-dropdown-item"
+                          onClick={() => {
+                            setFilterTitle("NFT");
+                            onSelectFilter("NFT")
+
+                          }}
+                        >
+                          <span>NFT</span>
+                        </li>
+                        <li
+                          className="nft-dropdown-item"
+                          onClick={() => {
+                            setFilterTitle("Token + NFT");
+                            onSelectFilter("Token + NFT")
+
+                          }}
+                        >
+                          <span>Token + NFT</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="tvl-earn-wrapper p-2">
+                      <div className="d-flex align-items-center gap-2">
+                        <span className="tvl-earn-title">TVL</span>
+                        <span className="tvl-earn-amount">$1,6000,000+</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
