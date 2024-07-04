@@ -3,8 +3,12 @@ import "./_governanceContent.scss";
 
 const GovernanceContent = () => {
   return (
-    <div className="d-flex justify-content-center w-100">
-      <h1 className="font-organetto text-white">Governance Content</h1>
+    <div className="container-fluid">
+      <div className="custom-container">
+        <div className="d-flex flex-column gap-3">
+          <h1 className="font-organetto text-white">Governance Content</h1>
+        </div>
+      </div>
     </div>
   );
 };
