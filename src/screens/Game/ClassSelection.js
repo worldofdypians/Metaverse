@@ -13,23 +13,23 @@ const ClassSelection = () => {
           Race and Class{" "}
           <mark className="font-montserrat explore-tag pe-2">Selection</mark>
         </h2>
-        <span className="classes-desc mb-5">
+        <span className="classes-desc mb-0 mb-lg-5">
           In World of Dypians, players select from a variety of Races and
           Classes, each with distinct abilities and playstyles, shaping their
           adventure in unique ways.
         </span>
       </div>
-      <div className="d-flex align-items-center justify-content-between mt-5 px-0">
+      <div className="d-flex flex-column flex-lg-row gap-5 gap-lg-0 align-items-center justify-content-between mt-0 mt-lg-5 px-0">
         <div className="humans-class-wrapper">
           <img src={humanClass} className="humans-img" alt="" />
           <img src={humansBg} className="humans-bg" alt="" />
-          <h6 className="humans-class-text mb-0 ms-5">Humans</h6>
+          <h6 className="humans-class-text mb-0 ms-3 ms-lg-5">Humans</h6>
         </div>
         <div className="aliens-class-wrapper ">
           <img src={aliensClass} className="aliens-img" alt="" />
           <img src={aliensBg} className="aliens-bg" alt="" />
 
-          <h6 className="aliens-class-text mb-0 me-5">Aliens</h6>
+          <h6 className="aliens-class-text mb-0 me-3 me-lg-5">Aliens</h6>
         </div>
       </div>
     </div>

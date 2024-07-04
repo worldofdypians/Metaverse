@@ -79,13 +79,13 @@ const GameEvents = () => {
             Game{" "}
             <mark className="font-montserrat explore-tag pe-2">Events</mark>
           </h2>
-          <span className="classes-desc mb-5">
+          <span className="classes-desc mb-0 mb-lg-5">
             Dive into spectacular in-game events like Treasure Hunt, Dragon
             Ruins, Scorpion King, Puzzle Madness, Critical Hit, Maze Garden and
             Daily Bonus.
           </span>
         </div>
-        <div className="row">
+        <div className="row gap-3 gap-lg-0 mx-3 mx-lg-0">
         {events.slice(0, 4).map((item, index) => (
                 <div className="col-12 col-lg-3">
                     <NavLink
@@ -101,7 +101,7 @@ const GameEvents = () => {
                 </div>
               ))}
         </div>
-        <div className="row justify-content-center mt-4">
+        <div className="row justify-content-center mt-3 gap-3 gap-lg-0 mx-3 mx-lg-0">
         {events.slice(4, 7).map((item, index) => (
                 <div className="col-12 col-lg-3">
                     <NavLink

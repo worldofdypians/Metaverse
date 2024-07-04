@@ -51,7 +51,12 @@ import base from "./assets/base.svg";
 import conflux from "./assets/conflux.svg";
 import sei from "./assets/sei.svg";
 import multiversx from "./assets/multiversx.svg";
-
+import twitterHeader from "./assets/twitterHeader.svg";
+import telegramHeader from "./assets/telegramHeader.svg";
+import discordHeader from "./assets/discordHeader.svg";
+import instagramHeader from "./assets/instagramHeader.svg";
+import youtubeHeader from "./assets/youtubeHeader.svg";
+import mediumHeader from "./assets/mediumHeader.svg";
 import error from "./assets/error.svg";
 import personIcon from "./assets/personIcon.svg";
 import dropdown from "./assets/dropdown.svg";
@@ -510,7 +515,7 @@ const Header = ({
   }, [myOffers, coinbase, nftCount]);
 
   return (
-    <>
+    <div className="d-flex flex-column">
       <div className="d-none d-lg-flex navbar-wrapper p-3 ">
         <div className="row justify-content-between mx-0 w-100">
           <div className="col-7 col-xl-7 col-xxl-7 d-flex align-items-center justify-content-start gap-5 ps-0">
@@ -604,7 +609,7 @@ const Header = ({
               Community
               <img src={headerArrow} alt="" />
               <div
-                className={`header-dropdown p-2 d-flex flex-column gap-2 ${
+                className={`header-dropdown  p-2 d-flex flex-column gap-2 ${
                   dropdown.community === "community"
                     ? "header-dropdown-active"
                     : ""
@@ -630,6 +635,29 @@ const Header = ({
                 >
                   Game Updates
                 </NavLink>
+                <hr className="header-divider my-0" />
+                <div className="d-flex align-items-center justify-content-between px-2 mb-2">
+                  <a href="#">
+                    <img src={twitterHeader} width={25} alt="" />
+                  </a>
+                  <a href="#">
+                    <img src={telegramHeader} width={25} alt="" />
+                  </a>
+                  <a href="#">
+                    <img src={discordHeader} width={25} alt="" />
+                  </a>
+                </div>
+                <div className="d-flex align-items-center justify-content-between px-2 mb-2">
+                  <a href="#">
+                    <img src={instagramHeader} width={25} alt="" />
+                  </a>
+                  <a href="#">
+                    <img src={youtubeHeader} width={25} alt="" />
+                  </a>
+                  <a href="#">
+                    <img src={mediumHeader} width={25} alt="" />
+                  </a>
+                </div>
               </div>
             </div>
             <div
@@ -640,7 +668,9 @@ const Header = ({
               onMouseEnter={() => handleDropdown("about")}
               onMouseLeave={() => handleDropdown(null)}
             >
-              <NavLink to="/about" className='text-white'>About</NavLink>
+              <NavLink to="/about" className="text-white">
+                About
+              </NavLink>
               <img src={headerArrow} alt="" />
               <div
                 className={`header-dropdown p-2 d-flex flex-column gap-2 ${
@@ -1138,7 +1168,249 @@ const Header = ({
           </div>
         </div>
       </div>
-    </>
+      {location.pathname.includes("/marketplace") && (
+        <div
+          className="d-none d-lg-flex align-items-center justify-content-center gap-5 marketplace-navbar-wrapper p-3"
+        >
+          <NavLink
+            to="/marketplace"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
+            }
+            children={({ isActive }) => {
+              const icon = isActive ? "homeIconActive" : "homeIcon";
+              return (
+                <>
+                  <img
+                    src={require(`../MarketSidebar/assets/${icon}.svg`)}
+                    style={{ width: "20px", height: "20px" }}
+                    alt=""
+                  />
+                  <span className={`sidebar-title`}>Home</span>
+                </>
+              );
+            }}
+          />
+
+          <div className="accordion" id="accordionExample">
+            <div className="">
+              <h2 className="sidebar-item p-2 mb-0" id="headingOne">
+                <div
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                >
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={require(`../MarketSidebar/assets/collectionsIcon.svg`).default}
+                        style={{ width: "20px", height: "20px" }}
+                        alt=""
+                      />
+                      <h6 className="sidebar-title mb-0">Collections</h6>
+                    </div>
+                    <img
+                      src={headerArrow}
+                      style={{ position: "relative", right: "5px" }}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </h2>
+              <div
+                id="collapseOne"
+                className={`accordion-collapse collapse ${
+                  location.pathname.includes("marketplace/caws") ||
+                  location.pathname.includes("marketplace/land") ||
+                  location.pathname.includes("marketplace/timepiece") ||
+                  location.pathname.includes("marketplace/beta-pass")
+                    ? "show"
+                    : null
+                }`}
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div className="accordion-body">
+                  <div className="d-flex flex-column gap-2">
+                    <NavLink
+                      to="/marketplace/beta-pass/core"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : `d-flex p-2 align-items-center gap-2 sidebar-item ${
+                              location.pathname.includes("conflux") ||
+                              location.pathname.includes("coin98") ||
+                              location.pathname.includes("coingecko") ||
+                              location.pathname.includes("base") ||
+                              location.pathname.includes("coinmarketcap") ||
+                              location.pathname.includes("doge") ||
+                              location.pathname.includes("skale") ||
+                              location.pathname.includes("gate") ||
+                              location.pathname.includes("skale") ||
+                              location.pathname.includes("core") ||
+                              location.pathname.includes("viction") ||
+                              location.pathname.includes("sei") ||
+                              location.pathname.includes("multivers")
+                                ? "sidebar-item-active nft-active"
+                                : null
+                            }`
+                      }
+                    >
+                      <div className="icon-wrapper"></div>
+                      <div className="d-flex align-items-center gap-5">
+                        <span className={`nft-sidebar-title`}>Beta Pass</span>
+                        <div className="new-beta-sidebar">
+                          <span className="new-beta-text">New</span>
+                        </div>
+                      </div>
+                    </NavLink>
+                    <NavLink
+                      to="/marketplace/caws"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                      }
+                    >
+                      <div className="icon-wrapper"></div>
+                      <span className={`nft-sidebar-title`}>CAWS</span>
+                    </NavLink>
+                    <NavLink
+                      to="/marketplace/land"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                      }
+                    >
+                      <div className="icon-wrapper"></div>
+                      <span className={`nft-sidebar-title`}>Land</span>
+                    </NavLink>
+                    <NavLink
+                      to="/marketplace/timepiece"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : `d-flex p-2 align-items-center gap-2 sidebar-item`
+                      }
+                    >
+                      <div className="icon-wrapper"></div>
+                      <span className={`nft-sidebar-title`}>
+                        CAWS Timepiece
+                      </span>
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <NavLink
+            to="/marketplace/events/treasure-hunt"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : `d-flex p-2 align-items-center gap-2 sidebar-item ${
+                    location.pathname.includes("events")
+                      ? "sidebar-item-active"
+                      : null
+                  }`
+            }
+            children={({ isActive }) => {
+              const icon = isActive
+                ? "eventsIconActive"
+                : location.pathname.includes("events")
+                ? "eventsIconActive"
+                : "eventsIcon";
+              return (
+                <>
+                  <img
+                    src={require(`../MarketSidebar/assets/${icon}.svg`)}
+                    style={{ width: "20px", height: "20px" }}
+                    alt=""
+                  />
+                  <span className={`sidebar-title`}>Events</span>
+                </>
+              );
+            }}
+          />
+          <NavLink
+            to="/marketplace/stake"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
+            }
+            children={({ isActive }) => {
+              const icon = isActive ? "stakeIconActive" : "stakeIcon";
+              return (
+                <>
+                  <img
+                    src={require(`../MarketSidebar/assets/${icon}.svg`)}
+                    style={{ width: "20px", height: "20px" }}
+                    alt=""
+                  />
+                  <span className={`sidebar-title`}>Stake</span>
+                </>
+              );
+            }}
+          />
+          <NavLink
+            to="/marketplace/mint/timepiece"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
+            }
+            children={({ isActive }) => {
+              const icon = isActive ? "mintIconActive" : "mintIcon";
+              return (
+                <>
+                  <img
+                    src={require(`../MarketSidebar/assets/${icon}.svg`)}
+                    style={{ width: "20px", height: "20px" }}
+                    alt=""
+                  />
+                  <span className={`sidebar-title`}>Mint</span>
+                </>
+              );
+            }}
+          />
+          <NavLink
+            to="/marketplace/nft-bridge"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
+            }
+            children={({ isActive }) => {
+              const icon = isActive ? "bridgeIconActive" : "bridgeIcon";
+              return (
+                <>
+                  <img
+                    src={require(`../MarketSidebar/assets/${icon}.svg`)}
+                    style={{ width: "20px", height: "20px" }}
+                    alt=""
+                  />
+                  <span className={`sidebar-title`}>NFT Bridge</span>
+                </>
+              );
+            }}
+          />
+        </div>
+      )}
+    </div>
   );
 };
 export default Header;

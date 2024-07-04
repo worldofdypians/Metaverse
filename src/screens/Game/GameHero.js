@@ -94,7 +94,7 @@ const GameHero = () => {
 
 
   return (
-    <div className="mainhero-wrapper about-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-center gap-5 position-relative">
+    <div className="mainhero-wrapper about-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-center mt-5 mt-lg-0 gap-5 position-relative">
       <div className="custom-container  mt-5 mt-lg-0">
         <div className="d-flex w-100 flex-column align-items-center gap-2">
           <h2 className="font-montserrat builders-title explorer-grid-title px-0">
