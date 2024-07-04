@@ -1,0 +1,80 @@
+.create-proposal-title {
+  color: #fff;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.category-wrapper {
+  border-radius: 12px;
+  border: 1px solid #7bd8b0;
+}
+
+.proposal-category-item-active {
+  border-radius: 12px;
+  background: #7bd8b0;
+  border: none;
+  color: #333;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.proposal-category-item {
+  color: #eeedff;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  background: transparent;
+  border-radius: 12px;
+  border: none;
+}
+
+.proposal-popup-input {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  background: #220744;
+  height: 35px; 
+  color: #ffffff;
+}
+
+.proposal-popup-input::placeholder, .proposal-textarea::placeholder {
+  color: #bcadc7;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.proposal-popup-input:focus-visible {
+  border: 1px solid #8e97cd !important;
+}
+.proposal-popup-input:focus {
+  border: 1px solid #8e97cd !important;
+}
+
+.proposal-textarea {
+    border-radius: 10px;
+border: 1px solid #B8B8E0;
+background: #220744;
+}
+
+.create-proposal-desc {
+  color: #eeedff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.proposal-subject-text {
+  color: #eeedff;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
