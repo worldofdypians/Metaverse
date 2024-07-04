@@ -2453,6 +2453,8 @@ function App() {
           }
         }
       }
+    } else {
+      setIsPremium(false);
     }
   };
 
