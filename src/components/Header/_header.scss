@@ -8,7 +8,7 @@
   // left: 50%;
   // transform: translate(-50%, 0);
   // right: 0;
-  z-index: 7;
+  z-index: 8;
   border-bottom: 2px solid #525469;
   // max-width: 1500px;
   background: rgba(8, 11, 42, 0.80);
@@ -572,6 +572,21 @@ backdrop-filter: blur(2px);
 }
 
 .dropdown-nav:hover{
+  background: rgba(86, 144, 255, 0.10);
+  color: #5690FF !important;
+}
+.dropdown-nav-marketplace {
+  color: #EEEDFF;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  border-radius: 10px;
+  transition: all .25s;
+}
+
+.dropdown-nav-marketplace:hover{
   background: rgba(86, 144, 255, 0.10);
   color: #5690FF !important;
 }

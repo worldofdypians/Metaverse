@@ -3821,16 +3821,7 @@ function App() {
         </Routes>
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
         <ScrollTop />
-        {location.pathname.includes("marketplace") ||
-        location.pathname.includes("notifications") ||
-        location.pathname.includes("account") ? (
-          location.pathname.includes("caws") ||
-          location.pathname.includes("land") ? null : (
-            <MarketplaceFooter />
-          )
-        ) : (
           <Footer />
-        )}
       </div>
 
       {/* {!location.pathname.includes("account") &&

@@ -99,6 +99,8 @@ const Header = ({
     game: null,
     community: null,
     about: null,
+    collections: null,
+    account: null,
   });
 
   // const [domainPopup, setDomainPopup] = useState(false);
@@ -733,10 +735,70 @@ const Header = ({
           <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
             <NavLink
               to={"/account"}
-              className="d-flex align-items-center gap-2"
+              onMouseEnter={() => handleDropdown("account")}
+              onMouseLeave={() => handleDropdown(null)}
+              className="d-flex align-items-center gap-2 position-relative"
             >
               <img src={personIcon} alt="" />
               <h6 className="mb-0 account-txt">Account</h6>
+              <img src={headerArrow} alt="" />
+
+              <div
+                className={`header-dropdown p-2 d-flex flex-column gap-2 ${
+                  dropdown.account === "account" ? "header-dropdown-active" : ""
+                }`}
+              >
+                <NavLink
+                  to={"/about#partners"}
+                  className={({ isActive }) =>
+                    isActive && window.location.hash === "#partners"
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Partners
+                </NavLink>
+                <NavLink
+                  to={"/about#roadmap"}
+                  className={({ isActive }) =>
+                    isActive && window.location.hash === "#roadmap"
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Roadmap
+                </NavLink>
+                <NavLink
+                  to={"/about#tokenomics"}
+                  className={({ isActive }) =>
+                    isActive && window.location.hash === "#tokenomics"
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Tokenomics
+                </NavLink>
+                <NavLink
+                  to={"/about#ourteam"}
+                  className={({ isActive }) =>
+                    isActive && window.location.hash === "#ourteam"
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Team
+                </NavLink>
+                <NavLink
+                  to={"/about#brand"}
+                  className={({ isActive }) =>
+                    isActive && window.location.hash === "#brand"
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Brand
+                </NavLink>
+              </div>
             </NavLink>
             {/* {!coinbase ? (
               <NavLink to={"/account"}>
@@ -1168,248 +1230,7 @@ const Header = ({
           </div>
         </div>
       </div>
-      {location.pathname.includes("/marketplace") && (
-        <div
-          className="d-none d-lg-flex align-items-center justify-content-center gap-5 marketplace-navbar-wrapper p-3"
-        >
-          <NavLink
-            to="/marketplace"
-            end
-            className={({ isActive }) =>
-              isActive
-                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : "d-flex p-2 align-items-center gap-2 sidebar-item"
-            }
-            children={({ isActive }) => {
-              const icon = isActive ? "homeIconActive" : "homeIcon";
-              return (
-                <>
-                  <img
-                    src={require(`../MarketSidebar/assets/${icon}.svg`)}
-                    style={{ width: "20px", height: "20px" }}
-                    alt=""
-                  />
-                  <span className={`sidebar-title`}>Home</span>
-                </>
-              );
-            }}
-          />
 
-          <div className="accordion" id="accordionExample">
-            <div className="">
-              <h2 className="sidebar-item p-2 mb-0" id="headingOne">
-                <div
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="true"
-                  aria-controls="collapseOne"
-                >
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={require(`../MarketSidebar/assets/collectionsIcon.svg`).default}
-                        style={{ width: "20px", height: "20px" }}
-                        alt=""
-                      />
-                      <h6 className="sidebar-title mb-0">Collections</h6>
-                    </div>
-                    <img
-                      src={headerArrow}
-                      style={{ position: "relative", right: "5px" }}
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </h2>
-              <div
-                id="collapseOne"
-                className={`accordion-collapse collapse ${
-                  location.pathname.includes("marketplace/caws") ||
-                  location.pathname.includes("marketplace/land") ||
-                  location.pathname.includes("marketplace/timepiece") ||
-                  location.pathname.includes("marketplace/beta-pass")
-                    ? "show"
-                    : null
-                }`}
-                aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample"
-              >
-                <div className="accordion-body">
-                  <div className="d-flex flex-column gap-2">
-                    <NavLink
-                      to="/marketplace/beta-pass/core"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : `d-flex p-2 align-items-center gap-2 sidebar-item ${
-                              location.pathname.includes("conflux") ||
-                              location.pathname.includes("coin98") ||
-                              location.pathname.includes("coingecko") ||
-                              location.pathname.includes("base") ||
-                              location.pathname.includes("coinmarketcap") ||
-                              location.pathname.includes("doge") ||
-                              location.pathname.includes("skale") ||
-                              location.pathname.includes("gate") ||
-                              location.pathname.includes("skale") ||
-                              location.pathname.includes("core") ||
-                              location.pathname.includes("viction") ||
-                              location.pathname.includes("sei") ||
-                              location.pathname.includes("multivers")
-                                ? "sidebar-item-active nft-active"
-                                : null
-                            }`
-                      }
-                    >
-                      <div className="icon-wrapper"></div>
-                      <div className="d-flex align-items-center gap-5">
-                        <span className={`nft-sidebar-title`}>Beta Pass</span>
-                        <div className="new-beta-sidebar">
-                          <span className="new-beta-text">New</span>
-                        </div>
-                      </div>
-                    </NavLink>
-                    <NavLink
-                      to="/marketplace/caws"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
-                      }
-                    >
-                      <div className="icon-wrapper"></div>
-                      <span className={`nft-sidebar-title`}>CAWS</span>
-                    </NavLink>
-                    <NavLink
-                      to="/marketplace/land"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
-                      }
-                    >
-                      <div className="icon-wrapper"></div>
-                      <span className={`nft-sidebar-title`}>Land</span>
-                    </NavLink>
-                    <NavLink
-                      to="/marketplace/timepiece"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : `d-flex p-2 align-items-center gap-2 sidebar-item`
-                      }
-                    >
-                      <div className="icon-wrapper"></div>
-                      <span className={`nft-sidebar-title`}>
-                        CAWS Timepiece
-                      </span>
-                    </NavLink>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <NavLink
-            to="/marketplace/events/treasure-hunt"
-            end
-            className={({ isActive }) =>
-              isActive
-                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : `d-flex p-2 align-items-center gap-2 sidebar-item ${
-                    location.pathname.includes("events")
-                      ? "sidebar-item-active"
-                      : null
-                  }`
-            }
-            children={({ isActive }) => {
-              const icon = isActive
-                ? "eventsIconActive"
-                : location.pathname.includes("events")
-                ? "eventsIconActive"
-                : "eventsIcon";
-              return (
-                <>
-                  <img
-                    src={require(`../MarketSidebar/assets/${icon}.svg`)}
-                    style={{ width: "20px", height: "20px" }}
-                    alt=""
-                  />
-                  <span className={`sidebar-title`}>Events</span>
-                </>
-              );
-            }}
-          />
-          <NavLink
-            to="/marketplace/stake"
-            end
-            className={({ isActive }) =>
-              isActive
-                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : "d-flex p-2 align-items-center gap-2 sidebar-item"
-            }
-            children={({ isActive }) => {
-              const icon = isActive ? "stakeIconActive" : "stakeIcon";
-              return (
-                <>
-                  <img
-                    src={require(`../MarketSidebar/assets/${icon}.svg`)}
-                    style={{ width: "20px", height: "20px" }}
-                    alt=""
-                  />
-                  <span className={`sidebar-title`}>Stake</span>
-                </>
-              );
-            }}
-          />
-          <NavLink
-            to="/marketplace/mint/timepiece"
-            end
-            className={({ isActive }) =>
-              isActive
-                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : "d-flex p-2 align-items-center gap-2 sidebar-item"
-            }
-            children={({ isActive }) => {
-              const icon = isActive ? "mintIconActive" : "mintIcon";
-              return (
-                <>
-                  <img
-                    src={require(`../MarketSidebar/assets/${icon}.svg`)}
-                    style={{ width: "20px", height: "20px" }}
-                    alt=""
-                  />
-                  <span className={`sidebar-title`}>Mint</span>
-                </>
-              );
-            }}
-          />
-          <NavLink
-            to="/marketplace/nft-bridge"
-            end
-            className={({ isActive }) =>
-              isActive
-                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : "d-flex p-2 align-items-center gap-2 sidebar-item"
-            }
-            children={({ isActive }) => {
-              const icon = isActive ? "bridgeIconActive" : "bridgeIcon";
-              return (
-                <>
-                  <img
-                    src={require(`../MarketSidebar/assets/${icon}.svg`)}
-                    style={{ width: "20px", height: "20px" }}
-                    alt=""
-                  />
-                  <span className={`sidebar-title`}>NFT Bridge</span>
-                </>
-              );
-            }}
-          />
-        </div>
-      )}
     </div>
   );
 };

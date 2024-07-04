@@ -102,7 +102,7 @@ const Tokenomics = () => {
                   <h6 className="tokenomics-table-title mb-0">CATEGORY</h6>
                 </div>
                 <div className="col-3 d-flex justify-content-center">
-                  <h6 className="tokenomics-table-title mb-0">UNCOCKED TGE</h6>
+                  <h6 className="tokenomics-table-title mb-0">UNLOCKED TGE</h6>
                 </div>
                 <div className="col-3 d-flex justify-content-center">
                   <h6 className="tokenomics-table-title mb-0">

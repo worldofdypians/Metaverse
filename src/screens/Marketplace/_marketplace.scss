@@ -373,10 +373,11 @@
   position: fixed;
   height: 100%;
   left: 0%;
-  z-index: 6;
-  background: #080b2a;
+  z-index: 7;
+  // background: #080b2a;
   // box-shadow: 4px 4px 20px 1px #340d60;
-  border-right: 2px solid #131634;
+  // border-right: 2px solid #131634;
+  margin-top: 80px;
   @media screen and (max-width: 1600px) {
     width: 21%;
   }
@@ -606,8 +607,9 @@
 }
 
 .container-nft {
-  width: 80%;
-  background-image: url("./assets//marketplaceBackground.png");
+  max-width: 1600px;
+  width: 100%;
+  background-image: url("./assets/marketplaceBackground.png");
   background-size: cover;
   @media screen and (max-width: 991px) {
     width: 100%;
@@ -643,7 +645,7 @@
 }
 
 .sidebar-item {
-  width: fit-content;
+  width: 100%;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s;
@@ -1012,17 +1014,18 @@ background: rgba(86, 144, 255, 0.10);
 }
 
 .nft-sidebar-title {
-  font-weight: 400;
+  font-family: "Montserrat";
   font-size: 12px;
-  line-height: 21px;
-  letter-spacing: 0.03em;
-  color: #b8b8e0;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  color: #EEEDFF;
   white-space: nowrap;
 }
 
 .nft-active {
   .nft-sidebar-title {
-    color: #7bd8b0;
+    color: #5690FF;
   }
 }
 
