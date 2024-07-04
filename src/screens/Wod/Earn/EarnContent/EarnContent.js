@@ -1,16 +1,11 @@
 import React, { useState } from "react";
-import StakingWod from "../stakingpools/StakingWod";
-import stakingIcon from "../assets/stakingIcon.svg";
-import farmingIcon from "../assets/farmingIcon.svg";
-import moreinfo from "../assets/more-info.svg";
-import { ClickAwayListener } from "@material-ui/core";
-import Tooltip from "@material-ui/core/Tooltip";
-import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 import "../_earn.scss";
 import arrowUp from "../assets/arrowUp.svg";
 import arrowUpActive from "../assets/arrowUpActive.svg";
 import arrowDown from "../assets/arrowDown.svg";
 import arrowDownActive from "../assets/arrowDownActive.svg";
+import useWindowSize from "../../../../hooks/useWindowSize";
+import arrowFilled from "../assets/arrow-filled.svg";
 
 const EarnContent = ({
   isConnected,
@@ -23,6 +18,7 @@ const EarnContent = ({
   onPoolSelect,
 }) => {
   const [sorting, setSorting] = useState("");
+  const windowSize = useWindowSize();
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center mb-5 py-4 earncontent-bg">
@@ -83,7 +79,6 @@ const EarnContent = ({
                               return (
                                 <img
                                   src={require(`../assets/tokens/${obj}.png`)}
-                                  style={{ width: 36, height: 36 }}
                                   alt=""
                                   key={index2}
                                   className="pool-coins"
@@ -92,22 +87,21 @@ const EarnContent = ({
                             })}
 
                             <h5
-                              className="text-white m-0"
-                              style={{ fontSize: "16px", fontWeight: "600" }}
+                              className="text-white m-0 tokeninfotxt"
+                              style={{ fontWeight: "600" }}
                             >
                               {item.tokenName}
                             </h5>
                           </div>
                         </td>
-                        <td className="earnother-td col-2">
+                        <td className="earnother-td col-1 col-lg-2 col-md-2">
                           <div className="d-flex align-items-center gap-2">
                             <h5
                               style={{
-                                fontSize: "16px",
                                 fontWeight: "300",
                                 color: "#F7F7FC",
                               }}
-                              className="m-0"
+                              className="m-0 tokeninfotxt"
                             >
                               {item.apr}%
                             </h5>
@@ -117,11 +111,10 @@ const EarnContent = ({
                         <td className="earnother-td col-2">
                           <h5
                             style={{
-                              fontSize: "16px",
                               fontWeight: "300",
                               color: "#F7F7FC",
                             }}
-                            className="m-0"
+                            className="m-0 tokeninfotxt"
                           >
                             {item.locktime}
                           </h5>
@@ -137,18 +130,23 @@ const EarnContent = ({
                           >
                             <img
                               src={require(`../assets/tokens/${item.chainLogo}`)}
-                              width={24}
-                              height={24}
                               alt=""
+                              className="token-chain-logo"
                             />
                             {item.chain}
                           </h5>
                         </td>
-                        <td className="earnother-td col-2 justify-content-end">
-                          <h6 className="details-text2 py-2 gap-1 d-flex align-items-center w-75 cursor-pointer justify-content-center m-0">
-                            Stake
-                          </h6>
-                        </td>
+                        {windowSize && windowSize.width > 991 ? (
+                          <td className="earnother-td col-2 justify-content-end">
+                            <h6 className="details-text2 py-2 gap-1 d-flex align-items-center w-75 cursor-pointer justify-content-center m-0">
+                              Stake
+                            </h6>
+                          </td>
+                        ) : (
+                          <td className="earnother-td col-1 justify-content-end">
+                            <img src={arrowFilled} alt="" className="earn-filled-arrow" />
+                          </td>
+                        )}
                       </tr>
                     </tbody>
                   </table>

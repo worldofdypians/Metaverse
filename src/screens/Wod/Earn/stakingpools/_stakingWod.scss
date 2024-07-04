@@ -91,21 +91,26 @@
 
 .details-text2 {
   border-radius: 12px;
-  border: 1px solid #7BD8B0;
+  border: 1px solid #7bd8b0;
   background: transparent;
-  color: #7BD8B0;
+  color: #7bd8b0;
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   text-align: center;
-  width: 100%;
+
   text-transform: uppercase;
+
+  @media only screen and (max-width: 767px) {
+    width: 100% !important;
+    font-size: 12px;
+  }
 }
 
 .details-text2:hover {
-background: linear-gradient(90deg, #7BD8B0 0%, #DCFB85 100%);
-color: #333;
+  background: linear-gradient(90deg, #7bd8b0 0%, #dcfb85 100%);
+  color: #333;
 }
 
 .filledbtn {
