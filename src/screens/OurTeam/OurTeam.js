@@ -16,6 +16,7 @@ import soni from "./assets/team/soni.jpeg";
 import samuel from "./assets/team/samuel.jpeg";
 import arben from "./assets/team/arben.jpg";
 import jeff from "./assets/team/jeff.jpg";
+import wei from "./assets/team/wei.jpg";
 import alex from "./assets/team/alex.png";
 
 import { useState } from "react";
@@ -149,6 +150,15 @@ const OurTeam = () => {
       photo: jeff,
       link: "",
       content: `Jeff, the Founder of Maven Capital, is a seasoned software engineer boasting over a decade of expertise in cutting-edge technologies such as AI, IoT, and Web3. Leveraging his extensive experience, Jeff provides founders with invaluable strategic advisory services and unparalleled expertise in Go-To-Market (GTM) strategies. His impressive portfolio includes collaborations with leading blockchain projects like Filecoin, IPFS, R3, Polygon, KCC, Telos, among others. Jeff is dedicated to fostering collaborative innovation aimed at achieving widespread adoption within the industry.`,
+    },
+     {
+      id: "wei",
+      name: "Wee Yao Liang",
+      position: "Advisor",
+      photo: wei,
+      link: "https://www.linkedin.com/in/skywee97/",
+      content: `Sky Wee is Managing Partner of VC, Crypto Influencer, Advisor. Sky Wee works closely with venture partners like LDA Capital, Elevate Ventures and ATF Capital.
+      Sky Wee has secured over $45 million in funding for an outstanding portfolio of 40+ projects. Official Influencer of Binance, showcasing his exceptional expertise and impact in the industry.`,
     },
     {
       id: "soni",

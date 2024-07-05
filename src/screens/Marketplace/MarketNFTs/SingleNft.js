@@ -18,13 +18,15 @@ import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 import eye from "../assets/eye.svg";
 import heart from "../assets/heart.svg";
 import ethIcon from "../assets/ethIcon.svg";
-import bnbLogo from "../assets/bnbLogo.svg";
+import bnbLogo from "../assets/bnbIcon.svg";
 import confluxLogo from "../assets/confluxLogo.svg";
 import baseLogo from "../assets/baseLogo.svg";
 import avaxLogo from "../assets/avaxLogo.svg";
 import skaleLogo from "../assets/skaleIcon.svg";
 import coreLogo from "../assets/coreLogo.svg";
 import victionLogo from "../assets/victionLogo.svg";
+import multiversLogo from "../assets/multiversLogo.svg";
+
 
 
 import { GET_PLAYER } from "../../Account/src/Containers/Dashboard/Dashboard.schema";
@@ -208,7 +210,9 @@ const SingleNft = ({
       type !== "base" &&
       type !== "skale" &&
       type !== "core" &&
-      type !== "viction"
+      type !== "viction"&&
+      type !== "multivers" &&
+      type !== "bnb"
     ) {
       const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
       const token_address_old = "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17";
@@ -534,6 +538,21 @@ const SingleNft = ({
       console.log(owner);
 
       setowner(owner);
+    }  else if (type === "bnb") {
+      const nft_contract = new window.bscWeb3.eth.Contract(
+        window.BNB_NFT_ABI,
+        window.config.nft_bnb_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      console.log(owner);
+
+      setowner(owner);
     } else if (type === "skale") {
       const nft_contract = new window.skaleWeb3.eth.Contract(
         window.SKALE_NFT_ABI,
@@ -563,7 +582,7 @@ const SingleNft = ({
 
       setowner(owner);
     } else if (type === "core") {
-      const nft_contract = new window.bscWeb3.eth.Contract(
+      const nft_contract = new window.coreWeb3.eth.Contract(
         window.CORE_NFT_ABI,
         window.config.nft_core_address
       );
@@ -576,9 +595,22 @@ const SingleNft = ({
 
       setowner(owner);
     }  else if (type === "viction") {
-      const nft_contract = new window.bscWeb3.eth.Contract(
+      const nft_contract = new window.victionWeb3.eth.Contract(
         window.VICTION_NFT_ABI,
         window.config.nft_viction_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      setowner(owner);
+    }   else if (type === "multivers") {
+      const nft_contract = new window.bscWeb3.eth.Contract(
+        window.MULTIVERS_NFT_ABI,
+        window.config.nft_multivers_address
       );
       const owner = await nft_contract.methods
         .ownerOf(Id)
@@ -1490,6 +1522,8 @@ const SingleNft = ({
         ? "conflux"
         : nftAddress.toLowerCase() === window.config.nft_doge_address.toLowerCase()
         ? "doge"
+        : nftAddress.toLowerCase() === window.config.nft_bnb_address.toLowerCase()
+        ? "bnb"
         : nftAddress.toLowerCase() === window.config.nft_skale_address.toLowerCase()
         ? "skale"
         : nftAddress.toLowerCase() === window.config.nft_cmc_address.toLowerCase()
@@ -1498,6 +1532,8 @@ const SingleNft = ({
         ? "core"
         : nftAddress.toLowerCase() === window.config.nft_viction_address.toLowerCase()
         ? "viction"
+         : nftAddress.toLowerCase() === window.config.nft_multivers_address.toLowerCase()
+        ? "multivers"
         : nftAddress.toLowerCase() === window.config.nft_base_address.toLowerCase()
         ? "base"
         : nftAddress.toLowerCase() === window.config.nft_caws_bnb_address.toLowerCase()
@@ -1545,6 +1581,8 @@ const SingleNft = ({
       setType("conflux");
     } else if (nftAddress.toLowerCase() === window.config.nft_doge_address.toLowerCase()) {
       setType("doge");
+    } else if (nftAddress.toLowerCase() === window.config.nft_bnb_address.toLowerCase()) {
+      setType("bnb");
     } else if (nftAddress.toLowerCase() === window.config.nft_skale_address.toLowerCase()) {
       setType("skale");
     } else if (nftAddress.toLowerCase() === window.config.nft_cmc_address.toLowerCase()) {
@@ -1553,6 +1591,8 @@ const SingleNft = ({
       setType("core");
     } else if (nftAddress.toLowerCase() === window.config.nft_viction_address.toLowerCase()) {
       setType("viction");
+    }  else if (nftAddress.toLowerCase() === window.config.nft_multivers_address.toLowerCase()) {
+      setType("multivers");
     } else if (nftAddress.toLowerCase() === window.config.nft_base_address.toLowerCase()) {
       setType("base");
     } else if (nftAddress.toLowerCase() === window.config.nft_gate_address.toLowerCase()) {
@@ -1710,6 +1750,18 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
+            )  : type === "bnb" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  BNB CHAIN{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
             ) : type === "skale" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
@@ -1750,6 +1802,18 @@ const SingleNft = ({
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   Viction{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
+            )  : type === "multivers" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  MultiversX{" "}
                   <h6
                     className="market-banner-title m-0"
                     style={{ color: "#8C56FF", lineHeight: "80%" }}
@@ -1804,10 +1868,14 @@ const SingleNft = ({
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+400.png`
                         : nftAddress.toLowerCase() === window.config.nft_viction_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+400.png`
+                        : nftAddress.toLowerCase() === window.config.nft_multivers_address.toLowerCase()
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+400.png`
                         : nftAddress.toLowerCase() === window.config.nft_base_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
                         : nftAddress.toLowerCase() === window.config.nft_skale_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+400x400.png`
+                        : nftAddress.toLowerCase() === window.config.nft_bnb_address.toLowerCase()
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+400.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
                     alt=""
@@ -1827,7 +1895,7 @@ const SingleNft = ({
                         type === "coingecko" ||
                         type === "gate" ||
                         type === "doge" ||
-                        type === "cmc" ||
+                        type === "cmc" ||type === "bnb" ||
                         type === "cawsbnb" ||
                         type === "landbnb"
                           ? bnbLogo
@@ -1845,6 +1913,8 @@ const SingleNft = ({
                           ? coreLogo
                           : type === "viction"
                           ? victionLogo
+                          : type === "multivers"
+                          ? multiversLogo
                           : ethIcon
                       }
                       alt=""
@@ -1852,7 +1922,7 @@ const SingleNft = ({
                     />{" "}
                     {type === "coingecko" ||
                     type === "gate" ||
-                    type === "doge" ||
+                    type === "doge" ||type === "bnb" ||
                     type === "cawsbnb" ||
                     type === "cmc" ||
                     type === "landbnb"
@@ -1869,6 +1939,8 @@ const SingleNft = ({
                       ? "SKALE"
                       : type === "viction"
                       ? "Viction"
+                      : type === "multivers"
+                      ? "MultiversX"
                       : type === "core"
                       ? "CORE"
                       : "Ethereum"}
@@ -1901,6 +1973,8 @@ const SingleNft = ({
                         ? "Conflux Beta Pass"
                         : type === "doge"
                         ? "Dogecoin Beta Pass"
+                        : type === "bnb"
+                        ? "BNB Chain Beta Pass"
                         : type === "skale"
                         ? "SKALE Beta Pass"
                         : type === "cmc"
@@ -1909,6 +1983,8 @@ const SingleNft = ({
                         ? "CORE Beta Pass"
                         : type === "viction"
                         ? "Viction Beta Pass"
+                        : type === "multivers"
+                        ? "MultiversX Beta Pass"
                         : type === "base"
                         ? "Base Beta Pass"
                         : "CAWS Timepiece"}{" "}
@@ -2061,9 +2137,11 @@ const SingleNft = ({
                       type !== "conflux" &&
                       type !== "base" &&
                       type !== "doge" &&
+                      type !== "bnb" &&
                       type !== "cmc" &&
                       type !== "core" &&
                       type !== "viction" &&
+                      type !== "multivers" &&
                       type !== "skale"  &&
                       loadingNft === false && (
                         <div className="price-wrapper p-3">
@@ -2232,9 +2310,11 @@ const SingleNft = ({
                       type !== "conflux" &&
                       type !== "base" &&
                       type !== "doge" &&
+                      type !== "bnb" &&
                       type !== "cmc" &&
                       type !== "core" &&
                       type !== "viction" &&
+                      type !== "multivers"&&
                       type !== "cawsbnb" &&
                       type !== "cawsavax" &&
                       type !== "cawsbase" &&
@@ -2429,10 +2509,12 @@ const SingleNft = ({
                         type === "conflux" ||
                         type === "base" ||
                         type === "doge" ||
+                        type === "bnb" ||
                         type === "skale" ||
                         type === "cmc" ||
                         type === "core" ||
                         type === "viction" ||
+                        type === "multivers" ||
                         type === "cawsbnb" ||
                         type === "cawsavax" ||
                         type === "cawsbase" ||
@@ -2457,8 +2539,10 @@ const SingleNft = ({
                               type === "gate" ||
                               type === "cmc" ||
                               type === "doge" ||
+                              type === "bnb" ||
                               type === "cawsbnb" ||
-                              type === "landbnb"
+                              type === "landbnb"||
+                              type === "multivers"
                                 ? `https://bscscan.com/address/${owner}`
                                 : type === "conflux"
                                 ? `https://evm.confluxscan.net/address/${owner}`
@@ -2664,8 +2748,10 @@ const SingleNft = ({
                         type !== "base" &&
                         type !== "cmc" &&
                         type !== "viction" &&
+                        type !== "multivers" &&
                         type !== "core" &&
                         type !== "doge" &&
+                        type !== "bnb" &&
                         type !== "skale" &&
                         type !== "cawsbnb" &&
                         type !== "cawsavax" &&
@@ -2734,10 +2820,12 @@ const SingleNft = ({
                         type !== "conflux" &&
                         type !== "base" &&
                         type !== "doge" &&
+                        type !== "bnb" &&
                         type !== "skale" &&
                         type !== "cmc" &&
                         type !== "core" &&
-                        type !== "viction" &&
+                        type !== "viction"  &&
+                        type !== "multivers"&&
                         type !== "cawsbnb" &&
                         type !== "cawsavax" &&
                         type !== "cawsbase" &&
@@ -2763,10 +2851,12 @@ const SingleNft = ({
                         type !== "conflux" &&
                         type !== "base" &&
                         type !== "doge" &&
+                        type !== "bnb" &&
                         type !== "skale" &&
                         type !== "cmc" &&
                         type !== "core" &&
-                        type !== "viction" &&
+                        type !== "viction" && 
+                        type !== "multivers" &&
                         type !== "cawsbnb" &&
                         type !== "cawsavax" &&
                         type !== "cawsbase" &&
@@ -2808,9 +2898,11 @@ const SingleNft = ({
             type !== "conflux" &&
             type !== "base" &&
             type !== "doge" &&
+            type !== "bnb" &&
             type !== "skale" &&
             type !== "cmc" &&  type !== "core" &&
-            type !== "viction" && (
+            type !== "viction"  &&
+            type !== "multivers"&& (
               <div className="px-2">
                 <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                   <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -3073,10 +3165,12 @@ const SingleNft = ({
             type === "conflux" ||
             type === "base" ||
             type === "doge" ||
+            type === "bnb" ||
             type === "skale" ||
             type === "cmc"||
             type === "core"||
-            type === "viction") && (
+            type === "viction"||
+            type === "multivers") && (
             <div className="px-2">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -3111,6 +3205,8 @@ const SingleNft = ({
                             ? "CORE"
                             : type === "viction"
                             ? "VIC"
+                            : type === "multivers"
+                            ? "EGLD"
                             : "BNB"}{" "}
                           rewards
                         </span>

@@ -35,6 +35,10 @@ import dogeTreasureHuntPopup from "../../components/TimepieceMint/assets/dogeTre
 import skalePopup from "../../components/TimepieceMint/assets/skalePopup.webp";
 
 import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreasureHunt.webp";
+import corePopupBg from "../../components/TimepieceMint/assets/corePopupImage.webp";
+import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
+import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
+import bnbPhase4 from "./WodBuilders/assets/bnbPhase4.png";
 
 import confluxTreasureHunt from "../../components/TimepieceMint/assets/confluxTreasureHunt.png";
 import LiveEvents from "./LiveEvents/LiveEvents";
@@ -58,7 +62,7 @@ const Home = ({
   };
 
   const [activePopup, setActivePopup] = useState(false);
-
+  const [popupInfo, setPopupInfo] = useState({});
   const html = document.querySelector("html");
   const hamburger = document.querySelector("#popup");
 
@@ -79,6 +83,7 @@ const Home = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "World of Dypians";
+    randomPopup();
   }, []);
 
   return (
@@ -89,7 +94,7 @@ const Home = ({
       >
         {/* <MintPopup
           active={activePopup}
-          data={entryCampaignPopup}
+          data={victionPopupInfo}
           onClose={() => setActivePopup(false)}
         /> */}
       </OutsideClickHandler>
@@ -98,6 +103,7 @@ const Home = ({
           <VideoWrapper
             handleRegister={handleRegister}
             handleDownload={handleDownload}
+            allStarData={allStarData}
           />
           {/* <LiveEvents /> */}
           <WodPartners full={false} />

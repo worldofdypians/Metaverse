@@ -4,6 +4,8 @@ import coingecko from "./assets/coingecko.svg";
 import gate from "./assets/gate.svg";
 import baseLogo from "./assets/baseLogo.svg";
 import skaleLogo from "./assets/skaleLogo.svg";
+import bnblogo from "./assets/bnblogo.svg";
+
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
 
@@ -46,7 +48,8 @@ const renderer = ({ days, hours, minutes }) => {
     </>
   );
 };
-const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
+const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd, data }) => {
+ 
   return (
     <div
       className="profile-event-item d-flex flex-column position-relative mb-1"
@@ -57,21 +60,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd }) => {
         <div className="d-flex align-items-center gap-2">
           <img
             src={
-              event.title === "CoinGecko"
-                ? coingecko
-                : event.title === "Conflux"
-                ? conflux
-                : event.title === "Base"
-                ? baseLogo
-                : event.title === "Dypius" || event.title === "Dypius Premium"
-                ? dypiusPremium16
-                : event.title === "Dogecoin"
-                ? doge
-                : event.title === "CoinMarketCap"
-                ? cmc
-                : event.title === "SKALE"
-                ? skaleLogo
-                : gate
+              data.logo
             }
             height={16}
             width={16}
