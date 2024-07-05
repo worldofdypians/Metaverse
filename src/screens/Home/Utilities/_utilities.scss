@@ -1,124 +1,129 @@
-.utilities-grid{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
+.utilities-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
 
-    @media screen and (max-width: 1300px) {
+  @media screen and (max-width: 1300px) {
     grid-template-columns: repeat(2, 1fr);
-    }
-    @media screen and (max-width: 786px) {
+  }
+  @media screen and (max-width: 786px) {
     grid-template-columns: repeat(1, 1fr);
-    }
+  }
 }
 
-.utility-card{
-    border-radius: 8px;
-    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
-    height: 100%;
-    // width: 450px;
-    height: auto;
-    overflow: hidden;
-    position: relative;
-    // filter: grayscale(0.5);
-    transition: all .35s;
-    --mask: linear-gradient(-135deg, #0000 50px, #000 0);
+.utility-card {
+  border-radius: 8px;
+  background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  height: 100%;
+  // width: 450px;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  // filter: grayscale(0.5);
+  transition: all 0.35s;
+  --mask: linear-gradient(-135deg, #0000 50px, #000 0);
   -webkit-mask: var(--mask);
   mask: var(--mask);
-    aspect-ratio: 16/9;
-
+  aspect-ratio: 16/9;
 }
 
-.utility-title{
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 20px;
-    color: #ffffff;
-    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-    margin-bottom: 0;
-    @media screen and (max-width: 786px) {
+.utility-title {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 20px;
+  color: #ffffff;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+  margin-bottom: 0;
+  @media screen and (max-width: 786px) {
     font-size: 26px;
-
-    }
+  }
 }
 
-.utility-desc{
-        font-family: "Poppins";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 18px;
-    color: #ffffff;
-    text-align: center;
-    @media screen and (max-width: 786px) {
-        font-size: 10px;
-        line-height: 14px;
-        }
+.utility-desc {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: #ffffff;
+  text-align: center;
+  @media screen and (max-width: 786px) {
+    font-size: 10px;
+    line-height: 14px;
+  }
 }
 
-.utility-first{
-    position: absolute;
-    transition: all .35s;
-    opacity: 1;
+.utility-first {
+  position: absolute;
+  transition: all 0.35s;
+  opacity: 1;
 }
 
-.utility-desc-div{
-    transition: all .35s;
-    position: absolute;
-    width: 90%;
-    opacity: 0;
-    transform: translateY(300px);
+.utility-desc-div {
+  transition: all 0.35s;
+  position: absolute;
+  width: 90%;
+  opacity: 0;
+  transform: translateY(300px);
 }
 
-.mainnet-card{
- background-image: url('./assets/mainnet.webp');
- background-size: 100% 100%;
- transition: all .35s;
+.mainnet-card {
+  background-image: url("./assets/mainnet.webp");
+  background-size: 100% 100%;
+  transition: all 0.35s;
 }
 
-.stats-card{
-background-image: url('./assets/stats.webp');
- background-size: 100% 100%;
- transition: all .35s;
+.stats-card {
+  background-image: url("./assets/stats.webp");
+  background-size: 100% 100%;
+  transition: all 0.35s;
 }
 
-.integrations-card{
-background-image: url('./assets/nftIntegrations.webp');
- background-size: 100% 100%;
- transition: all .35s;
+.integrations-card {
+  background-image: url("./assets/nftIntegrations.webp");
+  background-size: 100% 100%;
+  transition: all 0.35s;
 }
 
-.coins-card{
-background-image: url('./assets/utilities.webp');
- background-size: 100% 100%;
- transition: all .35s;
+.coins-card {
+  background: linear-gradient(to bottom left, #36f5ff, #cf4bf7, #15002d),
+    linear-gradient(to bottom right, #500097, #cf4bf7, #4c0094),
+    url("./assets/utilities.png");
+
+  background-size: cover;
+  background-blend-mode: color;
+  background-position: center;
+  transition: all 0.35s;
 }
 
-.events-card{
-background-image: url('./assets/premiumEvents.webp');
- background-size: 100% 100%;
- transition: all .35s;
+.events-card {
+  background-image: url("./assets/premiumEvents.webp");
+  background-size: 100% 100%;
+  transition: all 0.35s;
 }
-.partners-card{
-background-image: url('./assets/partners.webp');
- background-size: 100% 100%;
- transition: all .35s;
+.partners-card {
+  background-image: url("./assets/partners.webp");
+  background-size: 100% 100%;
+  transition: all 0.35s;
 }
 
+.utility-card:hover {
+  background: linear-gradient(
+    126.67deg,
+    rgba(113, 51, 229, 0.2) 35.2%,
+    rgba(24, 22, 54, 0.2) 191.04%
+  );
+  filter: grayscale(0);
 
-.utility-card:hover{
-    background: linear-gradient(126.67deg, rgba(113, 51, 229, 0.2) 35.2%, rgba(24, 22, 54, 0.2) 191.04%);
-    filter: grayscale(0);
-
-
-.utility-desc-div{
+  .utility-desc-div {
     transform: translateY(0px);
     opacity: 1;
-}
+  }
 
-.utility-first{
+  .utility-first {
     transform: translateY(-300px);
     opacity: 0;
+  }
 }
-} 

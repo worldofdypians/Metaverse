@@ -383,7 +383,7 @@ const Roadmap = () => {
         {
           title: "Launch Mobile App",
           desc: "Release a mobile application to provide users with a more convenient way to access the platform and its features.",
-          completed: false,
+          completed: true,
         },
       ],
     },
@@ -395,24 +395,9 @@ const Roadmap = () => {
         {
           title: "New Game UI Development",
           desc: "Develop a new user interface to improve navigation and accessibility within the game.",
-          completed: false,
+          completed: true,
         },
 
-        {
-          title: "Multiplayer Social Hub",
-          desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
-          completed: false,
-        },
-        {
-          title: "Introduction of Character Customization",
-          desc: "Allow players to personalize their main avatar/character with facial and body features.",
-          completed: false,
-        },
-        {
-          title: "Addition of Game Currency",
-          desc: "Introduce a new in-game currency to enhance the game's economy and provide more options for players.",
-          completed: false,
-        },
 
         // {
         //   title: "Introduction of Shop v1",
@@ -420,18 +405,35 @@ const Roadmap = () => {
         //   completed: false,
         // },
         {
+          title: "Challenger Features",
+          desc: "Exciting and engaging new in-game challenger events to enhance overall gameplay experience.",
+          completed: true,
+        },
+        {
           title: "Improving Tracking Rewards",
           desc: "Enhance the tracking of historic data rewards earned by players to improve their gaming experience.",
-          completed: false,
+          completed: true,
         },
         {
           title: "Personalized Game Domain",
           desc: "Enable players to create personalized web3 names with a customized domain name.",
-          completed: false,
+          completed: true,
         },
         {
           title: "Partnership Development",
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
+          completed: true,
+        },
+        
+        {
+          title: "Multiplayer Social Hub",
+          desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
+          completed: false,
+        },
+      
+        {
+          title: "Addition of Game Currency",
+          desc: "Introduce a new in-game currency to enhance the game's economy and provide more options for players.",
           completed: false,
         },
       ],
@@ -446,12 +448,12 @@ const Roadmap = () => {
           desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
           completed: false,
         },
+       
         {
-          title: "Introduction of Character NFT Generation",
-          desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
+          title: "Introduction of Character Customization",
+          desc: "Allow players to personalize their main avatar/character with facial and body features.",
           completed: false,
         },
-
         {
           title: "Expanding with a New Environment",
           desc: "Create a new environment, such as an island, for players to explore, complete tasks, and engage in battles.",
@@ -497,6 +499,11 @@ const Roadmap = () => {
         {
           title: "Full Release of the Multiplayer PvP",
           desc: "Launch the full version of the multiplayer player-versus-player mode for competitive gameplay.",
+          completed: false,
+        },
+        {
+          title: "Introduction of Character NFT Generation",
+          desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
           completed: false,
         },
         {

@@ -110,7 +110,8 @@ const WodBuilders = () => {
       icon: "seiLogo",
       banner: "seiBanner.webp",
       link: "https://x.com/worldofdypians/status/1795177907821617607",
-    },
+    }, 
+
     {
       name: "Midle",
       icon: "midle",
@@ -126,6 +127,28 @@ const WodBuilders = () => {
       icon: "cookie3",
       banner: "kucoinBanner.png",
     },
+    {
+      name: "KlapAI",
+      icon: "klapai",
+      banner: "kucoinBanner.png",
+    },
+    {
+      name: "Magic Store",
+      icon: "magic",
+      banner: "kucoinBanner.png",
+    },
+    {
+      name: "GGPLAY",
+      icon: "ggplay",
+      banner: "kucoinBanner.png",
+      link:'https://x.com/GGPlayOfficial/status/1801263235221647731'
+    },
+    {
+      name: "KAPGAMES",
+      icon: "kapgames",
+      banner: "kucoinBanner.png",
+    },
+  
   ];
 
   useEffect(() => {
@@ -159,7 +182,12 @@ const WodBuilders = () => {
                 alt=""
               />
               <div className="d-flex align-items-center gap-2">
-                <img src={require(`./assets/${item.icon}.svg`)} alt="" />
+              {item.icon === "klapai" ?
+                <img src={require(`./assets/${item.icon}.png`)} width={24} height={24} alt="" />
+                :
+                <img src={require(`./assets/${item.icon}.svg`)} width={24} height={24} alt="" />
+              
+              }
 
                 <span className="builder-title mb-0">{item.name}</span>
               </div>

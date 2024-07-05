@@ -29,15 +29,14 @@ const DragonPopup = ({onClosePopup}) => {
           participants, and it adds a whole new dimension to the game.
         </p>
         <p className="package-popup-desc">
-          Dragon Ruins participants will receive a 3x multiplier on their
+          Dragon Ruins participants will receive a 4x multiplier on their
           in-game activities, which will increase their leaderboard scores. This
           is a significant advantage that can help players climb the leaderboard
           and earn even more rewards. It's important to note that the event
           benefits last for 1 hour. However, players can purchase additional
           bundles to extend their usage beyond the initial 1 hour time frame.
           Purchasing additional bundles allows players to kill the dragon
-          multiple times, earning additional rewards each time they do so. Each
-          bundle purchase also grants the user a ticket to the CAWS NFT lottery.
+          multiple times, earning additional rewards each time they do so.
         </p>
         <p className="package-popup-desc">
           There is no limit to the amount of bundles a user may purchase during
@@ -58,7 +57,7 @@ const DragonPopup = ({onClosePopup}) => {
             Defeat the dragon to earn a significant amount of in-game rewards.
           </li>
           <li className="package-popup-desc">
-            Enjoy a 3x multiplier on your in-game activities, increasing your
+            Enjoy a 4x multiplier on your in-game activities, increasing your
             leaderboard scores.
           </li>
           <li className="package-popup-desc">
@@ -66,10 +65,7 @@ const DragonPopup = ({onClosePopup}) => {
             additional bundles to extend your usage beyond the initial 1 hour
             time frame.
           </li>
-          <li className="package-popup-desc">
-            The Each bundle purchase will grant you a ticket to the CAWS NFT
-            lottery.
-          </li>
+          
           <li className="package-popup-desc">
             There is no limit to the amount of bundles you may purchase during
             this promotional period.

@@ -73,9 +73,7 @@ const NewChestItem = ({
       if (result.status === 200) {
         onClaimRewards(result.data);
         setIsChestOpen(true);
-        if (chainText !== "skale") {
-          handleSecondTask(address);
-        }
+
         // onChestStatus("success");
         onLoadingChest(false);
         setLoading(false);
@@ -116,11 +114,9 @@ const NewChestItem = ({
   };
 
   const handleSecondTask = async (wallet) => {
-
-
-      const result2 = await axios
+    const result2 = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task6/${wallet}`
+        `https://api.worldofdypians.com/api/airdrop-alliance/task8/${wallet}`
       )
       .catch((err) => {
         console.error(err);
@@ -170,9 +166,7 @@ const NewChestItem = ({
         });
       if (result.status === 200) {
         onClaimRewards(result.data);
-        if (chainText !== "skale") {
-          handleSecondTask(address);
-        }
+
         setIsChestOpen(true);
         // onChestStatus("success");
         onLoadingChest(false);
@@ -623,9 +617,7 @@ const NewChestItem = ({
   };
 
   useEffect(() => {
-    if (
-      (!isPremium && rewardTypes === "premium")
-    ) {
+    if (!isPremium && rewardTypes === "premium") {
       setIsChestOpen(false);
     }
   }, [isPremium, rewardTypes]);
@@ -670,7 +662,7 @@ const NewChestItem = ({
           className={` ${
             chain === "bnb" ? "new-chest-item-img" : "new-chest-item-img-skale"
           } ${
-            loading ? (chain === "bnb" ? "chest-shake" : "chest-pulsate") : ""
+            loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
           }`}
           src={
             chain === "bnb" ||
@@ -688,16 +680,13 @@ const NewChestItem = ({
           style={{
             position: "relative",
             bottom: "5px",
-            filter:
-              ((rewardTypes === "premium" && !isPremium) ||
-                (chain !== "bnb" && chain !== "skale")) &&
-              "blur(5px)",
+            filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
           }}
         />
       ) : rewardTypes === "premium" && dummypremiumChests ? (
         <img
           className={`new-chest-item-img ${
-            loading ? (chain === "bnb" ? "chest-shake" : "chest-pulsate") : ""
+            loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
           }`}
           src={
             chain === "bnb" ||
@@ -719,19 +708,13 @@ const NewChestItem = ({
           style={{
             position: "relative",
             bottom: "5px",
-            filter:
-              ((rewardTypes === "premium" && !isPremium) ||
-                (chain !== "bnb" && chain !== "skale")) &&
-              "blur(5px)",
+            filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
           }}
         />
       ) : (
         <></>
       )}
-      {((rewardTypes === "premium" && !isPremium) ||
-        (chain !== "bnb" &&
-          chain !== "skale" &&
-          rewardTypes === "premium")) && (
+      {rewardTypes === "premium" && !isPremium && (
         <img
           src={premiumLock}
           className={`premium-lock ${shake && "shake-lock"}`}

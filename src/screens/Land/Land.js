@@ -23,7 +23,8 @@ const Land = ({
   showForms,
   balance,
   count,
-  setCount
+  setCount,
+  socials
 }) => {
   const [showUnstakeModal, setShowUnstakeModal] = useState(false);
   const [showWithdrawModal, setshowWithdrawModal] = useState(false);
@@ -595,7 +596,7 @@ const Land = ({
           handleSwitchChain={handleSwitchChain}
         />
         <LandTiers />
-        <Members handleRegister={handleRegister} />
+        <Members handleRegister={handleRegister} socials={socials} />
         <Community />
         <LandBenefits />
       </div>
