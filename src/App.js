@@ -73,9 +73,21 @@ import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
 import OurTeam from "./screens/OurTeam/OurTeam.js";
+import Token from "./screens/Wod/Token/Token.js";
+import Bridge from "./screens/Wod/Bridge/Bridge.js";
+import Earn from "./screens/Wod/Earn/Earn.js";
+import Buy from "./screens/Wod/Buy/Buy.js";
+import Governance from "./screens/Community/Governance/Governance.js";
+import GovernanceInner from "./screens/Community/Governance/GovernanceContent/GovernanceInner.js";
+import GameUpdates from "./screens/Community/GameUpdates/GameUpdates.js";
+import Brand from "./screens/About/Brand/Brand.js";
+import Partners from "./screens/About/Partners/Partners.js";
+import Tokenomics from "./screens/About/Tokenomics/Tokenomics.js";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
+import About from "./screens/About/About.js";
+import Game from "./screens/Game/Game.js";
 
 function App() {
   const CHAINLIST = {
@@ -4141,6 +4153,33 @@ function App() {
               />
             }
           />
+          <Route exact path="/token" element={<Token />} />
+          <Route exact path="/bridge" element={<Bridge />} />
+          <Route
+            exact
+            path="/earn"
+            element={
+              <Earn
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={chainId}
+                handleSwitchNetwork={handleSwitchNetwork}
+                onConnectWallet={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+          <Route exact path="/buy" element={<Buy />} />
+          <Route exact path="/governance" element={<Governance />} />
+          <Route exact path="/governance/proposal/:proposalId" element={<GovernanceInner />} />
+
+          <Route exact path="/game" element={<Game />} />
+          <Route exact path="/game-updates" element={<GameUpdates />} />
+          {/* <Route exact path="/brand" element={<Brand />} /> */}
+          {/* <Route exact path="/partners" element={<Partners />} />
+            <Route exact path="/tokenomics" element={<Tokenomics />} /> */}
+          <Route exact path="/about" element={<About />} />
 
           {/* <Route
               exact
@@ -4360,24 +4399,15 @@ function App() {
         </Routes>
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
         <ScrollTop />
-        {location.pathname.includes("marketplace") ||
-        location.pathname.includes("notifications") ||
-        location.pathname.includes("account") ? (
-          location.pathname.includes("caws") ||
-          location.pathname.includes("land") ? null : (
-            <MarketplaceFooter />
-          )
-        ) : (
           <Footer />
-        )}
       </div>
 
-      {!location.pathname.includes("account") &&
+      {/* {!location.pathname.includes("account") &&
         !location.pathname.includes("auth") &&
         !location.pathname.includes("explorer") &&
         !location.pathname.includes("bnbchain-alliance-program") && (
           <ChestFlyout />
-        )}
+        )} */}
       {domainPopup && (
         <DomainModal
           onClose={() => setDomainPopup(false)}

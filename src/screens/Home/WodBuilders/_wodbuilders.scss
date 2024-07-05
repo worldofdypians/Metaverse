@@ -18,11 +18,10 @@
 
 .builder-item {
   border-radius: 8px;
-  background: linear-gradient(
-    148deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
+  background: linear-gradient(148deg, rgba(170, 20, 240, 0.10) 0%, rgba(170, 20, 240, 0.05) 100%);
+
+  backdrop-filter: blur(10px);
+  
   backdrop-filter: blur(10px);
 }
 
@@ -58,8 +57,15 @@
 }
 
 .build-business-wrapper {
-  background: linear-gradient(262.84deg, #7e39fd 0%, #2f1369 100%);
+  background-image: url("./assets/wodpartnersBg.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
   position: relative;
+  @media screen and (max-width: 786px) {
+  background-image: url("./assets/wodpartnersBgMobile.png");
+    
+  }
 }
 
 .build-business-title-wrapper {
@@ -80,23 +86,61 @@
   }
 }
 
-.build-business-wrapper::before {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  content: "";
-  background-image: url("./assets/businessLines.svg");
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: contain;
-
-  @media screen and (max-width: 786px) {
-    background-size: 100% 100%;
-  }
-}
 
 .partner-banner{
   border-radius: 18px 0 18px 0;
+}
+
+.builders-bg{
+  background-image: url('./assets/buildersBg.webp');
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-size: 100% 75%;
+  background-repeat: no-repeat;
+  background-position: bottom;
+
+  
+}
+
+.builders-bg-large{
+  background-image: url('./assets/buildersBgLarge.webp') !important;
+  @media screen and (max-width: 786px) {
+    background-size: auto !important;
+  }
+}
+
+
+.partner-logo-container{
+  width: 90px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.small-partners-title{
+  color: #EEEDFF;
+text-align: center;
+font-family: "Montserrat";
+text-transform: uppercase;
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: 24px; /* 171.429% */
+}
+
+.view-all-partners{
+  color: #DCFB85;
+font-family: "Montserrat";
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+white-space: nowrap;
+}
+
+.new-partners-grid{
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  gap: 10px;
 }

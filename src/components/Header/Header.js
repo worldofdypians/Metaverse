@@ -6,7 +6,7 @@ import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import person from "./assets/person.svg";
 import personCoinbase from "./assets/personCoinbase.png";
 import personNoCoinbase from "./assets/personNoCoinbase.png";
-
+import headerArrow from "./assets/headerArrow.svg";
 import copy from "./assets/copy.svg";
 import check from "./assets/check.svg";
 import user from "./assets/user.svg";
@@ -51,14 +51,30 @@ import base from "./assets/base.svg";
 import conflux from "./assets/conflux.svg";
 import sei from "./assets/sei.svg";
 import multiversx from "./assets/multiversx.svg";
-
+import twitterHeader from "./assets/twitterHeader.svg";
+import telegramHeader from "./assets/telegramHeader.svg";
+import discordHeader from "./assets/discordHeader.svg";
+import instagramHeader from "./assets/instagramHeader.svg";
+import youtubeHeader from "./assets/youtubeHeader.svg";
+import mediumHeader from "./assets/mediumHeader.svg";
 import error from "./assets/error.svg";
+import personIcon from "./assets/personIcon.svg";
 import dropdown from "./assets/dropdown.svg";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import logouticon from "./assets/logout.svg";
 import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
+import cartIcon2 from './assets/dropdownAssets/cartIcon.svg'
+import epicIcon from './assets/dropdownAssets/epicIcon.svg'
+import guestIcon from './assets/dropdownAssets/guestIcon.svg'
+import linkedIcon from './assets/dropdownAssets/linkedIcon.svg'
+import logoutIcon from './assets/dropdownAssets/logoutIcon.svg'
+import registerIcon from './assets/dropdownAssets/registerIcon.svg'
+import supportIcon from './assets/dropdownAssets/supportIcon.svg'
+import unlinkedIcon from './assets/dropdownAssets/unlinkedIcon.svg'
+import userIcon from './assets/dropdownAssets/userIcon.svg'
+import walletIcon from './assets/dropdownAssets/walletIcon.svg'
 
 const Header = ({
   handleSignUp,
@@ -94,6 +110,20 @@ const Header = ({
   const [victionState, setVictionState] = useState(false);
   const [seiState, setSeiState] = useState(false);
   const [immutableState, setImmutableState] = useState(false);
+  const [account, setAccount] = useState({
+    logged: true,
+    wallet: false,
+    linked: false,
+    guest: true,
+  })
+  const [dropdown, setDropdown] = useState({
+    wod: null,
+    game: null,
+    community: null,
+    about: null,
+    collections: null,
+    account: null,
+  });
 
   // const [domainPopup, setDomainPopup] = useState(false);
 
@@ -231,6 +261,15 @@ const Header = ({
         setSeiState(false);
       }
     }
+  };
+
+  const handleDropdown = (key) => {
+    setDropdown((prevState) => ({
+      ...Object.keys(prevState).reduce((acc, curr) => {
+        acc[curr] = curr === key ? key : null;
+        return acc;
+      }, {}),
+    }));
   };
 
   const handleEthPool = async () => {
@@ -498,87 +537,360 @@ const Header = ({
   }, [myOffers, coinbase, nftCount]);
 
   return (
-    <>
-      <div className="d-none d-lg-flex px-5 navbar-wrapper py-4 w-100">
+    <div className="d-flex flex-column">
+      <div className="d-none d-lg-flex navbar-wrapper p-3 ">
         <div className="row justify-content-between mx-0 w-100">
-          <div className="col-7 col-xl-7 col-xxl-7 d-flex align-items-center justify-content-between ps-0">
+          <div className="col-7 col-xl-7 col-xxl-7 d-flex align-items-center justify-content-start gap-5 ps-0">
             <NavLink to="/">
-              <img src={metaverse} alt="metaverse" />
+              <img src={metaverse} alt="metaverse" height={32} />
             </NavLink>
-            <NavLink
-              to="/explorer"
-              className={({ isActive }) =>
-                isActive
-                  ? "nav-anchor font-poppins activenavlink"
-                  : "nav-anchor font-poppins"
+            <div
+              className={
+                "nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2"
               }
+              style={{ cursor: "pointer" }}
+              onMouseEnter={() => handleDropdown("wod")}
+              onMouseLeave={() => handleDropdown(null)}
             >
-              Explore
-            </NavLink>
-            {/* <a href="#marketplace" className="nav-anchor font-poppins">Marketplace</a> */}
-            {/* <div className="nav-anchor font-poppins">Roadmap</div> */}
+              WOD
+              <img src={headerArrow} alt="" />
+              <div
+                className={`header-dropdown p-2 d-flex flex-column gap-2 ${
+                  dropdown.wod === "wod" ? "header-dropdown-active" : ""
+                }`}
+              >
+                <NavLink
+                  to={"/token"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Token
+                </NavLink>
+                <NavLink
+                  to={"/earn"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Earn
+                </NavLink>
+                <NavLink
+                  to={"/bridge"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Bridge
+                </NavLink>
+                <NavLink
+                  to={"/buy"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Buy
+                </NavLink>
+              </div>
+            </div>
+            {/* <a href="#marketplace" className="nav-anchor">Marketplace</a> */}
+            {/* <div className="nav-anchor">Roadmap</div> */}
 
             <NavLink
-              to="/land"
+              to="/game"
               className={({ isActive }) =>
-                isActive
-                  ? "nav-anchor font-poppins activenavlink"
-                  : "nav-anchor font-poppins"
+                isActive ? "nav-anchor activenavlink" : "nav-anchor"
               }
             >
-              Land
+              Game
             </NavLink>
             <NavLink
               to="/marketplace"
               className={({ isActive }) =>
-                isActive
-                  ? "nav-anchor font-poppins activenavlink"
-                  : "nav-anchor font-poppins"
+                isActive ? "nav-anchor activenavlink" : "nav-anchor"
               }
             >
               Marketplace
             </NavLink>
-            <NavLink
-              to="/community"
-              className={({ isActive }) =>
-                isActive
-                  ? "nav-anchor font-poppins activenavlink"
-                  : "nav-anchor font-poppins"
+            <div
+              className={
+                "nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2"
               }
+              style={{ cursor: "pointer" }}
+              onMouseEnter={() => handleDropdown("community")}
+              onMouseLeave={() => handleDropdown(null)}
             >
               Community
-            </NavLink>
-            <NavLink
-              to="/roadmap"
-              className={({ isActive }) =>
-                isActive
-                  ? "nav-anchor font-poppins activenavlink"
-                  : "nav-anchor font-poppins"
+              <img src={headerArrow} alt="" />
+              <div
+                className={`header-dropdown  p-2 d-flex flex-column gap-2 ${
+                  dropdown.community === "community"
+                    ? "header-dropdown-active"
+                    : ""
+                }`}
+              >
+                <NavLink
+                  to={"/governance"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Governance
+                </NavLink>
+                <NavLink
+                  to={"/game-updates"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Game Updates
+                </NavLink>
+                <hr className="header-divider my-0" />
+                <div className="d-flex align-items-center justify-content-between px-2 mb-2">
+                  <a href="#">
+                    <img src={twitterHeader} width={25} alt="" />
+                  </a>
+                  <a href="#">
+                    <img src={telegramHeader} width={25} alt="" />
+                  </a>
+                  <a href="#">
+                    <img src={discordHeader} width={25} alt="" />
+                  </a>
+                </div>
+                <div className="d-flex align-items-center justify-content-between px-2 mb-2">
+                  <a href="#">
+                    <img src={instagramHeader} width={25} alt="" />
+                  </a>
+                  <a href="#">
+                    <img src={youtubeHeader} width={25} alt="" />
+                  </a>
+                  <a href="#">
+                    <img src={mediumHeader} width={25} alt="" />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div
+              className={
+                "nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2"
               }
+              style={{ cursor: "pointer" }}
+              onMouseEnter={() => handleDropdown("about")}
+              onMouseLeave={() => handleDropdown(null)}
             >
-              Roadmap
-            </NavLink>
-            <NavLink
-              to="/news"
-              className={({ isActive }) =>
-                isActive
-                  ? "nav-anchor font-poppins activenavlink"
-                  : "nav-anchor font-poppins"
-              }
-            >
-              News
-            </NavLink>
+              <NavLink to="/about" className="text-white">
+                About
+              </NavLink>
+              <img src={headerArrow} alt="" />
+              <div
+                className={`header-dropdown p-2 d-flex flex-column gap-2 ${
+                  dropdown.about === "about" ? "header-dropdown-active" : ""
+                }`}
+              >
+                <NavLink
+                  to={"/about#partners"}
+                  className={({ isActive }) =>
+                    isActive && window.location.hash === "#partners"
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Partners
+                </NavLink>
+                <NavLink
+                  to={"/about#roadmap"}
+                  className={({ isActive }) =>
+                    isActive && window.location.hash === "#roadmap"
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Roadmap
+                </NavLink>
+                <NavLink
+                  to={"/about#tokenomics"}
+                  className={({ isActive }) =>
+                    isActive && window.location.hash === "#tokenomics"
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Tokenomics
+                </NavLink>
+                <NavLink
+                  to={"/about#ourteam"}
+                  className={({ isActive }) =>
+                    isActive && window.location.hash === "#ourteam"
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Team
+                </NavLink>
+                <NavLink
+                  to={"/about#brand"}
+                  className={({ isActive }) =>
+                    isActive && window.location.hash === "#brand"
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Brand
+                </NavLink>
+              </div>
+            </div>
           </div>
           <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
-            {!coinbase ? (
-              <div className="linearborder2">
-                <button
-                  className="btn connectwallet px-3"
-                  onClick={handleSignUp}
+            <NavLink
+              to={"/account"}
+              onMouseEnter={() => handleDropdown("account")}
+              onMouseLeave={() => handleDropdown(null)}
+              className="d-flex align-items-center gap-2 position-relative"
+            >
+              <img src={personIcon} alt="" />
+              <h6 className="mb-0 account-txt">Account</h6>
+              <img src={headerArrow} alt="" />
+
+              <div
+                className={`header-dropdown p-2 d-flex flex-column gap-2 ${
+                  dropdown.account === "account" ? "header-dropdown-active" : ""
+                }`}
+              >
+               {account.logged === false ?
+                <>
+                 <button className="header-log-btn py-2">Log In</button>
+                <hr className="header-divider my-0" />
+                <NavLink
+                  to={"/contact-us"}
+                  className={({ isActive }) =>
+                    isActive 
+                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                  }
                 >
-                  Connect Wallet
-                </button>{" "}
+                  <img width={20} height={20} src={guestIcon} alt="" />
+                  Continue as Guest
+                </NavLink>
+                <NavLink
+                  to={"/contact-us"}
+                  className={({ isActive }) =>
+                    isActive 
+                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                  }
+                >
+                  <img width={20} height={20} src={registerIcon} alt="" />
+                  Sign Up
+                </NavLink>
+                <hr className="header-divider my-0" />
+
+                </>
+                : account.logged === true && account.guest === true ? 
+                <>
+                 <NavLink
+                  to={"/account"}
+                  className={({ isActive }) =>
+                    isActive 
+                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2 position-relative"
+                      : "dropdown-nav nav-active p-2 d-flex align-items-center gap-2 position-relative"
+                  }
+                >
+                  <img width={20} height={20} src={userIcon} alt="" />
+                  Guest
+                  <img src={account.linked === false ? unlinkedIcon : linkedIcon} className="link-icon" width={20} height={20} alt="" />
+                </NavLink>
+                <div
+                  className={`dropdown-nav ${account.linked === false ? "account-not-linked" : ""} nav-active p-2 d-flex align-items-center gap-2`}
+                >
+                  <img width={20} height={20} src={walletIcon} alt="" />
+                  <div className="d-flex flex-column">
+                    <span className="header-wallet-span">Wallet Address</span>
+                    <span className="header-wallet">
+                      {account.wallet === true ? "0xaC498...c7C9a" : "NA"}
+                      </span>
+                  </div>
+                </div>
+                <hr className="header-divider my-0" />
+                </> 
+                  : <></>
+              }
+                <NavLink
+                  to={"/contact-us"}
+                  className={({ isActive }) =>
+                    isActive 
+                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                  }
+                >
+                  <img width={20} height={20} src={supportIcon} alt="" />
+                  Support
+                </NavLink>
+                <NavLink
+                  to={"/marketplace"}
+                  className={({ isActive }) =>
+                    isActive 
+                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                  }
+                >
+                  <img width={20} height={20} src={cartIcon2} alt="" />
+                  Shop
+                </NavLink>
+                <a
+                  href="https://store.epicgames.com/en-US/p/world-of-dypians-2e0694"
+                  target="_blank"
+                  className={
+                    "dropdown-nav p-2 d-flex align-items-center gap-2"
+
+                  }
+                >
+                  <img width={20} height={20} src={epicIcon} alt="" />
+                  Download
+                </a>
+             
               </div>
+            </NavLink>
+            {/* {!coinbase ? (
+              <NavLink to={"/account"}>
+                <img src={personNoCoinbase} className="account-icon" alt="" />
+              </NavLink>
+            ) : (
+              <NavLink to={"/account"}>
+                <img
+                  src={avatar ? avatar : personCoinbase}
+                  className="account-icon"
+                  alt=""
+                />
+              </NavLink>
+            )} */}
+
+            {!coinbase ? (
+              // <div className="linearborder2">
+              //   <button
+              //     className="btn connectwallet px-3"
+              //     onClick={handleSignUp}
+              //   >
+              //     Connect Wallet
+              //   </button>{" "}
+              // </div>
+              <button
+                className="new-connect-btn px-2 py-1"
+                onClick={handleSignUp}
+              >
+                Connect Wallet
+              </button>
             ) : (
               <div className="d-flex align-items-center gap-3">
                 <div className="position-relative">
@@ -914,7 +1226,7 @@ const Header = ({
                   data-for={id}
                   data-tip="Copied To Clipboard!"
                   data-clipboard-text={coinbase}
-                  className="wallet-wrapper d-flex align-items-center gap-2 position-relative"
+                  className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
                 >
                   <div
                     className="btn connected px-3"
@@ -933,59 +1245,6 @@ const Header = ({
                 </Clipboard>
               </div>
             )}
-            {!coinbase ? (
-              <div
-                onClick={() => {
-                  setshowmenuAccount(true);
-                }}
-              >
-                <img src={personNoCoinbase} className="account-icon" alt="" />
-              </div>
-            ) : (
-              <div
-                className="d-flex flex-column align-items-center position-relative  gap-2"
-                onClick={() => {
-                  setshowmenuAccount(true);
-                }}
-              >
-                <div>
-                  <img
-                    src={avatar ? avatar : personCoinbase}
-                    className="account-icon"
-                    alt=""
-                  />
-                </div>
-              </div>
-            )}
-            {/* {email ? (
-              <button
-                className="logoutbtn px-3 py-1  position-absolute"
-                style={{
-                  width: "fit-content",
-                  bottom: "-23px",
-                  right: "-15px",
-                }}
-                onClick={() => {
-                  logout();
-                  onLogout();
-                }}
-              >
-                <img src={logouticon} alt="" /> Log Out
-              </button>
-            ) : (
-              <button
-                className="logoutbtn px-3 py-1  position-absolute"
-                style={{
-                  width: "fit-content",
-                  bottom: "-23px",
-                  right: "-15px",
-                  color: "#18ffff",
-                }}
-                onClick={onSigninClick}
-              >
-                <img src={logouticon} alt="" /> Sign in
-              </button>
-            )} */}
 
             {showmenu === true && (
               <div className="position-absolute" style={{ width: "210px" }}>
@@ -1084,7 +1343,8 @@ const Header = ({
           </div>
         </div>
       </div>
-    </>
+
+    </div>
   );
 };
 export default Header;
