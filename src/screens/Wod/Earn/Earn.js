@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./_earn.scss";
 import EarnHero from "./EarnHero/EarnHero";
 import EarnContent from "./EarnContent/EarnContent";
@@ -128,6 +128,12 @@ const Earn = ({
   const aprClose = () => {
     setaprTooltip(false);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = "Earn";
+
+  }, []);
 
   return (
     <>

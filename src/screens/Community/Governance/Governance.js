@@ -9,6 +9,8 @@ const Governance = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = "Governance";
+
   }, []);
 
   return (

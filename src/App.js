@@ -78,6 +78,7 @@ import Bridge from "./screens/Wod/Bridge/Bridge.js";
 import Earn from "./screens/Wod/Earn/Earn.js";
 import Buy from "./screens/Wod/Buy/Buy.js";
 import Governance from "./screens/Community/Governance/Governance.js";
+import GovernanceInner from "./screens/Community/Governance/GovernanceContent/GovernanceInner.js";
 import GameUpdates from "./screens/Community/GameUpdates/GameUpdates.js";
 import Brand from "./screens/About/Brand/Brand.js";
 import Partners from "./screens/About/Partners/Partners.js";
@@ -3643,6 +3644,8 @@ function App() {
           />
           <Route exact path="/buy" element={<Buy />} />
           <Route exact path="/governance" element={<Governance />} />
+          <Route exact path="/governance/proposal/:proposalId" element={<GovernanceInner />} />
+
           <Route exact path="/game" element={<Game />} />
           <Route exact path="/game-updates" element={<GameUpdates />} />
           {/* <Route exact path="/brand" element={<Brand />} /> */}

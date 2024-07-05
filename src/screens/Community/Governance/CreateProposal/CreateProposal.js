@@ -62,7 +62,7 @@ const CreateProposal = ({ open, onClose }) => {
                 selectedCategory === "aor"
                   ? "proposal-category-item-active"
                   : "proposal-category-item"
-              } py-2 px-5 w-100`}
+              } py-2 px-2 px-lg-5 w-100`}
               onClick={() => {
                 setSelectedCategory("aor");
               }}
@@ -74,7 +74,7 @@ const CreateProposal = ({ open, onClose }) => {
                 selectedCategory === "poll"
                   ? "proposal-category-item-active"
                   : "proposal-category-item"
-              } py-2 px-5 w-100`}
+              } py-2 px-2 px-lg-5 w-100`}
               onClick={() => {
                 setSelectedCategory("poll");
               }}
