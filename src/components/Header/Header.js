@@ -63,6 +63,16 @@ import dropdown from "./assets/dropdown.svg";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
+import cartIcon2 from './assets/dropdownAssets/cartIcon.svg'
+import epicIcon from './assets/dropdownAssets/epicIcon.svg'
+import guestIcon from './assets/dropdownAssets/guestIcon.svg'
+import linkedIcon from './assets/dropdownAssets/linkedIcon.svg'
+import logoutIcon from './assets/dropdownAssets/logoutIcon.svg'
+import registerIcon from './assets/dropdownAssets/registerIcon.svg'
+import supportIcon from './assets/dropdownAssets/supportIcon.svg'
+import unlinkedIcon from './assets/dropdownAssets/unlinkedIcon.svg'
+import userIcon from './assets/dropdownAssets/userIcon.svg'
+import walletIcon from './assets/dropdownAssets/walletIcon.svg'
 
 const Header = ({
   handleSignUp,
@@ -94,6 +104,12 @@ const Header = ({
   const [victionState, setVictionState] = useState(false);
   const [seiState, setSeiState] = useState(false);
   const [immutableState, setImmutableState] = useState(false);
+  const [account, setAccount] = useState({
+    logged: true,
+    wallet: false,
+    linked: false,
+    guest: true,
+  })
   const [dropdown, setDropdown] = useState({
     wod: null,
     game: null,
@@ -748,56 +764,98 @@ const Header = ({
                   dropdown.account === "account" ? "header-dropdown-active" : ""
                 }`}
               >
+               {account.logged === false ?
+                <>
+                 <button className="header-log-btn py-2">Log In</button>
+                <hr className="header-divider my-0" />
                 <NavLink
-                  to={"/about#partners"}
+                  to={"/contact-us"}
                   className={({ isActive }) =>
-                    isActive && window.location.hash === "#partners"
-                      ? "dropdown-nav nav-active p-2"
-                      : "dropdown-nav p-2"
+                    isActive 
+                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
                   }
                 >
-                  Partners
+                  <img width={20} height={20} src={guestIcon} alt="" />
+                  Continue as Guest
                 </NavLink>
                 <NavLink
-                  to={"/about#roadmap"}
+                  to={"/contact-us"}
                   className={({ isActive }) =>
-                    isActive && window.location.hash === "#roadmap"
-                      ? "dropdown-nav nav-active p-2"
-                      : "dropdown-nav p-2"
+                    isActive 
+                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
                   }
                 >
-                  Roadmap
+                  <img width={20} height={20} src={registerIcon} alt="" />
+                  Sign Up
+                </NavLink>
+                <hr className="header-divider my-0" />
+
+                </>
+                : account.logged === true && account.guest === true ? 
+                <>
+                 <NavLink
+                  to={"/account"}
+                  className={({ isActive }) =>
+                    isActive 
+                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2 position-relative"
+                      : "dropdown-nav nav-active p-2 d-flex align-items-center gap-2 position-relative"
+                  }
+                >
+                  <img width={20} height={20} src={userIcon} alt="" />
+                  Guest
+                  <img src={account.linked === false ? unlinkedIcon : linkedIcon} className="link-icon" width={20} height={20} alt="" />
+                </NavLink>
+                <div
+                  className={`dropdown-nav ${account.linked === false ? "account-not-linked" : ""} nav-active p-2 d-flex align-items-center gap-2`}
+                >
+                  <img width={20} height={20} src={walletIcon} alt="" />
+                  <div className="d-flex flex-column">
+                    <span className="header-wallet-span">Wallet Address</span>
+                    <span className="header-wallet">
+                      {account.wallet === true ? "0xaC498...c7C9a" : "NA"}
+                      </span>
+                  </div>
+                </div>
+                <hr className="header-divider my-0" />
+                </> 
+                  : <></>
+              }
+                <NavLink
+                  to={"/contact-us"}
+                  className={({ isActive }) =>
+                    isActive 
+                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                  }
+                >
+                  <img width={20} height={20} src={supportIcon} alt="" />
+                  Support
                 </NavLink>
                 <NavLink
-                  to={"/about#tokenomics"}
+                  to={"/marketplace"}
                   className={({ isActive }) =>
-                    isActive && window.location.hash === "#tokenomics"
-                      ? "dropdown-nav nav-active p-2"
-                      : "dropdown-nav p-2"
+                    isActive 
+                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
                   }
                 >
-                  Tokenomics
+                  <img width={20} height={20} src={cartIcon2} alt="" />
+                  Shop
                 </NavLink>
-                <NavLink
-                  to={"/about#ourteam"}
-                  className={({ isActive }) =>
-                    isActive && window.location.hash === "#ourteam"
-                      ? "dropdown-nav nav-active p-2"
-                      : "dropdown-nav p-2"
+                <a
+                  href="https://store.epicgames.com/en-US/p/world-of-dypians-2e0694"
+                  target="_blank"
+                  className={
+                    "dropdown-nav p-2 d-flex align-items-center gap-2"
+
                   }
                 >
-                  Team
-                </NavLink>
-                <NavLink
-                  to={"/about#brand"}
-                  className={({ isActive }) =>
-                    isActive && window.location.hash === "#brand"
-                      ? "dropdown-nav nav-active p-2"
-                      : "dropdown-nav p-2"
-                  }
-                >
-                  Brand
-                </NavLink>
+                  <img width={20} height={20} src={epicIcon} alt="" />
+                  Download
+                </a>
+             
               </div>
             </NavLink>
             {/* {!coinbase ? (
