@@ -44,12 +44,17 @@ import championBust from "./assets/championBust.png";
 import unstoppableBust from "./assets/unstoppableBust.png";
 import skaleActive from "../../Components/LeaderBoard/assets/skaleActive.svg";
 import bnbActive from "../../Components/LeaderBoard/assets/bnbActive.svg";
+import coreActive from "../../Components/LeaderBoard/assets/coreActive.svg";
+import victionActive from "../../Components/LeaderBoard/assets/victionActive.svg";
 import starAlert from "./assets/star-alert.svg";
 import axios from "axios";
+import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
 import Countdown from "react-countdown";
 import { dyp700Address, dyp700v1Address } from "../../web3";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import becomePremium from "./assets/becomePremium.svg";
+import premiumDiscount from "./assets/premiumDiscount.svg";
+
 import OutsideClickHandler from "react-outside-click-handler";
 import Slider from "react-slick";
 import { Tooltip, tooltipClasses } from "@mui/material";
@@ -57,7 +62,7 @@ import styled from "styled-components";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import premiumOfferTag from "./assets/premiumOfferTag2.png";
 import premiumExclusive from "./assets/premiumExclusive2.svg";
-// import premiumExclusive2 from "./assets/premiumExclusive2.svg";
+import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 
 // const renderer = ({ hours, minutes, seconds }) => {
 //   return (
@@ -92,6 +97,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 
 const ProfileCard = ({
   email,
+  discountPercentage,
   username,
   balance,
   address,
@@ -110,22 +116,25 @@ const ProfileCard = ({
   isConnected,
   onOpenLeaderboard,
   onOpenGenesisLeaderboard,
-
+  setPortfolio,
   onPremiumClick,
   handleSetAvailableTime,
   userRank,
   userRankSkale,
   userBnbScore,
   userSkaleScore,
+  userRankCore,
+  userCoreScore,
+  userRankViction,
+  userVictionScore,
   genesisRank,
   handleOpenDomains,
   domainName,
   rankData,
   setRankData,
-  getRankData,
+  getRankData,userDataStar, userDataPosition
 }) => {
-  let id = Math.random().toString(36);
-
+  let id = Math.random().toString(36); 
   const windowSize = useWindowSize();
   const [exclusivePremium, setExclusivePremium] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -152,7 +161,8 @@ const ProfileCard = ({
   const sliderRef = useRef(null);
   const [rankTooltip, setRankTooltip] = useState(false);
 
-  const userTotalScore = userBnbScore + userSkaleScore;
+  const userTotalScore =
+    userBnbScore + userSkaleScore + userCoreScore + userVictionScore;
 
   const handleUserRank = () => {
     let allScore;
@@ -161,46 +171,45 @@ const ProfileCard = ({
     } else if (rankData && rankData.multiplier === "no") {
       allScore = userTotalScore;
     }
-    if (allScore > 39999999) {
+    if (allScore > 59999999) {
       setUserRankName({
         name: "unstoppable",
         id: 4,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(4);
       setUserProgress(100);
-    } else if (allScore > 23999999) {
+    } else if (allScore > 34999999) {
       setUserRankName({
         name: "champion",
         id: 3,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(3);
-      setUserProgress((allScore / 40000000) * 100);
-    } else if (allScore > 11999999) {
+      setUserProgress((allScore / 60000000) * 100);
+    } else if (allScore > 21999999) {
       setUserRankName({
         name: "underdog",
         id: 2,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(2);
-      setUserProgress((allScore / 24000000) * 100);
-    } else if (allScore > 5999999) {
+      setUserProgress((allScore / 35000000) * 100);
+    } else if (allScore > 9999999) {
       setUserRankName({
         name: "rookie",
         id: 1,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(1);
-      setUserProgress((allScore / 12000000) * 100);
+      setUserProgress((allScore / 22000000) * 100);
     } else {
-     
       sliderRef?.current?.innerSlider?.slickGoTo(0);
-      setUserProgress((allScore / 6000000) * 100);
+      setUserProgress((allScore / 10000000) * 100);
     }
   };
-  
+
   const updateUserRank = async () => {
     if (rankData && userRankName) {
       if (rankData.rank == userRankName.id) {
         return;
-      } else if(rankData.rank <userRankName.id ) {
+      } else if (rankData.rank < userRankName.id) {
         await axios
           .patch(
             `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
@@ -402,7 +411,15 @@ const ProfileCard = ({
 
   useEffect(() => {
     handleUserRank();
-  }, [userRank, userRankSkale, userBnbScore, userSkaleScore]);
+  }, [
+    userRank,
+    userRankSkale,
+    userBnbScore,
+    userRankCore,
+    userRankViction,
+    userCoreScore,
+    userVictionScore,
+  ]);
 
   const html = document.querySelector("html");
 
@@ -433,11 +450,19 @@ const ProfileCard = ({
             >
               <div
                 className={`bordereddiv ${
-                  email && coinbase && username ? "" : "border-bottom-0"
+                  (email && coinbase && username) ||
+                  (!coinbase && email) ||
+                  (!coinbase && !email)
+                    ? ""
+                    : "border-bottom-0"
                 }`}
               >
-                <div className="d-flex   profile-header-wrapper justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
-                  <div className="d-flex gap-2 justify-content-between align-items-center" style={{width: windowSize.width > 991 ? '50%' : '100%'}}>
+                <div className="d-flex flex-column flex-lg-row profile-header-wrapper justify-content-between gap-2 align-items-start align-items-lg-center align-items-md-center">
+                  <div
+                    className={`d-flex gap-2 justify-content-between align-items-center ${
+                      windowSize.width > 991 && "w-50"
+                    }  `}
+                  >
                     <div className="d-flex align-items-center gap-2 w-100">
                       {(coinbase && !email && !isPremium) ||
                       (!coinbase && !email) ||
@@ -447,7 +472,7 @@ const ProfileCard = ({
                         address &&
                         username &&
                         !isPremium) ||
-                        (!address && !isPremium) ? (
+                      (!address && !isPremium) ? (
                         <img
                           src={defaultAvatar}
                           alt=""
@@ -476,7 +501,7 @@ const ProfileCard = ({
                         />
                       )}
 
-{!email && isPremium && coinbase && (
+                      {!email && isPremium && coinbase && (
                         <img
                           src={defaultAvatarPremium}
                           alt=""
@@ -486,35 +511,57 @@ const ProfileCard = ({
 
                       {(isVerified && email) || (coinbase && !email) ? (
                         <div className="d-flex flex-column gap-1 w-100">
-                          {coinbase && !email && (
-                            <div className="d-flex flex-column gap-1 col-lg-9 col-12">
-                              <span className="usernametext font-organetto">
-                                Start your journey now!
-                              </span>
-                            </div>
-                          )}
-                          <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
-                            {email !== undefined && username}
-                            {!domainName && isConnected && (
-                              <span
-                                className={`${
-                                  isPremium
-                                    ? "premiumtext-active"
-                                    : "premiumtext"
-                                }
-                              d-flex align-items-center gap-1`}
-                                style={{ cursor: "pointer" }}
-                                onClick={handleOpenDomains}
-                              >
-                                {address && email && (
-                                  <img
-                                    src={isPremium ? starActive : starDefault}
-                                  />
-                                )}
-                                Get domain name
-                              </span>
+                          <div className="d-flex align-items-center gap-2">
+                            {coinbase && !email && (
+                              <div className="d-flex flex-column gap-1 col-lg-9 col-12">
+                                <span className="usernametext font-organetto">
+                                  Start your journey now!
+                                </span>
+                              </div>
                             )}
-                          </span>
+                            <span className="usernametext font-organetto d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center align-items-md-center gap-2">
+                              {email !== undefined && username}
+                              {!domainName && isConnected && email && (
+                                <span
+                                  className={`${
+                                    isPremium
+                                      ? "premiumtext-active"
+                                      : "premiumtext"
+                                  }
+                              d-flex align-items-center gap-1`}
+                                  style={{ cursor: "pointer" }}
+                                  onClick={handleOpenDomains}
+                                >
+                                  {address && email && (
+                                    <img
+                                      src={isPremium ? starActive : starDefault}
+                                    />
+                                  )}
+                                  Get domain name
+                                </span>
+                              )}
+                              {/* {email && address && coinbase && !isPremium && (
+                    <div
+                      className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
+                    d-flex align-items-center position-relative mt-lg-0`}
+                      onClick={onPremiumClick}
+                      style={{height: "30px"}}
+                    > 
+                      <h6 className="become-premium-title mb-0">
+                        Premium Subscription
+                      </h6>
+
+                      <img
+                        src={becomePremium}
+                        alt=""
+                        className="become-premium-img"
+                        width={40}
+                        
+                      />
+                    </div>
+                  )} */}
+                            </span>
+                          </div>
 
                           <div className="wallet-balance d-flex flex-column flex-xxl-row flex-lg-row gap-3 position-relative">
                             <>
@@ -593,7 +640,7 @@ const ProfileCard = ({
                               </div>
                             </>
                           </div>
-                          {!coinbase && email && (
+                          {/* {!coinbase && email && (
                             <button
                               className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
                               onClick={() => {
@@ -612,7 +659,7 @@ const ProfileCard = ({
                               />
                               Connect wallet
                             </button>
-                          )}
+                          )} */}
                         </div>
                       ) : (
                         <div className="d-flex flex-column gap-1 col-lg-7">
@@ -623,7 +670,7 @@ const ProfileCard = ({
                       )}
                     </div>{" "}
                   </div>
-                  {!coinbase && !email && (
+                  {/* {!coinbase && !email && (
                     <button
                       className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
                       onClick={() => {
@@ -638,7 +685,7 @@ const ProfileCard = ({
                       <img src={blackWallet} alt="" style={{ width: 18 }} />
                       Connect wallet
                     </button>
-                  )}
+                  )} */}
                   {coinbase && address && !email && (
                     <button
                       className="d-flex px-3 py-1 align-items-center gap-2 signinbtn text-nowrap"
@@ -706,7 +753,6 @@ const ProfileCard = ({
                         ? ""
                         : coinbase && isPremium && !email
                         ? "d-none"
-                        
                         : ""
                     }`}
                     style={{
@@ -714,11 +760,14 @@ const ProfileCard = ({
                         !email && !isPremium
                           ? "repeat(1, 1fr)"
                           : email && !isPremium
-                          ? "repeat(4, 1fr)"
+                          ? "repeat(2, 1fr)"
+                          : isPremium
+                          ? "repeat(1, 1fr)"
                           : "repeat(3, 1fr)",
+                      placeItems: "flex-end",
                     }}
                   >
-                    {!isPremium && (
+                    {!isPremium && discountPercentage == 0 && (
                       <div
                         className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
@@ -726,7 +775,7 @@ const ProfileCard = ({
                       >
                         {/* <div className="table-separator position-absolute"></div> */}
                         <h6 className="become-premium-title mb-0">
-                          Become a Premium Member
+                          Premium Subscription
                         </h6>
 
                         <img
@@ -736,66 +785,56 @@ const ProfileCard = ({
                         />
                       </div>
                     )}
+
+                    {!isPremium && discountPercentage > 0 && (
+                      <div
+                        className={` wallet-wrapper-active-discount hoverdiscount position-relative justify-content-between
+                    d-flex align-items-center position-relative mt-3 mt-lg-0`}
+                        onClick={onPremiumClick}
+                      >
+                        <div className="premiumRedTag-profile position-absolute">
+                          <div className="position-relative d-flex flex-column">
+                            <img
+                              src={premiumRedTag}
+                              alt=""
+                              className="premiumtag-img"
+                            />
+                            <div className="d-flex flex-column position-absolute discountwrap-profile">
+                              <span className="discount-price2-profile font-oxanium">
+                                {discountPercentage}%
+                              </span>
+                              <span className="discount-price-bottom">
+                                Discount
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="d-flex flex-column">
+                          <h6 className="lifetime-plan-text2 m-0">
+                            Lifetime plan
+                          </h6>
+
+                          <div className="d-flex align-items-center gap-2">
+                            <h6 className="discount-price-profile m-0">
+                              {discountPercentage == 100
+                                ? "FREE"
+                                : "$" + (100 - Number(discountPercentage))}
+                            </h6>
+                            <h6 className="old-price-text-profile m-0">$100</h6>
+                          </div>
+                        </div>
+                        <img src={premiumDiscount} alt="" className="" />
+                      </div>
+                    )}
+
                     {email && address && (
                       <>
-                        <div
-                          style={{ height: "79px" }}
-                          className={`${
-                            isPremium
-                              ? "wallet-wrapper-active-premium hoverpremium"
-                              : "wallet-wrapper-active hoveractive"
-                          }
-                    position-relative
-                    d-flex  align-items-center justify-content-between gap-3 position-relative mt-3 mt-lg-0`}
-                          onClick={onOpenGenesisLeaderboard}
-                        >
-                          <div className="d-flex flex-column">
-                            <span className="leaderboard-title-span">
-                              Genesis
-                            </span>
-                            <span
-                              className="leaderboard-title-span"
-                              style={{
-                                color: isPremium ? "#FFBF00" : "#1BF5FF",
-                              }}
-                            >
-                              Leaderboard
-                            </span>
-                          </div>
-                          <img
-                            src={globe}
-                            alt=""
-                            style={{ height: "54px", width: "50px" }}
-                          />
-                        </div>
-                        <div
-                          style={{ height: "79px" }}
-                          className={`${
-                            isPremium
-                              ? "wallet-wrapper-active-premium hoverpremium"
-                              : "wallet-wrapper-active hoveractive"
-                          }
-                    position-relative
-                    d-flex  align-items-center justify-content-between gap-3 position-relative mt-3 mt-lg-0`}
-                          onClick={onOpenLeaderboard}
-                        >
-                          <div className="d-flex flex-column">
-                            <span className="leaderboard-title-span">Game</span>
-                            <span
-                              className="leaderboard-title-span"
-                              style={{
-                                color: isPremium ? "#FFBF00" : "#1BF5FF",
-                              }}
-                            >
-                              Leaderboard
-                            </span>
-                          </div>
-                          <img
-                            src={leaderboardIcon}
-                            alt=""
-                            style={{ height: "54px", width: "50px" }}
-                          />
-                        </div>
+                        {/* <img
+                          src={leaderboardIcon}
+                          alt=""
+                          style={{ height: "54px", width: "50px" }}
+                        /> */}
+
                         <div className="position-relative rank-outer-wrapper">
                           <div
                             className={`${
@@ -841,53 +880,158 @@ const ProfileCard = ({
                               onOutsideClick={() => setRankDropdown(false)}
                             >
                               <div className="player-rank-dropdown p-3 d-flex flex-column gap-2">
-                                {/* <div className="total-stars-wrapper d-flex align-items-center justify-content-between p-2">
-                                  <img src={star} style={{width: "30px", height: "30px"}} alt="" />
-                                  <div className="d-flex flex-column align-items-end">
-                                    <span className="total-stars-span">Collected Stars</span>
-                                    <h6 className="total-stars-amount mb-0">{getFormattedNumber(4562, 0)}</h6>
-                                  </div>
-                              </div> */}
-                                <div className="bnb-rank-wrapper d-flex align-items-center justify-content-between p-2 position-relative">
-                                  <img
-                                    src={bnbActive}
-                                    className="rank-logo-position"
-                                    alt=""
-                                  />
-                                  <div className="d-flex flex-column">
-                                    <span className="new-rank-span">
-                                      BNB SCORE
+                                <div className="d-flex flex-column gap-1">
+                                  <div className="d-flex align-items-center justify-content-between">
+                                    <div style={{ width: "33%" }}></div>
+                                    <span
+                                      className="rank-dropdown-span"
+                                      style={{ width: "33%" }}
+                                    >
+                                      Rank
                                     </span>
-                                    <h6 className="bnb-rank-score mb-0">
-                                      {getFormattedNumber(userBnbScore, 0)}
-                                    </h6>
+                                    <span
+                                      className="rank-dropdown-span"
+                                      style={{ width: "33%" }}
+                                    >
+                                      Score
+                                    </span>
                                   </div>
-                                  <div className="d-flex flex-column align-items-center">
-                                    <span className="new-rank-span">RANK</span>
-                                    <h6 className="bnb-rank-score mb-0">
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
+                                        src={bnbActive}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
+                                      <span className="rank-dropdown-text">
+                                        BNB Chain
+                                      </span>
+                                    </div>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
                                       #{userRank + 1}
-                                    </h6>
+                                    </span>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      {getFormattedNumber(userBnbScore, 0)}
+                                    </span>
+                                  </div>
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
+                                        src={skaleActive}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
+                                      <span className="rank-dropdown-text">
+                                        SKALE
+                                      </span>
+                                    </div>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      #{userRankSkale + 1}
+                                    </span>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      {getFormattedNumber(userSkaleScore, 0)}
+                                    </span>
+                                  </div>
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
+                                        src={coreActive}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
+                                      <span className="rank-dropdown-text">
+                                        CORE
+                                      </span>
+                                    </div>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      #{userRankCore + 1}
+                                    </span>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      {getFormattedNumber(userCoreScore, 0)}
+                                    </span>
+                                  </div>
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
+                                        src={victionActive}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
+                                      <span className="rank-dropdown-text">
+                                        VICTION
+                                      </span>
+                                    </div>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      #{userRankViction + 1}
+                                    </span>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      {getFormattedNumber(userVictionScore, 0)}
+                                    </span>
                                   </div>
                                 </div>
-                                <div className="skale-rank-wrapper d-flex align-items-center justify-content-between mt-2 p-2 position-relative">
+                                <div className="total-stars-wrapper d-flex align-items-center justify-content-between p-2">
                                   <img
-                                    src={skaleActive}
-                                    className="rank-logo-position"
+                                    src={star}
+                                    style={{ width: "30px", height: "30px" }}
                                     alt=""
                                   />
-                                  <div className="d-flex flex-column">
-                                    <span className="new-rank-span">
-                                      SKALE SCORE
-                                    </span>
-                                    <h6 className="skale-rank-score mb-0">
-                                      {getFormattedNumber(userSkaleScore, 0)}
-                                    </h6>
-                                  </div>
-                                  <div className="d-flex flex-column align-items-center">
-                                    <span className="new-rank-span">RANK</span>
-                                    <h6 className="skale-rank-score mb-0">
-                                      #{userRankSkale + 1}
-                                    </h6>
+                                  <div className="d-flex align-items-center gap-4">
+                                    {/* <div className="d-flex flex-column align-items-end">
+                                      <span className="total-stars-span">
+                                        Rank
+                                      </span>
+                                      <h6 className="total-stars-amount mb-0">
+                                        #{Number(userDataPosition)+1}
+                                      </h6>
+                                    </div> */}
+                                    <div className="d-flex flex-column align-items-end">
+                                      <span className="total-stars-span">
+                                        Collected Stars
+                                      </span>
+                                      <h6 className="total-stars-amount mb-0">
+                                        {getFormattedNumber(userDataStar, 0)}
+                                      </h6>
+                                    </div>
                                   </div>
                                 </div>
                                 <hr className="new-rank-divider my-2" />
@@ -990,14 +1134,14 @@ const ProfileCard = ({
                                   </span>
                                   <span className="rank-current-score">
                                     {userRankName?.name === "rookie"
-                                      ? "12M"
+                                      ? "22M"
                                       : userRankName?.name === "underdog"
-                                      ? "24M"
+                                      ? "35M"
                                       : userRankName?.name === "champion"
-                                      ? "40M"
+                                      ? "60M"
                                       : userRankName?.name === "unstoppable"
                                       ? ""
-                                      : "6M"}
+                                      : "10M"}
                                   </span>
                                 </div>
                                 {rankData?.multiplier === "no" && !isPremium ? (
@@ -1091,12 +1235,19 @@ const ProfileCard = ({
               </div>
               <div
                 className={`bordereddiv border-0 ${
-                  email && coinbase && username ? "py-2" : "p-0"
+                  (email &&
+                    coinbase &&
+                    username &&
+                    address.toLowerCase() !== coinbase.toLowerCase()) ||
+                  (!coinbase && email) ||
+                  (!coinbase && !email)
+                    ? "py-2"
+                    : "p-0"
                 }`}
               >
                 <div
                   className={`d-flex flex-column flex-xxl-row flex-lg-row  align-items-center gap-2 ${
-                    coinbase
+                    coinbase || (!coinbase && email) || (!coinbase && !email)
                       ? "justify-content-between"
                       : "justify-content-end p-2"
                   } `}
@@ -1121,14 +1272,11 @@ const ProfileCard = ({
                         </div>
                       </div>
                     )}
-                  {address &&
-                    coinbase &&
-                    email &&
-                    address?.toLowerCase() === coinbase?.toLowerCase() && (
-                      <p className="walletassoc-txt m-0">
-                        *This wallet is associated to your game account.
-                      </p>
-                    )}
+                  {((!coinbase && email) || (!coinbase && !email)) && (
+                    <p className="walletassoc-txt m-0">
+                      *Connect your wallet to view more info.
+                    </p>
+                  )}
 
                   {!address && coinbase && email && username && (
                     <p className="walletassoc-txt m-0">
@@ -1138,10 +1286,32 @@ const ProfileCard = ({
                     </p>
                   )}
 
+                  {((!coinbase && email) || (!coinbase && !email)) && (
+                    <button
+                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      onClick={() => {
+                        handleShowWalletPopup();
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      <img src={blackWallet} alt="" style={{ width: 18 }} />
+                      Connect wallet
+                    </button>
+                  )}
+
                   <div
-                    className="d-flex align-items-center gap-2"
+                    className=" align-items-center gap-2"
                     style={{
                       width: "fit-content",
+                      display: address &&
+                      email &&
+                      coinbase &&
+                      syncStatus !== "" &&
+                      address.toLowerCase() !== coinbase.toLowerCase() ? 'flex' : 'none',
                       justifyContent:
                         address &&
                         email &&
@@ -1175,7 +1345,7 @@ const ProfileCard = ({
                             : "Error"}
                         </button>
                       )}
-                    {email && (
+                    {/* {email && (
                       <button
                         className="logoutbtn px-3 py-1"
                         onClick={onLogoutClick}
@@ -1183,6 +1353,17 @@ const ProfileCard = ({
                         <img src={logouticon} alt="" /> Log Out
                       </button>
                     )}
+                    {address && email && (
+                      <div className="d-flex w-100 align-items-center">
+                        <button
+                          className="new-bundle-btn d-flex align-items-center gap-2 px-2"
+                          onClick={setPortfolio}
+                        >
+                          <img src={walletIcon} alt="" />
+                          My Portfolio
+                        </button>
+                      </div>
+                    )} */}
                   </div>
                 </div>
               </div>
@@ -1374,7 +1555,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">0 - 5,999,999</span>
+                    <span className="needed-points mb-0">0 - 9,999,999</span>
                   </div>
                   <div
                     className={` ${
@@ -1412,7 +1593,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">6,000,000</span>
+                    <span className="needed-points mb-0">10,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1451,7 +1632,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">12,000,000</span>
+                    <span className="needed-points mb-0">22,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1490,7 +1671,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">24,000,000</span>
+                    <span className="needed-points mb-0">35,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1529,7 +1710,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">40,000,000</span>
+                    <span className="needed-points mb-0">60,000,000</span>
                   </div>
                   <div
                     className={` ${

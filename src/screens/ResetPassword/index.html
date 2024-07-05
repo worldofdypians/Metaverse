@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dypius Password Reset</title>
+    <script>
+      function getMobileOperatingSystem(token) {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        console.log("here");
+
+        // Windows Phone must come first because its UA also contains "Android"
+        if (/windows phone/i.test(userAgent)) {
+          return "Windows Phone";
+        }
+
+        var token;
+
+        if (/android/i.test(userAgent)) {
+          console.log("is android");
+          window.location.href = "unitydl://redirect?token=" + token;
+          return "Android";
+        }
+
+        // iOS detection from: http://stackoverflow.com/a/9039885/177710
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+          return "iOS";
+        }
+        console.log("is not android");
+        return "Web";
+      }
+
+      const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+      });
+      // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
+      let token = params.token; // "some_value"
+      // document.getElementById("device").innerHTML = g  etMobileOperatingSystem(token)
+      console.log(token);
+      console.log(getMobileOperatingSystem(token));
+      // document.getElementById("device").innerHTML = getMobileOperatingSystem(token);
+      var a = document.getElementById("myLink");
+      
+      a.setAttribute("href", "unitydl://redirect?token=" + token);
+    </script>
+  </head>
+  <body>
+    <p id="device">Redirect</p>
+
+    <a id="myLink" href="#"><h1>Click here to reset your password</h1></a>
+  </body>
+</html>
+

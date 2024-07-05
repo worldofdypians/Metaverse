@@ -790,7 +790,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -903,7 +903,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -1017,7 +1017,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -1145,7 +1145,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -1260,7 +1260,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -1376,7 +1376,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -1490,7 +1490,7 @@ const NewDailyBonus = ({
           obj.rewardType === "Money" &&
           obj.status === "Unclaimable" &&
           obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFT."
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
         );
       });
 
@@ -1534,7 +1534,7 @@ const NewDailyBonus = ({
 
   useEffect(() => {
     countEarnedRewards();
-  }, [allChests, allSkaleChests]);
+  }, [allChests, allSkaleChests, allVictionChests, allCoreChests]);
 
   // useEffect(() => {
   //   setChain("bnb");
@@ -1544,7 +1544,7 @@ const NewDailyBonus = ({
     filterCawsNfts();
     filterLandNfts();
   }, [listedNFTS]);
-
+ 
   useEffect(() => {
     if (chain === "bnb") {
       if (email && coinbase && address) {
@@ -1671,197 +1671,131 @@ const NewDailyBonus = ({
         setMessage("login");
         setDisable(true);
       }
+    } else if (chain === "core") {
+      if (email && coinbase && address) {
+        if (coinbase.toLowerCase() === address.toLowerCase()) {
+          if (isPremium) {
+            if (
+              claimedCoreChests + claimedCorePremiumChests === 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase()
+            ) {
+              setMessage("complete");
+            } else if (
+              claimedCoreChests + claimedCorePremiumChests < 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 1116
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedCoreChests + claimedCorePremiumChests < 20 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 1116
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
+          } else if (!isPremium) {
+            if (
+              claimedCoreChests === 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 1116
+            ) {
+              setMessage("premium");
+              setDisable(true);
+            } else if (
+              claimedCoreChests < 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 1116
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedCoreChests < 10 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 1116
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
+          }
+        } else {
+          setMessage("switchAccount");
+          setDisable(true);
+        }
+      } else {
+        setMessage("login");
+        setDisable(true);
+      }
+    } else if (chain === "viction") {
+      if (email && coinbase && address) {
+        if (coinbase.toLowerCase() === address.toLowerCase()) {
+          if (isPremium) {
+            if (
+              claimedVictionChests + claimedVictionPremiumChests === 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase()
+            ) {
+              setMessage("complete");
+            } else if (
+              claimedVictionChests + claimedVictionPremiumChests < 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 88
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedVictionChests + claimedVictionPremiumChests < 20 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 88
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
+          } else if (!isPremium) {
+            if (
+              claimedVictionChests === 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 88
+            ) {
+              setMessage("premium");
+              setDisable(true);
+            } else if (
+              claimedVictionChests < 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 88
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedVictionChests < 10 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 88
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
+          }
+        } else {
+          setMessage("switchAccount");
+          setDisable(true);
+        }
+      } else {
+        setMessage("login");
+        setDisable(true);
+      }
     }
-    //  else if (chain === "core") {
-    //   if (email && coinbase && address) {
-    //     if (coinbase.toLowerCase() === address.toLowerCase()) {
-    //       if (isPremium) {
-    //         if (
-    //           claimedCoreChests + claimedCorePremiumChests === 20 &&
-    //           rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase()
-    //         ) {
-    //           setMessage("complete");
-    //         } else if (
-    //           claimedCoreChests + claimedCorePremiumChests < 20 &&
-    //           rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId === 1116
-    //         ) {
-    //           setMessage("");
-    //           setDisable(false);
-    //         } else if (
-    //           claimedCoreChests + claimedCorePremiumChests < 20 &&
-    //           // rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId !== 1116
-    //         ) {
-    //           setMessage("switch");
-    //           setDisable(true);
-    //         }
-    //       } else if (!isPremium) {
-    //         if (
-    //           claimedCoreChests === 10 &&
-    //           rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId === 1116
-    //         ) {
-    //           setMessage("premium");
-    //           setDisable(true);
-    //         } else if (
-    //           claimedCoreChests < 10 &&
-    //           rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId === 1116
-    //         ) {
-    //           setMessage("");
-    //           setDisable(false);
-    //         } else if (
-    //           claimedCoreChests < 10 &&
-    //           // rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId !== 1116
-    //         ) {
-    //           setMessage("switch");
-    //           setDisable(true);
-    //         }
-    //       }
-    //     } else {
-    //       setMessage("switchAccount");
-    //       setDisable(true);
-    //     }
-    //     setMessage("comingsoon");
-    //   } else {
-    //     setMessage("login");
-    //     setDisable(true);
-    //   }
-    // } else if (chain === "viction") {
-    //   if (email && coinbase && address) {
-    //     if (coinbase.toLowerCase() === address.toLowerCase()) {
-    //       if (isPremium) {
-    //         if (
-    //           claimedVictionChests + claimedVictionPremiumChests === 20 &&
-    //           rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase()
-    //         ) {
-    //           setMessage("complete");
-    //         } else if (
-    //           claimedVictionChests + claimedVictionPremiumChests < 20 &&
-    //           rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId === 88
-    //         ) {
-    //           setMessage("");
-    //           setDisable(false);
-    //         } else if (
-    //           claimedVictionChests + claimedVictionPremiumChests < 20 &&
-    //           // rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId !== 88
-    //         ) {
-    //           setMessage("switch");
-    //           setDisable(true);
-    //         }
-    //       } else if (!isPremium) {
-    //         if (
-    //           claimedVictionChests === 10 &&
-    //           rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId === 88
-    //         ) {
-    //           setMessage("premium");
-    //           setDisable(true);
-    //         } else if (
-    //           claimedVictionChests < 10 &&
-    //           rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId === 88
-    //         ) {
-    //           setMessage("");
-    //           setDisable(false);
-    //         } else if (
-    //           claimedVictionChests < 10 &&
-    //           // rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId !== 88
-    //         ) {
-    //           setMessage("switch");
-    //           setDisable(true);
-    //         }
-    //       }
-    //     } else {
-    //       setMessage("switchAccount");
-    //       setDisable(true);
-    //     }
-    //     setMessage("comingsoon");
-    //   } else {
-    //     setMessage("login");
-    //     setDisable(true);
-    //   }
-    // } else if (chain === "sei") {
-    //   if (email && coinbase && address) {
-    //     if (coinbase.toLowerCase() === address.toLowerCase()) {
-    //       if (isPremium) {
-    //         if (
-    //           claimedSeiChests + claimedSeiPremiumChests === 20 &&
-    //           rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase()
-    //         ) {
-    //           setMessage("complete");
-    //         } else if (
-    //           claimedSeiChests + claimedSeiPremiumChests < 20 &&
-    //           rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId === 713715
-    //         ) {
-    //           setMessage("");
-    //           setDisable(false);
-    //         } else if (
-    //           claimedSeiChests + claimedSeiPremiumChests < 20 &&
-    //           // rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId !== 713715
-    //         ) {
-    //           setMessage("switch");
-    //           setDisable(true);
-    //         }
-    //       } else if (!isPremium) {
-    //         if (
-    //           claimedSeiChests === 10 &&
-    //           rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId === 713715
-    //         ) {
-    //           setMessage("premium");
-    //           setDisable(true);
-    //         } else if (
-    //           claimedSeiChests < 10 &&
-    //           rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId === 713715
-    //         ) {
-    //           setMessage("");
-    //           setDisable(false);
-    //         } else if (
-    //           claimedSeiChests < 10 &&
-    //           // rewardData.length === 0 &&
-    //           address.toLowerCase() === coinbase.toLowerCase() &&
-    //           chainId !== 713715
-    //         ) {
-    //           setMessage("switch");
-    //           setDisable(true);
-    //         }
-    //       }
-    //     } else {
-    //       setMessage("switchAccount");
-    //       setDisable(true);
-    //     }
-    //     setMessage("comingsoon");
-    //   } else {
-    //     setMessage("login");
-    //     setDisable(true);
-    //   }
-    // }
   }, [
     email,
     chain,
@@ -1873,14 +1807,13 @@ const NewDailyBonus = ({
     claimedPremiumChests,
     claimedSkaleChests,
     claimedSkalePremiumChests,
-    // claimedCoreChests,
-    // claimedCorePremiumChests,
-    // claimedVictionChests,
-    // claimedVictionPremiumChests,
-    // claimedSeiChests,
-    // claimedSeiPremiumChests,
+    claimedCoreChests,
+    claimedCorePremiumChests,
+    claimedVictionChests,
+    claimedVictionPremiumChests,
     rewardData,
   ]);
+
   
   return (
     <>
@@ -2000,9 +1933,9 @@ const NewDailyBonus = ({
                     chain === "bnb"
                       ? totalPoints
                       : chain === "core"
-                      ? 0
+                      ? totalCorePoints
                       : chain === "viction"
-                      ? 0
+                      ? totalVictionPoints
                       : chain === "sei"
                       ? 0
                       : totalSkalePoints,
@@ -2020,9 +1953,9 @@ const NewDailyBonus = ({
                     chain === "bnb"
                       ? totalUsd
                       : chain === "core"
-                      ? 0
+                      ? totalCoreUsd
                       : chain === "viction"
-                      ? 0
+                      ? totalVictionUsd
                       : chain === "sei"
                       ? 0
                       : totalSkaleUsd,
@@ -2292,7 +2225,7 @@ const NewDailyBonus = ({
                                     ? "new-chain-active-btn"
                                     : "new-chain-inactive-btn"
                                 } d-flex gap-1 align-items-center`}
-                                // onClick={handleCorePool}
+                                onClick={handleCorePool}
                               >
                                 {" "}
                                 <img
@@ -2311,8 +2244,7 @@ const NewDailyBonus = ({
                                   src={
                                     corePercentage >= 20
                                       ? percentageFilled
-                                      : 
-                                      percentageEmpty
+                                      : percentageEmpty
                                   }
                                   height={8}
                                   alt=""
@@ -2358,120 +2290,18 @@ const NewDailyBonus = ({
                                   alt=""
                                 />
                               </div>
-                              <span className="percentage-span" style={{color: chain === "core" ? "#fff" : "gray"}}>
-                                {/* {parseInt(corePercentage)}% */}
-                                Coming Soon
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "sei" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={seiBg}
-                            className={`chain-img ${
-                              chain === "sei" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "sei" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center justify-content-between`}
-                            onClick={() => {
-                              setChain("sei");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            {/* <h6 className="chain-title-position mb-0">VICTION</h6> */}
-                            <div
-                              className=" d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={`${
-                                  chainId === 713715
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                // onClick={handleSeiPool}
+                              <span
+                                className="percentage-span"
+                                style={{
+                                  color: chain === "core" ? "#fff" : "gray",
+                                }}
                               >
-                                {" "}
-                                <img
-                                  src={seiIcon}
-                                  width={20}
-                                  height={20}
-                                  alt=""
-                                />{" "}
-                                SEI
-                              </button>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    seiPercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    seiPercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    seiPercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    seiPercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    seiPercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span" style={{color: chain === "sei" ? "#fff" : "gray"}}>
-                                {/* {parseInt(seiPercentage)}% */}
-                                Coming Soon
+                                {parseInt(corePercentage)}%
                               </span>
                             </div>
                           </div>
                         </div>
+
                         <div
                           className={`position-relative chain-item ${
                             chain === "viction" && "chain-item-active"
@@ -2502,7 +2332,7 @@ const NewDailyBonus = ({
                                   ? "new-chain-active-btn"
                                   : "new-chain-inactive-btn"
                               } d-flex gap-1 align-items-center`}
-                              // onClick={handleVictionPool}
+                              onClick={handleVictionPool}
                             >
                               {" "}
                               <img
@@ -2566,9 +2396,13 @@ const NewDailyBonus = ({
                                   alt=""
                                 />
                               </div>
-                              <span className="percentage-span" style={{color: chain === "viction" ? "#fff" : "gray"}}>
-                                {/* {parseInt(victionPercentage)}% */}
-                                Coming Soon
+                              <span
+                                className="percentage-span"
+                                style={{
+                                  color: chain === "viction" ? "#fff" : "gray",
+                                }}
+                              >
+                                {parseInt(victionPercentage)}%
                               </span>
                             </div>
                           </div>
@@ -2709,7 +2543,7 @@ const NewDailyBonus = ({
                                     ? "new-chain-active-btn"
                                     : "new-chain-inactive-btn"
                                 } d-flex gap-1 align-items-center`}
-                                // onClick={handleCorePool}
+                                onClick={handleCorePool}
                               >
                                 {" "}
                                 <img
@@ -2723,55 +2557,7 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "sei" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={seiBg}
-                            className={`chain-img ${
-                              chain === "sei" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "sei" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center justify-content-between`}
-                            onClick={() => {
-                              setChain("sei");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            {/* <h6 className="chain-title-position mb-0">VICTION</h6> */}
-                            <div
-                              className=" d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={`${
-                                  chainId === 713715
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                // onClick={handleSeiPool}
-                              >
-                                {" "}
-                                <img
-                                  src={seiIcon}
-                                  width={20}
-                                  height={20}
-                                  alt=""
-                                />{" "}
-                                SEI
-                              </button>
-                            </div>
-                          </div>
-                        </div>
+
                         <div
                           className={`position-relative chain-item ${
                             chain === "viction" && "chain-item-active"
@@ -2802,7 +2588,7 @@ const NewDailyBonus = ({
                                   ? "new-chain-active-btn"
                                   : "new-chain-inactive-btn"
                               } d-flex gap-1 align-items-center`}
-                              // onClick={handleVictionPool}
+                              onClick={handleVictionPool}
                             >
                               {" "}
                               <img
@@ -3115,104 +2901,6 @@ const NewDailyBonus = ({
                                   }
                                 />
                               ))
-                          : chain === "sei"
-                          ? allSeiChests && allSeiChests.length > 0
-                            ? allSeiChests.map((item, index) => (
-                                <NewChestItem
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  image={seiImages[index]}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onSeiChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataSei(value, value2);
-                                    setIsActive(value);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={item.chestType?.toLowerCase()}
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.isOpened}
-                                  disableBtn={disable}
-                                  isActive={isActive}
-                                  isActiveIndex={isActiveIndex}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                            : window.range(0, 19).map((item, index) => (
-                                <NewChestItem
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  chain={chain}
-                                  image={seiImages[index]}
-                                  key={index}
-                                  item={item}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onSeiChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataSei(value, value2);
-                                    setIsActive(value);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={
-                                    index + 1 <= 10 ? "standard" : "premium"
-                                  }
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.opened}
-                                  disableBtn={true}
-                                  isActive={isActive}
-                                  openChest={() => {
-                                    console.log("test");
-                                  }}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
                           : chain === "skale" &&
                             allSkaleChests &&
                             allSkaleChests.length > 0
@@ -3314,52 +3002,9 @@ const NewDailyBonus = ({
                     </div>
                   </div>
                   <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper">
-                 { (chain === 'core' || chain === 'viction' || chain === 'sei') && (
-                      <div
-                        className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
-                        style={{
-                          background: "#1A1C39",
-                          border: "1px solid #ce5d1b",
-                        }}
-                      >
-                        <div className="loader red-loader">
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
-                        </div>
-                        <h6
-                          className="loader-text mb-0"
-                          style={{ color: "#ce5d1b" }}
-                        >
-                          Coming Soon
-                        </h6>
-
-                        <></>
-
-                        <div className="loader red-loader">
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
-                        </div>
-                      </div>
-                    )}
-                    {(message === "" ||
+                    {message === "" ||
                     message === "initial" ||
-                    message === "waiting") && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    message === "waiting" ? (
                       <div
                         className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -3405,7 +3050,7 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 9 }}></div>
                         </div>
                       </div>
-                    ) : message === "switch" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "switch" ? (
                       <div
                         className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -3470,57 +3115,56 @@ const NewDailyBonus = ({
                               SKALE Network
                             </span>
                           </h6>
-                        ) 
-                        // : chain === "core" ? (
-                        //   <h6
-                        //     className="loader-text mb-0"
-                        //     style={{ color: "#ce5d1b" }}
-                        //   >
-                        //     Switch to{" "}
-                        //     <span
-                        //       style={{
-                        //         textDecoration: "underline",
-                        //         cursor: "pointer",
-                        //       }}
-                        //       // onClick={handleCorePool}
-                        //     >
-                        //       CORE Network
-                        //     </span>
-                        //   </h6>
-                        // ) : chain === "viction" ? (
-                        //   <h6
-                        //     className="loader-text mb-0"
-                        //     style={{ color: "#ce5d1b" }}
-                        //   >
-                        //     Switch to{" "}
-                        //     <span
-                        //       style={{
-                        //         textDecoration: "underline",
-                        //         cursor: "pointer",
-                        //       }}
-                        //       // onClick={handleVictionPool}
-                        //     >
-                        //       Viction Network
-                        //     </span>
-                        //   </h6>
-                        // ) : chain === "sei" ? (
-                        //   <h6
-                        //     className="loader-text mb-0"
-                        //     style={{ color: "#ce5d1b" }}
-                        //   >
-                        //     Switch to{" "}
-                        //     <span
-                        //       style={{
-                        //         textDecoration: "underline",
-                        //         cursor: "pointer",
-                        //       }}
-                        //       // onClick={handleSeiPool}
-                        //     >
-                        //       Sei Network
-                        //     </span>
-                        //   </h6>
-                        // ) 
-                        : (
+                        ) : chain === "core" ? (
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                            Switch to{" "}
+                            <span
+                              style={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
+                              onClick={handleCorePool}
+                            >
+                              CORE Network
+                            </span>
+                          </h6>
+                        ) : chain === "viction" ? (
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                            Switch to{" "}
+                            <span
+                              style={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
+                              onClick={handleVictionPool}
+                            >
+                              Viction Network
+                            </span>
+                          </h6>
+                        ) : (
+                          // : chain === "sei" ? (
+                          //   <h6
+                          //     className="loader-text mb-0"
+                          //     style={{ color: "#ce5d1b" }}
+                          //   >
+                          //     Switch to{" "}
+                          //     <span
+                          //       style={{
+                          //         textDecoration: "underline",
+                          //         cursor: "pointer",
+                          //       }}
+                          //       // onClick={handleSeiPool}
+                          //     >
+                          //       Sei Network
+                          //     </span>
+                          //   </h6>
+                          // )
                           <></>
                         )}
                         <div className="loader red-loader">
@@ -3536,7 +3180,7 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 9 }}></div>
                         </div>
                       </div>
-                    )  : message === "switchAccount" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "switchAccount" ? (
                       <div
                         className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -3579,7 +3223,7 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 10 }}></div>
                         </div>
                       </div>
-                    ) : message === "error" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "error" ? (
                       <div
                         className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -3618,11 +3262,11 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 9 }}></div>
                         </div>
                       </div>
-                    ) : message === "complete" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "complete" ? (
                       <div className="d-flex align-items-center justify-content-center complete-bg p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <h6 className="completed-text mb-0">Completed</h6>
                       </div>
-                    ) : message === "needPremium"  && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "needPremium" ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -3701,7 +3345,7 @@ const NewDailyBonus = ({
                           </button>
                         </div>
                       </div>
-                    ) : message === "caws"  && chain !== 'core' && chain!=='viction' && chain !== 'sei'? (
+                    ) : message === "caws" ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -3797,7 +3441,7 @@ const NewDailyBonus = ({
                           ))}
                         </div>
                       </div>
-                    ) : message === "won" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "won" ? (
                       <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -3849,7 +3493,7 @@ const NewDailyBonus = ({
                           className="win-confetti"
                         />
                       </div>
-                    ) : message === "wonPoints"  && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "wonPoints" ? (
                       <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -3884,7 +3528,7 @@ const NewDailyBonus = ({
                           className="win-confetti"
                         />
                       </div>
-                    ) : message === "premium"  && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "premium" ? (
                       <div
                         className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -3925,7 +3569,7 @@ const NewDailyBonus = ({
                           </button>
                         </div>
                       </div>
-                    ) : message === "login"  && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "login" ? (
                       <div
                         className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -3964,7 +3608,7 @@ const NewDailyBonus = ({
                           </NavLink>
                         </div>
                       </div>
-                    ) : message === "winDanger" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "winDanger" ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -4073,7 +3717,7 @@ const NewDailyBonus = ({
                             )}
                         </div>
                       </div>
-                    ) : message === "winDangerCaws" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "winDangerCaws" ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -4266,7 +3910,7 @@ const NewDailyBonus = ({
                             })}
                         </div>
                       </div>
-                    ) : message === "winDangerLand" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "winDangerLand" ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -4458,200 +4102,7 @@ const NewDailyBonus = ({
                             })}
                         </div>
                       </div>
-                    ) : message === "winDangerNotEnoughLand" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6 className="win-text mb-0">You won</h6>
-                          <div className="d-flex align-items-center gap-2">
-                            <img src={danger} alt="" width={20} height={20} />
-                            <span className="win-desc mb-0">
-                              The{" "}
-                              <span style={{ color: "#F2C624" }}>
-                                $
-                                {getFormattedNumber(
-                                  rewardData.rewards
-                                    ? rewardData.rewards.find((obj) => {
-                                        return obj.rewardType === "Money";
-                                      }).reward
-                                    : 0,
-                                  2
-                                )}
-                              </span>{" "}
-                              reward has not been assigned due to incomplete
-                              fulfillment of all the requirements.
-                            </span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
-                          </div>
-                          <h6 className="win-amount mb-0">+</h6>
-                          <div className="d-flex flex-column align-items-center danger-border p-1">
-                            <h6 className="win-amount mb-0">
-                              $
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).reward
-                                  : 0,
-                                2
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Rewards</span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === false ? (
-                                  <></>
-                                ) : (
-                                  <div
-                                    className="nft-reward-container"
-                                    key={index}
-                                  >
-                                    <img
-                                      className="nft-reward-img"
-                                      src={
-                                        item.type === "PREMIUM"
-                                          ? premiumRound
-                                          : item.type === "CAWS"
-                                          ? cawsRound
-                                          : item.type === "LAND"
-                                          ? wodRound
-                                          : dypRound
-                                      }
-                                      alt=""
-                                      width={70}
-                                      height={70}
-                                      style={{
-                                        borderRadius: "50%",
-                                      }}
-                                    />
-                                    <img
-                                      src={greenCheck}
-                                      alt=""
-                                      className="holder-check"
-                                    />
-                                  </div>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === true ? (
-                                  <></>
-                                ) : (
-                                  <HtmlTooltip
-                                    placement="top"
-                                    key={index}
-                                    title={
-                                      <div
-                                        className="d-flex align-items-center gap-2"
-                                        style={{ width: "fit-content" }}
-                                      >
-                                        <span
-                                          className="win-desc"
-                                          style={{ fontSize: "12px" }}
-                                        >
-                                          {rewardData.rewards
-                                            ? rewardData.rewards.find((obj) => {
-                                                return (
-                                                  obj.rewardType === "Money"
-                                                );
-                                              }).details
-                                            : ""}
-                                        </span>
-                                      </div>
-                                    }
-                                  >
-                                    <div
-                                      className="nft-reward-container"
-                                      key={index}
-                                    >
-                                      <img
-                                        className="nft-reward-img"
-                                        src={
-                                          item.type === "PREMIUM"
-                                            ? premiumRound
-                                            : item.type === "CAWS"
-                                            ? cawsRound
-                                            : item.type === "LAND"
-                                            ? wodRound
-                                            : dypRound
-                                        }
-                                        alt=""
-                                        width={70}
-                                        height={70}
-                                        style={{
-                                          borderRadius: "50%",
-                                          filter: "opacity(0.5)",
-                                        }}
-                                      />
-                                      <img
-                                        src={redX}
-                                        alt=""
-                                        className="holder-check"
-                                      />
-                                    </div>
-                                  </HtmlTooltip>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-                          {window
-                            .range(
-                              0,
-                              rewardData.rewards
-                                ? 3 -
-                                    rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).requirements.length
-                                : 0
-                            )
-                            .map((item, index) => {
-                              return (
-                                <div
-                                  className="required-item-placeholder"
-                                  key={index}
-                                ></div>
-                              );
-                            })}
-                        </div>
-                      </div>
-                    ) : message === "winDangerHasNftsNoPremium" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "winDangerNotEnoughLand" ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -4844,7 +4295,7 @@ const NewDailyBonus = ({
                             })}
                         </div>
                       </div>
-                    ) : message === "winDangerHasNftsPremiumNoDyp"  && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "winDangerHasNftsNoPremium" ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
@@ -5037,7 +4488,200 @@ const NewDailyBonus = ({
                             })}
                         </div>
                       </div>
-                    ) : message === "wod" && chain !== 'core' && chain!=='viction' && chain !== 'sei' ? (
+                    ) : message === "winDangerHasNftsPremiumNoDyp" ? (
+                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                        <div
+                          className="chain-desc-wrapper p-2 d-flex flex-column"
+                          style={{
+                            filter: "brightness(1)",
+                            position: "relative",
+                          }}
+                        >
+                          <h6 className="win-text mb-0">You won</h6>
+                          <div className="d-flex align-items-center gap-2">
+                            <img src={danger} alt="" width={20} height={20} />
+                            <span className="win-desc mb-0">
+                              The{" "}
+                              <span style={{ color: "#F2C624" }}>
+                                $
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </span>{" "}
+                              reward has not been assigned due to incomplete
+                              fulfillment of all the requirements.
+                            </span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2 win-rewards-container">
+                          <div className="d-flex flex-column align-items-center neutral-border p-1">
+                            <h6 className="win-amount mb-0">
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
+                                0
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">
+                              Leaderboard Points
+                            </span>
+                          </div>
+                          <h6 className="win-amount mb-0">+</h6>
+                          <div className="d-flex flex-column align-items-center danger-border p-1">
+                            <h6 className="win-amount mb-0">
+                              $
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).reward
+                                  : 0,
+                                2
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">Rewards</span>
+                          </div>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === false ? (
+                                  <></>
+                                ) : (
+                                  <div
+                                    className="nft-reward-container"
+                                    key={index}
+                                  >
+                                    <img
+                                      className="nft-reward-img"
+                                      src={
+                                        item.type === "PREMIUM"
+                                          ? premiumRound
+                                          : item.type === "CAWS"
+                                          ? cawsRound
+                                          : item.type === "LAND"
+                                          ? wodRound
+                                          : dypRound
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                      style={{
+                                        borderRadius: "50%",
+                                      }}
+                                    />
+                                    <img
+                                      src={greenCheck}
+                                      alt=""
+                                      className="holder-check"
+                                    />
+                                  </div>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+
+                          {rewardData.rewards ? (
+                            rewardData.rewards
+                              .find((obj) => {
+                                return obj.rewardType === "Money";
+                              })
+                              .requirements.map((item, index) => {
+                                return item.owned === true ? (
+                                  <></>
+                                ) : (
+                                  <HtmlTooltip
+                                    placement="top"
+                                    key={index}
+                                    title={
+                                      <div
+                                        className="d-flex align-items-center gap-2"
+                                        style={{ width: "fit-content" }}
+                                      >
+                                        <span
+                                          className="win-desc"
+                                          style={{ fontSize: "12px" }}
+                                        >
+                                          {rewardData.rewards
+                                            ? rewardData.rewards.find((obj) => {
+                                                return (
+                                                  obj.rewardType === "Money"
+                                                );
+                                              }).details
+                                            : ""}
+                                        </span>
+                                      </div>
+                                    }
+                                  >
+                                    <div
+                                      className="nft-reward-container"
+                                      key={index}
+                                    >
+                                      <img
+                                        className="nft-reward-img"
+                                        src={
+                                          item.type === "PREMIUM"
+                                            ? premiumRound
+                                            : item.type === "CAWS"
+                                            ? cawsRound
+                                            : item.type === "LAND"
+                                            ? wodRound
+                                            : dypRound
+                                        }
+                                        alt=""
+                                        width={70}
+                                        height={70}
+                                        style={{
+                                          borderRadius: "50%",
+                                          filter: "opacity(0.5)",
+                                        }}
+                                      />
+                                      <img
+                                        src={redX}
+                                        alt=""
+                                        className="holder-check"
+                                      />
+                                    </div>
+                                  </HtmlTooltip>
+                                );
+                              })
+                          ) : (
+                            <></>
+                          )}
+                          {window
+                            .range(
+                              0,
+                              rewardData.rewards
+                                ? 3 -
+                                    rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Money";
+                                    }).requirements.length
+                                : 0
+                            )
+                            .map((item, index) => {
+                              return (
+                                <div
+                                  className="required-item-placeholder"
+                                  key={index}
+                                ></div>
+                              );
+                            })}
+                        </div>
+                      </div>
+                    ) : message === "wod" ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
