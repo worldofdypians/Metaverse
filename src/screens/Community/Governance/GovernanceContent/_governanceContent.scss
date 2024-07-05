@@ -42,7 +42,7 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
-  line-height: normal;
+  // line-height: normal;
 }
 
 .past-proposals-wrapper {
@@ -60,7 +60,7 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
-  line-height: normal;
+  // line-height: normal;
 }
 
 .aor-tag {
@@ -74,7 +74,7 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
-  line-height: normal;
+  // line-height: normal;
 }
 
 .past-proposals-item {
@@ -99,7 +99,7 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
-  line-height: normal;
+  // line-height: normal;
 }
 
 .gov-navlink {
@@ -140,6 +140,11 @@
 
 .proposal-right-col {
   border-left: 1px solid rgba(255, 255, 255, 0.24);
+
+  @media screen and (max-width: 786px) {
+    border-left: none;
+  }
+
 }
 
 .proposal-result-wrapper {
@@ -164,4 +169,39 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+
+.prog1 {
+  background: transparent;
+  border-radius: 12px;
+  border: 1px solid #7bd8b0;
+  height: 8px;
+
+  .progress-bar {
+    border-radius: 12px;
+    background: #7bd8b0;
+  }
+}
+
+.prog2 {
+  background: transparent;
+  border-radius: 12px;
+  border: 1px solid #ff8168;
+  height: 8px;
+
+  .progress-bar {
+    border-radius: 12px;
+    background: #ff8168;
+  }
+}
+
+.orange-btn {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ff8168 0%, #ea6278 100%);
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  border: none;
 }

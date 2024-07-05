@@ -4,6 +4,10 @@
   font-style: normal;
   font-weight: 800;
   line-height: normal;
+
+  @media screen and (max-width: 786px) {
+    font-size: 20px;
+  }
 }
 
 .category-wrapper {
@@ -39,11 +43,12 @@
   border-radius: 10px;
   border: 1px solid #b8b8e0;
   background: #220744;
-  height: 35px; 
+  height: 35px;
   color: #ffffff;
 }
 
-.proposal-popup-input::placeholder, .proposal-textarea::placeholder {
+.proposal-popup-input::placeholder,
+.proposal-textarea::placeholder {
   color: #bcadc7;
   font-size: 10px;
   font-style: normal;
@@ -58,9 +63,9 @@
 }
 
 .proposal-textarea {
-    border-radius: 10px;
-border: 1px solid #B8B8E0;
-background: #220744;
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  background: #220744;
 }
 
 .create-proposal-desc {

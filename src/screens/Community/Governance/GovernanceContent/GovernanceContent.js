@@ -22,7 +22,7 @@ const GovernanceContent = () => {
                       <span className="active-proposals-features">
                         Access to Basic Features on the New Pools
                       </span>
-                      <div className="d-flex flex-column flex-lg-row flex-md-row gap-2 align-items-center">
+                      <div className="d-flex flex-row flex-wrap gap-2 align-items-center">
                         <div className="d-flex align-items-center gap-3">
                           <span className="gov-gray-text">By</span>
                           <span className="gov-white-text">0x253...acb3</span>
@@ -69,12 +69,12 @@ const GovernanceContent = () => {
               </div>
               <NavLink to="proposal/1">
                 <div className="past-proposals-item p-3">
-                  <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center justify-content-between">
+                  <div className="d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center justify-content-between gap-2">
                     <div className="d-flex flex-column gap-2">
                       <span className="active-proposals-features">
                         Access to Basic Features on the New Pools
                       </span>
-                      <div className="d-flex flex-column flex-lg-row flex-md-row gap-2 align-items-center">
+                      <div className="d-flex flex-row flex-wrap gap-2 align-items-center">
                         <div className="d-flex align-items-center gap-3">
                           <span className="gov-gray-text">By</span>
                           <span className="gov-white-text">0x253...acb3</span>
@@ -103,12 +103,12 @@ const GovernanceContent = () => {
               </NavLink>
               <NavLink to="proposal/2">
                 <div className="past-proposals-item p-3">
-                  <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center justify-content-between">
+                  <div className="d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center justify-content-between gap-2">
                     <div className="d-flex flex-column gap-2">
                       <span className="active-proposals-features">
                         Access to Basic Features on the New Pools
                       </span>
-                      <div className="d-flex flex-column flex-lg-row flex-md-row gap-2 align-items-center">
+                      <div className="d-flex flex-row flex-wrap gap-2 align-items-center">
                         <div className="d-flex align-items-center gap-3">
                           <span className="gov-gray-text">By</span>
                           <span className="gov-white-text">0x253...acb3</span>
@@ -137,12 +137,12 @@ const GovernanceContent = () => {
               </NavLink>
               <NavLink to="proposal/2">
                 <div className="past-proposals-item p-3">
-                  <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center justify-content-between">
+                  <div className="d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center justify-content-between gap-2">
                     <div className="d-flex flex-column gap-2">
                       <span className="active-proposals-features">
                         Access to Basic Features on the New Pools
                       </span>
-                      <div className="d-flex flex-column flex-lg-row flex-md-row gap-2 align-items-center">
+                      <div className="d-flex flex-row flex-wrap gap-2 align-items-center">
                         <div className="d-flex align-items-center gap-3">
                           <span className="gov-gray-text">By</span>
                           <span className="gov-white-text">0x253...acb3</span>
@@ -171,12 +171,12 @@ const GovernanceContent = () => {
               </NavLink>
               <NavLink to="proposal/2">
                 <div className="past-proposals-item p-3">
-                  <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center justify-content-between">
+                  <div className="d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center justify-content-between gap-2">
                     <div className="d-flex flex-column gap-2">
                       <span className="active-proposals-features">
                         Access to Basic Features on the New Pools
                       </span>
-                      <div className="d-flex flex-column flex-lg-row flex-md-row gap-2 align-items-center">
+                      <div className="d-flex flex-row flex-wrap gap-2 align-items-center">
                         <div className="d-flex align-items-center gap-3">
                           <span className="gov-gray-text">By</span>
                           <span className="gov-white-text">0x253...acb3</span>

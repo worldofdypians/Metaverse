@@ -200,7 +200,7 @@ const Footer = () => {
           </a>
         </div>
         <hr className="footer-divider my-4" />
-        <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center justify-content-between mb-5">
+        <div className="d-flex flex-column flex-lg-row flex-md-row align-items-lg-center justify-content-between mb-5">
           <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2 gap-lg-5">
             <img src={metaverse} height={64} alt="" />
             <div className="d-flex flex-column justify-content-between">
