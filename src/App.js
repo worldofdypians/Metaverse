@@ -4172,7 +4172,11 @@ function App() {
           />
           <Route exact path="/buy" element={<Buy />} />
           <Route exact path="/governance" element={<Governance />} />
-          <Route exact path="/governance/proposal/:proposalId" element={<GovernanceInner />} />
+          <Route
+            exact
+            path="/governance/proposal/:proposalId"
+            element={<GovernanceInner />}
+          />
 
           <Route exact path="/game" element={<Game />} />
           <Route exact path="/game-updates" element={<GameUpdates />} />
@@ -4397,9 +4401,10 @@ function App() {
               }
             /> */}
         </Routes>
+
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
         <ScrollTop />
-          <Footer />
+        <Footer />
       </div>
 
       {/* {!location.pathname.includes("account") &&

@@ -54,6 +54,7 @@ const Home = ({
   dyptokenDatabnb,
   idyptokenDatabnb,
   dyptokenDatabnb_old,
+  allStarData,
 }) => {
   const cmcPopupInfo = {
     title: "Treasure Hunt",
@@ -83,7 +84,7 @@ const Home = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "World of Dypians";
-    randomPopup();
+    // randomPopup();
   }, []);
 
   return (
