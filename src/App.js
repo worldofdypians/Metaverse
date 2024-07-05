@@ -1761,6 +1761,7 @@ function App() {
                 setmyVictionNFTsCreated(NFTS);
                 settotalVictionNft(NFTS.length);
                 setvictionMintAllowed(0);
+                setMyVictionNfts(NFTS);
               });
             })
             .catch((e) => {
@@ -2371,214 +2372,302 @@ function App() {
   };
 
   const refreshSubscription = async (addr) => {
-    let subscribedPlatformTokenAmountETH;
-    let subscribedPlatformTokenAmountCfx;
-    let subscribedPlatformTokenAmountBNB;
-    let subscribedPlatformTokenAmountBNB2;
-    let subscribedPlatformTokenAmountBNB1;
-
-    let subscribedPlatformTokenAmountAvax;
-    let subscribedPlatformTokenAmountBase;
-    let subscribedPlatformTokenAmountSkale;
-    let subscribedPlatformTokenAmountCore;
-    let subscribedPlatformTokenAmountViction;
-    let subscribedPlatformTokenAmountSei;
-
-    const web3eth = window.infuraWeb3;
-    const web3cfx = window.confluxWeb3;
-    const web3base = window.baseWeb3;
-    const web3bnb = window.bscWeb3;
-    const web3avax = window.avaxWeb3;
-    const web3skale = window.skaleWeb3;
-    const web3core = window.coreWeb3;
-    const web3viction = window.victionWeb3;
-    const web3sei = window.seiWeb3;
-
-    const CfxABI = window.SUBSCRIPTION_CFX_ABI;
-    const BaseABI = window.SUBSCRIPTION_BASE_ABI;
-    const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
-    const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
-    const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
-    const Bnb2ABI = window.SUBSCRIPTION_NEWBNB2_ABI;
-
-    const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
-    const CoreABI = window.SUBSCRIPTION_CORE_ABI;
-    const VicitonABI = window.SUBSCRIPTION_VICTION_ABI;
-    const SeiABI = window.SUBSCRIPTION_SKALE_ABI;
-
-    const ethsubscribeAddress = window.config.subscription_neweth_address;
-    const cfxsubscribeAddress = window.config.subscription_cfx_address;
-    const basesubscribeAddress = window.config.subscription_base_address;
-    const bnbsubscribeAddress = window.config.subscription_newbnb_address;
-    const bnbsubscribeAddress2 = window.config.subscription_newbnb2_address;
-    const bnbsubscribeAddress1 = window.config.subscription_newbnb1_address;
-
-    const avaxsubscribeAddress = window.config.subscription_newavax_address;
-    const skalesubscribeAddress = window.config.subscription_skale_address;
-    const coresubscribeAddress = window.config.subscription_core_address;
-    const victionsubscribeAddress = window.config.subscription_viction_address;
-    const seisubscribeAddress = window.config.subscription_sei_address;
-
-    const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
-    const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
-    const skalecontract = new web3skale.eth.Contract(
-      SkaleABI,
-      skalesubscribeAddress
+    const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
+      window.DAILY_BONUS_ABI,
+      window.config.daily_bonus_address
     );
 
-    const basecontract = new web3base.eth.Contract(
-      BaseABI,
-      basesubscribeAddress
+    const daily_bonus_contract_bnb = new window.bscWeb3.eth.Contract(
+      window.DAILY_BONUS_BNB_ABI,
+      window.config.daily_bonus_bnb_address
     );
 
-    const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
-    const bnbcontract2 = new web3bnb.eth.Contract(
-      Bnb2ABI,
-      bnbsubscribeAddress2
+    const daily_bonus_contract_skale = new window.skaleWeb3.eth.Contract(
+      window.DAILY_BONUS_SKALE_ABI,
+      window.config.daily_bonus_skale_address
     );
 
-    const bnbcontract1 = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress1);
-
-    const avaxcontract = new web3avax.eth.Contract(
-      AvaxABI,
-      avaxsubscribeAddress
+    const daily_bonus_contract_core = new window.coreWeb3.eth.Contract(
+      window.DAILY_BONUS_CORE_ABI,
+      window.config.daily_bonus_core_address
     );
 
-    const corecontract = new web3core.eth.Contract(
-      CoreABI,
-      coresubscribeAddress
+    const daily_bonus_contract_viction = new window.victionWeb3.eth.Contract(
+      window.DAILY_BONUS_VICTION_ABI,
+      window.config.daily_bonus_viction_address
     );
-
-    const victioncontract = new web3viction.eth.Contract(
-      VicitonABI,
-      victionsubscribeAddress
-    );
-
-    const seicontract = new web3sei.eth.Contract(SeiABI, seisubscribeAddress);
 
     if (addr) {
-      const result = window.checkPremium(addr);
-
-      subscribedPlatformTokenAmountETH = await ethcontract.methods
-        .subscriptionPlatformTokenAmount(addr)
+      const isPremium_bnb = await daily_bonus_contract_bnb.methods
+        .isPremiumUser(addr)
         .call()
         .catch((e) => {
-          console.log(e);
-          return 0;
+          console.error(e);
+          return false;
         });
-
-      subscribedPlatformTokenAmountCfx = await cfxcontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountBase = await basecontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountBNB = await bnbcontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountBNB2 = await bnbcontract2.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountBNB1 = await bnbcontract1.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountAvax = await avaxcontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountSkale = await skalecontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountCore = await corecontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      subscribedPlatformTokenAmountViction = await victioncontract.methods
-        .subscriptionPlatformTokenAmount(addr)
-        .call()
-        .catch((e) => {
-          console.log(e);
-          return 0;
-        });
-
-      // subscribedPlatformTokenAmountSei = await seicontract.methods
-      //   .subscriptionPlatformTokenAmount(addr)
-      //   .call()
-      //   .catch((e) => {
-      //     console.log(e);
-      //     return 0;
-      //   });
-
-      if (
-        subscribedPlatformTokenAmountCfx == "0" &&
-        subscribedPlatformTokenAmountETH == "0" &&
-        subscribedPlatformTokenAmountBase == "0" &&
-        subscribedPlatformTokenAmountBNB == "0" &&
-        subscribedPlatformTokenAmountBNB2 == "0" &&
-        subscribedPlatformTokenAmountAvax == "0" &&
-        subscribedPlatformTokenAmountSkale == "0" &&
-        subscribedPlatformTokenAmountCore == "0" &&
-        subscribedPlatformTokenAmountViction == "0" &&
-        subscribedPlatformTokenAmountBNB1 == "0" &&
-        result === false
-      ) {
-        setIsPremium(false);
-      }
-      if (
-        subscribedPlatformTokenAmountCfx != "0" ||
-        subscribedPlatformTokenAmountETH != "0" ||
-        subscribedPlatformTokenAmountBase != "0" ||
-        subscribedPlatformTokenAmountBNB != "0" ||
-        subscribedPlatformTokenAmountBNB2 != "0" ||
-        subscribedPlatformTokenAmountAvax != "0" ||
-        subscribedPlatformTokenAmountSkale != "0" ||
-        subscribedPlatformTokenAmountCore != "0" ||
-        subscribedPlatformTokenAmountViction != "0" ||
-        subscribedPlatformTokenAmountBNB1 != "0" ||
-        result === true
-      ) {
+      if (isPremium_bnb === true) {
         setIsPremium(true);
+      } else {
+        const isPremium_opbnb = await daily_bonus_contract.methods
+          .isPremiumUser(addr)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return false;
+          });
+        if (isPremium_opbnb === true) {
+          setIsPremium(true);
+        } else {
+          const isPremium_core = await daily_bonus_contract_core.methods
+            .isPremiumUser(addr)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+          if (isPremium_core === true) {
+            setIsPremium(true);
+          } else {
+            const isPremium_viction = await daily_bonus_contract_viction.methods
+              .isPremiumUser(addr)
+              .call()
+              .catch((e) => {
+                console.error(e);
+                return false;
+              });
+            if (isPremium_viction === true) {
+              setIsPremium(true);
+            } else {
+              const isPremium_skale = await daily_bonus_contract_skale.methods
+                .isPremiumUser(addr)
+                .call()
+                .catch((e) => {
+                  console.error(e);
+                  return false;
+                });
+              if (isPremium_skale === true) {
+                setIsPremium(true);
+              } else {
+                setIsPremium(false);
+              }
+            }
+          }
+        }
       }
+    } else {
+      setIsPremium(false);
     }
   };
+
+  // const refreshSubscription = async (addr) => {
+  //   let subscribedPlatformTokenAmountETH;
+  //   let subscribedPlatformTokenAmountCfx;
+  //   let subscribedPlatformTokenAmountBNB;
+  //   let subscribedPlatformTokenAmountBNB2;
+  //   let subscribedPlatformTokenAmountBNB1;
+
+  //   let subscribedPlatformTokenAmountAvax;
+  //   let subscribedPlatformTokenAmountBase;
+  //   let subscribedPlatformTokenAmountSkale;
+  //   let subscribedPlatformTokenAmountCore;
+  //   let subscribedPlatformTokenAmountViction;
+  //   let subscribedPlatformTokenAmountSei;
+
+  //   const web3eth = window.infuraWeb3;
+  //   const web3cfx = window.confluxWeb3;
+  //   const web3base = window.baseWeb3;
+  //   const web3bnb = window.bscWeb3;
+  //   const web3avax = window.avaxWeb3;
+  //   const web3skale = window.skaleWeb3;
+  //   const web3core = window.coreWeb3;
+  //   const web3viction = window.victionWeb3;
+  //   const web3sei = window.seiWeb3;
+
+  //   const CfxABI = window.SUBSCRIPTION_CFX_ABI;
+  //   const BaseABI = window.SUBSCRIPTION_BASE_ABI;
+  //   const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
+  //   const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
+  //   const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
+  //   const Bnb2ABI = window.SUBSCRIPTION_NEWBNB2_ABI;
+
+  //   const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
+  //   const CoreABI = window.SUBSCRIPTION_CORE_ABI;
+  //   const VicitonABI = window.SUBSCRIPTION_VICTION_ABI;
+  //   const SeiABI = window.SUBSCRIPTION_SKALE_ABI;
+
+  //   const ethsubscribeAddress = window.config.subscription_neweth_address;
+  //   const cfxsubscribeAddress = window.config.subscription_cfx_address;
+  //   const basesubscribeAddress = window.config.subscription_base_address;
+  //   const bnbsubscribeAddress = window.config.subscription_newbnb_address;
+  //   const bnbsubscribeAddress2 = window.config.subscription_newbnb2_address;
+  //   const bnbsubscribeAddress1 = window.config.subscription_newbnb1_address;
+
+  //   const avaxsubscribeAddress = window.config.subscription_newavax_address;
+  //   const skalesubscribeAddress = window.config.subscription_skale_address;
+  //   const coresubscribeAddress = window.config.subscription_core_address;
+  //   const victionsubscribeAddress = window.config.subscription_viction_address;
+  //   const seisubscribeAddress = window.config.subscription_sei_address;
+
+  //   const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
+  //   const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
+  //   const skalecontract = new web3skale.eth.Contract(
+  //     SkaleABI,
+  //     skalesubscribeAddress
+  //   );
+
+  //   const basecontract = new web3base.eth.Contract(
+  //     BaseABI,
+  //     basesubscribeAddress
+  //   );
+
+  //   const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
+  //   const bnbcontract2 = new web3bnb.eth.Contract(
+  //     Bnb2ABI,
+  //     bnbsubscribeAddress2
+  //   );
+
+  //   const bnbcontract1 = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress1);
+
+  //   const avaxcontract = new web3avax.eth.Contract(
+  //     AvaxABI,
+  //     avaxsubscribeAddress
+  //   );
+
+  //   const corecontract = new web3core.eth.Contract(
+  //     CoreABI,
+  //     coresubscribeAddress
+  //   );
+
+  //   const victioncontract = new web3viction.eth.Contract(
+  //     VicitonABI,
+  //     victionsubscribeAddress
+  //   );
+
+  //   const seicontract = new web3sei.eth.Contract(SeiABI, seisubscribeAddress);
+
+  //   if (addr) {
+  //     const result = window.checkPremium(addr);
+
+  //     subscribedPlatformTokenAmountETH = await ethcontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
+
+  //     subscribedPlatformTokenAmountCfx = await cfxcontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
+
+  //     subscribedPlatformTokenAmountBase = await basecontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
+
+  //     subscribedPlatformTokenAmountBNB = await bnbcontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
+
+  //     subscribedPlatformTokenAmountBNB2 = await bnbcontract2.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
+
+  //     subscribedPlatformTokenAmountBNB1 = await bnbcontract1.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
+
+  //     subscribedPlatformTokenAmountAvax = await avaxcontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
+
+  //     subscribedPlatformTokenAmountSkale = await skalecontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
+
+  //     subscribedPlatformTokenAmountCore = await corecontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
+
+  //     subscribedPlatformTokenAmountViction = await victioncontract.methods
+  //       .subscriptionPlatformTokenAmount(addr)
+  //       .call()
+  //       .catch((e) => {
+  //         console.log(e);
+  //         return 0;
+  //       });
+
+  //     // subscribedPlatformTokenAmountSei = await seicontract.methods
+  //     //   .subscriptionPlatformTokenAmount(addr)
+  //     //   .call()
+  //     //   .catch((e) => {
+  //     //     console.log(e);
+  //     //     return 0;
+  //     //   });
+
+  //     if (
+  //       subscribedPlatformTokenAmountCfx == "0" &&
+  //       subscribedPlatformTokenAmountETH == "0" &&
+  //       subscribedPlatformTokenAmountBase == "0" &&
+  //       subscribedPlatformTokenAmountBNB == "0" &&
+  //       subscribedPlatformTokenAmountBNB2 == "0" &&
+  //       subscribedPlatformTokenAmountAvax == "0" &&
+  //       subscribedPlatformTokenAmountSkale == "0" &&
+  //       subscribedPlatformTokenAmountCore == "0" &&
+  //       subscribedPlatformTokenAmountViction == "0" &&
+  //       subscribedPlatformTokenAmountBNB1 == "0" &&
+  //       result === false
+  //     ) {
+  //       setIsPremium(false);
+  //     }
+  //     if (
+  //       subscribedPlatformTokenAmountCfx != "0" ||
+  //       subscribedPlatformTokenAmountETH != "0" ||
+  //       subscribedPlatformTokenAmountBase != "0" ||
+  //       subscribedPlatformTokenAmountBNB != "0" ||
+  //       subscribedPlatformTokenAmountBNB2 != "0" ||
+  //       subscribedPlatformTokenAmountAvax != "0" ||
+  //       subscribedPlatformTokenAmountSkale != "0" ||
+  //       subscribedPlatformTokenAmountCore != "0" ||
+  //       subscribedPlatformTokenAmountViction != "0" ||
+  //       subscribedPlatformTokenAmountBNB1 != "0" ||
+  //       result === true
+  //     ) {
+  //       setIsPremium(true);
+  //     }
+  //   }
+  // };
   // const getmyCollectedNfts = async () => {
   //   let recievedOffers = [];
 
@@ -3289,11 +3378,7 @@ function App() {
             }
           />
 
-          <Route
-            exact
-            path="/reset-password"
-            element={<ResetPasswordTest />}
-          />
+          <Route exact path="/reset-password" element={<ResetPasswordTest />} />
 
           <Route
             exact
@@ -4104,48 +4189,48 @@ function App() {
                 />
               }
             /> */}
-          {/* <Route
-              exact
-              path="/marketplace/mint/viction"
-              element={
-                <MarketMint
-                  coinbase={coinbase}
-                  showWalletConnect={() => {
-                    setwalletModal(true);
-                  }}
-                  cawsArray={allCawsForTimepieceMint}
-                  mintloading={mintloading}
-                  isConnected={isConnected}
-                  chainId={chainId}
-                  handleMint={handleVictionNftMint}
-                  mintStatus={mintStatus}
-                  textColor={textColor}
-                  calculateCaws={calculateCaws}
-                  totalCreated={totalTimepieceCreated}
-                  timepieceMetadata={timepieceMetadata}
-                  myConfluxNFTsCreated={myConfluxNFTsCreated}
-                  mybaseNFTsCreated={mybaseNFTsCreated}
-                  myskaleNFTsCreated={myskaleNFTsCreated}
-                  handleConfluxMint={handleConfluxNftMint}
-                  handleBaseNftMint={handleBaseNftMint}
-                  confluxMintAllowed={confluxMintAllowed}
-                  baseMintAllowed={baseMintAllowed}
-                  skaleMintAllowed={skaleMintAllowed}
-                  coreMintAllowed={coreMintAllowed}
-                  victionMintAllowed={victionMintAllowed}
-                  totalCoreNft={totalCoreNft}
-                  myCoreNfts={myCoreNfts}
-                  totalMultiversNft={totalMultiversNft}
-                  totalImmutableNft={totalImmutableNft}
-                  myImmutableNfts={myImmutableNfts}
-                  myMultiversNfts={myMultiversNfts}
-                  totalseiNft={totalseiNft}
-                  myseiNfts={myseiNfts}
-                  totalVictionNft={totalVictionNft}
-                  myVictionNfts={myVictionNfts}
-                />
-              }
-            /> */}
+          <Route
+            exact
+            path="/marketplace/mint/viction"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleMint={handleVictionNftMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                myConfluxNFTsCreated={myConfluxNFTsCreated}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                myskaleNFTsCreated={myskaleNFTsCreated}
+                handleConfluxMint={handleConfluxNftMint}
+                handleBaseNftMint={handleBaseNftMint}
+                confluxMintAllowed={confluxMintAllowed}
+                baseMintAllowed={baseMintAllowed}
+                skaleMintAllowed={skaleMintAllowed}
+                coreMintAllowed={coreMintAllowed}
+                victionMintAllowed={victionMintAllowed}
+                totalCoreNft={totalCoreNft}
+                myCoreNfts={myCoreNfts}
+                totalMultiversNft={totalMultiversNft}
+                totalImmutableNft={totalImmutableNft}
+                myImmutableNfts={myImmutableNfts}
+                myMultiversNfts={myMultiversNfts}
+                totalseiNft={totalseiNft}
+                myseiNfts={myseiNfts}
+                totalVictionNft={totalVictionNft}
+                myVictionNfts={myVictionNfts}
+              />
+            }
+          />
 
           {/* <Route
               exact

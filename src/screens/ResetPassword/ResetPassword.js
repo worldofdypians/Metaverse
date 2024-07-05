@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 
 const ResetPasswordTest = () => {
   const getMobileOperatingSystem = (token) => {
@@ -15,7 +15,7 @@ const ResetPasswordTest = () => {
 
     if (/android/i.test(userAgent)) {
       console.log("is android");
-      window.location.href = "unitydl://redirect?token=" + token;
+      window.location.href = `dypius://resetpassword?token=${token}`;
       return "Android";
     }
 
@@ -37,23 +37,25 @@ const ResetPasswordTest = () => {
     console.log(token);
     console.log(getMobileOperatingSystem(token));
     // document.getElementById("device").innerHTML = getMobileOperatingSystem(token);
-    
-    window.location.href=`unitydl://redirect?token=${token}`
+
+    window.location.href = `dypius://resetpassword?token=${token}`;
     // var a = document.getElementById("myLink");
 
     // a.setAttribute("href", "unitydl://redirect?token=" + token);
   };
 
-  useEffect(()=>{
-    getParam()
-  },[])
+  useEffect(() => {
+    getParam();
+  }, []);
 
   return (
     <div className="container-lg">
       {" "}
-      <p id="device" className="text-white">Redirect</p>
+      <p id="device" className="text-white">
+        Redirect
+      </p>
       {/* <a id="myLink" href="#"> */}
-        <h1 className="text-white">Reset your password</h1>
+      <h1 className="text-white">Reset your password</h1>
       {/* </a> */}
     </div>
   );

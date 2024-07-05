@@ -229,7 +229,7 @@ const MarketMint = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(timepieceData);
+  const [selectedMint, setSelectedMint] = useState(victionData);
   const [mintTitle, setMintTitle] = useState("timepiece");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
@@ -300,10 +300,10 @@ const MarketMint = ({
   };
 
   useEffect(() => { 
-    // if (location.pathname.includes("bnbchain")) {
-    //  setSelectedMint(bnbData);
-    //  setMintTitle("bnbchain");
-    // } else
+    if (location.pathname.includes("viction")) {
+     setSelectedMint(victionData);
+     setMintTitle("viction");
+    } else
      if (location.pathname.includes("timepiece")) {
     setSelectedMint(timepieceData);
     setMintTitle("timepiece");
@@ -316,7 +316,7 @@ const MarketMint = ({
   }, []);
 
   let countToLiveConflux = new Date("2023-10-10T11:00:00.000+02:00");
-  let countToExpireConflux = new Date("2024-06-28T02:00:00.000+02:00");
+  let countToExpireConflux = new Date("2024-07-19T16:00:00.000+02:00");
 
   const dummyCards = [
     // {
@@ -402,14 +402,14 @@ const MarketMint = ({
     //   class: "mint-core",
     // },
 
-    // {
-    //   title: "Viction Pass",
-    //   eventId: "viction",
-    //   desc: "Gain entry to metaverse, and join exclusive Viction event with special ticket.",
-    //   img: victionActive,
-    //   data: victionData,
-    //   class: "mint-viction",
-    // },
+    {
+      title: "Viction Pass",
+      eventId: "viction",
+      desc: "Gain entry to metaverse, and join exclusive Viction event with special ticket.",
+      img: victionActive,
+      data: victionData,
+      class: "mint-viction",
+    },
 
     // {
     //   title: "SEI Pass",
@@ -762,7 +762,7 @@ const MarketMint = ({
 
               {activeTab === "live" && (
                 <>
-                  {/* <div className="pb-5 px-0 position-relative">
+                  <div className="pb-5 px-0 position-relative">
                     {activeSlide > 0 && (
                       <div className="prev-arrow-nft" onClick={firstPrev}>
                         <img src={nextArrow} alt="" />
@@ -798,7 +798,7 @@ const MarketMint = ({
                         />
                       ))}
                     </Slider>
-                  </div> */}
+                  </div>
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -1794,6 +1794,106 @@ const MarketMint = ({
                                 </div>
                               )}
 
+{selectedMint.id === "viction" && (
+                                <div
+                                  className={
+                                    (isConnected === true &&
+                                      chainId !== 88) ||
+                                    (status !== "Connect your wallet." &&
+                                      status !== "") ||
+                                    mintloading === "error" ||
+                                    totalVictionNft > 0
+                                      ? "linear-border-disabled"
+                                      : "linear-border"
+                                  }
+                                >
+                                  <button
+                                    className={`btn ${
+                                      mintloading === "error"
+                                        ? "filled-error-btn"
+                                        : (isConnected === true &&
+                                            chainId !== 88) ||
+                                          (status !== "Connect your wallet." &&
+                                            status !== "") ||
+                                            totalVictionNft > 0
+                                        ? "outline-btn-disabled"
+                                        : "filled-btn"
+                                    }  px-4 w-100`}
+                                    onClick={() => {
+                                      isConnected === true && chainId === 88
+                                        ? handleMint()
+                                        : showWalletConnect();
+                                    }}
+                                    disabled={
+                                      mintloading === "error" ||
+                                      mintloading === "success" ||
+                                      (isConnected === true &&
+                                        chainId !== 88) ||
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                        totalVictionNft > 0
+                                        ? true
+                                        : false
+                                    }
+                                    onMouseEnter={() => {
+                                      setMouseOver(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                      setMouseOver(false);
+                                    }}
+                                  >
+                                    {(isConnected === false ||
+                                      chainId !== 88) && (
+                                      <img
+                                        src={
+                                          mouseOver === false
+                                            ? blackWallet
+                                            : whitewallet
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "23px",
+                                          height: "23px",
+                                        }}
+                                      />
+                                    )}{" "}
+                                    {mintloading === "initial" &&
+                                    isConnected === true &&
+                                    chainId === 88 ? (
+                                      "Mint"
+                                    ) : mintloading === "mint" &&
+                                      isConnected === true &&
+                                      chainId === 88 ? (
+                                      <>
+                                        <div
+                                          className="spinner-border"
+                                          role="status"
+                                          style={{
+                                            height: "1.5rem",
+                                            width: "1.5rem",
+                                          }}
+                                        ></div>
+                                      </>
+                                    ) : mintloading === "error" &&
+                                      isConnected === true &&
+                                      chainId === 88 ? (
+                                      "Failed"
+                                    ) : mintloading === "success" &&
+                                      isConnected === true &&
+                                      activeButton ===
+                                        (isConnected === true &&
+                                          chainId === 88) ? (
+                                      "Success"
+                                    ) : isConnected === true &&
+                                      chainId !== 88 ? (
+                                      " Switch Chain"
+                                    ) : (
+                                      "Connect wallet"
+                                    )}
+                                  </button>
+                                </div>
+                              )}
+
                               {selectedMint.id === "sei" && (
                                 <div
                                   className={
@@ -2136,25 +2236,7 @@ const MarketMint = ({
                     />
                   </div>
 
-                  <div className="upcoming-mint-wrapper upcoming-viction-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">Viction Beta Pass</h6>
-                      <p className="upcoming-mint-desc">
-                        Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted by Viction
-                      </p>
-                    </div>
-                    <img
-                      src={victionBg}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-block"
-                    />
-                    <img
-                      src={victionMobileBg}
-                      alt=""
-                      className="upcoming-mint-img d-block d-lg-none d-md-none"
-                    />
-                  </div>
+                
                   <div className="upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">

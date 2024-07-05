@@ -123,7 +123,7 @@ const GlobalLeaderboard = ({
   useEffect(() => {
     setOptionText2("bnb");
   }, []);
-  console.log(allStarData, userDataStar);
+
   return (
     <div
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
