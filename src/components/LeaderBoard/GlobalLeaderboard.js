@@ -293,6 +293,7 @@ const GlobalLeaderboard = ({
                         {Number(item.position) + 1}
                       </td>
                       <td className="playerName col-5 font-montserrat">
+                        <div className="playerName-inner">
                         <img
                           src={require(`./assets/globalRanks/globalRank${
                             index + 1
@@ -301,10 +302,10 @@ const GlobalLeaderboard = ({
                           className="playerAvatar me-2"
                         />
                         <span>
-                          {" "}
+                        {" "}
                           {item.displayName?.slice(0, 13)}
                           {item.displayName?.length > 13 && "..."}
-                        </span>
+                        </span></div>
                       </td>
                       <td className="playerScore col-2 text-center font-montserrat">
                         <div className="d-flex align-items-center justify-content-center gap-2">
@@ -447,7 +448,7 @@ const GlobalLeaderboard = ({
         </div>
       </div>
 
-      {screen === "dash" && allStarData && !allStarData.isactive
+      {screen === "dash" && allStarData && allStarData.isactive === false
         ? [allStarData.player_data].map((item, index) => {
             return (
               <div
