@@ -3144,13 +3144,13 @@ function App() {
             path="/community"
             element={<Community socials={socials} />}
           />
-          <Route exact path="/team" element={<OurTeam />} />
+          {/* <Route exact path="/team" element={<OurTeam />} /> */}
           <Route
             exact
             path="/explorer"
             element={<Explorer count={count2} setCount={setCount2} />}
           />
-          <Route exact path="/stake" element={<NftMinting />} />
+          {/* <Route exact path="/stake" element={<NftMinting />} /> */}
           <Route exact path="/contact-us" element={<PartnerForm />} />
           <Route exact path="/unsubscribe/:email" element={<Unsubscribe />} />
           <Route
