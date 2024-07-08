@@ -483,7 +483,7 @@ const Land = ({
   }, []);
 
   return (
-    <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
+    <div className="container-fluid mt-lg-5 pt-lg-5 d-flex px-0 align-items-center justify-content-center">
          <OutsideClickHandler
         id="popup"
           onOutsideClick={() => {setActivePopup(false); setCount(1)}}

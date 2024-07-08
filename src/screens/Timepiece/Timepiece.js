@@ -38,7 +38,7 @@ const TimePiece = ({
   }, []);
 
   return (
-    <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
+    <div className="container-fluid px-0 d-flex mt-lg-5 pt-lg-5 align-items-center justify-content-center">
       {viewCollection === true && (
         <TimepieceChecklistModal
         coinbase={coinbase}

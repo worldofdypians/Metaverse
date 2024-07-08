@@ -690,7 +690,7 @@ const MarketMint = ({
   return (
     <>
       <div
-        className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
+        className="container-fluid d-flex justify-content-end mt-lg-5 pt-lg-5 p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
