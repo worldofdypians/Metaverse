@@ -2189,6 +2189,7 @@ function App() {
   };
 
   const { ethereum } = window;
+  const {email} = useAuth();
 
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
@@ -3068,6 +3069,9 @@ function App() {
             setCount55(count55 + 1);
           }}
           onSigninClick={checkData}
+          gameAccount = {data?.getPlayer?.wallet?.publicAddress}
+          email={email}
+          username={data?.getPlayer?.displayName}
         />
         <MobileNavbar
           handleSignUp={handleShowWalletModal}

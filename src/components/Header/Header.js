@@ -59,22 +59,22 @@ import youtubeHeader from "./assets/youtubeHeader.svg";
 import mediumHeader from "./assets/mediumHeader.svg";
 import error from "./assets/error.svg";
 import personIcon from "./assets/personIcon.svg";
-import dropdown from "./assets/dropdown.svg";
+import dropdownicon from "./assets/dropdown.svg";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import logouticon from "./assets/logout.svg";
 import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
-import cartIcon2 from './assets/dropdownAssets/cartIcon.svg'
-import epicIcon from './assets/dropdownAssets/epicIcon.svg'
-import guestIcon from './assets/dropdownAssets/guestIcon.svg'
-import linkedIcon from './assets/dropdownAssets/linkedIcon.svg'
-import logoutIcon from './assets/dropdownAssets/logoutIcon.svg'
-import registerIcon from './assets/dropdownAssets/registerIcon.svg'
-import supportIcon from './assets/dropdownAssets/supportIcon.svg'
-import unlinkedIcon from './assets/dropdownAssets/unlinkedIcon.svg'
-import userIcon from './assets/dropdownAssets/userIcon.svg'
-import walletIcon from './assets/dropdownAssets/walletIcon.svg'
+import cartIcon2 from "./assets/dropdownAssets/cartIcon.svg";
+import epicIcon from "./assets/dropdownAssets/epicIcon.svg";
+import guestIcon from "./assets/dropdownAssets/guestIcon.svg";
+import linkedIcon from "./assets/dropdownAssets/linkedIcon.svg";
+import logoutIcon from "./assets/dropdownAssets/logoutIcon.svg";
+import registerIcon from "./assets/dropdownAssets/registerIcon.svg";
+import supportIcon from "./assets/dropdownAssets/supportIcon.svg";
+import unlinkedIcon from "./assets/dropdownAssets/unlinkedIcon.svg";
+import userIcon from "./assets/dropdownAssets/userIcon.svg";
+import walletIcon from "./assets/dropdownAssets/walletIcon.svg";
 
 const Header = ({
   handleSignUp,
@@ -92,10 +92,14 @@ const Header = ({
   domainName,
   onSigninClick,
   onLogout,
+  gameAccount,
+  email,
+  username,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
   const [showmenuAccount, setshowmenuAccount] = useState(false);
+  const [showChainDropdown, setshowChainDropdown] = useState(false);
 
   const [isUnread, setisUnread] = useState(false);
   const [unreadNotifications, setunreadNotifications] = useState(0);
@@ -111,11 +115,11 @@ const Header = ({
   const [seiState, setSeiState] = useState(false);
   const [immutableState, setImmutableState] = useState(false);
   const [account, setAccount] = useState({
-    logged: true,
+    logged: false,
     wallet: false,
     linked: false,
-    guest: true,
-  })
+    guest: false,
+  });
   const [dropdown, setDropdown] = useState({
     wod: null,
     game: null,
@@ -130,7 +134,7 @@ const Header = ({
   const location = useLocation();
   const navigate = useNavigate();
   const [openNotifications, setOpenNotifications] = useState(false);
-  const { email, logout } = useAuth();
+  const { logout } = useAuth();
 
   let id = Math.random().toString(36);
 
@@ -536,6 +540,49 @@ const Header = ({
     checkRead();
   }, [myOffers, coinbase, nftCount]);
 
+  useEffect(() => {
+    if (email !== undefined && gameAccount !== undefined && coinbase) {
+      setAccount({
+        logged: true,
+        wallet: gameAccount,
+        linked: gameAccount,
+        guest: true,
+      });
+    } else if (!email && coinbase) {
+      setAccount({
+        logged: true,
+        wallet: coinbase,
+        linked: true,
+        guest: true,
+      });
+    } else if (email && !coinbase) {
+      setAccount({
+        logged: true,
+        wallet: gameAccount,
+        linked: true,
+        guest: true,
+      });
+    } else if (!email && !coinbase) {
+      setAccount({
+        logged: false,
+        wallet: false,
+        linked: false,
+        guest: true,
+      });
+    }
+  }, [email, gameAccount, coinbase]);
+
+  // useEffect(() => {
+  //   setDropdown({
+  //     wod: null,
+  //     game: null,
+  //     community: null,
+  //     about: null,
+  //     collections: null,
+  //     account: "account",
+  //   });
+  // }, []);
+
   return (
     <div className="d-flex flex-column">
       <div className="d-none d-lg-flex navbar-wrapper p-3 ">
@@ -760,7 +807,11 @@ const Header = ({
               className="d-flex align-items-center gap-2 position-relative"
             >
               <img src={personIcon} alt="" />
-              <h6 className="mb-0 account-txt">Account</h6>
+              <h6 className="mb-0 account-txt">
+                {username !== undefined && email !== undefined
+                  ? username
+                  : "Account"}
+              </h6>
               <img src={headerArrow} alt="" />
 
               <div
@@ -768,68 +819,84 @@ const Header = ({
                   dropdown.account === "account" ? "header-dropdown-active" : ""
                 }`}
               >
-               {account.logged === false ?
-                <>
-                 <button className="header-log-btn py-2">Log In</button>
-                <hr className="header-divider my-0" />
+                {account.logged === false ? (
+                  <>
+                    <NavLink to={"/auth"} className="header-log-btn py-2">
+                      Log In
+                    </NavLink>
+                    <hr className="header-divider my-0" />
+                    <NavLink
+                      to={"/account"}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                          : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                      }
+                    >
+                      <img width={20} height={20} src={guestIcon} alt="" />
+                      Continue as Guest
+                    </NavLink>
+                    <NavLink
+                      to={"/auth"}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                          : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                      }
+                    >
+                      <img width={20} height={20} src={registerIcon} alt="" />
+                      Sign Up
+                    </NavLink>
+                    <hr className="header-divider my-0" />
+                  </>
+                ) : account.logged === true && account.guest === true ? (
+                  <>
+                    <NavLink
+                      to={"/account"}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2 position-relative"
+                          : "dropdown-nav nav-active p-2 d-flex align-items-center gap-2 position-relative"
+                      }
+                    >
+                      <img width={20} height={20} src={userIcon} alt="" />
+                      {username ?? "Guest"}
+                      <img
+                        src={
+                          account.linked === false ? unlinkedIcon : linkedIcon
+                        }
+                        className="link-icon"
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                    </NavLink>
+                    <div
+                      className={`dropdown-nav ${
+                        account.linked === false ? "account-not-linked" : ""
+                      } nav-active p-2 d-flex align-items-center gap-2`}
+                    >
+                      <img width={20} height={20} src={walletIcon} alt="" />
+                      <div className="d-flex flex-column">
+                        <span className="header-wallet-span">
+                          Wallet Address
+                        </span>
+                        <span className="header-wallet">
+                          {account.wallet !== false
+                            ? shortAddress(account.wallet)
+                            : "NA"}
+                        </span>
+                      </div>
+                    </div>
+                    <hr className="header-divider my-0" />
+                  </>
+                ) : (
+                  <></>
+                )}
                 <NavLink
                   to={"/contact-us"}
                   className={({ isActive }) =>
-                    isActive 
-                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
-                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
-                  }
-                >
-                  <img width={20} height={20} src={guestIcon} alt="" />
-                  Continue as Guest
-                </NavLink>
-                <NavLink
-                  to={"/contact-us"}
-                  className={({ isActive }) =>
-                    isActive 
-                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
-                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
-                  }
-                >
-                  <img width={20} height={20} src={registerIcon} alt="" />
-                  Sign Up
-                </NavLink>
-                <hr className="header-divider my-0" />
-
-                </>
-                : account.logged === true && account.guest === true ? 
-                <>
-                 <NavLink
-                  to={"/account"}
-                  className={({ isActive }) =>
-                    isActive 
-                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2 position-relative"
-                      : "dropdown-nav nav-active p-2 d-flex align-items-center gap-2 position-relative"
-                  }
-                >
-                  <img width={20} height={20} src={userIcon} alt="" />
-                  Guest
-                  <img src={account.linked === false ? unlinkedIcon : linkedIcon} className="link-icon" width={20} height={20} alt="" />
-                </NavLink>
-                <div
-                  className={`dropdown-nav ${account.linked === false ? "account-not-linked" : ""} nav-active p-2 d-flex align-items-center gap-2`}
-                >
-                  <img width={20} height={20} src={walletIcon} alt="" />
-                  <div className="d-flex flex-column">
-                    <span className="header-wallet-span">Wallet Address</span>
-                    <span className="header-wallet">
-                      {account.wallet === true ? "0xaC498...c7C9a" : "NA"}
-                      </span>
-                  </div>
-                </div>
-                <hr className="header-divider my-0" />
-                </> 
-                  : <></>
-              }
-                <NavLink
-                  to={"/contact-us"}
-                  className={({ isActive }) =>
-                    isActive 
+                    isActive
                       ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
                       : "dropdown-nav p-2 d-flex align-items-center gap-2"
                   }
@@ -840,7 +907,7 @@ const Header = ({
                 <NavLink
                   to={"/marketplace"}
                   className={({ isActive }) =>
-                    isActive 
+                    isActive
                       ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
                       : "dropdown-nav p-2 d-flex align-items-center gap-2"
                   }
@@ -849,17 +916,30 @@ const Header = ({
                   Shop
                 </NavLink>
                 <a
-                  href="https://store.epicgames.com/en-US/p/world-of-dypians-2e0694"
+                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                   target="_blank"
-                  className={
-                    "dropdown-nav p-2 d-flex align-items-center gap-2"
-
-                  }
+                  rel="noreferrer"
+                  className={"dropdown-nav p-2 d-flex align-items-center gap-2"}
                 >
                   <img width={20} height={20} src={epicIcon} alt="" />
                   Download
                 </a>
-             
+                {email && (
+                  <>
+                    <hr className="header-divider my-0" />
+                    <button
+                      className="sign-out-btn py-1 d-flex align-items-center gap-2 justify-content-start"
+                      onClick={() => {
+                        logout();
+                        onLogout();
+                        setshowmenuAccount(false);
+                      }}
+                    >
+                      <img src={logouticon} alt="" className="logout-icon" />{" "}
+                      Log Out
+                    </button>
+                  </>
+                )}
               </div>
             </NavLink>
             {/* {!coinbase ? (
@@ -1115,134 +1195,142 @@ const Header = ({
                     </div>
                   </OutsideClickHandler>
                 </div>
-                <DropdownButton
-                  id="dropdown-basic-button"
-                  style={{ width: "124px" }}
-                  className="d-flex align-items-center justify-content-center"
-                  title={
-                    <span className="dropdown-title">
-                      <div className="d-flex align-items-center gap-1">
-                        <img
-                          src={
-                            ethState === true
-                              ? eth
-                              : bnbState === true
-                              ? bnb
-                              : opbnbState === true
-                              ? bnb
-                              : avaxState === true
-                              ? avax
-                              : baseState === true
-                              ? base
-                              : confluxState === true
-                              ? conflux
-                              : skaleState === true
-                              ? skale
-                              : coreState === true
-                              ? core
-                              : victionState === true
-                              ? viction
-                              : // : seiState === true
-                                // ? sei
-                                error
-                          }
-                          height={16}
-                          width={16}
-                          alt=""
-                        />
-                        <span className="change-chain-text d-none d-lg-flex">
-                          {ethState === true
-                            ? "Ethereum"
-                            : bnbState === true
-                            ? "BNB Chain"
-                            : opbnbState === true
-                            ? "opBNB Chain"
-                            : avaxState === true
-                            ? "Avalanche"
-                            : baseState === true
-                            ? "Base"
-                            : confluxState === true
-                            ? "Conflux"
-                            : skaleState === true
-                            ? "SKALE"
-                            : coreState === true
-                            ? "CORE"
-                            : victionState === true
-                            ? "Viction"
-                            : // : seiState === true
-                              // ? "Sei"
-                              "Unsupported"}
-                        </span>
-                      </div>
-
-                      <img src={dropdown} alt="" />
-                    </span>
-                  }
-                >
-                  <Dropdown.Item onClick={() => handleEthPool()}>
-                    <img src={eth} alt="" />
-                    Ethereum
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleBnbPool()}>
-                    <img src={bnb} alt="" />
-                    BNB Chain
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleOpBnbPool()}>
-                    <img src={bnb} alt="" />
-                    opBNB Chain
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleCorePool()}>
-                    <img src={core} width={20} height={20} alt="" />
-                    CORE
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleSkalePool()}>
-                    <img src={skale} alt="" />
-                    SKALE
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleConfluxPool()}>
-                    <img src={conflux} alt="" />
-                    Conflux
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleBasePool()}>
-                    <img src={base} alt="" />
-                    Base
-                  </Dropdown.Item>
-                  {/* <Dropdown.Item onClick={() => handleSeiPool()}>
-                    <img src={sei} width={20} height={20} alt="" />
-                    Sei
-                  </Dropdown.Item>*/}
-                  <Dropdown.Item onClick={() => handleVictionPool()}>
-                    <img src={viction} width={20} height={20} alt="" />
-                    Viction
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleAvaxPool()}>
-                    <img src={avax} alt="" />
-                    Avalanche
-                  </Dropdown.Item>
-                </DropdownButton>
-                <Clipboard
-                  component="div"
-                  data-event="click"
-                  data-for={id}
-                  data-tip="Copied To Clipboard!"
-                  data-clipboard-text={coinbase}
-                  className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
-                >
-                  <div
-                    className="btn connected px-3"
-                    style={{
-                      color: tooltip ? "#82DAAB" : "#FFFFFF",
-                      minHeight: "34px",
-                    }}
-                    onClick={() => {
-                      setShowMenu(true);
-                    }}
-                  >
-                    {domainName ? domainName : shortAddress(coinbase)}
-                    {/* {shortAddress(coinbase)} */}
-                    <img src={dropdown} alt="" />
+                <div>
+                  <div className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative">
+                    <div
+                      className="btn connected p-0 pe-3"
+                      style={{
+                        color: tooltip ? "#82DAAB" : "#FFFFFF",
+                        minHeight: "34px",
+                      }}
+                      onMouseEnter={() => {
+                        setshowChainDropdown(true);
+                      }}
+                      onMouseLeave={() => {
+                        setshowChainDropdown(false);
+                      }}
+                    >
+                      <DropdownButton
+                        id="dropdown-basic-button"
+                        className="d-flex align-items-center justify-content-center chaindropdown"
+                        show={showChainDropdown}
+                        title={
+                          <span className="dropdown-title">
+                            <div className="d-flex align-items-center">
+                              <img
+                                src={
+                                  ethState === true
+                                    ? eth
+                                    : bnbState === true
+                                    ? bnb
+                                    : opbnbState === true
+                                    ? bnb
+                                    : avaxState === true
+                                    ? avax
+                                    : baseState === true
+                                    ? base
+                                    : confluxState === true
+                                    ? conflux
+                                    : skaleState === true
+                                    ? skale
+                                    : coreState === true
+                                    ? core
+                                    : victionState === true
+                                    ? viction
+                                    : error
+                                }
+                                height={16}
+                                width={16}
+                                alt=""
+                              />
+                            </div>
+                          </span>
+                        }
+                      >
+                        <div className="d-flex flex-column gap-2">
+                          <span className="select-gray-txt pt-2">
+                            SELECT A NETWORK
+                          </span>
+                          <hr className="header-divider my-0" />
+                          <div className="d-flex gap-2 justify-content-between">
+                            <div className="d-flex flex-column gap-2">
+                              <Dropdown.Item onClick={() => handleEthPool()}>
+                                <img src={eth} alt="" />
+                                Ethereum
+                              </Dropdown.Item>
+                              <Dropdown.Item onClick={() => handleBnbPool()}>
+                                <img src={bnb} alt="" />
+                                BNB Chain
+                              </Dropdown.Item>
+                              <Dropdown.Item onClick={() => handleOpBnbPool()}>
+                                <img src={bnb} alt="" />
+                                opBNB Chain
+                              </Dropdown.Item>
+                              <Dropdown.Item onClick={() => handleCorePool()}>
+                                <img src={core} width={20} height={20} alt="" />
+                                CORE
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                onClick={() => handleConfluxPool()}
+                              >
+                                <img src={conflux} alt="" />
+                                Conflux
+                              </Dropdown.Item>
+                            </div>
+                            <div className="d-flex flex-column gap-2">
+                              <Dropdown.Item onClick={() => handleBasePool()}>
+                                <img src={base} alt="" />
+                                Base
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                onClick={() => handleVictionPool()}
+                              >
+                                <img
+                                  src={viction}
+                                  width={20}
+                                  height={20}
+                                  alt=""
+                                />
+                                Viction
+                              </Dropdown.Item>
+                              <Dropdown.Item onClick={() => handleAvaxPool()}>
+                                <img src={avax} alt="" />
+                                Avalanche
+                              </Dropdown.Item>
+                              <Dropdown.Item onClick={() => handleSkalePool()}>
+                                <img src={skale} alt="" />
+                                SKALE
+                              </Dropdown.Item>
+                            </div>
+                          </div>
+                          <hr className="header-divider my-0" />
+                          <button
+                            className="logoutbtn pt-2 pb-3"
+                            onClick={() => {
+                              manageDisconnect();
+                            }}
+                          >
+                            <img
+                              src={logouticon}
+                              alt=""
+                              className="logout-icon"
+                            />
+                            DISCONNECT
+                          </button>
+                        </div>
+                      </DropdownButton>
+                      <span
+                        className="d-flex align-items-center gap-2"
+                        // onClick={() => {
+                        //   setShowMenu(true);
+                        // }}
+                      >
+                        {domainName ? domainName : shortAddress(coinbase)}
+                        <img src={dropdownicon} alt="" />
+                      </span>
+                    </div>
                   </div>
-                </Clipboard>
+                </div>
               </div>
             )}
 
@@ -1319,7 +1407,12 @@ const Header = ({
                             setshowmenuAccount(false);
                           }}
                         >
-                          <img src={logouticon} alt="" className="logout-icon"/> Log Out
+                          <img
+                            src={logouticon}
+                            alt=""
+                            className="logout-icon"
+                          />{" "}
+                          Log Out
                         </button>
                       ) : (
                         <button
@@ -1343,7 +1436,6 @@ const Header = ({
           </div>
         </div>
       </div>
-
     </div>
   );
 };

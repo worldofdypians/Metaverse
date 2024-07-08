@@ -5614,11 +5614,11 @@ function Dashboard({
 
   return (
     <div
-      className="container-fluid d-flex justify-content-end p-0"
+      className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
       style={{ minHeight: "72vh", maxWidth: "2400px", overflow: "hidden" }}
     >
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
-      <div className="container-nft d-flex align-items-start px-3 px-lg-5 mt-lg-5 pt-lg-5 position-relative">
+      <div className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative">
         <div className="container-lg mx-0">
           <LoginWrapper
             style={{
