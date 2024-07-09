@@ -6,6 +6,10 @@ import discordIcon from "./assets/discordIcon.svg";
 import sidebarArrow from "./assets/sidebarArrow.svg";
 import { useLocation } from "react-router-dom";
 import dypiansLogo from "./assets/dypiansLogo.png";
+import buildLogo from "./assets/buildIcon.svg";
+import supportIcon from "./assets/supportIcon.svg";
+
+
 import { useEffect } from "react";
 
 const MarketSidebar = () => {
@@ -58,7 +62,7 @@ const MarketSidebar = () => {
               );
             }}
           />
-
+          <div className="sidebar-separator my-2"></div>
           <div className="accordion" id="accordionExample">
             <div className="">
               <h2 className="sidebar-item p-2 mb-0" id="headingOne">
@@ -177,6 +181,7 @@ const MarketSidebar = () => {
               </div>
             </div>
           </div>
+
           <NavLink
             to="/marketplace/events/treasure-hunt"
             end
@@ -273,6 +278,44 @@ const MarketSidebar = () => {
               );
             }}
           />
+          <div className="sidebar-separator my-2"></div>
+          <a
+            href="https://docs.google.com/forms/d/1s565QWMoCvkKwAWzkXzVPdixN_fLFlnEstya_k7caqs/viewform?edit_requested=true"
+            target="_blank"
+            rel="noreferrer"
+            className={"d-flex p-2 align-items-center gap-2 sidebar-item"}
+          >
+            <img
+              src={buildLogo}
+              style={{ width: "20px", height: "20px" }}
+              alt=""
+            />
+            <span className={`sidebar-title`}>Build in WOD</span>
+          </a>
+          <NavLink
+            to="/contact-us"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
+            }
+            children={({ isActive }) => {
+              const icon = isActive ? "bridgeIconActive" : "bridgeIcon";
+              return (
+                <>
+                  <img
+                    src={supportIcon}
+                    style={{ width: "20px", height: "20px" }}
+                    alt=""
+                  />
+                  <span className={`sidebar-title`}>NFT Bridge</span>
+                </>
+              );
+            }}
+          />
+          <div className="sidebar-separator my-2"></div>
+
         </div>
       </div>
     </div>
