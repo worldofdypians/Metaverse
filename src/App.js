@@ -88,6 +88,7 @@ import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 import About from "./screens/About/About.js";
 import Game from "./screens/Game/Game.js";
+import Campaigns from "./screens/Community/Campaigns/Campaigns.js";
 
 function App() {
   const CHAINLIST = {
@@ -4176,6 +4177,7 @@ function App() {
           />
           <Route exact path="/buy" element={<Buy />} />
           <Route exact path="/governance" element={<Governance />} />
+          <Route exact path="/campaigns" element={<Campaigns />} />
           <Route
             exact
             path="/governance/proposal/:proposalId"
