@@ -98,24 +98,7 @@ const Marketplace = ({
     secondSlider.current.slickPrev();
   };
 
-  const benefits = [
-    {
-      title: "Exclusive Access",
-      icon: "draft",
-    },
-    {
-      title: "Enhanced Interactions",
-      icon: "user",
-    },
-    {
-      title: "Special Rewards",
-      icon: "star",
-    },
-    {
-      title: "Expanded Functionality",
-      icon: "expand",
-    },
-  ];
+  
 
   var settings = {
     dots: false,
