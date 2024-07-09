@@ -74,7 +74,7 @@ const GameEvents = () => {
     <>
      <div className="our-team d-flex align-items-center justify-content-center my-5 py-4">
       <div className="custom-container">
-        <div className="d-flex flex-column align-items-center mb-5 w-100">
+        <div className="d-flex flex-column position-relative align-items-center mb-5 w-100">
           <h2 className="font-montserrat builders-title explorer-grid-title px-0">
             Game{" "}
             <mark className="font-montserrat explore-tag pe-2">Events</mark>

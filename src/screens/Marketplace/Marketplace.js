@@ -40,6 +40,7 @@ import confluxHome from "./assets/confluxHome.png";
 import baseUpcoming from "./assets/baseUpcoming.png";
 import OutsideClickHandler from "react-outside-click-handler";
 import DailyRewardsPopup from "../../components/TimepieceMint/DailyRewardsPopup";
+import GameEvents from "../Game/GameEvents";
 
 const Marketplace = ({
   listedNFTS,
@@ -690,16 +691,16 @@ const Marketplace = ({
           }}
         />
       </OutsideClickHandler> */}
-      <div className="container-nft mt-lg-5 d-flex align-items-start px-0 px-lg-5 position-relative">
+      <div className="container-nft2 mt-lg-5 d-flex align-items-start px-0 px-lg-5 position-relative">
         <div className="custom-container mx-0">
           <div className="market-upper-wrapper pb-5">
             <div className="d-flex flex-column gap-5">
               <div className="row mx-0 justify-content-center p-4  marketplace-banner align-items-center mt-4 mt-lg-0">
                 <div className="col-12 col-lg-6">
-                  <h6 className="market-banner-title text-center">
+                  <h6 className="market-banner-title text-uppercase text-center">
                     Explore the World of Dypians{" "}
                     <mark
-                      className="p-0"
+                      className="p-0 text-uppercase"
                       style={{
                         color: "#DCFB85",
                         lineHeight: "80%",
@@ -754,7 +755,7 @@ const Marketplace = ({
               </div>
               <div className="row gap-4 mx-0 gap-lg-0 align-items-center">
                 <div className="col-12 col-lg-4">
-                  <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-3">
+                  <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-0">
                     <h6 className="stats-value">
                       {getFormattedNumber(totalTx2).slice(
                         0,
@@ -767,7 +768,7 @@ const Marketplace = ({
                   </div>
                 </div>
                 <div className="col-12 col-lg-4">
-                  <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-3">
+                  <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-0">
                     <h6 className="stats-value">
                       {/* {abbreviateNumber(totalvolume,4)}+ */}$
                       {getFormattedNumber(totalvolume2, 0)}
@@ -776,7 +777,7 @@ const Marketplace = ({
                   </div>
                 </div>
                 <div className="col-12 col-lg-4">
-                  <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-3">
+                  <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-0">
                     <h6 className="stats-value">
                       {" "}
                       {getFormattedNumber(totalSupply, 0)}
@@ -788,10 +789,11 @@ const Marketplace = ({
             </div>
           </div>
           <div className="main-wrapper w-100">
-            <h6 className="nft-wrapper-title font-raleway my-4 ms-3 ms-lg-0">
+            <GameEvents/>
+            {/* <h6 className="nft-wrapper-title font-raleway my-4 ms-3 ms-lg-0">
               Active Events
-            </h6>
-            <div className="nft-outer-wrapper2 row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-2 p-lg-5 mx-2 mx-lg-0 position-relative">
+            </h6> */}
+            {/* <div className="nft-outer-wrapper2 row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-2 p-lg-5 mx-2 mx-lg-0 position-relative">
               {windowSize.width > 786 ? (
                 <>
                   <NavLink
@@ -813,23 +815,7 @@ const Marketplace = ({
                     </div>
                   </NavLink>
 
-                  {/* <NavLink
-                    to="/marketplace/events/daily-bonus"
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <div className="position-relative package-blur">
-                      <div className="first-box-blur d-flex align-items-end justify-content-center">
-                        <span className="blur-package-title">Daily Bonus</span>
-                      </div>
-                      <div className="second-box-blur"></div>
-                      <img
-                        src={require("./assets/dailyBonus.png")}
-                        alt=""
-                        className="blur-img"
-                      />
-                    </div>
-                  </NavLink> */}
+                  
 
                   <NavLink
                     to="/marketplace/events/dragon-ruins"
@@ -927,22 +913,7 @@ const Marketplace = ({
                         </span>
                       </NavLink>
                     </div>
-                    {/* <div className="">
-                      <NavLink
-                        to="/marketplace/events/daily-bonus"
-                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                      >
-                        <img
-                          src={require("./assets/dailyBonus.png")}
-                          className="w-100"
-                          style={{ borderRadius: "16px", height: 130 }}
-                          alt=""
-                        />
-                        <span className="event-package-title">
-                          Daily Bonus
-                        </span>
-                      </NavLink>
-                    </div> */}
+                   
                     <div className="">
                       <NavLink
                         to="/marketplace/events/dragon-ruins"
@@ -1012,7 +983,7 @@ const Marketplace = ({
                   </div>
                 </div>
               )}
-            </div>
+            </div> */}
             {/*  <div
               className="row mx-1 justify-content-center d-flex my-4 align-items-start nft-outer-wrapper2 px-3 py-5 px-lg-5 gap-4 my-4"
               style={{ minHeight: "420px" }}
