@@ -662,6 +662,18 @@ border-left: 4px solid transparent;
 
 }
 
+.marketplace-banner {
+  background: url(./assets/marketplaceBanner.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  min-height: 415px;
+}
+
+.market-upper-wrapper {
+background: linear-gradient(180deg, #140836 100.09%, #2F025B 181.99%);
+}
+
 .sidebar-item:hover {
 background: rgba(190, 190, 190, 0.10);
   .sidebar-title {
@@ -878,45 +890,42 @@ border-left: 4px solid #5690FF;
 }
 
 .stats-value {
+  color: #DCFB85;
+  text-align: center; 
+  font-size: 30px;
   font-style: normal;
   font-weight: 800;
-  font-size: 48px;
-  line-height: 59px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 0;
+  line-height: 24px; /* 80% */
 }
 
 .stats-desc {
+  color: #EEEDFF;
+  text-align: center; 
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 0;
+  line-height: 24px;  
 }
 .stats-container-1 {
-  background-image: url("./assets//statsBg1.png");
-  background-size: 100% 100%;
-  // aspect-ratio: 1.89/1;
+  border-radius: 10px;
+border: 1px solid #DCFB85;
+background: rgba(220, 251, 133, 0.04);
+backdrop-filter: blur(5.5px);
   min-height: 140px;
 }
 
 .stats-container-2 {
-  background-image: url("./assets//statsBg2.png");
-  background-size: 100% 100%;
-  // aspect-ratio: 1.89/1;
+  border-radius: 10px;
+border: 1px solid #DCFB85;
+background: rgba(220, 251, 133, 0.04);
+backdrop-filter: blur(5.5px);
   min-height: 140px;
 }
 .stats-container-3 {
-  background-image: url("./assets//statsBg3.png");
-  background-size: 100% 100%;
-  // aspect-ratio: 1.89/1;
+  border-radius: 10px;
+border: 1px solid #DCFB85;
+background: rgba(220, 251, 133, 0.04);
+backdrop-filter: blur(5.5px);
   min-height: 140px;
 }
 
