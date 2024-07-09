@@ -800,8 +800,7 @@ const Header = ({
             </div>
           </div>
           <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
-            <NavLink
-              to={"/account"}
+            <div
               onMouseEnter={() => handleDropdown("account")}
               onMouseLeave={() => handleDropdown(null)}
               className="d-flex align-items-center gap-2 position-relative"
@@ -941,7 +940,7 @@ const Header = ({
                   </>
                 )}
               </div>
-            </NavLink>
+            </div>
             {/* {!coinbase ? (
               <NavLink to={"/account"}>
                 <img src={personNoCoinbase} className="account-icon" alt="" />
