@@ -1225,7 +1225,7 @@ const Header = ({
                         show={showChainDropdown}
                         title={
                           <span className="dropdown-title">
-                            <div className="d-flex align-items-center">
+                            <div className="d-flex align-items-center gap-1">
                               <img
                                 src={
                                   ethState === true
@@ -1252,6 +1252,8 @@ const Header = ({
                                 width={16}
                                 alt=""
                               />
+                        <img src={dropdownicon} alt="" />
+
                             </div>
                           </span>
                         }
@@ -1335,7 +1337,6 @@ const Header = ({
                         // }}
                       >
                         {domainName ? domainName : shortAddress(coinbase)}
-                        <img src={dropdownicon} alt="" />
                       </span>
                     </div>
                   </div>
