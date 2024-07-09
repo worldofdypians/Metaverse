@@ -695,6 +695,16 @@ const Header = ({
                   Governance
                 </NavLink>
                 <NavLink
+                  to={"/campaigns"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2"
+                      : "dropdown-nav p-2"
+                  }
+                >
+                  Game Campaigns
+                </NavLink>
+                <NavLink
                   to={"/game-updates"}
                   className={({ isActive }) =>
                     isActive
