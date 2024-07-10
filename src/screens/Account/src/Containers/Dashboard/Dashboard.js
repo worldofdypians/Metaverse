@@ -5627,6 +5627,9 @@ function Dashboard({
         {location.pathname === "/account" ?
         <MyProfile /> 
         :
+        location.pathname === "/account/my-rewards" ?
+         <MyRewardsPopupNew />
+        :
         <></>
       }
       </div>
