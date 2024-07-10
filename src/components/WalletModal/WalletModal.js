@@ -2,11 +2,11 @@ import React from "react";
 import Modal from "../General/Modal";
 import OutsideClickHandler from "react-outside-click-handler";
 
-const WalletModal = ({ handleClose, show, handleConnection }) => {
+const WalletModal = ({ handleClose, show, handleConnection,handleConnectionPassport }) => {
   return (
     <Modal visible={show} onModalClose={handleClose} maxWidth={500}>
       <OutsideClickHandler onOutsideClick={handleClose}>
-        <div className="walletmodal-wrapper">
+        <div className="walletmodal-wrapper" id="connect">
           <div className="sc-jwKygS bFQpTL">
             <h3 style={{ fontSize: 20, color: "#fff" }}>Connect to a wallet</h3>
           </div>
@@ -24,6 +24,24 @@ const WalletModal = ({ handleClose, show, handleConnection }) => {
                   <span style={{ color: "#fff" }}>MetaMask</span>
                   <img
                     src={require("./wallets/metamask.svg").default}
+                    width={50}
+                    height={50}
+                    alt="Icon"
+                  />
+                </div>
+              </button>
+              <button
+                onClick={handleConnectionPassport}
+                id="connect-METAMASK"
+                className="walletbutton"
+              >
+                <div
+                  color="#E8831D"
+                  className="justify-content-between d-flex w-100 align-items-center"
+                >
+                  <span style={{ color: "#fff" }}>Immutable Passport</span>
+                  <img
+                    src={require("./wallets/immutableLogo.svg").default}
                     width={50}
                     height={50}
                     alt="Icon"

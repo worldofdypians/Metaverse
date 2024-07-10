@@ -7,7 +7,7 @@ import { ApolloProvider } from "@apollo/client";
 import "@aws-amplify/ui-react/styles.css";
 import awsExports from "./screens/Account/src/aws-exports";
 import "./screens/Account/src/App.css";
-
+import { checkout, passport, config } from "@imtbl/sdk";
 import AuthProvider, {
   useAuth,
 } from "./screens/Account/src/Utils.js/Auth/AuthDetails.js";
@@ -59,7 +59,7 @@ import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
 import { useEagerlyConnect } from "web3-connector";
 import SIDRegister from "@web3-name-sdk/register";
 import { createWeb3Name } from "@web3-name-sdk/core";
-import { providers } from "ethers";
+import { ethers, providers } from "ethers";
 import {
   useWeb3React,
   disconnect,
@@ -435,6 +435,25 @@ function App() {
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
+
+  const PUBLISHABLE_KEY = "pk_imapik-test-thnDYtOU1Z4uxZ85oiVj"; // Replace with your Publishable Key from the Immutable Hub
+  const CLIENT_ID = "8u9twN341by6zff9xxJ34MIWIDX438PZ"; // Replace with your passport client ID
+
+  const passportInstance = new passport.Passport({
+    baseConfig: {
+      environment: config.Environment.SANDBOX,
+      publishableKey: PUBLISHABLE_KEY,
+    },
+    clientId: CLIENT_ID,
+    redirectUri: "https://localhost:5173/redirect",
+    logoutRedirectUri: "https://localhost:5173/logout",
+    audience: "platform_api",
+    scope: "openid offline_access email transact",
+    popupOverlayOptions: {
+      disableGenericPopupOverlay: false, // Set to true to disable the generic pop-up overlay
+      disableBlockedPopupOverlay: false, // Set to true to disable the blocked pop-up overlay
+    },
+  });
 
   const fillRecordsStar = (itemData) => {
     if (itemData.length === 0) {
@@ -873,6 +892,24 @@ function App() {
       return;
     }
     return isConnected;
+  };
+  const baseConfig = {
+    environment: config.Environment.SANDBOX,
+    publishableKey: PUBLISHABLE_KEY,
+  };
+  const checkoutSDK = new checkout.Checkout({
+    baseConfig,
+    passport: passportInstance,
+  });
+
+  const handleConnectPassport = async () => {
+    const widgets = await checkoutSDK.widgets({
+      config: { theme: checkout.WidgetTheme.DARK },
+    });
+    const connect = widgets.create(checkout.WidgetType.CONNECT);
+    connect.mount("connect");
+
+console.log(connect, widgets,checkout)
   };
 
   const myNft = async () => {
@@ -4428,6 +4465,7 @@ function App() {
           handleConnection={() => {
             handleConnectWallet();
           }}
+          handleConnectionPassport={handleConnectPassport}
         />
       )}
 
