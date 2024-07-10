@@ -1,0 +1,216 @@
+.profile-card-wrapper{
+    border-radius: 10px;
+    background: linear-gradient(107deg, #28165C 0%, #5C1640 100%);
+}
+
+.my-profile-username{
+    color: #EEEDFF;
+    font-family: "Montserrat";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+.my-profile-email{
+    color: #B8B8E0;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 10px; /* 100% */
+}
+
+.wallet-address-wrapper{
+    border-radius: 4px;
+    background: rgba(128, 32, 96, 0.20);
+}
+
+.profile-wallet-span{
+    color: #B8B8E0;
+    font-family: "Montserrat";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 8px; /* 100% */
+}
+
+.wallet-addr{
+    color: #EEEDFF;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 10px; /* 100% */
+}
+
+.domain-name-wrapper{
+    background: linear-gradient(172deg, rgba(0,0,0,1) 20%, rgba(238,237,255,0.1) 100%);
+    width: 25px;
+    height: 25px;
+}
+
+.sidebar-separator {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, rgba(238, 237, 255, 0) 0%, #EEEDFF 53%, rgba(238, 237, 255, 0) 100%); 
+  }
+
+  .rank-card-wrapper{
+    border-radius: 8px;
+    height: 120px;
+    width: 120px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all .25s;
+    
+    img{
+        max-width: 60px;
+        max-height: 60px;
+    }
+    background: rgba(0,0,0,0.2);
+  }
+
+  .rank-card-wrapper:hover{
+    
+border: 1px solid #C23F62;
+background: rgba(194, 63, 98, 0.2);
+  }
+
+  .rank-card-span{
+    color: #AFA8BA;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 10px; /* 100% */
+  }
+
+  .rank-card-value{
+    color: #EEEDFF;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 10px; /* 100% */
+  }
+
+  .new-special-rewards-wrapper{
+    background-image: url(./assets/specialRewardsBg.png);
+    border-radius: 10px;
+    background-size: 100%;
+    cursor: pointer;
+  }
+
+  .special-rewards-title{
+    color: #9E3C7A;
+font-family: "Montserrat";
+font-size: 18px;
+width: 50%;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+text-transform: uppercase;
+  }
+
+
+  .special-rewards-span{
+    color: #9E3C7A;
+font-family: "Montserrat";
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+  }
+
+  .game-leaderboards-wrapper{
+    background-image: url(./assets/leaderboardsBg.png);
+    background-size: 100% 100%;
+    border-radius: 10px;
+  }
+
+  .leaderboards-title{
+    color: #FFF;
+font-family: "Montserrat";
+font-size: 18px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+text-transform: uppercase;
+  }
+
+
+  .leaderboards-flag-wrapper{
+    position: absolute;
+    right: 5%;
+    top: -27px;
+    width: 60%;
+  }
+
+  .new-flag-wrapper {
+    position: relative;
+    cursor: pointer;
+    width: 33%;
+    transition: all 0.25s;
+   
+  }
+  
+  .new-flag-wrapper:hover {
+    transform: scale(1.1);
+  }
+
+ .treasure-hunt-wrapper{
+    border-radius: 10px;
+background: radial-gradient(49.92% 49.92% at 50.08% 50%, #8262D0 0%, #482293 100%);
+ }
+
+
+
+ .new-treasure-hunt-card{
+    border-radius: 10px;
+border: 0.5px solid #9C89B3;
+background: #321A61;
+ }
+
+ .treasure-hunt-top{
+    border-bottom: 0.5px solid #9C89B3;
+background: #3F1F7E;
+border-radius: 10px 10px 0 0;
+
+ }
+
+ .treasure-hunt-title{
+    color: #EEEDFF;
+    font-family: "Montserrat";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 240% */
+ }
+
+ .treasure-hunt-rewards{
+    color: #FDF7FF;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 10px; /* 125% */
+ }
+
+.treasure-hunt-info{
+    border-radius: 4px;
+    background: rgba(133, 88, 221, 0.20);
+}
+
+ .treasure-hunt-info-span{
+    color: #FDF7FF;
+font-family: "Montserrat";
+font-size: 10px;
+font-style: normal;
+font-weight: 500;
+line-height: 10px; /* 125% */
+ }

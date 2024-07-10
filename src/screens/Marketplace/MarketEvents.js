@@ -118,6 +118,7 @@ import Countdown from "react-countdown";
 import getFormattedNumber from "../Account/src/Utils.js/hooks/get-formatted-number";
 import { useAuth } from "../Account/src/Utils.js/Auth/AuthDetails";
 import DailyBonusModal from "./DailyBonusModal";
+import ProfileSidebar from "../../components/ProfileSidebar/ProfileSidebar";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -1236,7 +1237,7 @@ const MarketEvents = ({
         className="container-fluid d-flex justify-content-end mt-lg-5 pt-lg-5 p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
-        {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
+        {windowSize.width < 992 ? <MobileNav /> : <ProfileSidebar />}
 
         <div
           className="container-nft align-items-start justify-content-start d-flex flex-column gap-2 px-3 px-lg-5 my-4"

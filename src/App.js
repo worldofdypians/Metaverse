@@ -4028,7 +4028,7 @@ function App() {
           />
           <Route
             exact
-            path="/marketplace/events/:eventId"
+            path="/account/events/:eventId"
             element={
               <MarketEvents
                 tabState={"live"}
