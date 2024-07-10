@@ -5628,7 +5628,40 @@ function Dashboard({
         <MyProfile /> 
         :
         location.pathname === "/account/my-rewards" ?
-         <MyRewardsPopupNew />
+        <MyRewardsPopupNew
+        address={data?.getPlayer?.wallet?.publicAddress}
+        weeklyplayerData={weeklyplayerDataAmount}
+        dailyplayerData={dailyplayerDataAmount}
+        dailyDataAmountCore={dailyDataAmountCore}
+        weeklyDataAmountCore={weeklyDataAmountCore}
+        monthlyDataAmountCore={monthlyDataAmountCore}
+        dailyDataAmountViction={dailyDataAmountViction}
+        weeklyDataAmountViction={weeklyDataAmountViction}
+        monthlyDataAmountViction={monthlyDataAmountViction}
+        dailyDataAmountSkale={dailyDataAmountSkale}
+        weeklyDataAmountSkale={weeklyDataAmountSkale}
+        monthlyDataAmountSkale={monthlyDataAmountSkale}
+        userRank2={userRank2}
+        email={email}
+        userDataStar={dataAmountStar}
+        allChests={allChests}
+        allSkaleChests={allSkaleChests}
+        allCoreChests={allCoreChests}
+        allVictionChests={allVictionChests}
+        allSeiChests={allSeiChests}
+        availableTime={goldenPassRemainingTime}
+        userSocialRewards={userSocialRewards}
+        bnbEarnUsd={bnbEarnUsd}
+        skaleEarnUsd={skaleEarnUsd}
+        multiversEarnUsd={multiversEarnUsd}
+        seiEarnUsd={seiEarnUsd}
+        victionEarnUsd={victionEarnUsd}
+        coreEarnUsd={coreEarnUsd}
+        kittyDashRecords={kittyDashRecords}
+        userRankRewards={userRankRewards}
+        cawsPremiumRewards={cawsPremiumRewards}
+        genesisRank2={genesisRank2}
+      />
         :
         <></>
       }
