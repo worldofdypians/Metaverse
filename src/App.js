@@ -3318,6 +3318,38 @@ function App() {
               />
             }
           />
+          <Route
+            exact
+            path="/account/premium"
+            element={
+              <Dashboard
+              onSuccessDeposit={() => {
+                setCount55(count55 + 1);
+              }}
+                ethTokenData={ethTokenData}
+                dyptokenDatabnb={dyptokenDatabnb}
+                dypTokenData={dypTokenData}
+                handleSwitchChain={handleSwitchChain}
+                dypTokenData_old={dypTokenData_old}
+                coinbase={coinbase}
+                account={coinbase}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleConnect={handleConnectWallet}
+                onSigninClick={checkData}
+                success={success}
+                availableTime={availTime}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleOpenDomains={() => setDomainPopup(true)}
+                domainName={domainName}
+                dogePrice={dogePrice}
+                onSubscribeSuccess={() => {
+                  setCount55(count55 + 1);
+                }}
+                isPremium={isPremium}
+              />
+            }
+          />
 
           <Route
             exact

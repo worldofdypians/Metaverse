@@ -3858,14 +3858,26 @@ background: linear-gradient(0deg, #080B2A 15.09%, rgba(8, 11, 42, 0.00) 100%);
 }
 
 .premium-gold-bg {
-  border-radius: 12px;
-  border: 0.5px solid #ffbf00;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 191, 0, 0.25) -23.88%,
-    rgba(255, 191, 0, 0) 99.99%
-  );
-  box-shadow: 0px 32px 64px 0px rgba(17, 17, 17, 0.12);
+  border-radius: 10px;
+  background: radial-gradient(77.54% 901.14% at 50% 50%, #5C1640 0%, #28165C 100%);
+}
+
+.benefits-title-wrapper{
+  border-radius: 10px 10px 0px 0px;
+background: #121235;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.premium-benefits-popup-title{
+  color: #FFC808;
+font-family: "Montserrat";
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 200% */
+text-transform: uppercase;
 }
 
 .lifetime-plan {
@@ -3901,10 +3913,8 @@ background: linear-gradient(0deg, #080B2A 15.09%, rgba(8, 11, 42, 0.00) 100%);
 }
 
 .premium-benefits-wrapper {
-  border-radius: 12px;
-  border: 0.5px solid #8e97cd;
-  background: rgba(23, 25, 50, 0.4);
-  box-shadow: 0px 32px 64px 0px rgba(17, 17, 17, 0.12);
+  border-radius: 0px 0px 10px 10px;
+  background: #18193C;
 }
 
 .premium-benefits-title {

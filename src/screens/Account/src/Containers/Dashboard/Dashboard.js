@@ -65,6 +65,7 @@ import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 import TopSection from "./Components/TopSection/TopSection";
 import Portfolio from "../../Components/WalletBalance/Portfolio";
 import ProfileSidebar from "../../../../../components/ProfileSidebar/ProfileSidebar";
+import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 
 function Dashboard({
   account,
@@ -90,6 +91,7 @@ function Dashboard({
   isPremium,
   dyptokenDatabnb,
   logoutCount,
+  onSuccessDeposit,
 }) {
   const { email, logout } = useAuth();
 
@@ -5662,7 +5664,23 @@ function Dashboard({
         cawsPremiumRewards={cawsPremiumRewards}
         genesisRank2={genesisRank2}
       />
-        :
+        : location.pathname === "/account/premium"?
+
+        <GetPremiumPopup
+        chainId={chainId}
+        coinbase={coinbase}
+        handleSwitchNetwork={handleSwitchNetwork}
+        onSuccessDeposit={() => {
+          onSuccessDeposit();
+          setTimeout(() => {
+            setgetPremiumPopup(false);
+          }, 2000);
+        }}
+        onClose={() => {
+          setgetPremiumPopup(false);
+        }}
+      />
+      :
         <></>
       }
       </div>

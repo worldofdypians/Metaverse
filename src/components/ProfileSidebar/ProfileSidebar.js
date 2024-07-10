@@ -109,7 +109,7 @@ const ProfileSidebar = () => {
             }}
           />
           <NavLink
-            to="/marketplace"
+            to="/account/premium"
             end
             className={({ isActive }) =>
               isActive
