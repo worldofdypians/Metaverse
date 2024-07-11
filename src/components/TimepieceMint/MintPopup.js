@@ -164,11 +164,11 @@ const MintPopup = ({ active, onClose, data }) => {
           </div>
           <h6 className="mint-popup-title">CoinMarketCap Beta Pass</h6>
         </>
-      ) : data.title === "Viction" ? (
+      ) : data.title === "Immutable" ? (
         <>
           <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
-            <h6 className="mint-popup-title">Viction Beta Pass</h6>
+            <h6 className="mint-popup-title">Immutable Beta Pass</h6>
           </div>
 
           <div className="d-flex align-items-center justify-content-center">
@@ -247,7 +247,7 @@ const MintPopup = ({ active, onClose, data }) => {
             </span>
           )}
         </div>
-      ) : data.title === "DogeCoin" || data.title === "Viction" ? (
+      ) : data.title === "DogeCoin" || data.title === "Immutable" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           <span className="popup-available-mint">
             Get access to the game and a unique event filled with surprises and
@@ -316,10 +316,10 @@ const MintPopup = ({ active, onClose, data }) => {
           >
             <button className="btn filled-btn px-4">More</button>
           </Link>
-        ) : data.title === "Viction" ? (
+        ) : data.title === "Immutable" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/mint/viction"}
+            to={"/marketplace/mint/immutable"}
             state={{ event: data.state }}
             className="linear-border"
           >
