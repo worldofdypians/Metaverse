@@ -230,7 +230,7 @@ const MarketSidebar = () => {
             }}
           />
           <NavLink
-            to="/marketplace/mint/viction"
+            to="/marketplace/mint/immutable"
             end
             className={({ isActive }) =>
               isActive

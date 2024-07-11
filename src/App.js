@@ -461,10 +461,7 @@ function App() {
     logoutRedirectUri: "https://localhost:8080/logout",
     audience: "platform_api",
     scope: "openid offline_access email transact",
-    popupOverlayOptions: {
-      disableGenericPopupOverlay: false, // Set to true to disable the generic pop-up overlay
-      disableBlockedPopupOverlay: false, // Set to true to disable the blocked pop-up overlay
-    },
+    
   });
 
   const fillRecordsStar = (itemData) => {
@@ -928,12 +925,7 @@ function App() {
       const accounts = await window.ethereum?.request({
         method: "eth_requestAccounts",
       });
-      if (accounts) {
-        setCoinbase(accounts[0]);
-        setIsConnected(true);
-        setwalletModal(false);
-        console.log("yes");
-      }
+      console.log(accounts)
     });
     connect.addListener(checkout.ConnectEventType.FAILURE, (data) => {
       console.log("failure", data);
