@@ -513,7 +513,7 @@ const MyProfile = () => {
     <div className="custom-container mt-5">
       <div className="row">
         <div className="col-12 col-lg-4">
-          <div className="profile-card-wrapper p-3 d-flex flex-column gap-2">
+          <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
             <div className="d-flex align-items-center gap-2">
               <img src={profileImage} alt="" />
               <div className="d-flex flex-column">
@@ -633,8 +633,8 @@ const MyProfile = () => {
                 <div className="row" style={{ width: "85%" }}>
                   {dummyBetaPassData2.slice(0, 3).map((item, index) => (
                     <div className="col-12 col-lg-4">
-                      <div className="new-treasure-hunt-card p-0 d-flex flex-column">
-                        <div className="p-2 treasure-hunt-top d-flex align-items-center justify-content-between">
+                      <div className={` ${item.status === "Expired" ? "new-treasure-hunt-card-expired" : "new-treasure-hunt-card"} p-0 d-flex flex-column`}>
+                        <div className={`p-2 ${item.status === "Expired" ? "treasure-hunt-top-expired" : "treasure-hunt-top"} d-flex align-items-center justify-content-between`}>
                           <div className="d-flex align-items-center gap-2">
                             <img
                               src={item.logo}
@@ -719,8 +719,8 @@ const MyProfile = () => {
           <div className="all-treasure-wrapper p-3 d-flex align-items-center justify-content-between mt-3">
             <div className="d-flex align-items-center justify-content-between w-100">
               {dummyBetaPassData2.slice(0, 5).map((item, index) => (
-                 <div className="new-treasure-hunt-card p-0 d-flex flex-column" style={{width: "19%"}}>
-                   <div className="p-2 treasure-hunt-top d-flex align-items-center justify-content-between">
+                 <div className={` ${item.status === "Expired" ? "new-treasure-hunt-card-expired" : "new-treasure-hunt-card"} p-0 d-flex flex-column`} style={{width: "19%"}}>
+                   <div className={`p-2 ${item.status === "Expired" ? "treasure-hunt-top-expired" : "treasure-hunt-top"} d-flex align-items-center justify-content-between`}>
                      <div className="d-flex align-items-center gap-2">
                        <img
                          src={item.logo}
