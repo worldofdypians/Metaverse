@@ -1069,22 +1069,10 @@ const GetPremiumPopup = ({
   }, [chainId, coinbase]);
 
   return (
-    <div
-      className="popup-wrapper popup-active p-4"
-      id="subscribe"
-      style={{ width: "40%", pointerEvents: "auto" }}
-    >
+        <div className="custom-container">
       <div className="subscribe-container p-2 position-relative">
         <div className="" style={{ background: "#8E97CD" }}></div>
-        <div className="d-flex justify-content-between align-items-center">
-          <h6 className="free-plan-title">Premium Subscription</h6>
-          <img
-            src={xMark}
-            onClick={onClose}
-            alt=""
-            style={{ cursor: "pointer" }}
-          />
-        </div>
+      
         {discountPercentage > 0 || nftPremium_total > 0 ? (
           <div className="premium-discount-bg mt-3 p-4 position-relative">
             <div className="premiumRedTag position-absolute">
@@ -1230,8 +1218,8 @@ const GetPremiumPopup = ({
             </div>
           </div>
         )}
-        <div className="my-3">
-          <h6 className="popup-subtitle mb-0">Benefits</h6>
+        <div className="mt-3 p-3 benefits-title-wrapper">
+          <h6 className="premium-benefits-popup-title mb-0">Benefits</h6>
         </div>
         <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
           <div className="d-flex flex-column gap-2">
@@ -1892,7 +1880,7 @@ const GetPremiumPopup = ({
           )}
         </div>
       </div>
-    </div>
+        </div>
   );
 };
 
