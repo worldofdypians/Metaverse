@@ -163,6 +163,16 @@ function App() {
       },
       blockExplorerUrls: ["https://seistream.app/"],
     },
+    13371: {
+      chainId: 13371,
+      chainName: "Immutable zkEVM",
+      rpcUrls: ["https://rpc.immutable.com"],
+      nativeCurrency: {
+        symbol: "IMX",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://explorer.immutable.com"],
+    },
   };
 
   const {
@@ -209,11 +219,13 @@ function App() {
   const [totalBnbNft, setTotalBnbNft] = useState(0);
   const [myBnbNfts, setMyBnbNfts] = useState([]);
   const [bnbMintAllowed, setBnbMintAllowed] = useState(1);
+  const [immutableMintAllowed, setImmutableMintAllowed] = useState(1);
 
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
   const [myskaleNFTsCreated, setmyskaleNFTsCreated] = useState([]);
   const [mycoreNFTsCreated, setmycoreNFTsCreated] = useState([]);
   const [myvictionNFTsCreated, setmyVictionNFTsCreated] = useState([]);
+  const [myimmutableNftsCreated, setmyImmutableNFTsCreated] = useState([]);
 
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
@@ -912,15 +924,16 @@ function App() {
 
     connect.mount("connect");
 
-    connect.addListener(checkout.ConnectEventType.SUCCESS, async (data) => { 
-
-      const accounts = await window.ethereum?.request({ method: "eth_requestAccounts" });
-      if(accounts) {
+    connect.addListener(checkout.ConnectEventType.SUCCESS, async (data) => {
+      const accounts = await window.ethereum?.request({
+        method: "eth_requestAccounts",
+      });
+      if (accounts) {
         setCoinbase(accounts[0]);
-        setIsConnected(true)
+        setIsConnected(true);
         setwalletModal(false);
-        console.log('yes')
-        }       
+        console.log("yes");
+      }
     });
     connect.addListener(checkout.ConnectEventType.FAILURE, (data) => {
       console.log("failure", data);
@@ -1123,6 +1136,13 @@ function App() {
         setMyBnbNfts(NFTS);
         setBnbMintAllowed(NFTS.length > 0 ? 0 : 1);
         setMyBnbNFTsCreated(NFTS);
+      });
+
+      getMyNFTS(coinbase, "immutable").then((NFTS) => {
+        setTotalImmutableNft(NFTS.length);
+        setMyImmutableNfts(NFTS);
+        setImmutableMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setmyImmutableNFTsCreated(NFTS);
       });
 
       getMyNFTS(coinbase, "base").then((NFTS) => {
@@ -1818,6 +1838,79 @@ function App() {
                 settotalVictionNft(NFTS.length);
                 setvictionMintAllowed(0);
                 setMyVictionNfts(NFTS);
+              });
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+        } else {
+          // setShowWhitelistLoadingModal(true);
+        }
+      } catch (e) {
+        setmintloading("error");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        window.alertify.error(
+          typeof e == "object" && e.message
+            ? e.message
+            : typeof e == "string"
+            ? String(e)
+            : "Oops, something went wrong! Refresh the page and try again!"
+        );
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      }
+    }
+  };
+
+  const handleImmutableNftMint = async () => {
+    if (isConnected && coinbase) {
+      try {
+        //Check Whitelist
+        let whitelist = 1;
+
+        if (parseInt(whitelist) === 1) {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+          // console.log(data,finalCaws, totalCawsDiscount);
+          let tokenId = await window.immutable_nft
+            .mintImmutableNFT()
+            .then(() => {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "immutable").then((NFTS) => {
+                setmyImmutableNFTsCreated(NFTS);
+                setTotalImmutableNft(NFTS.length);
+                setImmutableMintAllowed(0);
+                setMyImmutableNfts(NFTS);
               });
             })
             .catch((e) => {
@@ -4194,6 +4287,8 @@ function App() {
                 myBnbNFTsCreated={myBnbNFTsCreated}
                 bnbMintAllowed={bnbMintAllowed}
                 totalBnbNft={totalBnbNft}
+                immutableMintAllowed={immutableMintAllowed}
+
               />
             }
           />
@@ -4274,6 +4369,52 @@ function App() {
                 skaleMintAllowed={skaleMintAllowed}
                 coreMintAllowed={coreMintAllowed}
                 victionMintAllowed={victionMintAllowed}
+                totalCoreNft={totalCoreNft}
+                myCoreNfts={myCoreNfts}
+                totalMultiversNft={totalMultiversNft}
+                totalImmutableNft={totalImmutableNft}
+                myImmutableNfts={myImmutableNfts}
+                myMultiversNfts={myMultiversNfts}
+                totalseiNft={totalseiNft}
+                myseiNfts={myseiNfts}
+                totalVictionNft={totalVictionNft}
+                myVictionNfts={myVictionNfts}
+                immutableMintAllowed={immutableMintAllowed}
+
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/marketplace/mint/immutable"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleMint={handleImmutableNftMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                myConfluxNFTsCreated={myConfluxNFTsCreated}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                myskaleNFTsCreated={myskaleNFTsCreated}
+                handleConfluxMint={handleConfluxNftMint}
+                handleBaseNftMint={handleBaseNftMint}
+                confluxMintAllowed={confluxMintAllowed}
+                baseMintAllowed={baseMintAllowed}
+                skaleMintAllowed={skaleMintAllowed}
+                coreMintAllowed={coreMintAllowed}
+                victionMintAllowed={victionMintAllowed}
+                immutableMintAllowed={immutableMintAllowed}
                 totalCoreNft={totalCoreNft}
                 myCoreNfts={myCoreNfts}
                 totalMultiversNft={totalMultiversNft}

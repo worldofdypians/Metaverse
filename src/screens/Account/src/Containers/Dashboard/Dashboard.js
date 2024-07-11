@@ -347,6 +347,8 @@ function Dashboard({
   const [myCoreNfts, setmyCoreNfts] = useState([]);
   const [myVictionNfts, setmyVictionNfts] = useState([]);
   const [myMultiversNfts, setmyMultiversNfts] = useState([]);
+  const [myImmutableNfts, setmyImmutableNfts] = useState([]);
+
 
   const [latestVersion, setLatestVersion] = useState(0);
 
@@ -4004,6 +4006,9 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "viction").then(
       (NFTS) => setmyVictionNfts(NFTS)
     );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "immutable").then(
+      (NFTS) => setmyImmutableNfts(NFTS)
+    );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "multivers").then(
       (NFTS) => setmyMultiversNfts(NFTS)
@@ -5791,6 +5796,8 @@ function Dashboard({
                               myCmcNfts={myCmcNfts}
                               myCoreNfts={myCoreNfts}
                               myVictionNfts={myVictionNfts}
+                              myImmutableNfts={myImmutableNfts}
+
                               myMultiversNfts={myMultiversNfts}
                               mySkaleNfts={mySkaleNfts}
                               latestBoughtNFTS={latest20BoughtNFTS}
@@ -5998,6 +6005,7 @@ function Dashboard({
                         myCmcNfts={myCmcNfts}
                         myCoreNfts={myCoreNfts}
                         myVictionNfts={myVictionNfts}
+                        myImmutableNfts={myImmutableNfts}
                         myMultiversNfts={myMultiversNfts}
                         mySkaleNfts={mySkaleNfts}
                         latestBoughtNFTS={latest20BoughtNFTS}

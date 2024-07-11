@@ -104,7 +104,7 @@ const MarketMint = ({
   victionMintAllowed,
   totalseiNft,
   totalVictionNft,
-  totalImmutableNft,
+  totalImmutableNft,immutableMintAllowed,
   totalMultiversNft,
   totalCoreNft,
   myVictionNfts,
@@ -226,7 +226,6 @@ const MarketMint = ({
   const [skaleSold, setskaleSold] = useState(0);
   const [bnbNftsSold, setbnbNftsSold] = useState(0);
 
-
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(victionData);
@@ -280,7 +279,6 @@ const MarketMint = ({
       });
     setskaleSold(skaleresult);
 
-
     const bnbnftContract = new window.bscWeb3.eth.Contract(
       window.BNB_NFT_ABI,
       window.config.nft_bnb_address
@@ -293,20 +291,21 @@ const MarketMint = ({
         console.error(e);
         return 0;
       });
-      
-      console.log('bnbresult',bnbresult)
-    setbnbNftsSold(bnbresult);
 
+    console.log("bnbresult", bnbresult);
+    setbnbNftsSold(bnbresult);
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     if (location.pathname.includes("viction")) {
-     setSelectedMint(victionData);
-     setMintTitle("viction");
-    } else
-     if (location.pathname.includes("timepiece")) {
-    setSelectedMint(timepieceData);
-    setMintTitle("timepiece");
+      setSelectedMint(victionData);
+      setMintTitle("viction");
+    } else if (location.pathname.includes("timepiece")) {
+      setSelectedMint(timepieceData);
+      setMintTitle("timepiece");
+    } else if (location.pathname.includes("immutable")) {
+      setSelectedMint(immutableData);
+      setMintTitle("immutable");
     }
     getTotalSupply();
   }, [location]);
@@ -377,14 +376,14 @@ const MarketMint = ({
     //   data: baseData,
     //   class: "mint-skale",
     // },
-    // {
-    //   title: "Immutable Pass",
-    //   eventId: "immutable",
-    //   desc: "Gain entry to metaverse, and join exclusive Immutable event with special ticket.",
-    //   img: immutableActive,
-    //   data: immutableData,
-    //   class: "mint-immutable",
-    // },
+    {
+      title: "Immutable Pass",
+      eventId: "immutable",
+      desc: "Gain entry to metaverse, and join exclusive Immutable event with special ticket.",
+      img: immutableActive,
+      data: immutableData,
+      class: "mint-immutable",
+    },
     // {
     //   title: "MultiversX Pass",
     //   eventId: "multiversx",
@@ -497,7 +496,6 @@ const MarketMint = ({
       },
     ],
   };
-
 
   const firstNext = () => {
     slider.current.slickNext();
@@ -623,8 +621,7 @@ const MarketMint = ({
             setactiveButton(true);
             setStatus("");
           }
-        }
-        else if (selectedMint.id === "bnb") {
+        } else if (selectedMint.id === "bnb") {
           if (chainId !== 56) {
             setactiveButton(false);
             setStatus("Switch to BNB to continue minting.");
@@ -632,9 +629,7 @@ const MarketMint = ({
             setactiveButton(true);
             setStatus("");
           }
-        }
-        
-        else if (selectedMint.id === "core") {
+        } else if (selectedMint.id === "core") {
           if (chainId !== 1116) {
             setactiveButton(false);
             setStatus("Switch to CORE to continue minting.");
@@ -647,6 +642,14 @@ const MarketMint = ({
             setactiveButton(false);
             setStatus("Switch to Viction to continue minting.");
           } else if (chainId === 88) {
+            setactiveButton(true);
+            setStatus("");
+          }
+        } else if (selectedMint.id === "immutable") {
+          if (chainId !== 13371) {
+            setactiveButton(false);
+            setStatus("Switch to Immutable to continue minting.");
+          } else if (chainId === 13371) {
             setactiveButton(true);
             setStatus("");
           }
@@ -684,8 +687,6 @@ const MarketMint = ({
     window.scrollTo(0, 0);
     document.title = "NFT Mint";
   }, []);
-
-  
 
   return (
     <>
@@ -733,7 +734,9 @@ const MarketMint = ({
                       activeTab === "live" && "stake-tab-active"
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
-                  > <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                  >
+                    {" "}
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div>
                     Live
@@ -745,7 +748,6 @@ const MarketMint = ({
                     onClick={() => setActiveTab("upcoming")}
                   >
                     {" "}
-                   
                     Upcoming
                   </h6>
                   <h6
@@ -852,8 +854,7 @@ const MarketMint = ({
                                   : selectedMint.id === "multiversx" &&
                                     totalMultiversNft > 0
                                   ? "multivers-active"
-                                  : selectedMint.id === "bnb" &&
-                                    totalBnbNft > 0
+                                  : selectedMint.id === "bnb" && totalBnbNft > 0
                                   ? "bnb-active"
                                   : selectedMint.id === "multiversx" &&
                                     totalMultiversNft === 0
@@ -1521,6 +1522,8 @@ const MarketMint = ({
                                         ? bnbMintAllowed
                                         : mintTitle === "multiversx"
                                         ? 1
+                                        : mintTitle === "immutable"
+                                        ? immutableMintAllowed
                                         : 0}{" "}
                                       NFT
                                     </h6>
@@ -1794,11 +1797,10 @@ const MarketMint = ({
                                 </div>
                               )}
 
-{selectedMint.id === "viction" && (
+                              {selectedMint.id === "viction" && (
                                 <div
                                   className={
-                                    (isConnected === true &&
-                                      chainId !== 88) ||
+                                    (isConnected === true && chainId !== 88) ||
                                     (status !== "Connect your wallet." &&
                                       status !== "") ||
                                     mintloading === "error" ||
@@ -1815,7 +1817,7 @@ const MarketMint = ({
                                             chainId !== 88) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
-                                            totalVictionNft > 0
+                                          totalVictionNft > 0
                                         ? "outline-btn-disabled"
                                         : "filled-btn"
                                     }  px-4 w-100`}
@@ -1831,7 +1833,7 @@ const MarketMint = ({
                                         chainId !== 88) ||
                                       (status !== "Connect your wallet." &&
                                         status !== "") ||
-                                        totalVictionNft > 0
+                                      totalVictionNft > 0
                                         ? true
                                         : false
                                     }
@@ -2017,7 +2019,7 @@ const MarketMint = ({
                                     }  px-4 w-100`}
                                     onClick={() => {
                                       isConnected === true && chainId === 13371
-                                        ? handleBaseNftMint()
+                                        ? handleMint()
                                         : showWalletConnect();
                                     }}
                                     disabled={
@@ -2236,7 +2238,6 @@ const MarketMint = ({
                     />
                   </div>
 
-                
                   <div className="upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">
