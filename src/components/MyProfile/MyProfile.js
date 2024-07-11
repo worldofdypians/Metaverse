@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./_myprofile.scss";
 import profileImage from "./assets/profileImage.png";
 import premiumProfileImage from "./assets/premiumProfileImage.png";
@@ -45,6 +45,11 @@ import coingeckoUpcoming from "../../screens/Marketplace/assets/coingeckoUpcomin
 import baseUpcoming from "../../screens/Marketplace/assets/baseUpcoming.webp";
 import doge from "../../screens/Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../screens/Marketplace/MarketNFTs/assets/cmc.svg";
+import mageStarter from "../../screens/Account/src/Components/WalletBalance/assets/mageStarter.png";
+import mageGoing from "../../screens/Account/src/Components/WalletBalance/assets/mageGoing.png";
+import mageFinish from "../../screens/Account/src/Components/WalletBalance/assets/mageFinish.png";
+import readyBorder from "../../screens/Account/src/Components/WalletBalance/newAssets/readyBorder2.svg";
+
 
 import Countdown from "react-countdown";
 
@@ -77,7 +82,25 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const MyProfile = () => {
+const renderer2 = ({ hours, minutes }) => {
+  return (
+    <h6 className="timer-text mb-0">
+      {hours}h:{minutes}m (UTC)
+    </h6>
+  );
+};
+
+const MyProfile = ({
+  claimedChests,
+  claimedPremiumChests,
+  openedSkaleChests,
+  openedCoreChests,
+  openedVictionChests,
+  canBuy,
+  email,
+  isPremium
+
+}) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
@@ -91,7 +114,23 @@ const MyProfile = () => {
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
 
 
+  const totalClaimedChests =
+  claimedChests +
+  claimedPremiumChests +
+  openedSkaleChests.length +
+  openedCoreChests.length +
+  openedVictionChests.length;
+
+const chestPercentage = (totalClaimedChests / 80) * 100;
+
+let now = new Date().getTime();
+const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
+
+
+
   const [allEvents, setAllEvents] = useState(false)
+  const [finished, setFinished] = useState(false);
+
 
   const dummyBetaPassData2 = [
     // {
@@ -509,6 +548,16 @@ const MyProfile = () => {
     },
   ];
 
+  useEffect(() => {
+    if (canBuy && email) {
+      setFinished(false);
+    } else if (!canBuy && email) {
+      setFinished(true);
+    } else if (!email) {
+      setFinished(false);
+    }
+  }, [claimedChests, claimedPremiumChests, isPremium, canBuy, email]);
+
   return (
     <div className="custom-container mt-5">
       <div className="row">
@@ -564,13 +613,85 @@ const MyProfile = () => {
         <div className="col-12 col-lg-8">
           <div className="row ">
             <div className="col-12 col-lg-4">
-              <div className="new-special-rewards-wrapper d-flex flex-column gap-4 p-3">
+              {/* <div className="new-special-rewards-wrapper d-flex flex-column gap-4 p-3">
                 <h6 className="special-rewards-title">Special Rewards</h6>
                 <div className="d-flex align-items-center gap-1">
                   <span className="special-rewards-span">Submit</span>
                   <img src={redArrow} alt="" />
                 </div>
-              </div>
+              </div> */}
+               <div className="daily-bonus-wrapper">
+                  <div className="red-div"></div>
+                  <img
+                    // src={finished ? mageFinish : mageGoing}
+                    src={
+                      chestPercentage >= 50 && chestPercentage < 100
+                        ? mageGoing
+                        : chestPercentage === 100
+                        ? mageFinish
+                        : mageStarter
+                    }
+                    className={`${"daily-rewards-img"}`}
+                    alt=""
+                  />
+                  <div className="progress-bar-group d-flex flex-column align-items-start">
+                    {!finished && (
+                      <span className="progress-bar-title">Progress</span>
+                    )}
+
+                    <div className="yellow-progress-outer">
+                      <span className="mb-0 chest-progress">
+                        {/* {claimedPremiumChests}/10 */}
+                        {parseInt(chestPercentage)}%
+                      </span>
+                      <div
+                        className="yellow-progress-inner"
+                        style={{ width: `${chestPercentage}%` }}
+                        // style={{ width: `35%` }}
+                      ></div>
+                    </div>
+                  </div>
+                  <div className="d-flex flex-column justify-content-between h-100 p-3">
+                    <div
+                      className="d-flex align-items-center justify-content-between position-relative gap-1"
+                      style={{ width: "fit-content" }}
+                    >
+                      <h6 className="profile-div-title mb-0">Daily Bonus</h6>
+                    </div>
+
+                    <div
+                      className="d-flex flex-column align-items-center"
+                      style={{ width: "fit-content" }}
+                    >
+                      <div
+                        className="position-relative"
+                        style={{
+                          width: "96px",
+                          height: "40px",
+                          right: "0px",
+                          bottom: "15px",
+                        }}
+                      >
+                        <span className="ready-to-claim mb-0">
+                          {finished ? "Reset Time" : "Ready to Claim"}
+                        </span>
+                        <img
+                          src={readyBorder}
+                          alt=""
+                          className={`${
+                            finished ? "ready-border-2" : "ready-border"
+                          }`}
+                        />
+                      </div>
+                      {finished && (
+                        <span className="timer-text mb-0">
+                          <Countdown date={midnight} renderer={renderer2} />
+                        </span>
+                      )}
+                    </div>
+                    <div></div>
+                  </div>
+                </div>
             </div>
             <div className="col-12 col-lg-8">
               <div className="game-leaderboards-wrapper position-relative h-100 d-flex align-items-center justify-content-between p-3">

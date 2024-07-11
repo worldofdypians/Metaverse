@@ -40,7 +40,7 @@ const MarketSidebar = () => {
         style={{ height: "90%" }}
       >
         <div className="d-flex flex-column  gap-2">
-          <NavLink
+          {/* <NavLink
             to="/marketplace"
             end
             className={({ isActive }) =>
@@ -61,8 +61,8 @@ const MarketSidebar = () => {
                 </>
               );
             }}
-          />
-          <div className="sidebar-separator my-2"></div>
+          /> */}
+          {/* <div className="sidebar-separator my-2"></div> */}
           <div className="accordion" id="accordionExample">
             <div className="">
               <h2 className="sidebar-item p-2 mb-0" id="headingOne">
@@ -309,12 +309,11 @@ const MarketSidebar = () => {
                     style={{ width: "20px", height: "20px" }}
                     alt=""
                   />
-                  <span className={`sidebar-title`}>NFT Bridge</span>
+                  <span className={`sidebar-title`}>Support</span>
                 </>
               );
             }}
           />
-          <div className="sidebar-separator my-2"></div>
 
         </div>
       </div>

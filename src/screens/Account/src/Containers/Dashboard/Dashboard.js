@@ -5624,10 +5624,19 @@ function Dashboard({
       className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
       style={{ minHeight: "72vh", maxWidth: "2400px", overflow: "hidden" }}
     >
-      {windowSize.width < 992 ? <MobileNav /> : <ProfileSidebar />}
+      {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft2 d-flex align-items-start px-3 px-lg-5 position-relative">
         {location.pathname === "/account" ?
-        <MyProfile /> 
+        <MyProfile
+        claimedChests={claimedChests}
+claimedPremiumChests={claimedPremiumChests}
+openedSkaleChests={openedSkaleChests}
+openedCoreChests={openedCoreChests}
+openedVictionChests={openedVictionChests}
+canBuy={canBuy}
+email={email}
+isPremium={isPremium}
+         /> 
         :
         location.pathname === "/account/my-rewards" ?
         <MyRewardsPopupNew
