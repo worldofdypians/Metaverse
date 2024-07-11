@@ -445,8 +445,8 @@ function App() {
       publishableKey: PUBLISHABLE_KEY,
     },
     clientId: CLIENT_ID,
-    redirectUri: "https://localhost:5173/redirect",
-    logoutRedirectUri: "https://localhost:5173/logout",
+    redirectUri: "https://localhost:8080/redirect",
+    logoutRedirectUri: "https://localhost:8080/logout",
     audience: "platform_api",
     scope: "openid offline_access email transact",
     popupOverlayOptions: {
@@ -907,9 +907,28 @@ function App() {
       config: { theme: checkout.WidgetTheme.DARK },
     });
     const connect = widgets.create(checkout.WidgetType.CONNECT);
+
+    if (!connect) return;
+
     connect.mount("connect");
 
-console.log(connect, widgets,checkout)
+    connect.addListener(checkout.ConnectEventType.SUCCESS, async (data) => { 
+
+      const accounts = await window.ethereum?.request({ method: "eth_requestAccounts" });
+      if(accounts) {
+        setCoinbase(accounts[0]);
+        setIsConnected(true)
+        setwalletModal(false);
+        console.log('yes')
+        }       
+    });
+    connect.addListener(checkout.ConnectEventType.FAILURE, (data) => {
+      console.log("failure", data);
+    });
+    connect.addListener(checkout.ConnectEventType.CLOSE_WIDGET, () => {
+      connect.unmount();
+      setwalletModal(false);
+    });
   };
 
   const myNft = async () => {
