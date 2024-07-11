@@ -56,7 +56,7 @@ import immutableIcon from "../../../../../components/NewDailyBonus/assets/immuta
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
 import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
-import MyProfile from '../../../../../components/MyProfile/MyProfile'
+import MyProfile from "../../../../../components/MyProfile/MyProfile";
 import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import { dyp700Address, dyp700v1Address } from "../../web3";
@@ -66,6 +66,7 @@ import TopSection from "./Components/TopSection/TopSection";
 import Portfolio from "../../Components/WalletBalance/Portfolio";
 import ProfileSidebar from "../../../../../components/ProfileSidebar/ProfileSidebar";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
+import NewEvents from "../../../../../components/NewEvents/NewEvents";
 
 function Dashboard({
   account,
@@ -2103,7 +2104,7 @@ function Dashboard({
       StartPosition: 0,
       MaxResultsCount: 10,
     };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data); 
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setPrevVersionStar(parseInt(result.data.data.version));
     setStarRecords(result.data.data.leaderboard);
     fillRecordsStar(result.data.data.leaderboard);
@@ -2137,8 +2138,6 @@ function Dashboard({
             : 0
         );
       }
-
-      
     } else if (testArray.length === 0) {
       setActivePlayerStar(false);
       fetchDailyRecordsAroundPlayerStar(result.data.data.leaderboard);
@@ -2469,7 +2468,7 @@ function Dashboard({
     fetchMonthlyRecordsSkale();
 
     fetchRecordsStar();
-  }, [username, count, userId,goldenPassRemainingTime]);
+  }, [username, count, userId, goldenPassRemainingTime]);
 
   useEffect(() => {
     fetchGenesisPreviousWinners();
@@ -5615,7 +5614,7 @@ function Dashboard({
 
   const hashValue = window.location.hash;
 
-  const location = useLocation()
+  const location = useLocation();
 
   console.log(location, "location");
 
@@ -5625,73 +5624,74 @@ function Dashboard({
       style={{ minHeight: "72vh", maxWidth: "2400px", overflow: "hidden" }}
     >
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
-      <div className="container-nft2 d-flex align-items-start px-3 px-lg-5 position-relative">
-        {location.pathname === "/account" ?
-        <MyProfile
-        claimedChests={claimedChests}
-claimedPremiumChests={claimedPremiumChests}
-openedSkaleChests={openedSkaleChests}
-openedCoreChests={openedCoreChests}
-openedVictionChests={openedVictionChests}
-canBuy={canBuy}
-email={email}
-isPremium={isPremium}
-         /> 
-        :
-        location.pathname === "/account/my-rewards" ?
-        <MyRewardsPopupNew
-        address={data?.getPlayer?.wallet?.publicAddress}
-        weeklyplayerData={weeklyplayerDataAmount}
-        dailyplayerData={dailyplayerDataAmount}
-        dailyDataAmountCore={dailyDataAmountCore}
-        weeklyDataAmountCore={weeklyDataAmountCore}
-        monthlyDataAmountCore={monthlyDataAmountCore}
-        dailyDataAmountViction={dailyDataAmountViction}
-        weeklyDataAmountViction={weeklyDataAmountViction}
-        monthlyDataAmountViction={monthlyDataAmountViction}
-        dailyDataAmountSkale={dailyDataAmountSkale}
-        weeklyDataAmountSkale={weeklyDataAmountSkale}
-        monthlyDataAmountSkale={monthlyDataAmountSkale}
-        userRank2={userRank2}
-        email={email}
-        userDataStar={dataAmountStar}
-        allChests={allChests}
-        allSkaleChests={allSkaleChests}
-        allCoreChests={allCoreChests}
-        allVictionChests={allVictionChests}
-        allSeiChests={allSeiChests}
-        availableTime={goldenPassRemainingTime}
-        userSocialRewards={userSocialRewards}
-        bnbEarnUsd={bnbEarnUsd}
-        skaleEarnUsd={skaleEarnUsd}
-        multiversEarnUsd={multiversEarnUsd}
-        seiEarnUsd={seiEarnUsd}
-        victionEarnUsd={victionEarnUsd}
-        coreEarnUsd={coreEarnUsd}
-        kittyDashRecords={kittyDashRecords}
-        userRankRewards={userRankRewards}
-        cawsPremiumRewards={cawsPremiumRewards}
-        genesisRank2={genesisRank2}
-      />
-        : location.pathname === "/account/premium"?
-
-        <GetPremiumPopup
-        chainId={chainId}
-        coinbase={coinbase}
-        handleSwitchNetwork={handleSwitchNetwork}
-        onSuccessDeposit={() => {
-          onSuccessDeposit();
-          setTimeout(() => {
-            setgetPremiumPopup(false);
-          }, 2000);
-        }}
-        onClose={() => {
-          setgetPremiumPopup(false);
-        }}
-      />
-      :
-        <></>
-      }
+      <div className="container-nft2 d-flex flex-column align-items-start px-3 px-lg-5 position-relative">
+        {location.pathname === "/account" ? (
+          <>
+          <MyProfile
+            claimedChests={claimedChests}
+            claimedPremiumChests={claimedPremiumChests}
+            openedSkaleChests={openedSkaleChests}
+            openedCoreChests={openedCoreChests}
+            openedVictionChests={openedVictionChests}
+            canBuy={canBuy}
+            email={email}
+            isPremium={isPremium}
+          />
+          <NewEvents />
+          </>
+        ) : location.pathname === "/account/my-rewards" ? (
+          <MyRewardsPopupNew
+            address={data?.getPlayer?.wallet?.publicAddress}
+            weeklyplayerData={weeklyplayerDataAmount}
+            dailyplayerData={dailyplayerDataAmount}
+            dailyDataAmountCore={dailyDataAmountCore}
+            weeklyDataAmountCore={weeklyDataAmountCore}
+            monthlyDataAmountCore={monthlyDataAmountCore}
+            dailyDataAmountViction={dailyDataAmountViction}
+            weeklyDataAmountViction={weeklyDataAmountViction}
+            monthlyDataAmountViction={monthlyDataAmountViction}
+            dailyDataAmountSkale={dailyDataAmountSkale}
+            weeklyDataAmountSkale={weeklyDataAmountSkale}
+            monthlyDataAmountSkale={monthlyDataAmountSkale}
+            userRank2={userRank2}
+            email={email}
+            userDataStar={dataAmountStar}
+            allChests={allChests}
+            allSkaleChests={allSkaleChests}
+            allCoreChests={allCoreChests}
+            allVictionChests={allVictionChests}
+            allSeiChests={allSeiChests}
+            availableTime={goldenPassRemainingTime}
+            userSocialRewards={userSocialRewards}
+            bnbEarnUsd={bnbEarnUsd}
+            skaleEarnUsd={skaleEarnUsd}
+            multiversEarnUsd={multiversEarnUsd}
+            seiEarnUsd={seiEarnUsd}
+            victionEarnUsd={victionEarnUsd}
+            coreEarnUsd={coreEarnUsd}
+            kittyDashRecords={kittyDashRecords}
+            userRankRewards={userRankRewards}
+            cawsPremiumRewards={cawsPremiumRewards}
+            genesisRank2={genesisRank2}
+          />
+        ) : location.pathname === "/account/premium" ? (
+          <GetPremiumPopup
+            chainId={chainId}
+            coinbase={coinbase}
+            handleSwitchNetwork={handleSwitchNetwork}
+            onSuccessDeposit={() => {
+              onSuccessDeposit();
+              setTimeout(() => {
+                setgetPremiumPopup(false);
+              }, 2000);
+            }}
+            onClose={() => {
+              setgetPremiumPopup(false);
+            }}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
