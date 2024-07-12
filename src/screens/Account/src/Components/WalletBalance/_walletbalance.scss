@@ -2080,8 +2080,8 @@ background: #121235;
 
 .daily-rewards-img {
   position: absolute;
-  width: 100%;
-  right: -29%;
+  width: 85%;
+  right: -20%;
   bottom: -9%;
   z-index: 1;
   pointer-events: none;
@@ -2130,13 +2130,13 @@ background: #121235;
   width: 120px;
   height: 16px;
   border-radius: 12px;
-  border: 1px solid rgba(234, 157, 28, 1);
+  border: 1px solid #FF5EA0;
 }
 
 .yellow-progress-inner {
   height: 100%;
   border-radius: 12px;
-  background: rgba(234, 157, 28, 0.4);
+  background: #FF5EA0;
 }
 
 .chest-progress {
