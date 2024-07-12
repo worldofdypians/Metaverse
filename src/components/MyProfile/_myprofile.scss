@@ -265,8 +265,8 @@
   width: 100%;
 }
 
-.special-rewards-total{
-  color: #3B5896;
+.special-rewards-total {
+  color: #3b5896;
   font-family: "Montserrat";
   font-size: 18px;
   font-style: normal;
@@ -274,8 +274,8 @@
   line-height: normal;
 }
 
-.special-rewards-total-span{
-  color: #3B5896;
+.special-rewards-total-span {
+  color: #3b5896;
   font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
@@ -283,19 +283,126 @@
   line-height: normal;
 }
 
-
-.limited-offers-wrapper{
+.limited-offers-wrapper {
   border-radius: 10px;
-background: radial-gradient(358.71% 141.42% at 100% 100%, #7F2B8A 0%, #1F1B62 100%);
-height: 170px;
+  background: radial-gradient(
+    358.71% 141.42% at 100% 100%,
+    #7f2b8a 0%,
+    #1f1b62 100%
+  );
+  height: 170px;
 }
 
-.new-stake-nft-wrapper{
+.new-stake-nft-wrapper {
   height: 170px;
   border-radius: 10px;
-background: radial-gradient(490.81% 196.97% at 100% 100%, #482193 25.5%, #7856C5 100%);
+  background: radial-gradient(
+    490.81% 196.97% at 100% 100%,
+    #482193 25.5%,
+    #7856c5 100%
+  );
 }
 
-.new-stake-nft-img{
+.new-stake-nft-img {
   width: 65%;
+}
+
+.my-rewards-wrapper-new {
+  border-radius: 10px;
+  background: radial-gradient(
+    490.81% 196.97% at 100% 100%,
+    #005d63 25.5%,
+    #106a85 100%
+  );
+}
+
+.my-rewards-wrapper-new::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(./assets/myRewardsBg.svg);
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: contain;
+  pointer-events: none;
+}
+
+.miner-img {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+}
+
+.daily-progress-wrapper {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.progress-line {
+  stroke-width: 0.5px;
+  stroke: rgba(255, 211, 126, 0);
+}
+.progress-line-2 {
+  stroke-width: 0.5px;
+  stroke: rgba(255, 211, 126, 0);
+}
+
+.daily-progress-span {
+  color: #ffd37e;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 240% */
+  text-transform: uppercase;
+}
+
+.daily-progress-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.daily-progress-item {
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.daily-progress-value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f1118;
+  border: 1px solid #c09645;
+  border-radius: 4px;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  span {
+    color: #ffd37e;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+  }
+}
+
+.daily-progress-status {
+  position: absolute;
+  width: 55px !important;
+  bottom: -45%;
+  left: 0;
+  right: 0;
+  margin: auto;
 }

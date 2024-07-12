@@ -17,6 +17,7 @@ import bnb from "./assets/bnb.svg";
 import whiteArrow from "./assets/whiteArrow.svg";
 import greenArrow from "./assets/greenArrow.svg";
 import redArrow from "./assets/redArrow.svg";
+import cyanArrow from "./assets/cyanArrow.svg";
 import pinkArrow from "./assets/pinkArrow.svg";
 import grayArrow from "./assets/grayArrow.svg";
 import dypius from "../../screens/Account/src/Components/WalletBalance/assets/dypIcon.svg";
@@ -50,9 +51,27 @@ import mageStarter from "../../screens/Account/src/Components/WalletBalance/asse
 import mageGoing from "../../screens/Account/src/Components/WalletBalance/assets/mageGoing.png";
 import mageFinish from "../../screens/Account/src/Components/WalletBalance/assets/mageFinish.png";
 import readyBorder from "../../screens/Account/src/Components/WalletBalance/newAssets/readyBorder2.svg";
-import stakeNft from './assets/stakeNft.png'
-
+import stakeNft from './assets/stakeNft.png';
+import myRewardsMiner from './assets/myRewardsMiner.png'
 import Countdown from "react-countdown";
+import treasureHuntInactive from './assets/treasureHuntInactive.png'
+import treasureHuntActive from './assets/treasureHuntActive.png'
+import dragonRuinsInactive from './assets/dragonRuinsInactive.png'
+import dragonRuinsActive from './assets/dragonRuinsActive.png'
+import goldenPassInactive from './assets/goldenPassInactive.png'
+import goldenPassActive from './assets/goldenPassActive.png'
+import dailyBonusInactive from './assets/dailyBonusInactive.png'
+import dailyBonusActive from './assets/dailyBonusActive.png'
+import scorpionKingInactive from './assets/scorpionKingInactive.png'
+import scorpionKingActive from './assets/scorpionKingActive.png'
+import criticalHitInactive from './assets/criticalHitInactive.png'
+import criticalHitActive from './assets/criticalHitActive.png'
+import puzzleMadnessInactive from './assets/puzzleMadnessInactive.png'
+import puzzleMadnessActive from './assets/puzzleMadnessActive.png'
+import mazeGardenInactive from './assets/mazeGardenInactive.png'
+import mazeGardenActive from './assets/mazeGardenActive.png'
+import doneTag from './assets/doneTag.svg'
+import emptyTag from './assets/emptyTag.svg'
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -586,49 +605,68 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
               </div>
             </div>
             <hr className="sidebar-separator my-2" />
-            <div className="d-flex align-items-center justify-content-between w-100">
-              <div className="rank-card-wrapper d-flex align-items-center justify-content-center p-3">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <img src={totalEarningsIcon} alt="" />
-                  <span className="rank-card-span">Total Earnings</span>
-                  <span className="rank-card-value">$5,325</span>
-                </div>
+            <div className="daily-progress-wrapper p-3 d-flex flex-column gap-3">
+              <div className="d-flex align-items-center justify-content-between">
+                <div className="progress-line"></div>
+                <span className="daily-progress-span">Daily Progress</span>
+                <div className="progress-line-2"></div>
               </div>
-              <div className="rank-card-wrapper d-flex align-items-center justify-content-center p-3">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <img src={globalRankIcon} alt="" />
-                  <span className="rank-card-span">Global Rank</span>
-                  <span className="rank-card-value">#4</span>
+              <div className="daily-progress-grid">
+                <div className="daily-progress-item position-relative">
+                  <img src={treasureHuntActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>4</span>
+                  </div>
+                    <img src={emptyTag} alt="" className="daily-progress-status" />
                 </div>
-              </div>
-              <div className="rank-card-wrapper d-flex align-items-center justify-content-center p-3">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <img src={myRankIcon} alt="" />
-                  <span className="rank-card-span">My Rank</span>
-                  <span className="rank-card-value">Unstoppable</span>
+                <div className="daily-progress-item position-relative">
+                  <img src={treasureHuntActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>4</span>
+                  </div>
+                    <img src={doneTag} alt="" className="daily-progress-status" />
                 </div>
-              </div>
-            </div>
-            <div className="d-flex align-items-center justify-content-between w-100">
-              <div className="rank-card-wrapper d-flex align-items-center justify-content-center p-3">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <img src={totalEarningsIcon} alt="" />
-                  <span className="rank-card-span">Total Earnings</span>
-                  <span className="rank-card-value">$5,325</span>
+                <div className="daily-progress-item position-relative">
+                  <img src={treasureHuntActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>4</span>
+                  </div>
+                    <img src={emptyTag} alt="" className="daily-progress-status" />
                 </div>
-              </div>
-              <div className="rank-card-wrapper d-flex align-items-center justify-content-center p-3">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <img src={globalRankIcon} alt="" />
-                  <span className="rank-card-span">Global Rank</span>
-                  <span className="rank-card-value">#4</span>
+                <div className="daily-progress-item position-relative">
+                  <img src={treasureHuntActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>4</span>
+                  </div>
+                    <img src={doneTag} alt="" className="daily-progress-status" />
                 </div>
-              </div>
-              <div className="rank-card-wrapper d-flex align-items-center justify-content-center p-3">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <img src={myRankIcon} alt="" />
-                  <span className="rank-card-span">My Rank</span>
-                  <span className="rank-card-value">Unstoppable</span>
+                <div className="daily-progress-item position-relative">
+                  <img src={treasureHuntActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>4</span>
+                  </div>
+                    <img src={emptyTag} alt="" className="daily-progress-status" />
+                </div>
+                <div className="daily-progress-item position-relative">
+                  <img src={treasureHuntActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>4</span>
+                  </div>
+                    <img src={doneTag} alt="" className="daily-progress-status" />
+                </div>
+                <div className="daily-progress-item position-relative">
+                  <img src={treasureHuntActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>4</span>
+                  </div>
+                    <img src={emptyTag} alt="" className="daily-progress-status" />
+                </div>
+                <div className="daily-progress-item position-relative">
+                  <img src={treasureHuntActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>4</span>
+                  </div>
+                    <img src={doneTag} alt="" className="daily-progress-status" />
                 </div>
               </div>
             </div>
@@ -757,7 +795,18 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
               </div>
             </div>
             <div className="col-12 col-lg-6 mt-3">
-              <div className="profile-placeholder"></div>
+              <div className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-3 p-3">
+                <img src={myRewardsMiner} className="miner-img" alt="" />
+                <div className="d-flex align-items-center gap-2">
+              <h6 className="special-rewards-title" style={{color: "#FFF", width: "fit-content"}}>My</h6>
+              <h6 className="special-rewards-title" style={{color: "#35F3FF", width: "fit-content"}}>Rewards</h6>
+                </div>
+                <div className="d-flex flex-column">
+                  <h6 className="special-rewards-total mb-0" style={{color: "#FFE8D2"}}>$450.24</h6>
+                  <span className="special-rewards-total-span" style={{color: "#FFE8D2"}}>Rewards</span>
+                </div>
+                  <img src={cyanArrow} width={20} height={20} alt="" />
+              </div>
             </div>
             <div className="col-12 col-lg-6 mt-3">
                  <div className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-3 p-3">
