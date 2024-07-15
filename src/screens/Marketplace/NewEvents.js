@@ -387,7 +387,7 @@ const NewEvents = ({
     {
       title: "SKALE",
       logo: skaleLogo,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -398,7 +398,7 @@ const NewEvents = ({
         chain: "SKALE Nebula Hub",
         linkState: "skale",
         rewards: "SKL",
-        status: "Live",
+        status: "Expired",
         id: "event11",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SKL Rewards",

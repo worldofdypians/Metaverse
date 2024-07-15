@@ -337,6 +337,30 @@ const NewWalletBalance = ({
       "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
   };
 
+
+      
+
+  const dummyViction = {
+    title: "VICTION",
+    chain: "VICTION Chain",
+    linkState: "viction",
+    rewards: "VIC",
+    status: "Live",
+    id: "event14",
+    eventType: "Explore & Find",
+    eventDate: "Jul 01, 2024",
+    date: "Jul 01, 2024",
+    logo: victionLogo,
+    totalRewards: "$20,000 in VIC Rewards",
+    eventDuration: coreLastDay,
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore:
+      "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
+  };
+
   const dummyCore = {
     title: "CORE",
     logo: coreLogo,
@@ -538,7 +562,7 @@ const NewWalletBalance = ({
     {
       title: "SKALE",
       logo: skaleLogo,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -549,7 +573,7 @@ const NewWalletBalance = ({
         chain: "SKALE Nebula Hub",
         linkState: "skale",
         rewards: "SKL",
-        status: "Live",
+        status: "Expired",
         id: "event11",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SKL Rewards",
@@ -1413,11 +1437,11 @@ const NewWalletBalance = ({
                 }}
               />
               <ActiveProfileEvent
-                data={dummySkale}
-                event={dummySkale}
-                userEarnedUsd={skaleEarnUsd}
+                data={dummyViction}
+                event={dummyViction}
+                userEarnedUsd={victionEarnUsd}
                 onOpenEvent={() => {
-                  setDummyEvent(dummySkale);
+                  setDummyEvent(dummyViction);
                   setEventPopup(true);
                 }}
               />
