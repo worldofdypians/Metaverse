@@ -438,7 +438,7 @@ const MarketEvents = ({
     {
       title: "SKALE",
       logo: skaleLogo,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -449,7 +449,7 @@ const MarketEvents = ({
         chain: "SKALE Nebula Hub",
         linkState: "skale",
         rewards: "SKL",
-        status: "Live",
+        status: "Expired",
         id: "event11",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SKL Rewards",
@@ -1411,7 +1411,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1545,7 +1545,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(4, dummyBetaPassData2.length)
+                    .slice(3, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
