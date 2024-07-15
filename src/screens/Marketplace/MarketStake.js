@@ -550,7 +550,7 @@ const MarketStake = ({
           className="container-nft d-flex align-items-start flex-column gap-2 px-3 px-lg-5 my-4 position-relative"
           style={{ minHeight: "72vh", backgroundSize: "cover" }}
         >
-          <div className="container-lg mx-0">
+          <div className="custom-container mx-0">
             <h6 className="nft-page-title font-raleway mt-3 mb-4 mb-lg-4 mt-lg-4">
               NFT <span style={{ color: "#8c56ff" }}> Staking</span>
             </h6>

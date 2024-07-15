@@ -72,6 +72,8 @@ import mazeGardenInactive from './assets/mazeGardenInactive.png'
 import mazeGardenActive from './assets/mazeGardenActive.png'
 import doneTag from './assets/doneTag.svg'
 import emptyTag from './assets/emptyTag.svg'
+import portfolio from './assets/portfolio.svg'
+
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -580,7 +582,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
 
   return (
     <div className="custom-container mt-5">
-      <div className="row">
+      <div className="row mt-4 mt-lg-0">
         <div className="col-12 col-lg-4">
           <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
             <div className="d-flex align-items-center gap-2">
@@ -593,7 +595,8 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                 <span className="my-profile-email mb-2">
                   dypiustesting@gmail.com
                 </span>
-                <div className="wallet-address-wrapper d-flex align-items-center justify-content-between p-2">
+              <div className="d-flex flex-column flex-lg-row align-items-center gap-2">
+              <div className="wallet-address-wrapper d-flex align-items-center justify-content-between gap-4 p-2">
                   <div className="d-flex flex-column">
                     <span className="profile-wallet-span mb-2">
                       Wallet Address
@@ -602,6 +605,11 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                   </div>
                   <img src={domainIcon} width={30} height={30} alt="" />
                 </div>
+                <div className="portfolio-wrapper d-flex align-items-center gap-2 p-2">
+                  <img src={portfolio} width={25} height={25} alt="" />
+                  <h6 className="mb-0">My Portfolio</h6>
+                </div>
+              </div>
               </div>
             </div>
             <hr className="sidebar-separator my-2" />
@@ -617,56 +625,56 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                   <div className="daily-progress-value">
                       <span>4</span>
                   </div>
+                    <img src={doneTag} alt="" className="daily-progress-status" />
+                </div>
+                <div className="daily-progress-item position-relative">
+                  <img src={dragonRuinsActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>22</span>
+                  </div>
+                    <img src={doneTag} alt="" className="daily-progress-status" />
+                </div>
+                <div className="daily-progress-item position-relative">
+                  <img src={scorpionKingInactive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>0</span>
+                  </div>
                     <img src={emptyTag} alt="" className="daily-progress-status" />
                 </div>
                 <div className="daily-progress-item position-relative">
-                  <img src={treasureHuntActive} alt="" />
+                  <img src={puzzleMadnessActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>13</span>
+                  </div>
+                    <img src={doneTag} alt="" className="daily-progress-status" />
+                </div>
+                <div className="daily-progress-item position-relative">
+                  <img src={goldenPassActive} alt="" />
                   <div className="daily-progress-value">
                       <span>4</span>
                   </div>
                     <img src={doneTag} alt="" className="daily-progress-status" />
                 </div>
                 <div className="daily-progress-item position-relative">
-                  <img src={treasureHuntActive} alt="" />
+                  <img src={dailyBonusActive} alt="" />
                   <div className="daily-progress-value">
-                      <span>4</span>
-                  </div>
-                    <img src={emptyTag} alt="" className="daily-progress-status" />
-                </div>
-                <div className="daily-progress-item position-relative">
-                  <img src={treasureHuntActive} alt="" />
-                  <div className="daily-progress-value">
-                      <span>4</span>
+                      <span>54</span>
                   </div>
                     <img src={doneTag} alt="" className="daily-progress-status" />
                 </div>
                 <div className="daily-progress-item position-relative">
-                  <img src={treasureHuntActive} alt="" />
+                  <img src={criticalHitInactive} alt="" />
                   <div className="daily-progress-value">
-                      <span>4</span>
+                      <span>0</span>
                   </div>
                     <img src={emptyTag} alt="" className="daily-progress-status" />
                 </div>
                 <div className="daily-progress-item position-relative">
-                  <img src={treasureHuntActive} alt="" />
+                  <img src={mazeGardenInactive} alt="" />
                   <div className="daily-progress-value">
-                      <span>4</span>
-                  </div>
-                    <img src={doneTag} alt="" className="daily-progress-status" />
-                </div>
-                <div className="daily-progress-item position-relative">
-                  <img src={treasureHuntActive} alt="" />
-                  <div className="daily-progress-value">
-                      <span>4</span>
+                      <span>0</span>
                   </div>
                     <img src={emptyTag} alt="" className="daily-progress-status" />
-                </div>
-                <div className="daily-progress-item position-relative">
-                  <img src={treasureHuntActive} alt="" />
-                  <div className="daily-progress-value">
-                      <span>4</span>
-                  </div>
-                    <img src={doneTag} alt="" className="daily-progress-status" />
                 </div>
               </div>
             </div>
@@ -682,7 +690,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                   <img src={redArrow} alt="" />
                 </div>
               </div> */}
-               <div className="daily-bonus-wrapper">
+               <div className="daily-bonus-wrapper mt-4 mb-5 mt-lg-0 mb-lg-0">
                   <div className="red-div"></div>
                   <img
                     // src={finished ? mageFinish : mageGoing}
@@ -718,7 +726,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                       className="d-flex align-items-center justify-content-between position-relative gap-1"
                       style={{ width: "fit-content" }}
                     >
-                      <div className="d-flex flex-column">
+                      <div className="d-flex align-items-center gap-2">
                       <h6 className="leaderboards-title mb-0">Daily</h6>
                       <h6 className="leaderboards-title mb-0" style={{color: "#FF5EA0"}}>Bonus</h6>
                       </div>
@@ -759,8 +767,8 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                 </div>
             </div>
             <div className="col-12 col-lg-8">
-              <div className="game-leaderboards-wrapper position-relative h-100 d-flex align-items-center justify-content-between p-3">
-                <div className="d-flex flex-column">
+              <div className="game-leaderboards-wrapper position-relative h-100 d-flex align-items-end  align-items-lg-center justify-content-center justify-content-lg-between p-3">
+                <div className="d-flex flex-row flex-lg-column gap-2 gap-lg-0">
                   <h6 className="leaderboards-title">Game</h6>
                   <h6
                     className="leaderboards-title mb-0"
@@ -795,7 +803,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
               </div>
             </div>
             <div className="col-12 col-lg-6 mt-3">
-              <div className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-3 p-3">
+              <div className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3">
                 <img src={myRewardsMiner} className="miner-img" alt="" />
                 <div className="d-flex align-items-center gap-2">
               <h6 className="special-rewards-title" style={{color: "#FFF", width: "fit-content"}}>My</h6>
@@ -809,7 +817,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
               </div>
             </div>
             <div className="col-12 col-lg-6 mt-3">
-                 <div className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-3 p-3">
+                 <div className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-2 p-3">
                 <h6 className="special-rewards-title">Special Rewards</h6>
                 <div className="d-flex flex-column">
                   <h6 className="special-rewards-total mb-0">$450.24</h6>

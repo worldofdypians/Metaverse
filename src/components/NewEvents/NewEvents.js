@@ -16,7 +16,7 @@ const NewEvents = () => {
       <div className="row">
         <div className="col-12">
             <div className="d-flex flex-column">
-                <div className="new-events-top-wrapper p-3 d-flex align-items-center justify-content-between">
+                <div className="new-events-top-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
                     <h6 className="challenges-text mb-0">Challenges</h6>
                     <div className="d-flex align-items-center gap-2">
                         <div className="active-challenge-tab px-4 py-2 d-flex align-items-center justify-content-center">

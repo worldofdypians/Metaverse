@@ -698,7 +698,7 @@ const MarketMint = ({
           className="container-nft d-flex align-items-start flex-column gap-2 px-3 px-lg-5 my-4 position-relative"
           style={{ minHeight: "72vh", backgroundSize: "cover" }}
         >
-          <div className="container-lg mx-0 px-0">
+          <div className="custom-container mx-0 px-0">
             <div className="row justify-content-center align-items-center w-100 mx-0 px-3 py-3 p-lg-0 gap-5 gap-lg-0">
               {/* <div className="row align-items-center mb-5">
         <div className="col-12 col-lg-7">

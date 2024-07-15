@@ -110,8 +110,12 @@
   background-image: url(./assets/specialRewardsBg.png);
   border-radius: 10px;
   background-size: 100% 100%;
-  height: 100%;
+  height: 130px;
   cursor: pointer;
+
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
 }
 
 .special-rewards-title {
@@ -138,6 +142,9 @@
   background-image: url(./assets/leaderboardsBg.png);
   background-size: 100% 100%;
   border-radius: 10px;
+  @media screen and (max-width: 786px) {
+    height: 170px !important;
+  }
 }
 
 .leaderboards-title {
@@ -155,6 +162,11 @@
   right: 5%;
   top: -27px;
   width: 60%;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+    top: -24px;
+    right: 0px;
+  }
 }
 
 .new-flag-wrapper {
@@ -261,8 +273,11 @@
 .profile-placeholder {
   border-radius: 10px;
   background: #18193c;
-  height: 170px;
+  height: 130px;
   width: 100%;
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
 }
 
 .special-rewards-total {
@@ -290,52 +305,46 @@
     #7f2b8a 0%,
     #1f1b62 100%
   );
-  height: 170px;
+  height: 130px;
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
 }
 
 .new-stake-nft-wrapper {
-  height: 170px;
+  height: 130px;
   border-radius: 10px;
   background: radial-gradient(
     490.81% 196.97% at 100% 100%,
     #482193 25.5%,
     #7856c5 100%
   );
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
 }
 
 .new-stake-nft-img {
-  width: 65%;
+  width: 55%;
 }
 
 .my-rewards-wrapper-new {
   border-radius: 10px;
-  background: radial-gradient(
-    490.81% 196.97% at 100% 100%,
-    #005d63 25.5%,
-    #106a85 100%
-  );
+  background-image: url(./assets/myRewards.png);
+  background-size: 100% 100%;
+height: 130px;
+@media screen and (max-width: 786px) {
+  height: auto;
+}
 }
 
-.my-rewards-wrapper-new::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url(./assets/myRewardsBg.svg);
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: contain;
-  pointer-events: none;
-}
+
 
 .miner-img {
   position: absolute;
   right: 20px;
   bottom: 0;
+  width: 25%;
 }
 
 .daily-progress-wrapper {
@@ -405,4 +414,19 @@
   left: 0;
   right: 0;
   margin: auto;
+}
+
+.portfolio-wrapper{
+  border-radius: 8px;
+border: 0.5px solid #C23F62;
+background: rgba(128, 32, 96, 0.20);
+cursor: pointer;
+h6{
+  color: #EEEDFF;
+font-family: "Montserrat";
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 10px; /* 100% */
+}
 }
