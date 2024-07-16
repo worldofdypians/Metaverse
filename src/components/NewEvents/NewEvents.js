@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './_newevents.scss'
 import treasureHuntIcon from './assets/treasureHuntIcon.png'
 import dragonRuinsIcon from './assets/dragonRuinsIcon.png'
@@ -8,9 +8,13 @@ import scorpionKingIcon from './assets/scorpionKingIcon.png'
 import treasureHuntBadge from './assets/treasureHuntBadge.png'
 import criticalHitIcon from './assets/criticalHitIcon.png'
 import dummyViction from './assets/dummyViction.png'
+import TreasureHunt from '../Challenges/TreasureHunt'
 
 
 const NewEvents = () => {
+
+  const [challenge, setChallenge] = useState("treasureHunt")
+
   return (
     <div className="custom-container mt-5">
       <div className="row">
@@ -34,38 +38,49 @@ const NewEvents = () => {
                     <div className="row">
                         <div className="col-12 col-lg-2">
                             <div className="challenges-list-wrapper py-3 d-flex flex-column gap-3">
-                                <div className="active-challenge-item d-flex align-items-center gap-2 py-2 px-4">
+                                <div className={`${challenge === "treasureHunt" ? "active-challenge-item" : "challenge-item"} d-flex align-items-center gap-2 py-2 px-4`} onClick={() => {
+                                    setChallenge("treasureHunt")
+                                }}>
                                     <img src={treasureHuntIcon} alt="" />
                                     <h6 className="mb-0">Treasure Hunt</h6>
                                 </div>
-                                <div className="challenge-item d-flex align-items-center gap-2 py-2 px-4">
+                                <div className={`${challenge === "dragonRuins" ? "active-challenge-item" : "challenge-item"} d-flex align-items-center gap-2 py-2 px-4`} onClick={() => {
+                                    setChallenge("dragonRuins")
+                                }}>
                                     <img src={dragonRuinsIcon} alt="" />
                                     <h6 className="mb-0">Dragon Ruins</h6>
                                 </div>
-                                <div className="challenge-item d-flex align-items-center gap-2 py-2 px-4">
+                                <div className={` ${challenge === "scorpionKing" ? "active-challenge-item" : "challenge-item"} d-flex align-items-center gap-2 py-2 px-4`} onClick={() => {
+                                    setChallenge("scorpionKing")
+                                }}>
                                     <img src={scorpionKingIcon} alt="" />
                                     <h6 className="mb-0">Scorpion King</h6>
                                 </div>
-                                <div className="challenge-item d-flex align-items-center gap-2 py-2 px-4">
+                                <div className={` ${challenge === "puzzleMadness" ? "active-challenge-item" : "challenge-item"} d-flex align-items-center gap-2 py-2 px-4`} onClick={() => {
+                                    setChallenge("puzzleMadness")
+                                }}>
                                     <img src={puzzleMadnessIcon} alt="" />
                                     <h6 className="mb-0">Puzzle Madness</h6>
                                 </div>
-                                <div className="challenge-item d-flex align-items-center gap-2 py-2 px-4">
+                                <div className={` ${challenge === "criticalHit" ? "active-challenge-item" : "challenge-item"} d-flex align-items-center gap-2 py-2 px-4`} onClick={() => {
+                                    setChallenge("criticalHit")
+                                }}>
                                     <img src={criticalHitIcon} alt="" />
                                     <h6 className="mb-0">Critical Hit</h6>
                                 </div>
-                                <div className="challenge-item d-flex align-items-center gap-2 py-2 px-4">
+                                <div className={` ${challenge === "mazeGarden" ? "active-challenge-item" : "challenge-item"} d-flex align-items-center gap-2 py-2 px-4`} onClick={() => {
+                                    setChallenge("mazeGarden")
+                                }}>
                                     <img src={mazeGardenIcon} alt="" />
                                     <h6 className="mb-0">Maze Garden</h6>
                                 </div>
                             </div>
                         </div>
                         <div className="col-12 col-lg-10">
-                            <div className="d-flex flex-column gap-3">
-                                <div className="new-treasure-hunt-wrapper d-flex align-items-center justify-content-between">
-                                            
-                                </div>
-                            </div>
+                           {challenge === "treasureHunt" ?
+                            <TreasureHunt /> 
+                            : <></> 
+                        }
                         </div>
                     </div>
                 </div>

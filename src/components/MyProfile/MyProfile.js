@@ -70,9 +70,17 @@ import puzzleMadnessInactive from './assets/puzzleMadnessInactive.png'
 import puzzleMadnessActive from './assets/puzzleMadnessActive.png'
 import mazeGardenInactive from './assets/mazeGardenInactive.png'
 import mazeGardenActive from './assets/mazeGardenActive.png'
+import premiumDummy from './assets/premiumDummy.png'
+import dummyDragon from './assets/dummyDragon.png'
+import dummyCaws from './assets/dummyCaws.png'
 import doneTag from './assets/doneTag.svg'
 import emptyTag from './assets/emptyTag.svg'
 import portfolio from './assets/portfolio.svg'
+import starterProfile from './assets/starterProfile.png'
+import rookieProfile from './assets/rookieProfile.png'
+import underdogProfile from './assets/underdogProfile.png'
+import championProfile from './assets/championProfile.png'
+import unstoppableProfile from './assets/unstoppableProfile.png'
 
 
 const renderer = ({ days, hours, minutes }) => {
@@ -80,24 +88,24 @@ const renderer = ({ days, hours, minutes }) => {
     <>
       <div className="d-flex align-items-center gap-1">
         <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0">
+          <h6 className="profile-time-number mb-0" style={{fontSize: "10px"}}>
             {days < 10 ? "0" + days : days}
           </h6>
-          <span className="profile-time-desc mb-0">Days</span>
+          <span className="profile-time-desc mb-0" style={{fontSize: "8px"}}>Days</span>
         </div>
-        <h6 className="profile-time-number mb-0">:</h6>
+        <h6 className="profile-time-number mb-0" style={{fontSize: "10px"}}>:</h6>
         <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0">
+          <h6 className="profile-time-number mb-0" style={{fontSize: "10px"}}>
             {hours < 10 ? "0" + hours : hours}
           </h6>
-          <span className="profile-time-desc mb-0">Hours</span>
+          <span className="profile-time-desc mb-0" style={{fontSize: "8px"}}>Hours</span>
         </div>
-        <h6 className="profile-time-number mb-0">:</h6>
+        <h6 className="profile-time-number mb-0" style={{fontSize: "10px"}}>:</h6>
         <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0">
+          <h6 className="profile-time-number mb-0" style={{fontSize: "10px"}}>
             {minutes < 10 ? "0" + minutes : minutes}
           </h6>
-          <span className="profile-time-desc mb-0">Minutes</span>
+          <span className="profile-time-desc mb-0" style={{fontSize: "8px"}}>Minutes</span>
         </div>
       </div>
     </>
@@ -134,6 +142,7 @@ const MyProfile = ({
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+
 
 
   const totalClaimedChests =
@@ -586,7 +595,15 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
         <div className="col-12 col-lg-4">
           <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
             <div className="d-flex align-items-center gap-2">
-              <img src={profileImage} alt="" />
+              <div className="position-relative" style={{cursor: "pointer"}}>
+              <img className="new-profile-img" src={starterProfile} alt="" />
+                <div className="score-text-wrapper d-flex flex-column align-items-center">
+                  <h6 className="mb-0">
+                    79,000,000
+                  </h6>
+                  <span>Score</span>
+                </div>
+              </div>
               <div className="d-flex flex-column">
                 <div className="d-flex align-items-center gap-2">
                   <h6 className="my-profile-username">DarkSliffer</h6>
@@ -827,12 +844,59 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
               </div>
             </div>
             <div className="col-12 col-lg-8 mt-3">
-            <div className="limited-offers-wrapper d-flex flex-column justify-content-between gap-3 p-3">
-              <div className="d-flex align-items-center gap-2">
+            <div className="limited-offers-wrapper  d-flex align-items-center justify-content-between gap-3 p-3">
+              <div className="d-flex flex-column gap-2">
                 <h6 className="leaderboards-title mb-0">Limited</h6>
-                <h6 className="leaderboards-title mb-0" style={{color: "#00E3BA"}}>Offers</h6>
+                <h6 className="leaderboards-title mb-0" style={{color: "#00B6FF"}}>Offers</h6>
               </div>
-              <img src={greenArrow} height={20} width={20} alt="" />
+              <div className="d-flex align-items-center justify-content-between gap-4" style={{height: "140px"}}>
+                <div className="limited-offer-card d-flex flex-column justify-content-between">
+                  <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                    <span className="limited-offer-reward">Extra</span>
+                    <span className="limited-offer-reward" style={{color: "#F3C009"}}>200 Stars</span>
+                  </div>
+                    <div className="d-flex flex-column">
+                    <img src={premiumDummy} className="limited-offer-img" alt="" />
+                  <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1" style={{background: "#061F33"}}>
+                    <span className="limited-offer-purchase">Get Premium</span>
+                  </div>
+                    </div>
+                    <div className="d-flex w-100 justify-content-center">
+                    <Countdown renderer={renderer} date={bnbLastDay} />
+                    </div>
+                </div>
+                <div className="limited-offer-card d-flex flex-column justify-content-between">
+                  <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                    <span className="limited-offer-reward">Extra</span>
+                    <span className="limited-offer-reward" style={{color: "#F3C009"}}>700 Stars</span>
+                  </div>
+                    <div className="d-flex flex-column">
+                    <img src={dummyDragon} className="limited-offer-img" alt="" />
+                  <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1" style={{background: "#061F33"}}>
+                    <span className="limited-offer-purchase">Get Dragon Ruins</span>
+                  </div>
+                    </div>
+                    <div className="d-flex w-100 justify-content-center">
+                    <Countdown renderer={renderer} date={bnbLastDay} />
+                    </div>
+                </div>
+                <div className="limited-offer-card d-flex flex-column justify-content-between">
+                  <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                    <span className="limited-offer-reward">Extra</span>
+                    <span className="limited-offer-reward" style={{color: "#F3C009"}}>1,200 Stars</span>
+                  </div>
+                    <div className="d-flex flex-column">
+                    <img src={dummyCaws} className="limited-offer-img" alt="" />
+                  <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1" style={{background: "#061F33"}}>
+                    <span className="limited-offer-purchase">Get CAWS</span>
+                  </div>
+                    </div>
+                    <div className="d-flex w-100 justify-content-center">
+                    <Countdown renderer={renderer} date={bnbLastDay} />
+                    </div>
+                </div>
+            
+              </div>
             </div>
             </div>
             <div className="col-12 col-lg-4 mt-3">
