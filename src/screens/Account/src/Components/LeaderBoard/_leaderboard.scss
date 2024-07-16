@@ -91,6 +91,10 @@
   // background: #080b2a;
   z-index: 2;
   white-space: nowrap;
+  @media screen and (max-width: 500px) {
+    font-size: 9px;
+
+  }
 }
 
 .optionText {
@@ -190,6 +194,11 @@
 .playerAvatar {
   width: 30px;
   height: 30px;
+
+  @media screen and (max-width: 500px) {
+    width: 25px;
+  height: 25px;
+  }
 }
 .premium-star {
   position: absolute;
@@ -238,8 +247,12 @@
   line-height: 17px;
   letter-spacing: -0.018em;
   color: #f7f7ff;
+
   @media screen and (max-width: 786px) {
     font-size: 12px;
+      overflow-x: hidden;
+    width: 100%;
+    max-width: 100px;
   }
 }
 
@@ -435,7 +448,7 @@
 
 .optionswrapper-bg {
   position: absolute;
-  width: 20%;
+  width: 25%;
   height: 100%;
   border-radius: 12px;
   border: 1px solid #f4e07b;
@@ -478,11 +491,11 @@
 }
 
 .move-1 {
-  transform: translateX(133%);
+  transform: translateX(100%);
 }
 
 .move-2 {
-  transform: translateX(266%);
+  transform: translateX(200%);
 }
 .move-1-home {
   transform: translateX(100%);

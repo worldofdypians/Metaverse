@@ -18,6 +18,20 @@
   font-weight: 800;
 }
 
+.playerName-inner {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+
+  span {
+    text-overflow: ellipsis;
+    width: 90px;
+    overflow: hidden;
+  }
+}
+
+
+
 .grandPrices-wrapper {
   background-color: #242240;
   border-radius: 8px;
@@ -120,6 +134,11 @@
   // background: #080b2a;
   z-index: 2;
   white-space: nowrap;
+
+  @media screen and (max-width: 500px) {
+    font-size: 9px;
+
+  }
 }
 
 .optionText {
@@ -142,7 +161,7 @@
 
 .optionText:hover,
 .activeoption {
-  color: #FFF;
+  color: #fff;
 }
 
 .optionTextGolden {
@@ -198,7 +217,7 @@
   background: rgba(0, 254, 207, 0.1) !important;
 
   .goldenscore-inactive2 {
-    color: #fff ;
+    color: #fff;
   }
 
   .inactivegold {
@@ -210,13 +229,12 @@
 
 .golden-score-disabled {
   color: #8f8e99 !important;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-letter-spacing: -0.252px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.252px;
 }
-
 
 .optionsWrapper2 {
   background: linear-gradient(
@@ -232,6 +250,10 @@ letter-spacing: -0.252px;
 .playerAvatar {
   width: 28px;
   height: 30px;
+  @media screen and (max-width: 500px) {
+    width: 25px;
+  height: 25px;
+  }
 }
 .premium-star {
   position: absolute;
@@ -263,17 +285,16 @@ letter-spacing: -0.252px;
   }
 }
 .goldenscore-inactive2 {
-  color: #fff ;
+  color: #fff;
 }
 .golden-score-disabled {
   color: #8f8e99 !important;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-letter-spacing: -0.252px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.252px;
 }
-
 
 .playerName {
   font-style: normal;
@@ -284,6 +305,9 @@ letter-spacing: -0.252px;
   color: #f7f7ff;
   @media screen and (max-width: 786px) {
     font-size: 12px;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100px;
   }
 }
 
@@ -311,8 +335,7 @@ letter-spacing: -0.252px;
   padding: 10px;
   // border-radius: 8px;
   // border-bottom: 1px solid #09f3d2 !important;
-  color: #FFF;
-
+  color: #fff;
 }
 
 .nft-hover {
@@ -463,51 +486,69 @@ letter-spacing: -0.252px;
       no-repeat;
 }
 
-.premium-goldenscore{
+.premium-goldenscore {
   color: #f4e27b !important;
 }
 
-.global-leaderboard-banner{
-  border-radius: 16px;
-border: 1px solid #F4E27B;
-background: linear-gradient(90deg, rgba(19, 13, 49, 0.50) 0%, rgba(52, 21, 83, 0.50) 100%);
-backdrop-filter: blur(10.5px);
+.global-leaderboard-banner {
+  border-radius: 16px 16px 0 0;
+  // border: 1px solid #F4E27B;
+  background-image: url(./assets/globalHeaderBg.png);
+  background-size: 100% 100%;
+  // background: linear-gradient(90deg, rgba(19, 13, 49, 0.50) 0%, rgba(52, 21, 83, 0.50) 100%);
+  // backdrop-filter: blur(10.5px);
 }
 
-.global-leaderboard-title{
-  color: #FFF;
-font-family: "Organetto" !important;
-font-size: 24px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
-@media screen and (max-width: 500px) {
-  font-size: 15px;
-}
-}
-
-
-.global-total-wrapper{
-border-radius: 12px;
-border: 1px solid rgba(88, 37, 112, 1);
+.global-leaderboard-title {
+  color: #fff;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Montserrat";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  @media screen and (max-width: 500px) {
+    font-size: 15px;
+  }
 }
 
-.global-total-players{
-  color: #F4E27B;
-text-align: center;
-text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-font-family: "Oxanium" !important;
-font-size: 30px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
+.global-total-wrapper {
+  border-radius: 12px;
+  border: 1px solid rgba(88, 37, 112, 1);
 }
-.global-total-span{
-  color: #FFF;
+
+.global-total-players {
+  color: #f4e27b;
+  text-align: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Oxanium" !important;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+.global-total-span {
+  color: #fff;
   text-align: center;
   font-family: "Oxanium" !important;
   font-size: 14px;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
+}
+
+.view-chains-wrapper {
+  border-radius: 10px;
+  border-bottom: 1px solid rgba(76, 78, 100, 0.5);
+  background: linear-gradient(180deg, rgba(53, 34, 89, 0.4) 99.99%, rgba(52, 35, 87, 0.4) 100%);
+  backdrop-filter: blur(13px);
+  span {
+    color: #f7f7ff;
+    font-family: "Montserrat";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.216px;
+  }
 }

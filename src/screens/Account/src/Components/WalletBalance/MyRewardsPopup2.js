@@ -6,7 +6,7 @@ import allImg from "./myrewardsAssets/newAssets/allImg.svg";
 import allActive from "./myrewardsAssets/newAssets/allActive.svg";
 import nftStaking from "./myrewardsAssets/newAssets/nftStaking.svg";
 import nftStakingActive from "./myrewardsAssets/newAssets/nftStakingActive.svg";
-import bnbLogo from '../../../../Marketplace/assets/bnbLogo.svg'
+import bnbLogo from "../../../../Marketplace/assets/bnbLogo.svg";
 import leaderboard from "./myrewardsAssets/newAssets/leaderboard.svg";
 import leaderboardActive from "./myrewardsAssets/newAssets/leaderboardActive.svg";
 
@@ -26,6 +26,7 @@ import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
 import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
+import multiversIcon from "../../../../../components/NewDailyBonus/assets/multiversxIcon.svg";
 
 import dypius from "./myrewardsAssets/newAssets/treasureHunt/dypius.svg";
 import gate from "./myrewardsAssets/newAssets/treasureHunt/gate.svg";
@@ -34,49 +35,37 @@ import dypiusPremium from "./myrewardsAssets/newAssets/treasureHunt/dypiusPremiu
 import dogeCoin from "./myrewardsAssets/newAssets/treasureHunt/dogeCoin.svg";
 
 const MyRewardsPopupNew = ({
-  username,
-  userId,
   address,
   email,
-  bnbPrice,
-  cfxPrice,
-  ethTokenData,
-  openedChests,
   allChests,
   weeklyplayerData,
   dailyplayerData,
-  skaleplayerDataAmount,
   userRank2,
   userSocialRewards,
-  dogePrice,
-  userEarnUsd,
-  userEarnETH,
-  dogeEarnUSD,
-  dogeEarnBNB,
-  baseEarnUSD,
-  baseEarnETH,
-  dypiusEarnUsd,
   bnbEarnUsd,
-bnbEarnToken,
   skaleEarnUsd,
   seiEarnUsd,
   coreEarnUsd,
   victionEarnUsd,
-  cmcuserEarnETH,
-  cmcuserEarnUsd,
-  dypiusPremiumEarnUsd,
-  dypiusPremiumEarnTokens,
-  openedSkaleChests,
   allSkaleChests,
   kittyDashRecords,
   userRankRewards,
   cawsPremiumRewards,
-  openedCoreChests,
-  openedVictionChests,
   allCoreChests,
   allVictionChests,
   allSeiChests,
   genesisRank2,
+  dailyDataAmountCore,
+  weeklyDataAmountCore,
+  monthlyDataAmountCore,
+  dailyDataAmountViction,
+  weeklyDataAmountViction,
+  monthlyDataAmountViction,
+  dailyDataAmountSkale,
+  weeklyDataAmountSkale,
+  monthlyDataAmountSkale,
+  multiversEarnUsd,
+  userDataStar,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -473,30 +462,10 @@ bnbEarnToken,
       });
     }
 
-    if (allSeiChests && allSeiChests.length > 0) {
-      allSeiChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResultSei += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
     setTreasureRewardMoney(moneyResult);
     setTreasureRewardMoneySkale(moneyResultSkale);
     setTreasureRewardMoneyCore(moneyResultCore);
     setTreasureRewardMoneyViction(moneyResultViction);
-    setTreasureRewardMoneySei(moneyResultSei);
   };
 
   const fetchCachedData = () => {
@@ -556,7 +525,7 @@ bnbEarnToken,
 
   useEffect(() => {
     getTreasureChestsInfo();
-  }, [openedChests, openedSkaleChests]);
+  }, [allChests, allSkaleChests, allCoreChests, allVictionChests]);
 
   useEffect(() => {
     getBundles();
@@ -589,6 +558,8 @@ bnbEarnToken,
       behavior: "smooth",
     });
   };
+
+  const kittyDashRewards = [30, 20, 10, 10, 5, 5, 5, 5, 5, 5];
 
   return (
     <div className="d-grid rewardstable-wrapper2 gap-2 mt-3 px-1">
@@ -707,15 +678,31 @@ bnbEarnToken,
                       Number(treasureRewardMoney) +
                       Number(treasureRewardMoneySkale) +
                       Number(skaleEarnUsd) +
+                      Number(multiversEarnUsd) +
                       Number(seiEarnUsd) +
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd) +
-                      Number(dailyplayerData) + Number(skaleplayerDataAmount) +
+                      (kittyDashRecords[0]
+                        ? kittyDashRecords[0]?.position + 1 > 10
+                          ? 0
+                          : kittyDashRewards[kittyDashRecords[0]?.position]
+                        : 0) +
+                      // Number(dailyplayerData) +
+                      // Number(dailyDataAmountCore) +
+                      Number(weeklyDataAmountCore) +
+                      Number(monthlyDataAmountCore) +
+                      // Number(dailyDataAmountSkale) +
+                      Number(weeklyDataAmountSkale) +
+                      Number(monthlyDataAmountSkale) +
+                      // Number(dailyDataAmountViction) +
+                      Number(weeklyDataAmountViction) +
+                      Number(monthlyDataAmountViction) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(genesisRank2) +
                       Number(userRankRewards) +
+                      Number(userDataStar) +
                       Number(userSocialRewardsCached) +
                       Number(cawsPremiumRewards),
                     2
@@ -884,9 +871,24 @@ bnbEarnToken,
                     2
                   )
                 : getFormattedNumber(
-                    Number(dailyplayerData) + Number(skaleplayerDataAmount) +
+                    // Number(dailyplayerData) +
+                    // Number(dailyDataAmountCore) +
+                    Number(weeklyDataAmountCore) +
+                      (kittyDashRecords[0]
+                        ? kittyDashRecords[0]?.position + 1 > 10
+                          ? 0
+                          : kittyDashRewards[kittyDashRecords[0]?.position]
+                        : 0) +
+                      +Number(monthlyDataAmountCore) +
+                      // Number(dailyDataAmountSkale) +
+                      Number(weeklyDataAmountSkale) +
+                      Number(monthlyDataAmountSkale) +
+                      // Number(dailyDataAmountViction) +
+                      Number(weeklyDataAmountViction) +
+                      Number(monthlyDataAmountViction) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
+                      Number(userDataStar) +
                       Number(genesisRank2),
                     2
                   )}
@@ -955,6 +957,7 @@ bnbEarnToken,
                       Number(coreEarnUsd) +
                       Number(seiEarnUsd) +
                       Number(bnbEarnUsd) +
+                      Number(multiversEarnUsd) +
                       Number(victionEarnUsd),
                     2
                   )}
@@ -1129,7 +1132,7 @@ bnbEarnToken,
                 </span>
               </div>
 
-              {/* <div className="d-flex w-100 justify-content-between gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CORE</span>
                 <span className="item-name-right">
                   $
@@ -1137,7 +1140,7 @@ bnbEarnToken,
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(treasureRewardMoneyCore, 2)}
                 </span>
-              </div> */}
+              </div>
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
@@ -1150,7 +1153,7 @@ bnbEarnToken,
                     : getFormattedNumber(treasureRewardMoneySkale, 2)}
                 </span>
               </div>
-              {/* <div className="d-flex w-100 justify-content-between gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Viction</span>
                 <span className="item-name-right">
                   $
@@ -1159,7 +1162,7 @@ bnbEarnToken,
                     : getFormattedNumber(treasureRewardMoneyViction, 2)}
                 </span>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
+              {/*  <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
                 <span className="item-name-right">
                   $
@@ -1202,7 +1205,8 @@ bnbEarnToken,
                   {previousRewards
                     ? getFormattedNumber(leaderboardTotalData, 2)
                     : getFormattedNumber(
-                        Number(dailyplayerData) + Number(weeklyplayerData) + Number(userRank2) ,
+                        // Number(dailyplayerData) +
+                        Number(weeklyplayerData) + Number(userRank2),
                         2
                       )}
                 </span>
@@ -1213,27 +1217,37 @@ bnbEarnToken,
                   $
                   {previousRewards
                     ? getFormattedNumber(leaderboardSkaleTotalData, 2)
-                    : getFormattedNumber( Number(skaleplayerDataAmount), 2)}
+                    : getFormattedNumber(
+                        // Number(dailyDataAmountSkale) +
+                        Number(weeklyDataAmountSkale) +
+                          Number(monthlyDataAmountSkale),
+                        2
+                      )}
                 </span>
               </div>
-              {/* <div className="d-flex w-100 justify-content-between gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CORE</span>
                 <span className="item-name-right">
                   $
                   {previousRewards
                     ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(0, 2)}
+                    : getFormattedNumber(
+                        // Number(dailyDataAmountCore) +
+                        Number(weeklyDataAmountCore) +
+                          Number(monthlyDataAmountCore),
+                        2
+                      )}
                 </span>
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">Viction</span>
+                <span className="item-name-left">Global</span>
                 <span className="item-name-right">
                   $
                   {previousRewards
                     ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(0, 2)}
+                    : getFormattedNumber(Number(userDataStar), 2)}
                 </span>
-              </div> */}
+              </div>
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
@@ -1246,12 +1260,34 @@ bnbEarnToken,
                     : getFormattedNumber(genesisRank2, 2)}
                 </span>
               </div>
+
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Viction</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(
+                        // Number(dailyDataAmountViction) +
+                        Number(weeklyDataAmountViction) +
+                          Number(monthlyDataAmountViction),
+                        2
+                      )}
+                </span>
+              </div>
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Kitty Dash</span>
                 <span className="item-name-right">
                   $
-                  {kittyDashRecords.position > 10
+                  {previousRewards
                     ? getFormattedNumber(0, 2)
+                    : kittyDashRecords[0]
+                    ? kittyDashRecords[0]?.position + 1 > 10
+                      ? getFormattedNumber(0, 2)
+                      : getFormattedNumber(
+                          kittyDashRewards[kittyDashRecords[0]?.position],
+                          2
+                        )
                     : getFormattedNumber(0, 2)}
                 </span>
               </div>
@@ -1291,25 +1327,15 @@ bnbEarnToken,
                 <div className="d-flex flex-column gap-2 w-50">
                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img src={skale} alt="" />
+                      <img
+                        src={skale}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
                       SKALE
                     </span>
                     <span className="item-name-right">
                       ${getFormattedNumber(skaleEarnUsd, 2)}
-                    </span>
-                  </div>
-                
-                  {/* <div className="d-flex w-100 justify-content-between gap-2">
-                    <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img
-                        src={seiIcon}
-                        alt=""
-                        style={{ width: 16, height: 16 }}
-                      />
-                      SEI
-                    </span>
-                    <span className="item-name-right">
-                      ${getFormattedNumber(seiEarnUsd, 2)}
                     </span>
                   </div>
 
@@ -1325,16 +1351,49 @@ bnbEarnToken,
                     <span className="item-name-right">
                       ${getFormattedNumber(victionEarnUsd, 2)}
                     </span>
+                  </div>
+                  {/* <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={multiversIcon}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      MultiversX
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(multiversEarnUsd, 2)}
+                    </span>
                   </div> */}
                 </div>
                 <div className="d-flex flex-column gap-2 w-50">
-                <div className="d-flex w-100 justify-content-between gap-2">
+                  <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img src={bnbLogo} alt="" />
+                      <img
+                        src={
+                          require("../../../../Marketplace/assets/bnbLogo.svg")
+                            .default
+                        }
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
                       BNB Chain
                     </span>
                     <span className="item-name-right">
                       ${getFormattedNumber(bnbEarnUsd, 2)}
+                    </span>
+                  </div>
+                  <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={coreIcon}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      CORE
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(coreEarnUsd, 2)}
                     </span>
                   </div>
                 </div>
@@ -1371,20 +1430,6 @@ bnbEarnToken,
                     ${getFormattedNumber(dypPremiumUSD, 2)}
                   </span>
                 </div>
-
-                {/* <div className="d-flex w-100 justify-content-between gap-2">
-           <span className="d-flex align-items-center gap-2 item-name-left">
-             <img
-               src={coreIcon}
-               alt=""
-               style={{ width: 16, height: 16 }}
-             />
-             CORE
-           </span>
-           <span className="item-name-right">
-             ${getFormattedNumber(coreEarnUsd, 2)}
-           </span>
-         </div> */}
 
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">

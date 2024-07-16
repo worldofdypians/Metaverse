@@ -41,6 +41,10 @@ import axios from "axios";
 import validateEmail from "../../hooks/validateEmail";
 import Countdown from "react-countdown";
 import epicblack from "../../assets/epicblack.svg";
+import victionLogo from "../Home/VideoWrapper/assets/victionLogo.svg";
+import victionBg from "../Home/VideoWrapper/assets/victionBg.webp";
+import coreLogo from "../Home/VideoWrapper/assets/coreLogo.svg";
+import coreBg from "../Home/VideoWrapper/assets/coreBg.webp";
 
 const theme = createTheme({
   palette: {
@@ -120,12 +124,81 @@ const Community = ({socials}) => {
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
+  let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
 
 
 
   let activeDay = new Date("2024-05-01T11:35:00.000+02:00");
 
   const dummyBetaPassData2 = [
+    {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      backgroundImage: coreBg,
+      eventDate: "Jul 01, 2024",
+      date: "Jul 01, 2024",
+      eventDuration: coreLastDay,
+
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Live",
+        backgroundImage: coreBg,
+        logo: coreLogo,
+        date: "Jul 01, 2024",
+
+        id: "event12",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in CORE Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jul 01, 2024",
+      date: "Jul 01, 2024",
+      backgroundImage: victionBg,
+      eventDuration: coreLastDay,
+
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Live",
+        logo: victionLogo,
+        backgroundImage: victionBg,
+        date: "Jul 01, 2024",
+
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
     {
       title: "BNB Chain",
       logo: bnblogo,
@@ -159,7 +232,7 @@ const Community = ({socials}) => {
     {
       title: "SKALE",
       logo: skaleLogo,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
       eventDuration: skaleLastDay,
@@ -172,7 +245,7 @@ const Community = ({socials}) => {
         chain: "SKALE Nebula Hub",
         linkState: "skale",
         rewards: "SKL",
-        status: "Live",
+        status: "Expired",
         id: "event11",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SKL Rewards",
@@ -473,7 +546,7 @@ const Community = ({socials}) => {
 
   const dummyBanner = {
     title: "BNB Chain Game Expedition",
-    status: "Live",
+    status: "Expired",
     desc: "Join the World of Dypians (WoD) Dypians Discovery Quest Campaign from May 29 to June 12 for a chance to win a share of the 200,000 WOD Tokens & 750 Premium Subscription prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
     start_date: "June 12, 2024",
     end_date: "June 28, 2024",
@@ -717,13 +790,13 @@ const Community = ({socials}) => {
                   style={{ position: "absolute", top: "4%", left: "4%" }}
                 >
                   <h6 className="community-active-title mb-0">
-                    Daily Active Users:
+                  Monthly Players:
                   </h6>
                   <h6
                     className="community-active-title mb-0"
                     style={{ color: "#d9fa86" }}
                   >
-                    100,000+
+                    463,692
                   </h6>
                 </div>
                 <div className="row w-100 mt-5 mt-lg-0">
@@ -920,7 +993,7 @@ const Community = ({socials}) => {
                       Treasure Hunt
                     </h6>
                     <div className="community-events-grid w-100 p-3">
-                      {dummyBetaPassData2.slice(0, 2).map((item, index) => (
+                      {dummyBetaPassData2.slice(0, 3).map((item, index) => (
                         <ActiveProfileEvent
                           onOpenEvent={() => {
                             navigate("/marketplace/events/treasure-hunt");
@@ -934,7 +1007,7 @@ const Community = ({socials}) => {
                 ) : (
                   <div className="community-events-grid mt-5  w-100 p-3">
                     {dummyBetaPassData2
-                      .slice(1, dummyBetaPassData2.length)
+                      .slice(3, dummyBetaPassData2.length)
                       .map((item, index) => (
                         <ExpiredProfileEvent
                           onOpenEvent={() => {

@@ -30,8 +30,9 @@ import Slider from "react-slick";
 import useWindowSize from "../../../hooks/useWindowSize";
 import NewHomeLeaderboard from "../../../components/LeaderBoard/NewHomeLeaderboard";
 import GlobalLeaderboard from "../../../components/LeaderBoard/GlobalLeaderboard";
+import axios from "axios";
 
-const VideoWrapper = ({ handleRegister, handleDownload }) => {
+const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
   const [modal, setModal] = useState(false);
   const [multiplayerModal, setmultiplayerModal] = useState(false);
 
@@ -39,6 +40,9 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const betaSlider = useRef(null);
   const [activeSlide, setActiveSlide] = useState();
   const [showFirstNext, setShowFirstNext] = useState();
+  const [genesisData, setgenesisData] = useState([]);
+  const [previousgenesisData, setpreviousgenesisData] = useState([]);
+  const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
   const downloader = useRef();
   const windowSize = useWindowSize();
   downloader?.current?.addEventListener("mouseenter", () => {
@@ -51,13 +55,146 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
   const reqmodal = document.querySelector("#reqmodal");
   const html = document.querySelector("html");
 
+  const backendApi =
+    "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
+
+  const placeholderplayerData = [
+    {
+      position: 0,
+      displayName: "---",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: 1,
+      displayName: "---",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: 2,
+      displayName: "---",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: 3,
+      displayName: "---",
+      reward: "---",
+      statValue: "---",
+      premium: false,
+    },
+
+    {
+      position: 4,
+      displayName: "---",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: 5,
+      displayName: "---",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: 6,
+      displayName: "---",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: 7,
+      displayName: "---",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: 8,
+      displayName: "---",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+    {
+      position: 9,
+      displayName: "---",
+      reward: "---",
+      premium: false,
+      statValue: "---",
+    },
+  ];
+
+  const fetchGenesisRecords = async () => {
+    const data2 = {
+      StatisticName: "GenesisLandRewards",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+
+    const result2 = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data2)
+      .catch((err) => {
+        console.log(err);
+      });
+    if (result2) {
+      setgenesisData(result2.data.data.leaderboard);
+      setpreviousGenesisVersion(result2.data.data.version);
+
+      fillRecordsGenesis(result2.data.data.leaderboard);
+    }
+  };
+
+  const fillRecordsGenesis = (itemData) => {
+    if (itemData.length === 0) {
+      setgenesisData(placeholderplayerData);
+    } else if (itemData.length < 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setgenesisData(finalData);
+    }
+  };
+
+  const fetchGenesisPreviousWinners = async () => {
+    if (previousGenesisVersion != 0) {
+      const data = {
+        StatisticName: "GenesisLandRewards",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: previousGenesisVersion - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      fillRecordsGenesis(result.data.data.leaderboard);
+
+      setpreviousgenesisData(result.data.data.leaderboard);
+    }
+  };
+
+  useEffect(() => {
+    fetchGenesisRecords();
+  }, []);
+
+  useEffect(() => {
+    fetchGenesisPreviousWinners();
+  }, [previousGenesisVersion]);
+
   const gotoDownload = () => {
     window.location.href =
       "https://drive.google.com/drive/folders/1zURuJDGoePa9V1GMkTGTbKMcaFd4UScp";
   };
 
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
-
 
   const dummyBetaPassData2 = [
     {
@@ -100,49 +237,9 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
       },
     },
     {
-      title: "SKALE",
-      chain: "SKALE Nebula Hub",
-      linkState: "skale",
-      rewards: "SKL",
-      status: "Live",
-      eventStatus: "Live",
-      id: "event11",
-      eventType: "Explore & Mine",
-      date: "December 22, 2023",
-      logo: skaleLogo,
-      totalRewards: "$20,000 in SKL Rewards",
-      rewardsAmount: "$20,000",
-      rewardsCurrency: "SKL Rewards",
-      minRewards: "1",
-      maxRewards: "100",
-      minPoints: "5,000",
-      maxPoints: "50,000",
-      learnMore:
-        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
-      popupInfo: {
-        title: "SKALE",
-        chain: "SKALE Nebula Hub",
-        linkState: "doge",
-        rewards: "SKL",
-        status: "Live",
-        id: "event11",
-        eventStatus: "Live",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in SKL Rewards",
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
-        eventDate: "December 22, 2023",
-      },
-    },
-  
-    {
       title: "CORE",
       logo: coreLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -156,15 +253,15 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
-        status: "Coming Soon",
+        status: "Live",
         id: "event12",
         eventType: "Explore & Find",
         totalRewards: "$20,000 in SEI Rewards",
         eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
+        minRewards: "0.5",
+        maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "50,000",
+        maxPoints: "30,000",
         learnMore:
           "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
         eventDate: "XXX XX, XXXX",
@@ -173,7 +270,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
     {
       title: "VICTION",
       logo: victionLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in VIC Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -192,16 +289,55 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
         eventType: "Explore & Find",
         totalRewards: "$20,000 in VIC Rewards",
         eventDuration: dypius2LastDay,
-        minRewards: "1",
-        maxRewards: "100",
+        minRewards: "0.5",
+        maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "50,000",
+        maxPoints: "30,000",
         learnMore:
           "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
         eventDate: "XXX XX, XXXX",
       },
     },
-      {
+    {
+      title: "SKALE",
+      chain: "SKALE Nebula Hub",
+      linkState: "skale",
+      rewards: "SKL",
+      status: "Expired",
+      eventStatus: "Expired",
+      id: "event11",
+      eventType: "Explore & Mine",
+      date: "December 22, 2023",
+      logo: skaleLogo,
+      totalRewards: "$20,000 in SKL Rewards",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "SKL Rewards",
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore:
+        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+      popupInfo: {
+        title: "SKALE",
+        chain: "SKALE Nebula Hub",
+        linkState: "doge",
+        rewards: "SKL",
+        status: "Expired",
+        id: "event11",
+        eventStatus: "Expired",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in SKL Rewards",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "December 22, 2023",
+      },
+    },
+    {
       title: "Dypius",
       logo: dypius,
       eventStatus: "Expired",
@@ -443,7 +579,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
   ];
 
   var settings = {
-    dots: true,
+    dots: false,
     arrows: false,
     dotsClass: "button__bar",
     infinite: false,
@@ -495,6 +631,7 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
+          dots: true
         },
       },
     ],
@@ -618,8 +755,15 @@ const VideoWrapper = ({ handleRegister, handleDownload }) => {
             ></video>
           </div>
           <div className="col-12 col-lg-4  d-flex align-items-center justify-content-center justify-content-lg-start">
-            {/* <GlobalLeaderboard /> */}
-            <NewHomeLeaderboard />
+            <GlobalLeaderboard
+              genesisData={genesisData}
+              previousgenesisData={previousgenesisData}
+              previousGenesisVersion={previousGenesisVersion}
+              screen={"home"}
+              allStarData={allStarData}
+
+            />
+            {/* <NewHomeLeaderboard /> */}
           </div>
         </div>
         {windowSize.width > 992 && (

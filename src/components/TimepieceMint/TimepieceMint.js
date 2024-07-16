@@ -244,7 +244,7 @@ const TimePieceMint = ({
           />
           <h6 className="newminttitle font-organetto position-relative">
             Mint your Timepiece <br />nft 
-            <span className="newminttitle-marked mx-2">now!</span>
+            <span className="newminttitle-marked mx-2 font-organetto">now!</span>
           </h6>
           <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
             <div className="mint-benefits-grid">
