@@ -115,9 +115,9 @@ const WalletBalance = ({
   MyNFTSLandAvax,
   MyNFTSCawsAvax,
   MyNFTSLandBase,
-  MyNFTSCawsBase,
   myNFTSopBNB,
-  MyNFTSCawsBase,myMultiversNfts
+  MyNFTSCawsBase,
+  myMultiversNfts,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -1470,7 +1470,7 @@ const WalletBalance = ({
 
   return (
     <>
-    <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 justify-content-center align-items-center">
+      <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 justify-content-center align-items-center">
         <div className="row w-100 gap-5 gap-lg-0 mx-0">
           <div className="col-12 col-lg-4 px-0 pe-lg-3 position-relative mt-3 mt-lg-0">
             <h6
@@ -1596,7 +1596,6 @@ const WalletBalance = ({
             </h6>
             <div className="nft-outer-wrapper2 nft-outer-wrapper22 p-4  d-flex flex-column gap-2 position-relative h-100">
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
-               
                 <h6
                   className={`account-nft-sort ${
                     filterTitle === "Collected" && "nft-sort-selected"
@@ -2988,14 +2987,14 @@ const WalletBalance = ({
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : nft.nftAddress ===
-                                window.config.nft_core_address
-                              ? "core"
-                              : nft.nftAddress ===
-                              window.config.nft_viction_address
-                            ? "viction"
-                            : nft.nftAddress ===
-                              window.config.nft_multivers_address
-                            ? "multivers"
+                                  window.config.nft_core_address
+                                ? "core"
+                                : nft.nftAddress ===
+                                  window.config.nft_viction_address
+                                ? "viction"
+                                : nft.nftAddress ===
+                                  window.config.nft_multivers_address
+                                ? "multivers"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3133,14 +3132,14 @@ const WalletBalance = ({
                                       window.config.nft_cmc_address
                                     ? "CMCBP"
                                     : nft.nftAddress ===
-                                    window.config.nft_core_address
-                                  ? "COBP"
-                                  : nft.nftAddress ===
-                                  window.config.nft_viction_address
-                                ? "VCBP"
-                                : nft.nftAddress ===
-                                window.config.nft_multivers_address
-                              ? "MXBP"
+                                      window.config.nft_core_address
+                                    ? "COBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_viction_address
+                                    ? "VCBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_multivers_address
+                                    ? "MXBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -3305,14 +3304,14 @@ const WalletBalance = ({
                                   window.config.nft_coingecko_address
                                 ? "coingecko"
                                 : nft.nftAddress ===
-                                window.config.nft_core_address
-                              ? "core"
-                              : nft.nftAddress ===
-                              window.config.nft_viction_address
-                            ? "viction"
-                            : nft.nftAddress ===
-                              window.config.nft_multivers_address
-                            ? "multivers"
+                                  window.config.nft_core_address
+                                ? "core"
+                                : nft.nftAddress ===
+                                  window.config.nft_viction_address
+                                ? "viction"
+                                : nft.nftAddress ===
+                                  window.config.nft_multivers_address
+                                ? "multivers"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3394,8 +3393,8 @@ const WalletBalance = ({
                                       window.config.nft_viction_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                     : nft.nftAddress ===
-                                    window.config.nft_multivers_address
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
+                                      window.config.nft_multivers_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`

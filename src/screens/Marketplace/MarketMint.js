@@ -436,18 +436,18 @@ const MarketMint = ({
     //   data: seiData,
     //   class: "mint-sei",
     // },
-    {
-      title: "BNB Chain Pass",
-      eventId: "bnbchain",
-      desc: "Gain entry to metaverse, and join exclusive BNB Chain event with special ticket.",
-      img: bnbActive,
-      data: bnbData,
-      class: "mint-bnb",
-      id: "bnb",
-    },
+    // {
+    //   title: "BNB Chain Pass",
+    //   eventId: "bnbchain",
+    //   desc: "Gain entry to metaverse, and join exclusive BNB Chain event with special ticket.",
+    //   img: bnbActive,
+    //   data: bnbData,
+    //   class: "mint-bnb",
+    //   id: "bnb",
+    // },
 
     {
-      title: "OPBNB Chain Pass",
+      title: "opBNB Chain Pass",
       eventId: "opbnbchain",
       desc: "Gain entry to metaverse, and join exclusive OPBNB Chain event with special ticket.",
       img: bnbActive,

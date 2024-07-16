@@ -3237,7 +3237,7 @@ function Dashboard({
   const handleFirstTask = async (wallet) => {
     const result2 = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task7/${wallet}`
+        `https://api.worldofdypians.com/api/olympiad/task1/${wallet}`
       )
       .catch((e) => {
         console.error(e);
@@ -3274,7 +3274,7 @@ function Dashboard({
         onSubscribeSuccess(account);
 
         if (isonlink) {
-          // handleFirstTask(account);
+          handleFirstTask(account);
         }
       });
     } catch (error) {
@@ -5966,57 +5966,6 @@ function Dashboard({
                         multiversPoints={multiversPoints}
                         multiversEarnToken={multiversEarnToken}
                         multiversEarnUsd={multiversEarnUsd}
-                      />
-                      <WalletBalance
-                        ethTokenData={ethTokenData}
-                        dypTokenData={dypTokenData}
-                        onOpenNfts={onOpenNfts}
-                        listedNFTS={listedNFTS}
-                        myBoughtNfts={myBoughtNfts}
-                        address={data?.getPlayer?.wallet?.publicAddress}
-                        coinbase={account}
-                        isVerified={data?.getPlayer?.wallet}
-                        favoritesArray={favorites}
-                        dypBalance={dypBalance}
-                        dypBalancebnb={dypBalancebnb}
-                        dypBalanceavax={dypBalanceavax}
-                        idypBalance={idypBalance}
-                        idypBalancebnb={idypBalancebnb}
-                        idypBalanceavax={idypBalanceavax}
-                        showNfts={showNfts}
-                        handleShowWalletPopup={() => {
-                          setshowWalletModal(true);
-                        }}
-                        email={email}
-                        userId={data?.getPlayer?.playerId}
-                        username={data?.getPlayer?.displayName}
-                        myCawsCollected={MyNFTSCaws}
-                        myCawsOldCollected={MyNFTSCawsOld}
-                        myLandCollected={MyNFTSLand}
-                        myTimepieceCollected={MyNFTSTimepiece}
-                        landStaked={landstakes}
-                        myCawsWodStakes={myCawsWodStakesAll}
-                        myWodWodStakes={myWodWodStakesAll}
-                        myNFTSCoingecko={MyNFTSCoingecko}
-                        myGateNfts={myGateNfts}
-                        myConfluxNfts={myConfluxNfts}
-                        myBaseNfts={myBaseNfts}
-                        myDogeNfts={myDogeNfts}
-                        myCmcNfts={myCmcNfts}
-                        myCoreNfts={myCoreNfts}
-                        myVictionNfts={myVictionNfts}
-                        myMultiversNfts={myMultiversNfts}
-                        mySkaleNfts={mySkaleNfts}
-                        latestBoughtNFTS={latest20BoughtNFTS}
-                        myOffers={myOffers}
-                        allActiveOffers={allActiveOffers}
-                        latestVersion={latestVersion}
-                        MyNFTSLandBNB={MyNFTSLandBNB}
-                        MyNFTSCawsBNB={MyNFTSCawsBNB}
-                        MyNFTSLandAvax={MyNFTSLandAvax}
-                        MyNFTSCawsAvax={MyNFTSCawsAvax}
-                        MyNFTSLandBase={MyNFTSLandBase}
-                        MyNFTSCawsBase={MyNFTSCawsBase}
                       />
                     </div>
                     <WalletBalance
