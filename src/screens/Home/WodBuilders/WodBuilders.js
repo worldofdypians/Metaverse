@@ -148,6 +148,11 @@ const WodBuilders = () => {
       icon: "kapgames",
       banner: "kucoinBanner.png",
     },
+    {
+      name: "Micro3",
+      icon: "micro3",
+      banner: "kucoinBanner.png",
+    },
   
   ];
 
