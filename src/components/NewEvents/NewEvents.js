@@ -7,8 +7,15 @@ import puzzleMadnessIcon from './assets/puzzleMadnessIcon.png'
 import scorpionKingIcon from './assets/scorpionKingIcon.png'
 import treasureHuntBadge from './assets/treasureHuntBadge.png'
 import criticalHitIcon from './assets/criticalHitIcon.png'
+import goldenPassIcon from './assets/goldenPassIcon.png'
 import dummyViction from './assets/dummyViction.png'
 import TreasureHunt from '../Challenges/TreasureHunt'
+import DragonRuins from '../Challenges/DragonRuins'
+import ScorpionKing from '../Challenges/ScorpionKing'
+import PuzzleMadness from '../Challenges/PuzzleMadness'
+import CriticalHit from '../Challenges/CriticalHit'
+import MazeGarden from '../Challenges/MazeGarden'
+import GoldenPass from '../Challenges/GoldenPass'
 
 
 const NewEvents = () => {
@@ -50,6 +57,12 @@ const NewEvents = () => {
                                     <img src={dragonRuinsIcon} alt="" />
                                     <h6 className="mb-0">Dragon Ruins</h6>
                                 </div>
+                                <div className={`${challenge === "goldenPass" ? "active-challenge-item" : "challenge-item"} d-flex align-items-center gap-2 py-2 px-4`} onClick={() => {
+                                    setChallenge("goldenPass")
+                                }}>
+                                    <img src={goldenPassIcon} alt="" />
+                                    <h6 className="mb-0">Golden Pass</h6>
+                                </div>
                                 <div className={` ${challenge === "scorpionKing" ? "active-challenge-item" : "challenge-item"} d-flex align-items-center gap-2 py-2 px-4`} onClick={() => {
                                     setChallenge("scorpionKing")
                                 }}>
@@ -79,7 +92,20 @@ const NewEvents = () => {
                         <div className="col-12 col-lg-10">
                            {challenge === "treasureHunt" ?
                             <TreasureHunt /> 
-                            : <></> 
+                            : challenge === "dragonRuins" ? 
+                            <DragonRuins />
+                            : challenge === "scorpionKing" ? 
+                            <ScorpionKing />
+                            : challenge === "puzzleMadness" ? 
+                            <PuzzleMadness />
+                            : challenge === "criticalHit" ? 
+                            <CriticalHit />
+                            : challenge === "mazeGarden" ? 
+                            <MazeGarden />
+                            : challenge === "goldenPass" ? 
+                            <GoldenPass />
+                         
+                            : <></>
                         }
                         </div>
                     </div>
