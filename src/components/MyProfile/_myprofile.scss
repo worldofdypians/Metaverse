@@ -22,6 +22,15 @@
   line-height: 10px; /* 100% */
 }
 
+.current-rank-text{
+  color:  #FFD37E;
+font-family: "Montserrat";
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
 .wallet-address-wrapper {
   border-radius: 4px;
   background: rgba(128, 32, 96, 0.2);
@@ -393,6 +402,32 @@ height: 140px;
   height: 25px;
   position: absolute;
   right: -10px;
+  top: -10px;
+  span {
+    color: #ffd37e;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+  }
+}
+.daily-progress-value-golden {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f1118;
+  border: 1px solid #c09645;
+  border-radius: 4px;
+  height: 25px;
+  width: fit-content;
+  margin: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+  position: absolute;
+  right: 0;
+  left: 0;
   top: -10px;
   span {
     color: #ffd37e;

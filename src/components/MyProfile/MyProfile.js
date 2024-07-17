@@ -604,10 +604,10 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                   <span>Score</span>
                 </div>
               </div>
-              <div className="d-flex flex-column">
+              <div className="d-flex flex-column gap-2">
                 <div className="d-flex align-items-center gap-2">
-                  <h6 className="my-profile-username">DarkSliffer</h6>
-                  <img src={premiumTab} alt="" />
+                  <h6 className="my-profile-username mb-0">DarkSliffer</h6>
+                  <span className="current-rank-text">Unstoppable</span>
                 </div>
                 <span className="my-profile-email mb-2">
                   dypiustesting@gmail.com
@@ -637,6 +637,13 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                 <div className="progress-line-2"></div>
               </div>
               <div className="daily-progress-grid">
+              <div className="daily-progress-item position-relative">
+                  <img src={goldenPassActive} alt="" />
+                  <div className="daily-progress-value-golden">
+                      <span>25d:12h</span>
+                  </div>
+                    <img src={doneTag} alt="" className="daily-progress-status" />
+                </div>
                 <div className="daily-progress-item position-relative">
                   <img src={treasureHuntActive} alt="" />
                   <div className="daily-progress-value">
@@ -665,13 +672,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                   </div>
                     <img src={doneTag} alt="" className="daily-progress-status" />
                 </div>
-                <div className="daily-progress-item position-relative">
-                  <img src={goldenPassActive} alt="" />
-                  <div className="daily-progress-value">
-                      <span>4</span>
-                  </div>
-                    <img src={doneTag} alt="" className="daily-progress-status" />
-                </div>
+               
                 <div className="daily-progress-item position-relative">
                   <img src={dailyBonusActive} alt="" />
                   <div className="daily-progress-value">
@@ -688,8 +689,8 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                 </div>
                 <div className="daily-progress-item position-relative">
                   <img src={mazeGardenInactive} alt="" />
-                  <div className="daily-progress-value">
-                      <span>0</span>
+                  <div className="daily-progress-value-golden">
+                      <span>Sunday</span>
                   </div>
                     <img src={emptyTag} alt="" className="daily-progress-status" />
                 </div>
