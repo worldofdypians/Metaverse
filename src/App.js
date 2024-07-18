@@ -76,6 +76,24 @@ import OurTeam from "./screens/OurTeam/OurTeam.js";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
+import Redirect from "./screens/Home/Redirect";
+
+  const PUBLISHABLE_KEY = "pk_imapik-test-thnDYtOU1Z4uxZ85oiVj"; // Replace with your Publishable Key from the Immutable Hub
+  const CLIENT_ID = "8u9twN341by6zff9xxJ34MIWIDX438PZ"; // Replace with your passport client ID
+
+  const passportInstance = new passport.Passport({
+    baseConfig: {
+      environment: config.Environment.SANDBOX,
+      publishableKey: PUBLISHABLE_KEY,
+    },
+    clientId: CLIENT_ID,
+    redirectUri: "http://localhost:8080/redirect",
+    logoutRedirectUri: "http://localhost:8080/logout",
+    audience: "platform_api",
+    scope: "openid offline_access email transact",
+    
+  });
+
 
 function App() {
   const CHAINLIST = {
@@ -448,21 +466,7 @@ function App() {
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
-  const PUBLISHABLE_KEY = "pk_imapik-test-thnDYtOU1Z4uxZ85oiVj"; // Replace with your Publishable Key from the Immutable Hub
-  const CLIENT_ID = "8u9twN341by6zff9xxJ34MIWIDX438PZ"; // Replace with your passport client ID
 
-  const passportInstance = new passport.Passport({
-    baseConfig: {
-      environment: config.Environment.SANDBOX,
-      publishableKey: PUBLISHABLE_KEY,
-    },
-    clientId: CLIENT_ID,
-    redirectUri: "http://localhost:8080/redirect",
-    logoutRedirectUri: "http://localhost:8080/logout",
-    audience: "platform_api",
-    scope: "openid offline_access email transact",
-    
-  });
 
   const fillRecordsStar = (itemData) => {
     if (itemData.length === 0) {
@@ -916,24 +920,35 @@ function App() {
       config: { theme: checkout.WidgetTheme.DARK },
     });
     const connect = widgets.create(checkout.WidgetType.CONNECT);
-
+  
     if (!connect) return;
 
     connect.mount("connect");
+     
 
-    connect.addListener(checkout.ConnectEventType.SUCCESS, async (data) => {
-      const accounts = await window.ethereum?.request({
-        method: "eth_requestAccounts",
-      });
-      console.log(accounts)
-    });
-    connect.addListener(checkout.ConnectEventType.FAILURE, (data) => {
-      console.log("failure", data);
-    });
+    // connect.addListener(checkout.ConnectEventType.SUCCESS, async (data) => {
+    //   const accounts = await window.ethereum?.request({
+    //     method: "eth_requestAccounts",
+    //   });
+    //   console.log(accounts)
+    // });
+    // connect.addListener(checkout.ConnectEventType.FAILURE, (data) => {
+    //   console.log("failure", data);
+    // });
     connect.addListener(checkout.ConnectEventType.CLOSE_WIDGET, () => {
       connect.unmount();
       setwalletModal(false);
     });
+    //   await passportInstance.login().then(()=>{
+    //   console.log('success login')
+    // })
+
+    const passportProvider = passportInstance.connectEvm();
+
+const provider = new ethers.providers.Web3Provider(passportProvider);
+console.log('provider',provider)
+const accounts = await provider.request({ method: "eth_requestAccounts" });
+console.log(accounts)
   };
 
   const myNft = async () => {
@@ -3362,6 +3377,13 @@ function App() {
             path="/auth"
             element={<Auth isConnected={isConnected} coinbase={coinbase} />}
           />
+
+<Route
+            exact
+            path="/redirect"
+            element={<Redirect/>}
+          />
+
           <Route
             exact
             path="/bnbchain-alliance-program"
