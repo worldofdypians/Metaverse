@@ -26,13 +26,13 @@ const CriticalHit = () => {
       <div className="d-flex align-items-end justify-content-between">
         <h6 className="mb-0 purchase-package-title">Purchase</h6>
         <div className="d-flex align-items-end gap-2">
-          <span className="available-on">Available only on</span>
+          <span className="available-on">Available on</span>
           <img src={eth} width={20} height={20} alt="" />
           <span className="purchase-chain">Ethereum</span>
         </div>
       </div>
-      <div className="new-event-wrapper p-3 d-flex align-items-center justify-content-between">
-        <img src={criticalHitLand} alt="" />
+      <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
+        <img src={criticalHitLand} className="critical-hit-img" alt="" />
         <div className="stake-wod-btn px-4 py-2">Get Genesis Land</div>
       </div>
     </div>

@@ -22,13 +22,13 @@
   line-height: 10px; /* 100% */
 }
 
-.current-rank-text{
-  color:  #FFD37E;
-font-family: "Montserrat";
-font-size: 14px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+.current-rank-text {
+  color: #ffd37e;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
 .wallet-address-wrapper {
@@ -309,8 +309,11 @@ line-height: normal;
 
 .limited-offers-wrapper {
   border-radius: 10px;
-  background: radial-gradient(358.71% 141.42% at 100% 100%, #092E4B 0%, #18193C 100%);
-
+  background: radial-gradient(
+    358.71% 141.42% at 100% 100%,
+    #092e4b 0%,
+    #18193c 100%
+  );
 
   height: 160px;
   @media screen and (max-width: 786px) {
@@ -319,7 +322,7 @@ line-height: normal;
 }
 
 .new-stake-nft-wrapper {
-  height: 140px;
+  height: 160px;
   border-radius: 10px;
   background: radial-gradient(
     490.81% 196.97% at 100% 100%,
@@ -339,13 +342,11 @@ line-height: normal;
   border-radius: 10px;
   background-image: url(./assets/myRewards.png);
   background-size: 100% 100%;
-height: 140px;
-@media screen and (max-width: 786px) {
-  height: auto;
+  height: 140px;
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
 }
-}
-
-
 
 .miner-img {
   position: absolute;
@@ -449,82 +450,80 @@ height: 140px;
   margin: auto;
 }
 
-.portfolio-wrapper{
+.portfolio-wrapper {
   border-radius: 8px;
-border: 0.5px solid #C23F62;
-background: rgba(128, 32, 96, 0.20);
-cursor: pointer;
-h6{
-  color: #EEEDFF;
-font-family: "Montserrat";
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 10px; /* 100% */
-}
+  border: 0.5px solid #c23f62;
+  background: rgba(128, 32, 96, 0.2);
+  cursor: pointer;
+  h6 {
+    color: #eeedff;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 10px; /* 100% */
+  }
 }
 
-
-.new-profile-img{
+.new-profile-img {
   width: 100px;
 }
 
-.score-text-wrapper{
+.score-text-wrapper {
   position: absolute;
   bottom: 10px;
   left: 0;
   right: 0;
-  h6{
-    color: #FFD37E;
-text-align: center;
-font-family: "Montserrat";
-font-size: 10px;
-font-style: normal;
-font-weight: 700;
-line-height: 100%; /* 10px */
+  h6 {
+    color: #ffd37e;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%; /* 10px */
   }
 
-  span{
-    color: #BEA5A9;
-text-align: center;
-font-family: "Montserrat";
-font-size: 8px;
-font-style: normal;
-font-weight: 700;
-line-height: 100%; /* 8px */
-text-transform: uppercase;
+  span {
+    color: #bea5a9;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%; /* 8px */
+    text-transform: uppercase;
   }
 }
 
-.limited-offer-card{
-background: #092E4B;
-height: 160px;
-width: 120px;
-transform: matrix(1, 0, -0.18, 0.98, 0, 0);
-border-left: 2px solid #015F86;
-border-bottom: 2px solid #015F86;
+.limited-offer-card {
+  background: #092e4b;
+  height: 160px;
+  width: 120px;
+  transform: matrix(1, 0, -0.18, 0.98, 0, 0);
+  border-left: 2px solid #015f86;
+  border-bottom: 2px solid #015f86;
 }
 
-.limited-offer-reward{
-  color: #DAF3FF;
-text-align: center;
-font-family: "Montserrat";
-font-size: 11px;
-font-weight: 900;
-line-height: normal;
+.limited-offer-reward {
+  color: #daf3ff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 11px;
+  font-weight: 900;
+  line-height: normal;
 }
 
-.limited-offer-img{
+.limited-offer-img {
   width: 120px;
   height: 80px;
 }
 
-
-.limited-offer-purchase{
-  color: #F7F7FF;
-text-align: center;
-font-family: "Montserrat";
-font-size: 10px;
-font-weight: 600;
-line-height: normal;
+.limited-offer-purchase {
+  color: #f7f7ff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-weight: 600;
+  line-height: normal;
 }

@@ -13,7 +13,7 @@ const TreasureHunt = () => {
   return (
     <div className="d-flex flex-column gap-3">
       <div className="new-treasure-hunt-wrapper d-flex align-items-center justify-content-between">
-        <div className="ps-5 d-flex align-items-center gap-3">
+        <div className="ps-5 w-25 d-flex align-items-center gap-3">
           <img src={core} height={36} width={36} alt="" />
           <div className="d-flex flex-column gap-2">
             <h6 className="mb-0 new-treasure-hunt-title">CORE</h6>
@@ -42,7 +42,7 @@ const TreasureHunt = () => {
         </div>
       </div>
       <div className="new-treasure-hunt-wrapper d-flex align-items-center justify-content-between">
-        <div className="ps-5 d-flex align-items-center gap-3">
+        <div className="ps-5 w-25 d-flex align-items-center gap-3">
           <img src={viction} height={36} width={36} alt="" />
           <div className="d-flex flex-column gap-2">
             <h6 className="mb-0 new-treasure-hunt-title">VICTION</h6>
@@ -71,7 +71,7 @@ const TreasureHunt = () => {
         </div>
       </div>
       <div className="new-treasure-hunt-wrapper d-flex align-items-center justify-content-between">
-        <div className="ps-5 d-flex align-items-center gap-3">
+        <div className="ps-5 w-25 d-flex align-items-center gap-3">
           <img src={bnb} height={36} width={36} alt="" />
           <div className="d-flex flex-column gap-2">
             <h6 className="mb-0 new-treasure-hunt-title">BNB CHAIN</h6>
@@ -100,7 +100,7 @@ const TreasureHunt = () => {
         </div>
       </div>
       <div className="new-treasure-hunt-wrapper d-flex align-items-center justify-content-between">
-        <div className="ps-5 d-flex align-items-center gap-3">
+        <div className="ps-5 w-25 d-flex align-items-center gap-3">
           <img src={skale} height={36} width={36} alt="" />
           <div className="d-flex flex-column gap-2">
             <h6 className="mb-0 new-treasure-hunt-title">SKALE</h6>
