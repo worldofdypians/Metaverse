@@ -77,22 +77,32 @@ import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 import Redirect from "./screens/Home/Redirect";
+import WalletModal2 from "./components/WalletModal/WalletModal2";
 
-  const PUBLISHABLE_KEY = "pk_imapik-test-thnDYtOU1Z4uxZ85oiVj"; // Replace with your Publishable Key from the Immutable Hub
-  const CLIENT_ID = "8u9twN341by6zff9xxJ34MIWIDX438PZ"; // Replace with your passport client ID
+const PUBLISHABLE_KEY = "pk_imapik-test-thnDYtOU1Z4uxZ85oiVj"; // Replace with your Publishable Key from the Immutable Hub
+const CLIENT_ID = "8u9twN341by6zff9xxJ34MIWIDX438PZ"; // Replace with your passport client ID
 
-  const passportInstance = new passport.Passport({
-    baseConfig: {
-      environment: config.Environment.SANDBOX,
-      publishableKey: PUBLISHABLE_KEY,
-    },
-    clientId: CLIENT_ID,
-    redirectUri: "http://localhost:8080/redirect",
-    logoutRedirectUri: "http://localhost:8080/logout",
-    audience: "platform_api",
-    scope: "openid offline_access email transact",
-    
-  });
+const baseConfig = {
+  environment: config.Environment.SANDBOX,
+  publishableKey: PUBLISHABLE_KEY,
+};
+
+const passportInstance = new passport.Passport({
+  baseConfig: {
+    environment: config.Environment.SANDBOX,
+    publishableKey: PUBLISHABLE_KEY,
+  },
+  clientId: CLIENT_ID,
+  redirectUri: "http://localhost:8080/redirect",
+  logoutRedirectUri: "http://localhost:8080/logout",
+  audience: "platform_api",
+  scope: "openid offline_access email transact",
+});
+
+const checkoutSDK = new checkout.Checkout({
+  baseConfig,
+  passport: passportInstance,
+});
 
 
 function App() {
@@ -248,6 +258,8 @@ function App() {
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
+  const [walletId, setwalletId] = useState("connect");
+
   const [mintloading, setmintloading] = useState("initial");
   const [mintStatus, setmintStatus] = useState("");
   const [textColor, settextColor] = useState("#fff");
@@ -465,8 +477,6 @@ function App() {
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
-
-
 
   const fillRecordsStar = (itemData) => {
     if (itemData.length === 0) {
@@ -906,49 +916,73 @@ function App() {
     }
     return isConnected;
   };
-  const baseConfig = {
-    environment: config.Environment.SANDBOX,
-    publishableKey: PUBLISHABLE_KEY,
-  };
-  const checkoutSDK = new checkout.Checkout({
-    baseConfig,
-    passport: passportInstance,
-  });
 
   const handleConnectPassport = async () => {
     const widgets = await checkoutSDK.widgets({
       config: { theme: checkout.WidgetTheme.DARK },
     });
     const connect = widgets.create(checkout.WidgetType.CONNECT);
-  
+
     if (!connect) return;
 
     connect.mount("connect");
-     
 
-    // connect.addListener(checkout.ConnectEventType.SUCCESS, async (data) => {
-    //   const accounts = await window.ethereum?.request({
-    //     method: "eth_requestAccounts",
-    //   });
-    //   console.log(accounts)
-    // });
-    // connect.addListener(checkout.ConnectEventType.FAILURE, (data) => {
-    //   console.log("failure", data);
-    // });
+    connect.addListener(checkout.ConnectEventType.SUCCESS, async (data) => {
+      const passportProvider = passportInstance.connectEvm();
+      const accounts = await passportProvider.request({
+        method: "eth_requestAccounts",
+      });
+    });
+    connect.addListener(checkout.ConnectEventType.FAILURE, (data) => {
+      console.log("failure", data);
+    });
     connect.addListener(checkout.ConnectEventType.CLOSE_WIDGET, () => {
       connect.unmount();
       setwalletModal(false);
+      setTimeout(() => {
+        setwalletId("connect_simple");
+        handleConnectWalletPassport();
+      }, 1000);
     });
-    //   await passportInstance.login().then(()=>{
-    //   console.log('success login')
+
+    //   await passportInstance.login().then(async()=>{
+    //     if(accounts && accounts.length > 0) {
+    //       handleConnection();
+    //       console.log(window)
+    //     }
     // })
 
-    const passportProvider = passportInstance.connectEvm();
+    // const provider = new ethers.providers.Web3Provider(passportProvider);
+    // console.log('provider',provider)
+    // const accounts = await provider.request({ method: "eth_requestAccounts" });
+  };
+  console.log(walletId, walletModal);
+  const handleConnectWalletPassport = async () => {
+    setwalletModal(true);
+    console.log("in");
+const checkoutSDK_simple = new checkout.Checkout();
 
-const provider = new ethers.providers.Web3Provider(passportProvider);
-console.log('provider',provider)
-const accounts = await provider.request({ method: "eth_requestAccounts" });
-console.log(accounts)
+    const widgets_simple = await checkoutSDK_simple.widgets({
+      config: { theme: checkout.WidgetTheme.DARK },
+    });
+
+    const connect_simple = widgets_simple.create(checkout.WidgetType.CONNECT, {
+      config: { theme: checkout.WidgetTheme.DARK },
+    });
+
+    if (!connect_simple) return;
+
+    connect_simple.mount("connect_simple");
+
+    connect_simple.addListener(checkout.ConnectEventType.SUCCESS, (data) => {
+      console.log("success_simple", data);
+    });
+    connect_simple.addListener(checkout.ConnectEventType.FAILURE, (data) => {
+      console.log("failure_simple", data);
+    });
+    connect_simple.addListener(checkout.ConnectEventType.CLOSE_WIDGET, () => {
+      connect_simple.unmount();
+    });
   };
 
   const myNft = async () => {
@@ -3378,11 +3412,7 @@ console.log(accounts)
             element={<Auth isConnected={isConnected} coinbase={coinbase} />}
           />
 
-<Route
-            exact
-            path="/redirect"
-            element={<Redirect/>}
-          />
+          <Route exact path="/redirect" element={<Redirect />} />
 
           <Route
             exact
@@ -4302,7 +4332,6 @@ console.log(accounts)
                 bnbMintAllowed={bnbMintAllowed}
                 totalBnbNft={totalBnbNft}
                 immutableMintAllowed={immutableMintAllowed}
-
               />
             }
           />
@@ -4394,7 +4423,6 @@ console.log(accounts)
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
                 immutableMintAllowed={immutableMintAllowed}
-
               />
             }
           />
@@ -4630,9 +4658,9 @@ console.log(accounts)
         />
       )}
 
-      {walletModal === true && (
+      {walletModal === true && walletId === "connect" && (
         <WalletModal
-          show={walletModal}
+          show={walletId === "connect" && walletModal === true}
           handleClose={() => {
             setwalletModal(false);
           }}
@@ -4640,6 +4668,20 @@ console.log(accounts)
             handleConnectWallet();
           }}
           handleConnectionPassport={handleConnectPassport}
+        />
+      )}
+
+      {walletId === "connect_simple" && walletModal === true && (
+        <WalletModal2
+          show={walletId === "connect_simple" && walletModal === true}
+          handleClose={() => {
+            setwalletModal(false);
+            setwalletId("connect");
+          }}
+          handleConnection={() => {
+            handleConnectWallet();
+          }}
+          handleConnectionPassport={handleConnectWalletPassport}
         />
       )}
 
