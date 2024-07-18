@@ -99,6 +99,7 @@ const WodBuilders = () => {
       banner: "easy2stakeBanner.png",
       link: "https://twitter.com/Easy2Stake/status/1654120741221326850",
     },
+
     {
       name: "KuCoin",
       icon: "kucoinIcon",
@@ -111,6 +112,12 @@ const WodBuilders = () => {
       banner: "seiBanner.webp",
       link: "https://x.com/worldofdypians/status/1795177907821617607",
     }, 
+    {
+      name: "Immutable",
+      icon: "immutable",
+      banner: "immutableBanner.png",
+      link: "https://x.com/Immutable/status/1813966964957884795",
+    },
 
     {
       name: "Midle",
@@ -202,7 +209,7 @@ const WodBuilders = () => {
           <div className="d-flex justify-content-center mt-3">
             <div
               className="linear-border"
-              onClick={() => (slice === 2 ? setSlice(17) : setSlice(2))}
+              onClick={() => (slice === 2 ? setSlice(18) : setSlice(2))}
             >
               <button className="btn filled-btn px-5">
                 {slice === 2 ? "View More" : "View Less"}
@@ -213,7 +220,7 @@ const WodBuilders = () => {
           <div className="d-flex justify-content-center mt-3">
             <div
               className="linear-border"
-              onClick={() => (slice === 8 ? setSlice(17) : setSlice(8))}
+              onClick={() => (slice === 8 ? setSlice(18) : setSlice(8))}
             >
               <button className="btn filled-btn px-5">
                 {slice === 8 ? "View More" : "View Less"}
