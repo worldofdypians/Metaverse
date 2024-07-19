@@ -187,13 +187,13 @@ const MarketMint = ({
     mobileBg: "seiMobileBg.webp",
   };
 
-  const victionData = {
-    id: "viction",
-    cardTitle: "Viction Beta Pass",
-    title: "Viction Beta Pass",
-    background: "viction-mint-bg",
-    mobileBg: "victionMobileBg.webp",
-  };
+  // const victionData = {
+  //   id: "viction",
+  //   cardTitle: "Viction Beta Pass",
+  //   title: "Viction Beta Pass",
+  //   background: "viction-mint-bg",
+  //   mobileBg: "victionMobileBg.webp",
+  // };
 
   const bnbData = {
     id: "bnb",
@@ -229,7 +229,7 @@ const MarketMint = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(victionData);
+  const [selectedMint, setSelectedMint] = useState(timepieceData);
   const [mintTitle, setMintTitle] = useState("timepiece");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
@@ -301,8 +301,8 @@ const MarketMint = ({
 
   useEffect(() => { 
     if (location.pathname.includes("viction")) {
-     setSelectedMint(victionData);
-     setMintTitle("viction");
+    //  setSelectedMint(victionData);
+    //  setMintTitle("viction");
     } else
      if (location.pathname.includes("timepiece")) {
     setSelectedMint(timepieceData);
@@ -402,14 +402,14 @@ const MarketMint = ({
     //   class: "mint-core",
     // },
 
-    {
-      title: "Viction Pass",
-      eventId: "viction",
-      desc: "Gain entry to metaverse, and join exclusive Viction event with special ticket.",
-      img: victionActive,
-      data: victionData,
-      class: "mint-viction",
-    },
+    // {
+    //   title: "Viction Pass",
+    //   eventId: "viction",
+    //   desc: "Gain entry to metaverse, and join exclusive Viction event with special ticket.",
+    //   img: victionActive,
+    //   data: victionData,
+    //   class: "mint-viction",
+    // },
 
     // {
     //   title: "SEI Pass",
@@ -762,43 +762,45 @@ const MarketMint = ({
 
               {activeTab === "live" && (
                 <>
+                  {dummyCards.length > 1 &&
                   <div className="pb-5 px-0 position-relative">
-                    {activeSlide > 0 && (
-                      <div className="prev-arrow-nft" onClick={firstPrev}>
-                        <img src={nextArrow} alt="" />
-                      </div>
-                    )}
-                    {showFirstNext === activeSlide
-                      ? null
-                      : dummyCards.length > sliderCut && (
-                          <div className="next-arrow-nft" onClick={firstNext}>
-                            <img src={nextArrow} alt="1" />
-                          </div>
-                        )}
-                    {windowSize.width < 480 && (
-                      <>
-                        <div className="prev-arrow-nft" onClick={firstPrev}>
-                          <img src={nextArrow} alt="" />
-                        </div>
+                  {activeSlide > 0 && (
+                    <div className="prev-arrow-nft" onClick={firstPrev}>
+                      <img src={nextArrow} alt="" />
+                    </div>
+                  )}
+                  {showFirstNext === activeSlide
+                    ? null
+                    : dummyCards.length > sliderCut && (
                         <div className="next-arrow-nft" onClick={firstNext}>
                           <img src={nextArrow} alt="1" />
                         </div>
-                      </>
-                    )}
-                    <Slider ref={(c) => (slider.current = c)} {...settings}>
-                      {dummyCards.map((item, index) => (
-                        <EventSliderCard
-                          key={index}
-                          data={item}
-                          onSelectCard={() => {
-                            setSelectedMint(item.data);
-                            setMintTitle(item.eventId);
-                          }}
-                          mintTitle={mintTitle}
-                        />
-                      ))}
-                    </Slider>
-                  </div>
+                      )}
+                  {windowSize.width < 480 && (
+                    <>
+                      <div className="prev-arrow-nft" onClick={firstPrev}>
+                        <img src={nextArrow} alt="" />
+                      </div>
+                      <div className="next-arrow-nft" onClick={firstNext}>
+                        <img src={nextArrow} alt="1" />
+                      </div>
+                    </>
+                  )}
+                  <Slider ref={(c) => (slider.current = c)} {...settings}>
+                    {dummyCards.map((item, index) => (
+                      <EventSliderCard
+                        key={index}
+                        data={item}
+                        onSelectCard={() => {
+                          setSelectedMint(item.data);
+                          setMintTitle(item.eventId);
+                        }}
+                        mintTitle={mintTitle}
+                      />
+                    ))}
+                  </Slider>
+                </div>
+                  }
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -2396,7 +2398,7 @@ const MarketMint = ({
                       <div className="sold-out-tag px-3 py-1">
                         <span className="sold-out-span">Sold Out</span>
                       </div>
-                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper">
                         <h6 className="past-mint-title">Conflux Beta Pass</h6>
                         <div className="d-flex flex-column align-items-center rotatewrapper">
                           <h6 className="past-conflux-mint-amount">
@@ -2453,6 +2455,22 @@ const MarketMint = ({
                         <div className="d-flex flex-column align-items-center rotatewrapper">
                           <h6 className="past-bnb-mint-amount">
                             {getFormattedNumber(bnbNftsSold, 0)}
+                          </h6>
+                          <span className="past-bnb-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-viction-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">VICTION Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-bnb-mint-amount" style={{color: "#901C77"}}>
+                            13,219
                           </h6>
                           <span className="past-bnb-mint-desc">SOLD OUT</span>
                         </div>
