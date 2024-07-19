@@ -932,6 +932,7 @@ function App() {
       const accounts = await passportProvider.request({
         method: "eth_requestAccounts",
       });
+      handleConnectWallet();
     });
     connect.addListener(checkout.ConnectEventType.FAILURE, (data) => {
       console.log("failure", data);
@@ -939,10 +940,10 @@ function App() {
     connect.addListener(checkout.ConnectEventType.CLOSE_WIDGET, () => {
       connect.unmount();
       setwalletModal(false);
-      setTimeout(() => {
-        setwalletId("connect_simple");
-        handleConnectWalletPassport();
-      }, 1000);
+      // setTimeout(() => {
+      //   setwalletId("connect_simple");
+      //   handleConnectWalletPassport();
+      // }, 1000);
     });
 
     //   await passportInstance.login().then(async()=>{
@@ -976,6 +977,7 @@ const checkoutSDK_simple = new checkout.Checkout();
 
     connect_simple.addListener(checkout.ConnectEventType.SUCCESS, (data) => {
       console.log("success_simple", data);
+      handleConnectWallet();
     });
     connect_simple.addListener(checkout.ConnectEventType.FAILURE, (data) => {
       console.log("failure_simple", data);
