@@ -1978,7 +1978,7 @@ const WalletBalance = ({
                                   : item.type === "viction"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                   : item.type === "immutable"
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                   : item.type === "multivers"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
                                   : item.type === "base"
@@ -3070,7 +3070,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                     : nft.nftAddress ===
                                     window.config.nft_immutable_address
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_multivers_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
@@ -3389,7 +3389,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_immutable_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_multivers_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`

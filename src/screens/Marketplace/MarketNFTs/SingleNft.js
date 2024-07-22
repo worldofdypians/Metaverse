@@ -2000,6 +2000,9 @@ const SingleNft = ({
                         : nftAddress.toLowerCase() ===
                           window.config.nft_bnb_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+400.png`
+                        : nftAddress.toLowerCase() ===
+                          window.config.nft_immutable_address.toLowerCase()
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+400.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
                     alt=""

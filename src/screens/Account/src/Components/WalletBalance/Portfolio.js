@@ -1862,7 +1862,7 @@ const Portfolio = ({
                                 : item.type === "viction"
                                 ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                 : item.type === "immutable"
-                                ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
+                                ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                  : item.type === "bnb"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
                                 : item.type === "base"
@@ -3038,7 +3038,7 @@ const Portfolio = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_immutable_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
@@ -3353,7 +3353,7 @@ const Portfolio = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                     : nft.nftAddress ===
                                     window.config.nft_immutable_address
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
