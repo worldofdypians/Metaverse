@@ -91,7 +91,7 @@ const MintPopup = ({ active, onClose, data }) => {
                 className="mint-popup-title  mb-0"
                 style={{ color: "#18FFFF" }}
               >
-                Live Giveaway
+                Free Minting
               </h6>
             </div>
             <h6 className="mint-popup-title">CORE Beta Pass</h6>
