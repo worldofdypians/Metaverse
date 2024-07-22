@@ -957,7 +957,7 @@ function App() {
     // console.log('provider',provider)
     // const accounts = await provider.request({ method: "eth_requestAccounts" });
   };
-  console.log(walletId, walletModal);
+  
   const handleConnectWalletPassport = async () => {
     setwalletModal(true);
     console.log("in");
@@ -1938,11 +1938,26 @@ const checkoutSDK_simple = new checkout.Checkout();
           setmintloading("mint");
           setmintStatus("Minting in progress...");
           settextColor("rgb(123, 216, 176)");
-          // console.log(data,finalCaws, totalCawsDiscount);
-          let tokenId = await window.immutable_nft
-            .mintImmutableNFT()
-            .then(() => {
-              setmintStatus("Success! Your Nft was minted successfully!");
+          const body = {
+            walletAddress : coinbase
+          }
+
+          const result = await axios.post('https://api.worldofdypians.com/api/mint/immutable', body).catch((e)=>{
+            console.error(e);
+                setmintloading("error");
+                settextColor("#d87b7b");
+                setmintStatus(e);
+
+                setTimeout(() => {
+                        setmintloading("initial");
+                        setmintStatus("");
+                      }, 5000);
+
+          })
+
+          if(result && result.status === 200) {
+console.log(result.data)
+                setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
               settextColor("rgb(123, 216, 176)");
               setTimeout(() => {
@@ -1955,24 +1970,43 @@ const checkoutSDK_simple = new checkout.Checkout();
                 setImmutableMintAllowed(0);
                 setMyImmutableNfts(NFTS);
               });
-            })
-            .catch((e) => {
-              console.error(e);
-              setmintloading("error");
-              settextColor("#d87b7b");
 
-              if (typeof e == "object" && e.message) {
-                setmintStatus(e.message);
-              } else {
-                setmintStatus(
-                  "Oops, something went wrong! Refresh the page and try again!"
-                );
-              }
-              setTimeout(() => {
-                setmintloading("initial");
-                setmintStatus("");
-              }, 5000);
-            });
+          }
+          // console.log(data,finalCaws, totalCawsDiscount);
+          // let tokenId = await window.immutable_nft
+          //   .mintImmutableNFT()
+          //   .then(() => {
+          //     setmintStatus("Success! Your Nft was minted successfully!");
+          //     setmintloading("success");
+          //     settextColor("rgb(123, 216, 176)");
+          //     setTimeout(() => {
+          //       setmintStatus("");
+          //       setmintloading("initial");
+          //     }, 5000);
+          //     getMyNFTS(coinbase, "immutable").then((NFTS) => {
+          //       setmyImmutableNFTsCreated(NFTS);
+          //       setTotalImmutableNft(NFTS.length);
+          //       setImmutableMintAllowed(0);
+          //       setMyImmutableNfts(NFTS);
+          //     });
+          //   })
+          //   .catch((e) => {
+          //     console.error(e);
+          //     setmintloading("error");
+          //     settextColor("#d87b7b");
+
+          //     if (typeof e == "object" && e.message) {
+          //       setmintStatus(e.message);
+          //     } else {
+          //       setmintStatus(
+          //         "Oops, something went wrong! Refresh the page and try again!"
+          //       );
+          //     }
+          //     setTimeout(() => {
+          //       setmintloading("initial");
+          //       setmintStatus("");
+          //     }, 5000);
+          //   });
         } else {
           // setShowWhitelistLoadingModal(true);
         }
