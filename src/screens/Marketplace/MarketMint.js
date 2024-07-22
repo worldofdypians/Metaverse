@@ -229,8 +229,8 @@ const MarketMint = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(timepieceData);
-  const [mintTitle, setMintTitle] = useState("timepiece");
+  const [selectedMint, setSelectedMint] = useState(coreData);
+  const [mintTitle, setMintTitle] = useState("core");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -300,9 +300,9 @@ const MarketMint = ({
   };
 
   useEffect(() => { 
-    if (location.pathname.includes("viction")) {
-    //  setSelectedMint(victionData);
-    //  setMintTitle("viction");
+    if (location.pathname.includes("core")) {
+     setSelectedMint(coreData);
+     setMintTitle("core");
     } else
      if (location.pathname.includes("timepiece")) {
     setSelectedMint(timepieceData);
@@ -316,7 +316,7 @@ const MarketMint = ({
   }, []);
 
   let countToLiveConflux = new Date("2023-10-10T11:00:00.000+02:00");
-  let countToExpireConflux = new Date("2024-07-19T16:00:00.000+02:00");
+  let countToExpireConflux = new Date("2024-08-05T16:00:00.000+02:00");
 
   const dummyCards = [
     // {
@@ -393,14 +393,14 @@ const MarketMint = ({
     //   data: multiversData,
     //   class: "mint-multivers",
     // },
-    // {
-    //   title: "CORE Pass",
-    //   eventId: "core",
-    //   desc: "Gain entry to metaverse, and join exclusive CORE event with special ticket.",
-    //   img: coreActive,
-    //   data: coreData,
-    //   class: "mint-core",
-    // },
+    {
+      title: "CORE Pass",
+      eventId: "core",
+      desc: "Gain entry to metaverse, and join exclusive CORE event with special ticket.",
+      img: coreActive,
+      data: coreData,
+      class: "mint-core",
+    },
 
     // {
     //   title: "Viction Pass",
@@ -633,7 +633,6 @@ const MarketMint = ({
             setStatus("");
           }
         }
-        
         else if (selectedMint.id === "core") {
           if (chainId !== 1116) {
             setactiveButton(false);
@@ -2199,7 +2198,7 @@ const MarketMint = ({
                 //   </div>
                 // </div>
                 <div className="d-flex flex-column gap-4">
-                  <div className="upcoming-mint-wrapper upcoming-core-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  {/* <div className="upcoming-mint-wrapper upcoming-core-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">CORE Beta Pass</h6>
                       <p className="upcoming-mint-desc">
@@ -2217,7 +2216,7 @@ const MarketMint = ({
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div>
+                  </div> */}
                   <div className="upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">SEI Beta Pass</h6>
