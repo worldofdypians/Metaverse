@@ -334,6 +334,7 @@ const MarketMint = ({
 
   let countToLiveConflux = new Date("2023-10-10T11:00:00.000+02:00");
   let countToExpireConflux = new Date("2024-07-19T16:00:00.000+02:00");
+  let countToExpireOpbnb = new Date("2024-08-14T24:00:00.000+02:00");
 
   const dummyCards = [
     // {
@@ -419,14 +420,14 @@ const MarketMint = ({
     //   class: "mint-core",
     // },
 
-    {
-      title: "Viction Pass",
-      eventId: "viction",
-      desc: "Gain entry to metaverse, and join exclusive Viction event with special ticket.",
-      img: victionActive,
-      data: victionData,
-      class: "mint-viction",
-    },
+    // {
+    //   title: "Viction Pass",
+    //   eventId: "viction",
+    //   desc: "Gain entry to metaverse, and join exclusive Viction event with special ticket.",
+    //   img: victionActive,
+    //   data: victionData,
+    //   class: "mint-viction",
+    // },
 
     // {
     //   title: "SEI Pass",
@@ -1616,7 +1617,7 @@ const MarketMint = ({
                                   </span>
                                   <div className="d-flex align-items-center gap-2">
                                     <Countdown
-                                      date={countToExpireConflux}
+                                      date={countToExpireOpbnb}
                                       renderer={renderer2}
                                     />
                                   </div>
