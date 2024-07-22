@@ -1237,7 +1237,7 @@ const ProfileCard = ({
                 className={`bordereddiv border-0 ${
                   (email &&
                     coinbase &&
-                    username &&
+                    username && address &&
                     address.toLowerCase() !== coinbase.toLowerCase()) ||
                   (!coinbase && email) ||
                   (!coinbase && !email)
@@ -1255,7 +1255,7 @@ const ProfileCard = ({
                   {address &&
                     email &&
                     coinbase &&
-                    syncStatus !== "" &&
+                    syncStatus !== "" && address &&
                     address.toLowerCase() !== coinbase.toLowerCase() && (
                       <div className="sync-wrapper">
                         <div className="d-flex gap-2 align-items-center">

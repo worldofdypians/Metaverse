@@ -1290,9 +1290,9 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
-                  <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
+                  {/* <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
                     <NavLink
-                      to={"/marketplace/mint/viction"}
+                      to={"/marketplace/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5"
                     >
                       <div className="p-4 mint-wrappernew market-mint-viction w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
@@ -1309,7 +1309,7 @@ const Marketplace = ({
                   
                       </div>
                     </NavLink>
-                    <NavLink to="/marketplace/mint/viction">
+                    <NavLink to="/marketplace/mint/timepiece">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
@@ -1345,8 +1345,8 @@ const Marketplace = ({
                         Mint now <img src={greenArrow} alt="" />{" "}
                       </span>
                     </NavLink>
-                  </div>
-                  {/* <div className="d-flex flex-column gap-2 w-100">
+                  </div> */}
+                  <div className="d-flex flex-column gap-2 w-100">
                     <NavLink
                       to={"/marketplace/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5"
@@ -1393,7 +1393,7 @@ const Marketplace = ({
                         Mint now <img src={greenArrow} alt="" />{" "}
                       </span>
                     </NavLink>
-                  </div> */}
+                  </div>
                 </div>
                 <div className="w-100 d-flex flex-column gap-2">
                   <NavLink

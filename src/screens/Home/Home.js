@@ -155,11 +155,11 @@ const Home = ({
         id="popup"
         onOutsideClick={() => setActivePopup(false)}
       >
-        <MintPopup
+        {/* <MintPopup
           active={activePopup}
           data={victionPopupInfo}
           onClose={() => setActivePopup(false)}
-        />
+        /> */}
       </OutsideClickHandler>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex flex-column home-main-wrapper">
