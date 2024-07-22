@@ -4275,7 +4275,7 @@ function App() {
               }
             /> */}
 
-          {/* <Route
+          <Route
               exact
               path="/marketplace/mint/core"
               element={
@@ -4316,7 +4316,7 @@ function App() {
                   myVictionNfts={myVictionNfts}
                 />
               }
-            /> */}
+            />
           {/* <Route
               exact
               path="/marketplace/mint/sei"

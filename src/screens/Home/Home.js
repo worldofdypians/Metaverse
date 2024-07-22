@@ -35,7 +35,7 @@ import dogeTreasureHuntPopup from "../../components/TimepieceMint/assets/dogeTre
 import skalePopup from "../../components/TimepieceMint/assets/skalePopup.webp";
 
 import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreasureHunt.webp";
-import corePopupBg from "../../components/TimepieceMint/assets/corePopupImage.webp";
+import corePopupBg from "../../components/TimepieceMint/assets/corePopupBg.webp";
 import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
 import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
 import bnbPhase4 from "./WodBuilders/assets/bnbPhase4.png";
@@ -155,11 +155,11 @@ const Home = ({
         id="popup"
         onOutsideClick={() => setActivePopup(false)}
       >
-        {/* <MintPopup
+        <MintPopup
           active={activePopup}
-          data={victionPopupInfo}
+          data={corePopupInfo}
           onClose={() => setActivePopup(false)}
-        /> */}
+        />
       </OutsideClickHandler>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex flex-column home-main-wrapper">
