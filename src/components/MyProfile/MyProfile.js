@@ -17,6 +17,7 @@ import bnb from "./assets/bnb.svg";
 import whiteArrow from "./assets/whiteArrow.svg";
 import greenArrow from "./assets/greenArrow.svg";
 import redArrow from "./assets/redArrow.svg";
+import cyanArrow from "./assets/cyanArrow.svg";
 import pinkArrow from "./assets/pinkArrow.svg";
 import grayArrow from "./assets/grayArrow.svg";
 import dypius from "../../screens/Account/src/Components/WalletBalance/assets/dypIcon.svg";
@@ -50,33 +51,61 @@ import mageStarter from "../../screens/Account/src/Components/WalletBalance/asse
 import mageGoing from "../../screens/Account/src/Components/WalletBalance/assets/mageGoing.png";
 import mageFinish from "../../screens/Account/src/Components/WalletBalance/assets/mageFinish.png";
 import readyBorder from "../../screens/Account/src/Components/WalletBalance/newAssets/readyBorder2.svg";
-import stakeNft from './assets/stakeNft.png'
-
+import stakeNft from './assets/stakeNft.png';
+import myRewardsMiner from './assets/myRewardsMiner.png'
 import Countdown from "react-countdown";
+import treasureHuntInactive from './assets/treasureHuntInactive.png'
+import treasureHuntActive from './assets/treasureHuntActive.png'
+import dragonRuinsInactive from './assets/dragonRuinsInactive.png'
+import dragonRuinsActive from './assets/dragonRuinsActive.png'
+import goldenPassInactive from './assets/goldenPassInactive.png'
+import goldenPassActive from './assets/goldenPassActive.png'
+import dailyBonusInactive from './assets/dailyBonusInactive.png'
+import dailyBonusActive from './assets/dailyBonusActive.png'
+import scorpionKingInactive from './assets/scorpionKingInactive.png'
+import scorpionKingActive from './assets/scorpionKingActive.png'
+import criticalHitInactive from './assets/criticalHitInactive.png'
+import criticalHitActive from './assets/criticalHitActive.png'
+import puzzleMadnessInactive from './assets/puzzleMadnessInactive.png'
+import puzzleMadnessActive from './assets/puzzleMadnessActive.png'
+import mazeGardenInactive from './assets/mazeGardenInactive.png'
+import mazeGardenActive from './assets/mazeGardenActive.png'
+import premiumDummy from './assets/premiumDummy.png'
+import dummyDragon from './assets/dummyDragon.png'
+import dummyCaws from './assets/dummyCaws.png'
+import doneTag from './assets/doneTag.svg'
+import emptyTag from './assets/emptyTag.svg'
+import portfolio from './assets/portfolio.svg'
+import starterProfile from './assets/starterProfile.png'
+import rookieProfile from './assets/rookieProfile.png'
+import underdogProfile from './assets/underdogProfile.png'
+import championProfile from './assets/championProfile.png'
+import unstoppableProfile from './assets/unstoppableProfile.png'
+
 
 const renderer = ({ days, hours, minutes }) => {
   return (
     <>
       <div className="d-flex align-items-center gap-1">
         <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0">
+          <h6 className="profile-time-number mb-0" style={{fontSize: "10px"}}>
             {days < 10 ? "0" + days : days}
           </h6>
-          <span className="profile-time-desc mb-0">Days</span>
+          <span className="profile-time-desc mb-0" style={{fontSize: "8px"}}>Days</span>
         </div>
-        <h6 className="profile-time-number mb-0">:</h6>
+        <h6 className="profile-time-number mb-0" style={{fontSize: "10px"}}>:</h6>
         <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0">
+          <h6 className="profile-time-number mb-0" style={{fontSize: "10px"}}>
             {hours < 10 ? "0" + hours : hours}
           </h6>
-          <span className="profile-time-desc mb-0">Hours</span>
+          <span className="profile-time-desc mb-0" style={{fontSize: "8px"}}>Hours</span>
         </div>
-        <h6 className="profile-time-number mb-0">:</h6>
+        <h6 className="profile-time-number mb-0" style={{fontSize: "10px"}}>:</h6>
         <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0">
+          <h6 className="profile-time-number mb-0" style={{fontSize: "10px"}}>
             {minutes < 10 ? "0" + minutes : minutes}
           </h6>
-          <span className="profile-time-desc mb-0">Minutes</span>
+          <span className="profile-time-desc mb-0" style={{fontSize: "8px"}}>Minutes</span>
         </div>
       </div>
     </>
@@ -113,6 +142,7 @@ const MyProfile = ({
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+
 
 
   const totalClaimedChests =
@@ -561,20 +591,29 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
 
   return (
     <div className="custom-container mt-5">
-      <div className="row">
+      <div className="row mt-4 mt-lg-0">
         <div className="col-12 col-lg-4">
           <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
             <div className="d-flex align-items-center gap-2">
-              <img src={profileImage} alt="" />
-              <div className="d-flex flex-column">
+              <div className="position-relative" style={{cursor: "pointer"}}>
+              <img className="new-profile-img" src={starterProfile} alt="" />
+                <div className="score-text-wrapper d-flex flex-column align-items-center">
+                  <h6 className="mb-0">
+                    79,000,000
+                  </h6>
+                  <span>Score</span>
+                </div>
+              </div>
+              <div className="d-flex flex-column gap-2">
                 <div className="d-flex align-items-center gap-2">
-                  <h6 className="my-profile-username">DarkSliffer</h6>
-                  <img src={premiumTab} alt="" />
+                  <h6 className="my-profile-username mb-0">DarkSliffer</h6>
+                  <span className="current-rank-text">Unstoppable</span>
                 </div>
                 <span className="my-profile-email mb-2">
                   dypiustesting@gmail.com
                 </span>
-                <div className="wallet-address-wrapper d-flex align-items-center justify-content-between p-2">
+              <div className="d-flex flex-column flex-lg-row align-items-center gap-2">
+              <div className="wallet-address-wrapper d-flex align-items-center justify-content-between gap-4 p-2">
                   <div className="d-flex flex-column">
                     <span className="profile-wallet-span mb-2">
                       Wallet Address
@@ -583,52 +622,77 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                   </div>
                   <img src={domainIcon} width={30} height={30} alt="" />
                 </div>
+                <div className="portfolio-wrapper d-flex align-items-center gap-2 p-2">
+                  <img src={portfolio} width={25} height={25} alt="" />
+                  <h6 className="mb-0">My Portfolio</h6>
+                </div>
+              </div>
               </div>
             </div>
             <hr className="sidebar-separator my-2" />
-            <div className="d-flex align-items-center justify-content-between w-100">
-              <div className="rank-card-wrapper d-flex align-items-center justify-content-center p-3">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <img src={totalEarningsIcon} alt="" />
-                  <span className="rank-card-span">Total Earnings</span>
-                  <span className="rank-card-value">$5,325</span>
-                </div>
+            <div className="daily-progress-wrapper p-3 d-flex flex-column gap-3">
+              <div className="d-flex align-items-center justify-content-between">
+                <div className="progress-line"></div>
+                <span className="daily-progress-span">Daily Progress</span>
+                <div className="progress-line-2"></div>
               </div>
-              <div className="rank-card-wrapper d-flex align-items-center justify-content-center p-3">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <img src={globalRankIcon} alt="" />
-                  <span className="rank-card-span">Global Rank</span>
-                  <span className="rank-card-value">#4</span>
+              <div className="daily-progress-grid">
+              <div className="daily-progress-item position-relative">
+                  <img src={goldenPassActive} alt="" />
+                  <div className="daily-progress-value-golden">
+                      <span>25d:12h</span>
+                  </div>
+                    <img src={doneTag} alt="" className="daily-progress-status" />
                 </div>
-              </div>
-              <div className="rank-card-wrapper d-flex align-items-center justify-content-center p-3">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <img src={myRankIcon} alt="" />
-                  <span className="rank-card-span">My Rank</span>
-                  <span className="rank-card-value">Unstoppable</span>
+                <div className="daily-progress-item position-relative">
+                  <img src={treasureHuntActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>4</span>
+                  </div>
+                    <img src={doneTag} alt="" className="daily-progress-status" />
                 </div>
-              </div>
-            </div>
-            <div className="d-flex align-items-center justify-content-between w-100">
-              <div className="rank-card-wrapper d-flex align-items-center justify-content-center p-3">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <img src={totalEarningsIcon} alt="" />
-                  <span className="rank-card-span">Total Earnings</span>
-                  <span className="rank-card-value">$5,325</span>
+                <div className="daily-progress-item position-relative">
+                  <img src={dragonRuinsActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>22</span>
+                  </div>
+                    <img src={doneTag} alt="" className="daily-progress-status" />
                 </div>
-              </div>
-              <div className="rank-card-wrapper d-flex align-items-center justify-content-center p-3">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <img src={globalRankIcon} alt="" />
-                  <span className="rank-card-span">Global Rank</span>
-                  <span className="rank-card-value">#4</span>
+                <div className="daily-progress-item position-relative">
+                  <img src={scorpionKingInactive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>0</span>
+                  </div>
+                    <img src={emptyTag} alt="" className="daily-progress-status" />
                 </div>
-              </div>
-              <div className="rank-card-wrapper d-flex align-items-center justify-content-center p-3">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <img src={myRankIcon} alt="" />
-                  <span className="rank-card-span">My Rank</span>
-                  <span className="rank-card-value">Unstoppable</span>
+                <div className="daily-progress-item position-relative">
+                  <img src={puzzleMadnessActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>13</span>
+                  </div>
+                    <img src={doneTag} alt="" className="daily-progress-status" />
+                </div>
+               
+                <div className="daily-progress-item position-relative">
+                  <img src={dailyBonusActive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>54</span>
+                  </div>
+                    <img src={doneTag} alt="" className="daily-progress-status" />
+                </div>
+                <div className="daily-progress-item position-relative">
+                  <img src={criticalHitInactive} alt="" />
+                  <div className="daily-progress-value">
+                      <span>0</span>
+                  </div>
+                    <img src={emptyTag} alt="" className="daily-progress-status" />
+                </div>
+                <div className="daily-progress-item position-relative">
+                  <img src={mazeGardenInactive} alt="" />
+                  <div className="daily-progress-value-golden">
+                      <span>Sunday</span>
+                  </div>
+                    <img src={emptyTag} alt="" className="daily-progress-status" />
                 </div>
               </div>
             </div>
@@ -644,7 +708,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                   <img src={redArrow} alt="" />
                 </div>
               </div> */}
-               <div className="daily-bonus-wrapper">
+               <div className="daily-bonus-wrapper mt-4 mb-5 mt-lg-0 mb-lg-0">
                   <div className="red-div"></div>
                   <img
                     // src={finished ? mageFinish : mageGoing}
@@ -680,7 +744,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                       className="d-flex align-items-center justify-content-between position-relative gap-1"
                       style={{ width: "fit-content" }}
                     >
-                      <div className="d-flex flex-column">
+                      <div className="d-flex align-items-center gap-2">
                       <h6 className="leaderboards-title mb-0">Daily</h6>
                       <h6 className="leaderboards-title mb-0" style={{color: "#FF5EA0"}}>Bonus</h6>
                       </div>
@@ -721,8 +785,8 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                 </div>
             </div>
             <div className="col-12 col-lg-8">
-              <div className="game-leaderboards-wrapper position-relative h-100 d-flex align-items-center justify-content-between p-3">
-                <div className="d-flex flex-column">
+              <div className="game-leaderboards-wrapper position-relative h-100 d-flex align-items-end  align-items-lg-center justify-content-center justify-content-lg-between p-3">
+                <div className="d-flex flex-row flex-lg-column gap-2 gap-lg-0">
                   <h6 className="leaderboards-title">Game</h6>
                   <h6
                     className="leaderboards-title mb-0"
@@ -757,10 +821,21 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
               </div>
             </div>
             <div className="col-12 col-lg-6 mt-3">
-              <div className="profile-placeholder"></div>
+              <div className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3">
+                <img src={myRewardsMiner} className="miner-img" alt="" />
+                <div className="d-flex align-items-center gap-2">
+              <h6 className="special-rewards-title" style={{color: "#FFF", width: "fit-content"}}>My</h6>
+              <h6 className="special-rewards-title" style={{color: "#35F3FF", width: "fit-content"}}>Rewards</h6>
+                </div>
+                <div className="d-flex flex-column">
+                  <h6 className="special-rewards-total mb-0" style={{color: "#FFE8D2"}}>$450.24</h6>
+                  <span className="special-rewards-total-span" style={{color: "#FFE8D2"}}>Rewards</span>
+                </div>
+                  <img src={cyanArrow} width={20} height={20} alt="" />
+              </div>
             </div>
             <div className="col-12 col-lg-6 mt-3">
-                 <div className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-3 p-3">
+                 <div className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-2 p-3">
                 <h6 className="special-rewards-title">Special Rewards</h6>
                 <div className="d-flex flex-column">
                   <h6 className="special-rewards-total mb-0">$450.24</h6>
@@ -770,12 +845,59 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
               </div>
             </div>
             <div className="col-12 col-lg-8 mt-3">
-            <div className="limited-offers-wrapper d-flex flex-column justify-content-between gap-3 p-3">
-              <div className="d-flex align-items-center gap-2">
+            <div className="limited-offers-wrapper  d-flex align-items-center justify-content-between gap-3 p-3">
+              <div className="d-flex flex-column gap-2">
                 <h6 className="leaderboards-title mb-0">Limited</h6>
-                <h6 className="leaderboards-title mb-0" style={{color: "#00E3BA"}}>Offers</h6>
+                <h6 className="leaderboards-title mb-0" style={{color: "#00B6FF"}}>Offers</h6>
               </div>
-              <img src={greenArrow} height={20} width={20} alt="" />
+              <div className="d-flex align-items-center justify-content-between gap-4" style={{height: "140px"}}>
+                <div className="limited-offer-card d-flex flex-column justify-content-between">
+                  <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                    <span className="limited-offer-reward">Extra</span>
+                    <span className="limited-offer-reward" style={{color: "#F3C009"}}>200 Stars</span>
+                  </div>
+                    <div className="d-flex flex-column">
+                    <img src={premiumDummy} className="limited-offer-img" alt="" />
+                  <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1" style={{background: "#061F33"}}>
+                    <span className="limited-offer-purchase">Get Premium</span>
+                  </div>
+                    </div>
+                    <div className="d-flex w-100 justify-content-center">
+                    <Countdown renderer={renderer} date={bnbLastDay} />
+                    </div>
+                </div>
+                <div className="limited-offer-card d-flex flex-column justify-content-between">
+                  <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                    <span className="limited-offer-reward">Extra</span>
+                    <span className="limited-offer-reward" style={{color: "#F3C009"}}>700 Stars</span>
+                  </div>
+                    <div className="d-flex flex-column">
+                    <img src={dummyDragon} className="limited-offer-img" alt="" />
+                  <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1" style={{background: "#061F33"}}>
+                    <span className="limited-offer-purchase">Get Dragon Ruins</span>
+                  </div>
+                    </div>
+                    <div className="d-flex w-100 justify-content-center">
+                    <Countdown renderer={renderer} date={bnbLastDay} />
+                    </div>
+                </div>
+                <div className="limited-offer-card d-flex flex-column justify-content-between">
+                  <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                    <span className="limited-offer-reward">Extra</span>
+                    <span className="limited-offer-reward" style={{color: "#F3C009"}}>1,200 Stars</span>
+                  </div>
+                    <div className="d-flex flex-column">
+                    <img src={dummyCaws} className="limited-offer-img" alt="" />
+                  <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1" style={{background: "#061F33"}}>
+                    <span className="limited-offer-purchase">Get CAWS</span>
+                  </div>
+                    </div>
+                    <div className="d-flex w-100 justify-content-center">
+                    <Countdown renderer={renderer} date={bnbLastDay} />
+                    </div>
+                </div>
+            
+              </div>
             </div>
             </div>
             <div className="col-12 col-lg-4 mt-3">

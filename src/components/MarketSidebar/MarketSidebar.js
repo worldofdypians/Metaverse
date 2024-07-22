@@ -182,7 +182,7 @@ const MarketSidebar = () => {
             </div>
           </div>
 
-          <NavLink
+          {/* <NavLink
             to="/marketplace/events/treasure-hunt"
             end
             className={({ isActive }) =>
@@ -211,7 +211,7 @@ const MarketSidebar = () => {
                 </>
               );
             }}
-          />
+          /> */}
           <NavLink
             to="/marketplace/stake"
             end

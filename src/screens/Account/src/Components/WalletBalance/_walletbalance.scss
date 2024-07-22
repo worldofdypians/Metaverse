@@ -2080,8 +2080,8 @@ background: #121235;
 
 .daily-rewards-img {
   position: absolute;
-  width: 85%;
-  right: -20%;
+  width: 70%;
+  right: -15%;
   bottom: -9%;
   z-index: 1;
   pointer-events: none;
@@ -2156,7 +2156,7 @@ background: #121235;
 
 .daily-bonus-wrapper {
   position: relative;
-  height: 170px;
+  height: 140px;
   background: linear-gradient(125deg, #252743 -13.33%, #5f214e 70.47%);
 
   border-radius: 10px;
@@ -2164,6 +2164,9 @@ background: #121235;
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
   cursor: pointer;
+  @media screen and (max-width: 786px) {
+    height: 170px;
+  }
 }
 
 .daily-bonus-wrapper:hover {

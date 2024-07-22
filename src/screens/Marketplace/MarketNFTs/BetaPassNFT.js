@@ -822,7 +822,7 @@ const BetaPassNFT = ({
             className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative flex-column"
             style={{ backgroundSize: "cover" }}
           >
-            <div className="container-lg mx-0 position-relative">
+            <div className="custom-container mx-0 position-relative">
               <div
                 className="row align-items-center justify-content-between mt-4 mb-5 gap-4 gap-lg-0"
                 style={{ minHeight: "232px" }}

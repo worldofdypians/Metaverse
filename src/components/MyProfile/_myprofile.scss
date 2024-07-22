@@ -22,6 +22,15 @@
   line-height: 10px; /* 100% */
 }
 
+.current-rank-text {
+  color: #ffd37e;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
 .wallet-address-wrapper {
   border-radius: 4px;
   background: rgba(128, 32, 96, 0.2);
@@ -110,8 +119,12 @@
   background-image: url(./assets/specialRewardsBg.png);
   border-radius: 10px;
   background-size: 100% 100%;
-  height: 100%;
+  height: 140px;
   cursor: pointer;
+
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
 }
 
 .special-rewards-title {
@@ -138,6 +151,9 @@
   background-image: url(./assets/leaderboardsBg.png);
   background-size: 100% 100%;
   border-radius: 10px;
+  @media screen and (max-width: 786px) {
+    height: 170px !important;
+  }
 }
 
 .leaderboards-title {
@@ -155,6 +171,11 @@
   right: 5%;
   top: -27px;
   width: 60%;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+    top: -24px;
+    right: 0px;
+  }
 }
 
 .new-flag-wrapper {
@@ -261,12 +282,15 @@
 .profile-placeholder {
   border-radius: 10px;
   background: #18193c;
-  height: 170px;
+  height: 140px;
   width: 100%;
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
 }
 
-.special-rewards-total{
-  color: #3B5896;
+.special-rewards-total {
+  color: #3b5896;
   font-family: "Montserrat";
   font-size: 18px;
   font-style: normal;
@@ -274,8 +298,8 @@
   line-height: normal;
 }
 
-.special-rewards-total-span{
-  color: #3B5896;
+.special-rewards-total-span {
+  color: #3b5896;
   font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
@@ -283,19 +307,223 @@
   line-height: normal;
 }
 
-
-.limited-offers-wrapper{
+.limited-offers-wrapper {
   border-radius: 10px;
-background: radial-gradient(358.71% 141.42% at 100% 100%, #7F2B8A 0%, #1F1B62 100%);
-height: 170px;
+  background: radial-gradient(
+    358.71% 141.42% at 100% 100%,
+    #092e4b 0%,
+    #18193c 100%
+  );
+
+  height: 160px;
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
 }
 
-.new-stake-nft-wrapper{
-  height: 170px;
+.new-stake-nft-wrapper {
+  height: 160px;
   border-radius: 10px;
-background: radial-gradient(490.81% 196.97% at 100% 100%, #482193 25.5%, #7856C5 100%);
+  background: radial-gradient(
+    490.81% 196.97% at 100% 100%,
+    #482193 25.5%,
+    #7856c5 100%
+  );
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
 }
 
-.new-stake-nft-img{
-  width: 65%;
+.new-stake-nft-img {
+  width: 55%;
+}
+
+.my-rewards-wrapper-new {
+  border-radius: 10px;
+  background-image: url(./assets/myRewards.png);
+  background-size: 100% 100%;
+  height: 140px;
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
+}
+
+.miner-img {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  width: 25%;
+}
+
+.daily-progress-wrapper {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.progress-line {
+  stroke-width: 0.5px;
+  stroke: rgba(255, 211, 126, 0);
+}
+.progress-line-2 {
+  stroke-width: 0.5px;
+  stroke: rgba(255, 211, 126, 0);
+}
+
+.daily-progress-span {
+  color: #ffd37e;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 240% */
+  text-transform: uppercase;
+}
+
+.daily-progress-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.daily-progress-item {
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.daily-progress-value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f1118;
+  border: 1px solid #c09645;
+  border-radius: 4px;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  span {
+    color: #ffd37e;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+  }
+}
+.daily-progress-value-golden {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f1118;
+  border: 1px solid #c09645;
+  border-radius: 4px;
+  height: 25px;
+  width: fit-content;
+  margin: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: -10px;
+  span {
+    color: #ffd37e;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+  }
+}
+
+.daily-progress-status {
+  position: absolute;
+  width: 55px !important;
+  bottom: -45%;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.portfolio-wrapper {
+  border-radius: 8px;
+  border: 0.5px solid #c23f62;
+  background: rgba(128, 32, 96, 0.2);
+  cursor: pointer;
+  h6 {
+    color: #eeedff;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 10px; /* 100% */
+  }
+}
+
+.new-profile-img {
+  width: 100px;
+}
+
+.score-text-wrapper {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  h6 {
+    color: #ffd37e;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%; /* 10px */
+  }
+
+  span {
+    color: #bea5a9;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%; /* 8px */
+    text-transform: uppercase;
+  }
+}
+
+.limited-offer-card {
+  background: #092e4b;
+  height: 160px;
+  width: 120px;
+  transform: matrix(1, 0, -0.18, 0.98, 0, 0);
+  border-left: 2px solid #015f86;
+  border-bottom: 2px solid #015f86;
+}
+
+.limited-offer-reward {
+  color: #daf3ff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 11px;
+  font-weight: 900;
+  line-height: normal;
+}
+
+.limited-offer-img {
+  width: 120px;
+  height: 80px;
+}
+
+.limited-offer-purchase {
+  color: #f7f7ff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-weight: 600;
+  line-height: normal;
 }
