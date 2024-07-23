@@ -191,13 +191,13 @@ const MarketMint = ({
     mobileBg: "seiMobileBg.webp",
   };
 
-  const victionData = {
-    id: "viction",
-    cardTitle: "Viction Beta Pass",
-    title: "Viction Beta Pass",
-    background: "viction-mint-bg",
-    mobileBg: "victionMobileBg.webp",
-  };
+  // const victionData = {
+  //   id: "viction",
+  //   cardTitle: "Viction Beta Pass",
+  //   title: "Viction Beta Pass",
+  //   background: "viction-mint-bg",
+  //   mobileBg: "victionMobileBg.webp",
+  // };
 
   const bnbData = {
     id: "bnb",
@@ -241,8 +241,8 @@ const MarketMint = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(victionData);
-  const [mintTitle, setMintTitle] = useState("timepiece");
+  const [selectedMint, setSelectedMint] = useState(coreData);
+  const [mintTitle, setMintTitle] = useState("core");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -318,7 +318,10 @@ const MarketMint = ({
     ) {
       setSelectedMint(bnbData);
       setMintTitle("bnbchain");
-    } else if (location.pathname.includes("opbnbchain")) {
+    } else  if (location.pathname.includes("core")) {
+      setSelectedMint(coreData);
+      setMintTitle("core");
+     }  else if (location.pathname.includes("opbnbchain")) {
       setSelectedMint(opbnbData);
       setMintTitle("opbnbchain");
     } else if (location.pathname.includes("timepiece")) {
@@ -327,13 +330,13 @@ const MarketMint = ({
     }
     getTotalSupply();
   }, [location]);
-  console.log(selectedMint);
+ 
   useEffect(() => {
     html.classList.remove("hidescroll");
   }, []);
 
   let countToLiveConflux = new Date("2023-10-10T11:00:00.000+02:00");
-  let countToExpireConflux = new Date("2024-07-19T16:00:00.000+02:00");
+  let countToExpireConflux = new Date("2024-08-05T16:00:00.000+02:00");
   let countToExpireOpbnb = new Date("2024-08-14T24:00:00.000+02:00");
 
   const dummyCards = [
@@ -411,14 +414,14 @@ const MarketMint = ({
     //   data: multiversData,
     //   class: "mint-multivers",
     // },
-    // {
-    //   title: "CORE Pass",
-    //   eventId: "core",
-    //   desc: "Gain entry to metaverse, and join exclusive CORE event with special ticket.",
-    //   img: coreActive,
-    //   data: coreData,
-    //   class: "mint-core",
-    // },
+    {
+      title: "CORE Pass",
+      eventId: "core",
+      desc: "Gain entry to metaverse, and join exclusive CORE event with special ticket.",
+      img: coreActive,
+      data: coreData,
+      class: "mint-core",
+    },
 
     // {
     //   title: "Viction Pass",
@@ -793,43 +796,45 @@ const MarketMint = ({
 
               {activeTab === "live" && (
                 <>
+                  {dummyCards.length > 1 &&
                   <div className="pb-5 px-0 position-relative">
-                    {activeSlide > 0 && (
-                      <div className="prev-arrow-nft" onClick={firstPrev}>
-                        <img src={nextArrow} alt="" />
-                      </div>
-                    )}
-                    {showFirstNext === activeSlide
-                      ? null
-                      : dummyCards.length > sliderCut && (
-                          <div className="next-arrow-nft" onClick={firstNext}>
-                            <img src={nextArrow} alt="1" />
-                          </div>
-                        )}
-                    {windowSize.width < 480 && (
-                      <>
-                        <div className="prev-arrow-nft" onClick={firstPrev}>
-                          <img src={nextArrow} alt="" />
-                        </div>
+                  {activeSlide > 0 && (
+                    <div className="prev-arrow-nft" onClick={firstPrev}>
+                      <img src={nextArrow} alt="" />
+                    </div>
+                  )}
+                  {showFirstNext === activeSlide
+                    ? null
+                    : dummyCards.length > sliderCut && (
                         <div className="next-arrow-nft" onClick={firstNext}>
                           <img src={nextArrow} alt="1" />
                         </div>
-                      </>
-                    )}
-                    <Slider ref={(c) => (slider.current = c)} {...settings}>
-                      {dummyCards.map((item, index) => (
-                        <EventSliderCard
-                          key={index}
-                          data={item}
-                          onSelectCard={() => {
-                            setSelectedMint(item.data);
-                            setMintTitle(item.eventId);
-                          }}
-                          mintTitle={mintTitle}
-                        />
-                      ))}
-                    </Slider>
-                  </div>
+                      )}
+                  {windowSize.width < 480 && (
+                    <>
+                      <div className="prev-arrow-nft" onClick={firstPrev}>
+                        <img src={nextArrow} alt="" />
+                      </div>
+                      <div className="next-arrow-nft" onClick={firstNext}>
+                        <img src={nextArrow} alt="1" />
+                      </div>
+                    </>
+                  )}
+                  <Slider ref={(c) => (slider.current = c)} {...settings}>
+                    {dummyCards.map((item, index) => (
+                      <EventSliderCard
+                        key={index}
+                        data={item}
+                        onSelectCard={() => {
+                          setSelectedMint(item.data);
+                          setMintTitle(item.eventId);
+                        }}
+                        mintTitle={mintTitle}
+                      />
+                    ))}
+                  </Slider>
+                </div>
+                  }
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -1617,7 +1622,7 @@ const MarketMint = ({
                                   </span>
                                   <div className="d-flex align-items-center gap-2">
                                     <Countdown
-                                      date={countToExpireOpbnb}
+                                      date={ mintTitle === 'core' ? countToExpireConflux : countToExpireOpbnb}
                                       renderer={renderer2}
                                     />
                                   </div>
@@ -2383,7 +2388,7 @@ const MarketMint = ({
                 //   </div>
                 // </div>
                 <div className="d-flex flex-column gap-4">
-                  <div className="upcoming-mint-wrapper upcoming-core-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  {/* <div className="upcoming-mint-wrapper upcoming-core-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">CORE Beta Pass</h6>
                       <p className="upcoming-mint-desc">
@@ -2401,7 +2406,7 @@ const MarketMint = ({
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div>
+                  </div> */}
                   <div className="upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">SEI Beta Pass</h6>
@@ -2582,7 +2587,7 @@ const MarketMint = ({
                       <div className="sold-out-tag px-3 py-1">
                         <span className="sold-out-span">Sold Out</span>
                       </div>
-                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper">
                         <h6 className="past-mint-title">Conflux Beta Pass</h6>
                         <div className="d-flex flex-column align-items-center rotatewrapper">
                           <h6 className="past-conflux-mint-amount">
@@ -2639,6 +2644,22 @@ const MarketMint = ({
                         <div className="d-flex flex-column align-items-center rotatewrapper">
                           <h6 className="past-bnb-mint-amount">
                             {getFormattedNumber(bnbNftsSold, 0)}
+                          </h6>
+                          <span className="past-bnb-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-viction-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">VICTION Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-bnb-mint-amount" style={{color: "#901C77"}}>
+                            13,219
                           </h6>
                           <span className="past-bnb-mint-desc">SOLD OUT</span>
                         </div>

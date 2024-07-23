@@ -363,6 +363,8 @@ const NewDailyBonus = ({
   const [landNfts, setLandNfts] = useState([]);
   const [isActive, setIsActive] = useState();
   const [isActiveIndex, setIsActiveIndex] = useState();
+  const [countListedNfts, setcountListedNfts] = useState(0);
+
   const [totalPoints, settotalPoints] = useState(0);
   const [totalUsd, settotalUsd] = useState(0);
   const [nft, setNft] = useState({});
@@ -1543,8 +1545,8 @@ const NewDailyBonus = ({
   useEffect(() => {
     filterCawsNfts();
     filterLandNfts();
-  }, [listedNFTS]);
-
+  }, [listedNFTS,countListedNfts]);
+ 
   useEffect(() => {
     if (chain === "bnb") {
       if (email && coinbase && address) {
@@ -5273,6 +5275,9 @@ const NewDailyBonus = ({
           onSuccessPurchase={() => {
             onSkaleChestClaimed();
             onChestClaimed();
+            onVictionChestClaimed();
+            onCoreChestClaimed();
+            setcountListedNfts(countListedNfts)
             // setBuyNftPopup(false);
             setTimeout(() => {
               chain === "bnb"
