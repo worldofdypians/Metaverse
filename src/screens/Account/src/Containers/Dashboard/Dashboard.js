@@ -327,6 +327,8 @@ function Dashboard({
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
   const [MyNFTSBNB, setMyNFTSBNB] = useState([]);
+  const [MyNFTSopBNB, setMyNFTSopBNB] = useState([]);
+
 
   const [MyNFTSLandBNB, setMyNFTSLandBNB] = useState([]);
   const [MyNFTSCawsBNB, setMyNFTSCawsBNB] = useState([]);
@@ -347,6 +349,8 @@ function Dashboard({
   const [myCoreNfts, setmyCoreNfts] = useState([]);
   const [myVictionNfts, setmyVictionNfts] = useState([]);
   const [myMultiversNfts, setmyMultiversNfts] = useState([]);
+  const [myImmutableNfts, setmyImmutableNfts] = useState([]);
+
 
   const [latestVersion, setLatestVersion] = useState(0);
 
@@ -3235,7 +3239,7 @@ function Dashboard({
   const handleFirstTask = async (wallet) => {
     const result2 = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task7/${wallet}`
+        `https://api.worldofdypians.com/api/olympiad/task1/${wallet}`
       )
       .catch((e) => {
         console.error(e);
@@ -3272,7 +3276,7 @@ function Dashboard({
         onSubscribeSuccess(account);
 
         if (isonlink) {
-          // handleFirstTask(account);
+          handleFirstTask(account);
         }
       });
     } catch (error) {
@@ -3968,6 +3972,11 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "bnb").then((NFTS) =>
       setMyNFTSBNB(NFTS)
     );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "opbnb").then((NFTS) =>
+      setMyNFTSopBNB(NFTS)
+    );
+
     // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
     //   (NFTS) => setMyNFTSLandBNB(NFTS)
     // );
@@ -4003,6 +4012,9 @@ function Dashboard({
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "viction").then(
       (NFTS) => setmyVictionNfts(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "immutable").then(
+      (NFTS) => setmyImmutableNfts(NFTS)
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "multivers").then(
@@ -5791,6 +5803,8 @@ function Dashboard({
                               myCmcNfts={myCmcNfts}
                               myCoreNfts={myCoreNfts}
                               myVictionNfts={myVictionNfts}
+                              myImmutableNfts={myImmutableNfts}
+
                               myMultiversNfts={myMultiversNfts}
                               mySkaleNfts={mySkaleNfts}
                               latestBoughtNFTS={latest20BoughtNFTS}
@@ -5960,6 +5974,144 @@ function Dashboard({
                         multiversEarnToken={multiversEarnToken}
                         multiversEarnUsd={multiversEarnUsd}
                       />
+                    </div>
+                    <WalletBalance
+                      ethTokenData={ethTokenData}
+                      dypTokenData={dypTokenData}
+                      onOpenNfts={onOpenNfts}
+                      listedNFTS={listedNFTS}
+                      myBoughtNfts={myBoughtNfts}
+                      address={data?.getPlayer?.wallet?.publicAddress}
+                      coinbase={account}
+                      isVerified={data?.getPlayer?.wallet}
+                      favoritesArray={favorites}
+                      dypBalance={dypBalance}
+                      dypBalancebnb={dypBalancebnb}
+                      dypBalanceavax={dypBalanceavax}
+                      idypBalance={idypBalance}
+                      idypBalancebnb={idypBalancebnb}
+                      idypBalanceavax={idypBalanceavax}
+                      showNfts={showNfts}
+                      handleShowWalletPopup={() => {
+                        setshowWalletModal(true);
+                      }}
+                      email={email}
+                      userId={data?.getPlayer?.playerId}
+                      username={data?.getPlayer?.displayName}
+                      myCawsCollected={MyNFTSCaws}
+                      myCawsOldCollected={MyNFTSCawsOld}
+                      myLandCollected={MyNFTSLand}
+                      myNFTSBNB={MyNFTSBNB}
+                      myNFTSopBNB={MyNFTSopBNB}
+                      myTimepieceCollected={MyNFTSTimepiece}
+                      landStaked={landstakes}
+                      myCawsWodStakes={myCawsWodStakesAll}
+                      myWodWodStakes={myWodWodStakesAll}
+                      myNFTSCoingecko={MyNFTSCoingecko}
+                      myGateNfts={myGateNfts}
+                      myConfluxNfts={myConfluxNfts}
+                      myBaseNfts={myBaseNfts}
+                      myDogeNfts={myDogeNfts}
+                      myCmcNfts={myCmcNfts}
+                      myCoreNfts={myCoreNfts}
+                      myVictionNfts={myVictionNfts}
+                      mySkaleNfts={mySkaleNfts}
+                      latestBoughtNFTS={latest20BoughtNFTS}
+                      myOffers={myOffers}
+                      allActiveOffers={allActiveOffers}
+                      latestVersion={latestVersion}
+                      MyNFTSLandBNB={MyNFTSLandBNB}
+                      MyNFTSCawsBNB={MyNFTSCawsBNB}
+                      MyNFTSLandAvax={MyNFTSLandAvax}
+                      MyNFTSCawsAvax={MyNFTSCawsAvax}
+                      MyNFTSLandBase={MyNFTSLandBase}
+                      MyNFTSCawsBase={MyNFTSCawsBase}
+                      myImmutableNfts={myImmutableNfts}
+                      myMultiversNfts={myMultiversNfts}
+                    />
+                    {/* <div className="d-flex flex-column align-items-center w-100">
+                <div className="d-flex flex-column gap-2 w-100 mb-4">
+                  <h2
+                    className={`font-organetto d-flex flex-column flex-xl-row gap-1 align-items-center m-0 bundleTitle`}
+                  >
+                    Premium
+                    <mark className={`font-organetto bundletag`}>events</mark>
+                  </h2>
+              
+                </div>
+                <div className="d-flex align-items-start align-items-lg-center gap-2 gap-lg-2 w-100 justify-content-start">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <div
+                      className={`premium-package dyp-package ${
+                        selectedPackage === "dyp" && "selected-premium"
+                      } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
+                      onClick={() => setSelectedPackage("dyp")}
+                    >
+                      <img
+                        src={dypius}
+                        width={40}
+                        height={40}
+                        alt="premium package icon"
+                        className="premium-package-icon"
+                      />
+                    </div>
+                    <h6
+                      className="bundleTitle mb-0 fw-normal text-center"
+                      style={{ fontSize: "14px", fontFamily: "Poppins" }}
+                    >
+                      Golden Pass
+                    </h6>
+                  </div>
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <div
+                      className={`premium-package ${classes.idypicon} ${
+                        selectedPackage === "idyp" && "selected-premium"
+                      } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
+                      onClick={() => setSelectedPackage("idyp")}
+                    ></div>
+                    <h6
+                      className="bundleTitle mb-0 fw-normal text-center"
+                      style={{ fontSize: "14px", fontFamily: "Poppins" }}
+                    >
+                      Puzzle Madness
+                    </h6>
+                  </div>
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <div
+                      className={`premium-package dragon-package ${
+                        selectedPackage === "dragon" && "selected-premium"
+                      } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
+                      onClick={() => setSelectedPackage("dragon")}
+                    >
+                      <img
+                        src={dragonIcon}
+                        width={40}
+                        height={40}
+                        alt="premium package icon"
+                        className="premium-package-icon"
+                      />
+                    </div>
+                    <h6
+                      className="bundleTitle mb-0 fw-normal text-center"
+                      style={{ fontSize: "14px", fontFamily: "Poppins" }}
+                    >
+                      Dragon Ruins
+                    </h6>
+                  </div>
+
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <div
+                      className={`premium-package criticalhit-package ${
+                        selectedPackage === "criticalHit" && "selected-premium"
+                      } p-3 gap-3 d-flex flex-column align-items-center justify-content-center`}
+                      onClick={() => setSelectedPackage("criticalHit")}
+                    >
+                      <img
+                        src={dypius}
+                        width={40}
+                        height={40}
+                        alt="premium package icon"
+                        className="premium-package-icon"
                       <WalletBalance
                         ethTokenData={ethTokenData}
                         dypTokenData={dypTokenData}
@@ -5998,6 +6150,7 @@ function Dashboard({
                         myCmcNfts={myCmcNfts}
                         myCoreNfts={myCoreNfts}
                         myVictionNfts={myVictionNfts}
+                        myImmutableNfts={myImmutableNfts}
                         myMultiversNfts={myMultiversNfts}
                         mySkaleNfts={mySkaleNfts}
                         latestBoughtNFTS={latest20BoughtNFTS}
@@ -6012,6 +6165,37 @@ function Dashboard({
                         MyNFTSCawsBase={MyNFTSCawsBase}
                       />
                     </div>
+                    <h6
+                      className="bundleTitle mb-0 fw-normal text-center"
+                      style={{ fontSize: "14px", fontFamily: "Poppins" }}
+                    >
+                      Critical Hit
+                    </h6>
+                  </div>
+                </div>
+                <BundleCard
+                  coinbase={account}
+                  wallet={data?.getPlayer?.wallet?.publicAddress}
+                  chainId={chainId}
+                  username={data?.getPlayer?.displayName}
+                  email={email}
+                  getDypBalance={getDypBalance}
+                  getiDypBalance={getDypBalance}
+                  packageData={
+                    selectedPackage === "dragon"
+                      ? dragonData
+                      : selectedPackage === "dyp"
+                      ? dypPackageData
+                      : selectedPackage === "criticalHit"
+                      ? criticalHitPackageData
+                      : iDypPackageData
+                  }
+                  handleSetAvailableTime={(value) => {
+                    setAvailableTime(value);
+                  }}
+                  availableTime={availableTime}
+                />
+              </div> */}
 
                     {leaderboard && (
                       <OutsideClickHandler

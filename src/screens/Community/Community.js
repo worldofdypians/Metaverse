@@ -45,6 +45,7 @@ import victionLogo from "../Home/VideoWrapper/assets/victionLogo.svg";
 import victionBg from "../Home/VideoWrapper/assets/victionBg.webp";
 import coreLogo from "../Home/VideoWrapper/assets/coreLogo.svg";
 import coreBg from "../Home/VideoWrapper/assets/coreBg.webp";
+import opbnbCampaign from './assets/opbnbCampaign.png'
 
 const theme = createTheme({
   palette: {
@@ -511,8 +512,16 @@ const Community = ({socials}) => {
   const dummyData = [
 
     {
-      title: "BNB Chain Game Expedition",
+      title: "Dypians Global Challenge",
       status: "Live",
+      start_date: "July 24, 2024",
+      end_date: "August 14, 2024",
+      image: opbnbCampaign,
+      link: "https://dappbay.bnbchain.org/campaign/train-like-a-champion-with-bnb-chain-and-share-$250K/11",
+    },
+    {
+      title: "BNB Chain Game Expedition",
+      status: "Expired",
       start_date: "June 12, 2024",
       end_date: "June 28, 2024",
       image: bnbExpedition,
@@ -544,7 +553,7 @@ const Community = ({socials}) => {
     },
   ];
 
-  const dummyBanner = {
+  const dummyBanner2 = {
     title: "BNB Chain Game Expedition",
     status: "Expired",
     desc: "Join the World of Dypians (WoD) Dypians Discovery Quest Campaign from May 29 to June 12 for a chance to win a share of the 200,000 WOD Tokens & 750 Premium Subscription prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
@@ -553,6 +562,20 @@ const Community = ({socials}) => {
     image: bnbExpedition,
     link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/105-bnb-chain-game-expedition",
   };
+  const dummyBanner =  {
+    title: "Dypians Global Challenge",
+    status: "Live",
+    start_date: "July 24, 2024",
+    end_date: "August 14, 2024",
+    image: opbnbCampaign,
+    desc: `Join the Dypians Global Challenge and immerse yourself in a series of exciting tasks inspired by the Summer Olympics and show your dedication and skill by completing the following:
+    <ul class="mt-2">
+    <li>Login or Create a Game Account</li>
+    <li>Mint Beta Pass NFT on opBNB</li>
+    <li>Open at Least 10 Daily Bonus Chests</li>
+    </ul>`,
+    link: "https://dappbay.bnbchain.org/campaign/train-like-a-champion-with-bnb-chain-and-share-$250K/11"
+  }
 
   const html = document.querySelector("html");
 
@@ -580,9 +603,9 @@ const Community = ({socials}) => {
                   className="community-title"
                   style={{ color: "#eebf06", background: "none" }}
                 >
-                  BNB CHAIN
+                  Community
                 </mark>{" "}
-                AIRDROP ALLIANCE PROGRAM
+                Campaigns
               </h6>
             </div>
             <div className="col-12 col-lg-8 mb-5">
@@ -619,7 +642,7 @@ const Community = ({socials}) => {
                       <span>{dummyBanner.status}</span>
                     </div>
                   </div>
-                  <p className="community-card-desc">{dummyBanner.desc}</p>
+                  <p className="community-card-desc" dangerouslySetInnerHTML={{__html: dummyBanner.desc}}></p>
 
                   <div className="d-flex flex-column align-items-start gap-3 justify-content-between">
                     <div
