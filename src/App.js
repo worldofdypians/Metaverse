@@ -1770,9 +1770,10 @@ function App() {
                 setmintloading("initial");
               }, 5000);
               getMyNFTS(coinbase, "opbnb").then((NFTS) => {
-                setmyopbnbNFTsCreated(NFTS);
                 settotalopbnbNft(NFTS.length);
+                setmyOpbnbNfts(NFTS);
                 setopbnbMintAllowed(0);
+                setmyopbnbNFTsCreated(NFTS);
               });
             })
             .catch((e) => {

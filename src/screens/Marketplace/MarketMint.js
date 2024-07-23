@@ -903,7 +903,7 @@ const MarketMint = ({
                                   : selectedMint.id === "multiversx" &&
                                     totalMultiversNft === 0
                                   ? "conflux-empty"
-                                  : "bnb-active"
+                                  : "conflux-empty"
                               } d-flex justify-content-center align-items-center p-3 position-relative`}
                               style={{ height: 312 }}
                             >
