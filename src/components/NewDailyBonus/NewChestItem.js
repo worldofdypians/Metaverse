@@ -93,6 +93,9 @@ const NewChestItem = ({
         userData
       );
       if (result.status === 200) {
+        if(chainText === "opbnb" || chainText === "bnb"){
+          handleThirdTask(coinbase)
+        }
         onClaimRewards(result.data);
         setIsChestOpen(true);
         // onChestStatus("success");
@@ -166,7 +169,7 @@ const NewChestItem = ({
           }, 3000);
         });
       if (result.status === 200) {
-        if(chainText === "opbnb"){
+        if(chainText === "opbnb" || chainText === "bnb"){
           handleThirdTask(coinbase)
         }
         onClaimRewards(result.data);
