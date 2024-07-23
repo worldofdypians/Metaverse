@@ -136,7 +136,23 @@ const MintPopup = ({ active, onClose, data }) => {
             </h6>
           </div>
         </>
-      ) : data.title === "Daily Bonus" ? (
+      ) 
+      
+      : data.title === "opBNB" ? (
+        <>
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="pulsatingDot"></div>
+            <h6 className="mint-popup-title">opBNB Beta Pass</h6>
+          </div>
+
+          <div className="d-flex align-items-center justify-content-center">
+            <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
+              Free Minting
+            </h6>
+          </div>
+        </>
+      )
+      : data.title === "Daily Bonus" ? (
         <>
           <div className="d-flex align-items-center justify-content-center">
             {/* <div className="pulsatingDot"></div> */}
@@ -206,14 +222,15 @@ const MintPopup = ({ active, onClose, data }) => {
             </span>
           )}
         </div>
-      ) : data.title === "DogeCoin" || data.title === "Viction" ? (
+      ) : data.title === "DogeCoin" || data.title === "Viction" || data.title === "opBNB" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           <span className="popup-available-mint">
             Get access to the game and a unique event filled with surprises and
             rewards!
           </span>
         </div>
-      ) : //  : data.title === "Viction" ? (
+      ) 
+      : //  : data.title === "Viction" ? (
       //   <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
       //     {data.title === "Viction" && (
       //       <span className="popup-available-mint">
@@ -275,7 +292,18 @@ const MintPopup = ({ active, onClose, data }) => {
           >
             <button className="btn filled-btn px-4">More</button>
           </Link>
-        ) : data.title === "Viction" ? (
+        ) 
+        : data.title === "opBNB" ? (
+          <Link
+            onClick={onClose}
+            to={"/marketplace/mint/opbnbchain"}
+            state={{ event: data.state }}
+            className="linear-border"
+          >
+            <button className="btn filled-btn px-4">More</button>
+          </Link>
+        )
+        : data.title === "Viction" ? (
           <Link
             onClick={onClose}
             to={"/marketplace/mint/viction"}
