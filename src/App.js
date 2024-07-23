@@ -4437,8 +4437,11 @@ function App() {
                 mintStatus={mintStatus}
                 textColor={textColor}
                 calculateCaws={calculateCaws}
+                totalopbnbNft={totalopbnbNft}
                 totalCreated={totalTimepieceCreated}
                 timepieceMetadata={timepieceMetadata}
+                opbnbMintAllowed={opbnbMintAllowed}
+                myopbnbNFTsCreated={myopbnbNFTsCreated}
                 myConfluxNFTsCreated={myConfluxNFTsCreated}
                 mybaseNFTsCreated={mybaseNFTsCreated}
                 myskaleNFTsCreated={myskaleNFTsCreated}
@@ -4449,6 +4452,7 @@ function App() {
                 skaleMintAllowed={skaleMintAllowed}
                 coreMintAllowed={coreMintAllowed}
                 victionMintAllowed={victionMintAllowed}
+                immutableMintAllowed={immutableMintAllowed}
                 totalCoreNft={totalCoreNft}
                 myCoreNfts={myCoreNfts}
                 totalMultiversNft={totalMultiversNft}
@@ -4459,11 +4463,9 @@ function App() {
                 myseiNfts={myseiNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
+                myOpbnbNfts={myOpbnbNfts}
                 myBnbNfts={myBnbNfts}
-                myBnbNFTsCreated={myBnbNFTsCreated}
-                bnbMintAllowed={bnbMintAllowed}
                 totalBnbNft={totalBnbNft}
-                immutableMintAllowed={immutableMintAllowed}
               />
             }
           />
@@ -4533,8 +4535,11 @@ function App() {
                 mintStatus={mintStatus}
                 textColor={textColor}
                 calculateCaws={calculateCaws}
+                totalopbnbNft={totalopbnbNft}
                 totalCreated={totalTimepieceCreated}
                 timepieceMetadata={timepieceMetadata}
+                opbnbMintAllowed={opbnbMintAllowed}
+                myopbnbNFTsCreated={myopbnbNFTsCreated}
                 myConfluxNFTsCreated={myConfluxNFTsCreated}
                 mybaseNFTsCreated={mybaseNFTsCreated}
                 myskaleNFTsCreated={myskaleNFTsCreated}
@@ -4544,10 +4549,8 @@ function App() {
                 baseMintAllowed={baseMintAllowed}
                 skaleMintAllowed={skaleMintAllowed}
                 coreMintAllowed={coreMintAllowed}
-                opbnbMintAllowed={opbnbMintAllowed}
-                myopbnbNFTsCreated={myopbnbNFTsCreated}
-                myBnbNfts={myBnbNfts}
                 victionMintAllowed={victionMintAllowed}
+                immutableMintAllowed={immutableMintAllowed}
                 totalCoreNft={totalCoreNft}
                 myCoreNfts={myCoreNfts}
                 totalMultiversNft={totalMultiversNft}
@@ -4557,10 +4560,60 @@ function App() {
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
                 totalVictionNft={totalVictionNft}
-                totalopbnbNft={totalopbnbNft}
-                totalBnbNft={totalBnbNft}
                 myVictionNfts={myVictionNfts}
                 myOpbnbNfts={myOpbnbNfts}
+                myBnbNfts={myBnbNfts}
+                totalBnbNft={totalBnbNft}
+              />
+            }
+          />
+          
+             <Route
+            exact
+            path="/marketplace/mint/immutable"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleMint={handleImmutableNftMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalopbnbNft={totalopbnbNft}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                opbnbMintAllowed={opbnbMintAllowed}
+                myopbnbNFTsCreated={myopbnbNFTsCreated}
+                myConfluxNFTsCreated={myConfluxNFTsCreated}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                myskaleNFTsCreated={myskaleNFTsCreated}
+                handleConfluxMint={handleConfluxNftMint}
+                handleBaseNftMint={handleBaseNftMint}
+                confluxMintAllowed={confluxMintAllowed}
+                baseMintAllowed={baseMintAllowed}
+                skaleMintAllowed={skaleMintAllowed}
+                coreMintAllowed={coreMintAllowed}
+                victionMintAllowed={victionMintAllowed}
+                immutableMintAllowed={immutableMintAllowed}
+                totalCoreNft={totalCoreNft}
+                myCoreNfts={myCoreNfts}
+                totalMultiversNft={totalMultiversNft}
+                totalImmutableNft={totalImmutableNft}
+                myImmutableNfts={myImmutableNfts}
+                myMultiversNfts={myMultiversNfts}
+                totalseiNft={totalseiNft}
+                myseiNfts={myseiNfts}
+                totalVictionNft={totalVictionNft}
+                myVictionNfts={myVictionNfts}
+                myOpbnbNfts={myOpbnbNfts}
+                myBnbNfts={myBnbNfts}
+                totalBnbNft={totalBnbNft}
               />
             }
           />
@@ -4608,49 +4661,7 @@ function App() {
             }
           />
 
-          <Route
-            exact
-            path="/marketplace/mint/immutable"
-            element={
-              <MarketMint
-                coinbase={coinbase}
-                showWalletConnect={() => {
-                  setwalletModal(true);
-                }}
-                cawsArray={allCawsForTimepieceMint}
-                mintloading={mintloading}
-                isConnected={isConnected}
-                chainId={chainId}
-                handleMint={handleImmutableNftMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                timepieceMetadata={timepieceMetadata}
-                myConfluxNFTsCreated={myConfluxNFTsCreated}
-                mybaseNFTsCreated={mybaseNFTsCreated}
-                myskaleNFTsCreated={myskaleNFTsCreated}
-                handleConfluxMint={handleConfluxNftMint}
-                handleBaseNftMint={handleBaseNftMint}
-                confluxMintAllowed={confluxMintAllowed}
-                baseMintAllowed={baseMintAllowed}
-                skaleMintAllowed={skaleMintAllowed}
-                coreMintAllowed={coreMintAllowed}
-                victionMintAllowed={victionMintAllowed}
-                immutableMintAllowed={immutableMintAllowed}
-                totalCoreNft={totalCoreNft}
-                myCoreNfts={myCoreNfts}
-                totalMultiversNft={totalMultiversNft}
-                totalImmutableNft={totalImmutableNft}
-                myImmutableNfts={myImmutableNfts}
-                myMultiversNfts={myMultiversNfts}
-                totalseiNft={totalseiNft}
-                myseiNfts={myseiNfts}
-                totalVictionNft={totalVictionNft}
-                myVictionNfts={myVictionNfts}
-              />
-            }
-          /> */}
+        */}
 
           {/* <Route
               exact
@@ -4712,28 +4723,35 @@ function App() {
                   mintStatus={mintStatus}
                   textColor={textColor}
                   calculateCaws={calculateCaws}
-                  totalCreated={totalTimepieceCreated}
-                  timepieceMetadata={timepieceMetadata}
-                  myConfluxNFTsCreated={myConfluxNFTsCreated}
-                  mybaseNFTsCreated={mybaseNFTsCreated}
-                  myskaleNFTsCreated={myskaleNFTsCreated}
-                  handleConfluxMint={handleConfluxNftMint}
-                  handleBaseNftMint={handleBaseNftMint}
-                  confluxMintAllowed={confluxMintAllowed}
-                  baseMintAllowed={baseMintAllowed}
-                  skaleMintAllowed={skaleMintAllowed}
-                  coreMintAllowed={coreMintAllowed}
-                  victionMintAllowed={victionMintAllowed}
-                  totalCoreNft={totalCoreNft}
-                  myCoreNfts={myCoreNfts}
-                  totalMultiversNft={totalMultiversNft}
-                  totalImmutableNft={totalImmutableNft}
-                  myImmutableNfts={myImmutableNfts}
-                  myMultiversNfts={myMultiversNfts}
-                  totalseiNft={totalseiNft}
-                  myseiNfts={myseiNfts}
-                  totalVictionNft={totalVictionNft}
-                  myVictionNfts={myVictionNfts}
+                totalopbnbNft={totalopbnbNft}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                opbnbMintAllowed={opbnbMintAllowed}
+                myopbnbNFTsCreated={myopbnbNFTsCreated}
+                myConfluxNFTsCreated={myConfluxNFTsCreated}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                myskaleNFTsCreated={myskaleNFTsCreated}
+                handleConfluxMint={handleConfluxNftMint}
+                handleBaseNftMint={handleBaseNftMint}
+                confluxMintAllowed={confluxMintAllowed}
+                baseMintAllowed={baseMintAllowed}
+                skaleMintAllowed={skaleMintAllowed}
+                coreMintAllowed={coreMintAllowed}
+                victionMintAllowed={victionMintAllowed}
+                immutableMintAllowed={immutableMintAllowed}
+                totalCoreNft={totalCoreNft}
+                myCoreNfts={myCoreNfts}
+                totalMultiversNft={totalMultiversNft}
+                totalImmutableNft={totalImmutableNft}
+                myImmutableNfts={myImmutableNfts}
+                myMultiversNfts={myMultiversNfts}
+                totalseiNft={totalseiNft}
+                myseiNfts={myseiNfts}
+                totalVictionNft={totalVictionNft}
+                myVictionNfts={myVictionNfts}
+                myOpbnbNfts={myOpbnbNfts}
+                myBnbNfts={myBnbNfts}
+                totalBnbNft={totalBnbNft}
                 />
               }
             />

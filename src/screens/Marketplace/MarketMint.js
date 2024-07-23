@@ -338,7 +338,7 @@ const MarketMint = ({
 
   let countToLiveConflux = new Date("2023-10-10T11:00:00.000+02:00");
   let countToExpireConflux = new Date("2024-08-05T16:00:00.000+02:00");
-  let countToExpireOpbnb = new Date("2024-08-14T24:00:00.000+02:00");
+  let countToExpireOpbnb = new Date("2024-08-06T24:00:00.000+02:00");
 
   const dummyCards = [
     // {
@@ -399,14 +399,7 @@ const MarketMint = ({
     //   data: baseData,
     //   class: "mint-skale",
     // },
-    {
-      title: "Immutable Pass",
-      eventId: "immutable",
-      desc: "Gain entry to metaverse, and join exclusive Immutable event with special ticket.",
-      img: immutableActive,
-      data: immutableData,
-      class: "mint-immutable",
-    },
+
     // {
     //   title: "MultiversX Pass",
     //   eventId: "multiversx",
@@ -452,6 +445,14 @@ const MarketMint = ({
       data: opbnbData,
       class: "mint-bnb",
       id: "opbnb",
+    },
+    {
+      title: "Immutable Pass",
+      eventId: "immutable",
+      desc: "Gain entry to metaverse, and join exclusive Immutable event with special ticket.",
+      img: immutableActive,
+      data: immutableData,
+      class: "mint-immutable",
     },
     {
       title: "CORE Pass",
