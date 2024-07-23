@@ -52,6 +52,7 @@ import conflux from "./assets/conflux.svg";
 import sei from "./assets/sei.svg";
 import multiversx from "./assets/multiversx.svg";
 
+import immutable from "./assets/immutableLogo.svg";
 import error from "./assets/error.svg";
 import dropdown from "./assets/dropdown.svg";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -122,6 +123,7 @@ const Header = ({
         setSkaleState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
@@ -132,6 +134,8 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
@@ -142,6 +146,8 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
@@ -152,6 +158,8 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
@@ -162,6 +170,8 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -173,6 +183,8 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 1482601649) {
         setAvaxState(false);
         setBnbState(false);
@@ -184,6 +196,8 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 1116) {
         setAvaxState(false);
         setBnbState(false);
@@ -195,6 +209,8 @@ const Header = ({
         setCoreState(true);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 88) {
         setAvaxState(false);
         setBnbState(false);
@@ -206,6 +222,21 @@ const Header = ({
         setCoreState(false);
         setVictionState(true);
         setSeiState(false);
+        setImmutableState(false);
+
+      } else if (chainId === 13371) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false);
+        setImmutableState(true);
+
       }
       // else if (chainId === 713715 ) {
       //   setAvaxState(false);
@@ -229,6 +260,9 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+        
+
       }
     }
   };
@@ -395,6 +429,24 @@ const Header = ({
         await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
             handleSwitchNetwork(1482601649);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet();
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleImmutablePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x343b")
+          .then(() => {
+            handleSwitchNetwork(13371);
           })
           .catch((e) => {
             console.log(e);
@@ -830,6 +882,8 @@ const Header = ({
                               ? core
                               : victionState === true
                               ? viction
+                              : immutableState === true
+                              ? immutable
                               : // : seiState === true
                                 // ? sei
                                 error
@@ -857,6 +911,8 @@ const Header = ({
                             ? "CORE"
                             : victionState === true
                             ? "Viction"
+                            : immutableState === true
+                            ? "Immutable"
                             : // : seiState === true
                               // ? "Sei"
                               "Unsupported"}
@@ -890,6 +946,10 @@ const Header = ({
                   <Dropdown.Item onClick={() => handleConfluxPool()}>
                     <img src={conflux} alt="" />
                     Conflux
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleImmutablePool()}>
+                    <img src={immutable} width={20} height={20} alt="" />
+                    Immutable
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleBasePool()}>
                     <img src={base} alt="" />

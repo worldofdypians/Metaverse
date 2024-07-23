@@ -1479,7 +1479,7 @@ window.config = {
   nft_core_address: "0xdbE31B4f2a5921Ec2d0d739E3c9bcA985C5A18b0",
   nft_viction_address: "0x8E4917c1Ba9598fBbF66934CB17AC28c3b5849Ab",
   nft_sei_address: "0x5C3581fDB05E3A20fb109864DaE75A5665A7F92d",
-  nft_immutable_address: "0x5C3581fDB05E3A20fb109864DaE75A5665A7F92d",
+  nft_immutable_address: "0x49ce073Ce717425f1E0cB894C02A583a12cb0F90",
   nft_bnb_address: "0xe468df1606650452b2c08c36F79eaA8B78848E9C",
   nft_opbnb_address: "0x4e4A3f047fA8Fe69cB1a79a0452121ED6fca95ba",
   nft_multivers_address: "0x96A3F313679f2F5Ce098091BFf271bF4e848178B",
@@ -1554,6 +1554,7 @@ window.config = {
   core_endpoint: "https://rpc.coredao.org",
   viction_endpoint: "https://rpc.viction.xyz",
   sei_endpoint: "https://evm-rpc-arctic-1.sei-apis.com",
+  immutable_endpoint: "https://rpc.immutable.com",
 
   BUSD_address: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
   USDCe_address: "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
@@ -2149,6 +2150,8 @@ window.confluxWeb3 = new Web3(window.config.conflux_endpoint);
 window.baseWeb3 = new Web3(window.config.base_endpoint);
 window.opBnbWeb3 = new Web3(window.config.opbnb_endpoint);
 window.coreWeb3 = new Web3(window.config.core_endpoint);
+window.immutableWeb3 = new Web3(window.config.immutable_endpoint);
+
 window.victionWeb3 = new Web3(window.config.viction_endpoint);
 window.seiWeb3 = new Web3(window.config.sei_endpoint);
 
@@ -4072,6 +4075,98 @@ window.viction_nft = new VICTION_NFT();
 
 /**
  *
+ * @param {"TOKEN" | "VICTION_NFT" } key
+ */
+
+async function getContractImmutableNFT(key) {
+  if (!window.cached_contracts[key]) {
+    window.web3 = new Web3(window.ethereum);
+    window.cached_contracts[key] = new window.web3.eth.Contract(
+      window.IMMUTABLE_NFT_ABI,
+      window.config.nft_immutable_address,
+      {
+        from: await getCoinbase(),
+      }
+    );
+  }
+
+  return window.cached_contracts[key];
+}
+
+class IMMUTABLE_NFT {
+  constructor(key = "IMMUTABLE_NFT") {
+    this.key = key;
+    [
+      "REVEAL_TIMESTAMP",
+      "balanceOf",
+      "baseURI",
+      "ownerOf",
+      "betaPassPrice",
+      "costSaleIsActive",
+      "getApproved",
+      "isApprovedForAll",
+      "maxBetaPassPurchase",
+      "name",
+      "nextOwnerToExplicitlySet",
+      "owner",
+      "ownerOf",
+      "saleIsActive",
+      "startingIndex",
+      "startingIndexBlock",
+      "supportsInterface",
+      "symbol",
+      "tokenByIndex",
+      "tokenOfOwnerByIndex",
+      "tokenURI",
+      "totalSupply",
+    ].forEach((fn_name) => {
+      this[fn_name] = async function (...args) {
+        let contract = await getContractImmutableNFT(this.key);
+        return await contract.methods[fn_name](...args).call();
+      };
+    });
+
+    // ["approve, costSaleState, flipSaleState, mintBetaPass, mintBetaPassCost, renounceOwnership, reserveBetaPass, safeTransferFrom, setApprovalForAll, setBaseURI, setBetaPassPrice, setProvernanceHash, setRevealTimestamp, transferFrom, withdraw "].forEach((fn_name) => {
+    //   this[fn_name] = async function (...args) {
+    //     let contract = await getContractCoingeckoNFT(this.key);
+    //     return await contract.methods[fn_name](...args).send({
+    //       from: await getCoinbase(),
+    //     });
+    //   };
+    // });
+  }
+  async mintImmutableNFT() {
+    let nft_contract = await getContractImmutableNFT("VICTION_NFT");
+
+    let second = nft_contract.methods
+      .mintBetaPass()
+      .send({ from: await getCoinbase() });
+    // batch.execute()
+    let result = await second;
+    let sizeResult = Object.keys(result.events["Transfer"]).length;
+    if (result.events["Transfer"].blockNumber > 0) sizeResult = 101;
+    if (result.status == true) {
+      let nftId = 0;
+      if (sizeResult != 101) {
+        nftId = window.web3.utils
+          .toBN(result.events["Transfer"][sizeResult - 1].raw.topics[3])
+          .toString(10);
+      } else {
+        nftId = window.web3.utils
+          .toBN(result.events["Transfer"].raw.topics[3])
+          .toString(10);
+      }
+      return nftId;
+    } else {
+      throw new Error("Minting failed!");
+    }
+  }
+}
+
+window.immutable_nft = new IMMUTABLE_NFT();
+
+/**
+ *
  * @param {"TOKEN" | "GATE_NFT" } key
  */
 
@@ -5522,6 +5617,21 @@ async function getMyNFTs(address, type = "") {
     );
 
     return tokens;
+  } else if (type === "immutable") {
+    contract = new window.immutableWeb3.eth.Contract(
+      window.IMMUTABLE_NFT_ABI,
+      window.config.nft_immutable_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    // const tokens = await Promise.all(
+    //   range(0, balance - 1).map((i) =>
+    //     contract.methods.tokenOfOwnerByIndex(address, i).call()
+    //   )
+    // );
+
+    return balance;
   } else if (type === "multivers") {
     contract = new window.bscWeb3.eth.Contract(
       window.MULTIVERS_NFT_ABI,
@@ -22750,6 +22860,1417 @@ window.VICTION_NFT_ABI = [
   {
     inputs: [],
     name: "withdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
+window.IMMUTABLE_NFT_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner_",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "name_",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "symbol_",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "baseURI_",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "contractURI_",
+        type: "string",
+      },
+      {
+        internalType: "address",
+        name: "operatorAllowlist_",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "royaltyReceiver_",
+        type: "address",
+      },
+      {
+        internalType: "uint96",
+        name: "feeNumerator_",
+        type: "uint96",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [],
+    name: "AllowlistDoesNotImplementIOperatorAllowlist",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "target",
+        type: "address",
+      },
+    ],
+    name: "ApproveTargetNotInAllowlist",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "approver",
+        type: "address",
+      },
+    ],
+    name: "ApproverNotInAllowlist",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "caller",
+        type: "address",
+      },
+    ],
+    name: "CallerNotInAllowlist",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "IImmutableERC721IDAboveThreshold",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "currentOwner",
+        type: "address",
+      },
+    ],
+    name: "IImmutableERC721MismatchedTokenOwner",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "IImmutableERC721MismatchedTransferLengths",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "IImmutableERC721NotOwnerOrOperator",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "IImmutableERC721SendingToZerothAddress",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "IImmutableERC721TokenAlreadyBurned",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidShortString",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidSignature",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "PermitExpired",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "SignerCannotBeZerothAddress",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "str",
+        type: "string",
+      },
+    ],
+    name: "StringTooLong",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+    ],
+    name: "TransferFromNotInAllowlist",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "TransferToNotInAllowlist",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "approved",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "operator",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "bool",
+        name: "approved",
+        type: "bool",
+      },
+    ],
+    name: "ApprovalForAll",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [],
+    name: "EIP712DomainChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "oldRegistry",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "newRegistry",
+        type: "address",
+      },
+    ],
+    name: "OperatorAllowlistRegistryUpdated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "previousAdminRole",
+        type: "bytes32",
+      },
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "newAdminRole",
+        type: "bytes32",
+      },
+    ],
+    name: "RoleAdminChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
+    ],
+    name: "RoleGranted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
+    ],
+    name: "RoleRevoked",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "Transfer",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "DEFAULT_ADMIN_ROLE",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "DOMAIN_SEPARATOR",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "MINTER_ROLE",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "approve",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+    ],
+    name: "balanceOf",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "baseURI",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "burn",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "tokenIDs",
+        type: "uint256[]",
+      },
+    ],
+    name: "burnBatch",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "contractURI",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "eip712Domain",
+    outputs: [
+      {
+        internalType: "bytes1",
+        name: "fields",
+        type: "bytes1",
+      },
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "version",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "chainId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "verifyingContract",
+        type: "address",
+      },
+      {
+        internalType: "bytes32",
+        name: "salt",
+        type: "bytes32",
+      },
+      {
+        internalType: "uint256[]",
+        name: "extensions",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "exists",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getAdmins",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "getApproved",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+    ],
+    name: "getRoleAdmin",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "getRoleMember",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+    ],
+    name: "getRoleMemberCount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "grantMinterRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "grantRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "hasRole",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "operator",
+        type: "address",
+      },
+    ],
+    name: "isApprovedForAll",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "mint",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "to",
+            type: "address",
+          },
+          {
+            internalType: "uint256[]",
+            name: "tokenIds",
+            type: "uint256[]",
+          },
+        ],
+        internalType: "struct ERC721Hybrid.IDMint[]",
+        name: "mints",
+        type: "tuple[]",
+      },
+    ],
+    name: "mintBatch",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "to",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "quantity",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct ERC721Hybrid.Mint[]",
+        name: "mints",
+        type: "tuple[]",
+      },
+    ],
+    name: "mintBatchByQuantity",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "mintBatchByQuantityThreshold",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "quantity",
+        type: "uint256",
+      },
+    ],
+    name: "mintByQuantity",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "name",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "nonces",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "operatorAllowlist",
+    outputs: [
+      {
+        internalType: "contract IOperatorAllowlist",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "ownerOf",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "deadline",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes",
+        name: "sig",
+        type: "bytes",
+      },
+    ],
+    name: "permit",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "renounceRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "revokeMinterRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "revokeRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "salePrice",
+        type: "uint256",
+      },
+    ],
+    name: "royaltyInfo",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "safeBurn",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "owner",
+            type: "address",
+          },
+          {
+            internalType: "uint256[]",
+            name: "tokenIds",
+            type: "uint256[]",
+          },
+        ],
+        internalType: "struct ERC721Hybrid.IDBurn[]",
+        name: "burns",
+        type: "tuple[]",
+      },
+    ],
+    name: "safeBurnBatch",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "safeMint",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "to",
+            type: "address",
+          },
+          {
+            internalType: "uint256[]",
+            name: "tokenIds",
+            type: "uint256[]",
+          },
+        ],
+        internalType: "struct ERC721Hybrid.IDMint[]",
+        name: "mints",
+        type: "tuple[]",
+      },
+    ],
+    name: "safeMintBatch",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "to",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "quantity",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct ERC721Hybrid.Mint[]",
+        name: "mints",
+        type: "tuple[]",
+      },
+    ],
+    name: "safeMintBatchByQuantity",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "quantity",
+        type: "uint256",
+      },
+    ],
+    name: "safeMintByQuantity",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "safeTransferFrom",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes",
+        name: "_data",
+        type: "bytes",
+      },
+    ],
+    name: "safeTransferFrom",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "from",
+            type: "address",
+          },
+          {
+            internalType: "address[]",
+            name: "tos",
+            type: "address[]",
+          },
+          {
+            internalType: "uint256[]",
+            name: "tokenIds",
+            type: "uint256[]",
+          },
+        ],
+        internalType: "struct ERC721Hybrid.TransferRequest",
+        name: "tr",
+        type: "tuple",
+      },
+    ],
+    name: "safeTransferFromBatch",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "operator",
+        type: "address",
+      },
+      {
+        internalType: "bool",
+        name: "approved",
+        type: "bool",
+      },
+    ],
+    name: "setApprovalForAll",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "baseURI_",
+        type: "string",
+      },
+    ],
+    name: "setBaseURI",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_contractURI",
+        type: "string",
+      },
+    ],
+    name: "setContractURI",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
+      {
+        internalType: "uint96",
+        name: "feeNumerator",
+        type: "uint96",
+      },
+    ],
+    name: "setDefaultRoyaltyReceiver",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
+      {
+        internalType: "uint96",
+        name: "feeNumerator",
+        type: "uint96",
+      },
+    ],
+    name: "setNFTRoyaltyReceiver",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "tokenIds",
+        type: "uint256[]",
+      },
+      {
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
+      {
+        internalType: "uint96",
+        name: "feeNumerator",
+        type: "uint96",
+      },
+    ],
+    name: "setNFTRoyaltyReceiverBatch",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes4",
+        name: "interfaceId",
+        type: "bytes4",
+      },
+    ],
+    name: "supportsInterface",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "symbol",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "tokenURI",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalSupply",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "transferFrom",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

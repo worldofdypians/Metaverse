@@ -349,6 +349,8 @@ function Dashboard({
   const [myCoreNfts, setmyCoreNfts] = useState([]);
   const [myVictionNfts, setmyVictionNfts] = useState([]);
   const [myMultiversNfts, setmyMultiversNfts] = useState([]);
+  const [myImmutableNfts, setmyImmutableNfts] = useState([]);
+
 
   const [latestVersion, setLatestVersion] = useState(0);
 
@@ -4011,6 +4013,9 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "viction").then(
       (NFTS) => setmyVictionNfts(NFTS)
     );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "immutable").then(
+      (NFTS) => setmyImmutableNfts(NFTS)
+    );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "multivers").then(
       (NFTS) => setmyMultiversNfts(NFTS)
@@ -5798,6 +5803,8 @@ function Dashboard({
                               myCmcNfts={myCmcNfts}
                               myCoreNfts={myCoreNfts}
                               myVictionNfts={myVictionNfts}
+                              myImmutableNfts={myImmutableNfts}
+
                               myMultiversNfts={myMultiversNfts}
                               mySkaleNfts={mySkaleNfts}
                               latestBoughtNFTS={latest20BoughtNFTS}
@@ -6019,6 +6026,8 @@ function Dashboard({
                       MyNFTSCawsAvax={MyNFTSCawsAvax}
                       MyNFTSLandBase={MyNFTSLandBase}
                       MyNFTSCawsBase={MyNFTSCawsBase}
+                      myImmutableNfts={myImmutableNfts}
+                      myMultiversNfts={myMultiversNfts}
                     />
                     {/* <div className="d-flex flex-column align-items-center w-100">
                 <div className="d-flex flex-column gap-2 w-100 mb-4">
@@ -6103,6 +6112,57 @@ function Dashboard({
                         height={40}
                         alt="premium package icon"
                         className="premium-package-icon"
+                      <WalletBalance
+                        ethTokenData={ethTokenData}
+                        dypTokenData={dypTokenData}
+                        onOpenNfts={onOpenNfts}
+                        listedNFTS={listedNFTS}
+                        myBoughtNfts={myBoughtNfts}
+                        address={data?.getPlayer?.wallet?.publicAddress}
+                        coinbase={account}
+                        isVerified={data?.getPlayer?.wallet}
+                        favoritesArray={favorites}
+                        dypBalance={dypBalance}
+                        dypBalancebnb={dypBalancebnb}
+                        dypBalanceavax={dypBalanceavax}
+                        idypBalance={idypBalance}
+                        idypBalancebnb={idypBalancebnb}
+                        idypBalanceavax={idypBalanceavax}
+                        showNfts={showNfts}
+                        handleShowWalletPopup={() => {
+                          setshowWalletModal(true);
+                        }}
+                        email={email}
+                        userId={data?.getPlayer?.playerId}
+                        username={data?.getPlayer?.displayName}
+                        myCawsCollected={MyNFTSCaws}
+                        myCawsOldCollected={MyNFTSCawsOld}
+                        myLandCollected={MyNFTSLand}
+                        myTimepieceCollected={MyNFTSTimepiece}
+                        landStaked={landstakes}
+                        myCawsWodStakes={myCawsWodStakesAll}
+                        myWodWodStakes={myWodWodStakesAll}
+                        myNFTSCoingecko={MyNFTSCoingecko}
+                        myGateNfts={myGateNfts}
+                        myConfluxNfts={myConfluxNfts}
+                        myBaseNfts={myBaseNfts}
+                        myDogeNfts={myDogeNfts}
+                        myCmcNfts={myCmcNfts}
+                        myCoreNfts={myCoreNfts}
+                        myVictionNfts={myVictionNfts}
+                        myImmutableNfts={myImmutableNfts}
+                        myMultiversNfts={myMultiversNfts}
+                        mySkaleNfts={mySkaleNfts}
+                        latestBoughtNFTS={latest20BoughtNFTS}
+                        myOffers={myOffers}
+                        allActiveOffers={allActiveOffers}
+                        latestVersion={latestVersion}
+                        MyNFTSLandBNB={MyNFTSLandBNB}
+                        MyNFTSCawsBNB={MyNFTSCawsBNB}
+                        MyNFTSLandAvax={MyNFTSLandAvax}
+                        MyNFTSCawsAvax={MyNFTSCawsAvax}
+                        MyNFTSLandBase={MyNFTSLandBase}
+                        MyNFTSCawsBase={MyNFTSCawsBase}
                       />
                     </div>
                     <h6

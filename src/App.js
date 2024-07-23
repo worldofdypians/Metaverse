@@ -7,7 +7,7 @@ import { ApolloProvider } from "@apollo/client";
 import "@aws-amplify/ui-react/styles.css";
 import awsExports from "./screens/Account/src/aws-exports";
 import "./screens/Account/src/App.css";
-
+import { checkout, passport, config } from "@imtbl/sdk";
 import AuthProvider, {
   useAuth,
 } from "./screens/Account/src/Utils.js/Auth/AuthDetails.js";
@@ -59,7 +59,7 @@ import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
 import { useEagerlyConnect } from "web3-connector";
 import SIDRegister from "@web3-name-sdk/register";
 import { createWeb3Name } from "@web3-name-sdk/core";
-import { providers } from "ethers";
+import { ethers, providers } from "ethers";
 import {
   useWeb3React,
   disconnect,
@@ -76,6 +76,33 @@ import OurTeam from "./screens/OurTeam/OurTeam.js";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
+import Redirect from "./screens/Home/Redirect";
+import WalletModal2 from "./components/WalletModal/WalletModal2";
+
+const PUBLISHABLE_KEY = "pk_imapik-test-thnDYtOU1Z4uxZ85oiVj"; // Replace with your Publishable Key from the Immutable Hub
+const CLIENT_ID = "8u9twN341by6zff9xxJ34MIWIDX438PZ"; // Replace with your passport client ID
+
+const baseConfig = {
+  environment: config.Environment.SANDBOX,
+  publishableKey: PUBLISHABLE_KEY,
+};
+
+const passportInstance = new passport.Passport({
+  baseConfig: {
+    environment: config.Environment.SANDBOX,
+    publishableKey: PUBLISHABLE_KEY,
+  },
+  clientId: CLIENT_ID,
+  redirectUri: "http://localhost:8080/redirect",
+  logoutRedirectUri: "http://localhost:8080/logout",
+  audience: "platform_api",
+  scope: "openid offline_access email transact",
+});
+
+const checkoutSDK = new checkout.Checkout({
+  baseConfig,
+  passport: passportInstance,
+});
 
 function App() {
   const CHAINLIST = {
@@ -163,6 +190,16 @@ function App() {
       },
       blockExplorerUrls: ["https://seistream.app/"],
     },
+    13371: {
+      chainId: 13371,
+      chainName: "Immutable zkEVM",
+      rpcUrls: ["https://rpc.immutable.com"],
+      nativeCurrency: {
+        symbol: "IMX",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://explorer.immutable.com"],
+    },
   };
 
   const {
@@ -209,16 +246,20 @@ function App() {
   const [totalBnbNft, setTotalBnbNft] = useState(0);
   const [myBnbNfts, setMyBnbNfts] = useState([]);
   const [bnbMintAllowed, setBnbMintAllowed] = useState(1);
+  const [immutableMintAllowed, setImmutableMintAllowed] = useState(1);
 
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
   const [myskaleNFTsCreated, setmyskaleNFTsCreated] = useState([]);
   const [mycoreNFTsCreated, setmycoreNFTsCreated] = useState([]);
   const [myvictionNFTsCreated, setmyVictionNFTsCreated] = useState([]);
   const [myopbnbNFTsCreated, setmyopbnbNFTsCreated] = useState([]);
+  const [myimmutableNftsCreated, setmyImmutableNFTsCreated] = useState([]);
 
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
+  const [walletId, setwalletId] = useState("connect");
+
   const [mintloading, setmintloading] = useState("initial");
   const [mintStatus, setmintStatus] = useState("");
   const [textColor, settextColor] = useState("#fff");
@@ -880,6 +921,76 @@ function App() {
     return isConnected;
   };
 
+  const handleConnectPassport = async () => {
+    const widgets = await checkoutSDK.widgets({
+      config: { theme: checkout.WidgetTheme.DARK },
+    });
+    const connect = widgets.create(checkout.WidgetType.CONNECT);
+
+    if (!connect) return;
+
+    connect.mount("connect");
+
+    connect.addListener(checkout.ConnectEventType.SUCCESS, async (data) => {
+      const passportProvider = passportInstance.connectEvm();
+      const accounts = await passportProvider.request({
+        method: "eth_requestAccounts",
+      });
+      handleConnectWallet();
+    });
+    connect.addListener(checkout.ConnectEventType.FAILURE, (data) => {
+      console.log("failure", data);
+    });
+    connect.addListener(checkout.ConnectEventType.CLOSE_WIDGET, () => {
+      connect.unmount();
+      setwalletModal(false);
+      // setTimeout(() => {
+      //   setwalletId("connect_simple");
+      //   handleConnectWalletPassport();
+      // }, 1000);
+    });
+
+    //   await passportInstance.login().then(async()=>{
+    //     if(accounts && accounts.length > 0) {
+    //       handleConnection();
+    //       console.log(window)
+    //     }
+    // })
+
+    // const provider = new ethers.providers.Web3Provider(passportProvider);
+    // console.log('provider',provider)
+    // const accounts = await provider.request({ method: "eth_requestAccounts" });
+  };
+
+  const handleConnectWalletPassport = async () => {
+    setwalletModal(true);
+    console.log("in");
+    const checkoutSDK_simple = new checkout.Checkout();
+
+    const widgets_simple = await checkoutSDK_simple.widgets({
+      config: { theme: checkout.WidgetTheme.DARK },
+    });
+
+    const connect_simple = widgets_simple.create(checkout.WidgetType.CONNECT, {
+      config: { theme: checkout.WidgetTheme.DARK },
+    });
+
+    if (!connect_simple) return;
+
+    connect_simple.mount("connect_simple");
+
+    connect_simple.addListener(checkout.ConnectEventType.SUCCESS, (data) => {
+      console.log("success_simple", data);
+      handleConnectWallet();
+    });
+    connect_simple.addListener(checkout.ConnectEventType.FAILURE, (data) => {
+      console.log("failure_simple", data);
+    });
+    connect_simple.addListener(checkout.ConnectEventType.CLOSE_WIDGET, () => {
+      connect_simple.unmount();
+    });
+  };
+
   const myNft = async () => {
     if (coinbase !== null && coinbase !== undefined) {
       const infura_web3 = window.infuraWeb3;
@@ -1031,7 +1142,22 @@ function App() {
     return await window.getMyNFTs(coinbase, type);
   };
 
-  //todo
+  const fetchImmutableNfts = async()=>{
+    if(isConnected && coinbase)
+   { const result = await axios
+    .get(`https://api.worldofdypians.com/api/mint/immutable/${coinbase}`).catch((e)=>{
+      console.error(e);
+    })
+
+    if(result && result.status === 200) {
+      const NFTS = result.data.data.tokenIDMinted
+      setTotalImmutableNft(NFTS.length);
+      setMyImmutableNfts(NFTS);
+      setImmutableMintAllowed(NFTS.length > 0 ? 0 : 1);
+      setmyImmutableNFTsCreated(NFTS);
+    }}
+  }
+
   const fetchAllMyNfts = async () => {
     if (coinbase) {
       getMyNFTS(coinbase, "caws").then((NFTS) => setMyNFTSCaws(NFTS));
@@ -1072,6 +1198,13 @@ function App() {
         setMyBnbNfts(NFTS);
         setBnbMintAllowed(NFTS.length > 0 ? 0 : 1);
         setMyBnbNFTsCreated(NFTS);
+      });
+
+      getMyNFTS(coinbase, "immutable").then((NFTS) => {
+        setTotalImmutableNft(NFTS);
+        setMyImmutableNfts(NFTS);
+        setImmutableMintAllowed(NFTS > 0 ? 0 : 1);
+        setmyImmutableNFTsCreated(NFTS);
       });
 
       getMyNFTS(coinbase, "base").then((NFTS) => {
@@ -1866,6 +1999,110 @@ function App() {
                 setmintStatus("");
               }, 5000);
             });
+        } else {
+          // setShowWhitelistLoadingModal(true);
+        }
+      } catch (e) {
+        setmintloading("error");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        window.alertify.error(
+          typeof e == "object" && e.message
+            ? e.message
+            : typeof e == "string"
+            ? String(e)
+            : "Oops, something went wrong! Refresh the page and try again!"
+        );
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      }
+    }
+  };
+
+  const handleImmutableNftMint = async () => {
+    if (isConnected && coinbase) {
+      try {
+        //Check Whitelist
+        let whitelist = 1;
+
+        if (parseInt(whitelist) === 1) {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+
+          const result = await axios
+            .get(`https://api.worldofdypians.com/api/mint/immutable/${coinbase}`)
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+              setmintStatus(e);
+
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+
+          if (result && result.status === 200) {
+            console.log(result.data.data.tokenIDMinted);
+            setmintStatus("Success! Your Nft was minted successfully!");
+            setmintloading("success");
+            settextColor("rgb(123, 216, 176)");
+            setTimeout(() => {
+              setmintStatus("");
+              setmintloading("initial");
+            }, 5000);
+          
+              setmyImmutableNFTsCreated(result.data.data.tokenIDMinted);
+              setTotalImmutableNft(1);
+              setImmutableMintAllowed(0);
+              setMyImmutableNfts(result.data.data.tokenIDMinted);
+          
+          }
+          // console.log(data,finalCaws, totalCawsDiscount);
+          // let tokenId = await window.immutable_nft
+          //   .mintImmutableNFT()
+          //   .then(() => {
+          //     setmintStatus("Success! Your Nft was minted successfully!");
+          //     setmintloading("success");
+          //     settextColor("rgb(123, 216, 176)");
+          //     setTimeout(() => {
+          //       setmintStatus("");
+          //       setmintloading("initial");
+          //     }, 5000);
+          //     getMyNFTS(coinbase, "immutable").then((NFTS) => {
+          //       setmyImmutableNFTsCreated(NFTS);
+          //       setTotalImmutableNft(NFTS.length);
+          //       setImmutableMintAllowed(0);
+          //       setMyImmutableNfts(NFTS);
+          //     });
+          //   })
+          //   .catch((e) => {
+          //     console.error(e);
+          //     setmintloading("error");
+          //     settextColor("#d87b7b");
+
+          //     if (typeof e == "object" && e.message) {
+          //       setmintStatus(e.message);
+          //     } else {
+          //       setmintStatus(
+          //         "Oops, something went wrong! Refresh the page and try again!"
+          //       );
+          //     }
+          //     setTimeout(() => {
+          //       setmintloading("initial");
+          //       setmintStatus("");
+          //     }, 5000);
+          //   });
         } else {
           // setShowWhitelistLoadingModal(true);
         }
@@ -3306,6 +3543,9 @@ function App() {
             path="/auth"
             element={<Auth isConnected={isConnected} coinbase={coinbase} />}
           />
+
+          <Route exact path="/redirect" element={<Redirect />} />
+
           <Route
             exact
             path="/bnbchain-alliance-program"
@@ -4223,6 +4463,7 @@ function App() {
                 myBnbNFTsCreated={myBnbNFTsCreated}
                 bnbMintAllowed={bnbMintAllowed}
                 totalBnbNft={totalBnbNft}
+                immutableMintAllowed={immutableMintAllowed}
               />
             }
           />
@@ -4352,6 +4593,51 @@ function App() {
                 skaleMintAllowed={skaleMintAllowed}
                 coreMintAllowed={coreMintAllowed}
                 victionMintAllowed={victionMintAllowed}
+                totalCoreNft={totalCoreNft}
+                myCoreNfts={myCoreNfts}
+                totalMultiversNft={totalMultiversNft}
+                totalImmutableNft={totalImmutableNft}
+                myImmutableNfts={myImmutableNfts}
+                myMultiversNfts={myMultiversNfts}
+                totalseiNft={totalseiNft}
+                myseiNfts={myseiNfts}
+                totalVictionNft={totalVictionNft}
+                myVictionNfts={myVictionNfts}
+                immutableMintAllowed={immutableMintAllowed}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/marketplace/mint/immutable"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleMint={handleImmutableNftMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                myConfluxNFTsCreated={myConfluxNFTsCreated}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                myskaleNFTsCreated={myskaleNFTsCreated}
+                handleConfluxMint={handleConfluxNftMint}
+                handleBaseNftMint={handleBaseNftMint}
+                confluxMintAllowed={confluxMintAllowed}
+                baseMintAllowed={baseMintAllowed}
+                skaleMintAllowed={skaleMintAllowed}
+                coreMintAllowed={coreMintAllowed}
+                victionMintAllowed={victionMintAllowed}
+                immutableMintAllowed={immutableMintAllowed}
                 totalCoreNft={totalCoreNft}
                 myCoreNfts={myCoreNfts}
                 totalMultiversNft={totalMultiversNft}
@@ -4553,15 +4839,30 @@ function App() {
         />
       )}
 
-      {walletModal === true && (
+      {walletModal === true && walletId === "connect" && (
         <WalletModal
-          show={walletModal}
+          show={walletId === "connect" && walletModal === true}
           handleClose={() => {
             setwalletModal(false);
           }}
           handleConnection={() => {
             handleConnectWallet();
           }}
+          handleConnectionPassport={handleConnectPassport}
+        />
+      )}
+
+      {walletId === "connect_simple" && walletModal === true && (
+        <WalletModal2
+          show={walletId === "connect_simple" && walletModal === true}
+          handleClose={() => {
+            setwalletModal(false);
+            setwalletId("connect");
+          }}
+          handleConnection={() => {
+            handleConnectWallet();
+          }}
+          handleConnectionPassport={handleConnectWalletPassport}
         />
       )}
 

@@ -38,6 +38,8 @@ import skalePopup from "../../components/TimepieceMint/assets/skalePopup.webp";
 import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreasureHunt.webp";
 import corePopupBg from "../../components/TimepieceMint/assets/corePopupBg.webp";
 import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
+import immutablePopup from "../../components/TimepieceMint/assets/immutablePopup.webp";
+
 import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
 import bnbPhase4 from "./WodBuilders/assets/bnbPhase4.png";
 
@@ -104,10 +106,10 @@ const Home = ({
     img: dypiusPopup,
     state: "dypius",
   };
-  const victionPopupInfo = {
-    title: "Viction",
-    img: victionPopupBg,
-    state: "viction",
+  const immutablePopupInfo = {
+    title: "Immutable",
+    img: immutablePopup,
+    state: "immutable",
   };
 
   const corePopupInfo = {
@@ -122,7 +124,7 @@ const Home = ({
   };
 
   const [activePopup, setActivePopup] = useState(false);
-  const [popupInfo, setPopupInfo] = useState({});
+
   const html = document.querySelector("html");
   const hamburger = document.querySelector("#popup");
 
@@ -140,19 +142,9 @@ const Home = ({
   //   }
   // }, [activePopup]);
 
-  const randomPopup = () => {
-    const randomNumber = Math.floor(Math.random() * 2) + 1;
-    if (randomNumber === 1) {
-      setPopupInfo(corePopupInfo);
-    } else {
-      setPopupInfo(victionPopupInfo);
-    }
-  };
-
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "World of Dypians";
-    randomPopup();
   }, []);
 
   return (
