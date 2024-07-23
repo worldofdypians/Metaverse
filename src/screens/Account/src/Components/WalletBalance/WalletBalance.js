@@ -762,9 +762,9 @@ const WalletBalance = ({
           })
         );
       }
-      if (myImmutableNfts && myImmutableNfts.length > 0) {
+      if (myImmutableNfts && myImmutableNfts > 0) {
         await Promise.all(
-          myImmutableNfts.map(async (i) => {
+          [...Array(myImmutableNfts)].map((i) => {
             immutableNftsArray.push({
               nftAddress: window.config.nft_immutable_address,
               buyer: coinbase,
@@ -2028,8 +2028,10 @@ const WalletBalance = ({
                                   ? "GTBP"
                                   : item.type === "bnb"
                                   ? "BNBBP"
-                                  : "Timepiece"}{" "}
-                                #{item.tokenId}
+                                  : "Timepiece"}
+                                  
+                                  { item.type === "immutable" ? '' : `#${item.tokenId}`}
+                                
                               </h6>
                               {/* <span className="account-nft-type">
                               {item.type === "caws"
@@ -3139,7 +3141,8 @@ const WalletBalance = ({
                                       window.config.nft_multivers_address
                                     ? "MXBP"
                                     : "CAWS Timepiece"}{" "}
-                                  #{nft.tokenId}
+                                   { nft.nftAddress ===
+                                      window.config.nft_immutable_address ? '' : `#${nft.tokenId}`}
                                 </h6>
                                 {/* <span className="account-nft-type">
                             {nft.nftAddress ===
@@ -3460,7 +3463,8 @@ const WalletBalance = ({
                                       window.config.nft_multivers_address
                                     ? "MXBP"
                                     : "CAWS Timepiece"}{" "}
-                                  #{nft.tokenId}
+                                    { nft.nftAddress ===
+                                      window.config.nft_immutable_address ? '' : `#${nft.tokenId}`}
                                 </h6>
                                 {/* <span className="account-nft-type">
                             {nft.nftAddress ===

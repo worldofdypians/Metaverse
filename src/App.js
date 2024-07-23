@@ -1137,7 +1137,22 @@ function App() {
     return await window.getMyNFTs(coinbase, type);
   };
 
-  //todo
+  const fetchImmutableNfts = async()=>{
+    if(isConnected && coinbase)
+   { const result = await axios
+    .get(`https://api.worldofdypians.com/api/mint/immutable/${coinbase}`).catch((e)=>{
+      console.error(e);
+    })
+
+    if(result && result.status === 200) {
+      const NFTS = result.data.data.tokenIDMinted
+      setTotalImmutableNft(NFTS.length);
+      setMyImmutableNfts(NFTS);
+      setImmutableMintAllowed(NFTS.length > 0 ? 0 : 1);
+      setmyImmutableNFTsCreated(NFTS);
+    }}
+  }
+
   const fetchAllMyNfts = async () => {
     if (coinbase) {
       getMyNFTS(coinbase, "caws").then((NFTS) => setMyNFTSCaws(NFTS));
@@ -1181,9 +1196,9 @@ function App() {
       });
 
       getMyNFTS(coinbase, "immutable").then((NFTS) => {
-        setTotalImmutableNft(NFTS.length);
+        setTotalImmutableNft(NFTS);
         setMyImmutableNfts(NFTS);
-        setImmutableMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setImmutableMintAllowed(NFTS > 0 ? 0 : 1);
         setmyImmutableNFTsCreated(NFTS);
       });
 
@@ -1939,11 +1954,7 @@ function App() {
           settextColor("rgb(123, 216, 176)");
 
           const result = await axios
-            .get(`https://api.worldofdypians.com/api/mint/immutable`, {
-              params: {
-                walletAddress: coinbase,
-              },
-            })
+            .get(`https://api.worldofdypians.com/api/mint/immutable/${coinbase}`)
             .catch((e) => {
               console.error(e);
               setmintloading("error");
@@ -1957,7 +1968,7 @@ function App() {
             });
 
           if (result && result.status === 200) {
-            console.log(result.data);
+            console.log(result.data.data.tokenIDMinted);
             setmintStatus("Success! Your Nft was minted successfully!");
             setmintloading("success");
             settextColor("rgb(123, 216, 176)");
@@ -1965,12 +1976,12 @@ function App() {
               setmintStatus("");
               setmintloading("initial");
             }, 5000);
-            getMyNFTS(coinbase, "immutable").then((NFTS) => {
-              setmyImmutableNFTsCreated(NFTS);
-              setTotalImmutableNft(NFTS.length);
+          
+              setmyImmutableNFTsCreated(result.data.data.tokenIDMinted);
+              setTotalImmutableNft(1);
               setImmutableMintAllowed(0);
-              setMyImmutableNfts(NFTS);
-            });
+              setMyImmutableNfts(result.data.data.tokenIDMinted);
+          
           }
           // console.log(data,finalCaws, totalCawsDiscount);
           // let tokenId = await window.immutable_nft

@@ -1985,9 +1985,7 @@ const SingleNft = ({
                         : nftAddress.toLowerCase() ===
                           window.config.nft_viction_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_immutable_address.toLowerCase()
-                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+400.png`
+                        
                         : nftAddress.toLowerCase() ===
                           window.config.nft_multivers_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+400.png`
@@ -2123,7 +2121,7 @@ const SingleNft = ({
                         : type === "base"
                         ? "Base Beta Pass"
                         : "CAWS Timepiece"}{" "}
-                      #{nftId}
+                     {type === "immutable" ? '' : ` #${nftId}`}
                       <img
                         src={isFavorite ? favActive : favInactive}
                         onClick={() => {
@@ -2668,6 +2666,7 @@ const SingleNft = ({
                         </div>
                       )}
                     <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between gap-2 align-items-center">
+                     {type !=='immutable' &&
                       <div className="d-flex justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="owner-txt">Owner:</span>
                         {
@@ -2708,7 +2707,7 @@ const SingleNft = ({
                             {shortAddress(owner)}
                           </a>
                         }
-                      </div>
+                      </div> }
                       {!isOwner && IsListed && coinbase && isConnected && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center">
                           <button
