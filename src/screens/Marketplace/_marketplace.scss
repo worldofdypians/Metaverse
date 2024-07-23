@@ -1235,7 +1235,7 @@
 }
 
 .nft-page-wrapperbnb {
-  background: url(./assets/bnbprogramBg.webp);
+  background: url(./assets/wodbnb.webp);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -2173,6 +2173,18 @@ line-height: normal;
 
   @media screen and (max-width: 786px) {
     background-image: url("./assets/skaleMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+.past-viction-mint {
+  background-image: url("./assets/victionPastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/victionPastMintMobile.webp");
     aspect-ratio: 1/1;
   }
 }

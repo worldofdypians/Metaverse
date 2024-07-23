@@ -26,6 +26,7 @@ import gatePopup from "../../components/TimepieceMint/assets/gatePopup.webp";
 import cmcPopup from "../../components/TimepieceMint/assets/cmcPopup.webp";
 
 import dypiusPopup from "../../components/TimepieceMint/assets/dypiuspremiumPopup.webp";
+import opbnbPopup from "../../components/TimepieceMint/assets/opbnbPopup.webp";
 
 import coingeckoPopup from "../../components/TimepieceMint/assets/coingeckoPopup.png";
 import treasureHuntPopup from "../../components/TimepieceMint/assets/treasureHuntPopup.png";
@@ -35,7 +36,7 @@ import dogeTreasureHuntPopup from "../../components/TimepieceMint/assets/dogeTre
 import skalePopup from "../../components/TimepieceMint/assets/skalePopup.webp";
 
 import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreasureHunt.webp";
-import corePopupBg from "../../components/TimepieceMint/assets/corePopupImage.webp";
+import corePopupBg from "../../components/TimepieceMint/assets/corePopupBg.webp";
 import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
 import immutablePopup from "../../components/TimepieceMint/assets/immutablePopup.webp";
 
@@ -116,6 +117,11 @@ const Home = ({
     img: corePopupBg,
     state: "core",
   };
+  const opbnbInfo = {
+    title: "opBNB",
+    img: opbnbPopup,
+    state: "opbnb",
+  };
 
   const [activePopup, setActivePopup] = useState(false);
 
@@ -149,7 +155,7 @@ const Home = ({
       >
         <MintPopup
           active={activePopup}
-          data={immutablePopupInfo}
+          data={opbnbInfo}
           onClose={() => setActivePopup(false)}
         />
       </OutsideClickHandler>

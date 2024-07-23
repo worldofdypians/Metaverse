@@ -363,6 +363,8 @@ const NewDailyBonus = ({
   const [landNfts, setLandNfts] = useState([]);
   const [isActive, setIsActive] = useState();
   const [isActiveIndex, setIsActiveIndex] = useState();
+  const [countListedNfts, setcountListedNfts] = useState(0);
+
   const [totalPoints, settotalPoints] = useState(0);
   const [totalUsd, settotalUsd] = useState(0);
   const [nft, setNft] = useState({});
@@ -1543,7 +1545,7 @@ const NewDailyBonus = ({
   useEffect(() => {
     filterCawsNfts();
     filterLandNfts();
-  }, [listedNFTS]);
+  }, [listedNFTS,countListedNfts]);
  
   useEffect(() => {
     if (chain === "bnb") {
@@ -1814,7 +1816,6 @@ const NewDailyBonus = ({
     rewardData,
   ]);
 
-  
   return (
     <>
       <div className={`package-popup-wrapper2 `}>
@@ -2611,6 +2612,7 @@ const NewDailyBonus = ({
                           ? allChests && allChests.length > 0
                             ? allChests.map((item, index) => (
                                 <NewChestItem
+                                  coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
                                   buyNftPopup={buyNftPopup}
@@ -2657,6 +2659,7 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
                                   buyNftPopup={buyNftPopup}
@@ -2709,6 +2712,7 @@ const NewDailyBonus = ({
                           ? allCoreChests && allCoreChests.length > 0
                             ? allCoreChests.map((item, index) => (
                                 <NewChestItem
+                                  coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
                                   buyNftPopup={buyNftPopup}
@@ -2755,6 +2759,7 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
                                   buyNftPopup={buyNftPopup}
@@ -2807,6 +2812,7 @@ const NewDailyBonus = ({
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
                                 <NewChestItem
+                                  coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
                                   buyNftPopup={buyNftPopup}
@@ -2853,6 +2859,7 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
                                   buyNftPopup={buyNftPopup}
@@ -2906,6 +2913,7 @@ const NewDailyBonus = ({
                             allSkaleChests.length > 0
                           ? allSkaleChests.map((item, index) => (
                               <NewChestItem
+                                coinbase={coinbase}
                                 claimingChest={claimingChest}
                                 setClaimingChest={setClaimingChest}
                                 buyNftPopup={buyNftPopup}
@@ -2951,6 +2959,7 @@ const NewDailyBonus = ({
                             ))
                           : window.range(0, 19).map((item, index) => (
                               <NewChestItem
+                                coinbase={coinbase}
                                 claimingChest={claimingChest}
                                 setClaimingChest={setClaimingChest}
                                 buyNftPopup={buyNftPopup}
@@ -5266,6 +5275,9 @@ const NewDailyBonus = ({
           onSuccessPurchase={() => {
             onSkaleChestClaimed();
             onChestClaimed();
+            onVictionChestClaimed();
+            onCoreChestClaimed();
+            setcountListedNfts(countListedNfts)
             // setBuyNftPopup(false);
             setTimeout(() => {
               chain === "bnb"
