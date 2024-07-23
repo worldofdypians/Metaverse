@@ -292,7 +292,7 @@ const MarketMint = ({
         return 0;
       });
 
-    console.log("bnbresult", bnbresult);
+      
     setbnbNftsSold(bnbresult);
   };
 
