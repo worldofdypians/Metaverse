@@ -1292,6 +1292,34 @@ const Marketplace = ({
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
                     <NavLink
+                      to={"/marketplace/mint/opbnbchain"}
+                      className="w-100 m-0 d-flex flex-column gap-5"
+                    >
+                      <div className="p-4 mint-wrappernew market-mint-opbnb w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
+                        <div className="d-flex align-items-center justify-content-center homepage-nft-mint-tag px-3 py-1">
+                          <span>NFT Minting</span>
+                        </div>
+                        <div className="d-flex flex-column gap-2 mb-3">
+                        <h6 className="newminttitlehome m-0 position-relative">
+                          opBNB Beta
+                        </h6>
+                        <h6 className="newminttitlehome m-0 position-relative">
+                          Pass
+                        </h6></div>
+                  
+                      </div>
+                    </NavLink>
+                    <NavLink to="/marketplace/mint/opbnbchain">
+                      <span
+                        className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
+                        style={{ width: "fit-content" }}
+                      >
+                        Mint now <img src={greenArrow} alt="" />{" "}
+                      </span>
+                    </NavLink>
+                  </div>
+                  <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
+                  <NavLink
                       to={"/marketplace/mint/core"}
                       className="w-100 m-0 d-flex flex-column gap-5"
                     >
@@ -1309,35 +1337,7 @@ const Marketplace = ({
                   
                       </div>
                     </NavLink>
-                    <NavLink to="/marketplace/mint/timepiece">
-                      <span
-                        className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
-                        style={{ width: "fit-content" }}
-                      >
-                        Mint now <img src={greenArrow} alt="" />{" "}
-                      </span>
-                    </NavLink>
-                  </div>
-                  <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
-                    <NavLink
-                      to={"/marketplace/mint/timepiece"}
-                      className="w-100 m-0 d-flex flex-column gap-5"
-                    >
-                      <div className="p-4 mint-wrappernew market-mint-timepiece w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
-                        <div className="d-flex align-items-center justify-content-center homepage-nft-mint-tag px-3 py-1">
-                          <span>NFT Minting</span>
-                        </div>
-                        <div className="d-flex flex-column gap-2 mb-3">
-                        <h6 className="newminttitlehome m-0 position-relative">
-                          CAWS
-                        </h6>
-                        <h6 className="newminttitlehome m-0 position-relative">
-                          Timepiece
-                        </h6></div>
-                  
-                      </div>
-                    </NavLink>
-                    <NavLink to="/marketplace/mint/timepiece">
+                    <NavLink to="/marketplace/mint/core">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
