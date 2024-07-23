@@ -5511,13 +5511,13 @@ async function getMyNFTs(address, type = "") {
 
     const balance = await contract.methods.balanceOf(address).call();
 
-    const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
-    );
+    // const tokens = await Promise.all(
+    //   range(0, balance - 1).map((i) =>
+    //     contract.methods.tokenOfOwnerByIndex(address, i).call()
+    //   )
+    // );
 
-    return tokens;
+    return balance;
   } else if (type === "multivers") {
     contract = new window.bscWeb3.eth.Contract(
       window.MULTIVERS_NFT_ABI,

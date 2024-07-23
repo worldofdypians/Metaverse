@@ -859,7 +859,7 @@ const MarketMint = ({
                                   : selectedMint.id === "multiversx" &&
                                     totalMultiversNft === 0
                                   ? "conflux-empty"
-                                  : "bnb-active"
+                                  : "conflux-empty"
                               } d-flex justify-content-center align-items-center p-3 position-relative`}
                               style={{ height: 312 }}
                             >
@@ -1037,10 +1037,10 @@ const MarketMint = ({
                                   activeButton === false ||
                                   myImmutableNfts.length === 0
                                 }
-                                to={`/marketplace/nft/${myImmutableNfts[0]}/${window.config.nft_immutable_address}`}
+                                to={`/marketplace/nft/${totalImmutableNft}/${window.config.nft_immutable_address}`}
                                 onClick={() => {
                                   updateViewCount(
-                                    myImmutableNfts[0],
+                                    totalImmutableNft,
                                     window.config.nft_immutable_address
                                   );
                                 }}
