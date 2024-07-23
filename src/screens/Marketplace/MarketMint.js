@@ -211,8 +211,8 @@ const MarketMint = ({
     id: "opbnb",
     cardTitle: "OPBNB Chain Beta Pass",
     title: "OPBNB Chain Beta Pass",
-    background: "bnb-mint-bg",
-    mobileBg: "bnbMobileBg.webp",
+    background: "opbnb-mint-bg",
+    mobileBg: "opbnbMobile.webp",
   };
 
   const windowSize = useWindowSize();
@@ -241,8 +241,8 @@ const MarketMint = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(coreData);
-  const [mintTitle, setMintTitle] = useState("core");
+  const [selectedMint, setSelectedMint] = useState(opbnbData);
+  const [mintTitle, setMintTitle] = useState("opbnbchain");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -414,14 +414,7 @@ const MarketMint = ({
     //   data: multiversData,
     //   class: "mint-multivers",
     // },
-    {
-      title: "CORE Pass",
-      eventId: "core",
-      desc: "Gain entry to metaverse, and join exclusive CORE event with special ticket.",
-      img: coreActive,
-      data: coreData,
-      class: "mint-core",
-    },
+
 
     // {
     //   title: "Viction Pass",
@@ -459,7 +452,14 @@ const MarketMint = ({
       class: "mint-bnb",
       id: "opbnb",
     },
-
+    {
+      title: "CORE Pass",
+      eventId: "core",
+      desc: "Gain entry to metaverse, and join exclusive CORE event with special ticket.",
+      img: coreActive,
+      data: coreData,
+      class: "mint-core",
+    },
     {
       title: "CAWS Timepiece",
       eventId: "timepiece",
@@ -899,7 +899,7 @@ const MarketMint = ({
                                   ? "bnb-active"
                                   : selectedMint.id === "opbnb" &&
                                     totalopbnbNft > 0
-                                  ? "bnb-active"
+                                  ? "opbnb-active"
                                   : selectedMint.id === "multiversx" &&
                                     totalMultiversNft === 0
                                   ? "conflux-empty"
