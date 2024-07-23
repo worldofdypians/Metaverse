@@ -138,10 +138,10 @@ const MintPopup = ({ active, onClose, data }) => {
    <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              Free Minting
+            Dypians Global Challenge
             </h6>
           </div>
-          <h6 className="mint-popup-title">opBNB Beta Pass</h6>
+          {/* <h6 className="mint-popup-title">opBNB Beta Pass</h6> */}
         </>
       ) : data.title === "Daily Bonus" ? (
         <>
@@ -218,8 +218,7 @@ const MintPopup = ({ active, onClose, data }) => {
         data.title === "opBNB" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           <span className="popup-available-mint">
-            Get access to the game and a unique event filled with surprises and
-            rewards!
+          Train Like a Champion with BNB Chain for your share of $250K+: Dypians' Global Challenge - DappBay
           </span>
         </div>
       ) : //  : data.title === "Viction" ? (
@@ -285,14 +284,16 @@ const MintPopup = ({ active, onClose, data }) => {
             <button className="btn filled-btn px-4">More</button>
           </Link>
         ) : data.title === "opBNB" ? (
-          <Link
+          <a
             onClick={onClose}
-            to={"/marketplace/mint/opbnbchain"}
+            href={"https://dappbay.bnbchain.org/campaign/train-like-a-champion-with-bnb-chain-and-share-$250K/11"}
+            target="_blank"
+            rel="noreferrer"
             state={{ event: data.state }}
             className="linear-border"
           >
             <button className="btn filled-btn px-4">More</button>
-          </Link>
+          </a>
         ) : data.title === "Immutable" ? (
           <Link
             onClick={onClose}

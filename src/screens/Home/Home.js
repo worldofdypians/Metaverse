@@ -39,6 +39,8 @@ import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreas
 import corePopupBg from "../../components/TimepieceMint/assets/corePopupBg.webp";
 import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
 import immutablePopup from "../../components/TimepieceMint/assets/immutablePopup.webp";
+import bnbcampaign from "../../components/TimepieceMint/assets/bnbcampaign.webp";
+
 
 import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
 import bnbPhase4 from "./WodBuilders/assets/bnbPhase4.png";
@@ -119,7 +121,7 @@ const Home = ({
   };
   const opbnbInfo = {
     title: "opBNB",
-    img: opbnbPopup,
+    img: bnbcampaign,
     state: "opbnb",
   };
 

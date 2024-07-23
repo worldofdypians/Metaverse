@@ -209,8 +209,8 @@ const MarketMint = ({
 
   const opbnbData = {
     id: "opbnb",
-    cardTitle: "OPBNB Chain Beta Pass",
-    title: "OPBNB Chain Beta Pass",
+    cardTitle: "opBNB Chain Beta Pass",
+    title: "opBNB Chain Beta Pass",
     background: "opbnb-mint-bg",
     mobileBg: "opbnbMobile.webp",
   };
@@ -440,7 +440,7 @@ const MarketMint = ({
     {
       title: "opBNB Chain Pass",
       eventId: "opbnbchain",
-      desc: "Gain entry to metaverse, and join exclusive OPBNB Chain event with special ticket.",
+      desc: "Gain entry to metaverse, and join exclusive opBNB Chain event with special ticket.",
       img: bnbActive,
       data: opbnbData,
       class: "mint-bnb",
@@ -666,7 +666,7 @@ const MarketMint = ({
         } else if (selectedMint.id === "opbnb") {
           if (chainId !== 204) {
             setactiveButton(false);
-            setStatus("Switch to OPBNB Chain to continue minting.");
+            setStatus("Switch to opBNB Chain to continue minting.");
           } else if (chainId === 204) {
             setactiveButton(true);
             setStatus("");
@@ -1416,7 +1416,7 @@ const MarketMint = ({
                                 className="limit-span position-relative d-flex align-items-center gap-2"
                                 style={{ bottom: "0px" }}
                               >
-                                Available only on OPBNB Chain
+                                Available only on opBNB Chain
                                 <img src={bnbLogo} alt="" />
                               </span>
                             ) : mintTitle === "multiversx" ? (
@@ -1663,7 +1663,7 @@ const MarketMint = ({
                                 : mintTitle === "bnbchain"
                                 ? "BNB Chain"
                                 : mintTitle === "opbnbchain"
-                                ? "OPBNB Chain"
+                                ? "opBNB Chain"
                                 : "SEI"}
                               <img
                                 style={{ width: 24, height: 24 }}

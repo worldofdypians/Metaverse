@@ -1872,7 +1872,7 @@ const SingleNft = ({
             )   : type === "opbnb" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
-                  OPBNB CHAIN{" "}   <h6
+                  opBNB CHAIN{" "}   <h6
                     className="market-banner-title m-0"
                     style={{ color: "#8C56FF", lineHeight: "80%" }}
                   >
@@ -2102,7 +2102,7 @@ const SingleNft = ({
                       : type === "core"
                       ? "CORE"
                       : type === "opbnb"
-                      ? "OPBNB Chain"
+                      ? "opBNB Chain"
                       : type === "immutable"
                       ? "Immutable"
                       : "Ethereum"}
@@ -2152,7 +2152,7 @@ const SingleNft = ({
                         : type === "base"
                         ? "Base Beta Pass"
                         : type === "opbnb"
-                        ? "OPBNB Chain Beta Pass"
+                        ? "opBNB Chain Beta Pass"
                         : "CAWS Timepiece"}{" "}
                      {type === "immutable" ? '' : ` #${nftId}`}
                       <img
