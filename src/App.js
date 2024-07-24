@@ -264,7 +264,7 @@ function App() {
   const [myvictionNFTsCreated, setmyVictionNFTsCreated] = useState([]);
   const [myopbnbNFTsCreated, setmyopbnbNFTsCreated] = useState([]);
   const [myimmutableNftsCreated, setmyImmutableNFTsCreated] = useState([]);
-
+  const [myMantaNFTsCreated, setMyMantaNFTsCreated] = useState([])
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
@@ -286,7 +286,7 @@ function App() {
   const [totalCoreNft, settotalCoreNft] = useState(0);
   const [totalVictionNft, settotalVictionNft] = useState(0);
   const [totalopbnbNft, settotalopbnbNft] = useState(0);
-
+  const [totalMantaNft, setTotalMantaNft] = useState(0)
   const [totalDogeNft, settotalDogeNft] = useState(0);
   const [totalCmcNft, settotalCmcNft] = useState(0);
 
@@ -302,7 +302,7 @@ function App() {
   const [confluxMintAllowed, setconfluxMintAllowed] = useState(1);
   const [victionMintAllowed, setvictionMintAllowed] = useState(1);
   const [opbnbMintAllowed, setopbnbMintAllowed] = useState(1);
-
+  const [mantaMintAllowed, setMantaMintAllowed] = useState(1)
   const [coreMintAllowed, setcoreMintAllowed] = useState(1);
 
   const [fireAppcontent, setFireAppContent] = useState(false);
@@ -345,7 +345,7 @@ function App() {
   const [myCoreNfts, setMyCoreNfts] = useState([]);
   const [myVictionNfts, setMyVictionNfts] = useState([]);
   const [myOpbnbNfts, setmyOpbnbNfts] = useState([]);
-
+  const [myMantaNfts, setMyMantaNfts] = useState([])
   const [myMultiversNfts, setMyMultiversNfts] = useState([]);
   const [myImmutableNfts, setMyImmutableNfts] = useState([]);
 
@@ -1251,6 +1251,12 @@ function App() {
         setopbnbMintAllowed(NFTS.length > 0 ? 0 : 1);
         setmyopbnbNFTsCreated(NFTS);
       });
+      getMyNFTS(coinbase, "manta").then((NFTS) => {
+        setTotalMantaNft(NFTS.length);
+        setMyMantaNfts(NFTS);
+        mantaMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setMyMantaNFTsCreated(NFTS);
+      });
 
       //setmyBaseNFTs
     } else {
@@ -1269,6 +1275,8 @@ function App() {
       settotalopbnbNft(0);
       setMyCoreNfts([]);
       settotalCoreNft(0);
+      setMyMantaNfts([]);
+      setTotalMantaNft(0);
     }
   };
 
@@ -1917,6 +1925,78 @@ function App() {
                 setmyOpbnbNfts(NFTS);
                 setopbnbMintAllowed(0);
                 setmyopbnbNFTsCreated(NFTS);
+              });
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+        } else {
+          // setShowWhitelistLoadingModal(true);
+        }
+      } catch (e) {
+        setmintloading("error");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        window.alertify.error(
+          typeof e == "object" && e.message
+            ? e.message
+            : typeof e == "string"
+            ? String(e)
+            : "Oops, something went wrong! Refresh the page and try again!"
+        );
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      }
+    }
+  };
+  const handleMantaNftMint = async () => {
+    if (isConnected && coinbase) {
+      try {
+        //Check Whitelist
+        let whitelist = 1;
+
+        if (parseInt(whitelist) === 1) {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+          // console.log(data,finalCaws, totalCawsDiscount);
+          let tokenId = await window.manta_nft
+            .mintMantaNFT()
+            .then(() => {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "manta").then((NFTS) => {
+                setTotalMantaNft(NFTS.length);
+                setMyMantaNfts(NFTS);
+                setMantaMintAllowed(0);
+                setMantaMintAllowed(NFTS);
               });
             })
             .catch((e) => {
@@ -4546,6 +4626,59 @@ function App() {
                 textColor={textColor}
                 calculateCaws={calculateCaws}
                 totalopbnbNft={totalopbnbNft}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                opbnbMintAllowed={opbnbMintAllowed}
+                myopbnbNFTsCreated={myopbnbNFTsCreated}
+                myConfluxNFTsCreated={myConfluxNFTsCreated}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                myskaleNFTsCreated={myskaleNFTsCreated}
+                handleConfluxMint={handleConfluxNftMint}
+                handleBaseNftMint={handleBaseNftMint}
+                confluxMintAllowed={confluxMintAllowed}
+                baseMintAllowed={baseMintAllowed}
+                skaleMintAllowed={skaleMintAllowed}
+                coreMintAllowed={coreMintAllowed}
+                victionMintAllowed={victionMintAllowed}
+                immutableMintAllowed={immutableMintAllowed}
+                totalCoreNft={totalCoreNft}
+                myCoreNfts={myCoreNfts}
+                totalMultiversNft={totalMultiversNft}
+                totalImmutableNft={totalImmutableNft}
+                myImmutableNfts={myImmutableNfts}
+                myMultiversNfts={myMultiversNfts}
+                totalseiNft={totalseiNft}
+                myseiNfts={myseiNfts}
+                totalVictionNft={totalVictionNft}
+                myVictionNfts={myVictionNfts}
+                myOpbnbNfts={myOpbnbNfts}
+                myBnbNfts={myBnbNfts}
+                totalBnbNft={totalBnbNft}
+              />
+            }
+          />
+            <Route
+            exact
+            path="/marketplace/mint/manta"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleMint={handleMantaNftMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalopbnbNft={totalopbnbNft}
+                totalMantaNft={totalMantaNft}
+                mantaMintAllowed={mantaMintAllowed}
+                myMantaNfts={myMantaNfts}
+                myMantaNFTsCreated={myMantaNFTsCreated}
                 totalCreated={totalTimepieceCreated}
                 timepieceMetadata={timepieceMetadata}
                 opbnbMintAllowed={opbnbMintAllowed}
