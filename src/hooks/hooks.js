@@ -122,6 +122,18 @@ export const handleSwitchNetworkhook = async (chainID) => {
     blockExplorerUrls: ["https://seistream.app/"],
   };
 
+  const IMMUTABLEPARAMS = {
+    chainId: "0x343b", // A 0x-prefixed hexadecimal string
+    chainName: "Immutable zkEVM",
+    nativeCurrency: {
+      name: "IMX",
+      symbol: "IMX", // 2-6 characters long
+      decimals: 18,
+    },
+    rpcUrls: ["https://rpc.immutable.com"],
+    blockExplorerUrls: ["https://explorer.immutable.com"],
+  };
+
   try {
     await ethereum.request({
       method: "wallet_switchEthereumChain",
@@ -140,7 +152,8 @@ export const handleSwitchNetworkhook = async (chainID) => {
       (chainID === "0xcc" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x45c" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x58" && switchError.code.toString().includes("32603")) ||
-      (chainID === "0xae3f3" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0xae3f3" && switchError.code.toString().includes("32603"))||
+      (chainID === "0x343b" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x585eb4b1" &&
         switchError.code.toString().includes("32603")) ||
       (switchError.code === 4902 &&
@@ -170,6 +183,8 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [VICTIONPARAMS]
               : chainID === "0xae3f3"
               ? [SEIPARAMS]
+              : chainID === "0x343b"
+              ? [IMMUTABLEPARAMS]
               : "",
         });
         if (window.ethereum && window.ethereum.isTrust === true) {

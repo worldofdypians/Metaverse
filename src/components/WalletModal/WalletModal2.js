@@ -2,11 +2,11 @@ import React from "react";
 import Modal from "../General/Modal";
 import OutsideClickHandler from "react-outside-click-handler";
 
-const WalletModal = ({ handleClose, show, handleConnection,handleConnectionPassport }) => {
+const WalletModal2 = ({ handleClose, show, handleConnection,handleConnectionPassport }) => {
   return (
     <Modal visible={show} onModalClose={handleClose} maxWidth={500}>
       <OutsideClickHandler onOutsideClick={handleClose}>
-        <div className="walletmodal-wrapper" id={'connect'}>
+        <div className="walletmodal-wrapper" id={'connect_simple'}>
           <div className="sc-jwKygS bFQpTL">
             <h3 style={{ fontSize: 20, color: "#fff" }}>Connect to a wallet</h3>
           </div>
@@ -147,4 +147,4 @@ const WalletModal = ({ handleClose, show, handleConnection,handleConnectionPassp
   );
 };
 
-export default WalletModal;
+export default WalletModal2;

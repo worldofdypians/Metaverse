@@ -619,7 +619,7 @@ const BetaPassNFT = ({
   const handleFirstTask = async (wallet) => {
     await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task7/${wallet}`
+        `https://api.worldofdypians.com/api/olympiad/task1/${wallet}`
       )
       .catch((e) => {
         console.error(e);
@@ -640,7 +640,7 @@ const BetaPassNFT = ({
         },
       }).then(() => {
         setalreadyRegistered(true);
-        // handleFirstTask(coinbase);
+        handleFirstTask(coinbase);
       });
     } catch (error) {
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
@@ -3570,7 +3570,7 @@ const BetaPassNFT = ({
                               onSuccessLogin={() => {
                                 setalreadyRegistered(true);
                                 refetchPlayer();
-                                // handleFirstTask(coinbase);
+                                handleFirstTask(coinbase);
                               }}
                               mintTitle={selectedMint.cardTitle}
                               chainId={chainId}
