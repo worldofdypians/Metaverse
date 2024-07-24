@@ -22,6 +22,7 @@ import skale from "../Header/assets/skale.svg";
 import sei from "../Header/assets/sei.svg";
 import viction from "../Header/assets/viction.svg";
 import core from "../Header/assets/core.svg";
+import manta from "../Header/assets/manta.png";
 import immutable from "../Header/assets/immutableLogo.svg";
 
 import error from "../Header/assets/error.svg";
@@ -54,6 +55,7 @@ const MobileNavbar = ({
   const [confluxState, setConfluxState] = useState(false);
   const [skaleState, setSkaleState] = useState(false);
   const [coreState, setCoreState] = useState(false);
+  const [mantaState, setMantaState] = useState(false);
   const [victionState, setVictionState] = useState(false);
   const [seiState, setSeiState] = useState(false);
   const [immutableState, setImmutableState] = useState(false);
@@ -86,6 +88,7 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
@@ -97,6 +100,7 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
 
       } else if (chainId === 8453) {
         setAvaxState(false);
@@ -109,6 +113,7 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
 
       } else if (chainId === 56) {
         setAvaxState(false);
@@ -121,6 +126,7 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
 
       } else if (chainId === 204) {
         setAvaxState(false);
@@ -133,6 +139,7 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
 
       } else if (chainId === 1030) {
         setAvaxState(false);
@@ -146,6 +153,7 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
 
       } else if (chainId === 1482601649) {
         setAvaxState(false);
@@ -159,6 +167,7 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
 
       } else if (chainId === 1116) {
         setAvaxState(false);
@@ -172,6 +181,7 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
 
       } else if (chainId === 88) {
         setAvaxState(false);
@@ -185,6 +195,7 @@ const MobileNavbar = ({
         setVictionState(true);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
 
       } else if (chainId === 13371) {
         setAvaxState(false);
@@ -198,6 +209,22 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(true);
+        setMantaState(false);
+
+      }
+      else if (chainId === 169) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false);
+        setImmutableState(false);
+        setMantaState(true);
 
       }
       // else if (chainId === 713715 ) {
@@ -223,6 +250,7 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
 
       }
     }
@@ -258,6 +286,24 @@ const MobileNavbar = ({
           });
       } else {
         handleSwitchChainGateWallet(1116);
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleMantaPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xa9")
+          .then(() => {
+            handleSwitchNetwork(169);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(169);
       }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
@@ -522,6 +568,8 @@ const MobileNavbar = ({
                         ? viction
                         : immutableState === true
                         ? immutable
+                        : mantaState === true
+                        ? manta
                         // : seiState === true
                         // ? sei
                         : error
@@ -551,6 +599,8 @@ const MobileNavbar = ({
                             ? "Viction"
                             : immutableState === true
                             ? "Immutable"
+                            : mantaState === true
+                            ? "Manta"
                             // : seiState === true
                             // ? "Sei"
                             : "Unsupported"}
@@ -567,6 +617,10 @@ const MobileNavbar = ({
                   <Dropdown.Item onClick={() => handleBnbPool()}>
                     <img src={bnb} alt="" />
                     BNB Chain
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleMantaPool()}>
+                    <img src={manta} alt="" />
+                    Manta Network
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleOpBnbPool()}>
                     <img src={bnb} alt="" />

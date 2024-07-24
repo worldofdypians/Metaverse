@@ -200,6 +200,16 @@ function App() {
       },
       blockExplorerUrls: ["https://explorer.immutable.com"],
     },
+    169: {
+      chainId: 169,
+      chainName: "Manta Pacific Mainnet",
+      rpcUrls: ["https://pacific-rpc.manta.network/http"],
+      nativeCurrency: {
+        symbol: "ETH",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://pacific-explorer.manta.network/"],
+    },
   };
 
   const {

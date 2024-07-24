@@ -28,6 +28,8 @@ import bnbIcon from "./assets/bnbIcon.svg";
 import greenCheck from "./assets/greenCheck.svg";
 import infoIcon from "./assets/infoIcon.svg";
 import skaleIcon from "./assets/skaleIcon.svg";
+import manta from "./assets/manta.png";
+
 import seiIcon from "./assets/seiIcon.svg";
 import multiversxIcon from "./assets/multiversxIcon.svg";
 import danger from "./assets/danger.svg";
@@ -615,6 +617,22 @@ const NewDailyBonus = ({
         await handleSwitchNetworkhook("0x38")
           .then(() => {
             handleSwitchNetwork(56);
+            setRewardData([]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+  const handleMantaPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xa9")
+          .then(() => {
+            handleSwitchNetwork(169);
             setRewardData([]);
           })
           .catch((e) => {
@@ -2093,6 +2111,109 @@ const NewDailyBonus = ({
                         </div>
                         <div
                           className={`position-relative chain-item ${
+                            chain === "manta" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={seiBg}
+                            className={`chain-img ${
+                              chain === "manta" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "manta" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("manta");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">
+                              BNB CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 169
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleMantaPool}
+                              >
+                                {" "}
+                                <img src={manta} alt="" /> MANTA
+                              </button>
+
+                            
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    bnbPercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(bnbPercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
                             chain === "skale" && "chain-item-active"
                           } w-100`}
                         >
@@ -2463,6 +2584,51 @@ const NewDailyBonus = ({
                               >
                                 <img src={bnbIcon} alt="" /> opBNB
                               </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "manta" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={seiBg}
+                            className={`chain-img ${
+                              chain === "manta" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "manta" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("manta");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">
+                              Manta CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 56
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleMantaPool}
+                              >
+                                {" "}
+                                <img src={manta} alt="" /> Manta
+                              </button>
+
                             </div>
                           </div>
                         </div>
@@ -3124,7 +3290,8 @@ const NewDailyBonus = ({
                               SKALE Network
                             </span>
                           </h6>
-                        ) : chain === "core" ? (
+                        )
+                         : chain === "core" ? (
                           <h6
                             className="loader-text mb-0"
                             style={{ color: "#ce5d1b" }}

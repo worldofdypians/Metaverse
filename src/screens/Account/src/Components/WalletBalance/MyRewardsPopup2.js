@@ -1131,19 +1131,6 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(treasureRewardMoney, 2)}
                 </span>
               </div>
-
-              <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">CORE</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(treasureRewardMoneyCore, 2)}
-                </span>
-              </div>
-            </div>
-
-            <div className="d-flex flex-column gap-2 w-50">
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SKALE</span>
                 <span className="item-name-right">
@@ -1162,6 +1149,28 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(treasureRewardMoneyViction, 2)}
                 </span>
               </div>
+            </div>
+
+            <div className="d-flex flex-column gap-2 w-50">
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Manta</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(treasureRewardMoneySkale, 2)}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">CORE</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(treasureRewardMoneyCore, 2)}
+                </span>
+              </div>
+           
               {/*  <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
                 <span className="item-name-right">
@@ -1251,6 +1260,15 @@ const MyRewardsPopupNew = ({
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Manta</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(gemRewards, 2)
+                    : getFormattedNumber(genesisRank2, 2)}
+                </span>
+              </div>
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Genesis</span>
                 <span className="item-name-right">
