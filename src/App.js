@@ -61,14 +61,13 @@ import SIDRegister from "@web3-name-sdk/register";
 import { createWeb3Name } from "@web3-name-sdk/core";
 import { ethers, providers } from "ethers";
 import {
-  // useWeb3React,
+  
   disconnect,
   connectWallet,
   ConnectionType,
 } from "web3-connector";
-// import { getWeb3Connector } from '@binance/w3w-web3-connector'
-import { Web3Provider } from '@ethersproject/providers'
-import { Web3ReactProvider, useWeb3React } from '@web3-react/core'
+import { getWeb3Connector } from '@binance/w3w-web3-connector'
+import { useWeb3React } from '@web3-react/core'
 import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
 import ChestFlyout from "./components/LandFlyout/ChestFlyout";
@@ -106,6 +105,17 @@ const checkoutSDK = new checkout.Checkout({
   baseConfig,
   passport: passportInstance,
 });
+
+
+const Connector = getWeb3Connector()
+const binanceConnector = new Connector({
+  lng: 'en-US',
+  supportedChainIds: [1, 56],
+  rpc:{
+    56: 'https://bsc-dataseed.binance.org/'
+  }
+})
+
 
 function App() {
   const CHAINLIST = {
@@ -395,6 +405,8 @@ function App() {
     useWeb3React();
 
   useEagerlyConnect();
+
+  const { activate, deactivate,  library } = useWeb3React()
 
   const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
   const starPrizesGolden = [400, 200, 140, 70, 30, 30, 30, 30, 30, 30];
@@ -923,6 +935,13 @@ function App() {
     }
     return isConnected;
   };
+
+
+  const handleConnectBinance = async()=>{
+    console.log(binanceConnector)
+    // activate(binanceConnector)
+    binanceConnector.activate()
+  }
 
   const handleConnectPassport = async () => {
     const widgets = await checkoutSDK.widgets({
@@ -4870,6 +4889,7 @@ function App() {
             handleConnectWallet();
           }}
           handleConnectionPassport={handleConnectPassport}
+          handleConnectBinance={handleConnectBinance}
         />
       )}
 
