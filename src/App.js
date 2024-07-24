@@ -1995,8 +1995,8 @@ function App() {
               getMyNFTS(coinbase, "manta").then((NFTS) => {
                 setTotalMantaNft(NFTS.length);
                 setMyMantaNfts(NFTS);
-                setMantaMintAllowed(0);
-                setMantaMintAllowed(NFTS);
+                setMantaMintAllowed(NFTS.length > 0 ? 0 : 1);
+                setMyMantaNFTsCreated(NFTS);
               });
             })
             .catch((e) => {
