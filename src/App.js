@@ -61,11 +61,14 @@ import SIDRegister from "@web3-name-sdk/register";
 import { createWeb3Name } from "@web3-name-sdk/core";
 import { ethers, providers } from "ethers";
 import {
-  useWeb3React,
+  // useWeb3React,
   disconnect,
   connectWallet,
   ConnectionType,
 } from "web3-connector";
+// import { getWeb3Connector } from '@binance/w3w-web3-connector'
+import { Web3Provider } from '@ethersproject/providers'
+import { Web3ReactProvider, useWeb3React } from '@web3-react/core'
 import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
 import ChestFlyout from "./components/LandFlyout/ChestFlyout";
