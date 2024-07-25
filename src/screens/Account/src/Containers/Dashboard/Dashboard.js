@@ -1892,7 +1892,7 @@ function Dashboard({
       StartPosition: 0,
       MaxResultsCount: 10,
     };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((e)=>{console.error(e); fillRecordsManta([])});
     setPrevVersionManta(parseInt(result.data.data.version));
     setDailyRecordsManta(result.data.data.leaderboard);
     fillRecordsManta(result.data.data.leaderboard);
@@ -1912,7 +1912,7 @@ function Dashboard({
       StartPosition: 0,
       MaxResultsCount: 10,
     };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((e)=>{console.error(e); fillRecordsWeeklyManta([]);});
     setWeeklyRecordsManta(result.data.data.leaderboard);
     setPrevVersionMantaWeekly(result.data.data.version);
     var testArray = result.data.data.leaderboard.filter(
@@ -1934,7 +1934,7 @@ function Dashboard({
       StartPosition: 0,
       MaxResultsCount: 10,
     };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((e)=>{console.error(e); fillRecordsMonthlyManta([]);});;
     setMonthlyRecordsManta(result.data.data.leaderboard);
     setPrevVersionMantaMonthly(result.data.data.version);
     var testArray = result.data.data.leaderboard.filter(
@@ -2855,6 +2855,9 @@ function Dashboard({
     fetchDailyRecordsViction();
     fetchWeeklyRecordsViction();
     fetchMonthlyRecordsViction();
+    fetchDailyRecordsManta();
+    fetchWeeklyRecordsManta();
+    fetchMonthlyRecordsManta();
     fetchDailyRecordsSkale();
     fetchWeeklyRecordsSkale();
     fetchMonthlyRecordsSkale();
@@ -2873,6 +2876,9 @@ function Dashboard({
     fetchPreviousWinnersViction();
     fetchPreviousWeeklyWinnersViction();
     fetchPreviousMonthlyWinnersViction();
+    fetchPreviousWinnersManta();
+    fetchPreviousWeeklyWinnersManta();
+    fetchPreviousMonthlyWinnersManta();
     fetchPreviousWinnersSkale();
     fetchPreviousWeeklyWinnersSkale();
     fetchPreviousMonthlyWinnersSkale();
