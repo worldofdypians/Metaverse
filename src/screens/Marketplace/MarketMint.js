@@ -221,8 +221,8 @@ myMantaNFTsCreated,
   };
   const mantaData = {
     id: "manta",
-    cardTitle: "Manta Network Beta Pass",
-    title: "Manta Network Beta Pass",
+    cardTitle: "Manta Beta Pass",
+    title: "Manta Beta Pass",
     background: "manta-mint-bg",
     mobileBg: "mantaBgMobile.webp",
   };
@@ -454,9 +454,9 @@ myMantaNFTsCreated,
     // },
 
     {
-      title: "Manta Network Pass",
+      title: "Manta Pass",
       eventId: "manta",
-      desc: "Gain entry to metaverse, and join exclusive Manta Network event with special ticket.",
+      desc: "Gain entry to metaverse, and join exclusive Manta event with special ticket.",
       img: mantaActive,
       data: mantaData,
       class: "mint-manta",
@@ -504,7 +504,7 @@ myMantaNFTsCreated,
     dotsClass: "button__bar",
     infinite: false,
     speed: 300,
-    slidesToShow: 5,
+    slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 0,
     beforeChange: (current, next) => {
@@ -724,7 +724,7 @@ myMantaNFTsCreated,
         else if (selectedMint.id === "manta") {
           if (chainId !== 169) {
             setactiveButton(false);
-            setStatus("Switch to Manta Network to continue minting.");
+            setStatus("Switch to Manta to continue minting.");
           } else if (chainId === 169) {
             setactiveButton(true);
             setStatus("");
@@ -1310,7 +1310,7 @@ myMantaNFTsCreated,
                                     alt=""
                                   />
                                   <span className="mint-benefits-title">
-                                    Minting is available on Manta Network
+                                    Minting is available on Manta
                                   </span>
                                 </div>
                               ) :
@@ -1481,7 +1481,7 @@ myMantaNFTsCreated,
                                 className="limit-span position-relative d-flex align-items-center gap-2"
                                 style={{ bottom: "0px" }}
                               >
-                                Available only on Manta Network
+                                Available only on Manta
                                 <img src={mantaLogo} alt="" />
                               </span>
                             ) 
@@ -1771,7 +1771,7 @@ myMantaNFTsCreated,
                                 : mintTitle === "opbnbchain"
                                 ? "opBNB Chain"
                                 : mintTitle === "manta"
-                                ? "Manta Network"
+                                ? "Manta"
                                 : "SEI"}
                               <img
                                 style={{ width: 24, height: 24 }}

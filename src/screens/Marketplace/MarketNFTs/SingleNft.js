@@ -1881,7 +1881,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
             : type === "manta" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
-                  Manta Network{" "}
+                  Manta{" "}
                   <h6
                     className="market-banner-title m-0"
                     style={{ color: "#8C56FF", lineHeight: "80%" }}
@@ -2136,7 +2136,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                       : type === "conflux"
                       ? "Conflux"
                       : type === "conflux"
-                      ? "Manta Network"
+                      ? "Manta"
                       : type === "base" ||
                         type === "landbase" ||
                         type === "cawsbase"
@@ -2184,7 +2184,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                         : type === "conflux"
                         ? "Conflux Beta Pass"
                         : type === "manta"
-                        ? "Manta Network Beta Pass"
+                        ? "Manta Beta Pass"
                         : type === "doge"
                         ? "Dogecoin Beta Pass"
                         : type === "bnb"
