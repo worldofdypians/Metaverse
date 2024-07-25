@@ -37,6 +37,8 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
           ? "upcoming-core-event"
           : data.title === "VICTION"
           ? "upcoming-viction-event"
+          : data.title === "Manta Network"
+          ? "upcoming-manta-event"
           : data.title === "Immutable"
           ? "upcoming-immutable-event"
           : data.title === "MultiversX"
