@@ -279,6 +279,11 @@ const NewChestItem = ({
       window.config.daily_bonus_viction_address
     );
 
+    const daily_bonus_contract_manta = new window.web3.eth.Contract(
+      window.DAILY_BONUS_MANTA_ABI,
+      window.config.daily_bonus_manta_address
+    );
+
     // console.log(daily_bonus_contract);
     if (chainId === 204) {
       if (rewardTypes === "premium" && isPremium) {
@@ -424,6 +429,58 @@ const NewChestItem = ({
               data.transactionHash,
               chestIndex - 1,
               "viction"
+            );
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+          });
+      }
+    }  else if (chainId === 169) {
+      if (rewardTypes === "premium" && isPremium) {
+        await daily_bonus_contract_manta.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "manta"
+            );
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+        await daily_bonus_contract_manta.methods
+          .openChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "manta"
             );
           })
           .catch((e) => {
@@ -675,6 +732,7 @@ const NewChestItem = ({
             chain === "bnb" ||
             chain === "sei" ||
             chain === "viction" ||
+            chain === "manta" ||
             chain === "core"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
                   open ? image + "open" : image
@@ -699,6 +757,7 @@ const NewChestItem = ({
             chain === "bnb" ||
             chain === "core" ||
             chain === "viction" ||
+            chain === "manta" ||
             chain === "sei"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
                   open

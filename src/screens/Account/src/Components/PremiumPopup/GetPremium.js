@@ -14,7 +14,6 @@ import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import coreIcon from "../../Components/WalletBalance/assets/coreLogo.svg";
 import vicitonIcon from "../../Components/WalletBalance/assets/victionLogo.svg";
 
-
 import axios from "axios";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 
@@ -58,6 +57,10 @@ const GetPremiumPopup = ({
       name: "Viction",
       symbol: "viction",
     },
+    {
+      name: "Manta",
+      symbol: "manta",
+    },
   ];
 
   const { BigNumber } = window;
@@ -70,6 +73,7 @@ const GetPremiumPopup = ({
   let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
   let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
+  let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
 
   const metaverseBenefits = [
     "Exclusive access to World of Dypians",
@@ -236,6 +240,22 @@ const GetPremiumPopup = ({
     }
   };
 
+  const handleMantaPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xa9")
+          .then(() => {
+            handleSwitchNetwork(169);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
   const handleBasePool = async () => {
     if (!window.gatewallet) {
       await handleSwitchNetworkhook("0x2105")
@@ -283,7 +303,6 @@ const GetPremiumPopup = ({
     }
   };
 
-  
   const handleCorePool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
@@ -349,6 +368,8 @@ const GetPremiumPopup = ({
         ? window.config.subscriptionsei_tokens[token]?.decimals
         : chainId === 88
         ? window.config.subscriptionviction_tokens[token]?.decimals
+        : chainId === 169
+        ? window.config.subscriptionmanta_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -376,6 +397,8 @@ const GetPremiumPopup = ({
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 88
         ? await window.getEstimatedTokenSubscriptionAmountViction(token)
+        : chainId === 169
+        ? await window.getEstimatedTokenSubscriptionAmountManta(token)
         : chainId === 713715
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
@@ -404,6 +427,7 @@ const GetPremiumPopup = ({
     const seisubscribeAddress = window.config.subscription_sei_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
     const coresubscribeAddress = window.config.subscription_core_address;
+    const mantasubscribeAddress = window.config.subscription_manta_address;
 
     const web3 = new Web3(window.ethereum);
 
@@ -489,6 +513,8 @@ const GetPremiumPopup = ({
             ? skalesubscribeAddress
             : chainId === 88
             ? victionsubscribeAddress
+            : chainId === 169
+            ? mantasubscribeAddress
             : chainId === 1116
             ? coresubscribeAddress
             : chainId === 713715
@@ -527,6 +553,7 @@ const GetPremiumPopup = ({
     const seiWeb3 = new Web3(window.config.sei_endpoint);
     const coreWeb3 = new Web3(window.config.core_endpoint);
     const victionWeb3 = new Web3(window.config.viction_endpoint);
+    const mantaWeb3 = new Web3(window.config.manta_endpoint);
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
@@ -537,6 +564,7 @@ const GetPremiumPopup = ({
     const seisubscribeAddress = window.config.subscription_sei_address;
     const coresubscribeAddress = window.config.subscription_core_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
+    const mantasubscribeAddress = window.config.subscription_manta_address;
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -584,6 +612,11 @@ const GetPremiumPopup = ({
       subscribeToken
     );
 
+    const subscribeTokencontractmanta = new mantaWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
     let tokenprice =
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
@@ -602,6 +635,8 @@ const GetPremiumPopup = ({
         ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
         : chainId === 88
         ? await window.getEstimatedTokenSubscriptionAmountViction(token)
+        : chainId === 169
+        ? await window.getEstimatedTokenSubscriptionAmountManta(token)
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 713715
@@ -628,6 +663,20 @@ const GetPremiumPopup = ({
       } else if (chainId === 88) {
         const result = await subscribeTokencontractviction.methods
           .allowance(coinbase, victionsubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } else if (chainId === 169) {
+        const result = await subscribeTokencontractmanta.methods
+          .allowance(coinbase, mantasubscribeAddress)
           .call()
           .then();
         if (result != 0 && Number(result) >= Number(tokenprice)) {
@@ -822,6 +871,8 @@ const GetPremiumPopup = ({
           ? "SUBSCRIPTION_SKALE"
           : chainId === 88
           ? "SUBSCRIPTION_VICTION"
+          : chainId === 169
+          ? "SUBSCRIPTION_MANTA"
           : chainId === 1116
           ? "SUBSCRIPTION_CORE"
           : chainId === 713715
@@ -990,6 +1041,15 @@ const GetPremiumPopup = ({
       );
       handleSubscriptionTokenChange(wvictionAddress);
       handleCheckIfAlreadyApproved(wvictionAddress);
+    } else if (chainId === 169) {
+      setChainDropdown(chainDropdowns[8]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionmanta_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wmantaddress);
+      handleCheckIfAlreadyApproved(wmantaddress);
     } else if (chainId === 1116) {
       setChainDropdown(chainDropdowns[6]);
       setdropdownIcon("usdt");
@@ -1044,6 +1104,11 @@ const GetPremiumPopup = ({
     } else if (chainId === 88 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionviction_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 169 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionmanta_tokens[selectedSubscriptionToken]
           ?.decimals
       );
     } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
@@ -1164,6 +1229,14 @@ const GetPremiumPopup = ({
                     alt=""
                   />
                   <span className="subscription-chain mb-0">BNB Chain</span>
+                </div>
+
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={require(`../../../../../components/Header/assets/manta.png`)}
+                    alt=""
+                  />
+                  <span className="subscription-chain mb-0">Manta Chain</span>
                 </div>
 
                 <div className="d-flex align-items-center gap-2">
@@ -1310,6 +1383,20 @@ const GetPremiumPopup = ({
                 </li>
                 <li
                   className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                  onClick={handleMantaPool}
+                >
+                  <img
+                    src={
+                      require(`../../Images/premium/tokens/mantaIcon.svg`)
+                        .default
+                    }
+                    style={{ width: 18, height: 18 }}
+                    alt=""
+                  />
+                  Manta Chain
+                </li>
+                <li
+                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                   onClick={handleAvaxPool}
                 >
                   <img
@@ -1364,34 +1451,34 @@ const GetPremiumPopup = ({
                   SKALE
                 </li>
                 <li
-                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                      onClick={handleCorePool}
-                                    >
-                                      <img
-                                        src={coreIcon}
-                                        alt=""
-                                        style={{
-                                          width: "18px",
-                                          height: "18px",
-                                        }}
-                                      />
-                                      CORE
-                                    </li>
-                                    <li
-                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                      onClick={handleVictionPool}
-                                    >
-                                      <img
-                                        src={vicitonIcon}
-                                        alt=""
-                                        style={{
-                                          width: "18px",
-                                          height: "18px",
-                                        }}
-                                      />
-                                      Viction
-                                    </li>
-                                {/*     <li
+                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                  onClick={handleCorePool}
+                >
+                  <img
+                    src={coreIcon}
+                    alt=""
+                    style={{
+                      width: "18px",
+                      height: "18px",
+                    }}
+                  />
+                  CORE
+                </li>
+                <li
+                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                  onClick={handleVictionPool}
+                >
+                  <img
+                    src={vicitonIcon}
+                    alt=""
+                    style={{
+                      width: "18px",
+                      height: "18px",
+                    }}
+                  />
+                  Viction
+                </li>
+                {/*     <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={handleSeiPool}
                                     >
@@ -1463,6 +1550,8 @@ const GetPremiumPopup = ({
                           ? window.config.subscriptionskale_tokens
                           : chainId === 88
                           ? window.config.subscriptionviction_tokens
+                          : chainId === 169
+                          ? window.config.subscriptionmanta_tokens
                           : chainId === 1116
                           ? window.config.subscriptioncore_tokens
                           : chainId === 713715
@@ -1496,6 +1585,9 @@ const GetPremiumPopup = ({
                                   : chainId === 88
                                   ? window.config.subscriptionviction_tokens[t]
                                       ?.symbol
+                                  : chainId === 169
+                                  ? window.config.subscriptionmanta_tokens[t]
+                                      ?.symbol
                                   : chainId === 1116
                                   ? window.config.subscriptioncore_tokens[t]
                                       ?.symbol
@@ -1524,6 +1616,9 @@ const GetPremiumPopup = ({
                                       ?.symbol
                                   : chainId === 88
                                   ? window.config.subscriptionviction_tokens[t]
+                                      ?.symbol
+                                  : chainId === 169
+                                  ? window.config.subscriptionmanta_tokens[t]
                                       ?.symbol
                                   : chainId === 713715
                                   ? window.config.subscriptionsei_tokens[t]
@@ -1574,6 +1669,10 @@ const GetPremiumPopup = ({
                                 ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
                                     t
                                   ]?.symbol.toLowerCase()}Icon.svg`)
+                                : chainId === 169
+                                ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
+                                    t
+                                  ]?.symbol.toLowerCase()}Icon.svg`)
                                 : chainId === 713715
                                 ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
                                     t
@@ -1600,6 +1699,15 @@ const GetPremiumPopup = ({
                             ? window.config.subscriptionbase_tokens[t]?.symbol
                             : chainId === 1482601649
                             ? window.config.subscriptionskale_tokens[t]?.symbol
+                            : chainId === 1116
+                            ? window.config.subscriptioncore_tokens[t]?.symbol
+                            : chainId === 88
+                            ? window.config.subscriptionviction_tokens[t]
+                                ?.symbol
+                            : chainId === 169
+                            ? window.config.subscriptionmanta_tokens[t]?.symbol
+                            : chainId === 713715
+                            ? window.config.subscriptionsei_tokens[t]?.symbol
                             : window.config.subscription_tokens[t]?.symbol}
                         </li>
                       ))}
