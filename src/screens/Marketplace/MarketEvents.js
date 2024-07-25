@@ -227,7 +227,10 @@ const MarketEvents = ({
   const [victionPrice, setVictionPrice] = useState(0);
   const [victionEarnToken, setVictionEarnToken] = useState(0);
   const [victionPoints, setVictionPoints] = useState(0);
-
+  const [mantaPrice, setMantaPrice] = useState(0);
+  const [mantaEarnToken, setMantaEarnToken] = useState(0);
+  const [mantaEarnUsd, setMantaEarnUsd] = useState(0);
+  const [mantaPoints, setMantaPoints] = useState(0);
   const [multiversEarnUsd, setmultiversEarnUsd] = useState(0);
   const [multiversPrice, setmultiversPrice] = useState(0);
   const [multiversEarnToken, setmultiversEarnToken] = useState(0);
@@ -996,6 +999,9 @@ const MarketEvents = ({
           const victionEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "viction";
           });
+          const mantaEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "manta";
+          });
 
           const multiversEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "multivers";
@@ -1064,6 +1070,16 @@ const MarketEvents = ({
             setVictionPoints(pointsViction);
             setVictionEarnUsd(userEarnedusd);
             setVictionEarnToken(userEarnedusd / victionPrice);
+          }
+
+          if (mantaEvent && mantaEvent[0]) {
+            const userEarnedusd =
+              mantaEvent[0].reward.earn.total /
+              mantaEvent[0].reward.earn.multiplier;
+            const pointsManta = mantaEvent[0].reward.earn.totalPoints;
+            setMantaPoints(pointsManta);
+            setMantaEarnUsd(userEarnedusd);
+            setMantaEarnToken(userEarnedusd / mantaPrice);
           }
 
           if (multiversEvent && multiversEvent[0]) {
@@ -1606,6 +1622,8 @@ const MarketEvents = ({
                             ? dypiusPremiumEarnUsd
                             : item.title === "BNB Chain"
                             ? bnbEarnUsd
+                            : item.title === "Manta Network"
+                            ? mantaEarnUsd
                             : 0
                         }
                       />
@@ -2493,6 +2511,8 @@ const MarketEvents = ({
                         ? victionEarnUsd
                         : dummyEvent.id === "event20"
                         ? bnbEarnUsd
+                        : dummyEvent.id === "event21"
+                        ? mantaEarnUsd
                         : 0,
                       2
                     )}
