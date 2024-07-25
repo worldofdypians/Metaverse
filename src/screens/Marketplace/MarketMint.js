@@ -22,6 +22,7 @@ import nextArrow from "./assets/nextArrow1.svg";
 import confluxActive from "./assets/confluxActive.png";
 import coin98Active from "./assets/coin98Active.png";
 import bnbActive from "./assets/bnbActive.png";
+import mantaActive from "./assets/mantaActive.png";
 import coingeckoActive from "./assets/coingeckoActive.png";
 import skaleActive from "./assets/upcomingSkaleMobile.webp";
 import immutableActive from "./assets/immutableActive.webp";
@@ -222,8 +223,8 @@ myMantaNFTsCreated,
     id: "manta",
     cardTitle: "Manta Network Beta Pass",
     title: "Manta Network Beta Pass",
-    background: "opbnb-mint-bg",
-    mobileBg: "opbnbMobile.webp",
+    background: "manta-mint-bg",
+    mobileBg: "mantaBgMobile.webp",
   };
 
   const windowSize = useWindowSize();
@@ -455,10 +456,10 @@ myMantaNFTsCreated,
     {
       title: "Manta Network Pass",
       eventId: "manta",
-      desc: "Gain entry to metaverse, and join exclusive MantaNetwork event with special ticket.",
-      img: bnbActive,
+      desc: "Gain entry to metaverse, and join exclusive Manta Network event with special ticket.",
+      img: mantaActive,
       data: mantaData,
-      class: "mint-bnb",
+      class: "mint-manta",
       id: "manta",
     },
     {
@@ -930,6 +931,9 @@ myMantaNFTsCreated,
                                   : selectedMint.id === "core" &&
                                     totalCoreNft > 0
                                   ? "core-active"
+                                  : selectedMint.id === "manta" &&
+                                    totalMantaNft > 0
+                                  ? "manta-active"
                                   : selectedMint.id === "viction" &&
                                     totalVictionNft > 0
                                   ? "viction-active"

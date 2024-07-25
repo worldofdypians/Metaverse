@@ -33,6 +33,7 @@ import seiLogo from "./assets/seiLogo.svg";
 import multiversLogo from "./assets/multiversLogo.svg";
 
 import coreLogo from "./assets/coreLogo.svg";
+import mantaLogo from "./assets/mantaLogo2.png";
 import victionLogo from "./assets/victionLogo.svg";
 import immutableLogo from "./assets/immutableLogo.svg";
 
@@ -79,6 +80,7 @@ import seiThumb from "../Account/src/Components/WalletBalance/assets/seiThumb.pn
 import multiversThumb from "../Account/src/Components/WalletBalance/assets/multiversThumb.png";
 import immutableThumb from "../Account/src/Components/WalletBalance/assets/immutableThumb.png";
 import coreThumb from "../Account/src/Components/WalletBalance/assets/coreThumb.png";
+import mantaThumb from "../Account/src/Components/WalletBalance/assets/mantaThumb.png";
 
 import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.svg";
@@ -104,6 +106,8 @@ import bnbPopupImage from "./assets/bnbPopupImage.png";
 import coreBg from "./assets/coreBg.webp";
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
+import mantaBg from "./assets/mantaBg.webp";
+import mantaMobileBg from "./assets/mantaMobileBg.png";
 import immutableMobileBg from "./assets/immutableActive.webp";
 import seiMobileBg from "./assets/seiActive.webp";
 import coreMobileBg from "./assets/coreActive.webp";
@@ -229,8 +233,6 @@ const MarketEvents = ({
   const [multiversEarnToken, setmultiversEarnToken] = useState(0);
   const [multiversPoints, setmultiversPoints] = useState(0);
 
-
-
   const selected = useRef(null);
   const { email } = useAuth();
 
@@ -242,7 +244,6 @@ const MarketEvents = ({
         setBnbPrice(bnb);
       });
   };
-
 
   const fetchCorePrice = async () => {
     await axios
@@ -263,7 +264,6 @@ const MarketEvents = ({
         setVictionPrice(obj.data.tomochain.usd);
       });
   };
-
 
   const fetchEgldPrice = async () => {
     await axios
@@ -286,7 +286,6 @@ const MarketEvents = ({
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
-
 
   const dailyBonusMintData = {
     title: "Daily Bonus",
@@ -323,7 +322,34 @@ const MarketEvents = ({
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
-       {
+    {
+      title: "Manta Network",
+      logo: mantaLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in ETH Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: mantaBg,
+      popupInfo: {
+        title: "Manta Network",
+        chain: "Manta Network",
+        linkState: "manta",
+        rewards: "ETH",
+        status: "Live",
+        id: "event21",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in ETH Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
+    {
       title: "CORE",
       logo: coreLogo,
       eventStatus: "Live",
@@ -346,12 +372,11 @@ const MarketEvents = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore:
-          "",
+        learnMore: "",
         eventDate: "Jul 01, 2024",
       },
     },
- {
+    {
       title: "VICTION",
       logo: victionLogo,
       eventStatus: "Live",
@@ -374,8 +399,7 @@ const MarketEvents = ({
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore:
-          "",
+        learnMore: "",
         eventDate: "Jul 01, 2024",
       },
     },
@@ -952,7 +976,6 @@ const MarketEvents = ({
       if (response.status === 200) {
         const responseData = await response.json();
         if (responseData.events) {
-       
           const coingeckoEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "coingecko";
           });
@@ -1023,40 +1046,35 @@ const MarketEvents = ({
             setBnbEarnToken(userEarnedusd / bnbPrice);
           }
 
-
-
           if (coreEvent && coreEvent[0]) {
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
               coreEvent[0].reward.earn.multiplier;
-              const pointsCore= coreEvent[0].reward.earn.totalPoints;
-            setCorePoints(pointsCore)
+            const pointsCore = coreEvent[0].reward.earn.totalPoints;
+            setCorePoints(pointsCore);
             setCoreEarnUsd(userEarnedusd);
             setCoreEarnToken(userEarnedusd / corePrice);
           }
-
 
           if (victionEvent && victionEvent[0]) {
             const userEarnedusd =
               victionEvent[0].reward.earn.total /
               victionEvent[0].reward.earn.multiplier;
-              const pointsViction = victionEvent[0].reward.earn.totalPoints;
-            setVictionPoints(pointsViction)
+            const pointsViction = victionEvent[0].reward.earn.totalPoints;
+            setVictionPoints(pointsViction);
             setVictionEarnUsd(userEarnedusd);
             setVictionEarnToken(userEarnedusd / victionPrice);
           }
 
           if (multiversEvent && multiversEvent[0]) {
             const userEarnedusd =
-            multiversEvent[0].reward.earn.total /
-            multiversEvent[0].reward.earn.multiplier;
-              const pointsmultivers = multiversEvent[0].reward.earn.totalPoints;
-            setmultiversPoints(pointsmultivers)
+              multiversEvent[0].reward.earn.total /
+              multiversEvent[0].reward.earn.multiplier;
+            const pointsmultivers = multiversEvent[0].reward.earn.totalPoints;
+            setmultiversPoints(pointsmultivers);
             setmultiversEarnUsd(userEarnedusd);
             setmultiversEarnToken(userEarnedusd / multiversPrice);
           }
-
-
 
           if (dypEvent && dypEvent[0]) {
             const userEarnedDyp =
@@ -1176,7 +1194,6 @@ const MarketEvents = ({
   }, []);
 
   useEffect(() => {
-
     if (windowSize.width < 786) {
       window.scrollTo(0, 750);
     }
@@ -1492,12 +1509,31 @@ const MarketEvents = ({
               )}
               {activeTab === "upcoming" && (
                 <div className="d-flex flex-column gap-4">
-                    <div className="border-0 upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  <div className="border-0 upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Manta Network</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the Manta Network Treasure Hunt event for a chance
+                        to grab a share of the $20,000 ETH reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={mantaBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={mantaMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+                  <div className="border-0 upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">MultiversX</h6>
                       <p className="upcoming-mint-desc">
-                        Join the MultiversX Treasure Hunt event for a chance to grab a
-                        share of the $20,000 ELGD reward pool.
+                        Join the MultiversX Treasure Hunt event for a chance to
+                        grab a share of the $20,000 ELGD reward pool.
                       </p>
                     </div>
                     <img
@@ -1511,6 +1547,7 @@ const MarketEvents = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
+
                   <div className="border-0 upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">SEI</h6>
@@ -1530,9 +1567,6 @@ const MarketEvents = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
-                
-                
-                 
                 </div>
               )}
               {activeTab === "past" && (
@@ -1665,6 +1699,8 @@ const MarketEvents = ({
                         ? multiversThumb
                         : dummyEvent.linkState === "bnb"
                         ? bnbPopupImage
+                        : dummyEvent.linkState === "manta"
+                        ? mantaThumb
                         : eventPopupImage
                     }
                     alt=""
@@ -1722,7 +1758,7 @@ const MarketEvents = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              {dummyEvent.status === "Live" && dummyEvent.learnMore!=='' && (
+              {dummyEvent.status === "Live" && dummyEvent.learnMore !== "" && (
                 <NavLink
                   to={dummyEvent.learnMore}
                   className="events-page-details d-flex align-items-center gap-2"
@@ -1771,6 +1807,18 @@ const MarketEvents = ({
                       placement on the global leaderboard. Remember to log in to
                       the game daily and venture into the BNB Chain area to
                       uncover hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event21" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Manta Network Beta Pass NFT</b>. You can get the
+                      Manta Network Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Manta Network area, players not only stand a
+                      chance to secure daily rewards in BNB, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Manta Network area to uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event3" ? (
                     <p className="popup-event-desc">
@@ -1976,6 +2024,8 @@ const MarketEvents = ({
                           ? "CORE"
                           : dummyEvent.id === "event16"
                           ? "EGLD"
+                          : dummyEvent.id === "event21"
+                          ? "ETH"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2027,6 +2077,8 @@ const MarketEvents = ({
                 ? "CORE"
                 : dummyEvent.id === "event16"
                 ? "MultiversX"
+                : dummyEvent.id === "event21"
+                ? "Manta Network"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2068,6 +2120,22 @@ const MarketEvents = ({
                 empowers projects to build and scale efficiently, ensuring fast,
                 secure, and decentralized solutions without compromising on user
                 experience or innovation.
+              </p>
+            ) : dummyEvent.id === "event21" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Manta Network is the multi-modular ecosystem for zero-knowledge
+                (ZK) applications. Manta Network was created by a team of
+                experienced founders from prestigious institutions, including
+                Harvard, MIT, and Algorand. Manta Network has received
+                investments from many top web3 investment funds, including
+                Binance Labs and Polychain Capital. It has grown through
+                participation in the best web3 accelerators, including Alliance
+                DAO and Berkeley Blockchain Xcelerator. Manta Network is poised
+                to bring the next generation of web3 users and usher in a new
+                chapter of web3 zkApp applications.
               </p>
             ) : dummyEvent.id === "event3" ? (
               <p
@@ -2243,6 +2311,8 @@ const MarketEvents = ({
                     ? "https://twitter.com/Coredao_Org"
                     : dummyEvent.id === "event16"
                     ? "https://twitter.com/MultiversX"
+                    : dummyEvent.id === "event21"
+                    ? "https://x.com/mantanetwork"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2280,6 +2350,8 @@ const MarketEvents = ({
                     ? "https://t.me/CoreDAOTelegram"
                     : dummyEvent.id === "event16"
                     ? "https://t.me/MultiversX"
+                    : dummyEvent.id === "event21"
+                    ? "https://www.t.me/mantanetworkofficial"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -2326,6 +2398,8 @@ const MarketEvents = ({
                     ? "https://coredao.org/"
                     : dummyEvent.id === "event16"
                     ? "https://multiversx.com/"
+                    : dummyEvent.id === "event16"
+                    ? "https://manta.network/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -2481,6 +2555,8 @@ const MarketEvents = ({
                             ? "CORE"
                             : dummyEvent.id === "event16"
                             ? "EGLD"
+                            : dummyEvent.id === "event21"
+                            ? "ETH"
                             : "ETH"}
                         </>
                       )}
