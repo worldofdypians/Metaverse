@@ -1483,7 +1483,7 @@ window.config = {
   nft_bnb_address: "0xe468df1606650452b2c08c36F79eaA8B78848E9C",
   nft_opbnb_address: "0x4e4A3f047fA8Fe69cB1a79a0452121ED6fca95ba",
   nft_multivers_address: "0x96A3F313679f2F5Ce098091BFf271bF4e848178B",
-  nft_manta_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
+  nft_manta_address: "0xf894eBD7c4c850687D208246c42036EB951CE324",
   nft_dypius_premium_address: "0xd8B2C0D3400Ce23e62A94154d83172303C643685",
   ccip_eth_caws_address: "0x2824Ac0Eab15744396E763A698b55F4Fe983a757",
   ccip_bnb_caws_address: "0x0C5E19B9147c39d196bC6c88D087A7A84f99563E",
