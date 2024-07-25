@@ -326,7 +326,7 @@ const MarketEvents = ({
     //   },
     // },
     {
-      title: "Manta Network",
+      title: "Manta",
       logo: mantaLogo,
       eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
@@ -335,8 +335,8 @@ const MarketEvents = ({
       eventDate: "Jul 01, 2024",
       backgroundImage: mantaBg,
       popupInfo: {
-        title: "Manta Network",
-        chain: "Manta Network",
+        title: "Manta",
+        chain: "Manta",
         linkState: "manta",
         rewards: "ETH",
         status: "Live",
@@ -1444,7 +1444,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 4).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1527,9 +1527,9 @@ const MarketEvents = ({
                 <div className="d-flex flex-column gap-4">
                   <div className="border-0 upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">Manta Network</h6>
+                      <h6 className="upcoming-mint-title">Manta</h6>
                       <p className="upcoming-mint-desc">
-                        Join the Manta Network Treasure Hunt event for a chance
+                        Join the Manta Treasure Hunt event for a chance
                         to grab a share of the $20,000 ETH reward pool.
                       </p>
                     </div>
@@ -1595,7 +1595,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(3, dummyBetaPassData2.length)
+                    .slice(4, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
@@ -1829,14 +1829,14 @@ const MarketEvents = ({
                   ) : dummyEvent.id === "event21" ? (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
-                      <b>hold a Manta Network Beta Pass NFT</b>. You can get the
-                      Manta Network Beta Pass NFT from the World of Dypians
+                      <b>hold a Manta Beta Pass NFT</b>. You can get the
+                      Manta Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
-                      exploring the Manta Network area, players not only stand a
+                      exploring the Manta area, players not only stand a
                       chance to secure daily rewards in BNB, but also earn
                       points for their placement on the global leaderboard.
                       Remember to log in to the game daily and venture into the
-                      Manta Network area to uncover hidden treasures.
+                      Manta area to uncover hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event3" ? (
                     <p className="popup-event-desc">
@@ -2096,7 +2096,7 @@ const MarketEvents = ({
                 : dummyEvent.id === "event16"
                 ? "MultiversX"
                 : dummyEvent.id === "event21"
-                ? "Manta Network"
+                ? "Manta"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2144,14 +2144,14 @@ const MarketEvents = ({
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
-                Manta Network is the multi-modular ecosystem for zero-knowledge
-                (ZK) applications. Manta Network was created by a team of
+                Manta is the multi-modular ecosystem for zero-knowledge
+                (ZK) applications. Manta was created by a team of
                 experienced founders from prestigious institutions, including
-                Harvard, MIT, and Algorand. Manta Network has received
+                Harvard, MIT, and Algorand. Manta has received
                 investments from many top web3 investment funds, including
                 Binance Labs and Polychain Capital. It has grown through
                 participation in the best web3 accelerators, including Alliance
-                DAO and Berkeley Blockchain Xcelerator. Manta Network is poised
+                DAO and Berkeley Blockchain Xcelerator. Manta is poised
                 to bring the next generation of web3 users and usher in a new
                 chapter of web3 zkApp applications.
               </p>

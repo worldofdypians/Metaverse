@@ -21,6 +21,8 @@ import victionBg from "./assets/victionBg.webp";
 import seiLogo from "./assets/seiLogo.svg";
 import seiBg from "./assets/seiBg.webp";
 import coreLogo from "./assets/coreLogo.svg";
+import mantaLogo from "./assets/mantaLogo.png";
+
 import coreBg from "./assets/coreBg.webp";
 import immutableLogo from "./assets/immutableLogo.svg";
 import immutableBg from "./assets/immutableBg.webp";
@@ -237,6 +239,45 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
       },
     },
     {
+      title: "Manta",
+      chain: "Manta Chain",
+      linkState: "manta",
+      rewards: "ETH",
+      status: "Live",
+      eventStatus: "Live",
+      id: "event11",
+      eventType: "Explore & Mine",
+      date: "December 22, 2023",
+      logo: mantaLogo,
+      totalRewards: "$20,000 in ETH Rewards",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "ETH Rewards",
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore:
+        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+      popupInfo: {
+        title: "Manta",
+        chain: "Manta Chain",
+        linkState: "manta",
+        rewards: "ETH",
+        status: "Live",
+        id: "event11",
+        eventStatus: "Live",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in ETH Rewards",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "December 22, 2023",
+      },
+    },
+    {
       title: "CORE",
       logo: coreLogo,
       eventStatus: "Live",
@@ -298,6 +339,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
         eventDate: "XXX XX, XXXX",
       },
     },
+
     {
       title: "SKALE",
       chain: "SKALE Nebula Hub",
@@ -631,7 +673,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          dots: true
+          dots: true,
         },
       },
     ],
@@ -761,7 +803,6 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
               previousGenesisVersion={previousGenesisVersion}
               screen={"home"}
               allStarData={allStarData}
-
             />
             {/* <NewHomeLeaderboard /> */}
           </div>

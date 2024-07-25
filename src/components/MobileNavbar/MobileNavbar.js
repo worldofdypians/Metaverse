@@ -620,7 +620,7 @@ const MobileNavbar = ({
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleMantaPool()}>
                     <img src={manta} alt="" />
-                    Manta Network
+                    Manta
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleOpBnbPool()}>
                     <img src={bnb} alt="" />

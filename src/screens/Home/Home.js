@@ -126,7 +126,7 @@ const Home = ({
     state: "opbnb",
   };
   const mantaInfo = {
-    title: "Manta Network",
+    title: "Manta",
     img: mantaPopup,
     state: "manta",
   };
