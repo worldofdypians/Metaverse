@@ -2048,6 +2048,9 @@ window.config.nft_manta_address.toLowerCase(), "type");
                           window.config.nft_conflux_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
                         : nftAddress.toLowerCase() ===
+                          window.config.nft_manta_address.toLowerCase()
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+400.png`
+                        : nftAddress.toLowerCase() ===
                           window.config.nft_doge_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
                         : nftAddress.toLowerCase() ===

@@ -92,6 +92,7 @@ import multiversBg from "./assets/multiversBg.webp";
 import seiLogo from "./assets/seiLogo.svg";
 import seiBg from "./assets/seiBg.webp";
 import coreLogo from "./assets/coreLogo.svg";
+import mantaLogo from "./assets/mantaLogo2.png";
 import bnbLogo from "./assets/bnbIcon.svg";
 import coreBg from "./assets/coreBg.webp";
 import immutableLogo from "./assets/immutableLogo.svg";
@@ -349,6 +350,29 @@ const NewWalletBalance = ({
     rewards: "CORE",
     status: "Live",
   };
+  const dummyManta = {
+    title: "Manta Network",
+    logo: mantaLogo,
+    eventStatus: "Live",
+    totalRewards: "$20,000 in ETH Rewards",
+    myEarnings: 0.0,
+    eventDate: "Jul 01, 2024",
+    date: "Jul 01, 2024",
+
+    id: "event21",
+    eventType: "Explore & Mine",
+    eventDuration: coreLastDay,
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "",
+
+    chain: "Manta Network",
+    linkState: "manta",
+    rewards: "ETH",
+    status: "Live",
+  };
 
   const dummyBNB = {
     title: "BNB Chain",
@@ -399,6 +423,36 @@ const NewWalletBalance = ({
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
+    {
+      title: "Manta Network",
+      logo: mantaLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in ETH Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jul 01, 2024",
+
+      popupInfo: {
+        title: "Manta Network",
+        chain: "Manta Network",
+        linkState: "manta",
+        rewards: "ETH",
+        status: "Live",
+        logo: mantaLogo,
+        date: "Jul 01, 2024",
+
+        id: "event21",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in ETH Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
     {
       title: "CORE",
       logo: coreLogo,
@@ -1420,11 +1474,11 @@ const NewWalletBalance = ({
                 }}
               />
               <ActiveProfileEvent
-                data={dummyViction}
-                event={dummyViction}
-                userEarnedUsd={victionEarnUsd}
+                data={dummyManta}
+                event={dummyManta}
+                userEarnedUsd={mantaEarnUsd}
                 onOpenEvent={() => {
-                  setDummyEvent(dummyViction);
+                  setDummyEvent(dummyManta);
                   setEventPopup(true);
                 }}
               />
@@ -1508,6 +1562,8 @@ const NewWalletBalance = ({
                           ? skaleEarnUsd
                           : item.title === "VICTION"
                           ? victionEarnUsd
+                          : item.title === "Manta Network"
+                          ? mantaEarnUsd
                           : item.title === "CORE"
                           ? coreEarnUsd
                           : item.title === "CMC" ||

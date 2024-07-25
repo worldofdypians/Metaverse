@@ -10,6 +10,7 @@ import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-n
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
 const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
+
   return (
     <div
       className={` ${
@@ -37,7 +38,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
           ? "upcoming-core-event"
           : data.title === "VICTION"
           ? "upcoming-viction-event"
-          : data.title === "Manta"
+          : data.title === "Manta Network"
           ? "upcoming-manta-event"
           : data.title === "Immutable"
           ? "upcoming-immutable-event"

@@ -2022,6 +2022,8 @@ const WalletBalance = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
                                   : item.type === "opbnb"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+50.png`
+                                  : item.type === "manta"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
                                   : item.type === "cmc"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
                                   : item.type === "core"
@@ -3125,6 +3127,9 @@ const WalletBalance = ({
                                       window.config.nft_bnb_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_manta_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_opbnb_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+50.png`
                                     : nft.nftAddress ===
@@ -3141,9 +3146,6 @@ const WalletBalance = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_multivers_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_manta_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
@@ -3393,7 +3395,7 @@ const WalletBalance = ({
                                 ? "multivers"
                                 : nft.nftAddress ===
                                   window.config.nft_manta_address
-                                ? "multivers"
+                                ? "manta"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3482,7 +3484,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_manta_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`

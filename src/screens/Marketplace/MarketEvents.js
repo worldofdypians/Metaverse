@@ -326,7 +326,7 @@ const MarketEvents = ({
     //   },
     // },
     {
-      title: "Manta",
+      title: "Manta Network",
       logo: mantaLogo,
       eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
@@ -2544,6 +2544,8 @@ const MarketEvents = ({
                               ? victionEarnToken
                               : dummyEvent.id === "event20"
                               ? bnbEarnToken
+                              : dummyEvent.id === "event21"
+                              ? mantaEarnToken
                               : 0,
                             2
                           )}
