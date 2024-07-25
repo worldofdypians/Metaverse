@@ -183,35 +183,13 @@ const renderer2 = ({ hours, minutes }) => {
 const NewWalletBalance = ({
   dypBalance,
   weeklyplayerData,
-  dailyplayerData,
-  skaleplayerDataAmount,
   address,
   coinbase,
-  dypBalancebnb,
-  dypBalanceavax,
-  isVerified,
   email,
   // handleConnectWallet,
   handleShowWalletPopup,
-  idypBalance,
-  idypBalancebnb,
-  idypBalanceavax,
   userId,
   username,
-  listedNFTS,
-  landStaked,
-  myCawsWodStakes,
-  myWodWodStakes,
-  myCawsCollected,
-  myCawsOldCollected,
-  myLandCollected,
-  myTimepieceCollected,
-  myBoughtNfts,
-  isConnected,
-  handleConnect,
-  ethTokenData,
-  dypTokenData,
-  dailyDataAmountCore,
   weeklyDataAmountCore,
   monthlyDataAmountCore,
   dailyDataAmountViction,
@@ -220,13 +198,6 @@ const NewWalletBalance = ({
   dailyDataAmountSkale,
   weeklyDataAmountSkale,
   monthlyDataAmountSkale,
-  favoritesArray,
-  latestBoughtNFTS,
-  myOffers,
-  allActiveOffers,
-  myNFTSCoingecko,
-  myGateNfts,
-  myConfluxNfts,
   onDailyRewardsPopupOpen,
   onOpenLeaderboard,
   isPremium,
@@ -234,9 +205,6 @@ const NewWalletBalance = ({
   onBalanceClick,
   claimedChests,
   claimedPremiumChests,
-  claimedSkaleChests,
-  claimedSkalePremiumChests,
-  availableTime,
   canBuy,
   rewardsPopup,
   dailyPopup,
@@ -276,10 +244,6 @@ const NewWalletBalance = ({
   skaleEarnToken,
   skaleEarnUsd,
   skalePoints,
-  claimedCoreChests,
-  claimedCorePremiumChests,
-  claimedVictionChests,
-  claimedVictionPremiumChests,
   openedCoreChests,
   openedVictionChests,
   openedSeiChests,
@@ -299,7 +263,7 @@ const NewWalletBalance = ({
   multiversPoints,
   multiversEarnToken,
   multiversEarnUsd,
-  kittyDashRecords,
+  kittyDashRecords, weeklyDataAmountManta, monthlyDataAmountManta, mantaEarnUsd, openedMantaChests,mantaPoints, mantaEarnToken
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -884,9 +848,9 @@ const NewWalletBalance = ({
     claimedPremiumChests +
     openedSkaleChests.length +
     openedCoreChests.length +
-    openedVictionChests.length;
+    openedVictionChests.length + openedMantaChests.length;
 
-  const chestPercentage = (totalClaimedChests / 80) * 100;
+  const chestPercentage = (totalClaimedChests / 100) * 100;
 
   const dummyEvents = [
     {
@@ -1022,7 +986,26 @@ const NewWalletBalance = ({
     }
 
     if (openedVictionChests && openedVictionChests.length > 0) {
-      openedCoreChests.forEach((chest) => {
+      openedVictionChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedMantaChests && openedMantaChests.length > 0) {
+      openedMantaChests.forEach((chest) => {
         if (chest.isOpened === true) {
           if (chest.rewards.length > 1) {
             chest.rewards.forEach((innerChest) => {
@@ -1391,7 +1374,7 @@ const NewWalletBalance = ({
     address,
     openedCoreChests,
     openedVictionChests,
-    openedSkaleChests,
+    openedSkaleChests,openedMantaChests
   ]);
 
   useEffect(() => {
@@ -1889,7 +1872,7 @@ const NewWalletBalance = ({
                           Number(weeklyDataAmountCore) +
                           Number(monthlyDataAmountCore) +
                           // Number(dailyDataAmountSkale) +
-                          Number(weeklyDataAmountSkale) +
+                          Number(weeklyDataAmountSkale) +Number(weeklyDataAmountManta) +Number(monthlyDataAmountManta) +
                           (kittyDashRecords[0] ? kittyDashRecords[0]?.position+1 > 10 ? 0 : kittyDashRewards[kittyDashRecords[0]?.position] : 0) +
                           +Number(monthlyDataAmountSkale) +
                           // Number(dailyDataAmountViction) +
@@ -1897,7 +1880,8 @@ const NewWalletBalance = ({
                           Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd) +
                           Number(coreEarnUsd) +
-                          Number(victionEarnUsd),
+                          Number(victionEarnUsd)+
+                          Number(mantaEarnUsd),
                         2
                       )}
                     </h6>

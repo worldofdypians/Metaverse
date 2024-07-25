@@ -46,6 +46,8 @@ import skaleActive from "../../Components/LeaderBoard/assets/skaleActive.svg";
 import bnbActive from "../../Components/LeaderBoard/assets/bnbActive.svg";
 import coreActive from "../../Components/LeaderBoard/assets/coreActive.svg";
 import victionActive from "../../Components/LeaderBoard/assets/victionActive.svg";
+import mantaActive from "../../Components/LeaderBoard/assets/mantaActive.png";
+
 import starAlert from "./assets/star-alert.svg";
 import axios from "axios";
 import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
@@ -132,7 +134,7 @@ const ProfileCard = ({
   domainName,
   rankData,
   setRankData,
-  getRankData,userDataStar, userDataPosition
+  getRankData,userDataStar, userDataPosition, userRankManta, userMantaScore
 }) => {
   let id = Math.random().toString(36); 
   const windowSize = useWindowSize();
@@ -417,8 +419,12 @@ const ProfileCard = ({
     userBnbScore,
     userRankCore,
     userRankViction,
+    userRankManta,
+
     userCoreScore,
     userVictionScore,
+    userMantaScore,
+
   ]);
 
   const html = document.querySelector("html");
@@ -924,6 +930,35 @@ const ProfileCard = ({
                                       {getFormattedNumber(userBnbScore, 0)}
                                     </span>
                                   </div>
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
+                                        src={mantaActive}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
+                                      <span className="rank-dropdown-text">
+                                        Manta
+                                      </span>
+                                    </div>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      #{userRankManta + 1}
+                                    </span>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      {getFormattedNumber(userMantaScore, 0)}
+                                    </span>
+                                  </div>
+
                                   <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
                                     <div
                                       className="d-flex align-items-center gap-2"

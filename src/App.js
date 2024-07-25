@@ -1254,7 +1254,7 @@ function App() {
       getMyNFTS(coinbase, "manta").then((NFTS) => {
         setTotalMantaNft(NFTS.length);
         setMyMantaNfts(NFTS);
-        mantaMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setMantaMintAllowed(NFTS.length > 0 ? 0 : 1);
         setMyMantaNFTsCreated(NFTS);
       });
 
@@ -2809,6 +2809,11 @@ function App() {
       window.config.daily_bonus_viction_address
     );
 
+    const daily_bonus_contract_manta = new window.mantaWeb3.eth.Contract(
+      window.DAILY_BONUS_MANTA_ABI,
+      window.config.daily_bonus_manta_address
+    );
+
     if (addr) {
       const isPremium_bnb = await daily_bonus_contract_bnb.methods
         .isPremiumUser(addr)
@@ -2860,7 +2865,19 @@ function App() {
               if (isPremium_skale === true) {
                 setIsPremium(true);
               } else {
-                setIsPremium(false);
+                const isPremium_manta = await daily_bonus_contract_manta.methods
+                .isPremiumUser(addr)
+                .call()
+                .catch((e) => {
+                  console.error(e);
+                  return false;
+                });
+              if (isPremium_manta === true) {
+                setIsPremium(true);
+              } else {
+               setIsPremium(false);
+              }
+            
               }
             }
           }

@@ -39,7 +39,6 @@ const MyRewardsPopupNew = ({
   email,
   allChests,
   weeklyplayerData,
-  dailyplayerData,
   userRank2,
   userSocialRewards,
   bnbEarnUsd,
@@ -55,17 +54,14 @@ const MyRewardsPopupNew = ({
   allVictionChests,
   allSeiChests,
   genesisRank2,
-  dailyDataAmountCore,
   weeklyDataAmountCore,
   monthlyDataAmountCore,
-  dailyDataAmountViction,
   weeklyDataAmountViction,
   monthlyDataAmountViction,
-  dailyDataAmountSkale,
   weeklyDataAmountSkale,
   monthlyDataAmountSkale,
   multiversEarnUsd,
-  userDataStar,
+  userDataStar,weeklyDataAmountManta,monthlyDataAmountManta,allMantaChests, mantaEarnUsd
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -91,6 +87,10 @@ const MyRewardsPopupNew = ({
   const [treasureRewardMoneyCore, setTreasureRewardMoneyCore] = useState(0);
   const [treasureRewardMoneyViction, setTreasureRewardMoneyViction] =
     useState(0);
+
+    const [treasureRewardMoneyManta, setTreasureRewardMoneyManta] =
+    useState(0);
+
 
   const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
   const [pasttreasureRewardNftCaws, setpastTreasureRewardNftCaws] = useState(0);
@@ -384,6 +384,8 @@ const MyRewardsPopupNew = ({
     var moneyResultSkale = 0;
     var moneyResultCore = 0;
     var moneyResultViction = 0;
+    var moneyResultManta = 0;
+
     var moneyResultSei = 0;
 
     if (allChests && allChests.length > 0) {
@@ -462,10 +464,31 @@ const MyRewardsPopupNew = ({
       });
     }
 
+    if (allMantaChests && allMantaChests.length > 0) {
+      allMantaChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResultManta += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
     setTreasureRewardMoney(moneyResult);
     setTreasureRewardMoneySkale(moneyResultSkale);
     setTreasureRewardMoneyCore(moneyResultCore);
     setTreasureRewardMoneyViction(moneyResultViction);
+    setTreasureRewardMoneyManta(moneyResultManta);
+
   };
 
   const fetchCachedData = () => {
@@ -525,7 +548,7 @@ const MyRewardsPopupNew = ({
 
   useEffect(() => {
     getTreasureChestsInfo();
-  }, [allChests, allSkaleChests, allCoreChests, allVictionChests]);
+  }, [allChests, allSkaleChests, allCoreChests, allVictionChests, allMantaChests]);
 
   useEffect(() => {
     getBundles();
@@ -675,6 +698,7 @@ const MyRewardsPopupNew = ({
                     Number(treasureRewardMoneyCore) +
                       Number(treasureRewardMoneySei) +
                       Number(treasureRewardMoneyViction) +
+                      Number(treasureRewardMoneyManta) +
                       Number(treasureRewardMoney) +
                       Number(treasureRewardMoneySkale) +
                       Number(skaleEarnUsd) +
@@ -682,7 +706,8 @@ const MyRewardsPopupNew = ({
                       Number(seiEarnUsd) +
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
-                      Number(victionEarnUsd) +
+                      Number(victionEarnUsd)+
+                      Number(mantaEarnUsd) +
                       (kittyDashRecords[0]
                         ? kittyDashRecords[0]?.position + 1 > 10
                           ? 0
@@ -698,6 +723,8 @@ const MyRewardsPopupNew = ({
                       // Number(dailyDataAmountViction) +
                       Number(weeklyDataAmountViction) +
                       Number(monthlyDataAmountViction) +
+                      Number(weeklyDataAmountManta) +
+                      Number(monthlyDataAmountManta) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(genesisRank2) +
@@ -812,7 +839,8 @@ const MyRewardsPopupNew = ({
                     Number(treasureRewardMoney) +
                       Number(treasureRewardMoneyCore) +
                       Number(treasureRewardMoneySei) +
-                      Number(treasureRewardMoneyViction) +
+                      Number(treasureRewardMoneyViction)+
+                      Number(treasureRewardMoneyManta) +
                       Number(treasureRewardMoneySkale),
                     2
                   )}
@@ -886,6 +914,8 @@ const MyRewardsPopupNew = ({
                       // Number(dailyDataAmountViction) +
                       Number(weeklyDataAmountViction) +
                       Number(monthlyDataAmountViction) +
+                      Number(weeklyDataAmountManta) +
+                      Number(monthlyDataAmountManta) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(userDataStar) +
@@ -958,7 +988,8 @@ const MyRewardsPopupNew = ({
                       Number(seiEarnUsd) +
                       Number(bnbEarnUsd) +
                       Number(multiversEarnUsd) +
-                      Number(victionEarnUsd),
+                      Number(victionEarnUsd) +
+                      Number(mantaEarnUsd),
                     2
                   )}
             </span>
@@ -1158,7 +1189,7 @@ const MyRewardsPopupNew = ({
                   $
                   {previousRewards
                     ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(treasureRewardMoneySkale, 2)}
+                    : getFormattedNumber(treasureRewardMoneyManta, 2)}
                 </span>
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
@@ -1265,8 +1296,9 @@ const MyRewardsPopupNew = ({
                 <span className="item-name-right">
                   $
                   {previousRewards
-                    ? getFormattedNumber(gemRewards, 2)
-                    : getFormattedNumber(genesisRank2, 2)}
+                    ? getFormattedNumber(0, 2)
+                    : Number(weeklyDataAmountManta) +
+                    Number(monthlyDataAmountManta)}
                 </span>
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
@@ -1343,20 +1375,23 @@ const MyRewardsPopupNew = ({
             <div className="treasure-hunt-item-wrapper-active">
               <div className="d-flex justify-content-between gap-4 align-items-start">
                 <div className="d-flex flex-column gap-2 w-50">
-                  <div className="d-flex w-100 justify-content-between gap-2">
+                  
+ <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
                       <img
-                        src={skale}
+                        src={
+                          require("../../../../Marketplace/assets/mantaLogo.png")
+                            
+                        }
                         alt=""
                         style={{ width: 16, height: 16 }}
                       />
-                      SKALE
+                      Manta Chain
                     </span>
                     <span className="item-name-right">
-                      ${getFormattedNumber(skaleEarnUsd, 2)}
+                      ${getFormattedNumber(mantaEarnUsd, 2)}
                     </span>
                   </div>
-
                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
                       <img
@@ -1415,6 +1450,7 @@ const MyRewardsPopupNew = ({
                     </span>
                   </div>
                 </div>
+                
               </div>
             </div>
           </div>
@@ -1522,6 +1558,19 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(dogeRewardsUSD, 2)}
                   </span>
                 </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={skale}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      SKALE
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(skaleEarnUsd, 2)}
+                    </span>
+                  </div>
               </div>
             </div>
           </div>

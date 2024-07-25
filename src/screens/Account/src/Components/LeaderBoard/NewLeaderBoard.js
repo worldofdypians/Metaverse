@@ -109,7 +109,7 @@ const NewLeaderBoard = ({
   allBnbData,
   allCoreData,
   allSkaleData,
-  allVictionData,
+  allVictionData,allMantaData
 }) => {
   const chainItems = [
     {
@@ -252,7 +252,7 @@ const NewLeaderBoard = ({
         setAllData(allBnbData);
         setOptionText2("bnb");
       } else if (selectedChain.id - 1 === 1) {
-        setAllData(allSkaleData);
+        setAllData(allMantaData);
         setOptionText2("manta");
       } else if (selectedChain.id - 1 === 2) {
         setAllData(allSkaleData);
@@ -272,7 +272,7 @@ const NewLeaderBoard = ({
       return;
     } else {
       if (selectedChain.id + 1 === 1) {
-        setAllData(allSkaleData);
+        setAllData(allMantaData);
         setOptionText2("manta");
       }
       if (selectedChain.id + 1 === 2) {
@@ -424,7 +424,7 @@ const NewLeaderBoard = ({
                      } optionText col-3`}
                       onClick={() => {
                         handleOption("manta");
-                        setAllData(allSkaleData);
+                        setAllData(allMantaData);
                       }}
                       style={{ width: "20%" }}
                     >
