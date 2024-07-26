@@ -57,6 +57,7 @@ import championProfile from "./assets/championProfile.png";
 import unstoppableProfile from "./assets/unstoppableProfile.png";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import { NavLink } from "react-router-dom";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -113,11 +114,15 @@ const MyProfile = ({
   openedVictionChests,
   canBuy,
   email,
-  isPremium,
-  username,
-  address,
-  coinbase,
-  totalScore,
+  isPremium, username, address, coinbase, totalScore,
+  openChainsLeaderboard,
+openGlobalLeaderboard,
+openGenesisLeaderboard,
+openMyRewards,
+openDailyBonus,
+openPortfolio,
+openSpecialRewards
+
 }) => {
   const totalClaimedChests =
     claimedChests +
@@ -183,6 +188,11 @@ const MyProfile = ({
                     <img src={portfolio} width={25} height={25} alt="" />
                     <h6 className="mb-0">My Portfolio</h6>
                   </div>
+                  <img src={domainIcon} width={30} height={30} alt="" />
+                </div>
+                <div className="portfolio-wrapper d-flex align-items-center gap-2 p-2" onClick={openPortfolio}>
+                  <img src={portfolio} width={25} height={25} alt="" />
+                  <h6 className="mb-0">My Portfolio</h6>
                 </div>
               </div>
             </div>
@@ -277,24 +287,24 @@ const MyProfile = ({
                   <img src={redArrow} alt="" />
                 </div>
               </div> */}
-              <div className="daily-bonus-wrapper mt-4 mb-5 mt-lg-0 mb-lg-0">
-                <div className="red-div"></div>
-                <img
-                  // src={finished ? mageFinish : mageGoing}
-                  src={
-                    chestPercentage >= 50 && chestPercentage < 100
-                      ? mageGoing
-                      : chestPercentage === 100
-                      ? mageFinish
-                      : mageStarter
-                  }
-                  className={`${"daily-rewards-img"}`}
-                  alt=""
-                />
-                <div className="progress-bar-group d-flex flex-column align-items-start">
-                  {!finished && (
-                    <span className="progress-bar-title">Progress</span>
-                  )}
+               <div className="daily-bonus-wrapper mt-4 mb-5 mt-lg-0 mb-lg-0" onClick={openDailyBonus}>
+                  <div className="red-div"></div>
+                  <img
+                    // src={finished ? mageFinish : mageGoing}
+                    src={
+                      chestPercentage >= 50 && chestPercentage < 100
+                        ? mageGoing
+                        : chestPercentage === 100
+                        ? mageFinish
+                        : mageStarter
+                    }
+                    className={`${"daily-rewards-img"}`}
+                    alt=""
+                  />
+                  <div className="progress-bar-group d-flex flex-column align-items-start">
+                    {!finished && (
+                      <span className="progress-bar-title">Progress</span>
+                    )}
 
                   <div className="yellow-progress-outer">
                     <span className="mb-0 chest-progress">
@@ -370,21 +380,21 @@ const MyProfile = ({
                   </h6>
                 </div>
                 <div className="d-flex align-items-center leaderboards-flag-wrapper gap-3">
-                  <div className="new-flag-wrapper global-flag">
+                  <div className="new-flag-wrapper global-flag" onClick={openGlobalLeaderboard}>
                     <img src={globalFlag} className="w-100" alt="" />
                     <div className="flag-content d-flex flex-column gap-2 align-items-center">
                       <span className="flag-title">Global</span>
                       <img src={globalIcon} height={50} width={50} alt="" />
                     </div>
                   </div>
-                  <div className="new-flag-wrapper chains-flag">
+                  <div className="new-flag-wrapper chains-flag" onClick={openChainsLeaderboard}>
                     <img src={chainsFlag} className="w-100" alt="" />
                     <div className="flag-content d-flex flex-column gap-2 align-items-center">
                       <span className="flag-title">Chains</span>
                       <img src={chainsIcon} height={50} width={50} alt="" />
                     </div>
                   </div>
-                  <div className="new-flag-wrapper land-flag">
+                  <div className="new-flag-wrapper land-flag" onClick={openGenesisLeaderboard}>
                     <img src={landFlag} className="w-100" alt="" />
                     <div className="flag-content d-flex flex-column gap-2 align-items-center">
                       <span className="flag-title">Genesis</span>
@@ -395,7 +405,7 @@ const MyProfile = ({
               </div>
             </div>
             <div className="col-12 col-lg-6 mt-3">
-              <div className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3">
+              <div className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3" onClick={openMyRewards}>
                 <img src={myRewardsMiner} className="miner-img" alt="" />
                 <div className="d-flex align-items-center gap-2">
                   <h6
@@ -429,7 +439,7 @@ const MyProfile = ({
               </div>
             </div>
             <div className="col-12 col-lg-6 mt-3">
-              <div className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-2 p-3">
+                 <div className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-2 p-3" onClick={openSpecialRewards}>
                 <h6 className="special-rewards-title">Special Rewards</h6>
                 <div className="d-flex flex-column">
                   <h6 className="special-rewards-total mb-0">$450.24</h6>
@@ -542,7 +552,7 @@ const MyProfile = ({
               </div>
             </div>
             <div className="col-12 col-lg-4 mt-3">
-              <div className="new-stake-nft-wrapper d-flex align-items-center justify-content-between p-3">
+              <NavLink className="new-stake-nft-wrapper d-flex align-items-center justify-content-between p-3" to={"/marketplace/stake"}>
                 <div className="d-flex flex-column justify-content-between h-100">
                   <div className="d-flex flex-column">
                     <h6 className="leaderboards-title">Stake</h6>
@@ -556,7 +566,7 @@ const MyProfile = ({
                   <img src={pinkArrow} height={20} width={20} alt="" />
                 </div>
                 <img src={stakeNft} className="new-stake-nft-img" alt="" />
-              </div>
+              </NavLink>
             </div>
           </div>
         </div>
