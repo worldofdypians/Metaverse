@@ -1225,6 +1225,14 @@ backdrop-filter: blur(5.5px);
   }
 }
 
+.upcoming-mint-img-new {
+  height: 150px;
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+    width: 100% !important;
+  }
+}
+
 .home-card-rewards-amount {
   color: #ffeace;
   font-size: 20px;

@@ -44,18 +44,42 @@ import premiumIcon from "../../Images/premium/premiumIcon.svg";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
-import conflux from "../../Components/WalletBalance/assets/conflux.svg";
-import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
+
 import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import GenesisLeaderboard from "../../Components/LeaderBoard/GenesisLeaderboard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
-import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
-import immutableIcon from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
+import dypius from "../../Components/WalletBalance/assets/dypIcon.svg";
+import dypiusPremium from "../../Components/WalletBalance/assets/dypiusPremium16.svg";
+import upcomingDyp from "../../Components/WalletBalance/assets/upcomingDyp.webp";
+import victionLogo from "../../Components/WalletBalance/assets/victionLogo.svg";
+import multiversLogo from "../../Components/WalletBalance/assets/multiversLogo.svg";
+import victionBg from "../../Components/WalletBalance/assets/victionBg.webp";
+import multiversBg from "../../Components/WalletBalance/assets/multiversBg.webp";
+import seiLogo from "../../Components/WalletBalance/assets/seiLogo.svg";
+import seiBg from "../../Components/WalletBalance/assets/seiBg.webp";
+import coreLogo from "../../Components/WalletBalance/assets/coreLogo.svg";
+import bnbLogo from "../../Components/WalletBalance/assets/bnbIcon.svg";
+import coreBg from "../../Components/WalletBalance/assets/coreBg.webp";
+import immutableLogo from "../../Components/WalletBalance/assets/immutableLogo.svg";
+import immutableBg from "../../Components/WalletBalance/assets/immutableBg.webp";
+import upcomingSkale from "../../../../Marketplace/assets/upcomingSkale.webp";
+import upcomingBnb from "../../../../Marketplace/assets/upcomingBnb.png";
+import upcomingDoge from "../../../../Marketplace/assets/upcomingDoge.webp";
+import conflux from "../../Components/WalletBalance/assets/conflux.svg";
+import gate from "../../Components/WalletBalance/assets/gate.svg";
+import coingecko from "../../Components/WalletBalance/assets/coingecko.svg";
+import base from "../../Components/WalletBalance/assets/baseLogo.svg";
+import confluxUpcoming from "../../Components/WalletBalance/assets/confluxUpcoming.png";
+import gateUpcoming from "../../Components/WalletBalance/assets/gateUpcoming.webp";
+import skaleLogo from "../../Components/WalletBalance/assets/skaleLogo.svg";
+import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
+import baseUpcoming from "../../Components/WalletBalance/assets/baseUpcoming.webp";
+import cmcUpcoming from "../../../../Marketplace/assets/upcomingCmc.webp";
+import upcomingDyp2 from "../../../../Marketplace/assets/dypiusBgPic2.webp";
 
-import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
-import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
-import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
+import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
+import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
 import MyProfile from "../../../../../components/MyProfile/MyProfile";
 import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
@@ -94,6 +118,18 @@ function Dashboard({
   logoutCount,
   onSuccessDeposit,
 }) {
+  let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
+  let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
+  let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
+  let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
+  let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
+  let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
+  let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
+  let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
+  let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
+  let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
+  let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+
   const { email, logout } = useAuth();
 
   const override = {
@@ -333,7 +369,6 @@ function Dashboard({
   const [MyNFTSBNB, setMyNFTSBNB] = useState([]);
   const [MyNFTSopBNB, setMyNFTSopBNB] = useState([]);
 
-
   const [MyNFTSLandBNB, setMyNFTSLandBNB] = useState([]);
   const [MyNFTSCawsBNB, setMyNFTSCawsBNB] = useState([]);
 
@@ -354,7 +389,6 @@ function Dashboard({
   const [myVictionNfts, setmyVictionNfts] = useState([]);
   const [myMultiversNfts, setmyMultiversNfts] = useState([]);
   const [myImmutableNfts, setmyImmutableNfts] = useState([]);
-
 
   const [latestVersion, setLatestVersion] = useState(0);
 
@@ -808,6 +842,440 @@ function Dashboard({
     corePrice,
     victionPrice,
   ]);
+
+  const dummyBetaPassData2 = [
+    // {
+    //   title: "MultiversX",
+    //   logo: multiversLogo,
+    //   eventStatus: "Live",
+    //   totalRewards: "$20,000 in EGLD Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "Jul 01, 2024",
+    //   backgroundImage: multiversBg,
+    //   popupInfo: {
+    //     title: "MultiversX",
+    //     chain: "MultiversX Chain",
+    //     linkState: "multiversx",
+    //     rewards: "EGLD",
+    //     status: "Live",
+    //     id: "event16",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in EGLD Rewards",
+    //     eventDuration: coreLastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "",
+    //     eventDate: "Jul 01, 2024",
+    //   },
+    // },
+    {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      backgroundImage: coreBg,
+      eventDate: "Jul 01, 2024",
+      userEarnUsd: coreEarnUsd,
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Live",
+        backgroundImage: coreBg,
+        logo: coreLogo,
+        date: "Jul 01, 2024",
+
+        id: "event12",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in CORE Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: victionBg,
+      userEarnUsd: victionEarnUsd,
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Live",
+        logo: victionLogo,
+        backgroundImage: victionBg,
+        date: "Jul 01, 2024",
+
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
+    // {
+    //   title: "SEI",
+    //   logo: seiLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$20,000 in SEI Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "XXX XX, XXXX",
+    //   backgroundImage: seiBg,
+    //   popupInfo: {
+    //     title: "SEI",
+    //     chain: "SEI Chain",
+    //     linkState: "sei",
+    //     rewards: "SEI",
+    //     logo: seiLogo,
+    //     backgroundImage: seiBg,
+    //     date: "XXX XX, XXXX",
+
+    //     status: "Coming Soon",
+    //     id: "event13",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in SEI Rewards",
+    //     eventDuration: dypius2LastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //     eventDate: "XXX XX, XXXX",
+    //   },
+    // },
+
+    {
+      title: "BNB Chain",
+      logo: bnbLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jun 12, 2024",
+      backgroundImage: upcomingBnb,
+      userEarnUsd: bnbEarnUsd,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Live",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore:
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        eventDate: "Jun 12, 2024",
+      },
+    },
+    {
+      title: "SKALE",
+      logo: skaleLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in SKL Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Apr 15, 2024",
+      backgroundImage: upcomingSkale,
+      userEarnUsd: skaleEarnUsd,
+      popupInfo: {
+        title: "SKALE",
+        chain: "SKALE Nebula Hub",
+        linkState: "skale",
+        rewards: "SKL",
+        status: "Expired",
+        id: "event11",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in SKL Rewards",
+        eventDuration: skaleLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore:
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        eventDate: "Apr 15, 2024",
+      },
+    },
+
+    {
+      title: "Dypius Premium",
+      logo: dypiusPremium,
+      eventStatus: "Expired",
+      totalRewards: "$50,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Feb 26, 2024",
+      backgroundImage: upcomingDyp2,
+      activeTab: "dypiusv2",
+      userEarnUsd: dypiusPremiumEarnUsd,
+      popupInfo: {
+        title: "Dypius Premium",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event9",
+        eventType: "Explore & Find",
+        totalRewards: "$50,000 in BNB Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Feb 26, 2024",
+        activeTab: "dypiusv2",
+      },
+    },
+    {
+      title: "CMC",
+      logo: cmc,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Dec 26, 2023",
+      userEarnUsd: cmcuserEarnUsd,
+      backgroundImage: cmcUpcoming,
+      popupInfo: {
+        title: "CoinMarketCap",
+        chain: "BNB Chain",
+        linkState: "coinmarketcap",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event8",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: cmcLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        eventDate: "Dec 26, 2023",
+        learnMore:
+          "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "Dogecoin",
+      chain: "BNB Chain",
+      linkState: "doge",
+      rewards: "DOGE",
+      status: "Expired",
+      eventStatus: "Expired",
+      id: "event7",
+      eventType: "Explore & Mine",
+      date: "Dec 22, 2023",
+      eventDate: "Dec 22, 2023",
+      logo: doge,
+      totalRewards: "$10,000 in DOGE Rewards",
+      eventDuration: dogeLastDay,
+      backgroundImage: upcomingDoge,
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+      userEarnUsd: dogeEarnUSD,
+
+      popupInfo: {
+        title: "Dogecoin",
+        chain: "BNB Chain",
+        linkState: "doge",
+        rewards: "DOGE",
+        status: "Expired",
+        id: "event7",
+        eventStatus: "Expired",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in DOGE Rewards",
+        eventDuration: dogeLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "Dec 22, 2023",
+      },
+    },
+    {
+      title: "Base",
+      logo: base,
+      eventStatus: "Expired",
+      totalRewards: "$10,000 in ETH Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "Nov 01, 2023",
+      backgroundImage: baseUpcoming,
+      userEarnUsd: baseEarnUSD,
+
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Base",
+        chain: "Base Chain",
+        linkState: "base",
+        rewards: "ETH",
+        status: "Expired",
+        id: "event4",
+        date: "Nov 01, 2023",
+        totalRewards: "$10,000 in ETH Rewards",
+        eventDuration: baseLastDay,
+        eventDate: "Nov 01, 2023",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "CoinGecko",
+      logo: coingecko,
+      eventStatus: "Expired",
+      totalRewards: "$10,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Ended",
+      backgroundImage: coingeckoUpcoming,
+      userEarnUsd: userEarnUsd,
+
+      popupInfo: {
+        title: "CoinGecko",
+        chain: "BNB Chain",
+        linkState: "coingecko",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event3",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        eventDuration: coingeckoLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "Dypius",
+      logo: dypius,
+      eventStatus: "Expired",
+      totalRewards: "300,000 in DYPv2 Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Ended",
+      backgroundImage: upcomingDyp,
+      userEarnUsd: dypiusEarnUsd,
+
+      popupInfo: {
+        title: "Dypius",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "DYP",
+        status: "Expired",
+        id: "event5",
+        eventType: "Explore & Find",
+        totalRewards: "300,000 in DYPv2 Rewards",
+        eventDuration: dypiusLastDay,
+        minRewards: "25",
+        maxRewards: "50",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        eventDate: "Ended",
+      },
+    },
+    {
+      title: "Gate.io",
+      logo: gate,
+      eventStatus: "Expired",
+      totalRewards: "$2,000 in BNB Rewards",
+      myEarnings: 0,
+      eventType: "Explore & Mine",
+      eventDate: "Ended",
+      backgroundImage: gateUpcoming,
+      userEarnUsd: gateEarnUSD,
+
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Gate.io",
+        chain: "BNB Chain",
+        linkState: "gate",
+        rewards: "GT",
+        status: "Expired",
+        id: "event6",
+        totalRewards: "$2,000 in BNB Rewards",
+        eventDuration: gateLastDay,
+        eventDate: "Ended",
+        date: "Oct 20, 2023",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "20,000",
+        learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "Conflux",
+      logo: conflux,
+      eventStatus: "Expired",
+      totalRewards: "$2,000 in CFX Rewards",
+      myEarnings: 0,
+      eventType: "Explore & Mine",
+      eventDate: "Ended",
+      backgroundImage: confluxUpcoming,
+      userEarnUsd: confluxEarnUSD,
+
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Conflux",
+        chain: "Conflux Network",
+        linkState: "conflux",
+        rewards: "CFX",
+        status: "Expired",
+        id: "event1",
+        totalRewards: "$2,000 in CFX Rewards",
+        eventDuration: confluxLastDay,
+        eventDate: "Ended",
+        minRewards: "1",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "20,000",
+        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
+      },
+    },
+  ];
 
   const bnbStars = ["50", "40", "30", "20", "20", "20", "20", "20", "20", "20"];
   const bnbStarsPremium = [
@@ -3240,9 +3708,7 @@ function Dashboard({
 
   const handleFirstTask = async (wallet) => {
     const result2 = await axios
-      .get(
-        `https://api.worldofdypians.com/api/olympiad/task1/${wallet}`
-      )
+      .get(`https://api.worldofdypians.com/api/olympiad/task1/${wallet}`)
       .catch((e) => {
         console.error(e);
       });
@@ -5224,7 +5690,8 @@ function Dashboard({
     }
   };
   const handleRankRewards = () => {
-    let totalScore = userBnbScore + userSkaleScore + userCoreScore + userVictionScore;
+    let totalScore =
+      userBnbScore + userSkaleScore + userCoreScore + userVictionScore;
     if (totalScore > 10000000) {
       setUserRankRewards(5);
     } else if (totalScore > 22000000) {
@@ -5238,7 +5705,7 @@ function Dashboard({
 
   useEffect(() => {
     handleRankRewards();
-  }, [userBnbScore , userSkaleScore , userCoreScore , userVictionScore]);
+  }, [userBnbScore, userSkaleScore, userCoreScore, userVictionScore]);
 
   useEffect(() => {
     if (coinbase) {
@@ -5637,21 +6104,23 @@ function Dashboard({
       <div className="container-nft2 d-flex flex-column align-items-start px-3 px-lg-5 position-relative">
         {location.pathname === "/account" ? (
           <>
-          <MyProfile
-            claimedChests={claimedChests}
-            claimedPremiumChests={claimedPremiumChests}
-            openedSkaleChests={openedSkaleChests}
-            openedCoreChests={openedCoreChests}
-            openedVictionChests={openedVictionChests}
-            canBuy={canBuy}
-            email={email}
-            username={username}
-            isPremium={isPremium}
-            address={data?.getPlayer?.wallet?.publicAddress}
-            coinbase={coinbase}
-            totalScore={userBnbScore + userSkaleScore + userCoreScore + userVictionScore}
-          />
-          <NewEvents />
+            <MyProfile
+              claimedChests={claimedChests}
+              claimedPremiumChests={claimedPremiumChests}
+              openedSkaleChests={openedSkaleChests}
+              openedCoreChests={openedCoreChests}
+              openedVictionChests={openedVictionChests}
+              canBuy={canBuy}
+              email={email}
+              username={username}
+              isPremium={isPremium}
+              address={data?.getPlayer?.wallet?.publicAddress}
+              coinbase={coinbase}
+              totalScore={
+                userBnbScore + userSkaleScore + userCoreScore + userVictionScore
+              }
+            />
+            <NewEvents events={dummyBetaPassData2} />
           </>
         ) : location.pathname === "/account/my-rewards" ? (
           <MyRewardsPopupNew
