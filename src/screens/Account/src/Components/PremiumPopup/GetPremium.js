@@ -1216,6 +1216,7 @@ const GetPremiumPopup = ({
                     src={
                       require(`../../Images/premium/tokens/ethIcon.svg`).default
                     }
+                    style={{ width: 18, height: 18 }}
                     alt=""
                   />
                   <span className="subscription-chain mb-0">Ethereum</span>
@@ -1226,6 +1227,7 @@ const GetPremiumPopup = ({
                       require(`../../Images/premium/tokens/wbnbIcon.svg`)
                         .default
                     }
+                    style={{ width: 18, height: 18 }}
                     alt=""
                   />
                   <span className="subscription-chain mb-0">BNB Chain</span>
@@ -1235,8 +1237,9 @@ const GetPremiumPopup = ({
                   <img
                     src={require(`../../../../../components/Header/assets/manta.png`)}
                     alt=""
+                    style={{ width: 18, height: 18 }}
                   />
-                  <span className="subscription-chain mb-0">Manta Chain</span>
+                  <span className="subscription-chain mb-0">Manta</span>
                 </div>
 
                 <div className="d-flex align-items-center gap-2">
@@ -1245,6 +1248,7 @@ const GetPremiumPopup = ({
                       require(`../../Images/premium/tokens/wavaxIcon.svg`)
                         .default
                     }
+                    style={{ width: 18, height: 18 }}
                     alt=""
                   />
                   <span className="subscription-chain mb-0">Avalanche</span>
@@ -1393,7 +1397,7 @@ const GetPremiumPopup = ({
                     style={{ width: 18, height: 18 }}
                     alt=""
                   />
-                  Manta Chain
+                  Manta
                 </li>
                 <li
                   className="dropdown-item launchpad-item d-flex align-items-center gap-2"

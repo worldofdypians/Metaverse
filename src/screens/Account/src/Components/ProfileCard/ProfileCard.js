@@ -164,7 +164,7 @@ const ProfileCard = ({
   const [rankTooltip, setRankTooltip] = useState(false);
 
   const userTotalScore =
-    userBnbScore + userSkaleScore + userCoreScore + userVictionScore;
+    userBnbScore + userSkaleScore + userCoreScore + userVictionScore + userMantaScore;
 
   const handleUserRank = () => {
     let allScore;
@@ -420,7 +420,6 @@ const ProfileCard = ({
     userRankCore,
     userRankViction,
     userRankManta,
-
     userCoreScore,
     userVictionScore,
     userMantaScore,
