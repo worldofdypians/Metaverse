@@ -88,6 +88,9 @@ import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 import Redirect from "./screens/Home/Redirect";
 import WalletModal2 from "./components/WalletModal/WalletModal2";
+import About from "./screens/About/About.js";
+import Game from "./screens/Game/Game.js";
+import Campaigns from "./screens/Community/Campaigns/Campaigns.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -113,9 +116,7 @@ const checkoutSDK = new checkout.Checkout({
   baseConfig,
   passport: passportInstance,
 });
-import About from "./screens/About/About.js";
-import Game from "./screens/Game/Game.js";
-import Campaigns from "./screens/Community/Campaigns/Campaigns.js";
+
 
 function App() {
   const CHAINLIST = {

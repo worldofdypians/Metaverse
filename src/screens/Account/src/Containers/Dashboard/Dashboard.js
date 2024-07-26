@@ -5224,21 +5224,21 @@ function Dashboard({
     }
   };
   const handleRankRewards = () => {
-    let totalScore = userBnbScore + userSkaleScore;
-    if (totalScore > 6000000) {
+    let totalScore = userBnbScore + userSkaleScore + userCoreScore + userVictionScore;
+    if (totalScore > 10000000) {
       setUserRankRewards(5);
-    } else if (totalScore > 12000000) {
+    } else if (totalScore > 22000000) {
       setUserRankRewards(10);
-    } else if (totalScore > 24000000) {
+    } else if (totalScore > 35000000) {
       setUserRankRewards(25);
-    } else if (totalScore > 40000000) {
+    } else if (totalScore > 60000000) {
       setUserRankRewards(100);
     }
   };
 
   useEffect(() => {
     handleRankRewards();
-  }, [userBnbScore, userSkaleScore]);
+  }, [userBnbScore , userSkaleScore , userCoreScore , userVictionScore]);
 
   useEffect(() => {
     if (coinbase) {
@@ -5645,7 +5645,11 @@ function Dashboard({
             openedVictionChests={openedVictionChests}
             canBuy={canBuy}
             email={email}
+            username={username}
             isPremium={isPremium}
+            address={data?.getPlayer?.wallet?.publicAddress}
+            coinbase={coinbase}
+            totalScore={userBnbScore + userSkaleScore + userCoreScore + userVictionScore}
           />
           <NewEvents />
           </>

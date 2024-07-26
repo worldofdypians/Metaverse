@@ -1306,6 +1306,8 @@ const Header = ({
                                     ? core
                                     : victionState === true
                                     ? viction
+                                    : immutableState === true
+                                    ? immutable
                                     : error
                                 }
                                 height={16}
