@@ -4671,6 +4671,10 @@ function App() {
                 myOpbnbNfts={myOpbnbNfts}
                 myBnbNfts={myBnbNfts}
                 totalBnbNft={totalBnbNft}
+                totalMantaNft={totalMantaNft}
+                mantaMintAllowed={mantaMintAllowed}
+                myMantaNfts={myMantaNfts}
+                myMantaNFTsCreated={myMantaNFTsCreated}
               />
             }
           />

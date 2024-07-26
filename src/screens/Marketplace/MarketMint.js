@@ -252,8 +252,8 @@ myMantaNFTsCreated,
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(opbnbData);
-  const [mintTitle, setMintTitle] = useState("opbnbchain");
+  const [selectedMint, setSelectedMint] = useState(mantaData);
+  const [mintTitle, setMintTitle] = useState("manta");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
