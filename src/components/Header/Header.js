@@ -94,7 +94,7 @@ const Header = ({
   onLogout,
   gameAccount,
   email,
-  username,
+  username,loginListener
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -550,7 +550,7 @@ const Header = ({
       });
     } else if (!email && coinbase) {
       setAccount({
-        logged: true,
+        logged: false,
         wallet: coinbase,
         linked: true,
         guest: true,
@@ -570,17 +570,17 @@ const Header = ({
         guest: true,
       });
     }
-  }, [email, gameAccount, coinbase]);
+  }, [email, gameAccount, coinbase,loginListener]);
 
   // useEffect(() => {
-  //   setDropdown({
-  //     wod: null,
-  //     game: null,
-  //     community: null,
-  //     about: null,
-  //     collections: null,
-  //     account: "account",
-  //   });
+    // setDropdown({
+    //   wod: null,
+    //   game: null,
+    //   community: null,
+    //   about: null,
+    //   collections: null,
+    //   account: "account",
+    // });
   // }, []);
 
   return (
@@ -942,6 +942,13 @@ const Header = ({
                         logout();
                         onLogout();
                         setshowmenuAccount(false);
+                        setAccount({
+                          logged: false,
+                          wallet: coinbase,
+                          linked: false,
+                          guest: true,
+                        });
+
                       }}
                     >
                       <img src={logouticon} alt="" className="logout-icon" />{" "}

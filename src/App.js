@@ -196,6 +196,8 @@ function App() {
   const [donwloadSelected, setdownloadSelected] = useState(false);
 
   const [isConnected, setIsConnected] = useState(false);
+  const [loginListener, setloginListener] = useState(0);
+
   const [coinbase, setCoinbase] = useState();
   const [chainId, setChainId] = useState();
   const [currencyAmount, setCurrencyAmount] = useState(0);
@@ -3073,6 +3075,7 @@ function App() {
           gameAccount = {data?.getPlayer?.wallet?.publicAddress}
           email={email}
           username={data?.getPlayer?.displayName}
+          loginListener={loginListener}
         />
         <MobileNavbar
           handleSignUp={handleShowWalletModal}
@@ -3236,7 +3239,7 @@ function App() {
           <Route
             exact
             path="/auth"
-            element={<Auth isConnected={isConnected} coinbase={coinbase} />}
+            element={<Auth isConnected={isConnected} coinbase={coinbase} onSuccessLogin={()=>{setloginListener(loginListener+1)}}/>}
           />
           <Route
             exact
