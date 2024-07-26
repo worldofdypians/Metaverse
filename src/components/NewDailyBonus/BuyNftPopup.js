@@ -79,7 +79,7 @@ console.log('txHash',txHash)
       transactionHash: txHash,
       emailAddress: email,
       chestIndex: chestIndex - 1,
-      chainId: "skale",
+      chainId: chain,
     };
 
     const body = {
@@ -88,12 +88,12 @@ console.log('txHash',txHash)
       chestIndex: chestIndex - 1,
     };
 
-    const finalBody = chain === "skale" ? body_skale : body;
+    
 
     const resultBuy = await axios
       .post(
         `https://worldofdypiansdailybonus.azurewebsites.net/api/ClaimNftReward`,
-        finalBody
+        body_skale
       )
       .catch((e) => {
         console.error(e);

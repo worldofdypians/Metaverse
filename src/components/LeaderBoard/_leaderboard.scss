@@ -18,6 +18,20 @@
   font-weight: 800;
 }
 
+.playerName-inner {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+
+  span {
+    text-overflow: ellipsis;
+    width: 90px;
+    overflow: hidden;
+  }
+}
+
+
+
 .grandPrices-wrapper {
   background-color: #242240;
   border-radius: 8px;
@@ -120,6 +134,11 @@
   // background: #080b2a;
   z-index: 2;
   white-space: nowrap;
+
+  @media screen and (max-width: 500px) {
+    font-size: 9px;
+
+  }
 }
 
 .optionText {
@@ -231,6 +250,10 @@
 .playerAvatar {
   width: 28px;
   height: 30px;
+  @media screen and (max-width: 500px) {
+    width: 25px;
+  height: 25px;
+  }
 }
 .premium-star {
   position: absolute;
@@ -282,6 +305,9 @@
   color: #f7f7ff;
   @media screen and (max-width: 786px) {
     font-size: 12px;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100px;
   }
 }
 

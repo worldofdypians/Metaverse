@@ -201,26 +201,26 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
     {
       link: "/token",
       title: "TOKEN",
-      desc: 'Power your gameplay with WOD',
-      class: 'tokenClass',
+      desc: "Power your gameplay with WOD",
+      class: "tokenClass",
     },
     {
       link: "/earn",
       title: "Stake",
-      desc: 'Earn rewards by staking WOD tokens',
-      class: 'earnClass',
+      desc: "Earn rewards by staking WOD tokens",
+      class: "earnClass",
     },
     {
       link: "/marketplace/events/treasure-hunt",
       title: "EVENTS",
-      desc: 'Join exciting in-game events',
-      class: 'eventClass',
+      desc: "Join exciting in-game events",
+      class: "eventClass",
     },
     {
       link: "/",
       title: "LEADERBOARD",
-      desc: 'Compete for top player rankings',
-      class: 'leaderboardClass',
+      desc: "Compete for top player rankings",
+      class: "leaderboardClass",
     },
   ];
   var settings = {
@@ -276,6 +276,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
+          dots: true,
         },
       },
     ],
@@ -303,7 +304,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
               <br />
               Ever built
             </h4>
-            <div className="d-flex m-0 gap-5 align-items-center justify-content-center">
+            <div className="d-flex flex-column flex-lg-row flex-md-row m-0 gap-lg-5 gap-3 align-items-center justify-content-center">
               <div
                 className="linear-border p-0"
                 style={{
@@ -325,7 +326,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
                 </div>
               </div>
               <div
-                className="multiplayer-linear-border col-7"
+                className="multiplayer-linear-border col-lg-7 col-12"
                 style={{
                   zIndex: 5,
                   position: "relative",

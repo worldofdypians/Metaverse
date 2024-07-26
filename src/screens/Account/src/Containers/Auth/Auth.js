@@ -48,7 +48,7 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
   })
 );
 
-function Auth({ isConnected, coinbase }) {
+function Auth({ isConnected, coinbase,onSuccessLogin }) {
   const { isAuthenticated, loginError, setLoginValues, playerId } = useAuth();
 
   const [value, setValue] = React.useState(0);
@@ -79,7 +79,7 @@ function Auth({ isConnected, coinbase }) {
      
       const result2 = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task7/${wallet}`
+        `https://api.worldofdypians.com/api/olympiad/task1/${wallet}`
       )
       .catch((e) => {
         console.error(e);
@@ -112,6 +112,8 @@ function Auth({ isConnected, coinbase }) {
           {value === 0 && (
             <Login
               onSuccessLogin={() => {
+                handleFirstTask(coinbase);
+                onSuccessLogin()
                 // handleFirstTask(coinbase);
               }}
             />

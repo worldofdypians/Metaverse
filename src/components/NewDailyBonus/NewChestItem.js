@@ -28,6 +28,7 @@ const NewChestItem = ({
   claimingChest,
   setClaimingChest,
   image,
+  coinbase
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -92,6 +93,9 @@ const NewChestItem = ({
         userData
       );
       if (result.status === 200) {
+        if(chainText === "opbnb" || chainText === "bnb"){
+          handleThirdTask(coinbase)
+        }
         onClaimRewards(result.data);
         setIsChestOpen(true);
         // onChestStatus("success");
@@ -113,10 +117,10 @@ const NewChestItem = ({
     }
   };
 
-  const handleSecondTask = async (wallet) => {
+  const handleThirdTask = async (wallet) => {
     const result2 = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task8/${wallet}`
+        `https://api.worldofdypians.com/api/olympiad/task3/${wallet}`
       )
       .catch((err) => {
         console.error(err);
@@ -165,8 +169,10 @@ const NewChestItem = ({
           }, 3000);
         });
       if (result.status === 200) {
+        if(chainText === "opbnb" || chainText === "bnb"){
+          handleThirdTask(coinbase)
+        }
         onClaimRewards(result.data);
-
         setIsChestOpen(true);
         // onChestStatus("success");
         onLoadingChest(false);
@@ -314,6 +320,7 @@ const NewChestItem = ({
               chestIndex - 1,
               "opbnb"
             );
+
           })
           .catch((e) => {
             console.error(e);

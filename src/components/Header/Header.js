@@ -51,6 +51,8 @@ import base from "./assets/base.svg";
 import conflux from "./assets/conflux.svg";
 import sei from "./assets/sei.svg";
 import multiversx from "./assets/multiversx.svg";
+
+import immutable from "./assets/immutableLogo.svg";
 import twitterHeader from "./assets/twitterHeader.svg";
 import telegramHeader from "./assets/telegramHeader.svg";
 import discordHeader from "./assets/discordHeader.svg";
@@ -94,7 +96,7 @@ const Header = ({
   onLogout,
   gameAccount,
   email,
-  username,
+  username,loginListener
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -156,6 +158,7 @@ const Header = ({
         setSkaleState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
@@ -166,6 +169,8 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
@@ -176,6 +181,8 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
@@ -186,6 +193,8 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
@@ -196,6 +205,8 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -207,6 +218,8 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 1482601649) {
         setAvaxState(false);
         setBnbState(false);
@@ -218,6 +231,8 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 1116) {
         setAvaxState(false);
         setBnbState(false);
@@ -229,6 +244,8 @@ const Header = ({
         setCoreState(true);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 88) {
         setAvaxState(false);
         setBnbState(false);
@@ -240,6 +257,21 @@ const Header = ({
         setCoreState(false);
         setVictionState(true);
         setSeiState(false);
+        setImmutableState(false);
+
+      } else if (chainId === 13371) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false);
+        setImmutableState(true);
+
       }
       // else if (chainId === 713715 ) {
       //   setAvaxState(false);
@@ -263,6 +295,9 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setImmutableState(false);
+        
+
       }
     }
   };
@@ -450,6 +485,24 @@ const Header = ({
     }
   };
 
+  const handleImmutablePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x343b")
+          .then(() => {
+            handleSwitchNetwork(13371);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet();
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
   async function markNotificationAsRead(walletAddress, notificationId) {
     try {
       await axios.patch(
@@ -550,7 +603,7 @@ const Header = ({
       });
     } else if (!email && coinbase) {
       setAccount({
-        logged: true,
+        logged: false,
         wallet: coinbase,
         linked: true,
         guest: true,
@@ -570,17 +623,17 @@ const Header = ({
         guest: true,
       });
     }
-  }, [email, gameAccount, coinbase]);
+  }, [email, gameAccount, coinbase,loginListener]);
 
   // useEffect(() => {
-  //   setDropdown({
-  //     wod: null,
-  //     game: null,
-  //     community: null,
-  //     about: null,
-  //     collections: null,
-  //     account: "account",
-  //   });
+    // setDropdown({
+    //   wod: null,
+    //   game: null,
+    //   community: null,
+    //   about: null,
+    //   collections: null,
+    //   account: "account",
+    // });
   // }, []);
 
   return (
@@ -942,6 +995,13 @@ const Header = ({
                         logout();
                         onLogout();
                         setshowmenuAccount(false);
+                        setAccount({
+                          logged: false,
+                          wallet: coinbase,
+                          linked: false,
+                          guest: true,
+                        });
+
                       }}
                     >
                       <img src={logouticon} alt="" className="logout-icon" />{" "}
@@ -1219,7 +1279,7 @@ const Header = ({
                         setshowChainDropdown(false);
                       }}
                     >
-                      <DropdownButton
+             <DropdownButton
                         id="dropdown-basic-button"
                         className="d-flex align-items-center justify-content-center chaindropdown"
                         show={showChainDropdown}
@@ -1246,6 +1306,8 @@ const Header = ({
                                     ? core
                                     : victionState === true
                                     ? viction
+                                    : immutableState === true
+                                    ? immutable
                                     : error
                                 }
                                 height={16}
@@ -1312,6 +1374,10 @@ const Header = ({
                                 <img src={skale} alt="" />
                                 SKALE
                               </Dropdown.Item>
+                              <Dropdown.Item onClick={() => handleImmutablePool()}>
+                    <img src={immutable} width={20} height={20} alt="" />
+                    Immutable
+                  </Dropdown.Item>
                             </div>
                           </div>
                           <hr className="header-divider my-0" />

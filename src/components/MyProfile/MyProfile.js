@@ -81,6 +81,8 @@ import rookieProfile from './assets/rookieProfile.png'
 import underdogProfile from './assets/underdogProfile.png'
 import championProfile from './assets/championProfile.png'
 import unstoppableProfile from './assets/unstoppableProfile.png'
+import { shortAddress } from "../../screens/Caws/functions/shortAddress";
+import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 
 
 const renderer = ({ days, hours, minutes }) => {
@@ -128,7 +130,7 @@ const MyProfile = ({
   openedVictionChests,
   canBuy,
   email,
-  isPremium
+  isPremium, username, address, coinbase, totalScore
 
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -589,6 +591,8 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
     }
   }, [claimedChests, claimedPremiumChests, isPremium, canBuy, email]);
 
+ 
+
   return (
     <div className="custom-container mt-5">
       <div className="row mt-4 mt-lg-0">
@@ -599,18 +603,18 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
               <img className="new-profile-img" src={starterProfile} alt="" />
                 <div className="score-text-wrapper d-flex flex-column align-items-center">
                   <h6 className="mb-0">
-                    79,000,000
+                    {getFormattedNumber(totalScore,0)}
                   </h6>
                   <span>Score</span>
                 </div>
               </div>
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex align-items-center gap-2">
-                  <h6 className="my-profile-username mb-0">DarkSliffer</h6>
+                  <h6 className="my-profile-username mb-0">{username}</h6>
                   <span className="current-rank-text">Unstoppable</span>
                 </div>
                 <span className="my-profile-email mb-2">
-                  dypiustesting@gmail.com
+                  {email}
                 </span>
               <div className="d-flex flex-column flex-lg-row align-items-center gap-2">
               <div className="wallet-address-wrapper d-flex align-items-center justify-content-between gap-4 p-2">
@@ -618,7 +622,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                     <span className="profile-wallet-span mb-2">
                       Wallet Address
                     </span>
-                    <span className="wallet-addr">0xaC498...c7C9a</span>
+                    <span className="wallet-addr">{email !==undefined ? shortAddress(address) : coinbase ? shortAddress(coinbase) : ''}</span>
                   </div>
                   <img src={domainIcon} width={30} height={30} alt="" />
                 </div>

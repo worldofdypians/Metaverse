@@ -470,6 +470,42 @@
   //   background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   // }
 }
+.market-mint-core {
+  background-image: url("./assets/coreMarketMint.webp");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  // @media screen and (max-width: 786px) {
+  //   background-image: none;
+  //   background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  // }
+}
+
+.market-mint-opbnb {
+  background-image: url("./assets/opbnbMarketMint.webp");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  // @media screen and (max-width: 786px) {
+  //   background-image: none;
+  //   background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  // }
+}
+
+
+.market-mint-immutable {
+  background-image: url("./assets/immutableMarketBanner.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  // @media screen and (max-width: 786px) {
+  //   background-image: none;
+  //   background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  // }
+}
 
 .market-stake-bg{
   background-image: url("./assets/cawsMarketplaceBanner.png");
@@ -731,6 +767,19 @@
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   }
 }
+
+.opbnb-mint-bg {
+  background-image: url("./assets/opBnbBackground.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
 
 .viction-mint-bg {
   background-image: url("./assets/victionBackground.webp");
@@ -1220,6 +1269,13 @@
 }
 .bnb-active {
   background-image: url("../../assets/bnbActive2.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.opbnb-active {
+  background-image: url("../../assets/opBnbActive.webp");
   background-repeat: no-repeat;
   background-size: cover !important;
   background-position: center;

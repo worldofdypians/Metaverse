@@ -84,76 +84,32 @@ const MintPopup = ({ active, onClose, data }) => {
           <h6 className="mint-popup-title">DogeCoin Beta Pass</h6>
         </>
       ) : data.title === "CORE" ? (
-        <Slider {...settings} ref={sliderRef}>
-          <div>
-            <div className="d-flex align-items-center justify-content-center">
-              <div className="pulsatingDot"></div>
-              <h6
-                className="mint-popup-title  mb-0"
-                style={{ color: "#18FFFF" }}
-              >
-                Live CORE
-              </h6>
-            </div>
-            <h6 className="mint-popup-title">Treasure Hunt Event</h6>
-            <img
-              src={data.img}
-              className={`mint-popup-img ${
-                data.title === "Daily Bonus" && "bottom-auto-bg"
-              } `}
-              style={{
-                maxWidth: "100%",
-                height: data.title === "Daily Bonus" ? 370 : "",
-              }}
-              alt=""
-            />
-            <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-              <span className="popup-available-mint">
-                Explore the CORE area and use your{" "}
-                <img
-                  src={whiteExplore}
-                  className="white-explore d-inline"
-                  alt=""
-                />{" "}
-                to generate rewards!
-              </span>
-            </div>
-          </div>{" "}
-          <div>
-            <div className="d-flex align-items-center justify-content-center">
-              <div className="pulsatingDot"></div>
-              <h6
-                className="mint-popup-title  mb-0"
-                style={{ color: "#18FFFF" }}
-              >
-                Live Viction
-              </h6>
-            </div>
-            <h6 className="mint-popup-title">Treasure Hunt Event</h6>
-            <img
-              src={viction}
-              className={`mint-popup-img ${
-                data.title === "Daily Bonus" && "bottom-auto-bg"
-              } `}
-              style={{
-                maxWidth: "100%",
-                height: data.title === "Daily Bonus" ? 370 : "",
-              }}
-              alt=""
-            />
-            <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-              <span className="popup-available-mint">
-                Explore the Viction area and use your{" "}
-                <img
-                  src={whiteExplore}
-                  className="white-explore d-inline"
-                  alt=""
-                />{" "}
-                to generate rewards!
-              </span>
-            </div>
+        <div>
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="pulsatingDot"></div>
+            <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
+              Free Minting
+            </h6>
           </div>
-        </Slider>
+          <h6 className="mint-popup-title">CORE Beta Pass</h6>
+          <img
+            src={data.img}
+            className={`mint-popup-img ${
+              data.title === "Daily Bonus" && "bottom-auto-bg"
+            } `}
+            style={{
+              maxWidth: "100%",
+              height: data.title === "Daily Bonus" ? 370 : "",
+            }}
+            alt=""
+          />
+          <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
+            <span className="popup-available-mint">
+              Get access to the game and a unique event filled with surprises
+              and rewards!
+            </span>
+          </div>
+        </div>
       ) : data.title === "CoinMarketCap" ? (
         <>
           <div className="d-flex align-items-center justify-content-center">
@@ -164,11 +120,11 @@ const MintPopup = ({ active, onClose, data }) => {
           </div>
           <h6 className="mint-popup-title">CoinMarketCap Beta Pass</h6>
         </>
-      ) : data.title === "Viction" ? (
+      ) : data.title === "Immutable" ? (
         <>
           <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
-            <h6 className="mint-popup-title">Viction Beta Pass</h6>
+            <h6 className="mint-popup-title">Immutable Beta Pass</h6>
           </div>
 
           <div className="d-flex align-items-center justify-content-center">
@@ -176,6 +132,16 @@ const MintPopup = ({ active, onClose, data }) => {
               Free Minting
             </h6>
           </div>
+        </>
+      ) : data.title === "opBNB" ? (
+        <>
+   <div className="d-flex align-items-center justify-content-center">
+            <div className="pulsatingDot"></div>
+            <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
+            Dypians Global Challenge
+            </h6>
+          </div>
+          {/* <h6 className="mint-popup-title">opBNB Beta Pass</h6> */}
         </>
       ) : data.title === "Daily Bonus" ? (
         <>
@@ -247,11 +213,12 @@ const MintPopup = ({ active, onClose, data }) => {
             </span>
           )}
         </div>
-      ) : data.title === "DogeCoin" || data.title === "Viction" ? (
+      ) : data.title === "DogeCoin" ||
+        data.title === "Viction" ||
+        data.title === "opBNB" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           <span className="popup-available-mint">
-            Get access to the game and a unique event filled with surprises and
-            rewards!
+          Train Like a Champion with BNB Chain for your share of $250K+: Dypians' Global Challenge - DappBay
           </span>
         </div>
       ) : //  : data.title === "Viction" ? (
@@ -310,16 +277,27 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "CORE" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/events/treasure-hunt"}
+            to={"/marketplace/mint/core"}
             state={{ event: data.state }}
             className="linear-border"
           >
             <button className="btn filled-btn px-4">More</button>
           </Link>
-        ) : data.title === "Viction" ? (
+        ) : data.title === "opBNB" ? (
+          <a
+            onClick={onClose}
+            href={"https://dappbay.bnbchain.org/campaign/train-like-a-champion-with-bnb-chain-and-share-$250K/11"}
+            target="_blank"
+            rel="noreferrer"
+            state={{ event: data.state }}
+            className="linear-border"
+          >
+            <button className="btn filled-btn px-4">More</button>
+          </a>
+        ) : data.title === "Immutable" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/mint/viction"}
+            to={"/marketplace/mint/immutable"}
             state={{ event: data.state }}
             className="linear-border"
           >

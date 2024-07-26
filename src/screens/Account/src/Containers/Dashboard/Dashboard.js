@@ -331,6 +331,8 @@ function Dashboard({
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
   const [MyNFTSBNB, setMyNFTSBNB] = useState([]);
+  const [MyNFTSopBNB, setMyNFTSopBNB] = useState([]);
+
 
   const [MyNFTSLandBNB, setMyNFTSLandBNB] = useState([]);
   const [MyNFTSCawsBNB, setMyNFTSCawsBNB] = useState([]);
@@ -351,6 +353,8 @@ function Dashboard({
   const [myCoreNfts, setmyCoreNfts] = useState([]);
   const [myVictionNfts, setmyVictionNfts] = useState([]);
   const [myMultiversNfts, setmyMultiversNfts] = useState([]);
+  const [myImmutableNfts, setmyImmutableNfts] = useState([]);
+
 
   const [latestVersion, setLatestVersion] = useState(0);
 
@@ -3237,7 +3241,7 @@ function Dashboard({
   const handleFirstTask = async (wallet) => {
     const result2 = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task7/${wallet}`
+        `https://api.worldofdypians.com/api/olympiad/task1/${wallet}`
       )
       .catch((e) => {
         console.error(e);
@@ -3274,7 +3278,7 @@ function Dashboard({
         onSubscribeSuccess(account);
 
         if (isonlink) {
-          // handleFirstTask(account);
+          handleFirstTask(account);
         }
       });
     } catch (error) {
@@ -3970,6 +3974,11 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "bnb").then((NFTS) =>
       setMyNFTSBNB(NFTS)
     );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "opbnb").then((NFTS) =>
+      setMyNFTSopBNB(NFTS)
+    );
+
     // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
     //   (NFTS) => setMyNFTSLandBNB(NFTS)
     // );
@@ -4005,6 +4014,9 @@ function Dashboard({
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "viction").then(
       (NFTS) => setmyVictionNfts(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "immutable").then(
+      (NFTS) => setmyImmutableNfts(NFTS)
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "multivers").then(
@@ -5212,21 +5224,21 @@ function Dashboard({
     }
   };
   const handleRankRewards = () => {
-    let totalScore = userBnbScore + userSkaleScore;
-    if (totalScore > 6000000) {
+    let totalScore = userBnbScore + userSkaleScore + userCoreScore + userVictionScore;
+    if (totalScore > 10000000) {
       setUserRankRewards(5);
-    } else if (totalScore > 12000000) {
+    } else if (totalScore > 22000000) {
       setUserRankRewards(10);
-    } else if (totalScore > 24000000) {
+    } else if (totalScore > 35000000) {
       setUserRankRewards(25);
-    } else if (totalScore > 40000000) {
+    } else if (totalScore > 60000000) {
       setUserRankRewards(100);
     }
   };
 
   useEffect(() => {
     handleRankRewards();
-  }, [userBnbScore, userSkaleScore]);
+  }, [userBnbScore , userSkaleScore , userCoreScore , userVictionScore]);
 
   useEffect(() => {
     if (coinbase) {
@@ -5616,8 +5628,6 @@ function Dashboard({
 
   const location = useLocation();
 
-  console.log(location, "location");
-
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
@@ -5635,7 +5645,11 @@ function Dashboard({
             openedVictionChests={openedVictionChests}
             canBuy={canBuy}
             email={email}
+            username={username}
             isPremium={isPremium}
+            address={data?.getPlayer?.wallet?.publicAddress}
+            coinbase={coinbase}
+            totalScore={userBnbScore + userSkaleScore + userCoreScore + userVictionScore}
           />
           <NewEvents />
           </>
