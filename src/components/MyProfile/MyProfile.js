@@ -83,6 +83,7 @@ import championProfile from './assets/championProfile.png'
 import unstoppableProfile from './assets/unstoppableProfile.png'
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import { NavLink } from "react-router-dom";
 
 
 const renderer = ({ days, hours, minutes }) => {
@@ -137,6 +138,7 @@ openGenesisLeaderboard,
 openMyRewards,
 openDailyBonus,
 openPortfolio,
+openSpecialRewards
 
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -845,7 +847,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
               </div>
             </div>
             <div className="col-12 col-lg-6 mt-3">
-                 <div className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-2 p-3">
+                 <div className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-2 p-3" onClick={openSpecialRewards}>
                 <h6 className="special-rewards-title">Special Rewards</h6>
                 <div className="d-flex flex-column">
                   <h6 className="special-rewards-total mb-0">$450.24</h6>
@@ -911,7 +913,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
             </div>
             </div>
             <div className="col-12 col-lg-4 mt-3">
-              <div className="new-stake-nft-wrapper d-flex align-items-center justify-content-between p-3">
+              <NavLink className="new-stake-nft-wrapper d-flex align-items-center justify-content-between p-3" to={"/marketplace/stake"}>
                 <div className="d-flex flex-column justify-content-between h-100">
                   <div className="d-flex flex-column">
                     <h6 className="leaderboards-title">Stake</h6>
@@ -920,7 +922,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                   <img src={pinkArrow} height={20} width={20} alt="" />
                 </div>
                 <img src={stakeNft} className="new-stake-nft-img" alt="" />
-              </div>
+              </NavLink>
             </div>
 
           </div>

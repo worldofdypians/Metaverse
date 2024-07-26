@@ -52,6 +52,9 @@ import GenesisLeaderboard from "../../Components/LeaderBoard/GenesisLeaderboard"
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 import immutableIcon from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
+import TextField from "@mui/material/TextField";
+import styled from "styled-components";
+import ReCaptchaV2 from "react-google-recaptcha";
 
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
@@ -67,6 +70,55 @@ import Portfolio from "../../Components/WalletBalance/Portfolio";
 import ProfileSidebar from "../../../../../components/ProfileSidebar/ProfileSidebar";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import NewEvents from "../../../../../components/NewEvents/NewEvents";
+import successMark from '../../Components/WalletBalance/newAssets/successMark.svg'
+
+
+const StyledTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#fff",
+    fontFamily: "Poppins",
+  },
+  "& .MuiInputLabel-root": {
+    color: "#62688F",
+    fontFamily: "Poppins",
+    zIndex: "2",
+  },
+  "& .MuiFormHelperText-root": {
+    fontFamily: "Poppins",
+  },
+  "& .MuiSelect-select": {
+    color: "#fff",
+    fontFamily: "Poppins",
+    zIndex: "1",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#62688F",
+    fontFamily: "Poppins",
+    color: "#fff",
+    background: "#171932",
+    borderRadius: "8px",
+  },
+  "& .MuiOutlinedInput-input": {
+    zIndex: "1",
+    color: "#fff",
+    fontFamily: "Poppins",
+  },
+  "& .MuiOutlinedInput-root, & .MuiOutlinedInput-root:hover": {
+    "& fieldset": {
+      borderColor: "#62688F",
+      fontFamily: "Poppins",
+      background: "#171932",
+      borderRadius: "8px",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#62688F",
+      fontFamily: "Poppins",
+      color: "#fff",
+      background: "#171932",
+      borderRadius: "8px",
+    },
+  },
+});
 
 function Dashboard({
   account,
@@ -314,11 +366,13 @@ function Dashboard({
     useState(false);
   const firstSlider = useRef();
   const [loading, setLoading] = useState(true);
+  
   const [userRankRewards, setUserRankRewards] = useState(0);
   const [dypBalance, setDypBalance] = useState();
   const [dypBalancebnb, setDypBalanceBnb] = useState();
   const [dypBalanceavax, setDypBalanceAvax] = useState();
   const [idypBalance, setiDypBalance] = useState();
+  const [errors, setErrors] = useState({});
   const [idypBalancebnb, setiDypBalanceBnb] = useState();
   const [idypBalanceavax, setiDypBalanceAvax] = useState();
   const [showNfts, setShowNfts] = useState(false);
@@ -393,7 +447,7 @@ function Dashboard({
   const [playerRank, setPlayerRank] = useState({});
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
-
+  const [specialRewardsPopup, setSpecialRewardsPopup] = useState(false);
   const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
@@ -529,16 +583,71 @@ function Dashboard({
   const [multiversPrice, setmultiversPrice] = useState(0);
   const [multiversEarnToken, setmultiversEarnToken] = useState(0);
   const [multiversPoints, setmultiversPoints] = useState(0);
-
+  const [mediaUrl, setMediaUrl] = useState("");
+  const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
   const [discountPercentage, setdiscountPercentage] = useState(0);
   const [nftPremium_tokenId, setnftPremium_tokenId] = useState(0);
   const [nftPremium_total, setnftPremium_total] = useState(0);
   const [nftDiscountObject, setnftDiscountObject] = useState([]);
-
+  const recaptchaRef = useRef(null)
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
   const leaderboardId = document.querySelector("#leaderboard");
   const { BigNumber } = window;
+
+  const fetchUsersocialRewards = () => {
+    const cachedUserSocialRewards = localStorage.getItem(
+      "cacheduserSocialRewards"
+    );
+
+    if (cachedUserSocialRewards) {
+      setuserSocialRewardsCached(cachedUserSocialRewards);
+    }
+  };
+  const validateUrl = (url) => {
+    let errors = {};
+    let regex =
+      /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+    let match = url.match(regex);
+
+    if (!match) {
+      errors.url = "URL is not valid";
+    }
+
+    return errors;
+  };
+
+  const handleSubmit = async (e) => {
+    setLoading(true);
+    setErrors(validateUrl(mediaUrl));
+    const captchaToken = await recaptchaRef.current.executeAsync();
+    if (Object.keys(validateUrl(mediaUrl)).length === 0) {
+      const data = {
+        email: email,
+        url: mediaUrl,
+        walletAddress: coinbase,
+        username: username,
+        recaptcha: captchaToken,
+      };
+
+      if (email !== "" && mediaUrl !== "" && coinbase !== "") {
+        const send = await axios
+          .post("https://api.worldofdypians.com/api/submissions", data)
+          .then(function (result) {
+            console.log(result.data);
+            setSpecialRewardsSuccess("Email sent successfully");
+            return result.data;
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+      }
+    }
+
+    setLoading(false);
+  };
+
+
 
   //leaderboard calls
 
@@ -1051,7 +1160,7 @@ function Dashboard({
   const [monthlyrecords, setMonthlyRecords] = useState([]);
   const [genesisData, setgenesisData] = useState([]);
   const [previousgenesisData, setpreviousgenesisData] = useState([]);
-
+  const [specialRewardsSuccess, setSpecialRewardsSuccess] = useState(false)
   const fillRecords = (itemData) => {
     if (itemData.length === 0) {
       setRecords(placeholderplayerData);
@@ -5569,6 +5678,10 @@ function Dashboard({
   }, [email]);
 
   useEffect(() => {
+    fetchUsersocialRewards();
+  }, [userSocialRewards]);
+
+  useEffect(() => {
     if (
       (dailyBonusPopup === true && dailyrewardpopup) ||
       leaderboard === true
@@ -5656,6 +5769,7 @@ function Dashboard({
             openMyRewards={() => setmyRewardsPopup(true)}
             openDailyBonus={() => setdailyBonusPopup(true)}
             openPortfolio={() => setPortfolio(true)}
+            openSpecialRewards={() => setSpecialRewardsPopup(true)}
           />
           <NewEvents />
           </>
@@ -7231,6 +7345,150 @@ function Dashboard({
                   </div>
                 </OutsideClickHandler>
               )}
+               {specialRewardsPopup && (
+        <OutsideClickHandler
+          onOutsideClick={() => setSpecialRewardsPopup(false)}
+        >
+          <div
+            className="popup-wrapper popup-active p-3"
+            style={{ width: "30%", pointerEvents: "auto" }}
+          >
+            {specialRewardsSuccess === "Email sent successfully" ? (
+              <>
+                <div className="d-flex align-items-center justify-content-end w-100 mb-4">
+                  <img
+                    src={xMark}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setSpecialRewardsPopup(false)}
+                    alt=""
+                  />
+                </div>
+                <div className="d-flex flex-column align-items-center justify-content-center w-100 mb-4">
+                  <h6 className="rewards-success-title font-organetto">
+                    Successfully
+                  </h6>
+                  <h6
+                    className="rewards-success-title font-organetto"
+                    style={{ color: "#8C56FF" }}
+                  >
+                    Applied
+                  </h6>
+                </div>
+                <div className="d-flex w-100 justify-content-center mb-4">
+                  <img src={successMark} alt="" />
+                </div>
+                <div className="d-flex w-100 justify-content-center">
+                  <p
+                    className="popup-paragraph w-50"
+                    style={{ textAlign: "center" }}
+                  >
+                    Congratulations, your Special Reward application request is
+                    submitted. Please check back soon when our team reviews your
+                    application.
+                  </p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="d-flex align-items-center justify-content-between w-100 mb-4">
+                  <h6 className="popup-title-2 mb-0">Special Rewards</h6>
+                  <img
+                    src={xMark}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setSpecialRewardsPopup(false)}
+                    alt=""
+                  />
+                </div>
+                <p className="popup-paragraph">
+                  The Special Rewards program is designed to recognize and
+                  reward players for sharing their World of Dypians gameplay
+                  content on various social media platforms, including X
+                  (Twitter), Instagram, TikTok, YouTube, Facebook, Reddit, and
+                  more.
+                  <ul className="mt-3">
+                    <li>
+                      Minimum requirement of 1,000 followers on social media.
+                    </li>
+                  </ul>
+                </p>
+                <p className="popup-paragraph mb-4">
+                  The WoD Team will review the quality of the content, the
+                  engagement of the post, and other details. If you are
+                  eligible, they will determine the reward, which is distributed
+                  in BNB on a monthly basis.
+                </p>
+                <p className="popup-paragraph mb-4">
+                  <b>*Note:</b> You can submit one post per time. The team will
+                  not reply in any form, but if you are eligible, you will see
+                  the reward here. The display of the rewards will occur every
+                  Monday and will be distributed monthly.
+                </p>
+                <div className="d-flex align-items-center gap-4 mb-4">
+                  <StyledTextField
+                    error={errors?.url ? true : false}
+                    size="small"
+                    label="URL"
+                    id="email"
+                    name="email"
+                    value={mediaUrl}
+                    helperText={errors?.url}
+                    required
+                    onChange={(e) => {
+                      setMediaUrl(e.target.value);
+                    }}
+                    sx={{ width: "100%" }}
+                  />
+                  <div
+                    className={`${
+                      !email || !coinbase
+                        ? "linear-border-disabled"
+                        : "linear-border"
+                    }`}
+                    style={{
+                      width: "fit-content",
+                    }}
+                  >
+                    <button
+                      className={`btn ${
+                        !email || !coinbase
+                          ? "outline-btn-disabled"
+                          : "filled-btn"
+                      } px-5`}
+                      onClick={handleSubmit}
+                      disabled={!email || !coinbase ? true : false}
+                    >
+                      {loading ? (
+                        <div
+                          className="spinner-border text-light spinner-border-sm"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
+                        "Submit"
+                      )}
+                    </button>
+                    <ReCaptchaV2
+                      sitekey="6LflZgEgAAAAAO-psvqdoreRgcDdtkQUmYXoHuy2"
+                      style={{ display: "inline-block" }}
+                      theme="dark"
+                      size="invisible"
+                      ref={recaptchaRef}
+                    />
+                  </div>
+                </div>
+                <hr className="linear-divider" />
+                <div className="d-flex align-items-center justify-content-between">
+                  <span className="my-special-rewards mb-0">My Rewards</span>
+                  <h6 className="my-special-rewards-value mb-0">
+                    ${getFormattedNumber(Number(userSocialRewardsCached), 2)}
+                  </h6>
+                </div>
+              </>
+            )}
+          </div>
+        </OutsideClickHandler>
+      )}
       </div>
     </div>
   );
