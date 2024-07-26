@@ -79,22 +79,22 @@ import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 import Redirect from "./screens/Home/Redirect";
 import WalletModal2 from "./components/WalletModal/WalletModal2";
 
-const PUBLISHABLE_KEY = "pk_imapik-test-thnDYtOU1Z4uxZ85oiVj"; // Replace with your Publishable Key from the Immutable Hub
-const CLIENT_ID = "8u9twN341by6zff9xxJ34MIWIDX438PZ"; // Replace with your passport client ID
+const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
+const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
 
 const baseConfig = {
-  environment: config.Environment.SANDBOX,
+  environment: config.Environment.PRODUCTION,
   publishableKey: PUBLISHABLE_KEY,
 };
 
 const passportInstance = new passport.Passport({
   baseConfig: {
-    environment: config.Environment.SANDBOX,
+    environment: config.Environment.PRODUCTION,
     publishableKey: PUBLISHABLE_KEY,
   },
   clientId: CLIENT_ID,
-  redirectUri: "http://localhost:8080/redirect",
-  logoutRedirectUri: "http://localhost:8080/logout",
+  redirectUri: "https://www.worldofdypians.com/redirect",
+  logoutRedirectUri: "https://www.worldofdypians.com/logout",
   audience: "platform_api",
   scope: "openid offline_access email transact",
 });
