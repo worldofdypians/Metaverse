@@ -331,6 +331,8 @@ function Dashboard({
   const [MyNFTSLand, setMyNFTSLand] = useState([]);
   const [MyNFTSCaws, setMyNFTSCaws] = useState([]);
   const [MyNFTSBNB, setMyNFTSBNB] = useState([]);
+  const [MyNFTSopBNB, setMyNFTSopBNB] = useState([]);
+
 
   const [MyNFTSLandBNB, setMyNFTSLandBNB] = useState([]);
   const [MyNFTSCawsBNB, setMyNFTSCawsBNB] = useState([]);
@@ -351,6 +353,8 @@ function Dashboard({
   const [myCoreNfts, setmyCoreNfts] = useState([]);
   const [myVictionNfts, setmyVictionNfts] = useState([]);
   const [myMultiversNfts, setmyMultiversNfts] = useState([]);
+  const [myImmutableNfts, setmyImmutableNfts] = useState([]);
+
 
   const [latestVersion, setLatestVersion] = useState(0);
 
@@ -3237,7 +3241,7 @@ function Dashboard({
   const handleFirstTask = async (wallet) => {
     const result2 = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task7/${wallet}`
+        `https://api.worldofdypians.com/api/olympiad/task1/${wallet}`
       )
       .catch((e) => {
         console.error(e);
@@ -3274,7 +3278,7 @@ function Dashboard({
         onSubscribeSuccess(account);
 
         if (isonlink) {
-          // handleFirstTask(account);
+          handleFirstTask(account);
         }
       });
     } catch (error) {
@@ -3970,6 +3974,11 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "bnb").then((NFTS) =>
       setMyNFTSBNB(NFTS)
     );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "opbnb").then((NFTS) =>
+      setMyNFTSopBNB(NFTS)
+    );
+
     // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
     //   (NFTS) => setMyNFTSLandBNB(NFTS)
     // );
@@ -4005,6 +4014,9 @@ function Dashboard({
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "viction").then(
       (NFTS) => setmyVictionNfts(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "immutable").then(
+      (NFTS) => setmyImmutableNfts(NFTS)
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "multivers").then(
@@ -5615,8 +5627,6 @@ function Dashboard({
   const hashValue = window.location.hash;
 
   const location = useLocation();
-
-  console.log(location, "location");
 
   return (
     <div

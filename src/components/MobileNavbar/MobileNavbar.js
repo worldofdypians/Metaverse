@@ -22,6 +22,7 @@ import skale from "../Header/assets/skale.svg";
 import sei from "../Header/assets/sei.svg";
 import viction from "../Header/assets/viction.svg";
 import core from "../Header/assets/core.svg";
+import immutable from "../Header/assets/immutableLogo.svg";
 
 import error from "../Header/assets/error.svg";
 import dropdown from "../Header/assets/dropdown.svg";
@@ -55,6 +56,7 @@ const MobileNavbar = ({
   const [coreState, setCoreState] = useState(false);
   const [victionState, setVictionState] = useState(false);
   const [seiState, setSeiState] = useState(false);
+  const [immutableState, setImmutableState] = useState(false);
   
 
 
@@ -82,7 +84,8 @@ const MobileNavbar = ({
         setopBnbState(false);
         setSkaleState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
+        setImmutableState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
@@ -92,7 +95,9 @@ const MobileNavbar = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
@@ -102,7 +107,9 @@ const MobileNavbar = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
@@ -112,7 +119,9 @@ const MobileNavbar = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
@@ -122,7 +131,9 @@ const MobileNavbar = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
+        setImmutableState(false);
+
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -133,8 +144,10 @@ const MobileNavbar = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
-      } else if (chainId === 1482601649 ) {
+        setSeiState(false);
+        setImmutableState(false);
+
+      } else if (chainId === 1482601649) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
@@ -144,9 +157,10 @@ const MobileNavbar = ({
         setSkaleState(true);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
-      } 
-      else if (chainId === 1116 ) {
+        setSeiState(false);
+        setImmutableState(false);
+
+      } else if (chainId === 1116) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
@@ -156,9 +170,10 @@ const MobileNavbar = ({
         setSkaleState(false);
         setCoreState(true);
         setVictionState(false);
-        setSeiState(false)
-      }
-      else if (chainId === 88 ) {
+        setSeiState(false);
+        setImmutableState(false);
+
+      } else if (chainId === 88) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
@@ -168,7 +183,22 @@ const MobileNavbar = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(true);
-        setSeiState(false)
+        setSeiState(false);
+        setImmutableState(false);
+
+      } else if (chainId === 13371) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false);
+        setImmutableState(true);
+
       }
       // else if (chainId === 713715 ) {
       //   setAvaxState(false);
@@ -191,10 +221,13 @@ const MobileNavbar = ({
         setSkaleState(false);
         setCoreState(false);
         setVictionState(false);
-        setSeiState(false)
+        setSeiState(false);
+        setImmutableState(false);
+
       }
     }
   };
+
 
   const handleEthPool = async () => {
     if (window.ethereum) {
@@ -374,6 +407,25 @@ const MobileNavbar = ({
     }
   };
 
+
+  const handleImmutablePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x343b")
+          .then(() => {
+            handleSwitchNetwork(13371);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet();
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
   useEffect(() => {
     if (chainId === 1) {
       handleSwitchNetwork(1);
@@ -468,6 +520,8 @@ const MobileNavbar = ({
                         ? core
                         : victionState === true
                         ? viction
+                        : immutableState === true
+                        ? immutable
                         // : seiState === true
                         // ? sei
                         : error
@@ -495,6 +549,8 @@ const MobileNavbar = ({
                             ? "CORE"
                             : victionState === true
                             ? "Viction"
+                            : immutableState === true
+                            ? "Immutable"
                             // : seiState === true
                             // ? "Sei"
                             : "Unsupported"}
@@ -527,6 +583,10 @@ const MobileNavbar = ({
                   <Dropdown.Item onClick={() => handleConfluxPool()}>
                     <img src={conflux} alt="" />
                     Conflux
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleImmutablePool()}>
+                    <img src={immutable} width={20} height={20} alt="" />
+                    Immutable
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleBasePool()}>
                     <img src={base} alt="" />

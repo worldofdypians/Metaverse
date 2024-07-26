@@ -8,7 +8,7 @@ import coingecko from "./assets/coingecko.svg";
 import gate from "./assets/gate.svg";
 import baseLogo from "./assets/baseLogo.svg";
 import cmc from "./assets/cmc.svg";
-
+import skale from '../../../../Marketplace/MarketNFTs/assets/skaleLogo.svg'
 import dypius from "./assets/dypIcon.svg";
 import grayArrow from "./assets/grayArrow.svg";
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
@@ -44,6 +44,8 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
                 ? dypiusPremium16
                 : event.title === "CoinMarketCap"
                 ? cmc
+                : event.title === "SKALE"
+                ? skale
                 : gate
             }
             height={16}

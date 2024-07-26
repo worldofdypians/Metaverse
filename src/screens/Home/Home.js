@@ -26,6 +26,7 @@ import gatePopup from "../../components/TimepieceMint/assets/gatePopup.webp";
 import cmcPopup from "../../components/TimepieceMint/assets/cmcPopup.webp";
 
 import dypiusPopup from "../../components/TimepieceMint/assets/dypiuspremiumPopup.webp";
+import opbnbPopup from "../../components/TimepieceMint/assets/opbnbPopup.webp";
 
 import coingeckoPopup from "../../components/TimepieceMint/assets/coingeckoPopup.png";
 import treasureHuntPopup from "../../components/TimepieceMint/assets/treasureHuntPopup.png";
@@ -35,8 +36,12 @@ import dogeTreasureHuntPopup from "../../components/TimepieceMint/assets/dogeTre
 import skalePopup from "../../components/TimepieceMint/assets/skalePopup.webp";
 
 import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreasureHunt.webp";
-import corePopupBg from "../../components/TimepieceMint/assets/corePopupImage.webp";
+import corePopupBg from "../../components/TimepieceMint/assets/corePopupBg.webp";
 import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
+import immutablePopup from "../../components/TimepieceMint/assets/immutablePopup.webp";
+import bnbcampaign from "../../components/TimepieceMint/assets/bnbcampaign.webp";
+
+
 import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
 import bnbPhase4 from "./WodBuilders/assets/bnbPhase4.png";
 
@@ -61,9 +66,14 @@ const Home = ({
     img: cmcTreasureHuntPopup,
     state: "cmc",
   };
+  const opbnbInfo = {
+    title: "opBNB",
+    img: bnbcampaign,
+    state: "opbnb",
+  };
 
   const [activePopup, setActivePopup] = useState(false);
-  const [popupInfo, setPopupInfo] = useState({});
+
   const html = document.querySelector("html");
   const hamburger = document.querySelector("#popup");
 
@@ -95,7 +105,7 @@ const Home = ({
       >
         {/* <MintPopup
           active={activePopup}
-          data={victionPopupInfo}
+          data={opbnbInfo}
           onClose={() => setActivePopup(false)}
         /> */}
       </OutsideClickHandler>

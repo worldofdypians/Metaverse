@@ -79,7 +79,7 @@ function Auth({ isConnected, coinbase,onSuccessLogin }) {
      
       const result2 = await axios
       .get(
-        `https://api.worldofdypians.com/api/airdrop-alliance/task7/${wallet}`
+        `https://api.worldofdypians.com/api/olympiad/task1/${wallet}`
       )
       .catch((e) => {
         console.error(e);
@@ -112,6 +112,7 @@ function Auth({ isConnected, coinbase,onSuccessLogin }) {
           {value === 0 && (
             <Login
               onSuccessLogin={() => {
+                handleFirstTask(coinbase);
                 onSuccessLogin()
                 // handleFirstTask(coinbase);
               }}

@@ -103,7 +103,7 @@ const Portfolio = ({
   myCmcNfts,
   mySkaleNfts,
   myCoreNfts,
-  myVictionNfts,
+  myVictionNfts,myImmutableNfts,
   latestVersion,
   MyNFTSLandBNB,
   MyNFTSCawsBNB,
@@ -451,6 +451,7 @@ const Portfolio = ({
     let dogeNftsArray = [];
     let cmcNftsArray = [];
     let victionNftsArray = [];
+    let immutableNftsArray = [];
     let coreNftsArray = [];
     let cawsBnbArray = [];
     let cawsAvaxArray = [];
@@ -756,6 +757,22 @@ const Portfolio = ({
         );
       }
 
+      if (myImmutableNfts && myImmutableNfts.length > 0) {
+        await Promise.all(
+          myImmutableNfts.map(async (i) => {
+            immutableNftsArray.push({
+              nftAddress: window.config.nft_immutable_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "immutable",
+              chain: 13371,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
       if (myMultiversNfts && myMultiversNfts.length > 0) {
         await Promise.all(
           myMultiversNfts.map(async (i) => {
@@ -946,6 +963,7 @@ const Portfolio = ({
         ...multiversNftsArray,
         ...bnbNftsArray,
         ...victionNftsArray,
+        ...immutableNftsArray,
         ...coreNftsArray,
         ...confluxNftsArray,
         ...gateNftsArray,
@@ -1175,6 +1193,9 @@ const Portfolio = ({
       let victionFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_viction_address
       );
+      let immutableFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_immutable_address
+      );
 
       let multiversFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_multivers_address
@@ -1189,6 +1210,7 @@ const Portfolio = ({
         ...baseFilter,
         ...skaleFilter,
         ...victionFilter,
+        ...immutableFilter,
         ...multiversFilter,
         ...coreFilter,
         ...bnbFilter
@@ -1839,6 +1861,8 @@ const Portfolio = ({
                                 ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+50.png`
                                 : item.type === "viction"
                                 ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
+                                : item.type === "immutable"
+                                ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                  : item.type === "bnb"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
                                 : item.type === "base"
@@ -1878,6 +1902,8 @@ const Portfolio = ({
                                 ? "COBP"
                                 : item.type === "viction"
                                 ? "VCBP"
+                                 : item.type === "immutable"
+                                ? "IMXBP"
                                 : item.type === "bnb"
                                 ? "BNBBP"
                                 : item.type === "gate"
@@ -2933,6 +2959,9 @@ const Portfolio = ({
                               : nft.nftAddress ===
                               window.config.nft_viction_address
                             ? "viction"
+                            : nft.nftAddress ===
+                              window.config.nft_immutable_address
+                            ? "immutable"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3008,6 +3037,9 @@ const Portfolio = ({
                                       window.config.nft_viction_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_immutable_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                     : nft.nftAddress ===
@@ -3068,6 +3100,9 @@ const Portfolio = ({
                                   : nft.nftAddress ===
                                   window.config.nft_viction_address
                                 ? "VCBP"
+                                : nft.nftAddress ===
+                                  window.config.nft_immutable_address
+                                ? "IMXBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
@@ -3234,6 +3269,9 @@ const Portfolio = ({
                               : nft.nftAddress ===
                               window.config.nft_viction_address
                             ? "viction"
+                            : nft.nftAddress ===
+                            window.config.nft_immutable_address
+                          ? "immutable"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3314,6 +3352,9 @@ const Portfolio = ({
                                       window.config.nft_viction_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                     : nft.nftAddress ===
+                                    window.config.nft_immutable_address
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -3373,6 +3414,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_viction_address
                                     ? "VCBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_immutable_address
+                                    ? "IMXBP"
                                     : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
