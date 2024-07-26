@@ -130,7 +130,13 @@ const MyProfile = ({
   openedVictionChests,
   canBuy,
   email,
-  isPremium, username, address, coinbase, totalScore
+  isPremium, username, address, coinbase, totalScore,
+  openChainsLeaderboard,
+openGlobalLeaderboard,
+openGenesisLeaderboard,
+openMyRewards,
+openDailyBonus,
+openPortfolio,
 
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -626,7 +632,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                   </div>
                   <img src={domainIcon} width={30} height={30} alt="" />
                 </div>
-                <div className="portfolio-wrapper d-flex align-items-center gap-2 p-2">
+                <div className="portfolio-wrapper d-flex align-items-center gap-2 p-2" onClick={openPortfolio}>
                   <img src={portfolio} width={25} height={25} alt="" />
                   <h6 className="mb-0">My Portfolio</h6>
                 </div>
@@ -712,7 +718,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                   <img src={redArrow} alt="" />
                 </div>
               </div> */}
-               <div className="daily-bonus-wrapper mt-4 mb-5 mt-lg-0 mb-lg-0">
+               <div className="daily-bonus-wrapper mt-4 mb-5 mt-lg-0 mb-lg-0" onClick={openDailyBonus}>
                   <div className="red-div"></div>
                   <img
                     // src={finished ? mageFinish : mageGoing}
@@ -800,21 +806,21 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
                   </h6>
                 </div>
                 <div className="d-flex align-items-center leaderboards-flag-wrapper gap-3">
-                  <div className="new-flag-wrapper global-flag">
+                  <div className="new-flag-wrapper global-flag" onClick={openGlobalLeaderboard}>
                     <img src={globalFlag} className="w-100" alt="" />
                     <div className="flag-content d-flex flex-column gap-2 align-items-center">
                       <span className="flag-title">Global</span>
                       <img src={globalIcon} height={50} width={50} alt="" />
                     </div>
                   </div>
-                  <div className="new-flag-wrapper chains-flag">
+                  <div className="new-flag-wrapper chains-flag" onClick={openChainsLeaderboard}>
                     <img src={chainsFlag} className="w-100" alt="" />
                     <div className="flag-content d-flex flex-column gap-2 align-items-center">
                       <span className="flag-title">Chains</span>
                       <img src={chainsIcon} height={50} width={50} alt="" />
                     </div>
                   </div>
-                  <div className="new-flag-wrapper land-flag">
+                  <div className="new-flag-wrapper land-flag" onClick={openGenesisLeaderboard}>
                     <img src={landFlag} className="w-100" alt="" />
                     <div className="flag-content d-flex flex-column gap-2 align-items-center">
                       <span className="flag-title">Genesis</span>
@@ -825,7 +831,7 @@ const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
               </div>
             </div>
             <div className="col-12 col-lg-6 mt-3">
-              <div className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3">
+              <div className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3" onClick={openMyRewards}>
                 <img src={myRewardsMiner} className="miner-img" alt="" />
                 <div className="d-flex align-items-center gap-2">
               <h6 className="special-rewards-title" style={{color: "#FFF", width: "fit-content"}}>My</h6>
