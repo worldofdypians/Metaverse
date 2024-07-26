@@ -78,7 +78,7 @@ import upcomingDoge from "../../../../Marketplace/assets/upcomingDoge.webp";
 import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import gate from "../../Components/WalletBalance/assets/gate.svg";
 import coingecko from "../../Components/WalletBalance/assets/coingecko.svg";
-import base from "../../Components/WalletBalance/assets/baseLogo.svg";
+import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import confluxUpcoming from "../../Components/WalletBalance/assets/confluxUpcoming.png";
 import gateUpcoming from "../../Components/WalletBalance/assets/gateUpcoming.webp";
 import skaleLogo from "../../Components/WalletBalance/assets/skaleLogo.svg";
@@ -1244,7 +1244,7 @@ function Dashboard({
     },
     {
       title: "Base",
-      logo: base,
+      logo: baseLogo,
       eventStatus: "Expired",
       totalRewards: "$10,000 in ETH Rewards",
       myEarnings: 126.45,
@@ -6243,7 +6243,7 @@ function Dashboard({
               openPortfolio={() => setPortfolio(true)}
               openSpecialRewards={() => setSpecialRewardsPopup(true)}
             />
-            <NewEvents />
+            <NewEvents events={dummyBetaPassData2}/>
           </>
         ) : location.pathname === "/account/my-rewards" ? (
           <MyRewardsPopupNew
