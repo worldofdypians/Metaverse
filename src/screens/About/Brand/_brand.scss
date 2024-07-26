@@ -1,0 +1,22 @@
+.brand-desc{
+    color: #EEEDFF;
+text-align: center;
+font-family: "Montserrat";
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+width: 50%;
+@media screen and (max-width: 786px) {
+    width: 100%;
+}
+}
+
+.download-brand{
+    width: fit-content;
+    position: relative !important;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}

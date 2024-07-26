@@ -1,0 +1,121 @@
+.mainhero-wrapper {
+  min-height: 85vh !important;
+  background-image: url("../../../../assets/wodAssets/newTokenBg.webp") !important;
+
+  @media only screen and (max-width: 991px) {
+    min-height: auto !important;
+   
+}
+}
+
+.buy-item-logo {
+  width: 47px;
+}
+
+.buy-item-title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 130%;
+  letter-spacing: 0.03em;
+  text-transform: capitalize;
+  color: #ffffff;
+}
+
+.buy-items-all-wrapper {
+  backdrop-filter: blur(12.5px);
+  background: linear-gradient(148deg, #0000001a, #0000000d);
+}
+
+.buy-token-wrapper {
+  border: 0.1rem solid rgb(149 143 135);
+  min-height: 87px;
+}
+
+.buy-token-wrapper:hover {
+  border: 0.1rem solid #fff;
+  transition: all 0.25s ease;
+  // filter: drop-shadow(0 0 6px #fff);
+}
+
+.stake-wod-btn {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #7bd8b0 0%, #dcfb85 100%);
+  border: none;
+  color: #333;
+  text-align: center;
+  font-family: "Montserrat";
+  text-transform: uppercase;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  // line-height: normal;
+}
+.stake-wod-btn-inactive {
+  border-radius: 10px;
+  background: #CFC6DD;
+  border: none;
+  color: #464555;
+  text-align: center;
+  font-family: "Montserrat";
+  text-transform: uppercase;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  // line-height: normal;
+}
+
+.auto-button {
+  width: fit-content;
+}
+
+.buy-wod-btn {
+    border-radius: 10px;
+    background: linear-gradient(90deg, #7B2EB0 0%, #2647C9 100%);
+    border: none;
+    color: #EEEDFF;
+    text-align: center;
+    font-family: "Montserrat";
+    text-transform: uppercase;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    // line-height: normal;
+}
+
+.tokenEarnClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../../../assets/wodAssets/tokenEarnBg.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.tokenBridgeClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../../../assets/wodAssets/tokenBridgeBg.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.tokenGovernanceClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../../../assets/wodAssets/tokenGovernanceBg.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.buy-wod-bg{
+  background: rgba(47, 19, 105, 0.50);
+  display: flex;
+  justify-content: center;
+}

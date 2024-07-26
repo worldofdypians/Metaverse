@@ -5,8 +5,15 @@ import wodLogo from "./assets/wodLogo.png";
 import cawsLogo from "./assets/cawsLogo.png";
 import ItemCard from "../../components/ItemCard/ItemCard";
 import { NavLink } from "react-router-dom";
+
 import ethIcon from "./assets/ethIcon.svg";
 import bnbIcon from "./assets/bnbIcon.svg";
+import coreIcon from "./assets/coreLogo.svg";
+import skaleIcon from "./assets/skaleLogo.svg";
+import baseIcon from "./assets/baseLogo.svg";
+import confluxIcon from "./assets/confluxLogo.svg";
+import vicitonIcon from "./assets/victionLogo.svg";
+
 import dypIcon from "./assets/dypIcon.svg";
 import CountUp from "react-countup";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
@@ -33,6 +40,7 @@ import confluxHome from "./assets/confluxHome.png";
 import baseUpcoming from "./assets/baseUpcoming.png";
 import OutsideClickHandler from "react-outside-click-handler";
 import DailyRewardsPopup from "../../components/TimepieceMint/DailyRewardsPopup";
+import GameEvents from "../Game/GameEvents";
 
 const Marketplace = ({
   listedNFTS,
@@ -97,25 +105,6 @@ const Marketplace = ({
   const secondPrev = () => {
     secondSlider.current.slickPrev();
   };
-
-  const benefits = [
-    {
-      title: "Exclusive Access",
-      icon: "draft",
-    },
-    {
-      title: "Enhanced Interactions",
-      icon: "user",
-    },
-    {
-      title: "Special Rewards",
-      icon: "star",
-    },
-    {
-      title: "Expanded Functionality",
-      icon: "expand",
-    },
-  ];
 
   var settings = {
     dots: false,
@@ -683,11 +672,11 @@ const Marketplace = ({
 
   return (
     <div
-      className="container-fluid mt-5 mt-lg-0 d-flex flex-column-reverse flex-lg-row justify-content-center justify-content-lg-end p-0"
+      className="container-fluid mt-lg-5 pt-lg-5 d-flex flex-column-reverse flex-lg-row justify-content-center justify-content-lg-end p-0"
       style={{ minHeight: "72vh", maxWidth: "2400px" }}
     >
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
-      <OutsideClickHandler
+      {/* <OutsideClickHandler
         id="popup"
         onOutsideClick={() => {
           setActivePopup(false);
@@ -701,77 +690,110 @@ const Marketplace = ({
             setCount(1);
           }}
         />
-      </OutsideClickHandler>
-      <div className="container-nft d-flex align-items-start px-0 px-lg-5 position-relative">
-        <div className="container-lg mx-0">
-          <div className="row justify-content-between align-items-center marketplace-banner mt-4 mt-lg-0">
-            <div className="col-12 col-lg-5">
-              <h6 className="market-banner-title">
-                Explore the World of Dypians{" "}
-                <mark
-                  className="p-0"
-                  style={{
-                    color: "#8C56FF",
-                    lineHeight: "80%",
-                    background: "transparent",
-                  }}
-                >
-                  Marketplace!
-                </mark>
-              </h6>
+      </OutsideClickHandler> */}
+      <div className="container-nft2 mt-lg-5 d-flex align-items-start px-0 px-lg-5 position-relative">
+        <div className="custom-container mx-0">
+          <div className="market-upper-wrapper pb-5">
+            <div className="d-flex flex-column gap-5">
+              <div className="row mx-0 justify-content-center p-4  marketplace-banner align-items-center mt-4 mt-lg-0">
+                <div className="col-12 col-lg-6">
+                  <h6 className="market-banner-title text-uppercase text-center">
+                    Explore the World of Dypians{" "}
+                    <mark
+                      className="p-0 text-uppercase"
+                      style={{
+                        color: "#DCFB85",
+                        lineHeight: "80%",
+                        background: "transparent",
+                      }}
+                    >
+                      Marketplace
+                    </mark>
+                  </h6>
 
-              <div className="my-4">
-                <span className="market-banner-desc my-4">
-                  Discover the power of NFTs for a unique digital experience
-                </span>
+                  <div className="my-4 d-flex flex-column align-items-center gap-2">
+                    <span className="market-banner-desc">Available on</span>
+                    <span className="d-flex gap-2 align-items-center">
+                      <img
+                        src={ethIcon}
+                        alt=""
+                        style={{ width: 24, height: 24 }}
+                      />
+                      <img
+                        src={bnbIcon}
+                        alt=""
+                        style={{ width: 24, height: 24 }}
+                      />
+                      <img
+                        src={coreIcon}
+                        alt=""
+                        style={{ width: 24, height: 24 }}
+                      />
+                      <img
+                        src={skaleIcon}
+                        alt=""
+                        style={{ width: 24, height: 24 }}
+                      />
+                      <img
+                        src={baseIcon}
+                        alt=""
+                        style={{ width: 24, height: 24 }}
+                      />
+                      <img
+                        src={confluxIcon}
+                        alt=""
+                        style={{ width: 24, height: 24 }}
+                      />
+                      <img
+                        src={vicitonIcon}
+                        alt=""
+                        style={{ width: 24, height: 24 }}
+                      />
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="col-12 col-lg-5">
-              <img
-                src={require("./assets/marketMain2.webp")}
-                alt=""
-                className="market-main w-100"
-              />
+              <div className="row gap-4 mx-0 gap-lg-0 align-items-center">
+                <div className="col-12 col-lg-4">
+                  <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-0">
+                    <h6 className="stats-value">
+                      {getFormattedNumber(totalTx2).slice(
+                        0,
+                        getFormattedNumber(totalTx2).length - 3
+                      )}
+                    </h6>
+                    <span className="stats-desc">
+                      Total on-chain transactions
+                    </span>
+                  </div>
+                </div>
+                <div className="col-12 col-lg-4">
+                  <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-0">
+                    <h6 className="stats-value">
+                      {/* {abbreviateNumber(totalvolume,4)}+ */}$
+                      {getFormattedNumber(totalvolume2, 0)}
+                    </h6>
+                    <span className="stats-desc">Total Volume (USD)</span>
+                  </div>
+                </div>
+                <div className="col-12 col-lg-4">
+                  <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-0">
+                    <h6 className="stats-value">
+                      {" "}
+                      {getFormattedNumber(totalSupply, 0)}
+                    </h6>
+                    <span className="stats-desc">Sold NFTs</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className="main-wrapper w-100">
-            <div className="row gap-4 gap-lg-0 align-items-center">
-              <div className="col-12 col-lg-4">
-                <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-3">
-                  <h6 className="stats-value">
-                    {getFormattedNumber(totalTx2).slice(
-                      0,
-                      getFormattedNumber(totalTx2).length - 3
-                    )}
-                  </h6>
-                  <span className="stats-desc">
-                    Total on-chain transactions
-                  </span>
-                </div>
-              </div>
-              <div className="col-12 col-lg-4">
-                <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-3">
-                  <h6 className="stats-value">
-                    {/* {abbreviateNumber(totalvolume,4)}+ */}$
-                    {getFormattedNumber(totalvolume2, 0)}
-                  </h6>
-                  <span className="stats-desc">Total Volume (USD)</span>
-                </div>
-              </div>
-              <div className="col-12 col-lg-4">
-                <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-3">
-                  <h6 className="stats-value">
-                    {" "}
-                    {getFormattedNumber(totalSupply, 0)}
-                  </h6>
-                  <span className="stats-desc">Sold NFTs</span>
-                </div>
-              </div>
-            </div>
-            <h6 className="nft-wrapper-title font-raleway my-4 ms-3 ms-lg-0">
+            <GameEvents/>
+            {/* <h6 className="nft-wrapper-title font-raleway my-4 ms-3 ms-lg-0">
               Active Events
-            </h6>
-            <div className="nft-outer-wrapper2 row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-2 p-lg-5 mx-2 mx-lg-0 position-relative">
+            </h6> */}
+            {/* <div className="nft-outer-wrapper2 row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-2 p-lg-5 mx-2 mx-lg-0 position-relative">
               {windowSize.width > 786 ? (
                 <>
                   <NavLink
@@ -793,23 +815,7 @@ const Marketplace = ({
                     </div>
                   </NavLink>
 
-                  {/* <NavLink
-                    to="/marketplace/events/daily-bonus"
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <div className="position-relative package-blur">
-                      <div className="first-box-blur d-flex align-items-end justify-content-center">
-                        <span className="blur-package-title">Daily Bonus</span>
-                      </div>
-                      <div className="second-box-blur"></div>
-                      <img
-                        src={require("./assets/dailyBonus.png")}
-                        alt=""
-                        className="blur-img"
-                      />
-                    </div>
-                  </NavLink> */}
+                  
 
                   <NavLink
                     to="/marketplace/events/dragon-ruins"
@@ -907,22 +913,7 @@ const Marketplace = ({
                         </span>
                       </NavLink>
                     </div>
-                    {/* <div className="">
-                      <NavLink
-                        to="/marketplace/events/daily-bonus"
-                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                      >
-                        <img
-                          src={require("./assets/dailyBonus.png")}
-                          className="w-100"
-                          style={{ borderRadius: "16px", height: 130 }}
-                          alt=""
-                        />
-                        <span className="event-package-title">
-                          Daily Bonus
-                        </span>
-                      </NavLink>
-                    </div> */}
+                   
                     <div className="">
                       <NavLink
                         to="/marketplace/events/dragon-ruins"
@@ -992,7 +983,7 @@ const Marketplace = ({
                   </div>
                 </div>
               )}
-            </div>
+            </div> */}
             {/*  <div
               className="row mx-1 justify-content-center d-flex my-4 align-items-start nft-outer-wrapper2 px-3 py-5 px-lg-5 gap-4 my-4"
               style={{ minHeight: "420px" }}

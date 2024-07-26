@@ -562,7 +562,7 @@ const MyRewardsPopupNew = ({
   const kittyDashRewards = [30, 20, 10, 10, 5, 5, 5, 5, 5, 5];
 
   return (
-    <div className="d-grid rewardstable-wrapper2 gap-2 mt-3 px-1">
+    <div className="custom-container">
       <div className="total-earnings-purple-wrapper p-2">
         <div className="d-flex flex-column align-items-center justify-content-center">
           <span className="total-rewards-amount">
@@ -590,6 +590,7 @@ const MyRewardsPopupNew = ({
           <span className="total-rewards-desc">LIFETIME EARNINGS</span>
         </div>
       </div>
+      <div className="new-my-rewards-wrapper p-3">
       <div className="d-flex flex-column gap-1 w-100">
         <div className="d-flex flex-row justify-content-between gap-2 align-items-center">
           <span className="reward-category-text">Reward Category</span>
@@ -612,9 +613,11 @@ const MyRewardsPopupNew = ({
             </button>
           </div>
         </div>
-        <div className="small-separator"></div>
+        <div className="small-separator mb-2"></div>
       </div>
-      <div className="reward-category-items-wrapper">
+      <div className="row">
+        <div className="col-12 col-lg-3">
+        <div className="reward-category-items-wrapper p-3">
         <div
           className={` ${
             rewardCategory === "all"
@@ -718,7 +721,7 @@ const MyRewardsPopupNew = ({
           }  p-2`}
           onClick={() => {
             setrewardCategory("nftStaking");
-            scrollToView(previousRewards ? "pastnftStaking" : "nftStaking");
+            // scrollToView(previousRewards ? "pastnftStaking" : "nftStaking");
           }}
         >
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
@@ -771,7 +774,7 @@ const MyRewardsPopupNew = ({
           }  p-2`}
           onClick={() => {
             setrewardCategory("dailyBonus");
-            scrollToView(previousRewards ? "pastdailyBonus" : "dailyBonus");
+            // scrollToView(previousRewards ? "pastdailyBonus" : "dailyBonus");
           }}
         >
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
@@ -827,7 +830,7 @@ const MyRewardsPopupNew = ({
           }  p-2`}
           onClick={() => {
             setrewardCategory("leaderboard");
-            scrollToView(previousRewards ? "pastleaderboard" : "leaderboard2");
+            // scrollToView(previousRewards ? "pastleaderboard" : "leaderboard2");
           }}
         >
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
@@ -903,7 +906,7 @@ const MyRewardsPopupNew = ({
           }  p-2`}
           onClick={() => {
             setrewardCategory("treasurehunt");
-            scrollToView(previousRewards ? "pasttreasurehunt" : "treasurehunt");
+            // scrollToView(previousRewards ? "pasttreasurehunt" : "treasurehunt");
           }}
         >
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
@@ -972,9 +975,9 @@ const MyRewardsPopupNew = ({
           }  p-2`}
           onClick={() => {
             setrewardCategory("specialRewards");
-            scrollToView(
-              previousRewards ? "pastspecialRewards" : "specialRewards"
-            );
+            // scrollToView(
+            //   previousRewards ? "pastspecialRewards" : "specialRewards"
+            // );
           }}
         >
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
@@ -1023,7 +1026,9 @@ const MyRewardsPopupNew = ({
           </div>
         </div>
       </div>
-      {previousRewards ? (
+        </div>
+     <div className="col-12 col-lg-9">
+     {previousRewards ? (
         <div className="d-flex flex-column gap-2" id="pastnftStaking">
           <span
             className={
@@ -1550,6 +1555,9 @@ const MyRewardsPopupNew = ({
             </div>
           </div>
         </div>
+      </div>
+     </div>
+      </div>
       </div>
     </div>
   );

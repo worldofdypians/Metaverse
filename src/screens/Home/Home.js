@@ -48,6 +48,8 @@ import bnbPhase4 from "./WodBuilders/assets/bnbPhase4.png";
 import confluxTreasureHunt from "../../components/TimepieceMint/assets/confluxTreasureHunt.png";
 import LiveEvents from "./LiveEvents/LiveEvents";
 import WodBuilders from "./WodBuilders/WodBuilders";
+import GameUpdates from "./GameUpdates/GameUpdates";
+import WodPartners from "./WodBuilders/WodPartners";
 
 const Home = ({
   handleRegister,
@@ -55,69 +57,14 @@ const Home = ({
   coinbase,
   ethTokenData,
   dyptokenDatabnb,
-  allStarData,
   idyptokenDatabnb,
   dyptokenDatabnb_old,
+  allStarData,
 }) => {
-  const avaxPopupInfo = {
-    title: "Avalanche",
-    img: avalanchePopup,
-    state: "avax",
-  };
-  const confluxPopupInfo = {
-    title: "Conflux",
-    img: confluxPopup,
-    state: "conflux",
-  };
-
-  const gatePopupInfo = {
-    title: "Gate",
-    img: gatePopup,
-    state: "gate",
-  };
-
-  const coin98PopupInfo = {
-    title: "Coin98",
-    img: coin98Popup,
-    state: "coin98",
-  };
-  const basePopupInfo = {
-    title: "Base ",
-    img: basePopup,
-    state: "base",
-  };
-  const coingeckoPopupInfo = {
-    title: "CoinGecko",
-    img: coingeckoPopup,
-    state: "coingecko",
-  };
-
-  const skalePopupInfo = {
-    title: "SKALE",
-    img: skalePopup,
-    state: "skale",
-  };
-  const entryCampaignPopup = {
-    title: "SKALE",
-    img: dypiansDiscoveryQuest,
-    state: "skale",
-  };
-
-  const treasureHuntPopupInfo = {
+  const cmcPopupInfo = {
     title: "Treasure Hunt",
-    img: dypiusPopup,
-    state: "dypius",
-  };
-  const immutablePopupInfo = {
-    title: "Immutable",
-    img: immutablePopup,
-    state: "immutable",
-  };
-
-  const corePopupInfo = {
-    title: "CORE",
-    img: corePopupBg,
-    state: "core",
+    img: cmcTreasureHuntPopup,
+    state: "cmc",
   };
   const opbnbInfo = {
     title: "opBNB",
@@ -147,6 +94,7 @@ const Home = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "World of Dypians";
+    // randomPopup();
   }, []);
 
   return (
@@ -155,11 +103,11 @@ const Home = ({
         id="popup"
         onOutsideClick={() => setActivePopup(false)}
       >
-        <MintPopup
+        {/* <MintPopup
           active={activePopup}
           data={opbnbInfo}
           onClose={() => setActivePopup(false)}
-        />
+        /> */}
       </OutsideClickHandler>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex flex-column home-main-wrapper">
@@ -168,26 +116,28 @@ const Home = ({
             handleDownload={handleDownload}
             allStarData={allStarData}
           />
-          <LiveEvents />
+          {/* <LiveEvents /> */}
+          <WodPartners full={false} />
           <WodBuilders />
-          <Utilities />
-          <MarketSection
+          {/* <Utilities /> */}
+          {/* <MarketSection
             coinbase={coinbase}
             ethTokenData={ethTokenData}
             dyptokenDatabnb={dyptokenDatabnb}
             idyptokenDatabnb={idyptokenDatabnb}
-          />
+          /> */}
           <ExplorerGrid />
-          <LandNft />
-          <CawsSociety
+          <GameUpdates />
+          {/* <LandNft /> */}
+          {/* <CawsSociety
             content="The Cats and Watches Society (CAWS) NFT is a unique collection of
             utility NFTs developed by Dypius. Owners of these NFTs will be able
             to adventure with their CAT companion enhancing the player's
             abilities and increasing rewards."
-          />
-          <CawsWorld />
+          /> */}
+          {/* <CawsWorld /> */}
           <MarketPlace />
-          <Discord />
+          {/* <Discord /> */}
           {/* <Partners /> */}
         </div>
       </div>

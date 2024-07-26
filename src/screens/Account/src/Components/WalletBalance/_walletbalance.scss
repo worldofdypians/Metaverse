@@ -1675,7 +1675,7 @@
 .game-event-download {
   // background: linear-gradient(to right, #3dbda7, #067d71);
   border-radius: 6px;
-  padding: 0px 10px;
+  padding: 3px 10px;
   color: inherit;
   font-size: 12pt;
   font-style: normal;
@@ -1745,14 +1745,6 @@
   }
 }
 
-.rewardstable-wrapper2 {
-  height: 500px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  // @media only screen and (max-width: 991px) {
-  //   height: auto;
-  // }
-}
 
 .game-news-desc {
   p,
@@ -2067,8 +2059,11 @@
 
 .reward-category-items-wrapper {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+  border-radius: 12px;
+  height: 100%;
+background: #121235;
 
   @media only screen and (max-width: 768px) {
     display: grid;
@@ -2085,8 +2080,8 @@
 
 .daily-rewards-img {
   position: absolute;
-  width: 100%;
-  right: -29%;
+  width: 70%;
+  right: -15%;
   bottom: -9%;
   z-index: 1;
   pointer-events: none;
@@ -2135,13 +2130,13 @@
   width: 120px;
   height: 16px;
   border-radius: 12px;
-  border: 1px solid rgba(234, 157, 28, 1);
+  border: 1px solid #FF5EA0;
 }
 
 .yellow-progress-inner {
   height: 100%;
   border-radius: 12px;
-  background: rgba(234, 157, 28, 0.4);
+  background: #FF5EA0;
 }
 
 .chest-progress {
@@ -2161,7 +2156,7 @@
 
 .daily-bonus-wrapper {
   position: relative;
-  height: 170px;
+  height: 140px;
   background: linear-gradient(125deg, #252743 -13.33%, #5f214e 70.47%);
 
   border-radius: 10px;
@@ -2169,6 +2164,9 @@
   border: 2px solid #080b2a;
   transition: all 0.25s ease;
   cursor: pointer;
+  @media screen and (max-width: 786px) {
+    height: 170px;
+  }
 }
 
 .daily-bonus-wrapper:hover {
@@ -2753,4 +2751,9 @@
 
 .portfolio-open{
   height: fit-content;
+}
+
+.new-my-rewards-wrapper{
+  border-radius: 12px;
+background: #18193C;
 }
