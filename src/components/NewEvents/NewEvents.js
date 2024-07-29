@@ -17,7 +17,7 @@ import CriticalHit from "../Challenges/CriticalHit";
 import MazeGarden from "../Challenges/MazeGarden";
 import GoldenPass from "../Challenges/GoldenPass";
 
-const NewEvents = ({ events }) => {
+const NewEvents = ({ events,onEventClick }) => {
   const [challenge, setChallenge] = useState("treasureHunt");
   const [eventDuration, seteventDuration] = useState("Live");
 
@@ -140,7 +140,7 @@ const NewEvents = ({ events }) => {
                 </div>
                 <div className="col-12 col-lg-10">
                   {challenge === "treasureHunt" ? (
-                    <TreasureHunt events={events} eventDuration={eventDuration} />
+                    <TreasureHunt events={events} eventDuration={eventDuration} onEventClick={onEventClick}/>
                   ) : challenge === "dragonRuins" ? (
                     <DragonRuins />
                   ) : challenge === "scorpionKing" ? (
