@@ -221,7 +221,7 @@ const NewChestItem = ({
     const txResult = await window.web3.eth.getTransaction(txHash).catch((e) => {
       console.error(e);
     });
-
+console.log(txResult)
     if (txResult) {
       getUserRewardsByChest(email, txHash, chestIndex, chainText);
     } else {

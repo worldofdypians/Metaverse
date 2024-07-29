@@ -351,7 +351,7 @@ const NewWalletBalance = ({
     status: "Live",
   };
   const dummyManta = {
-    title: "Manta Network",
+    title: "Manta",
     logo: mantaLogo,
     eventStatus: "Live",
     totalRewards: "$20,000 in ETH Rewards",
@@ -368,7 +368,7 @@ const NewWalletBalance = ({
     maxPoints: "50,000",
     learnMore: "",
 
-    chain: "Manta Network",
+    chain: "Manta",
     linkState: "manta",
     rewards: "ETH",
     status: "Live",
@@ -424,7 +424,7 @@ const NewWalletBalance = ({
     //   },
     // },
     {
-      title: "Manta Network",
+      title: "Manta",
       logo: mantaLogo,
       eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
@@ -433,8 +433,8 @@ const NewWalletBalance = ({
       eventDate: "Jul 01, 2024",
 
       popupInfo: {
-        title: "Manta Network",
-        chain: "Manta Network",
+        title: "Manta",
+        chain: "Manta",
         linkState: "manta",
         rewards: "ETH",
         status: "Live",
@@ -1562,7 +1562,7 @@ const NewWalletBalance = ({
                           ? skaleEarnUsd
                           : item.title === "VICTION"
                           ? victionEarnUsd
-                          : item.title === "Manta Network"
+                          : item.title === "Manta"
                           ? mantaEarnUsd
                           : item.title === "CORE"
                           ? coreEarnUsd

@@ -25,7 +25,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
           ? "upcoming-mint-wrapper-gate"
           : data.title === "SKALE"
           ? "upcoming-skale-event"
-          : data.title === "Manta Network"
+          : data.title === "Manta"
           ? "upcoming-manta-event"
           : data.title === "CMC" || data.title === "CoinMarketCap"
           ? "upcoming-mint-wrapper-cmc"

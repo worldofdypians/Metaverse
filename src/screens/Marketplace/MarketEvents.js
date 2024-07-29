@@ -326,7 +326,7 @@ const MarketEvents = ({
     //   },
     // },
     {
-      title: "Manta Network",
+      title: "Manta",
       logo: mantaLogo,
       eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
@@ -1622,7 +1622,7 @@ const MarketEvents = ({
                             ? dypiusPremiumEarnUsd
                             : item.title === "BNB Chain"
                             ? bnbEarnUsd
-                            : item.title === "Manta Network"
+                            : item.title === "Manta"
                             ? mantaEarnUsd
                             : 0
                         }
