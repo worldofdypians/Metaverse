@@ -17,7 +17,7 @@ import CriticalHit from "../Challenges/CriticalHit";
 import MazeGarden from "../Challenges/MazeGarden";
 import GoldenPass from "../Challenges/GoldenPass";
 
-const NewEvents = ({ events,onEventClick }) => {
+const NewEvents = ({ events,onEventClick, coinbase, wallet, chainId }) => {
   const [challenge, setChallenge] = useState("treasureHunt");
   const [eventDuration, seteventDuration] = useState("Live");
 
@@ -146,7 +146,7 @@ const NewEvents = ({ events,onEventClick }) => {
                   ) : challenge === "scorpionKing" ? (
                     <ScorpionKing />
                   ) : challenge === "puzzleMadness" ? (
-                    <PuzzleMadness />
+                    <PuzzleMadness coinbase={coinbase} chainId={chainId} wallet={wallet}/>
                   ) : challenge === "criticalHit" ? (
                     <CriticalHit />
                   ) : challenge === "mazeGarden" ? (

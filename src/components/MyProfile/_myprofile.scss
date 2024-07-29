@@ -50,6 +50,11 @@ text-transform: uppercase;
   background: rgba(128, 32, 96, 0.2);
 }
 
+.wallet-address-wrapper-error {
+  border-radius: 4px;
+  background: rgba(255, 129, 104, 0.20);
+}
+
 .profile-wallet-span {
   color: #b8b8e0;
   font-family: "Montserrat";
@@ -59,15 +64,24 @@ text-transform: uppercase;
   line-height: 8px; /* 100% */
 }
 
+ 
+
 .wallet-addr {
   color: #eeedff;
   font-family: "Montserrat";
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 10px; /* 100% */
+  line-height: 10px;
 }
-
+.wallet-addr-error {
+  color: #FF8168;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 10px; 
+}
 .domain-name-wrapper {
   background: linear-gradient(
     172deg,
@@ -132,15 +146,22 @@ text-transform: uppercase;
 .new-special-rewards-wrapper {
   background-image: url(./assets/specialRewardsBg.png);
   border-radius: 10px;
-  background-size: 100% 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
   height: 140px;
   cursor: pointer;
-
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+  background-position: center;
   @media screen and (max-width: 786px) {
     height: auto;
   }
 }
 
+.new-special-rewards-wrapper:hover {
+
+  border: 2px solid #9e3c7a;
+}
 .special-rewards-title {
   color: #9e3c7a;
   font-family: "Montserrat";
@@ -330,11 +351,19 @@ text-transform: uppercase;
   );
 
   height: 160px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+
   @media screen and (max-width: 786px) {
     height: auto;
   }
 }
 
+.limited-offers-wrapper:hover {
+  border: 2px solid #015F86;
+
+}
 .new-stake-nft-wrapper {
   height: 160px;
   border-radius: 10px;
@@ -343,9 +372,15 @@ text-transform: uppercase;
     #482193 25.5%,
     #7856c5 100%
   );
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
   @media screen and (max-width: 786px) {
     height: auto;
   }
+}
+
+.new-stake-nft-wrapper:hover {
+  border: 2px solid #FFA1E5;
 }
 
 .new-stake-nft-img {
@@ -355,11 +390,20 @@ text-transform: uppercase;
 .my-rewards-wrapper-new {
   border-radius: 10px;
   background-image: url(./assets/myRewards.png);
-  background-size: 100% 100%;
+  background-size: cover;
   height: 140px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.25s ease;
   @media screen and (max-width: 786px) {
     height: auto;
   }
+}
+
+.my-rewards-wrapper-new:hover {
+  border: 2px solid #11fed2;
 }
 
 .miner-img {

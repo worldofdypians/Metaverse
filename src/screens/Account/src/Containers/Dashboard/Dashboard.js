@@ -6392,6 +6392,9 @@ function Dashboard({
                 setselectedEvent(value);
                 setshowEventPopup(true);
               }}
+              coinbase={coinbase}
+              wallet={data?.getPlayer?.wallet?.publicAddress}
+              chainId={chainId}
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (
