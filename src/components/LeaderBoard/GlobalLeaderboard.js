@@ -18,6 +18,7 @@ import goldenInactive from "./assets/goldenInactive.png";
 import { NavLink, useLocation } from "react-router-dom";
 import bnbIcon from "./assets/bnbIcon.svg";
 import victionActive from "./assets/victionActive.svg";
+import mantaActive from "./assets/mantaActive.png";
 import coreIcon from "./assets/coreIcon2.svg";
 import skaleActive from "./assets/skaleActive.svg";
 import yellowArrow from "./assets/yellowArrow.svg";
@@ -513,6 +514,7 @@ const GlobalLeaderboard = ({
           <div className="d-flex align-items-center gap-2">
             <div className="d-flex align-items-center gap-1">
               <img src={bnbIcon} width={20} height={20} alt="" />
+              <img src={mantaActive} width={20} height={20} alt="" />
               <img src={skaleActive} width={20} height={20} alt="" />
               <img src={coreIcon} width={20} height={20} alt="" />
               <img src={victionActive} width={20} height={20} alt="" />
