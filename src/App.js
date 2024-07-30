@@ -3854,6 +3854,52 @@ function App() {
               />
             }
           />
+
+<Route
+            exact
+            path="/marketplace/beta-pass/manta"
+            element={
+              <BetaPassNFT
+                type={"manta"}
+                ethTokenData={ethTokenData}
+                dypTokenData={dypTokenData}
+                isConnected={isConnected}
+                handleConnect={handleShowWalletModal}
+                listedNFTS={listedNFTS}
+                coinbase={coinbase}
+                timepieceBought={timepieceBought}
+                handleRefreshListing={handleRefreshList}
+                nftCount={nftCount}
+                cawsArray={allCawsForTimepieceMint}
+                totalMantaNft={totalMantaNft}
+                myMantaNfts={myMantaNfts}
+                mintloading={mintloading}
+                chainId={chainId}
+                handleMint={handleTimepieceMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                totalCoingeckoNft={totalCoingeckoNft}
+                myNFTSCoingecko={MyNFTSCoingecko}
+                myGateNfts={myGateNfts}
+                totalGateNft={totalGateNft}
+                totalBaseNft={totalBaseNft}
+                totalBnbNft={totalBnbNft}
+                myBaseNFTs={myBaseNFTs}
+                myBnbNfts={myBnbNfts}
+                totalConfluxNft={totalConfluxNft}
+                myConfluxNfts={myConfluxNfts}
+                timepieceMetadata={timepieceMetadata}
+                handleSwitchNetwork={handleSwitchNetwork}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
           <Route
             exact
             path="/marketplace/beta-pass/conflux"
@@ -3929,6 +3975,8 @@ function App() {
                 totalCoreNft={totalCoreNft}
                 myCoreNfts={myCoreNfts}
                 totalseiNft={totalseiNft}
+                totalMantaNft={totalMantaNft}
+                myMantaNfts={myMantaNfts}
                 myseiNfts={myseiNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
@@ -3982,6 +4030,8 @@ function App() {
                 myMultiversNfts={myMultiversNfts}
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
+                totalMantaNft={totalMantaNft}
+                myMantaNfts={myMantaNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
                 myBaseNFTs={myBaseNFTs}
@@ -4058,6 +4108,8 @@ function App() {
                 myMultiversNfts={myMultiversNfts}
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
+                totalMantaNft={totalMantaNft}
+                myMantaNfts={myMantaNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
                 myBaseNFTs={myBaseNFTs}
@@ -4098,6 +4150,8 @@ function App() {
                 myCoreNfts={myCoreNfts}
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
+                totalMantaNft={totalMantaNft}
+                myMantaNfts={myMantaNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
                 totalMultiversNft={totalMultiversNft}
