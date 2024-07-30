@@ -3045,6 +3045,9 @@ line-height: normal;
 .mint-bnb {
   background: linear-gradient(90deg, #181B38 0%, rgba(6, 136, 255, 0.05) 168.67%);
 }
+.mint-manta {
+  background: linear-gradient(90deg, #181B38 0%, #BE2CB0 168.67%);
+}
 
 .active-mint-title {
   color: #fff;
@@ -3906,8 +3909,19 @@ background: linear-gradient(90deg, #7F43FF 1.45%, #C01BDB 96.22%);
 
 .upcoming-skale-event {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, #002C39 168.67%);
+  background: linear-gradient(90deg, #181B38 0%, #002C39 168.67%) !important;
 }
+
+.upcoming-cookie-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(55, 113, 55, 0.5) 168.67%) !important;
+}
+
+.upcoming-midle-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(176, 106, 63, 0.5) 168.67%) !important;
+}
+
 
 .upcoming-sei-event {
   border-radius: 20px;
@@ -3923,6 +3937,10 @@ background: linear-gradient(90deg, #7F43FF 1.45%, #C01BDB 96.22%);
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, rgba(108, 44, 190, 1) 168.67%) !important;
 }
+.upcoming-manta-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181b38 0%, #BE2CB0 168.67%) !important;
+}
 
 .upcoming-immutable-event {
   border-radius: 20px;
@@ -3932,6 +3950,10 @@ background: linear-gradient(90deg, #7F43FF 1.45%, #C01BDB 96.22%);
 .upcoming-multivers-event {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, rgba(44, 102, 190, 1) 168.67%) !important;
+}
+.upcoming-manta-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181b38 0%, #BE2CB0 168.67%) !important;
 }
 
 

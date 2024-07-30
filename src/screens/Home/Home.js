@@ -22,6 +22,7 @@ import dailyGameDelightBanner from "../../components/TimepieceMint/assets/dailyG
 import dypiansDiscoveryQuest from "../../components/TimepieceMint/assets/dypiansDiscoveryQuest.webp";
 
 import dogePopup from "../../components/TimepieceMint/assets/dogePopup.png";
+import mantaPopup from "../../components/TimepieceMint/assets/mantaPopup.png";
 import gatePopup from "../../components/TimepieceMint/assets/gatePopup.webp";
 import cmcPopup from "../../components/TimepieceMint/assets/cmcPopup.webp";
 
@@ -123,6 +124,11 @@ const Home = ({
     title: "opBNB",
     img: bnbcampaign,
     state: "opbnb",
+  };
+  const mantaInfo = {
+    title: "Manta",
+    img: mantaPopup,
+    state: "manta",
   };
 
   const [activePopup, setActivePopup] = useState(false);
