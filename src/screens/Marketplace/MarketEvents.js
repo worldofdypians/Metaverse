@@ -91,6 +91,13 @@ import discord from "./assets/greenDiscord.svg";
 import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
 import upcomingDoge from "./assets/upcomingDoge.webp";
 import upcomingSkale from "./assets/upcomingSkale.webp";
+import upcomingCookie from "./assets/cookieBg.webp";
+import upcomingCookieMobile from "./assets/cookieMobileBg.webp";
+
+import upcomingMidle from "./assets/midleBg.webp";
+import upcomingMidleMobile from "./assets/midleBgMobile.webp";
+
+
 import upcomingSkaleMobile from "./assets/upcomingSkaleMobile.webp";
 import upcomingBnb from "./assets/upcomingBnb.png";
 
@@ -941,7 +948,7 @@ const MarketEvents = ({
   const fetchSkalePrice = async () => {
     await axios
       .get(
-        `https://api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd`
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
       )
       .then((obj) => {
         setSkalePrice(obj.data.skale.usd);
@@ -1558,6 +1565,64 @@ const MarketEvents = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
+                  <div className="border-0 upcoming-mint-wrapper upcoming-skale-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Skale</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the Skale Treasure Hunt event for a chance to grab a
+                        share of the $20,000 SKL reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingSkale}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={upcomingSkaleMobile}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+                  <div className="border-0 upcoming-mint-wrapper upcoming-cookie-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Cookie3</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the Cookie3 Treasure Hunt event for a chance to grab a
+                        share of the $20,000 COOKIE reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingCookie}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={upcomingCookieMobile}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+                  <div className="border-0 upcoming-mint-wrapper upcoming-midle-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Midle</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the Midle Treasure Hunt event for a chance to grab a
+                        share of the $20,000 reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingMidle}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={upcomingMidleMobile}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+
                   <div className="border-0 upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">MultiversX</h6>
@@ -1577,7 +1642,6 @@ const MarketEvents = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
-
                   <div className="border-0 upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">SEI</h6>

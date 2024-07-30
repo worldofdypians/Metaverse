@@ -61,7 +61,11 @@ const MyRewardsPopupNew = ({
   weeklyDataAmountSkale,
   monthlyDataAmountSkale,
   multiversEarnUsd,
-  userDataStar,weeklyDataAmountManta,monthlyDataAmountManta,allMantaChests, mantaEarnUsd
+  userDataStar,
+  weeklyDataAmountManta,
+  monthlyDataAmountManta,
+  allMantaChests,
+  mantaEarnUsd,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -88,9 +92,7 @@ const MyRewardsPopupNew = ({
   const [treasureRewardMoneyViction, setTreasureRewardMoneyViction] =
     useState(0);
 
-    const [treasureRewardMoneyManta, setTreasureRewardMoneyManta] =
-    useState(0);
-
+  const [treasureRewardMoneyManta, setTreasureRewardMoneyManta] = useState(0);
 
   const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
   const [pasttreasureRewardNftCaws, setpastTreasureRewardNftCaws] = useState(0);
@@ -488,7 +490,6 @@ const MyRewardsPopupNew = ({
     setTreasureRewardMoneyCore(moneyResultCore);
     setTreasureRewardMoneyViction(moneyResultViction);
     setTreasureRewardMoneyManta(moneyResultManta);
-
   };
 
   const fetchCachedData = () => {
@@ -548,7 +549,13 @@ const MyRewardsPopupNew = ({
 
   useEffect(() => {
     getTreasureChestsInfo();
-  }, [allChests, allSkaleChests, allCoreChests, allVictionChests, allMantaChests]);
+  }, [
+    allChests,
+    allSkaleChests,
+    allCoreChests,
+    allVictionChests,
+    allMantaChests,
+  ]);
 
   useEffect(() => {
     getBundles();
@@ -706,7 +713,7 @@ const MyRewardsPopupNew = ({
                       Number(seiEarnUsd) +
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
-                      Number(victionEarnUsd)+
+                      Number(victionEarnUsd) +
                       Number(mantaEarnUsd) +
                       (kittyDashRecords[0]
                         ? kittyDashRecords[0]?.position + 1 > 10
@@ -839,7 +846,7 @@ const MyRewardsPopupNew = ({
                     Number(treasureRewardMoney) +
                       Number(treasureRewardMoneyCore) +
                       Number(treasureRewardMoneySei) +
-                      Number(treasureRewardMoneyViction)+
+                      Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
                       Number(treasureRewardMoneySkale),
                     2
@@ -1201,7 +1208,7 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(treasureRewardMoneyCore, 2)}
                 </span>
               </div>
-           
+
               {/*  <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
                 <span className="item-name-right">
@@ -1297,8 +1304,10 @@ const MyRewardsPopupNew = ({
                   $
                   {previousRewards
                     ? getFormattedNumber(0, 2)
-                    : Number(weeklyDataAmountManta) +
-                    Number(monthlyDataAmountManta)}
+                    : getFormattedNumber(
+                        Number(weeklyDataAmountManta) +
+                          Number(monthlyDataAmountManta)
+                      )}
                 </span>
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
@@ -1375,51 +1384,6 @@ const MyRewardsPopupNew = ({
             <div className="treasure-hunt-item-wrapper-active">
               <div className="d-flex justify-content-between gap-4 align-items-start">
                 <div className="d-flex flex-column gap-2 w-50">
-                  
- <div className="d-flex w-100 justify-content-between gap-2">
-                    <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img
-                        src={
-                          require("../../../../Marketplace/assets/mantaLogo.png")
-                            
-                        }
-                        alt=""
-                        style={{ width: 16, height: 16 }}
-                      />
-                      Manta
-                    </span>
-                    <span className="item-name-right">
-                      ${getFormattedNumber(mantaEarnUsd, 2)}
-                    </span>
-                  </div>
-                  <div className="d-flex w-100 justify-content-between gap-2">
-                    <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img
-                        src={victionIcon}
-                        alt=""
-                        style={{ width: 16, height: 16 }}
-                      />
-                      Viction
-                    </span>
-                    <span className="item-name-right">
-                      ${getFormattedNumber(victionEarnUsd, 2)}
-                    </span>
-                  </div>
-                  {/* <div className="d-flex w-100 justify-content-between gap-2">
-                    <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img
-                        src={multiversIcon}
-                        alt=""
-                        style={{ width: 16, height: 16 }}
-                      />
-                      MultiversX
-                    </span>
-                    <span className="item-name-right">
-                      ${getFormattedNumber(multiversEarnUsd, 2)}
-                    </span>
-                  </div> */}
-                </div>
-                <div className="d-flex flex-column gap-2 w-50">
                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
                       <img
@@ -1450,7 +1414,51 @@ const MyRewardsPopupNew = ({
                     </span>
                   </div>
                 </div>
-                
+
+                <div className="d-flex flex-column gap-2 w-50">
+                  {/* <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={
+                          require("../../../../Marketplace/assets/mantaLogo.png")
+                            
+                        }
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      Manta
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(mantaEarnUsd, 2)}
+                    </span>
+                  </div> */}
+                  <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={victionIcon}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      Viction
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(victionEarnUsd, 2)}
+                    </span>
+                  </div>
+                  {/* <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={multiversIcon}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      MultiversX
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(multiversEarnUsd, 2)}
+                    </span>
+                  </div> */}
+                </div>
               </div>
             </div>
           </div>
@@ -1559,18 +1567,14 @@ const MyRewardsPopupNew = ({
                   </span>
                 </div>
                 <div className="d-flex w-100 justify-content-between gap-2">
-                    <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img
-                        src={skale}
-                        alt=""
-                        style={{ width: 16, height: 16 }}
-                      />
-                      SKALE
-                    </span>
-                    <span className="item-name-right">
-                      ${getFormattedNumber(skaleEarnUsd, 2)}
-                    </span>
-                  </div>
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={skale} alt="" style={{ width: 16, height: 16 }} />
+                    SKALE
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(skaleEarnUsd, 2)}
+                  </span>
+                </div>
               </div>
             </div>
           </div>

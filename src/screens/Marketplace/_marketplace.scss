@@ -3909,8 +3909,19 @@ background: linear-gradient(90deg, #7F43FF 1.45%, #C01BDB 96.22%);
 
 .upcoming-skale-event {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, #002C39 168.67%);
+  background: linear-gradient(90deg, #181B38 0%, #002C39 168.67%) !important;
 }
+
+.upcoming-cookie-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(55, 113, 55, 0.5) 168.67%) !important;
+}
+
+.upcoming-midle-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(176, 106, 63, 0.5) 168.67%) !important;
+}
+
 
 .upcoming-sei-event {
   border-radius: 20px;

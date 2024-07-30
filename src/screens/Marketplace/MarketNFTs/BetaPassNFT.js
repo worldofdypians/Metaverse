@@ -45,6 +45,8 @@ import avaxLogo from "./assets/avaxLogo.svg";
 import dogeLogo from "./assets/dogeLogo.svg";
 import dogeBetaBanner from "./assets/dogeBetaBanner.png";
 import bnbBetaBanner from "./assets/bnbBetaBanner.png";
+import mantaBanner from "./assets/mantaBanner.webp";
+
 import betapassBanner from "./assets/betaPassBanner.png";
 import betapassBannerConflux from "./assets/betaPassBannerConflux.webp";
 import betapassBannerGate from "./assets/betaPassBannerGate.webp";
@@ -952,7 +954,7 @@ const BetaPassNFT = ({
                         : mintTitle === "bnb"
                         ? bnbBetaBanner
                         : mintTitle === "manta"
-                        ? bnbBetaBanner
+                        ? mantaBanner
                         : betapassBanner
                     }
                     className="w-100"
