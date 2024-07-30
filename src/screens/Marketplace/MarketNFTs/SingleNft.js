@@ -2791,14 +2791,13 @@ window.config.nft_manta_address.toLowerCase(), "type");
                                 ? `https://www.vicscan.xyz/address/${owner}`
                                 : type === "core"
                                 ? `https://scan.coredao.org/address/${owner}`
-                                : type === "core"
+                                : type === "manta"
                                 ? `https://pacific-explorer.manta.network/address/${owner}`
                                 : type === 'opbnb'
                                 ? `https://opbnbscan.com/address/${owner}`
                                 : type === "immutable"
                                 ? `https://explorer.immutable.com/${owner}`
-                                : type === "manta"
-                                ? `https://pacific-explorer.manta.network/${owner}`
+                               
                                 : `https://etherscan.io/address/${owner}`
                             }
                             target="_blank"

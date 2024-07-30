@@ -303,6 +303,12 @@ const Marketplace = ({
       window.MULTIVERS_NFT_ABI,
       window.config.nft_multivers_address
     );
+    
+    const mantaContract = new window.mantaWeb3.eth.Contract(
+      window.MANTA_NFT_ABI,
+      window.config.nft_manta_address
+    );
+
 
     const confluxresult = await confluxContract.methods
       .totalSupply()
@@ -372,6 +378,14 @@ const Marketplace = ({
         return 0;
       });
 
+      const mantaresult = await mantaContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     //20000 = 10000 caws + 1000 genesis + 9000 coingecko
     setTotalSupply(
       parseInt(result) +
@@ -384,7 +398,8 @@ const Marketplace = ({
         parseInt(bnbresult) +
         parseInt(coreresult) +
         parseInt(victionresult) +
-        parseInt(multiversresult) +
+        parseInt(multiversresult)  +
+        parseInt(mantaresult) +
         20000
     );
   };

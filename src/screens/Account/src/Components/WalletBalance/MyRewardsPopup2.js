@@ -1386,7 +1386,7 @@ const MyRewardsPopupNew = ({
                         alt=""
                         style={{ width: 16, height: 16 }}
                       />
-                      Manta Chain
+                      Manta
                     </span>
                     <span className="item-name-right">
                       ${getFormattedNumber(mantaEarnUsd, 2)}
