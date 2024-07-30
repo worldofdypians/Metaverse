@@ -4682,7 +4682,7 @@ function App() {
               />
             }
           />
-            <Route
+            {/* <Route
             exact
             path="/marketplace/mint/manta"
             element={
@@ -4734,7 +4734,7 @@ function App() {
                 totalBnbNft={totalBnbNft}
               />
             }
-          />
+          /> */}
           
              <Route
             exact

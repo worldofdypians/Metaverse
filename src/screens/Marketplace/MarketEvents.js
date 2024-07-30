@@ -337,33 +337,33 @@ const MarketEvents = ({
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
-    {
-      title: "Manta",
-      logo: mantaLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in MANTA Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 01, 2024",
-      backgroundImage: mantaBg,
-      popupInfo: {
-        title: "Manta",
-        chain: "Manta",
-        linkState: "manta",
-        rewards: "MANTA",
-        status: "Live",
-        id: "event21",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in MANTA Rewards",
-        eventDuration: mantaLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Aug 01, 2024",
-      },
-    },
+    // {
+    //   title: "Manta",
+    //   logo: mantaLogo,
+    //   eventStatus: "Live",
+    //   totalRewards: "$20,000 in MANTA Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Aug 01, 2024",
+    //   backgroundImage: mantaBg,
+    //   popupInfo: {
+    //     title: "Manta",
+    //     chain: "Manta",
+    //     linkState: "manta",
+    //     rewards: "MANTA",
+    //     status: "Live",
+    //     id: "event21",
+    //     eventType: "Explore & Mine",
+    //     totalRewards: "$20,000 in MANTA Rewards",
+    //     eventDuration: mantaLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore: "",
+    //     eventDate: "Aug 01, 2024",
+    //   },
+    // },
     {
       title: "CORE",
       logo: coreLogo,
@@ -1297,9 +1297,7 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -1312,6 +1310,9 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1457,7 +1458,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1538,12 +1539,12 @@ const MarketEvents = ({
               )}
               {activeTab === "upcoming" && (
                 <div className="d-flex flex-column gap-4">
-                  {/* <div className="border-0 upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  <div className="border-0 upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Manta</h6>
                       <p className="upcoming-mint-desc">
                         Join the Manta Treasure Hunt event for a chance
-                        to grab a share of the $20,000 ETH reward pool.
+                        to grab a share of the $20,000 MANTA reward pool.
                       </p>
                     </div>
                     <img
@@ -1556,7 +1557,7 @@ const MarketEvents = ({
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div> */}
+                  </div>
                   <div className="border-0 upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">MultiversX</h6>
@@ -1608,7 +1609,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(4, dummyBetaPassData2.length)
+                    .slice(3, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}

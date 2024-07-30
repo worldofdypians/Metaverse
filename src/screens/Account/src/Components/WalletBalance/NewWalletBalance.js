@@ -426,35 +426,34 @@ const NewWalletBalance = ({
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
-    {
-      title: "Manta",
-      logo: mantaLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in MANTA Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 01, 2024",
-
-      popupInfo: {
-        title: "Manta",
-        chain: "Manta",
-        linkState: "manta",
-        rewards: "MANTA",
-        status: "Live",
-        logo: mantaLogo,
-        date: "Aug 01, 2024",
-        id: "event21",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in MANTA Rewards",
-        eventDuration: mantaLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Aug 01, 2024",
-      },
-    },
+    // {
+    //   title: "Manta",
+    //   logo: mantaLogo,
+    //   eventStatus: "Live",
+    //   totalRewards: "$20,000 in MANTA Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Aug 01, 2024",
+    //   popupInfo: {
+    //     title: "Manta",
+    //     chain: "Manta",
+    //     linkState: "manta",
+    //     rewards: "MANTA",
+    //     status: "Live",
+    //     logo: mantaLogo,
+    //     date: "Aug 01, 2024",
+    //     id: "event21",
+    //     eventType: "Explore & Mine",
+    //     totalRewards: "$20,000 in MANTA Rewards",
+    //     eventDuration: mantaLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore: "",
+    //     eventDate: "Aug 01, 2024",
+    //   },
+    // },
     {
       title: "CORE",
       logo: coreLogo,
@@ -904,9 +903,10 @@ const NewWalletBalance = ({
     claimedPremiumChests +
     openedSkaleChests.length +
     openedCoreChests.length +
-    openedVictionChests.length + openedMantaChests.length;
+    openedVictionChests.length
+    //  + openedMantaChests.length;
 
-  const chestPercentage = (totalClaimedChests / 100) * 100;
+  const chestPercentage = (totalClaimedChests / 80) * 100;
 
   const dummyEvents = [
     {
@@ -1475,11 +1475,11 @@ const NewWalletBalance = ({
                 }}
               />
               <ActiveProfileEvent
-                data={dummyManta}
-                event={dummyManta}
-                userEarnedUsd={mantaEarnUsd}
+                data={dummyViction}
+                event={dummyViction}
+                userEarnedUsd={victionEarnUsd}
                 onOpenEvent={() => {
-                  setDummyEvent(dummyManta);
+                  setDummyEvent(dummyViction);
                   setEventPopup(true);
                 }}
               />

@@ -30,7 +30,7 @@ import coreActive from "./assets/coreActive.webp";
 import victionActive from "./assets/victionActive.webp";
 import seiActive from "./assets/seiActive.webp";
 import multiversActive from "./assets/multiversActive.webp";
-import mantaLogo from './assets/mantaLogo.png'
+import mantaLogo from "./assets/mantaLogo.png";
 import timepieceActive from "./assets/timepieceActive.png";
 import gateActive from "./assets/gateActive.png";
 import kucoinActive from "./assets/kucoinActive.png";
@@ -46,11 +46,15 @@ import multiversLogo from "./assets/multiversLogo.svg";
 
 import seiBg from "./assets/seiBg.webp";
 import coreBg from "./assets/coreBg.webp";
+import mantaBg from "./assets/mantaBg.webp";
+
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
 import immutableMobileBg from "./assets/immutableActive.webp";
 import seiMobileBg from "./assets/seiActive.webp";
 import coreMobileBg from "./assets/coreActive.webp";
+import mantaMobileBg from "./assets/mantaMobileBg.png";
+
 import victionMobileBg from "./assets/victionActive.webp";
 import multiversMobileBg from "./assets/multiversActive.webp";
 
@@ -105,7 +109,8 @@ const MarketMint = ({
   victionMintAllowed,
   totalseiNft,
   totalVictionNft,
-  totalImmutableNft,immutableMintAllowed,
+  totalImmutableNft,
+  immutableMintAllowed,
   totalMultiversNft,
   totalCoreNft,
   myVictionNfts,
@@ -123,9 +128,9 @@ const MarketMint = ({
   opbnbMintAllowed,
   totalopbnbNft,
   totalMantaNft,
-mantaMintAllowed,
-myMantaNfts,
-myMantaNFTsCreated,
+  mantaMintAllowed,
+  myMantaNfts,
+  myMantaNFTsCreated,
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -252,8 +257,8 @@ myMantaNFTsCreated,
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(mantaData);
-  const [mintTitle, setMintTitle] = useState("manta");
+  const [selectedMint, setSelectedMint] = useState(opbnbData);
+  const [mintTitle, setMintTitle] = useState("opbnbchain");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -316,7 +321,6 @@ myMantaNFTsCreated,
         return 0;
       });
 
-      
     setbnbNftsSold(bnbresult);
   };
 
@@ -327,10 +331,10 @@ myMantaNFTsCreated,
     ) {
       setSelectedMint(bnbData);
       setMintTitle("bnbchain");
-    } else  if (location.pathname.includes("core")) {
+    } else if (location.pathname.includes("core")) {
       setSelectedMint(coreData);
       setMintTitle("core");
-     }  else if (location.pathname.includes("opbnbchain")) {
+    } else if (location.pathname.includes("opbnbchain")) {
       setSelectedMint(opbnbData);
       setMintTitle("opbnbchain");
     } else if (location.pathname.includes("timepiece")) {
@@ -339,14 +343,13 @@ myMantaNFTsCreated,
     } else if (location.pathname.includes("immutable")) {
       setSelectedMint(immutableData);
       setMintTitle("immutable");
-    }
-    else if (location.pathname.includes("manta")) {
+    } else if (location.pathname.includes("manta")) {
       setSelectedMint(mantaData);
       setMintTitle("manta");
     }
     getTotalSupply();
   }, [location]);
- 
+
   useEffect(() => {
     html.classList.remove("hidescroll");
   }, []);
@@ -425,7 +428,6 @@ myMantaNFTsCreated,
     //   class: "mint-multivers",
     // },
 
-
     // {
     //   title: "Viction Pass",
     //   eventId: "viction",
@@ -453,15 +455,15 @@ myMantaNFTsCreated,
     //   id: "bnb",
     // },
 
-    {
-      title: "Manta Pass",
-      eventId: "manta",
-      desc: "Gain entry to metaverse, and join exclusive Manta event with special ticket.",
-      img: mantaActive,
-      data: mantaData,
-      class: "mint-manta",
-      id: "manta",
-    },
+    // {
+    //   title: "Manta Pass",
+    //   eventId: "manta",
+    //   desc: "Gain entry to metaverse, and join exclusive Manta event with special ticket.",
+    //   img: mantaActive,
+    //   data: mantaData,
+    //   class: "mint-manta",
+    //   id: "manta",
+    // },
     {
       title: "opBNB Chain Pass",
       eventId: "opbnbchain",
@@ -720,8 +722,7 @@ myMantaNFTsCreated,
             setactiveButton(true);
             setStatus("");
           }
-        }
-        else if (selectedMint.id === "manta") {
+        } else if (selectedMint.id === "manta") {
           if (chainId !== 169) {
             setactiveButton(false);
             setStatus("Switch to Manta to continue minting.");
@@ -812,9 +813,7 @@ myMantaNFTsCreated,
                     onClick={() => setActiveTab("live")}
                   >
                     {" "}
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                    
                     Live
                   </h6>
                   <h6
@@ -823,7 +822,9 @@ myMantaNFTsCreated,
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
-                    {" "}
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     Upcoming
                   </h6>
                   <h6
@@ -840,45 +841,45 @@ myMantaNFTsCreated,
 
               {activeTab === "live" && (
                 <>
-                  {dummyCards.length > 1 &&
-                  <div className="pb-5 px-0 position-relative">
-                  {activeSlide > 0 && (
-                    <div className="prev-arrow-nft" onClick={firstPrev}>
-                      <img src={nextArrow} alt="" />
-                    </div>
-                  )}
-                  {showFirstNext === activeSlide
-                    ? null
-                    : dummyCards.length > sliderCut && (
-                        <div className="next-arrow-nft" onClick={firstNext}>
-                          <img src={nextArrow} alt="1" />
+                  {dummyCards.length > 1 && (
+                    <div className="pb-5 px-0 position-relative">
+                      {activeSlide > 0 && (
+                        <div className="prev-arrow-nft" onClick={firstPrev}>
+                          <img src={nextArrow} alt="" />
                         </div>
                       )}
-                  {windowSize.width < 480 && (
-                    <>
-                      <div className="prev-arrow-nft" onClick={firstPrev}>
-                        <img src={nextArrow} alt="" />
-                      </div>
-                      <div className="next-arrow-nft" onClick={firstNext}>
-                        <img src={nextArrow} alt="1" />
-                      </div>
-                    </>
+                      {showFirstNext === activeSlide
+                        ? null
+                        : dummyCards.length > sliderCut && (
+                            <div className="next-arrow-nft" onClick={firstNext}>
+                              <img src={nextArrow} alt="1" />
+                            </div>
+                          )}
+                      {windowSize.width < 480 && (
+                        <>
+                          <div className="prev-arrow-nft" onClick={firstPrev}>
+                            <img src={nextArrow} alt="" />
+                          </div>
+                          <div className="next-arrow-nft" onClick={firstNext}>
+                            <img src={nextArrow} alt="1" />
+                          </div>
+                        </>
+                      )}
+                      <Slider ref={(c) => (slider.current = c)} {...settings}>
+                        {dummyCards.map((item, index) => (
+                          <EventSliderCard
+                            key={index}
+                            data={item}
+                            onSelectCard={() => {
+                              setSelectedMint(item.data);
+                              setMintTitle(item.eventId);
+                            }}
+                            mintTitle={mintTitle}
+                          />
+                        ))}
+                      </Slider>
+                    </div>
                   )}
-                  <Slider ref={(c) => (slider.current = c)} {...settings}>
-                    {dummyCards.map((item, index) => (
-                      <EventSliderCard
-                        key={index}
-                        data={item}
-                        onSelectCard={() => {
-                          setSelectedMint(item.data);
-                          setMintTitle(item.eventId);
-                        }}
-                        mintTitle={mintTitle}
-                      />
-                    ))}
-                  </Slider>
-                </div>
-                  }
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -1219,7 +1220,7 @@ myMantaNFTsCreated,
                               </NavLink>
                             </div>
                           )}
-                             {selectedMint.id === "manta" && (
+                          {selectedMint.id === "manta" && (
                             <div
                               className={
                                 isConnected === false ||
@@ -1300,8 +1301,7 @@ myMantaNFTsCreated,
                                     Minting is available on SKALE
                                   </span>
                                 </div>
-                              ) :
-                              mintTitle === "manta" ? (
+                              ) : mintTitle === "manta" ? (
                                 <div className="d-flex align-items-center gap-2">
                                   <img
                                     src={blockChainIcon}
@@ -1313,9 +1313,7 @@ myMantaNFTsCreated,
                                     Minting is available on Manta
                                   </span>
                                 </div>
-                              ) :
-                              
-                              mintTitle === "coingecko" ||
+                              ) : mintTitle === "coingecko" ||
                                 mintTitle === "coin98" ? (
                                 <div className="d-flex align-items-center gap-2">
                                   <img
@@ -1475,8 +1473,7 @@ myMantaNFTsCreated,
                                 Available only on Conflux Network
                                 <img src={confluxLogo} alt="" />
                               </span>
-                            ) 
-                            : mintTitle === "manta" ? (
+                            ) : mintTitle === "manta" ? (
                               <span
                                 className="limit-span position-relative d-flex align-items-center gap-2"
                                 style={{ bottom: "0px" }}
@@ -1484,8 +1481,7 @@ myMantaNFTsCreated,
                                 Available only on Manta
                                 <img src={mantaLogo} alt="" />
                               </span>
-                            ) 
-                            : mintTitle === "avax" ? (
+                            ) : mintTitle === "avax" ? (
                               <span
                                 className="limit-span position-relative d-flex align-items-center gap-2"
                                 style={{ bottom: "0px" }}
@@ -1740,7 +1736,13 @@ myMantaNFTsCreated,
                                   </span>
                                   <div className="d-flex align-items-center gap-2">
                                     <Countdown
-                                      date={ mintTitle === 'core' ? countToExpireConflux : mintTitle === "manta" ? countToExpireManta : countToExpireOpbnb}
+                                      date={
+                                        mintTitle === "core"
+                                          ? countToExpireConflux
+                                          : mintTitle === "manta"
+                                          ? countToExpireManta
+                                          : countToExpireOpbnb
+                                      }
                                       renderer={renderer2}
                                     />
                                   </div>
@@ -1788,7 +1790,8 @@ myMantaNFTsCreated,
                                     ? immutableLogo
                                     : mintTitle === "manta"
                                     ? mantaLogo
-                                    : mintTitle === "bnbchain" || mintTitle === "opbnbchain"
+                                    : mintTitle === "bnbchain" ||
+                                      mintTitle === "opbnbchain"
                                     ? bnbLogo
                                     : seiLogo
                                 }
@@ -1927,12 +1930,12 @@ myMantaNFTsCreated,
                                             chainId !== 204) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
-                                            opbnbMintAllowed === 0
+                                          opbnbMintAllowed === 0
                                         ? "outline-btn-disabled"
                                         : "filled-btn"
                                     }  px-4 w-100`}
                                     onClick={() => {
-                                      isConnected === true && chainId ===204
+                                      isConnected === true && chainId === 204
                                         ? handleMint()
                                         : showWalletConnect();
                                     }}
@@ -1943,7 +1946,7 @@ myMantaNFTsCreated,
                                         chainId !== 204) ||
                                       (status !== "Connect your wallet." &&
                                         status !== "") ||
-                                        opbnbMintAllowed === 0
+                                      opbnbMintAllowed === 0
                                         ? true
                                         : false
                                     }
@@ -2485,7 +2488,7 @@ myMantaNFTsCreated,
                                   </button>
                                 </div>
                               )}
-                                 {selectedMint.id === "manta" && (
+                              {selectedMint.id === "manta" && (
                                 <div
                                   className={
                                     (isConnected === true && chainId !== 169) ||
@@ -2601,25 +2604,25 @@ myMantaNFTsCreated,
                 //   </div>
                 // </div>
                 <div className="d-flex flex-column gap-4">
-                  {/* <div className="upcoming-mint-wrapper upcoming-core-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  <div className="upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">CORE Beta Pass</h6>
+                      <h6 className="upcoming-mint-title">Manta Beta Pass</h6>
                       <p className="upcoming-mint-desc">
                         Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted by CORE
+                        and participate in an exclusive event hosted by Manta
                       </p>
                     </div>
                     <img
-                      src={coreBg}
+                      src={mantaBg}
                       alt=""
                       className="upcoming-mint-img d-none d-lg-block"
                     />
                     <img
-                      src={coreMobileBg}
+                      src={mantaMobileBg}
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div> */}
+                  </div>
                   <div className="upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">SEI Beta Pass</h6>
@@ -2870,7 +2873,10 @@ myMantaNFTsCreated,
                       <div className="d-flex flex-column justify-content-between past-content-wrapper ">
                         <h6 className="past-mint-title">VICTION Beta Pass</h6>
                         <div className="d-flex flex-column align-items-center rotatewrapper">
-                          <h6 className="past-bnb-mint-amount" style={{color: "#901C77"}}>
+                          <h6
+                            className="past-bnb-mint-amount"
+                            style={{ color: "#901C77" }}
+                          >
                             13,219
                           </h6>
                           <span className="past-bnb-mint-desc">SOLD OUT</span>
