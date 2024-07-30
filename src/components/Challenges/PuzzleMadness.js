@@ -153,11 +153,11 @@ const PuzzleMadness = ({ coinbase, chainId, wallet }) => {
   }, []);
 
   useEffect(() => {
-    checkApproval3500();
+    if (coinbase && wallet && chainId === 56) {
+      checkApproval3500();
+    }
     checkWalletAddr();
   }, [wallet, chainId, coinbase]);
-
-  console.log(bundleState3500, checkWallet,showApproval3500 )
 
   return (
     <div className="d-flex flex-column gap-3">
@@ -199,13 +199,13 @@ const PuzzleMadness = ({ coinbase, chainId, wallet }) => {
           </div>
         </div>
         <div className="d-flex align-items-center gap-3">
-          <div
+          <button
             disabled={
               bundleState3500 === "deposit" || checkWallet === false
                 ? true
                 : false
             }
-            className={`btn ${
+            className={` ${
               bundleState3500 === "deposit" || checkWallet === false
                 ? "stake-wod-btn-inactive"
                 : "stake-wod-btn"
@@ -226,14 +226,14 @@ const PuzzleMadness = ({ coinbase, chainId, wallet }) => {
             ) : (
               "Approve"
             )}
-          </div>
-          <div
+          </button>
+          <button
             disabled={
               bundleState3500 === "deposit" && checkWallet === true
                 ? false
                 : true
             }
-            className={`btn ${
+            className={` ${
               (bundleState3500 === "deposit" || showApproval3500 === false) &&
               checkWallet === true
                 ? "stake-wod-btn"
@@ -243,7 +243,6 @@ const PuzzleMadness = ({ coinbase, chainId, wallet }) => {
               handleDeposit3500();
             }}
           >
-            {" "}
             {depositState3500 === "loading-deposit" ? (
               <>
                 Buying
@@ -255,35 +254,50 @@ const PuzzleMadness = ({ coinbase, chainId, wallet }) => {
             ) : (
               "Buy"
             )}
-          </div>
+          </button>
         </div>
       </div>
       {countdown3500 && (
-        <div className="new-event-wrapper mt-5 p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
+        <div className="new-event-wrapper mt-5 p-3">
           <div className="d-flex flex-column gap-2">
-            <div className="d-flex align-items-center gap-2">
-              <h6 className="mb-0 time-remaining">Available Time Remaining</h6>
-              <img src={whiteTooltip} width={20} height={20} alt="" />
-            </div>
-            <p className="sync-desc mb-0">
-              Use in-game
-              <img
-                src={syncIcon}
-                className="mx-1"
-                width={20}
-                height={20}
-                alt=""
+            <div className=" d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between w-100">
+              <div className="d-flex flex-column gap-2">
+                <div className="d-flex align-items-center gap-2">
+                  <h6 className="mb-0 time-remaining">
+                    Available Time Remaining
+                  </h6>
+                  <img src={whiteTooltip} width={20} height={20} alt="" />
+                </div>
+                <p className="sync-desc mb-0">
+                  Use in-game
+                  <img
+                    src={syncIcon}
+                    className="mx-1"
+                    width={20}
+                    height={20}
+                    alt=""
+                  />
+                  sync button every time you purchase a bundle
+                </p>
+              </div>
+              <Countdown
+                date={Number(countdown3500) * 1000}
+                renderer={renderer}
+                onComplete={() => {
+                  setcountdown3500();
+                }}
               />
-              sync button every time you purchase a bundle
-            </p>
+            </div>
+            <span
+              className="statusText"
+              style={{
+                color: statusColor3500,
+                width: "fit-content",
+              }}
+            >
+              {status3500}
+            </span>
           </div>
-          <Countdown
-            date={Number(countdown3500) * 1000}
-            renderer={renderer}
-            onComplete={() => {
-              setcountdown3500();
-            }}
-          />
         </div>
       )}
     </div>

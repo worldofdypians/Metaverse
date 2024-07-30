@@ -17,10 +17,9 @@ import CriticalHit from "../Challenges/CriticalHit";
 import MazeGarden from "../Challenges/MazeGarden";
 import GoldenPass from "../Challenges/GoldenPass";
 
-const NewEvents = ({ events,onEventClick, coinbase, wallet, chainId }) => {
+const NewEvents = ({ events, onEventClick, coinbase, wallet, chainId }) => {
   const [challenge, setChallenge] = useState("treasureHunt");
   const [eventDuration, seteventDuration] = useState("Live");
-
 
   return (
     <div className="custom-container mt-5">
@@ -29,17 +28,46 @@ const NewEvents = ({ events,onEventClick, coinbase, wallet, chainId }) => {
           <div className="d-flex flex-column">
             <div className="new-events-top-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
               <h6 className="challenges-text mb-0">Challenges</h6>
-              <div className="d-flex align-items-center gap-2">
-                <div className={`${eventDuration === 'Live' ? 'active-challenge-tab' : 'challenge-tab'}   px-4 py-2 d-flex align-items-center justify-content-center`} onClick={()=>{seteventDuration('Live')}}>
-                  <span>Live</span>
+              {challenge === "treasureHunt" && (
+                <div className="d-flex align-items-center gap-2">
+                  <div
+                    className={`${
+                      eventDuration === "Live"
+                        ? "active-challenge-tab"
+                        : "challenge-tab"
+                    }   px-4 py-2 d-flex align-items-center justify-content-center`}
+                    onClick={() => {
+                      seteventDuration("Live");
+                    }}
+                  >
+                    <span>Live</span>
+                  </div>
+                  <div
+                    className={`${
+                      eventDuration === "Coming Soon"
+                        ? "active-challenge-tab"
+                        : "challenge-tab"
+                    } px-4 py-2 d-flex align-items-center justify-content-center`}
+                    onClick={() => {
+                      seteventDuration("Coming Soon");
+                    }}
+                  >
+                    <span>Upcoming</span>
+                  </div>
+                  <div
+                    className={`${
+                      eventDuration === "Expired"
+                        ? "active-challenge-tab"
+                        : "challenge-tab"
+                    } px-4 py-2 d-flex align-items-center justify-content-center`}
+                    onClick={() => {
+                      seteventDuration("Expired");
+                    }}
+                  >
+                    <span>Past</span>
+                  </div>
                 </div>
-                <div className={`${eventDuration === 'Coming Soon' ? 'active-challenge-tab' : 'challenge-tab'} px-4 py-2 d-flex align-items-center justify-content-center`} onClick={()=>{seteventDuration('Coming Soon')}}>
-                  <span>Upcoming</span>
-                </div>
-                <div className={`${eventDuration === 'Expired' ? 'active-challenge-tab' : 'challenge-tab'} px-4 py-2 d-flex align-items-center justify-content-center`} onClick={()=>{seteventDuration('Expired')}}>
-                  <span>Past</span>
-                </div>
-              </div>
+              )}
             </div>
             <div className="new-events-bottom-wrapper p-3">
               <div className="row">
@@ -140,19 +168,35 @@ const NewEvents = ({ events,onEventClick, coinbase, wallet, chainId }) => {
                 </div>
                 <div className="col-12 col-lg-10">
                   {challenge === "treasureHunt" ? (
-                    <TreasureHunt events={events} eventDuration={eventDuration} onEventClick={onEventClick}/>
+                    <TreasureHunt
+                      events={events}
+                      eventDuration={eventDuration}
+                      onEventClick={onEventClick}
+                    />
                   ) : challenge === "dragonRuins" ? (
-                    <DragonRuins />
+                    <DragonRuins
+                      coinbase={coinbase}
+                      chainId={chainId}
+                      wallet={wallet}
+                    />
                   ) : challenge === "scorpionKing" ? (
                     <ScorpionKing />
                   ) : challenge === "puzzleMadness" ? (
-                    <PuzzleMadness coinbase={coinbase} chainId={chainId} wallet={wallet}/>
+                    <PuzzleMadness
+                      coinbase={coinbase}
+                      chainId={chainId}
+                      wallet={wallet}
+                    />
                   ) : challenge === "criticalHit" ? (
                     <CriticalHit />
                   ) : challenge === "mazeGarden" ? (
                     <MazeGarden />
                   ) : challenge === "goldenPass" ? (
-                    <GoldenPass />
+                    <GoldenPass
+                      coinbase={coinbase}
+                      chainId={chainId}
+                      wallet={wallet}
+                    />
                   ) : (
                     <></>
                   )}
