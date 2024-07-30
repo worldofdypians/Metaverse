@@ -354,7 +354,7 @@ myMantaNFTsCreated,
   let countToLiveConflux = new Date("2023-10-10T11:00:00.000+02:00");
   let countToExpireConflux = new Date("2024-08-05T16:00:00.000+02:00");
   let countToExpireOpbnb = new Date("2024-08-06T24:00:00.000+02:00");
-  let countToExpireManta = new Date("2024-08-06T24:00:00.000+02:00");
+  let countToExpireManta = new Date("2024-08-15T24:00:00.000+02:00");
 
   const dummyCards = [
     // {

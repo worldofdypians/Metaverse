@@ -251,7 +251,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
       logo: mantaLogo,
       totalRewards: "$20,000 in MANTA Rewards",
       rewardsAmount: "$20,000",
-      rewardsCurrency: "ETH Rewards",
+      rewardsCurrency: "MANTA Rewards",
       minRewards: "1",
       maxRewards: "100",
       minPoints: "5,000",
