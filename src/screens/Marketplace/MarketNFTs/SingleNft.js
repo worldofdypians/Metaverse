@@ -2158,6 +2158,8 @@ window.config.nft_manta_address.toLowerCase(), "type");
                       ? "opBNB Chain"
                       : type === "immutable"
                       ? "Immutable"
+                      : type === "manta"
+                      ? "Manta Network"
                       : "Ethereum"}
                   </span>
                   <span className="seller-addr d-flex gap-1 align-items-center">
@@ -2784,7 +2786,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                                 : type === "cawsavax" || type === "landavax"
                                 ? `https://snowtrace.io/address/${owner}`
                                 : type === "skale"
-                                ? `https://lanky-ill-funny-testnet.explorer.testnet.skalenodes.com/address/${owner}`
+                                ? `https://green-giddy-denebola.explorer.mainnet.skalenodes.com/address/${owner}`
                                 : type === "viction"
                                 ? `https://www.vicscan.xyz/address/${owner}`
                                 : type === "core"
@@ -2795,6 +2797,8 @@ window.config.nft_manta_address.toLowerCase(), "type");
                                 ? `https://opbnbscan.com/address/${owner}`
                                 : type === "immutable"
                                 ? `https://explorer.immutable.com/${owner}`
+                                : type === "manta"
+                                ? `https://pacific-explorer.manta.network/${owner}`
                                 : `https://etherscan.io/address/${owner}`
                             }
                             target="_blank"
@@ -3453,7 +3457,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                             : type === "base"
                             ? "ETH"
                             : type === "manta"
-                            ? "ETH"
+                            ? "MANTA"
                             : type === "skale"
                             ? "SKL"
                             : type === "core"

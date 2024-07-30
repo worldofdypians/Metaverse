@@ -837,6 +837,7 @@ function Dashboard({
     skalePrice,
     dyptokenDatabnb,
     corePrice,
+    mantaPrice,
     victionPrice,
   ]);
 
@@ -3283,7 +3284,7 @@ function Dashboard({
         `https://pro-api.coingecko.com/api/v3/simple/price?ids=sei-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
       )
       .then((obj) => {
-        setSeiPrice(obj.data["sei-network"].usd.usd);
+        setSeiPrice(obj.data["sei-network"].usd);
       });
   };
 
@@ -3294,6 +3295,16 @@ function Dashboard({
       )
       .then((obj) => {
         setCorePrice(obj.data.core.usd);
+      });
+  };
+
+  const fetchMantaPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=manta-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setMantaPrice(obj.data["manta-network"].usd);
       });
   };
 
@@ -5800,6 +5811,7 @@ function Dashboard({
   useEffect(() => {
     fetchSkalePrice();
     fetchSeiPrice();
+    fetchMantaPrice()
     fetchCorePrice();
     fetchVictionPrice();
     fetchEgldPrice();

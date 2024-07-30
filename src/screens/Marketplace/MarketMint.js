@@ -504,7 +504,7 @@ myMantaNFTsCreated,
     dotsClass: "button__bar",
     infinite: false,
     speed: 300,
-    slidesToShow: 4,
+    slidesToShow: 5,
     slidesToScroll: 1,
     initialSlide: 0,
     beforeChange: (current, next) => {
@@ -2488,7 +2488,7 @@ myMantaNFTsCreated,
                                  {selectedMint.id === "manta" && (
                                 <div
                                   className={
-                                    (isConnected === true && chainId !== 88) ||
+                                    (isConnected === true && chainId !== 169) ||
                                     (status !== "Connect your wallet." &&
                                       status !== "") ||
                                     mintloading === "error" ||
@@ -2521,7 +2521,7 @@ myMantaNFTsCreated,
                                         chainId !== 169) ||
                                       (status !== "Connect your wallet." &&
                                         status !== "") ||
-                                      totalVictionNft > 0
+                                      totalMantaNft > 0
                                         ? true
                                         : false
                                     }

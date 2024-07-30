@@ -4536,6 +4536,10 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
+                totalMantaNft={totalMantaNft}
+                mantaMintAllowed={mantaMintAllowed}
+                myMantaNfts={myMantaNfts}
+                myMantaNFTsCreated={myMantaNFTsCreated}
                 cawsArray={allCawsForTimepieceMint}
                 mintloading={mintloading}
                 isConnected={isConnected}
@@ -4777,6 +4781,10 @@ function App() {
                 myVictionNfts={myVictionNfts}
                 myOpbnbNfts={myOpbnbNfts}
                 myBnbNfts={myBnbNfts}
+                totalMantaNft={totalMantaNft}
+                mantaMintAllowed={mantaMintAllowed}
+                myMantaNfts={myMantaNfts}
+                myMantaNFTsCreated={myMantaNFTsCreated}
                 totalBnbNft={totalBnbNft}
               />
             }
@@ -4916,6 +4924,10 @@ function App() {
                 myOpbnbNfts={myOpbnbNfts}
                 myBnbNfts={myBnbNfts}
                 totalBnbNft={totalBnbNft}
+                totalMantaNft={totalMantaNft}
+                mantaMintAllowed={mantaMintAllowed}
+                myMantaNfts={myMantaNfts}
+                myMantaNFTsCreated={myMantaNFTsCreated}
                 />
               }
             />

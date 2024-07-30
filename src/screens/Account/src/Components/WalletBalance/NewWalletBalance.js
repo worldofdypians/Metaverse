@@ -45,6 +45,8 @@ import gateUpcoming from "../../../../Marketplace/assets/gateUpcoming.webp";
 import eventPopupImage from "./assets/eventPopupImage.png";
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import victionThumb from "./assets/victionThumb.png";
+import mantaThumb from "./assets/mantaThumb.png";
+
 import seiThumb from "./assets/seiThumb.png";
 import multiversThumb from "./assets/multiversThumb.png";
 import immutableThumb from "./assets/immutableThumb.png";
@@ -277,6 +279,8 @@ const NewWalletBalance = ({
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+  let mantaLastDay = new Date("2024-10-30T14:00:00.000+02:00");
+
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
@@ -354,14 +358,13 @@ const NewWalletBalance = ({
     title: "Manta",
     logo: mantaLogo,
     eventStatus: "Live",
-    totalRewards: "$20,000 in ETH Rewards",
+    totalRewards: "$20,000 in MANTA Rewards",
     myEarnings: 0.0,
-    eventDate: "Jul 01, 2024",
-    date: "Jul 01, 2024",
-
+    eventDate: "Aug 01, 2024",
+    date: "Aug 01, 2024",
     id: "event21",
     eventType: "Explore & Mine",
-    eventDuration: coreLastDay,
+    eventDuration: mantaLastDay,
     minRewards: "0.5",
     maxRewards: "20",
     minPoints: "5,000",
@@ -370,7 +373,7 @@ const NewWalletBalance = ({
 
     chain: "Manta",
     linkState: "manta",
-    rewards: "ETH",
+    rewards: "MANTA",
     status: "Live",
   };
 
@@ -427,30 +430,29 @@ const NewWalletBalance = ({
       title: "Manta",
       logo: mantaLogo,
       eventStatus: "Live",
-      totalRewards: "$20,000 in ETH Rewards",
+      totalRewards: "$20,000 in MANTA Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Jul 01, 2024",
+      eventDate: "Aug 01, 2024",
 
       popupInfo: {
         title: "Manta",
         chain: "Manta",
         linkState: "manta",
-        rewards: "ETH",
+        rewards: "MANTA",
         status: "Live",
         logo: mantaLogo,
-        date: "Jul 01, 2024",
-
+        date: "Aug 01, 2024",
         id: "event21",
         eventType: "Explore & Mine",
-        totalRewards: "$20,000 in ETH Rewards",
-        eventDuration: coreLastDay,
+        totalRewards: "$20,000 in MANTA Rewards",
+        eventDuration: mantaLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Jul 01, 2024",
+        eventDate: "Aug 01, 2024",
       },
     },
     {
@@ -1450,7 +1452,6 @@ const NewWalletBalance = ({
 
   const recaptchaRef = useRef(null);
   const kittyDashRewards = [30, 20, 10, 10, 5, 5, 5, 5, 5, 5];
-
   return (
     <>
       <div className="container px-0">
@@ -2243,6 +2244,8 @@ const NewWalletBalance = ({
                         ? multiversThumb
                         : dummyEvent.linkState === "bnb"
                         ? bnbPopupImage
+                        : dummyEvent.linkState === "manta"
+                        ? mantaThumb
                         : eventPopupImage
                     }
                     alt=""
@@ -2497,6 +2500,18 @@ const NewWalletBalance = ({
                       Remember to log in to the game daily and venture into the
                       MultiversX area to uncover hidden treasures.
                     </p>
+                  )  : dummyEvent.id === "event21" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Manta Beta Pass NFT</b>. You can get the
+                      Manta Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Manta area, players not only stand a
+                      chance to secure daily rewards in MANTA, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Manta area to uncover hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -2563,6 +2578,8 @@ const NewWalletBalance = ({
                           ? "CORE"
                           : dummyEvent.id === "event16"
                           ? "EGLD"
+                          : dummyEvent.id === "event21"
+                          ? "MANTA"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2614,6 +2631,8 @@ const NewWalletBalance = ({
                 ? "MultiversX"
                 : dummyEvent.id === "event20"
                 ? "BNB Chain"
+                : dummyEvent.id === "event21"
+                ? "Manta"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2707,7 +2726,23 @@ const NewWalletBalance = ({
                 public ledger that is maintained by a network of computers
                 called nodes.
               </p>
-            ) : dummyEvent.id === "event11" ? (
+            )  : dummyEvent.id === "event21" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Manta is the multi-modular ecosystem for zero-knowledge
+                (ZK) applications. Manta was created by a team of
+                experienced founders from prestigious institutions, including
+                Harvard, MIT, and Algorand. Manta has received
+                investments from many top web3 investment funds, including
+                Binance Labs and Polychain Capital. It has grown through
+                participation in the best web3 accelerators, including Alliance
+                DAO and Berkeley Blockchain Xcelerator. Manta is poised
+                to bring the next generation of web3 users and usher in a new
+                chapter of web3 zkApp applications.
+              </p>
+            ): dummyEvent.id === "event11" ? (
               <p
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
@@ -2830,6 +2865,8 @@ const NewWalletBalance = ({
                     ? "https://twitter.com/Coredao_Org"
                     : dummyEvent.id === "event16"
                     ? "https://twitter.com/MultiversX"
+                    : dummyEvent.id === "event21"
+                    ? "https://x.com/mantanetwork"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2867,6 +2904,8 @@ const NewWalletBalance = ({
                     ? "https://t.me/CoreDAOTelegram"
                     : dummyEvent.id === "event16"
                     ? "https://t.me/MultiversX"
+                    : dummyEvent.id === "event21"
+                    ? "https://www.t.me/mantanetworkofficial"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -2913,6 +2952,8 @@ const NewWalletBalance = ({
                     ? "https://coredao.org/"
                     : dummyEvent.id === "event16"
                     ? "https://multiversx.com/"
+                    : dummyEvent.id === "event21"
+                    ? "https://manta.network/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -2959,6 +3000,8 @@ const NewWalletBalance = ({
                         ? corePoints
                         : dummyEvent.id === "event16"
                         ? multiversPoints
+                        : dummyEvent.id === "event21"
+                        ? mantaPoints
                         : 0,
                       0
                     )}
@@ -3004,6 +3047,8 @@ const NewWalletBalance = ({
                         ? bnbEarnUsd
                         : dummyEvent.id === "event16"
                         ? multiversEarnUsd
+                        : dummyEvent.id === "event21"
+                        ? mantaEarnUsd
                         : 0,
                       2
                     )}
@@ -3035,6 +3080,8 @@ const NewWalletBalance = ({
                               ? bnbEarnToken
                               : dummyEvent.id === "event16"
                               ? multiversEarnToken
+                              : dummyEvent.id === "event21"
+                              ? mantaEarnToken
                               : 0,
                             2
                           )}
@@ -3065,6 +3112,8 @@ const NewWalletBalance = ({
                             ? "CORE"
                             : dummyEvent.id === "event16"
                             ? "EGLD"
+                             : dummyEvent.id === "event21"
+                            ? "MANTA"
                             : "ETH"}
                         </>
                       )}

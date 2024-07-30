@@ -258,6 +258,17 @@ const MarketEvents = ({
       });
   };
 
+  const fetchMantaPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=manta-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setMantaPrice(obj.data["manta-network"].usd);
+      });
+  };
+
+
   const fetchVictionPrice = async () => {
     await axios
       .get(
@@ -289,6 +300,7 @@ const MarketEvents = ({
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+  let mantaLastDay = new Date("2024-10-30T14:00:00.000+02:00");
 
   const dailyBonusMintData = {
     title: "Daily Bonus",
@@ -329,27 +341,27 @@ const MarketEvents = ({
       title: "Manta",
       logo: mantaLogo,
       eventStatus: "Live",
-      totalRewards: "$20,000 in ETH Rewards",
+      totalRewards: "$20,000 in MANTA Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Jul 01, 2024",
+      eventDate: "Aug 01, 2024",
       backgroundImage: mantaBg,
       popupInfo: {
         title: "Manta",
         chain: "Manta",
         linkState: "manta",
-        rewards: "ETH",
+        rewards: "MANTA",
         status: "Live",
         id: "event21",
         eventType: "Explore & Mine",
-        totalRewards: "$20,000 in ETH Rewards",
-        eventDuration: coreLastDay,
+        totalRewards: "$20,000 in MANTA Rewards",
+        eventDuration: mantaLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Jul 01, 2024",
+        eventDate: "Aug 01, 2024",
       },
     },
     {
@@ -1207,8 +1219,9 @@ const MarketEvents = ({
     fetchVictionPrice();
     fetchEgldPrice();
     fetchCorePrice();
+    fetchMantaPrice()
   }, []);
-
+  
   useEffect(() => {
     if (windowSize.width < 786) {
       window.scrollTo(0, 750);
@@ -1257,7 +1270,7 @@ const MarketEvents = ({
     ) {
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
     }
-  }, [email, data, cfxPrice, bnbPrice, skalePrice, dyptokenDatabnb]);
+  }, [email, data, cfxPrice, bnbPrice, skalePrice, dyptokenDatabnb, mantaPrice]);
 
   useEffect(() => {
     setActiveTab(tabState);
@@ -1525,7 +1538,7 @@ const MarketEvents = ({
               )}
               {activeTab === "upcoming" && (
                 <div className="d-flex flex-column gap-4">
-                  <div className="border-0 upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  {/* <div className="border-0 upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Manta</h6>
                       <p className="upcoming-mint-desc">
@@ -1543,7 +1556,7 @@ const MarketEvents = ({
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div>
+                  </div> */}
                   <div className="border-0 upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">MultiversX</h6>
@@ -1833,7 +1846,7 @@ const MarketEvents = ({
                       Manta Beta Pass NFT from the World of Dypians
                       Marketplace. By engaging in the game on a daily basis and
                       exploring the Manta area, players not only stand a
-                      chance to secure daily rewards in BNB, but also earn
+                      chance to secure daily rewards in MANTA, but also earn
                       points for their placement on the global leaderboard.
                       Remember to log in to the game daily and venture into the
                       Manta area to uncover hidden treasures.
@@ -2043,7 +2056,7 @@ const MarketEvents = ({
                           : dummyEvent.id === "event16"
                           ? "EGLD"
                           : dummyEvent.id === "event21"
-                          ? "ETH"
+                          ? "MANTA"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2416,7 +2429,7 @@ const MarketEvents = ({
                     ? "https://coredao.org/"
                     : dummyEvent.id === "event16"
                     ? "https://multiversx.com/"
-                    : dummyEvent.id === "event16"
+                    : dummyEvent.id === "event21"
                     ? "https://manta.network/"
                     : "https://base.org/"
                 }
@@ -2464,6 +2477,8 @@ const MarketEvents = ({
                         ? victionPoints
                         : dummyEvent.id === "event12"
                         ? corePoints
+                        : dummyEvent.id === "event21"
+                        ? mantaPoints
                         : 0,
                       0
                     )}
@@ -2578,7 +2593,7 @@ const MarketEvents = ({
                             : dummyEvent.id === "event16"
                             ? "EGLD"
                             : dummyEvent.id === "event21"
-                            ? "ETH"
+                            ? "MANTA"
                             : "ETH"}
                         </>
                       )}
