@@ -1152,21 +1152,23 @@ function App() {
     return await window.getMyNFTs(coinbase, type);
   };
 
-  const fetchImmutableNfts = async()=>{
-    if(isConnected && coinbase)
-   { const result = await axios
-    .get(`https://api.worldofdypians.com/api/mint/immutable/${coinbase}`).catch((e)=>{
-      console.error(e);
-    })
+  const fetchImmutableNfts = async () => {
+    if (isConnected && coinbase) {
+      const result = await axios
+        .get(`https://api.worldofdypians.com/api/mint/immutable/${coinbase}`)
+        .catch((e) => {
+          console.error(e);
+        });
 
-    if(result && result.status === 200) {
-      const NFTS = result.data.data.tokenIDMinted
-      setTotalImmutableNft(NFTS.length);
-      setMyImmutableNfts(NFTS);
-      setImmutableMintAllowed(NFTS.length > 0 ? 0 : 1);
-      setmyImmutableNFTsCreated(NFTS);
-    }}
-  }
+      if (result && result.status === 200) {
+        const NFTS = result.data.data.tokenIDMinted;
+        setTotalImmutableNft(NFTS.length);
+        setMyImmutableNfts(NFTS);
+        setImmutableMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setmyImmutableNFTsCreated(NFTS);
+      }
+    }
+  };
 
   const fetchAllMyNfts = async () => {
     if (coinbase) {
@@ -1912,7 +1914,9 @@ function App() {
           let tokenId = await window.opbnb_nft
             .mintOPBNBNFT()
             .then(() => {
-              handleSecondTask(coinbase);
+              setTimeout(() => {
+                handleSecondTask(coinbase);
+              }, 5000);
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
               settextColor("rgb(123, 216, 176)");
@@ -2129,7 +2133,9 @@ function App() {
           settextColor("rgb(123, 216, 176)");
 
           const result = await axios
-            .get(`https://api.worldofdypians.com/api/mint/immutable/${coinbase}`)
+            .get(
+              `https://api.worldofdypians.com/api/mint/immutable/${coinbase}`
+            )
             .catch((e) => {
               console.error(e);
               setmintloading("error");
@@ -2151,12 +2157,11 @@ function App() {
               setmintStatus("");
               setmintloading("initial");
             }, 5000);
-          
-              setmyImmutableNFTsCreated(result.data.data.tokenIDMinted);
-              setTotalImmutableNft(1);
-              setImmutableMintAllowed(0);
-              setMyImmutableNfts(result.data.data.tokenIDMinted);
-          
+
+            setmyImmutableNFTsCreated(result.data.data.tokenIDMinted);
+            setTotalImmutableNft(1);
+            setImmutableMintAllowed(0);
+            setMyImmutableNfts(result.data.data.tokenIDMinted);
           }
           // console.log(data,finalCaws, totalCawsDiscount);
           // let tokenId = await window.immutable_nft
@@ -4933,22 +4938,22 @@ function App() {
             /> */}
 
           <Route
-              exact
-              path="/marketplace/mint/core"
-              element={
-                <MarketMint
-                  coinbase={coinbase}
-                  showWalletConnect={() => {
-                    setwalletModal(true);
-                  }}
-                  cawsArray={allCawsForTimepieceMint}
-                  mintloading={mintloading}
-                  isConnected={isConnected}
-                  chainId={chainId}
-                  handleMint={handleCoreNftMint}
-                  mintStatus={mintStatus}
-                  textColor={textColor}
-                  calculateCaws={calculateCaws}
+            exact
+            path="/marketplace/mint/core"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleMint={handleCoreNftMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
                 totalopbnbNft={totalopbnbNft}
                 totalCreated={totalTimepieceCreated}
                 timepieceMetadata={timepieceMetadata}
