@@ -449,7 +449,7 @@ const GlobalLeaderboard = ({
         </div>
       </div>
 
-      {screen === "dash" && allStarData && allStarData.isactive === false
+      {screen === "dash" && allStarData && allStarData.is_active === false
         ? [allStarData.player_data].map((item, index) => {
             return (
               <div
