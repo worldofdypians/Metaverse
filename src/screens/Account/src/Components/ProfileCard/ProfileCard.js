@@ -161,68 +161,7 @@ const ProfileCard = ({
   const sliderRef = useRef(null);
   const [rankTooltip, setRankTooltip] = useState(false);
 
-  const userTotalScore =
-    userBnbScore + userSkaleScore + userCoreScore + userVictionScore;
 
-  const handleUserRank = () => {
-    let allScore;
-    if (rankData && rankData.multiplier === "yes") {
-      allScore = userTotalScore * 4;
-    } else if (rankData && rankData.multiplier === "no") {
-      allScore = userTotalScore;
-    }
-    if (allScore > 59999999) {
-      setUserRankName({
-        name: "unstoppable",
-        id: 4,
-      });
-      sliderRef?.current?.innerSlider?.slickGoTo(4);
-      setUserProgress(100);
-    } else if (allScore > 34999999) {
-      setUserRankName({
-        name: "champion",
-        id: 3,
-      });
-      sliderRef?.current?.innerSlider?.slickGoTo(3);
-      setUserProgress((allScore / 60000000) * 100);
-    } else if (allScore > 21999999) {
-      setUserRankName({
-        name: "underdog",
-        id: 2,
-      });
-      sliderRef?.current?.innerSlider?.slickGoTo(2);
-      setUserProgress((allScore / 35000000) * 100);
-    } else if (allScore > 9999999) {
-      setUserRankName({
-        name: "rookie",
-        id: 1,
-      });
-      sliderRef?.current?.innerSlider?.slickGoTo(1);
-      setUserProgress((allScore / 22000000) * 100);
-    } else {
-      sliderRef?.current?.innerSlider?.slickGoTo(0);
-      setUserProgress((allScore / 10000000) * 100);
-    }
-  };
-
-  const updateUserRank = async () => {
-    if (rankData && userRankName) {
-      if (rankData.rank == userRankName.id) {
-        return;
-      } else if (rankData.rank < userRankName.id) {
-        await axios
-          .patch(
-            `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
-            {
-              rank: userRankName.id,
-            }
-          )
-          .then(async () => {
-            getRankData();
-          });
-      }
-    }
-  };
 
   var settings = {
     dots: false,
@@ -400,26 +339,14 @@ const ProfileCard = ({
     }
   };
 
-  useEffect(() => {
-    updateUserRank();
-  }, [handleUserRank]);
+
 
   useEffect(() => {
     countBundle();
     setlastDay(address);
   }, [address]);
 
-  useEffect(() => {
-    handleUserRank();
-  }, [
-    userRank,
-    userRankSkale,
-    userBnbScore,
-    userRankCore,
-    userRankViction,
-    userCoreScore,
-    userVictionScore,
-  ]);
+
 
   const html = document.querySelector("html");
 
@@ -1124,15 +1051,15 @@ const ProfileCard = ({
                                       />
                                     )}
                                   </div>
-                                  <span className="rank-current-score">
+                                  {/* <span className="rank-current-score">
                                     {rankData?.multiplier === "yes"
                                       ? getFormattedNumber(
                                           userTotalScore * 4,
                                           0
                                         )
                                       : getFormattedNumber(userTotalScore, 0)}
-                                  </span>
-                                  <span className="rank-current-score">
+                                  </span> */}
+                                  {/* <span className="rank-current-score">
                                     {userRankName?.name === "rookie"
                                       ? "22M"
                                       : userRankName?.name === "underdog"
@@ -1142,7 +1069,7 @@ const ProfileCard = ({
                                       : userRankName?.name === "unstoppable"
                                       ? ""
                                       : "10M"}
-                                  </span>
+                                  </span> */}
                                 </div>
                                 {rankData?.multiplier === "no" && !isPremium ? (
                                   <div className="d-flex justify-content-center">
@@ -1502,7 +1429,7 @@ const ProfileCard = ({
                   >
                     My points
                   </span>
-                  <h6
+                  {/* <h6
                     className="mb-0 your-score-text"
                     style={{
                       color:
@@ -1517,7 +1444,7 @@ const ProfileCard = ({
                     <img src={x4rounded} width={30} alt="" />
                   ) : (
                     <></>
-                  )}
+                  )} */}
                 </div>
               </div>
               <img

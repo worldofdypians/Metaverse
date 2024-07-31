@@ -101,6 +101,8 @@ import ProfileSidebar from "../../../../../components/ProfileSidebar/ProfileSide
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import NewEvents from "../../../../../components/NewEvents/NewEvents";
 import successMark from "../../Components/WalletBalance/newAssets/successMark.svg";
+import RankPopup from "../../../../../components/MyProfile/RankPopup";
+import EventsPopup from "../../../../../components/MyProfile/EventsPopup";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -406,7 +408,7 @@ function Dashboard({
   const [showChecklistLandNftModal, setshowChecklistLandNftModal] =
     useState(false);
   const firstSlider = useRef();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [userRankRewards, setUserRankRewards] = useState(0);
   const [dypBalance, setDypBalance] = useState();
@@ -628,6 +630,18 @@ function Dashboard({
   const [nftPremium_tokenId, setnftPremium_tokenId] = useState(0);
   const [nftPremium_total, setnftPremium_total] = useState(0);
   const [nftDiscountObject, setnftDiscountObject] = useState([]);
+  const [selectedEvent, setselectedEvent] = useState([]);
+  const [showEventPopup, setshowEventPopup] = useState(false);
+
+  const [userRankName, setUserRankName] = useState({
+    name: "starter",
+    id: 0,
+  });
+  const [userProgress, setUserProgress] = useState(0);
+  const [rankPopup, setRankPopup] = useState(false);
+
+  const sliderRef = useRef(null);
+
   const recaptchaRef = useRef(null);
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -994,6 +1008,10 @@ function Dashboard({
       backgroundImage: coreBg,
       eventDate: "Jul 01, 2024",
       userEarnUsd: coreEarnUsd,
+      userEarnCrypto: coreEarnToken,
+      userEarnPoints: corePoints,
+
+
       popupInfo: {
         title: "CORE",
         chain: "CORE Chain",
@@ -1003,7 +1021,6 @@ function Dashboard({
         backgroundImage: coreBg,
         logo: coreLogo,
         date: "Jul 01, 2024",
-
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",
@@ -1026,6 +1043,8 @@ function Dashboard({
       eventDate: "Jul 01, 2024",
       backgroundImage: victionBg,
       userEarnUsd: victionEarnUsd,
+      userEarnCrypto: victionEarnToken,
+      userEarnPoints: victionPoints,
       popupInfo: {
         title: "VICTION",
         chain: "VICTION Chain",
@@ -1035,7 +1054,6 @@ function Dashboard({
         logo: victionLogo,
         backgroundImage: victionBg,
         date: "Jul 01, 2024",
-
         id: "event14",
         eventType: "Explore & Find",
         totalRewards: "$20,000 in VIC Rewards",
@@ -1091,6 +1109,8 @@ function Dashboard({
       eventDate: "Jun 12, 2024",
       backgroundImage: upcomingBnb,
       userEarnUsd: bnbEarnUsd,
+      userEarnCrypto: bnbEarnToken,
+      userEarnPoints: bnbPoints,
       popupInfo: {
         title: "BNB Chain",
         chain: "BNB Chain",
@@ -1106,7 +1126,7 @@ function Dashboard({
         minPoints: "5,000",
         maxPoints: "30,000",
         learnMore:
-          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+          "/news",
         eventDate: "Jun 12, 2024",
       },
     },
@@ -1120,6 +1140,8 @@ function Dashboard({
       eventDate: "Apr 15, 2024",
       backgroundImage: upcomingSkale,
       userEarnUsd: skaleEarnUsd,
+      userEarnCrypto: skaleEarnToken,
+      userEarnPoints: skalePoints,
       popupInfo: {
         title: "SKALE",
         chain: "SKALE Nebula Hub",
@@ -1151,6 +1173,8 @@ function Dashboard({
       backgroundImage: upcomingDyp2,
       activeTab: "dypiusv2",
       userEarnUsd: dypiusPremiumEarnUsd,
+      userEarnCrypto: dypiusPremiumEarnTokens,
+      userEarnPoints: dypiusPremiumPoints,
       popupInfo: {
         title: "Dypius Premium",
         chain: "BNB Chain",
@@ -1180,6 +1204,8 @@ function Dashboard({
       eventType: "Explore & Mine",
       eventDate: "Dec 26, 2023",
       userEarnUsd: cmcuserEarnUsd,
+      userEarnCrypto: cmcuserEarnETH,
+      userEarnPoints: cmcuserPoints,
       backgroundImage: cmcUpcoming,
       popupInfo: {
         title: "CoinMarketCap",
@@ -1214,6 +1240,8 @@ function Dashboard({
       logo: doge,
       totalRewards: "$10,000 in DOGE Rewards",
       eventDuration: dogeLastDay,
+      userEarnCrypto: dogeEarnBNB,
+      userEarnPoints: dogeUserPoints,
       backgroundImage: upcomingDoge,
       minRewards: "1",
       maxRewards: "100",
@@ -1252,7 +1280,8 @@ function Dashboard({
       eventDate: "Nov 01, 2023",
       backgroundImage: baseUpcoming,
       userEarnUsd: baseEarnUSD,
-
+      userEarnCrypto: baseEarnETH,
+      userEarnPoints: baseUserPoints,
       popupInfo: {
         eventType: "Explore & Mine",
         title: "Base",
@@ -1282,7 +1311,8 @@ function Dashboard({
       eventDate: "Ended",
       backgroundImage: coingeckoUpcoming,
       userEarnUsd: userEarnUsd,
-
+      userEarnCrypto: userEarnETH,
+      userEarnPoints: userPoints,
       popupInfo: {
         title: "CoinGecko",
         chain: "BNB Chain",
@@ -1311,7 +1341,8 @@ function Dashboard({
       eventDate: "Ended",
       backgroundImage: upcomingDyp,
       userEarnUsd: dypiusEarnUsd,
-
+      userEarnCrypto: dypiusEarnTokens,
+      userEarnPoints: 0,
       popupInfo: {
         title: "Dypius",
         chain: "BNB Chain",
@@ -1338,7 +1369,8 @@ function Dashboard({
       eventDate: "Ended",
       backgroundImage: gateUpcoming,
       userEarnUsd: gateEarnUSD,
-
+      userEarnCrypto: gateEarnBnb,
+      userEarnPoints: gateUserPoints,
       popupInfo: {
         eventType: "Explore & Mine",
         title: "Gate.io",
@@ -1368,7 +1400,8 @@ function Dashboard({
       eventDate: "Ended",
       backgroundImage: confluxUpcoming,
       userEarnUsd: confluxEarnUSD,
-
+      userEarnCrypto: confluxEarnCFX,
+      userEarnPoints: confluxUserPoints,
       popupInfo: {
         eventType: "Explore & Mine",
         title: "Conflux",
@@ -5801,23 +5834,101 @@ function Dashboard({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
+
+  const userTotalScore =
+    userBnbScore + userSkaleScore + userCoreScore + userVictionScore;
+
   const handleRankRewards = () => {
-    let totalScore =
-      userBnbScore + userSkaleScore + userCoreScore + userVictionScore;
-    if (totalScore > 10000000) {
+    if (userTotalScore > 10000000) {
       setUserRankRewards(5);
-    } else if (totalScore > 22000000) {
+    } else if (userTotalScore > 22000000) {
       setUserRankRewards(10);
-    } else if (totalScore > 35000000) {
+    } else if (userTotalScore > 35000000) {
       setUserRankRewards(25);
-    } else if (totalScore > 60000000) {
+    } else if (userTotalScore > 60000000) {
       setUserRankRewards(100);
+    }
+  };
+
+  const handleUserRank = () => {
+    let allScore;
+    if (rankData && rankData.multiplier === "yes") {
+      allScore = userTotalScore * 4;
+    } else if (rankData && rankData.multiplier === "no") {
+      allScore = userTotalScore;
+    }
+    if (allScore > 59999999) {
+      setUserRankName({
+        name: "unstoppable",
+        id: 4,
+      });
+      sliderRef?.current?.innerSlider?.slickGoTo(4);
+      setUserProgress(100);
+    } else if (allScore > 34999999) {
+      setUserRankName({
+        name: "champion",
+        id: 3,
+      });
+      sliderRef?.current?.innerSlider?.slickGoTo(3);
+      setUserProgress((allScore / 60000000) * 100);
+    } else if (allScore > 21999999) {
+      setUserRankName({
+        name: "underdog",
+        id: 2,
+      });
+      sliderRef?.current?.innerSlider?.slickGoTo(2);
+      setUserProgress((allScore / 35000000) * 100);
+    } else if (allScore > 9999999) {
+      setUserRankName({
+        name: "rookie",
+        id: 1,
+      });
+      sliderRef?.current?.innerSlider?.slickGoTo(1);
+      setUserProgress((allScore / 22000000) * 100);
+    } else {
+      sliderRef?.current?.innerSlider?.slickGoTo(0);
+      setUserProgress((allScore / 10000000) * 100);
+    }
+  };
+
+  const updateUserRank = async () => {
+    if (rankData && userRankName) {
+      if (rankData.rank == userRankName.id) {
+        return;
+      } else if (rankData.rank < userRankName.id) {
+        await axios
+          .patch(
+            `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
+            {
+              rank: userRankName.id,
+            }
+          )
+          .then(async () => {
+            getRankData();
+          });
+      }
     }
   };
 
   useEffect(() => {
     handleRankRewards();
   }, [userBnbScore, userSkaleScore, userCoreScore, userVictionScore]);
+
+  useEffect(() => {
+    handleUserRank();
+  }, [
+    userRank,
+    userRankSkale,
+    userBnbScore,
+    userRankCore,
+    userRankViction,
+    userCoreScore,
+    userVictionScore,
+  ]);
+
+  useEffect(() => {
+    updateUserRank();
+  }, [handleUserRank]);
 
   useEffect(() => {
     if (coinbase) {
@@ -6242,8 +6353,49 @@ function Dashboard({
               openDailyBonus={() => setdailyBonusPopup(true)}
               openPortfolio={() => setPortfolio(true)}
               openSpecialRewards={() => setSpecialRewardsPopup(true)}
+              userRankName={userRankName}
+              isConnected={isConnected}
+              onConnectWallet={() => {
+                setshowWalletModal(true);
+              }}
+              onOpenRankPopup={() => {
+                setRankPopup(true);
+              }}
+              domainName={domainName}
+              openedChests={openedChests}
+              onDomainClick={() => {
+                handleOpenDomains();
+              }}
+              liveRewards={
+                Number(userSocialRewardsCached) +
+                Number(weeklyplayerDataAmount) +
+                Number(userRank2) +
+                Number(genesisRank2) +
+                Number(userRankRewards) +
+                Number(weeklyDataAmountCore) +
+                Number(monthlyDataAmountCore) +
+                Number(weeklyDataAmountSkale) +
+                +Number(monthlyDataAmountSkale) +
+                Number(weeklyDataAmountViction) +
+                Number(monthlyDataAmountViction) +
+                Number(coreEarnUsd) +
+                Number(victionEarnUsd) +
+                Number(bnbEarnUsd)
+              }
+              specialRewards={userSocialRewardsCached}
+              syncStatus={syncStatus}
+              onSyncClick={handleShowSyncModal}
             />
-            <NewEvents events={dummyBetaPassData2}/>
+            <NewEvents
+              events={dummyBetaPassData2}
+              onEventClick={(value) => {
+                setselectedEvent(value);
+                setshowEventPopup(true);
+              }}
+              coinbase={coinbase}
+              wallet={data?.getPlayer?.wallet?.publicAddress}
+              chainId={chainId}
+            />
           </>
         ) : location.pathname === "/account/my-rewards" ? (
           <MyRewardsPopupNew
@@ -6484,6 +6636,48 @@ function Dashboard({
             </div>
           </OutsideClickHandler>
         )}
+
+        {rankPopup && (
+          <RankPopup
+            isPremium={isPremium}
+            onClose={() => {
+              setRankPopup(false);
+            }}
+            rankData={rankData}
+            onPremiumClick={() => {
+              setgetPremiumPopup(true);
+            }}
+            userRankName={userRankName}
+            userTotalScore={userTotalScore}
+          />
+        )}
+
+        {showEventPopup && <EventsPopup  dummyEvent={selectedEvent} onClose={()=>{setshowEventPopup(false)}}/>}
+
+        {showWalletModal === true && success === false && (
+          <WalletModal
+            show={showWalletModal}
+            handleClose={() => {
+              setshowWalletModal(false);
+            }}
+            handleConnection={handleConnect}
+          />
+        )}
+
+        {showSyncModal === true && (
+          <SyncModal
+            onCancel={() => {
+              setshowSyncModal(false);
+            }}
+            onclose={() => {
+              setshowSyncModal(false);
+            }}
+            open={showSyncModal}
+            onConfirm={handleSync}
+            syncStatus={syncStatus}
+          />
+        )}
+
         {genesisLeaderboard && (
           <OutsideClickHandler
             onOutsideClick={() => setGenesisLeaderboard(false)}

@@ -5,7 +5,7 @@ import calendar from "./assets/calendar.svg";
 import totalEarningsIcon from "./assets/totalEarningsIcon.svg";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 
-const TreasureHunt = ({ events, eventDuration }) => {
+const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
   return (
     <div className="d-flex flex-column gap-3">
       {events
@@ -15,8 +15,9 @@ const TreasureHunt = ({ events, eventDuration }) => {
         .map((item, index) => {
           return (
             <div
-              className="new-treasure-hunt-wrapper d-flex align-items-center justify-content-between"
+              className="new-treasure-hunt-wrapper upcoming-mint-wrapper2 d-flex align-items-center justify-content-between"
               key={index}
+              onClick={()=>onEventClick(item)}
             >
               <div className="ps-5 w-25 d-flex align-items-center gap-3">
                 <img src={item.logo} height={36} width={36} alt="" />

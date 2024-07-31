@@ -4,6 +4,7 @@ import criticalHitBanner from "./assets/criticalHitBanner.png";
 import criticalHitLand from "./assets/criticalHitLand.png";
 import eth from "./assets/eth.svg";
 import tooltipIcon from "./assets/tooltipIcon.svg";
+import { NavLink } from "react-router-dom";
 
 const CriticalHit = () => {
   return (
@@ -33,7 +34,7 @@ const CriticalHit = () => {
       </div>
       <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
         <img src={criticalHitLand} className="critical-hit-img" alt="" />
-        <div className="stake-wod-btn px-4 py-2">Get Genesis Land</div>
+        <NavLink className="stake-wod-btn px-4 py-2" to={'/marketplace/land'}>Get Genesis Land</NavLink>
       </div>
     </div>
   );

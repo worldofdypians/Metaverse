@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from "react";
 import "./_myprofile.scss";
-import profileImage from "./assets/profileImage.png";
-import premiumProfileImage from "./assets/premiumProfileImage.png";
+
 import domainIcon from "./assets/domainIcon.svg";
-import globalRankIcon from "./assets/globalRankIcon.svg";
-import totalEarningsIcon from "./assets/totalEarningsIcon.svg";
-import myRankIcon from "./assets/myRankIcon.svg";
-import premiumTab from "./assets/premiumTab.svg";
+import errordomainIcon from "./assets/errordomainIcon.svg";
+
 import chainsFlag from "./assets/chainsFlag2.svg";
 import chainsIcon from "./assets/chainsIcon.svg";
 import globalFlag from "./assets/globalFlag2.svg";
 import globalIcon from "./assets/globalIcon2.png";
 import landFlag from "./assets/landFlag2.svg";
 import landIcon from "./assets/landIcon.svg";
-import bnb from "./assets/bnb.svg";
-import whiteArrow from "./assets/whiteArrow.svg";
-import greenArrow from "./assets/greenArrow.svg";
+
 import redArrow from "./assets/redArrow.svg";
 import cyanArrow from "./assets/cyanArrow.svg";
 import pinkArrow from "./assets/pinkArrow.svg";
-import grayArrow from "./assets/grayArrow.svg";
 
 import mageStarter from "../../screens/Account/src/Components/WalletBalance/assets/mageStarter.png";
 import mageGoing from "../../screens/Account/src/Components/WalletBalance/assets/mageGoing.png";
 import mageFinish from "../../screens/Account/src/Components/WalletBalance/assets/mageFinish.png";
 import readyBorder from "../../screens/Account/src/Components/WalletBalance/newAssets/readyBorder2.svg";
+import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.svg";
+
 import stakeNft from "./assets/stakeNft.png";
 import myRewardsMiner from "./assets/myRewardsMiner.png";
 import Countdown from "react-countdown";
@@ -55,6 +51,14 @@ import rookieProfile from "./assets/rookieProfile.png";
 import underdogProfile from "./assets/underdogProfile.png";
 import championProfile from "./assets/championProfile.png";
 import unstoppableProfile from "./assets/unstoppableProfile.png";
+
+import starterProfilePremium from "./assets/starterProfilePremium.png";
+import rookieProfilePremium from "./assets/rookieProfilePremium.png";
+import underdogProfilePremium from "./assets/underdogProfilePremium.png";
+import championProfilePremium from "./assets/championProfilePremium.png";
+import unstoppableProfilePremium from "./assets/unstoppableProfilePremium.png";
+import errorChain from "./assets/errorchain.svg";
+
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { NavLink } from "react-router-dom";
@@ -126,6 +130,17 @@ const MyProfile = ({
   openDailyBonus,
   openPortfolio,
   openSpecialRewards,
+  userRankName,
+  isConnected,
+  onConnectWallet,
+  onOpenRankPopup,
+  onDomainClick,
+  domainName,
+  liveRewards,
+  openedChests,
+  specialRewards,
+  syncStatus,
+  onSyncClick,
 }) => {
   const totalClaimedChests =
     claimedChests +
@@ -141,6 +156,89 @@ const MyProfile = ({
 
   const [allEvents, setAllEvents] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
+
+  const getTreasureChestsInfo = async () => {
+    var moneyResult = 0;
+
+    if (openedChests && openedChests.length > 0) {
+      openedChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedSkaleChests && openedSkaleChests.length > 0) {
+      openedSkaleChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedCoreChests && openedCoreChests.length > 0) {
+      openedCoreChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedVictionChests && openedVictionChests.length > 0) {
+      openedCoreChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    setTreasureRewardMoney(moneyResult);
+  };
 
   useEffect(() => {
     if (canBuy && email) {
@@ -152,14 +250,48 @@ const MyProfile = ({
     }
   }, [claimedChests, claimedPremiumChests, isPremium, canBuy, email]);
 
+  useEffect(() => {
+    getTreasureChestsInfo();
+  }, [openedChests, openedSkaleChests, openedCoreChests, openedVictionChests]);
+
   return (
     <div className="custom-container mt-5">
       <div className="row mt-4 mt-lg-0">
         <div className="col-12 col-lg-4">
           <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
             <div className="d-flex align-items-center gap-2">
-              <div className="position-relative" style={{ cursor: "pointer" }}>
-                <img className="new-profile-img" src={starterProfile} alt="" />
+              <div
+                className="position-relative"
+                style={{ cursor: "pointer" }}
+                onClick={onOpenRankPopup}
+              >
+                <img
+                  className="new-profile-img"
+                  src={
+                    userRankName.name === "starter"
+                      ? isPremium
+                        ? starterProfilePremium
+                        : starterProfile
+                      : userRankName.name === "rookie"
+                      ? isPremium
+                        ? rookieProfilePremium
+                        : rookieProfile
+                      : userRankName.name === "underdog"
+                      ? isPremium
+                        ? underdogProfilePremium
+                        : underdogProfile
+                      : userRankName.name === "champion"
+                      ? isPremium
+                        ? championProfilePremium
+                        : championProfile
+                      : userRankName.name === "unstoppable"
+                      ? isPremium
+                        ? unstoppableProfilePremium
+                        : unstoppableProfile
+                      : starterProfile
+                  }
+                  alt=""
+                />
                 <div className="score-text-wrapper d-flex flex-column align-items-center">
                   <h6 className="mb-0">{getFormattedNumber(totalScore, 0)}</h6>
                   <span>Score</span>
@@ -167,34 +299,148 @@ const MyProfile = ({
               </div>
               <div className="d-flex flex-column gap-2 w-100">
                 <div className="d-flex align-items-center gap-2">
-                  <h6 className="my-profile-username mb-0">{username ?? 'GUEST'}</h6>
-                  <span className="current-rank-text">Unstoppable</span>
+                  <div
+                    className={`d-flex align-items-center ${
+                      !email
+                        ? "justify-content-between w-100"
+                        : "justify-content-start"
+                    }  gap-2`}
+                  >
+                    <h6 className="my-profile-username mb-0">
+                      {email ? username : "GUEST"}
+                    </h6>
+                    {!email && coinbase && (
+                      <NavLink
+                        className="loginbtn-profile px-5 py-2"
+                        to="/auth"
+                      >
+                        Log in
+                      </NavLink>
+                    )}
+                  </div>
+
+                  <span className="current-rank-text text-capitalize">
+                    {email ? userRankName.name : ""}
+                  </span>
                 </div>
                 <span className="my-profile-email mb-2">{email}</span>
                 <div className="d-flex flex-column flex-lg-row align-items-center gap-2">
-                  <div className="wallet-address-wrapper w-100 d-flex align-items-center justify-content-between gap-4 p-2">
-                    <div className="d-flex flex-column">
-                      <span className="profile-wallet-span mb-2">
-                        Wallet Address
-                      </span>
-                      <span className="wallet-addr">
-                        {email !== undefined
-                          ? shortAddress(address)
-                          : coinbase
-                          ? shortAddress(coinbase)
-                          : "--"}
-                      </span>
-                    </div>
-                    <img src={domainIcon} width={30} height={30} alt="" />
-                  </div>
                   <div
-                    className="portfolio-wrapper d-flex w-100 align-items-center gap-2 p-2"
-                    onClick={openPortfolio}
+                    className={` ${
+                      isConnected &&
+                      address &&
+                      email &&
+                      coinbase &&
+                      syncStatus !== "" &&
+                      address.toLowerCase() !== coinbase.toLowerCase()
+                        ? "wallet-address-wrapper-error"
+                        : "wallet-address-wrapper"
+                    }  w-100 d-flex align-items-center justify-content-between gap-4 p-2`}
                   >
-                    <img src={portfolio} width={25} height={25} alt="" />
-                    <h6 className="mb-0">My Portfolio</h6>
+                    <div className="d-flex align-items-center w-100 justify-content-between">
+                      <div className="d-flex flex-column">
+                        <span className={`profile-wallet-span mb-2`}>
+                          Wallet Address
+                        </span>
+                        <span
+                          className={`${
+                            isConnected &&
+                            address &&
+                            email &&
+                            coinbase &&
+                            syncStatus !== "" &&
+                            address.toLowerCase() !== coinbase.toLowerCase()
+                              ? "wallet-addr-error"
+                              : "wallet-addr"
+                          } `}
+                        >
+                          {email !== undefined
+                            ? shortAddress(address)
+                            : coinbase
+                            ? shortAddress(coinbase)
+                            : "--"}
+                        </span>
+                      </div>
+                      { isConnected &&
+                        address &&
+                        email &&
+                        coinbase &&
+                        syncStatus !== "" &&
+                        address.toLowerCase() !== coinbase.toLowerCase() && <img src={errorChain} alt="" />}
+                      {!domainName &&
+                        isConnected &&
+                        address &&
+                        email &&
+                        coinbase &&
+                        syncStatus !== "" &&
+                        address.toLowerCase() === coinbase.toLowerCase() && (
+                          <img
+                            src={domainIcon}
+                            width={30}
+                            height={30}
+                            alt=""
+                            style={{ cursor: "pointer" }}
+                            onClick={onDomainClick}
+                          />
+                        )}
+                      {!domainName &&
+                        isConnected &&
+                        address &&
+                        email &&
+                        coinbase &&
+                        syncStatus !== "" &&
+                        address.toLowerCase() !== coinbase.toLowerCase() && (
+                          <img
+                            src={errordomainIcon}
+                            width={30}
+                            height={30}
+                            alt=""
+                            style={{ cursor: "pointer" }}
+                            onClick={onDomainClick}
+                          />
+                        )}
+                    </div>
                   </div>
-                  
+                  {(isConnected &&
+                    address &&
+                    email &&
+                    coinbase &&
+                    syncStatus !== "" &&
+                    address.toLowerCase() === coinbase.toLowerCase()) ||
+                  (isConnected && !email && coinbase) ? (
+                    <div
+                      className="portfolio-wrapper d-flex w-100 align-items-center gap-2 p-2"
+                      onClick={openPortfolio}
+                    >
+                      <img src={portfolio} width={25} height={25} alt="" />
+                      <h6 className="mb-0">My Portfolio</h6>
+                    </div>
+                  ) : !isConnected ? (
+                    <button
+                      className="loginbtn-profile px-5 py-2"
+                      onClick={onConnectWallet}
+                    >
+                      Log in
+                    </button>
+                  ) : (
+                    <button
+                      className="d-flex align-items-center gap-1 syncbtn px-3 py-2"
+                      onClick={onSyncClick}
+                    >
+                      <img
+                        src={sync}
+                        alt=""
+                        className={syncStatus === "loading" && "syncicon"}
+                      />{" "}
+                      {syncStatus === "initial"
+                        ? "Synchronize"
+                        : syncStatus === "loading"
+                        ? "Synchronising..."
+                        : syncStatus === "success"
+                        ? "Success"
+                        : "Error"}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -443,7 +689,10 @@ const MyProfile = ({
                     className="special-rewards-total mb-0"
                     style={{ color: "#FFE8D2" }}
                   >
-                    $450.24
+                    $
+                    {getFormattedNumber(
+                      liveRewards + Number(treasureRewardMoney)
+                    )}
                   </h6>
                   <span
                     className="special-rewards-total-span"
@@ -462,7 +711,9 @@ const MyProfile = ({
               >
                 <h6 className="special-rewards-title">Special Rewards</h6>
                 <div className="d-flex flex-column">
-                  <h6 className="special-rewards-total mb-0">$450.24</h6>
+                  <h6 className="special-rewards-total mb-0">
+                    ${getFormattedNumber(specialRewards)}
+                  </h6>
                   <span className="special-rewards-total-span">Rewards</span>
                 </div>
                 <img src={redArrow} width={20} height={20} alt="" />
