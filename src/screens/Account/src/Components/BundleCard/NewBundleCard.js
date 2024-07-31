@@ -171,7 +171,8 @@ const NewBundleCard = ({
   const [goldenPassDypAmountV2, setGoldenPassDypAmountV2] = useState(0);
   const [puzzleMadnessDypAmount, setPuzzleMadnessDypAmount] = useState(0);
 
-  let today = new Date();
+  const now = new Date();
+  const firstOfNextMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1));
 
   const getBundlePrizes = async () => {
     const dragonContract = new window.bscWeb3.eth.Contract(WOD_ABI, wodAddress);
@@ -780,8 +781,8 @@ const NewBundleCard = ({
 
       const resultv2 =
         remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
-      setcountdown700((resultv2 + resultv1) * 1000);
-      handleSetAvailableTime((resultv2 + resultv1) * 1000);
+      setcountdown700(firstOfNextMonth.getTime());
+      handleSetAvailableTime(firstOfNextMonth.getTime());
       // setcountdown700(result * 1000);
       //
     } else {

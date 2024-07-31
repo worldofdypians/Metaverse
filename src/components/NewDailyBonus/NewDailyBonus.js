@@ -639,12 +639,13 @@ const NewDailyBonus = ({
       });
 
     if (result && result.status === 200) {
-      onChestClaimed();
-      onSkaleChestClaimed();
+      
+      
       if (chain === "bnb") {
-        showSingleRewardData(rewardData.chestId, isActiveIndex - 1);
+        showSingleRewardData(rewardData.chestId, isActiveIndex - 1);onChestClaimed();
       } else if (chain === "skale") {
         showSingleRewardDataSkale(rewardData.chestId, isActiveIndex - 1);
+        onSkaleChestClaimed();
       } else if (chain === "core") {
         showSingleRewardDataCore(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "viction") {
@@ -3074,7 +3075,7 @@ const NewDailyBonus = ({
                                   onClaimRewards={(value) => {
                                     // setRewardData(value);
                                     setLiveRewardData(value);
-                                    onSkaleChestClaimed();
+                                    onChestClaimed();
                                     showLiveRewardData(value);
                                     setIsActive(item.chestId);
                                     // setIsActiveIndex(index + 1);
@@ -3430,7 +3431,7 @@ const NewDailyBonus = ({
                                 isPremium={isPremium}
                                 onClaimRewards={(value) => {
                                   setLiveRewardData(value);
-                                  onChestClaimed();
+                                  onSkaleChestClaimed();
                                   showLiveRewardDataSkale(value);
                                   setIsActive(item.chestId);
                                   setIsActiveIndex(index + 1);
