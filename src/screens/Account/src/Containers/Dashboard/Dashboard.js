@@ -561,6 +561,8 @@ function Dashboard({
   const html = document.querySelector("html");
   const leaderboardId = document.querySelector("#leaderboard");
   const { BigNumber } = window;
+  const now = new Date();
+  const firstOfNextMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1));
 
   //leaderboard calls
 
@@ -3309,8 +3311,8 @@ function Dashboard({
 
         const resultv2 =
           remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
-        setcountdown700((resultv2 + resultv1) * 1000);
-        handleSetAvailableTime((resultv2 + resultv1) * 1000);
+        setcountdown700(firstOfNextMonth.getTime());
+        handleSetAvailableTime(firstOfNextMonth.getTime());
         // setcountdown700(result * 1000);
         //}
       } else {
