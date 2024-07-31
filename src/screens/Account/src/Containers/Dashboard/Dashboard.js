@@ -500,6 +500,11 @@ function Dashboard({
   const [bundlesBought, setbundlesBought] = useState(0);
   const [count, setCount] = useState(0);
   const [skalecount, setskalecount] = useState(0);
+  const [vicitoncount, setvicitoncount] = useState(0);
+  const [corecount, setcorecount] = useState(0);
+  const [mantacount, setmantacount] = useState(0);
+
+
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
   const [userRank2, setUserRank2] = useState("");
@@ -1239,6 +1244,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerCore(true);
+      fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
     } else if (testArray.length === 0) {
       setActivePlayerCore(false);
       fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
@@ -1571,6 +1577,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerViction(true);
+      fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
     } else if (testArray.length === 0) {
       setActivePlayerViction(false);
       fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
@@ -1592,6 +1599,7 @@ function Dashboard({
 
     if (testArray.length > 0) {
       setActivePlayerVictionWeekly(true);
+      fetchWeeklyRecordsAroundPlayerViction(result.data.data.leaderboard);
     }
     if (testArray.length === 0) {
       setActivePlayerVictionWeekly(false);
@@ -1612,6 +1620,8 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerVictionMonthly(true);
+      fetchMonthlyRecordsAroundPlayerViction(result.data.data.leaderboard);
+
     }
     fillRecordsMonthlyViction(result.data.data.leaderboard);
 
@@ -1903,6 +1913,7 @@ function Dashboard({
     // );
     // if (testArray.length > 0) {
     //   setActivePlayerManta(true);
+    //   fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
     // } else if (testArray.length === 0) {
     //   setActivePlayerManta(false);
     //   fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
@@ -2240,6 +2251,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerSkale(true);
+      fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
     } else if (testArray.length === 0) {
       setActivePlayerSkale(false);
       fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
@@ -2261,6 +2273,8 @@ function Dashboard({
 
     if (testArray.length > 0) {
       setActivePlayerSkaleWeekly(true);
+      fetchWeeklyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+
     }
     if (testArray.length === 0) {
       setActivePlayerSkaleWeekly(false);
@@ -2721,6 +2735,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayer(true);
+      fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
     } else if (testArray.length === 0) {
       setActivePlayer(false);
       fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
@@ -2870,9 +2885,29 @@ function Dashboard({
     fetchDailyRecordsSkale();
     fetchWeeklyRecordsSkale();
     fetchMonthlyRecordsSkale();
-
     fetchRecordsStar();
-  }, [username, count, userId, goldenPassRemainingTime]);
+  }, [username, userId, goldenPassRemainingTime]);
+
+  useEffect(()=>{
+    fetchDailyRecords();
+  },[count])
+
+  useEffect(()=>{
+    fetchDailyRecordsCore();
+  },[corecount])
+
+  useEffect(()=>{
+    fetchDailyRecordsSkale();
+  },[skalecount])
+
+  useEffect(()=>{
+    fetchDailyRecordsViction();
+  },[vicitoncount])
+
+  useEffect(()=>{
+    fetchDailyRecordsManta();
+  },[mantacount])
+
 
   useEffect(() => {
     fetchGenesisPreviousWinners();
@@ -3041,13 +3076,12 @@ function Dashboard({
       },
     ]);
   }, [
-    dailyRecordsSkale,
+    dailyRecordsSkale,  weeklyRecordsSkale, monthlyRecordsSkale,userDataSkale, activePlayerSkale,
     prevDataSkale,
-    userDataSkale,
-    activePlayerSkale,
-    monthlyRecordsSkale,
     prevDataSkaleMonthly,
+    prevDataSkaleWeekly,
     userDataSkaleMonthly,
+    userDataSkaleWeekly,
   ]);
   useEffect(() => {
     setAllCoreData([
@@ -3087,12 +3121,15 @@ function Dashboard({
     ]);
   }, [
     dailyRecordsCore,
+    weeklyRecordsCore,
     prevDataCore,
     userDataCore,
     activePlayerCore,
     monthlyRecordsCore,
     prevDataCoreMonthly,
+    prevDataCoreWeekly,
     userDataCoreMonthly,
+    userDataCoreWeekly
   ]);
   useEffect(() => {
     setAllVictionData([
@@ -3132,12 +3169,15 @@ function Dashboard({
     ]);
   }, [
     dailyRecordsViction,
-    prevDataViction,
-    userDataViction,
-    activePlayerViction,
+    weeklyRecordsViction,
     monthlyRecordsViction,
+    prevDataViction,
+    prevDataVictionWeekly,
     prevDataVictionMonthly,
+    userDataViction,
+    userDataVictionWeekly,
     userDataVictionMonthly,
+    activePlayerViction,
   ]);
 
   useEffect(() => {
@@ -3178,12 +3218,15 @@ function Dashboard({
     ]);
   }, [
     dailyRecordsManta,
-    prevDataManta,
-    userDataManta,
-    activePlayerManta,
+    weeklyRecordsManta,
     monthlyRecordsManta,
+    prevDataManta,
+    prevDataMantaWeekly,
     prevDataMantaMonthly,
+    userDataManta,
+    userDataMantaWeekly,
     userDataMantaMonthly,
+    activePlayerManta,
   ]);
 
   const handleSetAvailableTime = (value) => {
@@ -6042,61 +6085,61 @@ function Dashboard({
     }
   }, [dataNonce]);
 
-  useEffect(() => {
-    if (
-      data &&
-      data.getPlayer &&
-      data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
-      data.getPlayer.wallet &&
-      data.getPlayer.wallet.publicAddress &&
-      email
-    ) {
-      fetchMonthlyRecordsAroundPlayer(monthlyrecords);
-      fetchGenesisAroundPlayer(
-        data.getPlayer.playerId,
-        data.getPlayer.displayName
-      );
-      fetchWeeklyRecordsAroundPlayer(weeklyrecords);
-      fetchDailyRecordsAroundPlayer(dailyrecords);
-      fetchKittyDashAroundPlayer(
-        data.getPlayer.playerId,
-        data.getPlayer.displayName
-      );
-      fetchDailyRecordsAroundPlayerCore(dailyRecordsCore);
-      fetchWeeklyRecordsAroundPlayerCore(weeklyRecordsCore);
-      fetchMonthlyRecordsAroundPlayerCore(monthlyRecordsCore);
-      fetchDailyRecordsAroundPlayerViction(dailyRecordsViction);
-      fetchWeeklyRecordsAroundPlayerViction(weeklyRecordsViction);
-      fetchMonthlyRecordsAroundPlayerViction(monthlyRecordsViction);
-      // fetchDailyRecordsAroundPlayerManta(dailyRecordsManta);
-      // fetchWeeklyRecordsAroundPlayerManta(weeklyRecordsManta);
-      // fetchMonthlyRecordsAroundPlayerManta(monthlyRecordsManta);
-      fetchDailyRecordsAroundPlayerSkale(dailyRecordsSkale);
-      fetchWeeklyRecordsAroundPlayerSkale(weeklyRecordsSkale);
-      fetchMonthlyRecordsAroundPlayerSkale(monthlyRecordsSkale);
-    }
-  }, [
-    data,
-    email,
-    weeklyrecords,
-    dailyRecordsSkale,
-    goldenPassRemainingTime,
-    monthlyrecords,
-    dailyrecords,
-    userId,
-    username,
-    isPremium,
-    dailyRecordsCore,
-    weeklyRecordsCore,
-    monthlyRecordsCore,
-    dailyRecordsViction,
-    weeklyRecordsViction,
-    monthlyRecordsViction,
-    dailyRecordsManta,
-    weeklyRecordsManta,
-    monthlyRecordsManta,
-  ]);
+  // useEffect(() => {
+  //   if (
+  //     data &&
+  //     data.getPlayer &&
+  //     data.getPlayer.displayName &&
+  //     data.getPlayer.playerId &&
+  //     data.getPlayer.wallet &&
+  //     data.getPlayer.wallet.publicAddress &&
+  //     email
+  //   ) {
+  //     fetchMonthlyRecordsAroundPlayer(monthlyrecords);
+  //     fetchGenesisAroundPlayer(
+  //       data.getPlayer.playerId,
+  //       data.getPlayer.displayName
+  //     );
+  //     fetchWeeklyRecordsAroundPlayer(weeklyrecords);
+  //     fetchDailyRecordsAroundPlayer(dailyrecords);
+  //     fetchKittyDashAroundPlayer(
+  //       data.getPlayer.playerId,
+  //       data.getPlayer.displayName
+  //     );
+  //     fetchDailyRecordsAroundPlayerCore(dailyRecordsCore);
+  //     fetchWeeklyRecordsAroundPlayerCore(weeklyRecordsCore);
+  //     fetchMonthlyRecordsAroundPlayerCore(monthlyRecordsCore);
+  //     fetchDailyRecordsAroundPlayerViction(dailyRecordsViction);
+  //     fetchWeeklyRecordsAroundPlayerViction(weeklyRecordsViction);
+  //     fetchMonthlyRecordsAroundPlayerViction(monthlyRecordsViction);
+  //     // fetchDailyRecordsAroundPlayerManta(dailyRecordsManta);
+  //     // fetchWeeklyRecordsAroundPlayerManta(weeklyRecordsManta);
+  //     // fetchMonthlyRecordsAroundPlayerManta(monthlyRecordsManta);
+  //     fetchDailyRecordsAroundPlayerSkale(dailyRecordsSkale);
+  //     fetchWeeklyRecordsAroundPlayerSkale(weeklyRecordsSkale);
+  //     fetchMonthlyRecordsAroundPlayerSkale(monthlyRecordsSkale);
+  //   }
+  // }, [
+  //   data,
+  //   email,
+  //   weeklyrecords,
+  //   dailyRecordsSkale,
+  //   goldenPassRemainingTime,
+  //   monthlyrecords,
+  //   dailyrecords,
+  //   userId,
+  //   username,
+  //   isPremium,
+  //   dailyRecordsCore,
+  //   weeklyRecordsCore,
+  //   monthlyRecordsCore,
+  //   dailyRecordsViction,
+  //   weeklyRecordsViction,
+  //   monthlyRecordsViction,
+  //   dailyRecordsManta,
+  //   weeklyRecordsManta,
+  //   monthlyRecordsManta,
+  // ]);
 
   useEffect(() => {
     if (
@@ -6191,7 +6234,7 @@ function Dashboard({
       // getAllMantaChests(email);
       // getAllSeiChests(email);
     }
-  }, [email, count]);
+  }, [email, count, skalecount, vicitoncount, corecount, mantacount]);
 
   useEffect(() => {
     if (bundlesBought === 1) {
@@ -6218,7 +6261,7 @@ function Dashboard({
   }, [userWallet, coinbase, chainId]);
 
   const hashValue = window.location.hash;
-
+  // console.log(allSkaleData)
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0"
@@ -8367,16 +8410,16 @@ function Dashboard({
                   setCount(count + 1);
                 }}
                 onSkaleChestClaimed={() => {
-                  setCount(count + 1);
+                  setskalecount(skalecount + 1);
                 }}
                 onCoreChestClaimed={() => {
-                  setCount(count + 1);
+                  setcorecount(corecount + 1);
                 }}
                 onVictionChestClaimed={() => {
-                  setCount(count + 1);
+                  setvicitoncount(vicitoncount + 1);
                 }}
                 onMantaChestClaimed={() => {
-                  setCount(count + 1);
+                  setmantacount(mantacount + 1);
                 }}
                 onSeiChestClaimed={() => {
                   setCount(count + 1);
