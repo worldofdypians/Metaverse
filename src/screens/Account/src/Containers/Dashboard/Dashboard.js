@@ -504,7 +504,6 @@ function Dashboard({
   const [corecount, setcorecount] = useState(0);
   const [mantacount, setmantacount] = useState(0);
 
-
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
   const [userRank2, setUserRank2] = useState("");
@@ -562,7 +561,9 @@ function Dashboard({
   const leaderboardId = document.querySelector("#leaderboard");
   const { BigNumber } = window;
   const now = new Date();
-  const firstOfNextMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1));
+  const firstOfNextMonth = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1)
+  );
 
   //leaderboard calls
 
@@ -1228,7 +1229,7 @@ function Dashboard({
 
       setPrevDataCoreMonthly(result.data.data.leaderboard);
     } else {
-    setPrevDataCoreMonthly(placeholderplayerData);
+      setPrevDataCoreMonthly(placeholderplayerData);
     }
   };
   const fetchDailyRecordsCore = async () => {
@@ -1561,7 +1562,7 @@ function Dashboard({
 
       setPrevDataVictionMonthly(result.data.data.leaderboard);
     } else {
-    setPrevDataVictionMonthly(placeholderplayerData);
+      setPrevDataVictionMonthly(placeholderplayerData);
     }
   };
   const fetchDailyRecordsViction = async () => {
@@ -1623,7 +1624,6 @@ function Dashboard({
     if (testArray.length > 0) {
       setActivePlayerVictionMonthly(true);
       fetchMonthlyRecordsAroundPlayerViction(result.data.data.leaderboard);
-
     }
     fillRecordsMonthlyViction(result.data.data.leaderboard);
 
@@ -1896,7 +1896,7 @@ function Dashboard({
 
       setPrevDataVictionMonthly(result.data.data.leaderboard);
     } else {
-    setPrevDataMantaMonthly(placeholderplayerData);
+      setPrevDataMantaMonthly(placeholderplayerData);
     }
   };
   const fetchDailyRecordsManta = async () => {
@@ -1905,7 +1905,12 @@ function Dashboard({
       StartPosition: 0,
       MaxResultsCount: 10,
     };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((e)=>{console.error(e); fillRecordsManta([])});
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsManta([]);
+      });
     setPrevVersionManta(parseInt(result.data.data.version));
     setDailyRecordsManta(result.data.data.leaderboard);
     fillRecordsManta(result.data.data.leaderboard);
@@ -1926,7 +1931,12 @@ function Dashboard({
       StartPosition: 0,
       MaxResultsCount: 10,
     };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((e)=>{console.error(e); fillRecordsWeeklyManta([]);});
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsWeeklyManta([]);
+      });
     setWeeklyRecordsManta(result.data.data.leaderboard);
     setPrevVersionMantaWeekly(result.data.data.version);
     var testArray = result.data.data.leaderboard.filter(
@@ -1937,7 +1947,6 @@ function Dashboard({
     if (testArray.length > 0) {
       setActivePlayerMantaWeekly(true);
       fetchWeeklyRecordsAroundPlayerManta(result.data.data.leaderboard);
-
     }
     if (testArray.length === 0) {
       setActivePlayerMantaWeekly(false);
@@ -1950,7 +1959,12 @@ function Dashboard({
       StartPosition: 0,
       MaxResultsCount: 10,
     };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((e)=>{console.error(e); fillRecordsMonthlyManta([]);});;
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMonthlyManta([]);
+      });
     setMonthlyRecordsManta(result.data.data.leaderboard);
     setPrevVersionMantaMonthly(result.data.data.version);
     var testArray = result.data.data.leaderboard.filter(
@@ -2230,7 +2244,7 @@ function Dashboard({
 
       setPrevDataSkaleMonthly(result.data.data.leaderboard);
     } else {
-    setPrevDataSkaleMonthly(placeholderplayerData);
+      setPrevDataSkaleMonthly(placeholderplayerData);
     }
   };
   const fetchDailyRecordsSkale = async () => {
@@ -2271,7 +2285,6 @@ function Dashboard({
     if (testArray.length > 0) {
       setActivePlayerSkaleWeekly(true);
       fetchWeeklyRecordsAroundPlayerSkale(result.data.data.leaderboard);
-
     }
     if (testArray.length === 0) {
       setActivePlayerSkaleWeekly(false);
@@ -2885,26 +2898,25 @@ function Dashboard({
     fetchRecordsStar();
   }, [username, userId, goldenPassRemainingTime]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchDailyRecords();
-  },[count])
+  }, [count]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchDailyRecordsCore();
-  },[corecount])
+  }, [corecount]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchDailyRecordsSkale();
-  },[skalecount])
+  }, [skalecount]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchDailyRecordsViction();
-  },[vicitoncount])
+  }, [vicitoncount]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchDailyRecordsManta();
-  },[mantacount])
-
+  }, [mantacount]);
 
   useEffect(() => {
     fetchGenesisPreviousWinners();
@@ -3073,7 +3085,11 @@ function Dashboard({
       },
     ]);
   }, [
-    dailyRecordsSkale,  weeklyRecordsSkale, monthlyRecordsSkale,userDataSkale, activePlayerSkale,
+    dailyRecordsSkale,
+    weeklyRecordsSkale,
+    monthlyRecordsSkale,
+    userDataSkale,
+    activePlayerSkale,
     prevDataSkale,
     prevDataSkaleMonthly,
     prevDataSkaleWeekly,
@@ -3126,7 +3142,7 @@ function Dashboard({
     prevDataCoreMonthly,
     prevDataCoreWeekly,
     userDataCoreMonthly,
-    userDataCoreWeekly
+    userDataCoreWeekly,
   ]);
   useEffect(() => {
     setAllVictionData([
@@ -3188,7 +3204,7 @@ function Dashboard({
         activeData: dailyRecordsManta,
         previousData: prevDataManta,
         player_data: userDataManta,
-        is_active: true, //change when apis are ready
+        is_active: activePlayerManta, //change when apis are ready
       },
       {
         title: "WEEKLY",
@@ -3199,7 +3215,7 @@ function Dashboard({
         activeData: weeklyRecordsManta,
         previousData: prevDataMantaWeekly,
         player_data: userDataMantaWeekly,
-        is_active: true,
+        is_active: activePlayerMantaWeekly,
       },
       {
         title: "MONTHLY",
@@ -3210,7 +3226,7 @@ function Dashboard({
         activeData: monthlyRecordsManta,
         previousData: prevDataMantaMonthly,
         player_data: userDataMantaMonthly,
-        is_active: true, //change when apis are ready
+        is_active: activePlayerMantaMonthly, //change when apis are ready
       },
     ]);
   }, [
@@ -3224,6 +3240,8 @@ function Dashboard({
     userDataMantaWeekly,
     userDataMantaMonthly,
     activePlayerManta,
+    activePlayerMantaMonthly,
+    activePlayerMantaWeekly,
   ]);
 
   const handleSetAvailableTime = (value) => {
@@ -4152,16 +4170,16 @@ function Dashboard({
           claimedChests + claimedPremiumChests < 20 ||
           claimedSkaleChests + claimedSkalePremiumChests < 20 ||
           claimedCoreChests + claimedCorePremiumChests < 20 ||
-          claimedVictionChests + claimedVictionPremiumChests < 20
-           || claimedMantaChests + claimedMantaPremiumChests < 20
+          claimedVictionChests + claimedVictionPremiumChests < 20 ||
+          claimedMantaChests + claimedMantaPremiumChests < 20
         ) {
           setCanBuy(true);
         } else if (
           claimedChests + claimedPremiumChests === 20 &&
           claimedSkaleChests + claimedSkalePremiumChests === 20 &&
           claimedCoreChests + claimedCorePremiumChests === 20 &&
-          claimedVictionChests + claimedVictionPremiumChests === 20 
-          && claimedMantaChests + claimedMantaPremiumChests === 20
+          claimedVictionChests + claimedVictionPremiumChests === 20 &&
+          claimedMantaChests + claimedMantaPremiumChests === 20
         ) {
           setCanBuy(false);
         }
@@ -4170,16 +4188,16 @@ function Dashboard({
           claimedChests < 10 ||
           claimedSkaleChests < 10 ||
           claimedCoreChests < 10 ||
-          claimedVictionChests < 10 
-          || claimedMantaChests < 10
+          claimedVictionChests < 10 ||
+          claimedMantaChests < 10
         ) {
           setCanBuy(true);
         } else if (
           claimedChests === 10 &&
           claimedSkaleChests === 10 &&
           claimedCoreChests === 10 &&
-          claimedVictionChests === 10
-           &&   claimedMantaChests === 10
+          claimedVictionChests === 10 &&
+          claimedMantaChests === 10
         ) {
           setCanBuy(false);
         }
@@ -5834,7 +5852,11 @@ function Dashboard({
 
   const handleRankRewards = () => {
     const totalScore =
-    userBnbScore + userSkaleScore + userCoreScore + userVictionScore + userMantaScore;
+      userBnbScore +
+      userSkaleScore +
+      userCoreScore +
+      userVictionScore +
+      userMantaScore;
     if (totalScore > 11999999 && totalScore < 24000000) {
       setUserRankRewards(5);
     } else if (totalScore >= 24000000 && totalScore < 37000000) {
@@ -5860,7 +5882,7 @@ function Dashboard({
   useEffect(() => {
     fetchSkalePrice();
     fetchSeiPrice();
-    fetchMantaPrice()
+    fetchMantaPrice();
     fetchCorePrice();
     fetchVictionPrice();
     fetchEgldPrice();
