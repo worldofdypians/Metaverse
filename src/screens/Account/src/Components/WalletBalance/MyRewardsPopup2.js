@@ -1416,7 +1416,7 @@ const MyRewardsPopupNew = ({
                 </div>
 
                 <div className="d-flex flex-column gap-2 w-50">
-                  <div className="d-flex w-100 justify-content-between gap-2">
+                  {/* <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
                       <img
                         src={
@@ -1431,7 +1431,7 @@ const MyRewardsPopupNew = ({
                     <span className="item-name-right">
                       ${getFormattedNumber(mantaEarnUsd, 2)}
                     </span>
-                  </div>
+                  </div> */}
                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
                       <img
