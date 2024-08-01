@@ -161,7 +161,7 @@ const GlobalLeaderboard = ({
               </span>
             </div>
             <div className="global-total-wrapper py-3 w-100 d-flex flex-column align-items-center justify-content-center">
-              <h6 className="global-total-players mb-0">463,692</h6>
+              <h6 className="global-total-players mb-0">565,251</h6>
               <span className="global-total-span">Monthly Players</span>
             </div>
           </div>
