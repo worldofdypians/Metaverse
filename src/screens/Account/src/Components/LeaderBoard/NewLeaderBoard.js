@@ -109,7 +109,7 @@ const NewLeaderBoard = ({
   allBnbData,
   allCoreData,
   allSkaleData,
-  allVictionData,allMantaData
+  allVictionData,allMantaData,allTaikoData
 }) => {
   const chainItems = [
     {

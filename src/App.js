@@ -147,6 +147,19 @@ function App() {
 
       blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
     },
+
+    167000 : {
+      chainId: 167000 ,
+      chainName: "Taiko Mainnet",
+      rpcUrls: ["https://rpc.taiko.xyz"],
+      nativeCurrency: {
+        symbol: "eth",
+        decimals: 18,
+      },
+
+      blockExplorerUrls: ["https://taikoscan.io"],
+    },
+
     1482601649: {
       chainId: 1482601649,
       chainName: "SKALE Nebula Hub",

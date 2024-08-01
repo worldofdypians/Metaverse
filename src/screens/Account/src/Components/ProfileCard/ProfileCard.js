@@ -134,7 +134,7 @@ const ProfileCard = ({
   domainName,
   rankData,
   setRankData,
-  getRankData,userDataStar, userDataPosition, userRankManta, userMantaScore
+  getRankData,userDataStar, userDataPosition, userRankManta, userMantaScore, userRankTaiko, userTaikoScore
 }) => {
   let id = Math.random().toString(36); 
   const windowSize = useWindowSize();

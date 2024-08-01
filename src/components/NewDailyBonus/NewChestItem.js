@@ -312,6 +312,11 @@ console.log(txResult)
       window.config.daily_bonus_manta_address
     );
 
+    const daily_bonus_contract_taiko = new window.web3.eth.Contract(
+      window.DAILY_BONUS_TAIKO_ABI,
+      window.config.daily_bonus_taiko_address
+    );
+
     // console.log(daily_bonus_contract);
     if (chainId === 204) {
       if (rewardTypes === "premium" && isPremium) {
@@ -471,12 +476,35 @@ console.log(txResult)
             setClaimingChest(false);
           });
       }
-    }  else if (chainId === 169) {
+    } else if (chainId === 169) {
       if (rewardTypes === "premium" && isPremium) {
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await web3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        const increasedGwei = parseInt(currentGwei) + 0.00018;
+        console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_manta.methods
+          .openPremiumChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
         await daily_bonus_contract_manta.methods
           .openPremiumChest()
           .send({
             from: address,
+            ...transactionParameters,
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -498,7 +526,84 @@ console.log(txResult)
             console.error(e);
           });
       } else if (rewardTypes === "standard") {
+
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await web3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        const increasedGwei = parseInt(currentGwei) + 0.00018;
+        console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+        };
+
         await daily_bonus_contract_manta.methods
+          .openChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
+
+        await daily_bonus_contract_manta.methods
+          .openChest()
+          .send({
+            from: address,
+            ...transactionParameters
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "manta"
+            );
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+          });
+      }
+    } else if (chainId === 167000) {
+      if (rewardTypes === "premium" && isPremium) {
+        await daily_bonus_contract_taiko.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "taiko"
+            );
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+        await daily_bonus_contract_taiko.methods
           .openChest()
           .send({
             from: address,
@@ -508,7 +613,7 @@ console.log(txResult)
               email,
               data.transactionHash,
               chestIndex - 1,
-              "manta"
+              "taiko"
             );
           })
           .catch((e) => {
@@ -760,7 +865,8 @@ console.log(txResult)
             chain === "bnb" ||
             chain === "sei" ||
             chain === "viction" ||
-            chain === "manta" ||
+            chain === "manta"||
+            chain === "taiko" ||
             chain === "core"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
                   open ? image + "open" : image
@@ -786,6 +892,7 @@ console.log(txResult)
             chain === "core" ||
             chain === "viction" ||
             chain === "manta" ||
+            chain === "taiko" ||
             chain === "sei"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
                   open

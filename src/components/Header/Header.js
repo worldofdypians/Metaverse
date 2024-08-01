@@ -97,6 +97,8 @@ const Header = ({
   const [mantaState, setMantaState] = useState(false)
   const [seiState, setSeiState] = useState(false);
   const [immutableState, setImmutableState] = useState(false);
+  const [taikoState, setTaikoState] = useState(false);
+
 
   // const [domainPopup, setDomainPopup] = useState(false);
 
@@ -127,6 +129,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
+        setTaikoState(false)
 
       } else if (chainId === 43114) {
         setAvaxState(true);
@@ -140,6 +143,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
+        setTaikoState(false)
 
       } else if (chainId === 8453) {
         setAvaxState(false);
@@ -153,6 +157,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
+        setTaikoState(false)
 
       } else if (chainId === 56) {
         setAvaxState(false);
@@ -166,6 +171,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
+        setTaikoState(false)
 
       } else if (chainId === 204) {
         setAvaxState(false);
@@ -179,6 +185,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
+        setTaikoState(false)
 
       } else if (chainId === 1030) {
         setAvaxState(false);
@@ -193,6 +200,7 @@ const Header = ({
         setSeiState(false);
         setMantaState(false);
         setImmutableState(false);
+        setTaikoState(false)
 
       } else if (chainId === 1482601649) {
         setAvaxState(false);
@@ -207,6 +215,7 @@ const Header = ({
         setSeiState(false);
         setMantaState(false);
         setImmutableState(false);
+        setTaikoState(false)
 
       } else if (chainId === 1116) {
         setAvaxState(false);
@@ -221,6 +230,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
+        setTaikoState(false)
 
       } else if (chainId === 88) {
         setAvaxState(false);
@@ -235,6 +245,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
+        setTaikoState(false)
 
       } else if (chainId === 13371) {
         setAvaxState(false);
@@ -249,8 +260,9 @@ const Header = ({
         setSeiState(false);
         setImmutableState(true);
         setMantaState(false);
+        setTaikoState(false)
 
-      }else if (chainId === 169) {
+      } else if (chainId === 169) {
         setAvaxState(false);
         setBnbState(false);
         setMantaState(true);
@@ -263,6 +275,22 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setTaikoState(false)
+
+      } else if (chainId === 167000) {
+        setAvaxState(false);
+        setBnbState(false);
+        setMantaState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false);
+        setImmutableState(false);
+        setTaikoState(true)
       }
       // else if (chainId === 713715 ) {
       //   setAvaxState(false);
@@ -287,173 +315,22 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setTaikoState(false)
         
 
       }
     }
   };
 
-  const handleEthPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x1")
-          .then(() => {
-            handleSwitchNetwork(1);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(1);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-  const handleCorePool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x45c")
-          .then(() => {
-            handleSwitchNetwork(1116);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(1116);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-  const handleMantaPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0xa9")
-          .then(() => {
-            handleSwitchNetwork(169);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(169);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
+ 
+ 
 
-  const handleSeiPool = async () => {
+  const switchNetwork = async (hexChainId, chain)=>{
     if (window.ethereum) {
       if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0xae3f3")
+        await handleSwitchNetworkhook(hexChainId)
           .then(() => {
-            handleSwitchNetwork(713715);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(713715);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-  const handleVictionPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x58")
-          .then(() => {
-            handleSwitchNetwork(88);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(88);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-  // console.log(avatar);
-  const handleBnbPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x38")
-          .then(() => {
-            handleSwitchNetwork(56);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(56);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleAvaxPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0xa86a")
-          .then(() => {
-            handleSwitchNetwork(43114);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(43114);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleOpBnbPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0xcc")
-          .then(() => {
-            handleSwitchNetwork(204);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(204);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleBasePool = async () => {
-    if (!window.gatewallet) {
-      await handleSwitchNetworkhook("0x2105")
-        .then(() => {
-          handleSwitchNetwork(8453);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    } else {
-      handleSwitchChainGateWallet(8453);
-    }
-  };
-
-  const handleConfluxPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x406")
-          .then(() => {
-            handleSwitchNetwork(1030);
+            handleSwitchNetwork(chain);
           })
           .catch((e) => {
             console.log(e);
@@ -464,44 +341,9 @@ const Header = ({
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
-  };
+  }
 
-  const handleSkalePool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x585eb4b1")
-          .then(() => {
-            handleSwitchNetwork(1482601649);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet();
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleImmutablePool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x343b")
-          .then(() => {
-            handleSwitchNetwork(13371);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet();
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
+ 
   async function markNotificationAsRead(walletAddress, notificationId) {
     try {
       await axios.patch(
@@ -929,6 +771,8 @@ const Header = ({
                               ? immutable
                               : mantaState === true
                               ? manta
+                              : taikoState === true
+                              ? manta
                               : // : seiState === true
                                 // ? sei
                                 error
@@ -960,6 +804,8 @@ const Header = ({
                             ? "Immutable"
                             : mantaState === true
                             ? "Manta"
+                            : taikoState === true
+                            ? "Taiko"
                             : // : seiState === true
                               // ? "Sei"
                               "Unsupported"}
@@ -970,39 +816,43 @@ const Header = ({
                     </span>
                   }
                 >
-                  <Dropdown.Item onClick={() => handleEthPool()}>
+                  <Dropdown.Item onClick={() => switchNetwork("0x1", 1)}>
                     <img src={eth} alt="" />
                     Ethereum
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleBnbPool()}>
+                  <Dropdown.Item onClick={() => switchNetwork("0x38", 56)}>
                     <img src={bnb} alt="" />
                     BNB Chain
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleMantaPool()}>
+                  <Dropdown.Item onClick={() => switchNetwork("0xa9", 169)}>
                     <img src={manta} alt="" />
                     Manta
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleOpBnbPool()}>
+                  <Dropdown.Item onClick={() => switchNetwork("0xcc", 204)}>
                     <img src={bnb} alt="" />
                     opBNB Chain
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleCorePool()}>
+                  <Dropdown.Item onClick={() => switchNetwork("0x28c58", 167000 )}>
+                    <img src={core} width={20} height={20} alt="" />
+                    Taiko
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => switchNetwork("0x45c", 1116)}>
                     <img src={core} width={20} height={20} alt="" />
                     CORE
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleSkalePool()}>
+                  <Dropdown.Item onClick={() => switchNetwork("0x585eb4b1", 1482601649)}>
                     <img src={skale} alt="" />
                     SKALE
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleConfluxPool()}>
+                  <Dropdown.Item onClick={() => switchNetwork("0x406", 1030)}>
                     <img src={conflux} alt="" />
                     Conflux
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleImmutablePool()}>
+                  <Dropdown.Item onClick={() => switchNetwork("0x343b", 13371)}>
                     <img src={immutable} width={20} height={20} alt="" />
                     Immutable
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleBasePool()}>
+                  <Dropdown.Item onClick={() => switchNetwork("0x2105", 8453)}>
                     <img src={base} alt="" />
                     Base
                   </Dropdown.Item>
@@ -1010,11 +860,11 @@ const Header = ({
                     <img src={sei} width={20} height={20} alt="" />
                     Sei
                   </Dropdown.Item>*/}
-                  <Dropdown.Item onClick={() => handleVictionPool()}>
+                  <Dropdown.Item onClick={() => switchNetwork("0x58", 88)}>
                     <img src={viction} width={20} height={20} alt="" />
                     Viction
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleAvaxPool()}>
+                  <Dropdown.Item onClick={() => switchNetwork("0xa86a", 43114)}>
                     <img src={avax} alt="" />
                     Avalanche
                   </Dropdown.Item>

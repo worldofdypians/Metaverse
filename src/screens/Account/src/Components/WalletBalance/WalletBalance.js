@@ -118,7 +118,7 @@ const WalletBalance = ({
   MyNFTSLandBase,
   myNFTSopBNB,
   MyNFTSCawsBase,
-  myMultiversNfts,myMantaNfts
+  myMultiversNfts,myMantaNfts, myTaikoNfts
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
