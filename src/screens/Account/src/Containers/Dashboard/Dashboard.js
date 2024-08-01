@@ -3863,8 +3863,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(monthlyPrizes[9]) + Number(monthlyPrizesGolden[9])
-              : Number(monthlyPrizes[userPosition]) +
+              ? Number(monthlyPrizesBnb[9]) + Number(monthlyPrizesGolden[9])
+              : Number(monthlyPrizesBnb[userPosition]) +
                 Number(monthlyPrizesGolden[userPosition])
             : 0
         );
@@ -3874,8 +3874,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(monthlyPrizes[9])
-              : Number(monthlyPrizes[userPosition])
+              ? Number(monthlyPrizesBnb[9])
+              : Number(monthlyPrizesBnb[userPosition])
             : 0
         );
       }
