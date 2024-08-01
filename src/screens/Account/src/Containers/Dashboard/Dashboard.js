@@ -504,7 +504,6 @@ function Dashboard({
   const [corecount, setcorecount] = useState(0);
   const [mantacount, setmantacount] = useState(0);
 
-
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
   const [userRank2, setUserRank2] = useState("");
@@ -561,6 +560,10 @@ function Dashboard({
   const html = document.querySelector("html");
   const leaderboardId = document.querySelector("#leaderboard");
   const { BigNumber } = window;
+  const now = new Date();
+  const firstOfNextMonth = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1)
+  );
 
   //leaderboard calls
 
@@ -1226,7 +1229,7 @@ function Dashboard({
 
       setPrevDataCoreMonthly(result.data.data.leaderboard);
     } else {
-    setPrevDataCoreMonthly(placeholderplayerData);
+      setPrevDataCoreMonthly(placeholderplayerData);
     }
   };
   const fetchDailyRecordsCore = async () => {
@@ -1287,6 +1290,8 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerCoreMonthly(true);
+      fetchMonthlyRecordsAroundPlayerCore(result.data.data.leaderboard);
+
     }
     fillRecordsMonthlyCore(result.data.data.leaderboard);
 
@@ -1559,7 +1564,7 @@ function Dashboard({
 
       setPrevDataVictionMonthly(result.data.data.leaderboard);
     } else {
-    setPrevDataVictionMonthly(placeholderplayerData);
+      setPrevDataVictionMonthly(placeholderplayerData);
     }
   };
   const fetchDailyRecordsViction = async () => {
@@ -1621,7 +1626,6 @@ function Dashboard({
     if (testArray.length > 0) {
       setActivePlayerVictionMonthly(true);
       fetchMonthlyRecordsAroundPlayerViction(result.data.data.leaderboard);
-
     }
     fillRecordsMonthlyViction(result.data.data.leaderboard);
 
@@ -1880,95 +1884,104 @@ function Dashboard({
     }
   };
   const fetchPreviousMonthlyWinnersManta = async () => {
-    // if (prevVersionVictionMonthly != 0) {
-    //   const data = {
-    //     StatisticName: "LeaderboardVictionMonthly",
-    //     StartPosition: 0,
-    //     MaxResultsCount: 10,
-    //     Version: prevVersionVictionMonthly - 1,
-    //   };
-    //   const result = await axios.post(
-    //     `${backendApi}/auth/GetLeaderboard?Version=-1`,
-    //     data
-    //   );
+    if (prevVersionMantaMonthly != 0) {
+      const data = {
+        StatisticName: "LeaderboardMantaMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionMantaMonthly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-    //   setPrevDataVictionMonthly(result.data.data.leaderboard);
-    // } else {
-    setPrevDataMantaMonthly(placeholderplayerData);
-    // }
+      setPrevDataVictionMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataMantaMonthly(placeholderplayerData);
+    }
   };
   const fetchDailyRecordsManta = async () => {
-    setDailyRecordsManta(placeholderplayerData);
-    // const data = {
-    //   StatisticName: "LeaderboardMantaDaily",
-    //   StartPosition: 0,
-    //   MaxResultsCount: 10,
-    // };
-    // const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((e)=>{console.error(e); fillRecordsManta([])});
-    // setPrevVersionManta(parseInt(result.data.data.version));
-    // setDailyRecordsManta(result.data.data.leaderboard);
-    // fillRecordsManta(result.data.data.leaderboard);
-    // var testArray = result.data.data.leaderboard.filter(
-    //   (item) => item.displayName === username
-    // );
-    // if (testArray.length > 0) {
-    //   setActivePlayerManta(true);
-    //   fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
-    // } else if (testArray.length === 0) {
-    //   setActivePlayerManta(false);
-    //   fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
-    // }
+    const data = {
+      StatisticName: "LeaderboardMantaDaily",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsManta([]);
+      });
+    setPrevVersionManta(parseInt(result.data.data.version));
+    setDailyRecordsManta(result.data.data.leaderboard);
+    fillRecordsManta(result.data.data.leaderboard);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    if (testArray.length > 0) {
+      setActivePlayerManta(true);
+      fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    } else if (testArray.length === 0) {
+      setActivePlayerManta(false);
+      fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    }
   };
   const fetchWeeklyRecordsManta = async () => {
+    const data = {
+      StatisticName: "LeaderboardMantaWeekly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsWeeklyManta([]);
+      });
+    setWeeklyRecordsManta(result.data.data.leaderboard);
+    setPrevVersionMantaWeekly(result.data.data.version);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    fillRecordsWeeklyManta(result.data.data.leaderboard);
 
-
-    setWeeklyRecordsManta(placeholderplayerData);
-
-    // const data = {
-    //   StatisticName: "LeaderboardMantaWeekly",
-    //   StartPosition: 0,
-    //   MaxResultsCount: 10,
-    // };
-    // const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((e)=>{console.error(e); fillRecordsWeeklyManta([]);});
-    // setWeeklyRecordsManta(result.data.data.leaderboard);
-    // setPrevVersionMantaWeekly(result.data.data.version);
-    // var testArray = result.data.data.leaderboard.filter(
-    //   (item) => item.displayName === username
-    // );
-    // fillRecordsWeeklyManta(result.data.data.leaderboard);
-
-    // if (testArray.length > 0) {
-    //   setActivePlayerMantaWeekly(true);
-    // }
-    // if (testArray.length === 0) {
-    //   setActivePlayerMantaWeekly(false);
-    //   fetchWeeklyRecordsAroundPlayerManta(result.data.data.leaderboard);
-    // }
+    if (testArray.length > 0) {
+      setActivePlayerMantaWeekly(true);
+      fetchWeeklyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    }
+    if (testArray.length === 0) {
+      setActivePlayerMantaWeekly(false);
+      fetchWeeklyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    }
   };
   const fetchMonthlyRecordsManta = async () => {
-    
-    setMonthlyRecordsManta(placeholderplayerData);
+    const data = {
+      StatisticName: "LeaderboardMantaMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMonthlyManta([]);
+      });
+    setMonthlyRecordsManta(result.data.data.leaderboard);
+    setPrevVersionMantaMonthly(result.data.data.version);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    if (testArray.length > 0) {
+      setActivePlayerMantaMonthly(true);
+      fetchMonthlyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    }
+    fillRecordsMonthlyManta(result.data.data.leaderboard);
 
-    // const data = {
-    //   StatisticName: "LeaderboardMantaMonthly",
-    //   StartPosition: 0,
-    //   MaxResultsCount: 10,
-    // };
-    // const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data).catch((e)=>{console.error(e); fillRecordsMonthlyManta([]);});;
-    // setMonthlyRecordsManta(result.data.data.leaderboard);
-    // setPrevVersionMantaMonthly(result.data.data.version);
-    // var testArray = result.data.data.leaderboard.filter(
-    //   (item) => item.displayName === username
-    // );
-    // if (testArray.length > 0) {
-    //   setActivePlayerMantaMonthly(true);
-    // }
-    // fillRecordsMonthlyManta(result.data.data.leaderboard);
-
-    // if (testArray.length === 0) {
-    //   setActivePlayerMantaMonthly(false);
-    //   fetchMonthlyRecordsAroundPlayerManta(result.data.data.leaderboard);
-    // }
+    if (testArray.length === 0) {
+      setActivePlayerMantaMonthly(false);
+      fetchMonthlyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    }
   };
   const fetchDailyRecordsAroundPlayerManta = async (itemData) => {
     const data = {
@@ -2233,7 +2246,7 @@ function Dashboard({
 
       setPrevDataSkaleMonthly(result.data.data.leaderboard);
     } else {
-    setPrevDataSkaleMonthly(placeholderplayerData);
+      setPrevDataSkaleMonthly(placeholderplayerData);
     }
   };
   const fetchDailyRecordsSkale = async () => {
@@ -2274,7 +2287,6 @@ function Dashboard({
     if (testArray.length > 0) {
       setActivePlayerSkaleWeekly(true);
       fetchWeeklyRecordsAroundPlayerSkale(result.data.data.leaderboard);
-
     }
     if (testArray.length === 0) {
       setActivePlayerSkaleWeekly(false);
@@ -2295,6 +2307,8 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerSkaleMonthly(true);
+      fetchMonthlyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+
     }
     fillRecordsMonthlySkale(result.data.data.leaderboard);
 
@@ -2778,6 +2792,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerMonthly(true);
+      fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
     }
     fillRecordsMonthly(result.data.data.leaderboard);
 
@@ -2888,26 +2903,32 @@ function Dashboard({
     fetchRecordsStar();
   }, [username, userId, goldenPassRemainingTime]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchDailyRecords();
-  },[count])
+    getAllChests(email);
 
-  useEffect(()=>{
+  }, [count]);
+
+  useEffect(() => {
     fetchDailyRecordsCore();
-  },[corecount])
+    getAllCoreChests(email);
 
-  useEffect(()=>{
+  }, [corecount]);
+
+  useEffect(() => {
     fetchDailyRecordsSkale();
-  },[skalecount])
+    getAllSkaleChests(email);
+  }, [skalecount]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchDailyRecordsViction();
-  },[vicitoncount])
+    getAllVictionChests(email);
+  }, [vicitoncount]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchDailyRecordsManta();
-  },[mantacount])
-
+    getAllMantaChests(email);
+  }, [mantacount]);
 
   useEffect(() => {
     fetchGenesisPreviousWinners();
@@ -3076,7 +3097,11 @@ function Dashboard({
       },
     ]);
   }, [
-    dailyRecordsSkale,  weeklyRecordsSkale, monthlyRecordsSkale,userDataSkale, activePlayerSkale,
+    dailyRecordsSkale,
+    weeklyRecordsSkale,
+    monthlyRecordsSkale,
+    userDataSkale,
+    activePlayerSkale,
     prevDataSkale,
     prevDataSkaleMonthly,
     prevDataSkaleWeekly,
@@ -3129,7 +3154,7 @@ function Dashboard({
     prevDataCoreMonthly,
     prevDataCoreWeekly,
     userDataCoreMonthly,
-    userDataCoreWeekly
+    userDataCoreWeekly,
   ]);
   useEffect(() => {
     setAllVictionData([
@@ -3191,7 +3216,7 @@ function Dashboard({
         activeData: dailyRecordsManta,
         previousData: prevDataManta,
         player_data: userDataManta,
-        is_active: true, //change when apis are ready
+        is_active: activePlayerManta, //change when apis are ready
       },
       {
         title: "WEEKLY",
@@ -3202,7 +3227,7 @@ function Dashboard({
         activeData: weeklyRecordsManta,
         previousData: prevDataMantaWeekly,
         player_data: userDataMantaWeekly,
-        is_active: true,
+        is_active: activePlayerMantaWeekly,
       },
       {
         title: "MONTHLY",
@@ -3213,7 +3238,7 @@ function Dashboard({
         activeData: monthlyRecordsManta,
         previousData: prevDataMantaMonthly,
         player_data: userDataMantaMonthly,
-        is_active: true, //change when apis are ready
+        is_active: activePlayerMantaMonthly, //change when apis are ready
       },
     ]);
   }, [
@@ -3227,6 +3252,8 @@ function Dashboard({
     userDataMantaWeekly,
     userDataMantaMonthly,
     activePlayerManta,
+    activePlayerMantaMonthly,
+    activePlayerMantaWeekly,
   ]);
 
   const handleSetAvailableTime = (value) => {
@@ -3309,8 +3336,8 @@ function Dashboard({
 
         const resultv2 =
           remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
-        setcountdown700((resultv2 + resultv1) * 1000);
-        handleSetAvailableTime((resultv2 + resultv1) * 1000);
+        setcountdown700(firstOfNextMonth.getTime());
+        handleSetAvailableTime(firstOfNextMonth.getTime());
         // setcountdown700(result * 1000);
         //}
       } else {
@@ -3836,8 +3863,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(monthlyPrizes[9]) + Number(monthlyPrizesGolden[9])
-              : Number(monthlyPrizes[userPosition]) +
+              ? Number(monthlyPrizesBnb[9]) + Number(monthlyPrizesGolden[9])
+              : Number(monthlyPrizesBnb[userPosition]) +
                 Number(monthlyPrizesGolden[userPosition])
             : 0
         );
@@ -3847,8 +3874,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(monthlyPrizes[9])
-              : Number(monthlyPrizes[userPosition])
+              ? Number(monthlyPrizesBnb[9])
+              : Number(monthlyPrizesBnb[userPosition])
             : 0
         );
       }
@@ -4155,16 +4182,16 @@ function Dashboard({
           claimedChests + claimedPremiumChests < 20 ||
           claimedSkaleChests + claimedSkalePremiumChests < 20 ||
           claimedCoreChests + claimedCorePremiumChests < 20 ||
-          claimedVictionChests + claimedVictionPremiumChests < 20
-          //  || claimedMantaChests + claimedMantaPremiumChests < 20
+          claimedVictionChests + claimedVictionPremiumChests < 20 ||
+          claimedMantaChests + claimedMantaPremiumChests < 20
         ) {
           setCanBuy(true);
         } else if (
           claimedChests + claimedPremiumChests === 20 &&
           claimedSkaleChests + claimedSkalePremiumChests === 20 &&
           claimedCoreChests + claimedCorePremiumChests === 20 &&
-          claimedVictionChests + claimedVictionPremiumChests === 20 
-          // && claimedMantaChests + claimedMantaPremiumChests === 20
+          claimedVictionChests + claimedVictionPremiumChests === 20 &&
+          claimedMantaChests + claimedMantaPremiumChests === 20
         ) {
           setCanBuy(false);
         }
@@ -4173,16 +4200,16 @@ function Dashboard({
           claimedChests < 10 ||
           claimedSkaleChests < 10 ||
           claimedCoreChests < 10 ||
-          claimedVictionChests < 10 
-          // || claimedMantaChests < 10
+          claimedVictionChests < 10 ||
+          claimedMantaChests < 10
         ) {
           setCanBuy(true);
         } else if (
           claimedChests === 10 &&
           claimedSkaleChests === 10 &&
           claimedCoreChests === 10 &&
-          claimedVictionChests === 10
-          //  &&   claimedMantaChests === 10
+          claimedVictionChests === 10 &&
+          claimedMantaChests === 10
         ) {
           setCanBuy(false);
         }
@@ -5836,21 +5863,26 @@ function Dashboard({
   };
 
   const handleRankRewards = () => {
-    let totalScore = userBnbScore + userSkaleScore;
-    if (totalScore > 6000000) {
+    const totalScore =
+      userBnbScore +
+      userSkaleScore +
+      userCoreScore +
+      userVictionScore +
+      userMantaScore;
+    if (totalScore > 11999999 && totalScore < 24000000) {
       setUserRankRewards(5);
-    } else if (totalScore > 12000000) {
+    } else if (totalScore >= 24000000 && totalScore < 37000000) {
       setUserRankRewards(10);
-    } else if (totalScore > 24000000) {
+    } else if (totalScore >= 37000000 && totalScore < 62000000) {
       setUserRankRewards(25);
-    } else if (totalScore > 40000000) {
+    } else if (totalScore >= 62000000) {
       setUserRankRewards(100);
     }
   };
 
   useEffect(() => {
     handleRankRewards();
-  }, [userBnbScore, userSkaleScore]);
+  }, [userBnbScore, userSkaleScore,userCoreScore,userVictionScore,userMantaScore]);
 
   useEffect(() => {
     if (coinbase) {
@@ -5862,7 +5894,7 @@ function Dashboard({
   useEffect(() => {
     fetchSkalePrice();
     fetchSeiPrice();
-    fetchMantaPrice()
+    fetchMantaPrice();
     fetchCorePrice();
     fetchVictionPrice();
     fetchEgldPrice();
@@ -6231,10 +6263,10 @@ function Dashboard({
       getAllChests(email);
       getAllCoreChests(email);
       getAllVictionChests(email);
-      // getAllMantaChests(email);
+      getAllMantaChests(email);
       // getAllSeiChests(email);
     }
-  }, [email, count, skalecount, vicitoncount, corecount, mantacount]);
+  }, [email]);
 
   useEffect(() => {
     if (bundlesBought === 1) {
@@ -6488,6 +6520,7 @@ function Dashboard({
                         onOpenGenesisLeaderboard={() => {
                           setGenesisLeaderboard(true);
                         }}
+                        userDataStar={dataAmountStar}
                         bnbEarnUsd={bnbEarnUsd}
                         dogePrice={dogePrice}
                         weeklyplayerData={weeklyplayerDataAmount}

@@ -266,7 +266,7 @@ const NewWalletBalance = ({
   multiversPoints,
   multiversEarnToken,
   multiversEarnUsd,
-  kittyDashRecords, weeklyDataAmountManta, monthlyDataAmountManta, mantaEarnUsd, openedMantaChests,mantaPoints, mantaEarnToken
+  kittyDashRecords, weeklyDataAmountManta, monthlyDataAmountManta, mantaEarnUsd, openedMantaChests,mantaPoints, mantaEarnToken,userDataStar
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -904,9 +904,9 @@ const NewWalletBalance = ({
     openedSkaleChests.length +
     openedCoreChests.length +
     openedVictionChests.length
-    //  + openedMantaChests.length;
+     + openedMantaChests.length;
 
-  const chestPercentage = (totalClaimedChests / 80) * 100;
+  const chestPercentage = (totalClaimedChests / 100) * 100;
 
   const dummyEvents = [
     {
@@ -1932,7 +1932,7 @@ const NewWalletBalance = ({
                           Number(weeklyDataAmountSkale) +Number(weeklyDataAmountManta) +Number(monthlyDataAmountManta) +
                           (kittyDashRecords[0] ? kittyDashRecords[0]?.position+1 > 10 ? 0 : kittyDashRewards[kittyDashRecords[0]?.position] : 0) +
                           +Number(monthlyDataAmountSkale) +
-                          // Number(dailyDataAmountViction) +
+                          Number(userDataStar) +
                           Number(weeklyDataAmountViction) +
                           Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd) +
