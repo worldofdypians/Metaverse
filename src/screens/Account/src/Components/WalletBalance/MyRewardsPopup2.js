@@ -590,7 +590,7 @@ const MyRewardsPopupNew = ({
   };
 
   const kittyDashRewards = [30, 20, 10, 10, 5, 5, 5, 5, 5, 5];
-console.log('userRank2',userRank2)
+
   return (
     <div className="d-grid rewardstable-wrapper2 gap-2 mt-3 px-1">
       <div className="total-earnings-purple-wrapper p-2">
