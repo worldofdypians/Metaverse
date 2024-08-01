@@ -1290,6 +1290,8 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerCoreMonthly(true);
+      fetchMonthlyRecordsAroundPlayerCore(result.data.data.leaderboard);
+
     }
     fillRecordsMonthlyCore(result.data.data.leaderboard);
 
@@ -2305,6 +2307,8 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerSkaleMonthly(true);
+      fetchMonthlyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+
     }
     fillRecordsMonthlySkale(result.data.data.leaderboard);
 
@@ -2788,6 +2792,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerMonthly(true);
+      fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
     }
     fillRecordsMonthly(result.data.data.leaderboard);
 
@@ -2900,22 +2905,29 @@ function Dashboard({
 
   useEffect(() => {
     fetchDailyRecords();
+    getAllChests(email);
+
   }, [count]);
 
   useEffect(() => {
     fetchDailyRecordsCore();
+    getAllCoreChests(email);
+
   }, [corecount]);
 
   useEffect(() => {
     fetchDailyRecordsSkale();
+    getAllSkaleChests(email);
   }, [skalecount]);
 
   useEffect(() => {
     fetchDailyRecordsViction();
+    getAllVictionChests(email);
   }, [vicitoncount]);
 
   useEffect(() => {
     fetchDailyRecordsManta();
+    getAllMantaChests(email);
   }, [mantacount]);
 
   useEffect(() => {
@@ -5870,7 +5882,7 @@ function Dashboard({
 
   useEffect(() => {
     handleRankRewards();
-  }, [userBnbScore, userSkaleScore]);
+  }, [userBnbScore, userSkaleScore,userCoreScore,userVictionScore,userMantaScore]);
 
   useEffect(() => {
     if (coinbase) {
@@ -6254,7 +6266,7 @@ function Dashboard({
       getAllMantaChests(email);
       // getAllSeiChests(email);
     }
-  }, [email, count, skalecount, vicitoncount, corecount, mantacount]);
+  }, [email]);
 
   useEffect(() => {
     if (bundlesBought === 1) {
