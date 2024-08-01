@@ -1168,14 +1168,14 @@ const ProfileCard = ({
                                   </span>
                                   <span className="rank-current-score">
                                     {userRankName?.name === "rookie"
-                                      ? "22M"
+                                      ? "24M"
                                       : userRankName?.name === "underdog"
-                                      ? "35M"
+                                      ? "37M"
                                       : userRankName?.name === "champion"
-                                      ? "60M"
+                                      ? "62M"
                                       : userRankName?.name === "unstoppable"
                                       ? ""
-                                      : "10M"}
+                                      : "12M"}
                                   </span>
                                 </div>
                                 {rankData?.multiplier === "no" && !isPremium ? (
