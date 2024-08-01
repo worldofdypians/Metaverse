@@ -70,7 +70,18 @@ const NewChestItem = ({
       const result = await axios.post(
         "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
         userData_bnb
-      );
+      ).catch((e)=>{
+        onLoadingChest(false);
+        setLoading(false);
+        setClaimingChest(false);
+
+        setIsChestOpen(false);
+        window.alertify.error(e?.message);
+        onChestStatus("error");
+        setTimeout(() => {
+          onChestStatus("initial");
+        }, 3000);
+      })
       if (result.status === 200) {
         onClaimRewards(result.data);
         setIsChestOpen(true);
@@ -79,19 +90,23 @@ const NewChestItem = ({
         onLoadingChest(false);
         setLoading(false);
         setClaimingChest(false);
-      } else {
-        onLoadingChest(false);
-        setLoading(false);
-        setClaimingChest(false);
-        setIsChestOpen(false);
-        window.alertify.error(result?.message);
-        onChestStatus("initial");
-      }
+      }  
     } else {
       const result = await axios.post(
         "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
         userData
-      );
+      ).catch((e)=>{
+        onLoadingChest(false);
+        setLoading(false);
+        setClaimingChest(false);
+
+        setIsChestOpen(false);
+        window.alertify.error(e?.message);
+        onChestStatus("error");
+        setTimeout(() => {
+          onChestStatus("initial");
+        }, 3000);
+      })
       if (result.status === 200) {
         if(chainText === "opbnb" || chainText === "bnb"){
           handleThirdTask(coinbase)
@@ -102,18 +117,7 @@ const NewChestItem = ({
         onLoadingChest(false);
         setLoading(false);
         setClaimingChest(false);
-      } else {
-        onLoadingChest(false);
-        setLoading(false);
-        setClaimingChest(false);
-
-        setIsChestOpen(false);
-        window.alertify.error(result?.message);
-        onChestStatus("error");
-        setTimeout(() => {
-          onChestStatus("initial");
-        }, 3000);
-      }
+      }  
     }
   };
 
@@ -157,16 +161,25 @@ const NewChestItem = ({
           userData_bnb
         )
         .catch((e) => {
+          
+          if(e.response.status === 400) {
+            setTimeout(() => {
+                getUserRewardsByChest2(userEmail, txHash, chestId, chainText);    
+            }, 2000);
+          }
+          else {
           onLoadingChest(false);
           setLoading(false);
           setClaimingChest(false);
-
           setIsChestOpen(false);
           window.alertify.error(e?.message);
+          console.error(e)
           onChestStatus("error");
-          setTimeout(() => {
+              setTimeout(() => {
             onChestStatus("initial");
           }, 3000);
+          }
+        
         });
       if (result.status === 200) {
         if(chainText === "opbnb" || chainText === "bnb"){
@@ -178,14 +191,30 @@ const NewChestItem = ({
         onLoadingChest(false);
         setLoading(false);
         setClaimingChest(false);
-      } else if (result.status === 400) {
-        getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
-      }
+      }  
     } else {
       const result = await axios.post(
         "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
         userData
-      );
+      ).catch((e)=>{
+        if(e.response.status === 400) {
+          setTimeout(() => {
+              getUserRewardsByChest2(userEmail, txHash, chestId, chainText);    
+          }, 2000);
+        }
+        else {
+        onLoadingChest(false);
+        setLoading(false);
+        setClaimingChest(false);
+        setIsChestOpen(false);
+        window.alertify.error(e?.message);
+        console.error(e)
+        onChestStatus("error");
+            setTimeout(() => {
+          onChestStatus("initial");
+        }, 3000);
+        }
+      })
       if (result.status === 200) {
         onClaimRewards(result.data);
         setIsChestOpen(true);
@@ -193,20 +222,19 @@ const NewChestItem = ({
         onLoadingChest(false);
         setLoading(false);
         setClaimingChest(false);
-      } else if (result.status === 400) {
-        getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
-      } else {
-        onLoadingChest(false);
-        setLoading(false);
-        setClaimingChest(false);
+      } 
+      //  else {
+      //   onLoadingChest(false);
+      //   setLoading(false);
+      //   setClaimingChest(false);
 
-        setIsChestOpen(false);
-        window.alertify.error(result?.message);
-        onChestStatus("error");
-        setTimeout(() => {
-          onChestStatus("initial");
-        }, 3000);
-      }
+      //   setIsChestOpen(false);
+      //   window.alertify.error(result?.message);
+      //   onChestStatus("error");
+      //   setTimeout(() => {
+      //     onChestStatus("initial");
+      //   }, 3000);
+      // }
     }
   };
 
@@ -221,7 +249,7 @@ const NewChestItem = ({
     const txResult = await window.web3.eth.getTransaction(txHash).catch((e) => {
       console.error(e);
     });
-
+console.log(txResult)
     if (txResult) {
       getUserRewardsByChest(email, txHash, chestIndex, chainText);
     } else {
@@ -277,6 +305,11 @@ const NewChestItem = ({
     const daily_bonus_contract_viction = new window.web3.eth.Contract(
       window.DAILY_BONUS_VICTION_ABI,
       window.config.daily_bonus_viction_address
+    );
+
+    const daily_bonus_contract_manta = new window.web3.eth.Contract(
+      window.DAILY_BONUS_MANTA_ABI,
+      window.config.daily_bonus_manta_address
     );
 
     // console.log(daily_bonus_contract);
@@ -424,6 +457,58 @@ const NewChestItem = ({
               data.transactionHash,
               chestIndex - 1,
               "viction"
+            );
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+          });
+      }
+    }  else if (chainId === 169) {
+      if (rewardTypes === "premium" && isPremium) {
+        await daily_bonus_contract_manta.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "manta"
+            );
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+        await daily_bonus_contract_manta.methods
+          .openChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "manta"
             );
           })
           .catch((e) => {
@@ -675,6 +760,7 @@ const NewChestItem = ({
             chain === "bnb" ||
             chain === "sei" ||
             chain === "viction" ||
+            chain === "manta" ||
             chain === "core"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
                   open ? image + "open" : image
@@ -699,6 +785,7 @@ const NewChestItem = ({
             chain === "bnb" ||
             chain === "core" ||
             chain === "viction" ||
+            chain === "manta" ||
             chain === "sei"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
                   open

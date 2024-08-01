@@ -32,6 +32,9 @@ import seiInactive from "./assets/seiInactive.svg";
 import Slider from "react-slick";
 import bnbActive from "./assets/bnbActive.svg";
 import bnbInactive from "./assets/bnbInactive.svg";
+import mantaActive from "./assets/mantaActive.png";
+import mantaInactive from "./assets/mantaInactive.png";
+import mantaWhite from "./assets/mantaWhite.png";
 import skaleActive from "./assets/skaleActive.svg";
 import skaleInactive from "./assets/skaleInactive.svg";
 import wodActive from "./assets/wodActive.svg";
@@ -106,7 +109,7 @@ const NewLeaderBoard = ({
   allBnbData,
   allCoreData,
   allSkaleData,
-  allVictionData,
+  allVictionData,allMantaData
 }) => {
   const chainItems = [
     {
@@ -115,19 +118,24 @@ const NewLeaderBoard = ({
       image: bnbActive,
     },
     {
-      title: "SKALE",
+      title: "Manta",
       id: 1,
+      image: mantaActive,
+    },
+    {
+      title: "SKALE",
+      id: 2,
       image: skaleActive,
     },
     {
       title: "CORE",
-      id: 2,
+      id: 3,
       image: coreActive,
     },
 
     {
       title: "Viction",
-      id: 3,
+      id: 4,
       image: victionActive,
     },
   ];
@@ -244,12 +252,15 @@ const NewLeaderBoard = ({
         setAllData(allBnbData);
         setOptionText2("bnb");
       } else if (selectedChain.id - 1 === 1) {
+        setAllData(allMantaData);
+        setOptionText2("manta");
+      } else if (selectedChain.id - 1 === 2) {
         setAllData(allSkaleData);
         setOptionText2("skale");
-      } else if (selectedChain.id - 1 === 2) {
+      } else if (selectedChain.id - 1 === 3) {
         setAllData(allCoreData);
         setOptionText2("core");
-      } else if (selectedChain.id - 1 === 3) {
+      } else if (selectedChain.id - 1 === 4) {
         setAllData(allVictionData);
         setOptionText2("viction");
       }
@@ -257,18 +268,22 @@ const NewLeaderBoard = ({
     }
   };
   const handleNextChain = () => {
-    if (selectedChain.id === 3) {
+    if (selectedChain.id === 4) {
       return;
     } else {
       if (selectedChain.id + 1 === 1) {
+        setAllData(allMantaData);
+        setOptionText2("manta");
+      }
+      if (selectedChain.id + 1 === 2) {
         setAllData(allSkaleData);
         setOptionText2("skale");
       }
-      if (selectedChain.id + 1 === 2) {
+      if (selectedChain.id + 1 === 3) {
         setAllData(allCoreData);
         setOptionText2("core");
       }
-      if (selectedChain.id + 1 === 3) {
+      if (selectedChain.id + 1 === 4) {
         setAllData(allVictionData);
         setOptionText2("viction");
       }
@@ -347,12 +362,14 @@ const NewLeaderBoard = ({
                 <div className="optionsWrapper position-relative col-12">
                   <div
                     className={`optionswrapper-bg ${
-                      optionText2 === "skale"
-                        ? "move-1"
+                      optionText2 === "manta"
+                        ? "move-1" : 
+                        optionText2 === "skale" ? 
+                        "move-2"
                         : optionText2 === "core"
-                        ? "move-2"
-                        : optionText2 === "viction"
                         ? "move-3"
+                        : optionText2 === "viction"
+                        ? "move-4"
                         : ""
                     }`}
                   ></div>
@@ -372,7 +389,7 @@ const NewLeaderBoard = ({
                         handleOption("bnb");
                         setAllData(allBnbData);
                       }}
-                      style={{ width: "25%" }}
+                      style={{ width: "20%" }}
                     >
                       <img
                         src={
@@ -398,6 +415,43 @@ const NewLeaderBoard = ({
                         : ""}
                     </span>
                     <span
+                      onMouseEnter={() => handleMouseEnter("manta")}
+                      onMouseLeave={handleMouseLeave}
+                      className={`
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "manta" && "otheroptionsActive"
+                     } optionText col-3`}
+                      onClick={() => {
+                        handleOption("manta");
+                        setAllData(allMantaData);
+                      }}
+                      style={{ width: "20%" }}
+                    >
+                      <img
+                        src={
+                          optionText2 === "manta"
+                            ? mantaActive
+                            : optionText2 !== "manta" && hoverState === "manta"
+                            ? mantaWhite
+                            : mantaInactive
+                        }
+                        className={`${
+                          optionText2 === "manta"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "Manta"
+                        : windowSize.width < 786 && optionText2 === "manta"
+                        ? "Manta"
+                        : ""}
+                    </span>
+                    <span
                       onMouseEnter={() => handleMouseEnter("skale")}
                       onMouseLeave={handleMouseLeave}
                       className={` 
@@ -405,7 +459,7 @@ const NewLeaderBoard = ({
                      ${
                        optionText2 === "skale" && "otheroptionsActive"
                      } optionText col-3`}
-                      style={{ width: "25%" }}
+                      style={{ width: "20%" }}
                       onClick={() => {
                         handleOption("skale");
                         setAllData(allSkaleData);
@@ -442,7 +496,7 @@ const NewLeaderBoard = ({
                     ${
                       optionText2 === "core" && "otheroptionsActive"
                     } optionText col-3`}
-                      style={{ width: "25%" }}
+                      style={{ width: "20%" }}
                       onClick={() => {
                         handleOption("core");
                         setAllData(allCoreData);
@@ -481,7 +535,7 @@ const NewLeaderBoard = ({
                      ${
                        optionText2 === "viction" && "otheroptionsActive"
                      } optionText col-3`}
-                      style={{ width: "25%" }}
+                      style={{ width: "20%" }}
                       onClick={() => {
                         handleOption("viction");
                         setAllData(allVictionData);
@@ -561,6 +615,14 @@ const NewLeaderBoard = ({
               className="d-flex flex-column gap-2 tablewrapper position-relative"
               style={{ height: optionText === "genesis" ? "345px" : "384px" }}
             >
+               {/* {optionText2 !==  "manta" ? (
+                <></>
+              ) : (
+                <div className="coming-soon-position d-flex align-items-center justify-content-center">
+                  <h6 className="mb-0">Coming Soon</h6>
+                </div>
+              )} */}
+
               {optionText !== "genesis" ? (
                 <div className="position-relative">
                   <img
@@ -588,7 +650,7 @@ const NewLeaderBoard = ({
                         return (
                           <div
                             key={index}
-                            className={`leaderboard-item  monthly-skale d-flex flex-column gap-2 p-0`}
+                            className={` leaderboard-item  monthly-skale d-flex flex-column gap-2 p-0`}
                           >
                             <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
                               <h6 className="leaderboard-title  text-white font-oxanium mb-0">
