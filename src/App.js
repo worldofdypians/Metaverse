@@ -5044,7 +5044,7 @@ function App() {
 
 <Route
             exact
-            path="/marketplace/mint/immutable"
+            path="/marketplace/mint/taiko"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -5055,7 +5055,7 @@ function App() {
                 mintloading={mintloading}
                 isConnected={isConnected}
                 chainId={chainId}
-                handleMint={handleImmutableNftMint}
+                handleMint={handleTaikoNftMint}
                 mintStatus={mintStatus}
                 textColor={textColor}
                 calculateCaws={calculateCaws}
