@@ -11,8 +11,7 @@ import { ApolloProvider } from "@apollo/client";
 import client from "./screens/Account/src/apolloConfig";
 
 import { Web3Provider } from '@ethersproject/providers'
-import { Web3ReactProvider, useWeb3React } from '@web3-react/core'
-import { ethers } from "ethers";
+import { Web3ReactProvider } from '@web3-react/core'
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);

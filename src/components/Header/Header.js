@@ -73,10 +73,12 @@ const Header = ({
   chainId,
   handleSwitchNetwork,
   handleSwitchChainGateWallet,
+  handleSwitchChainBinanceWallet,
   handleOpenDomains,
   domainName,
   onSigninClick,
   onLogout,
+  binanceWallet,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -135,7 +137,6 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
@@ -147,7 +148,6 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
@@ -159,7 +159,6 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
@@ -171,7 +170,6 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -184,7 +182,6 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-
       } else if (chainId === 1482601649) {
         setAvaxState(false);
         setBnbState(false);
@@ -197,7 +194,6 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-
       } else if (chainId === 1116) {
         setAvaxState(false);
         setBnbState(false);
@@ -210,7 +206,6 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-
       } else if (chainId === 88) {
         setAvaxState(false);
         setBnbState(false);
@@ -223,7 +218,6 @@ const Header = ({
         setVictionState(true);
         setSeiState(false);
         setImmutableState(false);
-
       } else if (chainId === 13371) {
         setAvaxState(false);
         setBnbState(false);
@@ -236,7 +230,6 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(true);
-
       }
       // else if (chainId === 713715 ) {
       //   setAvaxState(false);
@@ -261,8 +254,6 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-        
-
       }
     }
   };
@@ -277,15 +268,19 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet) {
         handleSwitchChainGateWallet(1);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(1);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(1);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
   const handleCorePool = async () => {
-    if (window.ethereum) {
+  if (window.ethereum) {
       if (!window.gatewallet) {
         await handleSwitchNetworkhook("0x45c")
           .then(() => {
@@ -294,12 +289,17 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet) {
         handleSwitchChainGateWallet(1116);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(1116);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(1116);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
+
   };
 
   const handleSeiPool = async () => {
@@ -320,6 +320,9 @@ const Header = ({
     }
   };
   const handleVictionPool = async () => {
+
+ 
+
     if (window.ethereum) {
       if (!window.gatewallet) {
         await handleSwitchNetworkhook("0x58")
@@ -329,12 +332,17 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet) {
         handleSwitchChainGateWallet(88);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(88);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(88);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
+
   };
   // console.log(avatar);
   const handleBnbPool = async () => {
@@ -347,9 +355,13 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet) {
         handleSwitchChainGateWallet(56);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(56);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(56);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -365,9 +377,13 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet) {
         handleSwitchChainGateWallet(43114);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(43114);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(43114);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -383,26 +399,45 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet) {
         handleSwitchChainGateWallet(204);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(204);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(204);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
+
+    
+ 
+
+
   };
 
   const handleBasePool = async () => {
-    if (!window.gatewallet) {
-      await handleSwitchNetworkhook("0x2105")
-        .then(() => {
-          handleSwitchNetwork(8453);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x2105")
+          .then(() => {
+            handleSwitchNetwork(8453);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet) {
+        handleSwitchChainGateWallet(8453);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(8453);
+      }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(8453);
     } else {
-      handleSwitchChainGateWallet(8453);
+      window.alertify.error("No web3 detected. Please install Metamask!");
     }
+
+
   };
 
   const handleConfluxPool = async () => {
@@ -415,9 +450,13 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
-        handleSwitchChainGateWallet();
+      } else if (window.gatewallet) {
+        handleSwitchChainGateWallet(1030);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(1030);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(1030);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -433,9 +472,13 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
-        handleSwitchChainGateWallet();
+      } else if (window.gatewallet) {
+        handleSwitchChainGateWallet(1482601649);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(1482601649);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(1482601649);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -451,12 +494,17 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
-        handleSwitchChainGateWallet();
+      } else if (window.gatewallet) {
+        handleSwitchChainGateWallet(13371);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(13371);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(13371);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
+
   };
 
   async function markNotificationAsRead(walletAddress, notificationId) {
@@ -1120,7 +1168,12 @@ const Header = ({
                             setshowmenuAccount(false);
                           }}
                         >
-                          <img src={logouticon} alt="" className="logout-icon"/> Log Out
+                          <img
+                            src={logouticon}
+                            alt=""
+                            className="logout-icon"
+                          />{" "}
+                          Log Out
                         </button>
                       ) : (
                         <button

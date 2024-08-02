@@ -41,7 +41,7 @@ const MobileNavbar = ({
   handleSwitchNetwork,
   handleSwitchChainGateWallet,
   domainName,
-  handleOpenDomains,
+  handleOpenDomains,handleSwitchChainBinanceWallet, binanceWallet
 }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -239,30 +239,39 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet) {
         handleSwitchChainGateWallet(1);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(1);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(1);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
   const handleCorePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x45c")
-          .then(() => {
-            handleSwitchNetwork(1116);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+        if (!window.gatewallet) {
+          await handleSwitchNetworkhook("0x45c")
+            .then(() => {
+              handleSwitchNetwork(1116);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.gatewallet) {
+          handleSwitchChainGateWallet(1116);
+        } else if (binanceWallet) {
+          handleSwitchChainBinanceWallet(1116);
+        }
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(1116);
       } else {
-        handleSwitchChainGateWallet(1116);
+        window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
+  
+    };
 
   const handleSeiPool = async () => {
     if (window.ethereum) {
@@ -282,6 +291,9 @@ const MobileNavbar = ({
     }
   };
   const handleVictionPool = async () => {
+
+ 
+
     if (window.ethereum) {
       if (!window.gatewallet) {
         await handleSwitchNetworkhook("0x58")
@@ -291,12 +303,17 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet) {
         handleSwitchChainGateWallet(88);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(88);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(88);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
+
   };
 
   const handleAvaxPool = async () => {
@@ -309,9 +326,13 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
-        handleSwitchChainGateWallet(1);
+      } else if (window.gatewallet) {
+        handleSwitchChainGateWallet(43114);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(43114);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(43114);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -327,9 +348,13 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet) {
         handleSwitchChainGateWallet(56);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(56);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(56);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -345,12 +370,21 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet) {
         handleSwitchChainGateWallet(204);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(204);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(204);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
+
+    
+ 
+
+
   };
 
   const handleConfluxPool = async () => {
@@ -363,9 +397,13 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet) {
         handleSwitchChainGateWallet(1030);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(1030);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(1030);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -381,12 +419,18 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet) {
         handleSwitchChainGateWallet(8453);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(8453);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(8453);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
+
+
   };
 
   const handleSkalePool = async () => {
@@ -399,9 +443,13 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
-        handleSwitchChainGateWallet();
+      } else if (window.gatewallet) {
+        handleSwitchChainGateWallet(1482601649);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(1482601649);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(1482601649);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -418,14 +466,18 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
-        handleSwitchChainGateWallet();
+      } else if (window.gatewallet) {
+        handleSwitchChainGateWallet(13371);
+      } else if (binanceWallet) {
+        handleSwitchChainBinanceWallet(13371);
       }
+    } else if (binanceWallet) {
+      handleSwitchChainBinanceWallet(13371);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
-  };
 
+  };
   useEffect(() => {
     if (chainId === 1) {
       handleSwitchNetwork(1);
