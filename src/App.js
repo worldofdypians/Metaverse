@@ -278,6 +278,8 @@ function App() {
   const [myopbnbNFTsCreated, setmyopbnbNFTsCreated] = useState([]);
   const [myimmutableNftsCreated, setmyImmutableNFTsCreated] = useState([]);
   const [myMantaNFTsCreated, setMyMantaNFTsCreated] = useState([])
+  const [myTaikoNFTsCreated, setMyTaikoNFTsCreated] = useState([])
+
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
@@ -300,6 +302,8 @@ function App() {
   const [totalVictionNft, settotalVictionNft] = useState(0);
   const [totalopbnbNft, settotalopbnbNft] = useState(0);
   const [totalMantaNft, setTotalMantaNft] = useState(0)
+  const [totalTaikoNft, setTotalTaikoNft] = useState(0)
+
   const [totalDogeNft, settotalDogeNft] = useState(0);
   const [totalCmcNft, settotalCmcNft] = useState(0);
 
@@ -316,6 +320,8 @@ function App() {
   const [victionMintAllowed, setvictionMintAllowed] = useState(1);
   const [opbnbMintAllowed, setopbnbMintAllowed] = useState(1);
   const [mantaMintAllowed, setMantaMintAllowed] = useState(1)
+  const [taikoMintAllowed, setTaikoMintAllowed] = useState(1)
+
   const [coreMintAllowed, setcoreMintAllowed] = useState(1);
 
   const [fireAppcontent, setFireAppContent] = useState(false);
@@ -359,6 +365,8 @@ function App() {
   const [myVictionNfts, setMyVictionNfts] = useState([]);
   const [myOpbnbNfts, setmyOpbnbNfts] = useState([]);
   const [myMantaNfts, setMyMantaNfts] = useState([])
+  const [myTaikoNfts, setMyTaikoNfts] = useState([])
+
   const [myMultiversNfts, setMyMultiversNfts] = useState([]);
   const [myImmutableNfts, setMyImmutableNfts] = useState([]);
 
@@ -1273,6 +1281,13 @@ function App() {
         setMyMantaNFTsCreated(NFTS);
       });
 
+      getMyNFTS(coinbase, "taikio").then((NFTS) => {
+        setTotalTaikoNft(NFTS.length);
+        setMyTaikoNfts(NFTS);
+        setTaikoMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setMyTaikoNFTsCreated(NFTS);
+      });
+
       //setmyBaseNFTs
     } else {
       setMyNFTSCaws([]);
@@ -1292,6 +1307,9 @@ function App() {
       settotalCoreNft(0);
       setMyMantaNfts([]);
       setTotalMantaNft(0);
+
+      setMyTaikoNfts([]);
+      setTotalTaikoNft(0);
     }
   };
 
@@ -2014,6 +2032,79 @@ function App() {
                 setMyMantaNfts(NFTS);
                 setMantaMintAllowed(NFTS.length > 0 ? 0 : 1);
                 setMyMantaNFTsCreated(NFTS);
+              });
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+        } else {
+          // setShowWhitelistLoadingModal(true);
+        }
+      } catch (e) {
+        setmintloading("error");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        window.alertify.error(
+          typeof e == "object" && e.message
+            ? e.message
+            : typeof e == "string"
+            ? String(e)
+            : "Oops, something went wrong! Refresh the page and try again!"
+        );
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      }
+    }
+  };
+
+  const handleTaikoNftMint = async () => {
+    if (isConnected && coinbase) {
+      try {
+        //Check Whitelist
+        let whitelist = 1;
+
+        if (parseInt(whitelist) === 1) {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+          // console.log(data,finalCaws, totalCawsDiscount);
+          let tokenId = await window.taiko_nft
+            .mintTaikoNFT()
+            .then(() => {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "taiko").then((NFTS) => {
+                setTotalTaikoNft(NFTS.length);
+                setMyTaikoNfts(NFTS);
+                setTaikoMintAllowed(NFTS.length > 0 ? 0 : 1);
+                setMyTaikoNFTsCreated(NFTS);
               });
             })
             .catch((e) => {
@@ -2831,6 +2922,11 @@ function App() {
       window.DAILY_BONUS_MANTA_ABI,
       window.config.daily_bonus_manta_address
     );
+    
+    const daily_bonus_contract_taiko = new window.taikoWeb3.eth.Contract(
+      window.DAILY_BONUS_TAIKO_ABI,
+      window.config.daily_bonus_taiko_address
+    );
 
     if (addr) {
       const isPremium_bnb = await daily_bonus_contract_bnb.methods
@@ -2893,7 +2989,18 @@ function App() {
               if (isPremium_manta === true) {
                 setIsPremium(true);
               } else {
+                const isPremium_taiko = await daily_bonus_contract_taiko.methods
+                .isPremiumUser(addr)
+                .call()
+                .catch((e) => {
+                  console.error(e);
+                  return false;
+                });
+              if (isPremium_taiko === true) {
+                setIsPremium(true);
+              } else {
                setIsPremium(false);
+              }
               }
             
               }
@@ -3891,6 +3998,55 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 totalMantaNft={totalMantaNft}
                 myMantaNfts={myMantaNfts}
+                totalTaikoNft={totalTaikoNft}
+                myTaikoNfts={myTaikoNfts}
+                mintloading={mintloading}
+                chainId={chainId}
+                handleMint={handleTimepieceMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                totalCoingeckoNft={totalCoingeckoNft}
+                myNFTSCoingecko={MyNFTSCoingecko}
+                myGateNfts={myGateNfts}
+                totalGateNft={totalGateNft}
+                totalBaseNft={totalBaseNft}
+                totalBnbNft={totalBnbNft}
+                myBaseNFTs={myBaseNFTs}
+                myBnbNfts={myBnbNfts}
+                totalConfluxNft={totalConfluxNft}
+                myConfluxNfts={myConfluxNfts}
+                timepieceMetadata={timepieceMetadata}
+                handleSwitchNetwork={handleSwitchNetwork}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
+<Route
+            exact
+            path="/marketplace/beta-pass/taiko"
+            element={
+              <BetaPassNFT
+                type={"taiko"}
+                ethTokenData={ethTokenData}
+                dypTokenData={dypTokenData}
+                isConnected={isConnected}
+                handleConnect={handleShowWalletModal}
+                listedNFTS={listedNFTS}
+                coinbase={coinbase}
+                timepieceBought={timepieceBought}
+                handleRefreshListing={handleRefreshList}
+                nftCount={nftCount}
+                cawsArray={allCawsForTimepieceMint}
+                totalMantaNft={totalMantaNft}
+                myMantaNfts={myMantaNfts}
+                totalTaikoNft={totalTaikoNft}
+                myTaikoNfts={myTaikoNfts}
                 mintloading={mintloading}
                 chainId={chainId}
                 handleMint={handleTimepieceMint}
@@ -3995,6 +4151,8 @@ function App() {
                 totalseiNft={totalseiNft}
                 totalMantaNft={totalMantaNft}
                 myMantaNfts={myMantaNfts}
+                totalTaikoNft={totalTaikoNft}
+                myTaikoNfts={myTaikoNfts}
                 myseiNfts={myseiNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
@@ -4050,6 +4208,8 @@ function App() {
                 myseiNfts={myseiNfts}
                 totalMantaNft={totalMantaNft}
                 myMantaNfts={myMantaNfts}
+                totalTaikoNft={totalTaikoNft}
+                myTaikoNfts={myTaikoNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
                 myBaseNFTs={myBaseNFTs}
@@ -4128,6 +4288,8 @@ function App() {
                 myseiNfts={myseiNfts}
                 totalMantaNft={totalMantaNft}
                 myMantaNfts={myMantaNfts}
+                totalTaikoNft={totalTaikoNft}
+                myTaikoNfts={myTaikoNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
                 myBaseNFTs={myBaseNFTs}
@@ -4170,6 +4332,8 @@ function App() {
                 myseiNfts={myseiNfts}
                 totalMantaNft={totalMantaNft}
                 myMantaNfts={myMantaNfts}
+                totalTaikoNft={totalTaikoNft}
+                myTaikoNfts={myTaikoNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
                 totalMultiversNft={totalMultiversNft}
@@ -4649,6 +4813,10 @@ function App() {
                 myOpbnbNfts={myOpbnbNfts}
                 myBnbNfts={myBnbNfts}
                 totalBnbNft={totalBnbNft}
+                totalTaikoNft={totalTaikoNft}
+                taikoMintAllowed={taikoMintAllowed}
+                myTaikoNfts={myTaikoNfts}
+                myTaikoNFTsCreated={myTaikoNFTsCreated}
               />
             }
           />
@@ -4751,6 +4919,10 @@ function App() {
                 mantaMintAllowed={mantaMintAllowed}
                 myMantaNfts={myMantaNfts}
                 myMantaNFTsCreated={myMantaNFTsCreated}
+                totalTaikoNft={totalTaikoNft}
+                taikoMintAllowed={taikoMintAllowed}
+                myTaikoNfts={myTaikoNfts}
+                myTaikoNFTsCreated={myTaikoNFTsCreated}
               />
             }
           />
@@ -4804,6 +4976,10 @@ function App() {
                 myOpbnbNfts={myOpbnbNfts}
                 myBnbNfts={myBnbNfts}
                 totalBnbNft={totalBnbNft}
+                 totalTaikoNft={totalTaikoNft}
+                taikoMintAllowed={taikoMintAllowed}
+                myTaikoNfts={myTaikoNfts}
+                myTaikoNFTsCreated={myTaikoNFTsCreated}
               />
             }
           /> */}
@@ -4858,9 +5034,73 @@ function App() {
                 myMantaNfts={myMantaNfts}
                 myMantaNFTsCreated={myMantaNFTsCreated}
                 totalBnbNft={totalBnbNft}
+                totalTaikoNft={totalTaikoNft}
+                taikoMintAllowed={taikoMintAllowed}
+                myTaikoNfts={myTaikoNfts}
+                myTaikoNFTsCreated={myTaikoNFTsCreated}
               />
             }
           />
+
+<Route
+            exact
+            path="/marketplace/mint/immutable"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleMint={handleImmutableNftMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalopbnbNft={totalopbnbNft}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                opbnbMintAllowed={opbnbMintAllowed}
+                myopbnbNFTsCreated={myopbnbNFTsCreated}
+                myConfluxNFTsCreated={myConfluxNFTsCreated}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                myskaleNFTsCreated={myskaleNFTsCreated}
+                handleConfluxMint={handleConfluxNftMint}
+                handleBaseNftMint={handleBaseNftMint}
+                confluxMintAllowed={confluxMintAllowed}
+                baseMintAllowed={baseMintAllowed}
+                skaleMintAllowed={skaleMintAllowed}
+                coreMintAllowed={coreMintAllowed}
+                victionMintAllowed={victionMintAllowed}
+                immutableMintAllowed={immutableMintAllowed}
+                totalCoreNft={totalCoreNft}
+                myCoreNfts={myCoreNfts}
+                totalMultiversNft={totalMultiversNft}
+                totalImmutableNft={totalImmutableNft}
+                myImmutableNfts={myImmutableNfts}
+                myMultiversNfts={myMultiversNfts}
+                totalseiNft={totalseiNft}
+                myseiNfts={myseiNfts}
+                totalVictionNft={totalVictionNft}
+                myVictionNfts={myVictionNfts}
+                myOpbnbNfts={myOpbnbNfts}
+                myBnbNfts={myBnbNfts}
+                totalMantaNft={totalMantaNft}
+                mantaMintAllowed={mantaMintAllowed}
+                myMantaNfts={myMantaNfts}
+                myMantaNFTsCreated={myMantaNFTsCreated}
+                totalBnbNft={totalBnbNft}
+
+                totalTaikoNft={totalTaikoNft}
+                taikoMintAllowed={taikoMintAllowed}
+                myTaikoNfts={myTaikoNfts}
+                myTaikoNFTsCreated={myTaikoNFTsCreated}
+              />
+            }
+          />
+
           {/* <Route
             exact
             path="/marketplace/mint/viction"

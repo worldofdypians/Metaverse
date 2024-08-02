@@ -171,7 +171,7 @@ const BetaPassNFT = ({
   myBnbNfts,
   totalBnbNft,
   totalMantaNft,
-  myMantaNfts,
+  myMantaNfts,totalTaikoNft,myTaikoNfts
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();

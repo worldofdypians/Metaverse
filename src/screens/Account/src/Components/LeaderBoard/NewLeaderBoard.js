@@ -123,19 +123,24 @@ const NewLeaderBoard = ({
       image: mantaActive,
     },
     {
-      title: "SKALE",
+      title: "Taiko",
       id: 2,
+      image: mantaActive,
+    },
+    {
+      title: "SKALE",
+      id: 3,
       image: skaleActive,
     },
     {
       title: "CORE",
-      id: 3,
+      id: 4,
       image: coreActive,
     },
 
     {
       title: "Viction",
-      id: 4,
+      id: 5,
       image: victionActive,
     },
   ];
@@ -255,12 +260,15 @@ const NewLeaderBoard = ({
         setAllData(allMantaData);
         setOptionText2("manta");
       } else if (selectedChain.id - 1 === 2) {
+        setAllData(allTaikoData);
+        setOptionText2("taiko");
+      } else if (selectedChain.id - 1 === 3) {
         setAllData(allSkaleData);
         setOptionText2("skale");
-      } else if (selectedChain.id - 1 === 3) {
+      } else if (selectedChain.id - 1 === 4) {
         setAllData(allCoreData);
         setOptionText2("core");
-      } else if (selectedChain.id - 1 === 4) {
+      } else if (selectedChain.id - 1 === 5) {
         setAllData(allVictionData);
         setOptionText2("viction");
       }
@@ -276,14 +284,18 @@ const NewLeaderBoard = ({
         setOptionText2("manta");
       }
       if (selectedChain.id + 1 === 2) {
+        setAllData(allTaikoData);
+        setOptionText2("taiko");
+      }
+      if (selectedChain.id + 1 === 3) {
         setAllData(allSkaleData);
         setOptionText2("skale");
       }
-      if (selectedChain.id + 1 === 3) {
+      if (selectedChain.id + 1 === 4) {
         setAllData(allCoreData);
         setOptionText2("core");
       }
-      if (selectedChain.id + 1 === 4) {
+      if (selectedChain.id + 1 === 5) {
         setAllData(allVictionData);
         setOptionText2("viction");
       }
@@ -335,7 +347,7 @@ const NewLeaderBoard = ({
       prevSlide()
     }, 500);
   }, []);
-
+  
   return (
     <>
       <div className="row w-100 justify-content-start"></div>
@@ -363,13 +375,15 @@ const NewLeaderBoard = ({
                   <div
                     className={`optionswrapper-bg ${
                       optionText2 === "manta"
-                        ? "move-1" : 
+                        ? "move-1" :
+                        optionText2 === "taiko"
+                        ? "move-2" : 
                         optionText2 === "skale" ? 
-                        "move-2"
+                        "move-3"
                         : optionText2 === "core"
-                        ? "move-3"
-                        : optionText2 === "viction"
                         ? "move-4"
+                        : optionText2 === "viction"
+                        ? "move-5"
                         : ""
                     }`}
                   ></div>
@@ -389,7 +403,7 @@ const NewLeaderBoard = ({
                         handleOption("bnb");
                         setAllData(allBnbData);
                       }}
-                      style={{ width: "20%" }}
+                      style={{ width: "14%" }}
                     >
                       <img
                         src={
@@ -426,7 +440,7 @@ const NewLeaderBoard = ({
                         handleOption("manta");
                         setAllData(allMantaData);
                       }}
-                      style={{ width: "20%" }}
+                      style={{ width: "14%" }}
                     >
                       <img
                         src={
@@ -451,6 +465,45 @@ const NewLeaderBoard = ({
                         ? "Manta"
                         : ""}
                     </span>
+
+                    <span
+                      onMouseEnter={() => handleMouseEnter("taiko")}
+                      onMouseLeave={handleMouseLeave}
+                      className={`
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "taiko" && "otheroptionsActive"
+                     } optionText col-3`}
+                      onClick={() => {
+                        handleOption("taiko");
+                        setAllData(allTaikoData);
+                      }}
+                      style={{ width: "14%" }}
+                    >
+                      <img
+                        src={
+                          optionText2 === "taiko"
+                            ? mantaActive
+                            : optionText2 !== "taiko" && hoverState === "taiko"
+                            ? mantaWhite
+                            : mantaInactive
+                        }
+                        className={`${
+                          optionText2 === "taiko"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "Taiko"
+                        : windowSize.width < 786 && optionText2 === "taiko"
+                        ? "Taiko"
+                        : ""}
+                    </span>
+
                     <span
                       onMouseEnter={() => handleMouseEnter("skale")}
                       onMouseLeave={handleMouseLeave}
@@ -459,7 +512,7 @@ const NewLeaderBoard = ({
                      ${
                        optionText2 === "skale" && "otheroptionsActive"
                      } optionText col-3`}
-                      style={{ width: "20%" }}
+                      style={{ width: "14%" }}
                       onClick={() => {
                         handleOption("skale");
                         setAllData(allSkaleData);
@@ -496,7 +549,7 @@ const NewLeaderBoard = ({
                     ${
                       optionText2 === "core" && "otheroptionsActive"
                     } optionText col-3`}
-                      style={{ width: "20%" }}
+                      style={{ width: "14%" }}
                       onClick={() => {
                         handleOption("core");
                         setAllData(allCoreData);
@@ -535,7 +588,7 @@ const NewLeaderBoard = ({
                      ${
                        optionText2 === "viction" && "otheroptionsActive"
                      } optionText col-3`}
-                      style={{ width: "20%" }}
+                      style={{ width: "14%" }}
                       onClick={() => {
                         handleOption("viction");
                         setAllData(allVictionData);
