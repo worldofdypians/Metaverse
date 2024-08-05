@@ -30,6 +30,7 @@ import coreActive from "./assets/coreActive.webp";
 import victionActive from "./assets/victionActive.webp";
 import seiActive from "./assets/seiActive.webp";
 import multiversActive from "./assets/multiversActive.webp";
+import taikoLogo from './MarketNFTs/assets/taikoLogo.svg'
 import mantaLogo from "./assets/mantaLogo.png";
 import timepieceActive from "./assets/timepieceActive.png";
 import gateActive from "./assets/gateActive.png";
@@ -1575,7 +1576,7 @@ const MarketMint = ({
                                 style={{ bottom: "0px" }}
                               >
                                 Available only on Taiko
-                                <img src={mantaLogo} alt="" />
+                                <img src={taikoLogo} alt="" />
                               </span>
                             ) : mintTitle === "avax" ? (
                               <span
@@ -1893,7 +1894,7 @@ const MarketMint = ({
                                     : mintTitle === "manta"
                                     ? mantaLogo
                                     : mintTitle === "taiko"
-                                    ? mantaLogo
+                                    ? taikoLogo
                                     : mintTitle === "bnbchain" ||
                                       mintTitle === "opbnbchain"
                                     ? bnbLogo

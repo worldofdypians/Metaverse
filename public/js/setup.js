@@ -1484,7 +1484,7 @@ window.config = {
   nft_opbnb_address: "0x4e4A3f047fA8Fe69cB1a79a0452121ED6fca95ba",
   nft_multivers_address: "0x96A3F313679f2F5Ce098091BFf271bF4e848178B",
   nft_manta_address: "0xf894eBD7c4c850687D208246c42036EB951CE324",
-  nft_taiko_address: "0xf894eBD7c4c850687D208246c42036EB951CE324",
+  nft_taiko_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
 
   nft_dypius_premium_address: "0xd8B2C0D3400Ce23e62A94154d83172303C643685",
   ccip_eth_caws_address: "0x2824Ac0Eab15744396E763A698b55F4Fe983a757",
@@ -1529,8 +1529,7 @@ window.config = {
   daily_bonus_core_address: "0x5c3581fdb05e3a20fb109864dae75a5665a7f92d",
   daily_bonus_viction_address: "0xaf33f679be47733bD3aBb5b0b977B6ba3eD8d01E",
   daily_bonus_manta_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
-  daily_bonus_taiko_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
-
+  daily_bonus_taiko_address: "0x8E4917c1Ba9598fBbF66934CB17AC28c3b5849Ab",
 
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
   vote_duration_in_seconds: 259200, // 5 minutes for test
@@ -1591,7 +1590,6 @@ window.config = {
   subscription_sei_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
   subscription_manta_address: "0xF943437f92519e3AdE18f16cb045453B7a92e6D5",
   subscription_taiko_address: "0xF943437f92519e3AdE18f16cb045453B7a92e6D5",
-
 
   //DYP-ETH 3 days
   token_address: "0xBa7872534a6C9097d805d8BEE97e030f4e372e54",
@@ -1987,7 +1985,7 @@ window.config = {
     "0xb73603C5d87fA094B7314C74ACE2e64D165016fb": {
       symbol: "USDC",
       decimals: 6,
-    }, 
+    },
     "0x0Dc808adcE2099A9F62AA87D9670745AbA741746": {
       symbol: "WETH",
       decimals: 18,
@@ -2006,7 +2004,7 @@ window.config = {
     "0xb73603C5d87fA094B7314C74ACE2e64D165016fb": {
       symbol: "USDC",
       decimals: 6,
-    }, 
+    },
     "0x0Dc808adcE2099A9F62AA87D9670745AbA741746": {
       symbol: "WETH",
       decimals: 18,
@@ -4198,7 +4196,6 @@ class MANTA_NFT {
 }
 window.manta_nft = new MANTA_NFT();
 
-
 async function getContractTaikoNFT(key) {
   if (!window.cached_contracts[key]) {
     window.web3 = new Web3(window.ethereum);
@@ -4284,8 +4281,6 @@ class TAIKO_NFT {
   }
 }
 window.taiko_nft = new TAIKO_NFT();
-
-
 
 /**
  *
@@ -10680,7 +10675,6 @@ window.DAILY_BONUS_MANTA_ABI = [
   },
 ];
 
-
 window.DAILY_BONUS_TAIKO_ABI = [
   {
     inputs: [
@@ -10779,6 +10773,13 @@ window.DAILY_BONUS_TAIKO_ABI = [
   {
     inputs: [{ internalType: "address", name: "user", type: "address" }],
     name: "addPremiumUser",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address[]", name: "users", type: "address[]" }],
+    name: "addPremiumUsersInBulk",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -24777,26 +24778,10 @@ window.MANTA_NFT_ABI = [
 window.TAIKO_NFT_ABI = [
   {
     inputs: [
-      {
-        internalType: "string",
-        name: "name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "symbol",
-        type: "string",
-      },
-      {
-        internalType: "uint256",
-        name: "maxNftSupply",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "saleStart",
-        type: "uint256",
-      },
+      { internalType: "string", name: "name", type: "string" },
+      { internalType: "string", name: "symbol", type: "string" },
+      { internalType: "uint256", name: "maxNftSupply", type: "uint256" },
+      { internalType: "uint256", name: "saleStart", type: "uint256" },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
@@ -24841,12 +24826,7 @@ window.TAIKO_NFT_ABI = [
         name: "operator",
         type: "address",
       },
-      {
-        indexed: false,
-        internalType: "bool",
-        name: "approved",
-        type: "bool",
-      },
+      { indexed: false, internalType: "bool", name: "approved", type: "bool" },
     ],
     name: "ApprovalForAll",
     type: "event",
@@ -24873,18 +24853,8 @@ window.TAIKO_NFT_ABI = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
       {
         indexed: true,
         internalType: "uint256",
@@ -24898,41 +24868,21 @@ window.TAIKO_NFT_ABI = [
   {
     inputs: [],
     name: "BETA_PASS_PROVENANCE",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
+    outputs: [{ internalType: "string", name: "", type: "string" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "REVEAL_TIMESTAMP",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
     ],
     name: "approve",
     outputs: [],
@@ -24940,60 +24890,30 @@ window.TAIKO_NFT_ABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-    ],
+    inputs: [{ internalType: "address", name: "owner", type: "address" }],
     name: "balanceOf",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "baseURI",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
+    outputs: [{ internalType: "string", name: "", type: "string" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "betaPassPrice",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "costSaleIsActive",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },
@@ -25012,58 +24932,26 @@ window.TAIKO_NFT_ABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
+    inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
     name: "getApproved",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "operator",
-        type: "address",
-      },
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "address", name: "operator", type: "address" },
     ],
     name: "isApprovedForAll",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "maxBetaPassPurchase",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -25076,11 +24964,7 @@ window.TAIKO_NFT_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: "uint256",
-        name: "numberOfTokens",
-        type: "uint256",
-      },
+      { internalType: "uint256", name: "numberOfTokens", type: "uint256" },
     ],
     name: "mintBetaPassCost",
     outputs: [],
@@ -25090,58 +24974,28 @@ window.TAIKO_NFT_ABI = [
   {
     inputs: [],
     name: "name",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
+    outputs: [{ internalType: "string", name: "", type: "string" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "nextOwnerToExplicitlySet",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "owner",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
+    inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
     name: "ownerOf",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
@@ -25161,21 +25015,9 @@ window.TAIKO_NFT_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
     ],
     name: "safeTransferFrom",
     outputs: [],
@@ -25184,26 +25026,10 @@ window.TAIKO_NFT_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes",
-        name: "_data",
-        type: "bytes",
-      },
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+      { internalType: "bytes", name: "_data", type: "bytes" },
     ],
     name: "safeTransferFrom",
     outputs: [],
@@ -25213,28 +25039,14 @@ window.TAIKO_NFT_ABI = [
   {
     inputs: [],
     name: "saleIsActive",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "operator",
-        type: "address",
-      },
-      {
-        internalType: "bool",
-        name: "approved",
-        type: "bool",
-      },
+      { internalType: "address", name: "operator", type: "address" },
+      { internalType: "bool", name: "approved", type: "bool" },
     ],
     name: "setApprovalForAll",
     outputs: [],
@@ -25242,26 +25054,14 @@ window.TAIKO_NFT_ABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "string",
-        name: "tokenURI",
-        type: "string",
-      },
-    ],
+    inputs: [{ internalType: "string", name: "tokenURI", type: "string" }],
     name: "setBaseURI",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "newPrice",
-        type: "uint256",
-      },
-    ],
+    inputs: [{ internalType: "uint256", name: "newPrice", type: "uint256" }],
     name: "setBetaPassPrice",
     outputs: [],
     stateMutability: "nonpayable",
@@ -25269,11 +25069,7 @@ window.TAIKO_NFT_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: "string",
-        name: "provenanceHash",
-        type: "string",
-      },
+      { internalType: "string", name: "provenanceHash", type: "string" },
     ],
     name: "setProvenanceHash",
     outputs: [],
@@ -25282,11 +25078,7 @@ window.TAIKO_NFT_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: "uint256",
-        name: "revealTimeStamp",
-        type: "uint256",
-      },
+      { internalType: "uint256", name: "revealTimeStamp", type: "uint256" },
     ],
     name: "setRevealTimestamp",
     outputs: [],
@@ -25296,153 +25088,67 @@ window.TAIKO_NFT_ABI = [
   {
     inputs: [],
     name: "startingIndex",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "startingIndexBlock",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "bytes4",
-        name: "interfaceId",
-        type: "bytes4",
-      },
-    ],
+    inputs: [{ internalType: "bytes4", name: "interfaceId", type: "bytes4" }],
     name: "supportsInterface",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "symbol",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
+    outputs: [{ internalType: "string", name: "", type: "string" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-    ],
+    inputs: [{ internalType: "uint256", name: "index", type: "uint256" }],
     name: "tokenByIndex",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "uint256", name: "index", type: "uint256" },
     ],
     name: "tokenOfOwnerByIndex",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
+    inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
     name: "tokenURI",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
+    outputs: [{ internalType: "string", name: "", type: "string" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "totalSupply",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
     ],
     name: "transferFrom",
     outputs: [],
@@ -25450,13 +25156,7 @@ window.TAIKO_NFT_ABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
     name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
@@ -51573,7 +51273,6 @@ async function getEstimatedTokenSubscriptionAmountManta(tokenAddress) {
     .getEstimatedTokenSubscriptionAmount(tokenAddress, 0)
     .call();
 }
-
 
 async function getEstimatedTokenSubscriptionAmountTaiko(tokenAddress) {
   const taikoContract = new window.taikoWeb3.eth.Contract(
