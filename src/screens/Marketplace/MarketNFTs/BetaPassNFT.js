@@ -26,6 +26,7 @@ import bnbLogo from "../assets/bnbIcon.svg";
 import skaleLogo from "../assets/skaleLogo.svg";
 import coreLogo from "../assets/coreLogo.svg";
 import immutableLogo from "../assets/immutableLogo.svg";
+import taikoLogo from "./assets/taikoLogo.svg";
 import multiversLogo from "../assets/multiversLogo.svg";
 
 import victionLogo from "../assets/victionLogo.svg";
@@ -301,6 +302,12 @@ const BetaPassNFT = ({
     id: "manta",
     cardTitle: "Manta Beta Pass",
     title: "Manta Beta Pass",
+    background: "manta-mint-bg",
+  };
+  const taikoData = {
+    id: "taiko",
+    cardTitle: "Taiko Beta Pass",
+    title: "Taiko Beta Pass",
     background: "manta-mint-bg",
   };
 
@@ -753,6 +760,10 @@ const BetaPassNFT = ({
       setSelectedMint(mantaData);
       setMintTitle("manta");
     }
+    else if (locationState.includes("/beta-pass/taiko")) {
+      setSelectedMint(taikoData);
+      setMintTitle("taiko");
+    }
   }, [locationState]);
 
   useEffect(() => {
@@ -855,6 +866,8 @@ const BetaPassNFT = ({
                         ? "BNB Chain"
                         : mintTitle === "manta"
                         ? "Manta"
+                        : mintTitle === "taiko"
+                        ? "Taiko"
                         : mintTitle}{" "}
                       Beta Pass
                     </h6>
@@ -887,6 +900,8 @@ const BetaPassNFT = ({
                           ? "BNB Chain"
                           : mintTitle === "manta"
                           ? "Manta Network"
+                          : mintTitle === "taiko"
+                          ? "Taiko Network"
                           : "our partners"}
                         .{" "}
                         {mintTitle === "skale"
@@ -955,6 +970,8 @@ const BetaPassNFT = ({
                         ? bnbBetaBanner
                         : mintTitle === "manta"
                         ? mantaBanner
+                        : mintTitle === "taiko"
+                        ? mantaBanner
                         : betapassBanner
                     }
                     className="w-100"
@@ -969,6 +986,24 @@ const BetaPassNFT = ({
                 {windowSize.width > 786 ? (
                   <>
                     <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
+                      <NavLink
+                        to={"/marketplace/beta-pass/taiko"}
+                        className={`${
+                          location.pathname.includes("taiko") &&
+                          "selected-beta-pass-item"
+                        } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                        onClick={() => {
+                          setSelectedMint(taikoData);
+                          setMintTitle("taiko");
+                        }}
+                      >
+                        <img
+                          src={taikoLogo}
+                          className="beta-pass-chain-img"
+                          alt=""
+                        />
+                        <span>Taiko</span>
+                      </NavLink>
                       <NavLink
                         to={"/marketplace/beta-pass/manta"}
                         className={`${
@@ -1222,6 +1257,24 @@ const BetaPassNFT = ({
                 ) : (
                   <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
                     <NavLink
+                      to={"/marketplace/beta-pass/taiko"}
+                      className={`${
+                        location.pathname.includes("taiko") &&
+                        "selected-beta-pass-item"
+                      } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                      onClick={() => {
+                        setSelectedMint(taikoData);
+                        setMintTitle("taiko");
+                      }}
+                    >
+                      <img
+                        src={taikoLogo}
+                        className="beta-pass-chain-img"
+                        alt=""
+                      />
+                      <span>Taiko</span>
+                    </NavLink>
+                    <NavLink
                       to={"/marketplace/beta-pass/manta"}
                       className={`${
                         location.pathname.includes("manta") &&
@@ -1467,6 +1520,7 @@ const BetaPassNFT = ({
                   mintTitle !== "skale" &&
                   mintTitle !== "core" &&
                   mintTitle !== "manta" &&
+                  mintTitle !== "taiko" &&
                   mintTitle !== "bnb" &&
                   mintTitle !== "viction" &&
                   mintTitle !== "sei" &&
@@ -1547,6 +1601,7 @@ const BetaPassNFT = ({
                     mintTitle === "viction" ||
                     mintTitle === "core" ||
                     mintTitle === "manta" ||
+                    mintTitle === "taiko" ||
                     mintTitle === "bnb" ||
                     mintTitle === "sei" ||
                     mintTitle === "multiversx"
@@ -1579,6 +1634,7 @@ const BetaPassNFT = ({
                         mintTitle !== "sei" &&
                         mintTitle !== "core" &&
                         mintTitle !== "manta" &&
+                        mintTitle !== "taiko" &&
                         mintTitle !== "bnb" &&
                         mintTitle !== "viction" &&
                         mintTitle !== "multiversx" && (
@@ -1599,6 +1655,7 @@ const BetaPassNFT = ({
                         mintTitle === "skale" ||
                         mintTitle === "core" ||
                         mintTitle === "manta" ||
+                        mintTitle === "taiko" ||
                         mintTitle === "bnb" ||
                         mintTitle === "sei" ||
                         mintTitle === "viction" ||
@@ -1680,6 +1737,7 @@ const BetaPassNFT = ({
                           mintTitle === "sei" ||
                           mintTitle === "core" ||
                           mintTitle === "manta" ||
+                          mintTitle === "taiko" ||
                           mintTitle === "viction" ||
                           mintTitle === "multiversx") && (
                           <div className="position-relative">
@@ -1724,6 +1782,21 @@ const BetaPassNFT = ({
                           Coming Soon
                         </div>
                       )}
+                      {mintTitle === "taiko" && (
+                        <div
+                          className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
+                          // href="https://sweepwidget.com/c/core-wod-giveaway"
+                          // target="_blank"
+                          // rel="noreferrer"
+                        >
+                          <img
+                            src={taikoLogo}
+                            style={{ width: 20, height: 20 }}
+                            alt=""
+                          />{" "}
+                          Coming Soon
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -1739,6 +1812,7 @@ const BetaPassNFT = ({
                     mintTitle === "sei" ||
                     mintTitle === "core" ||
                     mintTitle === "manta" ||
+                    mintTitle === "taiko" ||
                     mintTitle === "bnb" ||
                     mintTitle === "viction" ||
                     mintTitle === "multiversx"
@@ -1755,6 +1829,7 @@ const BetaPassNFT = ({
                   mintTitle !== "skale" &&
                   mintTitle !== "core" &&
                   mintTitle !== "manta" &&
+                  mintTitle !== "taiko" &&
                   mintTitle !== "bnb" &&
                   mintTitle !== "sei" &&
                   mintTitle !== "viction" &&
@@ -2025,7 +2100,7 @@ const BetaPassNFT = ({
                      mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
                     >
                       {!alreadyRegistered &&
-                        (mintTitle === "sei" || mintTitle === "manta") && (
+                        (mintTitle === "sei" || mintTitle === "manta" || mintTitle === "taiko") && (
                           <div className="d-flex align-items-center justify-content-around gap-2">
                             <button
                               className={
@@ -3418,10 +3493,12 @@ const BetaPassNFT = ({
                     </div> */}
 
                         {alreadyRegistered &&
-                          (mintTitle === "sei" || mintTitle === "manta") && (
+                          (mintTitle === "sei" || mintTitle === "manta" || mintTitle === "taiko") && (
                             <h6 className="land-name">
                               {(mintTitle === "sei" && totalseiNft > 0) ||
-                              (mintTitle === "manta" && totalMantaNft > 0)
+                              (mintTitle === "manta" && totalMantaNft > 0) ||
+                              (mintTitle === "taiko" && totalTaikoNft > 0)
+
                                 ? "My NFT"
                                 : "Registered"}{" "}
                             </h6>
@@ -3435,7 +3512,7 @@ const BetaPassNFT = ({
                         )} */}
                         {!alreadyRegistered &&
                           activeTab === "create" &&
-                          (mintTitle === "sei" || mintTitle === "manta") && (
+                          (mintTitle === "sei" || mintTitle === "manta" || mintTitle === "taiko") && (
                             <div>
                               <ul className="timeline m-0 p-0" id="timeline">
                                 <li className="col-3 li complete">
@@ -3479,7 +3556,7 @@ const BetaPassNFT = ({
                           )}
                         {playerCreation === false &&
                           !alreadyRegistered &&
-                          (mintTitle === "sei" || mintTitle === "manta") && (
+                          (mintTitle === "sei" || mintTitle === "manta" || mintTitle === "taiko") && (
                             <SignUpGecko
                               onSuccessVerify={(value) => {
                                 setplayerCreation(value);
@@ -3507,7 +3584,7 @@ const BetaPassNFT = ({
                         {playerCreation === true &&
                           linkWallet === false &&
                           !alreadyRegistered &&
-                          (mintTitle === "sei" || mintTitle === "manta") && (
+                          (mintTitle === "sei" || mintTitle === "manta" || mintTitle === "taiko") && (
                             <PlayerCreationGecko
                               onSuccessCreation={() => {
                                 setLinkWallet(true);
@@ -3518,7 +3595,7 @@ const BetaPassNFT = ({
 
                         {linkWallet === true &&
                           !alreadyRegistered &&
-                          (mintTitle === "sei" || mintTitle === "manta") && (
+                          (mintTitle === "sei" || mintTitle === "manta" || mintTitle === "taiko") && (
                             <div className="d-flex flex-column gap-4 justify-content-between p-4">
                               <span className={"createplayertxt"}>
                                 *Make sure to connect the same wallet address as
@@ -3722,6 +3799,107 @@ const BetaPassNFT = ({
                                     >
                                       {"MNBP"}
                                       {`#${myMantaNfts[0]}`}
+                                    </h6>
+                                  </div>
+                                </div>
+                              </NavLink>
+                            )}
+                            <span className="footertxt-coingecko">
+                              After NFT distribution, you can view{" "}
+                              {selectedMint.cardTitle}.
+                            </span>
+                            <div className="summaryseparator mt-3 mb-3"></div>
+                            <div className="d-flex align-items-center gap-2 justify-content-between">
+                              <div className="opacitywrapper4 m-0">
+                                <a
+                                  className="game-event-download text-white  d-flex align-items-center gap-2"
+                                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={epicwhite}
+                                    alt="icon"
+                                    className="epicgame2"
+                                  />
+                                  Download
+                                </a>
+                              </div>
+                              <NavLink
+                                to="/account"
+                                className="accountbtn-coingecko btn d-flex align-items-center gap-1"
+                              >
+                                <img src={user} alt="" className="user2" />
+                                My Account
+                              </NavLink>
+                            </div>
+                          </div>
+                        )}
+                        
+                        {alreadyRegistered && mintTitle === "taiko" && (
+                          <div className="d-flex flex-column justify-content-between h-100">
+                            {mintTitle === "taiko" && totalTaikoNft === 0 ? (
+                              <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
+                                <div
+                                  className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}
+                                  style={{
+                                    height: windowSize.width > 991 ? 210 : 295,
+                                  }}
+                                ></div>
+                                <div
+                                  className="genesis-desc nomask px-3 py-2 position-relative"
+                                  style={{
+                                    bottom: "5px",
+                                    minWidth: "100%",
+                                    maxWidth: "100%",
+                                  }}
+                                >
+                                  <h6
+                                    className="land-desc w-75 m-auto text-center justify-content-center"
+                                    style={{ fontWeight: 500, fontSize: 16 }}
+                                  >
+                                    {selectedMint.cardTitle}
+                                  </h6>
+                                </div>
+                              </div>
+                            ) : (
+                              <NavLink
+                                to={`/marketplace/nft/${myTaikoNfts[0]}/${window.config.nft_taiko_address}`}
+                                onClick={() => {
+                                  updateViewCount(
+                                    myTaikoNfts[0],
+                                    window.config.nft_taiko_address
+                                  );
+                                }}
+                              >
+                                <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
+                                  <div
+                                    className={`coingeckoempty-wrapper  ${
+                                      totalTaikoNft > 0 && mintTitle === "taiko"
+                                        ? "taiko-active"
+                                        : "conflux-empty"
+                                    } d-flex justify-content-center align-items-center p-3 position-relative`}
+                                    style={{
+                                      height:
+                                        windowSize.width > 991 ? 210 : 295,
+                                    }}
+                                  ></div>
+                                  <div
+                                    className="genesis-desc nomask px-3 py-2 position-relative"
+                                    style={{
+                                      bottom: "20px",
+                                      minWidth: "100%",
+                                      maxWidth: "100%",
+                                    }}
+                                  >
+                                    <h6
+                                      className="land-desc w-75 m-auto text-center justify-content-center"
+                                      style={{
+                                        fontWeight: 500,
+                                        fontSize: 16,
+                                      }}
+                                    >
+                                      {"TKBP"}
+                                      {`#${myTaikoNfts[0]}`}
                                     </h6>
                                   </div>
                                 </div>

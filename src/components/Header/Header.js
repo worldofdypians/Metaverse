@@ -50,6 +50,7 @@ import eth from "./assets/eth.svg";
 import base from "./assets/base.svg";
 import conflux from "./assets/conflux.svg";
 import manta from "./assets/manta.png";
+import taiko from "./assets/taiko.svg";
 import sei from "./assets/sei.svg";
 import multiversx from "./assets/multiversx.svg";
 
@@ -772,7 +773,7 @@ const Header = ({
                               : mantaState === true
                               ? manta
                               : taikoState === true
-                              ? manta
+                              ? taiko
                               : // : seiState === true
                                 // ? sei
                                 error
@@ -833,7 +834,7 @@ const Header = ({
                     opBNB Chain
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => switchNetwork("0x28c58", 167000 )}>
-                    <img src={core} width={20} height={20} alt="" />
+                    <img src={taiko} width={20} height={20} alt="" />
                     Taiko
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => switchNetwork("0x45c", 1116)}>

@@ -26,6 +26,9 @@ import coreActive from "./assets/coreActive.svg";
 import coreInactive from "./assets/coreInactive.svg";
 import victionActive from "./assets/victionActive.svg";
 import victionInactive from "./assets/victionInactive.svg";
+import taikoActive from "./assets/taikoActive.svg";
+import taikoInactive from "./assets/taikoInactive.svg";
+import taikoWhite from "./assets/taikoWhite.svg";
 import multiversxActive from "./assets/multiversxActive.svg";
 import seiActive from "./assets/seiActive.svg";
 import seiInactive from "./assets/seiInactive.svg";
@@ -125,7 +128,7 @@ const NewLeaderBoard = ({
     {
       title: "Taiko",
       id: 2,
-      image: mantaActive,
+      image: taikoActive,
     },
     {
       title: "SKALE",
@@ -483,10 +486,10 @@ const NewLeaderBoard = ({
                       <img
                         src={
                           optionText2 === "taiko"
-                            ? mantaActive
+                            ? taikoActive
                             : optionText2 !== "taiko" && hoverState === "taiko"
-                            ? mantaWhite
-                            : mantaInactive
+                            ? taikoWhite
+                            : taikoInactive
                         }
                         className={`${
                           optionText2 === "taiko"

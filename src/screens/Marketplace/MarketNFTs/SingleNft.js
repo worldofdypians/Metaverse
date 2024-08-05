@@ -21,6 +21,7 @@ import ethIcon from "../assets/ethIcon.svg";
 import bnbLogo from "../assets/bnbIcon.svg";
 import confluxLogo from "../assets/confluxLogo.svg";
 import mantaLogo from "../assets/mantaLogo.png";
+import taikoLogo from "./assets/taikoLogo.svg";
 import baseLogo from "../assets/baseLogo.svg";
 import avaxLogo from "../assets/avaxLogo.svg";
 import skaleLogo from "../assets/skaleIcon.svg";
@@ -204,6 +205,7 @@ const SingleNft = ({
     if (
       type !== "conflux" &&
       type !== "manta" &&
+      type !== "taiko" &&
       type !== "doge" &&
       type !== "cmc" &&
       type !== "coingecko" &&
@@ -531,6 +533,22 @@ const SingleNft = ({
       const nft_contract = new window.mantaWeb3.eth.Contract(
         window.MANTA_NFT_ABI,
         window.config.nft_manta_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      console.log(owner);
+
+      setowner(owner);
+    }
+    else if (type === "taiko") {
+      const nft_contract = new window.taikoWeb3.eth.Contract(
+        window.TAIKO_NFT_ABI,
+        window.config.nft_taiko_address
       );
       const owner = await nft_contract.methods
         .ownerOf(Id)
@@ -1580,6 +1598,9 @@ const SingleNft = ({
           window.config.nft_manta_address.toLowerCase()
         ? "manta"
         : nftAddress.toLowerCase() ===
+          window.config.nft_taiko_address.toLowerCase()
+        ? "taiko"
+        : nftAddress.toLowerCase() ===
           window.config.nft_doge_address.toLowerCase()
         ? "doge"
         : nftAddress.toLowerCase() ===
@@ -1669,6 +1690,9 @@ const SingleNft = ({
     }
     else if (nftAddress.toLowerCase() === window.config.nft_manta_address.toLowerCase()) {
       setType("manta");
+    }
+    else if (nftAddress.toLowerCase() === window.config.nft_taiko_address.toLowerCase()) {
+      setType("taiko");
     }
     else if (
       nftAddress.toLowerCase() === window.config.nft_doge_address.toLowerCase()
@@ -1790,8 +1814,7 @@ const SingleNft = ({
   }, [purchaseStatus, data]);
 
 
-console.log(nftAddress.toLowerCase(),
-window.config.nft_manta_address.toLowerCase(), "type");
+
 
   return (
     <div
@@ -1882,6 +1905,19 @@ window.config.nft_manta_address.toLowerCase(), "type");
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   Manta{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
+            )
+            : type === "taiko" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  Taiko{" "}
                   <h6
                     className="market-banner-title m-0"
                     style={{ color: "#8C56FF", lineHeight: "80%" }}
@@ -2051,6 +2087,9 @@ window.config.nft_manta_address.toLowerCase(), "type");
                           window.config.nft_manta_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+400.png`
                         : nftAddress.toLowerCase() ===
+                          window.config.nft_taiko_address.toLowerCase()
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+400.png`
+                        : nftAddress.toLowerCase() ===
                           window.config.nft_doge_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
                         : nftAddress.toLowerCase() ===
@@ -2107,6 +2146,8 @@ window.config.nft_manta_address.toLowerCase(), "type");
                           ? confluxLogo
                           : type === "manta"
                           ? mantaLogo
+                          : type === "taiko"
+                          ? taikoLogo
                           : type === "base" ||
                             type === "cawsbase" ||
                             type === "landbase"
@@ -2154,6 +2195,8 @@ window.config.nft_manta_address.toLowerCase(), "type");
                       ? "MultiversX"
                       : type === "core"
                       ? "CORE"
+                      : type === "taiko"
+                      ? "Taiko"
                       : type === "opbnb"
                       ? "opBNB Chain"
                       : type === "immutable"
@@ -2190,6 +2233,8 @@ window.config.nft_manta_address.toLowerCase(), "type");
                         ? "Conflux Beta Pass"
                         : type === "manta"
                         ? "Manta Beta Pass"
+                        : type === "taiko"
+                        ? "Taiko Beta Pass"
                         : type === "doge"
                         ? "Dogecoin Beta Pass"
                         : type === "bnb"
@@ -2359,6 +2404,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                       type !== "gate" &&
                       type !== "conflux" &&
                       type !== "manta" &&
+                      type !== "taiko" &&
                       type !== "base" &&
                       type !== "doge" &&
                       type !== "bnb"&&
@@ -2535,6 +2581,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                       type !== "gate" &&
                       type !== "conflux" &&
                       type !== "manta" &&
+                      type !== "taiko" &&
                       type !== "base" &&
                       type !== "doge" &&
                       type !== "bnb" &&
@@ -2737,6 +2784,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                         type === "gate" ||
                         type === "conflux" ||
                         type === "manta" ||
+                        type === "taiko" ||
                         type === "base" ||
                         type === "doge" ||
                         type === "bnb" ||
@@ -2793,6 +2841,8 @@ window.config.nft_manta_address.toLowerCase(), "type");
                                 ? `https://scan.coredao.org/address/${owner}`
                                 : type === "manta"
                                 ? `https://pacific-explorer.manta.network/address/${owner}`
+                                : type === "taiko"
+                                ? `https://taikoscan.io/address/${owner}`
                                 : type === 'opbnb'
                                 ? `https://opbnbscan.com/address/${owner}`
                                 : type === "immutable"
@@ -2986,6 +3036,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                         type !== "gate" &&
                         type !== "conflux" &&
                         type !== "manta" &&
+                        type !== "taiko" &&
                         type !== "base" &&
                         type !== "cmc" &&
                         type !== "viction" &&
@@ -3062,6 +3113,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                         type !== "gate" &&
                         type !== "conflux" &&
                         type !== "manta" &&
+                        type !== "taiko" &&
                         type !== "base" &&
                         type !== "doge" &&
                         type !== "bnb"  &&
@@ -3096,6 +3148,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                         type !== "gate" &&
                         type !== "conflux" &&
                         type !== "manta" &&
+                        type !== "taiko" &&
                         type !== "base" &&
                         type !== "doge" &&
                         type !== "bnb"  &&
@@ -3146,6 +3199,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
             type !== "gate" &&
             type !== "conflux" &&
             type !== "manta" &&
+            type !== "taiko" &&
             type !== "base" &&
             type !== "doge" &&
             type !== "bnb"  &&
@@ -3417,6 +3471,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
             type === "gate" ||
             type === "conflux" ||
             type === "manta" ||
+            type === "taiko" ||
             type === "base" ||
             type === "doge" ||
             type === "bnb" ||
@@ -3457,6 +3512,8 @@ window.config.nft_manta_address.toLowerCase(), "type");
                             ? "ETH"
                             : type === "manta"
                             ? "MANTA"
+                            : type === "taiko"
+                            ? "ETH"
                             : type === "skale"
                             ? "SKL"
                             : type === "core"

@@ -472,6 +472,7 @@ const WalletBalance = ({
     let opbnbNftsArray = [];
     let multiversNftsArray = [];
     let mantaNftsArray = [];
+    let taikoNftsArray = [];
 
 
     // console.log(allListed, "allListed");
@@ -829,6 +830,21 @@ const WalletBalance = ({
           })
         );
       }
+      if (myTaikoNfts && myTaikoNfts.length > 0) {
+        await Promise.all(
+          myTaikoNfts.map(async (i) => {
+            taikoNftsArray.push({
+              nftAddress: window.config.nft_taiko_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "taiko",
+              chain: 167000,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
 
       if (mySkaleNfts && mySkaleNfts.length > 0) {
         await Promise.all(
@@ -1006,6 +1022,7 @@ const WalletBalance = ({
         ...victionNftsArray,
         ...immutableNftsArray,
         ...mantaNftsArray,
+        ...taikoNftsArray,
         ...coreNftsArray,
         ...confluxNftsArray,
         ...gateNftsArray,
@@ -1252,6 +1269,9 @@ const WalletBalance = ({
       let mantaFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_manta_address
       );
+      let taikoFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_taiko_address
+      );
 
       const allBetapassArray = [
         ...coingeckoFilter,
@@ -1259,6 +1279,7 @@ const WalletBalance = ({
         ...gateFilter,
         ...dogeFilter,
         ...mantaFilter,
+        ...taikoFilter,
         ...cmcFilter,
         ...baseFilter,
         ...skaleFilter,
@@ -2034,7 +2055,7 @@ const WalletBalance = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                   : item.type === "multivers"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
-                                  : item.type === "manta"
+                                  : item.type === "taiko"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
                                   : item.type === "base"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
@@ -2081,6 +2102,8 @@ const WalletBalance = ({
                                   ? "MXBP"
                                   : item.type === "manta"
                                   ? "MNBP"
+                                  : item.type === "taiko"
+                                  ? "TKBP"
                                   : item.type === "gate"
                                   ? "GTBP"
                                   : item.type === "bnb"
@@ -3060,6 +3083,9 @@ const WalletBalance = ({
                                 : nft.nftAddress ===
                                   window.config.nft_manta_address
                                 ? "manta"
+                                : nft.nftAddress ===
+                                  window.config.nft_taiko_address
+                                ? "taiko"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3128,6 +3154,9 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_manta_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_taiko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_opbnb_address
@@ -3217,6 +3246,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_manta_address
                                     ? "MNBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_taiko_address
+                                    ? "TKBP"
                                     : "CAWS Timepiece"}{" "}
                                    { nft.nftAddress ===
                                       window.config.nft_immutable_address ? '' : `#${nft.tokenId}`}
@@ -3396,6 +3428,9 @@ const WalletBalance = ({
                                 : nft.nftAddress ===
                                   window.config.nft_manta_address
                                 ? "manta"
+                                : nft.nftAddress ===
+                                  window.config.nft_taiko_address
+                                ? "taiko"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3486,6 +3521,9 @@ const WalletBalance = ({
                                       window.config.nft_manta_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_taiko_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -3557,6 +3595,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_manta_address
                                     ? "MNBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_taiko_address
+                                    ? "TKBP"
                                     : "CAWS Timepiece"}{" "}
                                     { nft.nftAddress ===
                                       window.config.nft_immutable_address ? '' : `#${nft.tokenId}`}
