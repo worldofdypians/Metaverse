@@ -394,7 +394,7 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const { BigNumber } = window;
-  const { connector, account, chainId, isActive, isActivating } =
+  const { connector, account, chainId, active, isActive, isActivating } =
     useWeb3React();
 
   useEagerlyConnect();
@@ -615,7 +615,7 @@ function App() {
   const web3Name = createWeb3Name();
 
   const searchDomain = async (domain) => {
-    if (window.ethereum) {
+    if (window.ethereum && window.WALLET_TYPE!=='binance') {
       const provider = new providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const register = new SIDRegister({ signer, chainId: 56 });
@@ -628,11 +628,24 @@ function App() {
       } else {
         setAvailableDomain(available);
       }
-      console.log(available, domain.length);
+    } else if (window.WALLET_TYPE ==='binance' && library) {
+      const provider = library;
+      const signer = provider.getSigner();
+      const register = new SIDRegister({ signer, chainId: 56 });
+      const available = await register.getAvailable(domain);
+      const price = await register.getRentPrice(domain, 1);
+      const newPrice = new BigNumber(price._hex / 1e18).toFixed();
+      setDomainPrice(newPrice);
+      if (domain == "") {
+        setAvailableDomain("initial");
+      } else {
+        setAvailableDomain(available);
+      }
     }
   };
 
   const registerDomain = async (label, years) => {
+    if (window.ethereum && window.WALLET_TYPE!=='binance') {
     setLoadingDomain(true);
     const provider = new providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
@@ -661,6 +674,36 @@ function App() {
         }, 5000);
         console.log(e);
       });
+    }   else if (window.WALLET_TYPE==='binance' && library) {
+      setLoadingDomain(true);
+      const provider = library;
+      const signer = provider.getSigner();
+      const address = await signer.getAddress();
+      const register = new SIDRegister({ signer, chainId: 56 });
+      await register
+        .register(label, address, years, {
+          setPrimaryName: true,
+          referrer: "dyp.bnb",
+        })
+        .then(() => {
+          setSuccessMessage("You have successfully registered your .bnb domain");
+          setSuccessDomain(true);
+          setTimeout(() => {
+            setSuccessMessage("");
+            setSuccessDomain(false);
+          }, 5000);
+          setLoadingDomain(false);
+        })
+        .catch((e) => {
+          setLoadingDomain(false);
+          setSuccessDomain(false);
+          setSuccessMessage(`Something went wrong: ${e?.data?.message}`);
+          setTimeout(() => {
+            setSuccessMessage("");
+          }, 5000);
+          console.log(e);
+        });
+      }
   };
 
   const getTokenData = async () => {
@@ -790,7 +833,7 @@ function App() {
         });
     });
   };
-
+  // console.log(isConnected, coinbase);
   const checkConnection2 = async () => {
     const logout = localStorage.getItem("logout");
     if (logout !== "true") {
@@ -863,14 +906,22 @@ function App() {
   };
 
   const checkNetworkId = async () => {
-    if (window.ethereum && !window.gatewallet) {
+    if (
+      window.ethereum &&
+      !window.gatewallet &&
+      window.WALLET_TYPE !== "binance"
+    ) {
       window.ethereum
         .request({ method: "net_version" })
         .then((data) => {
           setChainId(parseInt(data));
         })
         .catch(console.error);
-    } else if (window.ethereum && window.gatewallet) {
+    } else if (
+      window.ethereum &&
+      window.gatewallet &&
+      window.WALLET_TYPE !== "binance"
+    ) {
       await provider
         ?.detectNetwork()
         .then((data) => {
@@ -932,14 +983,11 @@ function App() {
   };
 
   const handleConnectBinance = async () => {
-    await window.ethereum?.enable().catch((e) => {
-      console.error("error", e);
-    });
     await activate(binanceConnector).then(() => {
-      setIsConnected(true);
-      setCoinbase(account);
-      setwalletModal(false);
       setSuccess(true);
+      setwalletModal(false);
+      window.WALLET_TYPE = "binance";
+      window.getCoinbase()
     });
   };
 
@@ -1052,7 +1100,7 @@ function App() {
       setMyLandNFTs(nfts);
     } else setMyLandNFTs([]);
   };
-
+console.log(window.WALLET_TYPE)
   const myNft2 = async () => {
     let myNft = await window.myNftListContract(coinbase);
     if (myNft && myNft.length > 0) {
@@ -1305,7 +1353,7 @@ function App() {
     if (coinbase !== null && coinbase !== undefined) {
       const infura_web3 = window.infuraWeb3;
       let nfts_contract = new infura_web3.eth.Contract(
-        window.NFT_ABI,
+        window.CAWS_ABI,
         window.config.nft_address
       );
 
@@ -1713,6 +1761,14 @@ function App() {
       }
     }
   };
+
+  useEffect(() => {
+    if (account && active) {
+      setCoinbase(account);
+      setIsConnected(active);
+      setChainId(chainId);
+    }
+  }, [account, active,chainId]);
 
   useEffect(() => {
     if (
@@ -2549,7 +2605,7 @@ function App() {
       window.ethereum &&
       window.ethereum.isConnected() === true &&
       !window.gatewallet &&
-      !isInBinance()
+      !isInBinance() && window.WALLET_TYPE !=='binance'
     ) {
       if (
         logout === "false" ||
@@ -2565,16 +2621,16 @@ function App() {
       logout === "false" ||
       window.coinbase_address ===
         "0x0000000000000000000000000000000000000000" ||
-      window.coin98
+      window.coin98 && window.WALLET_TYPE !=='binance'
     ) {
       checkConnection2();
-    } else if (window.gatewallet && isActive) {
+    } else if (window.gatewallet && isActive && window.WALLET_TYPE !=='binance') {
       setIsConnected(isActive);
       if (account) {
         fetchAvatar(account);
         setCoinbase(account);
       }
-    } else if (isInBinance() || account) {
+    } else if (isInBinance() || account || window.WALLET_TYPE ==='binance') {
       setIsConnected(true);
       if (account) {
         fetchAvatar(account);
@@ -2586,7 +2642,7 @@ function App() {
       localStorage.setItem("logout", "true");
     }
     checkNetworkId();
-  }, [coinbase, networkId, isActive, account]);
+  }, [coinbase, networkId, active, account]);
 
   useEffect(() => {
     checkNetworkId();
@@ -2611,7 +2667,7 @@ function App() {
     if (isConnected === true && coinbase && networkId === 1) {
       myNft2();
       myLandNft();
-    } else if (isConnected === true && coinbase && networkId === 56) {
+    } else if (isConnected === true && coinbase && networkId === 56 && window.WALLET_TYPE !=='' && window.WALLET_TYPE !=='binance') {
       myNftBNB();
       myLandNftBNB();
     } else if (isConnected === true && coinbase && networkId === 43114) {
@@ -2815,292 +2871,6 @@ function App() {
     }
   };
 
-  // const refreshSubscription = async (addr) => {
-  //   let subscribedPlatformTokenAmountETH;
-  //   let subscribedPlatformTokenAmountCfx;
-  //   let subscribedPlatformTokenAmountBNB;
-  //   let subscribedPlatformTokenAmountBNB2;
-  //   let subscribedPlatformTokenAmountBNB1;
-
-  //   let subscribedPlatformTokenAmountAvax;
-  //   let subscribedPlatformTokenAmountBase;
-  //   let subscribedPlatformTokenAmountSkale;
-  //   let subscribedPlatformTokenAmountCore;
-  //   let subscribedPlatformTokenAmountViction;
-  //   let subscribedPlatformTokenAmountSei;
-
-  //   const web3eth = window.infuraWeb3;
-  //   const web3cfx = window.confluxWeb3;
-  //   const web3base = window.baseWeb3;
-  //   const web3bnb = window.bscWeb3;
-  //   const web3avax = window.avaxWeb3;
-  //   const web3skale = window.skaleWeb3;
-  //   const web3core = window.coreWeb3;
-  //   const web3viction = window.victionWeb3;
-  //   const web3sei = window.seiWeb3;
-
-  //   const CfxABI = window.SUBSCRIPTION_CFX_ABI;
-  //   const BaseABI = window.SUBSCRIPTION_BASE_ABI;
-  //   const EthABI = window.SUBSCRIPTION_NEWETH_ABI;
-  //   const AvaxABI = window.SUBSCRIPTION_NEWAVAX_ABI;
-  //   const BnbABI = window.SUBSCRIPTION_NEWBNB_ABI;
-  //   const Bnb2ABI = window.SUBSCRIPTION_NEWBNB2_ABI;
-
-  //   const SkaleABI = window.SUBSCRIPTION_SKALE_ABI;
-  //   const CoreABI = window.SUBSCRIPTION_CORE_ABI;
-  //   const VicitonABI = window.SUBSCRIPTION_VICTION_ABI;
-  //   const SeiABI = window.SUBSCRIPTION_SKALE_ABI;
-
-  //   const ethsubscribeAddress = window.config.subscription_neweth_address;
-  //   const cfxsubscribeAddress = window.config.subscription_cfx_address;
-  //   const basesubscribeAddress = window.config.subscription_base_address;
-  //   const bnbsubscribeAddress = window.config.subscription_newbnb_address;
-  //   const bnbsubscribeAddress2 = window.config.subscription_newbnb2_address;
-  //   const bnbsubscribeAddress1 = window.config.subscription_newbnb1_address;
-
-  //   const avaxsubscribeAddress = window.config.subscription_newavax_address;
-  //   const skalesubscribeAddress = window.config.subscription_skale_address;
-  //   const coresubscribeAddress = window.config.subscription_core_address;
-  //   const victionsubscribeAddress = window.config.subscription_viction_address;
-  //   const seisubscribeAddress = window.config.subscription_sei_address;
-
-  //   const ethcontract = new web3eth.eth.Contract(EthABI, ethsubscribeAddress);
-  //   const cfxcontract = new web3cfx.eth.Contract(CfxABI, cfxsubscribeAddress);
-  //   const skalecontract = new web3skale.eth.Contract(
-  //     SkaleABI,
-  //     skalesubscribeAddress
-  //   );
-
-  //   const basecontract = new web3base.eth.Contract(
-  //     BaseABI,
-  //     basesubscribeAddress
-  //   );
-
-  //   const bnbcontract = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress);
-  //   const bnbcontract2 = new web3bnb.eth.Contract(
-  //     Bnb2ABI,
-  //     bnbsubscribeAddress2
-  //   );
-
-  //   const bnbcontract1 = new web3bnb.eth.Contract(BnbABI, bnbsubscribeAddress1);
-
-  //   const avaxcontract = new web3avax.eth.Contract(
-  //     AvaxABI,
-  //     avaxsubscribeAddress
-  //   );
-
-  //   const corecontract = new web3core.eth.Contract(
-  //     CoreABI,
-  //     coresubscribeAddress
-  //   );
-
-  //   const victioncontract = new web3viction.eth.Contract(
-  //     VicitonABI,
-  //     victionsubscribeAddress
-  //   );
-
-  //   const seicontract = new web3sei.eth.Contract(SeiABI, seisubscribeAddress);
-
-  //   if (addr) {
-  //     const result = window.checkPremium(addr);
-
-  //     subscribedPlatformTokenAmountETH = await ethcontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountCfx = await cfxcontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountBase = await basecontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountBNB = await bnbcontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountBNB2 = await bnbcontract2.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountBNB1 = await bnbcontract1.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountAvax = await avaxcontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountSkale = await skalecontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountCore = await corecontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     subscribedPlatformTokenAmountViction = await victioncontract.methods
-  //       .subscriptionPlatformTokenAmount(addr)
-  //       .call()
-  //       .catch((e) => {
-  //         console.log(e);
-  //         return 0;
-  //       });
-
-  //     // subscribedPlatformTokenAmountSei = await seicontract.methods
-  //     //   .subscriptionPlatformTokenAmount(addr)
-  //     //   .call()
-  //     //   .catch((e) => {
-  //     //     console.log(e);
-  //     //     return 0;
-  //     //   });
-
-  //     if (
-  //       subscribedPlatformTokenAmountCfx == "0" &&
-  //       subscribedPlatformTokenAmountETH == "0" &&
-  //       subscribedPlatformTokenAmountBase == "0" &&
-  //       subscribedPlatformTokenAmountBNB == "0" &&
-  //       subscribedPlatformTokenAmountBNB2 == "0" &&
-  //       subscribedPlatformTokenAmountAvax == "0" &&
-  //       subscribedPlatformTokenAmountSkale == "0" &&
-  //       subscribedPlatformTokenAmountCore == "0" &&
-  //       subscribedPlatformTokenAmountViction == "0" &&
-  //       subscribedPlatformTokenAmountBNB1 == "0" &&
-  //       result === false
-  //     ) {
-  //       setIsPremium(false);
-  //     }
-  //     if (
-  //       subscribedPlatformTokenAmountCfx != "0" ||
-  //       subscribedPlatformTokenAmountETH != "0" ||
-  //       subscribedPlatformTokenAmountBase != "0" ||
-  //       subscribedPlatformTokenAmountBNB != "0" ||
-  //       subscribedPlatformTokenAmountBNB2 != "0" ||
-  //       subscribedPlatformTokenAmountAvax != "0" ||
-  //       subscribedPlatformTokenAmountSkale != "0" ||
-  //       subscribedPlatformTokenAmountCore != "0" ||
-  //       subscribedPlatformTokenAmountViction != "0" ||
-  //       subscribedPlatformTokenAmountBNB1 != "0" ||
-  //       result === true
-  //     ) {
-  //       setIsPremium(true);
-  //     }
-  //   }
-  // };
-  // const getmyCollectedNfts = async () => {
-  //   let recievedOffers = [];
-
-  //   if (MyNFTSTimepiece && MyNFTSTimepiece.length > 0) {
-  //     await Promise.all(
-  //       MyNFTSTimepiece.map(async (i) => {
-  //         const result = await window
-  //           .getAllOffers(window.config.nft_timepiece_address, i)
-  //           .catch((e) => {
-  //             console.error(e);
-  //           });
-
-  //         if (result && result.length > 0) {
-  //           result.map((item) => {
-  //             return recievedOffers.push({
-  //               offer: item.offer,
-  //               index: item.index,
-  //               nftAddress: window.config.nft_timepiece_address,
-  //               tokenId: i,
-  //               type: "timepiece",
-  //             });
-  //           });
-  //         }
-  //       })
-  //     );
-  //   }
-
-  //   if (MyNFTSLand && MyNFTSLand.length > 0) {
-  //     await Promise.all(
-  //       MyNFTSLand.map(async (i) => {
-  //         const result = await window
-  //           .getAllOffers(window.config.nft_land_address, i)
-  //           .catch((e) => {
-  //             console.error(e);
-  //           });
-
-  //         if (result && result.length > 0) {
-  //           result.map((item) => {
-  //             return recievedOffers.push({
-  //               offer: item.offer,
-  //               index: item.index,
-  //               nftAddress: window.config.nft_land_address,
-  //               tokenId: i,
-  //               type: "land",
-  //             });
-  //           });
-  //         }
-  //       })
-  //     );
-  //   }
-
-  //   if (MyNFTSCaws && MyNFTSCaws.length > 0) {
-  //     await Promise.all(
-  //       MyNFTSCaws.map(async (i) => {
-  //         const result = await window
-  //           .getAllOffers(window.config.nft_caws_address, i)
-  //           .catch((e) => {
-  //             console.error(e);
-  //           });
-
-  //         if (result && result.length > 0) {
-  //           result.map((item) => {
-  //             return recievedOffers.push({
-  //               offer: item.offer,
-  //               index: item.index,
-  //               nftAddress: window.config.nft_caws_address,
-  //               tokenId: i,
-  //               type: "caws",
-  //             });
-  //           });
-  //         }
-  //       })
-  //     );
-  //   }
-  //   setmyNftsOffer(recievedOffers);
-  // };
-
   const handleSwitchNetwork = async (chain) => {
     if (!window.gatewallet && !account) {
       setChainId(chain);
@@ -3162,6 +2932,18 @@ function App() {
                     ? "0x38"
                     : chain === 204
                     ? "0xcc"
+                    : chain === 1116
+                    ? "0x45c"
+                    : chain === 88
+                    ? "0x58"
+                    : chain === 43114
+                    ? "0xa86a"
+                    : chain === 8453
+                    ? "0x2105"
+                    : chain === 1030
+                    ? "0x406"
+                    : chain === 13371
+                    ? "0x343b"
                     : chain === 1482601649
                     ? "0x585eb4b1"
                     : "0x406",
@@ -3173,6 +2955,7 @@ function App() {
           })
           .catch((e) => {
             console.error(e);
+            setChainId(chainId);
           });
         // if (window.ethereum && window.gatewallet) {
         //   window.location.reload();
@@ -3191,6 +2974,7 @@ function App() {
             // }
           } catch (addError) {
             console.log(addError);
+            setChainId(chainId);
           }
         }
         // handle other "switch" errors
@@ -3201,12 +2985,13 @@ function App() {
   const handleDisconnect = async () => {
     if (!window.gatewallet) {
       await window.disconnectWallet();
-      await deactivate();
+      deactivate();
       localStorage.setItem("logout", "true");
       setSuccess(false);
       setCoinbase();
       setIsConnected(false);
       setIsPremium(false);
+      window.WALLET_TYPE = "";
     } else {
       disconnect(connector);
       localStorage.setItem("logout", "true");
@@ -3666,6 +3451,8 @@ function App() {
                 dypTokenData_old={dypTokenData_old}
                 coinbase={coinbase}
                 account={coinbase}
+                binanceW3WProvider={library}
+                binanceWallet={account}
                 isConnected={isConnected}
                 chainId={networkId}
                 handleConnect={handleConnectWallet}

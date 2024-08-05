@@ -88,7 +88,7 @@ function Dashboard({
   onSubscribeSuccess,
   isPremium,
   dyptokenDatabnb,
-  logoutCount,handleConnectBinance, handleConnectionPassport
+  logoutCount,handleConnectBinance, handleConnectionPassport, binanceW3WProvider, binanceWallet
 }) {
   const { email, logout } = useAuth();
 
@@ -2829,7 +2829,7 @@ function Dashboard({
   const fetchSkalePrice = async () => {
     await axios
       .get(
-        `https://api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd`
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
       )
       .then((obj) => {
         setSkalePrice(obj.data.skale.usd);
@@ -3256,7 +3256,8 @@ function Dashboard({
   };
 
   const signWalletPublicAddress = async () => {
-    try {
+    if(window.ethereum)
+   { try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner(account);
       const signature = await signer.signMessage(
@@ -3286,6 +3287,38 @@ function Dashboard({
       }, 3000);
 
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+    }} else if(binanceWallet && binanceW3WProvider) {
+      try {
+        const provider = binanceW3WProvider;
+        const signer = provider.getSigner();
+        const signature = await signer.signMessage(
+          `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+        );
+        verifyWallet({
+          variables: {
+            publicAddress: binanceWallet,
+            signature: signature,
+          },
+        }).then(() => {
+          setsyncStatus("success");
+          setTimeout(() => {
+            setshowSyncModal(false);
+            setsyncStatus("initial");
+          }, 1000);
+          onSubscribeSuccess(binanceWallet);
+  
+          if (isonlink) {
+            handleFirstTask(binanceWallet);
+          }
+        });
+      } catch (error) {
+        setsyncStatus("error");
+        setTimeout(() => {
+          setsyncStatus("initial");
+        }, 3000);
+  
+        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+      }
     }
   };
 
@@ -5261,7 +5294,7 @@ function Dashboard({
       data.getPlayer.playerId &&
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress &&
-      chainId === 1
+      chainId === 1 && window.WALLET_TYPE !==''
     ) {
       calculateAllRewardsCawsPremium(data.getPlayer.wallet.publicAddress);
     }
@@ -5334,6 +5367,7 @@ function Dashboard({
     //   handleCheckIfAlreadyApproved(wseiAddress);
     // }
     else if (chainId === 56) {
+
       setChainDropdown(chainDropdowns[1]);
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -5542,13 +5576,13 @@ function Dashboard({
   }, [data, email]);
 
   useEffect(() => {
-    if (coinbase) {
+    if (coinbase && isConnected) {
       setsyncStatus("initial");
       fetchAllMyNfts();
       getmyCawsWodStakes();
       getmyWodStakes();
     }
-  }, [userWallet, data?.getPlayer?.wallet?.publicAddress, coinbase]);
+  }, [userWallet, isConnected, data?.getPlayer?.wallet?.publicAddress, coinbase]);
 
   useEffect(() => {
     getOtherNfts();

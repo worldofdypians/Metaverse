@@ -902,7 +902,7 @@ const MarketEvents = ({
   const fetchSkalePrice = async () => {
     await axios
       .get(
-        `https://api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd`
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
       )
       .then((obj) => {
         setSkalePrice(obj.data.skale.usd);

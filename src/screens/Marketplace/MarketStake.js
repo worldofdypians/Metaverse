@@ -492,7 +492,7 @@ const MarketStake = ({
   }, [isConnected, EthRewards, EthRewardsCawsPremium]);
 
   useEffect(() => {
-    if (coinbase && chainId === 1) {
+    if (coinbase && chainId === 1 && isConnected) {
       calculateAllRewards();
       calculateAllRewardsLandPool();
       calculateAllRewardsCawsPremium();
