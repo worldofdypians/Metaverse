@@ -60,7 +60,7 @@ import SIDRegister from "@web3-name-sdk/register";
 import { createWeb3Name } from "@web3-name-sdk/core";
 import { ethers, providers } from "ethers";
 import { disconnect, connectWallet, ConnectionType } from "web3-connector";
-import { getWeb3Connector  } from "@binance/w3w-web3-connector";
+import { getWeb3Connector } from "@binance/w3w-web3-connector";
 import { isInBinance } from "@binance/w3w-utils";
 import { useWeb3React } from "@web3-react/core";
 import DomainModal from "./components/DomainModal/DomainModal.js";
@@ -880,7 +880,7 @@ function App() {
           console.log(e);
         });
     } else if (isInBinance() || account || window.BinanceChain) {
-        setChainId(chainId);
+      setChainId(chainId);
     } else {
       setChainId(1);
     }
@@ -939,9 +939,10 @@ function App() {
       setIsConnected(true);
       setCoinbase(account);
       setwalletModal(false);
+      setSuccess(true);
     });
   };
-  
+
   const handleConnectPassport = async () => {
     const widgets = await checkoutSDK.widgets({
       config: { theme: checkout.WidgetTheme.DARK },
@@ -969,6 +970,7 @@ function App() {
       //   setwalletId("connect_simple");
       //   handleConnectWalletPassport();
       // }, 1000);
+      setSuccess(true);
     });
 
     //   await passportInstance.login().then(async()=>{
@@ -985,7 +987,7 @@ function App() {
 
   const handleConnectWalletPassport = async () => {
     setwalletModal(true);
-    
+
     const checkoutSDK_simple = new checkout.Checkout();
 
     const widgets_simple = await checkoutSDK_simple.widgets({
@@ -1010,6 +1012,7 @@ function App() {
     connect_simple.addListener(checkout.ConnectEventType.CLOSE_WIDGET, () => {
       connect_simple.unmount();
     });
+    setSuccess(true);
   };
 
   const myNft = async () => {
@@ -2588,7 +2591,7 @@ function App() {
   useEffect(() => {
     checkNetworkId();
   }, [isConnected, coinbase, networkId, provider]);
-// console.log(provider)
+  // console.log(provider)
   useEffect(() => {
     if (isConnected === true && coinbase && networkId === 1) {
       myCAWStakes();
@@ -3099,11 +3102,9 @@ function App() {
   // };
 
   const handleSwitchNetwork = async (chain) => {
- 
-    
     if (!window.gatewallet && !account) {
       setChainId(chain);
-    } else if(window.gatewallet) {
+    } else if (window.gatewallet) {
       // const params = CHAINLIST[Number(chain)];
       // connector?.activate(params);
       setChainId(chain);
@@ -3147,27 +3148,32 @@ function App() {
         // handle other "switch" errors
       }
       // window.location.reload();
-    } else if(isInBinance() || account) {
-   
+    } else if (isInBinance() || account) {
       try {
- 
-        await binanceConnector.binanceW3WProvider.request({
-          method: "wallet_switchEthereumChain",
-          params: [
-            {
-              chainId:
-                chain === 1
-                  ? "0x1"
-                  : chain === 56
-                  ? "0x38"
-                  : chain === 204
-                  ? "0xcc"
-                  : chain === 1482601649
-                  ? "0x585eb4b1"
-                  : "0x406",
-            },
-          ],
-        }).then(()=>{setChainId(chain)}).catch((e)=>{console.error(e)});
+        await binanceConnector.binanceW3WProvider
+          .request({
+            method: "wallet_switchEthereumChain",
+            params: [
+              {
+                chainId:
+                  chain === 1
+                    ? "0x1"
+                    : chain === 56
+                    ? "0x38"
+                    : chain === 204
+                    ? "0xcc"
+                    : chain === 1482601649
+                    ? "0x585eb4b1"
+                    : "0x406",
+              },
+            ],
+          })
+          .then(() => {
+            setChainId(chain);
+          })
+          .catch((e) => {
+            console.error(e);
+          });
         // if (window.ethereum && window.gatewallet) {
         //   window.location.reload();
         // }
@@ -3674,6 +3680,8 @@ function App() {
                   setCount55(count55 + 1);
                 }}
                 isPremium={isPremium}
+                handleConnectionPassport={handleConnectPassport}
+                handleConnectBinance={handleConnectBinance}
               />
             }
           />

@@ -88,7 +88,7 @@ function Dashboard({
   onSubscribeSuccess,
   isPremium,
   dyptokenDatabnb,
-  logoutCount,
+  logoutCount,handleConnectBinance, handleConnectionPassport
 }) {
   const { email, logout } = useAuth();
 
@@ -7738,6 +7738,8 @@ function Dashboard({
                   setshowWalletModal(false);
                 }}
                 handleConnection={handleConnect}
+                handleConnectBinance={handleConnectBinance}
+                handleConnectionPassport={handleConnectionPassport}
               />
             )}
 
