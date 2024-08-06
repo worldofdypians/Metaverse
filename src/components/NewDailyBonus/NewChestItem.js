@@ -476,7 +476,7 @@ const NewChestItem = ({
         const gasPrice = await web3.eth.getGasPrice();
         console.log("gasPrice", gasPrice);
         const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-        const increasedGwei = parseInt(currentGwei) + 0.00018;
+        const increasedGwei = parseInt(currentGwei) + 0.0006;
         console.log("increasedGwei", increasedGwei);
 
         const transactionParameters = {
@@ -524,7 +524,7 @@ const NewChestItem = ({
         const gasPrice = await web3.eth.getGasPrice();
         console.log("gasPrice", gasPrice);
         const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-        const increasedGwei = parseInt(currentGwei) + 0.00018;
+        const increasedGwei = parseInt(currentGwei) + 0.0006;
         console.log("increasedGwei", increasedGwei);
 
         const transactionParameters = {
