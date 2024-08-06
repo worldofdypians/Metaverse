@@ -287,7 +287,7 @@ const MintPopup = ({ active, onClose, data }) => {
         : data.title === "Manta" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/mint/manta"}
+            to={"/marketplace/beta-pass/manta"}
             state={{ event: data.state }}
             className="linear-border"
           >
