@@ -1863,7 +1863,7 @@ window.buyNFT = async (
   const transactionParameters = {
     gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
   };
-  // console.log( transactionParameters )
+  console.log( getCoinbase() )
 
   await marketplace.methods
     .buyItem(nft_address, tokenId, [priceType, priceAddress])
@@ -1907,7 +1907,7 @@ window.buyNFT2 = async (
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );
-
+console.log(marketplace)
   const gasPrice = await window.web3.eth.getGasPrice();
   console.log("gasPrice", gasPrice);
   const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
@@ -23724,7 +23724,7 @@ async function connectWallet() {
 window.cached_contracts = Object.create(null);
 
 async function getCoinbase() {
-  if (window.ethereum && window.WALLET_TYPE !== "binance") {
+  if (window.ethereum && window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "") {
     if (window.WALLET_TYPE == "coin98") {
       return window.coinbase_address.toLowerCase();
     } else if (window.gatewallet) {
@@ -23751,7 +23751,10 @@ async function getCoinbase() {
         return window.coinbase_address.toLowerCase();
       }
     }
-  }  
+  }  else if( window.WALLET_TYPE === "binance") {
+    console.log(window.coinbase_address)
+    return window.coinbase_address
+  }
 }
 
 async function disconnectWallet() {

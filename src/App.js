@@ -75,7 +75,8 @@ import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 import Redirect from "./screens/Home/Redirect";
 import WalletModal2 from "./components/WalletModal/WalletModal2";
-
+import { initializeConnector } from "web3-connector";
+ 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
 
@@ -107,6 +108,8 @@ const binanceConnector = new Connector({
   supportedChainIds: [1, 56],
   rpc: {
     56: "https://bsc-dataseed.binance.org/",
+    1: window.config.infura_endpoint,
+
   },
 });
 
@@ -404,11 +407,10 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const { BigNumber } = window;
-  const { connector, account, chainId, active, isActive, isActivating } =
+  const { connector, account, chainId, active, isActive, isActivating,error } =
     useWeb3React();
 
   useEagerlyConnect();
-
   const { activate, deactivate, library, provider } = useWeb3React();
 
   const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
@@ -711,11 +713,11 @@ function App() {
         .catch((e) => {
           setLoadingDomain(false);
           setSuccessDomain(false);
-          setSuccessMessage(`Something went wrong: ${e?.data?.message}`);
+          setSuccessMessage(`Something went wrong: ${{e}.e.reason ?? 'try again later'}`);
           setTimeout(() => {
             setSuccessMessage("");
           }, 5000);
-          console.log(e);
+          console.log({e}.e.reason);
         });
     }
   };
@@ -1114,7 +1116,7 @@ function App() {
       setMyLandNFTs(nfts);
     } else setMyLandNFTs([]);
   };
-  console.log(window.WALLET_TYPE);
+ 
   const myNft2 = async () => {
     let myNft = await window.myNftListContract(coinbase);
     if (myNft && myNft.length > 0) {
@@ -1785,12 +1787,17 @@ function App() {
   };
 
   useEffect(() => {
-    if (account && active) {
+    if (account!==undefined && active!== false) {
       setCoinbase(account);
       setIsConnected(active);
       setChainId(chainId);
+      window.coinbase_address = account;
     }
-  }, [account, active, chainId]);
+  }, [account, active, chainId, success]);
+
+  // useEffect(()=>{
+  //   handleConnectBinance()
+  // },[])
 
   useEffect(() => {
     if (
@@ -2694,7 +2701,7 @@ function App() {
   }, [ethereum, nftCount]);
 
   const logout = localStorage.getItem("logout");
-
+// console.log(connector, library)
   useEffect(() => {
     if (
       !window.coin98 &&
@@ -2702,7 +2709,8 @@ function App() {
       window.ethereum.isConnected() === true &&
       !window.gatewallet &&
       !isInBinance() &&
-      window.WALLET_TYPE !== "binance"
+      window.WALLET_TYPE !== "binance"&&
+      window.WALLET_TYPE !== ""
     ) {
       if (
         logout === "false" ||
@@ -2715,16 +2723,18 @@ function App() {
         localStorage.setItem("logout", "true");
       }
     } else if (
-      logout === "false" ||
+      (logout === "false" ||
       window.coinbase_address ===
         "0x0000000000000000000000000000000000000000" ||
-      (window.coin98 && window.WALLET_TYPE !== "binance")
+      window.coin98) && window.WALLET_TYPE !== "binance"&&
+      window.WALLET_TYPE !== ""
     ) {
       checkConnection2();
     } else if (
       window.gatewallet &&
       isActive &&
-      window.WALLET_TYPE !== "binance"
+      window.WALLET_TYPE !== "binance"&&
+      window.WALLET_TYPE !== ""
     ) {
       setIsConnected(isActive);
       if (account) {
@@ -3409,6 +3419,7 @@ function App() {
                 nftCount={nftCount}
                 favorites={favorites}
                 dyptokenData_old={dypTokenData_old}
+                binanceW3WProvider={library}
               />
             }
           />
