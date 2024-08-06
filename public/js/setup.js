@@ -1484,7 +1484,7 @@ window.config = {
   nft_opbnb_address: "0x4e4A3f047fA8Fe69cB1a79a0452121ED6fca95ba",
   nft_multivers_address: "0x96A3F313679f2F5Ce098091BFf271bF4e848178B",
   nft_manta_address: "0xf894eBD7c4c850687D208246c42036EB951CE324",
-  nft_taiko_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
+  nft_taiko_address: "0xCb2Eb4ba62346751F36bA652010b553759141AEE",
 
   nft_dypius_premium_address: "0xd8B2C0D3400Ce23e62A94154d83172303C643685",
   ccip_eth_caws_address: "0x2824Ac0Eab15744396E763A698b55F4Fe983a757",
@@ -1529,7 +1529,7 @@ window.config = {
   daily_bonus_core_address: "0x5c3581fdb05e3a20fb109864dae75a5665a7f92d",
   daily_bonus_viction_address: "0xaf33f679be47733bD3aBb5b0b977B6ba3eD8d01E",
   daily_bonus_manta_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
-  daily_bonus_taiko_address: "0x8E4917c1Ba9598fBbF66934CB17AC28c3b5849Ab",
+  daily_bonus_taiko_address: "0xaf33f679be47733bD3aBb5b0b977B6ba3eD8d01E",
 
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
   vote_duration_in_seconds: 259200, // 5 minutes for test
