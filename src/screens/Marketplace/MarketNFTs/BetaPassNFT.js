@@ -47,6 +47,8 @@ import dogeLogo from "./assets/dogeLogo.svg";
 import dogeBetaBanner from "./assets/dogeBetaBanner.png";
 import bnbBetaBanner from "./assets/bnbBetaBanner.png";
 import mantaBanner from "./assets/mantaBanner.webp";
+import taikoBanner from "./assets/taikoBanner.webp";
+
 
 import betapassBanner from "./assets/betaPassBanner.png";
 import betapassBannerConflux from "./assets/betaPassBannerConflux.webp";
@@ -308,7 +310,7 @@ const BetaPassNFT = ({
     id: "taiko",
     cardTitle: "Taiko Beta Pass",
     title: "Taiko Beta Pass",
-    background: "manta-mint-bg",
+    background: "taiko-mint-bg",
   };
 
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
@@ -971,7 +973,7 @@ const BetaPassNFT = ({
                         : mintTitle === "manta"
                         ? mantaBanner
                         : mintTitle === "taiko"
-                        ? mantaBanner
+                        ? taikoBanner
                         : betapassBanner
                     }
                     className="w-100"

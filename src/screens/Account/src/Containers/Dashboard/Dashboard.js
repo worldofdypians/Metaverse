@@ -145,9 +145,10 @@ function Dashboard({
       name: "Manta",
       symbol: "manta",
     },
-     {
-      name: "Manta",
-      symbol: "manta",
+
+    {
+      name: "Taiko",
+      symbol: "taiko",
     },
 
     // {
@@ -7947,7 +7948,7 @@ function Dashboard({
                                     </div>
                                     <div className="d-flex align-items-center gap-2">
                                       <img
-                                        src={require(`../../../../../components/Header/assets/manta.png`)}
+                                        src={require(`../../../../../components/Header/assets/taiko.svg`).default}
                                         alt=""
                                         style={{ width: 18, height: 18 }}
                                       />
@@ -8149,7 +8150,7 @@ function Dashboard({
                                         >
                                           <img
                                             src={
-                                              require(`../../Images/premium/tokens/mantaIcon.svg`)
+                                              require(`../../Images/premium/tokens/taikoIcon.svg`)
                                                 .default
                                             }
                                             style={{ width: 18, height: 18 }}

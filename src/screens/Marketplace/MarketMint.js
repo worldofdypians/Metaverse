@@ -237,7 +237,7 @@ const MarketMint = ({
     id: "taiko",
     cardTitle: "Taiko Beta Pass",
     title: "Taiko Beta Pass",
-    background: "manta-mint-bg",
+    background: "taiko-mint-bg",
     mobileBg: "mantaBgMobile.webp",
   };
 

@@ -82,6 +82,8 @@ import multiversThumb from "../Account/src/Components/WalletBalance/assets/multi
 import immutableThumb from "../Account/src/Components/WalletBalance/assets/immutableThumb.png";
 import coreThumb from "../Account/src/Components/WalletBalance/assets/coreThumb.png";
 import mantaThumb from "../Account/src/Components/WalletBalance/assets/mantaThumb.png";
+import taikoThumb from "../Account/src/Components/WalletBalance/assets/taikoThumb.webp";
+
 
 import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.svg";
@@ -111,6 +113,8 @@ import immutableBg from "./assets/immutableBg.webp";
 import seiBg from "./assets/seiBg.webp";
 import bnbPopupImage from "./assets/bnbPopupImage.png";
 import coreBg from "./assets/coreBg.webp";
+import taikoBg from "./assets/taikoBg.webp";
+
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
 import mantaBg from "./assets/mantaBg.webp";
@@ -377,28 +381,28 @@ const MarketEvents = ({
     {
       title: "Taiko",
       logo: taikoLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in ETH Rewards",
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Aug 01, 2024",
-      backgroundImage: mantaBg,
+      eventDate: "Aug 12, 2024",
+      backgroundImage: taikoBg,
       popupInfo: {
-        title: "Taiko",
+        title: "TAIKO",
         chain: "Taiko",
         linkState: "taiko",
         rewards: "ETH",
-        status: "Live",
+        status: "Coming Soon",
         id: "event22",
         eventType: "Explore & Mine",
-        totalRewards: "$20,000 in ETH Rewards",
+        totalRewards: "$20,000 in TAIKO Rewards",
         eventDuration: taikoLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Aug 01, 2024",
+        eventDate: "Aug 12, 2024",
       },
     },
     {
@@ -1514,7 +1518,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 4).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1600,11 +1604,11 @@ const MarketEvents = ({
                       <h6 className="upcoming-mint-title">Taiko</h6>
                       <p className="upcoming-mint-desc">
                         Join the Taiko Treasure Hunt event for a chance to grab
-                        a share of the $20,000 ETH reward pool.
+                        a share of the $20,000 TAIKO reward pool.
                       </p>
                     </div>
                     <img
-                      src={mantaBg}
+                      src={taikoBg}
                       alt=""
                       className="upcoming-mint-img d-none d-lg-block"
                     />
@@ -1741,7 +1745,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(3, dummyBetaPassData2.length)
+                    .slice(4, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
@@ -1868,7 +1872,7 @@ const MarketEvents = ({
                         : dummyEvent.linkState === "manta"
                         ? mantaThumb
                         : dummyEvent.linkState === "taiko"
-                        ? mantaThumb
+                        ? taikoThumb
                         : eventPopupImage
                     }
                     alt=""
@@ -2139,6 +2143,18 @@ const MarketEvents = ({
                       Remember to log in to the game daily and venture into the
                       MultiversX area to uncover hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event22" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a TAIKO Beta Pass NFT</b>. You can get the
+                      TAIKO Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the TAIKO area, players not only stand a
+                      chance to secure daily rewards in TAIKO, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      TAIKO area to uncover hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -2207,7 +2223,7 @@ const MarketEvents = ({
                           : dummyEvent.id === "event21"
                           ? "MANTA"
                           : dummyEvent.id === "event22"
-                          ? "ETH"
+                          ? "TAIKO"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2768,7 +2784,7 @@ const MarketEvents = ({
                             : dummyEvent.id === "event21"
                             ? "MANTA"
                             : dummyEvent.id === "event22"
-                            ? "ETH"
+                            ? "TAIKO"
                             : "ETH"}
                         </>
                       )}
