@@ -49,6 +49,7 @@ import skale from "./assets/skale.svg";
 import eth from "./assets/eth.svg";
 import base from "./assets/base.svg";
 import conflux from "./assets/conflux.svg";
+import manta from "./assets/manta.png";
 import sei from "./assets/sei.svg";
 import multiversx from "./assets/multiversx.svg";
 
@@ -95,6 +96,7 @@ const Header = ({
   const [confluxState, setConfluxState] = useState(false);
   const [skaleState, setSkaleState] = useState(false);
   const [victionState, setVictionState] = useState(false);
+  const [mantaState, setMantaState] = useState(false)
   const [seiState, setSeiState] = useState(false);
   const [immutableState, setImmutableState] = useState(false);
 
@@ -126,6 +128,8 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
@@ -137,6 +141,8 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
@@ -148,6 +154,8 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
@@ -159,6 +167,8 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
@@ -170,6 +180,8 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -181,6 +193,7 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setMantaState(false);
         setImmutableState(false);
       } else if (chainId === 1482601649) {
         setAvaxState(false);
@@ -193,6 +206,7 @@ const Header = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
+        setMantaState(false);
         setImmutableState(false);
       } else if (chainId === 1116) {
         setAvaxState(false);
@@ -206,6 +220,8 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 88) {
         setAvaxState(false);
         setBnbState(false);
@@ -218,6 +234,8 @@ const Header = ({
         setVictionState(true);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 13371) {
         setAvaxState(false);
         setBnbState(false);
@@ -230,6 +248,21 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(true);
+        setMantaState(false);
+
+      }else if (chainId === 169) {
+        setAvaxState(false);
+        setBnbState(false);
+        setMantaState(true);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false);
+        setImmutableState(false);
       }
       // else if (chainId === 713715 ) {
       //   setAvaxState(false);
@@ -296,6 +329,23 @@ const Header = ({
       }
     } else if (binanceWallet && window.WALLET_TYPE ==='binance') {
       handleSwitchChainBinanceWallet(1116);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+  const handleMantaPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xa9")
+          .then(() => {
+            handleSwitchNetwork(169);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(169);
+      }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -921,6 +971,8 @@ const Header = ({
                               ? viction
                               : immutableState === true
                               ? immutable
+                              : mantaState === true
+                              ? manta
                               : // : seiState === true
                                 // ? sei
                                 error
@@ -950,6 +1002,8 @@ const Header = ({
                             ? "Viction"
                             : immutableState === true
                             ? "Immutable"
+                            : mantaState === true
+                            ? "Manta"
                             : // : seiState === true
                               // ? "Sei"
                               "Unsupported"}
@@ -967,6 +1021,10 @@ const Header = ({
                   <Dropdown.Item onClick={() => handleBnbPool()}>
                     <img src={bnb} alt="" />
                     BNB Chain
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleMantaPool()}>
+                    <img src={manta} alt="" />
+                    Manta
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleOpBnbPool()}>
                     <img src={bnb} alt="" />

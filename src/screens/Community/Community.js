@@ -819,7 +819,7 @@ const Community = ({socials}) => {
                     className="community-active-title mb-0"
                     style={{ color: "#d9fa86" }}
                   >
-                    463,692
+                    565,251
                   </h6>
                 </div>
                 <div className="row w-100 mt-5 mt-lg-0">

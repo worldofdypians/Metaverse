@@ -18,6 +18,7 @@ import goldenInactive from "./assets/goldenInactive.png";
 import { NavLink, useLocation } from "react-router-dom";
 import bnbIcon from "./assets/bnbIcon.svg";
 import victionActive from "./assets/victionActive.svg";
+import mantaActive from "./assets/mantaActive.png";
 import coreIcon from "./assets/coreIcon2.svg";
 import skaleActive from "./assets/skaleActive.svg";
 import yellowArrow from "./assets/yellowArrow.svg";
@@ -160,7 +161,7 @@ const GlobalLeaderboard = ({
               </span>
             </div>
             <div className="global-total-wrapper py-3 w-100 d-flex flex-column align-items-center justify-content-center">
-              <h6 className="global-total-players mb-0">463,692</h6>
+              <h6 className="global-total-players mb-0">565,251</h6>
               <span className="global-total-span">Monthly Players</span>
             </div>
           </div>
@@ -205,7 +206,7 @@ const GlobalLeaderboard = ({
                     <br />
                     <br />
                     Participate in Daily Chain Leaderboards from BNB Chain,
-                    SKALE, Core, and Viction to earn STARS that will boost your
+                    SKALE, Core, Manta and Viction to earn STARS that will boost your
                     global ranking.
                     <br />
                     <br />
@@ -448,7 +449,7 @@ const GlobalLeaderboard = ({
         </div>
       </div>
 
-      {screen === "dash" && allStarData && allStarData.isactive === false
+      {screen === "dash" && allStarData && allStarData.is_active === false && allStarData.player_data.displayName
         ? [allStarData.player_data].map((item, index) => {
             return (
               <div
@@ -513,6 +514,7 @@ const GlobalLeaderboard = ({
           <div className="d-flex align-items-center gap-2">
             <div className="d-flex align-items-center gap-1">
               <img src={bnbIcon} width={20} height={20} alt="" />
+              <img src={mantaActive} width={20} height={20} alt="" />
               <img src={skaleActive} width={20} height={20} alt="" />
               <img src={coreIcon} width={20} height={20} alt="" />
               <img src={victionActive} width={20} height={20} alt="" />

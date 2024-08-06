@@ -206,6 +206,16 @@ function App() {
       },
       blockExplorerUrls: ["https://explorer.immutable.com"],
     },
+    169: {
+      chainId: 169,
+      chainName: "Manta Pacific Mainnet",
+      rpcUrls: ["https://pacific-rpc.manta.network/http"],
+      nativeCurrency: {
+        symbol: "ETH",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://pacific-explorer.manta.network/"],
+    },
   };
 
   const {
@@ -260,7 +270,7 @@ function App() {
   const [myvictionNFTsCreated, setmyVictionNFTsCreated] = useState([]);
   const [myopbnbNFTsCreated, setmyopbnbNFTsCreated] = useState([]);
   const [myimmutableNftsCreated, setmyImmutableNFTsCreated] = useState([]);
-
+  const [myMantaNFTsCreated, setMyMantaNFTsCreated] = useState([]);
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
@@ -282,7 +292,7 @@ function App() {
   const [totalCoreNft, settotalCoreNft] = useState(0);
   const [totalVictionNft, settotalVictionNft] = useState(0);
   const [totalopbnbNft, settotalopbnbNft] = useState(0);
-
+  const [totalMantaNft, setTotalMantaNft] = useState(0);
   const [totalDogeNft, settotalDogeNft] = useState(0);
   const [totalCmcNft, settotalCmcNft] = useState(0);
 
@@ -298,7 +308,7 @@ function App() {
   const [confluxMintAllowed, setconfluxMintAllowed] = useState(1);
   const [victionMintAllowed, setvictionMintAllowed] = useState(1);
   const [opbnbMintAllowed, setopbnbMintAllowed] = useState(1);
-
+  const [mantaMintAllowed, setMantaMintAllowed] = useState(1);
   const [coreMintAllowed, setcoreMintAllowed] = useState(1);
 
   const [fireAppcontent, setFireAppContent] = useState(false);
@@ -341,7 +351,7 @@ function App() {
   const [myCoreNfts, setMyCoreNfts] = useState([]);
   const [myVictionNfts, setMyVictionNfts] = useState([]);
   const [myOpbnbNfts, setmyOpbnbNfts] = useState([]);
-
+  const [myMantaNfts, setMyMantaNfts] = useState([]);
   const [myMultiversNfts, setMyMultiversNfts] = useState([]);
   const [myImmutableNfts, setMyImmutableNfts] = useState([]);
 
@@ -615,7 +625,7 @@ function App() {
   const web3Name = createWeb3Name();
 
   const searchDomain = async (domain) => {
-    if (window.ethereum && window.WALLET_TYPE!=='binance') {
+    if (window.ethereum && window.WALLET_TYPE !== "binance") {
       const provider = new providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const register = new SIDRegister({ signer, chainId: 56 });
@@ -628,7 +638,7 @@ function App() {
       } else {
         setAvailableDomain(available);
       }
-    } else if (window.WALLET_TYPE ==='binance' && library) {
+    } else if (window.WALLET_TYPE === "binance" && library) {
       const provider = library;
       const signer = provider.getSigner();
       const register = new SIDRegister({ signer, chainId: 56 });
@@ -645,38 +655,9 @@ function App() {
   };
 
   const registerDomain = async (label, years) => {
-    if (window.ethereum && window.WALLET_TYPE!=='binance') {
-    setLoadingDomain(true);
-    const provider = new providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
-    const register = new SIDRegister({ signer, chainId: 56 });
-    await register
-      .register(label, address, years, {
-        setPrimaryName: true,
-        referrer: "dyp.bnb",
-      })
-      .then(() => {
-        setSuccessMessage("You have successfully registered your .bnb domain");
-        setSuccessDomain(true);
-        setTimeout(() => {
-          setSuccessMessage("");
-          setSuccessDomain(false);
-        }, 5000);
-        setLoadingDomain(false);
-      })
-      .catch((e) => {
-        setLoadingDomain(false);
-        setSuccessDomain(false);
-        setSuccessMessage(`Something went wrong: ${e?.data?.message}`);
-        setTimeout(() => {
-          setSuccessMessage("");
-        }, 5000);
-        console.log(e);
-      });
-    }   else if (window.WALLET_TYPE==='binance' && library) {
+    if (window.ethereum && window.WALLET_TYPE !== "binance") {
       setLoadingDomain(true);
-      const provider = library;
+      const provider = new providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const address = await signer.getAddress();
       const register = new SIDRegister({ signer, chainId: 56 });
@@ -686,7 +667,9 @@ function App() {
           referrer: "dyp.bnb",
         })
         .then(() => {
-          setSuccessMessage("You have successfully registered your .bnb domain");
+          setSuccessMessage(
+            "You have successfully registered your .bnb domain"
+          );
           setSuccessDomain(true);
           setTimeout(() => {
             setSuccessMessage("");
@@ -703,7 +686,38 @@ function App() {
           }, 5000);
           console.log(e);
         });
-      }
+    } else if (window.WALLET_TYPE === "binance" && library) {
+      setLoadingDomain(true);
+      const provider = library;
+      const signer = provider.getSigner();
+      const address = await signer.getAddress();
+      const register = new SIDRegister({ signer, chainId: 56 });
+      await register
+        .register(label, address, years, {
+          setPrimaryName: true,
+          referrer: "dyp.bnb",
+        })
+        .then(() => {
+          setSuccessMessage(
+            "You have successfully registered your .bnb domain"
+          );
+          setSuccessDomain(true);
+          setTimeout(() => {
+            setSuccessMessage("");
+            setSuccessDomain(false);
+          }, 5000);
+          setLoadingDomain(false);
+        })
+        .catch((e) => {
+          setLoadingDomain(false);
+          setSuccessDomain(false);
+          setSuccessMessage(`Something went wrong: ${e?.data?.message}`);
+          setTimeout(() => {
+            setSuccessMessage("");
+          }, 5000);
+          console.log(e);
+        });
+    }
   };
 
   const getTokenData = async () => {
@@ -987,7 +1001,7 @@ function App() {
       setSuccess(true);
       setwalletModal(false);
       window.WALLET_TYPE = "binance";
-      window.getCoinbase()
+      window.getCoinbase();
     });
   };
 
@@ -1100,7 +1114,7 @@ function App() {
       setMyLandNFTs(nfts);
     } else setMyLandNFTs([]);
   };
-console.log(window.WALLET_TYPE)
+  console.log(window.WALLET_TYPE);
   const myNft2 = async () => {
     let myNft = await window.myNftListContract(coinbase);
     if (myNft && myNft.length > 0) {
@@ -1315,6 +1329,12 @@ console.log(window.WALLET_TYPE)
         setopbnbMintAllowed(NFTS.length > 0 ? 0 : 1);
         setmyopbnbNFTsCreated(NFTS);
       });
+      getMyNFTS(coinbase, "manta").then((NFTS) => {
+        setTotalMantaNft(NFTS.length);
+        setMyMantaNfts(NFTS);
+        setMantaMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setMyMantaNFTsCreated(NFTS);
+      });
 
       //setmyBaseNFTs
     } else {
@@ -1333,6 +1353,8 @@ console.log(window.WALLET_TYPE)
       settotalopbnbNft(0);
       setMyCoreNfts([]);
       settotalCoreNft(0);
+      setMyMantaNfts([]);
+      setTotalMantaNft(0);
     }
   };
 
@@ -1768,7 +1790,7 @@ console.log(window.WALLET_TYPE)
       setIsConnected(active);
       setChainId(chainId);
     }
-  }, [account, active,chainId]);
+  }, [account, active, chainId]);
 
   useEffect(() => {
     if (
@@ -1976,7 +1998,9 @@ console.log(window.WALLET_TYPE)
           let tokenId = await window.opbnb_nft
             .mintOPBNBNFT()
             .then(() => {
-              handleSecondTask(coinbase);
+              setTimeout(() => {
+                handleSecondTask(coinbase);
+              }, 5000);
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
               settextColor("rgb(123, 216, 176)");
@@ -1989,6 +2013,78 @@ console.log(window.WALLET_TYPE)
                 setmyOpbnbNfts(NFTS);
                 setopbnbMintAllowed(0);
                 setmyopbnbNFTsCreated(NFTS);
+              });
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+        } else {
+          // setShowWhitelistLoadingModal(true);
+        }
+      } catch (e) {
+        setmintloading("error");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        window.alertify.error(
+          typeof e == "object" && e.message
+            ? e.message
+            : typeof e == "string"
+            ? String(e)
+            : "Oops, something went wrong! Refresh the page and try again!"
+        );
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      }
+    }
+  };
+  const handleMantaNftMint = async () => {
+    if (isConnected && coinbase) {
+      try {
+        //Check Whitelist
+        let whitelist = 1;
+
+        if (parseInt(whitelist) === 1) {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+          // console.log(data,finalCaws, totalCawsDiscount);
+          let tokenId = await window.manta_nft
+            .mintMantaNFT()
+            .then(() => {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "manta").then((NFTS) => {
+                setTotalMantaNft(NFTS.length);
+                setMyMantaNfts(NFTS);
+                setMantaMintAllowed(NFTS.length > 0 ? 0 : 1);
+                setMyMantaNFTsCreated(NFTS);
               });
             })
             .catch((e) => {
@@ -2605,7 +2701,8 @@ console.log(window.WALLET_TYPE)
       window.ethereum &&
       window.ethereum.isConnected() === true &&
       !window.gatewallet &&
-      !isInBinance() && window.WALLET_TYPE !=='binance'
+      !isInBinance() &&
+      window.WALLET_TYPE !== "binance"
     ) {
       if (
         logout === "false" ||
@@ -2621,16 +2718,20 @@ console.log(window.WALLET_TYPE)
       logout === "false" ||
       window.coinbase_address ===
         "0x0000000000000000000000000000000000000000" ||
-      window.coin98 && window.WALLET_TYPE !=='binance'
+      (window.coin98 && window.WALLET_TYPE !== "binance")
     ) {
       checkConnection2();
-    } else if (window.gatewallet && isActive && window.WALLET_TYPE !=='binance') {
+    } else if (
+      window.gatewallet &&
+      isActive &&
+      window.WALLET_TYPE !== "binance"
+    ) {
       setIsConnected(isActive);
       if (account) {
         fetchAvatar(account);
         setCoinbase(account);
       }
-    } else if (isInBinance() || account || window.WALLET_TYPE ==='binance') {
+    } else if (isInBinance() || account || window.WALLET_TYPE === "binance") {
       setIsConnected(true);
       if (account) {
         fetchAvatar(account);
@@ -2667,7 +2768,13 @@ console.log(window.WALLET_TYPE)
     if (isConnected === true && coinbase && networkId === 1) {
       myNft2();
       myLandNft();
-    } else if (isConnected === true && coinbase && networkId === 56 && window.WALLET_TYPE !=='' && window.WALLET_TYPE !=='binance') {
+    } else if (
+      isConnected === true &&
+      coinbase &&
+      networkId === 56 &&
+      window.WALLET_TYPE !== "" &&
+      window.WALLET_TYPE !== "binance"
+    ) {
       myNftBNB();
       myLandNftBNB();
     } else if (isConnected === true && coinbase && networkId === 43114) {
@@ -2809,6 +2916,11 @@ console.log(window.WALLET_TYPE)
       window.config.daily_bonus_viction_address
     );
 
+    const daily_bonus_contract_manta = new window.mantaWeb3.eth.Contract(
+      window.DAILY_BONUS_MANTA_ABI,
+      window.config.daily_bonus_manta_address
+    );
+
     if (addr) {
       const isPremium_bnb = await daily_bonus_contract_bnb.methods
         .isPremiumUser(addr)
@@ -2860,7 +2972,18 @@ console.log(window.WALLET_TYPE)
               if (isPremium_skale === true) {
                 setIsPremium(true);
               } else {
-                setIsPremium(false);
+                const isPremium_manta = await daily_bonus_contract_manta.methods
+                  .isPremiumUser(addr)
+                  .call()
+                  .catch((e) => {
+                    console.error(e);
+                    return false;
+                  });
+                if (isPremium_manta === true) {
+                  setIsPremium(true);
+                } else {
+                  setIsPremium(false);
+                }
               }
             }
           }
@@ -3622,6 +3745,52 @@ console.log(window.WALLET_TYPE)
               />
             }
           />
+
+          <Route
+            exact
+            path="/marketplace/beta-pass/manta"
+            element={
+              <BetaPassNFT
+                type={"manta"}
+                ethTokenData={ethTokenData}
+                dypTokenData={dypTokenData}
+                isConnected={isConnected}
+                handleConnect={handleShowWalletModal}
+                listedNFTS={listedNFTS}
+                coinbase={coinbase}
+                timepieceBought={timepieceBought}
+                handleRefreshListing={handleRefreshList}
+                nftCount={nftCount}
+                cawsArray={allCawsForTimepieceMint}
+                totalMantaNft={totalMantaNft}
+                myMantaNfts={myMantaNfts}
+                mintloading={mintloading}
+                chainId={chainId}
+                handleMint={handleTimepieceMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                totalCoingeckoNft={totalCoingeckoNft}
+                myNFTSCoingecko={MyNFTSCoingecko}
+                myGateNfts={myGateNfts}
+                totalGateNft={totalGateNft}
+                totalBaseNft={totalBaseNft}
+                totalBnbNft={totalBnbNft}
+                myBaseNFTs={myBaseNFTs}
+                myBnbNfts={myBnbNfts}
+                totalConfluxNft={totalConfluxNft}
+                myConfluxNfts={myConfluxNfts}
+                timepieceMetadata={timepieceMetadata}
+                handleSwitchNetwork={handleSwitchNetwork}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
           <Route
             exact
             path="/marketplace/beta-pass/conflux"
@@ -3697,6 +3866,8 @@ console.log(window.WALLET_TYPE)
                 totalCoreNft={totalCoreNft}
                 myCoreNfts={myCoreNfts}
                 totalseiNft={totalseiNft}
+                totalMantaNft={totalMantaNft}
+                myMantaNfts={myMantaNfts}
                 myseiNfts={myseiNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
@@ -3750,6 +3921,8 @@ console.log(window.WALLET_TYPE)
                 myMultiversNfts={myMultiversNfts}
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
+                totalMantaNft={totalMantaNft}
+                myMantaNfts={myMantaNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
                 myBaseNFTs={myBaseNFTs}
@@ -3826,6 +3999,8 @@ console.log(window.WALLET_TYPE)
                 myMultiversNfts={myMultiversNfts}
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
+                totalMantaNft={totalMantaNft}
+                myMantaNfts={myMantaNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
                 myBaseNFTs={myBaseNFTs}
@@ -3866,6 +4041,8 @@ console.log(window.WALLET_TYPE)
                 myCoreNfts={myCoreNfts}
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
+                totalMantaNft={totalMantaNft}
+                myMantaNfts={myMantaNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
                 totalMultiversNft={totalMultiversNft}
@@ -4304,6 +4481,10 @@ console.log(window.WALLET_TYPE)
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
+                totalMantaNft={totalMantaNft}
+                mantaMintAllowed={mantaMintAllowed}
+                myMantaNfts={myMantaNfts}
+                myMantaNFTsCreated={myMantaNFTsCreated}
                 cawsArray={allCawsForTimepieceMint}
                 mintloading={mintloading}
                 isConnected={isConnected}
@@ -4439,9 +4620,66 @@ console.log(window.WALLET_TYPE)
                 myOpbnbNfts={myOpbnbNfts}
                 myBnbNfts={myBnbNfts}
                 totalBnbNft={totalBnbNft}
+                totalMantaNft={totalMantaNft}
+                mantaMintAllowed={mantaMintAllowed}
+                myMantaNfts={myMantaNfts}
+                myMantaNFTsCreated={myMantaNFTsCreated}
               />
             }
           />
+          {/* <Route
+            exact
+            path="/marketplace/mint/manta"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleMint={handleMantaNftMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalopbnbNft={totalopbnbNft}
+                totalMantaNft={totalMantaNft}
+                mantaMintAllowed={mantaMintAllowed}
+                myMantaNfts={myMantaNfts}
+                myMantaNFTsCreated={myMantaNFTsCreated}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                opbnbMintAllowed={opbnbMintAllowed}
+                myopbnbNFTsCreated={myopbnbNFTsCreated}
+                myConfluxNFTsCreated={myConfluxNFTsCreated}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                myskaleNFTsCreated={myskaleNFTsCreated}
+                handleConfluxMint={handleConfluxNftMint}
+                handleBaseNftMint={handleBaseNftMint}
+                confluxMintAllowed={confluxMintAllowed}
+                baseMintAllowed={baseMintAllowed}
+                skaleMintAllowed={skaleMintAllowed}
+                coreMintAllowed={coreMintAllowed}
+                victionMintAllowed={victionMintAllowed}
+                immutableMintAllowed={immutableMintAllowed}
+                totalCoreNft={totalCoreNft}
+                myCoreNfts={myCoreNfts}
+                totalMultiversNft={totalMultiversNft}
+                totalImmutableNft={totalImmutableNft}
+                myImmutableNfts={myImmutableNfts}
+                myMultiversNfts={myMultiversNfts}
+                totalseiNft={totalseiNft}
+                myseiNfts={myseiNfts}
+                totalVictionNft={totalVictionNft}
+                myVictionNfts={myVictionNfts}
+                myOpbnbNfts={myOpbnbNfts}
+                myBnbNfts={myBnbNfts}
+                totalBnbNft={totalBnbNft}
+              />
+            }
+          /> */}
 
           <Route
             exact
@@ -4488,6 +4726,10 @@ console.log(window.WALLET_TYPE)
                 myVictionNfts={myVictionNfts}
                 myOpbnbNfts={myOpbnbNfts}
                 myBnbNfts={myBnbNfts}
+                totalMantaNft={totalMantaNft}
+                mantaMintAllowed={mantaMintAllowed}
+                myMantaNfts={myMantaNfts}
+                myMantaNFTsCreated={myMantaNFTsCreated}
                 totalBnbNft={totalBnbNft}
               />
             }
@@ -4627,6 +4869,10 @@ console.log(window.WALLET_TYPE)
                 myOpbnbNfts={myOpbnbNfts}
                 myBnbNfts={myBnbNfts}
                 totalBnbNft={totalBnbNft}
+                totalMantaNft={totalMantaNft}
+                mantaMintAllowed={mantaMintAllowed}
+                myMantaNfts={myMantaNfts}
+                myMantaNFTsCreated={myMantaNFTsCreated}
               />
             }
           />

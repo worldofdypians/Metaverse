@@ -22,6 +22,7 @@ import skale from "../Header/assets/skale.svg";
 import sei from "../Header/assets/sei.svg";
 import viction from "../Header/assets/viction.svg";
 import core from "../Header/assets/core.svg";
+import manta from "../Header/assets/manta.png";
 import immutable from "../Header/assets/immutableLogo.svg";
 
 import error from "../Header/assets/error.svg";
@@ -56,6 +57,7 @@ const MobileNavbar = ({
   const [confluxState, setConfluxState] = useState(false);
   const [skaleState, setSkaleState] = useState(false);
   const [coreState, setCoreState] = useState(false);
+  const [mantaState, setMantaState] = useState(false);
   const [victionState, setVictionState] = useState(false);
   const [seiState, setSeiState] = useState(false);
   const [immutableState, setImmutableState] = useState(false);
@@ -85,6 +87,7 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
@@ -96,6 +99,8 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
@@ -107,6 +112,8 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
@@ -118,6 +125,8 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
@@ -129,6 +138,8 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -141,6 +152,8 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 1482601649) {
         setAvaxState(false);
         setBnbState(false);
@@ -153,6 +166,8 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 1116) {
         setAvaxState(false);
         setBnbState(false);
@@ -165,6 +180,8 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 88) {
         setAvaxState(false);
         setBnbState(false);
@@ -177,6 +194,8 @@ const MobileNavbar = ({
         setVictionState(true);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       } else if (chainId === 13371) {
         setAvaxState(false);
         setBnbState(false);
@@ -189,6 +208,23 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(true);
+        setMantaState(false);
+
+      }
+      else if (chainId === 169) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false);
+        setImmutableState(false);
+        setMantaState(true);
+
       }
       // else if (chainId === 713715 ) {
       //   setAvaxState(false);
@@ -213,6 +249,8 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
+        setMantaState(false);
+
       }
     }
   };
@@ -255,6 +293,24 @@ const MobileNavbar = ({
       }
     } else if (binanceWallet && window.WALLET_TYPE === "binance") {
       handleSwitchChainBinanceWallet(1116);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleMantaPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0xa9")
+          .then(() => {
+            handleSwitchNetwork(169);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        handleSwitchChainGateWallet(169);
+      }
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -527,59 +583,63 @@ const MobileNavbar = ({
                 title={
                   <span className="dropdown-title">
                     <img
-                      src={
-                        ethState === true
-                          ? eth
-                          : bnbState === true
-                          ? bnb
-                          : opbnbState === true
-                          ? bnb
-                          : avaxState === true
-                          ? avax
-                          : baseState === true
-                          ? base
-                          : confluxState === true
-                          ? conflux
-                          : skaleState === true
-                          ? skale
-                          : coreState === true
-                          ? core
-                          : victionState === true
-                          ? viction
-                          : immutableState === true
-                          ? immutable
-                          : // : seiState === true
-                            // ? sei
-                            error
-                      }
+                     src={
+                      ethState === true
+                        ? eth
+                        : bnbState === true
+                        ? bnb
+                        : opbnbState === true
+                        ? bnb
+                        : avaxState === true
+                        ? avax
+                        : baseState === true
+                        ? base
+                        : confluxState === true
+                        ? conflux
+                        : skaleState === true
+                        ? skale
+                        : coreState === true
+                        ? core
+                        : victionState === true
+                        ? viction
+                        : immutableState === true
+                        ? immutable
+                        : mantaState === true
+                        ? manta
+                        // : seiState === true
+                        // ? sei
+                        : error
+                    }
                       height={16}
                       width={16}
                       alt=""
                     />
                     <span className="change-chain-text d-none d-lg-flex">
-                      {ethState === true
-                        ? "Ethereum"
-                        : bnbState === true
-                        ? "BNB Chain"
-                        : opbnbState === true
-                        ? "opBNB Chain"
-                        : avaxState === true
-                        ? "Avalanche"
-                        : baseState === true
-                        ? "Base"
-                        : confluxState === true
-                        ? "Conflux"
-                        : skaleState === true
-                        ? "SKALE"
-                        : coreState === true
-                        ? "CORE"
-                        : victionState === true
-                        ? "Viction"
-                        : immutableState === true
-                        ? "Immutable"
-                        : // : seiState === true
-                          // ? "Sei"
-                          "Unsupported"}
+                    {ethState === true
+                            ? "Ethereum"
+                            : bnbState === true
+                            ? "BNB Chain"
+                            : opbnbState === true
+                            ? "opBNB Chain"
+                            : avaxState === true
+                            ? "Avalanche"
+                            : baseState === true
+                            ? "Base"
+                            : confluxState === true
+                            ? "Conflux"
+                            : skaleState === true
+                            ? "SKALE"
+                            : coreState === true
+                            ? "CORE"
+                            : victionState === true
+                            ? "Viction"
+                            : immutableState === true
+                            ? "Immutable"
+                            : mantaState === true
+                            ? "Manta"
+                            // : seiState === true
+                            // ? "Sei"
+                            : "Unsupported"}
                     </span>
 
                     <img src={dropdown} alt="" />
@@ -587,38 +647,42 @@ const MobileNavbar = ({
                 }
               >
                 <Dropdown.Item onClick={() => handleEthPool()}>
-                  <img src={eth} alt="" />
-                  Ethereum
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleBnbPool()}>
-                  <img src={bnb} alt="" />
-                  BNB Chain
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleOpBnbPool()}>
-                  <img src={bnb} alt="" />
-                  opBNB Chain
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleCorePool()}>
-                  <img src={core} width={20} height={20} alt="" />
-                  CORE
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleSkalePool()}>
-                  <img src={skale} alt="" />
-                  SKALE
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleConfluxPool()}>
-                  <img src={conflux} alt="" />
-                  Conflux
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleImmutablePool()}>
-                  <img src={immutable} width={20} height={20} alt="" />
-                  Immutable
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleBasePool()}>
-                  <img src={base} alt="" />
-                  Base
-                </Dropdown.Item>
-                {/* <Dropdown.Item onClick={() => handleSeiPool()}>
+                    <img src={eth} alt="" />
+                    Ethereum
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleBnbPool()}>
+                    <img src={bnb} alt="" />
+                    BNB Chain
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleMantaPool()}>
+                    <img src={manta} alt="" />
+                    Manta
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleOpBnbPool()}>
+                    <img src={bnb} alt="" />
+                    opBNB Chain
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleCorePool()}>
+                    <img src={core} width={20} height={20} alt="" />
+                    CORE
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleSkalePool()}>
+                    <img src={skale} alt="" />
+                    SKALE
+                  </Dropdown.Item> 
+                  <Dropdown.Item onClick={() => handleConfluxPool()}>
+                    <img src={conflux} alt="" />
+                    Conflux
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleImmutablePool()}>
+                    <img src={immutable} width={20} height={20} alt="" />
+                    Immutable
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleBasePool()}>
+                    <img src={base} alt="" />
+                    Base
+                  </Dropdown.Item>
+                  {/* <Dropdown.Item onClick={() => handleSeiPool()}>
                     <img src={sei} width={20} height={20} alt="" />
                     Sei
                   </Dropdown.Item> */}

@@ -45,6 +45,8 @@ import gateUpcoming from "../../../../Marketplace/assets/gateUpcoming.webp";
 import eventPopupImage from "./assets/eventPopupImage.png";
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import victionThumb from "./assets/victionThumb.png";
+import mantaThumb from "./assets/mantaThumb.png";
+
 import seiThumb from "./assets/seiThumb.png";
 import multiversThumb from "./assets/multiversThumb.png";
 import immutableThumb from "./assets/immutableThumb.png";
@@ -92,6 +94,7 @@ import multiversBg from "./assets/multiversBg.webp";
 import seiLogo from "./assets/seiLogo.svg";
 import seiBg from "./assets/seiBg.webp";
 import coreLogo from "./assets/coreLogo.svg";
+import mantaLogo from "./assets/mantaLogo2.png";
 import bnbLogo from "./assets/bnbIcon.svg";
 import coreBg from "./assets/coreBg.webp";
 import immutableLogo from "./assets/immutableLogo.svg";
@@ -183,35 +186,13 @@ const renderer2 = ({ hours, minutes }) => {
 const NewWalletBalance = ({
   dypBalance,
   weeklyplayerData,
-  dailyplayerData,
-  skaleplayerDataAmount,
   address,
   coinbase,
-  dypBalancebnb,
-  dypBalanceavax,
-  isVerified,
   email,
   // handleConnectWallet,
   handleShowWalletPopup,
-  idypBalance,
-  idypBalancebnb,
-  idypBalanceavax,
   userId,
   username,
-  listedNFTS,
-  landStaked,
-  myCawsWodStakes,
-  myWodWodStakes,
-  myCawsCollected,
-  myCawsOldCollected,
-  myLandCollected,
-  myTimepieceCollected,
-  myBoughtNfts,
-  isConnected,
-  handleConnect,
-  ethTokenData,
-  dypTokenData,
-  dailyDataAmountCore,
   weeklyDataAmountCore,
   monthlyDataAmountCore,
   dailyDataAmountViction,
@@ -220,13 +201,6 @@ const NewWalletBalance = ({
   dailyDataAmountSkale,
   weeklyDataAmountSkale,
   monthlyDataAmountSkale,
-  favoritesArray,
-  latestBoughtNFTS,
-  myOffers,
-  allActiveOffers,
-  myNFTSCoingecko,
-  myGateNfts,
-  myConfluxNfts,
   onDailyRewardsPopupOpen,
   onOpenLeaderboard,
   isPremium,
@@ -234,9 +208,6 @@ const NewWalletBalance = ({
   onBalanceClick,
   claimedChests,
   claimedPremiumChests,
-  claimedSkaleChests,
-  claimedSkalePremiumChests,
-  availableTime,
   canBuy,
   rewardsPopup,
   dailyPopup,
@@ -276,10 +247,6 @@ const NewWalletBalance = ({
   skaleEarnToken,
   skaleEarnUsd,
   skalePoints,
-  claimedCoreChests,
-  claimedCorePremiumChests,
-  claimedVictionChests,
-  claimedVictionPremiumChests,
   openedCoreChests,
   openedVictionChests,
   openedSeiChests,
@@ -299,7 +266,7 @@ const NewWalletBalance = ({
   multiversPoints,
   multiversEarnToken,
   multiversEarnUsd,
-  kittyDashRecords,
+  kittyDashRecords, weeklyDataAmountManta, monthlyDataAmountManta, mantaEarnUsd, openedMantaChests,mantaPoints, mantaEarnToken,userDataStar
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -312,6 +279,8 @@ const NewWalletBalance = ({
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+  let mantaLastDay = new Date("2024-10-30T14:00:00.000+02:00");
+
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
@@ -385,6 +354,28 @@ const NewWalletBalance = ({
     rewards: "CORE",
     status: "Live",
   };
+  const dummyManta = {
+    title: "Manta",
+    logo: mantaLogo,
+    eventStatus: "Live",
+    totalRewards: "$20,000 in MANTA Rewards",
+    myEarnings: 0.0,
+    eventDate: "Aug 01, 2024",
+    date: "Aug 01, 2024",
+    id: "event21",
+    eventType: "Explore & Mine",
+    eventDuration: mantaLastDay,
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "",
+
+    chain: "Manta",
+    linkState: "manta",
+    rewards: "MANTA",
+    status: "Live",
+  };
 
   const dummyBNB = {
     title: "BNB Chain",
@@ -433,6 +424,34 @@ const NewWalletBalance = ({
     //     learnMore:
     //       "",
     //     eventDate: "Jul 01, 2024",
+    //   },
+    // },
+    // {
+    //   title: "Manta",
+    //   logo: mantaLogo,
+    //   eventStatus: "Live",
+    //   totalRewards: "$20,000 in MANTA Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Aug 01, 2024",
+    //   popupInfo: {
+    //     title: "Manta",
+    //     chain: "Manta",
+    //     linkState: "manta",
+    //     rewards: "MANTA",
+    //     status: "Live",
+    //     logo: mantaLogo,
+    //     date: "Aug 01, 2024",
+    //     id: "event21",
+    //     eventType: "Explore & Mine",
+    //     totalRewards: "$20,000 in MANTA Rewards",
+    //     eventDuration: mantaLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore: "",
+    //     eventDate: "Aug 01, 2024",
     //   },
     // },
     {
@@ -884,9 +903,10 @@ const NewWalletBalance = ({
     claimedPremiumChests +
     openedSkaleChests.length +
     openedCoreChests.length +
-    openedVictionChests.length;
+    openedVictionChests.length
+     + openedMantaChests.length;
 
-  const chestPercentage = (totalClaimedChests / 80) * 100;
+  const chestPercentage = (totalClaimedChests / 100) * 100;
 
   const dummyEvents = [
     {
@@ -1022,7 +1042,26 @@ const NewWalletBalance = ({
     }
 
     if (openedVictionChests && openedVictionChests.length > 0) {
-      openedCoreChests.forEach((chest) => {
+      openedVictionChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedMantaChests && openedMantaChests.length > 0) {
+      openedMantaChests.forEach((chest) => {
         if (chest.isOpened === true) {
           if (chest.rewards.length > 1) {
             chest.rewards.forEach((innerChest) => {
@@ -1391,7 +1430,7 @@ const NewWalletBalance = ({
     address,
     openedCoreChests,
     openedVictionChests,
-    openedSkaleChests,
+    openedSkaleChests,openedMantaChests
   ]);
 
   useEffect(() => {
@@ -1413,7 +1452,6 @@ const NewWalletBalance = ({
 
   const recaptchaRef = useRef(null);
   const kittyDashRewards = [30, 20, 10, 10, 5, 5, 5, 5, 5, 5];
-
   return (
     <>
       <div className="container px-0">
@@ -1525,6 +1563,8 @@ const NewWalletBalance = ({
                           ? skaleEarnUsd
                           : item.title === "VICTION"
                           ? victionEarnUsd
+                          : item.title === "Manta"
+                          ? mantaEarnUsd
                           : item.title === "CORE"
                           ? coreEarnUsd
                           : item.title === "CMC" ||
@@ -1889,15 +1929,16 @@ const NewWalletBalance = ({
                           Number(weeklyDataAmountCore) +
                           Number(monthlyDataAmountCore) +
                           // Number(dailyDataAmountSkale) +
-                          Number(weeklyDataAmountSkale) +
+                          Number(weeklyDataAmountSkale) +Number(weeklyDataAmountManta) +Number(monthlyDataAmountManta) +
                           (kittyDashRecords[0] ? kittyDashRecords[0]?.position+1 > 10 ? 0 : kittyDashRewards[kittyDashRecords[0]?.position] : 0) +
                           +Number(monthlyDataAmountSkale) +
-                          // Number(dailyDataAmountViction) +
+                          Number(userDataStar) +
                           Number(weeklyDataAmountViction) +
                           Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd) +
                           Number(coreEarnUsd) +
-                          Number(victionEarnUsd),
+                          Number(victionEarnUsd)+
+                          Number(mantaEarnUsd),
                         2
                       )}
                     </h6>
@@ -2203,6 +2244,8 @@ const NewWalletBalance = ({
                         ? multiversThumb
                         : dummyEvent.linkState === "bnb"
                         ? bnbPopupImage
+                        : dummyEvent.linkState === "manta"
+                        ? mantaThumb
                         : eventPopupImage
                     }
                     alt=""
@@ -2457,6 +2500,18 @@ const NewWalletBalance = ({
                       Remember to log in to the game daily and venture into the
                       MultiversX area to uncover hidden treasures.
                     </p>
+                  )  : dummyEvent.id === "event21" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Manta Beta Pass NFT</b>. You can get the
+                      Manta Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Manta area, players not only stand a
+                      chance to secure daily rewards in MANTA, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Manta area to uncover hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -2523,6 +2578,8 @@ const NewWalletBalance = ({
                           ? "CORE"
                           : dummyEvent.id === "event16"
                           ? "EGLD"
+                          : dummyEvent.id === "event21"
+                          ? "MANTA"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2574,6 +2631,8 @@ const NewWalletBalance = ({
                 ? "MultiversX"
                 : dummyEvent.id === "event20"
                 ? "BNB Chain"
+                : dummyEvent.id === "event21"
+                ? "Manta"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2667,7 +2726,23 @@ const NewWalletBalance = ({
                 public ledger that is maintained by a network of computers
                 called nodes.
               </p>
-            ) : dummyEvent.id === "event11" ? (
+            )  : dummyEvent.id === "event21" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Manta is the multi-modular ecosystem for zero-knowledge
+                (ZK) applications. Manta was created by a team of
+                experienced founders from prestigious institutions, including
+                Harvard, MIT, and Algorand. Manta has received
+                investments from many top web3 investment funds, including
+                Binance Labs and Polychain Capital. It has grown through
+                participation in the best web3 accelerators, including Alliance
+                DAO and Berkeley Blockchain Xcelerator. Manta is poised
+                to bring the next generation of web3 users and usher in a new
+                chapter of web3 zkApp applications.
+              </p>
+            ): dummyEvent.id === "event11" ? (
               <p
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
@@ -2790,6 +2865,8 @@ const NewWalletBalance = ({
                     ? "https://twitter.com/Coredao_Org"
                     : dummyEvent.id === "event16"
                     ? "https://twitter.com/MultiversX"
+                    : dummyEvent.id === "event21"
+                    ? "https://x.com/mantanetwork"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2827,6 +2904,8 @@ const NewWalletBalance = ({
                     ? "https://t.me/CoreDAOTelegram"
                     : dummyEvent.id === "event16"
                     ? "https://t.me/MultiversX"
+                    : dummyEvent.id === "event21"
+                    ? "https://www.t.me/mantanetworkofficial"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -2873,6 +2952,8 @@ const NewWalletBalance = ({
                     ? "https://coredao.org/"
                     : dummyEvent.id === "event16"
                     ? "https://multiversx.com/"
+                    : dummyEvent.id === "event21"
+                    ? "https://manta.network/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -2919,6 +3000,8 @@ const NewWalletBalance = ({
                         ? corePoints
                         : dummyEvent.id === "event16"
                         ? multiversPoints
+                        : dummyEvent.id === "event21"
+                        ? mantaPoints
                         : 0,
                       0
                     )}
@@ -2964,6 +3047,8 @@ const NewWalletBalance = ({
                         ? bnbEarnUsd
                         : dummyEvent.id === "event16"
                         ? multiversEarnUsd
+                        : dummyEvent.id === "event21"
+                        ? mantaEarnUsd
                         : 0,
                       2
                     )}
@@ -2995,6 +3080,8 @@ const NewWalletBalance = ({
                               ? bnbEarnToken
                               : dummyEvent.id === "event16"
                               ? multiversEarnToken
+                              : dummyEvent.id === "event21"
+                              ? mantaEarnToken
                               : 0,
                             2
                           )}
@@ -3025,6 +3112,8 @@ const NewWalletBalance = ({
                             ? "CORE"
                             : dummyEvent.id === "event16"
                             ? "EGLD"
+                             : dummyEvent.id === "event21"
+                            ? "MANTA"
                             : "ETH"}
                         </>
                       )}
