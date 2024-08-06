@@ -2731,7 +2731,7 @@ console.log(message)
                             >
                               <button
                                 className={` ${
-                                  chainId === 169
+                                  chainId === 167000
                                     ? "new-chain-active-btn"
                                     : "new-chain-inactive-btn"
                                 } d-flex gap-1 align-items-center`}
@@ -2796,106 +2796,6 @@ console.log(message)
                               </div>
                               <span className="percentage-span">
                                 {parseInt(taikoPercentage)}%
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "skale" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={skaleBg}
-                            className={`chain-img ${
-                              chain === "skale" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "skale" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("skale");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            {/* <h6 className="chain-title-position mb-0">SKALE</h6> */}
-                            <div
-                              className=" d-flex align-items-center gap-2 "
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={`${
-                                  chainId === 1482601649
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleSkalePool}
-                              >
-                                {" "}
-                                <img src={skaleIcon} alt="" /> SKALE
-                              </button>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    skalePercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(skalePercentage)}%
                               </span>
                             </div>
                           </div>
@@ -3011,6 +2911,107 @@ console.log(message)
                             </div>
                           </div>
                         </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "skale" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={skaleBg}
+                            className={`chain-img ${
+                              chain === "skale" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "skale" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("skale");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">SKALE</h6> */}
+                            <div
+                              className=" d-flex align-items-center gap-2 "
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={`${
+                                  chainId === 1482601649
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSkalePool}
+                              >
+                                {" "}
+                                <img src={skaleIcon} alt="" /> SKALE
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(skalePercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      
 
                         <div
                           className={`position-relative chain-item ${
@@ -3125,7 +3126,7 @@ console.log(message)
                             alt=""
                           />
                           <div
-                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
                           >
                             <div className="d-flex align-items-center gap-2">
                               <span className="percentage-span">
@@ -3141,7 +3142,7 @@ console.log(message)
                             alt=""
                           />
                           <div
-                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
                           >
                              <div className="d-flex align-items-center gap-2">
                               <span className="percentage-span">
@@ -3157,7 +3158,7 @@ console.log(message)
                             alt=""
                           />
                           <div
-                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
                           >
                             <div className="d-flex align-items-center gap-2">
                               <span className="percentage-span">
@@ -3173,7 +3174,7 @@ console.log(message)
                             alt=""
                           />
                           <div
-                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
                           >
                             <div className="d-flex align-items-center gap-2">
                               <span className="percentage-span">
