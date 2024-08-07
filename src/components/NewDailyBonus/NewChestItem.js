@@ -84,7 +84,7 @@ const NewChestItem = ({
             onChestStatus("initial");
           }, 3000);
         });
-      if (result.status === 200) {
+      if (result && result.status === 200) {
         onClaimRewards(result.data);
         setIsChestOpen(true);
 
@@ -111,7 +111,7 @@ const NewChestItem = ({
             onChestStatus("initial");
           }, 3000);
         });
-      if (result.status === 200) {
+      if (result && result.status === 200) {
         if (chainText === "opbnb" || chainText === "bnb") {
           handleThirdTask(coinbase);
         }
@@ -180,7 +180,7 @@ const NewChestItem = ({
             }, 3000);
           }
         });
-      if (result.status === 200) {
+      if (result && result.status === 200) {
         if (chainText === "opbnb" || chainText === "bnb") {
           handleThirdTask(coinbase);
         }
@@ -215,7 +215,7 @@ const NewChestItem = ({
             }, 3000);
           }
         });
-      if (result.status === 200) {
+      if (result && result.status === 200) {
         onClaimRewards(result.data);
         setIsChestOpen(true);
         // onChestStatus("success");
@@ -521,7 +521,7 @@ const NewChestItem = ({
           });
       } else if (rewardTypes === "standard") {
         const web3 = new Web3(window.ethereum);
-        const gasPrice = await web3.eth.getGasPrice();
+        const gasPrice = await window.mantaWeb3.getGasPrice();
         console.log("gasPrice", gasPrice);
         const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
         // const increasedGwei = parseInt(currentGwei) + 0.01;
@@ -680,10 +680,33 @@ const NewChestItem = ({
       }
     } else if (chainId === 1482601649) {
       if (rewardTypes === "premium" && isPremium) {
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await window.skaleWeb3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        const increasedGwei = parseInt(currentGwei) + 0.0001;
+        console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_skale.methods
+          .openPremiumChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
         await daily_bonus_contract_skale.methods
           .openPremiumChest()
           .send({
             from: address,
+            ...transactionParameters
           })
 
           .then((data) => {
@@ -708,11 +731,33 @@ const NewChestItem = ({
           });
       } else if (rewardTypes === "standard") {
         // console.log("standard");
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await window.skaleWeb3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        const increasedGwei = parseInt(currentGwei) + 0.0001;
+        console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_skale.methods
+          .openChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
 
         await daily_bonus_contract_skale.methods
           .openChest()
           .send({
             from: address,
+            ...transactionParameters
           })
           .then((data) => {
             handleCheckIfTxExists(
