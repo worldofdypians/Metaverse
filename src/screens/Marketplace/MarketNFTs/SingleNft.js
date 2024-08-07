@@ -1192,36 +1192,46 @@ const SingleNft = ({
           window.MARKETPLACE_ABI, binanceW3WProvider.getSigner()
         );
 console.log(marketplace)
-const gasPrice = ethers.utils.parseUnits('10', 'gwei');
-        // console.log("gasPrice", gasPrice);
-        // const currentGwei = ethers.utils.fromWei(gasPrice, "gwei");
-        // const increasedGwei = parseInt(currentGwei) + 1.5;
-        // console.log("increasedGwei", increasedGwei);
+const gasPrice = await binanceW3WProvider.getGasPrice();
+console.log("gasPrice", gasPrice.toString());
+const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+const increasedGwei = parseFloat(currentGwei) + 1.5;
+console.log("increasedGwei", increasedGwei);
+console.log(nft.payment_priceType, 'test')
+// Convert increased Gwei to Wei
+const gasPriceInWei = ethers.utils.parseUnits(increasedGwei.toString().slice(0,18), "gwei");
 
-        // const transactionParameters = {
-        //   gasPrice: ethers.utils.toWei(increasedGwei.toString(), "gwei"),
-        // };
+const transactionParameters = {
+  gasPrice: gasPriceInWei,
+};
 
-        // await marketplace.methods
-        //   .buyItem(nftAddress, nftId, [
-        //     nft.payment_priceType,
-        //     nft.payment_tokenAddress,
-        //   ])
-        //   .estimateGas({ from: coinbase, value: nft.price })
-        //   .then((gas) => {
-        //     transactionParameters.gas = ethers.utils.toHex(gas);
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
-        // console.log("transactionParameters", transactionParameters);
+const balance = await binanceW3WProvider.getSigner().getBalance();
+const balanceInEth = ethers.utils.formatEther(balance);
+console.log("Account Balance:", balanceInEth);
+
+// Estimate gas limit
+let gasLimit;
+try {
+  gasLimit = await marketplace.estimateGas.buyItem(nftAddress, nftId, [nft.payment_priceType, nft.payment_tokenAddress], {
+    value: nft.price,
+    from: coinbase,
+  });
+  transactionParameters.gasLimit = gasLimit;
+  console.log("transactionParameters", transactionParameters);
+} catch (error) {
+  console.error(error);
+}
 
         if (nft.payment_priceType === 1) {
           await marketplace
             .buyItem(nftAddress, nftId, [
               nft.payment_priceType,
               nft.payment_tokenAddress,
-            ],{gasPrice})
+            ],{
+              from: coinbase,
+              value: 0,
+              ...transactionParameters,
+            })
             // .send({ from: coinbase, value: 0
             //   , ...transactionParameters 
             // })
@@ -1268,7 +1278,11 @@ const gasPrice = ethers.utils.parseUnits('10', 'gwei');
             .buyItem(nftAddress, nftId, [
               nft.payment_priceType,
               nft.payment_tokenAddress,
-            ],{gasPrice})
+            ],{
+              from: coinbase,
+              value: nft.price,
+              ...transactionParameters,
+            })
             // .send({
             //   from: coinbase,
             //   value: nft.price,
