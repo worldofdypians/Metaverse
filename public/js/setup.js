@@ -1589,7 +1589,7 @@ window.config = {
   subscription_viction_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
   subscription_sei_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
   subscription_manta_address: "0xF943437f92519e3AdE18f16cb045453B7a92e6D5",
-  subscription_taiko_address: "0xF943437f92519e3AdE18f16cb045453B7a92e6D5",
+  subscription_taiko_address: "0x620655Ee8320bA51cf4cc06bf6a7C14022271764",
 
   //DYP-ETH 3 days
   token_address: "0xBa7872534a6C9097d805d8BEE97e030f4e372e54",
@@ -1997,20 +1997,16 @@ window.config = {
   },
 
   subscriptiontaiko_tokens: {
-    "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f": {
+    "0x2DEF195713CF4a606B49D07E520e22C17899a736": {
       symbol: "USDT",
       decimals: 6,
     },
-    "0xb73603C5d87fA094B7314C74ACE2e64D165016fb": {
+    "0x07d83526730c7438048D55A4fc0b850e2aaB6f0b": {
       symbol: "USDC",
       decimals: 6,
     },
-    "0x0Dc808adcE2099A9F62AA87D9670745AbA741746": {
-      symbol: "WETH",
-      decimals: 18,
-    },
-    "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5": {
-      symbol: "TAIKO",
+    "0x7d02A3E0180451B17e5D7f29eF78d06F8117106C": {
+      symbol: "DAI",
       decimals: 18,
     },
   },
@@ -13493,11 +13489,7 @@ window.SUBSCRIPTION_MANTA_ABI = [
 ];
 
 window.SUBSCRIPTION_TAIKO_ABI = [
-  {
-    inputs: [],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     anonymous: false,
     inputs: [
@@ -13591,98 +13583,27 @@ window.SUBSCRIPTION_TAIKO_ABI = [
   {
     inputs: [],
     name: "ONE_HUNDRED_X_100",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "SLIPPAGE_TOLERANCE_X_100",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "TRUSTED_DAI_ADDRESS",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "WBNB_ADDRESS",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "nftAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "discountPercentage",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "durationInDays",
-        type: "uint256",
-      },
-    ],
-    name: "addOrUpdateNFTDiscount",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address[]",
-        name: "subscribers",
-        type: "address[]",
-      },
-    ],
-    name: "addSubscribersInBulk",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
+      { internalType: "address", name: "tokenAddress", type: "address" },
     ],
     name: "addSupportedToken",
     outputs: [],
@@ -13690,123 +13611,31 @@ window.SUBSCRIPTION_TAIKO_ABI = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "discountPercentageGlobal",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "discountPercentage",
-        type: "uint256",
-      },
+      { internalType: "address", name: "tokenAddress", type: "address" },
     ],
     name: "getEstimatedTokenSubscriptionAmount",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
+    inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "isTokenSupported",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    name: "nftDiscounts",
-    outputs: [
-      {
-        internalType: "address",
-        name: "nftAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "discountPercentage",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "expiration",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "owner",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "nftAddress",
-        type: "address",
-      },
-    ],
-    name: "removeNFTDiscount",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
+      { internalType: "address", name: "tokenAddress", type: "address" },
     ],
     name: "removeSupportedToken",
     outputs: [],
@@ -13816,19 +13645,6 @@ window.SUBSCRIPTION_TAIKO_ABI = [
   {
     inputs: [],
     name: "renounceOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_newDiscount",
-        type: "uint256",
-      },
-    ],
-    name: "setDiscountPercentage",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -13848,16 +13664,8 @@ window.SUBSCRIPTION_TAIKO_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
+      { internalType: "address", name: "tokenAddress", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
     ],
     name: "subscribe",
     outputs: [],
@@ -13865,89 +13673,24 @@ window.SUBSCRIPTION_TAIKO_ABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "nftAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenID",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenAmount",
-        type: "uint256",
-      },
-    ],
-    name: "subscribeNFT",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "subscribeWithBNB",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "subscriptionFeeInDai",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
+    inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "subscriptionPlatformTokenAmount",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "token",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "recipient",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
+      { internalType: "address", name: "token", type: "address" },
+      { internalType: "address", name: "recipient", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
     ],
     name: "transferAnyERC20Token",
     outputs: [],
@@ -13955,13 +13698,7 @@ window.SUBSCRIPTION_TAIKO_ABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
     name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
@@ -13971,31 +13708,19 @@ window.SUBSCRIPTION_TAIKO_ABI = [
     inputs: [],
     name: "uniswapRouterV2",
     outputs: [
-      {
-        internalType: "contract IUniswapV2Router",
-        name: "",
-        type: "address",
-      },
+      { internalType: "contract IUniswapV2Router", name: "", type: "address" },
     ],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "accountAddress",
-        type: "address",
-      },
+      { internalType: "address", name: "accountAddress", type: "address" },
     ],
     name: "unsubscribeAddress",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
-  },
-  {
-    stateMutability: "payable",
-    type: "receive",
   },
 ];
 
@@ -51280,7 +51005,7 @@ async function getEstimatedTokenSubscriptionAmountTaiko(tokenAddress) {
     window.config.subscription_taiko_address
   );
   return await taikoContract.methods
-    .getEstimatedTokenSubscriptionAmount(tokenAddress, 0)
+    .getEstimatedTokenSubscriptionAmount(tokenAddress)
     .call();
 }
 

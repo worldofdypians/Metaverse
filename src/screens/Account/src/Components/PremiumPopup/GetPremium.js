@@ -78,7 +78,7 @@ const GetPremiumPopup = ({
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
   let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
   let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
-  let wtaikoddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
+  let wtaikoddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
 
 
   const metaverseBenefits = [
@@ -1313,7 +1313,7 @@ const GetPremiumPopup = ({
                 </div>
                 <div className="d-flex align-items-center gap-2">
                   <img
-                    src={require(`../../../../../components/Header/assets/manta.png`)}
+                    src={require(`../../../../../components/Header/assets/taiko.svg`).default}
                     alt=""
                     style={{ width: 18, height: 18 }}
                   />
@@ -1483,7 +1483,7 @@ const GetPremiumPopup = ({
                 >
                   <img
                     src={
-                      require(`../../Images/premium/tokens/mantaIcon.svg`)
+                      require(`../../Images/premium/tokens/taikoIcon.svg`)
                         .default
                     }
                     style={{ width: 18, height: 18 }}

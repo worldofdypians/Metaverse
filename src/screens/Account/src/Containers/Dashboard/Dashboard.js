@@ -3915,7 +3915,7 @@ function Dashboard({
   let wseiAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
   let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
-  let wtaikoddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
+  let wtaikoddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
 
 
   let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
@@ -8332,7 +8332,7 @@ function Dashboard({
                                                   : chainId === 169
                                                   ? window.config
                                                       .subscriptionmanta_tokens
-                                                      : chainId === 167000
+                                                  : chainId === 167000
                                                   ? window.config
                                                       .subscriptiontaiko_tokens
                                                   : chainId === 1116
