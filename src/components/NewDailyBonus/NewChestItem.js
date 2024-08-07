@@ -473,14 +473,14 @@ const NewChestItem = ({
     } else if (chainId === 169) {
       if (rewardTypes === "premium" && isPremium) {
         const web3 = new Web3(window.ethereum);
-        const gasPrice = await web3.eth.getGasPrice();
+        const gasPrice = await window.mantaWeb3.getGasPrice();
         console.log("gasPrice", gasPrice);
         const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-        const increasedGwei = parseInt(currentGwei) + 0.0006;
-        console.log("increasedGwei", increasedGwei);
+        // const increasedGwei = parseInt(currentGwei) + 0.01;
+        // console.log("increasedGwei", increasedGwei);
 
         const transactionParameters = {
-          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
         };
 
         await daily_bonus_contract_manta.methods
@@ -524,11 +524,11 @@ const NewChestItem = ({
         const gasPrice = await web3.eth.getGasPrice();
         console.log("gasPrice", gasPrice);
         const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-        const increasedGwei = parseInt(currentGwei) + 0.0006;
-        console.log("increasedGwei", increasedGwei);
+        // const increasedGwei = parseInt(currentGwei) + 0.01;
+        // console.log("increasedGwei", increasedGwei);
 
         const transactionParameters = {
-          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
         };
 
         await daily_bonus_contract_manta.methods
