@@ -333,9 +333,11 @@ const Header = ({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
+ 
+
   const handleMantaPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !=='binance') {
         await handleSwitchNetworkhook("0xa9")
           .then(() => {
             handleSwitchNetwork(169);
@@ -343,9 +345,13 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !=='binance') {
         handleSwitchChainGateWallet(169);
+      } else if (binanceWallet && window.WALLET_TYPE ==='binance') {
+        handleSwitchChainBinanceWallet(169);
       }
+    } else if (binanceWallet && window.WALLET_TYPE ==='binance') {
+      handleSwitchChainBinanceWallet(169);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }

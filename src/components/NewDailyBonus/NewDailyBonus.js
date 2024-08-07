@@ -141,6 +141,7 @@ const NewDailyBonus = ({
   openedMantaChests,
   allMantaChests,
   onMantaChestClaimed,
+  binanceW3WProvider,
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -639,10 +640,9 @@ const NewDailyBonus = ({
       });
 
     if (result && result.status === 200) {
-      
-      
       if (chain === "bnb") {
-        showSingleRewardData(rewardData.chestId, isActiveIndex - 1);onChestClaimed();
+        showSingleRewardData(rewardData.chestId, isActiveIndex - 1);
+        onChestClaimed();
       } else if (chain === "skale") {
         showSingleRewardDataSkale(rewardData.chestId, isActiveIndex - 1);
         onSkaleChestClaimed();
@@ -1722,7 +1722,13 @@ const NewDailyBonus = ({
 
   useEffect(() => {
     countEarnedRewards();
-  }, [allChests, allSkaleChests, allVictionChests, allMantaChests, allCoreChests]);
+  }, [
+    allChests,
+    allSkaleChests,
+    allVictionChests,
+    allMantaChests,
+    allCoreChests,
+  ]);
 
   // useEffect(() => {
   //   setChain("bnb");
@@ -1984,7 +1990,6 @@ const NewDailyBonus = ({
         setDisable(true);
       }
     } else if (chain === "manta") {
-   
       if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {
@@ -3055,6 +3060,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  binanceW3WProvider={binanceW3WProvider}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -3106,6 +3112,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  binanceW3WProvider={binanceW3WProvider}
                                 />
                               ))
                           : chain === "core"
@@ -3155,6 +3162,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  binanceW3WProvider={binanceW3WProvider}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -3206,111 +3214,111 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  binanceW3WProvider={binanceW3WProvider}
                                 />
                               ))
-
-                              : chain === "manta"
-                              ? allMantaChests && allMantaChests.length > 0
-                                ? allMantaChests.map((item, index) => (
-                                    <NewChestItem
-                                      coinbase={coinbase}
-                                      claimingChest={claimingChest}
-                                      setClaimingChest={setClaimingChest}
-                                      buyNftPopup={buyNftPopup}
-                                      chainId={chainId}
-                                      image={mantaImages[index]}
-                                      chain={chain}
-                                      key={index}
-                                      item={item}
-                                      // openChest={openChest}
-                                      selectedChest={selectedChest}
-                                      isPremium={isPremium}
-                                      onClaimRewards={(value) => {
-                                        // setRewardData(value);
-                                        setLiveRewardData(value);
-                                        onMantaChestClaimed();
-                                        showLiveRewardData(value);
-                                        setIsActive(item.chestId);
-                                        setIsActiveIndex(index + 1);
-                                      }}
-                                      handleShowRewards={(value, value2) => {
-                                        showSingleRewardDataManta(value, value2);
-                                        setIsActive(value);
-                                        setIsActiveIndex(index + 1);
-                                      }}
-                                      onLoadingChest={(value) => {
-                                        // setDisable(value);
-                                      }}
-                                      onChestStatus={(val) => {
-                                        setMessage(val);
-                                      }}
-                                      address={address}
-                                      email={email}
-                                      rewardTypes={item.chestType?.toLowerCase()}
-                                      chestId={item.chestId}
-                                      chestIndex={index + 1}
-                                      open={item.isOpened}
-                                      disableBtn={disable}
-                                      isActive={isActive}
-                                      isActiveIndex={isActiveIndex}
-                                      dummypremiumChests={
-                                        dummypremiumChests[index - 10]?.closedImg
-                                      }
-                                    />
-                                  ))
-                                : window.range(0, 19).map((item, index) => (
-                                    <NewChestItem
-                                      coinbase={coinbase}
-                                      claimingChest={claimingChest}
-                                      setClaimingChest={setClaimingChest}
-                                      buyNftPopup={buyNftPopup}
-                                      chainId={chainId}
-                                      chain={chain}
-                                      key={index}
-                                      item={item}
-                                      image={mantaImages[index]}
-                                      // openChest={openChest}
-                                      selectedChest={selectedChest}
-                                      isPremium={isPremium}
-                                      onClaimRewards={(value) => {
-                                        // setRewardData(value);
-                                        setLiveRewardData(value);
-                                        onMantaChestClaimed();
-                                        showLiveRewardData(value);
-                                        setIsActive(item.chestId);
-                                        // setIsActiveIndex(index + 1);
-                                      }}
-                                      handleShowRewards={(value, value2) => {
-                                        showSingleRewardDataManta(value, value2);
-                                        setIsActive(value);
-                                        // setIsActiveIndex(index + 1);
-                                      }}
-                                      onLoadingChest={(value) => {
-                                        // setDisable(value);
-                                      }}
-                                      onChestStatus={(val) => {
-                                        setMessage(val);
-                                      }}
-                                      address={address}
-                                      email={email}
-                                      rewardTypes={
-                                        index + 1 <= 10 ? "standard" : "premium"
-                                      }
-                                      chestId={item.chestId}
-                                      chestIndex={index + 1}
-                                      open={item.opened}
-                                      disableBtn={true}
-                                      isActive={isActive}
-                                      openChest={() => {
-                                        console.log("test");
-                                      }}
-                                      dummypremiumChests={
-                                        dummypremiumChests[index - 10]?.closedImg
-                                      }
-                                    />
-                                  ))
-
-
+                          : chain === "manta"
+                          ? allMantaChests && allMantaChests.length > 0
+                            ? allMantaChests.map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  image={mantaImages[index]}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onMantaChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataManta(value, value2);
+                                    setIsActive(value);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.isOpened}
+                                  disableBtn={disable}
+                                  isActive={isActive}
+                                  isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                  binanceW3WProvider={binanceW3WProvider}
+                                />
+                              ))
+                            : window.range(0, 19).map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  image={mantaImages[index]}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onMantaChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataManta(value, value2);
+                                    setIsActive(value);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.opened}
+                                  disableBtn={true}
+                                  isActive={isActive}
+                                  openChest={() => {
+                                    console.log("test");
+                                  }}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                  binanceW3WProvider={binanceW3WProvider}
+                                />
+                              ))
                           : chain === "viction"
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
@@ -3358,6 +3366,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  binanceW3WProvider={binanceW3WProvider}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -3409,6 +3418,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  binanceW3WProvider={binanceW3WProvider}
                                 />
                               ))
                           : chain === "skale" &&
@@ -3458,6 +3468,7 @@ const NewDailyBonus = ({
                                 dummypremiumChests={
                                   dummypremiumChests[index - 10]?.closedImg
                                 }
+                                binanceW3WProvider={binanceW3WProvider}
                               />
                             ))
                           : window.range(0, 19).map((item, index) => (
@@ -3508,15 +3519,16 @@ const NewDailyBonus = ({
                                 dummypremiumChests={
                                   dummypremiumChests[index - 10]?.closedImg
                                 }
+                                binanceW3WProvider={binanceW3WProvider}
                               />
                             ))}
                       </div>
                     </div>
                   </div>
                   <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper">
-                    {(message === "" ||
+                    {message === "" ||
                     message === "initial" ||
-                    message === "waiting")  ? (
+                    message === "waiting" ? (
                       <div
                         className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -3708,7 +3720,7 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 9 }}></div>
                         </div>
                       </div>
-                    ) : message === "switchAccount"  ? (
+                    ) : message === "switchAccount" ? (
                       <div
                         className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -5331,7 +5343,7 @@ const NewDailyBonus = ({
                           className="loader-text mb-0"
                           style={{ color: "#D75853" }}
                         >
-                         Coming Soon
+                          Coming Soon
                         </h6>
                         <div className="loader red-loader">
                           <div className="dot" style={{ "--i": 0 }}></div>
@@ -5346,7 +5358,7 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 9 }}></div>
                         </div>
                       </div>
-                    )  : (
+                    ) : (
                       <></>
                     )}
                   </div>
@@ -5829,13 +5841,15 @@ const NewDailyBonus = ({
           chestIndex={isActiveIndex}
           chain={chain}
           chainId={chainId}
+          coinbase={coinbase}
+          binanceW3WProvider={binanceW3WProvider}
           email={email}
           onSuccessPurchase={() => {
             onSkaleChestClaimed();
             onChestClaimed();
             onVictionChestClaimed();
             onCoreChestClaimed();
-            onMantaChestClaimed()
+            onMantaChestClaimed();
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
             setTimeout(() => {
@@ -5846,11 +5860,11 @@ const NewDailyBonus = ({
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
-                  : chain === "manta"
-                  ? showSingleRewardDataManta(
-                      rewardData.chestId,
-                      isActiveIndex - 1
-                    )
+                : chain === "manta"
+                ? showSingleRewardDataManta(
+                    rewardData.chestId,
+                    isActiveIndex - 1
+                  )
                 : chain === "viction"
                 ? showSingleRewardDataViction(
                     rewardData.chestId,

@@ -8434,6 +8434,7 @@ function Dashboard({
                   setdailyBonusPopup(false);
                   window.location.hash = "";
                 }}
+                binanceW3WProvider={binanceW3WProvider}
                 coinbase={coinbase}
                 standardChests={standardChests}
                 premiumChests={premiumChests}

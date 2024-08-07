@@ -105,10 +105,12 @@ const checkoutSDK = new checkout.Checkout({
 const Connector = getWeb3Connector();
 const binanceConnector = new Connector({
   lng: "en-US",
-  supportedChainIds: [1, 56],
+  supportedChainIds: [1, 56, 204, 169],
   rpc: {
     56: "https://bsc-dataseed.binance.org/",
     1: window.config.infura_endpoint,
+    204: window.config.opbnb_endpoint,
+    169: window.config.manta_endpoint,
 
   },
 });
@@ -3067,6 +3069,8 @@ function App() {
                     ? "0xcc"
                     : chain === 1116
                     ? "0x45c"
+                    : chain === 169
+                    ? "0xa9"
                     : chain === 88
                     ? "0x58"
                     : chain === 43114
