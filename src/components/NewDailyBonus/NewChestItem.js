@@ -473,7 +473,7 @@ const NewChestItem = ({
     } else if (chainId === 169) {
       if (rewardTypes === "premium" && isPremium) {
         const web3 = new Web3(window.ethereum);
-        const gasPrice = await window.mantaWeb3.getGasPrice();
+        const gasPrice = await window.mantaWeb3.eth.getGasPrice();
         console.log("gasPrice", gasPrice);
         const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
         // const increasedGwei = parseInt(currentGwei) + 0.01;
@@ -521,7 +521,7 @@ const NewChestItem = ({
           });
       } else if (rewardTypes === "standard") {
         const web3 = new Web3(window.ethereum);
-        const gasPrice = await window.mantaWeb3.getGasPrice();
+        const gasPrice = await window.mantaWeb3.eth.getGasPrice();
         console.log("gasPrice", gasPrice);
         const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
         // const increasedGwei = parseInt(currentGwei) + 0.01;
