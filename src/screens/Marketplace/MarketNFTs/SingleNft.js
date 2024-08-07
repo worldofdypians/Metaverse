@@ -2088,7 +2088,7 @@ const SingleNft = ({
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+400.png`
                         : nftAddress.toLowerCase() ===
                           window.config.nft_taiko_address.toLowerCase()
-                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+400.png`
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+400.png`
                         : nftAddress.toLowerCase() ===
                           window.config.nft_doge_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`

@@ -2056,7 +2056,7 @@ const WalletBalance = ({
                                   : item.type === "multivers"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
                                   : item.type === "taiko"
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                   : item.type === "base"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                   : item.type === "gate"
@@ -3157,7 +3157,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_opbnb_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+50.png`
@@ -3522,7 +3522,7 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
