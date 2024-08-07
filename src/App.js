@@ -1281,7 +1281,7 @@ function App() {
         setMyMantaNFTsCreated(NFTS);
       });
 
-      getMyNFTS(coinbase, "taikio").then((NFTS) => {
+      getMyNFTS(coinbase, "taiko").then((NFTS) => {
         setTotalTaikoNft(NFTS.length);
         setMyTaikoNfts(NFTS);
         setTaikoMintAllowed(NFTS.length > 0 ? 0 : 1);
@@ -1307,7 +1307,6 @@ function App() {
       settotalCoreNft(0);
       setMyMantaNfts([]);
       setTotalMantaNft(0);
-
       setMyTaikoNfts([]);
       setTotalTaikoNft(0);
     }
@@ -2101,10 +2100,12 @@ function App() {
                 setmintloading("initial");
               }, 5000);
               getMyNFTS(coinbase, "taiko").then((NFTS) => {
+                
                 setTotalTaikoNft(NFTS.length);
                 setMyTaikoNfts(NFTS);
                 setTaikoMintAllowed(NFTS.length > 0 ? 0 : 1);
                 setMyTaikoNFTsCreated(NFTS);
+                
               });
             })
             .catch((e) => {
@@ -3585,6 +3586,8 @@ function App() {
   useEffect(() => {
     fetchSocialData();
   }, []);
+
+
 
   return (
     <>

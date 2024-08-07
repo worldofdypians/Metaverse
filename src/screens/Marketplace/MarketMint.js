@@ -22,6 +22,7 @@ import nextArrow from "./assets/nextArrow1.svg";
 import confluxActive from "./assets/confluxActive.png";
 import coin98Active from "./assets/coin98Active.png";
 import bnbActive from "./assets/bnbActive.png";
+import taikoActive from "./assets/taikoActive.png";
 import mantaActive from "./assets/mantaActive.png";
 import coingeckoActive from "./assets/coingeckoActive.png";
 import skaleActive from "./assets/upcomingSkaleMobile.webp";
@@ -44,11 +45,11 @@ import coreLogo from "./assets/coreLogo.svg";
 import victionLogo from "./assets/victionLogo.svg";
 import seiLogo from "./assets/seiLogo.svg";
 import multiversLogo from "./assets/multiversLogo.svg";
-
+import taikoBg from "./assets/taikoBg.webp";
 import seiBg from "./assets/seiBg.webp";
 import coreBg from "./assets/coreBg.webp";
 import mantaBg from "./assets/mantaBg.webp";
-
+import taikoMobileBg from './assets/taikoActive.png'
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
 import immutableMobileBg from "./assets/immutableActive.webp";
@@ -238,7 +239,7 @@ const MarketMint = ({
     cardTitle: "Taiko Beta Pass",
     title: "Taiko Beta Pass",
     background: "taiko-mint-bg",
-    mobileBg: "mantaBgMobile.webp",
+    mobileBg: "taikoMobileBg.png",
   };
 
   const windowSize = useWindowSize();
@@ -491,9 +492,9 @@ const MarketMint = ({
       title: "Taiko Pass",
       eventId: "taiko",
       desc: "Gain entry to metaverse, and join exclusive Taiko event with special ticket.",
-      img: bnbActive,
-      data: opbnbData,
-      class: "mint-bnb",
+      img: taikoActive,
+      data: taikoData,
+      class: "mint-taiko",
       id: "taiko",
     },
     {
@@ -796,6 +797,8 @@ const MarketMint = ({
     document.title = "NFT Mint";
   }, []);
 
+  
+
   return (
     <>
       <div
@@ -975,7 +978,7 @@ const MarketMint = ({
                                   ? "manta-active"
                                   : selectedMint.id === "taiko" &&
                                     totalTaikoNft > 0
-                                  ? "manta-active"
+                                  ? "taiko-active"
                                   : selectedMint.id === "viction" &&
                                     totalVictionNft > 0
                                   ? "viction-active"
@@ -2828,7 +2831,7 @@ const MarketMint = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
-                  <div className="upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  {/* <div className="upcoming-mint-wrapper upcoming-taiko-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Taiko Beta Pass</h6>
                       <p className="upcoming-mint-desc">
@@ -2837,16 +2840,16 @@ const MarketMint = ({
                       </p>
                     </div>
                     <img
-                      src={mantaBg}
+                      src={taikoBg}
                       alt=""
                       className="upcoming-mint-img d-none d-lg-block"
                     />
                     <img
-                      src={mantaMobileBg}
+                      src={taikoMobileBg}
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div>
+                  </div> */}
                   <div className="upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">SEI Beta Pass</h6>

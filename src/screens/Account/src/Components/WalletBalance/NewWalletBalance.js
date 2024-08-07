@@ -46,6 +46,7 @@ import eventPopupImage from "./assets/eventPopupImage.png";
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import victionThumb from "./assets/victionThumb.png";
 import mantaThumb from "./assets/mantaThumb.png";
+import taikoThumb from "./assets/taikoThumb.webp";
 
 import seiThumb from "./assets/seiThumb.png";
 import multiversThumb from "./assets/multiversThumb.png";
@@ -397,7 +398,7 @@ const NewWalletBalance = ({
     myEarnings: 0.0,
     eventDate: "Aug 01, 2024",
     date: "Aug 01, 2024",
-    id: "event21",
+    id: "event22",
     eventType: "Explore & Mine",
     eventDuration: taikoLastDay,
     minRewards: "0.5",
@@ -2342,7 +2343,7 @@ const NewWalletBalance = ({
                         : dummyEvent.linkState === "manta"
                         ? mantaThumb
                         : dummyEvent.linkState === "taiko"
-                        ? mantaThumb
+                        ? taikoThumb
                         : eventPopupImage
                     }
                     alt=""

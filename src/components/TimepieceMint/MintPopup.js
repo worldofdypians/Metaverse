@@ -75,7 +75,7 @@ const MintPopup = ({ active, onClose, data }) => {
         </>
       ) 
       
-      : data.title === "Manta" ? (
+      : data.title === "Taiko" ? (
         <>
           <div className="d-flex align-items-center gap-2 mt-3 mt-lg-0 mb-4 mb-lg-0">
             <div className="d-flex flex-column align-items-center">
@@ -89,7 +89,7 @@ const MintPopup = ({ active, onClose, data }) => {
                 </h6>
               </div>
               <h6 className="mint-popup-title m-0">
-              Manta Beta Pass
+              Taiko Beta Pass
               </h6>
             </div>
           </div>
@@ -244,7 +244,7 @@ const MintPopup = ({ active, onClose, data }) => {
           </span>
         </div>
       ) : 
-        data.title === "Manta" ? (
+        data.title === "Taiko" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
             <span className="popup-available-mint">
             Get access to the game and a unique event filled with surprises and rewards!
@@ -284,10 +284,10 @@ const MintPopup = ({ active, onClose, data }) => {
             <button className="btn filled-btn px-4">More</button>
           </Link>
         ) 
-        : data.title === "Manta" ? (
+        : data.title === "Taiko" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/mint/manta"}
+            to={"/marketplace/mint/taiko"}
             state={{ event: data.state }}
             className="linear-border"
           >

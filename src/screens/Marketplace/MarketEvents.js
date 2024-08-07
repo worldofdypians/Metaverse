@@ -114,6 +114,7 @@ import seiBg from "./assets/seiBg.webp";
 import bnbPopupImage from "./assets/bnbPopupImage.png";
 import coreBg from "./assets/coreBg.webp";
 import taikoBg from "./assets/taikoBg.webp";
+import taikoMobileBg from './assets/taikoActive.png'
 
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
@@ -1599,7 +1600,7 @@ const MarketEvents = ({
               )}
               {activeTab === "upcoming" && (
                 <div className="d-flex flex-column gap-4">
-                  <div className="border-0 upcoming-mint-wrapper upcoming-taiko-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  {/* <div className="border-0 upcoming-mint-wrapper upcoming-taiko-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Taiko</h6>
                       <p className="upcoming-mint-desc">
@@ -1613,11 +1614,11 @@ const MarketEvents = ({
                       className="upcoming-mint-img d-none d-lg-block"
                     />
                     <img
-                      src={mantaMobileBg}
+                      src={taikoMobileBg}
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div>
+                  </div> */}
                   <div className="border-0 upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Manta</h6>
