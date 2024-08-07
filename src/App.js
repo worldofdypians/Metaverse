@@ -3359,7 +3359,7 @@ function App() {
       const amount = skaleWeb3.utils.fromWei(stringBalance, "ether");
       const formatted_amount = Number(amount);
 
-      if (formatted_amount <= 0.00005) {
+      if (formatted_amount <= 0.000005) {
         handleSkaleRefill(coinbase);
       } else {
         console.log("formatted_amount", formatted_amount);
