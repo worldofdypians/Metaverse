@@ -266,7 +266,14 @@ const NewWalletBalance = ({
   multiversPoints,
   multiversEarnToken,
   multiversEarnUsd,
-  kittyDashRecords, weeklyDataAmountManta, monthlyDataAmountManta, mantaEarnUsd, openedMantaChests,mantaPoints, mantaEarnToken,userDataStar
+  kittyDashRecords,
+  weeklyDataAmountManta,
+  monthlyDataAmountManta,
+  mantaEarnUsd,
+  openedMantaChests,
+  mantaPoints,
+  mantaEarnToken,
+  userDataStar,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -280,7 +287,6 @@ const NewWalletBalance = ({
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
   let mantaLastDay = new Date("2024-10-30T14:00:00.000+02:00");
-
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
@@ -305,9 +311,6 @@ const NewWalletBalance = ({
     learnMore:
       "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
   };
-
-
-      
 
   const dummyViction = {
     title: "VICTION",
@@ -903,8 +906,8 @@ const NewWalletBalance = ({
     claimedPremiumChests +
     openedSkaleChests.length +
     openedCoreChests.length +
-    openedVictionChests.length
-     + openedMantaChests.length;
+    openedVictionChests.length +
+    openedMantaChests.length;
 
   const chestPercentage = (totalClaimedChests / 100) * 100;
 
@@ -1430,7 +1433,8 @@ const NewWalletBalance = ({
     address,
     openedCoreChests,
     openedVictionChests,
-    openedSkaleChests,openedMantaChests
+    openedSkaleChests,
+    openedMantaChests,
   ]);
 
   useEffect(() => {
@@ -1929,15 +1933,21 @@ const NewWalletBalance = ({
                           Number(weeklyDataAmountCore) +
                           Number(monthlyDataAmountCore) +
                           // Number(dailyDataAmountSkale) +
-                          Number(weeklyDataAmountSkale) +Number(weeklyDataAmountManta) +Number(monthlyDataAmountManta) +
-                          (kittyDashRecords[0] ? kittyDashRecords[0]?.position+1 > 10 ? 0 : kittyDashRewards[kittyDashRecords[0]?.position] : 0) +
+                          Number(weeklyDataAmountSkale) +
+                          Number(weeklyDataAmountManta) +
+                          Number(monthlyDataAmountManta) +
+                          (kittyDashRecords[0]
+                            ? kittyDashRecords[0]?.position + 1 > 10
+                              ? 0
+                              : kittyDashRewards[kittyDashRecords[0]?.position]
+                            : 0) +
                           +Number(monthlyDataAmountSkale) +
                           Number(userDataStar) +
                           Number(weeklyDataAmountViction) +
                           Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd) +
                           Number(coreEarnUsd) +
-                          Number(victionEarnUsd)+
+                          Number(victionEarnUsd) + Number(cawsPremiumRewards)+ Number(bnbEarnUsd) +
                           Number(mantaEarnUsd),
                         2
                       )}
@@ -2500,17 +2510,17 @@ const NewWalletBalance = ({
                       Remember to log in to the game daily and venture into the
                       MultiversX area to uncover hidden treasures.
                     </p>
-                  )  : dummyEvent.id === "event21" ? (
+                  ) : dummyEvent.id === "event21" ? (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
-                      <b>hold a Manta Beta Pass NFT</b>. You can get the
-                      Manta Beta Pass NFT from the World of Dypians
-                      Marketplace. By engaging in the game on a daily basis and
-                      exploring the Manta area, players not only stand a
-                      chance to secure daily rewards in MANTA, but also earn
-                      points for their placement on the global leaderboard.
-                      Remember to log in to the game daily and venture into the
-                      Manta area to uncover hidden treasures.
+                      <b>hold a Manta Beta Pass NFT</b>. You can get the Manta
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      Manta area, players not only stand a chance to secure
+                      daily rewards in MANTA, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Manta area to uncover
+                      hidden treasures.
                     </p>
                   ) : (
                     <p className="popup-event-desc">
@@ -2726,23 +2736,22 @@ const NewWalletBalance = ({
                 public ledger that is maintained by a network of computers
                 called nodes.
               </p>
-            )  : dummyEvent.id === "event21" ? (
+            ) : dummyEvent.id === "event21" ? (
               <p
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
-                Manta is the multi-modular ecosystem for zero-knowledge
-                (ZK) applications. Manta was created by a team of
-                experienced founders from prestigious institutions, including
-                Harvard, MIT, and Algorand. Manta has received
-                investments from many top web3 investment funds, including
-                Binance Labs and Polychain Capital. It has grown through
-                participation in the best web3 accelerators, including Alliance
-                DAO and Berkeley Blockchain Xcelerator. Manta is poised
-                to bring the next generation of web3 users and usher in a new
-                chapter of web3 zkApp applications.
+                Manta is the multi-modular ecosystem for zero-knowledge (ZK)
+                applications. Manta was created by a team of experienced
+                founders from prestigious institutions, including Harvard, MIT,
+                and Algorand. Manta has received investments from many top web3
+                investment funds, including Binance Labs and Polychain Capital.
+                It has grown through participation in the best web3
+                accelerators, including Alliance DAO and Berkeley Blockchain
+                Xcelerator. Manta is poised to bring the next generation of web3
+                users and usher in a new chapter of web3 zkApp applications.
               </p>
-            ): dummyEvent.id === "event11" ? (
+            ) : dummyEvent.id === "event11" ? (
               <p
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
@@ -3112,7 +3121,7 @@ const NewWalletBalance = ({
                             ? "CORE"
                             : dummyEvent.id === "event16"
                             ? "EGLD"
-                             : dummyEvent.id === "event21"
+                            : dummyEvent.id === "event21"
                             ? "MANTA"
                             : "ETH"}
                         </>
