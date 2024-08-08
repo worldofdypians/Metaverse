@@ -490,34 +490,34 @@ const NewWalletBalance = ({
     //     eventDate: "Aug 01, 2024",
     //   },
     // },
-    {
-      title: "Taiko",
-      logo: taikoLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in ETH Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 01, 2024",
-      popupInfo: {
-        title: "Taiko",
-        chain: "Taiko",
-        linkState: "taiko",
-        rewards: "ETH",
-        status: "Live",
-        logo: taikoLogo,
-        date: "Aug 01, 2024",
-        id: "event22",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in ETH Rewards",
-        eventDuration: taikoLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Aug 01, 2024",
-      },
-    },
+    // {
+    //   title: "Taiko",
+    //   logo: taikoLogo,
+    //   eventStatus: "Live",
+    //   totalRewards: "$20,000 in ETH Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Aug 01, 2024",
+    //   popupInfo: {
+    //     title: "Taiko",
+    //     chain: "Taiko",
+    //     linkState: "taiko",
+    //     rewards: "ETH",
+    //     status: "Live",
+    //     logo: taikoLogo,
+    //     date: "Aug 01, 2024",
+    //     id: "event22",
+    //     eventType: "Explore & Mine",
+    //     totalRewards: "$20,000 in ETH Rewards",
+    //     eventDuration: taikoLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore: "",
+    //     eventDate: "Aug 01, 2024",
+    //   },
+    // },
     {
       title: "CORE",
       logo: coreLogo,
@@ -1551,11 +1551,11 @@ const NewWalletBalance = ({
                 Treasure Hunt
               </h6>{" "}
               <ActiveProfileEvent
-                data={dummyTaiko}
-                event={dummyTaiko}
+                data={dummyBNB}
+                event={dummyBNB}
                 userEarnedUsd={0}
                 onOpenEvent={() => {
-                  setDummyEvent(dummyTaiko);
+                  setDummyEvent(dummyBNB);
                   setEventPopup(true);
                 }}
               />
