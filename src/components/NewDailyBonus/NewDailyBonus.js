@@ -3,6 +3,9 @@ import "./_newdailybonus.scss";
 import bnbChain from "./assets/bnbChain.png";
 import skaleChain from "./assets/skaleChain.png";
 import comingSoon from "./assets/comingSoon.png";
+import comingSoon2 from "./assets/comingSoon2.png";
+import comingSoon3 from "./assets/comingSoon3.png";
+import comingSoon4 from "./assets/comingSoon4.png";
 import percentageFilled from "./assets/percentageFilled.svg";
 import percentageEmpty from "./assets/percentageEmpty.svg";
 import dypiusIcon from "./assets/dypiusIcon.svg";
@@ -3137,7 +3140,7 @@ const NewDailyBonus = ({
                         </div>
                         <div className={`position-relative chain-item w-100`}>
                           <img
-                            src={comingSoon}
+                            src={comingSoon2}
                             className={`chain-img`}
                             alt=""
                           />
@@ -3153,7 +3156,7 @@ const NewDailyBonus = ({
                         </div>
                         <div className={`position-relative chain-item w-100`}>
                           <img
-                            src={comingSoon}
+                            src={comingSoon3}
                             className={`chain-img`}
                             alt=""
                           />
@@ -3169,7 +3172,7 @@ const NewDailyBonus = ({
                         </div>
                         <div className={`position-relative chain-item w-100`}>
                           <img
-                            src={comingSoon}
+                            src={comingSoon4}
                             className={`chain-img`}
                             alt=""
                           />
