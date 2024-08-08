@@ -4421,6 +4421,8 @@ function App() {
                 ethTokenData={ethTokenData}
                 dyptokenData_old={dypTokenData_old}
                 dogePrice={dogePrice}
+                binanceW3WProvider={library}
+
               />
             }
           />
@@ -4444,6 +4446,8 @@ function App() {
                 }}
                 ethTokenData={ethTokenData}
                 dogePrice={dogePrice}
+                binanceW3WProvider={library}
+
               />
             }
           />
@@ -4467,6 +4471,8 @@ function App() {
                 dyptokenData_old={dypTokenData_old}
                 ethTokenData={ethTokenData}
                 dogePrice={dogePrice}
+                binanceW3WProvider={library}
+
               />
             }
           />

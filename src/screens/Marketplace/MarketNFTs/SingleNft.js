@@ -1202,7 +1202,7 @@ const SingleNft = ({
         const gasPrice = await binanceW3WProvider.getGasPrice();
         console.log("gasPrice", gasPrice.toString());
         const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
-        const increasedGwei = parseFloat(currentGwei) + 0;
+        const increasedGwei = parseFloat(currentGwei) + 1.5;
         console.log("increasedGwei", increasedGwei);
         console.log(nft.payment_priceType, "test");
         // Convert increased Gwei to Wei

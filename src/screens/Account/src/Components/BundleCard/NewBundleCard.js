@@ -28,6 +28,7 @@ import {
 import {
   DYP_700V1_ABI,
   DYP_700_ABI,
+  TOKEN_ABI,
   WOD_ABI,
   iDYP_3500_ABI,
 } from "../../web3/abis";
@@ -48,6 +49,7 @@ import { convertToUSD } from "../../../../../actions/convertUsd";
 import getFormattedNumber from "../../../../Caws/functions/get-formatted-number";
 import checkActive from "./assets/checked.svg";
 import checkPassive from "./assets/empty.svg";
+import { ethers } from "ethers";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -108,6 +110,7 @@ const NewBundleCard = ({
   idyptokenDatabnb,
   dyptokenDatabnb_old,
   dyptokenData_old,
+  binanceW3WProvider,
 }) => {
   const [sliderValue, setSliderValue] = useState(1);
   const [sliderValue700, setSliderValue700] = useState(1);
@@ -172,7 +175,9 @@ const NewBundleCard = ({
   const [puzzleMadnessDypAmount, setPuzzleMadnessDypAmount] = useState(0);
 
   const now = new Date();
-  const firstOfNextMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1));
+  const firstOfNextMonth = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1)
+  );
 
   const getBundlePrizes = async () => {
     const dragonContract = new window.bscWeb3.eth.Contract(WOD_ABI, wodAddress);
@@ -255,12 +260,45 @@ const NewBundleCard = ({
   };
 
   const checkApproval = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+    if (
+      coinbase?.toLowerCase() === wallet?.toLowerCase() &&
+      chainId === 56 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
       await token_abi.methods
         .allowance(coinbase, wodAddress)
         .call()
         .then((data) => {
           if (data === "0" || data < 150000000000000000000) {
+            setshowApproval(true);
+          } else {
+            setshowApproval(false);
+            setSliderValue(2);
+            setbundleState("deposit");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else if (
+      coinbase?.toLowerCase() === wallet?.toLowerCase() &&
+      chainId === 56 &&
+      window.WALLET_TYPE === "binance"
+    ) {
+      const token_address = "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4";
+
+      const dragonSc = new ethers.Contract(
+        token_address,
+        TOKEN_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      await dragonSc
+        .allowance(coinbase, wodAddress)
+        .then((data) => {
+          if (
+            parseInt(data._hex) === 0 ||
+            parseInt(data._hex) < 150000000000000000000
+          ) {
             setshowApproval(true);
           } else {
             setshowApproval(false);
@@ -287,7 +325,8 @@ const NewBundleCard = ({
 
   const checkApproval700 = async (tokenType) => {
     if (coinbase === wallet) {
-      if (tokenType === 1 && chainId === 56) {
+      if(window.WALLET_TYPE !=='binance')
+    {  if (tokenType === 1 && chainId === 56) {
         await token_abi.methods
           .allowance(coinbase, dyp700Address)
           .call()
@@ -327,6 +366,63 @@ const NewBundleCard = ({
           .catch((e) => {
             console.log(e);
           });
+      }}
+      else if(window.WALLET_TYPE === 'binance') {
+        if (tokenType === 1 && chainId === 56) {
+      const token_address = "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4";
+
+          const dypSc = new ethers.Contract(
+            token_address,
+            TOKEN_ABI,
+            binanceW3WProvider.getSigner()
+          );
+          
+          await dypSc
+            .allowance(coinbase, dyp700Address)
+            .then((data) => {
+              if ( parseInt(data._hex) === 0 || parseInt(data._hex) < 2100000000000000000000) {
+                setshowApproval700(true);
+                setbundleState700("initial");
+                setDepositState700("initial");
+                setSliderValue700(1);
+              } else {
+                setshowApproval700(false);
+                setSliderValue700(2);
+                setbundleState700("deposit");
+                setDepositState700("deposit");
+              }
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (tokenType === 0 && chainId === 1) {
+          const token_address = "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17";
+
+          const dypSc = new ethers.Contract(
+            token_address,
+            TOKEN_ABI,
+            binanceW3WProvider.getSigner()
+          );
+
+          await dypSc
+            .allowance(coinbase, dyp700v1Address)
+            .then((data) => {
+              if (parseInt(data._hex) === 0 || parseInt(data._hex) < 2100000000000000000000) {
+                setshowApproval700(true);
+                setbundleState700("initial");
+                setSliderValue700(1);
+                setDepositState700("initial");
+              } else {
+                setshowApproval700(false);
+                setSliderValue700(2);
+                setbundleState700("deposit");
+                setDepositState700("deposit");
+              }
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
       }
     }
   };
@@ -357,21 +453,44 @@ const NewBundleCard = ({
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+    if (window.WALLET_TYPE !== "binance") {
+      await token_abi.methods
+        .approve(wodAddress, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Succesfully approved!");
+          setbundleState("deposit");
+          setStatusColor("#00FECF");
+          setSliderValue(2);
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setbundleState("fail");
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      const token_address = "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4";
 
-    await token_abi.methods
-      .approve(wodAddress, "500000000000000000000000000")
-      .send({ from: coinbase })
-      .then(() => {
-        setStatus("Succesfully approved!");
-        setbundleState("deposit");
-        setStatusColor("#00FECF");
-        setSliderValue(2);
-      })
-      .catch((e) => {
-        setStatusColor("#FE7A00");
-        setStatus(e?.message);
-        setbundleState("fail");
-      });
+      const dragonSc = new ethers.Contract(
+        token_address,
+        TOKEN_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      await dragonSc
+        .approve(wodAddress, "500000000000000000000000000", { from: coinbase })
+        .then(() => {
+          setStatus("Succesfully approved!");
+          setbundleState("deposit");
+          setStatusColor("#00FECF");
+          setSliderValue(2);
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setbundleState("fail");
+        });
+    }
   };
 
   const handleApproval700 = async () => {
@@ -379,7 +498,8 @@ const NewBundleCard = ({
     setStatus700("Approving, please wait");
     setStatusColor700("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
-    if (priceType === 1) {
+    if(window.WALLET_TYPE !== 'binance')
+   { if (priceType === 1) {
       await token_abi.methods
         .approve(dyp700Address, "500000000000000000000000000")
         .send({ from: coinbase })
@@ -413,6 +533,60 @@ const NewBundleCard = ({
           setStatus700(e?.message);
           setbundleState700("fail");
         });
+    }} else if(window.WALLET_TYPE === 'binance') {
+
+      if (priceType === 1) {
+        const token_address = "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4";
+
+        const dypSc = new ethers.Contract(
+          token_address,
+          TOKEN_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+        await dypSc
+          .approve(dyp700Address, "500000000000000000000000000",{ from: coinbase })
+          .then(() => {
+            setStatus700("Succesfully approved!");
+            setbundleState700("deposit");
+            setStatusColor700("#00FECF");
+            setSliderValue700(2);
+            setDepositState700("deposit");
+          })
+          .catch((e) => {
+            console.error(e);
+            setStatusColor700("#FE7A00");
+            setStatus700(e?.message);
+            setbundleState700("fail");
+          });
+      } else if (priceType === 0) {
+
+        const token_address = "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17";
+
+        const dypSc = new ethers.Contract(
+          token_address,
+          TOKEN_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+        await dypSc
+          .approve(dyp700v1Address, "500000000000000000000000000",{ from: coinbase })
+          .then(() => {
+            setStatus700("Succesfully approved!");
+            setbundleState700("deposit");
+            setStatusColor700("#00FECF");
+            setSliderValue700(2);
+            setDepositState700("deposit");
+          })
+          .catch((e) => {
+            console.error(e);
+            setStatusColor700("#FE7A00");
+            setStatus700(e?.message);
+            setbundleState700("fail");
+          });
+      }
+
+     
     }
   };
 
@@ -458,26 +632,80 @@ const NewBundleCard = ({
     setDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
+    if (window.WALLET_TYPE !== "binance") {
+      await wod_abi.methods
+        .deposit()
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Bundle successfully purchased!");
+          setDepositState("success");
+          setStatusColor("#00FECF");
+          handleJoinLottery();
+          getDypBalance();
+          handleRefreshCountdown();
+          checkApproval();
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setDepositState("failDeposit");
+          console.log(e);
+        });
+      handleRefreshCountdown();
+    } else if (window.WALLET_TYPE === "binance") {
+      const wod_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
 
-    await wod_abi.methods
-      .deposit()
-      .send({ from: coinbase })
-      .then(() => {
-        setStatus("Bundle successfully purchased!");
-        setDepositState("success");
-        setStatusColor("#00FECF");
-        handleJoinLottery();
-        getDypBalance();
-        handleRefreshCountdown();
-        checkApproval();
-      })
-      .catch((e) => {
-        setStatusColor("#FE7A00");
-        setStatus(e?.message);
-        setDepositState("failDeposit");
-        console.log(e);
-      });
-    handleRefreshCountdown();
+      const dragonsc = new ethers.Contract(
+        wod_address,
+        WOD_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+        console.log("gasPrice", gasPrice.toString());
+        const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+        const increasedGwei = parseFloat(currentGwei) + 1.5;
+        console.log("increasedGwei", increasedGwei);
+    
+        // Convert increased Gwei to Wei
+        const gasPriceInWei = ethers.utils.parseUnits(
+          currentGwei.toString().slice(0, 16),
+          "gwei"
+        );
+
+        const transactionParameters = {
+          gasPrice: gasPriceInWei,
+        };
+
+        // let gasLimit;
+        // console.log('dragonsc',dragonsc.callStatic.deposit())
+        // try {
+        //   gasLimit = await dragonsc.estimateGas.deposit();
+        //   transactionParameters.gasLimit = gasLimit;
+        //   console.log("transactionParameters", transactionParameters);
+        // } catch (error) {
+        //   console.error(error);
+        // }
+
+
+      await dragonsc
+        .deposit({ from: coinbase, ...transactionParameters })
+        .then(() => {
+          setStatus("Bundle successfully purchased!");
+          setDepositState("success");
+          setStatusColor("#00FECF");
+          handleJoinLottery();
+          getDypBalance();
+          handleRefreshCountdown();
+          checkApproval();
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setDepositState("failDeposit");
+          console.log(e);
+        });
+      handleRefreshCountdown();
+    }
   };
 
   const increaseBundle = async () => {
@@ -637,7 +865,8 @@ const NewBundleCard = ({
     setStatus700("Confirm to complete purchase");
     setStatusColor700("#00FECF");
 
-    if (priceType === 1) {
+    if(window.WALLET_TYPE !== 'binance')
+  {  if (priceType === 1) {
       await dyp700_abi.methods
         .deposit()
         .send({ from: coinbase })
@@ -675,6 +904,51 @@ const NewBundleCard = ({
           setStatus700(e?.message);
           setDepositState700("failDeposit");
         });
+    }} else if(window.WALLET_TYPE === 'binance') {
+      if (priceType === 1) {
+        const dyp700_address = "0xd16DAad6bEd59a2c6806868855A05f4abF3b2ac9"
+        const goldenSc = new ethers.Contract( 
+          dyp700_address, DYP_700_ABI, binanceW3WProvider.getSigner())
+        await goldenSc
+          .deposit({ from: coinbase })
+          .then(() => {
+            setStatus700("Bundle successfully purchased!");
+            setDepositState700("success");
+            setStatusColor700("#00FECF");
+            getDypBalance();
+            insertBundle();
+            increaseBundle();
+            handleRefreshCountdown700();
+            checkApproval700(priceType);
+          })
+          .catch((e) => {
+            setStatusColor700("#FE7A00");
+            setStatus700(e?.message);
+            setDepositState700("failDeposit");
+          });
+      } else if (priceType === 0) {
+
+        const dyp700_address = "0x6493e45F0D9B81355035f07d6FAf59309B2e2f89"
+        const goldenSc = new ethers.Contract( 
+          dyp700_address, DYP_700V1_ABI, binanceW3WProvider.getSigner())
+
+        await goldenSc
+          .deposit({ from: coinbase }).then(() => {
+            setStatus700("Bundle successfully purchased!");
+            setDepositState700("success");
+            setStatusColor700("#00FECF");
+            getDypBalance();
+            insertBundle();
+            increaseBundle();
+            handleRefreshCountdown700();
+            checkApproval700(priceType);
+          })
+          .catch((e) => {
+            setStatusColor700("#FE7A00");
+            setStatus700(e?.message);
+            setDepositState700("failDeposit");
+          });
+      }
     }
   };
 
@@ -703,10 +977,22 @@ const NewBundleCard = ({
   };
 
   const handleRefreshCountdown = async () => {
-    const remainingTime = await wod_abi.methods
-      .getTimeOfExpireBuff(coinbase)
-      .call();
-    setcountdown(remainingTime);
+    if (window.WALLET_TYPE !== "binance" && coinbase) {
+      const remainingTime = await wod_abi.methods
+        .getTimeOfExpireBuff(coinbase)
+        .call();
+      setcountdown(remainingTime);
+    } else if (window.WALLET_TYPE === "binance" && coinbase) {
+      const wod_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
+      const dragonsc = new ethers.Contract(
+        wod_address,
+        WOD_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      const remainingTime = await dragonsc.getTimeOfExpireBuff(coinbase);
+      setcountdown(remainingTime);
+    }
   };
 
   const handleRefreshCountdown700 = async () => {
