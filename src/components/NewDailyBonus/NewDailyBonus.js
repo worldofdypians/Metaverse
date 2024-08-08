@@ -2314,7 +2314,7 @@ const NewDailyBonus = ({
     claimedTaikoPremiumChests,
     rewardData,
   ]);
-console.log(message)
+
   return (
     <>
       <div className={`package-popup-wrapper2 `}>
