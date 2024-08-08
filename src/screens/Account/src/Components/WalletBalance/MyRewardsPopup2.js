@@ -65,7 +65,7 @@ const MyRewardsPopupNew = ({
   weeklyDataAmountManta,
   monthlyDataAmountManta,
   allMantaChests,
-  mantaEarnUsd,
+  mantaEarnUsd,weeklyDataAmountTaiko,monthlyDataAmountTaiko, allTaikoChests,taikoEarnUsd
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);

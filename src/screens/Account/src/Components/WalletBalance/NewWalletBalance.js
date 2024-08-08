@@ -46,6 +46,7 @@ import eventPopupImage from "./assets/eventPopupImage.png";
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import victionThumb from "./assets/victionThumb.png";
 import mantaThumb from "./assets/mantaThumb.png";
+import taikoThumb from "./assets/taikoThumb.webp";
 
 import seiThumb from "./assets/seiThumb.png";
 import multiversThumb from "./assets/multiversThumb.png";
@@ -94,6 +95,7 @@ import multiversBg from "./assets/multiversBg.webp";
 import seiLogo from "./assets/seiLogo.svg";
 import seiBg from "./assets/seiBg.webp";
 import coreLogo from "./assets/coreLogo.svg";
+import taikoLogo from "./assets/taikoLogo.svg";
 import mantaLogo from "./assets/mantaLogo2.png";
 import bnbLogo from "./assets/bnbIcon.svg";
 import coreBg from "./assets/coreBg.webp";
@@ -274,6 +276,14 @@ const NewWalletBalance = ({
   mantaPoints,
   mantaEarnToken,
   userDataStar,
+  weeklyDataAmountTaiko,
+  monthlyDataAmountTaiko,
+  taikoEarnUsd,
+  claimedTaikoChests,
+  claimedTaikoPremiumChests,
+  openedTaikoChests,
+  taikoPoints,
+  taikoEarnToken,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -287,6 +297,7 @@ const NewWalletBalance = ({
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
   let mantaLastDay = new Date("2024-10-30T14:00:00.000+02:00");
+  let taikoLastDay = new Date("2024-10-30T14:00:00.000+02:00");
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
@@ -379,6 +390,28 @@ const NewWalletBalance = ({
     rewards: "MANTA",
     status: "Live",
   };
+  const dummyTaiko = {
+    title: "Taiko",
+    logo: taikoLogo,
+    eventStatus: "Live",
+    totalRewards: "$20,000 in ETH Rewards",
+    myEarnings: 0.0,
+    eventDate: "Aug 01, 2024",
+    date: "Aug 01, 2024",
+    id: "event22",
+    eventType: "Explore & Mine",
+    eventDuration: taikoLastDay,
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "",
+
+    chain: "Taiko",
+    linkState: "taiko",
+    rewards: "ETH",
+    status: "Live",
+  };
 
   const dummyBNB = {
     title: "BNB Chain",
@@ -457,6 +490,34 @@ const NewWalletBalance = ({
     //     eventDate: "Aug 01, 2024",
     //   },
     // },
+    {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in ETH Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 01, 2024",
+      popupInfo: {
+        title: "Taiko",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "ETH",
+        status: "Live",
+        logo: taikoLogo,
+        date: "Aug 01, 2024",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in ETH Rewards",
+        eventDuration: taikoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 01, 2024",
+      },
+    },
     {
       title: "CORE",
       logo: coreLogo,
@@ -907,9 +968,10 @@ const NewWalletBalance = ({
     openedSkaleChests.length +
     openedCoreChests.length +
     openedVictionChests.length +
+    openedTaikoChests.length +
     openedMantaChests.length;
 
-  const chestPercentage = (totalClaimedChests / 100) * 100;
+  const chestPercentage = (totalClaimedChests / 120) * 100;
 
   const dummyEvents = [
     {
@@ -1065,6 +1127,24 @@ const NewWalletBalance = ({
 
     if (openedMantaChests && openedMantaChests.length > 0) {
       openedMantaChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+    if (openedTaikoChests && openedTaikoChests.length > 0) {
+      openedTaikoChests.forEach((chest) => {
         if (chest.isOpened === true) {
           if (chest.rewards.length > 1) {
             chest.rewards.forEach((innerChest) => {
@@ -1435,6 +1515,7 @@ const NewWalletBalance = ({
     openedVictionChests,
     openedSkaleChests,
     openedMantaChests,
+    openedTaikoChests,
   ]);
 
   useEffect(() => {
@@ -1461,7 +1542,7 @@ const NewWalletBalance = ({
       <div className="container px-0">
         <div className="row gap-3 gap-lg-0 mx-0">
           <div className="col-12 rankings-outer-wrapper px-0 pe-lg-3 col-lg-4 position-relative">
-            <div className="purple-container rankings-wrapper px-3 px-lg-4 py-3  d-flex flex-column gap-2 position-relative custom-height-2 ">
+            <div className="purple-container rankings-wrapper px-3 px-lg-4 py-3  d-flex flex-column gap-2 position-relative custom-height-2">
               <div className="green-div"></div>
               <h6
                 className="profile-div-title mb-0"
@@ -1470,11 +1551,11 @@ const NewWalletBalance = ({
                 Treasure Hunt
               </h6>{" "}
               <ActiveProfileEvent
-                data={dummyBNB}
-                event={dummyBNB}
+                data={dummyTaiko}
+                event={dummyTaiko}
                 userEarnedUsd={0}
                 onOpenEvent={() => {
-                  setDummyEvent(dummyBNB);
+                  setDummyEvent(dummyTaiko);
                   setEventPopup(true);
                 }}
               />
@@ -1569,6 +1650,8 @@ const NewWalletBalance = ({
                           ? victionEarnUsd
                           : item.title === "Manta"
                           ? mantaEarnUsd
+                          : item.title === "Taiko"
+                          ? taikoEarnUsd
                           : item.title === "CORE"
                           ? coreEarnUsd
                           : item.title === "CMC" ||
@@ -1936,6 +2019,8 @@ const NewWalletBalance = ({
                           Number(weeklyDataAmountSkale) +
                           Number(weeklyDataAmountManta) +
                           Number(monthlyDataAmountManta) +
+                          Number(weeklyDataAmountTaiko) +
+                          Number(monthlyDataAmountTaiko) +
                           (kittyDashRecords[0]
                             ? kittyDashRecords[0]?.position + 1 > 10
                               ? 0
@@ -1947,7 +2032,9 @@ const NewWalletBalance = ({
                           Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd) +
                           Number(coreEarnUsd) +
-                          Number(victionEarnUsd) + Number(cawsPremiumRewards)+ Number(bnbEarnUsd) +
+                          Number(cawsPremiumRewards)+ Number(bnbEarnUsd) +
+                          Number(victionEarnUsd) +
+                          Number(taikoEarnUsd) +
                           Number(mantaEarnUsd),
                         2
                       )}
@@ -2256,6 +2343,8 @@ const NewWalletBalance = ({
                         ? bnbPopupImage
                         : dummyEvent.linkState === "manta"
                         ? mantaThumb
+                        : dummyEvent.linkState === "taiko"
+                        ? taikoThumb
                         : eventPopupImage
                     }
                     alt=""
@@ -2522,6 +2611,18 @@ const NewWalletBalance = ({
                       the game daily and venture into the Manta area to uncover
                       hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event22" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Taiko Beta Pass NFT</b>. You can get the Taiko
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      Taiko area, players not only stand a chance to secure
+                      daily rewards in ETH, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Taiko area to uncover
+                      hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -2590,6 +2691,8 @@ const NewWalletBalance = ({
                           ? "EGLD"
                           : dummyEvent.id === "event21"
                           ? "MANTA"
+                          : dummyEvent.id === "event22"
+                          ? "ETH"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2643,6 +2746,8 @@ const NewWalletBalance = ({
                 ? "BNB Chain"
                 : dummyEvent.id === "event21"
                 ? "Manta"
+                : dummyEvent.id === "event22"
+                ? "Taiko"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2750,6 +2855,15 @@ const NewWalletBalance = ({
                 accelerators, including Alliance DAO and Berkeley Blockchain
                 Xcelerator. Manta is poised to bring the next generation of web3
                 users and usher in a new chapter of web3 zkApp applications.
+              </p>
+            ) : dummyEvent.id === "event22" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Taiko is an Ethereum-equivalent (Type 1) ZK-EVM, maximally
+                compatible with Ethereum. No additional compiling, reaudits, or
+                tooling needed. Everything works out of the box, guaranteed.
               </p>
             ) : dummyEvent.id === "event11" ? (
               <p
@@ -2876,6 +2990,8 @@ const NewWalletBalance = ({
                     ? "https://twitter.com/MultiversX"
                     : dummyEvent.id === "event21"
                     ? "https://x.com/mantanetwork"
+                    : dummyEvent.id === "event22"
+                    ? "https://x.com/taikoxyz"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2915,6 +3031,8 @@ const NewWalletBalance = ({
                     ? "https://t.me/MultiversX"
                     : dummyEvent.id === "event21"
                     ? "https://www.t.me/mantanetworkofficial"
+                    : dummyEvent.id === "event22"
+                    ? "https://t.me/TaikoEcosystem"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -2963,6 +3081,8 @@ const NewWalletBalance = ({
                     ? "https://multiversx.com/"
                     : dummyEvent.id === "event21"
                     ? "https://manta.network/"
+                    : dummyEvent.id === "event22"
+                    ? "https://taiko.xyz/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -3011,6 +3131,8 @@ const NewWalletBalance = ({
                         ? multiversPoints
                         : dummyEvent.id === "event21"
                         ? mantaPoints
+                        : dummyEvent.id === "event22"
+                        ? taikoPoints
                         : 0,
                       0
                     )}
@@ -3058,6 +3180,8 @@ const NewWalletBalance = ({
                         ? multiversEarnUsd
                         : dummyEvent.id === "event21"
                         ? mantaEarnUsd
+                        : dummyEvent.id === "event22"
+                        ? taikoEarnUsd
                         : 0,
                       2
                     )}
@@ -3091,6 +3215,8 @@ const NewWalletBalance = ({
                               ? multiversEarnToken
                               : dummyEvent.id === "event21"
                               ? mantaEarnToken
+                              : dummyEvent.id === "event22"
+                              ? taikoEarnToken
                               : 0,
                             2
                           )}
@@ -3123,6 +3249,8 @@ const NewWalletBalance = ({
                             ? "EGLD"
                             : dummyEvent.id === "event21"
                             ? "MANTA"
+                            : dummyEvent.id === "event22"
+                            ? "ETH"
                             : "ETH"}
                         </>
                       )}
