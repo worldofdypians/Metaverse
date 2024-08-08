@@ -646,7 +646,7 @@ const MobileNavbar = ({
                   </span>
                 }
               >
-                <Dropdown.Item onClick={() => handleEthPool()}>
+                  <Dropdown.Item onClick={() => handleEthPool()}>
                     <img src={eth} alt="" />
                     Ethereum
                   </Dropdown.Item>
@@ -662,22 +662,28 @@ const MobileNavbar = ({
                     <img src={bnb} alt="" />
                     opBNB Chain
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleCorePool()}>
-                    <img src={core} width={20} height={20} alt="" />
-                    CORE
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleSkalePool()}>
-                    <img src={skale} alt="" />
-                    SKALE
-                  </Dropdown.Item> 
+                  {window.WALLET_TYPE !== "binance" && (
+                    <Dropdown.Item onClick={() => handleCorePool()}>
+                      <img src={core} width={20} height={20} alt="" />
+                      CORE
+                    </Dropdown.Item>
+                  )}
+                  {window.WALLET_TYPE !== "binance" && (
+                    <Dropdown.Item onClick={() => handleSkalePool()}>
+                      <img src={skale} alt="" />
+                      SKALE
+                    </Dropdown.Item>
+                  )}
                   <Dropdown.Item onClick={() => handleConfluxPool()}>
                     <img src={conflux} alt="" />
                     Conflux
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleImmutablePool()}>
-                    <img src={immutable} width={20} height={20} alt="" />
-                    Immutable
-                  </Dropdown.Item>
+                  {window.WALLET_TYPE !== "binance" && (
+                    <Dropdown.Item onClick={() => handleImmutablePool()}>
+                      <img src={immutable} width={20} height={20} alt="" />
+                      Immutable
+                    </Dropdown.Item>
+                  )}
                   <Dropdown.Item onClick={() => handleBasePool()}>
                     <img src={base} alt="" />
                     Base
@@ -685,15 +691,17 @@ const MobileNavbar = ({
                   {/* <Dropdown.Item onClick={() => handleSeiPool()}>
                     <img src={sei} width={20} height={20} alt="" />
                     Sei
-                  </Dropdown.Item> */}
-                <Dropdown.Item onClick={() => handleVictionPool()}>
-                  <img src={viction} width={20} height={20} alt="" />
-                  Viction
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleAvaxPool()}>
-                  <img src={avax} alt="" />
-                  Avalanche
-                </Dropdown.Item>
+                  </Dropdown.Item>*/}
+                  {window.WALLET_TYPE !== "binance" && (
+                    <Dropdown.Item onClick={() => handleVictionPool()}>
+                      <img src={viction} width={20} height={20} alt="" />
+                      Viction
+                    </Dropdown.Item>
+                  )}
+                  <Dropdown.Item onClick={() => handleAvaxPool()}>
+                    <img src={avax} alt="" />
+                    Avalanche
+                  </Dropdown.Item>
               </DropdownButton>
             </>
           )}

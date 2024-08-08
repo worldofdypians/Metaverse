@@ -105,13 +105,15 @@ const checkoutSDK = new checkout.Checkout({
 const Connector = getWeb3Connector();
 const binanceConnector = new Connector({
   lng: "en-US",
-  supportedChainIds: [1, 56, 204, 169],
+  supportedChainIds: [1, 56, 204, 169, 1030,8453,43114],
   rpc: {
     56: "https://bsc-dataseed.binance.org/",
     1: window.config.infura_endpoint,
     204: window.config.opbnb_endpoint,
     169: window.config.manta_endpoint,
-
+    1030: window.config.conflux_endpoint,
+    8453: window.config.base_endpoint,
+    43114: window.config.avax_endpoint,
   },
 });
 
@@ -4490,6 +4492,7 @@ function App() {
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
                 }}
+                binanceW3WProvider={library}
               />
             }
           />

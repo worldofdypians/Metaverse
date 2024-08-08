@@ -88,7 +88,11 @@ function Dashboard({
   onSubscribeSuccess,
   isPremium,
   dyptokenDatabnb,
-  logoutCount,handleConnectBinance, handleConnectionPassport, binanceW3WProvider, binanceWallet
+  logoutCount,
+  handleConnectBinance,
+  handleConnectionPassport,
+  binanceW3WProvider,
+  binanceWallet,
 }) {
   const { email, logout } = useAuth();
 
@@ -1292,7 +1296,6 @@ function Dashboard({
     if (testArray.length > 0) {
       setActivePlayerCoreMonthly(true);
       fetchMonthlyRecordsAroundPlayerCore(result.data.data.leaderboard);
-
     }
     fillRecordsMonthlyCore(result.data.data.leaderboard);
 
@@ -2309,7 +2312,6 @@ function Dashboard({
     if (testArray.length > 0) {
       setActivePlayerSkaleMonthly(true);
       fetchMonthlyRecordsAroundPlayerSkale(result.data.data.leaderboard);
-
     }
     fillRecordsMonthlySkale(result.data.data.leaderboard);
 
@@ -2908,13 +2910,11 @@ function Dashboard({
   useEffect(() => {
     fetchDailyRecords();
     getAllChests(email);
-
   }, [count]);
 
   useEffect(() => {
     fetchDailyRecordsCore();
     getAllCoreChests(email);
-
   }, [corecount]);
 
   useEffect(() => {
@@ -3267,85 +3267,85 @@ function Dashboard({
       setcountdown700();
       handleSetAvailableTime();
     } else if (bundlesBought > 0) {
-      const dypv1 = new window.infuraWeb3.eth.Contract(
-        DYP_700V1_ABI,
-        dyp700v1Address
-      );
+      // const dypv1 = new window.infuraWeb3.eth.Contract(
+      //   DYP_700V1_ABI,
+      //   dyp700v1Address
+      // );
 
-      const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
+      // const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
 
-      const remainingTimev1 = await dypv1.methods
-        .getTimeOfExpireBuff(coinbase)
-        .call();
+      // const remainingTimev1 = await dypv1.methods
+      //   .getTimeOfExpireBuff(coinbase)
+      //   .call();
 
-      const remainingTimev2 = await dypv2.methods
-        .getTimeOfExpireBuff(coinbase)
-        .call();
+      // const remainingTimev2 = await dypv2.methods
+      //   .getTimeOfExpireBuff(coinbase)
+      //   .call();
 
-      var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
+      // var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
 
-      var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
-      const timeofDepositv1 = await dypv1.methods
-        .getTimeOfDeposit(coinbase)
-        .call();
+      // var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
+      // const timeofDepositv1 = await dypv1.methods
+      //   .getTimeOfDeposit(coinbase)
+      //   .call();
 
-      const timeofDepositv2 = await dypv2.methods
-        .getTimeOfDeposit(coinbase)
-        .call();
+      // const timeofDepositv2 = await dypv2.methods
+      //   .getTimeOfDeposit(coinbase)
+      //   .call();
 
-      if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
-        remainingTime_milisecondsv1 = timeofDepositv1 * 1000;
-        remainingTime_milisecondsv2 = timeofDepositv2 * 1000;
+      // if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
+      //   remainingTime_milisecondsv1 = timeofDepositv1 * 1000;
+      //   remainingTime_milisecondsv2 = timeofDepositv2 * 1000;
 
-        const timeofDeposit_Datev1 = new Intl.DateTimeFormat("en-US", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        }).format(remainingTime_milisecondsv1);
+      //   const timeofDeposit_Datev1 = new Intl.DateTimeFormat("en-US", {
+      //     year: "numeric",
+      //     month: "2-digit",
+      //     day: "2-digit",
+      //     hour: "2-digit",
+      //     minute: "2-digit",
+      //     second: "2-digit",
+      //   }).format(remainingTime_milisecondsv1);
 
-        const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Datev1);
+      //   const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Datev1);
 
-        const timeofDeposit_Hoursv1 = timeofDeposit_Date_formattedv1.getHours();
-        const timeofDeposit_Minutesv1 =
-          timeofDeposit_Date_formattedv1.getMinutes();
-        const finalHoursv1 = timeofDeposit_Hoursv1 - 11;
+      //   const timeofDeposit_Hoursv1 = timeofDeposit_Date_formattedv1.getHours();
+      //   const timeofDeposit_Minutesv1 =
+      //     timeofDeposit_Date_formattedv1.getMinutes();
+      //   const finalHoursv1 = timeofDeposit_Hoursv1 - 11;
 
-        const finalMinutesv1 = timeofDeposit_Minutesv1 - 11;
+      //   const finalMinutesv1 = timeofDeposit_Minutesv1 - 11;
 
-        const resultv1 =
-          remainingTimev1 - finalHoursv1 * 60 * 60 - finalMinutesv1 * 60;
+      //   const resultv1 =
+      //     remainingTimev1 - finalHoursv1 * 60 * 60 - finalMinutesv1 * 60;
 
-        const timeofDeposit_Datev2 = new Intl.DateTimeFormat("en-US", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        }).format(remainingTime_milisecondsv2);
+      //   const timeofDeposit_Datev2 = new Intl.DateTimeFormat("en-US", {
+      //     year: "numeric",
+      //     month: "2-digit",
+      //     day: "2-digit",
+      //     hour: "2-digit",
+      //     minute: "2-digit",
+      //     second: "2-digit",
+      //   }).format(remainingTime_milisecondsv2);
 
-        const timeofDeposit_Date_formattedv2 = new Date(timeofDeposit_Datev2);
-        const timeofDeposit_day = timeofDeposit_Date_formattedv2.getDate();
-        const timeofDeposit_Hoursv2 = timeofDeposit_Date_formattedv2.getHours();
-        const timeofDeposit_Minutesv2 =
-          timeofDeposit_Date_formattedv2.getMinutes();
-        const finalHoursv2 = timeofDeposit_Hoursv2 - 11;
+      //   const timeofDeposit_Date_formattedv2 = new Date(timeofDeposit_Datev2);
+      //   const timeofDeposit_day = timeofDeposit_Date_formattedv2.getDate();
+      //   const timeofDeposit_Hoursv2 = timeofDeposit_Date_formattedv2.getHours();
+      //   const timeofDeposit_Minutesv2 =
+      //     timeofDeposit_Date_formattedv2.getMinutes();
+      //   const finalHoursv2 = timeofDeposit_Hoursv2 - 11;
 
-        const finalMinutesv2 = timeofDeposit_Minutesv2 - 11;
+      //   const finalMinutesv2 = timeofDeposit_Minutesv2 - 11;
 
-        const resultv2 =
-          remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
-        setcountdown700(firstOfNextMonth.getTime());
-        handleSetAvailableTime(firstOfNextMonth.getTime());
-        // setcountdown700(result * 1000);
-        //}
-      } else {
-        setcountdown700();
-        handleSetAvailableTime();
-      }
+      //   const resultv2 =
+      //     remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
+      setcountdown700(firstOfNextMonth.getTime());
+      handleSetAvailableTime(firstOfNextMonth.getTime());
+      // setcountdown700(result * 1000);
+      //}
+      // } else {
+      //   setcountdown700();
+      //   handleSetAvailableTime();
+      // }
     }
   };
 
@@ -3789,38 +3789,39 @@ function Dashboard({
   };
 
   const signWalletPublicAddress = async () => {
-    if(window.ethereum)
-   { try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner(account);
-      const signature = await signer.signMessage(
-        `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
-      );
-      verifyWallet({
-        variables: {
-          publicAddress: account,
-          signature: signature,
-        },
-      }).then(() => {
-        setsyncStatus("success");
+    if (window.ethereum) {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner(account);
+        const signature = await signer.signMessage(
+          `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+        );
+        verifyWallet({
+          variables: {
+            publicAddress: account,
+            signature: signature,
+          },
+        }).then(() => {
+          setsyncStatus("success");
+          setTimeout(() => {
+            setshowSyncModal(false);
+            setsyncStatus("initial");
+          }, 1000);
+          onSubscribeSuccess(account);
+
+          if (isonlink) {
+            handleFirstTask(account);
+          }
+        });
+      } catch (error) {
+        setsyncStatus("error");
         setTimeout(() => {
-          setshowSyncModal(false);
           setsyncStatus("initial");
-        }, 1000);
-        onSubscribeSuccess(account);
+        }, 3000);
 
-        if (isonlink) {
-          handleFirstTask(account);
-        }
-      });
-    } catch (error) {
-      setsyncStatus("error");
-      setTimeout(() => {
-        setsyncStatus("initial");
-      }, 3000);
-
-      console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
-    }} else if(binanceWallet && binanceW3WProvider) {
+        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+      }
+    } else if (binanceWallet && binanceW3WProvider) {
       try {
         const provider = binanceW3WProvider;
         const signer = provider.getSigner();
@@ -3839,7 +3840,7 @@ function Dashboard({
             setsyncStatus("initial");
           }, 1000);
           onSubscribeSuccess(binanceWallet);
-  
+
           if (isonlink) {
             handleFirstTask(binanceWallet);
           }
@@ -3849,7 +3850,7 @@ function Dashboard({
         setTimeout(() => {
           setsyncStatus("initial");
         }, 3000);
-  
+
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
       }
     }
@@ -3991,64 +3992,134 @@ function Dashboard({
       window.config.nft_dypius_premium_address
     );
 
-    if (wallet) {
-      const result = await nftContract.methods
-        .balanceOf(wallet)
-        .call()
-        .catch((e) => {
-          console.error(e);
-          return 0;
-        });
-
-      const discount = await premiumSc.methods
-        .discountPercentageGlobal()
-        .call()
-        .catch((e) => {
-          console.error(e);
-          return 0;
-        });
-
-      const nftObject = await premiumSc.methods
-        .nftDiscounts(window.config.nft_dypius_premium_address)
-        .call()
-        .catch((e) => {
-          console.error(e);
-        });
-
-      if (result && parseInt(result) > 0) {
-        const tokenId = await nftContract.methods
-          .tokenOfOwnerByIndex(wallet, 0)
+    if (window.WALLET_TYPE !== "binance") {
+      if (wallet) {
+        const result = await nftContract.methods
+          .balanceOf(wallet)
           .call()
           .catch((e) => {
             console.error(e);
             return 0;
           });
 
-        if (nftObject) {
-          setnftDiscountObject(nftObject);
+        const discount = await premiumSc.methods
+          .discountPercentageGlobal()
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+
+        const nftObject = await premiumSc.methods
+          .nftDiscounts(window.config.nft_dypius_premium_address)
+          .call()
+          .catch((e) => {
+            console.error(e);
+          });
+
+        if (result && parseInt(result) > 0) {
+          const tokenId = await nftContract.methods
+            .tokenOfOwnerByIndex(wallet, 0)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return 0;
+            });
+
+          if (nftObject) {
+            setnftDiscountObject(nftObject);
+            if (discount) {
+              setdiscountPercentage(
+                Math.max(
+                  parseInt(discount),
+                  parseInt(nftObject.discountPercentage)
+                )
+              );
+            }
+          }
+
+          setnftPremium_tokenId(tokenId);
+          setnftPremium_total(parseInt(result));
+        } else {
+          setnftPremium_tokenId(0);
+          setnftPremium_total(0);
+
           if (discount) {
-            setdiscountPercentage(
-              Math.max(
-                parseInt(discount),
-                parseInt(nftObject.discountPercentage)
-              )
-            );
+            setdiscountPercentage(parseInt(discount));
           }
         }
-
-        setnftPremium_tokenId(tokenId);
-        setnftPremium_total(parseInt(result));
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
-
-        if (discount) {
-          setdiscountPercentage(parseInt(discount));
-        }
       }
-    } else {
-      setnftPremium_tokenId(0);
-      setnftPremium_total(0);
+    } else if (window.WALLET_TYPE === "binance") {
+      if (wallet) {
+        const premiumSc_binance = new ethers.Contract(
+          window.config.subscription_newbnb2_address,
+          window.SUBSCRIPTION_NEWBNB2_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+        const nftContract_binance = new ethers.Contract(
+          window.config.nft_dypius_premium_address,
+          window.NFT_DYPIUS_PREMIUM_ABI,
+          binanceW3WProvider.getSigner()
+        );
+        const result = await nftContract_binance
+          .balanceOf(wallet)
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+
+        const discount = await premiumSc_binance
+          .discountPercentageGlobal()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+
+        const nftObject = await premiumSc_binance
+          .nftDiscounts(window.config.nft_dypius_premium_address)
+          .catch((e) => {
+            console.error(e);
+          });
+
+        if (result && parseInt(result) > 0) {
+          const tokenId = await nftContract.methods
+            .tokenOfOwnerByIndex(wallet, 0)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return 0;
+            });
+
+          if (nftObject) {
+            setnftDiscountObject(nftObject);
+            if (discount) {
+              setdiscountPercentage(
+                Math.max(
+                  parseInt(discount),
+                  parseInt(nftObject.discountPercentage)
+                )
+              );
+            }
+          }
+
+          setnftPremium_tokenId(tokenId);
+          setnftPremium_total(parseInt(result));
+        } else {
+          setnftPremium_tokenId(0);
+          setnftPremium_total(0);
+
+          if (discount) {
+            setdiscountPercentage(parseInt(discount));
+          }
+        }
+      } else {
+        setnftPremium_tokenId(0);
+        setnftPremium_total(0);
+      }
     }
     // } else setdiscountPercentage(0);
   };
@@ -4586,7 +4657,9 @@ function Dashboard({
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "bnb").then((NFTS) =>
+    {  console.log('NFTS',NFTS)
       setMyNFTSBNB(NFTS)
+}
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "opbnb").then((NFTS) =>
@@ -4703,53 +4776,60 @@ function Dashboard({
         ERC20_ABI,
         token_addressIDYP
       );
-      const bal1 = await contract1.methods
-        .balanceOf(coinbase)
-        .call()
-        .then((data) => {
-          return web3eth.utils.fromWei(data, "ether");
-        });
-      setDypBalance(bal1);
 
-      const bal2 = await contract2.methods
-        .balanceOf(coinbase)
-        .call()
-        .then((data) => {
-          return web3bsc.utils.fromWei(data, "ether");
-        });
-      setDypBalanceBnb(bal2);
 
-      const bal3 = await contract3.methods
-        .balanceOf(coinbase)
-        .call()
-        .then((data) => {
-          return web3avax.utils.fromWei(data, "ether");
-        });
-      setDypBalanceAvax(bal3);
 
-      const bal1_idyp = await contract1_idyp.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3eth.utils.fromWei(data, "ether");
-        });
-      setiDypBalance(bal1_idyp);
 
-      const bal2_idyp = await contract2_idyp.methods
-        .balanceOf(coinbase)
-        .call()
-        .then((data) => {
-          return web3bsc.utils.fromWei(data, "ether");
-        });
-      setiDypBalanceBnb(bal2_idyp);
 
-      const bal3_idyp = await contract3_idyp.methods
-        .balanceOf(coinbase)
-        .call()
-        .then((data) => {
-          return web3avax.utils.fromWei(data, "ether");
-        });
-      setiDypBalanceAvax(bal3_idyp);
+     
+        const bal1 = await contract1.methods
+          .balanceOf(coinbase)
+          .call()
+          .then((data) => {
+            return web3eth.utils.fromWei(data, "ether");
+          });
+        setDypBalance(bal1);
+
+        const bal2 = await contract2.methods
+          .balanceOf(coinbase)
+          .call()
+          .then((data) => {
+            return web3bsc.utils.fromWei(data, "ether");
+          });
+        setDypBalanceBnb(bal2);
+
+        const bal3 = await contract3.methods
+          .balanceOf(coinbase)
+          .call()
+          .then((data) => {
+            return web3avax.utils.fromWei(data, "ether");
+          });
+        setDypBalanceAvax(bal3);
+
+        const bal1_idyp = await contract1_idyp.methods
+          .balanceOf(account)
+          .call()
+          .then((data) => {
+            return web3eth.utils.fromWei(data, "ether");
+          });
+        setiDypBalance(bal1_idyp);
+
+        const bal2_idyp = await contract2_idyp.methods
+          .balanceOf(coinbase)
+          .call()
+          .then((data) => {
+            return web3bsc.utils.fromWei(data, "ether");
+          });
+        setiDypBalanceBnb(bal2_idyp);
+
+        const bal3_idyp = await contract3_idyp.methods
+          .balanceOf(coinbase)
+          .call()
+          .then((data) => {
+            return web3avax.utils.fromWei(data, "ether");
+          });
+        setiDypBalanceAvax(bal3_idyp);
+    
     } else {
       setDypBalance(0);
       setDypBalanceBnb(0);
@@ -5916,7 +5996,13 @@ function Dashboard({
 
   useEffect(() => {
     handleRankRewards();
-  }, [userBnbScore, userSkaleScore,userCoreScore,userVictionScore,userMantaScore]);
+  }, [
+    userBnbScore,
+    userSkaleScore,
+    userCoreScore,
+    userVictionScore,
+    userMantaScore,
+  ]);
 
   useEffect(() => {
     if (coinbase) {
@@ -5942,7 +6028,8 @@ function Dashboard({
       data.getPlayer.playerId &&
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress &&
-      chainId === 1 && window.WALLET_TYPE !==''
+      chainId === 1 &&
+      window.WALLET_TYPE !== ""
     ) {
       calculateAllRewardsCawsPremium(data.getPlayer.wallet.publicAddress);
     }
@@ -6026,7 +6113,6 @@ function Dashboard({
     //   handleCheckIfAlreadyApproved(wseiAddress);
     // }
     else if (chainId === 56) {
-
       setChainDropdown(chainDropdowns[1]);
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -6249,10 +6335,15 @@ function Dashboard({
     if (coinbase && isConnected) {
       setsyncStatus("initial");
       fetchAllMyNfts();
-      getmyCawsWodStakes();
-      getmyWodStakes();
+      // getmyCawsWodStakes();
+      // getmyWodStakes();
     }
-  }, [userWallet, isConnected, data?.getPlayer?.wallet?.publicAddress, coinbase]);
+  }, [
+    userWallet,
+    isConnected,
+    data?.getPlayer?.wallet?.publicAddress,
+    coinbase,
+  ]);
 
   useEffect(() => {
     getOtherNfts();
