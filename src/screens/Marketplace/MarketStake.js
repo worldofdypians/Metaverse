@@ -28,7 +28,7 @@ const MarketStake = ({
   isConnected,
   isPremium,
   onSuccessDeposit,
-  handleSwitchNetwork,
+  handleSwitchNetwork,binanceW3WProvider
 }) => {
   const windowSize = useWindowSize();
   const [mystakes, setMystakes] = useState([]);
@@ -492,7 +492,7 @@ const MarketStake = ({
   }, [isConnected, EthRewards, EthRewardsCawsPremium]);
 
   useEffect(() => {
-    if (coinbase && chainId === 1) {
+    if (coinbase && chainId === 1 && isConnected) {
       calculateAllRewards();
       calculateAllRewardsLandPool();
       calculateAllRewardsCawsPremium();
@@ -1059,6 +1059,7 @@ const MarketStake = ({
             onClose={() => {
               setgetPremiumPopup(false);
             }}
+            binanceW3WProvider={binanceW3WProvider}
           />
         </OutsideClickHandler>
       )}

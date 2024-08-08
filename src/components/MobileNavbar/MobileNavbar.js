@@ -43,6 +43,8 @@ const MobileNavbar = ({
   handleSwitchChainGateWallet,
   domainName,
   handleOpenDomains,
+  handleSwitchChainBinanceWallet,
+  binanceWallet,
 }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -59,9 +61,6 @@ const MobileNavbar = ({
   const [victionState, setVictionState] = useState(false);
   const [seiState, setSeiState] = useState(false);
   const [immutableState, setImmutableState] = useState(false);
-  
-
-
 
   const bgmenu = document.querySelector("#bgmenu");
   const hamburger = document.querySelector("#mobileNavbar");
@@ -256,10 +255,9 @@ const MobileNavbar = ({
     }
   };
 
-
   const handleEthPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x1")
           .then(() => {
             handleSwitchNetwork(1);
@@ -267,16 +265,20 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
         handleSwitchChainGateWallet(1);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
   const handleCorePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x45c")
           .then(() => {
             handleSwitchNetwork(1116);
@@ -284,9 +286,13 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
         handleSwitchChainGateWallet(1116);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1116);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1116);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -329,7 +335,7 @@ const MobileNavbar = ({
   };
   const handleVictionPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x58")
           .then(() => {
             handleSwitchNetwork(88);
@@ -337,35 +343,21 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
         handleSwitchChainGateWallet(88);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(88);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(88);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-
-  const handleAvaxPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0xa86a")
-          .then(() => {
-            handleSwitchNetwork(43114);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(1);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
+  // console.log(avatar);
   const handleBnbPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x38")
           .then(() => {
             handleSwitchNetwork(56);
@@ -373,9 +365,35 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
         handleSwitchChainGateWallet(56);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(56);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(56);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleAvaxPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+        await handleSwitchNetworkhook("0xa86a")
+          .then(() => {
+            handleSwitchNetwork(43114);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(43114);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(43114);
+      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(43114);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -383,7 +401,7 @@ const MobileNavbar = ({
 
   const handleOpBnbPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0xcc")
           .then(() => {
             handleSwitchNetwork(204);
@@ -391,27 +409,13 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
         handleSwitchChainGateWallet(204);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(204);
       }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleConfluxPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x406")
-          .then(() => {
-            handleSwitchNetwork(1030);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(1030);
-      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(204);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -419,7 +423,7 @@ const MobileNavbar = ({
 
   const handleBasePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x2105")
           .then(() => {
             handleSwitchNetwork(8453);
@@ -427,9 +431,35 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
         handleSwitchChainGateWallet(8453);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(8453);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(8453);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleConfluxPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+        await handleSwitchNetworkhook("0x406")
+          .then(() => {
+            handleSwitchNetwork(1030);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(1030);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1030);
+      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1030);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -437,7 +467,7 @@ const MobileNavbar = ({
 
   const handleSkalePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
             handleSwitchNetwork(1482601649);
@@ -445,18 +475,21 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
-        handleSwitchChainGateWallet();
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(1482601649);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1482601649);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1482601649);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
-
   const handleImmutablePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x343b")
           .then(() => {
             handleSwitchNetwork(13371);
@@ -464,14 +497,17 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
-        handleSwitchChainGateWallet();
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(13371);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(13371);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(13371);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-
   useEffect(() => {
     if (chainId === 1) {
       handleSwitchNetwork(1);
@@ -485,7 +521,7 @@ const MobileNavbar = ({
       handleSwitchNetwork(8453);
     }
 
-    if (chainId === 1482601649 ) {
+    if (chainId === 1482601649) {
       handleSwitchNetwork(1482601649);
     }
   }, [chainId, coinbase]);
@@ -610,7 +646,7 @@ const MobileNavbar = ({
                   </span>
                 }
               >
-                <Dropdown.Item onClick={() => handleEthPool()}>
+                  <Dropdown.Item onClick={() => handleEthPool()}>
                     <img src={eth} alt="" />
                     Ethereum
                   </Dropdown.Item>
@@ -626,22 +662,28 @@ const MobileNavbar = ({
                     <img src={bnb} alt="" />
                     opBNB Chain
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleCorePool()}>
-                    <img src={core} width={20} height={20} alt="" />
-                    CORE
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleSkalePool()}>
-                    <img src={skale} alt="" />
-                    SKALE
-                  </Dropdown.Item> 
+                  {window.WALLET_TYPE !== "binance" && (
+                    <Dropdown.Item onClick={() => handleCorePool()}>
+                      <img src={core} width={20} height={20} alt="" />
+                      CORE
+                    </Dropdown.Item>
+                  )}
+                  {window.WALLET_TYPE !== "binance" && (
+                    <Dropdown.Item onClick={() => handleSkalePool()}>
+                      <img src={skale} alt="" />
+                      SKALE
+                    </Dropdown.Item>
+                  )}
                   <Dropdown.Item onClick={() => handleConfluxPool()}>
                     <img src={conflux} alt="" />
                     Conflux
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleImmutablePool()}>
-                    <img src={immutable} width={20} height={20} alt="" />
-                    Immutable
-                  </Dropdown.Item>
+                  {window.WALLET_TYPE !== "binance" && (
+                    <Dropdown.Item onClick={() => handleImmutablePool()}>
+                      <img src={immutable} width={20} height={20} alt="" />
+                      Immutable
+                    </Dropdown.Item>
+                  )}
                   <Dropdown.Item onClick={() => handleBasePool()}>
                     <img src={base} alt="" />
                     Base
@@ -649,11 +691,13 @@ const MobileNavbar = ({
                   {/* <Dropdown.Item onClick={() => handleSeiPool()}>
                     <img src={sei} width={20} height={20} alt="" />
                     Sei
-                  </Dropdown.Item> */}
-                  <Dropdown.Item onClick={() => handleVictionPool()}>
-                    <img src={viction} width={20} height={20} alt="" />
-                    Viction
-                  </Dropdown.Item>
+                  </Dropdown.Item>*/}
+                  {window.WALLET_TYPE !== "binance" && (
+                    <Dropdown.Item onClick={() => handleVictionPool()}>
+                      <img src={viction} width={20} height={20} alt="" />
+                      Viction
+                    </Dropdown.Item>
+                  )}
                   <Dropdown.Item onClick={() => handleAvaxPool()}>
                     <img src={avax} alt="" />
                     Avalanche
@@ -685,185 +729,189 @@ const MobileNavbar = ({
         </div>
       </div>
       <OutsideClickHandler onOutsideClick={() => setOpenNavbar(false)}>
-      <div
-        className={`mobile-menu ${
-          openNavbar && "mobile-menu-open"
-        } d-flex d-lg-none p-3 flex-column gap-3`}
-        id="bgmenu"
-      >
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/explorer"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">Explore</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
+        <div
+          className={`mobile-menu ${
+            openNavbar && "mobile-menu-open"
+          } d-flex d-lg-none p-3 flex-column gap-3`}
+          id="bgmenu"
+        >
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+            <NavLink
+              to="/explorer"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">Explore</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
 
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/land"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">Land</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+            <NavLink
+              to="/land"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">Land</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
 
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/marketplace"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">Marketplace</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/community"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">Community</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/roadmap"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">Roadmap</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
-       
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/news"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">News</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+            <NavLink
+              to="/marketplace"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">Marketplace</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+            <NavLink
+              to="/community"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">Community</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+            <NavLink
+              to="/roadmap"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">Roadmap</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
 
-        <div className="w-100 d-flex align-items-center justify-content-center gap-3">
-          {!coinbase ? (
-            <div className="linearborder2">
-              <button
-                className="btn connectwallet px-3"
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+            <NavLink
+              to="/news"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">News</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
+
+          <div className="w-100 d-flex align-items-center justify-content-center gap-3">
+            {!coinbase ? (
+              <div className="linearborder2">
+                <button
+                  className="btn connectwallet px-3"
+                  onClick={() => {
+                    handleSignUp();
+                    setOpenNavbar(false);
+                  }}
+                >
+                  Connect Wallet
+                </button>{" "}
+              </div>
+            ) : coinbase && !domainName ? (
+              <div className="d-flex align-items-center gap-3">
+                <Clipboard
+                  component="div"
+                  data-event="click"
+                  data-for={id}
+                  data-tip="Copied To Clipboard!"
+                  data-clipboard-text={coinbase}
+                  className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative bg-transparent"
+                >
+                  <div
+                    className="btn connected px-3"
+                    style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
+                    onClick={() => {
+                      setTooltip(true);
+                      setTimeout(() => setTooltip(false), 2000);
+                    }}
+                  >
+                    {shortAddress(coinbase)}{" "}
+                    <img src={tooltip ? check : copy} alt="" />
+                  </div>
+                  <div
+                    className="btn pill-btn px-3"
+                    style={{ fontSize: 12 }}
+                    onClick={() => {
+                      handleOpenDomains();
+                      setOpenNavbar(false);
+                    }}
+                  >
+                    Domain Name
+                  </div>
+                </Clipboard>
+              </div>
+            ) : domainName ? (
+              <div
+                className="d-flex align-items-center gap-3"
                 onClick={() => {
-                  handleSignUp();
+                  handleOpenDomains();
                   setOpenNavbar(false);
                 }}
               >
-                Connect Wallet
-              </button>{" "}
-            </div>
-          ) : coinbase && !domainName ? (
-            <div className="d-flex align-items-center gap-3">
-              <Clipboard
-                component="div"
-                data-event="click"
-                data-for={id}
-                data-tip="Copied To Clipboard!"
-                data-clipboard-text={coinbase}
-                className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative bg-transparent"
-              >
-                <div
-                  className="btn connected px-3"
-                  style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
-                  onClick={() => {
-                    setTooltip(true);
-                    setTimeout(() => setTooltip(false), 2000);
-                  }}
+                <Clipboard
+                  component="div"
+                  data-event="click"
+                  data-for={id}
+                  data-tip="Copied To Clipboard!"
+                  data-clipboard-text={coinbase}
+                  className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative bg-transparent"
                 >
-                  {shortAddress(coinbase)}{" "}
-                  <img src={tooltip ? check : copy} alt="" />
-                </div>
-                <div
-                  className="btn pill-btn px-3"
-                  style={{fontSize: 12}} 
-                   onClick={()=>{handleOpenDomains(); setOpenNavbar(false)}}
-                >
-                  Domain Name
-                  
-                </div>
-              </Clipboard>
-            </div>
-          )
-           : domainName ? (
-            <div className="d-flex align-items-center gap-3" onClick={()=>{handleOpenDomains(); setOpenNavbar(false)}}>
-              <Clipboard
-                component="div"
-                data-event="click"
-                data-for={id}
-                data-tip="Copied To Clipboard!"
-                data-clipboard-text={coinbase}
-                className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative bg-transparent"
-              >
-                <div
-                  className="btn connected px-3"
-                  style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
-                  onClick={() => {
-                    setTooltip(true);
-                    setTimeout(() => setTooltip(false), 2000);
-                  }}
-                >
-                  {domainName}{" "}
-                   
-                </div>
-              </Clipboard>
-            </div>
-          ) 
-          :(
-            <></>
-          )
-          }
+                  <div
+                    className="btn connected px-3"
+                    style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
+                    onClick={() => {
+                      setTooltip(true);
+                      setTimeout(() => setTooltip(false), 2000);
+                    }}
+                  >
+                    {domainName}{" "}
+                  </div>
+                </Clipboard>
+              </div>
+            ) : (
+              <></>
+            )}
 
-          {!coinbase ? (
-            <NavLink
-              to={"/account"}
-              onClick={() => {
-                setOpenNavbar(false);
-              }}
-            >
-              <img src={person} className="account-icon" alt="" />
-            </NavLink>
-          ) : (
-            <NavLink
-              to={"/account"}
-              onClick={() => {
-                setOpenNavbar(false);
-              }}
-            >
-              <img
-                src={avatar === null ? person : avatar}
-                className="account-icon"
-                alt=""
-                // onClick={handleRedirect}
+            {!coinbase ? (
+              <NavLink
+                to={"/account"}
                 onClick={() => {
                   setOpenNavbar(false);
                 }}
-              />
-            </NavLink>
-          )}
+              >
+                <img src={person} className="account-icon" alt="" />
+              </NavLink>
+            ) : (
+              <NavLink
+                to={"/account"}
+                onClick={() => {
+                  setOpenNavbar(false);
+                }}
+              >
+                <img
+                  src={avatar === null ? person : avatar}
+                  className="account-icon"
+                  alt=""
+                  // onClick={handleRedirect}
+                  onClick={() => {
+                    setOpenNavbar(false);
+                  }}
+                />
+              </NavLink>
+            )}
+          </div>
         </div>
-      </div>
       </OutsideClickHandler>
     </>
   );

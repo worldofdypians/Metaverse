@@ -136,7 +136,7 @@ const ProfileCard = ({
   setRankData,
   getRankData,userDataStar, userDataPosition, userRankManta, userMantaScore
 }) => {
-  let id = Math.random().toString(36); 
+  let id = Math.random().toString(36);
   const windowSize = useWindowSize();
   const [exclusivePremium, setExclusivePremium] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -408,7 +408,9 @@ const ProfileCard = ({
 
   useEffect(() => {
     countBundle();
-    setlastDay(address);
+    if (address) {
+      setlastDay(address);
+    }
   }, [address]);
 
   useEffect(() => {
@@ -1271,7 +1273,8 @@ const ProfileCard = ({
                 className={`bordereddiv border-0 ${
                   (email &&
                     coinbase &&
-                    username && address &&
+                    username &&
+                    address &&
                     address.toLowerCase() !== coinbase.toLowerCase()) ||
                   (!coinbase && email) ||
                   (!coinbase && !email)
@@ -1289,7 +1292,8 @@ const ProfileCard = ({
                   {address &&
                     email &&
                     coinbase &&
-                    syncStatus !== "" && address &&
+                    syncStatus !== "" &&
+                    address &&
                     address.toLowerCase() !== coinbase.toLowerCase() && (
                       <div className="sync-wrapper">
                         <div className="d-flex gap-2 align-items-center">
@@ -1341,11 +1345,14 @@ const ProfileCard = ({
                     className=" align-items-center gap-2"
                     style={{
                       width: "fit-content",
-                      display: address &&
-                      email &&
-                      coinbase &&
-                      syncStatus !== "" &&
-                      address.toLowerCase() !== coinbase.toLowerCase() ? 'flex' : 'none',
+                      display:
+                        address &&
+                        email &&
+                        coinbase &&
+                        syncStatus !== "" &&
+                        address.toLowerCase() !== coinbase.toLowerCase()
+                          ? "flex"
+                          : "none",
                       justifyContent:
                         address &&
                         email &&

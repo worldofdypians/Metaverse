@@ -74,10 +74,12 @@ const Header = ({
   chainId,
   handleSwitchNetwork,
   handleSwitchChainGateWallet,
+  handleSwitchChainBinanceWallet,
   handleOpenDomains,
   domainName,
   onSigninClick,
   onLogout,
+  binanceWallet,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -94,7 +96,7 @@ const Header = ({
   const [confluxState, setConfluxState] = useState(false);
   const [skaleState, setSkaleState] = useState(false);
   const [victionState, setVictionState] = useState(false);
-  const [mantaState, setMantaState] = useState(false)
+  const [mantaState, setMantaState] = useState(false);
   const [seiState, setSeiState] = useState(false);
   const [immutableState, setImmutableState] = useState(false);
 
@@ -127,7 +129,6 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
@@ -140,7 +141,6 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
@@ -153,7 +153,6 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
@@ -166,7 +165,6 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
@@ -179,7 +177,6 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -193,7 +190,6 @@ const Header = ({
         setSeiState(false);
         setMantaState(false);
         setImmutableState(false);
-
       } else if (chainId === 1482601649) {
         setAvaxState(false);
         setBnbState(false);
@@ -207,7 +203,6 @@ const Header = ({
         setSeiState(false);
         setMantaState(false);
         setImmutableState(false);
-
       } else if (chainId === 1116) {
         setAvaxState(false);
         setBnbState(false);
@@ -221,7 +216,6 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-
       } else if (chainId === 88) {
         setAvaxState(false);
         setBnbState(false);
@@ -235,7 +229,6 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-
       } else if (chainId === 13371) {
         setAvaxState(false);
         setBnbState(false);
@@ -249,8 +242,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(true);
         setMantaState(false);
-
-      }else if (chainId === 169) {
+      } else if (chainId === 169) {
         setAvaxState(false);
         setBnbState(false);
         setMantaState(true);
@@ -287,15 +279,13 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-        
-
       }
     }
   };
 
   const handleEthPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x1")
           .then(() => {
             handleSwitchNetwork(1);
@@ -303,16 +293,20 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
         handleSwitchChainGateWallet(1);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
   const handleCorePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x45c")
           .then(() => {
             handleSwitchNetwork(1116);
@@ -320,16 +314,21 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
         handleSwitchChainGateWallet(1116);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1116);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1116);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
+
   const handleMantaPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0xa9")
           .then(() => {
             handleSwitchNetwork(169);
@@ -337,9 +336,13 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
         handleSwitchChainGateWallet(169);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(169);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(169);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -364,7 +367,7 @@ const Header = ({
   };
   const handleVictionPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x58")
           .then(() => {
             handleSwitchNetwork(88);
@@ -372,9 +375,13 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
         handleSwitchChainGateWallet(88);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(88);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(88);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -382,7 +389,7 @@ const Header = ({
   // console.log(avatar);
   const handleBnbPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x38")
           .then(() => {
             handleSwitchNetwork(56);
@@ -390,9 +397,13 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
         handleSwitchChainGateWallet(56);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(56);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(56);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -400,7 +411,7 @@ const Header = ({
 
   const handleAvaxPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0xa86a")
           .then(() => {
             handleSwitchNetwork(43114);
@@ -408,9 +419,13 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
         handleSwitchChainGateWallet(43114);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(43114);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(43114);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -418,7 +433,7 @@ const Header = ({
 
   const handleOpBnbPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0xcc")
           .then(() => {
             handleSwitchNetwork(204);
@@ -426,31 +441,43 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
         handleSwitchChainGateWallet(204);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(204);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(204);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
   const handleBasePool = async () => {
-    if (!window.gatewallet) {
-      await handleSwitchNetworkhook("0x2105")
-        .then(() => {
-          handleSwitchNetwork(8453);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    if (window.ethereum) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+        await handleSwitchNetworkhook("0x2105")
+          .then(() => {
+            handleSwitchNetwork(8453);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(8453);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(8453);
+      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(8453);
     } else {
-      handleSwitchChainGateWallet(8453);
+      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
   const handleConfluxPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x406")
           .then(() => {
             handleSwitchNetwork(1030);
@@ -458,9 +485,13 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
-        handleSwitchChainGateWallet();
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(1030);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1030);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1030);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -468,7 +499,7 @@ const Header = ({
 
   const handleSkalePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
             handleSwitchNetwork(1482601649);
@@ -476,9 +507,13 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
-        handleSwitchChainGateWallet();
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(1482601649);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1482601649);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1482601649);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -486,7 +521,7 @@ const Header = ({
 
   const handleImmutablePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x343b")
           .then(() => {
             handleSwitchNetwork(13371);
@@ -494,9 +529,13 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
-        handleSwitchChainGateWallet();
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(13371);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(13371);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(13371);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -986,22 +1025,28 @@ const Header = ({
                     <img src={bnb} alt="" />
                     opBNB Chain
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleCorePool()}>
-                    <img src={core} width={20} height={20} alt="" />
-                    CORE
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleSkalePool()}>
-                    <img src={skale} alt="" />
-                    SKALE
-                  </Dropdown.Item>
+                  {window.WALLET_TYPE !== "binance" && (
+                    <Dropdown.Item onClick={() => handleCorePool()}>
+                      <img src={core} width={20} height={20} alt="" />
+                      CORE
+                    </Dropdown.Item>
+                  )}
+                  {window.WALLET_TYPE !== "binance" && (
+                    <Dropdown.Item onClick={() => handleSkalePool()}>
+                      <img src={skale} alt="" />
+                      SKALE
+                    </Dropdown.Item>
+                  )}
                   <Dropdown.Item onClick={() => handleConfluxPool()}>
                     <img src={conflux} alt="" />
                     Conflux
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleImmutablePool()}>
-                    <img src={immutable} width={20} height={20} alt="" />
-                    Immutable
-                  </Dropdown.Item>
+                  {window.WALLET_TYPE !== "binance" && (
+                    <Dropdown.Item onClick={() => handleImmutablePool()}>
+                      <img src={immutable} width={20} height={20} alt="" />
+                      Immutable
+                    </Dropdown.Item>
+                  )}
                   <Dropdown.Item onClick={() => handleBasePool()}>
                     <img src={base} alt="" />
                     Base
@@ -1010,10 +1055,12 @@ const Header = ({
                     <img src={sei} width={20} height={20} alt="" />
                     Sei
                   </Dropdown.Item>*/}
-                  <Dropdown.Item onClick={() => handleVictionPool()}>
-                    <img src={viction} width={20} height={20} alt="" />
-                    Viction
-                  </Dropdown.Item>
+                  {window.WALLET_TYPE !== "binance" && (
+                    <Dropdown.Item onClick={() => handleVictionPool()}>
+                      <img src={viction} width={20} height={20} alt="" />
+                      Viction
+                    </Dropdown.Item>
+                  )}
                   <Dropdown.Item onClick={() => handleAvaxPool()}>
                     <img src={avax} alt="" />
                     Avalanche
@@ -1171,7 +1218,12 @@ const Header = ({
                             setshowmenuAccount(false);
                           }}
                         >
-                          <img src={logouticon} alt="" className="logout-icon"/> Log Out
+                          <img
+                            src={logouticon}
+                            alt=""
+                            className="logout-icon"
+                          />{" "}
+                          Log Out
                         </button>
                       ) : (
                         <button

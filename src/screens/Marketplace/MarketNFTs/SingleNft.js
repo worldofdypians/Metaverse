@@ -48,6 +48,7 @@ import expand from "./assets/expand.svg";
 import chart from "./assets/chart.svg";
 import users from "./assets/users.svg";
 import dropdownIcon from "./assets/dropdownIcon.svg";
+import { ethers } from "ethers";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -106,6 +107,7 @@ const SingleNft = ({
   handleRefreshListing,
   favorites,
   dyptokenData_old,
+  binanceW3WProvider,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -526,8 +528,7 @@ const SingleNft = ({
       console.log(owner);
 
       setowner(owner);
-    }
-    else if (type === "manta") {
+    } else if (type === "manta") {
       const nft_contract = new window.mantaWeb3.eth.Contract(
         window.MANTA_NFT_ABI,
         window.config.nft_manta_address
@@ -542,9 +543,7 @@ const SingleNft = ({
       console.log(owner);
 
       setowner(owner);
-    }
-    
-    else if (type === "doge") {
+    } else if (type === "doge") {
       const nft_contract = new window.bscWeb3.eth.Contract(
         window.DOGE_NFT_ABI,
         window.config.nft_doge_address
@@ -574,7 +573,7 @@ const SingleNft = ({
       console.log(owner);
 
       setowner(owner);
-    }  else if (type === "opbnb") {
+    } else if (type === "opbnb") {
       const nft_contract = new window.opBnbWeb3.eth.Contract(
         window.OPBNB_NFT_ABI,
         window.config.nft_opbnb_address
@@ -589,7 +588,7 @@ const SingleNft = ({
       console.log(owner);
 
       setowner(owner);
-    }else if (type === "skale") {
+    } else if (type === "skale") {
       const nft_contract = new window.skaleWeb3.eth.Contract(
         window.SKALE_NFT_ABI,
         window.config.nft_skale_address
@@ -732,11 +731,44 @@ const SingleNft = ({
   };
 
   const isApprovedBuy = async (tokenType, amount) => {
-    const result = await window.isApprovedBuy(tokenType, amount).catch((e) => {
-      console.error(e);
-    });
+    if (window.WALLET_TYPE !== "binance") {
+      const result = await window
+        .isApprovedBuy(tokenType, amount)
+        .catch((e) => {
+          console.error(e);
+        });
+      return result;
+    } else if (window.WALLET_TYPE === "binance") {
+      const contract_old = new ethers.Contract(
+        window.config.dyp_token_address,
+        window.DYP_ABI,
+        binanceW3WProvider.getSigner()
+      );
 
-    return result;
+      const contract = new ethers.Contract(
+        window.config.token_dypius_new_address,
+        window.DYP_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      if (tokenType === "dypv2") {
+        const allowance = await contract.allowance(
+          coinbase,
+          window.config.nft_marketplace_address
+        );
+
+        return Number(allowance) >= Number(amount);
+      } else if (tokenType === "dypv1") {
+        const allowance = await contract_old.allowance(
+          coinbase,
+          window.config.nft_marketplace_address
+        );
+
+        return Number(allowance) >= Number(amount);
+      } else if (tokenType === "eth") {
+        return true;
+      }
+    }
   };
 
   // console.log(window)
@@ -1113,52 +1145,209 @@ const SingleNft = ({
       setbuyLoading(true);
       setbuyStatus("buy");
       setPurchaseStatus("Buying NFT in progress..");
-      await window
-        .buyNFT(
-          nft.price,
-          nftAddress,
-          nftId,
-          nft.payment_priceType,
-          nft.payment_tokenAddress
-        )
-        .then((result) => {
-          console.log("buyNFT", result);
-          setbuyLoading(false);
-          setbuyStatus("success");
-          setPurchaseStatus("Successfully purchased!");
-          setShowToast(true);
-          setToastTitle("Successfully purchased!");
-          setPurchaseColor("#00FECF");
-          // setIsListed(false)
+      if (window.WALLET_TYPE !== "binance") {
+        await window
+          .buyNFT(
+            nft.price,
+            nftAddress,
+            nftId,
+            nft.payment_priceType,
+            nft.payment_tokenAddress
+          )
+          .then((result) => {
+            console.log("buyNFT", result);
+            setbuyLoading(false);
+            setbuyStatus("success");
+            setPurchaseStatus("Successfully purchased!");
+            setShowToast(true);
+            setToastTitle("Successfully purchased!");
+            setPurchaseColor("#00FECF");
+            // setIsListed(false)
 
-          setTimeout(() => {
-            setPurchaseStatus("");
-            setPurchaseColor("#00FECF");
-            setbuyStatus("");
-            handleRefreshList(
-              nftAddress === window.config.nft_caws_address
-                ? "caws"
-                : nftAddress === window.config.nft_timepiece_address
-                ? "timepiece"
-                : "land",
-              nftId
-            );
-            handleRefreshListing();
-            getLatestBoughtNFT();
-          }, 3000);
-        })
-        .catch((e) => {
-          setbuyStatus("failed");
-          setbuyLoading(false);
-          setPurchaseStatus(e?.message);
-          setPurchaseColor("#FF6232");
-          setTimeout(() => {
-            setPurchaseStatus("");
-            setPurchaseColor("#00FECF");
-            setbuyStatus("");
-          }, 3000);
-          console.error(e);
-        });
+            setTimeout(() => {
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+              setbuyStatus("");
+              handleRefreshList(
+                nftAddress === window.config.nft_caws_address
+                  ? "caws"
+                  : nftAddress === window.config.nft_timepiece_address
+                  ? "timepiece"
+                  : "land",
+                nftId
+              );
+              handleRefreshListing();
+              getLatestBoughtNFT();
+            }, 3000);
+          })
+          .catch((e) => {
+            setbuyStatus("failed");
+            setbuyLoading(false);
+            setPurchaseStatus(e?.message);
+            setPurchaseColor("#FF6232");
+            setTimeout(() => {
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+              setbuyStatus("");
+            }, 3000);
+            console.error(e);
+          });
+      } else if (window.WALLET_TYPE === "binance") {
+        const marketplace = new ethers.Contract(
+          window.config.nft_marketplace_address,
+          window.MARKETPLACE_ABI,
+          binanceW3WProvider.getSigner()
+        );
+        console.log(marketplace);
+        const gasPrice = await binanceW3WProvider.getGasPrice();
+        console.log("gasPrice", gasPrice.toString());
+        const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+        const increasedGwei = parseFloat(currentGwei) + 1.5;
+        console.log("increasedGwei", increasedGwei);
+        console.log(nft.payment_priceType, "test");
+        // Convert increased Gwei to Wei
+        const gasPriceInWei = ethers.utils.parseUnits(
+          increasedGwei.toString().slice(0, 16),
+          "gwei"
+        );
+
+        const transactionParameters = {
+          gasPrice: gasPriceInWei,
+        };
+
+        const balance = await binanceW3WProvider.getSigner().getBalance();
+        const balanceInEth = ethers.utils.formatEther(balance);
+        console.log("Account Balance:", balanceInEth);
+
+        // Estimate gas limit
+        let gasLimit;
+        try {
+          gasLimit = await marketplace.estimateGas.buyItem(
+            nftAddress,
+            nftId,
+            [nft.payment_priceType, nft.payment_tokenAddress],
+            {
+              value: nft.price,
+              from: coinbase,
+            }
+          );
+          transactionParameters.gasLimit = gasLimit;
+          console.log("transactionParameters", transactionParameters);
+        } catch (error) {
+          console.error(error);
+        }
+
+        if (nft.payment_priceType === 1) {
+          console.log('yes dyp', nft)
+          await marketplace
+            .buyItem(
+              nftAddress,
+              nftId,
+              [nft.payment_priceType, nft.payment_tokenAddress],
+              {
+                from: coinbase,
+                value: 0,
+                ...transactionParameters,
+              }
+            )
+            // .send({ from: coinbase, value: 0
+            //   , ...transactionParameters
+            // })
+            .then((result) => {
+              console.log("buyNFT", result);
+              setbuyLoading(false);
+              setbuyStatus("success");
+              setPurchaseStatus("Successfully purchased!");
+              setShowToast(true);
+              setToastTitle("Successfully purchased!");
+              setPurchaseColor("#00FECF");
+              // setIsListed(false)
+
+              setTimeout(() => {
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+                setbuyStatus("");
+                handleRefreshList(
+                  nftAddress === window.config.nft_caws_address
+                    ? "caws"
+                    : nftAddress === window.config.nft_timepiece_address
+                    ? "timepiece"
+                    : "land",
+                  nftId
+                );
+                handleRefreshListing();
+                getLatestBoughtNFT();
+              }, 3000);
+            })
+            .catch((e) => {
+              setbuyStatus("failed");
+              setbuyLoading(false);
+              setPurchaseStatus(e?.message);
+              setPurchaseColor("#FF6232");
+              setTimeout(() => {
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+                setbuyStatus("");
+              }, 3000);
+              console.error(e);
+            });
+        } else if (nft.payment_priceType === 0) {
+          await marketplace
+            .buyItem(
+              nftAddress,
+              nftId,
+              [nft.payment_priceType, nft.payment_tokenAddress],
+              {
+                from: coinbase,
+                value: nft.price,
+                ...transactionParameters,
+              }
+            )
+            // .send({
+            //   from: coinbase,
+            //   value: nft.price,
+            //   ...transactionParameters,
+            // })
+            .then((result) => {
+              console.log("buyNFT", result);
+              setbuyLoading(false);
+              setbuyStatus("success");
+              setPurchaseStatus("Successfully purchased!");
+              setShowToast(true);
+              setToastTitle("Successfully purchased!");
+              setPurchaseColor("#00FECF");
+              // setIsListed(false)
+
+              setTimeout(() => {
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+                setbuyStatus("");
+                handleRefreshList(
+                  nftAddress === window.config.nft_caws_address
+                    ? "caws"
+                    : nftAddress === window.config.nft_timepiece_address
+                    ? "timepiece"
+                    : "land",
+                  nftId
+                );
+                handleRefreshListing();
+                getLatestBoughtNFT();
+              }, 3000);
+            })
+            .catch((e) => {
+              setbuyStatus("failed");
+              setbuyLoading(false);
+              setPurchaseStatus(e?.message);
+              setPurchaseColor("#FF6232");
+              setTimeout(() => {
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+                setbuyStatus("");
+              }, 3000);
+              console.error(e);
+            });
+        }
+      }
     } else {
       console.log("approve buying");
 
@@ -1166,31 +1355,103 @@ const SingleNft = ({
       setbuyLoading(true);
       setPurchaseStatus("Approving in progress...");
       setPurchaseColor("#00FECF");
-      await window
-        .approveBuy(tokenType, nft.price)
-        .then(() => {
-          setTimeout(() => {
-            setbuyStatus("buy");
-            setPurchaseStatus("");
+      if (window.WALLET_TYPE !== "binance") {
+        await window
+          .approveBuy(tokenType, nft.price)
+          .then(() => {
+            setTimeout(() => {
+              setbuyStatus("buy");
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+            }, 3000);
+            setbuyStatus("success");
+            setbuyLoading(false);
+            setPurchaseStatus("Successfully approved");
             setPurchaseColor("#00FECF");
-          }, 3000);
-          setbuyStatus("success");
-          setbuyLoading(false);
-          setPurchaseStatus("Successfully approved");
-          setPurchaseColor("#00FECF");
-        })
-        .catch((e) => {
-          console.error(e);
-          setbuyStatus("failed");
-          setTimeout(() => {
-            setbuyStatus("approve");
-            setPurchaseStatus("");
-            setPurchaseColor("#00FECF");
-          }, 3000);
-          setbuyLoading(false);
-          setPurchaseStatus(e?.message);
-          setPurchaseColor("#FF6232");
-        });
+          })
+          .catch((e) => {
+            console.error(e);
+            setbuyStatus("failed");
+            setTimeout(() => {
+              setbuyStatus("approve");
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+            }, 3000);
+            setbuyLoading(false);
+            setPurchaseStatus(e?.message);
+            setPurchaseColor("#FF6232");
+          });
+      } else if (window.WALLET_TYPE === "binance") {
+        const contract_old = new ethers.Contract(
+          window.config.dyp_token_address,
+          window.DYP_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+        const contract = new ethers.Contract(
+          window.config.token_dypius_new_address,
+          window.DYP_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+        if (tokenType === "dypv2") {
+          await contract
+            .approve(window.config.nft_marketplace_address, nft.price, {
+              from: coinbase,
+            })
+            .then(() => {
+              setTimeout(() => {
+                setbuyStatus("buy");
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+              }, 3000);
+              setbuyStatus("success");
+              setbuyLoading(false);
+              setPurchaseStatus("Successfully approved");
+              setPurchaseColor("#00FECF");
+            })
+            .catch((e) => {
+              console.error(e);
+              setbuyStatus("failed");
+              setTimeout(() => {
+                setbuyStatus("approve");
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+              }, 3000);
+              setbuyLoading(false);
+              setPurchaseStatus(e?.message);
+              setPurchaseColor("#FF6232");
+            });
+        } else if (tokenType === "dypv1") {
+          await contract_old
+            .approve(window.config.nft_marketplace_address, nft.price, {
+              from: coinbase,
+            })
+            .then(() => {
+              setTimeout(() => {
+                setbuyStatus("buy");
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+              }, 3000);
+              setbuyStatus("success");
+              setbuyLoading(false);
+              setPurchaseStatus("Successfully approved");
+              setPurchaseColor("#00FECF");
+            })
+            .catch((e) => {
+              console.error(e);
+              setbuyStatus("failed");
+              setTimeout(() => {
+                setbuyStatus("approve");
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+              }, 3000);
+              setbuyLoading(false);
+              setPurchaseStatus(e?.message);
+              setPurchaseColor("#FF6232");
+            });
+        }
+      }
     }
   }
 
@@ -1568,10 +1829,11 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_coingecko_address.toLowerCase()
         ? "coingecko"
-         : nftAddress.toLowerCase() === window.config.nft_opbnb_address.toLowerCase()
+        : nftAddress.toLowerCase() ===
+          window.config.nft_opbnb_address.toLowerCase()
         ? "opbnb"
-        : nftAddress.toLowerCase() === window.config.nft_gate_address.toLowerCase()
-      
+        : nftAddress.toLowerCase() ===
+          window.config.nft_gate_address.toLowerCase()
         ? "gate"
         : nftAddress.toLowerCase() ===
           window.config.nft_conflux_address.toLowerCase()
@@ -1662,15 +1924,20 @@ const SingleNft = ({
       window.config.nft_coingecko_address.toLowerCase()
     ) {
       setType("coingecko");
-    }  else if (nftAddress.toLowerCase() === window.config.nft_opbnb_address.toLowerCase()) {
+    } else if (
+      nftAddress.toLowerCase() === window.config.nft_opbnb_address.toLowerCase()
+    ) {
       setType("opbnb");
-    } else if (nftAddress.toLowerCase() === window.config.nft_conflux_address.toLowerCase()) {
+    } else if (
+      nftAddress.toLowerCase() ===
+      window.config.nft_conflux_address.toLowerCase()
+    ) {
       setType("conflux");
-    }
-    else if (nftAddress.toLowerCase() === window.config.nft_manta_address.toLowerCase()) {
+    } else if (
+      nftAddress.toLowerCase() === window.config.nft_manta_address.toLowerCase()
+    ) {
       setType("manta");
-    }
-    else if (
+    } else if (
       nftAddress.toLowerCase() === window.config.nft_doge_address.toLowerCase()
     ) {
       setType("doge");
@@ -1789,10 +2056,6 @@ const SingleNft = ({
     }
   }, [purchaseStatus, data]);
 
-
-console.log(nftAddress.toLowerCase(),
-window.config.nft_manta_address.toLowerCase(), "type");
-
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0"
@@ -1876,9 +2139,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                   </h6>
                 </h6>
               </>
-            ) 
-            
-            : type === "manta" ? (
+            ) : type === "manta" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   Manta{" "}
@@ -1890,8 +2151,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                   </h6>
                 </h6>
               </>
-            )
-            : type === "doge" ? (
+            ) : type === "doge" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   Dogecoin{" "}
@@ -1915,15 +2175,16 @@ window.config.nft_manta_address.toLowerCase(), "type");
                   </h6>
                 </h6>
               </>
-            )   : type === "opbnb" ? (
+            ) : type === "opbnb" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
-                  opBNB CHAIN{" "}   <h6
+                  opBNB CHAIN{" "}
+                  <h6
                     className="market-banner-title m-0"
                     style={{ color: "#8C56FF", lineHeight: "80%" }}
                   >
                     Beta Pass
-                    </h6>
+                  </h6>
                 </h6>
               </>
             ) : type === "immutable" ? (
@@ -2062,7 +2323,6 @@ window.config.nft_manta_address.toLowerCase(), "type");
                         : nftAddress.toLowerCase() ===
                           window.config.nft_viction_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+400.png`
-                        
                         : nftAddress.toLowerCase() ===
                           window.config.nft_multivers_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+400.png`
@@ -2075,7 +2335,8 @@ window.config.nft_manta_address.toLowerCase(), "type");
                         : nftAddress.toLowerCase() ===
                           window.config.nft_bnb_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+400.png`
-                        : nftAddress.toLowerCase() === window.config.nft_opbnb_address.toLowerCase()
+                        : nftAddress.toLowerCase() ===
+                          window.config.nft_opbnb_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+400.png`
                         : nftAddress.toLowerCase() ===
                           window.config.nft_immutable_address.toLowerCase()
@@ -2099,7 +2360,9 @@ window.config.nft_manta_address.toLowerCase(), "type");
                         type === "coingecko" ||
                         type === "gate" ||
                         type === "doge" ||
-                        type === "cmc" ||type === "bnb"||type === "opbnb" ||
+                        type === "cmc" ||
+                        type === "bnb" ||
+                        type === "opbnb" ||
                         type === "cawsbnb" ||
                         type === "landbnb"
                           ? bnbLogo
@@ -2211,7 +2474,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                         : type === "opbnb"
                         ? "opBNB Chain Beta Pass"
                         : "CAWS Timepiece"}{" "}
-                     {type === "immutable" ? '' : ` #${nftId}`}
+                      {type === "immutable" ? "" : ` #${nftId}`}
                       <img
                         src={isFavorite ? favActive : favInactive}
                         onClick={() => {
@@ -2361,7 +2624,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                       type !== "manta" &&
                       type !== "base" &&
                       type !== "doge" &&
-                      type !== "bnb"&&
+                      type !== "bnb" &&
                       type !== "opbnb" &&
                       type !== "cmc" &&
                       type !== "core" &&
@@ -2538,7 +2801,7 @@ window.config.nft_manta_address.toLowerCase(), "type");
                       type !== "base" &&
                       type !== "doge" &&
                       type !== "bnb" &&
-                      type !== "opbnb"&&
+                      type !== "opbnb" &&
                       type !== "cmc" &&
                       type !== "core" &&
                       type !== "viction" &&
@@ -2762,53 +3025,53 @@ window.config.nft_manta_address.toLowerCase(), "type");
                         </div>
                       )}
                     <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between gap-2 align-items-center">
-                     {type !=='immutable' &&
-                      <div className="d-flex justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                        <span className="owner-txt">Owner:</span>
-                        {
-                          <a
-                            href={
-                              type === "coingecko" ||
-                              type === "gate" ||
-                              type === "cmc" ||
-                              type === "doge" ||
-                              type === "bnb" ||
-                              type === "cawsbnb" ||
-                              type === "landbnb" ||
-                              type === "multivers"
-                                ? `https://bscscan.com/address/${owner}`
-                                : type === "conflux"
-                                ? `https://evm.confluxscan.net/address/${owner}`
-                                : type === "base" ||
-                                  type === "cawsbase" ||
-                                  type === "landbase"
-                                ? `https://basescan.org/address/${owner}`
-                                : type === "cawsavax" || type === "landavax"
-                                ? `https://snowtrace.io/address/${owner}`
-                                : type === "skale"
-                                ? `https://green-giddy-denebola.explorer.mainnet.skalenodes.com/address/${owner}`
-                                : type === "viction"
-                                ? `https://www.vicscan.xyz/address/${owner}`
-                                : type === "core"
-                                ? `https://scan.coredao.org/address/${owner}`
-                                : type === "manta"
-                                ? `https://pacific-explorer.manta.network/address/${owner}`
-                                : type === 'opbnb'
-                                ? `https://opbnbscan.com/address/${owner}`
-                                : type === "immutable"
-                                ? `https://explorer.immutable.com/${owner}`
-                               
-                                : `https://etherscan.io/address/${owner}`
-                            }
-                            target="_blank"
-                            style={{ textDecoration: "none" }}
-                            className="seller-addr"
-                            rel="noreferrer"
-                          >
-                            {shortAddress(owner)}
-                          </a>
-                        }
-                      </div> }
+                      {type !== "immutable" && (
+                        <div className="d-flex justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                          <span className="owner-txt">Owner:</span>
+                          {
+                            <a
+                              href={
+                                type === "coingecko" ||
+                                type === "gate" ||
+                                type === "cmc" ||
+                                type === "doge" ||
+                                type === "bnb" ||
+                                type === "cawsbnb" ||
+                                type === "landbnb" ||
+                                type === "multivers"
+                                  ? `https://bscscan.com/address/${owner}`
+                                  : type === "conflux"
+                                  ? `https://evm.confluxscan.net/address/${owner}`
+                                  : type === "base" ||
+                                    type === "cawsbase" ||
+                                    type === "landbase"
+                                  ? `https://basescan.org/address/${owner}`
+                                  : type === "cawsavax" || type === "landavax"
+                                  ? `https://snowtrace.io/address/${owner}`
+                                  : type === "skale"
+                                  ? `https://green-giddy-denebola.explorer.mainnet.skalenodes.com/address/${owner}`
+                                  : type === "viction"
+                                  ? `https://www.vicscan.xyz/address/${owner}`
+                                  : type === "core"
+                                  ? `https://scan.coredao.org/address/${owner}`
+                                  : type === "manta"
+                                  ? `https://pacific-explorer.manta.network/address/${owner}`
+                                  : type === "opbnb"
+                                  ? `https://opbnbscan.com/address/${owner}`
+                                  : type === "immutable"
+                                  ? `https://explorer.immutable.com/${owner}`
+                                  : `https://etherscan.io/address/${owner}`
+                              }
+                              target="_blank"
+                              style={{ textDecoration: "none" }}
+                              className="seller-addr"
+                              rel="noreferrer"
+                            >
+                              {shortAddress(owner)}
+                            </a>
+                          }
+                        </div>
+                      )}
                       {!isOwner && IsListed && coinbase && isConnected && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center">
                           <button
@@ -3064,8 +3327,8 @@ window.config.nft_manta_address.toLowerCase(), "type");
                         type !== "manta" &&
                         type !== "base" &&
                         type !== "doge" &&
-                        type !== "bnb"  &&
-                        type !== "opbnb"&&
+                        type !== "bnb" &&
+                        type !== "opbnb" &&
                         type !== "skale" &&
                         type !== "cmc" &&
                         type !== "core" &&
@@ -3098,8 +3361,8 @@ window.config.nft_manta_address.toLowerCase(), "type");
                         type !== "manta" &&
                         type !== "base" &&
                         type !== "doge" &&
-                        type !== "bnb"  &&
-                        type !== "opbnb"&&
+                        type !== "bnb" &&
+                        type !== "opbnb" &&
                         type !== "skale" &&
                         type !== "cmc" &&
                         type !== "core" &&
@@ -3148,8 +3411,8 @@ window.config.nft_manta_address.toLowerCase(), "type");
             type !== "manta" &&
             type !== "base" &&
             type !== "doge" &&
-            type !== "bnb"  &&
-            type !== "opbnb"&&
+            type !== "bnb" &&
+            type !== "opbnb" &&
             type !== "skale" &&
             type !== "cmc" &&
             type !== "core" &&
