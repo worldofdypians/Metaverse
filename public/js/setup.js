@@ -848,7 +848,14 @@ class CAWS_TIMEPIECE {
   }
 
   async getTimepieceLatestMint() {
-    let nft_contract = await getContractCawsTimepieceNFT("CAWS_TIMEPIECE");
+    
+    let nft_contract = new window.infuraWeb3.eth.Contract(
+      window.CAWS_TIMEPIECE_ABI,
+      window.config.caws_timepiece_address,
+      {
+        from: await getCoinbase(),
+      }
+    );
     return await nft_contract.methods.totalSupply().call();
   }
 

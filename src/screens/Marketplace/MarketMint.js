@@ -772,7 +772,7 @@ const MarketMint = ({
 
   useEffect(() => {
     getTimepieceLatestMint();
-    getConfluxLatestMint();
+    // getConfluxLatestMint();
   }, [mybaseNFTsCreated, totalCreated]);
 
   useEffect(() => {

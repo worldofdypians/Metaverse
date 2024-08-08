@@ -2180,7 +2180,8 @@ function App() {
           setmintStatus("Minting in progress...");
           settextColor("rgb(123, 216, 176)");
           // console.log(data,finalCaws, totalCawsDiscount);
-          let tokenId = await window.opbnb_nft
+          if(window.WALLET_TYPE !=='binance')
+         { let tokenId = await window.opbnb_nft
             .mintOPBNBNFT()
             .then(() => {
               setTimeout(() => {
@@ -2216,7 +2217,51 @@ function App() {
                 setmintloading("initial");
                 setmintStatus("");
               }, 5000);
-            });
+            });}
+            else if(window.WALLET_TYPE === 'binance') {
+              const contract = new ethers.Contract(
+               
+                window.config.nft_opbnb_address, window.OPBNB_NFT_ABI, library.getSigner()
+                
+              )
+              let tokenId = await contract
+              .mintBetaPass({ from: coinbase })
+              .then(() => {
+                setTimeout(() => {
+                  handleSecondTask(coinbase);
+                }, 5000);
+                setmintStatus("Success! Your Nft was minted successfully!");
+                setmintloading("success");
+                settextColor("rgb(123, 216, 176)");
+                setTimeout(() => {
+                  setmintStatus("");
+                  setmintloading("initial");
+                }, 5000);
+                getMyNFTS(coinbase, "opbnb").then((NFTS) => {
+                  settotalopbnbNft(NFTS.length);
+                  setmyOpbnbNfts(NFTS);
+                  setopbnbMintAllowed(0);
+                  setmyopbnbNFTsCreated(NFTS);
+                });
+              })
+              .catch((e) => {
+                console.error(e);
+                setmintloading("error");
+                settextColor("#d87b7b");
+  
+                if (typeof e == "object" && e.message) {
+                  setmintStatus(e.message);
+                } else {
+                  setmintStatus(
+                    "Oops, something went wrong! Refresh the page and try again!"
+                  );
+                }
+                setTimeout(() => {
+                  setmintloading("initial");
+                  setmintStatus("");
+                }, 5000);
+              });
+            }
         } else {
           // setShowWhitelistLoadingModal(true);
         }

@@ -3992,7 +3992,7 @@ function Dashboard({
       window.config.nft_dypius_premium_address
     );
 
-    if (window.WALLET_TYPE !== "binance") {
+  
       if (wallet) {
         const result = await nftContract.methods
           .balanceOf(wallet)
@@ -4052,75 +4052,7 @@ function Dashboard({
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
       }
-    } else if (window.WALLET_TYPE === "binance") {
-      if (wallet) {
-        const premiumSc_binance = new ethers.Contract(
-          window.config.subscription_newbnb2_address,
-          window.SUBSCRIPTION_NEWBNB2_ABI,
-          binanceW3WProvider.getSigner()
-        );
-
-        const nftContract_binance = new ethers.Contract(
-          window.config.nft_dypius_premium_address,
-          window.NFT_DYPIUS_PREMIUM_ABI,
-          binanceW3WProvider.getSigner()
-        );
-        const result = await nftContract_binance
-          .balanceOf(wallet)
-          .catch((e) => {
-            console.error(e);
-            return 0;
-          });
-
-        const discount = await premiumSc_binance
-          .discountPercentageGlobal()
-          .catch((e) => {
-            console.error(e);
-            return 0;
-          });
-
-        const nftObject = await premiumSc_binance
-          .nftDiscounts(window.config.nft_dypius_premium_address)
-          .catch((e) => {
-            console.error(e);
-          });
-
-        if (result && parseInt(result) > 0) {
-          const tokenId = await nftContract.methods
-            .tokenOfOwnerByIndex(wallet, 0)
-            .call()
-            .catch((e) => {
-              console.error(e);
-              return 0;
-            });
-
-          if (nftObject) {
-            setnftDiscountObject(nftObject);
-            if (discount) {
-              setdiscountPercentage(
-                Math.max(
-                  parseInt(discount),
-                  parseInt(nftObject.discountPercentage)
-                )
-              );
-            }
-          }
-
-          setnftPremium_tokenId(tokenId);
-          setnftPremium_total(parseInt(result));
-        } else {
-          setnftPremium_tokenId(0);
-          setnftPremium_total(0);
-
-          if (discount) {
-            setdiscountPercentage(parseInt(discount));
-          }
-        }
-      } else {
-        setnftPremium_tokenId(0);
-        setnftPremium_total(0);
-      }
-    }
+   
     // } else setdiscountPercentage(0);
   };
 
@@ -4657,7 +4589,7 @@ function Dashboard({
     );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "bnb").then((NFTS) =>
-    {  console.log('NFTS',NFTS)
+    {  
       setMyNFTSBNB(NFTS)
 }
     );
