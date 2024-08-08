@@ -671,13 +671,13 @@ const NewLeaderBoard = ({
               className="d-flex flex-column gap-2 tablewrapper position-relative"
               style={{ height: optionText === "genesis" ? "345px" : "384px" }}
             >
-               {optionText2 !==  "taiko" ? (
+               {/* {optionText2 !==  "taiko" ? (
                 <></>
               ) : (
                 <div className="coming-soon-position d-flex align-items-center justify-content-center">
                   <h6 className="mb-0">Coming Soon</h6>
                 </div>
-              )}
+              )} */}
 
               {optionText !== "genesis" ? (
                 <div className="position-relative">
@@ -706,7 +706,7 @@ const NewLeaderBoard = ({
                         return (
                           <div
                             key={index}
-                            className={` ${optionText2 ===  "taiko" && 'comingsoon'} leaderboard-item  monthly-skale d-flex flex-column gap-2 p-0`}
+                            className={`leaderboard-item  monthly-skale d-flex flex-column gap-2 p-0`}
                           >
                             <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
                               <h6 className="leaderboard-title  text-white font-oxanium mb-0">
