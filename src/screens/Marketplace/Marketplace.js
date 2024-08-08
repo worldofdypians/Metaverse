@@ -54,6 +54,7 @@ const Marketplace = ({
   totalvolume,
   count,
   setCount,
+  totalSupply,
 }) => {
   const override = {
     display: "block",
@@ -82,7 +83,6 @@ const Marketplace = ({
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [showSecondNext, setShowSecondNext] = useState(false);
   const [favItems, setfavItems] = useState(0);
-  const [totalSupply, setTotalSupply] = useState(0);
   const [activePopup, setActivePopup] = useState(false);
 
   const firstNext = () => {
@@ -232,178 +232,6 @@ const Marketplace = ({
     ],
   };
 
-  const getTotalSupply = async () => {
-    const infura_web3 = window.infuraWeb3;
-    let timepiece_contract = new infura_web3.eth.Contract(
-      window.CAWS_TIMEPIECE_ABI,
-      window.config.nft_timepiece_address
-    );
-
-    const result = await timepiece_contract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-    let base_contract = new window.baseWeb3.eth.Contract(
-      window.BASE_NFT_ABI,
-      window.config.nft_base_address
-    );
-
-    const result_base = await base_contract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-    const confluxContract = new window.confluxWeb3.eth.Contract(
-      window.CONFLUX_NFT_ABI,
-      window.config.nft_conflux_address
-    );
-    const gateContract = new window.bscWeb3.eth.Contract(
-      window.GATE_NFT_ABI,
-      window.config.nft_gate_address
-    );
-
-    const dogeContract = new window.bscWeb3.eth.Contract(
-      window.DOGE_NFT_ABI,
-      window.config.nft_doge_address
-    );
-
-    const cmcContract = new window.bscWeb3.eth.Contract(
-      window.CMC_NFT_ABI,
-      window.config.nft_cmc_address
-    );
-
-    const skaleContract = new window.skaleWeb3.eth.Contract(
-      window.SKALE_NFT_ABI,
-      window.config.nft_skale_address
-    );
-
-    const bnbContract = new window.bscWeb3.eth.Contract(
-      window.BNB_NFT_ABI,
-      window.config.nft_bnb_address
-    );
-
-    const victionContract = new window.victionWeb3.eth.Contract(
-      window.VICTION_NFT_ABI,
-      window.config.nft_viction_address
-    );
-
-    const coreContract = new window.coreWeb3.eth.Contract(
-      window.CORE_NFT_ABI,
-      window.config.nft_core_address
-    );
-
-    const multiversContract = new window.bscWeb3.eth.Contract(
-      window.MULTIVERS_NFT_ABI,
-      window.config.nft_multivers_address
-    );
-    
-    const mantaContract = new window.mantaWeb3.eth.Contract(
-      window.MANTA_NFT_ABI,
-      window.config.nft_manta_address
-    );
-
-
-    const confluxresult = await confluxContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-    const gateresult = await gateContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-    const dogeresult = await dogeContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-    const cmcresult = await cmcContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-    const skaleresult = await skaleContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-    const bnbresult = await bnbContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-    const coreresult = await coreContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-    const victionresult = await victionContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-    const multiversresult = await multiversContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-      const mantaresult = await mantaContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-    //20000 = 10000 caws + 1000 genesis + 9000 coingecko
-    setTotalSupply(
-      parseInt(result) +
-        parseInt(result_base) +
-        parseInt(confluxresult) +
-        parseInt(gateresult) +
-        parseInt(dogeresult) +
-        parseInt(cmcresult) +
-        parseInt(skaleresult) +
-        parseInt(bnbresult) +
-        parseInt(coreresult) +
-        parseInt(victionresult) +
-        parseInt(multiversresult)  +
-        parseInt(mantaresult) +
-        20000
-    );
-  };
-
   const getAllData = async () => {
     const result = await axios
       .get("https://api.worldofdypians.com/api/totalTXs")
@@ -494,7 +322,6 @@ const Marketplace = ({
   useEffect(() => {
     getAllData();
     fetchCachedData();
-    getTotalSupply();
     window.scrollTo(0, 0);
     document.title = "Marketplace";
   }, []);
@@ -1315,13 +1142,13 @@ const Marketplace = ({
                           <span>NFT Minting</span>
                         </div>
                         <div className="d-flex flex-column gap-2 mb-3">
-                        <h6 className="newminttitlehome m-0 position-relative">
-                          opBNB Beta
-                        </h6>
-                        <h6 className="newminttitlehome m-0 position-relative">
-                          Pass
-                        </h6></div>
-                  
+                          <h6 className="newminttitlehome m-0 position-relative">
+                            opBNB Beta
+                          </h6>
+                          <h6 className="newminttitlehome m-0 position-relative">
+                            Pass
+                          </h6>
+                        </div>
                       </div>
                     </NavLink>
                     <NavLink to="/marketplace/mint/opbnbchain">
@@ -1334,25 +1161,25 @@ const Marketplace = ({
                     </NavLink>
                   </div>
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
-                  <NavLink
-                      to={"/marketplace/mint/core"}
+                    <NavLink
+                      to={"/marketplace/mint/immutable"}
                       className="w-100 m-0 d-flex flex-column gap-5"
                     >
-                      <div className="p-4 mint-wrappernew market-mint-core w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
+                      <div className="p-4 mint-wrappernew market-mint-immutable w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
                         <div className="d-flex align-items-center justify-content-center homepage-nft-mint-tag px-3 py-1">
                           <span>NFT Minting</span>
                         </div>
                         <div className="d-flex flex-column gap-2 mb-3">
-                        <h6 className="newminttitlehome m-0 position-relative">
-                          CORE Beta
-                        </h6>
-                        <h6 className="newminttitlehome m-0 position-relative">
-                          Pass
-                        </h6></div>
-                  
+                          <h6 className="newminttitlehome m-0 position-relative">
+                            Immutable Beta
+                          </h6>
+                          <h6 className="newminttitlehome m-0 position-relative">
+                            Pass
+                          </h6>
+                        </div>
                       </div>
                     </NavLink>
-                    <NavLink to="/marketplace/mint/core">
+                    <NavLink to="/marketplace/mint/immutable">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}

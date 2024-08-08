@@ -207,7 +207,7 @@ const GlobalLeaderboard = ({
                     <br />
                     <br />
                     Participate in Daily Chain Leaderboards from BNB Chain,
-                    SKALE, Core, and Viction to earn STARS that will boost your
+                    SKALE, Core, Manta and Viction to earn STARS that will boost your
                     global ranking.
                     <br />
                     <br />

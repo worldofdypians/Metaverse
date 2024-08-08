@@ -2032,6 +2032,7 @@ const NewWalletBalance = ({
                           Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd) +
                           Number(coreEarnUsd) +
+                          Number(cawsPremiumRewards)+ Number(bnbEarnUsd) +
                           Number(victionEarnUsd) +
                           Number(taikoEarnUsd) +
                           Number(mantaEarnUsd),

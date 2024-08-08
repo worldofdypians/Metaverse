@@ -1333,6 +1333,7 @@ function Dashboard({
 
     if (testArray.length > 0) {
       setActivePlayerCoreWeekly(true);
+      fetchWeeklyRecordsAroundPlayerCore(result.data.data.leaderboard);
     }
     if (testArray.length === 0) {
       setActivePlayerCoreWeekly(false);
@@ -3193,6 +3194,7 @@ function Dashboard({
 
     if (testArray.length > 0) {
       setActivePlayerWeekly(true);
+      fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
     }
     if (testArray.length === 0) {
       setActivePlayerWeekly(false);
@@ -4356,7 +4358,6 @@ function Dashboard({
       );
 
       const userPosition = testArray[0].position;
-      // console.log(userPosition)
 
       if (goldenPassRemainingTime) {
         setUserRank2(
@@ -4640,8 +4641,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(weeklyPrizes[9]) + Number(weeklyPrizesGolden[9])
-              : Number(weeklyPrizes[userPosition]) +
+              ? Number(weeklyPrizesBnb[9]) + Number(weeklyPrizesGolden[9])
+              : Number(weeklyPrizesBnb[userPosition]) +
                 Number(weeklyPrizesGolden[userPosition])
             : 0
         );
@@ -4651,8 +4652,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(weeklyPrizes[9])
-              : Number(weeklyPrizes[userPosition])
+              ? Number(weeklyPrizesBnb[9])
+              : Number(weeklyPrizesBnb[userPosition])
             : 0
         );
       }

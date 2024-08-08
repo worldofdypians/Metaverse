@@ -1770,19 +1770,19 @@ const BetaPassNFT = ({
                         </span>
                       )}
                       {mintTitle === "manta" && (
-                        <div
+                        <a
                           className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
-                          // href="https://sweepwidget.com/c/core-wod-giveaway"
-                          // target="_blank"
-                          // rel="noreferrer"
+                          href="https://sweepwidget.com/c/worldofdypians-manta-giveaway"
+                          target="_blank"
+                          rel="noreferrer"
                         >
                           <img
                             src={mantaLogo}
                             style={{ width: 20, height: 20 }}
                             alt=""
                           />{" "}
-                          Coming Soon
-                        </div>
+                          Manta Giveaway
+                        </a>
                       )}
                       {mintTitle === "taiko" && (
                         <div

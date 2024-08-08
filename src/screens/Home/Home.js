@@ -169,7 +169,7 @@ const Home = ({
       >
         <MintPopup
           active={activePopup}
-          data={taikoInfo}
+          data={mantaInfo}
           onClose={() => setActivePopup(false)}
         />
       </OutsideClickHandler>

@@ -264,6 +264,9 @@ const MarketMint = ({
   const [baseSold, setcBaseSold] = useState(0);
   const [skaleSold, setskaleSold] = useState(0);
   const [bnbNftsSold, setbnbNftsSold] = useState(0);
+  const [victionNftsSold, setVictionNftsSold] = useState(0);
+  const [coreNftsSold, setCoreNftsSold] = useState(0);
+
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
@@ -332,6 +335,39 @@ const MarketMint = ({
       });
 
     setbnbNftsSold(bnbresult);
+
+    const victionnftContract = new window.victionWeb3.eth.Contract(
+      window.VICTION_NFT_ABI,
+      window.config.nft_viction_address
+    );
+
+    const victionresult = await victionnftContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    setVictionNftsSold(victionresult);
+
+
+    const corenftContract = new window.coreWeb3.eth.Contract(
+      window.CORE_NFT_ABI,
+      window.config.nft_core_address
+    );
+
+    const coreresult = await corenftContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    setCoreNftsSold(coreresult);
+
+
   };
 
   useEffect(() => {
@@ -341,9 +377,6 @@ const MarketMint = ({
     ) {
       setSelectedMint(bnbData);
       setMintTitle("bnbchain");
-    } else if (location.pathname.includes("core")) {
-      setSelectedMint(coreData);
-      setMintTitle("core");
     } else if (location.pathname.includes("opbnbchain")) {
       setSelectedMint(opbnbData);
       setMintTitle("opbnbchain");
@@ -370,7 +403,9 @@ const MarketMint = ({
 
   let countToLiveConflux = new Date("2023-10-10T11:00:00.000+02:00");
   let countToExpireConflux = new Date("2024-08-05T16:00:00.000+02:00");
-  let countToExpireOpbnb = new Date("2024-08-06T24:00:00.000+02:00");
+  let countToExpireOpbnb = new Date("2024-08-14T24:00:00.000+02:00");
+  let countToExpireImmutable = new Date("2024-08-15T24:00:00.000+02:00");
+
   let countToExpireManta = new Date("2024-08-15T24:00:00.000+02:00");
   let countToExpireTaiko = new Date("2024-08-25T24:00:00.000+02:00");
 
@@ -506,14 +541,14 @@ const MarketMint = ({
       data: immutableData,
       class: "mint-immutable",
     },
-    {
-      title: "CORE Pass",
-      eventId: "core",
-      desc: "Gain entry to metaverse, and join exclusive CORE event with special ticket.",
-      img: coreActive,
-      data: coreData,
-      class: "mint-core",
-    },
+    // {
+    //   title: "CORE Pass",
+    //   eventId: "core",
+    //   desc: "Gain entry to metaverse, and join exclusive CORE event with special ticket.",
+    //   img: coreActive,
+    //   data: coreData,
+    //   class: "mint-core",
+    // },
     {
       title: "CAWS Timepiece",
       eventId: "timepiece",
@@ -1844,6 +1879,8 @@ const MarketMint = ({
                                           ? countToExpireConflux
                                           : mintTitle === "manta"
                                           ? countToExpireManta
+                                          : mintTitle === "immutable"
+                                          ? countToExpireImmutable
                                           : mintTitle === "taiko"
                                           ? countToExpireTaiko
                                           : countToExpireOpbnb
@@ -3106,9 +3143,27 @@ const MarketMint = ({
                             className="past-bnb-mint-amount"
                             style={{ color: "#901C77" }}
                           >
-                            13,219
+                            {getFormattedNumber(victionNftsSold,0)}
                           </h6>
                           <span className="past-bnb-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-core-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">CORE Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6
+                            className="past-core-mint-amount"
+                          >
+                            {getFormattedNumber(coreNftsSold,0)}
+                          </h6>
+                          <span className="past-core-mint-desc">SOLD OUT</span>
                         </div>
                       </div>
                     </div>
