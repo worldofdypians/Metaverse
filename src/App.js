@@ -3205,6 +3205,7 @@ function App() {
               if (isPremium_skale === true) {
                 setIsPremium(true);
               } else {
+            
                 const isPremium_manta = await daily_bonus_contract_manta.methods
                   .isPremiumUser(addr)
                   .call()
@@ -3829,6 +3830,8 @@ function App() {
                 isPremium={isPremium}
                 handleConnectionPassport={handleConnectPassport}
                 handleConnectBinance={handleConnectBinance}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+          handleSwitchChainBinanceWallet={handleSwitchNetwork}
               />
             }
           />
@@ -4705,7 +4708,9 @@ function App() {
             element={
               <MarketStake
                 isConnected={isConnected}
-                handleConnect={handleConnectWallet}
+                handleConnect={()=>{
+                  setwalletModal(true);
+                }}
                 chainId={networkId}
                 coinbase={coinbase}
                 isPremium={isPremium}
@@ -4714,6 +4719,9 @@ function App() {
                   setCount55(count55 + 1);
                 }}
                 binanceW3WProvider={library}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+          handleSwitchChainBinanceWallet={handleSwitchNetwork}
+          binanceWallet={account}
               />
             }
           />

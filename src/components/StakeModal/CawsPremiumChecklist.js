@@ -41,9 +41,12 @@ const CawsPremiumChecklist = ({
     const address = coinbase;
 
     let calculateRewards;
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
+ 
+    let  staking_contract = await new window.infuraweb3.eth.Contract(
+      window.CAWSPREMIUM_ABI,
+      window.config.nft_caws_premiumstake_address
     );
+
     if (address !== null && currentId) {
       calculateRewards = await staking_contract.methods
         .calculateReward(address, parseInt(currentId))
@@ -122,9 +125,11 @@ const CawsPremiumChecklist = ({
 
   const getStakesIds = async () => {
     const address = coinbase;
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
+    let  staking_contract = await new window.infuraweb3.eth.Contract(
+      window.CAWSPREMIUM_ABI,
+      window.config.nft_caws_premiumstake_address
     );
+    
     let stakenft = [];
     if (address !== null) {
       let myStakes = await staking_contract.methods

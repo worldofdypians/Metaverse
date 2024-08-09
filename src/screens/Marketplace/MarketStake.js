@@ -28,7 +28,7 @@ const MarketStake = ({
   isConnected,
   isPremium,
   onSuccessDeposit,
-  handleSwitchNetwork,binanceW3WProvider
+  handleSwitchNetwork,binanceW3WProvider,handleSwitchChainGateWallet,handleSwitchChainBinanceWallet,binanceWallet
 }) => {
   const windowSize = useWindowSize();
   const [mystakes, setMystakes] = useState([]);
@@ -121,7 +121,7 @@ const MarketStake = ({
 
   const totalStakedNft = async () => {
     let staking_contract = await new window.infuraWeb3.eth.Contract(
-      window.NFT_ABI,
+      window.CAWS_ABI,
       window.config.nft_address,
       { from: undefined }
     );
@@ -163,8 +163,9 @@ const MarketStake = ({
 
   const getCawsStakesIds = async () => {
     const address = coinbase;
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
+    let  staking_contract = await new window.infuraweb3.eth.Contract(
+      window.CAWSPREMIUM_ABI,
+      window.config.nft_caws_premiumstake_address
     );
     let stakenft = [];
     let myStakes = await staking_contract.methods
@@ -373,8 +374,9 @@ const MarketStake = ({
     let myStakes = await getCawsStakesIds();
     let result = 0;
     let calculateRewards = [];
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
+    let  staking_contract = await new window.infuraweb3.eth.Contract(
+      window.CAWSPREMIUM_ABI,
+      window.config.nft_caws_premiumstake_address
     );
     if (coinbase !== null) {
       if (myStakes && myStakes.length > 0) {
@@ -1060,6 +1062,9 @@ const MarketStake = ({
               setgetPremiumPopup(false);
             }}
             binanceW3WProvider={binanceW3WProvider}
+            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+            binanceWallet={binanceWallet}
           />
         </OutsideClickHandler>
       )}
