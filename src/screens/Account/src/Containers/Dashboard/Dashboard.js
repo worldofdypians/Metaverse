@@ -3661,7 +3661,7 @@ function Dashboard({
   const getCawsStakesIds = async () => {
     const address = coinbase;
 
-    let staking_contract = await new window.infuraweb3.eth.Contract(
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
       window.CAWSPREMIUM_ABI,
       window.config.nft_caws_premiumstake_address
     );
@@ -3685,7 +3685,7 @@ function Dashboard({
     let myStakes = await getCawsStakesIds(address);
     let result = 0;
     let calculateRewards = [];
-    let staking_contract = await new window.infuraweb3.eth.Contract(
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
       window.CAWSPREMIUM_ABI,
       window.config.nft_caws_premiumstake_address
     );
@@ -8965,6 +8965,9 @@ function Dashboard({
                   setdailyBonusPopup(false);
                   setgetPremiumPopup(true);
                 }}
+                handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+                handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+                binanceWallet={binanceWallet}
               />
               // </OutsideClickHandler>
             )}

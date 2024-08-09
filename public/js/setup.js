@@ -311,13 +311,7 @@ async function getContractNFT(key) {
       window.web3 = new Web3(window.ethereum);
       window.cached_contracts[key] = new window.web3.eth.Contract(
         key === "NFTSTAKING50" ? window.NFTSTAKING_ABI : ABI,
-        // key === "NFTSTAKING"
-        //     ? "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A"
-        //     : key === 'NFTSTAKING50' ? '0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A'
-        //     : address,
-        key === "NFTSTAKING"
-          ? "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A"
-          : key === "NFTSTAKING50"
+        key === "NFTSTAKING" || key === "NFTSTAKING50"
           ? "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A"
           : address,
         {
@@ -343,7 +337,16 @@ class NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        let contract = await getContractNFT(this.key);
+         
+        let contract =  new window.infuraWeb3.eth.Contract(
+          this.key === "NFTSTAKING50" ? window.NFTSTAKING_ABI : window[this.key + "_ABI"],
+          this.key === "NFTSTAKING" || this.key === "NFTSTAKING50"
+            ? "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A"
+            : window.config[this.key.toLowerCase() + "_address"],
+          {
+            from: await getCoinbase(),
+          }
+        );
         return await contract.methods[fn_name](...args).call();
       };
     });
@@ -396,14 +399,15 @@ class NFT {
   }
 
   async checkapproveStake(useraddr, addr) {
-    let nft_contract = await getContractNFT("CAWS_NFT");
-
+    let nft_contract =  new window.infuraWeb3.eth.Contract(
+      window.CAWS_ABI,
+      window.config.nft_caws_address
+    );
     return await nft_contract.methods.isApprovedForAll(useraddr, addr).call();
   }
 
   async depositStake() {
     let nft_contract = await getContractNFT("CAWS_NFT");
-
     return await nft_contract.methods.deposit([]).send();
   }
 
@@ -455,7 +459,7 @@ class CAWSPREMIUM {
       "stakingTime",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        let  contract = await new window.infuraweb3.eth.Contract(
+        let  contract = await new window.infuraWeb3.eth.Contract(
           window.CAWSPREMIUM_ABI,
           window.config.nft_caws_premiumstake_address
         );
@@ -471,7 +475,7 @@ class CAWSPREMIUM {
 
   async checkapproveStakeCawsPremium(useraddr, addr) {
     
-    let  nft_contract = await new window.infuraweb3.eth.Contract(
+    let  nft_contract = await new window.infuraWeb3.eth.Contract(
       window.CAWSPREMIUM_ABI,
       window.config.nft_caws_premiumstake_address
     );
@@ -485,7 +489,7 @@ class CAWSPREMIUM {
 
   async checkLockoutTimeCawsPremium() {
     
-    let  nft_contract = await new window.infuraweb3.eth.Contract(
+    let  nft_contract = await new window.infuraWeb3.eth.Contract(
       window.CAWSPREMIUM_ABI,
       window.config.nft_caws_premiumstake_address
     );
@@ -513,9 +517,9 @@ async function getContractLandNFT(key) {
         : ABI,
 
       key === "LANDNFTSTAKE"
-        ? "0xcd60d912655281908ee557ce1add61e983385a03"
+        ? window.config.nft_land_address
         : key === "LANDNFTSTAKING"
-        ? "0x6821710b0d6e9e10acfd8433ad023f874ed782f1"
+        ? window.config.landnftstake_address
         : address,
       {
         from: await getCoinbase(),
@@ -538,8 +542,20 @@ class LANDNFT {
       "ownerOf",
       "totalSupply",
     ].forEach((fn_name) => {
-      this[fn_name] = async function (...args) {
-        let contract = await getContractLandNFT(this.key);
+      this[fn_name] = async function (...args) { 
+        let  contract = await new window.infuraWeb3.eth.Contract(
+          key === "LANDNFTSTAKE"
+        ? window.LANDMINTING_ABI
+        : key === "LANDNFTSTAKING"
+        ? window.LANDSTAKING_ABI
+        : ABI,
+
+      key === "LANDNFTSTAKE"
+        ? window.config.nft_land_address
+        : key === "LANDNFTSTAKING"
+        ? window.config.landnftstake_address
+        : address,
+        );
         return await contract.methods[fn_name](...args).call();
       };
     });
@@ -630,7 +646,9 @@ class LANDNFT {
   }
 
   async checkapproveStake(useraddr, addr) {
-    let nft_contract = await getContractLandNFT("LANDNFTSTAKE");
+   
+    let nft_contract = await new window.infuraWeb3.eth.Contract( window.LANDMINTING_ABI ,window.config.nft_land_address);
+
     return await nft_contract.methods.isApprovedForAll(useraddr, addr).call();
   }
 
@@ -640,7 +658,10 @@ class LANDNFT {
   }
 
   async checkLockoutTime() {
-    let nft_contract = await getContractLandNFT("LANDNFTSTAKING");
+    let nft_contract = await new window.infuraWeb3.eth.Contract( window.LANDSTAKING_ABI ,windnow.config.landnftstake_address
+    
+    );
+
     const time = await nft_contract.methods.LOCKUP_TIME().call();
     return time;
   }
@@ -23927,14 +23948,12 @@ async function getCoinbase() {
       }
     }
   }  else if( window.WALLET_TYPE === "binance") {
-    console.log(window.coinbase_address)
     return window.coinbase_address
   }
 }
 
 async function disconnectWallet() {
   window.coinbase_address = "0x0000000000000000000000000000000000000000";
-  console.log(window.coinbase_address);
   return window.coinbase_addres;
 }
 async function getContract({ key, address = null, ABI = null }) {

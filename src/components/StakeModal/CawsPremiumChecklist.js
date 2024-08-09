@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import weth from "./assets/weth.svg";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { formattedNum } from "../../screens/Caws/functions/formatUSD";
+import { ethers } from "ethers";
 
 const CawsPremiumChecklist = ({
   modalId,
@@ -18,6 +19,7 @@ const CawsPremiumChecklist = ({
   coinbase,
   isConnected,
   width,
+  binanceW3WProvider,
 }) => {
   const [checkbtn, setCheckBtn] = useState(false);
   const [Unstakebtn, setUnstakeBtn] = useState(false);
@@ -36,13 +38,13 @@ const CawsPremiumChecklist = ({
       });
     return res;
   };
- 
+
   const calculateReward = async (currentId) => {
     const address = coinbase;
 
     let calculateRewards;
- 
-    let  staking_contract = await new window.infuraweb3.eth.Contract(
+
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
       window.CAWSPREMIUM_ABI,
       window.config.nft_caws_premiumstake_address
     );
@@ -60,7 +62,7 @@ const CawsPremiumChecklist = ({
       const infuraWeb3 = new Web3(window.config.infura_endpoint);
 
       let a = infuraWeb3.utils.fromWei(calculateRewards, "ether");
-  
+
       const ethprice = await convertEthToUsd();
       setethToUSD(Number(ethprice) * Number(a));
       setEthRewards(Number(a));
@@ -68,39 +70,77 @@ const CawsPremiumChecklist = ({
   };
 
   const handleClaim = async (itemId) => {
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
-    );
+    if (window.WALLET_TYPE !== "binance") {
+      let staking_contract = await window.getContractCawsPremiumNFT(
+        "CAWSPREMIUM"
+      );
 
-    await staking_contract.methods
-      .claimRewards([itemId])
-      .send()
-      .then(() => {
-        // setethToUSD(0);
-        setEthRewards(0);
-      })
-      .catch((err) => {
-        window.alertify.error(err?.message);
-      });
+      await staking_contract.methods
+        .claimRewards([itemId])
+        .send()
+        .then(() => {
+          // setethToUSD(0);
+          setEthRewards(0);
+        })
+        .catch((err) => {
+          window.alertify.error(err?.message);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let staking_contract = await new ethers.Contract(
+        window.config.nft_caws_premiumstake_address,
+        window.CAWSPREMIUM_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      await staking_contract
+        .claimRewards([itemId])
+        .then(() => {
+          // setethToUSD(0);
+          setEthRewards(0);
+        })
+        .catch((err) => {
+          window.alertify.error(err?.message);
+        });
+    }
   };
 
   const handleUnstake = async (itemId) => {
-    let stake_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
-    );
     setloading(true);
 
-    await stake_contract.methods
-      .withdraw([itemId])
-      .send()
-      .then(() => {
-        setcheckPassiveBtn(false);
-        setloading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setloading(false);
-      });
+    if (window.WALLET_TYPE !== "binance") {
+      let stake_contract = await window.getContractCawsPremiumNFT(
+        "CAWSPREMIUM"
+      );
+      await stake_contract.methods
+        .withdraw([itemId])
+        .send()
+        .then(() => {
+          setcheckPassiveBtn(false);
+          setloading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setloading(false);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let stake_contract = await new ethers.Contract(
+        window.config.nft_caws_premiumstake_address,
+        window.CAWSPREMIUM_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      await stake_contract.methods
+        .withdraw([itemId])
+        .send()
+        .then(() => {
+          setcheckPassiveBtn(false);
+          setloading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setloading(false);
+        });
+    }
   };
 
   useEffect(() => {
@@ -125,11 +165,11 @@ const CawsPremiumChecklist = ({
 
   const getStakesIds = async () => {
     const address = coinbase;
-    let  staking_contract = await new window.infuraweb3.eth.Contract(
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
       window.CAWSPREMIUM_ABI,
       window.config.nft_caws_premiumstake_address
     );
-    
+
     let stakenft = [];
     if (address !== null) {
       let myStakes = await staking_contract.methods
@@ -163,7 +203,7 @@ const CawsPremiumChecklist = ({
       }
     }
   };
- 
+
   return (
     <div className="d-flex flex-column gap-2">
       <div
@@ -227,7 +267,7 @@ const CawsPremiumChecklist = ({
                     color: "#B8B8E0",
                   }}
                 >
-                {nft.name}
+                  {nft.name}
                 </p>
                 {isStake ? (
                   <>
