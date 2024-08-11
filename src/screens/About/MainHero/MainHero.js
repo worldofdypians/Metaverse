@@ -9,7 +9,7 @@ const MainHero = () => {
     <div className="mainhero-wrapper about-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-center gap-5 position-relative">
       <div className="custom-container  mt-5 mt-lg-0">
         <div className="d-flex w-100 flex-column align-items-center gap-2">
-          <h2 className="font-montserrat builders-title explorer-grid-title px-0">
+          <h2 className="font-montserrat main-hero-title px-0">
             The Biggest metaverse ever built
           </h2>
           <p className="about-hero-desc">

@@ -90,11 +90,11 @@ const EarnHero = ({ onSelectFilter }) => {
           <div className="row mx-0 align-items-center justify-content-center gap-2 my-5">
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-center">
-                <h2 className="font-montserrat explorer-grid-title px-0 text-center">
-                  <mark className="font-montserrat explore-tag pe-2">
+                <h2 className="font-montserrat main-hero-title px-0 text-center">
+                  {/* <mark className="font-montserrat explore-tag pe-2">
                     World of Dypians
-                  </mark>
-                  Earn
+                  </mark> */}
+                  World of Dypians Earn
                 </h2>
                 <span className="market-banner-desc font-montserrat text-center">
                   Maximize your rewards in the World of Dypians with our Earn

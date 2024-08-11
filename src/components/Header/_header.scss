@@ -686,8 +686,8 @@
 .new-connect-btn {
   border-radius: 8px;
   background: linear-gradient(90deg, #5690ff 0%, #8c56ff 100%);
-  font-weight: 400;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 18px;
   line-height: 24px;
   font-family: "Montserrat";
   color: #ffffff;
@@ -696,8 +696,8 @@
 }
 
 .account-txt {
-  font-weight: 400;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 18px;
   line-height: 24px;
   font-family: "Montserrat";
   color: #ffffff;
@@ -726,4 +726,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+
+.account-btn-hover{
+  border-radius: 12px;
+  transition: all .25s;
+}
+
+.account-btn-hover:hover{
+  background: rgba(255, 255, 255, 0.12);
 }

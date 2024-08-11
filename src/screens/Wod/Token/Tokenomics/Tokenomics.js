@@ -82,9 +82,9 @@ const Tokenomics = () => {
       id="tokenomics"
     >
       <div className="custom-container d-flex flex-column w-100 gap-3">
-        <h4 className="main-hero-title font-montserrat text-start mb-0">
+        <h4 className="explorer-grid-title font-montserrat text-start mb-0">
           WoD{" "}
-          <mark className="font-montserrat main-hero-title explore-tag pe-2">
+          <mark className="font-montserrat explorer-grid-title explore-tag pe-2">
             Tokenomics
           </mark>
         </h4>

@@ -166,7 +166,7 @@ const Footer = () => {
     <div
       className={`${
         padding ? "extra-padding" : null
-      } footer-container d-flex justify-content-center align-items-end px-3 px-lg-5 w-100 `}
+      } footer-container d-flex justify-content-center align-items-center px-3 px-lg-5 w-100 `}
     >
       <div className="custom-container">
         <div className="d-flex align-items-center justify-content-between">
@@ -191,11 +191,11 @@ const Footer = () => {
             </NavLink>
           </div>
           <a
-            className="epic-games-btn px-2 py-1 d-flex align-items-center gap-2"
+            className="epic-games-btn p-2 d-flex align-items-center gap-2"
             href="https://store.epicgames.com/p/world-of-dypians-2e0694"
             target="_blank"
           >
-            <img src={epicgames} width={24} alt="" />
+            <img src={epicgames} width={26} alt="" />
             Download
           </a>
         </div>

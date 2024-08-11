@@ -117,8 +117,8 @@ const WodPartners = ({full}) => {
       <div className="d-flex flex-column gap-2">
        <div className="d-flex align-items-center justify-content-between">
        <h2 className="font-montserrat builders-title explorer-grid-title px-0">
-          PARTNERS AND{" "}
-          <mark className="font-montserrat explore-tag pe-2">INVESTORS</mark>
+          PARTNERS AND INVESTORS
+          {/* <mark className="font-montserrat explore-tag pe-2">INVESTORS</mark> */}
         </h2>
         {!full &&
             <NavLink to={"/partners"} className="d-flex align-items-center gap-2">

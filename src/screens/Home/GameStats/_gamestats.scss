@@ -1,23 +1,12 @@
 .new-game-stats-wrapper{
 position: relative;
-
     background-size: 100%;
+    aspect-ratio: 3.72/1;
     background-repeat: no-repeat; 
   background-image: url("./assets/transactionsBanner.webp");
-    @media screen and (min-width: 1600px) {
-        background-size: 2000px;
-        padding-top: 60px;
-        padding-bottom: 60px;
-    }
-    @media screen and (max-width: 1200px) {
-        background-size: cover;
-        background-position: right;
-    }
-    // @media screen and (min-width: 786px) {
-    //     background-size: 100% !important;
-    // }
-
- 
+ @media screen and (max-width: 1100px) {
+    background-size: cover;
+ }
 }
 
 .game-stats-grid{
@@ -35,6 +24,9 @@ position: relative;
     font-style: normal;
     font-weight: 900;
     line-height: 24px; /* 66.667% */
+    @media screen and (max-width: 786px) {
+        font-size: 20px;
+    }
 }
 .game-stats-type{
     color: rgba(238, 237, 255, 0.60);
@@ -44,4 +36,7 @@ position: relative;
     font-style: normal;
     font-weight: 500;
     line-height: 24px; /* 171.429% */
+    @media screen and (max-width: 786px) {
+        font-size: 12px;
+    }
 }

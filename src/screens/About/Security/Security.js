@@ -11,9 +11,9 @@ const Security = () => {
         <div className="custom-container">
           <div className="d-flex flex-column flex-lg-row gap-3 justify-content-between align-items-center">
             <div className="d-flex flex-column gap-3 col-lg-4">
-              <h4 className="main-hero-title font-montserrat text-start mb-0">
+              <h4 className="explorer-grid-title font-montserrat text-start mb-0">
                 SMART CONTRACTS
-                <mark className="font-montserrat main-hero-title explore-tag pe-2">
+                <mark className="font-montserrat explorer-grid-title explore-tag pe-2">
                   SECURITY
                 </mark>
               </h4>
