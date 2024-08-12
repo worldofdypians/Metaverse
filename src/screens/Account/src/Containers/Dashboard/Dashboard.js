@@ -146,6 +146,11 @@ function Dashboard({
       symbol: "manta",
     },
 
+    {
+      name: "Taiko",
+      symbol: "taiko",
+    },
+
     // {
     //   name: "SEI",
     //   symbol: "sei",
@@ -205,6 +210,19 @@ function Dashboard({
     "10",
   ];
   const chestImagesViction = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+  const chestImagesTaiko = [
     "0",
     "1",
     "2",
@@ -357,6 +375,7 @@ function Dashboard({
   const [myMultiversNfts, setmyMultiversNfts] = useState([]);
   const [myImmutableNfts, setmyImmutableNfts] = useState([]);
   const [myMantaNfts, setmyMantaNfts] = useState([]);
+  const [myTaikoNfts, setmyTaikoNfts] = useState([]);
 
   const [latestVersion, setLatestVersion] = useState(0);
 
@@ -419,6 +438,9 @@ function Dashboard({
   const [standardMantaChests, setStandardMantaChests] = useState([]);
   const [premiumMantaChests, setPremiumMantaChests] = useState([]);
 
+  const [standardTaikoChests, setStandardTaikoChests] = useState([]);
+  const [premiumTaikoChests, setPremiumTaikoChests] = useState([]);
+
   const [standardCoreChests, setStandardCoreChests] = useState([]);
   const [premiumCoreChests, setPremiumCoreChests] = useState([]);
 
@@ -427,6 +449,8 @@ function Dashboard({
   const [openedCoreChests, setOpenedCoreChests] = useState([]);
   const [openedSeiChests, setOpenedSeiChests] = useState([]);
   const [openedMantaChests, setOpenedMantaChests] = useState([]);
+  const [openedTaikoChests, setOpenedTaikoChests] = useState([]);
+
 
   const [kittyDashRecords, setkittyDashRecords] = useState([]);
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
@@ -478,12 +502,14 @@ function Dashboard({
   const [claimedVictionChests, setclaimedVictionChests] = useState(0);
   const [claimedSeiChests, setclaimedSeiChests] = useState(0);
   const [claimedMantaChests, setclaimedMantaChests] = useState(0);
+  const [claimedTaikoChests, setclaimedTaikoChests] = useState(0);
 
   const [claimedVictionPremiumChests, setclaimedVictionPremiumChests] =
     useState(0);
   const [claimedSeiPremiumChests, setclaimedSeiPremiumChests] = useState(0);
   const [claimedMantaPremiumChests, setclaimedMantaPremiumChests] = useState(0);
-
+  const [claimedTaikoPremiumChests, setclaimedTaikoPremiumChests] =
+    useState(0);
   const [userSocialRewards, setuserSocialRewards] = useState(0);
   const [skalePrice, setSkalePrice] = useState(0);
 
@@ -493,6 +519,7 @@ function Dashboard({
   const [allSkaleChests, setallSkaleChests] = useState([]);
   const [allCoreChests, setallCoreChests] = useState([]);
   const [allVictionChests, setallVictionChests] = useState([]);
+  const [allTaikoChests, setallTaikoChests] = useState([]);
   const [allSeiChests, setallSeiChests] = useState([]);
   const [allMantaChests, setallMantaChests] = useState([]);
 
@@ -503,6 +530,8 @@ function Dashboard({
   const [vicitoncount, setvicitoncount] = useState(0);
   const [corecount, setcorecount] = useState(0);
   const [mantacount, setmantacount] = useState(0);
+  const [taikocount, settaikocount] = useState(0);
+
 
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
@@ -525,7 +554,9 @@ function Dashboard({
   const [victionImages, setVictionImages] = useState(
     shuffle(chestImagesViction)
   );
-
+  const [taikoImages, setTaikoImages] = useState(
+    shuffle(chestImagesTaiko)
+  );
   const [mantaImages, setMantaImages] = useState(shuffle(chestImagesViction));
   const [seiImages, setSeiImages] = useState(shuffle(chestImagesSei));
   const [seiEarnUsd, setSeiEarnUsd] = useState(0);
@@ -540,6 +571,11 @@ function Dashboard({
   const [victionPrice, setVictionPrice] = useState(0);
   const [victionEarnToken, setVictionEarnToken] = useState(0);
   const [victionPoints, setVictionPoints] = useState(0);
+
+  const [taikoEarnUsd, setTaikoEarnUsd] = useState(0);
+  const [taikoPrice, setTaikoPrice] = useState(0);
+  const [taikoEarnToken, setTaikoEarnToken] = useState(0);
+  const [taikoPoints, setTaikoPoints] = useState(0);
 
   const [mantaEarnUsd, setMantaEarnUsd] = useState(0);
   const [mantaPrice, setMantaPrice] = useState(0);
@@ -997,6 +1033,8 @@ function Dashboard({
   const [allCoreData, setAllCoreData] = useState([]);
   const [allVictionData, setAllVictionData] = useState([]);
   const [allMantaData, setAllMantaData] = useState([]);
+  const [allTaikoData, setAllTaikoData] = useState([]);
+
 
   const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
   const [weeklyRecordsCore, setWeeklyRecordsCore] = useState([]);
@@ -1092,6 +1130,31 @@ function Dashboard({
   const [monthlyDataAmountManta, setMonthlyDataAmountManta] = useState([]);
   const [userRankManta, setUserRankManta] = useState("");
   const [userMantaScore, setUserMantaScore] = useState(0);
+
+
+  const [dailyRecordsTaiko, setDailyRecordsTaiko] = useState([]);
+  const [weeklyRecordsTaiko, setWeeklyRecordsTaiko] = useState([]);
+  const [monthlyRecordsTaiko, setMonthlyRecordsTaiko] = useState([]);
+  const [activePlayerTaiko, setActivePlayerTaiko] = useState(false);
+  const [activePlayerTaikoWeekly, setActivePlayerTaikoWeekly] = useState(false);
+  const [activePlayerTaikoMonthly, setActivePlayerTaikoMonthly] =
+    useState(false);
+  const [userDataTaiko, setUserDataTaiko] = useState({});
+  const [userDataTaikoWeekly, setUserDataTaikoWeekly] = useState({});
+  const [userDataTaikoMonthly, setUserDataTaikoMonthly] = useState({});
+  const [prevDataTaiko, setPrevDataTaiko] = useState([]);
+  const [prevDataTaikoWeekly, setPrevDataTaikoWeekly] = useState([]);
+  const [prevDataTaikoMonthly, setPrevDataTaikoMonthly] = useState([]);
+  const [prevVersionTaiko, setPrevVersionTaiko] = useState(0);
+  const [prevVersionTaikoWeekly, setPrevVersionTaikoWeekly] = useState(0);
+  const [prevVersionTaikoMonthly, setPrevVersionTaikoMonthly] = useState(0);
+  const [dailyDataAmountTaiko, setDailyDataAmountTaiko] = useState([]);
+  const [weeklyDataAmountTaiko, setWeeklyDataAmountTaiko] = useState([]);
+  const [monthlyDataAmountTaiko, setMonthlyDataAmountTaiko] = useState([]);
+  const [userRankTaiko, setUserRankTaiko] = useState("");
+  const [userTaikoScore, setUserTaikoScore] = useState(0);
+
+
 
   const [dailyrecords, setRecords] = useState([]);
   const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
@@ -2166,6 +2229,364 @@ function Dashboard({
     }
   };
 
+
+
+
+
+  const fillRecordsTaiko = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsTaiko(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsTaiko(finalData);
+    }
+  };
+  const fillRecordsWeeklyTaiko = (itemData) => {
+    if (itemData.length === 0) {
+      setWeeklyRecordsTaiko(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setWeeklyRecordsTaiko(finalData);
+    }
+  };
+  const fillRecordsMonthlyTaiko = (itemData) => {
+    if (itemData.length === 0) {
+      setMonthlyRecordsTaiko(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setMonthlyRecordsTaiko(finalData);
+    }
+  };
+  const fetchPreviousWinnersTaiko = async () => {
+    if (prevVersionTaiko != 0) {
+      const data = {
+        StatisticName: "LeaderboardTaikoDaily",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionTaiko - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      setPrevDataTaiko(result.data.data.leaderboard);
+    } else {
+      setPrevDataTaiko(placeholderplayerData);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+  const fetchPreviousWeeklyWinnersTaiko = async () => {
+    if (prevVersionTaikoWeekly != 0) {
+      const data = {
+        StatisticName: "LeaderboardTaikoWeekly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionTaikoWeekly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setPrevDataTaikoWeekly(result.data.data.leaderboard);
+    } else {
+      setPrevDataTaikoWeekly(placeholderplayerData);
+    }
+  };
+  const fetchPreviousMonthlyWinnersTaiko = async () => {
+    if (prevVersionTaikoMonthly != 0) {
+      const data = {
+        StatisticName: "LeaderboardTaikoMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionTaikoMonthly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setPrevDataVictionMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataTaikoMonthly(placeholderplayerData);
+    }
+  };
+  const fetchDailyRecordsTaiko = async () => {
+    const data = {
+      StatisticName: "LeaderboardTaikoDaily",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsTaiko([]);
+      });
+    setPrevVersionTaiko(parseInt(result.data.data.version));
+    setDailyRecordsTaiko(result.data.data.leaderboard);
+    fillRecordsTaiko(result.data.data.leaderboard);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    if (testArray.length > 0) {
+      setActivePlayerTaiko(true);
+      fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    } else if (testArray.length === 0) {
+      setActivePlayerTaiko(false);
+      fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    }
+  };
+  const fetchWeeklyRecordsTaiko = async () => {
+    const data = {
+      StatisticName: "LeaderboardTaikoWeekly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsWeeklyTaiko([]);
+      });
+    setWeeklyRecordsTaiko(result.data.data.leaderboard);
+    setPrevVersionTaikoWeekly(result.data.data.version);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    fillRecordsWeeklyTaiko(result.data.data.leaderboard);
+
+    if (testArray.length > 0) {
+      setActivePlayerTaikoWeekly(true);
+      fetchWeeklyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    }
+    if (testArray.length === 0) {
+      setActivePlayerTaikoWeekly(false);
+      fetchWeeklyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    }
+  };
+  const fetchMonthlyRecordsTaiko = async () => {
+    const data = {
+      StatisticName: "LeaderboardTaikoMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMonthlyTaiko([]);
+      });
+    setMonthlyRecordsTaiko(result.data.data.leaderboard);
+    setPrevVersionTaikoMonthly(result.data.data.version);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    if (testArray.length > 0) {
+      setActivePlayerTaikoMonthly(true);
+      fetchMonthlyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    }
+    fillRecordsMonthlyTaiko(result.data.data.leaderboard);
+
+    if (testArray.length === 0) {
+      setActivePlayerTaikoMonthly(false);
+      fetchMonthlyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    }
+  };
+  const fetchDailyRecordsAroundPlayerTaiko = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardTaikoDaily",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+
+      if (isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
+              : Number(skaleStars[userPosition]) +
+                Number(skaleStarsPremium[userPosition])
+            : 0
+        );
+      } else if (!isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9])
+              : Number(skaleStars[userPosition])
+            : 0
+        );
+      } else setDailyDataAmountTaiko(0);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerTaiko(true);
+          setUserDataTaiko([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerTaiko(false);
+          setUserDataTaiko(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerTaiko(false);
+        setUserDataTaiko(...testArray);
+      }
+    }
+  };
+  const fetchWeeklyRecordsAroundPlayerTaiko = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardTaikoWeekly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+      if (goldenPassRemainingTime && testArray[0].statValue != 0) {
+        setWeeklyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesWeekly[9]) +
+                Number(skalePrizesWeeklyGolden[9])
+              : Number(skalePrizesWeekly[userPosition]) +
+                Number(skalePrizesWeeklyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
+        setWeeklyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesWeekly[9])
+              : Number(skalePrizesWeekly[userPosition])
+            : 0
+        );
+      } else setWeeklyDataAmountTaiko(0);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerTaikoWeekly(true);
+          setUserDataTaikoWeekly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerTaikoWeekly(false);
+          setUserDataTaikoWeekly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerTaikoWeekly(false);
+        setUserDataTaikoWeekly(...testArray);
+      }
+    }
+  };
+
+  const fetchMonthlyRecordsAroundPlayerTaiko = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardTaikoMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
+
+      if (goldenPassRemainingTime) {
+        setMonthlyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setMonthlyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
+            : 0
+        );
+      }
+
+      setUserRankTaiko(testArray[0].position);
+      setUserTaikoScore(testArray[0].statValue);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerTaikoMonthly(true);
+          setUserDataTaikoMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerTaikoMonthly(false);
+          setUserDataTaikoMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerTaikoMonthly(false);
+        setUserDataTaikoMonthly(...testArray);
+      }
+    }
+  };
+
+
+
+
+
+
   const fillRecordsSkale = (itemData) => {
     if (itemData.length === 0) {
       setDailyRecordsSkale(placeholderplayerData);
@@ -2899,6 +3320,9 @@ function Dashboard({
     fetchDailyRecordsManta();
     fetchWeeklyRecordsManta();
     fetchMonthlyRecordsManta();
+    fetchDailyRecordsTaiko();
+    fetchWeeklyRecordsTaiko();
+    fetchMonthlyRecordsTaiko();
     fetchDailyRecordsSkale();
     fetchWeeklyRecordsSkale();
     fetchMonthlyRecordsSkale();
@@ -2933,6 +3357,11 @@ function Dashboard({
   }, [mantacount]);
 
   useEffect(() => {
+    fetchDailyRecordsTaiko();
+    getAllTaikoChests(email);
+  }, [taikocount]);
+
+  useEffect(() => {
     fetchGenesisPreviousWinners();
     fetchPreviousWinners();
     fetchPreviousWeeklyWinners();
@@ -2946,6 +3375,9 @@ function Dashboard({
     fetchPreviousWinnersManta();
     fetchPreviousWeeklyWinnersManta();
     fetchPreviousMonthlyWinnersManta();
+    fetchPreviousWinnersTaiko();
+    fetchPreviousWeeklyWinnersTaiko();
+    fetchPreviousMonthlyWinnersTaiko();
     fetchPreviousWinnersSkale();
     fetchPreviousWeeklyWinnersSkale();
     fetchPreviousMonthlyWinnersSkale();
@@ -2961,9 +3393,15 @@ function Dashboard({
     prevVersionStar,
     prevVersionSkaleMonthly,
     prevVersionCore,
+    prevVersionManta,
+    prevVersionTaiko,
     prevVersionVictionMonthly,
     prevVersionCoreWeekly,
     prevVersionCoreMonthly,
+    prevVersionMantaWeekly,
+    prevVersionMantaMonthly,
+    prevVersionTaikoWeekly,
+    prevVersionTaikoMonthly,
     prevVersionViction,
     prevVersionVictionWeekly,
   ]);
@@ -3258,6 +3696,57 @@ function Dashboard({
     activePlayerMantaWeekly,
   ]);
 
+  useEffect(() => {
+    setAllTaikoData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: skaleStars,
+        premium_rewards: skaleStarsPremium,
+        activeData: dailyRecordsTaiko,
+        previousData: prevDataTaiko,
+        player_data: userDataTaiko,
+        is_active: activePlayerTaiko, //change when apis are ready
+      },
+      {
+        title: "WEEKLY",
+        reset: "Monday (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesWeekly,
+        premium_rewards: skalePrizesWeeklyGolden,
+        activeData: weeklyRecordsTaiko,
+        previousData: prevDataTaikoWeekly,
+        player_data: userDataTaikoWeekly,
+        is_active: activePlayerTaikoWeekly,
+      },
+      {
+        title: "MONTHLY",
+        reset: "Monthly (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesMonthly,
+        premium_rewards: skalePrizesMonthlyGolden,
+        activeData: monthlyRecordsTaiko,
+        previousData: prevDataTaikoMonthly,
+        player_data: userDataTaikoMonthly,
+        is_active: activePlayerTaikoMonthly, //change when apis are ready
+      },
+    ]);
+  }, [
+    dailyRecordsTaiko,
+    weeklyRecordsTaiko,
+    monthlyRecordsTaiko,
+    prevDataTaiko,
+    prevDataTaikoWeekly,
+    prevDataTaikoMonthly,
+    userDataTaiko,
+    userDataTaikoWeekly,
+    userDataTaikoMonthly,
+    activePlayerTaiko,
+    activePlayerTaikoMonthly,
+    activePlayerTaikoWeekly,
+  ]);
+
   const handleSetAvailableTime = (value) => {
     setGoldenPassRemainingTime(value);
   };
@@ -3388,6 +3877,16 @@ function Dashboard({
       });
   };
 
+  const fetchTaikoPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=taiko&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setTaikoPrice(obj.data["taiko"].usd);
+      });
+  };
+
   const fetchVictionPrice = async () => {
     await axios
       .get(
@@ -3418,6 +3917,8 @@ function Dashboard({
   let wseiAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
   let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
+  let wtaikoddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
+
 
   let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
 
@@ -4184,7 +4685,8 @@ function Dashboard({
           claimedSkaleChests + claimedSkalePremiumChests < 20 ||
           claimedCoreChests + claimedCorePremiumChests < 20 ||
           claimedVictionChests + claimedVictionPremiumChests < 20 ||
-          claimedMantaChests + claimedMantaPremiumChests < 20
+          claimedMantaChests + claimedMantaPremiumChests < 20||
+          claimedTaikoChests + claimedTaikoPremiumChests < 20
         ) {
           setCanBuy(true);
         } else if (
@@ -4192,7 +4694,8 @@ function Dashboard({
           claimedSkaleChests + claimedSkalePremiumChests === 20 &&
           claimedCoreChests + claimedCorePremiumChests === 20 &&
           claimedVictionChests + claimedVictionPremiumChests === 20 &&
-          claimedMantaChests + claimedMantaPremiumChests === 20
+          claimedMantaChests + claimedMantaPremiumChests === 20 &&
+          claimedTaikoChests + claimedTaikoPremiumChests === 20
         ) {
           setCanBuy(false);
         }
@@ -4202,7 +4705,8 @@ function Dashboard({
           claimedSkaleChests < 10 ||
           claimedCoreChests < 10 ||
           claimedVictionChests < 10 ||
-          claimedMantaChests < 10
+          claimedMantaChests < 10 ||
+          claimedTaikoChests < 10
         ) {
           setCanBuy(true);
         } else if (
@@ -4210,7 +4714,8 @@ function Dashboard({
           claimedSkaleChests === 10 &&
           claimedCoreChests === 10 &&
           claimedVictionChests === 10 &&
-          claimedMantaChests === 10
+          claimedMantaChests === 10 &&
+          claimedTaikoChests === 10
         ) {
           setCanBuy(false);
         }
@@ -4454,6 +4959,53 @@ function Dashboard({
     }
   };
 
+  const getAllTaikoChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "taiko" };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedTaikoChests(openedChests);
+        setStandardTaikoChests(standardChestsArray);
+        setPremiumTaikoChests(premiumChestsArray);
+
+        setclaimedTaikoChests(openedStandardChests.length);
+        setclaimedTaikoPremiumChests(openedPremiumChests.length);
+        setallTaikoChests(chestOrder);
+      }
+    }
+  };
+
   const getAllSeiChests = async (userEmail) => {
     const emailData = { emailAddress: userEmail, chainId: "sei" };
 
@@ -4609,6 +5161,10 @@ function Dashboard({
     );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "manta").then((NFTS) =>
       setmyMantaNfts(NFTS)
+    );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "taiko").then((NFTS) =>
+      setmyTaikoNfts(NFTS)
     );
   };
 
@@ -4930,6 +5486,8 @@ function Dashboard({
         ? window.config.subscriptionviction_tokens[token]?.decimals
         : chainId === 169
         ? window.config.subscriptionmanta_tokens[token]?.decimals
+        : chainId === 167000
+        ? window.config.subscriptiontaiko_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -4959,6 +5517,8 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmountViction(token)
         : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
+        : chainId === 167000
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
         : chainId === 713715
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
@@ -4987,6 +5547,7 @@ function Dashboard({
     const seisubscribeAddress = window.config.subscription_sei_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
     const mantasubscribeAddress = window.config.subscription_manta_address;
+    const taikosubscribeAddress = window.config.subscription_taiko_address;
 
     const coresubscribeAddress = window.config.subscription_core_address;
 
@@ -5075,6 +5636,8 @@ function Dashboard({
             ? victionsubscribeAddress
             : chainId === 169
             ? mantasubscribeAddress
+            : chainId === 167000
+            ? taikosubscribeAddress
             : chainId === 1116
             ? coresubscribeAddress
             : chainId === 713715
@@ -5122,6 +5685,8 @@ function Dashboard({
     const coreWeb3 = new Web3(window.config.core_endpoint);
     const victionWeb3 = new Web3(window.config.viction_endpoint);
     const mantaWeb3 = new Web3(window.config.manta_endpoint);
+    const taikoWeb3 = new Web3(window.config.taiko_endpoint);
+
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
@@ -5133,6 +5698,8 @@ function Dashboard({
     const coresubscribeAddress = window.config.subscription_core_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
     const mantasubscribeAddress = window.config.subscription_manta_address;
+    const taikosubscribeAddress = window.config.subscription_taiko_address;
+
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -5184,6 +5751,10 @@ function Dashboard({
       window.ERC20_ABI,
       subscribeToken
     );
+    const subscribeTokencontracttaiko = new taikoWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
 
     let tokenprice =
       chainId === 1
@@ -5205,6 +5776,8 @@ function Dashboard({
         ? await window.getEstimatedTokenSubscriptionAmountViction(token)
         : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
+        : chainId === 167000
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 713715
@@ -5245,6 +5818,20 @@ function Dashboard({
       } else if (chainId === 169) {
         const result = await subscribeTokencontractmanta.methods
           .allowance(coinbase, mantasubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } else if (chainId === 167000) {
+        const result = await subscribeTokencontracttaiko.methods
+          .allowance(coinbase, taikosubscribeAddress)
           .call()
           .then();
         if (result != 0 && Number(result) >= Number(tokenprice)) {
@@ -5441,6 +6028,8 @@ function Dashboard({
           ? "SUBSCRIPTION_VICTION"
           : chainId === 169
           ? "SUBSCRIPTION_MANTA"
+          : chainId === 167000
+          ? "SUBSCRIPTION_TAIKO"
           : chainId === 1116
           ? "SUBSCRIPTION_CORE"
           : chainId === 713715
@@ -5552,6 +6141,8 @@ function Dashboard({
                 ? "viction"
                 : chainId === 169
                 ? "manta"
+                : chainId === 167000
+                ? "taiko"
                 : chainId === 1116
                 ? "core"
                 : chainId === 713715
@@ -5625,6 +6216,8 @@ function Dashboard({
                 ? "viction"
                 : chainId === 169
                 ? "manta"
+                : chainId === 167000
+                ? "taiko"
                 : chainId === 1116
                 ? "core"
                 : chainId === 713715
@@ -5863,13 +6456,30 @@ function Dashboard({
     }
   };
 
+  const handleTaikoPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x28c58")
+          .then(() => {
+            handleSwitchNetwork(167000);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
   const handleRankRewards = () => {
     const totalScore =
       userBnbScore +
       userSkaleScore +
       userCoreScore +
       userVictionScore +
-      userMantaScore;
+      userMantaScore +
+      userTaikoScore;
     if (totalScore > 11999999 && totalScore < 24000000) {
       setUserRankRewards(5);
     } else if (totalScore >= 24000000 && totalScore < 37000000) {
@@ -5883,7 +6493,7 @@ function Dashboard({
 
   useEffect(() => {
     handleRankRewards();
-  }, [userBnbScore, userSkaleScore,userCoreScore,userVictionScore,userMantaScore]);
+  }, [userBnbScore, userSkaleScore,userCoreScore,userVictionScore,userMantaScore,userTaikoScore]);
 
   useEffect(() => {
     if (coinbase) {
@@ -5896,6 +6506,7 @@ function Dashboard({
     fetchSkalePrice();
     fetchSeiPrice();
     fetchMantaPrice();
+    fetchTaikoPrice();
     fetchCorePrice();
     fetchVictionPrice();
     fetchEgldPrice();
@@ -5933,10 +6544,9 @@ function Dashboard({
         setSkaleImages(shuffle(chestImagesSkale));
         setVictionImages(shuffle(chestImagesViction));
         setMantaImages(shuffle(chestImagesViction));
-
+        setTaikoImages(shuffle(chestImagesTaiko));
         setCoreImages(shuffle(chestImagesCore));
         setSeiImages(shuffle(chestImagesSei));
-
         clearInterval(interval);
       }
     };
@@ -5972,6 +6582,15 @@ function Dashboard({
       );
       handleSubscriptionTokenChange(wmantaddress);
       handleCheckIfAlreadyApproved(wmantaddress);
+    } else if (chainId === 167000) {
+      setChainDropdown(chainDropdowns[9]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptiontaiko_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wtaikoddress);
+      handleCheckIfAlreadyApproved(wtaikoddress);
     } else if (chainId === 1116) {
       setChainDropdown(chainDropdowns[6]);
       setdropdownIcon("usdt");
@@ -6090,6 +6709,11 @@ function Dashboard({
     } else if (chainId === 169 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionmanta_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 167000 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptiontaiko_tokens[selectedSubscriptionToken]
           ?.decimals
       );
     } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
@@ -6265,6 +6889,7 @@ function Dashboard({
       getAllCoreChests(email);
       getAllVictionChests(email);
       getAllMantaChests(email);
+      getAllTaikoChests(email);
       // getAllSeiChests(email);
     }
   }, [email]);
@@ -6354,6 +6979,8 @@ function Dashboard({
                         userVictionScore={userVictionScore}
                         userRankManta={userRankManta}
                         userMantaScore={userMantaScore}
+                        userRankTaiko={userRankTaiko}
+                        userTaikoScore={userTaikoScore}
                         userSkaleScore={userSkaleScore}
                         genesisRank={genesisRank}
                         email={email}
@@ -6384,15 +7011,21 @@ function Dashboard({
                           setclaimedVictionChests(0);
                           setclaimedMantaPremiumChests(0);
                           setclaimedMantaChests(0);
+                          setclaimedTaikoPremiumChests(0);
+                          setclaimedTaikoChests(0);
                           setallChests([]);
                           setallSkaleChests([]);
                           setallCoreChests([]);
                           setallVictionChests([]);
                           setallMantaChests([]);
+                          setallTaikoChests([]);
+
                           setOpenedChests([]);
                           setOpenedCoreChests([]);
                           setOpenedVictionChests([]);
                           setOpenedMantaChests([]);
+                          setOpenedTaikoChests([]);
+
                           setOpenedSkaleChests([]);
                           setclaimedSkaleChests(0);
                           setclaimedSkalePremiumChests(0);
@@ -6484,6 +7117,8 @@ function Dashboard({
                               myMultiversNfts={myMultiversNfts}
                               mySkaleNfts={mySkaleNfts}
                               myMantaNfts={myMantaNfts}
+                              myTaikoNfts={myTaikoNfts}
+
                               latestBoughtNFTS={latest20BoughtNFTS}
                               myOffers={myOffers}
                               allActiveOffers={allActiveOffers}
@@ -6534,6 +7169,8 @@ function Dashboard({
                         monthlyDataAmountViction={monthlyDataAmountViction}
                         weeklyDataAmountManta={weeklyDataAmountManta}
                         monthlyDataAmountManta={monthlyDataAmountManta}
+                        weeklyDataAmountTaiko={weeklyDataAmountTaiko}
+                        monthlyDataAmountTaiko={monthlyDataAmountTaiko}
                         dailyDataAmountSkale={dailyDataAmountSkale}
                         weeklyDataAmountSkale={weeklyDataAmountSkale}
                         monthlyDataAmountSkale={monthlyDataAmountSkale}
@@ -6543,6 +7180,8 @@ function Dashboard({
                         coreEarnUsd={coreEarnUsd}
                         victionEarnUsd={victionEarnUsd}
                         mantaEarnUsd={mantaEarnUsd}
+                        taikoEarnUsd={taikoEarnUsd}
+
                         skalePoints={skalePoints}
                         userRank2={userRank2}
                         genesisRank2={genesisRank2}
@@ -6575,6 +7214,8 @@ function Dashboard({
                         }
                         claimedMantaChests={claimedMantaChests}
                         claimedMantaPremiumChests={claimedMantaPremiumChests}
+                        claimedTaikoChests={claimedTaikoChests}
+                        claimedTaikoPremiumChests={claimedTaikoPremiumChests}
                         kittyDashRecords={kittyDashRecords}
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
@@ -6612,6 +7253,8 @@ function Dashboard({
                         openedSeiChests={openedSeiChests}
                         openedVictionChests={openedVictionChests}
                         openedMantaChests={openedMantaChests}
+                        openedTaikoChests={openedTaikoChests}
+
                         onDailyBonusInfoClick={() => {
                           setdailyBonusInfo(true);
                         }}
@@ -6642,10 +7285,14 @@ function Dashboard({
                         corePoints={corePoints}
                         victionPoints={victionPoints}
                         mantaPoints={mantaPoints}
+                        taikoPoints={taikoPoints}
+
                         bnbEarnToken={bnbEarnToken}
                         coreEarnToken={coreEarnToken}
                         victionEarnToken={victionEarnToken}
                         mantaEarnToken={mantaEarnToken}
+                        taikoEarnToken={taikoEarnToken}
+
                         bnbPoints={bnbPoints}
                         onPremiumClick={() => {
                           setgetPremiumPopup(true);
@@ -6703,6 +7350,8 @@ function Dashboard({
                       myVictionNfts={myVictionNfts}
                       mySkaleNfts={mySkaleNfts}
                       myMantaNfts={myMantaNfts}
+                      myTaikoNfts={myTaikoNfts}
+
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}
@@ -6981,6 +7630,7 @@ function Dashboard({
                             allCoreData={allCoreData}
                             allVictionData={allVictionData}
                             allMantaData={allMantaData}
+                            allTaikoData={allTaikoData}
                             dailyplayerData={dailyplayerData}
                             weeklyplayerData={weeklyplayerData}
                             monthlyplayerData={monthlyplayerData}
@@ -7107,6 +7757,8 @@ function Dashboard({
                             monthlyDataAmountViction={monthlyDataAmountViction}
                             weeklyDataAmountManta={weeklyDataAmountManta}
                             monthlyDataAmountManta={monthlyDataAmountManta}
+                            weeklyDataAmountTaiko={weeklyDataAmountTaiko}
+                            monthlyDataAmountTaiko={monthlyDataAmountTaiko}
                             weeklyDataAmountSkale={weeklyDataAmountSkale}
                             monthlyDataAmountSkale={monthlyDataAmountSkale}
                             userRank2={userRank2}
@@ -7117,6 +7769,8 @@ function Dashboard({
                             allCoreChests={allCoreChests}
                             allVictionChests={allVictionChests}
                             allMantaChests={allMantaChests}
+                            allTaikoChests={allTaikoChests}
+
                             allSeiChests={allSeiChests}
                             availableTime={goldenPassRemainingTime}
                             userSocialRewards={userSocialRewards}
@@ -7126,6 +7780,8 @@ function Dashboard({
                             seiEarnUsd={seiEarnUsd}
                             victionEarnUsd={victionEarnUsd}
                             mantaEarnUsd={mantaEarnUsd}
+                            taikoEarnUsd={taikoEarnUsd}
+
                             coreEarnUsd={coreEarnUsd}
                             kittyDashRecords={kittyDashRecords}
                             userRankRewards={userRankRewards}
@@ -7289,6 +7945,16 @@ function Dashboard({
                                       />
                                       <span className="subscription-chain mb-0">
                                         Manta
+                                      </span>
+                                    </div>
+                                    <div className="d-flex align-items-center gap-2">
+                                      <img
+                                        src={require(`../../../../../components/Header/assets/taiko.svg`).default}
+                                        alt=""
+                                        style={{ width: 18, height: 18 }}
+                                      />
+                                      <span className="subscription-chain mb-0">
+                                        Taiko
                                       </span>
                                     </div>
                                     <div className="d-flex align-items-center gap-2">
@@ -7481,6 +8147,20 @@ function Dashboard({
                                         </li>
                                         <li
                                           className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                          onClick={handleTaikoPool}
+                                        >
+                                          <img
+                                            src={
+                                              require(`../../Images/premium/tokens/taikoIcon.svg`)
+                                                .default
+                                            }
+                                            style={{ width: 18, height: 18 }}
+                                            alt=""
+                                          />
+                                          Taiko
+                                        </li>
+                                        <li
+                                          className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                           onClick={handleAvaxPool}
                                         >
                                           <img
@@ -7653,6 +8333,9 @@ function Dashboard({
                                                   : chainId === 169
                                                   ? window.config
                                                       .subscriptionmanta_tokens
+                                                  : chainId === 167000
+                                                  ? window.config
+                                                      .subscriptiontaiko_tokens
                                                   : chainId === 1116
                                                   ? window.config
                                                       .subscriptioncore_tokens
@@ -7711,6 +8394,11 @@ function Dashboard({
                                                               .subscriptionmanta_tokens[
                                                               t
                                                             ]?.symbol
+                                                            : chainId === 167000
+                                                          ? window.config
+                                                              .subscriptiontaiko_tokens[
+                                                              t
+                                                            ]?.symbol
                                                           : chainId === 1116
                                                           ? window.config
                                                               .subscriptioncore_tokens[
@@ -7766,6 +8454,11 @@ function Dashboard({
                                                           : chainId === 169
                                                           ? window.config
                                                               .subscriptionmanta_tokens[
+                                                              t
+                                                            ]?.symbol
+                                                            : chainId === 167000
+                                                          ? window.config
+                                                              .subscriptiontaiko_tokens[
                                                               t
                                                             ]?.symbol
                                                           : chainId === 713715
@@ -7832,6 +8525,10 @@ function Dashboard({
                                                         ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
                                                             t
                                                           ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 167000
+                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
+                                                            t
+                                                          ]?.symbol.toLowerCase()}Icon.svg`)
                                                         : chainId === 713715
                                                         ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
                                                             t
@@ -7888,6 +8585,11 @@ function Dashboard({
                                                     : chainId === 169
                                                     ? window.config
                                                         .subscriptionmanta_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                      : chainId === 167000
+                                                    ? window.config
+                                                        .subscriptiontaiko_tokens[
                                                         t
                                                       ]?.symbol
                                                     : chainId === 713715
@@ -8387,7 +9089,8 @@ function Dashboard({
                 skaleImages={skaleImages}
                 seiImages={seiImages}
                 victionImages={victionImages}
-                mantaImages={victionImages}
+                mantaImages={mantaImages}
+                taikoImages={taikoImages}
                 coreImages={coreImages}
                 chainId={chainId}
                 dypTokenData={dypTokenData}
@@ -8411,6 +9114,8 @@ function Dashboard({
                 premiumVictionChests={premiumVictionChests}
                 standardMantaChests={standardMantaChests}
                 premiumMantaChests={premiumMantaChests}
+                standardTaikoChests={standardTaikoChests}
+                premiumTaikoChests={premiumTaikoChests}
                 standardSeiChests={standardSeiChests}
                 premiumSeiChests={premiumSeiChests}
                 claimedChests={claimedChests}
@@ -8423,6 +9128,8 @@ function Dashboard({
                 claimedVictionPremiumChests={claimedVictionPremiumChests}
                 claimedMantaChests={claimedMantaChests}
                 claimedMantaPremiumChests={claimedMantaPremiumChests}
+                claimedTaikoChests={claimedTaikoChests}
+                claimedTaikoPremiumChests={claimedTaikoPremiumChests}
                 claimedSeiChests={claimedSeiChests}
                 claimedSeiPremiumChests={claimedSeiPremiumChests}
                 email={email}
@@ -8431,6 +9138,7 @@ function Dashboard({
                 openedCoreChests={openedCoreChests}
                 openedVictionChests={openedVictionChests}
                 openedMantaChests={openedMantaChests}
+                openedTaikoChests={openedTaikoChests}
                 openedSeiChests={openedSeiChests}
                 canBuy={canBuy}
                 address={data?.getPlayer?.wallet?.publicAddress}
@@ -8439,6 +9147,7 @@ function Dashboard({
                 allCoreChests={allCoreChests}
                 allVictionChests={allVictionChests}
                 allMantaChests={allMantaChests}
+                allTaikoChests={allTaikoChests}
                 allSeiChests={allSeiChests}
                 onChestClaimed={() => {
                   setCount(count + 1);
@@ -8454,6 +9163,9 @@ function Dashboard({
                 }}
                 onMantaChestClaimed={() => {
                   setmantacount(mantacount + 1);
+                }}
+                onTaikoChestClaimed={() => {
+                  settaikocount(taikocount + 1);
                 }}
                 onSeiChestClaimed={() => {
                   setCount(count + 1);
