@@ -61,7 +61,6 @@ import { createWeb3Name } from "@web3-name-sdk/core";
 import { ethers, providers } from "ethers";
 import { disconnect, connectWallet, ConnectionType } from "web3-connector";
 import { getWeb3Connector } from "@binance/w3w-web3-connector";
-import { isInBinance } from "@binance/w3w-utils";
 import { useWeb3React } from "@web3-react/core";
 import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
@@ -1118,8 +1117,7 @@ function App() {
         .catch((e) => {
           console.log(e);
         });
-    } else if (
-      isInBinance() ||
+    } else if ( 
       account ||
       (binanceData !== undefined && binanceData !== null)
     ) {
@@ -1972,14 +1970,18 @@ function App() {
   };
 
   useEffect(() => {
-    if (binanceData && binanceData !== null && window.WALLET_TYPE === 'binance') {
+    if (
+      binanceData &&
+      binanceData !== null &&
+      window.WALLET_TYPE === "binance"
+    ) {
       setCoinbase(binanceData.accounts[0]);
       setIsConnected(binanceData.connected);
       setChainId(parseInt(binanceData.chainId));
       window.coinbase_address = binanceData.accounts[0];
       window.WALLET_TYPE = "binance";
-      binanceConnector.activate()
-      console.log('in')
+      binanceConnector.activate();
+      console.log("in");
     }
   }, [binanceData]);
 
@@ -2969,9 +2971,10 @@ function App() {
         setCoinbase(account);
       }
     } else if (
-      isInBinance() || window.WALLET_TYPE === 'binance' ||
+     
+      window.WALLET_TYPE === "binance" ||
       account ||
-      (binanceData != null && binanceData !== undefined) 
+      (binanceData != null && binanceData !== undefined)
     ) {
       if (binanceData != null && binanceData !== undefined) {
         setCoinbase(binanceData.accounts[0]);
@@ -2979,10 +2982,10 @@ function App() {
         setChainId(parseInt(binanceData.chainId));
         window.coinbase_address = binanceData.accounts[0];
         window.WALLET_TYPE = "binance";
-        activate(binanceConnector)
-      } else if(account !==undefined && chainId !== undefined) {
+        activate(binanceConnector);
+      } else if (account !== undefined && chainId !== undefined) {
         window.WALLET_TYPE = "binance";
-        activate(binanceConnector)
+        activate(binanceConnector);
         setCoinbase(account);
         setIsConnected(true);
         setChainId(chainId);
@@ -3291,7 +3294,7 @@ function App() {
         // handle other "switch" errors
       }
       // window.location.reload();
-    } else if (isInBinance() || account) {
+    } else if (account) {
       try {
         await binanceConnector.binanceW3WProvider
           .request({
@@ -3624,7 +3627,7 @@ function App() {
           handleSwitchNetwork={handleSwitchNetwork}
           handleSwitchChainGateWallet={handleSwitchNetwork}
           handleSwitchChainBinanceWallet={handleSwitchNetwork}
-          binanceWallet={account}
+          binanceWallet={coinbase}
           handleOpenDomains={() => setDomainPopup(true)}
           domainName={domainName}
           onLogout={() => {
@@ -3650,7 +3653,7 @@ function App() {
           handleOpenDomains={() => setDomainPopup(true)}
           domainName={domainName}
           handleSwitchChainBinanceWallet={handleSwitchNetwork}
-          binanceWallet={account}
+          binanceWallet={coinbase}
         />
 
         <Routes>
@@ -3779,6 +3782,10 @@ function App() {
                 onSuccessTransfer={() => {
                   setCount(count + 1);
                 }}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
+                binanceW3WProvider={library}
               />
             }
           />
@@ -3837,7 +3844,7 @@ function App() {
                 coinbase={coinbase}
                 account={coinbase}
                 binanceW3WProvider={library}
-                binanceWallet={account}
+                binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
                 handleConnect={handleConnectWallet}
@@ -4742,7 +4749,7 @@ function App() {
                 binanceW3WProvider={library}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
-                binanceWallet={account}
+                binanceWallet={coinbase}
               />
             }
           />
