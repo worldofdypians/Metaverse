@@ -24,6 +24,7 @@ import viction from "../Header/assets/viction.svg";
 import core from "../Header/assets/core.svg";
 import manta from "../Header/assets/manta.png";
 import immutable from "../Header/assets/immutableLogo.svg";
+import taiko from "../Header/assets/taiko.svg";
 
 import error from "../Header/assets/error.svg";
 import dropdown from "../Header/assets/dropdown.svg";
@@ -384,7 +385,7 @@ const MobileNavbar = ({
                           : mantaState === true
                           ? manta
                           : taikoState === true
-                          ? manta
+                          ? taiko
                           : // : seiState === true
                             // ? sei
                             error
@@ -444,7 +445,7 @@ const MobileNavbar = ({
                   opBNB Chain
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => switchNetwork("0x28c58", 167000)}>
-                  <img src={core} width={20} height={20} alt="" />
+                  <img src={taiko} width={20} height={20} alt="" />
                   Taiko
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => switchNetwork("0x45c", 1116)}>
