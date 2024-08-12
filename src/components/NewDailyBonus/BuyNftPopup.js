@@ -169,18 +169,15 @@ const BuyNftPopup = ({
       setbuyStatus("buy");
       setPurchaseStatus("Buying NFT in progress..");
 
-      const marketplace = new window.web3.eth.Contract(
+   
+   
+
+      if (window.WALLET_TYPE !== "binance") {
+           const marketplace = new window.web3.eth.Contract(
         window.MARKETPLACE_ABI,
         window.config.nft_marketplace_address
       );
 
-      const marketplace_binance = new window.web3.eth.Contract(
-        window.config.nft_marketplace_address,
-        window.MARKETPLACE_ABI,
-        binanceW3WProvider.getSigner()
-      );
-
-      if (window.WALLET_TYPE !== "binance") {
         const gasPrice = await window.web3.eth.getGasPrice();
         console.log("gasPrice", gasPrice);
         const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
@@ -259,7 +256,12 @@ const BuyNftPopup = ({
               console.error(e);
             });
         }
-      } else if (window.WALLET_TYPE !== "binance") {
+      } else if (window.WALLET_TYPE === "binance") {
+           const marketplace_binance = new window.web3.eth.Contract(
+        window.config.nft_marketplace_address,
+        window.MARKETPLACE_ABI,
+        binanceW3WProvider.getSigner()
+      );
         const gasPrice = await binanceW3WProvider.getGasPrice();
         console.log("gasPrice", gasPrice.toString());
         const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");

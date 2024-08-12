@@ -5011,7 +5011,7 @@ function Dashboard({
       tokenprice / 10 ** tokenDecimals,
       tokenDecimals
     );
-    if (coinbase) {
+    if (coinbase && window.WALLET_TYPE === 'binance') {
       let token_Sc = new ethers.Contract(
         token,
         window.ERC20_ABI,

@@ -144,7 +144,7 @@ const StakeLandModal = ({
           setStatus("*An error occurred. Please try again");
           handleClearStatus();
         });
-    } else if (window.WALLET_TYPE !== "binance") {
+    } else if (window.WALLET_TYPE === "binance") {
       let landcontract = new ethers.Contract(
         window.config.nft_land_address,
         window.LANDMINTING_ABI,
