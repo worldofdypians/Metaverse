@@ -11,6 +11,56 @@ const Campaigns = () => {
   const dummyArr = [1,2,3,4,5,6,7,8,9];
 
 
+  const dummyItems = [
+    {
+      title: "Entry Campaign", 
+      date: "February 27, 2024 - March 26, 2024",
+      status: "Live",
+    },
+    {
+      title: "Entry Campaign", 
+      date: "February 27, 2024 - March 26, 2024",
+      status: "Coming Soon",
+    },
+    {
+      title: "Entry Campaign", 
+      date: "February 27, 2024 - March 26, 2024",
+      status: "Expired",
+    },
+    {
+      title: "Entry Campaign", 
+      date: "February 27, 2024 - March 26, 2024",
+      status: "Expired",
+    },
+    {
+      title: "Entry Campaign", 
+      date: "February 27, 2024 - March 26, 2024",
+      status: "Expired",
+    },
+    {
+      title: "Entry Campaign", 
+      date: "February 27, 2024 - March 26, 2024",
+      status: "Expired",
+    },
+    {
+      title: "Entry Campaign", 
+      date: "February 27, 2024 - March 26, 2024",
+      status: "Expired",
+    },
+    {
+      title: "Entry Campaign", 
+      date: "February 27, 2024 - March 26, 2024",
+      status: "Expired",
+    },
+    {
+      title: "Entry Campaign", 
+      date: "February 27, 2024 - March 26, 2024",
+      status: "Expired",
+    },
+
+  ]
+
+
   return (
     <div className="container-fluid d-flex flex-column w-100 mt-5 align-items-center justify-content-center px-0">
       <div className="custom-container px-2 px-lg-0 my-5 py-5">
@@ -72,26 +122,32 @@ const Campaigns = () => {
           </div>
         </div>
         <div className="campaign-items-grid mt-5">
-        {dummyArr.map((item) => (
-          <div className="campaign-item d-flex flex-column gap-2" key={item}>
-            <img src={dummyCampaignItem} alt="campaign image" className="w-100" />
+        {dummyItems.map((item, index) => (
+          <div className="campaign-item d-flex flex-column gap-2" key={index} >
+            <img src={dummyCampaignItem} alt="campaign image" className="w-100" style={{opacity: item.status === "Expired" ? "0.5" : "1"}} />
             <div className="d-flex align-items-center gap-2">
-              <h6 className="campaign-item-title">Entry Campaign</h6>
+              <h6 className="campaign-item-title mb-0">{item.title}</h6>
               <div
-                className="profile-event-tag position-relative d-flex align-items-center justify-content-center px-1"
-                style={{ background: "#EC8123", top: 0, right: 0 }}
-              >
-                <span
-                  className="profile-event-tag-text mb-0"
-                  style={{ color: "#FFFFFF" }}
+                  className={`position-relative py-1 ${item.status === "Live" ? "events-page-status-tag-live" : item.status === "Coming Soon" ? "events-page-status-tag-upcoming" : "events-page-status-tag-expired"} px-2 d-flex align-items-center justify-content-center gap-0`}
+                  style={{ top: 0 }}
                 >
-                  Coming Soon
-                </span>
-              </div>
+                 {item.status === "Live" && 
+                  <div
+                  className="pulsatingDot"
+                  style={{
+                    width: 7,
+                    height: 7,
+                    marginRight: 5,
+                  }}
+                ></div>
+                 }
+
+                  <span>{item.status}</span>
+                </div>
             </div>
             <div className="d-flex align-items-center gap-2">
               <img src={calendar} alt="" />
-              <span className="campaign-item-date">February 27, 2024 - March 26, 2024</span>
+              <span className="campaign-item-date">{item.date}</span>
             </div>
             <hr className="campaign-banner-divider" />
 

@@ -111,7 +111,7 @@ const WodBuilders = () => {
       icon: "seiLogo",
       banner: "seiBanner.webp",
       link: "https://x.com/worldofdypians/status/1795177907821617607",
-    }, 
+    },
     {
       name: "Immutable",
       icon: "immutable",
@@ -148,7 +148,7 @@ const WodBuilders = () => {
       name: "GGPLAY",
       icon: "ggplay",
       banner: "kucoinBanner.png",
-      link:'https://x.com/GGPlayOfficial/status/1801263235221647731'
+      link: "https://x.com/GGPlayOfficial/status/1801263235221647731",
     },
     {
       name: "KAPGAMES",
@@ -160,7 +160,6 @@ const WodBuilders = () => {
       icon: "micro3",
       banner: "kucoinBanner.png",
     },
-  
   ];
 
   useEffect(() => {
@@ -170,42 +169,52 @@ const WodBuilders = () => {
   return (
     <div className="extra-margin">
       <div
-        className={`px-3 px-lg-5 d-flex flex-column justify-content-center align-items-center builders-bg mb-5 ${slice !== 8 && "builders-bg-large"}`}
+        className={`px-3 px-lg-5 d-flex flex-column justify-content-center align-items-center builders-bg mb-5 ${
+          slice !== 8 && "builders-bg-large"
+        }`}
         id="wodbuilders"
       >
         <div className="d-flex  justify-content-center align-items-center mb-4 gap-2">
           <h2 className="font-montserrat builders-title explorer-grid-title px-0">
-            <mark className="font-montserrat explore-tag pe-2">PIONEERS</mark>
-            SHAPING THE WORLD OF DYPIANS{" "}
+            PIONEERS SHAPING THE WORLD OF DYPIANS
           </h2>
         </div>
         <div className="custom-container">
-        <div className="wod-builders-grid">
-          {builders.slice(0, slice).map((item, index) => (
-            <a
-              href={item.link}
-              target="_blank"
-              key={index}
-              className="builder-item p-3 d-flex flex-column gap-2"
-            >
-              <img
-                src={require(`./assets/${item.banner}`)}
-                className="w-100 partner-banner"
-                alt=""
-              />
-              <div className="d-flex align-items-center gap-2">
-              {item.icon === "klapai" ?
-                <img src={require(`./assets/${item.icon}.png`)} width={24} height={24} alt="" />
-                :
-                <img src={require(`./assets/${item.icon}.svg`)} width={24} height={24} alt="" />
-              
-              }
+          <div className="wod-builders-grid">
+            {builders.slice(0, slice).map((item, index) => (
+              <a
+                href={item.link}
+                target="_blank"
+                key={index}
+                className="builder-item p-3 d-flex flex-column gap-2"
+              >
+                <img
+                  src={require(`./assets/${item.banner}`)}
+                  className="w-100 partner-banner"
+                  alt=""
+                />
+                <div className="d-flex align-items-center gap-2">
+                  {item.icon === "klapai" ? (
+                    <img
+                      src={require(`./assets/${item.icon}.png`)}
+                      width={24}
+                      height={24}
+                      alt=""
+                    />
+                  ) : (
+                    <img
+                      src={require(`./assets/${item.icon}.svg`)}
+                      width={24}
+                      height={24}
+                      alt=""
+                    />
+                  )}
 
-                <span className="builder-title mb-0">{item.name}</span>
-              </div>
-            </a>
-          ))}
-        </div>
+                  <span className="builder-title mb-0">{item.name}</span>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
         {windowSize.width < 786 ? (
           <div className="d-flex justify-content-center mt-3">
@@ -231,7 +240,6 @@ const WodBuilders = () => {
           </div>
         )}
       </div>
-      
     </div>
   );
 };
