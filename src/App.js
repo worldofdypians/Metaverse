@@ -392,6 +392,8 @@ function App() {
   const [landBought, setLandBought] = useState([]);
   const [myNftsOffer, setmyNftsOffer] = useState([]);
   const [success, setSuccess] = useState(false);
+  const [binanceData, setbinanceData] = useState();
+
   const [isPremium, setIsPremium] = useState(false);
   const [domainPopup, setDomainPopup] = useState(false);
   const [availableDomain, setAvailableDomain] = useState("initial");
@@ -1103,7 +1105,7 @@ function App() {
     if (
       window.ethereum &&
       !window.gatewallet &&
-      window.WALLET_TYPE !== "binance"
+      !binanceData
     ) {
       window.ethereum
         .request({ method: "net_version" })
@@ -1114,7 +1116,7 @@ function App() {
     } else if (
       window.ethereum &&
       window.gatewallet &&
-      window.WALLET_TYPE !== "binance"
+      !binanceData
     ) {
       await provider
         ?.detectNetwork()
@@ -1184,6 +1186,11 @@ function App() {
       window.getCoinbase();
     });
   };
+
+  const checkBinanceData = ()=>{
+    const data = JSON.parse(localStorage.getItem('connect-session'))
+    setbinanceData(data)
+  }
 
   const handleConnectPassport = async () => {
     const widgets = await checkoutSDK.widgets({
@@ -1965,7 +1972,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (account!==undefined && active!== false) {
+    if (binanceData && binanceData !== null) {
       setCoinbase(account);
       setIsConnected(active);
       setChainId(chainId);
@@ -3579,7 +3586,10 @@ function App() {
   useEffect(() => {
     fetchSocialData();
     getTotalSupply()
+    checkBinanceData()
   }, []);
+
+  console.log(binanceData, 'binancedata')
 
   return (
     <>
