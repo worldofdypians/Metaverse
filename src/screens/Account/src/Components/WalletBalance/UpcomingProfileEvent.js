@@ -74,6 +74,8 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
               ? data.backgroundImage
               : data.linkState == "core"
               ? data.backgroundImage
+              : data.linkState == "taiko"
+              ? data.backgroundImage
               : coingeckoProfileBanner
           }
           style={{ height: "50px", width: "25%" }}

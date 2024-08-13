@@ -84,7 +84,6 @@ import coreThumb from "../Account/src/Components/WalletBalance/assets/coreThumb.
 import mantaThumb from "../Account/src/Components/WalletBalance/assets/mantaThumb.png";
 import taikoThumb from "../Account/src/Components/WalletBalance/assets/taikoThumb.webp";
 
-
 import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.svg";
 import twitter from "./assets/greenTwitter.svg";
@@ -114,7 +113,7 @@ import seiBg from "./assets/seiBg.webp";
 import bnbPopupImage from "./assets/bnbPopupImage.png";
 import coreBg from "./assets/coreBg.webp";
 import taikoBg from "./assets/taikoBg.webp";
-import taikoMobileBg from './assets/taikoActive.png'
+import taikoMobileBg from "./assets/taikoActive.png";
 
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
@@ -352,60 +351,7 @@ const MarketEvents = ({
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
-    // {
-    //   title: "Manta",
-    //   logo: mantaLogo,
-    //   eventStatus: "Live",
-    //   totalRewards: "$20,000 in MANTA Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Mine",
-    //   eventDate: "Aug 01, 2024",
-    //   backgroundImage: mantaBg,
-    //   popupInfo: {
-    //     title: "Manta",
-    //     chain: "Manta",
-    //     linkState: "manta",
-    //     rewards: "MANTA",
-    //     status: "Live",
-    //     id: "event21",
-    //     eventType: "Explore & Mine",
-    //     totalRewards: "$20,000 in MANTA Rewards",
-    //     eventDuration: mantaLastDay,
-    //     minRewards: "0.5",
-    //     maxRewards: "20",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore: "",
-    //     eventDate: "Aug 01, 2024",
-    //   },
-    // },
-    // {
-    //   title: "Taiko",
-    //   logo: taikoLogo,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$20,000 in TAIKO Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Mine",
-    //   eventDate: "Aug 12, 2024",
-    //   backgroundImage: taikoBg,
-    //   popupInfo: {
-    //     title: "TAIKO",
-    //     chain: "Taiko",
-    //     linkState: "taiko",
-    //     rewards: "ETH",
-    //     status: "Coming Soon",
-    //     id: "event22",
-    //     eventType: "Explore & Mine",
-    //     totalRewards: "$20,000 in TAIKO Rewards",
-    //     eventDuration: taikoLastDay,
-    //     minRewards: "0.5",
-    //     maxRewards: "20",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore: "",
-    //     eventDate: "Aug 12, 2024",
-    //   },
-    // },
+
     {
       title: "CORE",
       logo: coreLogo,
@@ -460,34 +406,6 @@ const MarketEvents = ({
         eventDate: "Jul 01, 2024",
       },
     },
-    // {
-    //   title: "SEI",
-    //   logo: seiLogo,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$20,000 in SEI Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Find",
-    //   eventDate: "XXX XX, XXXX",
-    //   backgroundImage: seiBg,
-    //   popupInfo: {
-    //     title: "SEI",
-    //     chain: "SEI Chain",
-    //     linkState: "sei",
-    //     rewards: "SEI",
-    //     status: "Coming Soon",
-    //     id: "event13",
-    //     eventType: "Explore & Find",
-    //     totalRewards: "$20,000 in SEI Rewards",
-    //     eventDuration: dypius2LastDay,
-    //     minRewards: "1",
-    //     maxRewards: "100",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore:
-    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-    //     eventDate: "XXX XX, XXXX",
-    //   },
-    // },
 
     {
       title: "BNB Chain",
@@ -516,6 +434,115 @@ const MarketEvents = ({
         eventDate: "Jun 12, 2024",
       },
     },
+    {
+      title: "Manta",
+      logo: mantaLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in MANTA Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 20, 2024",
+      backgroundImage: mantaBg,
+      popupInfo: {
+        title: "Manta",
+        chain: "Manta",
+        linkState: "manta",
+        rewards: "MANTA",
+        status: "Coming Soon",
+        id: "event21",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in MANTA Rewards",
+        eventDuration: mantaLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 20, 2024",
+      },
+    },
+    {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in TAIKO Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 22, 2024",
+      backgroundImage: taikoBg,
+      popupInfo: {
+        title: "TAIKO",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Coming Soon",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 22, 2024",
+      },
+    },
+    {
+      title: "Immutable",
+      logo: immutableLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in IMX Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 15, 2024",
+      backgroundImage: immutableBg,
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable",
+        linkState: "immutable",
+        rewards: "IMX",
+        status: "Coming Soon",
+        id: "event15",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in IMX Rewards",
+        eventDuration: taikoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 15, 2024",
+      },
+    },
+    // {
+    //   title: "SEI",
+    //   logo: seiLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$20,000 in SEI Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "XXX XX, XXXX",
+    //   backgroundImage: seiBg,
+    //   popupInfo: {
+    //     title: "SEI",
+    //     chain: "SEI Chain",
+    //     linkState: "sei",
+    //     rewards: "SEI",
+    //     status: "Coming Soon",
+    //     id: "event13",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in SEI Rewards",
+    //     eventDuration: dypius2LastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //     eventDate: "XXX XX, XXXX",
+    //   },
+    // },
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -1519,7 +1546,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 6).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1600,7 +1627,7 @@ const MarketEvents = ({
               )}
               {activeTab === "upcoming" && (
                 <div className="d-flex flex-column gap-4">
-                  <div className="border-0 upcoming-mint-wrapper upcoming-taiko-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  {/* <div className="border-0 upcoming-mint-wrapper upcoming-taiko-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Taiko</h6>
                       <p className="upcoming-mint-desc">
@@ -1618,8 +1645,8 @@ const MarketEvents = ({
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div>
-                  <div className="border-0 upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  </div> */}
+                  {/* <div className="border-0 upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Manta</h6>
                       <p className="upcoming-mint-desc">
@@ -1637,8 +1664,8 @@ const MarketEvents = ({
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div>
-                  <div className="border-0 upcoming-mint-wrapper upcoming-immutable-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  </div> */}
+                  {/* <div className="border-0 upcoming-mint-wrapper upcoming-immutable-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Immutable</h6>
                       <p className="upcoming-mint-desc">
@@ -1656,7 +1683,7 @@ const MarketEvents = ({
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div>
+                  </div> */}
 
                   <div className="border-0 upcoming-mint-wrapper upcoming-skale-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
@@ -1766,7 +1793,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(3, dummyBetaPassData2.length)
+                    .slice(6, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
@@ -2167,14 +2194,14 @@ const MarketEvents = ({
                   ) : dummyEvent.id === "event22" ? (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
-                      <b>hold a TAIKO Beta Pass NFT</b>. You can get the
-                      TAIKO Beta Pass NFT from the World of Dypians
-                      Marketplace. By engaging in the game on a daily basis and
-                      exploring the TAIKO area, players not only stand a
-                      chance to secure daily rewards in TAIKO, but also earn
-                      points for their placement on the global leaderboard.
-                      Remember to log in to the game daily and venture into the
-                      TAIKO area to uncover hidden treasures.
+                      <b>hold a TAIKO Beta Pass NFT</b>. You can get the TAIKO
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      TAIKO area, players not only stand a chance to secure
+                      daily rewards in TAIKO, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the TAIKO area to uncover
+                      hidden treasures.
                     </p>
                   ) : (
                     <p className="popup-event-desc">
@@ -2822,8 +2849,8 @@ const MarketEvents = ({
               </span>
             </div>
             {dummyEvent.status === "Coming Soon" &&
-              dummyEvent.id !== "event7" &&
-              dummyEvent.id !== "event9" && (
+              dummyEvent.id !== "event15" &&
+              dummyEvent.id !== "event22" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
                   <NavLink
                     to={`/marketplace/beta-pass/${dummyEvent.linkState}`}
