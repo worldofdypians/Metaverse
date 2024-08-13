@@ -36,10 +36,12 @@ const TimepieceNFT = ({
   listedNFTS,
   coinbase,
   ethTokenData,
-  dypTokenData,dypTokenData_old,
+  dypTokenData,
+  dypTokenData_old,
   timepieceBought,
   handleRefreshListing,
   nftCount,
+  binanceW3WProvider,
 }) => {
   const override = {
     display: "block",
@@ -230,7 +232,7 @@ const TimepieceNFT = ({
   const [eyewear, setEyewear] = useState({ trait_type: "Eyewear", value: [] });
   const [watch, setWatch] = useState({ trait_type: "Watch", value: [] });
   const [count, setCount] = useState(0);
-  const [priceCount, setPriceCount] = useState(0)
+  const [priceCount, setPriceCount] = useState(0);
   const [displayFilters, setDisplayFilters] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState([
     background,
@@ -565,8 +567,6 @@ const TimepieceNFT = ({
     }
   };
 
-  
-
   const getListedTimepiece = async () => {
     const timepiece = await getTimepieceNfts().catch((e) => {
       console.error(e);
@@ -743,7 +743,8 @@ const TimepieceNFT = ({
     const wrappedElement = document.getElementById("header");
     if (wrappedElement) {
       const isBottom =
-      parseInt(wrappedElement.getBoundingClientRect()?.bottom) <= window.innerHeight;
+        parseInt(wrappedElement.getBoundingClientRect()?.bottom) <=
+        window.innerHeight;
       if (isBottom) {
         if (count === 0) {
           if (next < totalSupply) {
@@ -1037,6 +1038,7 @@ const TimepieceNFT = ({
                             isListed={nft.isListed}
                             soldPriceType={nft.soldPriceType}
                             handleRefreshListing={handleRefreshListing}
+                            binanceW3WProvider={binanceW3WProvider}
                           />
                         </NavLink>
                       ))}
@@ -1221,6 +1223,7 @@ const TimepieceNFT = ({
                             isLatestSale={nft.isLatestSale}
                             isListed={nft.isListed}
                             soldPriceType={nft.soldPriceType}
+                            binanceW3WProvider={binanceW3WProvider}
                           />
                         </NavLink>
                       );
@@ -1274,6 +1277,7 @@ const TimepieceNFT = ({
                               isLatestSale={nft.isLatestSale}
                               isListed={nft.isListed}
                               soldPriceType={nft.soldPriceType}
+                              binanceW3WProvider={binanceW3WProvider}
                             />
                           </NavLink>
                         ))}

@@ -235,7 +235,7 @@ window.config = {
     "0xb73603C5d87fA094B7314C74ACE2e64D165016fb": {
       symbol: "USDC",
       decimals: 6,
-    }, 
+    },
     "0x0Dc808adcE2099A9F62AA87D9670745AbA741746": {
       symbol: "WETH",
       decimals: 18,
@@ -304,24 +304,24 @@ window.seiWeb3 = new Web3(window.config.sei_endpoint);
  * @param {"TOKEN" | "STAKING" | "NFTSTAKING" | "NFTSTAKING50" } key
  */
 async function getContractNFT(key) {
-  if (window.WALLET_TYPE !== "binance") {
-    let ABI = window[key + "_ABI"];
-    let address = window.config[key.toLowerCase() + "_address"];
-    if (!window.cached_contracts[key]) {
-      window.web3 = new Web3(window.ethereum);
-      window.cached_contracts[key] = new window.web3.eth.Contract(
-        key === "NFTSTAKING50" ? window.NFTSTAKING_ABI : ABI,
-        key === "NFTSTAKING" || key === "NFTSTAKING50"
-          ? "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A"
-          : address,
-        {
-          from: await getCoinbase(),
-        }
-      );
-    }
-
-    return window.cached_contracts[key];
+  let ABI = window[key + "_ABI"];
+  let address = window.config[key.toLowerCase() + "_address"];
+  if (!window.cached_contracts[key]) {
+    window.web3 = new Web3(window.ethereum);
+    window.cached_contracts[key] = new window.web3.eth.Contract(
+      key === "NFTSTAKING50" || key === "NFTSTAKING"
+        ? window.NFTSTAKING_ABI
+        : ABI,
+      key === "NFTSTAKING" || key === "NFTSTAKING50"
+        ? "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A"
+        : address,
+      {
+        from: await getCoinbase(),
+      }
+    );
   }
+
+  return window.cached_contracts[key];
 }
 
 class NFT {
@@ -337,12 +337,12 @@ class NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-         
-        let contract =  new window.infuraWeb3.eth.Contract(
-          this.key === "NFTSTAKING50" ? window.NFTSTAKING_ABI : window[this.key + "_ABI"],
+        let contract = new window.infuraWeb3.eth.Contract(
+          this.key === "NFTSTAKING50" ? window.NFTSTAKING_ABI : window.CAWS_ABI,
+
           this.key === "NFTSTAKING" || this.key === "NFTSTAKING50"
-            ? "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A"
-            : window.config[this.key.toLowerCase() + "_address"],
+            ? window.config.nftstaking_address
+            : window.config.nft_caws_address,
           {
             from: await getCoinbase(),
           }
@@ -399,7 +399,7 @@ class NFT {
   }
 
   async checkapproveStake(useraddr, addr) {
-    let nft_contract =  new window.infuraWeb3.eth.Contract(
+    let nft_contract = new window.infuraWeb3.eth.Contract(
       window.CAWS_ABI,
       window.config.nft_caws_address
     );
@@ -412,13 +412,20 @@ class NFT {
   }
 
   async checkLockoutTime() {
-    let nft_contract = await getContractNFT("NFTSTAKING");
+    let nft_contract = new window.infuraWeb3.eth.Contract(
+      window.NFTSTAKING_ABI,
+      window.config.nftstaking_address
+    );
+
     const time = await nft_contract.methods.LOCKUP_TIME().call();
     return time;
   }
 
   async checkLockoutTime50() {
-    let nft_contract = await getContractNFT("NFTSTAKING50");
+    let nft_contract = new window.infuraWeb3.eth.Contract(
+      window.NFTSTAKING_ABI,
+      window.config.nftstaking_address
+    );
     const time = await nft_contract.methods.LOCKUP_TIME().call();
     return time;
   }
@@ -459,7 +466,7 @@ class CAWSPREMIUM {
       "stakingTime",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        let  contract = await new window.infuraWeb3.eth.Contract(
+        let contract = await new window.infuraWeb3.eth.Contract(
           window.CAWSPREMIUM_ABI,
           window.config.nft_caws_premiumstake_address
         );
@@ -474,8 +481,7 @@ class CAWSPREMIUM {
   }
 
   async checkapproveStakeCawsPremium(useraddr, addr) {
-    
-    let  nft_contract = await new window.infuraWeb3.eth.Contract(
+    let nft_contract = await new window.infuraWeb3.eth.Contract(
       window.CAWSPREMIUM_ABI,
       window.config.nft_caws_premiumstake_address
     );
@@ -488,8 +494,7 @@ class CAWSPREMIUM {
   }
 
   async checkLockoutTimeCawsPremium() {
-    
-    let  nft_contract = await new window.infuraWeb3.eth.Contract(
+    let nft_contract = await new window.infuraWeb3.eth.Contract(
       window.CAWSPREMIUM_ABI,
       window.config.nft_caws_premiumstake_address
     );
@@ -542,19 +547,19 @@ class LANDNFT {
       "ownerOf",
       "totalSupply",
     ].forEach((fn_name) => {
-      this[fn_name] = async function (...args) { 
-        let  contract = await new window.infuraWeb3.eth.Contract(
+      this[fn_name] = async function (...args) {
+        let contract = await new window.infuraWeb3.eth.Contract(
           key === "LANDNFTSTAKE"
-        ? window.LANDMINTING_ABI
-        : key === "LANDNFTSTAKING"
-        ? window.LANDSTAKING_ABI
-        : ABI,
+            ? window.LANDMINTING_ABI
+            : key === "LANDNFTSTAKING"
+            ? window.LANDSTAKING_ABI
+            : ABI,
 
-      key === "LANDNFTSTAKE"
-        ? window.config.nft_land_address
-        : key === "LANDNFTSTAKING"
-        ? window.config.landnftstake_address
-        : address,
+          key === "LANDNFTSTAKE"
+            ? window.config.nft_land_address
+            : key === "LANDNFTSTAKING"
+            ? window.config.landnftstake_address
+            : address
         );
         return await contract.methods[fn_name](...args).call();
       };
@@ -646,8 +651,10 @@ class LANDNFT {
   }
 
   async checkapproveStake(useraddr, addr) {
-   
-    let nft_contract = await new window.infuraWeb3.eth.Contract( window.LANDMINTING_ABI ,window.config.nft_land_address);
+    let nft_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDMINTING_ABI,
+      window.config.nft_land_address
+    );
 
     return await nft_contract.methods.isApprovedForAll(useraddr, addr).call();
   }
@@ -658,8 +665,9 @@ class LANDNFT {
   }
 
   async checkLockoutTime() {
-    let nft_contract = await new window.infuraWeb3.eth.Contract( window.LANDSTAKING_ABI ,windnow.config.landnftstake_address
-    
+    let nft_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDSTAKING_ABI,
+      windnow.config.landnftstake_address
     );
 
     const time = await nft_contract.methods.LOCKUP_TIME().call();
@@ -708,13 +716,14 @@ class WOD_CAWS {
       "stakingTime",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        
-        let contract = new window.infuraWeb3.eth.Contract(  window.WOD_CAWS_ABI,
+        let contract = new window.infuraWeb3.eth.Contract(
+          window.WOD_CAWS_ABI,
           window.config.wod_caws_address,
           {
             from: await getCoinbase(),
-          });
-    
+          }
+        );
+
         return await contract.methods[fn_name](...args).call();
       };
     });
@@ -779,62 +788,73 @@ class WOD_CAWS {
   }
 
   async calculateRewardWodCaws(address, tokenId) {
- 
-    let nft_contract = new window.infuraWeb3.eth.Contract(  window.WOD_CAWS_ABI,
+    let nft_contract = new window.infuraWeb3.eth.Contract(
+      window.WOD_CAWS_ABI,
       window.config.wod_caws_address,
       {
         from: await getCoinbase(),
-      });
+      }
+    );
 
     return await nft_contract.methods.calculateReward(address, tokenId).call();
   }
 
   async calculateRewardsWodCaws(address, tokenArray) {
-    let nft_contract = new window.infuraWeb3.eth.Contract(  window.WOD_CAWS_ABI,
+    let nft_contract = new window.infuraWeb3.eth.Contract(
+      window.WOD_CAWS_ABI,
       window.config.wod_caws_address,
       {
         from: await getCoinbase(),
-      });
+      }
+    );
     return await nft_contract.methods
       .calculateRewards(address, tokenArray)
       .call();
   }
 
   async depositsOfCaws(address) {
-    let nft_contract = new window.infuraWeb3.eth.Contract(  window.WOD_CAWS_ABI,
+    let nft_contract = new window.infuraWeb3.eth.Contract(
+      window.WOD_CAWS_ABI,
       window.config.wod_caws_address,
       {
         from: await getCoinbase(),
-      });
+      }
+    );
     return await nft_contract.methods.depositsOf(address).call();
   }
 
   async depositsOfWod(address) {
-    let nft_contract = new window.infuraWeb3.eth.Contract(  window.WOD_CAWS_ABI,
+    let nft_contract = new window.infuraWeb3.eth.Contract(
+      window.WOD_CAWS_ABI,
       window.config.wod_caws_address,
       {
         from: await getCoinbase(),
-      });
+      }
+    );
     return await nft_contract.methods.depositsOfWoD(address).call();
   }
 
   async checkLockupTimeWodCaws() {
-    let nft_contract = new window.infuraWeb3.eth.Contract(  window.WOD_CAWS_ABI,
+    let nft_contract = new window.infuraWeb3.eth.Contract(
+      window.WOD_CAWS_ABI,
       window.config.wod_caws_address,
       {
         from: await getCoinbase(),
-      });
+      }
+    );
     const time = await nft_contract.methods.LOCKUP_TIME().call();
 
     return time;
   }
 
   async checkStakingTimeWodCaws(address) {
-    let nft_contract = new window.infuraWeb3.eth.Contract(  window.WOD_CAWS_ABI,
+    let nft_contract = new window.infuraWeb3.eth.Contract(
+      window.WOD_CAWS_ABI,
       window.config.wod_caws_address,
       {
         from: await getCoinbase(),
-      });
+      }
+    );
     const stakingTime = await nft_contract.methods.stakingTime(address).call();
 
     return stakingTime;
@@ -884,12 +904,13 @@ class CAWS_TIMEPIECE {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        
-        let contract = new window.infuraWeb3.eth.Contract(  window.CAWS_TIMEPIECE_ABI,
+        let contract = new window.infuraWeb3.eth.Contract(
+          window.CAWS_TIMEPIECE_ABI,
           window.config.caws_timepiece_address,
           {
             from: await getCoinbase(),
-          });
+          }
+        );
 
         return await contract.methods[fn_name](...args).call();
       };
@@ -913,18 +934,18 @@ class CAWS_TIMEPIECE {
   }
 
   async calculateTimepieceBalance(address) {
-  
-    let nft_contract = new window.infuraWeb3.eth.Contract(  window.CAWS_TIMEPIECE_ABI,
+    let nft_contract = new window.infuraWeb3.eth.Contract(
+      window.CAWS_TIMEPIECE_ABI,
       window.config.caws_timepiece_address,
       {
         from: await getCoinbase(),
-      });
+      }
+    );
 
     return await nft_contract.methods.balanceOf(address).call();
   }
 
   async getTimepieceLatestMint() {
-    
     let nft_contract = new window.infuraWeb3.eth.Contract(
       window.CAWS_TIMEPIECE_ABI,
       window.config.caws_timepiece_address,
@@ -936,7 +957,6 @@ class CAWS_TIMEPIECE {
   }
 
   async getCawsUsedinTimepiece(address) {
-   
     let nft_contract = new window.infuraWeb3.eth.Contract(
       window.CAWS_TIMEPIECE_ABI,
       window.config.caws_timepiece_address,
@@ -949,7 +969,6 @@ class CAWS_TIMEPIECE {
   }
 
   async getCawsTimepieceURI(tokenId) {
-     
     let nft_contract = new window.infuraWeb3.eth.Contract(
       window.CAWS_TIMEPIECE_ABI,
       window.config.caws_timepiece_address,
@@ -1028,14 +1047,14 @@ class COINGECKO_NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        
-        let contract = new window.bscWeb3.eth.Contract( window.COINGECKO_NFT_ABI,
+        let contract = new window.bscWeb3.eth.Contract(
+          window.COINGECKO_NFT_ABI,
           window.config.nft_coingecko_address,
           {
             from: await getCoinbase(),
-          });
+          }
+        );
 
-          
         return await contract.methods[fn_name](...args).call();
       };
     });
@@ -1103,14 +1122,14 @@ class BASE_NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        let contract = new window.baseWeb3.eth.Contract( window.BASE_NFT_ABI,
+        let contract = new window.baseWeb3.eth.Contract(
+          window.BASE_NFT_ABI,
           window.config.nft_base_address,
           {
             from: await getCoinbase(),
-          });
+          }
+        );
 
-
-        
         return await contract.methods[fn_name](...args).call();
       };
     });
@@ -1204,12 +1223,13 @@ class SKALE_NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-    
-        let contract = new window.skaleWeb3.eth.Contract(   window.SKALE_NFT_ABI,
+        let contract = new window.skaleWeb3.eth.Contract(
+          window.SKALE_NFT_ABI,
           window.config.nft_skale_address,
           {
             from: await getCoinbase(),
-          });
+          }
+        );
         return await contract.methods[fn_name](...args).call();
       };
     });
@@ -1301,12 +1321,13 @@ class CORE_NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-       
-        let contract = new window.coreWeb3.eth.Contract(    window.CORE_NFT_ABI,
+        let contract = new window.coreWeb3.eth.Contract(
+          window.CORE_NFT_ABI,
           window.config.nft_core_address,
           {
             from: await getCoinbase(),
-          });
+          }
+        );
 
         return await contract.methods[fn_name](...args).call();
       };
@@ -1398,14 +1419,14 @@ class BNB_NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        let contract = new window.bscWeb3.eth.Contract( 
+        let contract = new window.bscWeb3.eth.Contract(
           window.BNB_NFT_ABI,
           window.config.nft_bnb_address,
           {
             from: await getCoinbase(),
-          });
+          }
+        );
 
-       
         return await contract.methods[fn_name](...args).call();
       };
     });
@@ -1492,13 +1513,13 @@ class OPBNB_NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        
-        let contract = new window.opBnbWeb3.eth.Contract( 
+        let contract = new window.opBnbWeb3.eth.Contract(
           window.OPBNB_NFT_ABI,
-      window.config.nft_opbnb_address,
+          window.config.nft_opbnb_address,
           {
             from: await getCoinbase(),
-          });
+          }
+        );
 
         return await contract.methods[fn_name](...args).call();
       };
@@ -1591,13 +1612,13 @@ class VICTION_NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        
-        let contract = new window.victionWeb3.eth.Contract( 
+        let contract = new window.victionWeb3.eth.Contract(
           window.VICTION_NFT_ABI,
-      window.config.nft_viction_address,
+          window.config.nft_viction_address,
           {
             from: await getCoinbase(),
-          });
+          }
+        );
         return await contract.methods[fn_name](...args).call();
       };
     });
@@ -1684,13 +1705,13 @@ class MANTA_NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        
-        let contract = new window.mantaWeb3.eth.Contract( 
+        let contract = new window.mantaWeb3.eth.Contract(
           window.MANTA_NFT_ABI,
           window.config.nft_manta_address,
           {
             from: await getCoinbase(),
-          });
+          }
+        );
         return await contract.methods[fn_name](...args).call();
       };
     });
@@ -1781,14 +1802,13 @@ class IMMUTABLE_NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        
-            
-        let contract = new window.immutableWeb3.eth.Contract( 
+        let contract = new window.immutableWeb3.eth.Contract(
           window.IMMUTABLE_NFT_ABI,
-      window.config.nft_immutable_address,
+          window.config.nft_immutable_address,
           {
             from: await getCoinbase(),
-          });
+          }
+        );
         return await contract.methods[fn_name](...args).call();
       };
     });
@@ -1882,13 +1902,13 @@ class GATE_NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        
-        let contract = new window.bscWeb3.eth.Contract( 
+        let contract = new window.bscWeb3.eth.Contract(
           window.GATE_NFT_ABI,
           window.config.nft_gate_address,
           {
             from: await getCoinbase(),
-          });
+          }
+        );
         return await contract.methods[fn_name](...args).call();
       };
     });
@@ -1903,13 +1923,13 @@ class GATE_NFT {
     // });
   }
   async getGateLatestMint() {
-    
-    let nft_contract = new window.bscWeb3.eth.Contract( 
+    let nft_contract = new window.bscWeb3.eth.Contract(
       window.GATE_NFT_ABI,
       window.config.nft_gate_address,
       {
         from: await getCoinbase(),
-      });
+      }
+    );
     return await nft_contract.methods.totalSupply().call();
   }
 }
@@ -1962,14 +1982,13 @@ class CONFLUX_NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        
-
-        let contract = new window.confluxWeb3.eth.Contract( 
+        let contract = new window.confluxWeb3.eth.Contract(
           window.CONFLUX_NFT_ABI,
-      window.config.nft_conflux_address,
+          window.config.nft_conflux_address,
           {
             from: await getCoinbase(),
-          });
+          }
+        );
         return await contract.methods[fn_name](...args).call();
       };
     });
@@ -1984,13 +2003,13 @@ class CONFLUX_NFT {
     });
   }
   async getConfluxLatestMint() {
- 
-    let nft_contract = new window.confluxWeb3.eth.Contract( 
+    let nft_contract = new window.confluxWeb3.eth.Contract(
       window.CONFLUX_NFT_ABI,
-  window.config.nft_conflux_address,
+      window.config.nft_conflux_address,
       {
         from: await getCoinbase(),
-      });
+      }
+    );
     return await nft_contract.methods.totalSupply().call();
   }
   async mintConfluxNFT() {
@@ -2051,7 +2070,7 @@ window.buyNFT = async (
   const transactionParameters = {
     gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
   };
-  console.log( getCoinbase() )
+  console.log(getCoinbase());
 
   await marketplace.methods
     .buyItem(nft_address, tokenId, [priceType, priceAddress])
@@ -2095,7 +2114,7 @@ window.buyNFT2 = async (
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
   );
-console.log(marketplace)
+  console.log(marketplace);
   const gasPrice = await window.web3.eth.getGasPrice();
   console.log("gasPrice", gasPrice);
   const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
@@ -3088,11 +3107,13 @@ async function getMyNFTs(address, type = "") {
 }
 
 async function myNftListContract(address) {
-  
-  let nft_contract = new window.infuraWeb3.eth.Contract(window.CAWS_ABI, window.config.nft_caws_address,
+  let nft_contract = new window.infuraWeb3.eth.Contract(
+    window.CAWS_ABI,
+    window.config.nft_caws_address,
     {
       from: await getCoinbase(),
-    });
+    }
+  );
 
   let getBalanceOf = await nft_contract.methods.balanceOf(address).call();
 
@@ -3144,12 +3165,14 @@ async function myNftListContractCCIPBase(address, nftAddress) {
   return nftList;
 }
 
-async function myNftLandListContract(address) { 
-  let nft_contract = new window.infuraWeb3.eth.Contract(window.LANDMINTING_ABI, window.config.landnft_address,
+async function myNftLandListContract(address) {
+  let nft_contract = new window.infuraWeb3.eth.Contract(
+    window.LANDMINTING_ABI,
+    window.config.landnft_address,
     {
       from: await getCoinbase(),
-    });
-    
+    }
+  );
 
   let getBalanceOf = await nft_contract.methods.balanceOf(address).call();
 
@@ -23920,7 +23943,11 @@ async function connectWallet() {
 window.cached_contracts = Object.create(null);
 
 async function getCoinbase() {
-  if (window.ethereum && window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "") {
+  if (
+    window.ethereum &&
+    window.WALLET_TYPE !== "binance" &&
+    window.WALLET_TYPE !== ""
+  ) {
     if (window.WALLET_TYPE == "coin98") {
       return window.coinbase_address.toLowerCase();
     } else if (window.gatewallet) {
@@ -23947,8 +23974,8 @@ async function getCoinbase() {
         return window.coinbase_address.toLowerCase();
       }
     }
-  }  else if( window.WALLET_TYPE === "binance") {
-    return window.coinbase_address
+  } else if (window.WALLET_TYPE === "binance") {
+    return window.coinbase_address;
   }
 }
 
@@ -24050,9 +24077,11 @@ async function unsubscribe() {
     .send({ from: await getCoinbase() });
 }
 
-async function getEstimatedTokenSubscriptionAmount(tokenAddress) { 
-  let subscriptionContract = new window.avaxWeb3.eth.Contract( window.SUBSCRIPTION_NEWAVAX_ABI,
-    window.config.subscription_newavax_address)
+async function getEstimatedTokenSubscriptionAmount(tokenAddress) {
+  let subscriptionContract = new window.avaxWeb3.eth.Contract(
+    window.SUBSCRIPTION_NEWAVAX_ABI,
+    window.config.subscription_newavax_address
+  );
 
   if (subscriptionContract) {
     return await subscriptionContract.methods
@@ -24062,9 +24091,10 @@ async function getEstimatedTokenSubscriptionAmount(tokenAddress) {
 }
 
 async function getEstimatedTokenSubscriptionAmountETH(tokenAddress) {
-  
-  let subscriptionContract = new window.infuraWeb3.eth.Contract( window.SUBSCRIPTION_NEWETH_ABI,
-    window.config.subscription_neweth_address)
+  let subscriptionContract = new window.infuraWeb3.eth.Contract(
+    window.SUBSCRIPTION_NEWETH_ABI,
+    window.config.subscription_neweth_address
+  );
   if (subscriptionContract) {
     return await subscriptionContract.methods
       .getEstimatedTokenSubscriptionAmount(tokenAddress)
@@ -24074,7 +24104,7 @@ async function getEstimatedTokenSubscriptionAmountETH(tokenAddress) {
 
 async function getEstimatedTokenSubscriptionAmountBNB(tokenAddress) {
   let subscriptionContract = await getContract({ key: "SUBSCRIPTION_NEWBNB" });
-  
+
   if (subscriptionContract) {
     return await subscriptionContract.methods
       .getEstimatedTokenSubscriptionAmount(tokenAddress)
@@ -24085,25 +24115,28 @@ async function getEstimatedTokenSubscriptionAmountBNB(tokenAddress) {
 async function getEstimatedTokenSubscriptionAmountBNB2(
   tokenAddress,
   discountPercentage
-) { 
-  let subscriptionContract = new window.bscWeb3.eth.Contract( window.SUBSCRIPTION_NEWBNB2_ABI,
-    window.config.subscription_newbnb2_address)
+) {
+  let subscriptionContract = new window.bscWeb3.eth.Contract(
+    window.SUBSCRIPTION_NEWBNB2_ABI,
+    window.config.subscription_newbnb2_address
+  );
 
   if (subscriptionContract) {
-  return await subscriptionContract.methods
-    .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
-    .call();
+    return await subscriptionContract.methods
+      .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
+      .call();
   }
 }
 
 async function getEstimatedTokenSubscriptionAmountCFX(tokenAddress) {
- 
-  let subscriptionContract = new window.confluxWeb3.eth.Contract( window.SUBSCRIPTION_CFX_ABI,
-    window.config.subscription_cfx_address)
+  let subscriptionContract = new window.confluxWeb3.eth.Contract(
+    window.SUBSCRIPTION_CFX_ABI,
+    window.config.subscription_cfx_address
+  );
   if (subscriptionContract) {
-  return await subscriptionContract.methods
-    .getEstimatedTokenSubscriptionAmount(tokenAddress)
-    .call();
+    return await subscriptionContract.methods
+      .getEstimatedTokenSubscriptionAmount(tokenAddress)
+      .call();
   }
 }
 
@@ -24113,9 +24146,9 @@ async function getEstimatedTokenSubscriptionAmountBase(tokenAddress) {
     window.config.subscription_base_address
   );
   if (baseContract) {
-  return await baseContract.methods
-    .getEstimatedTokenSubscriptionAmount(tokenAddress)
-    .call();
+    return await baseContract.methods
+      .getEstimatedTokenSubscriptionAmount(tokenAddress)
+      .call();
   }
 }
 
@@ -24125,9 +24158,9 @@ async function getEstimatedTokenSubscriptionAmountSkale(tokenAddress) {
     window.config.subscription_skale_address
   );
   if (skaleContract) {
-  return await skaleContract.methods
-    .getEstimatedTokenSubscriptionAmount(tokenAddress)
-    .call();
+    return await skaleContract.methods
+      .getEstimatedTokenSubscriptionAmount(tokenAddress)
+      .call();
   }
 }
 
@@ -24137,9 +24170,9 @@ async function getEstimatedTokenSubscriptionAmountSei(tokenAddress) {
     window.config.subscription_sei_address
   );
   if (seiContract) {
-  return await seiContract.methods
-    .getEstimatedTokenSubscriptionAmount(tokenAddress)
-    .call();
+    return await seiContract.methods
+      .getEstimatedTokenSubscriptionAmount(tokenAddress)
+      .call();
   }
 }
 
@@ -24149,9 +24182,9 @@ async function getEstimatedTokenSubscriptionAmountViction(tokenAddress) {
     window.config.subscription_viction_address
   );
   if (vicitonContract) {
-  return await vicitonContract.methods
-    .getEstimatedTokenSubscriptionAmount(tokenAddress)
-    .call();
+    return await vicitonContract.methods
+      .getEstimatedTokenSubscriptionAmount(tokenAddress)
+      .call();
   }
 }
 
@@ -24172,9 +24205,9 @@ async function getEstimatedTokenSubscriptionAmountCore(tokenAddress) {
   );
 
   if (coreContract) {
-  return await coreContract.methods
-    .getEstimatedTokenSubscriptionAmount(tokenAddress)
-    .call();
+    return await coreContract.methods
+      .getEstimatedTokenSubscriptionAmount(tokenAddress)
+      .call();
   }
 }
 

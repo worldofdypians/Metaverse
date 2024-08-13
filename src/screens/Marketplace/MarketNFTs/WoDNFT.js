@@ -33,10 +33,12 @@ const WoDNFT = ({
   listedNFTS,
   coinbase,
   ethTokenData,
-  dypTokenData,dypTokenData_old,
+  dypTokenData,
+  dypTokenData_old,
   wodBought,
   handleRefreshListing,
   nftCount,
+  binanceW3WProvider,
 }) => {
   const override = {
     display: "block",
@@ -789,7 +791,7 @@ const WoDNFT = ({
       fetchInitialWod();
     }
   }, [allwodNfts.length, finalData.length, wodBought]);
- 
+
   useEffect(() => {
     getWodCollection();
     // fetchFilters();
@@ -1013,6 +1015,7 @@ const WoDNFT = ({
                             isListed={nft.isListed}
                             soldPriceType={nft.soldPriceType}
                             handleRefreshListing={handleRefreshListing}
+                            binanceW3WProvider={binanceW3WProvider}
                           />
                         </NavLink>
                       ))}
@@ -1195,6 +1198,7 @@ const WoDNFT = ({
                             isLatestSale={nft.isLatestSale}
                             isListed={nft.isListed}
                             soldPriceType={nft.soldPriceType}
+                            binanceW3WProvider={binanceW3WProvider}
                           />
                         </NavLink>
                       );
@@ -1248,6 +1252,7 @@ const WoDNFT = ({
                               isLatestSale={nft.isLatestSale}
                               isListed={nft.isListed}
                               soldPriceType={nft.soldPriceType}
+                              binanceW3WProvider={binanceW3WProvider}
                             />
                           </NavLink>
                         ))}
