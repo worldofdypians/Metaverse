@@ -1101,16 +1101,22 @@ function App() {
   };
 
   const checkNetworkId = async () => {
-    if (window.ethereum && !window.gatewallet &&
-      window.WALLET_TYPE !=='binance') {
+    if (
+      window.ethereum &&
+      !window.gatewallet &&
+      window.WALLET_TYPE !== "binance"
+    ) {
       window.ethereum
         .request({ method: "net_version" })
         .then((data) => {
           setChainId(parseInt(data));
         })
         .catch(console.error);
-    } else if (window.ethereum && window.gatewallet &&
-      window.WALLET_TYPE !=='binance') {
+    } else if (
+      window.ethereum &&
+      window.gatewallet &&
+      window.WALLET_TYPE !== "binance"
+    ) {
       await provider
         ?.detectNetwork()
         .then((data) => {
@@ -1119,8 +1125,8 @@ function App() {
         .catch((e) => {
           console.log(e);
         });
-    } else if ( 
-      account ||
+    } else if (
+      window.WALLET_TYPE === "binance" ||
       (binanceData !== undefined && binanceData !== null)
     ) {
       if (binanceData !== undefined && binanceData !== null) {
@@ -1184,18 +1190,16 @@ function App() {
       setwalletModal(false);
       window.WALLET_TYPE = "binance";
       window.getCoinbase();
+      checkBinanceData();
     });
   };
 
-  const checkBinanceData = async() => {
+  const checkBinanceData = async () => {
     const data = JSON.parse(localStorage.getItem("connect-session"));
-    if(data != null) {
-      console.log('data',data)
-      await activate(binanceConnector)
-    }
+
     setbinanceData(data);
   };
-  
+
   const handleConnectPassport = async () => {
     const widgets = await checkoutSDK.widgets({
       config: { theme: checkout.WidgetTheme.DARK },
@@ -1986,13 +1990,14 @@ function App() {
       setChainId(parseInt(binanceData.chainId));
       window.coinbase_address = binanceData.accounts[0];
       window.WALLET_TYPE = "binance";
-      console.log("in");
     } else if (
       window.WALLET_TYPE === "binance" ||
       account ||
       (binanceData != null && binanceData !== undefined)
     ) {
       if (binanceData != null && binanceData !== undefined) {
+        activate(binanceConnector);
+
         setCoinbase(binanceData.accounts[0]);
         setIsConnected(binanceData.connected);
         setChainId(parseInt(binanceData.chainId));
@@ -2004,12 +2009,8 @@ function App() {
         setIsConnected(true);
         setChainId(chainId);
       }
-    } 
+    }
   }, [binanceData]);
-  
-  // useEffect(()=>{
-  //   handleConnectBinance()
-  // },[])
 
   useEffect(() => {
     if (
@@ -2965,7 +2966,7 @@ function App() {
       window.ethereum &&
       window.ethereum.isConnected() === true &&
       !window.gatewallet &&
-      window.WALLET_TYPE !=='binance'
+      window.WALLET_TYPE !== "binance"
     ) {
       window.WALLET_TYPE = "metamask";
       if (
@@ -2983,18 +2984,20 @@ function App() {
         window.coinbase_address ===
           "0x0000000000000000000000000000000000000000" ||
         window.coin98) &&
-      
-      window.WALLET_TYPE !=='binance'
+      window.WALLET_TYPE !== "binance"
     ) {
       checkConnection2();
-    } else if (window.gatewallet && isActive &&
-      window.WALLET_TYPE !=='binance') {
+    } else if (
+      window.gatewallet &&
+      isActive &&
+      window.WALLET_TYPE !== "binance"
+    ) {
       setIsConnected(isActive);
       if (account) {
         fetchAvatar(account);
         setCoinbase(account);
       }
-    } else {
+    } else if (window.WALLET_TYPE !== "binance") {
       setIsConnected(false);
       setCoinbase();
       localStorage.setItem("logout", "true");
@@ -3252,9 +3255,9 @@ function App() {
   };
 
   const handleSwitchNetwork = async (chain) => {
-    if (!window.gatewallet && window.WALLET_TYPE !=='binance') {
+    if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
       setChainId(chain);
-    } else if (window.gatewallet) {
+    } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
       // const params = CHAINLIST[Number(chain)];
       // connector?.activate(params);
       setChainId(chain);
@@ -3298,7 +3301,7 @@ function App() {
         // handle other "switch" errors
       }
       // window.location.reload();
-    } else if (window.WALLET_TYPE ==='binance') {
+    } else if (window.WALLET_TYPE === "binance") {
       try {
         await binanceConnector.binanceW3WProvider
           .request({
@@ -3334,6 +3337,7 @@ function App() {
           })
           .then(() => {
             setChainId(chain);
+            checkBinanceData();
           })
           .catch((e) => {
             console.error(e);

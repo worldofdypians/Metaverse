@@ -728,7 +728,9 @@ const NewDailyBonus = ({
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
     } else {
-      window.alertify.error("This network is not available on Binance Web3 Wallet");
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
     }
   };
 
@@ -748,7 +750,9 @@ const NewDailyBonus = ({
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
     } else {
-      window.alertify.error("This network is not available on Binance Web3 Wallet");
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
     }
   };
   const handleVictionPool = async () => {
@@ -767,7 +771,9 @@ const NewDailyBonus = ({
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
     } else {
-      window.alertify.error("This network is not available on Binance Web3 Wallet");
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
     }
   };
 
@@ -1833,190 +1839,202 @@ const NewDailyBonus = ({
         setDisable(true);
       }
     } else if (chain === "skale") {
-      if (email && coinbase && address) {
-        if (coinbase.toLowerCase() === address.toLowerCase()) {
-          if (isPremium) {
-            if (
-              claimedSkaleChests + claimedSkalePremiumChests === 20 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase()
-            ) {
-              setMessage("complete");
-            } else if (
-              claimedSkaleChests + claimedSkalePremiumChests < 20 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 1482601649
-            ) {
-              setMessage("");
-              setDisable(false);
-            } else if (
-              claimedSkaleChests + claimedSkalePremiumChests < 20 &&
-              // rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 1482601649
-            ) {
-              setMessage("switch");
-              setDisable(true);
+      if (window.WALLET_TYPE !== "binance") {
+        if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedSkaleChests + claimedSkalePremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedSkaleChests + claimedSkalePremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 1482601649
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedSkaleChests + claimedSkalePremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 1482601649
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedSkaleChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 1482601649
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedSkaleChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 1482601649
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedSkaleChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 1482601649
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
             }
-          } else if (!isPremium) {
-            if (
-              claimedSkaleChests === 10 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 1482601649
-            ) {
-              setMessage("premium");
-              setDisable(true);
-            } else if (
-              claimedSkaleChests < 10 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 1482601649
-            ) {
-              setMessage("");
-              setDisable(false);
-            } else if (
-              claimedSkaleChests < 10 &&
-              // rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 1482601649
-            ) {
-              setMessage("switch");
-              setDisable(true);
-            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
           }
         } else {
-          setMessage("switchAccount");
+          setMessage("login");
           setDisable(true);
         }
-      } else {
-        setMessage("login");
-        setDisable(true);
+      } else if (window.WALLET_TYPE === "binance") {
+        setMessage("notsupported");
       }
     } else if (chain === "core") {
-      if (email && coinbase && address) {
-        if (coinbase.toLowerCase() === address.toLowerCase()) {
-          if (isPremium) {
-            if (
-              claimedCoreChests + claimedCorePremiumChests === 20 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase()
-            ) {
-              setMessage("complete");
-            } else if (
-              claimedCoreChests + claimedCorePremiumChests < 20 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 1116
-            ) {
-              setMessage("");
-              setDisable(false);
-            } else if (
-              claimedCoreChests + claimedCorePremiumChests < 20 &&
-              // rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 1116
-            ) {
-              setMessage("switch");
-              setDisable(true);
+      if (window.WALLET_TYPE !== "binance") {
+        if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedCoreChests + claimedCorePremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedCoreChests + claimedCorePremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 1116
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedCoreChests + claimedCorePremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 1116
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedCoreChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 1116
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedCoreChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 1116
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedCoreChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 1116
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
             }
-          } else if (!isPremium) {
-            if (
-              claimedCoreChests === 10 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 1116
-            ) {
-              setMessage("premium");
-              setDisable(true);
-            } else if (
-              claimedCoreChests < 10 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 1116
-            ) {
-              setMessage("");
-              setDisable(false);
-            } else if (
-              claimedCoreChests < 10 &&
-              // rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 1116
-            ) {
-              setMessage("switch");
-              setDisable(true);
-            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
           }
         } else {
-          setMessage("switchAccount");
+          setMessage("login");
           setDisable(true);
         }
-      } else {
-        setMessage("login");
-        setDisable(true);
+      } else if (window.WALLET_TYPE === "binance") {
+        setMessage("notsupported");
       }
     } else if (chain === "viction") {
-      if (email && coinbase && address) {
-        if (coinbase.toLowerCase() === address.toLowerCase()) {
-          if (isPremium) {
-            if (
-              claimedVictionChests + claimedVictionPremiumChests === 20 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase()
-            ) {
-              setMessage("complete");
-            } else if (
-              claimedVictionChests + claimedVictionPremiumChests < 20 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 88
-            ) {
-              setMessage("");
-              setDisable(false);
-            } else if (
-              claimedVictionChests + claimedVictionPremiumChests < 20 &&
-              // rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 88
-            ) {
-              setMessage("switch");
-              setDisable(true);
+      if (window.WALLET_TYPE !== "binance") {
+        if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedVictionChests + claimedVictionPremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedVictionChests + claimedVictionPremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 88
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedVictionChests + claimedVictionPremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 88
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedVictionChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 88
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedVictionChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 88
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedVictionChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 88
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
             }
-          } else if (!isPremium) {
-            if (
-              claimedVictionChests === 10 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 88
-            ) {
-              setMessage("premium");
-              setDisable(true);
-            } else if (
-              claimedVictionChests < 10 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 88
-            ) {
-              setMessage("");
-              setDisable(false);
-            } else if (
-              claimedVictionChests < 10 &&
-              // rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 88
-            ) {
-              setMessage("switch");
-              setDisable(true);
-            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
           }
         } else {
-          setMessage("switchAccount");
+          setMessage("login");
           setDisable(true);
         }
-      } else {
-        setMessage("login");
-        setDisable(true);
+      } else if (window.WALLET_TYPE === "binance") {
+        setMessage("notsupported");
       }
     } else if (chain === "manta") {
       if (email && coinbase && address) {
@@ -3736,6 +3754,45 @@ const NewDailyBonus = ({
                           // )
                           <></>
                         )}
+                        <div className="loader red-loader">
+                          <div className="dot" style={{ "--i": 0 }}></div>
+                          <div className="dot" style={{ "--i": 1 }}></div>
+                          <div className="dot" style={{ "--i": 2 }}></div>
+                          <div className="dot" style={{ "--i": 3 }}></div>
+                          <div className="dot" style={{ "--i": 4 }}></div>
+                          <div className="dot" style={{ "--i": 5 }}></div>
+                          <div className="dot" style={{ "--i": 6 }}></div>
+                          <div className="dot" style={{ "--i": 7 }}></div>
+                          <div className="dot" style={{ "--i": 8 }}></div>
+                          <div className="dot" style={{ "--i": 9 }}></div>
+                        </div>
+                      </div>
+                    )  : message === "notsupported" ? (
+                      <div
+                        className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
+                        style={{
+                          background: "#1A1C39",
+                          border: "1px solid #ce5d1b",
+                        }}
+                      >
+                        <div className="loader red-loader">
+                          <div className="dot" style={{ "--i": 0 }}></div>
+                          <div className="dot" style={{ "--i": 1 }}></div>
+                          <div className="dot" style={{ "--i": 2 }}></div>
+                          <div className="dot" style={{ "--i": 3 }}></div>
+                          <div className="dot" style={{ "--i": 4 }}></div>
+                          <div className="dot" style={{ "--i": 5 }}></div>
+                          <div className="dot" style={{ "--i": 6 }}></div>
+                          <div className="dot" style={{ "--i": 7 }}></div>
+                          <div className="dot" style={{ "--i": 8 }}></div>
+                          <div className="dot" style={{ "--i": 9 }}></div>
+                        </div>
+                        <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                        Not available 
+                       </h6>
                         <div className="loader red-loader">
                           <div className="dot" style={{ "--i": 0 }}></div>
                           <div className="dot" style={{ "--i": 1 }}></div>

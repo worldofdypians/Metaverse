@@ -508,23 +508,7 @@ const MobileNavbar = ({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-  useEffect(() => {
-    if (chainId === 1) {
-      handleSwitchNetwork(1);
-    }
 
-    if (chainId === 56) {
-      handleSwitchNetwork(56);
-    }
-
-    if (chainId === 8453) {
-      handleSwitchNetwork(8453);
-    }
-
-    if (chainId === 1482601649) {
-      handleSwitchNetwork(1482601649);
-    }
-  }, [chainId, coinbase]);
 
   useEffect(() => {
     setActiveChain();

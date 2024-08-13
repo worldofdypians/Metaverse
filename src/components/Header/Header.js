@@ -598,30 +598,6 @@ const Header = ({
     }
   };
 
-  useEffect(() => {
-    if (chainId === 1) {
-      handleSwitchNetwork(1);
-    }
-
-    if (chainId === 56) {
-      handleSwitchNetwork(56);
-    }
-
-    if (chainId === 8453) {
-      handleSwitchNetwork(8453);
-    }
-
-    if (chainId === 1482601649) {
-      handleSwitchNetwork(1482601649);
-    }
-
-    // if (chainId === 1116 ) {
-    //   handleSwitchNetwork(1116);
-    // }
-    // if (chainId === 88 ) {
-    //   handleSwitchNetwork(88);
-    // }
-  }, [chainId, coinbase]);
 
   useEffect(() => {
     setActiveChain();

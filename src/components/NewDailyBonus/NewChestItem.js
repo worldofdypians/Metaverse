@@ -902,7 +902,13 @@ const NewChestItem = ({
             //   }, 3000);
             // })
             .then((data) => {
-              getUserRewardsByChest(email, data.hash, chestIndex - 1, "bnb");
+            
+              handleCheckIfTxExists(
+                email,
+                data.hash,
+                chestIndex - 1,
+                "bnb"
+              );
             })
             .catch((e) => {
               window.alertify.error(e?.message);
@@ -948,7 +954,13 @@ const NewChestItem = ({
             //   ...transactionParameters,
             // })
             .then((data) => {
-              getUserRewardsByChest(email, data.hash, chestIndex - 1, "bnb");
+              // getUserRewardsByChest(email, data.hash, chestIndex - 1, "bnb");
+              handleCheckIfTxExists(
+                email,
+                data.hash,
+                chestIndex - 1,
+                "bnb"
+              );
             })
             .catch((e) => {
               console.error(e);
