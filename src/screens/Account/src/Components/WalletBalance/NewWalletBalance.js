@@ -601,7 +601,7 @@ const NewWalletBalance = ({
         chain: "Taiko",
         linkState: "taiko",
         rewards: "TAIKO",
-        status: "Live",
+        status: "Coming Soon",
         logo: taikoLogo,
         date: "Aug 22, 2024",
         id: "event22",
