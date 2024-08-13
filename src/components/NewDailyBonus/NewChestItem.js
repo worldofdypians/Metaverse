@@ -312,6 +312,11 @@ const NewChestItem = ({
       window.config.daily_bonus_manta_address
     );
 
+    const daily_bonus_contract_taiko = new window.web3.eth.Contract(
+      window.DAILY_BONUS_TAIKO_ABI,
+      window.config.daily_bonus_taiko_address
+    );
+
     // console.log(daily_bonus_contract);
     if (chainId === 204) {
       if (rewardTypes === "premium" && isPremium) {
@@ -546,7 +551,7 @@ const NewChestItem = ({
           .openChest()
           .send({
             from: address,
-            ...transactionParameters,
+            ...transactionParameters
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -554,6 +559,108 @@ const NewChestItem = ({
               data.transactionHash,
               chestIndex - 1,
               "manta"
+            );
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+          });
+      }
+    } else if (chainId === 167000) {
+      if (rewardTypes === "premium" && isPremium) {
+
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await window.taikoWeb3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 0.01;
+        // console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_taiko.methods
+          .openPremiumChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
+        await daily_bonus_contract_taiko.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+            ...transactionParameters
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "taiko"
+            );
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await window.taikoWeb3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 0.01;
+        // console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_taiko.methods
+          .openChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
+
+
+        await daily_bonus_contract_taiko.methods
+          .openChest()
+          .send({
+            from: address,
+            ...transactionParameters
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "taiko"
             );
           })
           .catch((e) => {
@@ -850,7 +957,8 @@ const NewChestItem = ({
             chain === "bnb" ||
             chain === "sei" ||
             chain === "viction" ||
-            chain === "manta" ||
+            chain === "manta"||
+            chain === "taiko" ||
             chain === "core"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
                   open ? image + "open" : image
@@ -876,6 +984,7 @@ const NewChestItem = ({
             chain === "core" ||
             chain === "viction" ||
             chain === "manta" ||
+            chain === "taiko" ||
             chain === "sei"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
                   open
