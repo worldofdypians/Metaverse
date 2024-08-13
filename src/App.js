@@ -3614,7 +3614,7 @@ function App() {
     checkBinanceData();
   }, []);
 
-  // console.log(window.WALLET_TYPE, library,binanceData)
+  
 
   return (
     <>

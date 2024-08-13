@@ -933,43 +933,151 @@ const SingleNft = ({
       setsellStatus("sell");
       setPurchaseStatus("Listing NFT in progress...");
       setPurchaseColor("#00FECF");
+      if (window.WALLET_TYPE !== "binance") {
+        await window
+          .listNFT(nftId, newPrice, pricetype2, type, tokenType)
+          .then((result) => {
+            setsellLoading(false);
+            setsellStatus("success");
+            setPurchaseStatus("NFT successfully listed!");
+            setPurchaseColor("#00FECF");
+            setShowToast(true);
+            handleRefreshList(
+              nftAddress === window.config.nft_caws_address
+                ? "caws"
+                : nftAddress === window.config.nft_timepiece_address
+                ? "timepiece"
+                : "land",
+              nftId
+            );
+            setIsListed(true);
+            handleRefreshListing();
+            setTimeout(() => {
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+              setsellStatus("sell");
+            }, 3000);
+          })
+          .catch((e) => {
+            setsellLoading(false);
+            setsellStatus("failed");
+            setPurchaseStatus(e?.message);
+            setPurchaseColor("#FF6232");
+            setTimeout(() => {
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+              setsellStatus("sell");
+            }, 3000);
+            console.error(e);
+          });
+      } else if (window.WALLET_TYPE !== "binance") {
+        let nft_address, price_nft, price_address;
 
-      await window
-        .listNFT(nftId, newPrice, pricetype2, type, tokenType)
-        .then((result) => {
-          setsellLoading(false);
-          setsellStatus("success");
-          setPurchaseStatus("NFT successfully listed!");
-          setPurchaseColor("#00FECF");
-          setShowToast(true);
-          handleRefreshList(
-            nftAddress === window.config.nft_caws_address
-              ? "caws"
-              : nftAddress === window.config.nft_timepiece_address
-              ? "timepiece"
-              : "land",
-            nftId
+        if (type === "timepiece") {
+          nft_address = window.config.nft_timepiece_address;
+        } else if (type === "land") {
+          nft_address = window.config.nft_land_address;
+        } else {
+          nft_address = window.config.nft_caws_address;
+        }
+
+        if (priceType === 0) {
+          price_nft = 0;
+          price_address = "0x0000000000000000000000000000000000000000";
+        }
+
+        if (priceType === 1) {
+          price_nft = 1;
+          price_address =
+            tokenType === "dypv2"
+              ? window.config.token_dypius_new_address
+              : window.config.dyp_token_address;
+        }
+
+        const marketplace = new ethers.Contract(
+          window.config.nft_marketplace_address,
+          window.MARKETPLACE_ABI
+        );
+
+        const gasPrice = await binanceW3WProvider.getGasPrice();
+        console.log("gasPrice", gasPrice.toString());
+        const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+        const increasedGwei = parseFloat(currentGwei) + 1.5;
+        console.log("increasedGwei", increasedGwei);
+        console.log(nft.payment_priceType, "test");
+        // Convert increased Gwei to Wei
+        const gasPriceInWei = ethers.utils.parseUnits(
+          increasedGwei.toString().slice(0, 16),
+          "gwei"
+        );
+
+        const transactionParameters = {
+          gasPrice: gasPriceInWei,
+        };
+
+        const balance = await binanceW3WProvider.getSigner().getBalance();
+        const balanceInEth = ethers.utils.formatEther(balance);
+        console.log("Account Balance:", balanceInEth);
+
+        // Estimate gas limit
+        let gasLimit;
+        try {
+          gasLimit = await marketplace.estimateGas.listItem(
+            nft_address,
+            nftId,
+            newPrice,
+            [price_nft, price_address],
+            {
+              value: nft.price,
+              from: coinbase,
+            }
           );
-          setIsListed(true);
-          handleRefreshListing();
-          setTimeout(() => {
-            setPurchaseStatus("");
+          transactionParameters.gasLimit = gasLimit;
+          console.log("transactionParameters", transactionParameters);
+        } catch (error) {
+          console.error(error);
+        }
+
+        await marketplace
+          .listItem(nft_address, nftId, newPrice, [price_nft, price_address], {
+            from: coinbase,
+            ...transactionParameters,
+          })
+          .then((result) => {
+            setsellLoading(false);
+            setsellStatus("success");
+            setPurchaseStatus("NFT successfully listed!");
             setPurchaseColor("#00FECF");
-            setsellStatus("sell");
-          }, 3000);
-        })
-        .catch((e) => {
-          setsellLoading(false);
-          setsellStatus("failed");
-          setPurchaseStatus(e?.message);
-          setPurchaseColor("#FF6232");
-          setTimeout(() => {
-            setPurchaseStatus("");
-            setPurchaseColor("#00FECF");
-            setsellStatus("sell");
-          }, 3000);
-          console.error(e);
-        });
+            setShowToast(true);
+            handleRefreshList(
+              nftAddress === window.config.nft_caws_address
+                ? "caws"
+                : nftAddress === window.config.nft_timepiece_address
+                ? "timepiece"
+                : "land",
+              nftId
+            );
+            setIsListed(true);
+            handleRefreshListing();
+            setTimeout(() => {
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+              setsellStatus("sell");
+            }, 3000);
+          })
+          .catch((e) => {
+            setsellLoading(false);
+            setsellStatus("failed");
+            setPurchaseStatus(e?.message);
+            setPurchaseColor("#FF6232");
+            setTimeout(() => {
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+              setsellStatus("sell");
+            }, 3000);
+            console.error(e);
+          });
+      }
     } else {
       console.log("approve selling");
 
@@ -977,34 +1085,145 @@ const SingleNft = ({
       setsellStatus("approve");
       setPurchaseStatus("Approving NFT for listing in progress..");
       setPurchaseColor("#00FECF");
+      if (window.WALLET_TYPE !== "binance") {
+        await window
+          .approveNFT(type)
+          .then((result) => {
+            setTimeout(() => {
+              setsellStatus("sell");
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+            }, 3000);
 
-      await window
-        .approveNFT(type)
-        .then((result) => {
-          setTimeout(() => {
-            setsellStatus("sell");
-            setPurchaseStatus("");
+            setsellLoading(false);
+            setsellStatus("success");
+            setPurchaseStatus("Successfully approved! You can list your nft");
             setPurchaseColor("#00FECF");
-          }, 3000);
+          })
+          .catch((e) => {
+            setTimeout(() => {
+              setsellStatus("approve");
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+            }, 3000);
 
-          setsellLoading(false);
-          setsellStatus("success");
-          setPurchaseStatus("Successfully approved! You can list your nft");
-          setPurchaseColor("#00FECF");
-        })
-        .catch((e) => {
-          setTimeout(() => {
-            setsellStatus("approve");
-            setPurchaseStatus("");
-            setPurchaseColor("#00FECF");
-          }, 3000);
+            setsellLoading(false);
+            setsellStatus("failed");
+            setPurchaseStatus(e?.message);
+            setPurchaseColor("#FF6232");
+            console.log(e);
+          });
+      } else if (window.WALLET_TYPE === "binance") {
+        if (type === "timepiece") {
+          let contract = new ethers.Contract(
+            window.config.nft_timepiece_address,
+            window.TIMEPIECE_ABI,
+            binanceW3WProvider.getSigner()
+          );
 
-          setsellLoading(false);
-          setsellStatus("failed");
-          setPurchaseStatus(e?.message);
-          setPurchaseColor("#FF6232");
-          console.log(e);
-        });
+          await contract
+            .setApprovalForAll(window.config.nft_marketplace_address, true, {
+              from: coinbase,
+            })
+            .then((result) => {
+              setTimeout(() => {
+                setsellStatus("sell");
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+              }, 3000);
+
+              setsellLoading(false);
+              setsellStatus("success");
+              setPurchaseStatus("Successfully approved! You can list your nft");
+              setPurchaseColor("#00FECF");
+            })
+            .catch((e) => {
+              setTimeout(() => {
+                setsellStatus("approve");
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+              }, 3000);
+
+              setsellLoading(false);
+              setsellStatus("failed");
+              setPurchaseStatus(e?.message);
+              setPurchaseColor("#FF6232");
+              console.log(e);
+            });
+        } else if (type === "land") {
+          console.log("land");
+          let contract = new ethers.Contract(
+            window.config.nft_land_address,
+            window.WOD_ABI,
+            binanceW3WProvider.getSigner()
+          );
+
+          await contract
+            .setApprovalForAll(window.config.nft_marketplace_address, true, {
+              from: coinbase,
+            })
+            .then((result) => {
+              setTimeout(() => {
+                setsellStatus("sell");
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+              }, 3000);
+
+              setsellLoading(false);
+              setsellStatus("success");
+              setPurchaseStatus("Successfully approved! You can list your nft");
+              setPurchaseColor("#00FECF");
+            })
+            .catch((e) => {
+              setTimeout(() => {
+                setsellStatus("approve");
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+              }, 3000);
+
+              setsellLoading(false);
+              setsellStatus("failed");
+              setPurchaseStatus(e?.message);
+              setPurchaseColor("#FF6232");
+              console.log(e);
+            });
+        } else {
+          let contract = new ethers.Contract(
+            window.config.nft_caws_address,
+            window.CAWS_ABI,
+            binanceW3WProvider.getSigner()
+          );
+          await contract
+            .setApprovalForAll(window.config.nft_marketplace_address, true, {
+              from: coinbase,
+            })
+            .then((result) => {
+              setTimeout(() => {
+                setsellStatus("sell");
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+              }, 3000);
+
+              setsellLoading(false);
+              setsellStatus("success");
+              setPurchaseStatus("Successfully approved! You can list your nft");
+              setPurchaseColor("#00FECF");
+            })
+            .catch((e) => {
+              setTimeout(() => {
+                setsellStatus("approve");
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+              }, 3000);
+
+              setsellLoading(false);
+              setsellStatus("failed");
+              setPurchaseStatus(e?.message);
+              setPurchaseColor("#FF6232");
+              console.log(e);
+            });
+        }
+      }
     }
   };
 
@@ -1238,7 +1457,7 @@ const SingleNft = ({
         }
 
         if (nft.payment_priceType === 1) {
-          console.log('yes dyp', nft)
+          console.log("yes dyp", nft);
           await marketplace
             .buyItem(
               nftAddress,
