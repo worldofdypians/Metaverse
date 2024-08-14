@@ -1185,18 +1185,38 @@ function App() {
   };
 
   const handleConnectBinance = async () => {
-    await activate(binanceConnector).then(() => {
+    await activate(binanceConnector).then(async () => {
       setSuccess(true);
       setwalletModal(false);
       window.WALLET_TYPE = "binance";
       window.getCoinbase();
-      checkBinanceData();
+
+      const data = JSON.parse(localStorage.getItem("connect-session"));
+      if (data && data !== null) {
+        setbinanceData(data);
+      } else {
+        window.WALLET_TYPE = "binance";
+        await window.ethereum?.enable();
+        let coinbase_address = await window.ethereum?.request({
+          method: "eth_accounts",
+        });
+
+        if (coinbase_address && coinbase_address.length > 0) {
+          setCoinbase(coinbase_address[0]);
+          setIsConnected(true);
+          window.ethereum
+            .request({ method: "net_version" })
+            .then((data) => {
+              setChainId(parseInt(data));
+            })
+            .catch(console.error);
+        }
+      }
     });
   };
 
   const checkBinanceData = async () => {
     const data = JSON.parse(localStorage.getItem("connect-session"));
-
     setbinanceData(data);
   };
 
@@ -2010,7 +2030,7 @@ function App() {
         setChainId(chainId);
       }
     }
-  }, [binanceData]);
+  }, [binanceData, account, chainId]);
 
   useEffect(() => {
     if (
@@ -3000,6 +3020,17 @@ function App() {
       setIsConnected(false);
       setCoinbase();
       localStorage.setItem("logout", "true");
+    } else if(window.ethereum && window.WALLET_TYPE === 'binance' && window.ethereum?.isBinance) {
+       window.getCoinbase().then((data) => {
+        if (data) {
+          fetchAvatar(data);
+          setCoinbase(data);
+          setIsConnected(true);
+        } else {
+          setCoinbase();
+          setIsConnected(false);
+        }
+      });
     }
     checkNetworkId();
   }, [coinbase, networkId, active, account]);
@@ -3300,7 +3331,7 @@ function App() {
         // handle other "switch" errors
       }
       // window.location.reload();
-    } else if (window.WALLET_TYPE === "binance") {
+    } else if (window.WALLET_TYPE === "binance" && binanceData) {
       try {
         await binanceConnector.binanceW3WProvider
           .request({
@@ -3334,7 +3365,7 @@ function App() {
               },
             ],
           })
-          .then(() => {
+          .then(async () => {
             setChainId(chain);
             checkBinanceData();
           })
@@ -3347,7 +3378,8 @@ function App() {
         // }
       } catch (switchError) {
         // This error code indicates that the chain has not been added to MetaMask.
-        console.log(switchError, "switch");
+        console.log(switchError, "switch"); 
+
         if (switchError.code === 4902) {
           try {
             await library.request({
@@ -3360,6 +3392,64 @@ function App() {
           } catch (addError) {
             console.log(addError);
             setChainId(chainId);
+          }
+        }
+        // handle other "switch" errors
+      }
+    } else if (
+      window.WALLET_TYPE === "binance" &&
+      !binanceData &&
+      window.ethereum?.isBinance
+    ) {
+      try {
+        await ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [
+            {
+              chainId:
+                chain === 1
+                  ? "0x1"
+                  : chain === 56
+                  ? "0x38"
+                  : chain === 204
+                  ? "0xcc"
+                  : chain === 1116
+                  ? "0x45c"
+                  : chain === 169
+                  ? "0xa9"
+                  : chain === 88
+                  ? "0x58"
+                  : chain === 43114
+                  ? "0xa86a"
+                  : chain === 8453
+                  ? "0x2105"
+                  : chain === 1030
+                  ? "0x406"
+                  : chain === 13371
+                  ? "0x343b"
+                  : chain === 1482601649
+                  ? "0x585eb4b1"
+                  : "0x406",
+            },
+          ],
+        });
+        // if (window.ethereum && window.gatewallet) {
+        //   window.location.reload();
+        // }
+      } catch (switchError) {
+        // This error code indicates that the chain has not been added to MetaMask.
+        console.log(switchError, "switch");
+        if (switchError.code === 4902) {
+          try {
+            await ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: CHAINLIST[Number(chain)],
+            });
+            // if (window.ethereum && window.gatewallet) {
+            //   window.location.reload();
+            // }
+          } catch (addError) {
+            console.log(addError);
           }
         }
         // handle other "switch" errors
@@ -3613,8 +3703,6 @@ function App() {
     checkBinanceData();
   }, []);
 
-  
-
   return (
     <>
       <div className="container-fluid p-0 main-wrapper2 position-relative">
@@ -3675,7 +3763,7 @@ function App() {
                 }}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleSwitchChain={handleSwitchChain}
+                handleSwitchChain={handleSwitchNetwork}
                 handleRefreshListing={handleRefreshList}
                 nftCount={nftCount}
                 favorites={favorites}

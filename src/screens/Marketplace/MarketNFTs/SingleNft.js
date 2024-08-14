@@ -3635,7 +3635,7 @@ const SingleNft = ({
                             } d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
                               chainId !== 1 && chainId !== 5
-                                ? handleSwitchChain()
+                                ? handleSwitchChain(1)
                                 : handleBuy(nft);
                             }}
                           >
@@ -3696,7 +3696,7 @@ const SingleNft = ({
                             } d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
                               chainId !== 1 && chainId !== 5
-                                ? handleSwitchChain()
+                                ? handleSwitchChain(1)
                                 : updateListing(
                                     nft.tokenId,
                                     nftPrice,
@@ -3745,7 +3745,7 @@ const SingleNft = ({
                             className={`unlistbtn col-lg-6 col-xxl-6 d-flex justify-content-center d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
                               chainId !== 1 && chainId !== 5
-                                ? handleSwitchChain()
+                                ? handleSwitchChain(1)
                                 : cancelNFT(
                                     nft.nftAddress,
                                     nft.tokenId,
@@ -3826,7 +3826,7 @@ const SingleNft = ({
                             } d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
                               chainId !== 1 && chainId !== 5
-                                ? handleSwitchChain()
+                                ? handleSwitchChain(1)
                                 : handleSell(
                                     nft.tokenId,
                                     nftPrice,
