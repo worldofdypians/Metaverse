@@ -21,6 +21,7 @@ import victionBg from "./assets/victionBg.webp";
 import seiLogo from "./assets/seiLogo.svg";
 import seiBg from "./assets/seiBg.webp";
 import coreLogo from "./assets/coreLogo.svg";
+import taikoLogo from "./assets/taikoLogo.svg";
 import mantaLogo from "./assets/mantaLogo.png";
 
 import coreBg from "./assets/coreBg.webp";
@@ -199,6 +200,8 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
 
   const dummyBetaPassData2 = [
+  
+
     {
       title: "BNB Chain",
       chain: "SKALE Nebula Hub",
@@ -340,6 +343,86 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
         eventDate: "December 22, 2023",
       },
     },
+      {
+      title: "Taiko",
+      chain: "Taiko Chain",
+      linkState: "taiko",
+      rewards: "TAIKO",
+      status: "Coming Soon",
+      eventStatus: "Coming Soon",
+      id: "event11",
+      eventType: "Explore & Mine",
+      date: "December 22, 2023",
+      logo: taikoLogo,
+      totalRewards: "$20,000 in TAIKO Rewards",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "TAIKO Rewards",
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore:
+        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+      popupInfo: {
+        title: "Taiko",
+        chain: "Taiko Chain",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Coming Soon",
+        id: "event11",
+        eventStatus: "Coming Soon",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "December 22, 2023",
+      },
+    },
+
+    {
+      title: "Immutable",
+      chain: "Immutable Chain",
+      linkState: "taiko",
+      rewards: "IMX",
+      status: "Coming Soon",
+      eventStatus: "Coming Soon",
+      id: "event11",
+      eventType: "Explore & Mine",
+      date: "December 22, 2023",
+      logo: immutableLogo,
+      totalRewards: "$20,000 in IMX Rewards",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "IMX Rewards",
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore:
+        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable Chain",
+        linkState: "taiko",
+        rewards: "IMX",
+        status: "Coming Soon",
+        id: "event11",
+        eventStatus: "Coming Soon",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in IMX Rewards",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "December 22, 2023",
+      },
+    },
+
     {
       title: "SKALE",
       chain: "SKALE Nebula Hub",
@@ -621,13 +704,14 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
   ];
 
   var settings = {
-    dots: false,
+    dots: true,
     arrows: false,
     dotsClass: "button__bar",
-    infinite: false,
+    infinite: true,
     speed: 300,
     slidesToShow: 4,
     slidesToScroll: 1,
+    autoplay: true,
     initialSlide: 0,
     beforeChange: (current, next) => {
       setActiveSlide(next);
@@ -766,7 +850,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
                   </span>
 
                   <Slider {...settings} ref={betaSlider}>
-                    {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                    {dummyBetaPassData2.slice(0, 6).map((item, index) => (
                       <NavLink to={`/marketplace/events/treasure-hunt`}>
                         <BetaEventCardHome
                           data={item}
@@ -818,7 +902,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
               </span>
 
               <Slider {...settings} ref={betaSlider}>
-                {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                {dummyBetaPassData2.slice(0, 6).map((item, index) => (
                   <NavLink to={`/marketplace/events/treasure-hunt`}>
                     <BetaEventCardHome
                       data={item}

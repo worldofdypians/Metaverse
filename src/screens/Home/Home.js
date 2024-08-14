@@ -40,6 +40,7 @@ import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreas
 import corePopupBg from "../../components/TimepieceMint/assets/corePopupBg.webp";
 import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
 import immutablePopup from "../../components/TimepieceMint/assets/immutablePopup.webp";
+import taikoPopup from "../../components/TimepieceMint/assets/taikoPopup.png";
 import bnbcampaign from "../../components/TimepieceMint/assets/bnbcampaign.webp";
 
 
@@ -129,6 +130,11 @@ const Home = ({
     title: "Manta",
     img: mantaPopup,
     state: "manta",
+  };
+  const taikoInfo = {
+    title: "Taiko",
+    img: taikoPopup,
+    state: "taiko",
   };
 
   const [activePopup, setActivePopup] = useState(false);

@@ -448,7 +448,7 @@
 
 .optionswrapper-bg {
   position: absolute;
-  width: 20%;
+  width: 14%;
   height: 100%;
   border-radius: 12px;
   border: 1px solid #f4e07b;
@@ -491,18 +491,23 @@
 }
 
 .move-1 {
-  transform: translateX(100%);
+  transform: translateX(125%);
+}
+.move-2 {
+  transform: translateX(250%);
 }
 .move-3 {
-  transform: translateX(300%);
+  transform: translateX(370%);
 }
 .move-4 {
-  transform: translateX(400%);
+  transform: translateX(492%);
 }
 
-.move-2 {
-  transform: translateX(200%);
+.move-5 {
+  transform: translateX(614%);
 }
+
+
 .move-1-home {
   transform: translateX(100%);
 }

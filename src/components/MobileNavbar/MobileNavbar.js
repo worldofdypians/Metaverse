@@ -24,6 +24,7 @@ import viction from "../Header/assets/viction.svg";
 import core from "../Header/assets/core.svg";
 import manta from "../Header/assets/manta.png";
 import immutable from "../Header/assets/immutableLogo.svg";
+import taiko from "../Header/assets/taiko.svg";
 
 import error from "../Header/assets/error.svg";
 import dropdown from "../Header/assets/dropdown.svg";
@@ -59,9 +60,7 @@ const MobileNavbar = ({
   const [victionState, setVictionState] = useState(false);
   const [seiState, setSeiState] = useState(false);
   const [immutableState, setImmutableState] = useState(false);
-  
-
-
+  const [taikoState, setTaikoState] = useState(false);
 
   const bgmenu = document.querySelector("#bgmenu");
   const hamburger = document.querySelector("#mobileNavbar");
@@ -89,6 +88,7 @@ const MobileNavbar = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
+        setTaikoState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
@@ -101,7 +101,7 @@ const MobileNavbar = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-
+        setTaikoState(false);
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
@@ -114,7 +114,7 @@ const MobileNavbar = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-
+        setTaikoState(false);
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
@@ -127,7 +127,7 @@ const MobileNavbar = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-
+        setTaikoState(false);
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
@@ -140,7 +140,7 @@ const MobileNavbar = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-
+        setTaikoState(false);
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -152,9 +152,9 @@ const MobileNavbar = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
-        setImmutableState(false);
         setMantaState(false);
-
+        setImmutableState(false);
+        setTaikoState(false);
       } else if (chainId === 1482601649) {
         setAvaxState(false);
         setBnbState(false);
@@ -166,9 +166,9 @@ const MobileNavbar = ({
         setCoreState(false);
         setVictionState(false);
         setSeiState(false);
-        setImmutableState(false);
         setMantaState(false);
-
+        setImmutableState(false);
+        setTaikoState(false);
       } else if (chainId === 1116) {
         setAvaxState(false);
         setBnbState(false);
@@ -182,7 +182,7 @@ const MobileNavbar = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-
+        setTaikoState(false);
       } else if (chainId === 88) {
         setAvaxState(false);
         setBnbState(false);
@@ -196,7 +196,7 @@ const MobileNavbar = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-
+        setTaikoState(false);
       } else if (chainId === 13371) {
         setAvaxState(false);
         setBnbState(false);
@@ -210,11 +210,11 @@ const MobileNavbar = ({
         setSeiState(false);
         setImmutableState(true);
         setMantaState(false);
-
-      }
-      else if (chainId === 169) {
+        setTaikoState(false);
+      } else if (chainId === 169) {
         setAvaxState(false);
         setBnbState(false);
+        setMantaState(true);
         setEthState(false);
         setBaseState(false);
         setConfluxState(false);
@@ -224,8 +224,21 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-        setMantaState(true);
-
+        setTaikoState(false);
+      } else if (chainId === 167000) {
+        setAvaxState(false);
+        setBnbState(false);
+        setMantaState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false);
+        setImmutableState(false);
+        setTaikoState(true);
       }
       // else if (chainId === 713715 ) {
       //   setAvaxState(false);
@@ -250,216 +263,17 @@ const MobileNavbar = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-        setMantaState(false);
-
+        setTaikoState(false);
       }
     }
   };
 
-
-  const handleEthPool = async () => {
+  const switchNetwork = async (hexChainId, chain) => {
     if (window.ethereum) {
       if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x1")
+        await handleSwitchNetworkhook(hexChainId)
           .then(() => {
-            handleSwitchNetwork(1);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(1);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-  const handleCorePool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x45c")
-          .then(() => {
-            handleSwitchNetwork(1116);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(1116);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleMantaPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0xa9")
-          .then(() => {
-            handleSwitchNetwork(169);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(169);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleSeiPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0xae3f3")
-          .then(() => {
-            handleSwitchNetwork(713715);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(713715);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-  const handleVictionPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x58")
-          .then(() => {
-            handleSwitchNetwork(88);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(88);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleAvaxPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0xa86a")
-          .then(() => {
-            handleSwitchNetwork(43114);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(1);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleBnbPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x38")
-          .then(() => {
-            handleSwitchNetwork(56);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(56);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleOpBnbPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0xcc")
-          .then(() => {
-            handleSwitchNetwork(204);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(204);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleConfluxPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x406")
-          .then(() => {
-            handleSwitchNetwork(1030);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(1030);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleBasePool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x2105")
-          .then(() => {
-            handleSwitchNetwork(8453);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet(8453);
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleSkalePool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x585eb4b1")
-          .then(() => {
-            handleSwitchNetwork(1482601649);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else {
-        handleSwitchChainGateWallet();
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-
-  const handleImmutablePool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x343b")
-          .then(() => {
-            handleSwitchNetwork(13371);
+            handleSwitchNetwork(chain);
           })
           .catch((e) => {
             console.log(e);
@@ -485,7 +299,7 @@ const MobileNavbar = ({
       handleSwitchNetwork(8453);
     }
 
-    if (chainId === 1482601649 ) {
+    if (chainId === 1482601649) {
       handleSwitchNetwork(1482601649);
     }
   }, [chainId, coinbase]);
@@ -547,117 +361,127 @@ const MobileNavbar = ({
                 title={
                   <span className="dropdown-title">
                     <img
-                     src={
-                      ethState === true
-                        ? eth
-                        : bnbState === true
-                        ? bnb
-                        : opbnbState === true
-                        ? bnb
-                        : avaxState === true
-                        ? avax
-                        : baseState === true
-                        ? base
-                        : confluxState === true
-                        ? conflux
-                        : skaleState === true
-                        ? skale
-                        : coreState === true
-                        ? core
-                        : victionState === true
-                        ? viction
-                        : immutableState === true
-                        ? immutable
-                        : mantaState === true
-                        ? manta
-                        // : seiState === true
-                        // ? sei
-                        : error
-                    }
+                      src={
+                        ethState === true
+                          ? eth
+                          : bnbState === true
+                          ? bnb
+                          : opbnbState === true
+                          ? bnb
+                          : avaxState === true
+                          ? avax
+                          : baseState === true
+                          ? base
+                          : confluxState === true
+                          ? conflux
+                          : skaleState === true
+                          ? skale
+                          : coreState === true
+                          ? core
+                          : victionState === true
+                          ? viction
+                          : immutableState === true
+                          ? immutable
+                          : mantaState === true
+                          ? manta
+                          : taikoState === true
+                          ? taiko
+                          : // : seiState === true
+                            // ? sei
+                            error
+                      }
                       height={16}
                       width={16}
                       alt=""
                     />
                     <span className="change-chain-text d-none d-lg-flex">
-                    {ethState === true
-                            ? "Ethereum"
-                            : bnbState === true
-                            ? "BNB Chain"
-                            : opbnbState === true
-                            ? "opBNB Chain"
-                            : avaxState === true
-                            ? "Avalanche"
-                            : baseState === true
-                            ? "Base"
-                            : confluxState === true
-                            ? "Conflux"
-                            : skaleState === true
-                            ? "SKALE"
-                            : coreState === true
-                            ? "CORE"
-                            : victionState === true
-                            ? "Viction"
-                            : immutableState === true
-                            ? "Immutable"
-                            : mantaState === true
-                            ? "Manta"
-                            // : seiState === true
-                            // ? "Sei"
-                            : "Unsupported"}
+                      {ethState === true
+                        ? "Ethereum"
+                        : bnbState === true
+                        ? "BNB Chain"
+                        : opbnbState === true
+                        ? "opBNB Chain"
+                        : avaxState === true
+                        ? "Avalanche"
+                        : baseState === true
+                        ? "Base"
+                        : confluxState === true
+                        ? "Conflux"
+                        : skaleState === true
+                        ? "SKALE"
+                        : coreState === true
+                        ? "CORE"
+                        : victionState === true
+                        ? "Viction"
+                        : immutableState === true
+                        ? "Immutable"
+                        : mantaState === true
+                        ? "Manta"
+                        : taikoState === true
+                        ? "Taiko"
+                        : // : seiState === true
+                          // ? "Sei"
+                          "Unsupported"}
                     </span>
 
                     <img src={dropdown} alt="" />
                   </span>
                 }
               >
-                <Dropdown.Item onClick={() => handleEthPool()}>
-                    <img src={eth} alt="" />
-                    Ethereum
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleBnbPool()}>
-                    <img src={bnb} alt="" />
-                    BNB Chain
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleMantaPool()}>
-                    <img src={manta} alt="" />
-                    Manta
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleOpBnbPool()}>
-                    <img src={bnb} alt="" />
-                    opBNB Chain
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleCorePool()}>
-                    <img src={core} width={20} height={20} alt="" />
-                    CORE
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleSkalePool()}>
-                    <img src={skale} alt="" />
-                    SKALE
-                  </Dropdown.Item> 
-                  <Dropdown.Item onClick={() => handleConfluxPool()}>
-                    <img src={conflux} alt="" />
-                    Conflux
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleImmutablePool()}>
-                    <img src={immutable} width={20} height={20} alt="" />
-                    Immutable
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleBasePool()}>
-                    <img src={base} alt="" />
-                    Base
-                  </Dropdown.Item>
-                  {/* <Dropdown.Item onClick={() => handleSeiPool()}>
+                <Dropdown.Item onClick={() => switchNetwork("0x1", 1)}>
+                  <img src={eth} alt="" />
+                  Ethereum
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => switchNetwork("0x38", 56)}>
+                  <img src={bnb} alt="" />
+                  BNB Chain
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => switchNetwork("0xa9", 169)}>
+                  <img src={manta} alt="" />
+                  Manta
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => switchNetwork("0xcc", 204)}>
+                  <img src={bnb} alt="" />
+                  opBNB Chain
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => switchNetwork("0x28c58", 167000)}>
+                  <img src={taiko} width={20} height={20} alt="" />
+                  Taiko
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => switchNetwork("0x45c", 1116)}>
+                  <img src={core} width={20} height={20} alt="" />
+                  CORE
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => switchNetwork("0x585eb4b1", 1482601649)}
+                >
+                  <img src={skale} alt="" />
+                  SKALE
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => switchNetwork("0x406", 1030)}>
+                  <img src={conflux} alt="" />
+                  Conflux
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => switchNetwork("0x343b", 13371)}>
+                  <img src={immutable} width={20} height={20} alt="" />
+                  Immutable
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => switchNetwork("0x2105", 8453)}>
+                  <img src={base} alt="" />
+                  Base
+                </Dropdown.Item>
+                {/* <Dropdown.Item onClick={() => handleSeiPool()}>
                     <img src={sei} width={20} height={20} alt="" />
                     Sei
-                  </Dropdown.Item> */}
-                  <Dropdown.Item onClick={() => handleVictionPool()}>
-                    <img src={viction} width={20} height={20} alt="" />
-                    Viction
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleAvaxPool()}>
-                    <img src={avax} alt="" />
-                    Avalanche
-                  </Dropdown.Item>
+                  </Dropdown.Item>*/}
+                <Dropdown.Item onClick={() => switchNetwork("0x58", 88)}>
+                  <img src={viction} width={20} height={20} alt="" />
+                  Viction
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => switchNetwork("0xa86a", 43114)}>
+                  <img src={avax} alt="" />
+                  Avalanche
+                </Dropdown.Item>
               </DropdownButton>
             </>
           )}
@@ -685,185 +509,189 @@ const MobileNavbar = ({
         </div>
       </div>
       <OutsideClickHandler onOutsideClick={() => setOpenNavbar(false)}>
-      <div
-        className={`mobile-menu ${
-          openNavbar && "mobile-menu-open"
-        } d-flex d-lg-none p-3 flex-column gap-3`}
-        id="bgmenu"
-      >
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/explorer"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">Explore</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
+        <div
+          className={`mobile-menu ${
+            openNavbar && "mobile-menu-open"
+          } d-flex d-lg-none p-3 flex-column gap-3`}
+          id="bgmenu"
+        >
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+            <NavLink
+              to="/explorer"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">Explore</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
 
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/land"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">Land</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+            <NavLink
+              to="/land"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">Land</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
 
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/marketplace"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">Marketplace</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/community"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">Community</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/roadmap"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">Roadmap</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
-       
-        <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
-          <NavLink
-            to="/news"
-            className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-            style={{ textDecoration: "none" }}
-            onClick={() => setOpenNavbar(false)}
-          >
-            <h6 className="mobile-nav-link font-poppins mb-0">News</h6>
-            <img src={mobileArrow} alt="arrow" />{" "}
-          </NavLink>
-        </div>
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+            <NavLink
+              to="/marketplace"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">Marketplace</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+            <NavLink
+              to="/community"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">Community</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+            <NavLink
+              to="/roadmap"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">Roadmap</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
 
-        <div className="w-100 d-flex align-items-center justify-content-center gap-3">
-          {!coinbase ? (
-            <div className="linearborder2">
-              <button
-                className="btn connectwallet px-3"
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+            <NavLink
+              to="/news"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">News</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
+
+          <div className="w-100 d-flex align-items-center justify-content-center gap-3">
+            {!coinbase ? (
+              <div className="linearborder2">
+                <button
+                  className="btn connectwallet px-3"
+                  onClick={() => {
+                    handleSignUp();
+                    setOpenNavbar(false);
+                  }}
+                >
+                  Connect Wallet
+                </button>{" "}
+              </div>
+            ) : coinbase && !domainName ? (
+              <div className="d-flex align-items-center gap-3">
+                <Clipboard
+                  component="div"
+                  data-event="click"
+                  data-for={id}
+                  data-tip="Copied To Clipboard!"
+                  data-clipboard-text={coinbase}
+                  className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative bg-transparent"
+                >
+                  <div
+                    className="btn connected px-3"
+                    style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
+                    onClick={() => {
+                      setTooltip(true);
+                      setTimeout(() => setTooltip(false), 2000);
+                    }}
+                  >
+                    {shortAddress(coinbase)}{" "}
+                    <img src={tooltip ? check : copy} alt="" />
+                  </div>
+                  <div
+                    className="btn pill-btn px-3"
+                    style={{ fontSize: 12 }}
+                    onClick={() => {
+                      handleOpenDomains();
+                      setOpenNavbar(false);
+                    }}
+                  >
+                    Domain Name
+                  </div>
+                </Clipboard>
+              </div>
+            ) : domainName ? (
+              <div
+                className="d-flex align-items-center gap-3"
                 onClick={() => {
-                  handleSignUp();
+                  handleOpenDomains();
                   setOpenNavbar(false);
                 }}
               >
-                Connect Wallet
-              </button>{" "}
-            </div>
-          ) : coinbase && !domainName ? (
-            <div className="d-flex align-items-center gap-3">
-              <Clipboard
-                component="div"
-                data-event="click"
-                data-for={id}
-                data-tip="Copied To Clipboard!"
-                data-clipboard-text={coinbase}
-                className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative bg-transparent"
-              >
-                <div
-                  className="btn connected px-3"
-                  style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
-                  onClick={() => {
-                    setTooltip(true);
-                    setTimeout(() => setTooltip(false), 2000);
-                  }}
+                <Clipboard
+                  component="div"
+                  data-event="click"
+                  data-for={id}
+                  data-tip="Copied To Clipboard!"
+                  data-clipboard-text={coinbase}
+                  className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative bg-transparent"
                 >
-                  {shortAddress(coinbase)}{" "}
-                  <img src={tooltip ? check : copy} alt="" />
-                </div>
-                <div
-                  className="btn pill-btn px-3"
-                  style={{fontSize: 12}} 
-                   onClick={()=>{handleOpenDomains(); setOpenNavbar(false)}}
-                >
-                  Domain Name
-                  
-                </div>
-              </Clipboard>
-            </div>
-          )
-           : domainName ? (
-            <div className="d-flex align-items-center gap-3" onClick={()=>{handleOpenDomains(); setOpenNavbar(false)}}>
-              <Clipboard
-                component="div"
-                data-event="click"
-                data-for={id}
-                data-tip="Copied To Clipboard!"
-                data-clipboard-text={coinbase}
-                className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative bg-transparent"
-              >
-                <div
-                  className="btn connected px-3"
-                  style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
-                  onClick={() => {
-                    setTooltip(true);
-                    setTimeout(() => setTooltip(false), 2000);
-                  }}
-                >
-                  {domainName}{" "}
-                   
-                </div>
-              </Clipboard>
-            </div>
-          ) 
-          :(
-            <></>
-          )
-          }
+                  <div
+                    className="btn connected px-3"
+                    style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
+                    onClick={() => {
+                      setTooltip(true);
+                      setTimeout(() => setTooltip(false), 2000);
+                    }}
+                  >
+                    {domainName}{" "}
+                  </div>
+                </Clipboard>
+              </div>
+            ) : (
+              <></>
+            )}
 
-          {!coinbase ? (
-            <NavLink
-              to={"/account"}
-              onClick={() => {
-                setOpenNavbar(false);
-              }}
-            >
-              <img src={person} className="account-icon" alt="" />
-            </NavLink>
-          ) : (
-            <NavLink
-              to={"/account"}
-              onClick={() => {
-                setOpenNavbar(false);
-              }}
-            >
-              <img
-                src={avatar === null ? person : avatar}
-                className="account-icon"
-                alt=""
-                // onClick={handleRedirect}
+            {!coinbase ? (
+              <NavLink
+                to={"/account"}
                 onClick={() => {
                   setOpenNavbar(false);
                 }}
-              />
-            </NavLink>
-          )}
+              >
+                <img src={person} className="account-icon" alt="" />
+              </NavLink>
+            ) : (
+              <NavLink
+                to={"/account"}
+                onClick={() => {
+                  setOpenNavbar(false);
+                }}
+              >
+                <img
+                  src={avatar === null ? person : avatar}
+                  className="account-icon"
+                  alt=""
+                  // onClick={handleRedirect}
+                  onClick={() => {
+                    setOpenNavbar(false);
+                  }}
+                />
+              </NavLink>
+            )}
+          </div>
         </div>
-      </div>
       </OutsideClickHandler>
     </>
   );

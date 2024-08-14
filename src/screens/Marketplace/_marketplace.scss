@@ -3087,6 +3087,9 @@ line-height: normal;
 .mint-bnb {
   background: linear-gradient(90deg, #181B38 0%, rgba(6, 136, 255, 0.05) 168.67%);
 }
+.mint-taiko {
+  background: linear-gradient(90deg, #181B38 0%, #CC238C 168.67%);
+}
 .mint-manta {
   background: linear-gradient(90deg, #181B38 0%, #BE2CB0 168.67%);
 }
@@ -3986,7 +3989,7 @@ background: linear-gradient(90deg, #7F43FF 1.45%, #C01BDB 96.22%);
 
 .upcoming-immutable-event {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181b38 0%, rgba(44, 190, 181, 1) 168.67%) !important;
+  background: linear-gradient(90deg, #181b38 0%, rgb(35 133 127) 168.67%) !important;
 }
 
 .upcoming-multivers-event {
@@ -3997,6 +4000,12 @@ background: linear-gradient(90deg, #7F43FF 1.45%, #C01BDB 96.22%);
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #BE2CB0 168.67%) !important;
 }
+
+.upcoming-taiko-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(204, 35, 140, 0.5) 168.67%) !important;
+}
+
 
 
 

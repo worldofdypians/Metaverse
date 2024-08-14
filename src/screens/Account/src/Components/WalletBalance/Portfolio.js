@@ -110,7 +110,7 @@ const Portfolio = ({
   MyNFTSLandAvax,
   MyNFTSCawsAvax,
   MyNFTSLandBase,
-  MyNFTSCawsBase,myNFTSBNB,myMultiversNfts
+  MyNFTSCawsBase,myNFTSBNB,myMultiversNfts, myTaikoNfts
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
