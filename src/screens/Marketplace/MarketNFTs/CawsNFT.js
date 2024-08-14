@@ -39,7 +39,7 @@ const CawsNFT = ({
   cawsBought,
   handleRefreshListing,
   nftCount,
-  binanceW3WProvider,
+  binanceW3WProvider,chainId
 }) => {
   const override = {
     display: "block",
@@ -982,6 +982,8 @@ const CawsNFT = ({
                             soldPriceType={nft.soldPriceType}
                             handleRefreshListing={handleRefreshListing}
                             binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
+
                           />
                         </NavLink>
                       ))}
@@ -1168,6 +1170,8 @@ const CawsNFT = ({
                             isListed={nft.isListed}
                             soldPriceType={nft.soldPriceType}
                             binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
+
                           />
                         </NavLink>
                       );
@@ -1217,6 +1221,8 @@ const CawsNFT = ({
                             isListed={nft.isListed}
                             soldPriceType={nft.soldPriceType}
                             binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
+
                           />
                         </NavLink>
                       ))}

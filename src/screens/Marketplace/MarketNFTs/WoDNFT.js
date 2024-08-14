@@ -38,7 +38,7 @@ const WoDNFT = ({
   wodBought,
   handleRefreshListing,
   nftCount,
-  binanceW3WProvider,
+  binanceW3WProvider,chainId
 }) => {
   const override = {
     display: "block",
@@ -1016,6 +1016,8 @@ const WoDNFT = ({
                             soldPriceType={nft.soldPriceType}
                             handleRefreshListing={handleRefreshListing}
                             binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
+
                           />
                         </NavLink>
                       ))}
@@ -1199,6 +1201,8 @@ const WoDNFT = ({
                             isListed={nft.isListed}
                             soldPriceType={nft.soldPriceType}
                             binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
+
                           />
                         </NavLink>
                       );
@@ -1253,6 +1257,8 @@ const WoDNFT = ({
                               isListed={nft.isListed}
                               soldPriceType={nft.soldPriceType}
                               binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
+
                             />
                           </NavLink>
                         ))}

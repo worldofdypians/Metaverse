@@ -2225,7 +2225,7 @@ window.isApprovedBuy = async (tokenType, amount) => {
 
 window.isApprovedNFT = async (token, type, address) => {
   if (type === "timepiece") {
-    window.web3 = new Web3(window.ethereum);
+    window.web3 = new Web3(window.ethereum ?? window.config.infura_endpoint);
     let contract = new window.web3.eth.Contract(
       window.TIMEPIECE_ABI,
       window.config.nft_timepiece_address
@@ -2244,6 +2244,7 @@ window.isApprovedNFT = async (token, type, address) => {
       return true;
     } else return false;
   } else if (type === "land") {
+    window.web3 = new Web3(window.ethereum ?? window.config.infura_endpoint);
     let contract = new window.web3.eth.Contract(
       window.WOD_ABI,
       window.config.nft_land_address
@@ -2259,6 +2260,7 @@ window.isApprovedNFT = async (token, type, address) => {
       return true;
     } else return false;
   } else {
+    window.web3 = new Web3(window.ethereum ?? window.config.infura_endpoint);
     let contract = new window.web3.eth.Contract(
       window.CAWS_ABI,
       window.config.nft_caws_address
@@ -2625,6 +2627,7 @@ window.approveOffer = async (amount, priceType, tokenType) => {
   }
 };
 
+
 window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
@@ -2655,7 +2658,7 @@ window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
 };
 
 window.isApprovedOffer = async (amount, priceType, tokenType) => {
-  window.web3 = new Web3(window.ethereum);
+  window.web3 = new Web3(window.ethereum ?? window.config.infura_endpoint);
   console.log(amount, priceType, tokenType);
   if (priceType === 1) {
     const contract = new window.web3.eth.Contract(

@@ -2964,7 +2964,6 @@ function App() {
     if (
       !window.coin98 &&
       window.ethereum &&
-      window.ethereum.isConnected() === true &&
       !window.gatewallet &&
       window.WALLET_TYPE !== "binance"
     ) {
@@ -3924,6 +3923,7 @@ function App() {
                 totalTx={totalTx}
                 totalvolume={totalvolume}
                 binanceW3WProvider={library}
+                chainId={networkId}
               />
             }
           />
@@ -3943,6 +3943,7 @@ function App() {
                 handleRefreshListing={handleRefreshList}
                 nftCount={nftCount}
                 binanceW3WProvider={library}
+                chainId={networkId}
               />
             }
           />
@@ -3962,6 +3963,7 @@ function App() {
                 handleRefreshListing={handleRefreshList}
                 nftCount={nftCount}
                 binanceW3WProvider={library}
+                chainId={networkId}
               />
             }
           />
@@ -3981,6 +3983,7 @@ function App() {
                 handleRefreshListing={handleRefreshList}
                 nftCount={nftCount}
                 binanceW3WProvider={library}
+                chainId={networkId}
               />
             }
           />

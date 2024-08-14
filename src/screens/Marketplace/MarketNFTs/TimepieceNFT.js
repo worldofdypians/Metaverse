@@ -41,7 +41,7 @@ const TimepieceNFT = ({
   timepieceBought,
   handleRefreshListing,
   nftCount,
-  binanceW3WProvider,
+  binanceW3WProvider,chainId
 }) => {
   const override = {
     display: "block",
@@ -1039,6 +1039,8 @@ const TimepieceNFT = ({
                             soldPriceType={nft.soldPriceType}
                             handleRefreshListing={handleRefreshListing}
                             binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
+
                           />
                         </NavLink>
                       ))}
@@ -1224,6 +1226,8 @@ const TimepieceNFT = ({
                             isListed={nft.isListed}
                             soldPriceType={nft.soldPriceType}
                             binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
+
                           />
                         </NavLink>
                       );
@@ -1278,6 +1282,8 @@ const TimepieceNFT = ({
                               isListed={nft.isListed}
                               soldPriceType={nft.soldPriceType}
                               binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
+
                             />
                           </NavLink>
                         ))}

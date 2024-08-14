@@ -1674,13 +1674,13 @@ const SingleNft = ({
     }
   }
 
-  const cancelNFT = (nftAddress, tokenId, type, tokenType) => {
+  const cancelNFT = async (nftAddress, tokenId, type, tokenType) => {
     setcancelLoading(true);
     setcancelStatus("cancel");
     setPurchaseColor("#00FECF");
     setPurchaseStatus("Unlisting your nft...");
     console.log("cancelling");
-
+    if(window.WALLET_TYPE !=='binance') {
     return window
       .cancelListNFT(nftAddress, tokenId, type, tokenType)
       .then((result) => {
@@ -1708,6 +1708,83 @@ const SingleNft = ({
         setPurchaseColor("#FF6232");
         setPurchaseStatus(e?.message);
       });
+    } else if(window.WALLET_TYPE === 'binance') {
+
+      let price_address; 
+    
+      if (priceType === 0) {
+        price_address = "0x0000000000000000000000000000000000000000";
+      }
+    
+      if (priceType === 1) {
+        price_address =
+          tokenType === "dypv2"
+            ? window.config.token_dypius_new_address
+            : window.config.dyp_token_address;
+      }
+    
+      const marketplace = new ethers.Contract(
+        window.config.nft_marketplace_address, window.MARKETPLACE_ABI, binanceW3WProvider.getSigner()
+      );
+
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseInt(currentGwei) + 1.5;
+
+      const gasPriceInWei = ethers.utils.parseUnits(
+        increasedGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      let gasLimit;
+      try {
+        gasLimit = await marketplace.estimateGas.cancelListing(
+          nftAddress, tokenId, [priceType, price_address],
+          {
+            from: coinbase,
+          }
+        );
+        transactionParameters.gasLimit = gasLimit;
+        console.log("transactionParameters", transactionParameters);
+      } catch (error) {
+        console.error(error);
+      }
+
+
+    
+      await marketplace
+        .cancelListing(nftAddress, tokenId, [priceType, price_address],{ from: coinbase, ...transactionParameters })
+        .then((result) => {
+          setTimeout(() => {
+            setcancelStatus("");
+            setPurchaseColor("#00FECF");
+            setPurchaseStatus("");
+          }, 3000);
+          // handleRefreshList(type, tokenId);
+          handleRefreshListing();
+          setcancelLoading(false);
+          setcancelStatus("success");
+          setPurchaseColor("#00FECF");
+          setPurchaseStatus("Nft successfully unlisted");
+        })
+        .catch((e) => {
+          setTimeout(() => {
+            setcancelStatus("");
+            setPurchaseColor("");
+            setPurchaseStatus("");
+          }, 3000);
+  
+          setcancelLoading(false);
+          setcancelStatus("failed");
+          setPurchaseColor("#FF6232");
+          setPurchaseStatus(e?.message);
+        });
+
+    }
   };
 
   async function updateListing(nft, price, priceType, type, tokenType) {
@@ -1856,29 +1933,101 @@ const SingleNft = ({
   const handleMakeOffer = async (price, pricetype, tokenType) => {
     setOfferStatus("loading");
     const newPrice = new BigNumber(price * 1e18).toFixed();
-    await window
-      .makeOffer(nftAddress, nftId, newPrice, pricetype, tokenType)
-      .then(() => {
-        handleRefreshListing();
-        setOfferStatus("success");
-        setTimeout(() => {
-          setOfferStatus("initial");
-        }, 3000);
-      })
-      .catch((e) => {
-        console.error(e);
-        setOfferStatus("fail");
-        setTimeout(() => {
-          setOfferStatus("initial");
-        }, 3000);
-      });
+    if (window.WALLET_TYPE !== "binance") {
+      await window
+        .makeOffer(nftAddress, nftId, newPrice, pricetype, tokenType)
+        .then(() => {
+          handleRefreshListing();
+          setOfferStatus("success");
+          setTimeout(() => {
+            setOfferStatus("initial");
+          }, 3000);
+        })
+        .catch((e) => {
+          console.error(e);
+          setOfferStatus("fail");
+          setTimeout(() => {
+            setOfferStatus("initial");
+          }, 3000);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let price_address;
+
+      if (priceType === 0) {
+        price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+      }
+
+      if (priceType === 1) {
+        price_address =
+          tokenType === "dypv2"
+            ? window.config.token_dypius_new_address
+            : window.config.dyp_token_address;
+      }
+
+      const marketplace = new ethers.Contract(
+        window.config.nft_marketplace_address,
+        window.MARKETPLACE_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseInt(currentGwei) + 1.5;
+
+      const gasPriceInWei = ethers.utils.parseUnits(
+        increasedGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      let gasLimit;
+      try {
+        gasLimit = await marketplace.estimateGas.makeOffer(
+          nftAddress,
+          nftId,
+          price,
+          [priceType, price_address],
+          {
+            from: coinbase,
+          }
+        );
+        transactionParameters.gasLimit = gasLimit;
+        console.log("transactionParameters", transactionParameters);
+      } catch (error) {
+        console.error(error);
+      }
+
+      await marketplace
+        .makeOffer(nftAddress, nftId, price, [priceType, price_address], {
+          from: coinbase,
+          ...transactionParameters,
+        })
+        .then(() => {
+          handleRefreshListing();
+          setOfferStatus("success");
+          setTimeout(() => {
+            setOfferStatus("initial");
+          }, 3000);
+        })
+        .catch((e) => {
+          console.error(e);
+          setOfferStatus("fail");
+          setTimeout(() => {
+            setOfferStatus("initial");
+          }, 3000);
+        });
+    }
   };
 
   const handleDeleteOffer = async (offerIndex) => {
     setOfferdeleteStatus("loadingdelete");
 
     console.log(nftAddress, nftId, offerIndex);
-    await window
+    if(window.WALLET_TYPE !=='binance') {
+      await window
       .cancelOffer(nftAddress, nftId, offerIndex)
       .then(() => {
         handleRefreshListing();
@@ -1895,13 +2044,63 @@ const SingleNft = ({
           setOfferdeleteStatus("initial");
         }, 3000);
       });
+    }
+    else if(window.WALLET_TYPE ==='binance') {
+      const marketplace = new ethers.Contract(
+        window.config.nft_marketplace_address, window.MARKETPLACE_ABI, binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseInt(currentGwei) + 1.5;
+
+      const gasPriceInWei = ethers.utils.parseUnits(
+        increasedGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      let gasLimit;
+      try {
+        gasLimit = await marketplace.estimateGas.cancelOffer(
+          nftAddress, nftId, offerIndex,
+          {
+            from: coinbase,
+          }
+        );
+        transactionParameters.gasLimit = gasLimit;
+        console.log("transactionParameters", transactionParameters);
+      } catch (error) {
+        console.error(error);
+      }
+    
+      await marketplace
+        .cancelOffer(nftAddress, nftId, offerIndex,{ from: coinbase, ...transactionParameters })
+        .then(() => {
+          handleRefreshListing();
+          setOfferdeleteStatus("successdelete");
+          setTimeout(() => {
+            setOfferdeleteStatus("initial");
+          }, 3000);
+        })
+        .catch((e) => {
+          console.error(e);
+          setOfferdeleteStatus("faildelete");
+  
+          setTimeout(() => {
+            setOfferdeleteStatus("initial");
+          }, 3000);
+        });
+    }
   };
 
   const handleUpdateOffer = async (price, pricetype, offerIndex, tokenType) => {
     setOfferupdateStatus("loadingupdate");
     const newPrice = new BigNumber(price * 1e18).toFixed();
-
-    await window
+    if(window.WALLET_TYPE !=='binance') {
+      await window
       .updateOffer(
         nftAddress,
         nftId,
@@ -1925,13 +2124,85 @@ const SingleNft = ({
           setOfferupdateStatus("initial");
         }, 3000);
       });
+    } else if(window.WALLET_TYPE === 'binance') {
+
+      let price_address;
+
+      if (priceType === 0) {
+        price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+      }
+    
+      if (priceType === 1) {
+        price_address =
+          tokenType === "dypv2"
+            ? window.config.token_dypius_new_address
+            : window.config.dyp_token_address;
+      }
+    
+      const marketplace = new ethers.Contract(
+        window.config.nft_marketplace_address, window.MARKETPLACE_ABI, binanceW3WProvider.getSigner()
+      );
+    
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseInt(currentGwei) + 1.5;
+
+      const gasPriceInWei = ethers.utils.parseUnits(
+        increasedGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      let gasLimit;
+      try {
+        gasLimit = await marketplace.estimateGas.updateOffer(
+          nftAddress, nftId, offerIndex, newPrice, [
+            priceType,
+            price_address,
+          ],
+          {
+            from: coinbase,
+          }
+        );
+        transactionParameters.gasLimit = gasLimit;
+        console.log("transactionParameters", transactionParameters);
+      } catch (error) {
+        console.error(error);
+      }
+
+      await marketplace
+        .updateOffer(nftAddress, nftId, offerIndex, newPrice, [
+          priceType,
+          price_address,
+        ],{ from: coinbase, ...transactionParameters })
+        .then(() => {
+          handleRefreshListing();
+          setOfferupdateStatus("successupdate");
+          setTimeout(() => {
+            setOfferupdateStatus("initial");
+          }, 3000);
+        })
+        .catch((e) => {
+          console.error(e);
+          setOfferupdateStatus("failupdate");
+  
+          setTimeout(() => {
+            setOfferupdateStatus("initial");
+          }, 3000);
+        });
+
+    }
   };
 
   const handleAcceptOffer = async (offerIndex) => {
     setOfferacceptStatus("loading");
 
     console.log(nftAddress, nftId, offerIndex);
-    await window
+    if(window.WALLET_TYPE !=='binance') {
+      await window
       .acceptOffer(nftAddress, nftId, offerIndex)
       .then(() => {
         setOfferacceptStatus("success");
@@ -1949,6 +2220,61 @@ const SingleNft = ({
           setOfferacceptStatus("initial");
         }, 3000);
       });
+    }
+    else if(window.WALLET_TYPE === 'binance') {
+
+      const marketplace = new ethers.Contract(
+        window.config.nft_marketplace_address, window.MARKETPLACE_ABI, binanceW3WProvider.getSigner()
+      );
+    
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseInt(currentGwei) + 1.5;
+
+      const gasPriceInWei = ethers.utils.parseUnits(
+        increasedGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      let gasLimit;
+      try {
+        gasLimit = await marketplace.estimateGas.acceptOffer(
+          nftAddress, nftId, offerIndex,
+          {
+            from: coinbase,
+          }
+        );
+        transactionParameters.gasLimit = gasLimit;
+        console.log("transactionParameters", transactionParameters);
+      } catch (error) {
+        console.error(error);
+      }
+
+    
+      await marketplace
+        .acceptOffer(nftAddress, nftId, offerIndex,{ from: coinbase, ...transactionParameters })
+        .then(() => {
+          setOfferacceptStatus("success");
+          setTimeout(() => {
+            setOfferacceptStatus("initial");
+            handleRefreshListing();
+            getLatest20BoughtNFTS(nftAddress, nftId);
+            getLatestBoughtNFT();
+          }, 3000);
+        })
+        .catch((e) => {
+          console.error(e);
+          setOfferacceptStatus("fail");
+          setTimeout(() => {
+            setOfferacceptStatus("initial");
+          }, 3000);
+        });
+
+    }
   };
 
   useEffect(() => {
@@ -4181,6 +4507,7 @@ const SingleNft = ({
           updatestatus={offerupdateStatus}
           coinbase={coinbase}
           nftCount={nftCount}
+          binanceW3WProvider={binanceW3WProvider}
         />
       )}
     </div>
