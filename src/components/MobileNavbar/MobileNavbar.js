@@ -278,7 +278,7 @@ const MobileNavbar = ({
   };
   const handleCorePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
         await handleSwitchNetworkhook("0x45c")
           .then(() => {
             handleSwitchNetwork(1116);
@@ -286,13 +286,17 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
         handleSwitchChainGateWallet(1116);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(1116);
+      }  else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+        window.alertify.error(
+          "This network is not available on Binance Web3 Wallet"
+        );
       }
     } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(1116);
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -335,7 +339,7 @@ const MobileNavbar = ({
   };
   const handleVictionPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
         await handleSwitchNetworkhook("0x58")
           .then(() => {
             handleSwitchNetwork(88);
@@ -343,10 +347,12 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
         handleSwitchChainGateWallet(88);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(88);
+      }  else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+        window.alertify.error(
+          "This network is not available on Binance Web3 Wallet"
+        );
       }
     } else if (binanceWallet && window.WALLET_TYPE === "binance") {
       handleSwitchChainBinanceWallet(88);
@@ -467,7 +473,7 @@ const MobileNavbar = ({
 
   const handleSkalePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance"  && !window.ethereum?.isBinance) {
         await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
             handleSwitchNetwork(1482601649);
@@ -475,13 +481,17 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
         handleSwitchChainGateWallet(1482601649);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(1482601649);
+      } else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+        window.alertify.error(
+          "This network is not available on Binance Web3 Wallet"
+        );
       }
     } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(1482601649);
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -489,7 +499,7 @@ const MobileNavbar = ({
 
   const handleImmutablePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance"  && !window.ethereum?.isBinance) {
         await handleSwitchNetworkhook("0x343b")
           .then(() => {
             handleSwitchNetwork(13371);
@@ -497,13 +507,17 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance"  && !window.ethereum?.isBinance) {
         handleSwitchChainGateWallet(13371);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(13371);
+      } else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+        window.alertify.error(
+          "This network is not available on Binance Web3 Wallet"
+        );
       }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(13371);
+    } else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -646,13 +660,13 @@ const MobileNavbar = ({
                     <img src={bnb} alt="" />
                     opBNB Chain
                   </Dropdown.Item>
-                  {window.WALLET_TYPE !== "binance" && (
+                  {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
                     <Dropdown.Item onClick={() => handleCorePool()}>
                       <img src={core} width={20} height={20} alt="" />
                       CORE
                     </Dropdown.Item>
                   )}
-                  {window.WALLET_TYPE !== "binance" && (
+                  {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
                     <Dropdown.Item onClick={() => handleSkalePool()}>
                       <img src={skale} alt="" />
                       SKALE
@@ -662,7 +676,7 @@ const MobileNavbar = ({
                     <img src={conflux} alt="" />
                     Conflux
                   </Dropdown.Item>
-                  {window.WALLET_TYPE !== "binance" && (
+                  {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
                     <Dropdown.Item onClick={() => handleImmutablePool()}>
                       <img src={immutable} width={20} height={20} alt="" />
                       Immutable
@@ -676,7 +690,7 @@ const MobileNavbar = ({
                     <img src={sei} width={20} height={20} alt="" />
                     Sei
                   </Dropdown.Item>*/}
-                  {window.WALLET_TYPE !== "binance" && (
+                  {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
                     <Dropdown.Item onClick={() => handleVictionPool()}>
                       <img src={viction} width={20} height={20} alt="" />
                       Viction

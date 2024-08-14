@@ -6252,18 +6252,28 @@ function Dashboard({
     }
   };
 
+
   const handleSkalePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance"  && !window.ethereum?.isBinance) {
         await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
             handleSwitchNetwork(1482601649);
-            setChainDropdown(chainDropdowns[5]);
           })
           .catch((e) => {
             console.log(e);
           });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
+        handleSwitchChainGateWallet(1482601649);
+      } else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+        window.alertify.error(
+          "This network is not available on Binance Web3 Wallet"
+        );
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -6285,19 +6295,26 @@ function Dashboard({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-
+  
   const handleVictionPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
         await handleSwitchNetworkhook("0x58")
           .then(() => {
             handleSwitchNetwork(88);
-            setChainDropdown(chainDropdowns[7]);
           })
           .catch((e) => {
             console.log(e);
           });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
+        handleSwitchChainGateWallet(88);
+      }  else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+        window.alertify.error(
+          "This network is not available on Binance Web3 Wallet"
+        );
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(88);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -8011,7 +8028,7 @@ function Dashboard({
                                           />
                                           Conflux Network
                                         </li>
-                                        {window.WALLET_TYPE !== "binance" && (
+                                        {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
                                           <li
                                             className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                             onClick={handleSkalePool}
@@ -8027,7 +8044,7 @@ function Dashboard({
                                             SKALE
                                           </li>
                                         )}
-                                        {window.WALLET_TYPE !== "binance" && (
+                                        {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
                                           <li
                                             className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                             onClick={handleCorePool}
@@ -8043,7 +8060,7 @@ function Dashboard({
                                             CORE
                                           </li>
                                         )}
-                                        {window.WALLET_TYPE !== "binance" && (
+                                        {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
                                           <li
                                             className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                             onClick={handleVictionPool}
