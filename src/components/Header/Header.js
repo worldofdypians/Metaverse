@@ -1016,13 +1016,13 @@ const Header = ({
                     <img src={bnb} alt="" />
                     opBNB Chain
                   </Dropdown.Item>
-                  {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
+                  {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                     <Dropdown.Item onClick={() => handleCorePool()}>
                       <img src={core} width={20} height={20} alt="" />
                       CORE
                     </Dropdown.Item>
                   )}
-                  {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
+                  {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                     <Dropdown.Item onClick={() => handleSkalePool()}>
                       <img src={skale} alt="" />
                       SKALE
@@ -1032,7 +1032,7 @@ const Header = ({
                     <img src={conflux} alt="" />
                     Conflux
                   </Dropdown.Item>
-                  {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
+                  {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                     <Dropdown.Item onClick={() => handleImmutablePool()}>
                       <img src={immutable} width={20} height={20} alt="" />
                       Immutable
@@ -1046,7 +1046,7 @@ const Header = ({
                     <img src={sei} width={20} height={20} alt="" />
                     Sei
                   </Dropdown.Item>*/}
-                  {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
+                  {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                     <Dropdown.Item onClick={() => handleVictionPool()}>
                       <img src={viction} width={20} height={20} alt="" />
                       Viction

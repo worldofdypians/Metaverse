@@ -1766,7 +1766,7 @@ const GetPremiumPopup = ({
                   />
                   Conflux Network
                 </li>
-                {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
+                {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                   <li
                     className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                     onClick={handleSkalePool}
@@ -1783,7 +1783,7 @@ const GetPremiumPopup = ({
                   </li>
                 )}
 
-                {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
+                {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                   <li
                     className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                     onClick={handleCorePool}
@@ -1799,7 +1799,7 @@ const GetPremiumPopup = ({
                     CORE
                   </li>
                 )}
-                {(window.WALLET_TYPE !== "binance" || window.ethereum?.isBinance) && (
+                {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                   <li
                     className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                     onClick={handleVictionPool}
