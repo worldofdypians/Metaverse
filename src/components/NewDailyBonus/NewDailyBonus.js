@@ -1901,7 +1901,7 @@ const NewDailyBonus = ({
           setMessage("login");
           setDisable(true);
         }
-      } else if (window.WALLET_TYPE === "binance") {
+      } else if (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) {
         setMessage("notsupported");
       }
     } else if (chain === "core") {
@@ -1967,7 +1967,7 @@ const NewDailyBonus = ({
           setMessage("login");
           setDisable(true);
         }
-      } else if (window.WALLET_TYPE === "binance") {
+      } else if (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) {
         setMessage("notsupported");
       }
     } else if (chain === "viction") {
@@ -2033,7 +2033,7 @@ const NewDailyBonus = ({
           setMessage("login");
           setDisable(true);
         }
-      } else if (window.WALLET_TYPE === "binance") {
+      } else if (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) {
         setMessage("notsupported");
       }
     } else if (chain === "manta") {

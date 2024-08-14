@@ -3020,17 +3020,16 @@ function App() {
       setIsConnected(false);
       setCoinbase();
       localStorage.setItem("logout", "true");
-    } else if(window.ethereum && window.WALLET_TYPE === 'binance' && window.ethereum?.isBinance) {
-       window.getCoinbase().then((data) => {
-        if (data) {
-          fetchAvatar(data);
-          setCoinbase(data);
+    }
+     else if(window.ethereum && window.WALLET_TYPE === 'binance' && window.ethereum?.isBinance && logout === "false") {
+        if (account) {
+          fetchAvatar(account);
+          setCoinbase(account);
           setIsConnected(true);
         } else {
           setCoinbase();
           setIsConnected(false);
         }
-      });
     }
     checkNetworkId();
   }, [coinbase, networkId, active, account]);
