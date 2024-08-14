@@ -148,8 +148,8 @@ function App() {
       blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
     },
 
-    167000 : {
-      chainId: 167000 ,
+    167000: {
+      chainId: 167000,
       chainName: "Taiko Mainnet",
       rpcUrls: ["https://rpc.taiko.xyz"],
       nativeCurrency: {
@@ -278,8 +278,8 @@ function App() {
   const [myvictionNFTsCreated, setmyVictionNFTsCreated] = useState([]);
   const [myopbnbNFTsCreated, setmyopbnbNFTsCreated] = useState([]);
   const [myimmutableNftsCreated, setmyImmutableNFTsCreated] = useState([]);
-  const [myMantaNFTsCreated, setMyMantaNFTsCreated] = useState([])
-  const [myTaikoNFTsCreated, setMyTaikoNFTsCreated] = useState([])
+  const [myMantaNFTsCreated, setMyMantaNFTsCreated] = useState([]);
+  const [myTaikoNFTsCreated, setMyTaikoNFTsCreated] = useState([]);
 
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
@@ -302,8 +302,8 @@ function App() {
   const [totalCoreNft, settotalCoreNft] = useState(0);
   const [totalVictionNft, settotalVictionNft] = useState(0);
   const [totalopbnbNft, settotalopbnbNft] = useState(0);
-  const [totalMantaNft, setTotalMantaNft] = useState(0)
-  const [totalTaikoNft, setTotalTaikoNft] = useState(0)
+  const [totalMantaNft, setTotalMantaNft] = useState(0);
+  const [totalTaikoNft, setTotalTaikoNft] = useState(0);
 
   const [totalDogeNft, settotalDogeNft] = useState(0);
   const [totalCmcNft, settotalCmcNft] = useState(0);
@@ -320,8 +320,8 @@ function App() {
   const [confluxMintAllowed, setconfluxMintAllowed] = useState(1);
   const [victionMintAllowed, setvictionMintAllowed] = useState(1);
   const [opbnbMintAllowed, setopbnbMintAllowed] = useState(1);
-  const [mantaMintAllowed, setMantaMintAllowed] = useState(1)
-  const [taikoMintAllowed, setTaikoMintAllowed] = useState(1)
+  const [mantaMintAllowed, setMantaMintAllowed] = useState(1);
+  const [taikoMintAllowed, setTaikoMintAllowed] = useState(1);
 
   const [coreMintAllowed, setcoreMintAllowed] = useState(1);
 
@@ -365,8 +365,8 @@ function App() {
   const [myCoreNfts, setMyCoreNfts] = useState([]);
   const [myVictionNfts, setMyVictionNfts] = useState([]);
   const [myOpbnbNfts, setmyOpbnbNfts] = useState([]);
-  const [myMantaNfts, setMyMantaNfts] = useState([])
-  const [myTaikoNfts, setMyTaikoNfts] = useState([])
+  const [myMantaNfts, setMyMantaNfts] = useState([]);
+  const [myTaikoNfts, setMyTaikoNfts] = useState([]);
 
   const [myMultiversNfts, setMyMultiversNfts] = useState([]);
   const [myImmutableNfts, setMyImmutableNfts] = useState([]);
@@ -678,12 +678,11 @@ function App() {
       window.MULTIVERS_NFT_ABI,
       window.config.nft_multivers_address
     );
-    
+
     const mantaContract = new window.mantaWeb3.eth.Contract(
       window.MANTA_NFT_ABI,
       window.config.nft_manta_address
     );
-
 
     const confluxresult = await confluxContract.methods
       .totalSupply()
@@ -753,7 +752,7 @@ function App() {
         return 0;
       });
 
-      const mantaresult = await mantaContract.methods
+    const mantaresult = await mantaContract.methods
       .totalSupply()
       .call()
       .catch((e) => {
@@ -773,12 +772,11 @@ function App() {
         parseInt(bnbresult) +
         parseInt(coreresult) +
         parseInt(victionresult) +
-        parseInt(multiversresult)  +
+        parseInt(multiversresult) +
         parseInt(mantaresult) +
         20000
     );
   };
-
 
   useEffect(() => {
     fetchRecordsStar();
@@ -2274,12 +2272,10 @@ function App() {
                 setmintloading("initial");
               }, 5000);
               getMyNFTS(coinbase, "taiko").then((NFTS) => {
-                
                 setTotalTaikoNft(NFTS.length);
                 setMyTaikoNfts(NFTS);
                 setTaikoMintAllowed(NFTS.length > 0 ? 0 : 1);
                 setMyTaikoNFTsCreated(NFTS);
-                
               });
             })
             .catch((e) => {
@@ -2894,7 +2890,8 @@ function App() {
     if (
       !window.coin98 &&
       window.ethereum &&
-      window.ethereum.isConnected() === true &&
+      (window.ethereum.isMetaMask === true ||
+        window.ethereum.isTrust === true) &&
       !window.gatewallet
     ) {
       if (
@@ -3097,7 +3094,7 @@ function App() {
       window.DAILY_BONUS_MANTA_ABI,
       window.config.daily_bonus_manta_address
     );
-    
+
     const daily_bonus_contract_taiko = new window.taikoWeb3.eth.Contract(
       window.DAILY_BONUS_TAIKO_ABI,
       window.config.daily_bonus_taiko_address
@@ -3155,29 +3152,29 @@ function App() {
                 setIsPremium(true);
               } else {
                 const isPremium_manta = await daily_bonus_contract_manta.methods
-                .isPremiumUser(addr)
-                .call()
-                .catch((e) => {
-                  console.error(e);
-                  return false;
-                });
-              if (isPremium_manta === true) {
-                setIsPremium(true);
-              } else {
-                const isPremium_taiko = await daily_bonus_contract_taiko.methods
-                .isPremiumUser(addr)
-                .call()
-                .catch((e) => {
-                  console.error(e);
-                  return false;
-                });
-              if (isPremium_taiko === true) {
-                setIsPremium(true);
-              } else {
-               setIsPremium(false);
-              }
-              }
-            
+                  .isPremiumUser(addr)
+                  .call()
+                  .catch((e) => {
+                    console.error(e);
+                    return false;
+                  });
+                if (isPremium_manta === true) {
+                  setIsPremium(true);
+                } else {
+                  const isPremium_taiko =
+                    await daily_bonus_contract_taiko.methods
+                      .isPremiumUser(addr)
+                      .call()
+                      .catch((e) => {
+                        console.error(e);
+                        return false;
+                      });
+                  if (isPremium_taiko === true) {
+                    setIsPremium(true);
+                  } else {
+                    setIsPremium(false);
+                  }
+                }
               }
             }
           }
@@ -3722,9 +3719,9 @@ function App() {
   }, [nftCount]);
 
   const checkData = async () => {
-    if (coinbase) {
-      navigate("/auth");
-    }
+    // if (coinbase) {
+    navigate("/auth");
+    // }
   };
 
   useEffect(() => {
@@ -3759,10 +3756,8 @@ function App() {
 
   useEffect(() => {
     fetchSocialData();
-    getTotalSupply()
+    getTotalSupply();
   }, []);
-
-
 
   return (
     <>
@@ -4033,7 +4028,7 @@ function App() {
             path="/marketplace"
             element={
               <Marketplace
-              totalSupply={totalSupply}
+                totalSupply={totalSupply}
                 count={count2}
                 setCount={setCount2}
                 ethTokenData={ethTokenData}
@@ -4159,7 +4154,7 @@ function App() {
             }
           />
 
-<Route
+          <Route
             exact
             path="/marketplace/beta-pass/manta"
             element={
@@ -4206,7 +4201,7 @@ function App() {
             }
           />
 
-<Route
+          <Route
             exact
             path="/marketplace/beta-pass/taiko"
             element={
@@ -5105,7 +5100,7 @@ function App() {
               />
             }
           />
-            {/* <Route
+          {/* <Route
             exact
             path="/marketplace/mint/manta"
             element={
@@ -5162,8 +5157,8 @@ function App() {
               />
             }
           /> */}
-          
-         <Route
+
+          <Route
             exact
             path="/marketplace/mint/immutable"
             element={
@@ -5221,7 +5216,7 @@ function App() {
             }
           />
 
-{/* <Route
+          {/* <Route
             exact
             path="/marketplace/mint/taiko"
             element={
