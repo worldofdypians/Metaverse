@@ -273,8 +273,8 @@ const MarketMint = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(immutableData);
-  const [mintTitle, setMintTitle] = useState("immutable");
+  const [selectedMint, setSelectedMint] = useState(taikoData);
+  const [mintTitle, setMintTitle] = useState("taiko");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -425,7 +425,7 @@ const MarketMint = ({
   let countToExpireImmutable = new Date("2024-08-15T24:00:00.000+02:00");
 
   let countToExpireManta = new Date("2024-08-15T24:00:00.000+02:00");
-  let countToExpireTaiko = new Date("2024-08-25T24:00:00.000+02:00");
+  let countToExpireTaiko = new Date("2024-09-13T24:00:00.000+02:00");
 
 
   const dummyCards = [
@@ -542,15 +542,15 @@ const MarketMint = ({
     //   class: "mint-bnb",
     //   id: "opbnb",
     // },
-    // {
-    //   title: "Taiko Pass",
-    //   eventId: "taiko",
-    //   desc: "Gain entry to metaverse, and join exclusive Taiko event with special ticket.",
-    //   img: taikoActive,
-    //   data: taikoData,
-    //   class: "mint-taiko",
-    //   id: "taiko",
-    // },
+    {
+      title: "Taiko Pass",
+      eventId: "taiko",
+      desc: "Gain entry to metaverse, and join exclusive Taiko event with special ticket.",
+      img: taikoActive,
+      data: taikoData,
+      class: "mint-taiko",
+      id: "taiko",
+    },
     {
       title: "Immutable Pass",
       eventId: "immutable",
@@ -900,8 +900,9 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
                   >
-                    {" "}
-                    
+                     <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     Live
                   </h6>
                   <h6
@@ -910,9 +911,7 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     Upcoming
                   </h6>
                   <h6
@@ -2868,7 +2867,7 @@ const MarketMint = ({
                 //   </div>
                 // </div>
                 <div className="d-flex flex-column gap-4">
-                    <div className="upcoming-mint-wrapper upcoming-taiko-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    {/* <div className="upcoming-mint-wrapper upcoming-taiko-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Taiko Beta Pass</h6>
                       <p className="upcoming-mint-desc">
@@ -2886,7 +2885,7 @@ const MarketMint = ({
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div>
+                  </div> */}
                   <div className="upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Manta Beta Pass</h6>

@@ -1739,7 +1739,6 @@ const BetaPassNFT = ({
                           mintTitle === "sei" ||
                           mintTitle === "core" ||
                           mintTitle === "manta" ||
-                          mintTitle === "taiko" ||
                           mintTitle === "viction" ||
                           mintTitle === "multiversx") && (
                           <div className="position-relative">
@@ -1784,7 +1783,7 @@ const BetaPassNFT = ({
                           Manta Giveaway
                         </a>
                       )}
-                      {mintTitle === "taiko" && (
+                      {/* {mintTitle === "taiko" && (
                         <a
                           className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
                           href="https://sweepwidget.com/c/taiko-wod-giveaway"
@@ -1798,7 +1797,7 @@ const BetaPassNFT = ({
                           />{" "}
                           Taiko Giveaway
                         </a>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>

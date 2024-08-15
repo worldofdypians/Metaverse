@@ -3513,7 +3513,7 @@ const SingleNft = ({
                             : type === "manta"
                             ? "MANTA"
                             : type === "taiko"
-                            ? "ETH"
+                            ? "TAIKO"
                             : type === "skale"
                             ? "SKL"
                             : type === "core"
