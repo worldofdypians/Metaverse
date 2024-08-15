@@ -172,6 +172,12 @@ const WodBuilders = () => {
       icon: "micro3",
       banner: "kucoinBanner.png",
     },
+
+    {
+      name: "Cyborg",
+      icon: "cyborg",
+      banner: "kucoinBanner.png",
+    },
   
   ];
 
