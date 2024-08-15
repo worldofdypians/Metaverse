@@ -85,7 +85,7 @@ const MintPopup = ({ active, onClose, data }) => {
                   className="mint-popup-title  mb-0"
                   style={{ color: "#18FFFF" }}
                 >
-                  Live Giveaway
+                  Free Minting
                 </h6>
               </div>
               <h6 className="mint-popup-title m-0">
@@ -322,7 +322,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "Taiko" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/beta-pass/taiko"}
+            to={"/marketplace/mint/taiko"}
             state={{ event: data.state }}
             className="linear-border"
           >
