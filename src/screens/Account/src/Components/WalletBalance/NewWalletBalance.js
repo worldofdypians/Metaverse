@@ -286,6 +286,9 @@ const NewWalletBalance = ({
   openedTaikoChests,
   taikoPoints,
   taikoEarnToken,
+  immutableEarnUsd,
+  immutableEarnToken,
+  immutablePoints,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -300,6 +303,8 @@ const NewWalletBalance = ({
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
   let mantaLastDay = new Date("2024-10-30T14:00:00.000+02:00");
   let taikoLastDay = new Date("2024-10-30T14:00:00.000+02:00");
+  let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
+
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
@@ -392,14 +397,38 @@ const NewWalletBalance = ({
     rewards: "MANTA",
     status: "Live",
   };
+
+  const dummyImmutable = {
+    title: "Immutable",
+    logo: immutableLogo,
+    eventStatus: "Live",
+    totalRewards: "$20,000 in IMX Rewards",
+    myEarnings: 0.0,
+    eventDate: "Aug 15, 2024",
+    date: "Aug 15, 2024",
+    id: "event15",
+    eventType: "Explore & Mine",
+    eventDuration: immutableLastDay,
+    backgroundImage: immutableBg,
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
+    chain: "Immutable",
+    linkState: "immutable",
+    rewards: "IMX",
+    status: "Live",
+  };
+
   const dummyTaiko = {
     title: "Taiko",
     logo: taikoLogo,
     eventStatus: "Coming Soon",
     totalRewards: "$20,000 in TAIKO Rewards",
     myEarnings: 0.0,
-    eventDate: "Aug 22, 2024",
-    date: "Aug 22, 2024",
+    eventDate: "Aug 19, 2024",
+    date: "Aug 19, 2024",
     id: "event22",
     eventType: "Explore & Mine",
     eventDuration: taikoLastDay,
@@ -530,7 +559,6 @@ const NewWalletBalance = ({
         eventDate: "Jul 01, 2024",
       },
     },
-
     {
       title: "BNB Chain",
       logo: bnbLogo,
@@ -557,6 +585,66 @@ const NewWalletBalance = ({
         learnMore:
           "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
         eventDate: "Jun 12, 2024",
+      },
+    },
+    {
+      title: "Immutable",
+      logo: immutableLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in IMX Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 15, 2024",
+      backgroundImage: immutableBg,
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable",
+        linkState: "immutable",
+        rewards: "IMX",
+        status: "Live",
+        logo: immutableLogo,
+        date: "Aug 15, 2024",
+        id: "event15",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in IMX Rewards",
+        eventDuration: immutableLastDay,
+        backgroundImage: immutableBg,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
+        eventDate: "Aug 15, 2024",
+      },
+    },
+    {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in TAIKO Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 19, 2024",
+      backgroundImage: taikoBg,
+      popupInfo: {
+        title: "Taiko",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Coming Soon",
+        logo: taikoLogo,
+        date: "Aug 19, 2024",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        backgroundImage: taikoBg,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 19, 2024",
       },
     },
     {
@@ -587,66 +675,8 @@ const NewWalletBalance = ({
         eventDate: "Aug 20, 2024",
       },
     },
-    {
-      title: "Taiko",
-      logo: taikoLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in TAIKO Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 22, 2024",
-      backgroundImage: taikoBg,
-      popupInfo: {
-        title: "Taiko",
-        chain: "Taiko",
-        linkState: "taiko",
-        rewards: "TAIKO",
-        status: "Coming Soon",
-        logo: taikoLogo,
-        date: "Aug 22, 2024",
-        id: "event22",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in TAIKO Rewards",
-        eventDuration: taikoLastDay,
-        backgroundImage: taikoBg,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Aug 22, 2024",
-      },
-    },
-    {
-      title: "Immutable",
-      logo: immutableLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in IMX Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 15, 2024",
-      backgroundImage: immutableBg,
-      popupInfo: {
-        title: "Immutable",
-        chain: "Immutable",
-        linkState: "immutable",
-        rewards: "IMX",
-        status: "Coming Soon",
-        logo: immutableLogo,
-        date: "Aug 15, 2024",
-        id: "event15",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in IMX Rewards",
-        eventDuration: taikoLastDay,
-        backgroundImage: immutableBg,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Aug 15, 2024",
-      },
-    },
+    
+   
     // {
     //   title: "SEI",
     //   logo: seiLogo,
@@ -1588,17 +1618,19 @@ const NewWalletBalance = ({
               >
                 Treasure Hunt
               </h6>{" "}
-              <UpcomingProfileEvent
-                data={dummyTaiko}
+              <ActiveProfileEvent
+                data={dummyImmutable}
+                event={dummyImmutable}
+                userEarnedUsd={immutableEarnUsd}
                 onOpenEvent={() => {
-                  setDummyEvent(dummyTaiko);
+                  setDummyEvent(dummyImmutable);
                   setEventPopup(true);
                 }}
               />
               <ActiveProfileEvent
                 data={dummyBNB}
                 event={dummyBNB}
-                userEarnedUsd={0}
+                userEarnedUsd={bnbEarnUsd}
                 onOpenEvent={() => {
                   setDummyEvent(dummyBNB);
                   setEventPopup(true);
@@ -1688,6 +1720,8 @@ const NewWalletBalance = ({
                           ? mantaEarnUsd
                           : item.title === "Taiko"
                           ? taikoEarnUsd
+                          : item.title === "Immutable"
+                          ? immutableEarnUsd
                           : item.title === "CORE"
                           ? coreEarnUsd
                           : item.title === "CMC" ||
@@ -2071,7 +2105,8 @@ const NewWalletBalance = ({
                           Number(cawsPremiumRewards) +
                           Number(bnbEarnUsd) +
                           Number(victionEarnUsd) +
-                          Number(taikoEarnUsd) +
+                          Number(taikoEarnUsd) + +
+                          Number(immutableEarnUsd) +
                           Number(mantaEarnUsd),
                         2
                       )}
@@ -2433,7 +2468,7 @@ const NewWalletBalance = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              {dummyEvent.status === "Live" && dummyEvent.learnMore !== "" && (
+              {dummyEvent.status === "Live" && dummyEvent.learnMore !== "" && dummyEvent.id!=='event15' && (
                 <NavLink
                   to={dummyEvent.learnMore}
                   className="events-page-details d-flex align-items-center gap-2"
@@ -2441,6 +2476,17 @@ const NewWalletBalance = ({
                   Learn more
                   <img src={eventsArrow} alt="" />
                 </NavLink>
+              )}
+              {dummyEvent.status === "Live" && dummyEvent.learnMore !== "" && dummyEvent.id==='event15' && (
+                <a
+                  href={dummyEvent.learnMore}
+                  target="_blank"
+                  rel='noreferrer'
+                  className="events-page-details d-flex align-items-center gap-2"
+                >
+                  Learn more
+                  <img src={eventsArrow} alt="" />
+                </a>
               )}
             </div>
             <div className="row mb-3 gap-3 gap-lg-0">
@@ -3170,6 +3216,8 @@ const NewWalletBalance = ({
                         ? mantaPoints
                         : dummyEvent.id === "event22"
                         ? taikoPoints
+                        : dummyEvent.id === "event15"
+                        ? immutablePoints
                         : 0,
                       0
                     )}
@@ -3219,6 +3267,8 @@ const NewWalletBalance = ({
                         ? mantaEarnUsd
                         : dummyEvent.id === "event22"
                         ? taikoEarnUsd
+                        : dummyEvent.id === "event15"
+                        ? immutableEarnUsd
                         : 0,
                       2
                     )}
@@ -3254,6 +3304,8 @@ const NewWalletBalance = ({
                               ? mantaEarnToken
                               : dummyEvent.id === "event22"
                               ? taikoEarnToken
+                              : dummyEvent.id === "event15"
+                              ? immutableEarnToken
                               : 0,
                             2
                           )}

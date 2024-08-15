@@ -268,12 +268,13 @@ const MarketMint = ({
   const [bnbNftsSold, setbnbNftsSold] = useState(0);
   const [victionNftsSold, setVictionNftsSold] = useState(0);
   const [coreNftsSold, setCoreNftsSold] = useState(0);
+  const [opbnbNftsSold, setopBnbNftsSold] = useState(0);
 
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(opbnbData);
-  const [mintTitle, setMintTitle] = useState("opbnbchain");
+  const [selectedMint, setSelectedMint] = useState(immutableData);
+  const [mintTitle, setMintTitle] = useState("immutable");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -368,6 +369,21 @@ const MarketMint = ({
       });
 
     setCoreNftsSold(coreresult);
+
+    const opbnbnftContract = new window.opBnbWeb3.eth.Contract(
+      window.OPBNB_NFT_ABI,
+      window.config.nft_opbnb_address
+    );
+
+    const opbnbresult = await opbnbnftContract.methods
+    .totalSupply()
+    .call()
+    .catch((e) => {
+      console.error(e);
+      return 0;
+    });
+
+  setopBnbNftsSold(opbnbresult);
 
 
   };
@@ -517,15 +533,15 @@ const MarketMint = ({
     //   class: "mint-manta",
     //   id: "manta",
     // },
-    {
-      title: "opBNB Chain Pass",
-      eventId: "opbnbchain",
-      desc: "Gain entry to metaverse, and join exclusive opBNB Chain event with special ticket.",
-      img: bnbActive,
-      data: opbnbData,
-      class: "mint-bnb",
-      id: "opbnb",
-    },
+    // {
+    //   title: "opBNB Chain Pass",
+    //   eventId: "opbnbchain",
+    //   desc: "Gain entry to metaverse, and join exclusive opBNB Chain event with special ticket.",
+    //   img: bnbActive,
+    //   data: opbnbData,
+    //   class: "mint-bnb",
+    //   id: "opbnb",
+    // },
     // {
     //   title: "Taiko Pass",
     //   eventId: "taiko",
@@ -3187,6 +3203,24 @@ const MarketMint = ({
                             {getFormattedNumber(coreNftsSold,0)}
                           </h6>
                           <span className="past-core-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-opbnb-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">opBNB Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6
+                            className="past-bnb-mint-amount"
+                          >
+                            {getFormattedNumber(opbnbNftsSold,0)}
+                          </h6>
+                          <span className="past-bnb-mint-desc">SOLD OUT</span>
                         </div>
                       </div>
                     </div>
