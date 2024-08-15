@@ -2204,6 +2204,19 @@ line-height: normal;
 }
 
 
+.past-opbnb-mint {
+  background-image: url("./assets/opbnbPastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/opbnbPastMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
 
 .past-bnb-mint {
   background-image: url("./assets/bnbMintDesktop.webp");
@@ -2334,6 +2347,18 @@ line-height: normal;
 }
 
 
+.past-opbnb-mint-amount {
+  color: #FC9210;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
 
 .past-conflux-mint-desc {
   color: #fff;
@@ -2380,6 +2405,20 @@ line-height: normal;
 
 
 .past-core-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(255, 174, 67, 0.7);
+  font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-opbnb-mint-desc {
   color: #fff;
   text-shadow: 0px 3px 4px rgba(255, 174, 67, 0.7);
   font-family: Poppins;

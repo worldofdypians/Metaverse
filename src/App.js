@@ -5067,7 +5067,7 @@ function App() {
             }
           /> */}
 
-          <Route
+          {/* <Route
             exact
             path="/marketplace/mint/opbnbchain"
             element={
@@ -5123,7 +5123,7 @@ function App() {
                 myTaikoNFTsCreated={myTaikoNFTsCreated}
               />
             }
-          />
+          /> */}
           {/* <Route
             exact
             path="/marketplace/mint/manta"

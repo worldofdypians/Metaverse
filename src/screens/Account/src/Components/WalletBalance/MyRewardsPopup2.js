@@ -26,6 +26,8 @@ import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
 import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
+import immutableLogo from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
+
 import multiversIcon from "../../../../../components/NewDailyBonus/assets/multiversxIcon.svg";
 
 import dypius from "./myrewardsAssets/newAssets/treasureHunt/dypius.svg";
@@ -67,7 +69,7 @@ const MyRewardsPopupNew = ({
   allMantaChests,
   mantaEarnUsd,
   weeklyDataAmountTaiko,
-  monthlyDataAmountTaiko, allTaikoChests,taikoEarnUsd
+  monthlyDataAmountTaiko, allTaikoChests,taikoEarnUsd, immutableEarnUsd
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -734,7 +736,7 @@ const MyRewardsPopupNew = ({
                       Number(skaleEarnUsd) +
                       Number(multiversEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(bnbEarnUsd) +
+                      Number(bnbEarnUsd) + Number(immutableEarnUsd)+
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd) +
                       Number(mantaEarnUsd) +
@@ -1020,7 +1022,7 @@ const MyRewardsPopupNew = ({
                     Number(skaleEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(bnbEarnUsd) +
+                      Number(bnbEarnUsd) + Number(immutableEarnUsd)+
                       Number(multiversEarnUsd) +
                       Number(victionEarnUsd) +
                       Number(mantaEarnUsd),
@@ -1493,19 +1495,19 @@ const MyRewardsPopupNew = ({
                       ${getFormattedNumber(victionEarnUsd, 2)}
                     </span>
                   </div>
-                  {/* <div className="d-flex w-100 justify-content-between gap-2">
+                  <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
                       <img
-                        src={multiversIcon}
+                        src={immutableLogo}
                         alt=""
                         style={{ width: 16, height: 16 }}
                       />
-                      MultiversX
+                      Immutable
                     </span>
                     <span className="item-name-right">
-                      ${getFormattedNumber(multiversEarnUsd, 2)}
+                      ${getFormattedNumber(immutableEarnUsd, 2)}
                     </span>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>
