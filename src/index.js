@@ -4,28 +4,35 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./app.scss";
 import { BrowserRouter } from "react-router-dom";
-import { Web3ReactProvider } from "web3-connector";
+
 import { getConnectors } from "web3-connector";
 import AuthProvider from "./screens/Account/src/Utils.js/Auth/AuthDetails";
 import { ApolloProvider } from "@apollo/client";
 import client from "./screens/Account/src/apolloConfig";
+
+import { Web3Provider } from "@ethersproject/providers";
+import { Web3ReactProvider } from "@web3-react/core";
+import { getWeb3ReactContext } from "@web3-react/core";
+
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
-const connectors = getConnectors({
-  1: [`${window.config.infura_endpoint}`],
-});
 
+function getLibrary(provider) {
+  const library = new Web3Provider(provider);
+  library.pollingInterval = 12000;
+  return library;
+}
 
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <Web3ReactProvider connectors={connectors}>
-    <ApolloProvider client={client}>
-      <AuthProvider>
-        <App />
-        </AuthProvider>
-    </ApolloProvider>
-    </Web3ReactProvider>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <ApolloProvider client={client}>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </ApolloProvider>
+      </Web3ReactProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

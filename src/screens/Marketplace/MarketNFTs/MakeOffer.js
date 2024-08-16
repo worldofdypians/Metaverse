@@ -13,6 +13,7 @@ import dropdownIcon from "./assets/dropdownIcon.svg";
 import whiteTag from "./assets/whiteTag.svg";
 import Web3 from "web3";
 import getListedNFTS from "../../../actions/Marketplace";
+import { ethers } from "ethers";
 
 const MakeOffer = ({
   open,
@@ -33,7 +34,7 @@ const MakeOffer = ({
   nftAddr,
   nftId,
   deletestatus,
-  updatestatus,
+  updatestatus,binanceW3WProvider
 }) => {
   const windowSize = useWindowSize();
   const [filter1, setFilter1] = useState("weth");
@@ -91,7 +92,8 @@ const MakeOffer = ({
   const approveMakeOffer = async (price, pricetype, tokenType) => {
     const newPrice = new BigNumber(price * 1e18).toFixed();
     setapprovestatus("loading");
-    await window
+    if(window.WALLET_TYPE !== 'binance'){
+      await window
       .approveOffer(newPrice, pricetype, tokenType)
       .then(() => {
         setisApprove(true);
@@ -109,6 +111,58 @@ const MakeOffer = ({
           setapprovestatus("initial");
         }, 3000);
       });
+    } else if(window.WALLET_TYPE === 'binance') {
+      if (pricetype === 1) {
+        const contract = new ethers.Contract(
+         
+          tokenType === "dypv2"
+            ? window.config.token_dypius_new_address
+            : window.config.dyp_token_address, window.DYP_ABI, binanceW3WProvider.getSigner()
+        );
+    
+        
+      
+    
+        await contract
+          .approve(window.config.nft_marketplace_address, newPrice,{ from: coinbase })
+          .then(() => {
+            setisApprove(true);
+            setapprovestatus("success");
+            setTimeout(() => {
+              setapprovestatus("initial");
+            }, 3000);
+          })
+          .catch((e) => {
+            console.error(e);
+            setapprovestatus("fail");
+            setTimeout(() => {
+              setapprovestatus("initial");
+            }, 3000);
+          });
+      } else if (pricetype === 0) {
+        const contract = new ethers.Contract(
+          window.config.weth2_address, window.TOKEN_ABI, binanceW3WProvider.getSigner()
+        );
+    
+
+        await contract
+          .approve(window.config.nft_marketplace_address, newPrice,{ from: coinbase })
+          .then(() => {
+            setisApprove(true);
+            setapprovestatus("success");
+            setTimeout(() => {
+              setapprovestatus("initial");
+            }, 3000);
+          })
+          .catch((e) => {
+            console.error(e);
+            setapprovestatus("fail");
+            setTimeout(() => {
+              setapprovestatus("initial");
+            }, 3000);
+          });
+      }
+    }
   };
 
   const getDypBalance = async () => {

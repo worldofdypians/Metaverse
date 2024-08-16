@@ -44,6 +44,8 @@ const MobileNavbar = ({
   handleSwitchChainGateWallet,
   domainName,
   handleOpenDomains,
+  handleSwitchChainBinanceWallet,
+  binanceWallet,
 }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -278,31 +280,22 @@ const MobileNavbar = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
-        handleSwitchChainGateWallet();
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance"  && !window.ethereum?.isBinance) {
+        handleSwitchChainGateWallet(chain);
+      } else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+        window.alertify.error(
+          "This network is not available on Binance Web3 Wallet"
+        );
       }
+    } else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
-  useEffect(() => {
-    if (chainId === 1) {
-      handleSwitchNetwork(1);
-    }
-
-    if (chainId === 56) {
-      handleSwitchNetwork(56);
-    }
-
-    if (chainId === 8453) {
-      handleSwitchNetwork(8453);
-    }
-
-    if (chainId === 1482601649) {
-      handleSwitchNetwork(1482601649);
-    }
-  }, [chainId, coinbase]);
 
   useEffect(() => {
     setActiveChain();
@@ -444,28 +437,46 @@ const MobileNavbar = ({
                   <img src={bnb} alt="" />
                   opBNB Chain
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => switchNetwork("0x28c58", 167000)}>
-                  <img src={taiko} width={20} height={20} alt="" />
-                  Taiko
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => switchNetwork("0x45c", 1116)}>
-                  <img src={core} width={20} height={20} alt="" />
-                  CORE
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => switchNetwork("0x585eb4b1", 1482601649)}
-                >
-                  <img src={skale} alt="" />
-                  SKALE
-                </Dropdown.Item>
+                {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <Dropdown.Item
+                        onClick={() => switchNetwork("0x28c58", 167000)}
+                      >
+                        <img src={taiko} width={20} height={20} alt="" />
+                        Taiko
+                      </Dropdown.Item>
+                    )}
+                {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <Dropdown.Item
+                        onClick={() => switchNetwork("0x45c", 1116)}
+                      >
+                        <img src={core} width={20} height={20} alt="" />
+                        CORE
+                      </Dropdown.Item>
+                    )}
+                {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <Dropdown.Item
+                        onClick={() => switchNetwork("0x585eb4b1", 1482601649)}
+                      >
+                        <img src={skale} alt="" />
+                        SKALE
+                      </Dropdown.Item>
+                    )}
                 <Dropdown.Item onClick={() => switchNetwork("0x406", 1030)}>
                   <img src={conflux} alt="" />
                   Conflux
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => switchNetwork("0x343b", 13371)}>
-                  <img src={immutable} width={20} height={20} alt="" />
-                  Immutable
-                </Dropdown.Item>
+                {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <Dropdown.Item
+                        onClick={() => switchNetwork("0x343b", 13371)}
+                      >
+                        <img src={immutable} width={20} height={20} alt="" />
+                        Immutable
+                      </Dropdown.Item>
+                    )}
                 <Dropdown.Item onClick={() => switchNetwork("0x2105", 8453)}>
                   <img src={base} alt="" />
                   Base
@@ -474,10 +485,14 @@ const MobileNavbar = ({
                     <img src={sei} width={20} height={20} alt="" />
                     Sei
                   </Dropdown.Item>*/}
-                <Dropdown.Item onClick={() => switchNetwork("0x58", 88)}>
-                  <img src={viction} width={20} height={20} alt="" />
-                  Viction
-                </Dropdown.Item>
+                 {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <Dropdown.Item onClick={() => switchNetwork("0x58", 88)}>
+                        <img src={viction} width={20} height={20} alt="" />
+                        Viction
+                      </Dropdown.Item>
+                    )}
+
                 <Dropdown.Item onClick={() => switchNetwork("0xa86a", 43114)}>
                   <img src={avax} alt="" />
                   Avalanche

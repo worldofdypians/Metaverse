@@ -12,6 +12,7 @@ import CawsWodNftChecklist from "./CawsWodNftChecklist";
 import ethIcon from "./assets/ethIcon.svg";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { formattedNum } from "../../screens/Caws/functions/formatUSD";
+import { ethers } from "ethers";
 
 const RewardsModal = ({
   onModalClose,
@@ -27,6 +28,7 @@ const RewardsModal = ({
   finalUsd,
   onClaimAll,
   handleConnect,
+  binanceW3WProvider,
 }) => {
   const [checkUnstakebtn, setCheckUnstakeBtn] = useState(false);
   const [status, setStatus] = useState("");
@@ -117,29 +119,61 @@ const RewardsModal = ({
     setStatus("*Processing unstake");
     setColor("#57AEAA");
     setloadingWithdraw(true);
-    await window.wod_caws
-      .withdrawWodCaws(
-        getApprovedNfts(selectNftIds),
-        getApprovedLandNfts(selectNftLandIds)
-      )
-      .then(() => {
-        onDepositComplete();
-        setloadingWithdraw(false);
-        setStatus("*Unstaked successfully");
-        setColor("#57AEAA");
-        handleClearStatus();
-        setSelectedNftIds([]);
-        setSelectedNftLandIds([]);
-      })
-      .catch((err) => {
-        setloadingWithdraw(false);
-        window.alertify.error(err?.message);
-        setStatus("An error occurred, please try again");
-        setColor("#F13227");
-        setSelectedNftIds([]);
-        setSelectedNftLandIds([]);
-        handleClearStatus();
-      });
+    if (window.WALLET_TYPE !== "binance") {
+      await window.wod_caws
+        .withdrawWodCaws(
+          getApprovedNfts(selectNftIds),
+          getApprovedLandNfts(selectNftLandIds)
+        )
+        .then(() => {
+          onDepositComplete();
+          setloadingWithdraw(false);
+          setStatus("*Unstaked successfully");
+          setColor("#57AEAA");
+          handleClearStatus();
+          setSelectedNftIds([]);
+          setSelectedNftLandIds([]);
+        })
+        .catch((err) => {
+          setloadingWithdraw(false);
+          window.alertify.error(err?.message);
+          setStatus("An error occurred, please try again");
+          setColor("#F13227");
+          setSelectedNftIds([]);
+          setSelectedNftLandIds([]);
+          handleClearStatus();
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let nft_contract = new ethers.Contract(
+        window.config.wod_caws_address,
+        window.WOD_CAWS_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      await nft_contract
+        .withdraw(
+          getApprovedNfts(selectNftIds),
+          getApprovedLandNfts(selectNftLandIds)
+        )
+        .then(() => {
+          onDepositComplete();
+          setloadingWithdraw(false);
+          setStatus("*Unstaked successfully");
+          setColor("#57AEAA");
+          handleClearStatus();
+          setSelectedNftIds([]);
+          setSelectedNftLandIds([]);
+        })
+        .catch((err) => {
+          setloadingWithdraw(false);
+          window.alertify.error(err?.message);
+          setStatus("An error occurred, please try again");
+          setColor("#F13227");
+          setSelectedNftIds([]);
+          setSelectedNftLandIds([]);
+          handleClearStatus();
+        });
+    }
   };
 
   const handleClaim = async (itemId) => {
@@ -147,24 +181,53 @@ const RewardsModal = ({
     setActive(false);
     setStatus("*Claiming rewards...");
     setColor("#57AEAA");
-    await window.wod_caws
-      .claimRewardsWodCaws(getApprovedNfts(selectNftIds))
-      .then(() => {
-        setloadingClaim(false);
-        setStatus("*Claimed successfully");
-        handleClearStatus();
-        setColor("#57AEAA");
-        setSelectedNftIds([]);
-        setSelectedNftLandIds([]);
-      })
-      .catch((err) => {
-        window.alertify.error(err?.message);
-        setloadingClaim(false);
-        setColor("#F13227");
-        setStatus("An error occurred, please try again");
-        setSelectedNftIds([]);
-        setSelectedNftLandIds([]);
-      });
+    if (window.WALLET_TYPE !== "binance") {
+      await window.wod_caws
+        .claimRewardsWodCaws(getApprovedNfts(selectNftIds))
+        .then(() => {
+          setloadingClaim(false);
+          setStatus("*Claimed successfully");
+          handleClearStatus();
+          setColor("#57AEAA");
+          setSelectedNftIds([]);
+          setSelectedNftLandIds([]);
+        })
+        .catch((err) => {
+          window.alertify.error(err?.message);
+          setloadingClaim(false);
+          setColor("#F13227");
+          setStatus("An error occurred, please try again");
+          setSelectedNftIds([]);
+          setSelectedNftLandIds([]);
+        });
+    }
+
+    if (window.WALLET_TYPE === "binance") {
+      let nft_contract = new ethers.Contract(
+        window.config.wod_caws_address,
+        window.WOD_CAWS_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      await nft_contract
+        .claimRewards(getApprovedNfts(selectNftIds))
+        .then(() => {
+          setloadingClaim(false);
+          setStatus("*Claimed successfully");
+          handleClearStatus();
+          setColor("#57AEAA");
+          setSelectedNftIds([]);
+          setSelectedNftLandIds([]);
+        })
+        .catch((err) => {
+          window.alertify.error(err?.message);
+          setloadingClaim(false);
+          setColor("#F13227");
+          setStatus("An error occurred, please try again");
+          setSelectedNftIds([]);
+          setSelectedNftLandIds([]);
+        });
+    }
   };
 
   return (
