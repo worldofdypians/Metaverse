@@ -8,10 +8,10 @@ const WalletModal = ({ handleClose, show, handleConnection,handleConnectionPassp
       <OutsideClickHandler onOutsideClick={handleClose}>
         <div className="walletmodal-wrapper" id={'connect'}>
           <div className="sc-jwKygS bFQpTL">
-            <h3 style={{ fontSize: 20, color: "#fff" }}>Connect to a wallet</h3>
+          <h3 style={{ fontSize: 20 }} className="text-white mx-2 mx-lg-3">Connect to a wallet</h3>
           </div>
-          <div>
-            <div className="row flex-column" style={{ gap: 20 }}>
+          <div className="wallet-items-wrapper">
+            <div className="row flex-column mx-2 mx-lg-3 align-items-center gap-3">
               <button
                 onClick={handleConnection}
                 id="connect-METAMASK"
@@ -21,11 +21,10 @@ const WalletModal = ({ handleClose, show, handleConnection,handleConnectionPassp
                   color="#E8831D"
                   className="justify-content-between d-flex w-100 align-items-center"
                 >
-                  <span style={{ color: "#fff" }}>MetaMask</span>
+                  <span className="text-white wallet-item-name">MetaMask</span>
                   <img
                     src={require("./wallets/metamask.svg").default}
-                    width={50}
-                    height={50}
+                    className="wallet-item-icon"
                     alt="Icon"
                   />
                 </div>
@@ -39,11 +38,10 @@ const WalletModal = ({ handleClose, show, handleConnection,handleConnectionPassp
                   color="#E8831D"
                   className="justify-content-between d-flex w-100 align-items-center"
                 >
-                  <span style={{ color: "#fff" }}>Binance SDK Wallet</span>
+                  <span className="text-white wallet-item-name">Binance SDK Wallet</span>
                   <img
                     src={require("./wallets/binanceWallet.png")}
-                    width={50}
-                    height={50}
+                    className="wallet-item-icon"
                     alt="Icon"
                   />
                 </div>
@@ -57,11 +55,10 @@ const WalletModal = ({ handleClose, show, handleConnection,handleConnectionPassp
                   color="#E8831D"
                   className="justify-content-between d-flex w-100 align-items-center"
                 >
-                  <span style={{ color: "#fff" }}>Immutable Passport</span>
+                  <span className="text-white wallet-item-name">Immutable Passport</span>
                   <img
                     src={require("./wallets/immutableLogo.svg").default}
-                    width={50}
-                    height={50}
+                    className="wallet-item-icon"
                     alt="Icon"
                   />
                 </div>
@@ -75,11 +72,10 @@ const WalletModal = ({ handleClose, show, handleConnection,handleConnectionPassp
                   color="#E8831D"
                   className="justify-content-between d-flex w-100 align-items-center"
                 >
-                  <span style={{ color: "#fff" }}>Gate wallet</span>
+                  <span className="text-white wallet-item-name">Gate wallet</span>
                   <img
                     src={require("./wallets/gate.jpg")}
-                    width={50}
-                    height={50}
+                    className="wallet-item-icon"
                     alt="Icon"
                     style={{ borderRadius: "50%" }}
                   />
@@ -94,11 +90,10 @@ const WalletModal = ({ handleClose, show, handleConnection,handleConnectionPassp
                   color="#E8831D"
                   className="justify-content-between d-flex w-100 align-items-center"
                 >
-                  <span style={{ color: "#fff" }}>Coinbase</span>
+                  <span className="text-white wallet-item-name">Coinbase</span>
                   <img
                     src={require("./wallets/coinbase.svg").default}
-                    width={50}
-                    height={50}
+                    className="wallet-item-icon"
                     alt="Icon"
                   />
                 </div>
@@ -112,11 +107,10 @@ const WalletModal = ({ handleClose, show, handleConnection,handleConnectionPassp
                   color="#E8831D"
                   className="justify-content-between d-flex w-100 align-items-center"
                 >
-                  <span style={{ color: "#fff" }}>Coin98</span>
+                  <span className="text-white wallet-item-name">Coin98</span>
                   <img
                     src={require("./wallets/coin98.svg").default}
-                    width={50}
-                    height={50}
+                   className="wallet-item-icon"
                     alt="Icon"
                   />
                 </div>
@@ -130,11 +124,10 @@ const WalletModal = ({ handleClose, show, handleConnection,handleConnectionPassp
                   color="#E8831D"
                   className="justify-content-between d-flex w-100 align-items-center"
                 >
-                  <span style={{ color: "#fff" }}>Trust Wallet</span>
+                  <span className="text-white wallet-item-name">Trust Wallet</span>
                   <img
                     src={require("./wallets/trustwallet.svg").default}
-                    width={50}
-                    height={50}
+                    className="wallet-item-icon"
                     alt="Icon"
                   />
                 </div>
@@ -148,11 +141,10 @@ const WalletModal = ({ handleClose, show, handleConnection,handleConnectionPassp
                   color="#E8831D"
                   className="justify-content-between d-flex w-100 align-items-center"
                 >
-                  <span style={{ color: "#fff" }}>SafePal</span>
+                  <span className="text-white wallet-item-name">SafePal</span>
                   <img
                     src={require("./wallets/safepal.svg").default}
-                    width={50}
-                    height={50}
+                    className="wallet-item-icon"
                     alt="Icon"
                   />
                 </div>
