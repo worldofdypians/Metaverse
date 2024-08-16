@@ -1162,24 +1162,24 @@ const Marketplace = ({
                   </div>
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
                     <NavLink
-                      to={"/marketplace/mint/immutable"}
+                      to={"/marketplace/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5"
                     >
-                      <div className="p-4 mint-wrappernew market-mint-immutable w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
+                      <div className="p-4 mint-wrappernew market-mint-timepiece w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
                         <div className="d-flex align-items-center justify-content-center homepage-nft-mint-tag px-3 py-1">
                           <span>NFT Minting</span>
                         </div>
                         <div className="d-flex flex-column gap-2 mb-3">
                           <h6 className="newminttitlehome m-0 position-relative">
-                            Immutable Beta
+                            CAWS
                           </h6>
                           <h6 className="newminttitlehome m-0 position-relative">
-                            Pass
+                            Timepiece
                           </h6>
                         </div>
                       </div>
                     </NavLink>
-                    <NavLink to="/marketplace/mint/immutable">
+                    <NavLink to="/marketplace/mint/timepiece">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}

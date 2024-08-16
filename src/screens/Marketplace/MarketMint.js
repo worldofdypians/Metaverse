@@ -269,6 +269,8 @@ const MarketMint = ({
   const [victionNftsSold, setVictionNftsSold] = useState(0);
   const [coreNftsSold, setCoreNftsSold] = useState(0);
   const [opbnbNftsSold, setopBnbNftsSold] = useState(0);
+  const [immutableNftsSold, setimmutableNftsSold] = useState(0);
+
 
 
   const [activeSlide, setActiveSlide] = useState(0);
@@ -384,6 +386,23 @@ const MarketMint = ({
     });
 
   setopBnbNftsSold(opbnbresult);
+
+
+  
+  const immutableContract = new window.immutableWeb3.eth.Contract(
+    window.IMMUTABLE_NFT_ABI,
+    window.config.nft_immutable_address
+  );
+
+  const immutableresult = await immutableContract.methods
+  .totalSupply()
+  .call()
+  .catch((e) => {
+    console.error(e);
+    return 0;
+  });
+
+setimmutableNftsSold(immutableresult);
 
 
   };
@@ -551,14 +570,14 @@ const MarketMint = ({
       class: "mint-taiko",
       id: "taiko",
     },
-    {
-      title: "Immutable Pass",
-      eventId: "immutable",
-      desc: "Gain entry to metaverse, and join exclusive Immutable event with special ticket.",
-      img: immutableActive,
-      data: immutableData,
-      class: "mint-immutable",
-    },
+    // {
+    //   title: "Immutable Pass",
+    //   eventId: "immutable",
+    //   desc: "Gain entry to metaverse, and join exclusive Immutable event with special ticket.",
+    //   img: immutableActive,
+    //   data: immutableData,
+    //   class: "mint-immutable",
+    // },
     // {
     //   title: "CORE Pass",
     //   eventId: "core",
@@ -3220,6 +3239,24 @@ const MarketMint = ({
                             {getFormattedNumber(opbnbNftsSold,0)}
                           </h6>
                           <span className="past-bnb-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-immutable-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">Immutable Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6
+                            className="past-immutable-mint-amount"
+                          >
+                            {getFormattedNumber(immutableNftsSold,0)}
+                          </h6>
+                          <span className="past-immutable-mint-desc">SOLD OUT</span>
                         </div>
                       </div>
                     </div>
