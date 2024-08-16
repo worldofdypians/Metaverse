@@ -6,7 +6,7 @@ const WalletModal = ({ handleClose, show, handleConnection,handleConnectionPassp
   return (
     <Modal visible={show} onModalClose={handleClose} maxWidth={500}>
       <OutsideClickHandler onOutsideClick={handleClose}>
-        <div className="walletmodal-wrapper" id={'connect'}>
+        <div className="walletmodal-wrapper px-3 py-4" id={'connect'}>
           <div className="sc-jwKygS bFQpTL">
           <h3 style={{ fontSize: 20 }} className="text-white mx-2 mx-lg-3">Connect to a wallet</h3>
           </div>

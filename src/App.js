@@ -73,8 +73,7 @@ import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 import Redirect from "./screens/Home/Redirect";
-import WalletModal2 from "./components/WalletModal/WalletModal2";
-import { initializeConnector } from "web3-connector";
+import { isMobile } from "react-device-detect";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -1185,34 +1184,40 @@ function App() {
   };
 
   const handleConnectBinance = async () => {
-    await activate(binanceConnector).then(async () => {
-      setSuccess(true);
-      setwalletModal(false);
-      window.WALLET_TYPE = "binance";
-      window.getCoinbase();
-
-      const data = JSON.parse(localStorage.getItem("connect-session"));
-      if (data && data !== null) {
-        setbinanceData(data);
-      } else {
+    await activate(binanceConnector)
+      .then(async () => {
+        setSuccess(true);
+        setwalletModal(false);
         window.WALLET_TYPE = "binance";
-        await window.ethereum?.enable();
-        let coinbase_address = await window.ethereum?.request({
-          method: "eth_accounts",
-        });
+        if (isMobile) {
+          window.getCoinbase();
+          const data = JSON.parse(localStorage.getItem("connect-session"));
+          if (data && data !== null) {
+            setbinanceData(data);
+          } else {
+            window.WALLET_TYPE = "binance";
+            await window.ethereum?.enable();
+            let coinbase_address = await window.ethereum?.request({
+              method: "eth_accounts",
+            });
 
-        if (coinbase_address && coinbase_address.length > 0) {
-          setCoinbase(coinbase_address[0]);
-          setIsConnected(true);
-          window.ethereum
-            .request({ method: "net_version" })
-            .then((data) => {
-              setChainId(parseInt(data));
-            })
-            .catch(console.error);
+            if (coinbase_address && coinbase_address.length > 0) {
+              setCoinbase(coinbase_address[0]);
+              setIsConnected(true);
+              window.ethereum
+                .request({ method: "net_version" })
+                .then((data) => {
+                  setChainId(parseInt(data));
+                })
+                .catch(console.error);
+            }
+          }
         }
-      }
-    });
+      })
+      .catch((e) => {
+        console.error(e);
+        window.WALLET_TYPE = "";
+      });
   };
 
   const checkBinanceData = async () => {
@@ -3020,16 +3025,20 @@ function App() {
       setIsConnected(false);
       setCoinbase();
       localStorage.setItem("logout", "true");
-    }
-     else if(window.ethereum && window.WALLET_TYPE === 'binance' && window.ethereum?.isBinance && logout === "false") {
-        if (account) {
-          fetchAvatar(account);
-          setCoinbase(account);
-          setIsConnected(true);
-        } else {
-          setCoinbase();
-          setIsConnected(false);
-        }
+    } else if (
+      window.ethereum 
+      // && window.WALLET_TYPE === "binance"
+       && window.ethereum?.isBinance &&
+      logout === "false"
+    ) {
+      if (account) {
+        fetchAvatar(account);
+        setCoinbase(account);
+        setIsConnected(true);
+      } else {
+        setCoinbase();
+        setIsConnected(false);
+      }
     }
     checkNetworkId();
   }, [coinbase, networkId, active, account]);
@@ -3377,7 +3386,7 @@ function App() {
         // }
       } catch (switchError) {
         // This error code indicates that the chain has not been added to MetaMask.
-        console.log(switchError, "switch"); 
+        console.log(switchError, "switch");
 
         if (switchError.code === 4902) {
           try {
@@ -5372,20 +5381,6 @@ function App() {
           }}
           handleConnectionPassport={handleConnectPassport}
           handleConnectBinance={handleConnectBinance}
-        />
-      )}
-
-      {walletId === "connect_simple" && walletModal === true && (
-        <WalletModal2
-          show={walletId === "connect_simple" && walletModal === true}
-          handleClose={() => {
-            setwalletModal(false);
-            setwalletId("connect");
-          }}
-          handleConnection={() => {
-            handleConnectWallet();
-          }}
-          handleConnectionPassport={handleConnectWalletPassport}
         />
       )}
 
