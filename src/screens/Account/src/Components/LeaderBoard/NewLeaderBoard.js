@@ -279,7 +279,7 @@ const NewLeaderBoard = ({
     }
   };
   const handleNextChain = () => {
-    if (selectedChain.id === 4) {
+    if (selectedChain.id + 1 === 6) {
       return;
     } else {
       if (selectedChain.id + 1 === 1) {
@@ -305,7 +305,7 @@ const NewLeaderBoard = ({
       setSelectedChain(chainItems[selectedChain.id + 1]);
     }
   };
-
+  
   useEffect(() => {
     handleOption(optionText2);
   }, [inactiveBoard]);

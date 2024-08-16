@@ -5182,7 +5182,7 @@ function App() {
             }
           /> */}
 
-          <Route
+          {/* <Route
             exact
             path="/marketplace/mint/immutable"
             element={
@@ -5238,7 +5238,7 @@ function App() {
                 myTaikoNFTsCreated={myTaikoNFTsCreated}
               />
             }
-          />
+          /> */}
 
           <Route
             exact
