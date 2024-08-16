@@ -3027,7 +3027,7 @@ function App() {
       localStorage.setItem("logout", "true");
     } else if (
       window.ethereum 
-      // && window.WALLET_TYPE === "binance"
+      && window.WALLET_TYPE === "binance"
        && window.ethereum?.isBinance &&
       logout === "false"
     ) {
