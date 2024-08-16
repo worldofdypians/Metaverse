@@ -56,7 +56,12 @@ const WodBuilders = () => {
       banner: "mantaBanner.webp",
       link: "https://x.com/MantaNetwork/status/1819260085945749903",
     },
-
+    {
+      name: "Taiko",
+      icon: "taiko",
+      banner: "taikoBanner.webp",
+      // link: "https://x.com/MantaNetwork/status/1819260085945749903",
+    },
     {
       name: "Conflux",
       icon: "confluxIcon",
@@ -167,6 +172,12 @@ const WodBuilders = () => {
       icon: "micro3",
       banner: "kucoinBanner.png",
     },
+
+    {
+      name: "Cyborg",
+      icon: "cyborg",
+      banner: "kucoinBanner.png",
+    },
   
   ];
 
@@ -216,7 +227,7 @@ const WodBuilders = () => {
           <div className="d-flex justify-content-center mt-3">
             <div
               className="linear-border"
-              onClick={() => (slice === 2 ? setSlice(19) : setSlice(2))}
+              onClick={() => (slice === 2 ? setSlice(20) : setSlice(2))}
             >
               <button className="btn filled-btn px-5">
                 {slice === 2 ? "View More" : "View Less"}
@@ -227,7 +238,7 @@ const WodBuilders = () => {
           <div className="d-flex justify-content-center mt-3">
             <div
               className="linear-border"
-              onClick={() => (slice === 8 ? setSlice(19) : setSlice(8))}
+              onClick={() => (slice === 8 ? setSlice(20) : setSlice(8))}
             >
               <button className="btn filled-btn px-5">
                 {slice === 8 ? "View More" : "View Less"}

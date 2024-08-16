@@ -2204,6 +2204,32 @@ line-height: normal;
 }
 
 
+.past-opbnb-mint {
+  background-image: url("./assets/opbnbPastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/opbnbPastMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
+.past-immutable-mint {
+  background-image: url("./assets/immutablePastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/immutablePastMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
 
 .past-bnb-mint {
   background-image: url("./assets/bnbMintDesktop.webp");
@@ -2321,6 +2347,18 @@ line-height: normal;
   }
 }
 
+.past-immutable-mint-amount {
+  color: #883aff;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
 .past-core-mint-amount {
   color: #FC9210;
   text-align: center;
@@ -2333,6 +2371,18 @@ line-height: normal;
   }
 }
 
+
+.past-opbnb-mint-amount {
+  color: #FC9210;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
 
 
 .past-conflux-mint-desc {
@@ -2378,8 +2428,37 @@ line-height: normal;
   }
 }
 
+.past-immutable-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(155, 67, 255, 0.7);
+  font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+
 
 .past-core-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(255, 174, 67, 0.7);
+  font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-opbnb-mint-desc {
   color: #fff;
   text-shadow: 0px 3px 4px rgba(255, 174, 67, 0.7);
   font-family: Poppins;
@@ -3086,6 +3165,9 @@ line-height: normal;
 }
 .mint-bnb {
   background: linear-gradient(90deg, #181B38 0%, rgba(6, 136, 255, 0.05) 168.67%);
+}
+.mint-taiko {
+  background: linear-gradient(90deg, #181B38 0%, #CC238C 168.67%);
 }
 .mint-manta {
   background: linear-gradient(90deg, #181B38 0%, #BE2CB0 168.67%);
@@ -3986,7 +4068,7 @@ background: linear-gradient(90deg, #7F43FF 1.45%, #C01BDB 96.22%);
 
 .upcoming-immutable-event {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181b38 0%, rgba(44, 190, 181, 1) 168.67%) !important;
+  background: linear-gradient(90deg, #181b38 0%, rgb(35 133 127) 168.67%) !important;
 }
 
 .upcoming-multivers-event {
@@ -3997,6 +4079,12 @@ background: linear-gradient(90deg, #7F43FF 1.45%, #C01BDB 96.22%);
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #BE2CB0 168.67%) !important;
 }
+
+.upcoming-taiko-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(204, 35, 140, 0.5) 168.67%) !important;
+}
+
 
 
 

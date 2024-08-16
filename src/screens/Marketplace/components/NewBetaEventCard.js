@@ -39,10 +39,14 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
           ? "upcoming-core-event"
           : data.title === "VICTION"
           ? "upcoming-viction-event"
+          : data.title === "Manta"
+          ? "upcoming-manta-event"
           : data.title === "Immutable"
           ? "upcoming-immutable-event"
           : data.title === "MultiversX"
           ? "upcoming-multivers-event"
+          : data.title === "Taiko"
+          ? "upcoming-taiko-event"
           : "upcoming-mint-wrapper-coin98"
       } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column d-flex align-items-center justify-content-between px-0`}
       onClick={onOpenPopup}

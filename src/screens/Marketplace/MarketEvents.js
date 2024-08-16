@@ -34,6 +34,7 @@ import multiversLogo from "./assets/multiversLogo.svg";
 
 import coreLogo from "./assets/coreLogo.svg";
 import mantaLogo from "./assets/mantaLogo2.png";
+import taikoLogo from "./MarketNFTs/assets/taikoLogo.svg";
 import victionLogo from "./assets/victionLogo.svg";
 import immutableLogo from "./assets/immutableLogo.svg";
 
@@ -81,6 +82,7 @@ import multiversThumb from "../Account/src/Components/WalletBalance/assets/multi
 import immutableThumb from "../Account/src/Components/WalletBalance/assets/immutableThumb.png";
 import coreThumb from "../Account/src/Components/WalletBalance/assets/coreThumb.png";
 import mantaThumb from "../Account/src/Components/WalletBalance/assets/mantaThumb.png";
+import taikoThumb from "../Account/src/Components/WalletBalance/assets/taikoThumb.webp";
 
 import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.svg";
@@ -97,7 +99,6 @@ import upcomingCookieMobile from "./assets/cookieMobileBg.webp";
 import upcomingMidle from "./assets/midleBg.webp";
 import upcomingMidleMobile from "./assets/midleBgMobile.webp";
 
-
 import upcomingSkaleMobile from "./assets/upcomingSkaleMobile.webp";
 import upcomingBnb from "./assets/upcomingBnb.png";
 
@@ -111,6 +112,9 @@ import immutableBg from "./assets/immutableBg.webp";
 import seiBg from "./assets/seiBg.webp";
 import bnbPopupImage from "./assets/bnbPopupImage.png";
 import coreBg from "./assets/coreBg.webp";
+import taikoBg from "./assets/taikoBg.webp";
+import taikoMobileBg from "./assets/taikoActive.png";
+
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
 import mantaBg from "./assets/mantaBg.webp";
@@ -238,10 +242,18 @@ const MarketEvents = ({
   const [mantaEarnToken, setMantaEarnToken] = useState(0);
   const [mantaEarnUsd, setMantaEarnUsd] = useState(0);
   const [mantaPoints, setMantaPoints] = useState(0);
+  const [taikoEarnToken, setTaikoEarnToken] = useState(0);
+  const [taikoEarnUsd, setTaikoEarnUsd] = useState(0);
+  const [taikoPoints, setTaikoPoints] = useState(0);
   const [multiversEarnUsd, setmultiversEarnUsd] = useState(0);
   const [multiversPrice, setmultiversPrice] = useState(0);
   const [multiversEarnToken, setmultiversEarnToken] = useState(0);
   const [multiversPoints, setmultiversPoints] = useState(0);
+
+  const [immutableEarnUsd, setImmutableEarnUsd] = useState(0);
+  const [immutablePrice, setImmutablePrice] = useState(0);
+  const [immutableEarnToken, setImmutableEarnToken] = useState(0);
+  const [immutablePoints, setImmutablePoints] = useState(0);
 
   const selected = useRef(null);
   const { email } = useAuth();
@@ -275,7 +287,6 @@ const MarketEvents = ({
       });
   };
 
-
   const fetchVictionPrice = async () => {
     await axios
       .get(
@@ -296,6 +307,16 @@ const MarketEvents = ({
       });
   };
 
+  const fetchImmutablePrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=immutable-x&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setImmutablePrice(obj.data["immutable-x"].usd);
+      });
+  };
+
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
@@ -308,6 +329,8 @@ const MarketEvents = ({
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
   let mantaLastDay = new Date("2024-10-30T14:00:00.000+02:00");
+  let taikoLastDay = new Date("2024-10-30T14:00:00.000+02:00");
+  let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
 
   const dailyBonusMintData = {
     title: "Daily Bonus",
@@ -344,33 +367,7 @@ const MarketEvents = ({
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
-    // {
-    //   title: "Manta",
-    //   logo: mantaLogo,
-    //   eventStatus: "Live",
-    //   totalRewards: "$20,000 in MANTA Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Mine",
-    //   eventDate: "Aug 01, 2024",
-    //   backgroundImage: mantaBg,
-    //   popupInfo: {
-    //     title: "Manta",
-    //     chain: "Manta",
-    //     linkState: "manta",
-    //     rewards: "MANTA",
-    //     status: "Live",
-    //     id: "event21",
-    //     eventType: "Explore & Mine",
-    //     totalRewards: "$20,000 in MANTA Rewards",
-    //     eventDuration: mantaLastDay,
-    //     minRewards: "0.5",
-    //     maxRewards: "20",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore: "",
-    //     eventDate: "Aug 01, 2024",
-    //   },
-    // },
+
     {
       title: "CORE",
       logo: coreLogo,
@@ -425,6 +422,116 @@ const MarketEvents = ({
         eventDate: "Jul 01, 2024",
       },
     },
+    {
+      title: "BNB Chain",
+      logo: bnbLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jun 12, 2024",
+      backgroundImage: upcomingBnb,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Live",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news",
+        eventDate: "Jun 12, 2024",
+      },
+    },
+    {
+      title: "Immutable",
+      logo: immutableLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in IMX Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 15, 2024",
+      backgroundImage: immutableBg,
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable",
+        linkState: "immutable",
+        rewards: "IMX",
+        status: "Live",
+        id: "event15",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in IMX Rewards",
+        eventDuration: immutableLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
+        eventDate: "Aug 15, 2024",
+      },
+    },
+    {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in TAIKO Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 19, 2024",
+      backgroundImage: taikoBg,
+      popupInfo: {
+        title: "TAIKO",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Coming Soon",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 19, 2024",
+      },
+    },
+    {
+      title: "Manta",
+      logo: mantaLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in MANTA Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 20, 2024",
+      backgroundImage: mantaBg,
+      popupInfo: {
+        title: "Manta",
+        chain: "Manta",
+        linkState: "manta",
+        rewards: "MANTA",
+        status: "Coming Soon",
+        id: "event21",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in MANTA Rewards",
+        eventDuration: mantaLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 20, 2024",
+      },
+    },
+    
+  
     // {
     //   title: "SEI",
     //   logo: seiLogo,
@@ -453,34 +560,6 @@ const MarketEvents = ({
     //     eventDate: "XXX XX, XXXX",
     //   },
     // },
-
-    {
-      title: "BNB Chain",
-      logo: bnbLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Jun 12, 2024",
-      backgroundImage: upcomingBnb,
-      popupInfo: {
-        title: "BNB Chain",
-        chain: "BNB Chain",
-        linkState: "bnb",
-        rewards: "BNB",
-        status: "Live",
-        id: "event20",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: bnbLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "/news",
-        eventDate: "Jun 12, 2024",
-      },
-    },
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -1021,6 +1100,9 @@ const MarketEvents = ({
           const mantaEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "manta";
           });
+          const taikoEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "taiko";
+          });
 
           const multiversEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "multivers";
@@ -1050,6 +1132,10 @@ const MarketEvents = ({
             return obj.betapassId === "subscriber";
           });
 
+          const immutableEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "immutable";
+          });
+
           if (dypPremiumEvent && dypPremiumEvent[0]) {
             const userEarnedusd =
               dypPremiumEvent[0].reward.earn.total /
@@ -1069,6 +1155,17 @@ const MarketEvents = ({
             setBnbPoints(pointsBnb);
             setBnbEarnUsd(userEarnedusd);
             setBnbEarnToken(userEarnedusd / bnbPrice);
+          }
+
+          if (immutableEvent && immutableEvent[0]) {
+            const userEarnedusd =
+            immutableEvent[0].reward.earn.total /
+            immutableEvent[0].reward.earn.multiplier;
+            const pointsBnb = immutableEvent[0].reward.earn.totalPoints;
+
+            setImmutablePoints(pointsBnb);
+            setImmutableEarnUsd(userEarnedusd);
+            setImmutableEarnToken(userEarnedusd / immutablePrice);
           }
 
           if (coreEvent && coreEvent[0]) {
@@ -1099,6 +1196,15 @@ const MarketEvents = ({
             setMantaPoints(pointsManta);
             setMantaEarnUsd(userEarnedusd);
             setMantaEarnToken(userEarnedusd / mantaPrice);
+          }
+          if (taikoEvent && taikoEvent[0]) {
+            const userEarnedusd =
+              taikoEvent[0].reward.earn.total /
+              taikoEvent[0].reward.earn.multiplier;
+            const pointsTaiko = taikoEvent[0].reward.earn.totalPoints;
+            setTaikoPoints(pointsTaiko);
+            setTaikoEarnUsd(userEarnedusd);
+            setTaikoEarnToken(userEarnedusd / mantaPrice);
           }
 
           if (multiversEvent && multiversEvent[0]) {
@@ -1226,9 +1332,10 @@ const MarketEvents = ({
     fetchVictionPrice();
     fetchEgldPrice();
     fetchCorePrice();
-    fetchMantaPrice()
+    fetchMantaPrice();
+    fetchImmutablePrice()
   }, []);
-  
+
   useEffect(() => {
     if (windowSize.width < 786) {
       window.scrollTo(0, 750);
@@ -1277,7 +1384,15 @@ const MarketEvents = ({
     ) {
       fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
     }
-  }, [email, data, cfxPrice, bnbPrice, skalePrice, dyptokenDatabnb, mantaPrice]);
+  }, [
+    email,
+    data,
+    cfxPrice,
+    bnbPrice,
+    skalePrice,
+    dyptokenDatabnb,
+    mantaPrice,
+  ]);
 
   useEffect(() => {
     setActiveTab(tabState);
@@ -1304,7 +1419,9 @@ const MarketEvents = ({
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <div className="position-relative">
-                   
+                     <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     <NavLink
                       to={`/marketplace/events/treasure-hunt`}
                       className={({ isActive }) =>
@@ -1317,9 +1434,7 @@ const MarketEvents = ({
                     </NavLink>
                   </div>
                   <div className="position-relative">
-                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     <NavLink
                       to={"/marketplace/events/upcoming"}
                       className={({ isActive }) =>
@@ -1465,7 +1580,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 3).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 6).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1547,12 +1662,31 @@ const MarketEvents = ({
               )}
               {activeTab === "upcoming" && (
                 <div className="d-flex flex-column gap-4">
-                  <div className="border-0 upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  {/* <div className="border-0 upcoming-mint-wrapper upcoming-taiko-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Taiko</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the Taiko Treasure Hunt event for a chance to grab
+                        a share of the $20,000 TAIKO reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={taikoBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={taikoMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div> */}
+                  {/* <div className="border-0 upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Manta</h6>
                       <p className="upcoming-mint-desc">
-                        Join the Manta Treasure Hunt event for a chance
-                        to grab a share of the $20,000 MANTA reward pool.
+                        Join the Manta Treasure Hunt event for a chance to grab
+                        a share of the $20,000 MANTA reward pool.
                       </p>
                     </div>
                     <img
@@ -1565,13 +1699,33 @@ const MarketEvents = ({
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div>
+                  </div> */}
+                  {/* <div className="border-0 upcoming-mint-wrapper upcoming-immutable-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Immutable</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the Immutable Treasure Hunt event for a chance to grab
+                        a share of the $20,000 IMX reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={immutableBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={immutableMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div> */}
+
                   <div className="border-0 upcoming-mint-wrapper upcoming-skale-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Skale</h6>
                       <p className="upcoming-mint-desc">
-                        Join the Skale Treasure Hunt event for a chance to grab a
-                        share of the $20,000 SKL reward pool.
+                        Join the Skale Treasure Hunt event for a chance to grab
+                        a share of the $20,000 SKL reward pool.
                       </p>
                     </div>
                     <img
@@ -1589,8 +1743,8 @@ const MarketEvents = ({
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Cookie3</h6>
                       <p className="upcoming-mint-desc">
-                        Join the Cookie3 Treasure Hunt event for a chance to grab a
-                        share of the $20,000 COOKIE reward pool.
+                        Join the Cookie3 Treasure Hunt event for a chance to
+                        grab a share of the $20,000 COOKIE reward pool.
                       </p>
                     </div>
                     <img
@@ -1608,8 +1762,8 @@ const MarketEvents = ({
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Midle</h6>
                       <p className="upcoming-mint-desc">
-                        Join the Midle Treasure Hunt event for a chance to grab a
-                        share of the $20,000 reward pool.
+                        Join the Midle Treasure Hunt event for a chance to grab
+                        a share of the $20,000 reward pool.
                       </p>
                     </div>
                     <img
@@ -1674,7 +1828,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(3, dummyBetaPassData2.length)
+                    .slice(6, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
@@ -1701,8 +1855,12 @@ const MarketEvents = ({
                             ? dypiusPremiumEarnUsd
                             : item.title === "BNB Chain"
                             ? bnbEarnUsd
+                            : item.title === "Immutable"
+                            ? immutableEarnUsd
                             : item.title === "Manta"
                             ? mantaEarnUsd
+                            : item.title === "Taiko"
+                            ? taikoEarnUsd
                             : 0
                         }
                       />
@@ -1798,6 +1956,8 @@ const MarketEvents = ({
                         ? bnbPopupImage
                         : dummyEvent.linkState === "manta"
                         ? mantaThumb
+                        : dummyEvent.linkState === "taiko"
+                        ? taikoThumb
                         : eventPopupImage
                     }
                     alt=""
@@ -1855,7 +2015,7 @@ const MarketEvents = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              {dummyEvent.status === "Live" && dummyEvent.learnMore !== "" && (
+              {dummyEvent.status === "Live" && dummyEvent.learnMore !== ""  && dummyEvent.id!=='event15' && (
                 <NavLink
                   to={dummyEvent.learnMore}
                   className="events-page-details d-flex align-items-center gap-2"
@@ -1863,6 +2023,17 @@ const MarketEvents = ({
                   Learn more
                   <img src={eventsArrow} alt="" />
                 </NavLink>
+              )}
+               {dummyEvent.status === "Live" && dummyEvent.learnMore !== "" && dummyEvent.id==='event15' && (
+                <a
+                  href={dummyEvent.learnMore}
+                  target="_blank"
+                  rel='noreferrer'
+                  className="events-page-details d-flex align-items-center gap-2"
+                >
+                  Learn more
+                  <img src={eventsArrow} alt="" />
+                </a>
               )}
             </div>
             <div className="row mb-3 gap-3 gap-lg-0">
@@ -1908,14 +2079,26 @@ const MarketEvents = ({
                   ) : dummyEvent.id === "event21" ? (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
-                      <b>hold a Manta Beta Pass NFT</b>. You can get the
-                      Manta Beta Pass NFT from the World of Dypians
-                      Marketplace. By engaging in the game on a daily basis and
-                      exploring the Manta area, players not only stand a
-                      chance to secure daily rewards in MANTA, but also earn
-                      points for their placement on the global leaderboard.
-                      Remember to log in to the game daily and venture into the
-                      Manta area to uncover hidden treasures.
+                      <b>hold a Manta Beta Pass NFT</b>. You can get the Manta
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      Manta area, players not only stand a chance to secure
+                      daily rewards in MANTA, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Manta area to uncover
+                      hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event21" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Taiko Beta Pass NFT</b>. You can get the Taiko
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      Taiko area, players not only stand a chance to secure
+                      daily rewards in ETH, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Taiko area to uncover
+                      hidden treasures.
                     </p>
                   ) : dummyEvent.id === "event3" ? (
                     <p className="popup-event-desc">
@@ -2056,6 +2239,18 @@ const MarketEvents = ({
                       Remember to log in to the game daily and venture into the
                       MultiversX area to uncover hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event22" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a TAIKO Beta Pass NFT</b>. You can get the TAIKO
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      TAIKO area, players not only stand a chance to secure
+                      daily rewards in TAIKO, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the TAIKO area to uncover
+                      hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -2123,6 +2318,8 @@ const MarketEvents = ({
                           ? "EGLD"
                           : dummyEvent.id === "event21"
                           ? "MANTA"
+                          : dummyEvent.id === "event22"
+                          ? "TAIKO"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2176,6 +2373,8 @@ const MarketEvents = ({
                 ? "MultiversX"
                 : dummyEvent.id === "event21"
                 ? "Manta"
+                : dummyEvent.id === "event22"
+                ? "Taiko"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2223,16 +2422,24 @@ const MarketEvents = ({
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
-                Manta is the multi-modular ecosystem for zero-knowledge
-                (ZK) applications. Manta was created by a team of
-                experienced founders from prestigious institutions, including
-                Harvard, MIT, and Algorand. Manta has received
-                investments from many top web3 investment funds, including
-                Binance Labs and Polychain Capital. It has grown through
-                participation in the best web3 accelerators, including Alliance
-                DAO and Berkeley Blockchain Xcelerator. Manta is poised
-                to bring the next generation of web3 users and usher in a new
-                chapter of web3 zkApp applications.
+                Manta is the multi-modular ecosystem for zero-knowledge (ZK)
+                applications. Manta was created by a team of experienced
+                founders from prestigious institutions, including Harvard, MIT,
+                and Algorand. Manta has received investments from many top web3
+                investment funds, including Binance Labs and Polychain Capital.
+                It has grown through participation in the best web3
+                accelerators, including Alliance DAO and Berkeley Blockchain
+                Xcelerator. Manta is poised to bring the next generation of web3
+                users and usher in a new chapter of web3 zkApp applications.
+              </p>
+            ) : dummyEvent.id === "event22" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Taiko is an Ethereum-equivalent (Type 1) ZK-EVM, maximally
+                compatible with Ethereum. No additional compiling, reaudits, or
+                tooling needed. Everything works out of the box, guaranteed.
               </p>
             ) : dummyEvent.id === "event3" ? (
               <p
@@ -2410,6 +2617,8 @@ const MarketEvents = ({
                     ? "https://twitter.com/MultiversX"
                     : dummyEvent.id === "event21"
                     ? "https://x.com/mantanetwork"
+                    : dummyEvent.id === "event22"
+                    ? "https://x.com/taikoxyz"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2449,6 +2658,8 @@ const MarketEvents = ({
                     ? "https://t.me/MultiversX"
                     : dummyEvent.id === "event21"
                     ? "https://www.t.me/mantanetworkofficial"
+                    : dummyEvent.id === "event22"
+                    ? "https://t.me/TaikoEcosystem"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -2497,6 +2708,8 @@ const MarketEvents = ({
                     ? "https://multiversx.com/"
                     : dummyEvent.id === "event21"
                     ? "https://manta.network/"
+                    : dummyEvent.id === "event22"
+                    ? "https://taiko.xyz/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -2545,6 +2758,10 @@ const MarketEvents = ({
                         ? corePoints
                         : dummyEvent.id === "event21"
                         ? mantaPoints
+                        : dummyEvent.id === "event22"
+                        ? taikoPoints
+                        : dummyEvent.id === "event15"
+                        ? immutablePoints
                         : 0,
                       0
                     )}
@@ -2592,8 +2809,12 @@ const MarketEvents = ({
                         ? victionEarnUsd
                         : dummyEvent.id === "event20"
                         ? bnbEarnUsd
+                        : dummyEvent.id === "event15"
+                        ? immutableEarnUsd
                         : dummyEvent.id === "event21"
                         ? mantaEarnUsd
+                        : dummyEvent.id === "event22"
+                        ? taikoEarnUsd
                         : 0,
                       2
                     )}
@@ -2627,6 +2848,10 @@ const MarketEvents = ({
                               ? bnbEarnToken
                               : dummyEvent.id === "event21"
                               ? mantaEarnToken
+                              : dummyEvent.id === "event22"
+                              ? taikoEarnToken
+                              : dummyEvent.id === "event15"
+                              ? immutableEarnToken
                               : 0,
                             2
                           )}
@@ -2660,6 +2885,8 @@ const MarketEvents = ({
                             ? "EGLD"
                             : dummyEvent.id === "event21"
                             ? "MANTA"
+                            : dummyEvent.id === "event22"
+                            ? "TAIKO"
                             : "ETH"}
                         </>
                       )}
@@ -2676,8 +2903,8 @@ const MarketEvents = ({
               </span>
             </div>
             {dummyEvent.status === "Coming Soon" &&
-              dummyEvent.id !== "event7" &&
-              dummyEvent.id !== "event9" && (
+              dummyEvent.id !== "event15" &&
+              dummyEvent.id !== "event22" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
                   <NavLink
                     to={`/marketplace/beta-pass/${dummyEvent.linkState}`}

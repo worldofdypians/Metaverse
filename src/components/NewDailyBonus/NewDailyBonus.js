@@ -3,6 +3,9 @@ import "./_newdailybonus.scss";
 import bnbChain from "./assets/bnbChain.png";
 import skaleChain from "./assets/skaleChain.png";
 import comingSoon from "./assets/comingSoon.png";
+import comingSoon2 from "./assets/comingSoon2.png";
+import comingSoon3 from "./assets/comingSoon3.png";
+import comingSoon4 from "./assets/comingSoon4.png";
 import percentageFilled from "./assets/percentageFilled.svg";
 import percentageEmpty from "./assets/percentageEmpty.svg";
 import dypiusIcon from "./assets/dypiusIcon.svg";
@@ -16,8 +19,10 @@ import dypRound from "./assets/dypRound.png";
 import completedBg from "./assets/completedBg.png";
 import bnbBg from "./assets/bnbBg.png";
 import mantaBg from "./assets/mantaBg.png";
+
 import skaleBg from "./assets/skaleBg.png";
 import coreBg from "./assets/coreBg.png";
+import taikoBg from "./assets/taikoBg.png";
 import victionBg from "./assets/victionBg.png";
 import winConfetti from "./assets/winConfetti.png";
 import xMark from "./assets/xMark2.svg";
@@ -29,7 +34,7 @@ import greenCheck from "./assets/greenCheck.svg";
 import infoIcon from "./assets/infoIcon.svg";
 import skaleIcon from "./assets/skaleIcon.svg";
 import manta from "./assets/manta.png";
-
+import taiko from "./assets/taikoIcon.svg";
 import seiIcon from "./assets/seiIcon.svg";
 import multiversxIcon from "./assets/multiversxIcon.svg";
 import danger from "./assets/danger.svg";
@@ -141,6 +146,14 @@ const NewDailyBonus = ({
   openedMantaChests,
   allMantaChests,
   onMantaChestClaimed,
+  taikoImages,
+  standardTaikoChests,
+  premiumTaikoChests,
+  claimedTaikoChests,
+  claimedTaikoPremiumChests,
+  openedTaikoChests,
+  allTaikoChests,
+  onTaikoChestClaimed,
   binanceW3WProvider,
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
@@ -173,6 +186,9 @@ const NewDailyBonus = ({
 
   const mantaClaimed = claimedMantaChests + claimedMantaPremiumChests;
   const mantaPercentage = (mantaClaimed / 20) * 100;
+
+  const taikoClaimed = claimedTaikoChests + claimedTaikoPremiumChests;
+  const taikoPercentage = (taikoClaimed / 20) * 100;
 
   const seiClaimed = claimedSeiChests + claimedSeiPremiumChests;
   const seiPercentage = (seiClaimed / 20) * 100;
@@ -394,6 +410,8 @@ const NewDailyBonus = ({
   const [totalVictionUsd, settotalVictionUsd] = useState(0);
   const [totalMantaPoints, settotalMantaPoints] = useState(0);
   const [totalMantaUsd, settotalMantaUsd] = useState(0);
+  const [totalTaikoPoints, settotalTaikoPoints] = useState(0);
+  const [totalTaikoUsd, settotalTaikoUsd] = useState(0);
   const [totalSeiPoints, settotalSeiPoints] = useState(0);
   const [totalSeiUsd, settotalSeiUsd] = useState(0);
 
@@ -571,6 +589,40 @@ const NewDailyBonus = ({
       settotalMantaUsd(resultMantaUsd);
     }
 
+    if (allTaikoChests && allTaikoChests.length > 0) {
+      let resultTaikoPoints = 0;
+      let resultTaikoUsd = 0;
+
+      allTaikoChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultTaikoPoints += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                resultTaikoUsd += Number(innerChest.reward);
+              }
+            });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultTaikoPoints += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+
+      settotalTaikoPoints(resultTaikoPoints);
+      settotalTaikoUsd(resultTaikoUsd);
+    }
+
     if (allSeiChests && allSeiChests.length > 0) {
       let resultSeiPoints = 0;
       let resultSeiUsd = 0;
@@ -659,6 +711,8 @@ const NewDailyBonus = ({
         showSingleRewardDataViction(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "manta") {
         showSingleRewardDataManta(rewardData.chestId, isActiveIndex - 1);
+      } else if (chain === "taiko") {
+        showSingleRewardDataTaiko(rewardData.chestId, isActiveIndex - 1);
       }
     }
   };
@@ -710,6 +764,30 @@ const NewDailyBonus = ({
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
+  };
+
+  const handleTaikoPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+        await handleSwitchNetworkhook("0x28c58")
+          .then(() => {
+            handleSwitchNetwork(167000);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(167000);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(167000);
+      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(167000);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+
+
   };
   
   const handleSkalePool = async () => {
@@ -1646,6 +1724,122 @@ const NewDailyBonus = ({
     }
   };
 
+  const showSingleRewardDataTaiko = (chestID, chestIndex) => {
+    const filteredResult = openedTaikoChests.find(
+      (el) =>
+        el.chestId === chestID && allTaikoChests.indexOf(el) === chestIndex
+    );
+    setIsActive(chestID);
+    setIsActiveIndex(chestIndex + 1);
+    if (filteredResult) {
+      const result = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "CAWS"
+        );
+      });
+
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LAND"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return obj.rewardType === "Money" && obj.status === "Claimed";
+      });
+
+      const resultPoints = filteredResult.rewards.length === 1;
+
+      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
+        );
+      });
+
+      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+          );
+        }
+      );
+
+      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
+          );
+        }
+      );
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
+        );
+      });
+
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+        );
+      });
+
+      if (result) {
+        setMessage("caws");
+      } else if (resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if (resultWon) {
+        setMessage("won");
+      } else if (resultPoints) {
+        setMessage("wonPoints");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
+      } else if (resultWonMoneyNotEnoughLands) {
+        setMessage("winDangerNotEnoughLand");
+      } else if (resultWonMoneyhasNftsNoPremium) {
+        setMessage("winDangerHasNftsNoPremium");
+      } else if (resultWonMoneyhasNftsNoDyp) {
+        setMessage("winDangerHasNftsPremiumNoDyp");
+      }
+
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
+  };
+
   const showSingleRewardDataSei = (chestID, chestIndex) => {
     const filteredResult = openedSeiChests.find(
       (el) => el.chestId === chestID && allSeiChests.indexOf(el) === chestIndex
@@ -1768,6 +1962,7 @@ const NewDailyBonus = ({
     allSkaleChests,
     allVictionChests,
     allMantaChests,
+    allTaikoChests,
     allCoreChests,
   ]);
 
@@ -2104,6 +2299,68 @@ const NewDailyBonus = ({
         setMessage("login");
         setDisable(true);
       }
+    } else if (chain === "taiko") {
+      if (email && coinbase && address) {
+        if (coinbase.toLowerCase() === address.toLowerCase()) {
+          if (isPremium) {
+            if (
+              claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase()
+            ) {
+              setMessage("complete");
+            } else if (
+              claimedTaikoChests + claimedTaikoPremiumChests < 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 167000
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedTaikoChests + claimedTaikoPremiumChests < 20 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 167000
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
+          } else if (!isPremium) {
+            if (
+              claimedTaikoChests === 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 167000
+            ) {
+              setMessage("premium");
+              setDisable(true);
+            } else if (
+              claimedTaikoChests < 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 167000
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedTaikoChests < 10 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 167000
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
+          }
+        } else {
+          setMessage("switchAccount");
+          setDisable(true);
+        }
+      } else {
+        setMessage("login");
+        setDisable(true);
+      }
     }
   }, [
     email,
@@ -2122,6 +2379,8 @@ const NewDailyBonus = ({
     claimedVictionPremiumChests,
     claimedMantaChests,
     claimedMantaPremiumChests,
+    claimedTaikoChests,
+    claimedTaikoPremiumChests,
     rewardData,
   ]);
 
@@ -2248,6 +2507,8 @@ const NewDailyBonus = ({
                       ? totalVictionPoints
                       : chain === "manta"
                       ? totalMantaPoints
+                      : chain === "taiko"
+                      ? totalTaikoPoints
                       : chain === "sei"
                       ? 0
                       : totalSkalePoints,
@@ -2270,6 +2531,8 @@ const NewDailyBonus = ({
                       ? totalVictionUsd
                       : chain === "manta"
                       ? totalMantaUsd
+                      : chain === "taiko"
+                      ? totalTaikoUsd
                       : chain === "sei"
                       ? 0
                       : totalSkaleUsd,
@@ -2289,7 +2552,7 @@ const NewDailyBonus = ({
                   <div className="col-12 col-lg-5 chains-wrapper mt-5 mt-lg-0">
                     {windowSize.width > 992 ? (
                       <div
-                        className="d-flex flex-row flex-lg-column justify-content-between h-100 chains-container"
+                        className=" h-100 chains-container"
                         style={{ gap: "8px" }}
                       >
                         <div
@@ -2307,7 +2570,7 @@ const NewDailyBonus = ({
                           <div
                             className={`chain-title-wrapper ${
                               chain === "bnb" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center justify-content-between`}
+                            } p-2 d-flex flex-lg-column align-items-center justify-content-between`}
                             onClick={() => {
                               setChain("bnb");
                               setIsActive();
@@ -2419,7 +2682,7 @@ const NewDailyBonus = ({
                           <div
                             className={`chain-title-wrapper ${
                               chain === "manta" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center justify-content-between`}
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
                               setChain("manta");
                               setIsActive();
@@ -2507,43 +2770,44 @@ const NewDailyBonus = ({
                         </div>
                         <div
                           className={`position-relative chain-item ${
-                            chain === "skale" && "chain-item-active"
+                            chain === "taiko" && "chain-item-active"
                           } w-100`}
                         >
                           <img
-                            src={skaleBg}
+                            src={taikoBg}
                             className={`chain-img ${
-                              chain === "skale" && "chain-img-active"
+                              chain === "taiko" && "chain-img-active"
                             }`}
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === "skale" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center justify-content-between`}
+                              chain === "taiko" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
-                              setChain("skale");
+                              setChain("taiko");
                               setIsActive();
                               setIsActiveIndex();
                               setRewardData([]);
                             }}
                           >
-                            {/* <h6 className="chain-title-position mb-0">SKALE</h6> */}
+                            {/* <h6 className="chain-title-position mb-0">
+                              BNB CHAIN
+                            </h6> */}
                             <div
-                              className=" d-flex align-items-center gap-2 "
+                              className="d-flex align-items-center gap-2"
                               style={{ width: "fit-content" }}
                             >
                               <button
-                                className={`${
-                                  chainId === 1482601649
+                                className={` ${
+                                  chainId === 167000
                                     ? "new-chain-active-btn"
                                     : "new-chain-inactive-btn"
                                 } d-flex gap-1 align-items-center`}
-                                onClick={handleSkalePool}
+                                onClick={handleTaikoPool}
                               >
                                 {" "}
-                                <img src={skaleIcon} alt="" /> SKALE
+                                <img src={taiko} alt="" /> Taiko
                               </button>
                             </div>
                             <div className="d-flex align-items-center gap-2">
@@ -2551,7 +2815,7 @@ const NewDailyBonus = ({
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage >= 20
+                                    taikoPercentage >= 20
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2561,7 +2825,7 @@ const NewDailyBonus = ({
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage >= 40
+                                    taikoPercentage >= 40
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2571,7 +2835,7 @@ const NewDailyBonus = ({
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage >= 60
+                                    taikoPercentage >= 60
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2581,7 +2845,7 @@ const NewDailyBonus = ({
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage >= 80
+                                    taikoPercentage >= 80
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2591,7 +2855,7 @@ const NewDailyBonus = ({
                                 <img
                                   className="percent-img"
                                   src={
-                                    skalePercentage === 100
+                                    taikoPercentage === 100
                                       ? percentageFilled
                                       : percentageEmpty
                                   }
@@ -2600,7 +2864,7 @@ const NewDailyBonus = ({
                                 />
                               </div>
                               <span className="percentage-span">
-                                {parseInt(skalePercentage)}%
+                                {parseInt(taikoPercentage)}%
                               </span>
                             </div>
                           </div>
@@ -2621,7 +2885,7 @@ const NewDailyBonus = ({
                             className={`chain-title-wrapper ${
                               chain === "core" &&
                               "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center justify-content-between`}
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
                               setChain("core");
                               setIsActive();
@@ -2716,6 +2980,107 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "skale" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={skaleBg}
+                            className={`chain-img ${
+                              chain === "skale" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "skale" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("skale");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">SKALE</h6> */}
+                            <div
+                              className=" d-flex align-items-center gap-2 "
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={`${
+                                  chainId === 1482601649
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSkalePool}
+                              >
+                                {" "}
+                                <img src={skaleIcon} alt="" /> SKALE
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    skalePercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(skalePercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      
 
                         <div
                           className={`position-relative chain-item ${
@@ -2733,7 +3098,7 @@ const NewDailyBonus = ({
                             className={`chain-title-wrapper ${
                               chain === "viction" &&
                               "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center justify-content-between`}
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
                               setChain("viction");
                               setIsActive();
@@ -2822,6 +3187,71 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
+
+                        <div className={`position-relative chain-item w-100`}>
+                          <img
+                            src={comingSoon}
+                            className={`chain-img`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
+                          >
+                            <div className="d-flex align-items-center gap-2">
+                              <span className="percentage-span">
+                                Coming Soon
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className={`position-relative chain-item w-100`}>
+                          <img
+                            src={comingSoon2}
+                            className={`chain-img`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
+                          >
+                             <div className="d-flex align-items-center gap-2">
+                              <span className="percentage-span">
+                                Coming Soon
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className={`position-relative chain-item w-100`}>
+                          <img
+                            src={comingSoon3}
+                            className={`chain-img`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
+                          >
+                            <div className="d-flex align-items-center gap-2">
+                              <span className="percentage-span">
+                                Coming Soon
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className={`position-relative chain-item w-100`}>
+                          <img
+                            src={comingSoon4}
+                            className={`chain-img`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
+                          >
+                            <div className="d-flex align-items-center gap-2">
+                              <span className="percentage-span">
+                                Coming Soon
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     ) : (
                       <Slider {...settings}>
@@ -2840,7 +3270,7 @@ const NewDailyBonus = ({
                           <div
                             className={`chain-title-wrapper ${
                               chain === "bnb" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center justify-content-between`}
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
                               setChain("bnb");
                               setIsActive();
@@ -2924,6 +3354,52 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
+
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "taiko" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={taikoBg}
+                            className={`chain-img ${
+                              chain === "taiko" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "taiko" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("taiko");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">
+                              Manta CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 169
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleTaikoPool}
+                              >
+                                {" "}
+                                <img src={taiko} alt="" /> Taiko
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
                         <div
                           className={`position-relative chain-item ${
                             chain === "skale" && "chain-item-active"
@@ -2940,7 +3416,7 @@ const NewDailyBonus = ({
                             className={`chain-title-wrapper ${
                               chain === "skale" &&
                               "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center justify-content-between`}
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
                               setChain("skale");
                               setIsActive();
@@ -2983,7 +3459,7 @@ const NewDailyBonus = ({
                             className={`chain-title-wrapper ${
                               chain === "core" &&
                               "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center justify-content-between`}
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
                               setChain("core");
                               setIsActive();
@@ -3033,7 +3509,7 @@ const NewDailyBonus = ({
                             className={`chain-title-wrapper ${
                               chain === "viction" &&
                               "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center justify-content-between`}
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
                               setChain("viction");
                               setIsActive();
@@ -3372,6 +3848,206 @@ const NewDailyBonus = ({
                                   binanceW3WProvider={binanceW3WProvider}
                                 />
                               ))
+                          : chain === "manta"
+                          ? allMantaChests && allMantaChests.length > 0
+                            ? allMantaChests.map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  image={mantaImages[index]}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onMantaChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataManta(value, value2);
+                                    setIsActive(value);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.isOpened}
+                                  disableBtn={disable}
+                                  isActive={isActive}
+                                  isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                            : window.range(0, 19).map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  image={mantaImages[index]}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onMantaChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataManta(value, value2);
+                                    setIsActive(value);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.opened}
+                                  disableBtn={true}
+                                  isActive={isActive}
+                                  openChest={() => {
+                                    console.log("test");
+                                  }}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                          : chain === "taiko"
+                          ? allTaikoChests && allTaikoChests.length > 0
+                            ? allTaikoChests.map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  image={taikoImages[index]}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onTaikoChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataTaiko(value, value2);
+                                    setIsActive(value);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.isOpened}
+                                  disableBtn={disable}
+                                  isActive={isActive}
+                                  isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                            : window.range(0, 19).map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  image={taikoImages[index]}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onTaikoChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataTaiko(value, value2);
+                                    setIsActive(value);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.opened}
+                                  disableBtn={true}
+                                  isActive={isActive}
+                                  openChest={() => {
+                                    console.log("test");
+                                  }}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
                           : chain === "viction"
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
@@ -3706,6 +4382,22 @@ const NewDailyBonus = ({
                               onClick={handleMantaPool}
                             >
                               Manta Chain
+                            </span>
+                          </h6>
+                        ) : chain === "taiko" ? (
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                            Switch to{" "}
+                            <span
+                              style={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
+                              onClick={handleTaikoPool}
+                            >
+                              Taiko Chain
                             </span>
                           </h6>
                         ) : chain === "core" ? (
@@ -5942,6 +6634,8 @@ const NewDailyBonus = ({
             onVictionChestClaimed();
             onCoreChestClaimed();
             onMantaChestClaimed();
+            onTaikoChestClaimed();
+
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
             setTimeout(() => {
@@ -5954,6 +6648,11 @@ const NewDailyBonus = ({
                   )
                 : chain === "manta"
                 ? showSingleRewardDataManta(
+                    rewardData.chestId,
+                    isActiveIndex - 1
+                  )
+                : chain === "taiko"
+                ? showSingleRewardDataTaiko(
                     rewardData.chestId,
                     isActiveIndex - 1
                   )

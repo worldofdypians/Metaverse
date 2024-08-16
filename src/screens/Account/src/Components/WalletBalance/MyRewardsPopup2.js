@@ -26,6 +26,8 @@ import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
 import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
+import immutableLogo from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
+
 import multiversIcon from "../../../../../components/NewDailyBonus/assets/multiversxIcon.svg";
 
 import dypius from "./myrewardsAssets/newAssets/treasureHunt/dypius.svg";
@@ -66,6 +68,8 @@ const MyRewardsPopupNew = ({
   monthlyDataAmountManta,
   allMantaChests,
   mantaEarnUsd,
+  weeklyDataAmountTaiko,
+  monthlyDataAmountTaiko, allTaikoChests,taikoEarnUsd, immutableEarnUsd
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -93,6 +97,7 @@ const MyRewardsPopupNew = ({
     useState(0);
 
   const [treasureRewardMoneyManta, setTreasureRewardMoneyManta] = useState(0);
+  const [treasureRewardMoneyTaiko, setTreasureRewardMoneyTaiko] = useState(0);
 
   const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
   const [pasttreasureRewardNftCaws, setpastTreasureRewardNftCaws] = useState(0);
@@ -387,6 +392,7 @@ const MyRewardsPopupNew = ({
     var moneyResultCore = 0;
     var moneyResultViction = 0;
     var moneyResultManta = 0;
+    var moneyResultTaiko = 0;
 
     var moneyResultSei = 0;
 
@@ -484,12 +490,31 @@ const MyRewardsPopupNew = ({
         }
       });
     }
+    if (allTaikoChests && allTaikoChests.length > 0) {
+      allTaikoChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResultTaiko += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
 
     setTreasureRewardMoney(moneyResult);
     setTreasureRewardMoneySkale(moneyResultSkale);
     setTreasureRewardMoneyCore(moneyResultCore);
     setTreasureRewardMoneyViction(moneyResultViction);
     setTreasureRewardMoneyManta(moneyResultManta);
+    setTreasureRewardMoneyTaiko(moneyResultTaiko);
   };
 
   const fetchCachedData = () => {
@@ -711,7 +736,7 @@ const MyRewardsPopupNew = ({
                       Number(skaleEarnUsd) +
                       Number(multiversEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(bnbEarnUsd) +
+                      Number(bnbEarnUsd) + Number(immutableEarnUsd)+
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd) +
                       Number(mantaEarnUsd) +
@@ -731,7 +756,9 @@ const MyRewardsPopupNew = ({
                       Number(weeklyDataAmountViction) +
                       Number(monthlyDataAmountViction) +
                       Number(weeklyDataAmountManta) +
+                      Number(weeklyDataAmountTaiko) +
                       Number(monthlyDataAmountManta) +
+                      Number(monthlyDataAmountTaiko) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(genesisRank2) +
@@ -922,7 +949,9 @@ const MyRewardsPopupNew = ({
                       Number(weeklyDataAmountViction) +
                       Number(monthlyDataAmountViction) +
                       Number(weeklyDataAmountManta) +
+                      Number(weeklyDataAmountTaiko) +
                       Number(monthlyDataAmountManta) +
+                      Number(monthlyDataAmountTaiko) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
                       Number(userDataStar) +
@@ -993,7 +1022,7 @@ const MyRewardsPopupNew = ({
                     Number(skaleEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(bnbEarnUsd) +
+                      Number(bnbEarnUsd) + Number(immutableEarnUsd)+
                       Number(multiversEarnUsd) +
                       Number(victionEarnUsd) +
                       Number(mantaEarnUsd),
@@ -1200,6 +1229,15 @@ const MyRewardsPopupNew = ({
                 </span>
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Taiko</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(treasureRewardMoneyTaiko, 2)}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CORE</span>
                 <span className="item-name-right">
                   $
@@ -1295,9 +1333,6 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(Number(userDataStar), 2)}
                 </span>
               </div>
-            </div>
-
-            <div className="d-flex flex-column gap-2 w-50">
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Manta</span>
                 <span className="item-name-right">
@@ -1307,6 +1342,21 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(
                         Number(weeklyDataAmountManta) +
                           Number(monthlyDataAmountManta)
+                      )}
+                </span>
+              </div>
+            </div>
+
+            <div className="d-flex flex-column gap-2 w-50">
+            <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Taiko</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(
+                        Number(weeklyDataAmountTaiko) +
+                          Number(monthlyDataAmountTaiko)
                       )}
                 </span>
               </div>
@@ -1445,19 +1495,19 @@ const MyRewardsPopupNew = ({
                       ${getFormattedNumber(victionEarnUsd, 2)}
                     </span>
                   </div>
-                  {/* <div className="d-flex w-100 justify-content-between gap-2">
+                  <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
                       <img
-                        src={multiversIcon}
+                        src={immutableLogo}
                         alt=""
                         style={{ width: 16, height: 16 }}
                       />
-                      MultiversX
+                      Immutable
                     </span>
                     <span className="item-name-right">
-                      ${getFormattedNumber(multiversEarnUsd, 2)}
+                      ${getFormattedNumber(immutableEarnUsd, 2)}
                     </span>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>

@@ -21,6 +21,7 @@ import ethIcon from "../assets/ethIcon.svg";
 import bnbLogo from "../assets/bnbIcon.svg";
 import confluxLogo from "../assets/confluxLogo.svg";
 import mantaLogo from "../assets/mantaLogo.png";
+import taikoLogo from "./assets/taikoLogo.svg";
 import baseLogo from "../assets/baseLogo.svg";
 import avaxLogo from "../assets/avaxLogo.svg";
 import skaleLogo from "../assets/skaleIcon.svg";
@@ -206,6 +207,7 @@ const SingleNft = ({
     if (
       type !== "conflux" &&
       type !== "manta" &&
+      type !== "taiko" &&
       type !== "doge" &&
       type !== "cmc" &&
       type !== "coingecko" &&
@@ -543,7 +545,25 @@ const SingleNft = ({
       console.log(owner);
 
       setowner(owner);
-    } else if (type === "doge") {
+    }
+    else if (type === "taiko") {
+      const nft_contract = new window.taikoWeb3.eth.Contract(
+        window.TAIKO_NFT_ABI,
+        window.config.nft_taiko_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      console.log(owner);
+
+      setowner(owner);
+    }
+    
+      else if (type === "doge") {
       const nft_contract = new window.bscWeb3.eth.Contract(
         window.DOGE_NFT_ABI,
         window.config.nft_doge_address
@@ -2387,6 +2407,9 @@ const SingleNft = ({
           window.config.nft_manta_address.toLowerCase()
         ? "manta"
         : nftAddress.toLowerCase() ===
+          window.config.nft_taiko_address.toLowerCase()
+        ? "taiko"
+        : nftAddress.toLowerCase() ===
           window.config.nft_doge_address.toLowerCase()
         ? "doge"
         : nftAddress.toLowerCase() ===
@@ -2482,7 +2505,11 @@ const SingleNft = ({
       nftAddress.toLowerCase() === window.config.nft_manta_address.toLowerCase()
     ) {
       setType("manta");
-    } else if (
+    }
+    else if (nftAddress.toLowerCase() === window.config.nft_taiko_address.toLowerCase()) {
+      setType("taiko");
+    }
+    else if (
       nftAddress.toLowerCase() === window.config.nft_doge_address.toLowerCase()
     ) {
       setType("doge");
@@ -2601,6 +2628,9 @@ const SingleNft = ({
     }
   }, [purchaseStatus, data]);
 
+
+
+
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0"
@@ -2696,7 +2726,21 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
-            ) : type === "doge" ? (
+            )
+            : type === "taiko" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  Taiko{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
+            )
+            : type === "doge" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   Dogecoin{" "}
@@ -2857,6 +2901,9 @@ const SingleNft = ({
                           window.config.nft_manta_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+400.png`
                         : nftAddress.toLowerCase() ===
+                          window.config.nft_taiko_address.toLowerCase()
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+400.png`
+                        : nftAddress.toLowerCase() ===
                           window.config.nft_doge_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
                         : nftAddress.toLowerCase() ===
@@ -2915,6 +2962,8 @@ const SingleNft = ({
                           ? confluxLogo
                           : type === "manta"
                           ? mantaLogo
+                          : type === "taiko"
+                          ? taikoLogo
                           : type === "base" ||
                             type === "cawsbase" ||
                             type === "landbase"
@@ -2962,6 +3011,8 @@ const SingleNft = ({
                       ? "MultiversX"
                       : type === "core"
                       ? "CORE"
+                      : type === "taiko"
+                      ? "Taiko"
                       : type === "opbnb"
                       ? "opBNB Chain"
                       : type === "immutable"
@@ -2998,6 +3049,8 @@ const SingleNft = ({
                         ? "Conflux Beta Pass"
                         : type === "manta"
                         ? "Manta Beta Pass"
+                        : type === "taiko"
+                        ? "Taiko Beta Pass"
                         : type === "doge"
                         ? "Dogecoin Beta Pass"
                         : type === "bnb"
@@ -3167,6 +3220,7 @@ const SingleNft = ({
                       type !== "gate" &&
                       type !== "conflux" &&
                       type !== "manta" &&
+                      type !== "taiko" &&
                       type !== "base" &&
                       type !== "doge" &&
                       type !== "bnb" &&
@@ -3343,6 +3397,7 @@ const SingleNft = ({
                       type !== "gate" &&
                       type !== "conflux" &&
                       type !== "manta" &&
+                      type !== "taiko" &&
                       type !== "base" &&
                       type !== "doge" &&
                       type !== "bnb" &&
@@ -3545,6 +3600,7 @@ const SingleNft = ({
                         type === "gate" ||
                         type === "conflux" ||
                         type === "manta" ||
+                        type === "taiko" ||
                         type === "base" ||
                         type === "doge" ||
                         type === "bnb" ||
@@ -3570,53 +3626,55 @@ const SingleNft = ({
                         </div>
                       )}
                     <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between gap-2 align-items-center">
-                      {type !== "immutable" && (
-                        <div className="d-flex justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="owner-txt">Owner:</span>
-                          {
-                            <a
-                              href={
-                                type === "coingecko" ||
-                                type === "gate" ||
-                                type === "cmc" ||
-                                type === "doge" ||
-                                type === "bnb" ||
-                                type === "cawsbnb" ||
-                                type === "landbnb" ||
-                                type === "multivers"
-                                  ? `https://bscscan.com/address/${owner}`
-                                  : type === "conflux"
-                                  ? `https://evm.confluxscan.net/address/${owner}`
-                                  : type === "base" ||
-                                    type === "cawsbase" ||
-                                    type === "landbase"
-                                  ? `https://basescan.org/address/${owner}`
-                                  : type === "cawsavax" || type === "landavax"
-                                  ? `https://snowtrace.io/address/${owner}`
-                                  : type === "skale"
-                                  ? `https://green-giddy-denebola.explorer.mainnet.skalenodes.com/address/${owner}`
-                                  : type === "viction"
-                                  ? `https://www.vicscan.xyz/address/${owner}`
-                                  : type === "core"
-                                  ? `https://scan.coredao.org/address/${owner}`
-                                  : type === "manta"
-                                  ? `https://pacific-explorer.manta.network/address/${owner}`
-                                  : type === "opbnb"
-                                  ? `https://opbnbscan.com/address/${owner}`
-                                  : type === "immutable"
-                                  ? `https://explorer.immutable.com/${owner}`
-                                  : `https://etherscan.io/address/${owner}`
-                              }
-                              target="_blank"
-                              style={{ textDecoration: "none" }}
-                              className="seller-addr"
-                              rel="noreferrer"
-                            >
-                              {shortAddress(owner)}
-                            </a>
-                          }
-                        </div>
-                      )}
+                     {type !=='immutable' &&
+                      <div className="d-flex justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                        <span className="owner-txt">Owner:</span>
+                        {
+                          <a
+                            href={
+                              type === "coingecko" ||
+                              type === "gate" ||
+                              type === "cmc" ||
+                              type === "doge" ||
+                              type === "bnb" ||
+                              type === "cawsbnb" ||
+                              type === "landbnb" ||
+                              type === "multivers"
+                                ? `https://bscscan.com/address/${owner}`
+                                : type === "conflux"
+                                ? `https://evm.confluxscan.net/address/${owner}`
+                                : type === "base" ||
+                                  type === "cawsbase" ||
+                                  type === "landbase"
+                                ? `https://basescan.org/address/${owner}`
+                                : type === "cawsavax" || type === "landavax"
+                                ? `https://snowtrace.io/address/${owner}`
+                                : type === "skale"
+                                ? `https://green-giddy-denebola.explorer.mainnet.skalenodes.com/address/${owner}`
+                                : type === "viction"
+                                ? `https://www.vicscan.xyz/address/${owner}`
+                                : type === "core"
+                                ? `https://scan.coredao.org/address/${owner}`
+                                : type === "manta"
+                                ? `https://pacific-explorer.manta.network/address/${owner}`
+                                : type === "taiko"
+                                ? `https://taikoscan.io/address/${owner}`
+                                : type === 'opbnb'
+                                ? `https://opbnbscan.com/address/${owner}`
+                                : type === "immutable"
+                                ? `https://explorer.immutable.com/${owner}`
+                               
+                                : `https://etherscan.io/address/${owner}`
+                            }
+                            target="_blank"
+                            style={{ textDecoration: "none" }}
+                            className="seller-addr"
+                            rel="noreferrer"
+                          >
+                            {shortAddress(owner)}
+                          </a>
+                        }
+                      </div> }
                       {!isOwner && IsListed && coinbase && isConnected && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center">
                           <button
@@ -3794,6 +3852,7 @@ const SingleNft = ({
                         type !== "gate" &&
                         type !== "conflux" &&
                         type !== "manta" &&
+                        type !== "taiko" &&
                         type !== "base" &&
                         type !== "cmc" &&
                         type !== "viction" &&
@@ -3870,6 +3929,7 @@ const SingleNft = ({
                         type !== "gate" &&
                         type !== "conflux" &&
                         type !== "manta" &&
+                        type !== "taiko" &&
                         type !== "base" &&
                         type !== "doge" &&
                         type !== "bnb" &&
@@ -3904,6 +3964,7 @@ const SingleNft = ({
                         type !== "gate" &&
                         type !== "conflux" &&
                         type !== "manta" &&
+                        type !== "taiko" &&
                         type !== "base" &&
                         type !== "doge" &&
                         type !== "bnb" &&
@@ -3954,6 +4015,7 @@ const SingleNft = ({
             type !== "gate" &&
             type !== "conflux" &&
             type !== "manta" &&
+            type !== "taiko" &&
             type !== "base" &&
             type !== "doge" &&
             type !== "bnb" &&
@@ -4225,6 +4287,7 @@ const SingleNft = ({
             type === "gate" ||
             type === "conflux" ||
             type === "manta" ||
+            type === "taiko" ||
             type === "base" ||
             type === "doge" ||
             type === "bnb" ||
@@ -4265,6 +4328,8 @@ const SingleNft = ({
                             ? "ETH"
                             : type === "manta"
                             ? "MANTA"
+                            : type === "taiko"
+                            ? "TAIKO"
                             : type === "skale"
                             ? "SKL"
                             : type === "core"

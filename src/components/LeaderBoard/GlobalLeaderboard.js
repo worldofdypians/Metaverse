@@ -22,6 +22,7 @@ import mantaActive from "./assets/mantaActive.png";
 import coreIcon from "./assets/coreIcon2.svg";
 import skaleActive from "./assets/skaleActive.svg";
 import yellowArrow from "./assets/yellowArrow.svg";
+import taikoLogo from '../../screens/Marketplace/MarketNFTs/assets/taikoLogo.svg'
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
 import inactiveUserPfp from "./assets/inactiveUserPfp.png";
 
@@ -206,7 +207,7 @@ const GlobalLeaderboard = ({
                     <br />
                     <br />
                     Participate in Daily Chain Leaderboards from BNB Chain,
-                    SKALE, Core, Manta and Viction to earn STARS that will boost your
+                    SKALE, Core, Manta, Taiko and Viction to earn STARS that will boost your
                     global ranking.
                     <br />
                     <br />
@@ -515,8 +516,9 @@ const GlobalLeaderboard = ({
             <div className="d-flex align-items-center gap-1">
               <img src={bnbIcon} width={20} height={20} alt="" />
               <img src={mantaActive} width={20} height={20} alt="" />
-              <img src={skaleActive} width={20} height={20} alt="" />
+              <img src={taikoLogo} width={20} height={20} alt="" />
               <img src={coreIcon} width={20} height={20} alt="" />
+              <img src={skaleActive} width={20} height={20} alt="" />
               <img src={victionActive} width={20} height={20} alt="" />
             </div>
             <img src={yellowArrow} width={20} height={20} alt="" />

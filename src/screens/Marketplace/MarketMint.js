@@ -22,6 +22,7 @@ import nextArrow from "./assets/nextArrow1.svg";
 import confluxActive from "./assets/confluxActive.png";
 import coin98Active from "./assets/coin98Active.png";
 import bnbActive from "./assets/bnbActive.png";
+import taikoActive from "./assets/taikoActive.png";
 import mantaActive from "./assets/mantaActive.png";
 import coingeckoActive from "./assets/coingeckoActive.png";
 import skaleActive from "./assets/upcomingSkaleMobile.webp";
@@ -30,6 +31,7 @@ import coreActive from "./assets/coreActive.webp";
 import victionActive from "./assets/victionActive.webp";
 import seiActive from "./assets/seiActive.webp";
 import multiversActive from "./assets/multiversActive.webp";
+import taikoLogo from './MarketNFTs/assets/taikoLogo.svg'
 import mantaLogo from "./assets/mantaLogo.png";
 import timepieceActive from "./assets/timepieceActive.png";
 import gateActive from "./assets/gateActive.png";
@@ -43,14 +45,16 @@ import coreLogo from "./assets/coreLogo.svg";
 import victionLogo from "./assets/victionLogo.svg";
 import seiLogo from "./assets/seiLogo.svg";
 import multiversLogo from "./assets/multiversLogo.svg";
-
+import taikoBg from "./assets/taikoBg.webp";
 import seiBg from "./assets/seiBg.webp";
 import coreBg from "./assets/coreBg.webp";
 import mantaBg from "./assets/mantaBg.webp";
-
+import taikoMobileBg from './assets/taikoActive.png'
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
 import immutableMobileBg from "./assets/immutableActive.webp";
+import immutableBg from "./assets/immutableBg.webp";
+
 import seiMobileBg from "./assets/seiActive.webp";
 import coreMobileBg from "./assets/coreActive.webp";
 import mantaMobileBg from "./assets/mantaMobileBg.png";
@@ -130,7 +134,7 @@ const MarketMint = ({
   totalMantaNft,
   mantaMintAllowed,
   myMantaNfts,
-  myMantaNFTsCreated,
+  myMantaNFTsCreated,totalTaikoNft,taikoMintAllowed,myTaikoNfts, myTaikoNFTsCreated
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -232,6 +236,14 @@ const MarketMint = ({
     mobileBg: "mantaBgMobile.webp",
   };
 
+  const taikoData = {
+    id: "taiko",
+    cardTitle: "Taiko Beta Pass",
+    title: "Taiko Beta Pass",
+    background: "taiko-mint-bg",
+    mobileBg: "taikoMobileBg.png",
+  };
+
   const windowSize = useWindowSize();
   const params = useParams();
   const location = useLocation();
@@ -256,12 +268,15 @@ const MarketMint = ({
   const [bnbNftsSold, setbnbNftsSold] = useState(0);
   const [victionNftsSold, setVictionNftsSold] = useState(0);
   const [coreNftsSold, setCoreNftsSold] = useState(0);
+  const [opbnbNftsSold, setopBnbNftsSold] = useState(0);
+  const [immutableNftsSold, setimmutableNftsSold] = useState(0);
+
 
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(opbnbData);
-  const [mintTitle, setMintTitle] = useState("opbnbchain");
+  const [selectedMint, setSelectedMint] = useState(taikoData);
+  const [mintTitle, setMintTitle] = useState("taiko");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -357,6 +372,38 @@ const MarketMint = ({
 
     setCoreNftsSold(coreresult);
 
+    const opbnbnftContract = new window.opBnbWeb3.eth.Contract(
+      window.OPBNB_NFT_ABI,
+      window.config.nft_opbnb_address
+    );
+
+    const opbnbresult = await opbnbnftContract.methods
+    .totalSupply()
+    .call()
+    .catch((e) => {
+      console.error(e);
+      return 0;
+    });
+
+  setopBnbNftsSold(opbnbresult);
+
+
+  
+  const immutableContract = new window.immutableWeb3.eth.Contract(
+    window.IMMUTABLE_NFT_ABI,
+    window.config.nft_immutable_address
+  );
+
+  const immutableresult = await immutableContract.methods
+  .totalSupply()
+  .call()
+  .catch((e) => {
+    console.error(e);
+    return 0;
+  });
+
+setimmutableNftsSold(immutableresult);
+
 
   };
 
@@ -380,6 +427,10 @@ const MarketMint = ({
       setSelectedMint(mantaData);
       setMintTitle("manta");
     }
+    else if (location.pathname.includes("taiko")) {
+      setSelectedMint(taikoData);
+      setMintTitle("taiko");
+    }
     getTotalSupply();
   }, [location]);
 
@@ -393,6 +444,8 @@ const MarketMint = ({
   let countToExpireImmutable = new Date("2024-08-15T24:00:00.000+02:00");
 
   let countToExpireManta = new Date("2024-08-15T24:00:00.000+02:00");
+  let countToExpireTaiko = new Date("2024-09-13T24:00:00.000+02:00");
+
 
   const dummyCards = [
     // {
@@ -499,23 +552,32 @@ const MarketMint = ({
     //   class: "mint-manta",
     //   id: "manta",
     // },
+    // {
+    //   title: "opBNB Chain Pass",
+    //   eventId: "opbnbchain",
+    //   desc: "Gain entry to metaverse, and join exclusive opBNB Chain event with special ticket.",
+    //   img: bnbActive,
+    //   data: opbnbData,
+    //   class: "mint-bnb",
+    //   id: "opbnb",
+    // },
     {
-      title: "opBNB Chain Pass",
-      eventId: "opbnbchain",
-      desc: "Gain entry to metaverse, and join exclusive opBNB Chain event with special ticket.",
-      img: bnbActive,
-      data: opbnbData,
-      class: "mint-bnb",
-      id: "opbnb",
+      title: "Taiko Pass",
+      eventId: "taiko",
+      desc: "Gain entry to metaverse, and join exclusive Taiko event with special ticket.",
+      img: taikoActive,
+      data: taikoData,
+      class: "mint-taiko",
+      id: "taiko",
     },
-    {
-      title: "Immutable Pass",
-      eventId: "immutable",
-      desc: "Gain entry to metaverse, and join exclusive Immutable event with special ticket.",
-      img: immutableActive,
-      data: immutableData,
-      class: "mint-immutable",
-    },
+    // {
+    //   title: "Immutable Pass",
+    //   eventId: "immutable",
+    //   desc: "Gain entry to metaverse, and join exclusive Immutable event with special ticket.",
+    //   img: immutableActive,
+    //   data: immutableData,
+    //   class: "mint-immutable",
+    // },
     // {
     //   title: "CORE Pass",
     //   eventId: "core",
@@ -765,6 +827,14 @@ const MarketMint = ({
             setactiveButton(true);
             setStatus("");
           }
+        } else if (selectedMint.id === "taiko") {
+          if (chainId !== 167000) {
+            setactiveButton(false);
+            setStatus("Switch to Taiko to continue minting.");
+          } else if (chainId === 167000) {
+            setactiveButton(true);
+            setStatus("");
+          }
         }
       }
     }
@@ -799,6 +869,8 @@ const MarketMint = ({
     window.scrollTo(0, 0);
     document.title = "NFT Mint";
   }, []);
+
+  
 
   return (
     <>
@@ -847,8 +919,9 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
                   >
-                    {" "}
-                    
+                     <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     Live
                   </h6>
                   <h6
@@ -857,9 +930,7 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     Upcoming
                   </h6>
                   <h6
@@ -948,6 +1019,13 @@ const MarketMint = ({
                                   <span>{myMantaNFTsCreated.length}</span>
                                 </div>
                               )}
+                               {showBadge &&
+                              myTaikoNFTsCreated.length > 0 &&
+                              selectedMint.id === "taiko" && (
+                                <div className="totalcreated">
+                                  <span>{myTaikoNFTsCreated.length}</span>
+                                </div>
+                              )}
                             <div
                               className={`genesis-wrapper ${
                                 selectedMint.id === "timepiece" &&
@@ -970,6 +1048,9 @@ const MarketMint = ({
                                   : selectedMint.id === "manta" &&
                                     totalMantaNft > 0
                                   ? "manta-active"
+                                  : selectedMint.id === "taiko" &&
+                                    totalTaikoNft > 0
+                                  ? "taiko-active"
                                   : selectedMint.id === "viction" &&
                                     totalVictionNft > 0
                                   ? "viction-active"
@@ -1290,6 +1371,42 @@ const MarketMint = ({
                               </NavLink>
                             </div>
                           )}
+
+{selectedMint.id === "taiko" && (
+                            <div
+                              className={
+                                isConnected === false ||
+                                activeButton === false ||
+                                myTaikoNfts.length === 0
+                                  ? "linear-border-disabled"
+                                  : "linear-border"
+                              }
+                            >
+                              <NavLink
+                                className={`btn ${
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myTaikoNfts.length === 0
+                                    ? "outline-btn-disabled"
+                                    : "outline-btn"
+                                } px-5 w-100`}
+                                disabled={
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myTaikoNfts.length === 0
+                                }
+                                to={`/marketplace/nft/${myTaikoNfts[0]}/${window.config.nft_taiko_address}`}
+                                onClick={() => {
+                                  updateViewCount(
+                                    myTaikoNfts[0],
+                                    window.config.nft_taiko_address
+                                  );
+                                }}
+                              >
+                                View NFT
+                              </NavLink>
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div
@@ -1346,6 +1463,18 @@ const MarketMint = ({
                                   />
                                   <span className="mint-benefits-title">
                                     Minting is available on Manta
+                                  </span>
+                                </div>
+                              ): mintTitle === "taiko" ? (
+                                <div className="d-flex align-items-center gap-2">
+                                  <img
+                                    src={blockChainIcon}
+                                    width={40}
+                                    height={40}
+                                    alt=""
+                                  />
+                                  <span className="mint-benefits-title">
+                                    Minting is available on Taiko
                                   </span>
                                 </div>
                               ) : mintTitle === "coingecko" ||
@@ -1515,6 +1644,14 @@ const MarketMint = ({
                               >
                                 Available only on Manta
                                 <img src={mantaLogo} alt="" />
+                              </span>
+                            ) : mintTitle === "taiko" ? (
+                              <span
+                                className="limit-span position-relative d-flex align-items-center gap-2"
+                                style={{ bottom: "0px" }}
+                              >
+                                Available only on Taiko
+                                <img src={taikoLogo} alt="" />
                               </span>
                             ) : mintTitle === "avax" ? (
                               <span
@@ -1756,6 +1893,8 @@ const MarketMint = ({
                                         ? bnbMintAllowed
                                         : mintTitle === "manta"
                                         ? mantaMintAllowed
+                                        : mintTitle === "taiko"
+                                        ? taikoMintAllowed
                                         : mintTitle === "multiversx"
                                         ? 1
                                         : mintTitle === "immutable"
@@ -1778,6 +1917,8 @@ const MarketMint = ({
                                           ? countToExpireManta
                                           : mintTitle === "immutable"
                                           ? countToExpireImmutable
+                                          : mintTitle === "taiko"
+                                          ? countToExpireTaiko
                                           : countToExpireOpbnb
                                       }
                                       renderer={renderer2}
@@ -1811,6 +1952,8 @@ const MarketMint = ({
                                 ? "opBNB Chain"
                                 : mintTitle === "manta"
                                 ? "Manta"
+                                : mintTitle === "taiko"
+                                ? "Taiko"
                                 : "SEI"}
                               <img
                                 style={{ width: 24, height: 24 }}
@@ -1827,6 +1970,8 @@ const MarketMint = ({
                                     ? immutableLogo
                                     : mintTitle === "manta"
                                     ? mantaLogo
+                                    : mintTitle === "taiko"
+                                    ? taikoLogo
                                     : mintTitle === "bnbchain" ||
                                       mintTitle === "opbnbchain"
                                     ? bnbLogo
@@ -2623,6 +2768,106 @@ const MarketMint = ({
                                   </button>
                                 </div>
                               )}
+
+{selectedMint.id === "taiko" && (
+                                <div
+                                  className={
+                                    (isConnected === true && chainId !== 167000) ||
+                                    (status !== "Connect your wallet." &&
+                                      status !== "") ||
+                                    mintloading === "error" ||
+                                    totalTaikoNft > 0
+                                      ? "linear-border-disabled"
+                                      : "linear-border"
+                                  }
+                                >
+                                  <button
+                                    className={`btn ${
+                                      mintloading === "error"
+                                        ? "filled-error-btn"
+                                        : (isConnected === true &&
+                                            chainId !== 167000) ||
+                                          (status !== "Connect your wallet." &&
+                                            status !== "") ||
+                                            totalTaikoNft > 0
+                                        ? "outline-btn-disabled"
+                                        : "filled-btn"
+                                    }  px-4 w-100`}
+                                    onClick={() => {
+                                      isConnected === true && chainId === 167000
+                                        ? handleMint()
+                                        : showWalletConnect();
+                                    }}
+                                    disabled={
+                                      mintloading === "error" ||
+                                      mintloading === "success" ||
+                                      (isConnected === true &&
+                                        chainId !== 167000) ||
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      totalTaikoNft > 0
+                                        ? true
+                                        : false
+                                    }
+                                    onMouseEnter={() => {
+                                      setMouseOver(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                      setMouseOver(false);
+                                    }}
+                                  >
+                                    {(isConnected === false ||
+                                      chainId !== 167000) && (
+                                      <img
+                                        src={
+                                          mouseOver === false
+                                            ? blackWallet
+                                            : whitewallet
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "23px",
+                                          height: "23px",
+                                        }}
+                                      />
+                                    )}{" "}
+                                    {mintloading === "initial" &&
+                                    isConnected === true &&
+                                    chainId === 167000 ? (
+                                      "Mint"
+                                    ) : mintloading === "mint" &&
+                                      isConnected === true &&
+                                      chainId === 167000 ? (
+                                      <>
+                                        <div
+                                          className="spinner-border"
+                                          role="status"
+                                          style={{
+                                            height: "1.5rem",
+                                            width: "1.5rem",
+                                          }}
+                                        ></div>
+                                      </>
+                                    ) : mintloading === "error" &&
+                                      isConnected === true &&
+                                      chainId === 167000 ? (
+                                      "Failed"
+                                    ) : mintloading === "success" &&
+                                      isConnected === true &&
+                                      activeButton ===
+                                        (isConnected === true &&
+                                          chainId === 167000) ? (
+                                      "Success"
+                                    ) : isConnected === true &&
+                                      chainId !== 167000 ? (
+                                      " Switch Chain"
+                                    ) : (
+                                      "Connect wallet"
+                                    )}
+                                  </button>
+                                </div>
+                              )}
+
                             </div>
                           </div>
                         </div>
@@ -2641,6 +2886,25 @@ const MarketMint = ({
                 //   </div>
                 // </div>
                 <div className="d-flex flex-column gap-4">
+                    {/* <div className="upcoming-mint-wrapper upcoming-taiko-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Taiko Beta Pass</h6>
+                      <p className="upcoming-mint-desc">
+                        Get access to a special ticket to enter the metaverse
+                        and participate in an exclusive event hosted by Taiko
+                      </p>
+                    </div>
+                    <img
+                      src={taikoBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={taikoMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div> */}
                   <div className="upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Manta Beta Pass</h6>
@@ -2660,6 +2924,28 @@ const MarketMint = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
+                
+                  {/* <div className="upcoming-mint-wrapper upcoming-immutable-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Immutable Beta Pass</h6>
+                      <p className="upcoming-mint-desc">
+                        Get access to a special ticket to enter the metaverse
+                        and participate in an exclusive event hosted by Immutable
+                      </p>
+                    </div>
+                    <img
+                      src={immutableBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={immutableMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div> */}
+                
+
                   <div className="upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">SEI Beta Pass</h6>
@@ -2935,6 +3221,42 @@ const MarketMint = ({
                             {getFormattedNumber(coreNftsSold,0)}
                           </h6>
                           <span className="past-core-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-opbnb-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">opBNB Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6
+                            className="past-bnb-mint-amount"
+                          >
+                            {getFormattedNumber(opbnbNftsSold,0)}
+                          </h6>
+                          <span className="past-bnb-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-immutable-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">Immutable Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6
+                            className="past-immutable-mint-amount"
+                          >
+                            {getFormattedNumber(immutableNftsSold,0)}
+                          </h6>
+                          <span className="past-immutable-mint-desc">SOLD OUT</span>
                         </div>
                       </div>
                     </div>

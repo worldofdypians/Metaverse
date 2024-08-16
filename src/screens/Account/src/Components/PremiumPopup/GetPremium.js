@@ -65,6 +65,10 @@ const GetPremiumPopup = ({
       name: "Manta",
       symbol: "manta",
     },
+    {
+      name: "Taiko",
+      symbol: "taiko",
+    },
   ];
 
   const { BigNumber } = window;
@@ -78,6 +82,8 @@ const GetPremiumPopup = ({
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
   let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
   let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
+  let wtaikoddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
+
 
   const metaverseBenefits = [
     "Exclusive access to World of Dypians",
@@ -281,6 +287,22 @@ const GetPremiumPopup = ({
     }
   };
 
+  const handleTaikoPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x28c58")
+          .then(() => {
+            handleSwitchNetwork(167000);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
   const handleBasePool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
@@ -426,6 +448,8 @@ const GetPremiumPopup = ({
         ? window.config.subscriptionviction_tokens[token]?.decimals
         : chainId === 169
         ? window.config.subscriptionmanta_tokens[token]?.decimals
+        : chainId === 167000
+        ? window.config.subscriptiontaiko_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -455,6 +479,8 @@ const GetPremiumPopup = ({
         ? await window.getEstimatedTokenSubscriptionAmountViction(token)
         : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
+        : chainId === 167000
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
         : chainId === 713715
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
@@ -490,6 +516,8 @@ const GetPremiumPopup = ({
     const seisubscribeAddress = window.config.subscription_sei_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
     const mantasubscribeAddress = window.config.subscription_manta_address;
+    const taikosubscribeAddress = window.config.subscription_taiko_address;
+
 
     const coresubscribeAddress = window.config.subscription_core_address;
 
@@ -638,27 +666,29 @@ const GetPremiumPopup = ({
 
           .approve(
             chainId === 1
-              ? ethsubscribeAddress
-              : chainId === 56
-              ? bnbsubscribeAddress
-              : chainId === 1030
-              ? cfxsubscribeAddress
-              : chainId === 8453
-              ? basesubscribeAddress
-              : chainId === 43114
-              ? avaxsubscribeAddress
-              : chainId === 1482601649
-              ? skalesubscribeAddress
-              : chainId === 88
-              ? victionsubscribeAddress
-              : chainId === 169
-              ? mantasubscribeAddress
-              : chainId === 1116
-              ? coresubscribeAddress
-              : chainId === 713715
-              ? seisubscribeAddress
-              : cfxsubscribeAddress,
-            price
+            ? ethsubscribeAddress
+            : chainId === 56
+            ? bnbsubscribeAddress
+            : chainId === 1030
+            ? cfxsubscribeAddress
+            : chainId === 8453
+            ? basesubscribeAddress
+            : chainId === 43114
+            ? avaxsubscribeAddress
+            : chainId === 1482601649
+            ? skalesubscribeAddress
+            : chainId === 88
+            ? victionsubscribeAddress
+            : chainId === 169
+            ? mantasubscribeAddress
+            : chainId === 167000
+            ? taikosubscribeAddress
+            : chainId === 1116
+            ? coresubscribeAddress
+            : chainId === 713715
+            ? seisubscribeAddress
+            : cfxsubscribeAddress,
+          price 
           )
           .send({ from: coinbase })
           .then(() => {
@@ -687,27 +717,29 @@ const GetPremiumPopup = ({
         await tokenContract_binance
           .approve(
             chainId === 1
-              ? ethsubscribeAddress
-              : chainId === 56
-              ? bnbsubscribeAddress
-              : chainId === 1030
-              ? cfxsubscribeAddress
-              : chainId === 8453
-              ? basesubscribeAddress
-              : chainId === 43114
-              ? avaxsubscribeAddress
-              : chainId === 1482601649
-              ? skalesubscribeAddress
-              : chainId === 88
-              ? victionsubscribeAddress
-              : chainId === 169
-              ? mantasubscribeAddress
-              : chainId === 1116
-              ? coresubscribeAddress
-              : chainId === 713715
-              ? seisubscribeAddress
-              : cfxsubscribeAddress,
-            price,
+            ? ethsubscribeAddress
+            : chainId === 56
+            ? bnbsubscribeAddress
+            : chainId === 1030
+            ? cfxsubscribeAddress
+            : chainId === 8453
+            ? basesubscribeAddress
+            : chainId === 43114
+            ? avaxsubscribeAddress
+            : chainId === 1482601649
+            ? skalesubscribeAddress
+            : chainId === 88
+            ? victionsubscribeAddress
+            : chainId === 169
+            ? mantasubscribeAddress
+            : chainId === 167000
+            ? taikosubscribeAddress
+            : chainId === 1116
+            ? coresubscribeAddress
+            : chainId === 713715
+            ? seisubscribeAddress
+            : cfxsubscribeAddress,
+          price,
             { from: coinbase }
           )
           .then(() => {
@@ -742,6 +774,8 @@ const GetPremiumPopup = ({
     const coreWeb3 = new Web3(window.config.core_endpoint);
     const victionWeb3 = new Web3(window.config.viction_endpoint);
     const mantaWeb3 = new Web3(window.config.manta_endpoint);
+    const taikoWeb3 = new Web3(window.config.taiko_endpoint);
+
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
@@ -753,6 +787,7 @@ const GetPremiumPopup = ({
     const coresubscribeAddress = window.config.subscription_core_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
     const mantasubscribeAddress = window.config.subscription_manta_address;
+    const taikosubscribeAddress = window.config.subscription_taiko_address;
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -805,6 +840,11 @@ const GetPremiumPopup = ({
       subscribeToken
     );
 
+    const subscribeTokencontracttaiko = new taikoWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
     let tokenprice =
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
@@ -825,6 +865,8 @@ const GetPremiumPopup = ({
         ? await window.getEstimatedTokenSubscriptionAmountViction(token)
         : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
+        : chainId === 167000
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 713715
@@ -865,6 +907,20 @@ const GetPremiumPopup = ({
       } else if (chainId === 169) {
         const result = await subscribeTokencontractmanta.methods
           .allowance(coinbase, mantasubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } else if (chainId === 167000) {
+        const result = await subscribeTokencontracttaiko.methods
+          .allowance(coinbase, taikosubscribeAddress)
           .call()
           .then();
         if (result != 0 && Number(result) >= Number(tokenprice)) {
@@ -1071,6 +1127,8 @@ const GetPremiumPopup = ({
           ? "SUBSCRIPTION_VICTION"
           : chainId === 169
           ? "SUBSCRIPTION_MANTA"
+          : chainId === 167000
+          ? "SUBSCRIPTION_TAIKO"
           : chainId === 1116
           ? "SUBSCRIPTION_CORE"
           : chainId === 713715
@@ -1375,6 +1433,15 @@ const GetPremiumPopup = ({
       );
       handleSubscriptionTokenChange(wmantaddress);
       handleCheckIfAlreadyApproved(wmantaddress);
+    } else if (chainId === 167000) {
+      setChainDropdown(chainDropdowns[9]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptiontaiko_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wtaikoddress);
+      handleCheckIfAlreadyApproved(wtaikoddress);
     } else if (chainId === 1116) {
       setChainDropdown(chainDropdowns[6]);
       setdropdownIcon("usdt");
@@ -1434,6 +1501,11 @@ const GetPremiumPopup = ({
     } else if (chainId === 169 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionmanta_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 167000 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptiontaiko_tokens[selectedSubscriptionToken]
           ?.decimals
       );
     } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
@@ -1566,7 +1638,14 @@ const GetPremiumPopup = ({
                   />
                   <span className="subscription-chain mb-0">Manta</span>
                 </div>
-
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={require(`../../../../../components/Header/assets/taiko.svg`).default}
+                    alt=""
+                    style={{ width: 18, height: 18 }}
+                  />
+                  <span className="subscription-chain mb-0">Taiko</span>
+                </div>
                 <div className="d-flex align-items-center gap-2">
                   <img
                     src={
@@ -1725,6 +1804,22 @@ const GetPremiumPopup = ({
                   />
                   Manta
                 </li>
+
+                <li
+                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                  onClick={handleTaikoPool}
+                >
+                  <img
+                    src={
+                      require(`../../Images/premium/tokens/taikoIcon.svg`)
+                        .default
+                    }
+                    style={{ width: 18, height: 18 }}
+                    alt=""
+                  />
+                  Taiko
+                </li>
+
                 <li
                   className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                   onClick={handleAvaxPool}
@@ -1889,6 +1984,8 @@ const GetPremiumPopup = ({
                           ? window.config.subscriptionviction_tokens
                           : chainId === 169
                           ? window.config.subscriptionmanta_tokens
+                          : chainId === 167000
+                          ? window.config.subscriptiontaiko_tokens
                           : chainId === 1116
                           ? window.config.subscriptioncore_tokens
                           : chainId === 713715
@@ -1925,6 +2022,9 @@ const GetPremiumPopup = ({
                                   : chainId === 169
                                   ? window.config.subscriptionmanta_tokens[t]
                                       ?.symbol
+                                      : chainId === 167000
+                                      ? window.config.subscriptiontaiko_tokens[t]
+                                          ?.symbol
                                   : chainId === 1116
                                   ? window.config.subscriptioncore_tokens[t]
                                       ?.symbol
@@ -1956,6 +2056,9 @@ const GetPremiumPopup = ({
                                       ?.symbol
                                   : chainId === 169
                                   ? window.config.subscriptionmanta_tokens[t]
+                                      ?.symbol
+                                      : chainId === 167000
+                                  ? window.config.subscriptiontaiko_tokens[t]
                                       ?.symbol
                                   : chainId === 713715
                                   ? window.config.subscriptionsei_tokens[t]
@@ -2010,6 +2113,10 @@ const GetPremiumPopup = ({
                                 ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
                                     t
                                   ]?.symbol.toLowerCase()}Icon.svg`)
+                                  : chainId === 167000
+                                ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
+                                    t
+                                  ]?.symbol.toLowerCase()}Icon.svg`)
                                 : chainId === 713715
                                 ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
                                     t
@@ -2043,6 +2150,8 @@ const GetPremiumPopup = ({
                                 ?.symbol
                             : chainId === 169
                             ? window.config.subscriptionmanta_tokens[t]?.symbol
+                            : chainId === 167000
+                            ? window.config.subscriptiontaiko_tokens[t]?.symbol
                             : chainId === 713715
                             ? window.config.subscriptionsei_tokens[t]?.symbol
                             : window.config.subscription_tokens[t]?.symbol}
