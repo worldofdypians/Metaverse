@@ -313,7 +313,7 @@ const Header = ({
 
   const switchNetwork = async (hexChainId, chain) => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook(hexChainId)
           .then(() => {
             handleSwitchNetwork(chain);

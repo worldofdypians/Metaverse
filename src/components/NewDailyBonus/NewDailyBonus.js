@@ -767,24 +767,31 @@ const NewDailyBonus = ({
   };
 
   const handleTaikoPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0x28c58")
-          .then(() => {
-            handleSwitchNetwork(167000);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(167000);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(167000);
+ 
+
+    if (window.WALLET_TYPE !== "binance") {
+      if (window.ethereum) {
+        if (!window.gatewallet) {
+          await handleSwitchNetworkhook("0x28c58")
+            .then(() => {
+              handleSwitchNetwork(167000);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
+        else if(window.ethereum?.isBinance) {
+          window.alertify.error(
+            "This network is not available on Binance Web3 Wallet"
+          );
+        }
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(167000);
     } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
     }
 
 
@@ -817,6 +824,7 @@ const NewDailyBonus = ({
   };
 
   const handleCorePool = async () => {
+ 
     if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
         if (!window.gatewallet) {
@@ -828,6 +836,11 @@ const NewDailyBonus = ({
               console.log(e);
             });
         }
+        else if(window.ethereum?.isBinance) {
+          window.alertify.error(
+            "This network is not available on Binance Web3 Wallet"
+          );
+        }
       } else {
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
@@ -836,29 +849,35 @@ const NewDailyBonus = ({
         "This network is not available on Binance Web3 Wallet"
       );
     }
+
   };
   const handleVictionPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
-        await handleSwitchNetworkhook("0x58")
-          .then(() => {
-            handleSwitchNetwork(88);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
-        handleSwitchChainGateWallet(88);
-      }  else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
-        window.alertify.error(
-          "This network is not available on Binance Web3 Wallet"
-        );
+    if (window.WALLET_TYPE !== "binance") {
+      if (window.ethereum) {
+        if (!window.gatewallet) {
+          await handleSwitchNetworkhook("0x58")
+            .then(() => {
+              handleSwitchNetwork(88);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
+        else if(window.ethereum?.isBinance) {
+          window.alertify.error(
+            "This network is not available on Binance Web3 Wallet"
+          );
+        }
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(88);
     } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
     }
+
+
   };
 
   const handleSeiPool = async () => {
@@ -2300,7 +2319,8 @@ const NewDailyBonus = ({
         setDisable(true);
       }
     } else if (chain === "taiko") {
-      if (email && coinbase && address) {
+      if(window.WALLET_TYPE !=='binance')
+     { if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {
             if (
@@ -2360,6 +2380,8 @@ const NewDailyBonus = ({
       } else {
         setMessage("login");
         setDisable(true);
+      }} else if (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) {
+        setMessage("notsupported");
       }
     }
   }, [

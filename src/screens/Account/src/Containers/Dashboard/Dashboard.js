@@ -8707,6 +8707,7 @@ function Dashboard({
                                           />
                                           Manta
                                         </li>
+                                        {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                                         <li
                                           className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                           onClick={handleTaikoPool}
@@ -8721,6 +8722,7 @@ function Dashboard({
                                           />
                                           Taiko
                                         </li>
+)}
                                         <li
                                           className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                           onClick={handleAvaxPool}

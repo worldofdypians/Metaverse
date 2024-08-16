@@ -3476,6 +3476,7 @@ function App() {
       }
       // window.location.reload();
     } else if (window.WALLET_TYPE === "binance" && binanceData) {
+      console.log('yes')
       try {
         await binanceConnector.binanceW3WProvider
           .request({
