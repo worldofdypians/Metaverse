@@ -786,13 +786,7 @@ function App() {
         console.error(e);
         return 0;
       });
-      const nftresult = await nftContract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+
     //20002 = 10000 caws + 1000 genesis + 9002 coingecko
     setTotalSupply(
       parseInt(result) +
