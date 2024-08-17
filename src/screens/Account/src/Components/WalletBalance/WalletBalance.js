@@ -118,7 +118,7 @@ const WalletBalance = ({
   MyNFTSLandBase,
   myNFTSopBNB,
   MyNFTSCawsBase,
-  myMultiversNfts,myMantaNfts, myTaikoNfts
+  myMultiversNfts,myMantaNfts, myTaikoNfts, myCookieNfts
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -473,6 +473,8 @@ const WalletBalance = ({
     let multiversNftsArray = [];
     let mantaNftsArray = [];
     let taikoNftsArray = [];
+    let cookieNftsArray = [];
+
 
 
     // console.log(allListed, "allListed");
@@ -846,6 +848,22 @@ const WalletBalance = ({
         );
       }
 
+      if (myCookieNfts && myCookieNfts.length > 0) {
+        await Promise.all(
+          myCookieNfts.map(async (i) => {
+            cookieNftsArray.push({
+              nftAddress: window.config.nft_cookie3_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "cookie3",
+              chain: 56,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
       if (mySkaleNfts && mySkaleNfts.length > 0) {
         await Promise.all(
           mySkaleNfts.map(async (i) => {
@@ -1018,6 +1036,7 @@ const WalletBalance = ({
       finalCollection = [
         ...bnbNftsArray,
         ...opbnbNftsArray,
+        ...cookieNftsArray,
         ...multiversNftsArray,
         ...victionNftsArray,
         ...immutableNftsArray,
@@ -1269,8 +1288,13 @@ const WalletBalance = ({
       let mantaFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_manta_address
       );
+
       let taikoFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_taiko_address
+      );
+
+      let cookie3Filter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_cookie3_address
       );
 
       const allBetapassArray = [
@@ -1280,6 +1304,7 @@ const WalletBalance = ({
         ...dogeFilter,
         ...mantaFilter,
         ...taikoFilter,
+        ...cookie3Filter,
         ...cmcFilter,
         ...baseFilter,
         ...skaleFilter,
@@ -2057,6 +2082,8 @@ const WalletBalance = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
                                   : item.type === "taiko"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                  : item.type === "cookie3"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                   : item.type === "base"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                   : item.type === "gate"
@@ -2104,6 +2131,8 @@ const WalletBalance = ({
                                   ? "MNBP"
                                   : item.type === "taiko"
                                   ? "TKBP"
+                                  : item.type === "cookie3"
+                                  ? "CKBP"
                                   : item.type === "gate"
                                   ? "GTBP"
                                   : item.type === "bnb"
@@ -3086,6 +3115,9 @@ const WalletBalance = ({
                                 : nft.nftAddress ===
                                   window.config.nft_taiko_address
                                 ? "taiko"
+                                : nft.nftAddress ===
+                                  window.config.nft_cookie3_address
+                                ? "cookie3"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3157,6 +3189,9 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_cookie3_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_opbnb_address
@@ -3249,6 +3284,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? "TKBP"
+                                    : nft.nftAddress ===
+                                    window.config.nft_cookie3_address
+                                  ? "CKBP"
                                     : "CAWS Timepiece"}{" "}
                                    { nft.nftAddress ===
                                       window.config.nft_immutable_address ? '' : `#${nft.tokenId}`}
@@ -3431,6 +3469,9 @@ const WalletBalance = ({
                                 : nft.nftAddress ===
                                   window.config.nft_taiko_address
                                 ? "taiko"
+                                : nft.nftAddress ===
+                                  window.config.nft_cookie3_address
+                                ? "cookie3"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3524,6 +3565,9 @@ const WalletBalance = ({
                                       window.config.nft_taiko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_cookie3_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -3598,6 +3642,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? "TKBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_cookie3_address
+                                    ? "CKBP"
                                     : "CAWS Timepiece"}{" "}
                                     { nft.nftAddress ===
                                       window.config.nft_immutable_address ? '' : `#${nft.tokenId}`}

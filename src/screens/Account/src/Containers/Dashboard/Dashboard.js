@@ -376,6 +376,8 @@ function Dashboard({
   const [myImmutableNfts, setmyImmutableNfts] = useState([]);
   const [myMantaNfts, setmyMantaNfts] = useState([]);
   const [myTaikoNfts, setmyTaikoNfts] = useState([]);
+  const [myCookieNfts, setmyCookieNfts] = useState([]);
+
 
   const [latestVersion, setLatestVersion] = useState(0);
 
@@ -5198,6 +5200,13 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "taiko").then((NFTS) =>
       setmyTaikoNfts(NFTS)
     );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cookie3").then((NFTS) =>
+    setmyCookieNfts(NFTS)
+  );
+
+    
+
   };
 
   const getOtherNfts = async () => {
@@ -7387,7 +7396,7 @@ function Dashboard({
                       mySkaleNfts={mySkaleNfts}
                       myMantaNfts={myMantaNfts}
                       myTaikoNfts={myTaikoNfts}
-
+                      myCookieNfts={myCookieNfts}
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}

@@ -280,6 +280,8 @@ function App() {
   const [myimmutableNftsCreated, setmyImmutableNFTsCreated] = useState([]);
   const [myMantaNFTsCreated, setMyMantaNFTsCreated] = useState([]);
   const [myTaikoNFTsCreated, setMyTaikoNFTsCreated] = useState([]);
+  const [myCookieNFTsCreated, setMyCookieNFTsCreated] = useState([]);
+
 
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
@@ -304,6 +306,8 @@ function App() {
   const [totalopbnbNft, settotalopbnbNft] = useState(0);
   const [totalMantaNft, setTotalMantaNft] = useState(0);
   const [totalTaikoNft, setTotalTaikoNft] = useState(0);
+  const [totalCookieNft, setTotalCookieNft] = useState(0);
+
 
   const [totalDogeNft, settotalDogeNft] = useState(0);
   const [totalCmcNft, settotalCmcNft] = useState(0);
@@ -322,6 +326,8 @@ function App() {
   const [opbnbMintAllowed, setopbnbMintAllowed] = useState(1);
   const [mantaMintAllowed, setMantaMintAllowed] = useState(1);
   const [taikoMintAllowed, setTaikoMintAllowed] = useState(1);
+  const [cookieMintAllowed, setCookieMintAllowed] = useState(1);
+
 
   const [coreMintAllowed, setcoreMintAllowed] = useState(1);
 
@@ -359,6 +365,8 @@ function App() {
   const [MyNFTSCoingecko, setMyNFTSCoingecko] = useState([]);
   const [myGateNfts, setMyGateNfts] = useState([]);
   const [myConfluxNfts, setMyConfluxNfts] = useState([]);
+  const [myCookieNfts, setMyCookieNfts] = useState([]);
+
   const [myBaseNFTs, setmyBaseNFTs] = useState([]);
   const [myskaleNFTs, setmySkaleNFTs] = useState([]);
   const [myseiNfts, setMyseiNfts] = useState([]);
@@ -1482,6 +1490,13 @@ function App() {
         setMyTaikoNfts(NFTS);
         setTaikoMintAllowed(NFTS.length > 0 ? 0 : 1);
         setMyTaikoNFTsCreated(NFTS);
+      });
+
+      getMyNFTS(coinbase, "cookie3").then((NFTS) => {
+        setTotalCookieNft(NFTS.length);
+        setMyCookieNfts(NFTS);
+        setCookieMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setMyCookieNFTsCreated(NFTS);
       });
 
       //setmyBaseNFTs
@@ -4178,6 +4193,52 @@ function App() {
             }
           />
 
+<Route
+            exact
+            path="/marketplace/beta-pass/cookie3"
+            element={
+              <BetaPassNFT
+                type={"cookie3"}
+                ethTokenData={ethTokenData}
+                dypTokenData={dypTokenData}
+                isConnected={isConnected}
+                handleConnect={handleShowWalletModal}
+                listedNFTS={listedNFTS}
+                coinbase={coinbase}
+                timepieceBought={timepieceBought}
+                handleRefreshListing={handleRefreshList}
+                nftCount={nftCount}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                chainId={chainId}
+                handleMint={handleTimepieceMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                totalCoingeckoNft={totalCoingeckoNft}
+                myNFTSCoingecko={MyNFTSCoingecko}
+                myGateNfts={myGateNfts}
+                totalGateNft={totalGateNft}
+                totalBaseNft={totalBaseNft}
+                totalBnbNft={totalBnbNft}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
+
+                myBaseNFTs={myBaseNFTs}
+                myBnbNfts={myBnbNfts}
+                totalConfluxNft={totalConfluxNft}
+                myConfluxNfts={myConfluxNfts}
+                timepieceMetadata={timepieceMetadata}
+                handleSwitchNetwork={handleSwitchNetwork}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
           <Route
             exact
             path="/marketplace/beta-pass/manta"
@@ -4211,6 +4272,8 @@ function App() {
                 totalGateNft={totalGateNft}
                 totalBaseNft={totalBaseNft}
                 totalBnbNft={totalBnbNft}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                 myBaseNFTs={myBaseNFTs}
                 myBnbNfts={myBnbNfts}
                 totalConfluxNft={totalConfluxNft}
@@ -4253,6 +4316,8 @@ function App() {
                 calculateCaws={calculateCaws}
                 totalCreated={totalTimepieceCreated}
                 totalCoingeckoNft={totalCoingeckoNft}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                 myNFTSCoingecko={MyNFTSCoingecko}
                 myGateNfts={myGateNfts}
                 totalGateNft={totalGateNft}
@@ -4300,6 +4365,8 @@ function App() {
                 myGateNfts={myGateNfts}
                 totalGateNft={totalGateNft}
                 totalBaseNft={totalBaseNft}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                 myBaseNFTs={myBaseNFTs}
                 totalConfluxNft={totalConfluxNft}
                 myConfluxNfts={myConfluxNfts}
@@ -4336,6 +4403,8 @@ function App() {
                 textColor={textColor}
                 calculateCaws={calculateCaws}
                 totalCreated={totalTimepieceCreated}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                 totalCoingeckoNft={totalCoingeckoNft}
                 myNFTSCoingecko={MyNFTSCoingecko}
                 myGateNfts={myGateNfts}
@@ -4396,6 +4465,8 @@ function App() {
                 myGateNfts={myGateNfts}
                 totalGateNft={totalGateNft}
                 totalBaseNft={totalBaseNft}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                 totalCoreNft={totalCoreNft}
                 myCoreNfts={myCoreNfts}
                 totalMultiversNft={totalMultiversNft}
@@ -4477,6 +4548,8 @@ function App() {
                 totalGateNft={totalGateNft}
                 totalBaseNft={totalBaseNft}
                 totalCoreNft={totalCoreNft}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                 myCoreNfts={myCoreNfts}
                 totalMultiversNft={totalMultiversNft}
                 totalImmutableNft={totalImmutableNft}
@@ -4534,6 +4607,8 @@ function App() {
                 myTaikoNfts={myTaikoNfts}
                 totalVictionNft={totalVictionNft}
                 myVictionNfts={myVictionNfts}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                 totalMultiversNft={totalMultiversNft}
                 totalImmutableNft={totalImmutableNft}
                 myImmutableNfts={myImmutableNfts}
@@ -4598,6 +4673,8 @@ function App() {
                 totalCmcNft={totalCmcNft}
                 totalSkaleNft={totalSkaleNft}
                 mySkaleNfts={myskaleNFTsCreated}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
               />
             }
           />
@@ -4633,6 +4710,8 @@ function App() {
                 myBaseNFTs={myBaseNFTs}
                 totalConfluxNft={totalConfluxNft}
                 myConfluxNfts={myConfluxNfts}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                 timepieceMetadata={timepieceMetadata}
                 handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
@@ -4675,6 +4754,8 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 totalConfluxNft={totalConfluxNft}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                 myConfluxNfts={myConfluxNfts}
                 timepieceMetadata={timepieceMetadata}
                 handleSwitchNetwork={handleSwitchNetwork}
@@ -4719,6 +4800,8 @@ function App() {
                 totalGateNft={totalGateNft}
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                 totalConfluxNft={totalConfluxNft}
                 myConfluxNfts={myConfluxNfts}
                 timepieceMetadata={timepieceMetadata}
@@ -4751,6 +4834,8 @@ function App() {
                     chainId={chainId}
                     handleMint={handleTimepieceMint}
                     mintStatus={mintStatus}
+                    totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                     textColor={textColor}
                     calculateCaws={calculateCaws}
                     totalCreated={totalTimepieceCreated}
@@ -4796,6 +4881,8 @@ function App() {
                     handleRefreshListing={handleRefreshList}
                     nftCount={nftCount}
                     handleSwitchNetwork={handleSwitchNetwork}
+                    totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                   />
                 }
               /> */}
@@ -4820,6 +4907,8 @@ function App() {
                 myNFTSCoingecko={MyNFTSCoingecko}
                 myGateNfts={myGateNfts}
                 totalGateNft={totalGateNft}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 totalConfluxNft={totalConfluxNft}
@@ -4864,6 +4953,8 @@ function App() {
                 myBaseNFTs={myBaseNFTs}
                 totalConfluxNft={totalConfluxNft}
                 myConfluxNfts={myConfluxNfts}
+                totalCookieNft={totalCookieNft}
+                myCookieNfts={myCookieNfts}
                 timepieceMetadata={timepieceMetadata}
                 handleConnect={handleShowWalletModal}
                 listedNFTS={listedNFTS}
