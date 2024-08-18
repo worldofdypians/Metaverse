@@ -1485,8 +1485,7 @@ window.config = {
   nft_multivers_address: "0x96A3F313679f2F5Ce098091BFf271bF4e848178B",
   nft_manta_address: "0xf894eBD7c4c850687D208246c42036EB951CE324",
   nft_taiko_address: "0xCb2Eb4ba62346751F36bA652010b553759141AEE",
-  nft_cookie3_address: "0xCb2Eb4ba62346751F36bA652010b553759141AEE",
-
+  nft_cookie3_address: "0xC46EF880A2670a00392d3d3fDa9C65A81e8b505b",
 
   nft_dypius_premium_address: "0xd8B2C0D3400Ce23e62A94154d83172303C643685",
   ccip_eth_caws_address: "0x2824Ac0Eab15744396E763A698b55F4Fe983a757",

@@ -1000,7 +1000,7 @@ const BetaPassNFT = ({
                 className="filters-container d-flex flex-column align-items-center justify-content-center my-4 p-3 position-relative gap-3"
                 style={{ zIndex: 2 }}
               >
-                {windowSize.width > 786 ? (
+                {windowSize.width > 991 ? (
                   <>
                     <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
                     <NavLink
@@ -1147,8 +1147,8 @@ const BetaPassNFT = ({
                         />
                         <span>VICTION</span>
                       </NavLink>
-                    </div>
-                    <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
+                    
+                    
                       <NavLink
                         to={"/marketplace/beta-pass/skale"}
                         className={`${
