@@ -85,11 +85,11 @@ const MintPopup = ({ active, onClose, data }) => {
                   className="mint-popup-title  mb-0"
                   style={{ color: "#18FFFF" }}
                 >
-                  Taiko
+                  $20,000 TAIKO Rewards
                 </h6>
               </div>
               <h6 className="mint-popup-title m-0">
-              Treasure Hunt Event
+              Taiko Treasure Hunt 
               </h6>
             </div>
           </div>
