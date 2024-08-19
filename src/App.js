@@ -282,7 +282,6 @@ function App() {
   const [myTaikoNFTsCreated, setMyTaikoNFTsCreated] = useState([]);
   const [myCookieNFTsCreated, setMyCookieNFTsCreated] = useState([]);
 
-
   const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
@@ -308,7 +307,6 @@ function App() {
   const [totalTaikoNft, setTotalTaikoNft] = useState(0);
   const [totalCookieNft, setTotalCookieNft] = useState(0);
 
-
   const [totalDogeNft, settotalDogeNft] = useState(0);
   const [totalCmcNft, settotalCmcNft] = useState(0);
 
@@ -327,7 +325,6 @@ function App() {
   const [mantaMintAllowed, setMantaMintAllowed] = useState(1);
   const [taikoMintAllowed, setTaikoMintAllowed] = useState(1);
   const [cookieMintAllowed, setCookieMintAllowed] = useState(1);
-
 
   const [coreMintAllowed, setcoreMintAllowed] = useState(1);
 
@@ -697,9 +694,14 @@ function App() {
       window.config.nft_manta_address
     );
 
-    const nftContract = new window.bscWeb3.eth.Contract(
-      window.NFT_DYPIUS_PREMIUM_ABI,
-      window.config.nft_dypius_premium_address
+    const taikoContract = new window.taikoWeb3.eth.Contract(
+      window.TAIKO_NFT_ABI,
+      window.config.nft_taiko_address
+    );
+
+    const cookieContract = new window.bscWeb3.eth.Contract(
+      window.COOKIE3_NFT_ABI,
+      window.config.nft_cookie3_address
     );
 
     const confluxresult = await confluxContract.methods
@@ -746,7 +748,7 @@ function App() {
         return 0;
       });
 
-      const opbnbresult = await opbnbContract.methods
+    const opbnbresult = await opbnbContract.methods
       .totalSupply()
       .call()
       .catch((e) => {
@@ -785,13 +787,23 @@ function App() {
         console.error(e);
         return 0;
       });
-      const nftresult = await nftContract.methods
+
+    const taikoresult = await taikoContract.methods
       .totalSupply()
       .call()
       .catch((e) => {
         console.error(e);
         return 0;
       });
+
+    const cookieresult = await cookieContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     //20002 = 10000 caws + 1000 genesis + 9002 coingecko
     setTotalSupply(
       parseInt(result) +
@@ -801,11 +813,14 @@ function App() {
         parseInt(dogeresult) +
         parseInt(cmcresult) +
         parseInt(skaleresult) +
-        parseInt(bnbresult) + parseInt(opbnbresult) +
+        parseInt(bnbresult) +
+        parseInt(opbnbresult) +
         parseInt(coreresult) +
         parseInt(victionresult) +
         parseInt(multiversresult) +
         parseInt(mantaresult) +
+        parseInt(taikoresult) +
+        parseInt(cookieresult) +
         20002
     );
   };
@@ -4193,7 +4208,7 @@ function App() {
             }
           />
 
-<Route
+          <Route
             exact
             path="/marketplace/beta-pass/cookie3"
             element={
@@ -4224,7 +4239,6 @@ function App() {
                 totalBnbNft={totalBnbNft}
                 totalCookieNft={totalCookieNft}
                 myCookieNfts={myCookieNfts}
-
                 myBaseNFTs={myBaseNFTs}
                 myBnbNfts={myBnbNfts}
                 totalConfluxNft={totalConfluxNft}
@@ -5381,7 +5395,6 @@ function App() {
                 myMantaNfts={myMantaNfts}
                 myMantaNFTsCreated={myMantaNFTsCreated}
                 totalBnbNft={totalBnbNft}
-
                 totalTaikoNft={totalTaikoNft}
                 taikoMintAllowed={taikoMintAllowed}
                 myTaikoNfts={myTaikoNfts}
