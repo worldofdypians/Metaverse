@@ -664,6 +664,11 @@ function App() {
       window.config.nft_bnb_address
     );
 
+    const opbnbContract = new window.opBnbWeb3.eth.Contract(
+      window.OPBNB_NFT_ABI,
+      window.config.nft_opbnb_address
+    );
+
     const victionContract = new window.victionWeb3.eth.Contract(
       window.VICTION_NFT_ABI,
       window.config.nft_viction_address
@@ -682,6 +687,11 @@ function App() {
     const mantaContract = new window.mantaWeb3.eth.Contract(
       window.MANTA_NFT_ABI,
       window.config.nft_manta_address
+    );
+
+    const nftContract = new window.bscWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_ABI,
+      window.config.nft_dypius_premium_address
     );
 
     const confluxresult = await confluxContract.methods
@@ -728,6 +738,14 @@ function App() {
         return 0;
       });
 
+      const opbnbresult = await opbnbContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     const coreresult = await coreContract.methods
       .totalSupply()
       .call()
@@ -759,8 +777,14 @@ function App() {
         console.error(e);
         return 0;
       });
-
-    //20000 = 10000 caws + 1000 genesis + 9000 coingecko
+      const nftresult = await nftContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+    //20002 = 10000 caws + 1000 genesis + 9002 coingecko
     setTotalSupply(
       parseInt(result) +
         parseInt(result_base) +
@@ -769,12 +793,12 @@ function App() {
         parseInt(dogeresult) +
         parseInt(cmcresult) +
         parseInt(skaleresult) +
-        parseInt(bnbresult) +
+        parseInt(bnbresult) + parseInt(opbnbresult) +
         parseInt(coreresult) +
         parseInt(victionresult) +
         parseInt(multiversresult) +
         parseInt(mantaresult) +
-        20000
+        20002
     );
   };
 
@@ -5043,7 +5067,7 @@ function App() {
             }
           /> */}
 
-          <Route
+          {/* <Route
             exact
             path="/marketplace/mint/opbnbchain"
             element={
@@ -5099,7 +5123,7 @@ function App() {
                 myTaikoNFTsCreated={myTaikoNFTsCreated}
               />
             }
-          />
+          /> */}
           {/* <Route
             exact
             path="/marketplace/mint/manta"
@@ -5158,7 +5182,7 @@ function App() {
             }
           /> */}
 
-          <Route
+          {/* <Route
             exact
             path="/marketplace/mint/immutable"
             element={
@@ -5214,9 +5238,9 @@ function App() {
                 myTaikoNFTsCreated={myTaikoNFTsCreated}
               />
             }
-          />
+          /> */}
 
-          {/* <Route
+          <Route
             exact
             path="/marketplace/mint/taiko"
             element={
@@ -5273,7 +5297,7 @@ function App() {
                 myTaikoNFTsCreated={myTaikoNFTsCreated}
               />
             }
-          /> */}
+          />
 
           {/* <Route
             exact

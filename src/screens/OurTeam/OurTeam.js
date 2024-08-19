@@ -18,6 +18,8 @@ import arben from "./assets/team/arben.jpg";
 import jeff from "./assets/team/jeff.jpg";
 import wei from "./assets/team/wei.jpg";
 import alex from "./assets/team/alex.png";
+import yavuz from "./assets/team/yavuz.jpg";
+
 
 import { useState } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -159,6 +161,14 @@ const OurTeam = () => {
       link: "https://www.linkedin.com/in/skywee97/",
       content: `Sky Wee is Managing Partner of VC, Crypto Influencer, Advisor. Sky Wee works closely with venture partners like LDA Capital, Elevate Ventures and ATF Capital.
       Sky Wee has secured over $45 million in funding for an outstanding portfolio of 40+ projects. Official Influencer of Binance, showcasing his exceptional expertise and impact in the industry.`,
+    },
+    {
+      id: "yavuz",
+      name: "Yavuz Saglam",
+      position: "Advisor",
+      photo: yavuz,
+      link: "https://x.com/sidrevocx",
+      content: `Yavuz Sağlam brings over 10 years of experience in the blockchain and Web3 industry to his role as a Strategic Advisor for World of Dypians. As a key figure at Castrum Capital, Turkey's largest Web3 venture capital firm, Yavuz has a proven track record of guiding innovative projects toward success. His deep expertise in investment strategies, market analysis, and scaling Web3 ventures empowers World of Dypians to accelerate growth and navigate the ever-evolving landscape of gaming and blockchain with confidence. Yavuz’s strategic insights are instrumental in helping us identify new opportunities and achieve our ambitious goals.`,
     },
     {
       id: "soni",
