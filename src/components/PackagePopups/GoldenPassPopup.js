@@ -49,11 +49,11 @@ const GoldenPassPopup = ({onClosePopup}) => {
               The Golden Pass bundle is available for a month and can be
               purchased once a month.
             </li>
-            <li className="package-popup-desc">
+            {/* <li className="package-popup-desc">
               If a player purchases the fourth bundle, they will receive the
               entire time left to participate in the event until the end of the
               month.
-            </li>
+            </li> */}
             <li className="package-popup-desc">
               Once the bundle is active, players will receive extra rewards
               based on their leaderboard ranking.
