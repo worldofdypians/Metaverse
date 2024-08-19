@@ -2139,7 +2139,7 @@ const NewWalletBalance = ({
                           Number(cawsPremiumRewards) +
                           Number(bnbEarnUsd) +
                           Number(victionEarnUsd) +
-                          Number(taikoEarnUsd) + +
+                          Number(taikoEarnUsd) + 
                           Number(immutableEarnUsd) +
                           Number(mantaEarnUsd) +
                           Number(cookieEarnUsd),
