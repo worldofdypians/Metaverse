@@ -19,6 +19,8 @@ import jeff from "./assets/team/jeff.jpg";
 import wei from "./assets/team/wei.jpg";
 import alex from "./assets/team/alex.png";
 import yavuz from "./assets/team/yavuz.jpg";
+import navid from "./assets/team/navid.jpg";
+
 
 
 import { useState } from "react";
@@ -169,6 +171,14 @@ const OurTeam = () => {
       photo: yavuz,
       link: "https://x.com/sidrevocx",
       content: `Yavuz Sağlam brings over 10 years of experience in the blockchain and Web3 industry to his role as a Strategic Advisor for World of Dypians. As a key figure at Castrum Capital, Turkey's largest Web3 venture capital firm, Yavuz has a proven track record of guiding innovative projects toward success. His deep expertise in investment strategies, market analysis, and scaling Web3 ventures empowers World of Dypians to accelerate growth and navigate the ever-evolving landscape of gaming and blockchain with confidence. Yavuz’s strategic insights are instrumental in helping us identify new opportunities and achieve our ambitious goals.`,
+    },
+    {
+      id: "navid",
+      name: "Navid Shokriyan",
+      position: "Advisor",
+      photo: navid,
+      link: "https://x.com/navidshokriyan",
+      content: `Navid Shokriyan is a seasoned investor and influential leader in the KOL space, known for his pivotal roles in the crypto space. With a proven track record of attracting over $15 million for 11 projects, Navid is set to play a crucial role in expanding our KOL services and driving further success`,
     },
     {
       id: "soni",

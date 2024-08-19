@@ -242,6 +242,7 @@ const MarketEvents = ({
   const [victionEarnToken, setVictionEarnToken] = useState(0);
   const [victionPoints, setVictionPoints] = useState(0);
   const [mantaPrice, setMantaPrice] = useState(0);
+  const [taikoPrice, setTaikoPrice] = useState(0)
   const [mantaEarnToken, setMantaEarnToken] = useState(0);
   const [mantaEarnUsd, setMantaEarnUsd] = useState(0);
   const [mantaPoints, setMantaPoints] = useState(0);
@@ -292,6 +293,18 @@ const MarketEvents = ({
       )
       .then((obj) => {
         setMantaPrice(obj.data["manta-network"].usd);
+      });
+  };
+
+
+  
+  const fetchTaikoPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=taiko&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setTaikoPrice(obj.data["taiko"].usd);
       });
   };
 
@@ -347,7 +360,7 @@ const MarketEvents = ({
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
   let mantaLastDay = new Date("2024-10-30T14:00:00.000+02:00");
-  let taikoLastDay = new Date("2024-10-30T14:00:00.000+02:00");
+  let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
 
   const dailyBonusMintData = {
@@ -497,7 +510,7 @@ const MarketEvents = ({
     {
       title: "Taiko",
       logo: taikoLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -508,7 +521,7 @@ const MarketEvents = ({
         chain: "Taiko",
         linkState: "taiko",
         rewards: "TAIKO",
-        status: "Coming Soon",
+        status: "Live",
         id: "event22",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in TAIKO Rewards",
@@ -1263,7 +1276,7 @@ const MarketEvents = ({
             const pointsTaiko = taikoEvent[0].reward.earn.totalPoints;
             setTaikoPoints(pointsTaiko);
             setTaikoEarnUsd(userEarnedusd);
-            setTaikoEarnToken(userEarnedusd / mantaPrice);
+            setTaikoEarnToken(userEarnedusd / taikoPrice);
           }
 
           if (multiversEvent && multiversEvent[0]) {
@@ -1392,6 +1405,7 @@ const MarketEvents = ({
     fetchEgldPrice();
     fetchCorePrice();
     fetchMantaPrice();
+    fetchTaikoPrice();
     fetchImmutablePrice();
     fetchCookiePrice();
   }, []);
