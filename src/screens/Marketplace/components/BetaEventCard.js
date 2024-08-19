@@ -46,6 +46,8 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
           ? "upcoming-multivers-event"
           : data.title === "Taiko"
           ? "upcoming-taiko-event"
+          : data.title === "Cookie3"
+          ? "upcoming-cookie-event"
           : "upcoming-mint-wrapper-coin98"
       } upcoming-mint-wrapper upcoming-mint-wrapper2 flex-column flex-lg-row gap-3 d-flex align-items-center justify-content-between px-0`}
       onClick={onOpenPopup}
