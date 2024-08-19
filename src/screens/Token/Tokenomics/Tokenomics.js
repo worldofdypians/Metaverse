@@ -81,7 +81,7 @@ const Tokenomics = () => {
       className="d-flex  flex-column align-items-center gap-4"
       id="tokenomics"
     >
-      <div className="custom-container px-3 px-lg-5 d-flex flex-column w-100 gap-3">
+      <div className="custom-container px-4 px-lg-5 d-flex flex-column w-100 gap-3">
         <h4 className="explorer-grid-title font-montserrat text-start mb-0" style={{textTransform: "uppercase"}}>
           WoD{" "}
           <mark className="font-montserrat explorer-grid-title explore-tag pe-2" style={{textTransform: "uppercase"}}>

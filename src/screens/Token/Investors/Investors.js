@@ -42,7 +42,7 @@ const Investors = () => {
 
 
   return (
-   <div className="container-fluid px-5 py-4 investors-bg d-flex flex-column gap-3">
+   <div className="container-fluid px-4 px-lg-5 py-4 investors-bg d-flex flex-column gap-3">
     <div className="d-flex flex-column gap-3">
         <h6 className="mb-0 investors-title">
             Launchpads

@@ -56,7 +56,7 @@ const TokenUtility = () => {
         </div>
       </div>
       <div className="container-fluid py-4 px-0 d-flex justify-content-center buy-wod-bg">
-        <div className="custom-container w-100 px-5">
+        <div className="custom-container w-100  px-4 px-lg-5">
           <div className="token-utilities-grid">
             {utilities.map((item, index) => (
               <div className="d-flex flex-column gap-3" key={index}>
