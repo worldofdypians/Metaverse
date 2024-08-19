@@ -4328,7 +4328,7 @@ function Dashboard({
   };
 
   const signWalletPublicAddress = async () => {
-    if (window.ethereum) {
+    if (window.ethereum && window.WALLET_TYPE !=='binance') {
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner(account);
