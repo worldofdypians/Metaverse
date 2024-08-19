@@ -1,0 +1,38 @@
+.investors-bg{
+background-image: url('./assets/investorsBg.webp');
+background-size: 100% 100%;
+}
+
+.investors-title{
+    color: #DCFB85;
+    font-family: "Montserrat";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+.investors-grid{
+display: grid;
+grid-template-columns: repeat(4,1fr);
+gap: 20px;
+
+@media screen and (max-width: 786px) {
+    grid-template-columns: repeat(1,1fr);
+}
+}
+
+.investors-item{
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.09);
+    box-shadow: 0px 4px 4px 0px rgba(20, 8, 54, 0.25);
+    backdrop-filter: blur(5.5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 104px;
+}
+
+.investors-img{
+width: 50%;
+}

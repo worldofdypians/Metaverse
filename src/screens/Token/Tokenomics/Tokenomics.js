@@ -78,10 +78,10 @@ const Tokenomics = () => {
 
   return (
     <div
-      className="d-flex px-lg-5 flex-column align-items-center gap-4"
+      className="d-flex  flex-column align-items-center gap-4"
       id="tokenomics"
     >
-      <div className="custom-container d-flex flex-column w-100 gap-3">
+      <div className="custom-container px-3 px-lg-5 d-flex flex-column w-100 gap-3">
         <h4 className="explorer-grid-title font-montserrat text-start mb-0" style={{textTransform: "uppercase"}}>
           WoD{" "}
           <mark className="font-montserrat explorer-grid-title explore-tag pe-2" style={{textTransform: "uppercase"}}>
@@ -92,12 +92,12 @@ const Tokenomics = () => {
         The total token supply is 1B $WOD and is designed to fuel the World of Dypians ecosystem and help it grow.
         </span>
       </div>
-      <div className="w-100 py-5 d-flex justify-content-center new-tokenomics-bg">
+      <div className="w-100 px-lg-5 py-5 d-flex justify-content-center new-tokenomics-bg">
         <div className="custom-container w-100">
           <div className="row mx-0 align-items-end">
             <div className="col-12 col-lg-6">
               <div className="row mx-0">
-                <div className="col-3 d-flex justify-content-center">
+                <div className="col-3 d-flex justify-content-start">
                   <h6 className="tokenomics-table-title mb-0">CATEGORY</h6>
                 </div>
                 <div className="col-3 d-flex justify-content-center">
@@ -145,15 +145,15 @@ const Tokenomics = () => {
                 <div className="d-flex flex-column">
                   <span className="wod-copy-span">WOD Contract Address</span>
                   <div className="d-flex align-items-center gap-2">
-                    <span className="wod-address">
-                      0xaC4989037EEb663e267514d9beC258A4108c7C9a
-                    </span>
+                    <a  href="https://bscscan.com/token/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8" target="_blank" className="wod-address">
+                    0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8
+                    </a>
                     <Clipboard
                       component="div"
                       data-event="click"
                       data-tip="Copied To Clipboard!"
                       data-clipboard-text={
-                        "0xaC4989037EEb663e267514d9beC258A4108c7C9a"
+                        "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
                       }
                       className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
                     >
@@ -173,7 +173,7 @@ const Tokenomics = () => {
                   <img
                     src={tokenomicsChart}
                     alt=""
-                    className="tokenomics-chart w-100"
+                    className="tokenomics-chart"
                   />
                 </div>
               </div>

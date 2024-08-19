@@ -1,6 +1,6 @@
 .tokenomics-chart {
   width: 80%;
-  @media screen and (max-width: 785px) {
+  @media screen and (max-width: 786px) {
     width: 100%;
   }
 }
@@ -47,7 +47,7 @@
 }
 
 .new-tokenomics-bg {
-  // background-image: url(../../../../assets/wodAssets/tokenomicsBg.webp);
+  background-image: url(../assets/newTokenomicsBg.webp);
   background-size: 100%;
   background-repeat: no-repeat;
 }
@@ -78,8 +78,8 @@
 }
 
 .tokenomics-dot{
-    width: 12px;
-    height: 12px;
+    min-width: 12px;
+    min-height: 12px;
     border-radius: 50%;
 }
 

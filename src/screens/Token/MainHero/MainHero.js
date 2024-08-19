@@ -146,7 +146,7 @@ const MainHero = () => {
 
   return (
     <div className="px-3 mainhero-wrapper px-lg-5 d-flex flex-column justify-content-center align-items-center">
-      <div className="custom-container w-100 mt-5 mt-lg-0">
+      <div className="custom-container w-100  mt-5 mt-lg-0">
         <div className="d-flex flex-column w-100">
           <div className="row mx-0 align-items-center justify-content-between gap-2 mt-5 mt-lg-0">
             <div className="col-12 col-lg-6 ps-lg-0">
@@ -155,11 +155,16 @@ const MainHero = () => {
                   $WoD Token
                 </h4>
                 <span className="market-banner-desc font-montserrat text-start">
-                WOD is a utility token issued on BNB Chain, providing the foundation for the World of Dypians ecosystem, integrating DeFi, NFTs, Gaming, and AI all in one place.
+                  WOD is a utility token issued on BNB Chain, providing the
+                  foundation for the World of Dypians ecosystem, integrating
+                  DeFi, NFTs, Gaming, and AI all in one place.
                 </span>
+             
               </div>
             </div>
-
+            <div className="col-12 col-lg-5 pe-0">
+              <img src={newToken} className="w-100" alt="" />
+            </div>
           </div>
         </div>
       </div>

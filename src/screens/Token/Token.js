@@ -4,6 +4,7 @@ import TokenUtility from "./TokenUtility/TokenUtility";
 import MainHero from "./MainHero/MainHero";
 import Tokenomics from "./Tokenomics/Tokenomics";
 import Utility from "./Utility/Utility";
+import Investors from "./Investors/Investors";
 
 const Token = () => {
 
@@ -18,6 +19,7 @@ const Token = () => {
         <MainHero />
         <TokenUtility />
         <Tokenomics />
+        <Investors />
         {/* <Utility /> */}
       </div>
     </div>
