@@ -268,12 +268,15 @@ const MarketMint = ({
   const [bnbNftsSold, setbnbNftsSold] = useState(0);
   const [victionNftsSold, setVictionNftsSold] = useState(0);
   const [coreNftsSold, setCoreNftsSold] = useState(0);
+  const [opbnbNftsSold, setopBnbNftsSold] = useState(0);
+  const [immutableNftsSold, setimmutableNftsSold] = useState(0);
+
 
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(opbnbData);
-  const [mintTitle, setMintTitle] = useState("opbnbchain");
+  const [selectedMint, setSelectedMint] = useState(taikoData);
+  const [mintTitle, setMintTitle] = useState("taiko");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -369,6 +372,38 @@ const MarketMint = ({
 
     setCoreNftsSold(coreresult);
 
+    const opbnbnftContract = new window.opBnbWeb3.eth.Contract(
+      window.OPBNB_NFT_ABI,
+      window.config.nft_opbnb_address
+    );
+
+    const opbnbresult = await opbnbnftContract.methods
+    .totalSupply()
+    .call()
+    .catch((e) => {
+      console.error(e);
+      return 0;
+    });
+
+  setopBnbNftsSold(opbnbresult);
+
+
+  
+  const immutableContract = new window.immutableWeb3.eth.Contract(
+    window.IMMUTABLE_NFT_ABI,
+    window.config.nft_immutable_address
+  );
+
+  const immutableresult = await immutableContract.methods
+  .totalSupply()
+  .call()
+  .catch((e) => {
+    console.error(e);
+    return 0;
+  });
+
+setimmutableNftsSold(immutableresult);
+
 
   };
 
@@ -409,7 +444,7 @@ const MarketMint = ({
   let countToExpireImmutable = new Date("2024-08-15T24:00:00.000+02:00");
 
   let countToExpireManta = new Date("2024-08-15T24:00:00.000+02:00");
-  let countToExpireTaiko = new Date("2024-08-25T24:00:00.000+02:00");
+  let countToExpireTaiko = new Date("2024-09-13T24:00:00.000+02:00");
 
 
   const dummyCards = [
@@ -517,32 +552,32 @@ const MarketMint = ({
     //   class: "mint-manta",
     //   id: "manta",
     // },
-    {
-      title: "opBNB Chain Pass",
-      eventId: "opbnbchain",
-      desc: "Gain entry to metaverse, and join exclusive opBNB Chain event with special ticket.",
-      img: bnbActive,
-      data: opbnbData,
-      class: "mint-bnb",
-      id: "opbnb",
-    },
     // {
-    //   title: "Taiko Pass",
-    //   eventId: "taiko",
-    //   desc: "Gain entry to metaverse, and join exclusive Taiko event with special ticket.",
-    //   img: taikoActive,
-    //   data: taikoData,
-    //   class: "mint-taiko",
-    //   id: "taiko",
+    //   title: "opBNB Chain Pass",
+    //   eventId: "opbnbchain",
+    //   desc: "Gain entry to metaverse, and join exclusive opBNB Chain event with special ticket.",
+    //   img: bnbActive,
+    //   data: opbnbData,
+    //   class: "mint-bnb",
+    //   id: "opbnb",
     // },
     {
-      title: "Immutable Pass",
-      eventId: "immutable",
-      desc: "Gain entry to metaverse, and join exclusive Immutable event with special ticket.",
-      img: immutableActive,
-      data: immutableData,
-      class: "mint-immutable",
+      title: "Taiko Pass",
+      eventId: "taiko",
+      desc: "Gain entry to metaverse, and join exclusive Taiko event with special ticket.",
+      img: taikoActive,
+      data: taikoData,
+      class: "mint-taiko",
+      id: "taiko",
     },
+    // {
+    //   title: "Immutable Pass",
+    //   eventId: "immutable",
+    //   desc: "Gain entry to metaverse, and join exclusive Immutable event with special ticket.",
+    //   img: immutableActive,
+    //   data: immutableData,
+    //   class: "mint-immutable",
+    // },
     // {
     //   title: "CORE Pass",
     //   eventId: "core",
@@ -884,8 +919,9 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
                   >
-                    {" "}
-                    
+                     <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     Live
                   </h6>
                   <h6
@@ -894,9 +930,7 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     Upcoming
                   </h6>
                   <h6
@@ -2852,7 +2886,7 @@ const MarketMint = ({
                 //   </div>
                 // </div>
                 <div className="d-flex flex-column gap-4">
-                    <div className="upcoming-mint-wrapper upcoming-taiko-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    {/* <div className="upcoming-mint-wrapper upcoming-taiko-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Taiko Beta Pass</h6>
                       <p className="upcoming-mint-desc">
@@ -2870,7 +2904,7 @@ const MarketMint = ({
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div>
+                  </div> */}
                   <div className="upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Manta Beta Pass</h6>
@@ -3187,6 +3221,42 @@ const MarketMint = ({
                             {getFormattedNumber(coreNftsSold,0)}
                           </h6>
                           <span className="past-core-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-opbnb-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">opBNB Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6
+                            className="past-bnb-mint-amount"
+                          >
+                            {getFormattedNumber(opbnbNftsSold,0)}
+                          </h6>
+                          <span className="past-bnb-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-immutable-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">Immutable Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6
+                            className="past-immutable-mint-amount"
+                          >
+                            {getFormattedNumber(immutableNftsSold,0)}
+                          </h6>
+                          <span className="past-immutable-mint-desc">SOLD OUT</span>
                         </div>
                       </div>
                     </div>

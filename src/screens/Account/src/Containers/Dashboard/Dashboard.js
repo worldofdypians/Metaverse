@@ -577,6 +577,13 @@ function Dashboard({
   const [taikoEarnToken, setTaikoEarnToken] = useState(0);
   const [taikoPoints, setTaikoPoints] = useState(0);
 
+
+  const [immutableEarnUsd, setImmutableEarnUsd] = useState(0);
+  const [immutablePrice, setImmutablePrice] = useState(0);
+  const [immutableEarnToken, setImmutableEarnToken] = useState(0);
+  const [immutablePoints, setImmutablePoints] = useState(0);
+
+
   const [mantaEarnUsd, setMantaEarnUsd] = useState(0);
   const [mantaPrice, setMantaPrice] = useState(0);
   const [mantaEarnToken, setMantaEarnToken] = useState(0);
@@ -610,6 +617,16 @@ function Dashboard({
       )
       .then((obj) => {
         setmultiversPrice(obj.data.tomochain.usd);
+      });
+  };
+
+  const fetchImmutablePrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=immutable-x&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setImmutablePrice(obj.data["immutable-x"].usd);
       });
   };
 
@@ -692,6 +709,10 @@ function Dashboard({
             return obj.betapassId === "subscriber";
           });
 
+          const immutableEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "immutable";
+          });
+
           if (dypPremiumEvent && dypPremiumEvent[0]) {
             const userEarnedusd =
               dypPremiumEvent[0].reward.earn.total /
@@ -711,6 +732,17 @@ function Dashboard({
             setBnbPoints(pointsBnb);
             setBnbEarnUsd(userEarnedusd);
             setBnbEarnToken(userEarnedusd / bnbPrice);
+          }
+
+          if (immutableEvent && immutableEvent[0]) {
+            const userEarnedusd =
+            immutableEvent[0].reward.earn.total /
+            immutableEvent[0].reward.earn.multiplier;
+            const pointsBnb = immutableEvent[0].reward.earn.totalPoints;
+
+            setImmutablePoints(pointsBnb);
+            setImmutableEarnUsd(userEarnedusd);
+            setImmutableEarnToken(userEarnedusd / immutablePrice);
           }
 
           if (coreEvent && coreEvent[0]) {
@@ -6510,6 +6542,7 @@ function Dashboard({
     fetchCorePrice();
     fetchVictionPrice();
     fetchEgldPrice();
+    fetchImmutablePrice();
   }, []);
 
   useEffect(() => {
@@ -7181,6 +7214,9 @@ function Dashboard({
                         victionEarnUsd={victionEarnUsd}
                         mantaEarnUsd={mantaEarnUsd}
                         taikoEarnUsd={taikoEarnUsd}
+                        immutableEarnUsd={immutableEarnUsd}
+                        immutableEarnToken={immutableEarnToken}
+                        immutablePoints={immutablePoints}
 
                         skalePoints={skalePoints}
                         userRank2={userRank2}
@@ -7781,6 +7817,7 @@ function Dashboard({
                             victionEarnUsd={victionEarnUsd}
                             mantaEarnUsd={mantaEarnUsd}
                             taikoEarnUsd={taikoEarnUsd}
+                            immutableEarnUsd={immutableEarnUsd}
 
                             coreEarnUsd={coreEarnUsd}
                             kittyDashRecords={kittyDashRecords}
