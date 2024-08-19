@@ -30,6 +30,8 @@ import taikoLogo from "./assets/taikoLogo.svg";
 import multiversLogo from "../assets/multiversLogo.svg";
 
 import victionLogo from "../assets/victionLogo.svg";
+import cookie3Logo from "../assets/cookie3Logo.svg";
+
 import seiLogo from "../assets/seiLogo.svg";
 
 import comingSoon from "../assets/comingSoon.svg";
@@ -49,11 +51,12 @@ import bnbBetaBanner from "./assets/bnbBetaBanner.png";
 import mantaBanner from "./assets/mantaBanner.webp";
 import taikoBanner from "./assets/taikoBanner.webp";
 
-
 import betapassBanner from "./assets/betaPassBanner.png";
 import betapassBannerConflux from "./assets/betaPassBannerConflux.webp";
 import betapassBannerGate from "./assets/betaPassBannerGate.webp";
 import seiBanner from "./assets/seiBanner.webp";
+import cookie3Banner from "./assets/cookie3Banner.webp";
+
 import victionBanner from "./assets/victionBanner.webp";
 import immutableBanner from "./assets/immutableBanner.webp";
 import multiversBanner from "./assets/multiversBanner.webp";
@@ -174,7 +177,11 @@ const BetaPassNFT = ({
   myBnbNfts,
   totalBnbNft,
   totalMantaNft,
-  myMantaNfts,totalTaikoNft,myTaikoNfts, totalCookieNft, myCookieNfts
+  myMantaNfts,
+  totalTaikoNft,
+  myTaikoNfts,
+  totalCookieNft,
+  myCookieNfts,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -768,12 +775,10 @@ const BetaPassNFT = ({
     } else if (locationState.includes("/beta-pass/manta")) {
       setSelectedMint(mantaData);
       setMintTitle("manta");
-    }
-    else if (locationState.includes("/beta-pass/taiko")) {
+    } else if (locationState.includes("/beta-pass/taiko")) {
       setSelectedMint(taikoData);
       setMintTitle("taiko");
-    }
-    else if (locationState.includes("/beta-pass/cookie3")) {
+    } else if (locationState.includes("/beta-pass/cookie3")) {
       setSelectedMint(cookie3Data);
       setMintTitle("cookie3");
     }
@@ -969,8 +974,6 @@ const BetaPassNFT = ({
                         ? baseBetaBanner
                         : mintTitle === "doge"
                         ? dogeBetaBanner
-                        : mintTitle === "cookie3"
-                        ? dogeBetaBanner
                         : mintTitle === "cmc"
                         ? cmcBetaBanner
                         : mintTitle === "skale"
@@ -989,6 +992,8 @@ const BetaPassNFT = ({
                         ? mantaBanner
                         : mintTitle === "taiko"
                         ? taikoBanner
+                        : mintTitle === "cookie3"
+                        ? cookie3Banner
                         : betapassBanner
                     }
                     className="w-100"
@@ -1003,7 +1008,7 @@ const BetaPassNFT = ({
                 {windowSize.width > 991 ? (
                   <>
                     <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
-                    <NavLink
+                      <NavLink
                         to={"/marketplace/beta-pass/cookie3"}
                         className={`${
                           location.pathname.includes("cookie3") &&
@@ -1015,7 +1020,7 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={taikoLogo}
+                          src={cookie3Logo}
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1147,8 +1152,7 @@ const BetaPassNFT = ({
                         />
                         <span>VICTION</span>
                       </NavLink>
-                    
-                    
+
                       <NavLink
                         to={"/marketplace/beta-pass/skale"}
                         className={`${
@@ -1291,24 +1295,24 @@ const BetaPassNFT = ({
                   </>
                 ) : (
                   <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
-                       <NavLink
-                        to={"/marketplace/beta-pass/cookie3"}
-                        className={`${
-                          location.pathname.includes("cookie3") &&
-                          "selected-beta-pass-item"
-                        } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
-                        onClick={() => {
-                          setSelectedMint(cookie3Data);
-                          setMintTitle("cookie3");
-                        }}
-                      >
-                        <img
-                          src={taikoLogo}
-                          className="beta-pass-chain-img"
-                          alt=""
-                        />
-                        <span>Cookie3</span>
-                      </NavLink>
+                    <NavLink
+                      to={"/marketplace/beta-pass/cookie3"}
+                      className={`${
+                        location.pathname.includes("cookie3") &&
+                        "selected-beta-pass-item"
+                      } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
+                      onClick={() => {
+                        setSelectedMint(cookie3Data);
+                        setMintTitle("cookie3");
+                      }}
+                    >
+                      <img
+                        src={cookie3Logo}
+                        className="beta-pass-chain-img"
+                        alt=""
+                      />
+                      <span>Cookie3</span>
+                    </NavLink>
                     <NavLink
                       to={"/marketplace/beta-pass/taiko"}
                       className={`${
@@ -1840,7 +1844,7 @@ const BetaPassNFT = ({
                         </a>
                       )}
 
-{mintTitle === "cookie3" && (
+                      {mintTitle === "cookie3" && (
                         <a
                           className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
                           href="https://sweepwidget.com/c/worldofdypians-manta-giveaway"
@@ -1848,7 +1852,7 @@ const BetaPassNFT = ({
                           rel="noreferrer"
                         >
                           <img
-                            src={mantaLogo}
+                            src={cookie3Logo}
                             style={{ width: 20, height: 20 }}
                             alt=""
                           />{" "}
@@ -2176,7 +2180,10 @@ const BetaPassNFT = ({
                      mint-wrappernew d-flex flex-column staking-height gap-4 gap-lg-2`}
                     >
                       {!alreadyRegistered &&
-                        (mintTitle === "sei" || mintTitle === "manta" || mintTitle === "taiko" || mintTitle === "cookie3") && (
+                        (mintTitle === "sei" ||
+                          mintTitle === "manta" ||
+                          mintTitle === "taiko" ||
+                          mintTitle === "cookie3") && (
                           <div className="d-flex align-items-center justify-content-around gap-2">
                             <button
                               className={
@@ -3569,7 +3576,10 @@ const BetaPassNFT = ({
                     </div> */}
 
                         {alreadyRegistered &&
-                          (mintTitle === "sei" || mintTitle === "manta" || mintTitle === "taiko" || mintTitle === "cookie3") && (
+                          (mintTitle === "sei" ||
+                            mintTitle === "manta" ||
+                            mintTitle === "taiko" ||
+                            mintTitle === "cookie3") && (
                             <h6 className="land-name">
                               {(mintTitle === "sei" && totalseiNft > 0) ||
                               (mintTitle === "manta" && totalMantaNft > 0) ||
@@ -3588,7 +3598,10 @@ const BetaPassNFT = ({
                         )} */}
                         {!alreadyRegistered &&
                           activeTab === "create" &&
-                          (mintTitle === "sei" || mintTitle === "manta" || mintTitle === "taiko" || mintTitle === "cookie3") && (
+                          (mintTitle === "sei" ||
+                            mintTitle === "manta" ||
+                            mintTitle === "taiko" ||
+                            mintTitle === "cookie3") && (
                             <div>
                               <ul className="timeline m-0 p-0" id="timeline">
                                 <li className="col-3 li complete">
@@ -3632,7 +3645,10 @@ const BetaPassNFT = ({
                           )}
                         {playerCreation === false &&
                           !alreadyRegistered &&
-                          (mintTitle === "sei" || mintTitle === "manta" || mintTitle === "taiko" || mintTitle === "cookie3") && (
+                          (mintTitle === "sei" ||
+                            mintTitle === "manta" ||
+                            mintTitle === "taiko" ||
+                            mintTitle === "cookie3") && (
                             <SignUpGecko
                               onSuccessVerify={(value) => {
                                 setplayerCreation(value);
@@ -3660,7 +3676,10 @@ const BetaPassNFT = ({
                         {playerCreation === true &&
                           linkWallet === false &&
                           !alreadyRegistered &&
-                          (mintTitle === "sei" || mintTitle === "manta" || mintTitle === "taiko" || mintTitle === "cookie3") && (
+                          (mintTitle === "sei" ||
+                            mintTitle === "manta" ||
+                            mintTitle === "taiko" ||
+                            mintTitle === "cookie3") && (
                             <PlayerCreationGecko
                               onSuccessCreation={() => {
                                 setLinkWallet(true);
@@ -3671,7 +3690,10 @@ const BetaPassNFT = ({
 
                         {linkWallet === true &&
                           !alreadyRegistered &&
-                          (mintTitle === "sei" || mintTitle === "manta" || mintTitle === "taiko" || mintTitle === "cookie3") && (
+                          (mintTitle === "sei" ||
+                            mintTitle === "manta" ||
+                            mintTitle === "taiko" ||
+                            mintTitle === "cookie3") && (
                             <div className="d-flex flex-column gap-4 justify-content-between p-4">
                               <span className={"createplayertxt"}>
                                 *Make sure to connect the same wallet address as
@@ -3910,7 +3932,7 @@ const BetaPassNFT = ({
                             </div>
                           </div>
                         )}
-                        
+
                         {alreadyRegistered && mintTitle === "taiko" && (
                           <div className="d-flex flex-column justify-content-between h-100">
                             {mintTitle === "taiko" && totalTaikoNft === 0 ? (
@@ -4012,7 +4034,7 @@ const BetaPassNFT = ({
                           </div>
                         )}
 
-{alreadyRegistered && mintTitle === "cookie3" && (
+                        {alreadyRegistered && mintTitle === "cookie3" && (
                           <div className="d-flex flex-column justify-content-between h-100">
                             {mintTitle === "cookie3" && totalCookieNft === 0 ? (
                               <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
@@ -4051,7 +4073,8 @@ const BetaPassNFT = ({
                                 <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
                                   <div
                                     className={`coingeckoempty-wrapper  ${
-                                      totalCookieNft > 0 && mintTitle === "cookie3"
+                                      totalCookieNft > 0 &&
+                                      mintTitle === "cookie3"
                                         ? "cookie3-active"
                                         : "conflux-empty"
                                     } d-flex justify-content-center align-items-center p-3 position-relative`}
