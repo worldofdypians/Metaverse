@@ -514,7 +514,7 @@ const MarketEvents = ({
       totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Aug 22, 2024",
+      eventDate: "Aug 19, 2024",
       backgroundImage: taikoBg,
       popupInfo: {
         title: "TAIKO",
@@ -531,7 +531,7 @@ const MarketEvents = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Aug 22, 2024",
+        eventDate: "Aug 19, 2024",
       },
     },
     {

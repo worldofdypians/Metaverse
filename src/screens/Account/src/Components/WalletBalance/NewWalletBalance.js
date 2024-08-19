@@ -597,7 +597,7 @@ const NewWalletBalance = ({
       totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Aug 22, 2024",
+      eventDate: "Aug 19, 2024",
       backgroundImage: taikoBg,
       popupInfo: {
         title: "Taiko",
@@ -606,7 +606,7 @@ const NewWalletBalance = ({
         rewards: "TAIKO",
         status: "Live",
         logo: taikoLogo,
-        date: "Aug 22, 2024",
+        date: "Aug 19, 2024",
         id: "event22",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in TAIKO Rewards",
@@ -617,7 +617,7 @@ const NewWalletBalance = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Aug 22, 2024",
+        eventDate: "Aug 19, 2024",
       },
     },
     {
