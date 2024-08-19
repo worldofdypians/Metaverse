@@ -376,6 +376,8 @@ function Dashboard({
   const [myImmutableNfts, setmyImmutableNfts] = useState([]);
   const [myMantaNfts, setmyMantaNfts] = useState([]);
   const [myTaikoNfts, setmyTaikoNfts] = useState([]);
+  const [myCookieNfts, setmyCookieNfts] = useState([]);
+
 
   const [latestVersion, setLatestVersion] = useState(0);
 
@@ -577,6 +579,11 @@ function Dashboard({
   const [taikoEarnToken, setTaikoEarnToken] = useState(0);
   const [taikoPoints, setTaikoPoints] = useState(0);
 
+  const [cookieEarnUsd, setCookieEarnUsd] = useState(0);
+  const [cookiePrice, setCookiePrice] = useState(0);
+  const [cookieEarnToken, setCookieEarnToken] = useState(0);
+  const [cookiePoints, setCookiePoints] = useState(0);
+
 
   const [immutableEarnUsd, setImmutableEarnUsd] = useState(0);
   const [immutablePrice, setImmutablePrice] = useState(0);
@@ -713,6 +720,10 @@ function Dashboard({
             return obj.betapassId === "immutable";
           });
 
+          const cookieEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "cookie3";
+          });
+
           if (dypPremiumEvent && dypPremiumEvent[0]) {
             const userEarnedusd =
               dypPremiumEvent[0].reward.earn.total /
@@ -743,6 +754,17 @@ function Dashboard({
             setImmutablePoints(pointsBnb);
             setImmutableEarnUsd(userEarnedusd);
             setImmutableEarnToken(userEarnedusd / immutablePrice);
+          }
+
+          if (cookieEvent && cookieEvent[0]) {
+            const userEarnedusd =
+              cookieEvent[0].reward.earn.total /
+              cookieEvent[0].reward.earn.multiplier;
+            const pointsBnb = cookieEvent[0].reward.earn.totalPoints;
+
+            setCookiePoints(pointsBnb);
+            setCookieEarnUsd(userEarnedusd);
+            setCookieEarnToken(userEarnedusd / cookiePrice);
           }
 
           if (coreEvent && coreEvent[0]) {
@@ -3919,6 +3941,16 @@ function Dashboard({
       });
   };
 
+  const fetchCookiePrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=cookie&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setCookiePrice(obj.data.cookie.usd);
+      });
+  };
+
   const fetchVictionPrice = async () => {
     await axios
       .get(
@@ -5198,6 +5230,13 @@ function Dashboard({
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "taiko").then((NFTS) =>
       setmyTaikoNfts(NFTS)
     );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cookie3").then((NFTS) =>
+    setmyCookieNfts(NFTS)
+  );
+
+    
+
   };
 
   const getOtherNfts = async () => {
@@ -6539,6 +6578,7 @@ function Dashboard({
     fetchSeiPrice();
     fetchMantaPrice();
     fetchTaikoPrice();
+    fetchCookiePrice();
     fetchCorePrice();
     fetchVictionPrice();
     fetchEgldPrice();
@@ -7214,6 +7254,11 @@ function Dashboard({
                         victionEarnUsd={victionEarnUsd}
                         mantaEarnUsd={mantaEarnUsd}
                         taikoEarnUsd={taikoEarnUsd}
+                        cookieEarnUsd={cookieEarnUsd}
+                        cookieEarnToken={cookieEarnToken}
+                        cookiePoints={cookiePoints}
+
+
                         immutableEarnUsd={immutableEarnUsd}
                         immutableEarnToken={immutableEarnToken}
                         immutablePoints={immutablePoints}
@@ -7224,7 +7269,7 @@ function Dashboard({
                         dailyPopup={dailyBonusPopup}
                         ethTokenData={ethTokenData}
                         dypTokenData={dypTokenData}
-                        onOpenNfts={onOpenNfts}
+                        onOpenNfts={onOpenNfts} 
                         listedNFTS={listedNFTS}
                         myBoughtNfts={myBoughtNfts}
                         address={data?.getPlayer?.wallet?.publicAddress}
@@ -7387,7 +7432,7 @@ function Dashboard({
                       mySkaleNfts={mySkaleNfts}
                       myMantaNfts={myMantaNfts}
                       myTaikoNfts={myTaikoNfts}
-
+                      myCookieNfts={myCookieNfts}
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
                       allActiveOffers={allActiveOffers}

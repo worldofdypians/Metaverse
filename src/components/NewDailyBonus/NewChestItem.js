@@ -112,9 +112,9 @@ const NewChestItem = ({
           }, 3000);
         });
       if (result && result.status === 200) {
-        if (chainText === "opbnb" || chainText === "bnb") {
-          handleThirdTask(coinbase);
-        }
+        // if (chainText === "opbnb" || chainText === "bnb") {
+        //   handleThirdTask(coinbase);
+        // }
         onClaimRewards(result.data);
         setIsChestOpen(true);
         // onChestStatus("success");
@@ -181,9 +181,9 @@ const NewChestItem = ({
           }
         });
       if (result && result.status === 200) {
-        if (chainText === "opbnb" || chainText === "bnb") {
-          handleThirdTask(coinbase);
-        }
+        // if (chainText === "opbnb" || chainText === "bnb") {
+        //   handleThirdTask(coinbase);
+        // }
         onClaimRewards(result.data);
         setIsChestOpen(true);
         // onChestStatus("success");
