@@ -78,23 +78,22 @@ const Tokenomics = () => {
 
   return (
     <div
-      className="d-flex flex-column align-items-center gap-5"
+      className="d-flex px-lg-5 flex-column align-items-center gap-4"
       id="tokenomics"
     >
       <div className="custom-container d-flex flex-column w-100 gap-3">
-        <h4 className="explorer-grid-title font-montserrat text-start mb-0">
+        <h4 className="explorer-grid-title font-montserrat text-start mb-0" style={{textTransform: "uppercase"}}>
           WoD{" "}
-          <mark className="font-montserrat explorer-grid-title explore-tag pe-2">
+          <mark className="font-montserrat explorer-grid-title explore-tag pe-2" style={{textTransform: "uppercase"}}>
             Tokenomics
           </mark>
         </h4>
         <span className="tokenomics-wrapper-desc">
-          The total token supply is 1B $WOD and is designed to fuel the World of
-          Dypians ecosystem and help it grow.
+        The total token supply is 1B $WOD and is designed to fuel the World of Dypians ecosystem and help it grow.
         </span>
       </div>
       <div className="w-100 py-5 d-flex justify-content-center new-tokenomics-bg">
-        <div className="custom-container">
+        <div className="custom-container w-100">
           <div className="row mx-0 align-items-end">
             <div className="col-12 col-lg-6">
               <div className="row mx-0">

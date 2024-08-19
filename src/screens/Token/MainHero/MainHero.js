@@ -6,7 +6,7 @@ import kucoin from "../assets/kuCoin.png";
 import pancake from "../assets/pancake.png";
 import coinbaseLogo from "../assets/coinbase.png";
 import gateio from "../assets/gateio.png";
-import newToken from "../../../../assets/wodAssets/newToken.svg";
+import newToken from "../assets/newToken.svg";
 
 const MainHero = () => {
   const dypProducts = [
@@ -145,83 +145,21 @@ const MainHero = () => {
   const betaSlider2 = useRef(null);
 
   return (
-    <div className="mainhero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-end gap-5">
-      <div className="custom-container  mt-5 mt-lg-0">
+    <div className="px-3 mainhero-wrapper px-lg-5 d-flex flex-column justify-content-center align-items-center">
+      <div className="custom-container w-100 mt-5 mt-lg-0">
         <div className="d-flex flex-column w-100">
           <div className="row mx-0 align-items-center justify-content-between gap-2 mt-5 mt-lg-0">
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-start">
                 <h4 className="main-hero-title font-montserrat text-start">
-                  WoD Token
+                  $WoD Token
                 </h4>
                 <span className="market-banner-desc font-montserrat text-start">
-                  WoD is a utility token that provides the foundation for the
-                  World of Dypians ecosystem within a decentralized platform
-                  that focuses on scalability, security, and global adoption.
+                WOD is a utility token issued on BNB Chain, providing the foundation for the World of Dypians ecosystem, integrating DeFi, NFTs, Gaming, and AI all in one place.
                 </span>
-                <div className="d-flex align-items-center gap-3">
-                  <button className="stake-wod-btn px-4 py-2">Stake WoD</button>
-                  <button className="buy-wod-btn px-4 py-2">Buy WoD</button>
-                </div>
               </div>
             </div>
-            <div className="col-12 col-lg-5 pe-0">
-              <img src={newToken} className="w-100" alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="opacitywrapper position-relative bottom-0">
-        <div className="d-flex flex-column gap-4 position-relative">
-       
-          <div className="d-flex flex-column mx-0 align-items-center justify-content-between gap-2 buy-items-all-wrapper py-2">
-            <div className="container-fluid py-4 buy-wod-bg">
-              <div className="custom-container p-0">
-                <div className="d-flex flex-column  gap-4">
-                  <h4
-                    className="main-hero-title font-montserrat text-center"
-                    style={{ width: "fit-content" }}
-                  >
-                    Buy{" "}
-                    <mark className="font-montserrat main-hero-title explore-tag pe-2">
-                      WoD
-                    </mark>
-                  </h4>
-                  <div className="row w-100 mx-0 align-items-center justify-content-between">
-                    <Slider {...settings2} ref={betaSlider2} className="px-0">
-                      <div className="w-100 buy-token-wrapper p-3 rounded">
-                        <div className="d-flex align-items-center gap-2">
-                          <img src={kucoin} alt="" className="buy-item-logo" />
-                          <h4 className="m-0 buy-item-title">KuCoin</h4>
-                        </div>
-                      </div>
-                      <div className="w-100 buy-token-wrapper p-3 rounded">
-                        <div className="d-flex align-items-center gap-2">
-                          <img src={gateio} alt="" className="buy-item-logo" />
-                          <h4 className="m-0 buy-item-title">Gate.io</h4>
-                        </div>
-                      </div>
-                      <div className="w-100 buy-token-wrapper p-3 rounded">
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={coinbaseLogo}
-                            alt=""
-                            className="buy-item-logo"
-                          />
-                          <h4 className="m-0 buy-item-title">Coinbase</h4>
-                        </div>
-                      </div>
-                      <div className="w-100 buy-token-wrapper p-3 rounded">
-                        <div className="d-flex align-items-center gap-2">
-                          <img src={pancake} alt="" className="buy-item-logo" />
-                          <h4 className="m-0 buy-item-title">PancakeSwap</h4>
-                        </div>
-                      </div>
-                    </Slider>
-                  </div>
-                </div>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>

@@ -1,4 +1,8 @@
-.tokenomics-wrapper {
+.tokenomics-chart {
+  width: 80%;
+  @media screen and (max-width: 785px) {
+    width: 100%;
+  }
 }
 
 .allocation-wrapper {
