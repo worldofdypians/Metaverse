@@ -1619,9 +1619,9 @@ const NewWalletBalance = ({
                 Treasure Hunt
               </h6>{" "}
               <ActiveProfileEvent
-                data={dummyTaiko}
-                event={dummyTaiko}
-                userEarnedUsd={taikoEarnUsd}
+                data={dummyImmutable}
+                event={dummyImmutable}
+                userEarnedUsd={immutableEarnUsd}
                 onOpenEvent={() => {
                   setDummyEvent(dummyImmutable);
                   setEventPopup(true);
