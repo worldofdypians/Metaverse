@@ -1,12 +1,11 @@
 import React, { useRef } from "react";
 import "./_mainhero.scss";
-import BetaEventCardHome from "../../../Marketplace/components/BetaEventCardHome";
 import { NavLink } from "react-router-dom";
 import Slider from "react-slick";
-import kucoin from "../../../../assets/wodAssets/buyWod/kuCoin.png";
-import pancake from "../../../../assets/wodAssets/buyWod/pancake.png";
-import coinbaseLogo from "../../../../assets/wodAssets/buyWod/coinbase.png";
-import gateio from "../../../../assets/wodAssets/buyWod/gateio.png";
+import kucoin from "../assets/kuCoin.png";
+import pancake from "../assets/pancake.png";
+import coinbaseLogo from "../assets/coinbase.png";
+import gateio from "../assets/gateio.png";
 import newToken from "../../../../assets/wodAssets/newToken.svg";
 
 const MainHero = () => {
@@ -174,19 +173,7 @@ const MainHero = () => {
       </div>
       <div className="opacitywrapper position-relative bottom-0">
         <div className="d-flex flex-column gap-4 position-relative">
-          <div className="custom-container m-auto p-0 ">
-            <Slider {...settings} ref={betaSlider}>
-              {dypProducts.slice(0, 4).map((item, index) => (
-                <NavLink to={`${item.link}`}>
-                  <BetaEventCardHome
-                    data={item}
-                    key={index}
-                    isFrontPage={true}
-                  />
-                </NavLink>
-              ))}
-            </Slider>
-          </div>
+       
           <div className="d-flex flex-column mx-0 align-items-center justify-content-between gap-2 buy-items-all-wrapper py-2">
             <div className="container-fluid py-4 buy-wod-bg">
               <div className="custom-container p-0">

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./_tokenomics.scss";
-import chart from "../../../../assets/wodAssets/dyp-chart2.svg";
-import copy from "../../../../components/Header/assets/copy.svg";
-import check from "../../../../components/Header/assets/check.svg";
+import chart from "../assets/dyp-chart2.svg";
+import copy from "../assets/copy.svg";
+import check from "../assets/check.svg";
 import Clipboard from "react-clipboard.js";
-import copyIcon from "../../../../assets/wodAssets/copyIcon.svg";
-import tokenomicsChart from "../../../../assets/wodAssets/tokenomicsChart.svg";
+import copyIcon from "../assets/copyIcon.svg";
+import tokenomicsChart from "../assets/tokenomicsChart.svg";
 
 const Tokenomics = () => {
   const [tooltip, setTooltip] = useState(false);
