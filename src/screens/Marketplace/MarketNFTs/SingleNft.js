@@ -206,6 +206,7 @@ const SingleNft = ({
       type !== "conflux" &&
       type !== "manta" &&
       type !== "taiko" &&
+      type !== "cookie3" &&
       type !== "doge" &&
       type !== "cmc" &&
       type !== "coingecko" &&
@@ -549,6 +550,23 @@ const SingleNft = ({
       const nft_contract = new window.taikoWeb3.eth.Contract(
         window.TAIKO_NFT_ABI,
         window.config.nft_taiko_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      console.log(owner);
+
+      setowner(owner);
+    }
+
+    else if (type === "cookie3") {
+      const nft_contract = new window.bscWeb3.eth.Contract(
+        window.COOKIE3_NFT_ABI,
+        window.config.nft_cookie3_address
       );
       const owner = await nft_contract.methods
         .ownerOf(Id)
@@ -1601,6 +1619,9 @@ const SingleNft = ({
           window.config.nft_taiko_address.toLowerCase()
         ? "taiko"
         : nftAddress.toLowerCase() ===
+          window.config.nft_cookie3_address.toLowerCase()
+        ? "cookie3"
+        : nftAddress.toLowerCase() ===
           window.config.nft_doge_address.toLowerCase()
         ? "doge"
         : nftAddress.toLowerCase() ===
@@ -1693,6 +1714,9 @@ const SingleNft = ({
     }
     else if (nftAddress.toLowerCase() === window.config.nft_taiko_address.toLowerCase()) {
       setType("taiko");
+    }
+    else if (nftAddress.toLowerCase() === window.config.nft_cookie3_address.toLowerCase()) {
+      setType("cookie3");
     }
     else if (
       nftAddress.toLowerCase() === window.config.nft_doge_address.toLowerCase()
@@ -1927,6 +1951,19 @@ const SingleNft = ({
                 </h6>
               </>
             )
+            : type === "cookie3" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  Cookie3{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
+            )
             : type === "doge" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
@@ -2090,6 +2127,9 @@ const SingleNft = ({
                           window.config.nft_taiko_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+400.png`
                         : nftAddress.toLowerCase() ===
+                          window.config.nft_cookie3_address.toLowerCase()
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+400.png`
+                        : nftAddress.toLowerCase() ===
                           window.config.nft_doge_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
                         : nftAddress.toLowerCase() ===
@@ -2140,7 +2180,8 @@ const SingleNft = ({
                         type === "doge" ||
                         type === "cmc" ||type === "bnb"||type === "opbnb" ||
                         type === "cawsbnb" ||
-                        type === "landbnb"
+                        type === "landbnb" ||
+                        type === "cookie3"
                           ? bnbLogo
                           : type === "conflux"
                           ? confluxLogo
@@ -2175,7 +2216,8 @@ const SingleNft = ({
                     type === "bnb" ||
                     type === "cawsbnb" ||
                     type === "cmc" ||
-                    type === "landbnb"
+                    type === "landbnb" ||
+                    type === "cookie3"
                       ? "BNB Chain"
                       : type === "conflux"
                       ? "Conflux"
@@ -2235,6 +2277,8 @@ const SingleNft = ({
                         ? "Manta Beta Pass"
                         : type === "taiko"
                         ? "Taiko Beta Pass"
+                        : type === "cookie3"
+                        ? "Cookie3 Beta Pass"
                         : type === "doge"
                         ? "Dogecoin Beta Pass"
                         : type === "bnb"
@@ -2405,6 +2449,7 @@ const SingleNft = ({
                       type !== "conflux" &&
                       type !== "manta" &&
                       type !== "taiko" &&
+                      type !== "cookie3" &&
                       type !== "base" &&
                       type !== "doge" &&
                       type !== "bnb"&&
@@ -2582,6 +2627,7 @@ const SingleNft = ({
                       type !== "conflux" &&
                       type !== "manta" &&
                       type !== "taiko" &&
+                      type !== "cookie3" &&
                       type !== "base" &&
                       type !== "doge" &&
                       type !== "bnb" &&
@@ -2785,6 +2831,7 @@ const SingleNft = ({
                         type === "conflux" ||
                         type === "manta" ||
                         type === "taiko" ||
+                        type === "cookie3" ||
                         type === "base" ||
                         type === "doge" ||
                         type === "bnb" ||
@@ -2823,6 +2870,7 @@ const SingleNft = ({
                               type === "bnb" ||
                               type === "cawsbnb" ||
                               type === "landbnb" ||
+                              type === "cookie3" ||
                               type === "multivers"
                                 ? `https://bscscan.com/address/${owner}`
                                 : type === "conflux"
@@ -3037,6 +3085,7 @@ const SingleNft = ({
                         type !== "conflux" &&
                         type !== "manta" &&
                         type !== "taiko" &&
+                        type !== "cookie3" &&
                         type !== "base" &&
                         type !== "cmc" &&
                         type !== "viction" &&
@@ -3114,6 +3163,7 @@ const SingleNft = ({
                         type !== "conflux" &&
                         type !== "manta" &&
                         type !== "taiko" &&
+                        type !== "cookie3" &&
                         type !== "base" &&
                         type !== "doge" &&
                         type !== "bnb"  &&
@@ -3149,6 +3199,7 @@ const SingleNft = ({
                         type !== "conflux" &&
                         type !== "manta" &&
                         type !== "taiko" &&
+                        type !== "cookie3" &&
                         type !== "base" &&
                         type !== "doge" &&
                         type !== "bnb"  &&
@@ -3200,6 +3251,7 @@ const SingleNft = ({
             type !== "conflux" &&
             type !== "manta" &&
             type !== "taiko" &&
+            type !== "cookie3" &&
             type !== "base" &&
             type !== "doge" &&
             type !== "bnb"  &&
@@ -3472,6 +3524,7 @@ const SingleNft = ({
             type === "conflux" ||
             type === "manta" ||
             type === "taiko" ||
+            type === "cookie3" ||
             type === "base" ||
             type === "doge" ||
             type === "bnb" ||
@@ -3524,6 +3577,8 @@ const SingleNft = ({
                             ? "EGLD"
                             : type === "immutable"
                             ? "IMX"
+                            : type === "cookie3"
+                            ? "COOKIE"
                             : "BNB"}{" "}
                           rewards
                         </span>
