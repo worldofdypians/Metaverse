@@ -85,11 +85,11 @@ const MintPopup = ({ active, onClose, data }) => {
                   className="mint-popup-title  mb-0"
                   style={{ color: "#18FFFF" }}
                 >
-                  Live Giveaway
+                  Taiko
                 </h6>
               </div>
               <h6 className="mint-popup-title m-0">
-              Taiko Beta Pass
+              Treasure Hunt Event
               </h6>
             </div>
           </div>
@@ -244,11 +244,11 @@ const MintPopup = ({ active, onClose, data }) => {
           </div>
         </div>
       )}
-      {data.title === "Treasure Hunt" ? (
+      {data.title === "Taiko" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-          {data.title === "Treasure Hunt" && (
+          {data.title === "Taiko" && (
             <span className="popup-available-mint">
-              Explore the downtown area and use your{" "}
+              Explore the Taiko area and use your{" "}
               <img src={whiteExplore} className="white-explore" alt="" /> to
               generate rewards!
             </span>
@@ -263,13 +263,13 @@ const MintPopup = ({ active, onClose, data }) => {
           </span>
         </div>
       ) : 
-        data.title === "Taiko" ? (
-        <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-            <span className="popup-available-mint">
-            Get access to the game and a unique event filled with surprises and rewards!
-            </span>
-        </div>
-      ): 
+      //   data.title === "Taiko" ? (
+      //   <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
+      //       <span className="popup-available-mint">
+      //       Get access to the game and a unique event filled with surprises and rewards!
+      //       </span>
+      //   </div>
+      // ): 
       data.title === "Manta" ? (
       <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           <span className="popup-available-mint">
@@ -322,7 +322,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "Taiko" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/beta-pass/taiko"}
+            to={"/marketplace/events/treasure-hunt"}
             state={{ event: data.state }}
             className="linear-border"
           >

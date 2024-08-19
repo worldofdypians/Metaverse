@@ -299,7 +299,7 @@ const NewWalletBalance = ({
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
   let mantaLastDay = new Date("2024-10-30T14:00:00.000+02:00");
-  let taikoLastDay = new Date("2024-10-30T14:00:00.000+02:00");
+  let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
@@ -395,7 +395,7 @@ const NewWalletBalance = ({
   const dummyTaiko = {
     title: "Taiko",
     logo: taikoLogo,
-    eventStatus: "Coming Soon",
+    eventStatus: "Live",
     totalRewards: "$20,000 in TAIKO Rewards",
     myEarnings: 0.0,
     eventDate: "Aug 22, 2024",
@@ -414,7 +414,7 @@ const NewWalletBalance = ({
     chain: "TAIKO",
     linkState: "taiko",
     rewards: "TAIKO",
-    status: "Coming Soon",
+    status: "Live",
   };
 
   const dummyBNB = {
@@ -560,6 +560,36 @@ const NewWalletBalance = ({
       },
     },
     {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in TAIKO Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 22, 2024",
+      backgroundImage: taikoBg,
+      popupInfo: {
+        title: "Taiko",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Live",
+        logo: taikoLogo,
+        date: "Aug 22, 2024",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        backgroundImage: taikoBg,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 22, 2024",
+      },
+    },
+    {
       title: "Manta",
       logo: mantaLogo,
       eventStatus: "Coming Soon",
@@ -587,36 +617,7 @@ const NewWalletBalance = ({
         eventDate: "Aug 20, 2024",
       },
     },
-    {
-      title: "Taiko",
-      logo: taikoLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in TAIKO Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 22, 2024",
-      backgroundImage: taikoBg,
-      popupInfo: {
-        title: "Taiko",
-        chain: "Taiko",
-        linkState: "taiko",
-        rewards: "TAIKO",
-        status: "Coming Soon",
-        logo: taikoLogo,
-        date: "Aug 22, 2024",
-        id: "event22",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in TAIKO Rewards",
-        eventDuration: taikoLastDay,
-        backgroundImage: taikoBg,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Aug 22, 2024",
-      },
-    },
+    
     {
       title: "Immutable",
       logo: immutableLogo,
@@ -1588,8 +1589,10 @@ const NewWalletBalance = ({
               >
                 Treasure Hunt
               </h6>{" "}
-              <UpcomingProfileEvent
+              <ActiveProfileEvent
                 data={dummyTaiko}
+                event={dummyTaiko}
+                userEarnedUsd={taikoEarnUsd}
                 onOpenEvent={() => {
                   setDummyEvent(dummyTaiko);
                   setEventPopup(true);

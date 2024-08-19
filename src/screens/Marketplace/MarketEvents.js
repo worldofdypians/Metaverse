@@ -239,6 +239,7 @@ const MarketEvents = ({
   const [victionEarnToken, setVictionEarnToken] = useState(0);
   const [victionPoints, setVictionPoints] = useState(0);
   const [mantaPrice, setMantaPrice] = useState(0);
+  const [taikoPrice, setTaikoPrice] = useState(0)
   const [mantaEarnToken, setMantaEarnToken] = useState(0);
   const [mantaEarnUsd, setMantaEarnUsd] = useState(0);
   const [mantaPoints, setMantaPoints] = useState(0);
@@ -282,6 +283,18 @@ const MarketEvents = ({
       });
   };
 
+
+  
+  const fetchTaikoPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=taiko&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setTaikoPrice(obj.data["taiko"].usd);
+      });
+  };
+
   const fetchVictionPrice = async () => {
     await axios
       .get(
@@ -314,7 +327,7 @@ const MarketEvents = ({
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
   let mantaLastDay = new Date("2024-10-30T14:00:00.000+02:00");
-  let taikoLastDay = new Date("2024-10-30T14:00:00.000+02:00");
+  let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
 
   const dailyBonusMintData = {
     title: "Daily Bonus",
@@ -435,6 +448,33 @@ const MarketEvents = ({
       },
     },
     {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in TAIKO Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 22, 2024",
+      backgroundImage: taikoBg,
+      popupInfo: {
+        title: "TAIKO",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Live",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 22, 2024",
+      },
+    },
+    {
       title: "Manta",
       logo: mantaLogo,
       eventStatus: "Coming Soon",
@@ -461,33 +501,7 @@ const MarketEvents = ({
         eventDate: "Aug 20, 2024",
       },
     },
-    {
-      title: "Taiko",
-      logo: taikoLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in TAIKO Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 22, 2024",
-      backgroundImage: taikoBg,
-      popupInfo: {
-        title: "TAIKO",
-        chain: "Taiko",
-        linkState: "taiko",
-        rewards: "TAIKO",
-        status: "Coming Soon",
-        id: "event22",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in TAIKO Rewards",
-        eventDuration: taikoLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Aug 22, 2024",
-      },
-    },
+   
     {
       title: "Immutable",
       logo: immutableLogo,
@@ -1172,7 +1186,7 @@ const MarketEvents = ({
             const pointsTaiko = taikoEvent[0].reward.earn.totalPoints;
             setTaikoPoints(pointsTaiko);
             setTaikoEarnUsd(userEarnedusd);
-            setTaikoEarnToken(userEarnedusd / mantaPrice);
+            setTaikoEarnToken(userEarnedusd / taikoPrice);
           }
 
           if (multiversEvent && multiversEvent[0]) {
@@ -1301,6 +1315,7 @@ const MarketEvents = ({
     fetchEgldPrice();
     fetchCorePrice();
     fetchMantaPrice();
+    fetchTaikoPrice();
   }, []);
 
   useEffect(() => {
