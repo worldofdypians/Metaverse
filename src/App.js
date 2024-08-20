@@ -78,6 +78,7 @@ import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 import Redirect from "./screens/Home/Redirect";
 import WalletModal2 from "./components/WalletModal/WalletModal2";
+import Token from './screens/Token/Token'
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -3895,6 +3896,7 @@ function App() {
             }
           />
           <Route exact path="/caws" element={<Caws />} />
+          <Route exact path="/tokenomics" element={<Token />} />
           <Route
             exact
             path="/notifications"
