@@ -78,7 +78,9 @@
 }
 
 .auto-button {
+  @media screen and (max-width: 786px) {
   width: fit-content;
+  }
 }
 
 .buy-wod-btn {

@@ -8,25 +8,27 @@ import coinbaseLogo from "../assets/coinbase.png";
 import gateio from "../assets/gateio.png";
 import newToken from "../assets/newToken.svg";
 
-const MainHero = () => {
-  const dypProducts = [
+const MainHero = ({scrollInto}) => {
+  const launchpads = [
     {
-      link: "/earn",
-      title: "Earn",
-      desc: "Earn rewards by staking WOD tokens",
-      class: "tokenEarnClass",
+      title: "poolz",
+      logo: "poolz.svg",
+      link: "https://www.poolz.finance/project-details/about/249",
     },
     {
-      link: "/bridge",
-      title: "Bridge",
-      desc: "Bridge your assets securely between chains",
-      class: "tokenBridgeClass",
+      title: "Ordify",
+      logo: "ordify.svg",
+      link: "https://launch.ordify.world/projects/details/bnb/world-of-dypians",
     },
     {
-      link: "/governance",
-      title: "Governance",
-      desc: "Lorem ipsum governance something",
-      class: "tokenGovernanceClass",
+      title: "WeWay",
+      logo: "weway.svg",
+      link: "https://wepad.io/project/world-of-dypians",
+    },
+    {
+      title: "Finceptor",
+      logo: "finceptor.svg",
+      link: "https://finceptor.app/deals/sale/wod-open",
     },
   ];
 
@@ -159,11 +161,33 @@ const MainHero = () => {
                   foundation for the World of Dypians ecosystem, integrating
                   DeFi, NFTs, Gaming, and AI all in one place.
                 </span>
-             
+                <div className="d-flex align-items-center gap-2">
+                  <button className="pill-btn2 px-3 py-2" onClick={()=>{scrollInto('tokenomics')}}>Tokenomics</button>
+                  <button className="signinbtn2 px-3 py-2" onClick={()=>{scrollInto('backers&partners')}}>Backers & Partners</button>
+                </div>
               </div>
             </div>
             <div className="col-12 col-lg-5 pe-0">
               <img src={newToken} className="w-100" alt="" />
+            </div>
+          </div>
+          <div className="d-flex flex-column gap-3">
+            <h6 className="mb-0 investors-title">Launchpads</h6>
+            <div className="investors-grid">
+              {launchpads.map((item, index) => (
+                <a
+                  href={item.link}
+                  target="_blank"
+                  className="investors-item py-2"
+                  key={index}
+                >
+                  <img
+                    src={require(`../Investors/assets/${item.logo}`)}
+                    className="investors-img"
+                    alt=""
+                  />
+                </a>
+              ))}
             </div>
           </div>
         </div>

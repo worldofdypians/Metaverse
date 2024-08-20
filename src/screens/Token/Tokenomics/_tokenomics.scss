@@ -56,6 +56,7 @@
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
   box-shadow: 0px 4px 4px 0px rgba(20, 8, 54, 0.25);
+  flex-wrap: nowrap;
 }
 
 .tokenomics-table-head {
@@ -64,7 +65,13 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
-  line-height: 24px; /* 171.429% */
+  line-height: 24px;
+
+  @media screen and (max-width: 786px) {
+    // width: fit-content;
+    font-size: 11px;
+    font-weight: 500;
+  }
 }
 
 .tokenomics-table-item {
@@ -73,30 +80,45 @@
   font-family: "Montserrat";
   font-size: 14px;
   font-style: normal;
+
   font-weight: 700;
-  line-height: 24px; /* 171.429% */
-}
-
-.tokenomics-dot{
-    min-width: 12px;
-    min-height: 12px;
-    border-radius: 50%;
-}
-
-.tokenomics-table-title{
-    color: #DCFB85;
-    font-family: "Montserrat";
+  line-height: 24px;
+  @media screen and (max-width: 786px) {
+    // width: fit-content;
     font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    @media screen and (max-width: 500px) {
-      font-size: 11px;
-    }
+    font-weight: 500;
+  }
 }
 
-.wod-copy-span{
-  color: #A2ADC8;
+.tokenomics-dot {
+  min-width: 12px;
+  min-height: 12px;
+  border-radius: 50%;
+}
+
+.tokenomics-table-title {
+  color: #dcfb85;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  @media screen and (max-width: 500px) {
+    font-size: 11px;
+    line-height: normal;
+  }
+}
+
+.tokenomicsTablewrapper {
+  @media only screen and (max-width: 690px) {
+    display: grid;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+.wod-copy-span {
+  color: #a2adc8;
   font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
@@ -104,8 +126,8 @@
   line-height: normal;
 }
 
-.wod-address{
-  color: #EEEDFF;
+.wod-address {
+  color: #eeedff;
   font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
@@ -114,7 +136,7 @@
   text-decoration-line: underline;
 }
 
-.wod-chart-wrapper{
+.wod-chart-wrapper {
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
   box-shadow: 0px 4px 4px 0px rgba(20, 8, 54, 0.25);
@@ -124,4 +146,3 @@
     padding: 10px;
   }
 }
-

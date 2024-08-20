@@ -14,14 +14,21 @@ const Token = () => {
     document.title = "WoD Token";
   }, []);
 
+  const scrollToView = (viewId) => {
+    document.getElementById(viewId).scrollIntoView({
+      behavior: "smooth",
+      block: "end"
+    });
+  };
+
+
   return (
     <div className="container-fluid token-wrapper px-0">
       <div className="d-flex flex-column gap-5"> 
-        <MainHero />
+        <MainHero scrollInto={scrollToView}/>
         <TokenUtility />
         <Tokenomics />
         <Investors />
-        <WodBuilders page={"wod"} />
         {/* <Utility /> */}
       </div>
     </div>

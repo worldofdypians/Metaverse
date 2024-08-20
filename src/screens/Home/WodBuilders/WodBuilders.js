@@ -257,11 +257,12 @@ const WodBuilders = ({ page }) => {
           )}
         </div>
       )}
-      <div className="w-100 px-3 px-lg-5 mx-0 build-business-wrapper py-4">
+      <div className={`w-100  mx-0  ${page === 'home' ? 'px-3 px-lg-5 build-business-wrapper py-4' : 'bg-none'} `}>
         <div className="d-flex flex-column gap-2">
+        {page === "home" && (
           <h6 className="builder-title mb-0" style={{ fontWeight: "800" }}>
             Building In World of Dypians
-          </h6>
+          </h6>)}
           <div className="row mx-0 w-100 gap-4 gap-lg-0 d-flex flex-column flex-lg-row flex-md-column align-items-center justify-content-between">
             <div className={`builder-item p-3 d-flex flex-column gap-3 gap-lg-0 justify-content-between ${page === 'home' && 'col-lg-7'} `}>
               <div className="builders-first-half"></div>
