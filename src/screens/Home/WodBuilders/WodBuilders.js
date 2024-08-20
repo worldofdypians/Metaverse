@@ -178,6 +178,10 @@ const WodBuilders = () => {
       icon: "cyborg",
       banner: "kucoinBanner.png",
     },
+    {
+      name: "Plena Finance",
+      icon: "plena",
+    },
   
   ];
 

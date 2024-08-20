@@ -2056,7 +2056,7 @@
 
 .treasure-hunt-item-wrapper-active {
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   @media only screen and (max-width: 500px) {
     display: grid;
