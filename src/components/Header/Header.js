@@ -453,6 +453,16 @@ const Header = ({
             >
               Explore
             </NavLink>
+            <NavLink
+              to="/tokenomics"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-anchor font-poppins activenavlink"
+                  : "nav-anchor font-poppins"
+              }
+            >
+              WOD
+            </NavLink>
             {/* <a href="#marketplace" className="nav-anchor font-poppins">Marketplace</a> */}
             {/* <div className="nav-anchor font-poppins">Roadmap</div> */}
 

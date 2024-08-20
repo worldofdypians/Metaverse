@@ -304,7 +304,7 @@ const NewWalletBalance = ({
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
-  let mantaLastDay = new Date("2024-10-30T14:00:00.000+02:00");
+  let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
   let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
 
@@ -653,7 +653,7 @@ const NewWalletBalance = ({
     {
       title: "Manta",
       logo: mantaLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in MANTA Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -663,7 +663,7 @@ const NewWalletBalance = ({
         chain: "Manta",
         linkState: "manta",
         rewards: "MANTA",
-        status: "Coming Soon",
+        status: "Live",
         logo: mantaLogo,
         date: "Aug 20, 2024",
         id: "event21",
