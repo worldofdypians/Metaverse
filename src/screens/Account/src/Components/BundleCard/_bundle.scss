@@ -628,6 +628,10 @@ line-height: normal;
 border: none;
   color: #080b2a;
   border: none;
+
+  @media screen and (max-width: 500px) {
+    font-size: 13px;
+  }
 }
 
 .signinbtn {
@@ -651,7 +655,9 @@ font-style: normal;
 font-weight: 600;
 line-height: normal;
 border: none;
-
+@media screen and (max-width: 500px) {
+  font-size: 13px;
+}
 }
 
 .rewards-btn {
