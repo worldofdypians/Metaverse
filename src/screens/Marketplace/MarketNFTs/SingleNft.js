@@ -3577,6 +3577,8 @@ const SingleNft = ({
                             ? "EGLD"
                             : type === "immutable"
                             ? "IMX"
+                            : type === "cookie3"
+                            ? "COOKIE"
                             : "BNB"}{" "}
                           rewards
                         </span>
