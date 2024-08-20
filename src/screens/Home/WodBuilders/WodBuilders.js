@@ -3,7 +3,7 @@ import "./_wodbuilders.scss";
 import { useState } from "react";
 import useWindowSize from "../../../hooks/useWindowSize";
 
-const WodBuilders = () => {
+const WodBuilders = ({page}) => {
   const [slice, setSlice] = useState(2);
   const windowSize = useWindowSize();
 
@@ -187,66 +187,68 @@ const WodBuilders = () => {
 
   return (
     <>
+    {page === "home" && 
       <div
-        className="px-3 px-lg-5 d-flex flex-column justify-content-center align-items-center"
-        id="wodbuilders"
-      >
-        <div className="d-flex  justify-content-center align-items-center mb-4 gap-2">
-          <h2 className="font-organetto builders-title explorer-grid-title px-0">
-            <mark className="font-organetto explore-tag pe-2">Pioneers</mark>
-            shaping the World of Dypians{" "}
-          </h2>
-        </div>
-        <div className="wod-builders-grid">
-          {builders.slice(0, slice).map((item, index) => (
-            <a
-              href={item.link}
-              target="_blank"
-              key={index}
-              className="builder-item p-3 d-flex flex-column gap-2"
-            >
-              <img
-                src={require(`./assets/${item.banner}`)}
-                className="w-100 partner-banner"
-                alt=""
-              />
-              <div className="d-flex align-items-center gap-2">
-              {item.icon === "klapai" || item.icon === "manta" ?
-                <img src={require(`./assets/${item.icon}.png`)} width={24} height={24} alt="" />
-                :
-                <img src={require(`./assets/${item.icon}.svg`)} width={24} height={24} alt="" />
-              
-              }
-
-                <span className="builder-title mb-0">{item.name}</span>
-              </div>
-            </a>
-          ))}
-        </div>
-        {windowSize.width < 786 ? (
-          <div className="d-flex justify-content-center mt-3">
-            <div
-              className="linear-border"
-              onClick={() => (slice === 2 ? setSlice(20) : setSlice(2))}
-            >
-              <button className="btn filled-btn px-5">
-                {slice === 2 ? "View More" : "View Less"}
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="d-flex justify-content-center mt-3">
-            <div
-              className="linear-border"
-              onClick={() => (slice === 8 ? setSlice(20) : setSlice(8))}
-            >
-              <button className="btn filled-btn px-5">
-                {slice === 8 ? "View More" : "View Less"}
-              </button>
-            </div>
-          </div>
-        )}
+      className="px-3 px-lg-5 d-flex flex-column justify-content-center align-items-center"
+      id="wodbuilders"
+    >
+      <div className="d-flex  justify-content-center align-items-center mb-4 gap-2">
+        <h2 className="font-organetto builders-title explorer-grid-title px-0">
+          <mark className="font-organetto explore-tag pe-2">Pioneers</mark>
+          shaping the World of Dypians{" "}
+        </h2>
       </div>
+      <div className="wod-builders-grid">
+        {builders.slice(0, slice).map((item, index) => (
+          <a
+            href={item.link}
+            target="_blank"
+            key={index}
+            className="builder-item p-3 d-flex flex-column gap-2"
+          >
+            <img
+              src={require(`./assets/${item.banner}`)}
+              className="w-100 partner-banner"
+              alt=""
+            />
+            <div className="d-flex align-items-center gap-2">
+            {item.icon === "klapai" || item.icon === "manta" ?
+              <img src={require(`./assets/${item.icon}.png`)} width={24} height={24} alt="" />
+              :
+              <img src={require(`./assets/${item.icon}.svg`)} width={24} height={24} alt="" />
+            
+            }
+
+              <span className="builder-title mb-0">{item.name}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      {windowSize.width < 786 ? (
+        <div className="d-flex justify-content-center mt-3">
+          <div
+            className="linear-border"
+            onClick={() => (slice === 2 ? setSlice(20) : setSlice(2))}
+          >
+            <button className="btn filled-btn px-5">
+              {slice === 2 ? "View More" : "View Less"}
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="d-flex justify-content-center mt-3">
+          <div
+            className="linear-border"
+            onClick={() => (slice === 8 ? setSlice(20) : setSlice(8))}
+          >
+            <button className="btn filled-btn px-5">
+              {slice === 8 ? "View More" : "View Less"}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+    }
       <div className="w-100 px-3 px-lg-5 mx-0 build-business-wrapper py-4">
         <div className="d-flex flex-column gap-2">
           <h6 className="builder-title mb-0" style={{ fontWeight: "800" }}>
@@ -277,19 +279,21 @@ const WodBuilders = () => {
             </div>
             <div className="d-flex flex-column flex-lg-row gap-2 col-lg-5">
               <div className="build-business-title-wrapper">
-                <h6 className="mb-0 font-organetto">
+                <h6 className="mb-0 font-organetto" style={{textAlign: page === "home" ? "auto" : "right"}}>
                   Bring your business to World of Dypians
                 </h6>
               </div>
+             {page === "home" && 
               <div className="d-flex align-items-center justify-content-center">
-                <a
-                  href="https://docs.google.com/forms/d/1s565QWMoCvkKwAWzkXzVPdixN_fLFlnEstya_k7caqs/viewform?edit_requested=true"
-                  target="_blank"
-                  className="linear-border"
-                >
-                  <button className="btn filled-btn px-5">Apply</button>
-                </a>
-              </div>
+              <a
+                href="https://docs.google.com/forms/d/1s565QWMoCvkKwAWzkXzVPdixN_fLFlnEstya_k7caqs/viewform?edit_requested=true"
+                target="_blank"
+                className="linear-border"
+              >
+                <button className="btn filled-btn px-5">Apply</button>
+              </a>
+            </div>
+             }
             </div>
           </div>
         </div>

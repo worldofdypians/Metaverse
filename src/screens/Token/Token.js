@@ -5,6 +5,7 @@ import MainHero from "./MainHero/MainHero";
 import Tokenomics from "./Tokenomics/Tokenomics";
 import Utility from "./Utility/Utility";
 import Investors from "./Investors/Investors";
+import WodBuilders from "../Home/WodBuilders/WodBuilders";
 
 const Token = () => {
 
@@ -20,6 +21,7 @@ const Token = () => {
         <TokenUtility />
         <Tokenomics />
         <Investors />
+        <WodBuilders page={"wod"} />
         {/* <Utility /> */}
       </div>
     </div>

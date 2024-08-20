@@ -6,37 +6,45 @@ const Investors = () => {
     const launchpads = [
         {
             title: "poolz",
-            logo: "poolz.svg"
+            logo: "poolz.svg",
+            link: "https://www.poolz.finance/",
         },
         {
             title: "Ordify",
-            logo: "ordify.svg"
+            logo: "ordify.svg",
+            link: "https://ordify.world/",
         },
         {
             title: "WeWay",
-            logo: "weway.svg"
+            logo: "weway.svg",
+            link: "https://weway.io/",
         },
         {
             title: "Finceptor",
-            logo: "finceptor.svg"
+            logo: "finceptor.svg",
+            link: "https://finceptor.app/",
         },
     ]
     const investors = [
         {
             title: "Castrum Capital",
-            logo: "castrum.png"
+            logo: "castrum.png",
+            link: "https://castrum.capital/"
         },
         {
             title: "Financial Move",
-            logo: "financialMove.svg"
+            logo: "financialMove.svg",
+            link: "https://financialmove.com.br/"
         },
         {
             title: "MPC Education",
-            logo: "mpcEducation.svg"
+            logo: "mpcEducation.svg",
+            link: "https://meuplanocrypto.com/"
         },
         {
             title: "Crypto Adventure",
-            logo: "cryptoAdventure.svg"
+            logo: "cryptoAdventure.svg",
+            link: "https://cryptoadventure.com/"
         },
     ]
 
@@ -49,9 +57,9 @@ const Investors = () => {
         </h6>
         <div className="investors-grid">
             {launchpads.map((item, index) => (
-                <div className="investors-item py-2" key={index}>
+                <a href={item.link} target='_blank' className="investors-item py-2" key={index}>
                     <img src={require(`./assets/${item.logo}`)} className='investors-img' alt="" />
-                </div>
+                </a>
             ))}
         </div>
     </div>
@@ -61,9 +69,9 @@ const Investors = () => {
         </h6>
         <div className="investors-grid">
             {investors.map((item, index) => (
-                <div className="investors-item py-2" key={index}>
-                    <img src={require(`./assets/${item.logo}`)} className='investors-img' alt="" />
-                </div>
+               <a href={item.link} target='_blank' className="investors-item py-2" key={index}>
+               <img src={require(`./assets/${item.logo}`)} className='investors-img' alt="" />
+           </a>
             ))}
         </div>
     </div>

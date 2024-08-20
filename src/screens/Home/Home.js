@@ -181,7 +181,7 @@ const Home = ({
             allStarData={allStarData}
           />
           <LiveEvents />
-          <WodBuilders />
+          <WodBuilders page={"home"} />
           <Utilities />
           <MarketSection
             coinbase={coinbase}
