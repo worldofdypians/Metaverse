@@ -6,6 +6,8 @@ import check from "../assets/check.svg";
 import Clipboard from "react-clipboard.js";
 import copyIcon from "../assets/copyIcon.svg";
 import tokenomicsChart from "../assets/tokenomicsChart.svg";
+import { shortAddress } from "../../Caws/functions/shortAddress";
+import useWindowSize from "../../../hooks/useWindowSize";
 
 const Tokenomics = () => {
   const [tooltip, setTooltip] = useState(false);
@@ -76,20 +78,29 @@ const Tokenomics = () => {
     },
   ];
 
+  const windowSize = useWindowSize();
+
   return (
     <div
       className="d-flex  flex-column align-items-center gap-4"
       id="tokenomics"
     >
       <div className="custom-container px-4 px-lg-5 d-flex flex-column w-100 gap-3">
-        <h4 className="explorer-grid-title font-montserrat text-start mb-0" style={{textTransform: "uppercase"}}>
+        <h4
+          className="explorer-grid-title font-montserrat text-start mb-0"
+          style={{ textTransform: "uppercase" }}
+        >
           WoD{" "}
-          <mark className="font-montserrat explorer-grid-title explore-tag pe-2" style={{textTransform: "uppercase"}}>
+          <mark
+            className="font-montserrat explorer-grid-title explore-tag pe-2"
+            style={{ textTransform: "uppercase" }}
+          >
             Tokenomics
           </mark>
         </h4>
         <span className="tokenomics-wrapper-desc">
-        The total token supply is 1B $WOD and is designed to fuel the World of Dypians ecosystem and help it grow.
+          The total token supply is 1B $WOD and is designed to fuel the World of
+          Dypians ecosystem and help it grow.
         </span>
       </div>
       <div className="w-100 px-lg-5 py-5 d-flex justify-content-center new-tokenomics-bg">
@@ -145,8 +156,16 @@ const Tokenomics = () => {
                 <div className="d-flex flex-column">
                   <span className="wod-copy-span">WOD Contract Address</span>
                   <div className="d-flex align-items-center gap-2">
-                    <a  href="https://bscscan.com/token/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8" target="_blank" className="wod-address">
-                    0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8
+                    <a
+                      href="https://bscscan.com/token/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                      target="_blank"
+                      className="wod-address"
+                    >
+                      {windowSize.width > 991
+                        ? "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                        : shortAddress(
+                            "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                          )}
                     </a>
                     <Clipboard
                       component="div"
