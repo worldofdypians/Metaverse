@@ -526,7 +526,7 @@ const MobileNavbar = ({
               <img src={mobileArrow} alt="arrow" />{" "}
             </NavLink>
           </div>
-          {/* <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
             <NavLink
               to="/tokenomics"
               className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
@@ -536,7 +536,7 @@ const MobileNavbar = ({
               <h6 className="mobile-nav-link font-poppins mb-0">WOD</h6>
               <img src={mobileArrow} alt="arrow" />{" "}
             </NavLink>
-          </div> */}
+          </div>
 
           <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
             <NavLink
