@@ -874,10 +874,10 @@ function App() {
 
   const searchDomain = async (domain) => {
     if (window.ethereum && window.WALLET_TYPE !== "binance") {
-      const provider = new providers.Web3Provider(window.ethereum);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const register = new SIDRegister({ signer, chainId: 56 });
-      const available = await register.getAvailable(domain);
+      const available = await register.getAvailable(domain).catch((e)=>{console.error(e)});
       const price = await register.getRentPrice(domain, 1);
       const newPrice = new BigNumber(price._hex / 1e18).toFixed();
       setDomainPrice(newPrice);
@@ -905,7 +905,7 @@ function App() {
   const registerDomain = async (label, years) => {
     if (window.ethereum && window.WALLET_TYPE !== "binance") {
       setLoadingDomain(true);
-      const provider = new providers.Web3Provider(window.ethereum);
+      const provider = ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const address = await signer.getAddress();
       const register = new SIDRegister({ signer, chainId: 56 });
