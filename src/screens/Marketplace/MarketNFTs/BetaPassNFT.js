@@ -3661,7 +3661,7 @@ const BetaPassNFT = ({
                                 </div>
                               </div>
                               <span className="footertxt-coingecko">
-                                Earn daily SKL rewards and global leaderboard
+                                Earn daily Manta rewards and global leaderboard
                                 points.
                               </span>
                               <div className="summaryseparator mt-3 mb-3"></div>
