@@ -11,8 +11,8 @@ const WodBuilders = ({ page }) => {
     {
       name: "BNB Chain",
       icon: "bnbIcon",
-      banner: "bnbChainBanner.png",
-      link: "https://twitter.com/BNBCHAIN/status/1705265706747548051?t=7iSDimripaRiwq6A_Z6ViQ&s=19",
+      banner: "bnbChainBanner.webp",
+      link: "https://x.com/BNBCHAIN/status/1821018678550306906",
     },
     {
       name: "CORE",
