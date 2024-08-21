@@ -8,6 +8,7 @@ import copyIcon from "../assets/copyIcon.svg";
 import tokenomicsChart from "../assets/tokenomicsChart.svg";
 import { shortAddress } from "../../Caws/functions/shortAddress";
 import useWindowSize from "../../../hooks/useWindowSize";
+import bnb from '../../../components/Header/assets/bnb.svg'
 
 const Tokenomics = () => {
   const [tooltip, setTooltip] = useState(false);
@@ -193,6 +194,8 @@ const Tokenomics = () => {
             </div>
             <div className="col-12 col-lg-6 mt-4 mt-lg-0">
               <div className="d-flex flex-column align-items-center align-items-lg-end gap-2">
+                <div className="d-flex align-items-center gap-2">
+                  <img src={bnb} alt="" />
                 <div className="d-flex flex-column">
                   <span className="wod-copy-span">WOD Contract Address</span>
                   <div className="d-flex align-items-center gap-2">
@@ -227,6 +230,7 @@ const Tokenomics = () => {
                       </span>
                     </Clipboard>
                   </div>
+                </div>
                 </div>
                 <div className="wod-chart-wrapper w-100 d-flex justify-content-center align-items-center ">
                   <img
