@@ -530,7 +530,7 @@ const MobileNavbar = ({
           } d-flex d-lg-none p-3 flex-column gap-3`}
           id="bgmenu"
         >
-          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
             <NavLink
               to="/explorer"
               className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
@@ -541,8 +541,19 @@ const MobileNavbar = ({
               <img src={mobileArrow} alt="arrow" />{" "}
             </NavLink>
           </div>
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
+            <NavLink
+              to="/tokenomics"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">WOD</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
 
-          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
             <NavLink
               to="/land"
               className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
@@ -554,7 +565,7 @@ const MobileNavbar = ({
             </NavLink>
           </div>
 
-          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
             <NavLink
               to="/marketplace"
               className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
@@ -565,7 +576,7 @@ const MobileNavbar = ({
               <img src={mobileArrow} alt="arrow" />{" "}
             </NavLink>
           </div>
-          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
             <NavLink
               to="/community"
               className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
@@ -576,7 +587,7 @@ const MobileNavbar = ({
               <img src={mobileArrow} alt="arrow" />{" "}
             </NavLink>
           </div>
-          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
             <NavLink
               to="/roadmap"
               className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
@@ -588,7 +599,7 @@ const MobileNavbar = ({
             </NavLink>
           </div>
 
-          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-3">
+          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
             <NavLink
               to="/news"
               className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"

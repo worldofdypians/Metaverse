@@ -47,6 +47,7 @@ import coin98Upcoming from "./assets/coin98Upcoming.png";
 import victionThumb from "./assets/victionThumb.png";
 import mantaThumb from "./assets/mantaThumb.png";
 import taikoThumb from "./assets/taikoThumb.webp";
+import cookie3Thumb from "./assets/cookie3Thumb.png";
 
 import seiThumb from "./assets/seiThumb.png";
 import multiversThumb from "./assets/multiversThumb.png";
@@ -97,6 +98,8 @@ import seiBg from "./assets/seiBg.webp";
 import coreLogo from "./assets/coreLogo.svg";
 import taikoLogo from "./assets/taikoLogo.svg";
 import mantaLogo from "./assets/mantaLogo2.png";
+import cookieLogo from "../../../../Marketplace/assets/cookie3Logo.svg";
+
 import bnbLogo from "./assets/bnbIcon.svg";
 import coreBg from "./assets/coreBg.webp";
 import taikoBg from "./assets/taikoBg.png";
@@ -288,7 +291,7 @@ const NewWalletBalance = ({
   taikoEarnToken,
   immutableEarnUsd,
   immutableEarnToken,
-  immutablePoints,
+  immutablePoints,cookieEarnUsd, cookieEarnToken, cookiePoints
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -301,8 +304,8 @@ const NewWalletBalance = ({
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
-  let mantaLastDay = new Date("2024-10-30T14:00:00.000+02:00");
-  let taikoLastDay = new Date("2024-10-30T14:00:00.000+02:00");
+  let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
+  let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
 
 
@@ -424,7 +427,7 @@ const NewWalletBalance = ({
   const dummyTaiko = {
     title: "Taiko",
     logo: taikoLogo,
-    eventStatus: "Coming Soon",
+    eventStatus: "Live",
     totalRewards: "$20,000 in TAIKO Rewards",
     myEarnings: 0.0,
     eventDate: "Aug 19, 2024",
@@ -443,7 +446,7 @@ const NewWalletBalance = ({
     chain: "TAIKO",
     linkState: "taiko",
     rewards: "TAIKO",
-    status: "Coming Soon",
+    status: "Live",
   };
 
   const dummyBNB = {
@@ -588,6 +591,36 @@ const NewWalletBalance = ({
       },
     },
     {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in TAIKO Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 19, 2024",
+      backgroundImage: taikoBg,
+      popupInfo: {
+        title: "Taiko",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Live",
+        logo: taikoLogo,
+        date: "Aug 19, 2024",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        backgroundImage: taikoBg,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 19, 2024",
+      },
+    },
+    {
       title: "Immutable",
       logo: immutableLogo,
       eventStatus: "Live",
@@ -618,39 +651,9 @@ const NewWalletBalance = ({
       },
     },
     {
-      title: "Taiko",
-      logo: taikoLogo,
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in TAIKO Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 19, 2024",
-      backgroundImage: taikoBg,
-      popupInfo: {
-        title: "Taiko",
-        chain: "Taiko",
-        linkState: "taiko",
-        rewards: "TAIKO",
-        status: "Coming Soon",
-        logo: taikoLogo,
-        date: "Aug 19, 2024",
-        id: "event22",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in TAIKO Rewards",
-        eventDuration: taikoLastDay,
-        backgroundImage: taikoBg,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Aug 19, 2024",
-      },
-    },
-    {
       title: "Manta",
       logo: mantaLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in MANTA Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -660,7 +663,7 @@ const NewWalletBalance = ({
         chain: "Manta",
         linkState: "manta",
         rewards: "MANTA",
-        status: "Coming Soon",
+        status: "Live",
         logo: mantaLogo,
         date: "Aug 20, 2024",
         id: "event21",
@@ -673,6 +676,35 @@ const NewWalletBalance = ({
         maxPoints: "50,000",
         learnMore: "",
         eventDate: "Aug 20, 2024",
+      },
+    },
+
+    {
+      title: "Cookie3",
+      logo: cookieLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in COOKIE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 26, 2024",
+      popupInfo: {
+        title: "Cookie3",
+        chain: "BNB Chain",
+        linkState: "cookie3",
+        rewards: "COOKIE",
+        status: "Coming Soon",
+        logo: cookieLogo,
+        date: "Aug 26, 2024",
+        id: "event23",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in COOKIE Rewards",
+        eventDuration: mantaLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 26, 2024",
       },
     },
     
@@ -1720,6 +1752,8 @@ const NewWalletBalance = ({
                           ? mantaEarnUsd
                           : item.title === "Taiko"
                           ? taikoEarnUsd
+                          : item.title === "Cookie3"
+                          ? cookieEarnUsd
                           : item.title === "Immutable"
                           ? immutableEarnUsd
                           : item.title === "CORE"
@@ -2105,9 +2139,10 @@ const NewWalletBalance = ({
                           Number(cawsPremiumRewards) +
                           Number(bnbEarnUsd) +
                           Number(victionEarnUsd) +
-                          Number(taikoEarnUsd) + +
+                          Number(taikoEarnUsd) + 
                           Number(immutableEarnUsd) +
-                          Number(mantaEarnUsd),
+                          Number(mantaEarnUsd) +
+                          Number(cookieEarnUsd),
                         2
                       )}
                     </h6>
@@ -2322,20 +2357,35 @@ const NewWalletBalance = ({
                   activeTab={item.activeTab}
                   userEarnUsd={
                     item.title === "Conflux"
-                      ? confluxEarnUSD
-                      : item.title === "Base"
-                      ? baseEarnUSD
-                      : item.title === "Dypius"
-                      ? dypiusEarnTokens
-                      : item.title === "Gate.io"
-                      ? gateEarnUSD
-                      : item.title === "CoinGecko"
-                      ? userEarnUsd
-                      : item.title === "Dogecoin"
-                      ? dogeEarnUSD
-                      : item.title === "CMC" || item.title === "CoinMarketCap"
-                      ? cmcuserEarnUsd
-                      : 0
+                    ? confluxEarnUSD
+                    : item.title === "Base"
+                    ? baseEarnUSD
+                    : item.title === "Dypius"
+                    ? dypiusEarnTokens
+                    : item.title === "Gate.io"
+                    ? gateEarnUSD
+                    : item.title === "CoinGecko"
+                    ? userEarnUsd
+                    : item.title === "Dogecoin"
+                    ? dogeEarnUSD
+                    : item.title === "SKALE"
+                    ? skaleEarnUsd
+                    : item.title === "VICTION"
+                    ? victionEarnUsd
+                    : item.title === "Manta"
+                    ? mantaEarnUsd
+                    : item.title === "Taiko"
+                    ? taikoEarnUsd
+                    : item.title === "Cookie3"
+                    ? cookieEarnUsd
+                    : item.title === "Immutable"
+                    ? immutableEarnUsd
+                    : item.title === "CORE"
+                    ? coreEarnUsd
+                    : item.title === "CMC" ||
+                      item.title === "CoinMarketCap"
+                    ? cmcuserEarnUsd
+                    : 0
                   }
                 />
               ))}
@@ -2417,6 +2467,8 @@ const NewWalletBalance = ({
                         ? mantaThumb
                         : dummyEvent.linkState === "taiko"
                         ? taikoThumb
+                        : dummyEvent.linkState === "cookie3"
+                        ? cookie3Thumb
                         : eventPopupImage
                     }
                     alt=""
@@ -2706,6 +2758,18 @@ const NewWalletBalance = ({
                       the game daily and venture into the Taiko area to uncover
                       hidden treasures.
                     </p>
+                  )  : dummyEvent.id === "event23" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Cookie3 Beta Pass NFT</b>. You can get the
+                      Cookie3 Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Cookie3 area, players not only stand a
+                      chance to secure daily rewards in COOKIE, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Cookie3 area to uncover hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -2776,6 +2840,8 @@ const NewWalletBalance = ({
                           ? "MANTA"
                           : dummyEvent.id === "event22"
                           ? "TAIKO"
+                          : dummyEvent.id === "event23"
+                          ? "COOKIE"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2831,6 +2897,8 @@ const NewWalletBalance = ({
                 ? "Manta"
                 : dummyEvent.id === "event22"
                 ? "Taiko"
+                : dummyEvent.id === "event23"
+                ? "Cookie3"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2947,6 +3015,17 @@ const NewWalletBalance = ({
                 Taiko is an Ethereum-equivalent (Type 1) ZK-EVM, maximally
                 compatible with Ethereum. No additional compiling, reaudits, or
                 tooling needed. Everything works out of the box, guaranteed.
+              </p>
+            )  : dummyEvent.id === "event23" ? (
+              <p
+                className="popup-event-desc"
+              >
+                Cookie3 is the first MarketingFi protocol and AI-powered data
+                layer, built to revolutionize how users, creators, and
+                businesses interact. By leveraging AI and blockchain, Cookie3
+                enhances marketing strategies and data insights, empowering
+                everyone in the digital ecosystem to thrive with smarter, more
+                efficient tools.
               </p>
             ) : dummyEvent.id === "event11" ? (
               <p
@@ -3075,6 +3154,8 @@ const NewWalletBalance = ({
                     ? "https://x.com/mantanetwork"
                     : dummyEvent.id === "event22"
                     ? "https://x.com/taikoxyz"
+                    : dummyEvent.id === "event23"
+                    ? "https://x.com/cookie3_com"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -3116,6 +3197,8 @@ const NewWalletBalance = ({
                     ? "https://www.t.me/mantanetworkofficial"
                     : dummyEvent.id === "event22"
                     ? "https://t.me/TaikoEcosystem"
+                    : dummyEvent.id === "event23"
+                    ? "https://t.me/cookie3_co"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -3166,6 +3249,8 @@ const NewWalletBalance = ({
                     ? "https://manta.network/"
                     : dummyEvent.id === "event22"
                     ? "https://taiko.xyz/"
+                    : dummyEvent.id === "event23"
+                    ? "https://www.cookie3.com/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -3218,6 +3303,9 @@ const NewWalletBalance = ({
                         ? taikoPoints
                         : dummyEvent.id === "event15"
                         ? immutablePoints
+                        : dummyEvent.id === "event23"
+                        ? cookiePoints
+                        
                         : 0,
                       0
                     )}
@@ -3269,6 +3357,8 @@ const NewWalletBalance = ({
                         ? taikoEarnUsd
                         : dummyEvent.id === "event15"
                         ? immutableEarnUsd
+                        : dummyEvent.id === "event23"
+                        ? cookieEarnUsd
                         : 0,
                       2
                     )}
@@ -3306,6 +3396,8 @@ const NewWalletBalance = ({
                               ? taikoEarnToken
                               : dummyEvent.id === "event15"
                               ? immutableEarnToken
+                              : dummyEvent.id === "event23"
+                              ? cookieEarnToken
                               : 0,
                             2
                           )}
@@ -3340,6 +3432,8 @@ const NewWalletBalance = ({
                             ? "MANTA"
                             : dummyEvent.id === "event22"
                             ? "TAIKO"
+                            : dummyEvent.id === "event23"
+                            ? "COOKIE"
                             : "ETH"}
                         </>
                       )}

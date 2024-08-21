@@ -41,6 +41,7 @@ import corePopupBg from "../../components/TimepieceMint/assets/corePopupBg.webp"
 import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
 import immutablePopup from "../../components/TimepieceMint/assets/immutablePopup.webp";
 import taikoPopup from "../../components/TimepieceMint/assets/taikoPopup.png";
+import taikoTreasureHunt from "../../components/TimepieceMint/assets/taikoTreasureHunt.png";
 import bnbcampaign from "../../components/TimepieceMint/assets/bnbcampaign.webp";
 
 
@@ -133,7 +134,7 @@ const Home = ({
   };
   const taikoInfo = {
     title: "Taiko",
-    img: taikoPopup,
+    img: taikoTreasureHunt,
     state: "taiko",
   };
 
@@ -181,7 +182,7 @@ const Home = ({
             allStarData={allStarData}
           />
           <LiveEvents />
-          <WodBuilders />
+          <WodBuilders page={"home"} />
           <Utilities />
           <MarketSection
             coinbase={coinbase}
