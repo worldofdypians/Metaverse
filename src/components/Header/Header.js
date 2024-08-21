@@ -75,10 +75,12 @@ const Header = ({
   chainId,
   handleSwitchNetwork,
   handleSwitchChainGateWallet,
+  handleSwitchChainBinanceWallet,
   handleOpenDomains,
   domainName,
   onSigninClick,
   onLogout,
+  binanceWallet,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -95,11 +97,10 @@ const Header = ({
   const [confluxState, setConfluxState] = useState(false);
   const [skaleState, setSkaleState] = useState(false);
   const [victionState, setVictionState] = useState(false);
-  const [mantaState, setMantaState] = useState(false)
+  const [mantaState, setMantaState] = useState(false);
   const [seiState, setSeiState] = useState(false);
   const [immutableState, setImmutableState] = useState(false);
   const [taikoState, setTaikoState] = useState(false);
-
 
   // const [domainPopup, setDomainPopup] = useState(false);
 
@@ -130,8 +131,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-        setTaikoState(false)
-
+        setTaikoState(false);
       } else if (chainId === 43114) {
         setAvaxState(true);
         setBnbState(false);
@@ -144,8 +144,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-        setTaikoState(false)
-
+        setTaikoState(false);
       } else if (chainId === 8453) {
         setAvaxState(false);
         setBnbState(false);
@@ -158,8 +157,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-        setTaikoState(false)
-
+        setTaikoState(false);
       } else if (chainId === 56) {
         setAvaxState(false);
         setBnbState(true);
@@ -172,8 +170,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-        setTaikoState(false)
-
+        setTaikoState(false);
       } else if (chainId === 204) {
         setAvaxState(false);
         setBnbState(false);
@@ -186,8 +183,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-        setTaikoState(false)
-
+        setTaikoState(false);
       } else if (chainId === 1030) {
         setAvaxState(false);
         setBnbState(false);
@@ -201,8 +197,7 @@ const Header = ({
         setSeiState(false);
         setMantaState(false);
         setImmutableState(false);
-        setTaikoState(false)
-
+        setTaikoState(false);
       } else if (chainId === 1482601649) {
         setAvaxState(false);
         setBnbState(false);
@@ -216,8 +211,7 @@ const Header = ({
         setSeiState(false);
         setMantaState(false);
         setImmutableState(false);
-        setTaikoState(false)
-
+        setTaikoState(false);
       } else if (chainId === 1116) {
         setAvaxState(false);
         setBnbState(false);
@@ -231,8 +225,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-        setTaikoState(false)
-
+        setTaikoState(false);
       } else if (chainId === 88) {
         setAvaxState(false);
         setBnbState(false);
@@ -246,8 +239,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setMantaState(false);
-        setTaikoState(false)
-
+        setTaikoState(false);
       } else if (chainId === 13371) {
         setAvaxState(false);
         setBnbState(false);
@@ -261,8 +253,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(true);
         setMantaState(false);
-        setTaikoState(false)
-
+        setTaikoState(false);
       } else if (chainId === 169) {
         setAvaxState(false);
         setBnbState(false);
@@ -276,8 +267,7 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-        setTaikoState(false)
-
+        setTaikoState(false);
       } else if (chainId === 167000) {
         setAvaxState(false);
         setBnbState(false);
@@ -291,7 +281,7 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-        setTaikoState(true)
+        setTaikoState(true);
       }
       // else if (chainId === 713715 ) {
       //   setAvaxState(false);
@@ -316,19 +306,14 @@ const Header = ({
         setVictionState(false);
         setSeiState(false);
         setImmutableState(false);
-        setTaikoState(false)
-        
-
+        setTaikoState(false);
       }
     }
   };
 
- 
- 
-
-  const switchNetwork = async (hexChainId, chain)=>{
+  const switchNetwork = async (hexChainId, chain) => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook(hexChainId)
           .then(() => {
             handleSwitchNetwork(chain);
@@ -336,15 +321,18 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else {
-        handleSwitchChainGateWallet();
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(chain);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(chain);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(chain);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
-  }
+  };
 
- 
   async function markNotificationAsRead(walletAddress, notificationId) {
     try {
       await axios.patch(
@@ -401,31 +389,6 @@ const Header = ({
       }
     }
   };
-
-  useEffect(() => {
-    if (chainId === 1) {
-      handleSwitchNetwork(1);
-    }
-
-    if (chainId === 56) {
-      handleSwitchNetwork(56);
-    }
-
-    if (chainId === 8453) {
-      handleSwitchNetwork(8453);
-    }
-
-    if (chainId === 1482601649) {
-      handleSwitchNetwork(1482601649);
-    }
-
-    // if (chainId === 1116 ) {
-    //   handleSwitchNetwork(1116);
-    // }
-    // if (chainId === 88 ) {
-    //   handleSwitchNetwork(88);
-    // }
-  }, [chainId, coinbase]);
 
   useEffect(() => {
     setActiveChain();
@@ -843,26 +806,46 @@ const Header = ({
                     <img src={bnb} alt="" />
                     opBNB Chain
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => switchNetwork("0x28c58", 167000 )}>
-                    <img src={taiko} width={20} height={20} alt="" />
-                    Taiko
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => switchNetwork("0x45c", 1116)}>
-                    <img src={core} width={20} height={20} alt="" />
-                    CORE
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => switchNetwork("0x585eb4b1", 1482601649)}>
-                    <img src={skale} alt="" />
-                    SKALE
-                  </Dropdown.Item>
+                  {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <Dropdown.Item
+                        onClick={() => switchNetwork("0x28c58", 167000)}
+                      >
+                        <img src={taiko} width={20} height={20} alt="" />
+                        Taiko
+                      </Dropdown.Item>
+                    )}
+                  {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <Dropdown.Item
+                        onClick={() => switchNetwork("0x45c", 1116)}
+                      >
+                        <img src={core} width={20} height={20} alt="" />
+                        CORE
+                      </Dropdown.Item>
+                    )}
+                  {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <Dropdown.Item
+                        onClick={() => switchNetwork("0x585eb4b1", 1482601649)}
+                      >
+                        <img src={skale} alt="" />
+                        SKALE
+                      </Dropdown.Item>
+                    )}
                   <Dropdown.Item onClick={() => switchNetwork("0x406", 1030)}>
                     <img src={conflux} alt="" />
                     Conflux
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => switchNetwork("0x343b", 13371)}>
-                    <img src={immutable} width={20} height={20} alt="" />
-                    Immutable
-                  </Dropdown.Item>
+                  {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <Dropdown.Item
+                        onClick={() => switchNetwork("0x343b", 13371)}
+                      >
+                        <img src={immutable} width={20} height={20} alt="" />
+                        Immutable
+                      </Dropdown.Item>
+                    )}
                   <Dropdown.Item onClick={() => switchNetwork("0x2105", 8453)}>
                     <img src={base} alt="" />
                     Base
@@ -871,10 +854,14 @@ const Header = ({
                     <img src={sei} width={20} height={20} alt="" />
                     Sei
                   </Dropdown.Item>*/}
-                  <Dropdown.Item onClick={() => switchNetwork("0x58", 88)}>
-                    <img src={viction} width={20} height={20} alt="" />
-                    Viction
-                  </Dropdown.Item>
+                  {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <Dropdown.Item onClick={() => switchNetwork("0x58", 88)}>
+                        <img src={viction} width={20} height={20} alt="" />
+                        Viction
+                      </Dropdown.Item>
+                    )}
+
                   <Dropdown.Item onClick={() => switchNetwork("0xa86a", 43114)}>
                     <img src={avax} alt="" />
                     Avalanche
@@ -1032,7 +1019,12 @@ const Header = ({
                             setshowmenuAccount(false);
                           }}
                         >
-                          <img src={logouticon} alt="" className="logout-icon"/> Log Out
+                          <img
+                            src={logouticon}
+                            alt=""
+                            className="logout-icon"
+                          />{" "}
+                          Log Out
                         </button>
                       ) : (
                         <button

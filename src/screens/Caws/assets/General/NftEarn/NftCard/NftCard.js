@@ -10,7 +10,7 @@ const NftCard = () => {
 
   const myStakes = async () => {
     let staking_contract = await new window.infuraWeb3.eth.Contract(
-      window.NFT_ABI,
+      window.CAWS_ABI,
       window.config.nft_address,
       {from: undefined}
   );

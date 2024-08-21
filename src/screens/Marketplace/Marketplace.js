@@ -55,6 +55,7 @@ const Marketplace = ({
   count,
   setCount,
   totalSupply,
+  binanceW3WProvider,chainId
 }) => {
   const override = {
     display: "block",
@@ -1447,6 +1448,8 @@ const Marketplace = ({
                             isWod={nft.type === "land"}
                             coinbase={coinbase}
                             isListed={true}
+                            binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
                           />
                         </NavLink>
                       ))}
@@ -1758,6 +1761,9 @@ const Marketplace = ({
                             coinbase={coinbase}
                             isListed={true}
                             onFavorite={updateFavs}
+                            binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
+
                           />
                         </NavLink>
                       ))}

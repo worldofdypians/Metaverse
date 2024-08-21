@@ -842,7 +842,7 @@ setimmutableNftsSold(immutableresult);
 
   useEffect(() => {
     getTimepieceLatestMint();
-    getConfluxLatestMint();
+    // getConfluxLatestMint();
   }, [mybaseNFTsCreated, totalCreated]);
 
   useEffect(() => {
