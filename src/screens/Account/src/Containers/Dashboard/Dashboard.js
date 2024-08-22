@@ -5191,15 +5191,15 @@ function Dashboard({
       setMyNFTSCaws(NFTS)
     );
 
-    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
-    //   (NFTS) => setMyNFTSCawsBNB(NFTS)
-    // );
-    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
-    //   (NFTS) => setMyNFTSCawsBase(NFTS)
-    // );
-    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
-    //   (NFTS) => setMyNFTSCawsAvax(NFTS)
-    // );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
+      (NFTS) => setMyNFTSCawsBNB(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
+      (NFTS) => setMyNFTSCawsBase(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
+      (NFTS) => setMyNFTSCawsAvax(NFTS)
+    );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "timepiece").then(
       (NFTS) => setMyNFTSTimepiece(NFTS)
@@ -5217,15 +5217,15 @@ function Dashboard({
       setMyNFTSopBNB(NFTS)
     );
 
-    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
-    //   (NFTS) => setMyNFTSLandBNB(NFTS)
-    // );
-    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
-    //   (NFTS) => setMyNFTSLandBase(NFTS)
-    // );
-    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
-    //   (NFTS) => setMyNFTSLandAvax(NFTS)
-    // );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
+      (NFTS) => setMyNFTSLandBNB(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
+      (NFTS) => setMyNFTSLandBase(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
+      (NFTS) => setMyNFTSLandAvax(NFTS)
+    );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "coingecko").then(
       (NFTS) => setMyNFTSCoingecko(NFTS)
     );

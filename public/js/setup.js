@@ -3329,8 +3329,27 @@ async function myNftLandListContract(address) {
 }
 
 async function myNftLandListContractCCIP(address, nftAddress) {
-  window.web3 = new Web3(window.ethereum);
-  let nft_contract = new window.web3.eth.Contract(
+   
+  let nft_contract = new window.bscWeb3.eth.Contract(
+    window.LAND_CCIP_ABI,
+    nftAddress
+  );
+
+  let getBalanceOf = await nft_contract.methods.balanceOf(address).call();
+
+  let nftList = [];
+
+  for (let i = 0; i < getBalanceOf; i++)
+    nftList.push(
+      await nft_contract.methods.tokenOfOwnerByIndex(address, i).call()
+    );
+
+  return nftList;
+}
+
+async function myNftLandListContractCCIPAvax(address, nftAddress) {
+
+  let nft_contract = new window.avaxWeb3.eth.Contract(
     window.LAND_CCIP_ABI,
     nftAddress
   );

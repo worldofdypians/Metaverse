@@ -1451,7 +1451,7 @@ function App() {
   };
 
   const myLandNftAVAX = async () => {
-    let myNft = await window.myNftLandListContractCCIP(
+    let myNft = await window.myNftLandListContractCCIPAvax(
       coinbase,
       window.config.nft_land_avax_address
     );
@@ -3230,9 +3230,7 @@ function App() {
     } else if (
       isConnected === true &&
       coinbase &&
-      networkId === 56 &&
-      window.WALLET_TYPE !== "" &&
-      window.WALLET_TYPE !== "binance"
+      networkId === 56
     ) {
       myNftBNB();
       myLandNftBNB();
