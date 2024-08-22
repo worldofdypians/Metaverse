@@ -1072,22 +1072,15 @@ const NewBundleCard = ({
   };
 
   const handleRefreshCountdown = async () => {
-    if (window.WALLET_TYPE !== "binance" && coinbase) {
-      const remainingTime = await wod_abi.methods
-        .getTimeOfExpireBuff(coinbase)
-        .call();
-      setcountdown(remainingTime);
-    } else if (window.WALLET_TYPE === "binance" && coinbase) {
+ 
       const wod_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
-      const dragonsc = new ethers.Contract(
-        wod_address,
-        WOD_ABI,
-        binanceW3WProvider.getSigner()
+      const dragonsc = new window.bscWeb3.eth.Contract(
+        WOD_ABI, wod_address,
       );
 
-      const remainingTime = await dragonsc.getTimeOfExpireBuff(coinbase);
+      const remainingTime = await dragonsc.methods.getTimeOfExpireBuff(coinbase).call().catch((e)=>{console.error(e); return 0});
       setcountdown(remainingTime);
-    }
+   
   };
 
   const handleRefreshCountdown700 = async () => {
@@ -1111,7 +1104,6 @@ const NewBundleCard = ({
     //   DYP_700V1_ABI,
     //   binanceW3WProvider.getSigner()
     // );
-
 
     // const remainingTimev1 = await dypv1.methods
     //   .getTimeOfExpireBuff(coinbase)
@@ -1177,10 +1169,10 @@ const NewBundleCard = ({
 
     //   const resultv2 =
     //     remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
-      setcountdown700(firstOfNextMonth.getTime());
-      handleSetAvailableTime(firstOfNextMonth.getTime());
-      // setcountdown700(result * 1000);
-      //
+    setcountdown700(firstOfNextMonth.getTime());
+    handleSetAvailableTime(firstOfNextMonth.getTime());
+    // setcountdown700(result * 1000);
+    //
     // } else {
     //   setcountdown700();
     //   handleSetAvailableTime();
@@ -1188,23 +1180,19 @@ const NewBundleCard = ({
   };
 
   const handleRefreshCountdown3500 = async () => {
-    if (window.WALLET_TYPE !== "binance" && coinbase) {
-      const remainingTime = await idyp3500_abi.methods
-        .getTimeOfExpireBuff(coinbase)
-        .call();
-      setcountdown3500(remainingTime);
-    } else if (window.WALLET_TYPE === "binance" && coinbase) {
-      const token_address = "0x54ad1fAaf2781E58Fcb58b7D02E25c8289a08b06";
-
-      const puzzleSc = new ethers.Contract(
-        token_address,
-        iDYP_3500_ABI,
-        binanceW3WProvider.getSigner()
-      );
-
-      const remainingTime = await puzzleSc.getTimeOfExpireBuff(coinbase);
-      setcountdown3500(remainingTime);
-    }
+    const token_address = "0x54ad1fAaf2781E58Fcb58b7D02E25c8289a08b06";
+    const puzzleSc = new window.bscWeb3.eth.Contract(
+      iDYP_3500_ABI,
+      token_address
+    );
+    const remainingTime = await puzzleSc.methods
+      .getTimeOfExpireBuff(coinbase)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+    setcountdown3500(remainingTime);
   };
 
   useEffect(() => {
