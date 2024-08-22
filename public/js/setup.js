@@ -2334,7 +2334,7 @@ window.isApprovedBuy = async (tokenType, amount) => {
 
 window.isApprovedNFT = async (token, type, address) => {
   if (type === "timepiece") {
-    window.web3 = new Web3(window.ethereum ?? window.config.infura_endpoint);
+    window.web3 = new Web3(window.config.infura_endpoint);
     let contract = new window.web3.eth.Contract(
       window.TIMEPIECE_ABI,
       window.config.nft_timepiece_address
@@ -2353,7 +2353,7 @@ window.isApprovedNFT = async (token, type, address) => {
       return true;
     } else return false;
   } else if (type === "land") {
-    window.web3 = new Web3(window.ethereum ?? window.config.infura_endpoint);
+    window.web3 = new Web3(window.config.infura_endpoint);
     let contract = new window.web3.eth.Contract(
       window.WOD_ABI,
       window.config.nft_land_address
@@ -2369,7 +2369,7 @@ window.isApprovedNFT = async (token, type, address) => {
       return true;
     } else return false;
   } else {
-    window.web3 = new Web3(window.ethereum ?? window.config.infura_endpoint);
+    window.web3 = new Web3(window.config.infura_endpoint);
     let contract = new window.web3.eth.Contract(
       window.CAWS_ABI,
       window.config.nft_caws_address
@@ -2701,8 +2701,9 @@ window.updateOffer = async (
 
 window.approveOffer = async (amount, priceType, tokenType) => {
   console.log(amount, priceType, tokenType);
+  const web3 = new Web3(window.ethereum);
   if (priceType === 1) {
-    const contract = new window.web3.eth.Contract(
+    const contract = new web3.eth.Contract(
       window.DYP_ABI,
       tokenType === "dypv2"
         ? window.config.token_dypius_new_address
@@ -2767,7 +2768,7 @@ window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
 };
 
 window.isApprovedOffer = async (amount, priceType, tokenType) => {
-  window.web3 = new Web3(window.ethereum ?? window.config.infura_endpoint);
+  window.web3 = new Web3(window.config.infura_endpoint);
   console.log(amount, priceType, tokenType);
   if (priceType === 1) {
     const contract = new window.web3.eth.Contract(
