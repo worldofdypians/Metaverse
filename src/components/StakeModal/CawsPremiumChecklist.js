@@ -20,6 +20,7 @@ const CawsPremiumChecklist = ({
   isConnected,
   width,
   binanceW3WProvider,
+  onUnstake,
 }) => {
   const [checkbtn, setCheckBtn] = useState(false);
   const [Unstakebtn, setUnstakeBtn] = useState(false);
@@ -117,6 +118,9 @@ const CawsPremiumChecklist = ({
         .then(() => {
           setcheckPassiveBtn(false);
           setloading(false);
+          setTimeout(() => {
+            onUnstake();
+          }, 2000);
         })
         .catch((err) => {
           console.log(err);
@@ -129,12 +133,14 @@ const CawsPremiumChecklist = ({
         binanceW3WProvider.getSigner()
       );
 
-      await stake_contract.methods
+      await stake_contract
         .withdraw([itemId])
-        .send()
         .then(() => {
           setcheckPassiveBtn(false);
           setloading(false);
+          setTimeout(() => {
+            onUnstake();
+          }, 2000);
         })
         .catch((err) => {
           console.log(err);

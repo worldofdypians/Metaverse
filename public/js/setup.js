@@ -2737,7 +2737,6 @@ window.approveOffer = async (amount, priceType, tokenType) => {
   }
 };
 
-
 window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
@@ -3259,15 +3258,17 @@ async function myNftListContract(address) {
   );
 
   let getBalanceOf = await nft_contract.methods.balanceOf(address).call();
+  console.log('getBalanceOfgetBalanceOfgetBalanceOf',getBalanceOf)
 
   let nftList = [];
+  if (getBalanceOf && getBalanceOf > 0) {
+    for (let i = 0; i < getBalanceOf; i++)
+      nftList.push(
+        await nft_contract.methods.tokenOfOwnerByIndex(address, i).call()
+      );
 
-  for (let i = 0; i < getBalanceOf; i++)
-    nftList.push(
-      await nft_contract.methods.tokenOfOwnerByIndex(address, i).call()
-    );
-
-  return nftList;
+    return nftList;
+  } else return [];
 }
 
 async function myNftListContractCCIP(address, nftAddress) {
@@ -3330,7 +3331,6 @@ async function myNftLandListContract(address) {
 }
 
 async function myNftLandListContractCCIP(address, nftAddress) {
-   
   let nft_contract = new window.bscWeb3.eth.Contract(
     window.LAND_CCIP_ABI,
     nftAddress
@@ -3349,7 +3349,6 @@ async function myNftLandListContractCCIP(address, nftAddress) {
 }
 
 async function myNftLandListContractCCIPAvax(address, nftAddress) {
-
   let nft_contract = new window.avaxWeb3.eth.Contract(
     window.LAND_CCIP_ABI,
     nftAddress

@@ -30,7 +30,7 @@ const CawsStakeModal = ({
   onClaimAll,
   handleConnect,
   myCawsstakes,
-  binanceW3WProvider,
+  binanceW3WProvider,onUnstake
 }) => {
   const [active, setActive] = useState(true);
   const [showToStake, setshowToStake] = useState(false);
@@ -229,7 +229,9 @@ const CawsStakeModal = ({
           setSelectedNftIds([]);
           setColor("#57AEAA");
           handleClearStatus();
-          onDepositComplete();
+          setTimeout(() => {
+            onDepositComplete();
+          }, 2000);
         })
         .catch((err) => {
           setloadingdeposit(false);
@@ -560,6 +562,7 @@ const CawsStakeModal = ({
                           coinbase={coinbase}
                           isConnected={isConnected}
                           binanceW3WProvider={binanceW3WProvider}
+                          onUnstake={onUnstake}
                         />
                       </>
                     );
@@ -618,6 +621,8 @@ const CawsStakeModal = ({
                           coinbase={coinbase}
                           isConnected={isConnected}
                           binanceW3WProvider={binanceW3WProvider}
+                          onUnstake={onUnstake}
+
                         />
                       </>
                     );

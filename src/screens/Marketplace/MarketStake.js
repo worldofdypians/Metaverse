@@ -180,6 +180,7 @@ const MarketStake = ({
       .depositsOf(address)
       .call()
       .then((result) => {
+        console.log('resultresultresultresult',result)
         for (let i = 0; i < result.length; i++)
           stakenft.push(parseInt(result[i]));
         return stakenft;
@@ -1059,7 +1060,7 @@ const MarketStake = ({
           nftItem={myNFTs}
           isConnected={isConnected}
           coinbase={coinbase}
-          onDepositComplete={() => refreshStakes()}
+          onDepositComplete={refreshStakes}
           onClaimAll={() => {
             claimRewardsCawsPremium();
           }}
@@ -1067,6 +1068,7 @@ const MarketStake = ({
           handleConnect={handleConnect}
           myCawsstakes={myCawsstakes}
           binanceW3WProvider={binanceW3WProvider}
+          onUnstake={refreshStakes}
         />
       )}
 
@@ -1095,7 +1097,7 @@ const MarketStake = ({
           nftItem={myCawsstakes}
           isConnected={isConnected}
           coinbase={coinbase}
-          onDepositComplete={() => refreshStakes()}
+          onDepositComplete={refreshStakes}
           ETHrewards={EthRewardsCawsPremium}
           finalUsd={ethToUSDCawsPremium}
           onClaimAll={() => {
@@ -1105,6 +1107,8 @@ const MarketStake = ({
           handleConnect={handleConnect}
           myCawsstakes={myCawsstakes}
           binanceW3WProvider={binanceW3WProvider}
+          onUnstake={refreshStakes}
+
         />
       )}
 
