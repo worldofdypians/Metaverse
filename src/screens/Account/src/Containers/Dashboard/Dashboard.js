@@ -688,6 +688,10 @@ function Dashboard({
             return obj.betapassId === "manta";
           });
 
+          const taikoEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "taiko";
+          });
+
           const multiversEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "multivers";
           });
@@ -754,6 +758,16 @@ function Dashboard({
             setImmutablePoints(pointsBnb);
             setImmutableEarnUsd(userEarnedusd);
             setImmutableEarnToken(userEarnedusd / immutablePrice);
+          }
+
+          if (taikoEvent && taikoEvent[0]) {
+            const userEarnedusd =
+              taikoEvent[0].reward.earn.total /
+              taikoEvent[0].reward.earn.multiplier;
+            const pointsTaiko = taikoEvent[0].reward.earn.totalPoints;
+            setTaikoPoints(pointsTaiko);
+            setTaikoEarnUsd(userEarnedusd);
+            setTaikoEarnToken(userEarnedusd / taikoPrice);
           }
 
           if (cookieEvent && cookieEvent[0]) {
