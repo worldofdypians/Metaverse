@@ -1474,6 +1474,10 @@
   border-radius: 20px;
 background: linear-gradient(90deg, #181B38 0%, #482193 168.67%);
 }
+.new-wod-stake-wrapper{
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, #6F2723 168.67%);
+}
 
 .new-caws-apr{
   position: absolute;
@@ -1483,6 +1487,24 @@ background: linear-gradient(90deg, #181B38 0%, #482193 168.67%);
   top: 0;
   margin: auto;
   background-image: url('./assets/cawsAprBg.svg');
+  width: 100px;
+  height: 100px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    position: relative;
+  }
+}
+
+.new-wod-apr{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  background-image: url('./assets/wodAprBg.svg');
   width: 100px;
   height: 100px;
   background-size: 100%;
@@ -1757,7 +1779,7 @@ line-height: normal;
   display: flex;
   align-items: center;
   color: #ffffff;
-  width: 75%;
+  width: 100%;
 
   @media screen and (max-width: 786px) {
     width: 100%;
@@ -4148,7 +4170,7 @@ font-size: 12px;
 font-style: normal;
 font-weight: 500;
 line-height: normal;
-width: 50%;
+width: 100%;
 @media screen and (max-width: 786px) {
   width: 100%;
 }
