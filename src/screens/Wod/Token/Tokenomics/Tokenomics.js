@@ -6,6 +6,8 @@ import check from "../../../../components/Header/assets/check.svg";
 import Clipboard from "react-clipboard.js";
 import copyIcon from "../../../../assets/wodAssets/copyIcon.svg";
 import tokenomicsChart from "../../../../assets/wodAssets/tokenomicsChart.svg";
+import bnb from '../../../../components/Header/assets/bnb.svg'
+import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 
 const Tokenomics = () => {
   const [tooltip, setTooltip] = useState(false);
@@ -17,6 +19,8 @@ const Tokenomics = () => {
       cliff: 6,
       vesting: 19,
       color: "#8303AE",
+      allocation: 8,
+      tokens: 80000000,
     },
     {
       category: "Private",
@@ -24,6 +28,8 @@ const Tokenomics = () => {
       cliff: 3,
       vesting: 16,
       color: "#D83EE0",
+      allocation: 8.5,
+      tokens: 85000000,
     },
     {
       category: "KOL",
@@ -31,6 +37,8 @@ const Tokenomics = () => {
       cliff: 1,
       vesting: 8,
       color: "#F3A8E2",
+      allocation: 1.5,
+      tokens: 15000000,
     },
     {
       category: "Public",
@@ -38,6 +46,8 @@ const Tokenomics = () => {
       cliff: 0,
       vesting: 6,
       color: "#34609E",
+      allocation: 2,
+      tokens: 20000000,
     },
     {
       category: "Team",
@@ -45,6 +55,8 @@ const Tokenomics = () => {
       cliff: 12,
       vesting: 36,
       color: "#B711AE",
+      allocation: 12,
+      tokens: 120000000,
     },
     {
       category: "Advisors",
@@ -52,6 +64,8 @@ const Tokenomics = () => {
       cliff: 9,
       vesting: 30,
       color: "#5690FF",
+      allocation: 5,
+      tokens: 50000000,
     },
     {
       category: "Community",
@@ -59,6 +73,8 @@ const Tokenomics = () => {
       cliff: 0,
       vesting: 48,
       color: "#8303AE",
+      allocation: 30,
+      tokens: 300000000,
     },
     {
       category: "Ecosystem",
@@ -66,6 +82,8 @@ const Tokenomics = () => {
       cliff: 1,
       vesting: 36,
       color: "#6A07C7",
+      allocation: 25,
+      tokens: 250000000,
     },
     {
       category: "Liquidity",
@@ -73,6 +91,8 @@ const Tokenomics = () => {
       cliff: 0,
       vesting: 3,
       color: "#5A8BFF",
+      allocation: 8,
+      tokens: 80000000,
     },
   ];
 
@@ -98,21 +118,28 @@ const Tokenomics = () => {
           <div className="row mx-0 align-items-end">
             <div className="col-12 col-lg-6">
               <div className="row mx-0">
-                <div className="col-3 d-flex justify-content-center">
+                <div className="col-2 d-flex justify-content-start">
                   <h6 className="tokenomics-table-title mb-0">CATEGORY</h6>
                 </div>
-                <div className="col-3 d-flex justify-content-center">
-                  <h6 className="tokenomics-table-title mb-0">UNLOCKED TGE</h6>
+                <div className="col-2 d-flex justify-content-center">
+                  <h6 className="tokenomics-table-title mb-0">ALLOCATION</h6>
                 </div>
-                <div className="col-3 d-flex justify-content-center">
+                <div className="col-2 d-flex justify-content-center">
+                  <h6 className="tokenomics-table-title mb-0">TOKENS</h6>
+                </div>
+              
+                <div className="col-2 d-flex justify-content-center">
                   <h6 className="tokenomics-table-title mb-0">
                     CLIFF (MONTHS)
                   </h6>
                 </div>
-                <div className="col-3 d-flex justify-content-center">
+                <div className="col-2 d-flex justify-content-center">
                   <h6 className="tokenomics-table-title mb-0">
                     VESTING (MONTHS)
                   </h6>
+                </div>
+                <div className="col-2 d-flex justify-content-center">
+                  <h6 className="tokenomics-table-title mb-0">UNLOCKED TGE</h6>
                 </div>
               </div>
               <div className="d-flex flex-column gap-1">
@@ -121,21 +148,28 @@ const Tokenomics = () => {
                     className="tokenomics-table-row mx-0 row d-flex align-items-center justify-content-center p-2"
                     key={index}
                   >
-                    <h6 className="tokenomics-table-head d-flex align-items-center gap-2 col-3 mb-0">
+                    <h6 className="tokenomics-table-head d-flex align-items-center gap-2 col-2 mb-0">
                       <div
                         className="tokenomics-dot"
                         style={{ background: item.color }}
                       ></div>
                       {item.category}
                     </h6>
-                    <h6 className="tokenomics-table-item col-3 mb-0">
-                      {item.tge}%
+                  
+                    <h6 className="tokenomics-table-item col-2 mb-0">
+                      {item.allocation}%
                     </h6>
-                    <h6 className="tokenomics-table-item col-3 mb-0">
+                    <h6 className="tokenomics-table-item col-2 mb-0">
+                      {getFormattedNumber(item.tokens, 0)}
+                    </h6>
+                    <h6 className="tokenomics-table-item col-2 mb-0">
                       {item.cliff}
                     </h6>
-                    <h6 className="tokenomics-table-item col-3 mb-0">
+                    <h6 className="tokenomics-table-item col-2 mb-0">
                       {item.vesting}
+                    </h6>
+                    <h6 className="tokenomics-table-item col-2 mb-0">
+                      {item.tge}%
                     </h6>
                   </div>
                 ))}
@@ -143,18 +177,20 @@ const Tokenomics = () => {
             </div>
             <div className="col-12 col-lg-6 mt-4 mt-lg-0">
               <div className="d-flex flex-column align-items-center align-items-lg-end gap-2">
+                <div className="d-flex align-items-center gap-2">
+                  <img src={bnb} alt="" />
                 <div className="d-flex flex-column">
                   <span className="wod-copy-span">WOD Contract Address</span>
                   <div className="d-flex align-items-center gap-2">
-                    <span className="wod-address">
-                      0xaC4989037EEb663e267514d9beC258A4108c7C9a
-                    </span>
+                    <a href="https://bscscan.com/token/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8" target="_blank" className="wod-address">
+                    0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8
+                    </a>
                     <Clipboard
                       component="div"
                       data-event="click"
                       data-tip="Copied To Clipboard!"
                       data-clipboard-text={
-                        "0xaC4989037EEb663e267514d9beC258A4108c7C9a"
+                        "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
                       }
                       className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
                     >
@@ -169,6 +205,7 @@ const Tokenomics = () => {
                       </span>
                     </Clipboard>
                   </div>
+                </div>
                 </div>
                 <div className="wod-chart-wrapper w-100 d-flex justify-content-center align-items-center ">
                   <img
