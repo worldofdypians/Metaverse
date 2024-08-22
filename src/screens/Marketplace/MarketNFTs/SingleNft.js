@@ -1952,6 +1952,10 @@ const SingleNft = ({
       setNftPrice(100000);
     } else if (Number(newprice) <= 100000 && priceType === 1) {
       setNftPrice(newprice);
+    } else if (Number(newprice) > 100000 && priceType === 2) {
+      setNftPrice(100000);
+    } else if (Number(newprice) <= 100000 && priceType === 2) {
+      setNftPrice(newprice);
     }
   };
 
@@ -1964,6 +1968,10 @@ const SingleNft = ({
     } else if (Number(newprice) > 100000 && nft.payment_priceType === 1) {
       setNftPrice(100000);
     } else if (Number(newprice) <= 100000 && nft.payment_priceType === 1) {
+      setNftPrice(newprice);
+    } else if (Number(newprice) > 100000 && nft.payment_priceType === 2) {
+      setNftPrice(100000);
+    } else if (Number(newprice) <= 100000 && nft.payment_priceType === 2) {
       setNftPrice(newprice);
     }
   };
@@ -2337,7 +2345,7 @@ const SingleNft = ({
           setIsApprove(isApproved);
         });
       } else if (!IsListed) {
-        // console.log(nft);
+        console.log('yessssss');
         isApprovedNFT(
           nftId,
           nftAddress === window.config.nft_caws_address
@@ -2360,7 +2368,7 @@ const SingleNft = ({
     }
     // }
   }, [isConnected, IsListed, isOwner, coinbase, nftCount]);
-
+ 
   useEffect(() => {
     if (isConnected === true && nft && nft.payment_priceType === 1) {
       isApprovedBuy(nft.payment_tokenAddress, nft.price).then((isApproved) => {

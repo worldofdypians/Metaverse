@@ -1797,9 +1797,11 @@ function App() {
   const checkCawsToUse = async () => {
     const testArray = [];
     const cawsArray = [...myCAWNFTs, ...myCAWstakes, ...myCawsWodStakesAll];
-    const nft_contract = await window.getContractCawsTimepieceNFT(
-      "CAWS_TIMEPIECE"
-    );
+
+    let nft_contract = new window.infuraWeb3.eth.Contract(
+          window.CAWS_TIMEPIECE_ABI,
+          window.config.caws_timepiece_address
+        );
 
     if (cawsArray.length > 0) {
       for (let i = 0; i < cawsArray.length; i++) {
