@@ -19,7 +19,7 @@ background-size: 100% 100%;
 
 .investors-grid{
 display: grid;
-grid-template-columns: repeat(4,1fr);
+grid-template-columns: repeat(6,1fr);
 gap: 20px;
 
 @media screen and (max-width: 786px) {

@@ -1,6 +1,7 @@
 import React from "react";
 import "./_investors.scss";
 import WodBuilders from "../../Home/WodBuilders/WodBuilders";
+import NewBuilders from "../../Home/WodBuilders/NewBuilders";
 
 const Investors = () => {
   const investors = [
@@ -89,7 +90,7 @@ const Investors = () => {
       </div>
       <div className="d-flex flex-column gap-3">
         <h6 className="mb-0 investors-title">Partners</h6>
-        <WodBuilders page={"wod"} />
+        <NewBuilders />
       </div>
     </div>
   );
