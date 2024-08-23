@@ -26,6 +26,15 @@ gap: 20px;
     grid-template-columns: repeat(1,1fr);
 }
 }
+.new-investors-grid{
+display: grid;
+grid-template-columns: repeat(6,1fr);
+gap: 20px;
+
+@media screen and (max-width: 786px) {
+    grid-template-columns: repeat(1,1fr);
+}
+}
 
 .investors-item{
     border-radius: 8px;
