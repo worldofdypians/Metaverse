@@ -71,7 +71,7 @@ const Investors = () => {
     <div className="container-fluid px-4 px-lg-5 py-4 investors-bg d-flex flex-column gap-5" id='backers&partners'>
       <div className="d-flex flex-column gap-3">
         <h6 className="mb-0 investors-title">Backers</h6>
-        <div className="investors-grid">
+        <div className="new-investors-grid">
           {investors.map((item, index) => (
             <a
               href={item.link}
