@@ -1072,32 +1072,10 @@ const SingleNft = ({
           console.error(error);
         }
 
-        await marketplace
+        const txResponse = await marketplace
           .listItem(nft_address, nftId, newPrice, [price_nft, price_address], {
             from: coinbase,
             ...transactionParameters,
-          })
-          .then((result) => {
-            setsellLoading(false);
-            setsellStatus("success");
-            setPurchaseStatus("NFT successfully listed!");
-            setPurchaseColor("#00FECF");
-            setShowToast(true);
-            handleRefreshList(
-              nftAddress === window.config.nft_caws_address
-                ? "caws"
-                : nftAddress === window.config.nft_timepiece_address
-                ? "timepiece"
-                : "land",
-              nftId
-            );
-            setIsListed(true);
-            handleRefreshListing();
-            setTimeout(() => {
-              setPurchaseStatus("");
-              setPurchaseColor("#00FECF");
-              setsellStatus("sell");
-            }, 3000);
           })
           .catch((e) => {
             setsellLoading(false);
@@ -1111,6 +1089,30 @@ const SingleNft = ({
             }, 3000);
             console.error(e);
           });
+
+          const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setsellLoading(false);
+          setsellStatus("success");
+          setPurchaseStatus("NFT successfully listed!");
+          setPurchaseColor("#00FECF");
+          setShowToast(true);
+          handleRefreshList(
+            nftAddress === window.config.nft_caws_address
+              ? "caws"
+              : nftAddress === window.config.nft_timepiece_address
+              ? "timepiece"
+              : "land",
+            nftId
+          );
+          setIsListed(true);
+          handleRefreshListing();
+          setTimeout(() => {
+            setPurchaseStatus("");
+            setPurchaseColor("#00FECF");
+            setsellStatus("sell");
+          }, 3000);
+        }
       }
     } else {
       console.log("approve selling");
@@ -1155,21 +1157,9 @@ const SingleNft = ({
             binanceW3WProvider.getSigner()
           );
 
-          await contract
+         const txResponse = await contract
             .setApprovalForAll(window.config.nft_marketplace_address, true, {
               from: coinbase,
-            })
-            .then((result) => {
-              setTimeout(() => {
-                setsellStatus("sell");
-                setPurchaseStatus("");
-                setPurchaseColor("#00FECF");
-              }, 3000);
-
-              setsellLoading(false);
-              setsellStatus("success");
-              setPurchaseStatus("Successfully approved! You can list your nft");
-              setPurchaseColor("#00FECF");
             })
             .catch((e) => {
               setTimeout(() => {
@@ -1184,29 +1174,32 @@ const SingleNft = ({
               setPurchaseColor("#FF6232");
               console.log(e);
             });
+
+            const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setTimeout(() => {
+            setsellStatus("sell");
+            setPurchaseStatus("");
+            setPurchaseColor("#00FECF");
+          }, 3000);
+
+          setsellLoading(false);
+          setsellStatus("success");
+          setPurchaseStatus("Successfully approved! You can list your nft");
+          setPurchaseColor("#00FECF");
+        }
+
         } else if (type === "land") {
-          console.log("land");
+          
           let contract = new ethers.Contract(
             window.config.nft_land_address,
             window.WOD_ABI,
             binanceW3WProvider.getSigner()
           );
 
-          await contract
+          const txResponse = await contract
             .setApprovalForAll(window.config.nft_marketplace_address, true, {
               from: coinbase,
-            })
-            .then((result) => {
-              setTimeout(() => {
-                setsellStatus("sell");
-                setPurchaseStatus("");
-                setPurchaseColor("#00FECF");
-              }, 3000);
-
-              setsellLoading(false);
-              setsellStatus("success");
-              setPurchaseStatus("Successfully approved! You can list your nft");
-              setPurchaseColor("#00FECF");
             })
             .catch((e) => {
               setTimeout(() => {
@@ -1221,27 +1214,30 @@ const SingleNft = ({
               setPurchaseColor("#FF6232");
               console.log(e);
             });
+
+            const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setTimeout(() => {
+            setsellStatus("sell");
+            setPurchaseStatus("");
+            setPurchaseColor("#00FECF");
+          }, 3000);
+
+          setsellLoading(false);
+          setsellStatus("success");
+          setPurchaseStatus("Successfully approved! You can list your nft");
+          setPurchaseColor("#00FECF");
+        }
+
         } else {
           let contract = new ethers.Contract(
             window.config.nft_caws_address,
             window.CAWS_ABI,
             binanceW3WProvider.getSigner()
           );
-          await contract
+          const txResponse = await contract
             .setApprovalForAll(window.config.nft_marketplace_address, true, {
               from: coinbase,
-            })
-            .then((result) => {
-              setTimeout(() => {
-                setsellStatus("sell");
-                setPurchaseStatus("");
-                setPurchaseColor("#00FECF");
-              }, 3000);
-
-              setsellLoading(false);
-              setsellStatus("success");
-              setPurchaseStatus("Successfully approved! You can list your nft");
-              setPurchaseColor("#00FECF");
             })
             .catch((e) => {
               setTimeout(() => {
@@ -1256,6 +1252,21 @@ const SingleNft = ({
               setPurchaseColor("#FF6232");
               console.log(e);
             });
+
+            const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setTimeout(() => {
+            setsellStatus("sell");
+            setPurchaseStatus("");
+            setPurchaseColor("#00FECF");
+          }, 3000);
+
+          setsellLoading(false);
+          setsellStatus("success");
+          setPurchaseStatus("Successfully approved! You can list your nft");
+          setPurchaseColor("#00FECF");
+        }
+
         }
       }
     }
@@ -1408,7 +1419,6 @@ const SingleNft = ({
             nft.payment_tokenAddress
           )
           .then((result) => {
-            console.log("buyNFT", result);
             setbuyLoading(false);
             setbuyStatus("success");
             setPurchaseStatus("Successfully purchased!");
@@ -1490,8 +1500,7 @@ const SingleNft = ({
         }
 
         if (nft.payment_priceType === 1) {
-          console.log("yes dyp", nft);
-          await marketplace
+         const txResponse = await marketplace
             .buyItem(
               nftAddress,
               nftId,
@@ -1502,11 +1511,21 @@ const SingleNft = ({
                 ...transactionParameters,
               }
             )
-            // .send({ from: coinbase, value: 0
-            //   , ...transactionParameters
-            // })
-            .then((result) => {
-              console.log("buyNFT", result);
+            .catch((e) => {
+              setbuyStatus("failed");
+              setbuyLoading(false);
+              setPurchaseStatus(e?.message);
+              setPurchaseColor("#FF6232");
+              setTimeout(() => {
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+                setbuyStatus("");
+              }, 3000);
+              console.error(e);
+            });
+
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
               setbuyLoading(false);
               setbuyStatus("success");
               setPurchaseStatus("Successfully purchased!");
@@ -1529,21 +1548,12 @@ const SingleNft = ({
                 handleRefreshListing();
                 getLatestBoughtNFT();
               }, 3000);
-            })
-            .catch((e) => {
-              setbuyStatus("failed");
-              setbuyLoading(false);
-              setPurchaseStatus(e?.message);
-              setPurchaseColor("#FF6232");
-              setTimeout(() => {
-                setPurchaseStatus("");
-                setPurchaseColor("#00FECF");
-                setbuyStatus("");
-              }, 3000);
-              console.error(e);
-            });
+            }
+    
+            
+
         } else if (nft.payment_priceType === 0) {
-          await marketplace
+         const txResponse = await marketplace
             .buyItem(
               nftAddress,
               nftId,
@@ -1554,13 +1564,21 @@ const SingleNft = ({
                 ...transactionParameters,
               }
             )
-            // .send({
-            //   from: coinbase,
-            //   value: nft.price,
-            //   ...transactionParameters,
-            // })
-            .then((result) => {
-              console.log("buyNFT", result);
+            .catch((e) => {
+              setbuyStatus("failed");
+              setbuyLoading(false);
+              setPurchaseStatus(e?.message);
+              setPurchaseColor("#FF6232");
+              setTimeout(() => {
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+                setbuyStatus("");
+              }, 3000);
+              console.error(e);
+            });
+
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
               setbuyLoading(false);
               setbuyStatus("success");
               setPurchaseStatus("Successfully purchased!");
@@ -1583,19 +1601,8 @@ const SingleNft = ({
                 handleRefreshListing();
                 getLatestBoughtNFT();
               }, 3000);
-            })
-            .catch((e) => {
-              setbuyStatus("failed");
-              setbuyLoading(false);
-              setPurchaseStatus(e?.message);
-              setPurchaseColor("#FF6232");
-              setTimeout(() => {
-                setPurchaseStatus("");
-                setPurchaseColor("#00FECF");
-                setbuyStatus("");
-              }, 3000);
-              console.error(e);
-            });
+            }
+
         }
       }
     } else {
@@ -1645,20 +1652,9 @@ const SingleNft = ({
         );
 
         if (tokenType === "dypv2") {
-          await contract
+         const txResponse = await contract
             .approve(window.config.nft_marketplace_address, nft.price, {
               from: coinbase,
-            })
-            .then(() => {
-              setTimeout(() => {
-                setbuyStatus("buy");
-                setPurchaseStatus("");
-                setPurchaseColor("#00FECF");
-              }, 3000);
-              setbuyStatus("success");
-              setbuyLoading(false);
-              setPurchaseStatus("Successfully approved");
-              setPurchaseColor("#00FECF");
             })
             .catch((e) => {
               console.error(e);
@@ -1672,21 +1668,24 @@ const SingleNft = ({
               setPurchaseStatus(e?.message);
               setPurchaseColor("#FF6232");
             });
+
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setTimeout(() => {
+                setbuyStatus("buy");
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+              }, 3000);
+              setbuyStatus("success");
+              setbuyLoading(false);
+              setPurchaseStatus("Successfully approved");
+              setPurchaseColor("#00FECF");
+            }
+
         } else if (tokenType === "dypv1") {
-          await contract_old
+          const txResponse = await contract_old
             .approve(window.config.nft_marketplace_address, nft.price, {
               from: coinbase,
-            })
-            .then(() => {
-              setTimeout(() => {
-                setbuyStatus("buy");
-                setPurchaseStatus("");
-                setPurchaseColor("#00FECF");
-              }, 3000);
-              setbuyStatus("success");
-              setbuyLoading(false);
-              setPurchaseStatus("Successfully approved");
-              setPurchaseColor("#00FECF");
             })
             .catch((e) => {
               console.error(e);
@@ -1700,6 +1699,19 @@ const SingleNft = ({
               setPurchaseStatus(e?.message);
               setPurchaseColor("#FF6232");
             });
+
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setTimeout(() => {
+                setbuyStatus("buy");
+                setPurchaseStatus("");
+                setPurchaseColor("#00FECF");
+              }, 3000);
+              setbuyStatus("success");
+              setbuyLoading(false);
+              setPurchaseStatus("Successfully approved");
+              setPurchaseColor("#00FECF");
+            }
         }
       }
     }
@@ -1788,23 +1800,10 @@ const SingleNft = ({
         console.error(error);
       }
 
-      await marketplace
+    const txResponse =  await marketplace
         .cancelListing(nftAddress, tokenId, [priceType, price_address], {
           from: coinbase,
           ...transactionParameters,
-        })
-        .then((result) => {
-          setTimeout(() => {
-            setcancelStatus("");
-            setPurchaseColor("#00FECF");
-            setPurchaseStatus("");
-          }, 3000);
-          // handleRefreshList(type, tokenId);
-          handleRefreshListing();
-          setcancelLoading(false);
-          setcancelStatus("success");
-          setPurchaseColor("#00FECF");
-          setPurchaseStatus("Nft successfully unlisted");
         })
         .catch((e) => {
           setTimeout(() => {
@@ -1818,6 +1817,20 @@ const SingleNft = ({
           setPurchaseColor("#FF6232");
           setPurchaseStatus(e?.message);
         });
+
+        const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setTimeout(() => {
+                setcancelStatus("");
+                setPurchaseColor("#00FECF");
+                setPurchaseStatus("");
+              }, 3000);
+              handleRefreshListing();
+              setcancelLoading(false);
+              setcancelStatus("success");
+              setPurchaseColor("#00FECF");
+              setPurchaseStatus("Nft successfully unlisted");
+            }
     }
   };
 
@@ -1897,31 +1910,8 @@ const SingleNft = ({
         binanceW3WProvider.getSigner()
       );
 
-      await marketplace
+      const txResponse = await marketplace
         .updateListing(nft_address, nft, newPrice, [price_nft, price_address])
-        .then((result) => {
-          console.log('done update', result)
-          setTimeout(() => {
-            setPurchaseColor("#00FECF");
-            setPurchaseStatus("");
-            setupdateStatus("");
-          }, 3000);
-          setShowToast(true);
-          setToastTitle("Successfully updated!");
-          handleRefreshList(
-            nftAddress === window.config.nft_caws_address
-              ? "caws"
-              : nftAddress === window.config.nft_timepiece_address
-              ? "timepiece"
-              : "land",
-            nftId
-          );
-          handleRefreshListing();
-          setPurchaseColor("#00FECF");
-          setPurchaseStatus("Price updated successfully.");
-          setupdateLoading(false);
-          setupdateStatus("success");
-        })
         .catch((e) => {
           setTimeout(() => {
             setPurchaseColor("#00FECF");
@@ -1934,6 +1924,30 @@ const SingleNft = ({
           setupdateLoading(false);
           setupdateStatus("failed");
         });
+
+        const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setTimeout(() => {
+                setPurchaseColor("#00FECF");
+                setPurchaseStatus("");
+                setupdateStatus("");
+              }, 3000);
+              setShowToast(true);
+              setToastTitle("Successfully updated!");
+              handleRefreshList(
+                nftAddress === window.config.nft_caws_address
+                  ? "caws"
+                  : nftAddress === window.config.nft_timepiece_address
+                  ? "timepiece"
+                  : "land",
+                nftId
+              );
+              handleRefreshListing();
+              setPurchaseColor("#00FECF");
+              setPurchaseStatus("Price updated successfully.");
+              setupdateLoading(false);
+              setupdateStatus("success");
+            }
     }
   }
 
@@ -2111,17 +2125,10 @@ const SingleNft = ({
         console.error(error);
       }
 
-      await marketplace
+     const txResponse = await marketplace
         .makeOffer(nftAddress, nftId, price, [priceType, price_address], {
           from: coinbase,
           ...transactionParameters,
-        })
-        .then(() => {
-          handleRefreshListing();
-          setOfferStatus("success");
-          setTimeout(() => {
-            setOfferStatus("initial");
-          }, 3000);
         })
         .catch((e) => {
           console.error(e);
@@ -2130,6 +2137,16 @@ const SingleNft = ({
             setOfferStatus("initial");
           }, 3000);
         });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          handleRefreshListing();
+          setOfferStatus("success");
+          setTimeout(() => {
+            setOfferStatus("initial");
+          }, 3000);
+        }
+
     }
   };
 
@@ -2190,17 +2207,10 @@ const SingleNft = ({
         console.error(error);
       }
 
-      await marketplace
+      const txResponse = await marketplace
         .cancelOffer(nftAddress, nftId, offerIndex, {
           from: coinbase,
           ...transactionParameters,
-        })
-        .then(() => {
-          handleRefreshListing();
-          setOfferdeleteStatus("successdelete");
-          setTimeout(() => {
-            setOfferdeleteStatus("initial");
-          }, 3000);
         })
         .catch((e) => {
           console.error(e);
@@ -2210,6 +2220,15 @@ const SingleNft = ({
             setOfferdeleteStatus("initial");
           }, 3000);
         });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          handleRefreshListing();
+          setOfferdeleteStatus("successdelete");
+          setTimeout(() => {
+            setOfferdeleteStatus("initial");
+          }, 3000);
+        }
     }
   };
 
@@ -2292,7 +2311,7 @@ const SingleNft = ({
         console.error(error);
       }
 
-      await marketplace
+    const txResponse =  await marketplace
         .updateOffer(
           nftAddress,
           nftId,
@@ -2301,13 +2320,6 @@ const SingleNft = ({
           [priceType, price_address],
           { from: coinbase, ...transactionParameters }
         )
-        .then(() => {
-          handleRefreshListing();
-          setOfferupdateStatus("successupdate");
-          setTimeout(() => {
-            setOfferupdateStatus("initial");
-          }, 3000);
-        })
         .catch((e) => {
           console.error(e);
           setOfferupdateStatus("failupdate");
@@ -2316,6 +2328,16 @@ const SingleNft = ({
             setOfferupdateStatus("initial");
           }, 3000);
         });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          handleRefreshListing();
+          setOfferupdateStatus("successupdate");
+          setTimeout(() => {
+            setOfferupdateStatus("initial");
+          }, 3000);
+        }
+
     }
   };
 
@@ -2378,19 +2400,10 @@ const SingleNft = ({
         console.error(error);
       }
 
-      await marketplace
+     const txResponse = await marketplace
         .acceptOffer(nftAddress, nftId, offerIndex, {
           from: coinbase,
           ...transactionParameters,
-        })
-        .then(() => {
-          setOfferacceptStatus("success");
-          setTimeout(() => {
-            setOfferacceptStatus("initial");
-            handleRefreshListing();
-            getLatest20BoughtNFTS(nftAddress, nftId);
-            getLatestBoughtNFT();
-          }, 3000);
         })
         .catch((e) => {
           console.error(e);
@@ -2399,6 +2412,18 @@ const SingleNft = ({
             setOfferacceptStatus("initial");
           }, 3000);
         });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setOfferacceptStatus("success");
+          setTimeout(() => {
+            setOfferacceptStatus("initial");
+            handleRefreshListing();
+            getLatest20BoughtNFTS(nftAddress, nftId);
+            getLatestBoughtNFT();
+          }, 3000);
+        }
+
     }
   };
 

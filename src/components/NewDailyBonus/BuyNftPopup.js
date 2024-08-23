@@ -301,7 +301,7 @@ const BuyNftPopup = ({
         }
 
         if (nft.payment_priceType === 1) {
-          await marketplace_binance
+         const txResponse = await marketplace_binance
             .buyItem(
               nft.nftAddress,
               nft.tokenId,
@@ -312,11 +312,6 @@ const BuyNftPopup = ({
                 ...transactionParameters,
               }
             )
-
-            .then((data) => {
-              console.log("buyTxHash", data.hash);
-              handleCollectReward(data.hash);
-            })
             .catch((e) => {
               setbuyStatus("failed");
               setbuyLoading(false);
@@ -329,8 +324,14 @@ const BuyNftPopup = ({
               }, 3000);
               console.error(e);
             });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            handleCollectReward(txResponse.hash);
+          }
+
         } else if (nft.payment_priceType === 0) {
-          await marketplace_binance
+         const txResponse =  await marketplace_binance
             .buyItem(
               nft.nftAddress,
               nft.tokenId,
@@ -341,10 +342,6 @@ const BuyNftPopup = ({
                 ...transactionParameters,
               }
             )
-            .then((data) => {
-              console.log("buyTxHash", data.hash);
-              handleCollectReward(data.hash);
-            })
             .catch((e) => {
               setbuyStatus("failed");
               setbuyLoading(false);
@@ -357,6 +354,12 @@ const BuyNftPopup = ({
               }, 3000);
               console.error(e);
             });
+
+            const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            handleCollectReward(txResponse.hash);
+          }
+
         }
       }
     } else {
@@ -405,20 +408,9 @@ const BuyNftPopup = ({
           );
   
           if (tokenType === "dypv2") {
-            await contract
+           const txResponse = await contract
               .approve(window.config.nft_marketplace_address, nft.price, {
                 from: coinbase,
-              })
-              .then(() => {
-                setTimeout(() => {
-                  setbuyStatus("buy");
-                  setPurchaseStatus("");
-                  setPurchaseColor("#00FECF");
-                }, 3000);
-                setbuyStatus("success");
-                setbuyLoading(false);
-                setPurchaseStatus("Successfully approved");
-                setPurchaseColor("#00FECF");
               })
               .catch((e) => {
                 console.error(e);
@@ -432,21 +424,24 @@ const BuyNftPopup = ({
                 setPurchaseStatus(e?.message);
                 setPurchaseColor("#FF6232");
               });
+
+            const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setTimeout(() => {
+              setbuyStatus("buy");
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+            }, 3000);
+            setbuyStatus("success");
+            setbuyLoading(false);
+            setPurchaseStatus("Successfully approved");
+            setPurchaseColor("#00FECF");
+          }
+
           } else if (tokenType === "dypv1") {
-            await contract_old
+           const txResponse = await contract_old
               .approve(window.config.nft_marketplace_address, nft.price, {
                 from: coinbase,
-              })
-              .then(() => {
-                setTimeout(() => {
-                  setbuyStatus("buy");
-                  setPurchaseStatus("");
-                  setPurchaseColor("#00FECF");
-                }, 3000);
-                setbuyStatus("success");
-                setbuyLoading(false);
-                setPurchaseStatus("Successfully approved");
-                setPurchaseColor("#00FECF");
               })
               .catch((e) => {
                 console.error(e);
@@ -460,6 +455,20 @@ const BuyNftPopup = ({
                 setPurchaseStatus(e?.message);
                 setPurchaseColor("#FF6232");
               });
+
+              const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setTimeout(() => {
+              setbuyStatus("buy");
+              setPurchaseStatus("");
+              setPurchaseColor("#00FECF");
+            }, 3000);
+            setbuyStatus("success");
+            setbuyLoading(false);
+            setPurchaseStatus("Successfully approved");
+            setPurchaseColor("#00FECF");
+          }
+
           }
         }
     }

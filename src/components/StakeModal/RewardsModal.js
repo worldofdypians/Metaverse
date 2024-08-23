@@ -150,20 +150,11 @@ const RewardsModal = ({
         binanceW3WProvider.getSigner()
       );
 
-      await nft_contract
+     const txResponse = await nft_contract
         .withdraw(
           getApprovedNfts(selectNftIds),
           getApprovedLandNfts(selectNftLandIds)
         )
-        .then(() => {
-          onDepositComplete();
-          setloadingWithdraw(false);
-          setStatus("*Unstaked successfully");
-          setColor("#57AEAA");
-          handleClearStatus();
-          setSelectedNftIds([]);
-          setSelectedNftLandIds([]);
-        })
         .catch((err) => {
           setloadingWithdraw(false);
           window.alertify.error(err?.message);
@@ -173,6 +164,18 @@ const RewardsModal = ({
           setSelectedNftLandIds([]);
           handleClearStatus();
         });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          onDepositComplete();
+          setloadingWithdraw(false);
+          setStatus("*Unstaked successfully");
+          setColor("#57AEAA");
+          handleClearStatus();
+          setSelectedNftIds([]);
+          setSelectedNftLandIds([]);
+        }
+
     }
   };
 
@@ -209,16 +212,8 @@ const RewardsModal = ({
         binanceW3WProvider.getSigner()
       );
 
-      await nft_contract
+     const txResponse =  await nft_contract
         .claimRewards(getApprovedNfts(selectNftIds))
-        .then(() => {
-          setloadingClaim(false);
-          setStatus("*Claimed successfully");
-          handleClearStatus();
-          setColor("#57AEAA");
-          setSelectedNftIds([]);
-          setSelectedNftLandIds([]);
-        })
         .catch((err) => {
           window.alertify.error(err?.message);
           setloadingClaim(false);
@@ -227,6 +222,17 @@ const RewardsModal = ({
           setSelectedNftIds([]);
           setSelectedNftLandIds([]);
         });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setloadingClaim(false);
+          setStatus("*Claimed successfully");
+          handleClearStatus();
+          setColor("#57AEAA");
+          setSelectedNftIds([]);
+          setSelectedNftLandIds([]);
+        }
+
     }
   };
 

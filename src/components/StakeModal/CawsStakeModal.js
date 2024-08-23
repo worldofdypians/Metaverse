@@ -156,20 +156,22 @@ const CawsStakeModal = ({
         window.CAWS_ABI,
         binanceW3WProvider.getSigner()
       );
-      await nft_contract
+      const txResponse = await nft_contract
         .setApprovalForAll(stake25, true)
-        .then(() => {
-          setActive(false);
-          setloading(false);
-          setColor("#52A8A4");
-          setStatus("*Now you can deposit");
-        })
         .catch((err) => {
           setloading(false);
           setColor("#F13227");
           setStatus("*An error occurred. Please try again");
           handleClearStatus();
         });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setActive(false);
+          setloading(false);
+          setColor("#52A8A4");
+          setStatus("*Now you can deposit");
+        }
     }
   };
 
@@ -213,7 +215,7 @@ const CawsStakeModal = ({
         window.CAWSPREMIUM_ABI,
         binanceW3WProvider.getSigner()
       );
-      await stake_contract
+      const txResponse =await stake_contract
         .deposit(
           checkbtn === true
             ? nftIds.length === selectNftIds.length
@@ -221,7 +223,16 @@ const CawsStakeModal = ({
               : selectNftIds
             : selectNftIds
         )
-        .then(() => {
+        .catch((err) => {
+          setloadingdeposit(false);
+          setColor("#F13227");
+          setStatus("*An error occurred. Please try again");
+          setSelectedNftIds([]);
+          handleClearStatus();
+        });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
           setloadingdeposit(false);
           setshowClaim(true);
           setActive(true);
@@ -232,14 +243,9 @@ const CawsStakeModal = ({
           setTimeout(() => {
             onDepositComplete();
           }, 2000);
-        })
-        .catch((err) => {
-          setloadingdeposit(false);
-          setColor("#F13227");
-          setStatus("*An error occurred. Please try again");
-          setSelectedNftIds([]);
-          handleClearStatus();
-        });
+        }
+
+
     }
   };
 
@@ -348,7 +354,7 @@ const CawsStakeModal = ({
         binanceW3WProvider.getSigner()
       );
 
-      await stake_contract
+     const txResponse =  await stake_contract
         .withdraw(
           checkUnstakebtn === true
             ? nftIds.length === selectNftIds.length
@@ -356,12 +362,6 @@ const CawsStakeModal = ({
               : selectNftIds
             : selectNftIds
         )
-        .then(() => {
-          setStatus("*Unstaked successfully");
-          setColor("#57AEAA");
-          handleClearStatus();
-          setSelectedNftIds([]);
-        })
         .catch((err) => {
           window.alertify.error(err?.message);
           setStatus("An error occurred, please try again");
@@ -369,6 +369,14 @@ const CawsStakeModal = ({
           setSelectedNftIds([]);
           handleClearStatus();
         });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setStatus("*Unstaked successfully");
+          setColor("#57AEAA");
+          handleClearStatus();
+          setSelectedNftIds([]);
+        }
     }
   };
 
@@ -411,7 +419,7 @@ const CawsStakeModal = ({
         binanceW3WProvider.getSigner()
       );
 
-      await staking_contract
+    const txResponse =  await staking_contract
         .claimRewards(
           checkUnstakebtn === true
             ? nftIds.length === selectNftIds.length
@@ -419,19 +427,21 @@ const CawsStakeModal = ({
               : selectNftIds
             : selectNftIds
         )
-        .then(() => {
-          setloadingClaim(false);
-          setStatus("*Claimed successfully");
-          handleClearStatus();
-          setColor("#57AEAA");
-          setSelectedNftIds([]);
-        })
         .catch((err) => {
           window.alertify.error(err?.message);
           setloadingClaim(false);
           setStatus("An error occurred, please try again");
           setSelectedNftIds([]);
         });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setloadingClaim(false);
+          setStatus("*Claimed successfully");
+          handleClearStatus();
+          setColor("#57AEAA");
+          setSelectedNftIds([]);
+        }
     }
   };
 

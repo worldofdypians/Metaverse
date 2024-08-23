@@ -417,11 +417,8 @@ const NewChestItem = ({
           binanceW3WProvider.getSigner()
         );
         if (rewardTypes === "premium" && isPremium) {
-          await daily_bonus_contract_opbnb_binance
+         const txResponse =  await daily_bonus_contract_opbnb_binance
             .openPremiumChest()
-            .then((data) => {
-              getUserRewardsByChest(email, data.hash, chestIndex - 1, "opbnb");
-            })
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
@@ -434,13 +431,14 @@ const NewChestItem = ({
 
               console.error(e);
             });
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "opbnb");
+          }
+
         } else if (rewardTypes === "standard") {
-          await daily_bonus_contract_opbnb_binance
+         const txResponse =  await daily_bonus_contract_opbnb_binance
             .openChest()
-            .then((data) => {
-              console.log("data", data);
-              getUserRewardsByChest(email, data.hash, chestIndex - 1, "opbnb");
-            })
             .catch((e) => {
               console.error(e);
               window.alertify.error(e?.message);
@@ -452,6 +450,12 @@ const NewChestItem = ({
               setLoading(false);
               setClaimingChest(false);
             });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "opbnb");
+          }
+
         }
       }
     } else if (chainId === 1116) {
@@ -698,15 +702,8 @@ const NewChestItem = ({
           //   });
           // console.log(transactionParameters);
 
-          await daily_bonus_contract_manta_binance
+          const txResponse = await daily_bonus_contract_manta_binance
             .openPremiumChest({...transactionParameters})
-            // .send({
-            //   from: address,
-            //   ,
-            // })
-            .then((data) => {
-              handleCheckIfTxExists(email, data.hash, chestIndex - 1, "manta");
-            })
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
@@ -718,6 +715,12 @@ const NewChestItem = ({
               setClaimingChest(false);
               console.error(e);
             });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "manta");
+          }
+
         } else if (rewardTypes === "standard") {
           const gasPrice = await binanceW3WProvider.getGasPrice();
           const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
@@ -740,15 +743,8 @@ const NewChestItem = ({
           }
 
 
-          await daily_bonus_contract_manta_binance
+          const txResponse = await daily_bonus_contract_manta_binance
             .openChest({...transactionParameters})
-            // .send({
-            //   from: address,
-            //   ...transactionParameters,
-            // })
-            .then((data) => {
-              handleCheckIfTxExists(email, data.hash, chestIndex - 1, "manta");
-            })
             .catch((e) => {
               console.error(e);
               window.alertify.error(e?.message);
@@ -760,6 +756,13 @@ const NewChestItem = ({
               setLoading(false);
               setClaimingChest(false);
             });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "manta");
+          }
+
+
         }
       }
     } else if (chainId === 167000) {
@@ -1002,7 +1005,7 @@ const NewChestItem = ({
             console.error(error);
           }
 
-          await daily_bonus_contract_bnb_binance
+         const txResponse =  await daily_bonus_contract_bnb_binance
             .openPremiumChest({...transactionParameters})
             // .send({
             //   from: address,
@@ -1017,15 +1020,6 @@ const NewChestItem = ({
             //     onLoadingChest(false);
             //   }, 3000);
             // })
-            .then((data) => {
-            
-              handleCheckIfTxExists(
-                email,
-                data.hash,
-                chestIndex - 1,
-                "bnb"
-              );
-            })
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
@@ -1038,6 +1032,12 @@ const NewChestItem = ({
 
               console.error(e);
             });
+
+            const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "bnb");
+          }
+
         } else if (rewardTypes === "standard") {
           const gasPrice = await binanceW3WProvider.getGasPrice();
           const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
@@ -1059,21 +1059,12 @@ const NewChestItem = ({
             console.error(error);
           }
 
-          await daily_bonus_contract_bnb_binance
+          const txResponse = await daily_bonus_contract_bnb_binance
             .openChest({...transactionParameters})
             // .send({
             //   from: address,
             //   ...transactionParameters,
             // })
-            .then((data) => {
-              // getUserRewardsByChest(email, data.hash, chestIndex - 1, "bnb");
-              handleCheckIfTxExists(
-                email,
-                data.hash,
-                chestIndex - 1,
-                "bnb"
-              );
-            })
             .catch((e) => {
               console.error(e);
               window.alertify.error(e?.message);
@@ -1085,6 +1076,11 @@ const NewChestItem = ({
               setLoading(false);
               setClaimingChest(false);
             });
+
+            const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "bnb");
+          }
         }
       }
     } else if (chainId === 1482601649) {

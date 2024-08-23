@@ -5753,27 +5753,12 @@ function Dashboard({
         );
 
         if (approveStatus === "initial") {
-          await nftContract_binance
+          const txResponse = await nftContract_binance
             .approve(
               window.config.subscription_newbnb2_address,
               nftPremium_tokenId,
               { from: coinbase }
             )
-
-            .then(() => {
-              setloadspinner(false);
-              setisApproved(true);
-              if (discountPercentage < 100) {
-                if (
-                  selectedSubscriptionToken.toLowerCase() ===
-                  "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
-                ) {
-                  setapproveStatus("deposit");
-                } else setapproveStatus("approveAmount");
-              } else {
-                setapproveStatus("deposit");
-              }
-            })
             .catch((e) => {
               setstatus(e?.message);
               setloadspinner(false);
@@ -5785,25 +5770,45 @@ function Dashboard({
                 setapproveStatus("initial");
               }, 5000);
             });
+
+            const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setloadspinner(false);
+          setisApproved(true);
+          if (discountPercentage < 100) {
+            if (
+              selectedSubscriptionToken.toLowerCase() ===
+              "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+            ) {
+              setapproveStatus("deposit");
+            } else setapproveStatus("approveAmount");
+          } else {
+            setapproveStatus("deposit");
+          }
+        }
+
         } else if (approveStatus === "approveAmount") {
-          await tokenContract_binance
+          const txResponse = await tokenContract_binance
             .approve(bnbsubscribeAddress, price, { from: coinbase })
-            .then(() => {
+            .catch((e) => {
+              setstatus(e?.message);
               setloadspinner(false);
+              setapproveStatus("fail");
+              window.alertify.error(e?.message);
+              setTimeout(() => {
+                setstatus("");
+                setloadspinner(false);
+                setapproveStatus("initial");
+              }, 5000);
+            });
+
+            const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setloadspinner(false);
               setisApproved(true);
               setapproveStatus("deposit");
-            })
-            .catch((e) => {
-              setstatus(e?.message);
-              setloadspinner(false);
-              setapproveStatus("fail");
-              window.alertify.error(e?.message);
-              setTimeout(() => {
-                setstatus("");
-                setloadspinner(false);
-                setapproveStatus("initial");
-              }, 5000);
-            });
+        }
+
         }
       }
     } else {
@@ -5864,7 +5869,7 @@ function Dashboard({
           binanceW3WProvider.getSigner()
         );
 
-        await tokenContract_binance
+        const txResponse = await tokenContract_binance
           .approve(
             chainId === 1
             ? ethsubscribeAddress
@@ -5892,11 +5897,6 @@ function Dashboard({
           price,
             { from: coinbase }
           )
-          .then(() => {
-            setloadspinner(false);
-            setisApproved(true);
-            setapproveStatus("deposit");
-          })
           .catch((e) => {
             setstatus(e?.message);
             setloadspinner(false);
@@ -5908,6 +5908,14 @@ function Dashboard({
               setapproveStatus("initial");
             }, 5000);
           });
+
+          const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        }
+
       }
     }
   };
@@ -6566,17 +6574,32 @@ function Dashboard({
         let subscriptionContract = await getContractBinance({
           key: "SUBSCRIPTION_NEWBNB2",
         });
-        await subscriptionContract
+       const txResponse =  await subscriptionContract
           .subscribeNFT(
             nftDiscountObject.nftAddress,
             nftPremium_tokenId,
             selectedSubscriptionToken,
             price,
             { from: coinbase }
-          )
-          .then(async (data) => {
+          ) 
+          .catch(() => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
             if (dailyBonusPopup === true) {
-              setPremiumTxHash(data.hash);
+              setPremiumTxHash(txResponse.hash);
               const selectedchain =
               chainId === 1
                 ? "eth"
@@ -6628,20 +6651,8 @@ function Dashboard({
               setgetPremiumPopup(false);
               onSubscribeSuccess();
             }, 2000);
-          })
-          .catch(() => {
-            setloadspinnerSub(false);
-            setapproveStatus("failsubscribe");
-            setstatus(e?.message);
-            window.alertify.error(e?.message);
+          }
 
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          });
       } else if (
         chainId === 56 &&
         selectedSubscriptionToken.toLowerCase() ===

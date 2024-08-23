@@ -93,15 +93,18 @@ const CawsPremiumChecklist = ({
         binanceW3WProvider.getSigner()
       );
 
-      await staking_contract
+     const txResponse =  await staking_contract
         .claimRewards([itemId])
-        .then(() => {
-          // setethToUSD(0);
-          setEthRewards(0);
-        })
+        
         .catch((err) => {
           window.alertify.error(err?.message);
         });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setEthRewards(0);
+        }
+
     }
   };
 
@@ -133,19 +136,19 @@ const CawsPremiumChecklist = ({
         binanceW3WProvider.getSigner()
       );
 
-      await stake_contract
+      const txResponse = await stake_contract
         .withdraw([itemId])
-        .then(() => {
-          setcheckPassiveBtn(false);
-          setloading(false);
-          setTimeout(() => {
-            onUnstake();
-          }, 2000);
-        })
         .catch((err) => {
           console.log(err);
           setloading(false);
         });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setcheckPassiveBtn(false);
+          setloading(false);
+            onUnstake();
+        }
     }
   };
 

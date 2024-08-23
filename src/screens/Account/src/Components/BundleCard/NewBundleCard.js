@@ -514,19 +514,22 @@ const NewBundleCard = ({
         binanceW3WProvider.getSigner()
       );
 
-      await dragonSc
+      const txResponse = await dragonSc
         .approve(wodAddress, "500000000000000000000000000", { from: coinbase })
-        .then(() => {
-          setStatus("Succesfully approved!");
-          setbundleState("deposit");
-          setStatusColor("#00FECF");
-          setSliderValue(2);
-        })
         .catch((e) => {
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setbundleState("fail");
         });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setStatus("Succesfully approved!");
+          setbundleState("deposit");
+          setStatusColor("#00FECF");
+          setSliderValue(2);
+        }
+
     }
   };
 
@@ -581,16 +584,9 @@ const NewBundleCard = ({
           binanceW3WProvider.getSigner()
         );
 
-        await dypSc
+        const txResponse = await dypSc
           .approve(dyp700Address, "500000000000000000000000000", {
             from: coinbase,
-          })
-          .then(() => {
-            setStatus700("Succesfully approved!");
-            setbundleState700("deposit");
-            setStatusColor700("#00FECF");
-            setSliderValue700(2);
-            setDepositState700("deposit");
           })
           .catch((e) => {
             console.error(e);
@@ -598,6 +594,16 @@ const NewBundleCard = ({
             setStatus700(e?.message);
             setbundleState700("fail");
           });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setStatus700("Succesfully approved!");
+            setbundleState700("deposit");
+            setStatusColor700("#00FECF");
+            setSliderValue700(2);
+            setDepositState700("deposit");
+          }
+
       } else if (priceType === 0) {
         const token_address = "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17";
 
@@ -607,16 +613,9 @@ const NewBundleCard = ({
           binanceW3WProvider.getSigner()
         );
 
-        await dypSc
+        const txResponse = await dypSc
           .approve(dyp700v1Address, "500000000000000000000000000", {
             from: coinbase,
-          })
-          .then(() => {
-            setStatus700("Succesfully approved!");
-            setbundleState700("deposit");
-            setStatusColor700("#00FECF");
-            setSliderValue700(2);
-            setDepositState700("deposit");
           })
           .catch((e) => {
             console.error(e);
@@ -624,6 +623,16 @@ const NewBundleCard = ({
             setStatus700(e?.message);
             setbundleState700("fail");
           });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setStatus700("Succesfully approved!");
+            setbundleState700("deposit");
+            setStatusColor700("#00FECF");
+            setSliderValue700(2);
+            setDepositState700("deposit");
+          }
+
       }
     }
   };
@@ -657,21 +666,24 @@ const NewBundleCard = ({
         binanceW3WProvider.getSigner()
       );
 
-      await idypSc
+     const txResponse = await idypSc
         .approve(idyp3500Address, "500000000000000000000000000", {
           from: coinbase,
-        })
-        .then(() => {
-          setStatus3500("Succesfully approved!");
-          setbundleState3500("deposit");
-          setStatusColor3500("#00FECF");
-          setSliderValue3500(2);
         })
         .catch((e) => {
           setStatusColor3500("#FE7A00");
           setStatus3500(e?.message);
           setbundleState3500("fail");
         });
+
+        const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setStatus3500("Succesfully approved!");
+            setbundleState3500("deposit");
+            setStatusColor3500("#00FECF");
+            setSliderValue3500(2);
+          }
+
     }
   };
 
@@ -749,9 +761,16 @@ const NewBundleCard = ({
       //   console.error(error);
       // }
 
-      await dragonsc
+     const txResponse = await dragonsc
         .deposit({ from: coinbase, ...transactionParameters })
-        .then(() => {
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setDepositState("failDeposit");
+          console.log(e);
+        });
+        const txReceipt = await txResponse.wait();
+          if (txReceipt) {
           setStatus("Bundle successfully purchased!");
           setDepositState("success");
           setStatusColor("#00FECF");
@@ -759,13 +778,8 @@ const NewBundleCard = ({
           getDypBalance();
           handleRefreshCountdown();
           checkApproval();
-        })
-        .catch((e) => {
-          setStatusColor("#FE7A00");
-          setStatus(e?.message);
-          setDepositState("failDeposit");
-          console.log(e);
-        });
+          }
+
       handleRefreshCountdown();
     }
   };
@@ -975,9 +989,16 @@ const NewBundleCard = ({
           DYP_700_ABI,
           binanceW3WProvider.getSigner()
         );
-        await goldenSc
+       const txResponse = await goldenSc
           .deposit({ from: coinbase })
-          .then(() => {
+          .catch((e) => {
+            setStatusColor700("#FE7A00");
+            setStatus700(e?.message);
+            setDepositState700("failDeposit");
+          });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
             setStatus700("Bundle successfully purchased!");
             setDepositState700("success");
             setStatusColor700("#00FECF");
@@ -986,12 +1007,8 @@ const NewBundleCard = ({
             increaseBundle();
             handleRefreshCountdown700();
             checkApproval700(priceType);
-          })
-          .catch((e) => {
-            setStatusColor700("#FE7A00");
-            setStatus700(e?.message);
-            setDepositState700("failDeposit");
-          });
+          }
+
       } else if (priceType === 0) {
         const dyp700_address = "0x6493e45F0D9B81355035f07d6FAf59309B2e2f89";
         const goldenSc = new ethers.Contract(
@@ -1000,9 +1017,16 @@ const NewBundleCard = ({
           binanceW3WProvider.getSigner()
         );
 
-        await goldenSc
+       const txResponse = await goldenSc
           .deposit({ from: coinbase })
-          .then(() => {
+          .catch((e) => {
+            setStatusColor700("#FE7A00");
+            setStatus700(e?.message);
+            setDepositState700("failDeposit");
+          });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
             setStatus700("Bundle successfully purchased!");
             setDepositState700("success");
             setStatusColor700("#00FECF");
@@ -1011,12 +1035,8 @@ const NewBundleCard = ({
             increaseBundle();
             handleRefreshCountdown700();
             checkApproval700(priceType);
-          })
-          .catch((e) => {
-            setStatusColor700("#FE7A00");
-            setStatus700(e?.message);
-            setDepositState700("failDeposit");
-          });
+          }
+
       }
     }
   };
@@ -1052,21 +1072,24 @@ const NewBundleCard = ({
         binanceW3WProvider.getSigner()
       );
 
-      await puzzleSc
+      const txResponse = await puzzleSc
         .deposit({ from: coinbase })
-        .then(() => {
-          setStatus3500("Bundle successfully purchased!");
-          setDepositState3500("success");
-          setStatusColor3500("#00FECF");
-          getiDypBalance();
-          handleRefreshCountdown3500();
-          checkApproval3500();
-        })
         .catch((e) => {
           setStatusColor3500("#FE7A00");
           setStatus3500(e?.message);
           setDepositState3500("failDeposit");
         });
+
+        const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setStatus3500("Bundle successfully purchased!");
+            setDepositState3500("success");
+            setStatusColor3500("#00FECF");
+            getiDypBalance();
+            handleRefreshCountdown3500();
+            checkApproval3500();
+          }
+
       handleRefreshCountdown3500();
     }
   };
