@@ -4200,8 +4200,8 @@ async function getContractTaikoNFT(key) {
   if (!window.cached_contracts[key]) {
     window.web3 = new Web3(window.ethereum);
     window.cached_contracts[key] = new window.web3.eth.Contract(
-      window.NFT_DYPIUS_PREMIUM_ABI,
-      window.config.nft_dypius_premium_address,
+      window.TAIKO_NFT_ABI,
+      window.config.nft_taiko_address,
       {
         from: await getCoinbase(),
       }
