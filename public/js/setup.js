@@ -1488,7 +1488,8 @@ window.config = {
   nft_cookie3_address: "0xC46EF880A2670a00392d3d3fDa9C65A81e8b505b",
 
   nft_dypius_premium_address: "0xd8B2C0D3400Ce23e62A94154d83172303C643685",
-  nft_dypius_premium_viction_address: "0x3216574908Fe5B4fF523c3E6d2edFfb7bBc066E0",
+  nft_dypius_premium_viction_address:
+    "0x3216574908Fe5B4fF523c3E6d2edFfb7bBc066E0",
 
   ccip_eth_caws_address: "0x2824Ac0Eab15744396E763A698b55F4Fe983a757",
   ccip_bnb_caws_address: "0x0C5E19B9147c39d196bC6c88D087A7A84f99563E",
@@ -13159,7 +13160,6 @@ window.SUBSCRIPTION_CORE_ABI = [
     type: "function",
   },
 ];
-
 
 window.SUBSCRIPTION_VICTION_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
@@ -51777,7 +51777,12 @@ async function subscribeNFT(nftAddress, tokenId, tokenAddress, tokenAmount) {
     .send({ from: await getCoinbase() });
 }
 
-async function subscribeNFTViction(nftAddress, tokenId, tokenAddress, tokenAmount) {
+async function subscribeNFTViction(
+  nftAddress,
+  tokenId,
+  tokenAddress,
+  tokenAmount
+) {
   let subscriptionContract = await getContract({ key: "SUBSCRIPTION_VICTION" });
   return await subscriptionContract.methods
     .subscribeNFT(nftAddress, tokenId, tokenAddress, tokenAmount)
@@ -51866,15 +51871,18 @@ async function getEstimatedTokenSubscriptionAmountSei(tokenAddress) {
     .call();
 }
 
-async function getEstimatedTokenSubscriptionAmountViction( tokenAddress,
-  discountPercentage) {
+async function getEstimatedTokenSubscriptionAmountViction(
+  tokenAddress,
+  discountPercentage
+) {
   const vicitonContract = new window.victionWeb3.eth.Contract(
     window.SUBSCRIPTION_VICTION_ABI,
     window.config.subscription_viction_address
   );
+ 
   return await vicitonContract.methods
     .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
-    .call();
+    .call().catch((e)=>{return 100000000})
 }
 
 async function getEstimatedTokenSubscriptionAmountManta(tokenAddress) {

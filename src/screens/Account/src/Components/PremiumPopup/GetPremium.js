@@ -1835,7 +1835,7 @@ const GetPremiumPopup = ({
             </div>
           </div>
           <div className="d-flex flex-column gap-3 subscribe-input-container"></div>
-          {discountPercentage < 100 || discountPercentageViction  < 100 && (
+          {(discountPercentage < 100 || discountPercentageViction  < 100) && (
             <div className="d-flex flex-column align-items-end gap-3">
               <span className="my-premium-balance-text mb-0">
                 My balance:{" "}
