@@ -98,7 +98,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 }));
 
 const ProfileCard = ({
-  email,
+  email,discountPercentageViction,
   discountPercentage,
   username,
   balance,
@@ -772,7 +772,7 @@ const ProfileCard = ({
                       placeItems: "flex-end",
                     }}
                   >
-                    {!isPremium && discountPercentage == 0 && (
+                    {!isPremium && (discountPercentage == 0 && discountPercentageViction === 0) && (
                       <div
                         className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
@@ -791,7 +791,7 @@ const ProfileCard = ({
                       </div>
                     )}
 
-                    {!isPremium && discountPercentage > 0 && (
+                    {!isPremium && (discountPercentage > 0 || discountPercentageViction>0) && (
                       <div
                         className={` wallet-wrapper-active-discount hoverdiscount position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
@@ -806,7 +806,7 @@ const ProfileCard = ({
                             />
                             <div className="d-flex flex-column position-absolute discountwrap-profile">
                               <span className="discount-price2-profile font-oxanium">
-                                {discountPercentage}%
+                                {discountPercentage > 0 ? discountPercentage : discountPercentageViction > 0 ? discountPercentageViction : discountPercentage}%
                               </span>
                               <span className="discount-price-bottom">
                                 Discount
@@ -821,9 +821,18 @@ const ProfileCard = ({
 
                           <div className="d-flex align-items-center gap-2">
                             <h6 className="discount-price-profile m-0">
-                              {discountPercentage == 100
-                                ? "FREE"
-                                : "$" + (100 - Number(discountPercentage))}
+                            {discountPercentage == 100 ||
+                                      discountPercentageViction == 100
+                                        ? "FREE"
+                                        : "$" +
+                                          (100 -
+                                            Number(
+                                              discountPercentage > 0
+                                                ? discountPercentage
+                                                : discountPercentageViction > 0
+                                                ? discountPercentageViction
+                                                : discountPercentage
+                                            ))}
                             </h6>
                             <h6 className="old-price-text-profile m-0">$100</h6>
                           </div>

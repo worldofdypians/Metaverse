@@ -115,10 +115,21 @@ const GetPremiumPopup = ({
   const [nftPremium_total, setnftPremium_total] = useState(0);
   const [nftDiscountObject, setnftDiscountObject] = useState([]);
 
+  const [discountPercentageViction, setdiscountPercentageViction] = useState(0);
+  const [nftPremium_tokenIdViction, setnftPremium_tokenIdViction] = useState(0);
+  const [nftPremium_totalViction, setnftPremium_totalViction] = useState(0);
+  const [nftDiscountObjectViction, setnftDiscountObjectViction] = useState([]);
+
   const calculatePremiumDiscount = async (wallet) => {
+    // if (chainId === 56) {
     const premiumSc = new window.bscWeb3.eth.Contract(
       window.SUBSCRIPTION_NEWBNB2_ABI,
       window.config.subscription_newbnb2_address
+    );
+
+    const premiumSc_viction = new window.victionWeb3.eth.Contract(
+      window.SUBSCRIPTION_VICTION_ABI,
+      window.config.subscription_viction_address
     );
 
     const nftContract = new window.bscWeb3.eth.Contract(
@@ -126,8 +137,21 @@ const GetPremiumPopup = ({
       window.config.nft_dypius_premium_address
     );
 
+    const nftContract_viction = new window.victionWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
+      window.config.nft_dypius_premium_viction_address
+    );
+
     if (wallet) {
       const result = await nftContract.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+      const result_viction = await nftContract_viction.methods
         .balanceOf(wallet)
         .call()
         .catch((e) => {
@@ -143,8 +167,23 @@ const GetPremiumPopup = ({
           return 0;
         });
 
+      const discount_viction = await premiumSc_viction.methods
+        .discountPercentageGlobal()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
       const nftObject = await premiumSc.methods
         .nftDiscounts(window.config.nft_dypius_premium_address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const nftObject_viction = await premiumSc_viction.methods
+        .nftDiscounts(window.config.nft_dypius_premium_viction_address)
         .call()
         .catch((e) => {
           console.error(e);
@@ -173,19 +212,49 @@ const GetPremiumPopup = ({
 
         setnftPremium_tokenId(tokenId);
         setnftPremium_total(parseInt(result));
+      } else if (result_viction && parseInt(result_viction) > 0) {
+        const tokenId = await nftContract_viction.methods
+          .tokenOfOwnerByIndex(wallet, 0)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+
+        if (nftObject_viction) {
+          setnftDiscountObjectViction(nftObject_viction);
+          if (discount_viction) {
+            setdiscountPercentageViction(
+              Math.max(
+                parseInt(discount_viction),
+                parseInt(nftObject_viction.discountPercentage)
+              )
+            );
+          }
+        }
+
+        setnftPremium_tokenIdViction(tokenId);
+        setnftPremium_totalViction(parseInt(result_viction));
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
-
+        setnftPremium_tokenIdViction(0);
+        setnftPremium_totalViction(0);
         if (discount) {
           setdiscountPercentage(parseInt(discount));
+        } else if (discount_viction) {
+          setdiscountPercentageViction(parseInt(discount_viction));
         }
       }
     } else {
       setnftPremium_tokenId(0);
       setnftPremium_total(0);
+      setnftPremium_tokenIdViction(0);
+      setnftPremium_totalViction(0);
     }
+    // } else setdiscountPercentage(0);
   };
+
 
   const handleUpdatePremiumUser = async (wallet) => {
     await axios
@@ -420,7 +489,10 @@ const GetPremiumPopup = ({
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 88
-        ? await window.getEstimatedTokenSubscriptionAmountViction(token)
+        ? await window.getEstimatedTokenSubscriptionAmountViction(
+            token,
+            discountPercentageViction
+          )
         : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
         : chainId === 167000
@@ -452,10 +524,10 @@ const GetPremiumPopup = ({
     const skalesubscribeAddress = window.config.subscription_skale_address;
     const seisubscribeAddress = window.config.subscription_sei_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
-    const coresubscribeAddress = window.config.subscription_core_address;
     const mantasubscribeAddress = window.config.subscription_manta_address;
     const taikosubscribeAddress = window.config.subscription_taiko_address;
 
+    const coresubscribeAddress = window.config.subscription_core_address;
 
     const web3 = new Web3(window.ethereum);
 
@@ -468,6 +540,11 @@ const GetPremiumPopup = ({
     let nftContract = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_ABI,
       window.config.nft_dypius_premium_address
+    );
+
+    let nftContract_viction = new window.web3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
+      window.config.nft_dypius_premium_viction_address
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
@@ -506,6 +583,56 @@ const GetPremiumPopup = ({
       } else if (approveStatus === "approveAmount") {
         await tokenContract.methods
           .approve(bnbsubscribeAddress, price)
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      }
+    }
+    if (chainId === 88 && nftPremium_totalViction > 0) {
+      if (approveStatus === "initial") {
+        await nftContract_viction.methods
+          .approve(
+            window.config.subscription_viction_address,
+            nftPremium_tokenIdViction
+          )
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentageViction < 100) {
+              setapproveStatus("approveAmount");
+            } else {
+              setapproveStatus("deposit");
+            }
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      } else if (approveStatus === "approveAmount") {
+        await tokenContract.methods
+          .approve(victionsubscribeAddress, price)
           .send({ from: coinbase })
           .then(() => {
             setloadspinner(false);
@@ -586,7 +713,6 @@ const GetPremiumPopup = ({
     const mantaWeb3 = new Web3(window.config.manta_endpoint);
     const taikoWeb3 = new Web3(window.config.taiko_endpoint);
 
-
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb2_address;
@@ -649,7 +775,6 @@ const GetPremiumPopup = ({
       window.ERC20_ABI,
       subscribeToken
     );
-
     const subscribeTokencontracttaiko = new taikoWeb3.eth.Contract(
       window.ERC20_ABI,
       subscribeToken
@@ -672,7 +797,10 @@ const GetPremiumPopup = ({
         : chainId === 1482601649
         ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
         : chainId === 88
-        ? await window.getEstimatedTokenSubscriptionAmountViction(token)
+        ? await window.getEstimatedTokenSubscriptionAmountViction(
+            token,
+            discountPercentageViction
+          )
         : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
         : chainId === 167000
@@ -689,20 +817,6 @@ const GetPremiumPopup = ({
       if (chainId === 1) {
         const result = await subscribeTokencontract.methods
           .allowance(coinbase, ethsubscribeAddress)
-          .call()
-          .then();
-        if (result != 0 && Number(result) >= Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(true);
-          setapproveStatus("deposit");
-        } else if (result == 0 || Number(result) < Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(false);
-          setapproveStatus("initial");
-        }
-      } else if (chainId === 88) {
-        const result = await subscribeTokencontractviction.methods
-          .allowance(coinbase, victionsubscribeAddress)
           .call()
           .then();
         if (result != 0 && Number(result) >= Number(tokenprice)) {
@@ -843,6 +957,69 @@ const GetPremiumPopup = ({
               setisApproved(false);
               setapproveStatus("initial");
             }
+          }
+        }
+      } else if (chainId === 88) {
+        if (nftPremium_totalViction > 0) {
+          let contract = new window.web3.eth.Contract(
+            window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
+            window.config.nft_dypius_premium_viction_address
+          );
+
+          let approved = await contract.methods
+            .getApproved(nftPremium_tokenIdViction)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          let approvedAll = await contract.methods
+            .isApprovedForAll(coinbase, victionsubscribeAddress)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+ 
+            if (
+              (approved.toLowerCase() === victionsubscribeAddress.toLowerCase()) ||
+              approvedAll === true
+            ) {
+           
+              if(discountPercentageViction === 100) {
+                setloadspinner(false);
+                setisApproved(true);
+                setapproveStatus("deposit");
+              }
+              // if (discountPercentageViction < 100) {
+              //   setloadspinner(false);
+              //   setisApproved(true);
+              //   setapproveStatus("approveAmount");
+              // } else {
+              //   setloadspinner(false);
+              //   setisApproved(false);
+              //   setapproveStatus("initial");
+              // }
+            } else {
+              setloadspinner(false);
+              setisApproved(false);
+              setapproveStatus("initial");
+            }
+        } else {
+          const result = await subscribeTokencontractviction.methods
+            .allowance(coinbase, victionsubscribeAddress)
+            .call()
+            .then();
+
+          if (result != 0 && Number(result) >= Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else if (result == 0 || Number(result) < Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
           }
         }
       } else if (chainId === 43114) {
@@ -1002,6 +1179,38 @@ const GetPremiumPopup = ({
             setstatus("");
           }, 5000);
         });
+    } else if (chainId === 88 && nftPremium_totalViction > 0) {
+      await window
+        .subscribeNFTViction(
+          nftDiscountObjectViction.nftAddress,
+          nftPremium_tokenIdViction,
+          selectedSubscriptionToken,
+          price
+        )
+        .then(async (data) => {
+          setloadspinnerSub(false);
+          onSuccessDeposit();
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        })
+        .catch(() => {
+          setloadspinnerSub(false);
+          setapproveStatus("failsubscribe");
+          setstatus(e?.message);
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        });
     } else {
       await subscriptionContract.methods
         .subscribe(selectedSubscriptionToken, price)
@@ -1017,8 +1226,6 @@ const GetPremiumPopup = ({
             setapproveStatus("initial");
             setstatus("");
           }, 5000);
-          // this.props.onSubscribe();
-          // window.location.href = "https://app.dypius.com/account";
         })
         .catch((e) => {
           setloadspinnerSub(false);
@@ -1144,7 +1351,7 @@ const GetPremiumPopup = ({
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
     }
-  }, [chainId, nftPremium_total, discountPercentage, nftPremium_tokenId]);
+  }, [chainId, nftPremium_total, nftPremium_totalViction, discountPercentage, discountPercentageViction, nftPremium_tokenId, nftPremium_tokenIdViction]);
 
   useEffect(() => {
     if (chainId === 1 && selectedSubscriptionToken !== "") {
@@ -1220,59 +1427,94 @@ const GetPremiumPopup = ({
             style={{ cursor: "pointer" }}
           />
         </div>
-        {discountPercentage > 0 || nftPremium_total > 0 ? (
-          <div className="premium-discount-bg mt-3 p-4 position-relative">
-            <div className="premiumRedTag position-absolute">
-              <div className="position-relative d-flex flex-column">
-                <img src={premiumRedTag} alt="" />
-                <div className="d-flex flex-column position-absolute discountwrap">
-                  <span className="discount-price2 font-oxanium">
-                    {discountPercentage}%
-                  </span>
-                  <span className="discount-price-bottom">Discount</span>
-                </div>
-              </div>
-            </div>
-            <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
-              <div className="d-flex flex-column">
-                <h6 className="lifetime-plan-text m-0">Lifetime plan</h6>
-                {nftPremium_total > 0 && (
-                  <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
-                    Valid until:{" "}
-                    {new Date(nftDiscountObject.expiration * 1000)
-                      .toDateString()
-                      .slice(
-                        3,
-                        new Date(
-                          nftDiscountObject.expiration * 1000
-                        ).toDateString().length
-                      )}
-                  </h6>
-                )}
-              </div>
-              <div className="d-flex align-items-end gap-2">
-                <h6 className="discount-price">
-                  {discountPercentage == 100
-                    ? "FREE"
-                    : "$" + (100 - Number(discountPercentage))}
-                </h6>
-                <h6 className="old-price-text">$100</h6>
-              </div>
-              {nftPremium_total > 0 && (
-                <h6 className="token-amount-placeholder m-0 premium-custom-text">
-                  Valid until:{" "}
-                  {new Date(nftDiscountObject.expiration * 1000)
-                    .toDateString()
-                    .slice(
-                      3,
-                      new Date(
-                        nftDiscountObject.expiration * 1000
-                      ).toDateString().length
-                    )}
-                </h6>
-              )}
-            </div>
-          </div>
+        {(discountPercentage > 0 || discountPercentageViction > 0) || (nftPremium_total > 0 || nftPremium_totalViction > 0) ? (
+           <div className="premium-discount-bg mt-3 p-4 position-relative">
+           <div className="premiumRedTag position-absolute">
+             <div className="position-relative d-flex flex-column">
+               <img src={premiumRedTag} alt="" />
+               <div className="d-flex flex-column position-absolute discountwrap">
+                 <span className="discount-price2 font-oxanium">
+                   {discountPercentage}%
+                 </span>
+                 <span className="discount-price-bottom">
+                   Discount
+                 </span>
+               </div>
+             </div>
+           </div>
+           <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
+             <div className="d-flex flex-column">
+               <h6 className="lifetime-plan-text m-0">
+                 Lifetime plan
+               </h6>
+               {nftPremium_total > 0 ||
+                 (nftPremium_totalViction > 0 && (
+                   <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                     Valid until:{" "}
+                     {new Date(
+                       nftPremium_total > 0
+                         ? nftDiscountObject.expiration *
+                           1000
+                         : nftDiscountObjectViction.expiration *
+                           1000
+                     )
+                       .toDateString()
+                       .slice(
+                         3,
+                         new Date(
+                           nftPremium_total > 0
+                             ? nftDiscountObject.expiration *
+                               1000
+                             : nftDiscountObjectViction.expiration *
+                               1000
+                         ).toDateString().length
+                       )}
+                   </h6>
+                 ))}
+             </div>
+             <div className="d-flex align-items-end gap-2">
+               <h6 className="discount-price">
+                 {discountPercentage == 100 ||
+                 discountPercentageViction == 100
+                   ? "FREE"
+                   : "$" +
+                     (100 -
+                       Number(
+                         discountPercentage > 0
+                           ? discountPercentage
+                           : discountPercentageViction > 0
+                           ? discountPercentageViction
+                           : discountPercentage
+                       ))}
+               </h6>
+               <h6 className="old-price-text">$100</h6>
+             </div>
+             {nftPremium_total > 0 ||
+               (nftPremium_totalViction > 0 && (
+                 <h6 className="token-amount-placeholder m-0 premium-custom-text">
+                   Valid until:{" "}
+                   {new Date(
+                     nftPremium_total > 0
+                       ? nftDiscountObject.expiration *
+                         1000
+                       : nftDiscountObjectViction.expiration *
+                         1000
+                   )
+                     .toDateString()
+                     .slice(
+                       3,
+                       new Date(
+                         nftPremium_total > 0
+                           ? nftDiscountObject.expiration *
+                             1000
+                           : nftDiscountObjectViction.expiration *
+                             1000
+                       ).toDateString().length
+                     )}
+                 </h6>
+               ))}
+           </div>
+         </div>
         ) : (
           <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
             <div className="d-flex flex-column gap-2">
@@ -1593,7 +1835,7 @@ const GetPremiumPopup = ({
             </div>
           </div>
           <div className="d-flex flex-column gap-3 subscribe-input-container"></div>
-          {discountPercentage < 100 && (
+          {discountPercentage < 100 || discountPercentageViction  < 100 && (
             <div className="d-flex flex-column align-items-end gap-3">
               <span className="my-premium-balance-text mb-0">
                 My balance:{" "}
@@ -1836,7 +2078,7 @@ const GetPremiumPopup = ({
                 </div>
                 <span className="subscription-price-usd mb-0">
                   {" "}
-                  ${100 - Number(discountPercentage)}
+                  ${100 - Number(discountPercentage!= 0  ? discountPercentage : discountPercentageViction != 0 ? discountPercentageViction : discountPercentage) }
                 </span>
               </div>
             </div>
@@ -2002,6 +2244,118 @@ const GetPremiumPopup = ({
               }}
             >
               Switch to BNB Chain
+            </button>{" "}
+          </div>
+        ) : discountPercentageViction > 0 && chainId === 88 ? (
+          <div className="d-flex align-items-center gap-3 justify-content-center">
+            <div
+              className={` ${
+                approveStatus === "fail" || !coinbase || isApproved
+                  ? "linear-border-disabled"
+                  : "linear-border"
+              }`}
+            >
+              <button
+                className={`btn ${
+                  approveStatus === "fail" || !coinbase || isApproved
+                    ? "outline-btn-disabled"
+                    : "filled-btn"
+                } px-4`}
+                disabled={
+                  approveStatus === "fail" || !coinbase || isApproved
+                    ? true
+                    : false
+                }
+                onClick={(e) => handleApprove(e)}
+              >
+                {loadspinner === false &&
+                (approveStatus === "initial" ||
+                  approveStatus === "deposit" ||
+                  approveStatus === "approveAmount" ||
+                  approveStatus === "failsubscribe" ||
+                  approveStatus === "successsubscribe") ? (
+                  <>
+                    Approve{" "}
+                    {approveStatus === "approveAmount"
+                      ? "token"
+                      : nftPremium_totalViction > 0
+                      ? "NFT"
+                      : ""}
+                  </>
+                ) : loadspinner === false && approveStatus === "fail" ? (
+                  "Failed"
+                ) : (
+                  <div className="d-flex align-items-center gap-2">
+                    Processing
+                    <div
+                      className="spinner-border "
+                      role="status"
+                      style={{
+                        height: "1rem",
+                        width: "1rem",
+                      }}
+                    ></div>{" "}
+                  </div>
+                )}
+              </button>
+            </div>
+            <div
+              className={` ${
+                isApproved === false
+                  ? "linear-border-disabled"
+                  : "linear-border"
+              }`}
+            >
+              <button
+                className={`btn ${
+                  isApproved === false ? "outline-btn-disabled" : "filled-btn"
+                } px-4`}
+                onClick={() => handleSubscribe()}
+              >
+                {loadspinnerSub === false &&
+                (approveStatus === "initial" ||
+                  approveStatus === "fail" ||
+                  approveStatus === "deposit") ? (
+                  <>
+                    {discountPercentageViction > 0 || nftPremium_totalViction > 0
+                      ? "Redeem"
+                      : "Buy"}
+                  </>
+                ) : loadspinnerSub === false &&
+                  approveStatus === "successsubscribe" ? (
+                  "Success"
+                ) : loadspinnerSub === false &&
+                  approveStatus === "failsubscribe" ? (
+                  "Failed"
+                ) : (
+                  <div
+                    className="spinner-border "
+                    role="status"
+                    style={{
+                      height: "1rem",
+                      width: "1rem",
+                    }}
+                  ></div>
+                )}
+              </button>
+            </div>
+          </div>
+        ) : discountPercentageViction > 0 && chainId !== 88 ? (
+          <div
+            className={`d-flex align-items-center justify-content-center mb-2`}
+          >
+            <button
+              className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+              onClick={() => {
+                handleVictionPool();
+              }}
+              style={{
+                width: "fit-content",
+                whiteSpace: "nowrap",
+                fontSize: 14,
+              }}
+            >
+              Switch to Viction
             </button>{" "}
           </div>
         ) : (
