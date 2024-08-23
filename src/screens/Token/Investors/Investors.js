@@ -5,6 +5,26 @@ import WodBuilders from "../../Home/WodBuilders/WodBuilders";
 const Investors = () => {
   const investors = [
     {
+      title: "BNB Chain",
+      logo: "bnbBackers.svg",
+      link: "https://www.bnbchain.org/en",
+    },
+    {
+      title: "CORE",
+      logo: "coreBackers.svg",
+      link: "https://coredao.org/",
+    },
+    {
+      title: "SKALE",
+      logo: "skaleBackers.svg",
+      link: "https://skale.space/",
+    },
+    {
+      title: "Manta Network",
+      logo: "mantaBackers.svg",
+      link: "https://manta.network/",
+    },
+    {
       title: "Castrum Capital",
       logo: "castrum.png",
       link: "https://castrum.capital/",
@@ -23,6 +43,26 @@ const Investors = () => {
       title: "Crypto Adventure",
       logo: "cryptoAdventure.svg",
       link: "https://cryptoadventure.com/",
+    },
+    {
+      title: "Conflux",
+      logo: "confluxBackers.svg",
+      link: "https://confluxnetwork.org/",
+    },
+    {
+      title: "Taiko",
+      logo: "taikoBackers.svg",
+      link: "https://taiko.xyz/",
+    },
+    {
+      title: "VICTION",
+      logo: "victionBackers.svg",
+      link: "https://www.viction.xyz/",
+    },
+    {
+      title: "Cookie3",
+      logo: "cookie3Backers.svg",
+      link: "https://www.cookie3.com/",
     },
   ];
 
