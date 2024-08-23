@@ -4200,8 +4200,8 @@ async function getContractTaikoNFT(key) {
   if (!window.cached_contracts[key]) {
     window.web3 = new Web3(window.ethereum);
     window.cached_contracts[key] = new window.web3.eth.Contract(
-      window.TAIKO_NFT_ABI,
-      window.config.nft_taiko_address,
+      window.NFT_DYPIUS_PREMIUM_ABI,
+      window.config.nft_dypius_premium_address,
       {
         from: await getCoinbase(),
       }
@@ -51772,6 +51772,13 @@ async function subscribe(tokenAddress, amount) {
 
 async function subscribeNFT(nftAddress, tokenId, tokenAddress, tokenAmount) {
   let subscriptionContract = await getContract({ key: "SUBSCRIPTION_NEWBNB2" });
+  return await subscriptionContract.methods
+    .subscribeNFT(nftAddress, tokenId, tokenAddress, tokenAmount)
+    .send({ from: await getCoinbase() });
+}
+
+async function subscribeNFTViction(nftAddress, tokenId, tokenAddress, tokenAmount) {
+  let subscriptionContract = await getContract({ key: "SUBSCRIPTION_VICTION" });
   return await subscriptionContract.methods
     .subscribeNFT(nftAddress, tokenId, tokenAddress, tokenAmount)
     .send({ from: await getCoinbase() });

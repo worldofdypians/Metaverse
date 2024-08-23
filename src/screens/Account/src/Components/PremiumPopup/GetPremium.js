@@ -981,25 +981,31 @@ const GetPremiumPopup = ({
               console.error(e);
               return false;
             });
-
-          if (
-            approved.toLowerCase() === victionsubscribeAddress.toLowerCase() ||
-            approvedAll
-          ) {
-            if (discountPercentage < 100) {
-              setloadspinner(false);
-              setisApproved(true);
-              setapproveStatus("approveAmount");
+ 
+            if (
+              (approved.toLowerCase() === victionsubscribeAddress.toLowerCase()) ||
+              approvedAll === true
+            ) {
+           
+              if(discountPercentageViction === 100) {
+                setloadspinner(false);
+                setisApproved(true);
+                setapproveStatus("deposit");
+              }
+              // if (discountPercentageViction < 100) {
+              //   setloadspinner(false);
+              //   setisApproved(true);
+              //   setapproveStatus("approveAmount");
+              // } else {
+              //   setloadspinner(false);
+              //   setisApproved(false);
+              //   setapproveStatus("initial");
+              // }
             } else {
               setloadspinner(false);
               setisApproved(false);
               setapproveStatus("initial");
             }
-          } else {
-            setloadspinner(false);
-            setisApproved(false);
-            setapproveStatus("initial");
-          }
         } else {
           const result = await subscribeTokencontractviction.methods
             .allowance(coinbase, victionsubscribeAddress)
@@ -1175,7 +1181,7 @@ const GetPremiumPopup = ({
         });
     } else if (chainId === 88 && nftPremium_totalViction > 0) {
       await window
-        .subscribeNFT(
+        .subscribeNFTViction(
           nftDiscountObjectViction.nftAddress,
           nftPremium_tokenIdViction,
           selectedSubscriptionToken,
@@ -1345,7 +1351,7 @@ const GetPremiumPopup = ({
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
     }
-  }, [chainId, nftPremium_total, discountPercentage, nftPremium_tokenId]);
+  }, [chainId, nftPremium_total, nftPremium_totalViction, discountPercentage, discountPercentageViction, nftPremium_tokenId, nftPremium_tokenIdViction]);
 
   useEffect(() => {
     if (chainId === 1 && selectedSubscriptionToken !== "") {
@@ -1421,7 +1427,7 @@ const GetPremiumPopup = ({
             style={{ cursor: "pointer" }}
           />
         </div>
-        {discountPercentage > 0 || nftPremium_total > 0 ? (
+        {(discountPercentage > 0 || discountPercentageViction > 0) || (nftPremium_total > 0 || nftPremium_totalViction > 0) ? (
            <div className="premium-discount-bg mt-3 p-4 position-relative">
            <div className="premiumRedTag position-absolute">
              <div className="position-relative d-flex flex-column">

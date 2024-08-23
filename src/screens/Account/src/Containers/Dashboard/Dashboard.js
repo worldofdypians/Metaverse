@@ -4542,7 +4542,7 @@ function Dashboard({
           console.error(e);
           return 0;
         });
-
+console.log('result_victionresult_viction',result_viction)
       const discount = await premiumSc.methods
         .discountPercentageGlobal()
         .call()
@@ -6136,20 +6136,26 @@ function Dashboard({
               console.error(e);
               return false;
             });
-
+           
           if (
-            approved.toLowerCase() === victionsubscribeAddress.toLowerCase() ||
-            approvedAll
+            (approved.toLowerCase() === victionsubscribeAddress.toLowerCase()) ||
+            approvedAll === true
           ) {
-            if (discountPercentage < 100) {
+         
+            if(discountPercentageViction === 100) {
               setloadspinner(false);
               setisApproved(true);
-              setapproveStatus("approveAmount");
-            } else {
-              setloadspinner(false);
-              setisApproved(false);
-              setapproveStatus("initial");
+              setapproveStatus("deposit");
             }
+            // if (discountPercentageViction < 100) {
+            //   setloadspinner(false);
+            //   setisApproved(true);
+            //   setapproveStatus("approveAmount");
+            // } else {
+            //   setloadspinner(false);
+            //   setisApproved(false);
+            //   setapproveStatus("initial");
+            // }
           } else {
             setloadspinner(false);
             setisApproved(false);
@@ -6419,7 +6425,7 @@ function Dashboard({
         });
     } else if (chainId === 88 && nftPremium_totalViction > 0) {
       await window
-        .subscribeNFT(
+        .subscribeNFTViction(
           nftDiscountObjectViction.nftAddress,
           nftPremium_tokenIdViction,
           selectedSubscriptionToken,
@@ -6971,13 +6977,7 @@ function Dashboard({
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
     }
-  }, [
-    chainId,
-    getPremiumPopup,
-    discountPercentage,
-    nftPremium_total,
-    nftPremium_tokenId,
-  ]);
+  }, [chainId, nftPremium_total, nftPremium_totalViction, discountPercentage, discountPercentageViction, nftPremium_tokenId, nftPremium_tokenIdViction]);
 
   useEffect(() => {
     if (chainId === 1 && selectedSubscriptionToken !== "") {
@@ -7275,6 +7275,8 @@ function Dashboard({
                     >
                       <ProfileCard
                         discountPercentage={discountPercentage}
+                        discountPercentageViction={discountPercentageViction}
+
                         getRankData={getRankData}
                         setPortfolio={() => setPortfolio(!portfolio)}
                         rankData={rankData}
@@ -8146,7 +8148,7 @@ function Dashboard({
                                 style={{ cursor: "pointer" }}
                               />
                             </div>
-                            {discountPercentage > 0 || nftPremium_total > 0 ? (
+                            {(discountPercentage > 0 || discountPercentageViction > 0) || (nftPremium_total > 0 || nftPremium_totalViction > 0) ? (
                               <div className="premium-discount-bg mt-3 p-4 position-relative">
                                 <div className="premiumRedTag position-absolute">
                                   <div className="position-relative d-flex flex-column">
@@ -8208,8 +8210,7 @@ function Dashboard({
                                     </h6>
                                     <h6 className="old-price-text">$100</h6>
                                   </div>
-                                  {nftPremium_total > 0 ||
-                                    (nftPremium_totalViction > 0 && (
+                                  { (nftPremium_total > 0 || nftPremium_totalViction > 0) && (
                                       <h6 className="token-amount-placeholder m-0 premium-custom-text">
                                         Valid until:{" "}
                                         {new Date(
@@ -8231,7 +8232,7 @@ function Dashboard({
                                             ).toDateString().length
                                           )}
                                       </h6>
-                                    ))}
+                                    )}
                                 </div>
                               </div>
                             ) : (

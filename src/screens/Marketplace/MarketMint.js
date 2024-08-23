@@ -2772,42 +2772,20 @@ setimmutableNftsSold(immutableresult);
 {selectedMint.id === "taiko" && (
                                 <div
                                   className={
-                                    (isConnected === true && chainId !== 167000) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    mintloading === "error" ||
-                                    totalTaikoNft > 0
-                                      ? "linear-border-disabled"
-                                      : "linear-border"
+                                    "linear-border"
                                   }
                                 >
                                   <button
-                                    className={`btn ${
-                                      mintloading === "error"
-                                        ? "filled-error-btn"
-                                        : (isConnected === true &&
-                                            chainId !== 167000) ||
-                                          (status !== "Connect your wallet." &&
-                                            status !== "") ||
-                                            totalTaikoNft > 0
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    }  px-4 w-100`}
+                                    className={`btn 
+                                  filled-btn
+                                      px-4 w-100`}
                                     onClick={() => {
-                                      isConnected === true && chainId === 167000
+                                      isConnected === true
                                         ? handleMint()
                                         : showWalletConnect();
                                     }}
                                     disabled={
-                                      mintloading === "error" ||
-                                      mintloading === "success" ||
-                                      (isConnected === true &&
-                                        chainId !== 167000) ||
-                                      (status !== "Connect your wallet." &&
-                                        status !== "") ||
-                                      totalTaikoNft > 0
-                                        ? true
-                                        : false
+                                     false
                                     }
                                     onMouseEnter={() => {
                                       setMouseOver(true);
