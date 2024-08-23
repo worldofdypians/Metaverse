@@ -301,21 +301,21 @@ const WodBuilders = ({ page }) => {
                     {item.icon === "klapai" || item.icon === "manta" ? (
                       <img
                         src={require(`./assets/${item.icon}.png`)}
-                        width={24}
-                        height={24}
+                        width={page === "home" ?  24 : 30}
+                        height={page === "home" ?  24 : 30}
                         alt=""
                       />
                     ) : (
                       <img
                         src={require(`./assets/${item.icon}.svg`)}
-                        width={24}
-                        height={24}
+                        width={page === "home" ?  24 : 30}
+                        height={page === "home" ?  24 : 30}
                         alt=""
                       />
                     )}
 
                     <span
-                      className="builder-title mb-0"
+                      className={`builder-title mb-0`}
                       style={{ fontWeight: "400" }}
                     >
                       {item.name}
