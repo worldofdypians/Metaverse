@@ -600,7 +600,7 @@ const Community = ({socials}) => {
   };
   const dummyBanner =  {
     title: "Festive 4YA Celebration",
-    status: "Live",
+    status: "Upcoming",
     start_date: "August 26, 2024",
     end_date: "September 08, 2024",
     image: wodFestive,
