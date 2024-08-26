@@ -600,7 +600,7 @@ const Community = ({socials}) => {
   };
   const dummyBanner =  {
     title: "Festive 4YA Celebration",
-    status: "Upcoming",
+    status: "Live",
     start_date: "August 26, 2024",
     end_date: "September 08, 2024",
     image: wodFestive,
@@ -609,7 +609,7 @@ const Community = ({socials}) => {
     <li>Login or Create a Game Account: Get started by logging in or creating a new game account in the World of Dypians.</li>
     <li>Open at Least 10 Daily Bonus Chests: Test your luck and consistency by opening at least 10 Daily Bonus Chests on BNB Chain or opBNB.</li>
     </ul>`,
-    // link: "https://dappbay.bnbchain.org/campaign/train-like-a-champion-with-bnb-chain-and-share-$250K/11"
+    link: "https://dappbay.bnbchain.org/campaign/join-bnb-chain-4-year-ecosystem-celebration-with-$300K-in-rewards/2-festive-4ya-celebration"
   }
 
   const html = document.querySelector("html");
