@@ -25,6 +25,8 @@ import coingecko from "./myrewardsAssets/newAssets/treasureHunt/coingecko.svg";
 import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
+import cookieIcon from "./myrewardsAssets/newAssets/treasureHunt/cookie3Logo.svg";
+
 import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 import immutableLogo from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
 
@@ -72,7 +74,7 @@ const MyRewardsPopupNew = ({
   monthlyDataAmountTaiko,
   allTaikoChests,
   taikoEarnUsd,
-  immutableEarnUsd,
+  immutableEarnUsd,cookieEarnUsd
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -743,6 +745,7 @@ const MyRewardsPopupNew = ({
                       Number(immutableEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(taikoEarnUsd) +
+                      Number(cookieEarnUsd) +
                       Number(victionEarnUsd) +
                       Number(mantaEarnUsd) +
                       (kittyDashRecords[0]
@@ -1032,7 +1035,7 @@ const MyRewardsPopupNew = ({
                       Number(multiversEarnUsd) +
                       Number(victionEarnUsd) +
                       Number(mantaEarnUsd) +
-                      Number(taikoEarnUsd),
+                      Number(taikoEarnUsd) + Number(cookieEarnUsd),
                     2
                   )}
             </span>
@@ -1468,6 +1471,19 @@ const MyRewardsPopupNew = ({
                     </span>
                     <span className="item-name-right">
                       ${getFormattedNumber(coreEarnUsd, 2)}
+                    </span>
+                  </div>
+                  <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={cookieIcon}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      Cookie3
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(cookieEarnUsd, 2)}
                     </span>
                   </div>
                 </div>

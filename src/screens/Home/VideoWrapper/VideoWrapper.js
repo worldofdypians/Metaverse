@@ -23,6 +23,8 @@ import seiBg from "./assets/seiBg.webp";
 import coreLogo from "./assets/coreLogo.svg";
 import taikoLogo from "./assets/taikoLogo.svg";
 import mantaLogo from "./assets/mantaLogo.png";
+import cookieLogo from "./assets/cookie3Logo.svg";
+
 
 import coreBg from "./assets/coreBg.webp";
 import immutableLogo from "./assets/immutableLogo.svg";
@@ -424,6 +426,46 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
       },
     },
   
+    {
+      title: "Cookie3",
+      chain: "BNB Chain",
+      linkState: "cookie3",
+      rewards: "COOKIE",
+      status: "Live",
+      eventStatus: "Live",
+      id: "event11",
+      eventType: "Explore & Mine",
+      date: "December 22, 2023",
+      logo: cookieLogo,
+      totalRewards: "$20,000 in COOKIE Rewards",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "COOKIE Rewards",
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore:
+        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+      popupInfo: {
+        title: "Cookie3",
+        chain: "BNB Chain",
+        linkState: "cookie3",
+        rewards: "COOKIE",
+        status: "Live",
+        id: "event11",
+        eventStatus: "Live",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in COOKIE Rewards",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "December 22, 2023",
+      },
+    },
+
 
     {
       title: "SKALE",
@@ -852,7 +894,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
                   </span>
 
                   <Slider {...settings} ref={betaSlider}>
-                    {dummyBetaPassData2.slice(0, 6).map((item, index) => (
+                    {dummyBetaPassData2.slice(0, 7).map((item, index) => (
                       <NavLink to={`/marketplace/events/treasure-hunt`}>
                         <BetaEventCardHome
                           data={item}
@@ -904,7 +946,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
               </span>
 
               <Slider {...settings} ref={betaSlider}>
-                {dummyBetaPassData2.slice(0, 6).map((item, index) => (
+                {dummyBetaPassData2.slice(0, 7).map((item, index) => (
                   <NavLink to={`/marketplace/events/treasure-hunt`}>
                     <BetaEventCardHome
                       data={item}

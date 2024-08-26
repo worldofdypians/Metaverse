@@ -1210,7 +1210,7 @@
 }
 .home-card-rewards-currency {
   color: #ffeace;
-  font-size: 14px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -2931,6 +2931,11 @@ line-height: normal;
 .manta-eventwrapper {
   border-radius: 20px;
   background: linear-gradient(to bottom, #8f2b78 15.48%, #0bd2ff 254.86%);
+}
+
+.taiko-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to top, #8f2b78 15.48%, #000000 254.86%);
 }
 
 .doge-eventwrapper {
