@@ -382,6 +382,8 @@ const BetaPassNFT = ({
   const [cmcEarnUSD, setCmcEarnUSD] = useState(0);
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
   const [mantaEarnUsd, setMantaEarnUsd] = useState(0);
+  const [taikoEarnUsd, setTaikoEarnUsd] = useState(0);
+
 
 
   const html = document.querySelector("html");
@@ -511,6 +513,11 @@ const BetaPassNFT = ({
             return obj.betapassId === "manta";
           });
 
+          const taikoEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "taiko";
+          });
+
+
           if (coingeckoEvent && coingeckoEvent[0]) {
             const usdValue =
               coingeckoEvent[0].reward.earn.total /
@@ -570,6 +577,16 @@ const BetaPassNFT = ({
               mantaEvent[0].reward.earn.multiplier;
             setMantaEarnUsd(usdValue);
           }
+
+
+          
+          if (taikoEvent && taikoEvent[0]) {
+            const usdValue =
+            taikoEvent[0].reward.earn.total /
+            taikoEvent[0].reward.earn.multiplier;
+            setTaikoEarnUsd(usdValue);
+          }
+
 
           if (dogeEvent && dogeEvent[0]) {
             const usdValue =
@@ -1812,7 +1829,6 @@ const BetaPassNFT = ({
                           mintTitle === "core" ||
                           mintTitle === "viction" ||
                           mintTitle === "cookie3" ||
-                          mintTitle === "taiko" ||
                           mintTitle === "multiversx") && (
                           <div className="position-relative">
                             <img src={pinkAreaBase} alt="" />
@@ -1873,7 +1889,7 @@ const BetaPassNFT = ({
                         </a>
                       )}
 
-                      {mintTitle === "taiko" && (
+                      {/* {mintTitle === "taiko" && (
                         <a
                           className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
                           href="https://sweepwidget.com/c/taiko-wod-giveaway"
@@ -1887,7 +1903,7 @@ const BetaPassNFT = ({
                           />{" "}
                           Taiko Giveaway
                         </a>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
@@ -2194,7 +2210,6 @@ const BetaPassNFT = ({
                     >
                       {!alreadyRegistered &&
                         (mintTitle === "sei" ||
-                          mintTitle === "taiko" ||
                           mintTitle === "cookie3") && (
                           <div className="d-flex align-items-center justify-content-around gap-2">
                             <button
@@ -3692,6 +3707,133 @@ const BetaPassNFT = ({
                           </div>
                         )}
 
+{mintTitle === "taiko" && (
+                          <div className="">
+                            <div className="d-flex flex-column gap-3">
+                              <div className="d-flex align-items-center position-relative gap-2">
+                                <h6 className="coingecko-eventh6 m-0">
+                                  Taiko Treasure Hunt
+                                </h6>
+                                <div
+                                  className={`position-relative  events-page-status-tag-live px-2 d-flex align-items-center justify-content-center gap-0`}
+                                  style={{ top: 0 }}
+                                >
+                                  <div
+                                    className="pulsatingDot"
+                                    style={{
+                                      width: 7,
+                                      height: 7,
+                                      marginRight: 5,
+                                    }}
+                                  ></div>
+
+                                  <span>Live</span>
+                                </div>
+                              </div>
+                              <div className="taiko-eventwrapper p-3">
+                                <div className="d-flex flex-column gap-4">
+                                  <div className="d-flex gap-2 align-items-center">
+                                    <img
+                                      src={taikoLogo}
+                                      width={32}
+                                      height={32}
+                                      alt=""
+                                    />
+                                    <div className="d-flex flex-column gap-1">
+                                      <span className="coingecko-eventname">
+                                        Taiko
+                                      </span>
+                                      <span className="coingecko-eventusd">
+                                        $20,000 in Taiko rewards
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
+                                    <div
+                                      className="mybetaearnings position-relative m-0"
+                                      style={{ top: 0, bottom: 0 }}
+                                    >
+                                      <h6 className="event-my-earnings3 mb-3">
+                                        ${getFormattedNumber(taikoEarnUsd, 2)}
+                                      </h6>
+                                    </div>
+                                    <div className="d-flex flex-column gap-2">
+                                      <div className="d-flex gap-1 align-items-center">
+                                        <img src={whitePickaxe} alt="" />
+                                        <span className="white-events-text mb-0">
+                                          Explore &amp; Mine
+                                        </span>
+                                      </div>
+                                      <div className="d-flex gap-1 align-items-center">
+                                        <img src={whiteCalendar} alt="" />
+                                        <span className="white-events-text mb-0">
+                                          Start: Aug. 19, 2024
+                                        </span>
+                                      </div>
+                                      <div className="d-flex gap-1 align-items-center">
+                                        <img src={whiteCalendar} alt="" />
+                                        <span className="white-events-text mb-0">
+                                          End: Nov. 17, 2024
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="d-flex gap-1 align-items-center justify-content-center">
+                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                      <span className="coingecko-eventdetails">
+                                        Event details
+                                      </span>
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="12"
+                                        height="12"
+                                        viewBox="0 0 12 12"
+                                        fill="none"
+                                      >
+                                        <path
+                                          d="M4.5 9L7.5 6L4.5 3"
+                                          stroke="white"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                        />
+                                      </svg>
+                                    </NavLink>
+                                  </div>
+                                </div>
+                              </div>
+                              <span className="footertxt-coingecko">
+                                Earn daily Taiko rewards and global leaderboard
+                                points.
+                              </span>
+                              <div className="summaryseparator mt-3 mb-3"></div>
+                              <div className="d-flex align-items-center gap-2 justify-content-between">
+                                <div className="opacitywrapper4 m-0">
+                                  <a
+                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={epicwhite}
+                                      alt="icon"
+                                      className="epicgame2"
+                                    />
+                                    Download
+                                  </a>
+                                </div>
+                                <NavLink
+                                  to="/account"
+                                  className="accountbtn-coingecko btn d-flex align-items-center gap-1"
+                                >
+                                  <img src={user} alt="" className="user2" />
+                                  My Account
+                                </NavLink>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
                         {/* <h6
                       className="land-placeholder mb-0"
                       style={{ marginLeft: 11 }}
@@ -3716,7 +3858,6 @@ const BetaPassNFT = ({
 
                         {alreadyRegistered &&
                           (mintTitle === "sei" ||
-                            mintTitle === "taiko" ||
                             mintTitle === "cookie3") && (
                             <h6 className="land-name">
                               {(mintTitle === "sei" && totalseiNft > 0) ||
@@ -3737,7 +3878,6 @@ const BetaPassNFT = ({
                         {!alreadyRegistered &&
                           activeTab === "create" &&
                           (mintTitle === "sei" ||
-                            mintTitle === "taiko" ||
                             mintTitle === "cookie3") && (
                             <div>
                               <ul className="timeline m-0 p-0" id="timeline">
@@ -3783,7 +3923,6 @@ const BetaPassNFT = ({
                         {playerCreation === false &&
                           !alreadyRegistered &&
                           (mintTitle === "sei" ||
-                            mintTitle === "taiko" ||
                             mintTitle === "cookie3") && (
                             <SignUpGecko
                               onSuccessVerify={(value) => {
@@ -3813,7 +3952,6 @@ const BetaPassNFT = ({
                           linkWallet === false &&
                           !alreadyRegistered &&
                           (mintTitle === "sei"  ||
-                            mintTitle === "taiko" ||
                             mintTitle === "cookie3") && (
                             <PlayerCreationGecko
                               onSuccessCreation={() => {
@@ -3967,106 +4105,6 @@ const BetaPassNFT = ({
                         )}
 
                  
-                        {alreadyRegistered && mintTitle === "taiko" && (
-                          <div className="d-flex flex-column justify-content-between h-100">
-                            {mintTitle === "taiko" && totalTaikoNft === 0 ? (
-                              <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
-                                <div
-                                  className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}
-                                  style={{
-                                    height: windowSize.width > 991 ? 210 : 295,
-                                  }}
-                                ></div>
-                                <div
-                                  className="genesis-desc nomask px-3 py-2 position-relative"
-                                  style={{
-                                    bottom: "5px",
-                                    minWidth: "100%",
-                                    maxWidth: "100%",
-                                  }}
-                                >
-                                  <h6
-                                    className="land-desc w-75 m-auto text-center justify-content-center"
-                                    style={{ fontWeight: 500, fontSize: 16 }}
-                                  >
-                                    {selectedMint.cardTitle}
-                                  </h6>
-                                </div>
-                              </div>
-                            ) : (
-                              <NavLink
-                                to={`/marketplace/nft/${myTaikoNfts[0]}/${window.config.nft_taiko_address}`}
-                                onClick={() => {
-                                  updateViewCount(
-                                    myTaikoNfts[0],
-                                    window.config.nft_taiko_address
-                                  );
-                                }}
-                              >
-                                <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
-                                  <div
-                                    className={`coingeckoempty-wrapper  ${
-                                      totalTaikoNft > 0 && mintTitle === "taiko"
-                                        ? "taiko-active"
-                                        : "conflux-empty"
-                                    } d-flex justify-content-center align-items-center p-3 position-relative`}
-                                    style={{
-                                      height:
-                                        windowSize.width > 991 ? 210 : 295,
-                                    }}
-                                  ></div>
-                                  <div
-                                    className="genesis-desc nomask px-3 py-2 position-relative"
-                                    style={{
-                                      bottom: "20px",
-                                      minWidth: "100%",
-                                      maxWidth: "100%",
-                                    }}
-                                  >
-                                    <h6
-                                      className="land-desc w-75 m-auto text-center justify-content-center"
-                                      style={{
-                                        fontWeight: 500,
-                                        fontSize: 16,
-                                      }}
-                                    >
-                                      {"TKBP"}
-                                      {`#${myTaikoNfts[0]}`}
-                                    </h6>
-                                  </div>
-                                </div>
-                              </NavLink>
-                            )}
-                            <span className="footertxt-coingecko">
-                              After NFT distribution, you can view{" "}
-                              {selectedMint.cardTitle}.
-                            </span>
-                            <div className="summaryseparator mt-3 mb-3"></div>
-                            <div className="d-flex align-items-center gap-2 justify-content-between">
-                              <div className="opacitywrapper4 m-0">
-                                <a
-                                  className="game-event-download text-white  d-flex align-items-center gap-2"
-                                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                                  target="_blank"
-                                >
-                                  <img
-                                    src={epicwhite}
-                                    alt="icon"
-                                    className="epicgame2"
-                                  />
-                                  Download
-                                </a>
-                              </div>
-                              <NavLink
-                                to="/account"
-                                className="accountbtn-coingecko btn d-flex align-items-center gap-1"
-                              >
-                                <img src={user} alt="" className="user2" />
-                                My Account
-                              </NavLink>
-                            </div>
-                          </div>
-                        )}
 
                         {alreadyRegistered && mintTitle === "cookie3" && (
                           <div className="d-flex flex-column justify-content-between h-100">

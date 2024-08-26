@@ -8096,6 +8096,8 @@ function Dashboard({
                             userRankRewards={userRankRewards}
                             cawsPremiumRewards={cawsPremiumRewards}
                             genesisRank2={genesisRank2}
+                        cookieEarnUsd={cookieEarnUsd}
+
                           />
                         </div>
                       </OutsideClickHandler>
