@@ -179,7 +179,7 @@ const MintPopup = ({ active, onClose, data }) => {
    <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-            Dypians Global Challenge
+            Festive 4YA Celebration
             </h6>
           </div>
           {/* <h6 className="mint-popup-title">opBNB Beta Pass</h6> */}
@@ -259,7 +259,7 @@ const MintPopup = ({ active, onClose, data }) => {
         data.title === "opBNB" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           <span className="popup-available-mint">
-          Train Like a Champion with BNB Chain for your share of $250K+: Dypians' Global Challenge - DappBay
+          Don't miss this chance to be part of the World of Dypians exciting Festive 4YA Celebration campaign.
           </span>
         </div>
       ) : 
@@ -341,7 +341,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "opBNB" ? (
           <a
             onClick={onClose}
-            href={"https://dappbay.bnbchain.org/campaign/train-like-a-champion-with-bnb-chain-and-share-$250K/11"}
+            href={"https://dappbay.bnbchain.org/campaign/join-bnb-chain-4-year-ecosystem-celebration-with-$300K-in-rewards/2-festive-4ya-celebration"}
             target="_blank"
             rel="noreferrer"
             state={{ event: data.state }}
