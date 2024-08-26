@@ -786,6 +786,10 @@ const GetPremiumPopup = ({
             }, 5000);
           });
       } else if (approveStatus === "approveAmount") {
+        let tokenContract = new web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
         await tokenContract.methods
           .approve(victionsubscribeAddress, price)
           .send({ from: coinbase })

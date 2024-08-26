@@ -5732,6 +5732,11 @@ function Dashboard({
 
     setloadspinner(true);
 
+    const nftContract_viction = new window.victionWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
+      window.config.nft_dypius_premium_viction_address
+    );
+
     if (chainId === 56 && nftPremium_total > 0) {
       if (window.WALLET_TYPE !== "binance") {
         let tokenContract = new web3.eth.Contract(
@@ -5897,6 +5902,10 @@ function Dashboard({
             }, 5000);
           });
       } else if (approveStatus === "approveAmount") {
+        let tokenContract = new web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
         await tokenContract.methods
           .approve(victionsubscribeAddress, price)
           .send({ from: coinbase })
