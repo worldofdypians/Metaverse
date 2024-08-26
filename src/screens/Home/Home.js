@@ -43,6 +43,8 @@ import immutablePopup from "../../components/TimepieceMint/assets/immutablePopup
 import taikoPopup from "../../components/TimepieceMint/assets/taikoPopup.png";
 import taikoTreasureHunt from "../../components/TimepieceMint/assets/taikoTreasureHunt.png";
 import bnbcampaign from "../../components/TimepieceMint/assets/bnbcampaign.webp";
+import festivecampaign from "../../components/TimepieceMint/assets/festiveCampaign.webp";
+
 
 
 import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
@@ -122,9 +124,9 @@ const Home = ({
     img: corePopupBg,
     state: "core",
   };
-  const opbnbInfo = {
+  const bnbInfo = {
     title: "opBNB",
-    img: bnbcampaign,
+    img: festivecampaign,
     state: "opbnb",
   };
   const mantaInfo = {
@@ -170,7 +172,7 @@ const Home = ({
       >
         <MintPopup
           active={activePopup}
-          data={taikoInfo}
+          data={bnbInfo}
           onClose={() => setActivePopup(false)}
         />
       </OutsideClickHandler>
