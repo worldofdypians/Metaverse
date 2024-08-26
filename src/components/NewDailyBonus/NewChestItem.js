@@ -112,9 +112,9 @@ const NewChestItem = ({
           }, 3000);
         });
       if (result && result.status === 200) {
-        // if (chainText === "opbnb" || chainText === "bnb") {
-        //   handleThirdTask(coinbase);
-        // }
+        if (chainText === "opbnb" || chainText === "bnb") {
+          handleSecondTask(coinbase);
+        }
         onClaimRewards(result.data);
         setIsChestOpen(true);
         // onChestStatus("success");
@@ -125,9 +125,9 @@ const NewChestItem = ({
     }
   };
 
-  const handleThirdTask = async (wallet) => {
+  const handleSecondTask = async (wallet) => {
     const result2 = await axios
-      .get(`https://api.worldofdypians.com/api/olympiad/task3/${wallet}`)
+      .get(`https://api.worldofdypians.com/api/olympiad/task2/${wallet}`)
       .catch((err) => {
         console.error(err);
       });
@@ -181,9 +181,9 @@ const NewChestItem = ({
           }
         });
       if (result && result.status === 200) {
-        // if (chainText === "opbnb" || chainText === "bnb") {
-        //   handleThirdTask(coinbase);
-        // }
+        if (chainText === "opbnb" || chainText === "bnb") {
+          handleSecondTask(coinbase);
+        }
         onClaimRewards(result.data);
         setIsChestOpen(true);
         // onChestStatus("success");

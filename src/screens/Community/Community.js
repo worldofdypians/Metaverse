@@ -602,7 +602,7 @@ const Community = ({socials}) => {
     title: "Festive 4YA Celebration",
     status: "Upcoming",
     start_date: "August 26, 2024",
-    end_date: "September 8, 2024",
+    end_date: "September 08, 2024",
     image: wodFestive,
     desc: `Join the Festive 4YA Celebration campaign and immerse yourself in a series of exciting tasks to celebrate the BNB Chain 4 Year Anniversary. Show your dedication and skill by completing the following:
     <ul class="mt-2">

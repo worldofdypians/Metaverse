@@ -362,6 +362,8 @@ const MarketEvents = ({
   let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
   let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
+  let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
+
 
   const dailyBonusMintData = {
     title: "Daily Bonus",
@@ -564,7 +566,7 @@ const MarketEvents = ({
     {
       title: "Cookie3",
       logo: cookie3Logo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in COOKIE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -575,11 +577,11 @@ const MarketEvents = ({
         chain: "BNB Chain",
         linkState: "cookie3",
         rewards: "Cookie3",
-        status: "Coming Soon",
+        status: "Live",
         id: "event23",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in COOKIE Rewards",
-        eventDuration: mantaLastDay,
+        eventDuration: cookieLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
