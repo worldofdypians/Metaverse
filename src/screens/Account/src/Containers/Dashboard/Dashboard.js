@@ -5732,16 +5732,6 @@ function Dashboard({
 
     setloadspinner(true);
 
-    let nftContract = new window.web3.eth.Contract(
-      window.NFT_DYPIUS_PREMIUM_ABI,
-      window.config.nft_dypius_premium_address
-    );
-
-    let nftContract_viction = new window.web3.eth.Contract(
-      window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
-      window.config.nft_dypius_premium_viction_address
-    );
-
     if (chainId === 56 && nftPremium_total > 0) {
       if (window.WALLET_TYPE !== "binance") {
         let tokenContract = new web3.eth.Contract(
@@ -5878,8 +5868,7 @@ function Dashboard({
 
         }
       }
-    }
-    if (chainId === 88 && nftPremium_totalViction > 0) {
+    } else if (chainId === 88 && nftPremium_totalViction > 0 && window.WALLET_TYPE !== "binance") {
       if (approveStatus === "initial") {
         await nftContract_viction.methods
           .approve(
@@ -5928,7 +5917,7 @@ function Dashboard({
             }, 5000);
           });
       }
-    } else {
+    }  else {
       if (window.WALLET_TYPE !== "binance") {
         let tokenContract = new web3.eth.Contract(
           window.ERC20_ABI,
@@ -6703,7 +6692,7 @@ function Dashboard({
               setstatus("");
             }, 5000);
           });
-      }  else {
+      } else {
         await subscriptionContract.methods
           .subscribe(selectedSubscriptionToken, price)
           .send({ from: await window.getCoinbase() })
