@@ -5,6 +5,7 @@
   right: 16px;
   max-width: 2500px;
   top: 16px;
+  min-height: 72px;
   // left: 50%;
   // transform: translate(-50%, 0);
   // right: 0;
@@ -17,7 +18,7 @@
 
   .nav-anchor {
     font-weight: 600;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 24px;
     color: #ffffff;
     text-decoration: none;
@@ -588,7 +589,7 @@
 .header-dropdown {
   border-radius: 0px 0px 10px 10px;
   border: 0.5px solid #525469;
-  background: rgba(8, 11, 42, 0.8);
+  background: rgba(8, 11, 42, 1);
   width: 225px;
   position: absolute;
   top: 190%;
@@ -619,8 +620,8 @@
 }
 
 .dropdown-nav {
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 16px;
   line-height: 24px;
   color: #ffffff;
   text-decoration: none;
@@ -685,8 +686,8 @@
 .new-connect-btn {
   border-radius: 8px;
   background: linear-gradient(90deg, #5690ff 0%, #8c56ff 100%);
-  font-weight: 400;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 18px;
   line-height: 24px;
   font-family: "Montserrat";
   color: #ffffff;
@@ -695,8 +696,8 @@
 }
 
 .account-txt {
-  font-weight: 400;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 18px;
   line-height: 24px;
   font-family: "Montserrat";
   color: #ffffff;
@@ -718,11 +719,21 @@
   color: #eeedff;
   text-align: center;
   font-family: "Montserrat";
-  font-size: 12px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+
+.account-btn-hover{
+  border-radius: 12px;
+  transition: all .25s;
+}
+
+.account-btn-hover:hover{
+  background: rgba(255, 255, 255, 0.12);
 }

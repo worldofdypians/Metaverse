@@ -8,7 +8,7 @@ const GovernanceHero = ({onCreateProposal}) => {
         <div className="d-flex flex-column w-100 gap-3">
           <div className="col-lg-5">
             <div className="d-flex flex-column gap-3">
-              <h2 className="font-montserrat text-start explorer-grid-title px-0">
+              <h2 className="font-montserrat text-start main-hero-title px-0">
                 Get involved and shape The World of Dypians future
               </h2>
               <span className="gov-desc font-montserrat">

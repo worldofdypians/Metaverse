@@ -143,4 +143,8 @@ white-space: nowrap;
   display: grid;
   grid-template-columns: repeat(14, 1fr);
   gap: 10px;
+  @media screen and (max-width: 786px) {
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+  }
 }

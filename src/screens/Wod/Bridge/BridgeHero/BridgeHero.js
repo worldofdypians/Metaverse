@@ -10,7 +10,7 @@ const BridgeHero = () => {
         <div className="row mx-0 align-items-center justify-content-between gap-2 mt-5 mt-lg-0">
           <div className="col-12 col-lg-6 ps-lg-0">
             <div className="d-flex flex-column gap-2 align-items-start">
-            <h2 className="font-montserrat builders-title explorer-grid-title px-0">
+            <h2 className="font-montserrat main-hero-title  px-0">
             <mark className="font-montserrat explore-tag pe-2">WOD TOKEN</mark>
             BRIDGE{" "}
           </h2>

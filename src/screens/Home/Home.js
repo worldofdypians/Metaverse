@@ -50,6 +50,7 @@ import LiveEvents from "./LiveEvents/LiveEvents";
 import WodBuilders from "./WodBuilders/WodBuilders";
 import GameUpdates from "./GameUpdates/GameUpdates";
 import WodPartners from "./WodBuilders/WodPartners";
+import GameStats from "./GameStats/GameStats";
 
 const Home = ({
   handleRegister,
@@ -118,6 +119,7 @@ const Home = ({
           />
           {/* <LiveEvents /> */}
           <WodPartners full={false} />
+          <GameStats />
           <WodBuilders />
           {/* <Utilities /> */}
           {/* <MarketSection

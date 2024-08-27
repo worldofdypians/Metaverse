@@ -239,11 +239,11 @@ const GameUpdates = () => {
   return (
     <div className="container-fluid d-flex flex-column align-items-center justify-content-center mt-5">
       <div className="d-flex w-100 flex-column align-items-center justify-content-center mt-5 py-4 game-updates-title-wrapper">
-        <h2 className="font-montserrat builders-title explorer-grid-title px-0 mb-0">
+        <h2 className="font-montserrat main-hero-title px-0 mb-0">
           UPDATES, STORIES AND ANNOUNCEMENTS FROM
         </h2>
         <h2
-          className="font-montserrat builders-title explorer-grid-title px-0"
+          className="font-montserrat main-hero-title px-0"
           style={{ color: "#8C56FF" }}
         >
           WORLD OF DYPIANS

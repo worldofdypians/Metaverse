@@ -866,7 +866,8 @@ const Header = ({
             <div
               onMouseEnter={() => handleDropdown("account")}
               onMouseLeave={() => handleDropdown(null)}
-              className="d-flex align-items-center gap-2 position-relative"
+              className="d-flex align-items-center gap-2 position-relative account-btn-hover p-2"
+              style={{cursor: "pointer"}}
             >
               <img src={personIcon} alt="" />
               <h6 className="mb-0 account-txt">
@@ -877,9 +878,10 @@ const Header = ({
               <img src={headerArrow} alt="" />
 
               <div
-                className={`header-dropdown p-2 d-flex flex-column gap-2 ${
+                className={`header-dropdown p-3 d-flex flex-column gap-2 ${
                   dropdown.account === "account" ? "header-dropdown-active" : ""
                 }`}
+                style={{top: "140%"}}
               >
                 {account.logged === false ? (
                   <>
@@ -1035,7 +1037,7 @@ const Header = ({
               //   </button>{" "}
               // </div>
               <button
-                className="new-connect-btn px-2 py-1"
+                className="new-connect-btn p-2"
                 onClick={handleSignUp}
               >
                 Connect Wallet

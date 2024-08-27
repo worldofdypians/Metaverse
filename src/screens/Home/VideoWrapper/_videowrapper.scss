@@ -110,11 +110,14 @@
   color: #FFF;
   text-align: center;
   text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.80);
-  font-size: 32px;
+  font-size: 50px;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
   text-transform: uppercase;
+  @media screen and (max-width: 786px) {
+    font-size: 32px;
+  }
 }
 
 .main-hero-subtitle {
