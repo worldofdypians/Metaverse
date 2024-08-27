@@ -17,7 +17,7 @@ import CriticalHit from "../Challenges/CriticalHit";
 import MazeGarden from "../Challenges/MazeGarden";
 import GoldenPass from "../Challenges/GoldenPass";
 
-const NewEvents = ({ events, onEventClick, coinbase, wallet, chainId }) => {
+const NewEvents = ({ events, onEventClick, coinbase, wallet, chainId, binanceW3WProvider }) => {
   const [challenge, setChallenge] = useState("treasureHunt");
   const [eventDuration, seteventDuration] = useState("Live");
 
@@ -178,6 +178,7 @@ const NewEvents = ({ events, onEventClick, coinbase, wallet, chainId }) => {
                       coinbase={coinbase}
                       chainId={chainId}
                       wallet={wallet}
+                      binanceW3WProvider={binanceW3WProvider}
                     />
                   ) : challenge === "scorpionKing" ? (
                     <ScorpionKing />
@@ -186,6 +187,8 @@ const NewEvents = ({ events, onEventClick, coinbase, wallet, chainId }) => {
                       coinbase={coinbase}
                       chainId={chainId}
                       wallet={wallet}
+                      binanceW3WProvider={binanceW3WProvider}
+
                     />
                   ) : challenge === "criticalHit" ? (
                     <CriticalHit />
@@ -196,6 +199,8 @@ const NewEvents = ({ events, onEventClick, coinbase, wallet, chainId }) => {
                       coinbase={coinbase}
                       chainId={chainId}
                       wallet={wallet}
+                      binanceW3WProvider={binanceW3WProvider}
+
                     />
                   ) : (
                     <></>

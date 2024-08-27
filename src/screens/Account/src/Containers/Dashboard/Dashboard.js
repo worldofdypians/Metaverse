@@ -61,6 +61,8 @@ import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionI
 import dypius from "../../Components/WalletBalance/assets/dypIcon.svg";
 import dypiusPremium from "../../Components/WalletBalance/assets/dypiusPremium16.svg";
 import upcomingDyp from "../../Components/WalletBalance/assets/upcomingDyp.webp";
+import upcomingCookie from "../../../../Marketplace/assets/cookieBg.webp";
+
 import victionLogo from "../../Components/WalletBalance/assets/victionLogo.svg";
 import multiversLogo from "../../Components/WalletBalance/assets/multiversLogo.svg";
 import victionBg from "../../Components/WalletBalance/assets/victionBg.webp";
@@ -69,6 +71,13 @@ import seiLogo from "../../Components/WalletBalance/assets/seiLogo.svg";
 import seiBg from "../../Components/WalletBalance/assets/seiBg.webp";
 import coreLogo from "../../Components/WalletBalance/assets/coreLogo.svg";
 import bnbLogo from "../../Components/WalletBalance/assets/bnbIcon.svg";
+import taikoLogo from "../../Components/WalletBalance/assets/taikoLogo.svg";
+import taikoBg from "../../../../Marketplace/assets/taikoBg.webp";
+import mantaBg from "../../../../Marketplace/assets/mantaBg.webp";
+
+import mantaLogo from "../../Components/WalletBalance/assets/mantaLogo2.png";
+import cookie3Logo from "../../../../Marketplace/assets/cookie3Logo.svg";
+
 import coreBg from "../../Components/WalletBalance/assets/coreBg.webp";
 import immutableLogo from "../../Components/WalletBalance/assets/immutableLogo.svg";
 import immutableBg from "../../Components/WalletBalance/assets/immutableBg.webp";
@@ -194,6 +203,10 @@ function Dashboard({
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+  let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
+  let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
+  let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
+  let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
 
   const { email, logout } = useAuth();
 
@@ -1158,21 +1171,17 @@ function Dashboard({
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      backgroundImage: coreBg,
       eventDate: "Jul 01, 2024",
+      backgroundImage: coreBg,
       userEarnUsd: coreEarnUsd,
       userEarnCrypto: coreEarnToken,
       userEarnPoints: corePoints,
-
       popupInfo: {
         title: "CORE",
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
         status: "Live",
-        backgroundImage: coreBg,
-        logo: coreLogo,
-        date: "Jul 01, 2024",
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",
@@ -1203,9 +1212,6 @@ function Dashboard({
         linkState: "viction",
         rewards: "VIC",
         status: "Live",
-        logo: victionLogo,
-        backgroundImage: victionBg,
-        date: "Jul 01, 2024",
         id: "event14",
         eventType: "Explore & Find",
         totalRewards: "$20,000 in VIC Rewards",
@@ -1216,6 +1222,156 @@ function Dashboard({
         maxPoints: "50,000",
         learnMore: "",
         eventDate: "Jul 01, 2024",
+      },
+    },
+    {
+      title: "BNB Chain",
+      logo: bnbLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jun 12, 2024",
+      backgroundImage: upcomingBnb,
+      userEarnUsd: bnbEarnUsd,
+      userEarnCrypto: bnbEarnToken,
+      userEarnPoints: bnbPoints,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Live",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news",
+        eventDate: "Jun 12, 2024",
+      },
+    },
+    {
+      title: "Immutable",
+      logo: immutableLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in IMX Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 15, 2024",
+      backgroundImage: immutableBg,
+      userEarnUsd: immutableEarnUsd,
+      userEarnCrypto: immutableEarnToken,
+      userEarnPoints: immutablePoints,
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable",
+        linkState: "immutable",
+        rewards: "IMX",
+        status: "Live",
+        id: "event15",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in IMX Rewards",
+        eventDuration: immutableLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
+        eventDate: "Aug 15, 2024",
+      },
+    },
+    {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in TAIKO Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 19, 2024",
+      backgroundImage: taikoBg,
+      userEarnUsd: taikoEarnUsd,
+      userEarnCrypto: taikoEarnToken,
+      userEarnPoints: taikoPoints,
+      popupInfo: {
+        title: "TAIKO",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Live",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 19, 2024",
+      },
+    },
+    {
+      title: "Manta",
+      logo: mantaLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in MANTA Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 20, 2024",
+      backgroundImage: mantaBg,
+      userEarnUsd: mantaEarnUsd,
+      userEarnCrypto: mantaEarnToken,
+      userEarnPoints: mantaPoints,
+      popupInfo: {
+        title: "Manta",
+        chain: "Manta",
+        linkState: "manta",
+        rewards: "MANTA",
+        status: "Live",
+        id: "event21",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in MANTA Rewards",
+        eventDuration: mantaLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 20, 2024",
+      },
+    },
+    {
+      title: "Cookie3",
+      logo: cookie3Logo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in COOKIE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 26, 2024",
+      backgroundImage: upcomingCookie,
+      userEarnUsd: cookieEarnUsd,
+      userEarnCrypto: cookieEarnToken,
+      userEarnPoints: cookiePoints,
+      popupInfo: {
+        title: "Cookie3",
+        chain: "BNB Chain",
+        linkState: "cookie3",
+        rewards: "Cookie3",
+        status: "Live",
+        id: "event23",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in COOKIE Rewards",
+        eventDuration: cookieLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 26, 2024",
       },
     },
     // {
@@ -1251,36 +1407,6 @@ function Dashboard({
     //   },
     // },
 
-    {
-      title: "BNB Chain",
-      logo: bnbLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Jun 12, 2024",
-      backgroundImage: upcomingBnb,
-      userEarnUsd: bnbEarnUsd,
-      userEarnCrypto: bnbEarnToken,
-      userEarnPoints: bnbPoints,
-      popupInfo: {
-        title: "BNB Chain",
-        chain: "BNB Chain",
-        linkState: "bnb",
-        rewards: "BNB",
-        status: "Live",
-        id: "event20",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: bnbLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore: "/news",
-        eventDate: "Jun 12, 2024",
-      },
-    },
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -7956,12 +8082,13 @@ function Dashboard({
     }
   };
   const userTotalScore =
-  userBnbScore +
-  userSkaleScore +
-  userCoreScore +
-  userVictionScore +
-  userMantaScore +
-  userTaikoScore;
+    userBnbScore +
+    userSkaleScore +
+    userCoreScore +
+    userVictionScore +
+    userMantaScore +
+    userTaikoScore;
+ 
   const handleRankRewards = () => {
     const totalScore =
       userBnbScore +
@@ -7988,40 +8115,40 @@ function Dashboard({
     } else if (rankData && rankData.multiplier === "no") {
       allScore = userTotalScore;
     }
-    if (allScore > 59999999) {
+    if (allScore > 61999999) {
       setUserRankName({
         name: "unstoppable",
         id: 4,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(4);
       setUserProgress(100);
-    } else if (allScore > 34999999) {
+    } else if (allScore > 36999999) {
       setUserRankName({
         name: "champion",
         id: 3,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(3);
-      setUserProgress((allScore / 60000000) * 100);
-    } else if (allScore > 21999999) {
+      setUserProgress((allScore / 62000000) * 100);
+    } else if (allScore > 23999999) {
       setUserRankName({
         name: "underdog",
         id: 2,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(2);
-      setUserProgress((allScore / 35000000) * 100);
-    } else if (allScore > 9999999) {
+      setUserProgress((allScore / 37000000) * 100);
+    } else if (allScore > 11999999) {
       setUserRankName({
         name: "rookie",
         id: 1,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(1);
-      setUserProgress((allScore / 22000000) * 100);
+      setUserProgress((allScore / 24000000) * 100);
     } else {
       sliderRef?.current?.innerSlider?.slickGoTo(0);
-      setUserProgress((allScore / 10000000) * 100);
+      setUserProgress((allScore / 12000000) * 100);
     }
   };
-
+  
   const updateUserRank = async () => {
     if (rankData && userRankName) {
       if (rankData.rank == userRankName.id) {
@@ -8060,7 +8187,7 @@ function Dashboard({
     userRankCore,
     userRankViction,
     userRankManta,
-    userRankTaiko
+    userRankTaiko,
   ]);
 
   useEffect(() => {
@@ -8529,9 +8656,7 @@ function Dashboard({
               isPremium={isPremium}
               address={data?.getPlayer?.wallet?.publicAddress}
               coinbase={coinbase}
-              totalScore={
-                userBnbScore + userSkaleScore + userCoreScore + userVictionScore
-              }
+              totalScore={userTotalScore}
               openChainsLeaderboard={() => setLeaderboard(true)}
               openGlobalLeaderboard={() => setGlobalLeaderboard(true)}
               openGenesisLeaderboard={() => setGenesisLeaderboard(true)}
@@ -8581,6 +8706,7 @@ function Dashboard({
               coinbase={coinbase}
               wallet={data?.getPlayer?.wallet?.publicAddress}
               chainId={chainId}
+              binanceW3WProvider={binanceW3WProvider}
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (

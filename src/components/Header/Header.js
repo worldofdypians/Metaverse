@@ -100,7 +100,8 @@ const Header = ({
   binanceWallet,
   gameAccount,
   email,
-  username,loginListener
+  username,
+  loginListener,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -472,17 +473,17 @@ const Header = ({
         guest: true,
       });
     }
-  }, [email, gameAccount, coinbase,loginListener]);
+  }, [email, gameAccount, coinbase, loginListener]);
 
   // useEffect(() => {
-    // setDropdown({
-    //   wod: null,
-    //   game: null,
-    //   community: null,
-    //   about: null,
-    //   collections: null,
-    //   account: "account",
-    // });
+  // setDropdown({
+  //   wod: null,
+  //   game: null,
+  //   community: null,
+  //   about: null,
+  //   collections: null,
+  //   account: "account",
+  // });
   // }, []);
 
   return (
@@ -716,7 +717,7 @@ const Header = ({
               onMouseEnter={() => handleDropdown("account")}
               onMouseLeave={() => handleDropdown(null)}
               className="d-flex align-items-center gap-2 position-relative account-btn-hover p-2"
-              style={{cursor: "pointer"}}
+              style={{ cursor: "pointer" }}
             >
               <img src={personIcon} alt="" />
               <h6 className="mb-0 account-txt">
@@ -730,7 +731,7 @@ const Header = ({
                 className={`header-dropdown p-3 d-flex flex-column gap-2 ${
                   dropdown.account === "account" ? "header-dropdown-active" : ""
                 }`}
-                style={{top: "140%"}}
+                style={{ top: "140%" }}
               >
                 {account.logged === false ? (
                   <>
@@ -852,7 +853,6 @@ const Header = ({
                           linked: false,
                           guest: true,
                         });
-
                       }}
                     >
                       <img src={logouticon} alt="" className="logout-icon" />{" "}
@@ -885,10 +885,7 @@ const Header = ({
               //     Connect Wallet
               //   </button>{" "}
               // </div>
-              <button
-                className="new-connect-btn p-2"
-                onClick={handleSignUp}
-              >
+              <button className="new-connect-btn p-2" onClick={handleSignUp}>
                 Connect Wallet
               </button>
             ) : (
@@ -1130,7 +1127,7 @@ const Header = ({
                         setshowChainDropdown(false);
                       }}
                     >
-             <DropdownButton
+                      <DropdownButton
                         id="dropdown-basic-button"
                         className="d-flex align-items-center justify-content-center chaindropdown"
                         show={showChainDropdown}
@@ -1140,39 +1137,38 @@ const Header = ({
                               <img
                                 src={
                                   ethState === true
-                                  ? eth
-                                  : bnbState === true
-                                  ? bnb
-                                  : opbnbState === true
-                                  ? bnb
-                                  : avaxState === true
-                                  ? avax
-                                  : baseState === true
-                                  ? base
-                                  : confluxState === true
-                                  ? conflux
-                                  : skaleState === true
-                                  ? skale
-                                  : coreState === true
-                                  ? core
-                                  : victionState === true
-                                  ? viction
-                                  : immutableState === true
-                                  ? immutable
-                                  : mantaState === true
-                                  ? manta
-                                  : taikoState === true
-                                  ? taiko
-                                  : // : seiState === true
-                                    // ? sei
-                                    error
+                                    ? eth
+                                    : bnbState === true
+                                    ? bnb
+                                    : opbnbState === true
+                                    ? bnb
+                                    : avaxState === true
+                                    ? avax
+                                    : baseState === true
+                                    ? base
+                                    : confluxState === true
+                                    ? conflux
+                                    : skaleState === true
+                                    ? skale
+                                    : coreState === true
+                                    ? core
+                                    : victionState === true
+                                    ? viction
+                                    : immutableState === true
+                                    ? immutable
+                                    : mantaState === true
+                                    ? manta
+                                    : taikoState === true
+                                    ? taiko
+                                    : // : seiState === true
+                                      // ? sei
+                                      error
                                 }
-                                height={16}
-                                width={16}
+                                width={20}
+                                height={20}
                                 alt=""
                               />
-                        <img src={dropdownicon} alt="" />
-
+                              <img src={dropdownicon} alt="" />
                             </div>
                           </span>
                         }
@@ -1184,84 +1180,141 @@ const Header = ({
                           <hr className="header-divider my-0" />
                           <div className="d-flex gap-2 justify-content-between">
                             <div className="d-flex flex-column gap-2">
-                            <Dropdown.Item onClick={() => switchNetwork("0x1", 1)}>
-                    <img src={eth} alt="" />
-                    Ethereum
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => switchNetwork("0x38", 56)}>
-                    <img src={bnb} alt="" />
-                    BNB Chain
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => switchNetwork("0xcc", 204)}>
-                    <img src={bnb} alt="" />
-                    opBNB Chain
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => switchNetwork("0xa9", 169)}>
-                    <img src={manta} alt="" />
-                    Manta
-                  </Dropdown.Item>
-                  {window.WALLET_TYPE !== "binance" &&
-                    !window.ethereum?.isBinance && (
-                      <Dropdown.Item
-                        onClick={() => switchNetwork("0x28c58", 167000)}
-                      >
-                        <img src={taiko} width={20} height={20} alt="" />
-                        Taiko
-                      </Dropdown.Item>
-                    )}
-                              {window.WALLET_TYPE !== "binance" &&
-                    !window.ethereum?.isBinance && (
-                      <Dropdown.Item
-                        onClick={() => switchNetwork("0x45c", 1116)}
-                      >
-                        <img src={core} width={20} height={20} alt="" />
-                        CORE
-                      </Dropdown.Item>
-                    )}
-                             <Dropdown.Item onClick={() => switchNetwork("0x406", 1030)}>
-                                <img src={conflux} alt="" />
-                                Conflux
+                              <Dropdown.Item
+                                onClick={() => switchNetwork("0x1", 1)}
+                              >
+                                <img src={eth} alt="" width={20} height={20} />
+                                Ethereum
                               </Dropdown.Item>
+                              <Dropdown.Item
+                                onClick={() => switchNetwork("0x38", 56)}
+                              >
+                                <img src={bnb} alt="" width={20} height={20} />
+                                BNB Chain
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                onClick={() => switchNetwork("0xcc", 204)}
+                              >
+                                <img src={bnb} alt="" width={20} height={20} />
+                                opBNB Chain
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                onClick={() => switchNetwork("0xa9", 169)}
+                              >
+                                <img
+                                  src={manta}
+                                  alt=""
+                                  width={20}
+                                  height={20}
+                                />
+                                Manta
+                              </Dropdown.Item>
+                              {window.WALLET_TYPE !== "binance" &&
+                                !window.ethereum?.isBinance && (
+                                  <Dropdown.Item
+                                    onClick={() =>
+                                      switchNetwork("0x28c58", 167000)
+                                    }
+                                  >
+                                    <img
+                                      src={taiko}
+                                      width={20}
+                                      height={20}
+                                      alt=""
+                                    />
+                                    Taiko
+                                  </Dropdown.Item>
+                                )}
+                              {window.WALLET_TYPE !== "binance" &&
+                                !window.ethereum?.isBinance && (
+                                  <Dropdown.Item
+                                    onClick={() => switchNetwork("0x45c", 1116)}
+                                  >
+                                    <img
+                                      src={core}
+                                      width={20}
+                                      height={20}
+                                      alt=""
+                                    />
+                                    CORE
+                                  </Dropdown.Item>
+                                )}
                             </div>
                             <div className="d-flex flex-column gap-2">
-                            <Dropdown.Item onClick={() => switchNetwork("0x2105", 8453)}>
-                                <img src={base} alt="" />
+                              <Dropdown.Item
+                                onClick={() => switchNetwork("0x2105", 8453)}
+                              >
+                                <img src={base} alt="" width={20} height={20} />
                                 Base
                               </Dropdown.Item>
                               {window.WALLET_TYPE !== "binance" &&
-                    !window.ethereum?.isBinance && (
-                      <Dropdown.Item onClick={() => switchNetwork("0x58", 88)}>
-                        <img src={viction} width={20} height={20} alt="" />
-                        Viction
-                      </Dropdown.Item>
-                    )}
-                               <Dropdown.Item onClick={() => switchNetwork("0xa86a", 43114)}>
-                    <img src={avax} alt="" />
-                    Avalanche
-                  </Dropdown.Item>
-                  {window.WALLET_TYPE !== "binance" &&
-                    !window.ethereum?.isBinance && (
-                      <Dropdown.Item
-                        onClick={() => switchNetwork("0x585eb4b1", 1482601649)}
-                      >
-                        <img src={skale} alt="" />
-                        SKALE
-                      </Dropdown.Item>
-                    )}
+                                !window.ethereum?.isBinance && (
+                                  <Dropdown.Item
+                                    onClick={() => switchNetwork("0x58", 88)}
+                                  >
+                                    <img
+                                      src={viction}
+                                      width={20}
+                                      height={20}
+                                      alt=""
+                                    />
+                                    Viction
+                                  </Dropdown.Item>
+                                )}
+                              <Dropdown.Item
+                                onClick={() => switchNetwork("0xa86a", 43114)}
+                              >
+                                <img src={avax} alt="" width={20} height={20} />
+                                Avalanche
+                              </Dropdown.Item>
                               {window.WALLET_TYPE !== "binance" &&
-                    !window.ethereum?.isBinance && (
-                      <Dropdown.Item
-                        onClick={() => switchNetwork("0x343b", 13371)}
-                      >
-                        <img src={immutable} width={20} height={20} alt="" />
-                        Immutable
-                      </Dropdown.Item>
-                    )}
+                                !window.ethereum?.isBinance && (
+                                  <Dropdown.Item
+                                    onClick={() =>
+                                      switchNetwork("0x585eb4b1", 1482601649)
+                                    }
+                                  >
+                                    <img
+                                      src={skale}
+                                      alt=""
+                                      width={20}
+                                      height={20}
+                                    />
+                                    SKALE
+                                  </Dropdown.Item>
+                                )}
+                              {window.WALLET_TYPE !== "binance" &&
+                                !window.ethereum?.isBinance && (
+                                  <Dropdown.Item
+                                    onClick={() =>
+                                      switchNetwork("0x343b", 13371)
+                                    }
+                                  >
+                                    <img
+                                      src={immutable}
+                                      width={20}
+                                      height={20}
+                                      alt=""
+                                    />
+                                    Immutable
+                                  </Dropdown.Item>
+                                )}
+                              <Dropdown.Item
+                                onClick={() => switchNetwork("0x406", 1030)}
+                              >
+                                <img
+                                  src={conflux}
+                                  alt=""
+                                  width={20}
+                                  height={20}
+                                />
+                                Conflux
+                              </Dropdown.Item>
                             </div>
                           </div>
                           <hr className="header-divider my-0" />
                           <button
-                            className="logoutbtn pt-2 pb-3"
+                            className="sign-out-btn pt-2 pb-3  d-flex align-items-center gap-2 justify-content-start"
                             onClick={() => {
                               manageDisconnect();
                             }}
@@ -1319,7 +1372,7 @@ const Header = ({
                       </span>
 
                       <span
-                        className="menuitem2"
+                        className="menuitem2 sign-out-btn  d-flex align-items-center gap-2 justify-content-start"
                         onClick={() => {
                           setShowMenu(false);
                           manageDisconnect();

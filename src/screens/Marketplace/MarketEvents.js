@@ -3030,14 +3030,6 @@ const MarketEvents = ({
                   </NavLink>
                 </div>
               )}
-
-            {/* {dummyEvent.id === "event9" && (
-              <div className="w-100 d-flex justify-content-end mt-3">
-                <NavLink to={`/account`}>
-                  <button className="btn get-beta-btn">Get Premium</button>
-                </NavLink>
-              </div>
-            )} */}
           </div>
         </OutsideClickHandler>
       )}

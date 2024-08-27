@@ -12,6 +12,7 @@ import { WOD_ABI } from "../../screens/Account/src/web3/abis";
 import { token_abi } from "../../screens/Account/src/web3";
 import { wod_abi } from "../../screens/Account/src/web3";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import { ethers } from "ethers";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -35,7 +36,7 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const DragonRuins = ({ coinbase, chainId, wallet }) => {
+const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider }) => {
   let dummyDate = new Date("2024-10-01T14:00:00.000+02:00");
   const [status, setStatus] = useState(
     "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
@@ -127,25 +128,79 @@ const DragonRuins = ({ coinbase, chainId, wallet }) => {
     setDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
+    if (window.WALLET_TYPE !== "binance") {
+      await wod_abi.methods
+        .deposit()
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Bundle successfully purchased!");
+          setDepositState("success");
+          setStatusColor("#00FECF");
 
-    await wod_abi.methods
-      .deposit()
-      .send({ from: coinbase })
-      .then(() => {
+          handleRefreshCountdown();
+          checkApproval();
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setDepositState("failDeposit");
+          console.log(e);
+        });
+      handleRefreshCountdown();
+    } else if (window.WALLET_TYPE === "binance") {
+      const wod_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
+
+      const dragonsc = new ethers.Contract(
+        wod_address,
+        WOD_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
+
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      // let gasLimit;
+      // console.log('dragonsc',dragonsc.callStatic.deposit())
+      // try {
+      //   gasLimit = await dragonsc.estimateGas.deposit();
+      //   transactionParameters.gasLimit = gasLimit;
+      //   console.log("transactionParameters", transactionParameters);
+      // } catch (error) {
+      //   console.error(error);
+      // }
+
+      const txResponse = await dragonsc
+        .deposit({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setDepositState("failDeposit");
+          console.log(e);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setStatus("Bundle successfully purchased!");
         setDepositState("success");
         setStatusColor("#00FECF");
 
         handleRefreshCountdown();
         checkApproval();
-      })
-      .catch((e) => {
-        setStatusColor("#FE7A00");
-        setStatus(e?.message);
-        setDepositState("failDeposit");
-        console.log(e);
-      });
-    handleRefreshCountdown();
+      }
+
+      handleRefreshCountdown();
+    }
   };
 
   useEffect(() => {

@@ -84,7 +84,6 @@ import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 import Redirect from "./screens/Home/Redirect";
 import WalletModal2 from "./components/WalletModal/WalletModal2";
-import Token from './screens/Token/Token'
 import { isMobile } from "react-device-detect";
 import About from "./screens/About/About.js";
 import Game from "./screens/Game/Game.js";

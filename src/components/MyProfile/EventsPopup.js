@@ -25,6 +25,12 @@ import website from "../../screens/Account/src/Components/WalletBalance/assets/g
 import discord from "../../screens/Account/src/Components/WalletBalance/assets/greenDiscord.svg";
 import grayDollar from "../../screens/Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import eventsArrow from "../../screens/Account/src/Components/WalletBalance/assets/eventsArrow.svg";
+import mantaThumb from "../../screens/Account/src/Components/WalletBalance/assets/mantaThumb.png";
+import taikoThumb from "../../screens/Account/src/Components/WalletBalance/assets/taikoThumb.webp";
+import cookie3Thumb from "../../screens/Account/src/Components/WalletBalance/assets/cookie3Thumb.png";
+import skalePopupImage from "../../screens/Account/src/Components/WalletBalance/assets/skalePopupImage.png";
+import eventPopupImageDypius2 from "../../screens/Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
+
 import infoIcon from "../../screens/Marketplace/assets/infoIcon.svg";
 
 import Countdown from "react-countdown";
@@ -65,7 +71,7 @@ const renderer2 = ({ hours, minutes }) => {
   );
 };
 
-const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
+const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
   return (
     <OutsideClickHandler onOutsideClick={() => onClose()}>
       <div className="profile-event-popup p-4">
@@ -111,15 +117,7 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                   dummyEvent.popupInfo?.id === "event5"
                     ? dypeventPopupImage
                     : dummyEvent.popupInfo?.id === "event9"
-                    ? upcomingDyp2
-                    : dummyEvent.popupInfo?.id === "event5"
-                    ? upcomingDyp
-                    : dummyEvent.popupInfo?.id === "event11"
-                    ? upcomingSkale
-                    : dummyEvent?.popupInfo.id === "event1"
-                    ? confluxPopupImage
-                    : dummyEvent.popupInfo?.id === "event20"
-                    ? bnbPopupImage
+                    ? eventPopupImageDypius2
                     : dummyEvent.popupInfo?.linkState === "coingecko"
                     ? eventPopupImageGecko
                     : dummyEvent.popupInfo.linkState === "gate"
@@ -130,6 +128,8 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                     ? dogePopupImage
                     : dummyEvent.popupInfo.linkState === "coinmarketcap"
                     ? cmcPopupImage
+                    : dummyEvent.popupInfo.linkState === "skale"
+                    ? skalePopupImage
                     : dummyEvent.popupInfo.linkState === "core"
                     ? coreThumb
                     : dummyEvent.popupInfo.linkState === "sei"
@@ -140,10 +140,21 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                     ? victionThumb
                     : dummyEvent.popupInfo.linkState === "multiversx"
                     ? multiversThumb
+                    : dummyEvent.popupInfo.linkState === "bnb"
+                    ? bnbPopupImage
+                    : dummyEvent.popupInfo.linkState === "manta"
+                    ? mantaThumb
+                    : dummyEvent.popupInfo.linkState === "taiko"
+                    ? taikoThumb
+                    : dummyEvent.popupInfo.linkState === "cookie3"
+                    ? cookie3Thumb
                     : eventPopupImage
                 }
                 alt=""
-                style={{ width: 80, height: 80 }}
+                style={{
+                  width: 80,
+                  height: 80,
+                }}
               />
               <div className="d-flex flex-column justify-content-between">
                 <div className="d-flex flex-column">
@@ -161,13 +172,16 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                 </div>
                 <div className="d-flex">
                   <span className="event-popup-chain mb-0">
-                    Chain: {dummyEvent.popupInfo?.chain}
+                    Chain: {dummyEvent?.chain}
                   </span>
                 </div>
               </div>
             </div>
             {dummyEvent.popupInfo?.status === "Live" && (
-              <Countdown renderer={renderer} date={dummyEvent.popupInfo.eventDuration} />
+              <Countdown
+                renderer={renderer}
+                date={dummyEvent.popupInfo.eventDuration}
+              />
             )}
             {dummyEvent.popupInfo?.status === "Coming Soon" && (
               <div className="d-flex flex-column">
@@ -181,7 +195,9 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                     className="green-calendar"
                     alt=""
                   />
-                  <h6 className="live-on-date mb-0">{dummyEvent.popupInfo.eventDate}</h6>
+                  <h6 className="live-on-date mb-0">
+                    {dummyEvent.popupInfo.eventDate}
+                  </h6>
                 </div>
               </div>
             )}
@@ -189,15 +205,30 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
         </div>
         <div className="d-flex align-items-center justify-content-between mb-3">
           <h6 className="how-it-works mb-0">How it works?</h6>
-          {dummyEvent.popupInfo.status === "Live" && dummyEvent.popupInfo.learnMore !== "" && (
-            <NavLink
-              to={dummyEvent.popupInfo.learnMore}
-              className="events-page-details d-flex align-items-center gap-2"
-            >
-              Learn more
-              <img src={eventsArrow} alt="" />
-            </NavLink>
-          )}
+          {dummyEvent.popupInfo.status === "Live" &&
+            dummyEvent.popupInfo.learnMore !== "" &&
+            dummyEvent.popupInfo.id !== "event15" && (
+              <NavLink
+                to={dummyEvent.popupInfo.learnMore}
+                className="events-page-details d-flex align-items-center gap-2"
+              >
+                Learn more
+                <img src={eventsArrow} alt="" />
+              </NavLink>
+            )}
+          {dummyEvent.popupInfo.status === "Live" &&
+            dummyEvent.popupInfo.learnMore !== "" &&
+            dummyEvent.popupInfo.id === "event15" && (
+              <a
+                href={dummyEvent.popupInfo.learnMore}
+                target="_blank"
+                rel="noreferrer"
+                className="events-page-details d-flex align-items-center gap-2"
+              >
+                Learn more
+                <img src={eventsArrow} alt="" />
+              </a>
+            )}
         </div>
         <div className="row mb-3 gap-3 gap-lg-0">
           <div className="col-12 col-lg-6">
@@ -214,6 +245,17 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                   the global leaderboard. Remember to log in to the game daily
                   and venture into the Conflux area to uncover hidden treasures.
                 </p>
+              ) : dummyEvent.popupInfo.id === "event2" ? (
+                <p className="popup-event-desc">
+                  To participate in the event, players are required to&nbsp;
+                  <b>hold a Coin98 Beta Pass NFT</b>. You can get the Coin98
+                  Beta Pass NFT from the World of Dypians Marketplace. By
+                  engaging in the game on a daily basis and exploring the Coin98
+                  area, players not only stand a chance to secure daily rewards
+                  in C98, but also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the Coin98 area to uncover hidden treasures.
+                </p>
               ) : dummyEvent.popupInfo.id === "event20" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
@@ -226,16 +268,27 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                   and venture into the BNB Chain area to uncover hidden
                   treasures.
                 </p>
-              ) : dummyEvent.popupInfo.id === "event2" ? (
+              ) : dummyEvent.id === "event21" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
-                  <b>hold a Coin98 Beta Pass NFT</b>. You can get the Coin98
-                  Beta Pass NFT from the World of Dypians Marketplace. By
-                  engaging in the game on a daily basis and exploring the Coin98
-                  area, players not only stand a chance to secure daily rewards
-                  in C98, but also earn points for their placement on the global
+                  <b>hold a Manta Beta Pass NFT</b>. You can get the Manta Beta
+                  Pass NFT from the World of Dypians Marketplace. By engaging in
+                  the game on a daily basis and exploring the Manta area,
+                  players not only stand a chance to secure daily rewards in
+                  MANTA, but also earn points for their placement on the global
                   leaderboard. Remember to log in to the game daily and venture
-                  into the Coin98 area to uncover hidden treasures.
+                  into the Manta area to uncover hidden treasures.
+                </p>
+              ) : dummyEvent.popupInfo.id === "event22" ? (
+                <p className="popup-event-desc">
+                  To participate in the event, players are required to&nbsp;
+                  <b>hold a Taiko Beta Pass NFT</b>. You can get the Taiko Beta
+                  Pass NFT from the World of Dypians Marketplace. By engaging in
+                  the game on a daily basis and exploring the Taiko area,
+                  players not only stand a chance to secure daily rewards in
+                  ETH, but also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the Taiko area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event3" ? (
                 <p className="popup-event-desc">
@@ -259,7 +312,7 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                   daily and venture into the downtown area to uncover hidden
                   treasures.
                 </p>
-              ) : dummyEvent.popupInfo.id === "event6" ? (
+              ) : dummyEvent.id === "event6" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Gate Beta Pass NFT</b>. You can get the Gate Beta
@@ -269,17 +322,6 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                   BNB, but also earn points for their placement on the global
                   leaderboard. Remember to log in to the game daily and venture
                   into the Gate.io area to uncover hidden treasures.
-                </p>
-              ) : dummyEvent.popupInfo.id === "event11" ? (
-                <p className="popup-event-desc">
-                  To participate in the event, players are required to&nbsp;
-                  <b>hold a SKALE Beta Pass NFT</b>. You can get the SKALE Beta
-                  Pass NFT from the World of Dypians Marketplace. By engaging in
-                  the game on a daily basis and exploring the SKALE area,
-                  players not only stand a chance to secure daily rewards in
-                  SKL, but also earn points for their placement on the global
-                  leaderboard. Remember to log in to the game daily and venture
-                  into the SKALE area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event7" ? (
                 <p className="popup-event-desc">
@@ -305,20 +347,6 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                   in to the game daily and venture into the CoinMarketCap area
                   to uncover hidden treasures.
                 </p>
-              ) : dummyEvent.popupInfo.id === "event11" ? (
-                <p
-                  className="popup-event-desc"
-                  // style={{ fontSize: "12px", fontWeight: "500" }}
-                >
-                  SKALE stands as the world's fastest blockchain, meticulously
-                  engineered to enable secure Ethereum scaling. With SKALE
-                  AppChains, users enjoy ZERO gas fees and access advanced
-                  functionalities like AI/ML smart contracts, on-chain file
-                  storage, interchain messaging, and zero-cost minting. This
-                  empowers developers to swiftly deploy their own configurable
-                  EVM blockchains without compromising on speed, security, or
-                  decentralization.
-                </p>
               ) : dummyEvent.popupInfo.id === "event9" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to be{" "}
@@ -327,6 +355,17 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                   have the opportunity to secure daily rewards in BNB. Remember
                   to log in to the game daily and venture into the downtown area
                   to uncover hidden treasures.
+                </p>
+              ) : dummyEvent.popupInfo.id === "event11" ? (
+                <p className="popup-event-desc">
+                  To participate in the event, players are required to&nbsp;
+                  <b>hold a SKALE Beta Pass NFT</b>. You can get the SKALE Beta
+                  Pass NFT from the World of Dypians Marketplace. By engaging in
+                  the game on a daily basis and exploring the SKALE area,
+                  players not only stand a chance to secure daily rewards in
+                  SKL, but also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the SKALE area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event14" ? (
                 <p className="popup-event-desc">
@@ -385,6 +424,17 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                   to the game daily and venture into the MultiversX area to
                   uncover hidden treasures.
                 </p>
+              ) : dummyEvent.popupInfo.id === "event23" ? (
+                <p className="popup-event-desc">
+                  To participate in the event, players are required to&nbsp;
+                  <b>hold a Cookie3 Beta Pass NFT</b>. You can get the Cookie3
+                  Beta Pass NFT from the World of Dypians Marketplace. By
+                  engaging in the game on a daily basis and exploring the
+                  Cookie3 area, players not only stand a chance to secure daily
+                  rewards in COOKIE, but also earn points for their placement on
+                  the global leaderboard. Remember to log in to the game daily
+                  and venture into the Cookie3 area to uncover hidden treasures.
+                </p>
               ) : (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
@@ -407,7 +457,8 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                 <>
                   {dummyEvent.popupInfo.id !== "event5" ? (
                     <li className="popup-event-desc">
-                      Daily Rewards range from ${dummyEvent.popupInfo.minRewards} to $
+                      Daily Rewards range from $
+                      {dummyEvent.popupInfo.minRewards} to $
                       {dummyEvent.popupInfo.maxRewards}
                     </li>
                   ) : (
@@ -415,8 +466,8 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                   )}
                   {dummyEvent.popupInfo.id !== "event5" && (
                     <li className="popup-event-desc">
-                      Daily Points range from {dummyEvent.popupInfo.minPoints} to{" "}
-                      {dummyEvent.popupInfo.maxPoints}
+                      Daily Points range from {dummyEvent.popupInfo.minPoints}{" "}
+                      to {dummyEvent.popupInfo.maxPoints}
                     </li>
                   )}
                 </>
@@ -427,14 +478,13 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                       ? "CFX"
                       : dummyEvent.popupInfo.id === "event2"
                       ? "C98"
-                      : dummyEvent.popupInfo.id === "event3"
-                      ? "BNB"
                       : dummyEvent.popupInfo.id === "event5"
                       ? "DYP"
                       : dummyEvent.popupInfo.id === "event6" ||
                         dummyEvent.popupInfo.id === "event8" ||
                         dummyEvent.popupInfo.id === "event9" ||
-                        dummyEvent.popupInfo.id === "event20"
+                        dummyEvent.popupInfo.id === "event20" ||
+                        dummyEvent.popupInfo.id === "event3"
                       ? "BNB"
                       : dummyEvent.popupInfo.id === "event7"
                       ? "DOGE"
@@ -450,15 +500,22 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                       ? "CORE"
                       : dummyEvent.popupInfo.id === "event16"
                       ? "EGLD"
+                      : dummyEvent.popupInfo.id === "event21"
+                      ? "MANTA"
+                      : dummyEvent.popupInfo.id === "event22"
+                      ? "TAIKO"
+                      : dummyEvent.popupInfo.id === "event23"
+                      ? "COOKIE"
                       : "ETH"}{" "}
                     rewards
                   </li>
                 )}
-                {dummyEvent.popupInfo.id !== "event5" && dummyEvent.popupInfo.id !== "event11" && (
-                  <li className="popup-event-desc">
-                    Get global leaderboard points
-                  </li>
-                )}
+                {dummyEvent.popupInfo.id !== "event5" &&
+                  dummyEvent.popupInfo.id !== "event11" && (
+                    <li className="popup-event-desc">
+                      Get global leaderboard points
+                    </li>
+                  )}
                 {dummyEvent.popupInfo.id === "event11" && (
                   <li className="popup-event-desc">
                     Get global SKALE leaderboard points
@@ -476,9 +533,12 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
             ? "Conflux Network"
             : dummyEvent.popupInfo.id === "event2"
             ? "Coin98"
+            : dummyEvent.popupInfo.id === "event20"
+            ? "BNB Chain"
             : dummyEvent.popupInfo.id === "event3"
             ? "CoinGecko"
-            : dummyEvent.popupInfo.id === "event5" || dummyEvent.popupInfo.id === "event9"
+            : dummyEvent.popupInfo.id === "event5" ||
+              dummyEvent.popupInfo.id === "event9"
             ? "Dypius"
             : dummyEvent.popupInfo.id === "event6"
             ? "Gate.io"
@@ -498,8 +558,12 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
             ? "CORE"
             : dummyEvent.popupInfo.id === "event16"
             ? "MultiversX"
-            : dummyEvent.popupInfo.id === "event20"
-            ? "BNB Chain"
+            : dummyEvent.popupInfo.id === "event21"
+            ? "Manta"
+            : dummyEvent.popupInfo.id === "event22"
+            ? "Taiko"
+            : dummyEvent.popupInfo.id === "event23"
+            ? "Cookie3"
             : "Base Network"}
         </h6>
         {dummyEvent.popupInfo.id === "event1" ? (
@@ -525,6 +589,53 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
             fulfill untapped demand and enhance in-demand utilities in the DeFi
             space, helping people to access DeFi services effortlessly.
           </p>
+        ) : dummyEvent.popupInfo.id === "event20" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+            BNB Chain is a high-performance blockchain designed to support the
+            expansive growth of decentralized applications. It offers a robust
+            infrastructure that combines high throughput, low latency, and low
+            fees, making it the ideal platform for DeFi, NFTs, and gaming. With
+            BNB Chain, developers can leverage advanced functionalities such as
+            cross-chain compatibility, on-chain governance, and scalable smart
+            contracts. The ecosystem empowers projects to build and scale
+            efficiently, ensuring fast, secure, and decentralized solutions
+            without compromising on user experience or innovation.
+          </p>
+        ) : dummyEvent.popupInfo.id === "event21" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+            Manta is the multi-modular ecosystem for zero-knowledge (ZK)
+            applications. Manta was created by a team of experienced founders
+            from prestigious institutions, including Harvard, MIT, and Algorand.
+            Manta has received investments from many top web3 investment funds,
+            including Binance Labs and Polychain Capital. It has grown through
+            participation in the best web3 accelerators, including Alliance DAO
+            and Berkeley Blockchain Xcelerator. Manta is poised to bring the
+            next generation of web3 users and usher in a new chapter of web3
+            zkApp applications.
+          </p>
+        ) : dummyEvent.popupInfo.id === "event22" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+            Taiko is an Ethereum-equivalent (Type 1) ZK-EVM, maximally
+            compatible with Ethereum. No additional compiling, reaudits, or
+            tooling needed. Everything works out of the box, guaranteed.
+          </p>
+        ) : dummyEvent.popupInfo.id === "event23" ? (
+          <p className="popup-event-desc">
+            Cookie3 is the first MarketingFi protocol and AI-powered data layer,
+            built to revolutionize how users, creators, and businesses interact.
+            By leveraging AI and blockchain, Cookie3 enhances marketing
+            strategies and data insights, empowering everyone in the digital
+            ecosystem to thrive with smarter, more efficient tools.
+          </p>
         ) : dummyEvent.popupInfo.id === "event3" ? (
           <p
             className="popup-event-desc"
@@ -538,7 +649,8 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
             growth, open source code development, major events, and on-chain
             metrics.
           </p>
-        ) : dummyEvent.popupInfo.id === "event5" || dummyEvent.popupInfo.id === "event9" ? (
+        ) : dummyEvent.popupInfo.id === "event5" ||
+          dummyEvent.popupInfo.id === "event9" ? (
           <p
             className="popup-event-desc"
             // style={{ fontSize: "12px", fontWeight: "500" }}
@@ -562,21 +674,6 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
             countries across the world, and is always committed to complying
             with the applicable laws where it operates.
           </p>
-        ) : dummyEvent.popupInfo.id === "event20" ? (
-          <p
-            className="popup-event-desc"
-            // style={{ fontSize: "12px", fontWeight: "500" }}
-          >
-            BNB Chain is a high-performance blockchain designed to support the
-            expansive growth of decentralized applications. It offers a robust
-            infrastructure that combines high throughput, low latency, and low
-            fees, making it the ideal platform for DeFi, NFTs, and gaming. With
-            BNB Chain, developers can leverage advanced functionalities such as
-            cross-chain compatibility, on-chain governance, and scalable smart
-            contracts. The ecosystem empowers projects to build and scale
-            efficiently, ensuring fast, secure, and decentralized solutions
-            without compromising on user experience or innovation.
-          </p>
         ) : dummyEvent.popupInfo.id === "event7" ? (
           <p
             className="popup-event-desc"
@@ -588,6 +685,18 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
             cryptocurrency that utilises blockchain technology, a highly secure
             decentralised system of storing information as a public ledger that
             is maintained by a network of computers called nodes.
+          </p>
+        ) : dummyEvent.popupInfo.id === "event8" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+            CoinMarketCap provides cryptocurrency market cap rankings, charts,
+            and more. We tracks capitalization of various cryptocurrencies by
+            listing prices, available supply (amount of coins that is currently
+            in circulation), trade volume over last 24 hours, or market
+            capitalizations. CoinMarketCap was founded in May 2013 by Brandon
+            Chez in Long Island City, Queens, New York.
           </p>
         ) : dummyEvent.popupInfo.id === "event11" ? (
           <p
@@ -615,6 +724,15 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
             speed, security, and scalability, all contributing to a more secure
             and open world.
           </p>
+        ) : dummyEvent.popupInfo.id === "event16" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+            MultiversX is a distributed blockchain network for next-gen
+            applications. Decentralized via 3000+ nodes, scalable through
+            sharding, fast, secure & green.
+          </p>
         ) : dummyEvent.popupInfo.id === "event15" ? (
           <p
             className="popup-event-desc"
@@ -640,32 +758,11 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
             // style={{ fontSize: "12px", fontWeight: "500" }}
           >
             Core DAO started as a community looking for better solutions, and
-            that’s what it remains. With principles grounded in the premises of
+            that's what it remains. With principles grounded in the premises of
             both Bitcoin and Ethereum, our power comes from embracing multiple
             ideas and communities. The opposite of a winner-take-all mentality -
             Core is focused instead on platform growth and driving the global
             adoption of blockchain technology.
-          </p>
-        ) : dummyEvent.popupInfo.id === "event16" ? (
-          <p
-            className="popup-event-desc"
-            // style={{ fontSize: "12px", fontWeight: "500" }}
-          >
-            MultiversX is a distributed blockchain network for next-gen
-            applications. Decentralized via 3000+ nodes, scalable through
-            sharding, fast, secure & green.
-          </p>
-        ) : dummyEvent.popupInfo.id === "event8" ? (
-          <p
-            className="popup-event-desc"
-            // style={{ fontSize: "12px", fontWeight: "500" }}
-          >
-            CoinMarketCap provides cryptocurrency market cap rankings, charts,
-            and more. We tracks capitalization of various cryptocurrencies by
-            listing prices, available supply (amount of coins that is currently
-            in circulation), trade volume over last 24 hours, or market
-            capitalizations. CoinMarketCap was founded in May 2013 by Brandon
-            Chez in Long Island City, Queens, New York.
           </p>
         ) : (
           <p
@@ -685,7 +782,8 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
             href={
               dummyEvent.popupInfo.id === "event1"
                 ? "https://twitter.com/Conflux_Network"
-                : dummyEvent.popupInfo.id === "event5" || dummyEvent.popupInfo.id === "event9"
+                : dummyEvent.popupInfo.id === "event5" ||
+                  dummyEvent.popupInfo.id === "event9"
                 ? "https://twitter.com/dypius"
                 : dummyEvent.popupInfo.id === "event3"
                 ? "https://twitter.com/coingecko"
@@ -697,18 +795,24 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                 ? "https://twitter.com/CoinMarketCap"
                 : dummyEvent.popupInfo.id === "event11"
                 ? "https://twitter.com/SkaleNetwork"
+                : dummyEvent.popupInfo.id === "event20"
+                ? "https://x.com/BNBChain"
                 : dummyEvent.popupInfo.id === "event14"
                 ? "https://viction.link/twitter"
                 : dummyEvent.popupInfo.id === "event15"
                 ? "https://twitter.com/Immutable"
-                : dummyEvent.popupInfo.id === "event20"
-                ? "https://x.com/BNBChain"
-                : dummyEvent.popupInfo.id === "event13"
+                : dummyEvent.id === "event13"
                 ? "https://twitter.com/SeiNetwork"
                 : dummyEvent.popupInfo.id === "event12"
                 ? "https://twitter.com/Coredao_Org"
                 : dummyEvent.popupInfo.id === "event16"
                 ? "https://twitter.com/MultiversX"
+                : dummyEvent.popupInfo.id === "event21"
+                ? "https://x.com/mantanetwork"
+                : dummyEvent.popupInfo.id === "event22"
+                ? "https://x.com/taikoxyz"
+                : dummyEvent.popupInfo.id === "event23"
+                ? "https://x.com/cookie3_com"
                 : "https://twitter.com/buildonbase"
             }
             target="_blank"
@@ -722,30 +826,37 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
             href={
               dummyEvent.popupInfo.id === "event1"
                 ? "https://t.me/Conflux_English"
-                : dummyEvent.popupInfo.id === "event5" || dummyEvent.popupInfo.id === "event9"
+                : dummyEvent.popupInfo.id === "event5" ||
+                  dummyEvent.popupInfo.id === "event9"
                 ? "https://t.me/worldofdypians"
                 : dummyEvent.popupInfo.id === "event3"
                 ? "https://t.me/coingecko"
-                : dummyEvent.popupInfo.id === "event6"
-                ? "https://t.me/gateio_en"
                 : dummyEvent.popupInfo.id === "event8"
                 ? "https://t.me/CoinMarketCapAnnouncements"
+                : dummyEvent.popupInfo.id === "event6"
+                ? "https://t.me/gateio_en"
                 : dummyEvent.popupInfo.id === "event7"
                 ? "https://discord.gg/dogecoin"
                 : dummyEvent.popupInfo.id === "event11"
                 ? "https://t.me/skaleofficial"
+                : dummyEvent.popupInfo.id === "event20"
+                ? "https://t.me/bnbchain"
                 : dummyEvent.popupInfo.id === "event14"
                 ? "https://viction.link/telegram"
                 : dummyEvent.popupInfo.id === "event15"
                 ? "https://discord.gg/CYsjMdctsP"
-                : dummyEvent.popupInfo.id === "event20"
-                ? "https://t.me/bnbchain"
                 : dummyEvent.popupInfo.id === "event13"
                 ? "https://t.me/seinetwork?ref=blog.sei.io"
                 : dummyEvent.popupInfo.id === "event12"
                 ? "https://t.me/CoreDAOTelegram"
                 : dummyEvent.popupInfo.id === "event16"
                 ? "https://t.me/MultiversX"
+                : dummyEvent.popupInfo.id === "event21"
+                ? "https://www.t.me/mantanetworkofficial"
+                : dummyEvent.popupInfo.id === "event22"
+                ? "https://t.me/TaikoEcosystem"
+                : dummyEvent.popupInfo.id === "event23"
+                ? "https://t.me/cookie3_co"
                 : "https://base.org/discord"
             }
             target="_blank"
@@ -755,12 +866,14 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
             <img
               alt=""
               src={
-                dummyEvent.popupInfo.id !== "event4" && dummyEvent.popupInfo.id !== "event7"
+                dummyEvent.popupInfo.id !== "event4" &&
+                dummyEvent.popupInfo.id !== "event7"
                   ? telegram
                   : discord
               }
             />
-            {dummyEvent.popupInfo.id !== "event4" && dummyEvent.popupInfo.id !== "event7"
+            {dummyEvent.popupInfo.id !== "event4" &&
+            dummyEvent.popupInfo.id !== "event7"
               ? "Telegram"
               : "Discord"}
           </a>
@@ -768,7 +881,8 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
             href={
               dummyEvent.popupInfo.id === "event1"
                 ? "https://confluxnetwork.org/"
-                : dummyEvent.popupInfo.id === "event5" || dummyEvent.popupInfo.id === "event9"
+                : dummyEvent.popupInfo.id === "event5" ||
+                  dummyEvent.popupInfo.id === "event9"
                 ? "https://www.dypius.com/"
                 : dummyEvent.popupInfo.id === "event3"
                 ? "https://www.coingecko.com/"
@@ -782,16 +896,22 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                 ? "https://skale.space/"
                 : dummyEvent.popupInfo.id === "event14"
                 ? "https://www.viction.xyz/"
-                : dummyEvent.popupInfo.id === "event20"
-                ? "https://www.bnbchain.org/en"
                 : dummyEvent.popupInfo.id === "event15"
                 ? "https://www.immutable.com/"
                 : dummyEvent.popupInfo.id === "event13"
                 ? "https://www.sei.io/"
+                : dummyEvent.popupInfo.id === "event20"
+                ? "https://www.bnbchain.org/en"
                 : dummyEvent.popupInfo.id === "event12"
                 ? "https://coredao.org/"
                 : dummyEvent.popupInfo.id === "event16"
                 ? "https://multiversx.com/"
+                : dummyEvent.popupInfo.id === "event21"
+                ? "https://manta.network/"
+                : dummyEvent.popupInfo.id === "event22"
+                ? "https://taiko.xyz/"
+                : dummyEvent.popupInfo.id === "event23"
+                ? "https://www.cookie3.com/"
                 : "https://base.org/"
             }
             target="_blank"
@@ -816,13 +936,17 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
               </h6>
 
               <span className="mb-0 event-earnings-usd">
-                {dummyEvent.popupInfo.id === "event5" ? "Amount" : "Leaderboard Points"}
+                {dummyEvent.popupInfo.id === "event5"
+                  ? "Amount"
+                  : "Leaderboard Points"}
               </span>
             </div>
             <div className="d-flex flex-column gap-2">
               <h6
                 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1"
-                style={{ left: dummyEvent.popupInfo.id === "event5" && "0px" }}
+                style={{
+                  left: dummyEvent.popupInfo.id === "event5" && "0px",
+                }}
               >
                 ${getFormattedNumber(dummyEvent.userEarnUsd, 2)}
                 <span className="ethpricerewards specialstyle-wrapper-eth">
@@ -839,13 +963,14 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                         ? "DYP"
                         : dummyEvent.popupInfo.id === "event6" ||
                           dummyEvent.popupInfo.id === "event8" ||
-                          dummyEvent.popupInfo.id === "event9" ||
-                          dummyEvent.popupInfo.id === "event20"
+                          dummyEvent.popupInfo.id === "event9"
                         ? "BNB"
                         : dummyEvent.popupInfo.id === "event7"
                         ? "DOGE"
                         : dummyEvent.popupInfo.id === "event11"
                         ? "SKL"
+                        : dummyEvent.popupInfo.id === "event20"
+                        ? "BNB"
                         : dummyEvent.popupInfo.id === "event14"
                         ? "VIC"
                         : dummyEvent.popupInfo.id === "event15"
@@ -856,6 +981,12 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
                         ? "CORE"
                         : dummyEvent.popupInfo.id === "event16"
                         ? "EGLD"
+                        : dummyEvent.popupInfo.id === "event21"
+                        ? "MANTA"
+                        : dummyEvent.popupInfo.id === "event22"
+                        ? "TAIKO"
+                        : dummyEvent.popupInfo.id === "event23"
+                        ? "COOKIE"
                         : "ETH"}
                     </>
                   )}
@@ -872,27 +1003,14 @@ const EventsPopup = ({ onClose, dummyEvent,onClearAd }) => {
           </span>
         </div>
         {dummyEvent.status === "Coming Soon" &&
-          dummyEvent.popupInfo.id !== "event7" &&
-          dummyEvent.popupInfo.id !== "event9" && (
+          dummyEvent.popupInfo.id !== "event15" &&
+          dummyEvent.popupInfo.id !== "event22" && (
             <div className="w-100 d-flex justify-content-end mt-3">
               <NavLink to={`/marketplace/beta-pass/${dummyEvent.linkState}`}>
                 <button className="btn get-beta-btn">Get Beta Pass</button>
               </NavLink>
             </div>
           )}
-        {/* {dummyEvent.popupInfo.id === "event9" && !isPremium && (
-              <div className="w-100 d-flex justify-content-end mt-3">
-                <NavLink
-                  to={`/account`}
-                  onClick={() => {
-                    setEventPopup(false);
-                    onPremiumClick();
-                  }}
-                >
-                  <button className="btn get-beta-btn">Get Premium</button>
-                </NavLink>
-              </div>
-            )} */}
       </div>
     </OutsideClickHandler>
   );

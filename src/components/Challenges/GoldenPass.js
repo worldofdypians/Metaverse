@@ -23,6 +23,7 @@ import { dyp700_abi, dyp700v1_abi } from "../../screens/Account/src/web3";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { CircularProgress } from "@mui/material";
+import { ethers } from "ethers";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -46,7 +47,7 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const GoldenPass = ({ coinbase, wallet, chainId }) => {
+const GoldenPass = ({ coinbase, wallet, chainId, binanceW3WProvider }) => {
   const [dropdown, setDropdown] = useState(false);
   const [eventPrice, setEventPrice] = useState("DYP v2");
   const [goldenPassDypAmountV1, setGoldenPassDypAmountV1] = useState(0);
@@ -314,42 +315,99 @@ const GoldenPass = ({ coinbase, wallet, chainId }) => {
     setStatus700("Confirm to complete purchase");
     setStatusColor700("#00FECF");
 
-    if (priceType === 1) {
-      await dyp700_abi.methods
-        .deposit()
-        .send({ from: coinbase })
-        .then(() => {
-          setStatus700("Bundle successfully purchased!");
-          setDepositState700("success");
-          setStatusColor700("#00FECF");
-          insertBundle();
-          increaseBundle();
-          handleRefreshCountdown700();
-          checkApproval700(priceType);
-        })
-        .catch((e) => {
-          setStatusColor700("#FE7A00");
-          setStatus700(e?.message);
-          setDepositState700("failDeposit");
-        });
-    } else if (priceType === 0) {
-      await dyp700v1_abi.methods
-        .deposit()
-        .send({ from: coinbase })
-        .then(() => {
-          setStatus700("Bundle successfully purchased!");
-          setDepositState700("success");
-          setStatusColor700("#00FECF");
-          insertBundle();
-          increaseBundle();
-          handleRefreshCountdown700();
-          checkApproval700(priceType);
-        })
-        .catch((e) => {
-          setStatusColor700("#FE7A00");
-          setStatus700(e?.message);
-          setDepositState700("failDeposit");
-        });
+    if (window.WALLET_TYPE !== "binance") {
+      if (priceType === 1) {
+        await dyp700_abi.methods
+          .deposit()
+          .send({ from: coinbase })
+          .then(() => {
+            setStatus700("Bundle successfully purchased!");
+            setDepositState700("success");
+            setStatusColor700("#00FECF");
+            insertBundle();
+            increaseBundle();
+            handleRefreshCountdown700();
+            checkApproval700(priceType);
+          })
+          .catch((e) => {
+            setStatusColor700("#FE7A00");
+            setStatus700(e?.message);
+            setDepositState700("failDeposit");
+          });
+      } else if (priceType === 0) {
+        await dyp700v1_abi.methods
+          .deposit()
+          .send({ from: coinbase })
+          .then(() => {
+            setStatus700("Bundle successfully purchased!");
+            setDepositState700("success");
+            setStatusColor700("#00FECF");
+            insertBundle();
+            increaseBundle();
+            handleRefreshCountdown700();
+            checkApproval700(priceType);
+          })
+          .catch((e) => {
+            setStatusColor700("#FE7A00");
+            setStatus700(e?.message);
+            setDepositState700("failDeposit");
+          });
+      }
+    } else if (window.WALLET_TYPE === "binance") {
+      if (priceType === 1) {
+        const dyp700_address = "0xd16DAad6bEd59a2c6806868855A05f4abF3b2ac9";
+        const goldenSc = new ethers.Contract(
+          dyp700_address,
+          DYP_700_ABI,
+          binanceW3WProvider.getSigner()
+        );
+       const txResponse = await goldenSc
+          .deposit({ from: coinbase })
+          .catch((e) => {
+            setStatusColor700("#FE7A00");
+            setStatus700(e?.message);
+            setDepositState700("failDeposit");
+          });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setStatus700("Bundle successfully purchased!");
+            setDepositState700("success");
+            setStatusColor700("#00FECF");
+            insertBundle();
+            increaseBundle();
+            handleRefreshCountdown700();
+            checkApproval700(priceType);
+          }
+
+      } else if (priceType === 0) {
+        const dyp700_address = "0x6493e45F0D9B81355035f07d6FAf59309B2e2f89";
+        const goldenSc = new ethers.Contract(
+          dyp700_address,
+          DYP_700V1_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+       const txResponse = await goldenSc
+          .deposit({ from: coinbase })
+          .catch((e) => {
+            setStatusColor700("#FE7A00");
+            setStatus700(e?.message);
+            setDepositState700("failDeposit");
+          });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setStatus700("Bundle successfully purchased!");
+            setDepositState700("success");
+            setStatusColor700("#00FECF");
+            insertBundle();
+            increaseBundle();
+            handleRefreshCountdown700();
+            checkApproval700(priceType);
+          }
+
+      }
     }
   };
 
