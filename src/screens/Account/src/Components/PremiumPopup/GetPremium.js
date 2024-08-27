@@ -258,7 +258,6 @@ const GetPremiumPopup = ({
     // } else setdiscountPercentage(0);
   };
 
-
   const handleUpdatePremiumUser = async (wallet) => {
     await axios
       .get(`https://api.worldofdypians.com/api/sub/${wallet}`)
@@ -717,22 +716,21 @@ const GetPremiumPopup = ({
               }, 5000);
             });
 
-            const txReceipt = await txResponse.wait();
-        if (txReceipt) {
-          setloadspinner(false);
-          setisApproved(true);
-          if (discountPercentage < 100) {
-            if (
-              selectedSubscriptionToken.toLowerCase() ===
-              "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
-            ) {
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentage < 100) {
+              if (
+                selectedSubscriptionToken.toLowerCase() ===
+                "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+              ) {
+                setapproveStatus("deposit");
+              } else setapproveStatus("approveAmount");
+            } else {
               setapproveStatus("deposit");
-            } else setapproveStatus("approveAmount");
-          } else {
-            setapproveStatus("deposit");
+            }
           }
-        }
-
         } else if (approveStatus === "approveAmount") {
           const txResponse = await tokenContract_binance
             .approve(bnbsubscribeAddress, price, { from: coinbase })
@@ -748,16 +746,19 @@ const GetPremiumPopup = ({
               }, 5000);
             });
 
-            const txReceipt = await txResponse.wait();
-        if (txReceipt) {
-          setloadspinner(false);
-              setisApproved(true);
-              setapproveStatus("deposit");
-        }
-
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          }
         }
       }
-    } else if (chainId === 88 && nftPremium_totalViction > 0 && window.WALLET_TYPE !== "binance") {
+    } else if (
+      chainId === 88 &&
+      nftPremium_totalViction > 0 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
       if (approveStatus === "initial") {
         await nftContract_viction.methods
           .approve(
@@ -810,7 +811,7 @@ const GetPremiumPopup = ({
             }, 5000);
           });
       }
-    }  else {
+    } else {
       if (window.WALLET_TYPE !== "binance") {
         let tokenContract = new web3.eth.Contract(
           window.ERC20_ABI,
@@ -820,29 +821,29 @@ const GetPremiumPopup = ({
 
           .approve(
             chainId === 1
-            ? ethsubscribeAddress
-            : chainId === 56
-            ? bnbsubscribeAddress
-            : chainId === 1030
-            ? cfxsubscribeAddress
-            : chainId === 8453
-            ? basesubscribeAddress
-            : chainId === 43114
-            ? avaxsubscribeAddress
-            : chainId === 1482601649
-            ? skalesubscribeAddress
-            : chainId === 88
-            ? victionsubscribeAddress
-            : chainId === 169
-            ? mantasubscribeAddress
-            : chainId === 167000
-            ? taikosubscribeAddress
-            : chainId === 1116
-            ? coresubscribeAddress
-            : chainId === 713715
-            ? seisubscribeAddress
-            : cfxsubscribeAddress,
-          price
+              ? ethsubscribeAddress
+              : chainId === 56
+              ? bnbsubscribeAddress
+              : chainId === 1030
+              ? cfxsubscribeAddress
+              : chainId === 8453
+              ? basesubscribeAddress
+              : chainId === 43114
+              ? avaxsubscribeAddress
+              : chainId === 1482601649
+              ? skalesubscribeAddress
+              : chainId === 88
+              ? victionsubscribeAddress
+              : chainId === 169
+              ? mantasubscribeAddress
+              : chainId === 167000
+              ? taikosubscribeAddress
+              : chainId === 1116
+              ? coresubscribeAddress
+              : chainId === 713715
+              ? seisubscribeAddress
+              : cfxsubscribeAddress,
+            price
           )
           .send({ from: coinbase })
           .then(() => {
@@ -871,29 +872,29 @@ const GetPremiumPopup = ({
         const txResponse = await tokenContract_binance
           .approve(
             chainId === 1
-            ? ethsubscribeAddress
-            : chainId === 56
-            ? bnbsubscribeAddress
-            : chainId === 1030
-            ? cfxsubscribeAddress
-            : chainId === 8453
-            ? basesubscribeAddress
-            : chainId === 43114
-            ? avaxsubscribeAddress
-            : chainId === 1482601649
-            ? skalesubscribeAddress
-            : chainId === 88
-            ? victionsubscribeAddress
-            : chainId === 169
-            ? mantasubscribeAddress
-            : chainId === 167000
-            ? taikosubscribeAddress
-            : chainId === 1116
-            ? coresubscribeAddress
-            : chainId === 713715
-            ? seisubscribeAddress
-            : cfxsubscribeAddress,
-          price,
+              ? ethsubscribeAddress
+              : chainId === 56
+              ? bnbsubscribeAddress
+              : chainId === 1030
+              ? cfxsubscribeAddress
+              : chainId === 8453
+              ? basesubscribeAddress
+              : chainId === 43114
+              ? avaxsubscribeAddress
+              : chainId === 1482601649
+              ? skalesubscribeAddress
+              : chainId === 88
+              ? victionsubscribeAddress
+              : chainId === 169
+              ? mantasubscribeAddress
+              : chainId === 167000
+              ? taikosubscribeAddress
+              : chainId === 1116
+              ? coresubscribeAddress
+              : chainId === 713715
+              ? seisubscribeAddress
+              : cfxsubscribeAddress,
+            price,
             { from: coinbase }
           )
           .catch((e) => {
@@ -908,13 +909,12 @@ const GetPremiumPopup = ({
             }, 5000);
           });
 
-          const txReceipt = await txResponse.wait();
+        const txReceipt = await txResponse.wait();
         if (txReceipt) {
           setloadspinner(false);
           setisApproved(true);
           setapproveStatus("deposit");
         }
-
       }
     }
   };
@@ -1201,31 +1201,30 @@ const GetPremiumPopup = ({
               console.error(e);
               return false;
             });
- 
-            if (
-              (approved.toLowerCase() === victionsubscribeAddress.toLowerCase()) ||
-              approvedAll === true
-            ) {
-           
-              if(discountPercentageViction === 100) {
-                setloadspinner(false);
-                setisApproved(true);
-                setapproveStatus("deposit");
-              }
-              // if (discountPercentageViction < 100) {
-              //   setloadspinner(false);
-              //   setisApproved(true);
-              //   setapproveStatus("approveAmount");
-              // } else {
-              //   setloadspinner(false);
-              //   setisApproved(false);
-              //   setapproveStatus("initial");
-              // }
-            } else {
+
+          if (
+            approved.toLowerCase() === victionsubscribeAddress.toLowerCase() ||
+            approvedAll === true
+          ) {
+            if (discountPercentageViction === 100) {
               setloadspinner(false);
-              setisApproved(false);
-              setapproveStatus("initial");
+              setisApproved(true);
+              setapproveStatus("deposit");
             }
+            // if (discountPercentageViction < 100) {
+            //   setloadspinner(false);
+            //   setisApproved(true);
+            //   setapproveStatus("approveAmount");
+            // } else {
+            //   setloadspinner(false);
+            //   setisApproved(false);
+            //   setapproveStatus("initial");
+            // }
+          } else {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
         } else {
           const result = await subscribeTokencontractviction.methods
             .allowance(coinbase, victionsubscribeAddress)
@@ -1442,7 +1441,7 @@ const GetPremiumPopup = ({
               setstatus("");
             }, 5000);
           });
-      }  else {
+      } else {
         await subscriptionContract.methods
           .subscribe(selectedSubscriptionToken, price)
           .send({ from: await window.getCoinbase() })
@@ -1526,20 +1525,19 @@ const GetPremiumPopup = ({
             }, 5000);
           });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setloadspinnerSub(false);
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          onSuccessDeposit();
+          setTimeout(() => {
             setloadspinnerSub(false);
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            onSuccessDeposit();
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          }
-
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        }
       } else if (
         chainId === 56 &&
         selectedSubscriptionToken.toLowerCase() ===
@@ -1560,19 +1558,19 @@ const GetPremiumPopup = ({
             }, 5000);
           });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setloadspinnerSub(false);
+          onSuccessDeposit();
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          setTimeout(() => {
             setloadspinnerSub(false);
-            onSuccessDeposit();
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          } 
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        }
       } else {
         const txResponse = await subscriptionContract
           .subscribe(selectedSubscriptionToken, price, { from: coinbase })
@@ -1589,20 +1587,19 @@ const GetPremiumPopup = ({
             }, 5000);
           });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setloadspinnerSub(false);
+          onSuccessDeposit();
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          setTimeout(() => {
             setloadspinnerSub(false);
-            onSuccessDeposit();
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          } 
-
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        }
       }
     }
   };
@@ -1716,7 +1713,15 @@ const GetPremiumPopup = ({
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
     }
-  }, [chainId, nftPremium_total, nftPremium_totalViction, discountPercentage, discountPercentageViction, nftPremium_tokenId, nftPremium_tokenIdViction]);
+  }, [
+    chainId,
+    nftPremium_total,
+    nftPremium_totalViction,
+    discountPercentage,
+    discountPercentageViction,
+    nftPremium_tokenId,
+    nftPremium_tokenIdViction,
+  ]);
 
   useEffect(() => {
     if (chainId === 1 && selectedSubscriptionToken !== "") {
@@ -1776,11 +1781,7 @@ const GetPremiumPopup = ({
   }, [chainId, coinbase]);
 
   return (
-    <div
-      className="popup-wrapper popup-active p-4"
-      id="subscribe"
-      style={{ width: "40%", pointerEvents: "auto" }}
-    >
+    <div className="custom-container">
       <div className="subscribe-container p-2 position-relative">
         <div className="" style={{ background: "#8E97CD" }}></div>
         <div className="d-flex justify-content-between align-items-center">
@@ -1792,94 +1793,84 @@ const GetPremiumPopup = ({
             style={{ cursor: "pointer" }}
           />
         </div>
-        {(discountPercentage > 0 || discountPercentageViction > 0) || (nftPremium_total > 0 || nftPremium_totalViction > 0) ? (
-           <div className="premium-discount-bg mt-3 p-4 position-relative">
-           <div className="premiumRedTag position-absolute">
-             <div className="position-relative d-flex flex-column">
-               <img src={premiumRedTag} alt="" />
-               <div className="d-flex flex-column position-absolute discountwrap">
-                 <span className="discount-price2 font-oxanium">
-                   {discountPercentage}%
-                 </span>
-                 <span className="discount-price-bottom">
-                   Discount
-                 </span>
-               </div>
-             </div>
-           </div>
-           <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
-             <div className="d-flex flex-column">
-               <h6 className="lifetime-plan-text m-0">
-                 Lifetime plan
-               </h6>
-               {nftPremium_total > 0 ||
-                 (nftPremium_totalViction > 0 && (
-                   <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
-                     Valid until:{" "}
-                     {new Date(
-                       nftPremium_total > 0
-                         ? nftDiscountObject.expiration *
-                           1000
-                         : nftDiscountObjectViction.expiration *
-                           1000
-                     )
-                       .toDateString()
-                       .slice(
-                         3,
-                         new Date(
-                           nftPremium_total > 0
-                             ? nftDiscountObject.expiration *
-                               1000
-                             : nftDiscountObjectViction.expiration *
-                               1000
-                         ).toDateString().length
-                       )}
-                   </h6>
-                 ))}
-             </div>
-             <div className="d-flex align-items-end gap-2">
-               <h6 className="discount-price">
-                 {discountPercentage == 100 ||
-                 discountPercentageViction == 100
-                   ? "FREE"
-                   : "$" +
-                     (100 -
-                       Number(
-                         discountPercentage > 0
-                           ? discountPercentage
-                           : discountPercentageViction > 0
-                           ? discountPercentageViction
-                           : discountPercentage
-                       ))}
-               </h6>
-               <h6 className="old-price-text">$100</h6>
-             </div>
-             {nftPremium_total > 0 ||
-               (nftPremium_totalViction > 0 && (
-                 <h6 className="token-amount-placeholder m-0 premium-custom-text">
-                   Valid until:{" "}
-                   {new Date(
-                     nftPremium_total > 0
-                       ? nftDiscountObject.expiration *
-                         1000
-                       : nftDiscountObjectViction.expiration *
-                         1000
-                   )
-                     .toDateString()
-                     .slice(
-                       3,
-                       new Date(
-                         nftPremium_total > 0
-                           ? nftDiscountObject.expiration *
-                             1000
-                           : nftDiscountObjectViction.expiration *
-                             1000
-                       ).toDateString().length
-                     )}
-                 </h6>
-               ))}
-           </div>
-         </div>
+        {discountPercentage > 0 ||
+        discountPercentageViction > 0 ||
+        nftPremium_total > 0 ||
+        nftPremium_totalViction > 0 ? (
+          <div className="premium-discount-bg mt-3 p-4 position-relative">
+            <div className="premiumRedTag position-absolute">
+              <div className="position-relative d-flex flex-column">
+                <img src={premiumRedTag} alt="" />
+                <div className="d-flex flex-column position-absolute discountwrap">
+                  <span className="discount-price2 font-oxanium">
+                    {discountPercentage}%
+                  </span>
+                  <span className="discount-price-bottom">Discount</span>
+                </div>
+              </div>
+            </div>
+            <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
+              <div className="d-flex flex-column">
+                <h6 className="lifetime-plan-text m-0">Lifetime plan</h6>
+                {nftPremium_total > 0 ||
+                  (nftPremium_totalViction > 0 && (
+                    <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                      Valid until:{" "}
+                      {new Date(
+                        nftPremium_total > 0
+                          ? nftDiscountObject.expiration * 1000
+                          : nftDiscountObjectViction.expiration * 1000
+                      )
+                        .toDateString()
+                        .slice(
+                          3,
+                          new Date(
+                            nftPremium_total > 0
+                              ? nftDiscountObject.expiration * 1000
+                              : nftDiscountObjectViction.expiration * 1000
+                          ).toDateString().length
+                        )}
+                    </h6>
+                  ))}
+              </div>
+              <div className="d-flex align-items-end gap-2">
+                <h6 className="discount-price">
+                  {discountPercentage == 100 || discountPercentageViction == 100
+                    ? "FREE"
+                    : "$" +
+                      (100 -
+                        Number(
+                          discountPercentage > 0
+                            ? discountPercentage
+                            : discountPercentageViction > 0
+                            ? discountPercentageViction
+                            : discountPercentage
+                        ))}
+                </h6>
+                <h6 className="old-price-text">$100</h6>
+              </div>
+              {nftPremium_total > 0 ||
+                (nftPremium_totalViction > 0 && (
+                  <h6 className="token-amount-placeholder m-0 premium-custom-text">
+                    Valid until:{" "}
+                    {new Date(
+                      nftPremium_total > 0
+                        ? nftDiscountObject.expiration * 1000
+                        : nftDiscountObjectViction.expiration * 1000
+                    )
+                      .toDateString()
+                      .slice(
+                        3,
+                        new Date(
+                          nftPremium_total > 0
+                            ? nftDiscountObject.expiration * 1000
+                            : nftDiscountObjectViction.expiration * 1000
+                        ).toDateString().length
+                      )}
+                  </h6>
+                ))}
+            </div>
+          </div>
         ) : (
           <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
             <div className="d-flex flex-column gap-2">
@@ -1994,8 +1985,8 @@ const GetPremiumPopup = ({
             </div>
           </div>
         )}
-        <div className="my-3">
-          <h6 className="popup-subtitle mb-0">Benefits</h6>
+        <div className="mt-3 p-3 benefits-title-wrapper">
+          <h6 className="premium-benefits-popup-title mb-0">Benefits</h6>
         </div>
         <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
           <div className="d-flex flex-column gap-2">
@@ -2215,7 +2206,7 @@ const GetPremiumPopup = ({
             </div>
           </div>
           <div className="d-flex flex-column gap-3 subscribe-input-container"></div>
-          {(discountPercentage < 100 || discountPercentageViction  < 100) && (
+          {(discountPercentage < 100 || discountPercentageViction < 100) && (
             <div className="d-flex flex-column align-items-end gap-3">
               <span className="my-premium-balance-text mb-0">
                 My balance:{" "}
@@ -2458,7 +2449,15 @@ const GetPremiumPopup = ({
                 </div>
                 <span className="subscription-price-usd mb-0">
                   {" "}
-                  ${100 - Number(discountPercentage!= 0  ? discountPercentage : discountPercentageViction != 0 ? discountPercentageViction : discountPercentage) }
+                  $
+                  {100 -
+                    Number(
+                      discountPercentage != 0
+                        ? discountPercentage
+                        : discountPercentageViction != 0
+                        ? discountPercentageViction
+                        : discountPercentage
+                    )}
                 </span>
               </div>
             </div>
@@ -2697,7 +2696,8 @@ const GetPremiumPopup = ({
                   approveStatus === "fail" ||
                   approveStatus === "deposit") ? (
                   <>
-                    {discountPercentageViction > 0 || nftPremium_totalViction > 0
+                    {discountPercentageViction > 0 ||
+                    nftPremium_totalViction > 0
                       ? "Redeem"
                       : "Buy"}
                   </>

@@ -800,9 +800,9 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
   return (
     <div
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
-      style={{ alignSelf: "baseline", minWidth: "92%", maxWidth: "92%" }}
+      // style={{ alignSelf: "baseline", minWidth: "92%", maxWidth: "92%" }}
     >
-      <div className="nft-hover">
+      {/* <div className="nft-hover">
         <div className="d-flex flex-column align-items-center gap-4">
           <div className="nft-hover-wrapper d-flex flex-column align-items-center">
             <div className="d-flex align-items-center nft-badges-wrapper gap-4 gap-lg-0">
@@ -828,7 +828,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
             </span>
           </div>
         </div>
-      </div>
+      </div> */}
       {countdown !== "0" && countdown && (
         <Countdown
           date={Number(countdown) * 1000}
@@ -2089,7 +2089,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                       
+
                           <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName
@@ -2164,7 +2164,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                           <td className="playerScore col-2 text-center font-montserrat">
                             {getFormattedNumber(item.statValue, 0)}
                           </td>
-                  
+
                           <td
                             className={`playerReward text-center col-2 font-montserrat ${
                               username === item.displayName

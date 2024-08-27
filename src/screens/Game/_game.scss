@@ -1,0 +1,293 @@
+.humans-class-wrapper{
+max-height: 500px;
+    width: 49%;
+position: relative;
+display: flex;
+align-items: center;
+@media screen and (max-width: 786px){
+    width: 100%
+}
+}
+
+.new-amplify-wrapper{
+    position: relative;
+        background-size: 100%;
+        aspect-ratio: 3.72/1;
+        background-repeat: no-repeat; 
+      background-image: url("../../assets/gameAssets/amplifyBanner.webp");
+     @media screen and (max-width: 1100px) {
+        background-size: cover;
+        background-position: right;
+     }
+     @media screen and (max-width: 786px) {
+        background-image: none;
+     }
+}
+
+.amp-benefits-desc {
+    color: #ACAD98;
+text-align: right;
+font-family: Poppins;
+font-size: 10px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; 
+}
+
+.ways-to-amplify-title {
+    color: #FFF;
+text-align: right;
+font-size: 24px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+
+.ways-to-amplify-desc {
+    color: #BCBCBC;
+text-align: right;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 16px; 
+}
+
+.explore-btn {
+    border-radius: 12px;
+background: linear-gradient(90deg, #007156 0%, #01B187 100%);
+color: #EEEDFF;
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+border: none;
+}
+
+.getpremium-btn {
+    border-radius: 12px;
+border: 1px solid #FFD37E;
+color: #FFD37E;
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+background: transparent;
+}
+
+.humans-bg{
+    width: 100%;
+    max-height: 500px;
+   
+}
+
+.humans-img{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 75%;
+}
+.aliens-img{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 75%;
+}
+
+.humans-class-text{
+    -webkit-text-stroke:2px #0100FA;
+    font-family: "Oxanium";
+    color: transparent;
+    font-size: 46px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    text-transform: uppercase;
+    position: absolute;
+    @media screen and (max-width: 786px) {
+        font-size: 36px;
+    }
+}
+.aliens-class-text{
+    -webkit-text-stroke:2px #F40031;
+    font-family: "Oxanium";
+    color: transparent;
+    font-size: 46px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    text-transform: uppercase;
+    position: absolute;
+    @media screen and (max-width: 786px) {
+        font-size: 36px;
+    }
+
+}
+
+.aliens-bg{
+    width: 100%;
+    max-height: 500px;
+   
+}
+
+
+.aliens-class-wrapper{
+    max-height: 500px;
+    width: 49%;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: end;
+@media screen and (max-width: 786px){
+    width: 100%
+}
+}
+
+.classes-desc{
+    color: #EEEDFF;
+text-align: center;
+font-family: "Montserrat";
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 171.429% */
+}
+
+
+.treasureHuntCard {
+    border-radius: 10px;
+    border: 1px solid #b8b8e0;
+    backdrop-filter: blur(12.5px);
+    min-height: 160px;
+    background: url(../../assets/gameAssets/treasureHuntCard.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.dragonRuinsCard {
+    border-radius: 10px;
+    border: 1px solid #b8b8e0;
+    backdrop-filter: blur(12.5px);
+    min-height: 160px;
+    background: url(../../assets/gameAssets/dragonRuinsCard.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.scorpionKingCard {
+    border-radius: 10px;
+    border: 1px solid #b8b8e0;
+    backdrop-filter: blur(12.5px);
+    min-height: 160px;
+    background: url(../../assets/gameAssets/scorpionKingCard.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.puzzleMadnessCard {
+    border-radius: 10px;
+    border: 1px solid #b8b8e0;
+    backdrop-filter: blur(12.5px);
+    min-height: 160px;
+    background: url(../../assets/gameAssets/puzzleMadnessCard.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.criticalHitCard {
+    border-radius: 10px;
+    border: 1px solid #b8b8e0;
+    backdrop-filter: blur(12.5px);
+    min-height: 160px;
+    background: url(../../assets/gameAssets/criticalHitCard.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.mazeGardenCard {
+    border-radius: 10px;
+    border: 1px solid #b8b8e0;
+    backdrop-filter: blur(12.5px);
+    min-height: 160px;
+    background: url(../../assets/gameAssets/mazeGardenCard.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.dailyBonusCard {
+    border-radius: 10px;
+    border: 1px solid #b8b8e0;
+    backdrop-filter: blur(12.5px);
+    min-height: 160px;
+    background: url(../../assets/gameAssets/dailyBonusCard.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.amplify-ways-wrapper{
+    background-image: url(../../assets/gameAssets/amplifyRewardsBg.svg);
+    background-size: 100%;
+}
+
+.game-table{
+@media screen and (max-width: 786px) {
+    min-width: 1000px;
+}
+}
+
+.game-table-header{
+    color: #EEEDFF;
+    font-family: "Montserrat";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    width: 25%;
+    text-align: center;
+}
+
+.game-table-header-1{
+    color: #EEEDFF;
+    font-family: "Montserrat";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    width: 25%;
+}
+
+.game-table-row{
+    border-radius: 8px;
+    width: 25%;
+    text-align: center;
+}
+
+.game-table-text{
+    color: #EEEDFF;
+    font-family: "Montserrat";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    width: 25%;
+    text-align: start !important;
+}
+
+.buy-premium-btn{
+background: linear-gradient(90deg, #FF8168 0%, #EA6278 100%) !important;
+color: #EEEDFF !important;
+}
+
+.amplify-table-wrapper{
+    background-image: url(../../assets/gameAssets/amplifyTableBg.webp);
+    background-size: 100% 100%;
+}
+
+.game-table-container{
+    @media screen and (max-width: 786px) {
+        overflow: scroll;
+
+    }
+}
