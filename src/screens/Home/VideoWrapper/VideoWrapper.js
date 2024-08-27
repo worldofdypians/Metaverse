@@ -21,6 +21,11 @@ import victionBg from "./assets/victionBg.webp";
 import seiLogo from "./assets/seiLogo.svg";
 import seiBg from "./assets/seiBg.webp";
 import coreLogo from "./assets/coreLogo.svg";
+import taikoLogo from "./assets/taikoLogo.svg";
+import mantaLogo from "./assets/mantaLogo.png";
+import cookieLogo from "./assets/cookie3Logo.svg";
+
+
 import coreBg from "./assets/coreBg.webp";
 import immutableLogo from "./assets/immutableLogo.svg";
 import immutableBg from "./assets/immutableBg.webp";
@@ -198,12 +203,15 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
 
   const dummyBetaPassData2 = [
+  
+
     {
       link: "/token",
       title: "TOKEN",
       desc: "Power your gameplay with WOD",
       class: "tokenClass",
     },
+
     {
       link: "/earn",
       title: "Stake",
@@ -224,13 +232,14 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
     },
   ];
   var settings = {
-    dots: false,
+    dots: true,
     arrows: false,
     dotsClass: "button__bar",
-    infinite: false,
+    infinite: true,
     speed: 300,
     slidesToShow: 4,
     slidesToScroll: 1,
+    autoplay: true,
     initialSlide: 0,
     beforeChange: (current, next) => {
       setActiveSlide(next);

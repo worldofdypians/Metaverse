@@ -61,6 +61,8 @@ import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionI
 import dypius from "../../Components/WalletBalance/assets/dypIcon.svg";
 import dypiusPremium from "../../Components/WalletBalance/assets/dypiusPremium16.svg";
 import upcomingDyp from "../../Components/WalletBalance/assets/upcomingDyp.webp";
+import upcomingCookie from "../../../../Marketplace/assets/cookieBg.webp";
+
 import victionLogo from "../../Components/WalletBalance/assets/victionLogo.svg";
 import multiversLogo from "../../Components/WalletBalance/assets/multiversLogo.svg";
 import victionBg from "../../Components/WalletBalance/assets/victionBg.webp";
@@ -69,6 +71,13 @@ import seiLogo from "../../Components/WalletBalance/assets/seiLogo.svg";
 import seiBg from "../../Components/WalletBalance/assets/seiBg.webp";
 import coreLogo from "../../Components/WalletBalance/assets/coreLogo.svg";
 import bnbLogo from "../../Components/WalletBalance/assets/bnbIcon.svg";
+import taikoLogo from "../../Components/WalletBalance/assets/taikoLogo.svg";
+import taikoBg from "../../../../Marketplace/assets/taikoBg.webp";
+import mantaBg from "../../../../Marketplace/assets/mantaBg.webp";
+
+import mantaLogo from "../../Components/WalletBalance/assets/mantaLogo2.png";
+import cookie3Logo from "../../../../Marketplace/assets/cookie3Logo.svg";
+
 import coreBg from "../../Components/WalletBalance/assets/coreBg.webp";
 import immutableLogo from "../../Components/WalletBalance/assets/immutableLogo.svg";
 import immutableBg from "../../Components/WalletBalance/assets/immutableBg.webp";
@@ -175,6 +184,12 @@ function Dashboard({
   isPremium,
   dyptokenDatabnb,
   logoutCount,
+  handleConnectBinance,
+  handleConnectionPassport,
+  binanceW3WProvider,
+  binanceWallet,
+  handleSwitchChainBinanceWallet,
+  handleSwitchChainGateWallet,
   onSuccessDeposit,
 }) {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -188,6 +203,10 @@ function Dashboard({
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+  let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
+  let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
+  let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
+  let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
 
   const { email, logout } = useAuth();
 
@@ -214,6 +233,7 @@ function Dashboard({
       name: "BNB Chain",
       symbol: "bnb",
     },
+
     {
       name: "Avalanche",
       symbol: "wavax",
@@ -238,6 +258,17 @@ function Dashboard({
       name: "Viction",
       symbol: "viction",
     },
+
+    {
+      name: "Manta",
+      symbol: "manta",
+    },
+
+    {
+      name: "Taiko",
+      symbol: "taiko",
+    },
+
     // {
     //   name: "SEI",
     //   symbol: "sei",
@@ -297,6 +328,19 @@ function Dashboard({
     "10",
   ];
   const chestImagesViction = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+  const chestImagesTaiko = [
     "0",
     "1",
     "2",
@@ -450,6 +494,9 @@ function Dashboard({
   const [myVictionNfts, setmyVictionNfts] = useState([]);
   const [myMultiversNfts, setmyMultiversNfts] = useState([]);
   const [myImmutableNfts, setmyImmutableNfts] = useState([]);
+  const [myMantaNfts, setmyMantaNfts] = useState([]);
+  const [myTaikoNfts, setmyTaikoNfts] = useState([]);
+  const [myCookieNfts, setmyCookieNfts] = useState([]);
 
   const [latestVersion, setLatestVersion] = useState(0);
 
@@ -508,6 +555,13 @@ function Dashboard({
   const [premiumVictionChests, setPremiumVictionChests] = useState([]);
   const [standardSeiChests, setStandardSeiChests] = useState([]);
   const [premiumSeiChests, setPremiumSeiChests] = useState([]);
+
+  const [standardMantaChests, setStandardMantaChests] = useState([]);
+  const [premiumMantaChests, setPremiumMantaChests] = useState([]);
+
+  const [standardTaikoChests, setStandardTaikoChests] = useState([]);
+  const [premiumTaikoChests, setPremiumTaikoChests] = useState([]);
+
   const [standardCoreChests, setStandardCoreChests] = useState([]);
   const [premiumCoreChests, setPremiumCoreChests] = useState([]);
 
@@ -515,6 +569,8 @@ function Dashboard({
   const [openedVictionChests, setOpenedVictionChests] = useState([]);
   const [openedCoreChests, setOpenedCoreChests] = useState([]);
   const [openedSeiChests, setOpenedSeiChests] = useState([]);
+  const [openedMantaChests, setOpenedMantaChests] = useState([]);
+  const [openedTaikoChests, setOpenedTaikoChests] = useState([]);
 
   const [kittyDashRecords, setkittyDashRecords] = useState([]);
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
@@ -565,11 +621,14 @@ function Dashboard({
 
   const [claimedVictionChests, setclaimedVictionChests] = useState(0);
   const [claimedSeiChests, setclaimedSeiChests] = useState(0);
+  const [claimedMantaChests, setclaimedMantaChests] = useState(0);
+  const [claimedTaikoChests, setclaimedTaikoChests] = useState(0);
 
   const [claimedVictionPremiumChests, setclaimedVictionPremiumChests] =
     useState(0);
   const [claimedSeiPremiumChests, setclaimedSeiPremiumChests] = useState(0);
-
+  const [claimedMantaPremiumChests, setclaimedMantaPremiumChests] = useState(0);
+  const [claimedTaikoPremiumChests, setclaimedTaikoPremiumChests] = useState(0);
   const [userSocialRewards, setuserSocialRewards] = useState(0);
   const [skalePrice, setSkalePrice] = useState(0);
 
@@ -579,12 +638,19 @@ function Dashboard({
   const [allSkaleChests, setallSkaleChests] = useState([]);
   const [allCoreChests, setallCoreChests] = useState([]);
   const [allVictionChests, setallVictionChests] = useState([]);
+  const [allTaikoChests, setallTaikoChests] = useState([]);
   const [allSeiChests, setallSeiChests] = useState([]);
+  const [allMantaChests, setallMantaChests] = useState([]);
 
   const [countdown700, setcountdown700] = useState();
   const [bundlesBought, setbundlesBought] = useState(0);
   const [count, setCount] = useState(0);
   const [skalecount, setskalecount] = useState(0);
+  const [vicitoncount, setvicitoncount] = useState(0);
+  const [corecount, setcorecount] = useState(0);
+  const [mantacount, setmantacount] = useState(0);
+  const [taikocount, settaikocount] = useState(0);
+
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
   const [userRank2, setUserRank2] = useState("");
@@ -606,6 +672,8 @@ function Dashboard({
   const [victionImages, setVictionImages] = useState(
     shuffle(chestImagesViction)
   );
+  const [taikoImages, setTaikoImages] = useState(shuffle(chestImagesTaiko));
+  const [mantaImages, setMantaImages] = useState(shuffle(chestImagesViction));
   const [seiImages, setSeiImages] = useState(shuffle(chestImagesSei));
   const [seiEarnUsd, setSeiEarnUsd] = useState(0);
   const [seiPrice, setSeiPrice] = useState(0);
@@ -619,6 +687,26 @@ function Dashboard({
   const [victionPrice, setVictionPrice] = useState(0);
   const [victionEarnToken, setVictionEarnToken] = useState(0);
   const [victionPoints, setVictionPoints] = useState(0);
+
+  const [taikoEarnUsd, setTaikoEarnUsd] = useState(0);
+  const [taikoPrice, setTaikoPrice] = useState(0);
+  const [taikoEarnToken, setTaikoEarnToken] = useState(0);
+  const [taikoPoints, setTaikoPoints] = useState(0);
+
+  const [cookieEarnUsd, setCookieEarnUsd] = useState(0);
+  const [cookiePrice, setCookiePrice] = useState(0);
+  const [cookieEarnToken, setCookieEarnToken] = useState(0);
+  const [cookiePoints, setCookiePoints] = useState(0);
+
+  const [immutableEarnUsd, setImmutableEarnUsd] = useState(0);
+  const [immutablePrice, setImmutablePrice] = useState(0);
+  const [immutableEarnToken, setImmutableEarnToken] = useState(0);
+  const [immutablePoints, setImmutablePoints] = useState(0);
+
+  const [mantaEarnUsd, setMantaEarnUsd] = useState(0);
+  const [mantaPrice, setMantaPrice] = useState(0);
+  const [mantaEarnToken, setMantaEarnToken] = useState(0);
+  const [mantaPoints, setMantaPoints] = useState(0);
 
   const [multiversEarnUsd, setmultiversEarnUsd] = useState(0);
   const [multiversPrice, setmultiversPrice] = useState(0);
@@ -640,6 +728,11 @@ function Dashboard({
   const [userProgress, setUserProgress] = useState(0);
   const [rankPopup, setRankPopup] = useState(false);
 
+  const [discountPercentageViction, setdiscountPercentageViction] = useState(0);
+  const [nftPremium_tokenIdViction, setnftPremium_tokenIdViction] = useState(0);
+  const [nftPremium_totalViction, setnftPremium_totalViction] = useState(0);
+  const [nftDiscountObjectViction, setnftDiscountObjectViction] = useState([]);
+
   const sliderRef = useRef(null);
 
   const recaptchaRef = useRef(null);
@@ -647,6 +740,10 @@ function Dashboard({
   const html = document.querySelector("html");
   const leaderboardId = document.querySelector("#leaderboard");
   const { BigNumber } = window;
+  const now = new Date();
+  const firstOfNextMonth = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1)
+  );
 
   const fetchUsersocialRewards = () => {
     const cachedUserSocialRewards = localStorage.getItem(
@@ -712,6 +809,16 @@ function Dashboard({
       });
   };
 
+  const fetchImmutablePrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=immutable-x&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setImmutablePrice(obj.data["immutable-x"].usd);
+      });
+  };
+
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
       const response = await fetch(
@@ -759,6 +866,14 @@ function Dashboard({
             return obj.betapassId === "viction";
           });
 
+          const mantaEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "manta";
+          });
+
+          const taikoEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "taiko";
+          });
+
           const multiversEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "multivers";
           });
@@ -787,6 +902,14 @@ function Dashboard({
             return obj.betapassId === "subscriber";
           });
 
+          const immutableEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "immutable";
+          });
+
+          const cookieEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "cookie3";
+          });
+
           if (dypPremiumEvent && dypPremiumEvent[0]) {
             const userEarnedusd =
               dypPremiumEvent[0].reward.earn.total /
@@ -808,6 +931,38 @@ function Dashboard({
             setBnbEarnToken(userEarnedusd / bnbPrice);
           }
 
+          if (immutableEvent && immutableEvent[0]) {
+            const userEarnedusd =
+              immutableEvent[0].reward.earn.total /
+              immutableEvent[0].reward.earn.multiplier;
+            const pointsBnb = immutableEvent[0].reward.earn.totalPoints;
+
+            setImmutablePoints(pointsBnb);
+            setImmutableEarnUsd(userEarnedusd);
+            setImmutableEarnToken(userEarnedusd / immutablePrice);
+          }
+
+          if (taikoEvent && taikoEvent[0]) {
+            const userEarnedusd =
+              taikoEvent[0].reward.earn.total /
+              taikoEvent[0].reward.earn.multiplier;
+            const pointsTaiko = taikoEvent[0].reward.earn.totalPoints;
+            setTaikoPoints(pointsTaiko);
+            setTaikoEarnUsd(userEarnedusd);
+            setTaikoEarnToken(userEarnedusd / taikoPrice);
+          }
+
+          if (cookieEvent && cookieEvent[0]) {
+            const userEarnedusd =
+              cookieEvent[0].reward.earn.total /
+              cookieEvent[0].reward.earn.multiplier;
+            const pointsBnb = cookieEvent[0].reward.earn.totalPoints;
+
+            setCookiePoints(pointsBnb);
+            setCookieEarnUsd(userEarnedusd);
+            setCookieEarnToken(userEarnedusd / cookiePrice);
+          }
+
           if (coreEvent && coreEvent[0]) {
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
@@ -826,6 +981,16 @@ function Dashboard({
             setVictionPoints(pointsViction);
             setVictionEarnUsd(userEarnedusd);
             setVictionEarnToken(userEarnedusd / victionPrice);
+          }
+
+          if (mantaEvent && mantaEvent[0]) {
+            const userEarnedusd =
+              mantaEvent[0].reward.earn.total /
+              mantaEvent[0].reward.earn.multiplier;
+            const pointsManta = mantaEvent[0].reward.earn.totalPoints;
+            setMantaPoints(pointsManta);
+            setMantaEarnUsd(userEarnedusd);
+            setMantaEarnToken(userEarnedusd / mantaPrice);
           }
 
           if (multiversEvent && multiversEvent[0]) {
@@ -966,6 +1131,7 @@ function Dashboard({
     skalePrice,
     dyptokenDatabnb,
     corePrice,
+    mantaPrice,
     victionPrice,
   ]);
 
@@ -1005,22 +1171,17 @@ function Dashboard({
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      backgroundImage: coreBg,
       eventDate: "Jul 01, 2024",
+      backgroundImage: coreBg,
       userEarnUsd: coreEarnUsd,
       userEarnCrypto: coreEarnToken,
       userEarnPoints: corePoints,
-
-
       popupInfo: {
         title: "CORE",
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
         status: "Live",
-        backgroundImage: coreBg,
-        logo: coreLogo,
-        date: "Jul 01, 2024",
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",
@@ -1051,9 +1212,6 @@ function Dashboard({
         linkState: "viction",
         rewards: "VIC",
         status: "Live",
-        logo: victionLogo,
-        backgroundImage: victionBg,
-        date: "Jul 01, 2024",
         id: "event14",
         eventType: "Explore & Find",
         totalRewards: "$20,000 in VIC Rewards",
@@ -1064,6 +1222,156 @@ function Dashboard({
         maxPoints: "50,000",
         learnMore: "",
         eventDate: "Jul 01, 2024",
+      },
+    },
+    {
+      title: "BNB Chain",
+      logo: bnbLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jun 12, 2024",
+      backgroundImage: upcomingBnb,
+      userEarnUsd: bnbEarnUsd,
+      userEarnCrypto: bnbEarnToken,
+      userEarnPoints: bnbPoints,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Live",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news",
+        eventDate: "Jun 12, 2024",
+      },
+    },
+    {
+      title: "Immutable",
+      logo: immutableLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in IMX Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 15, 2024",
+      backgroundImage: immutableBg,
+      userEarnUsd: immutableEarnUsd,
+      userEarnCrypto: immutableEarnToken,
+      userEarnPoints: immutablePoints,
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable",
+        linkState: "immutable",
+        rewards: "IMX",
+        status: "Live",
+        id: "event15",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in IMX Rewards",
+        eventDuration: immutableLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
+        eventDate: "Aug 15, 2024",
+      },
+    },
+    {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in TAIKO Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 19, 2024",
+      backgroundImage: taikoBg,
+      userEarnUsd: taikoEarnUsd,
+      userEarnCrypto: taikoEarnToken,
+      userEarnPoints: taikoPoints,
+      popupInfo: {
+        title: "TAIKO",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Live",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 19, 2024",
+      },
+    },
+    {
+      title: "Manta",
+      logo: mantaLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in MANTA Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 20, 2024",
+      backgroundImage: mantaBg,
+      userEarnUsd: mantaEarnUsd,
+      userEarnCrypto: mantaEarnToken,
+      userEarnPoints: mantaPoints,
+      popupInfo: {
+        title: "Manta",
+        chain: "Manta",
+        linkState: "manta",
+        rewards: "MANTA",
+        status: "Live",
+        id: "event21",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in MANTA Rewards",
+        eventDuration: mantaLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 20, 2024",
+      },
+    },
+    {
+      title: "Cookie3",
+      logo: cookie3Logo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in COOKIE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 26, 2024",
+      backgroundImage: upcomingCookie,
+      userEarnUsd: cookieEarnUsd,
+      userEarnCrypto: cookieEarnToken,
+      userEarnPoints: cookiePoints,
+      popupInfo: {
+        title: "Cookie3",
+        chain: "BNB Chain",
+        linkState: "cookie3",
+        rewards: "Cookie3",
+        status: "Live",
+        id: "event23",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in COOKIE Rewards",
+        eventDuration: cookieLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 26, 2024",
       },
     },
     // {
@@ -1099,37 +1407,6 @@ function Dashboard({
     //   },
     // },
 
-    {
-      title: "BNB Chain",
-      logo: bnbLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Jun 12, 2024",
-      backgroundImage: upcomingBnb,
-      userEarnUsd: bnbEarnUsd,
-      userEarnCrypto: bnbEarnToken,
-      userEarnPoints: bnbPoints,
-      popupInfo: {
-        title: "BNB Chain",
-        chain: "BNB Chain",
-        linkState: "bnb",
-        rewards: "BNB",
-        status: "Live",
-        id: "event20",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: bnbLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore:
-          "/news",
-        eventDate: "Jun 12, 2024",
-      },
-    },
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -1569,6 +1846,9 @@ function Dashboard({
   const [allSkaleData, setAllSkaleData] = useState([]);
   const [allCoreData, setAllCoreData] = useState([]);
   const [allVictionData, setAllVictionData] = useState([]);
+  const [allMantaData, setAllMantaData] = useState([]);
+  const [allTaikoData, setAllTaikoData] = useState([]);
+
   const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
   const [weeklyRecordsCore, setWeeklyRecordsCore] = useState([]);
   const [monthlyRecordsCore, setMonthlyRecordsCore] = useState([]);
@@ -1641,6 +1921,51 @@ function Dashboard({
   const [monthlyDataAmountViction, setMonthlyDataAmountViction] = useState([]);
   const [userRankViction, setUserRankViction] = useState("");
   const [userVictionScore, setUserVictionScore] = useState(0);
+
+  const [dailyRecordsManta, setDailyRecordsManta] = useState([]);
+  const [weeklyRecordsManta, setWeeklyRecordsManta] = useState([]);
+  const [monthlyRecordsManta, setMonthlyRecordsManta] = useState([]);
+  const [activePlayerManta, setActivePlayerManta] = useState(false);
+  const [activePlayerMantaWeekly, setActivePlayerMantaWeekly] = useState(false);
+  const [activePlayerMantaMonthly, setActivePlayerMantaMonthly] =
+    useState(false);
+  const [userDataManta, setUserDataManta] = useState({});
+  const [userDataMantaWeekly, setUserDataMantaWeekly] = useState({});
+  const [userDataMantaMonthly, setUserDataMantaMonthly] = useState({});
+  const [prevDataManta, setPrevDataManta] = useState([]);
+  const [prevDataMantaWeekly, setPrevDataMantaWeekly] = useState([]);
+  const [prevDataMantaMonthly, setPrevDataMantaMonthly] = useState([]);
+  const [prevVersionManta, setPrevVersionManta] = useState(0);
+  const [prevVersionMantaWeekly, setPrevVersionMantaWeekly] = useState(0);
+  const [prevVersionMantaMonthly, setPrevVersionMantaMonthly] = useState(0);
+  const [dailyDataAmountManta, setDailyDataAmountManta] = useState([]);
+  const [weeklyDataAmountManta, setWeeklyDataAmountManta] = useState([]);
+  const [monthlyDataAmountManta, setMonthlyDataAmountManta] = useState([]);
+  const [userRankManta, setUserRankManta] = useState("");
+  const [userMantaScore, setUserMantaScore] = useState(0);
+
+  const [dailyRecordsTaiko, setDailyRecordsTaiko] = useState([]);
+  const [weeklyRecordsTaiko, setWeeklyRecordsTaiko] = useState([]);
+  const [monthlyRecordsTaiko, setMonthlyRecordsTaiko] = useState([]);
+  const [activePlayerTaiko, setActivePlayerTaiko] = useState(false);
+  const [activePlayerTaikoWeekly, setActivePlayerTaikoWeekly] = useState(false);
+  const [activePlayerTaikoMonthly, setActivePlayerTaikoMonthly] =
+    useState(false);
+  const [userDataTaiko, setUserDataTaiko] = useState({});
+  const [userDataTaikoWeekly, setUserDataTaikoWeekly] = useState({});
+  const [userDataTaikoMonthly, setUserDataTaikoMonthly] = useState({});
+  const [prevDataTaiko, setPrevDataTaiko] = useState([]);
+  const [prevDataTaikoWeekly, setPrevDataTaikoWeekly] = useState([]);
+  const [prevDataTaikoMonthly, setPrevDataTaikoMonthly] = useState([]);
+  const [prevVersionTaiko, setPrevVersionTaiko] = useState(0);
+  const [prevVersionTaikoWeekly, setPrevVersionTaikoWeekly] = useState(0);
+  const [prevVersionTaikoMonthly, setPrevVersionTaikoMonthly] = useState(0);
+  const [dailyDataAmountTaiko, setDailyDataAmountTaiko] = useState([]);
+  const [weeklyDataAmountTaiko, setWeeklyDataAmountTaiko] = useState([]);
+  const [monthlyDataAmountTaiko, setMonthlyDataAmountTaiko] = useState([]);
+  const [userRankTaiko, setUserRankTaiko] = useState("");
+  const [userTaikoScore, setUserTaikoScore] = useState(0);
+
   const [dailyrecords, setRecords] = useState([]);
   const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
   const [activePlayer, setActivePlayer] = useState(false);
@@ -1763,22 +2088,22 @@ function Dashboard({
     }
   };
   const fetchPreviousMonthlyWinnersCore = async () => {
-    // if (prevVersionCoreMonthly != 0) {
-    //   const data = {
-    //     StatisticName: "LeaderboardCoreMonthly",
-    //     StartPosition: 0,
-    //     MaxResultsCount: 10,
-    //     Version: prevVersionCoreMonthly - 1,
-    //   };
-    //   const result = await axios.post(
-    //     `${backendApi}/auth/GetLeaderboard?Version=-1`,
-    //     data
-    //   );
+    if (prevVersionCoreMonthly != 0) {
+      const data = {
+        StatisticName: "LeaderboardCoreMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionCoreMonthly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-    //   setPrevDataCoreMonthly(result.data.data.leaderboard);
-    // } else {
-    setPrevDataCoreMonthly(placeholderplayerData);
-    // }
+      setPrevDataCoreMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataCoreMonthly(placeholderplayerData);
+    }
   };
   const fetchDailyRecordsCore = async () => {
     const data = {
@@ -1795,6 +2120,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerCore(true);
+      fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
     } else if (testArray.length === 0) {
       setActivePlayerCore(false);
       fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
@@ -1817,6 +2143,7 @@ function Dashboard({
 
     if (testArray.length > 0) {
       setActivePlayerCoreWeekly(true);
+      fetchWeeklyRecordsAroundPlayerCore(result.data.data.leaderboard);
     }
     if (testArray.length === 0) {
       setActivePlayerCoreWeekly(false);
@@ -1837,6 +2164,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerCoreMonthly(true);
+      fetchMonthlyRecordsAroundPlayerCore(result.data.data.leaderboard);
     }
     fillRecordsMonthlyCore(result.data.data.leaderboard);
 
@@ -2095,22 +2423,22 @@ function Dashboard({
     }
   };
   const fetchPreviousMonthlyWinnersViction = async () => {
-    // if (prevVersionVictionMonthly != 0) {
-    //   const data = {
-    //     StatisticName: "LeaderboardVictionMonthly",
-    //     StartPosition: 0,
-    //     MaxResultsCount: 10,
-    //     Version: prevVersionVictionMonthly - 1,
-    //   };
-    //   const result = await axios.post(
-    //     `${backendApi}/auth/GetLeaderboard?Version=-1`,
-    //     data
-    //   );
+    if (prevVersionVictionMonthly != 0) {
+      const data = {
+        StatisticName: "LeaderboardVictionMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionVictionMonthly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-    //   setPrevDataVictionMonthly(result.data.data.leaderboard);
-    // } else {
-    setPrevDataVictionMonthly(placeholderplayerData);
-    // }
+      setPrevDataVictionMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataVictionMonthly(placeholderplayerData);
+    }
   };
   const fetchDailyRecordsViction = async () => {
     const data = {
@@ -2127,6 +2455,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerViction(true);
+      fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
     } else if (testArray.length === 0) {
       setActivePlayerViction(false);
       fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
@@ -2148,6 +2477,7 @@ function Dashboard({
 
     if (testArray.length > 0) {
       setActivePlayerVictionWeekly(true);
+      fetchWeeklyRecordsAroundPlayerViction(result.data.data.leaderboard);
     }
     if (testArray.length === 0) {
       setActivePlayerVictionWeekly(false);
@@ -2168,6 +2498,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerVictionMonthly(true);
+      fetchMonthlyRecordsAroundPlayerViction(result.data.data.leaderboard);
     }
     fillRecordsMonthlyViction(result.data.data.leaderboard);
 
@@ -2357,6 +2688,705 @@ function Dashboard({
       }
     }
   };
+
+  const fillRecordsManta = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsManta(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsManta(finalData);
+    }
+  };
+  const fillRecordsWeeklyManta = (itemData) => {
+    if (itemData.length === 0) {
+      setWeeklyRecordsManta(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setWeeklyRecordsManta(finalData);
+    }
+  };
+  const fillRecordsMonthlyManta = (itemData) => {
+    if (itemData.length === 0) {
+      setMonthlyRecordsManta(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setMonthlyRecordsManta(finalData);
+    }
+  };
+  const fetchPreviousWinnersManta = async () => {
+    if (prevVersionManta != 0) {
+      const data = {
+        StatisticName: "LeaderboardMantaDaily",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionManta - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      setPrevDataManta(result.data.data.leaderboard);
+    } else {
+      setPrevDataManta(placeholderplayerData);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+  const fetchPreviousWeeklyWinnersManta = async () => {
+    if (prevVersionMantaWeekly != 0) {
+      const data = {
+        StatisticName: "LeaderboardMantaWeekly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionMantaWeekly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setPrevDataMantaWeekly(result.data.data.leaderboard);
+    } else {
+      setPrevDataMantaWeekly(placeholderplayerData);
+    }
+  };
+  const fetchPreviousMonthlyWinnersManta = async () => {
+    if (prevVersionMantaMonthly != 0) {
+      const data = {
+        StatisticName: "LeaderboardMantaMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionMantaMonthly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setPrevDataVictionMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataMantaMonthly(placeholderplayerData);
+    }
+  };
+  const fetchDailyRecordsManta = async () => {
+    const data = {
+      StatisticName: "LeaderboardMantaDaily",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsManta([]);
+      });
+    setPrevVersionManta(parseInt(result.data.data.version));
+    setDailyRecordsManta(result.data.data.leaderboard);
+    fillRecordsManta(result.data.data.leaderboard);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    if (testArray.length > 0) {
+      setActivePlayerManta(true);
+      fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    } else if (testArray.length === 0) {
+      setActivePlayerManta(false);
+      fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    }
+  };
+  const fetchWeeklyRecordsManta = async () => {
+    const data = {
+      StatisticName: "LeaderboardMantaWeekly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsWeeklyManta([]);
+      });
+    setWeeklyRecordsManta(result.data.data.leaderboard);
+    setPrevVersionMantaWeekly(result.data.data.version);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    fillRecordsWeeklyManta(result.data.data.leaderboard);
+
+    if (testArray.length > 0) {
+      setActivePlayerMantaWeekly(true);
+      fetchWeeklyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    }
+    if (testArray.length === 0) {
+      setActivePlayerMantaWeekly(false);
+      fetchWeeklyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    }
+  };
+  const fetchMonthlyRecordsManta = async () => {
+    const data = {
+      StatisticName: "LeaderboardMantaMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMonthlyManta([]);
+      });
+    setMonthlyRecordsManta(result.data.data.leaderboard);
+    setPrevVersionMantaMonthly(result.data.data.version);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    if (testArray.length > 0) {
+      setActivePlayerMantaMonthly(true);
+      fetchMonthlyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    }
+    fillRecordsMonthlyManta(result.data.data.leaderboard);
+
+    if (testArray.length === 0) {
+      setActivePlayerMantaMonthly(false);
+      fetchMonthlyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    }
+  };
+  const fetchDailyRecordsAroundPlayerManta = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardMantaDaily",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+
+      if (isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountManta(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
+              : Number(skaleStars[userPosition]) +
+                Number(skaleStarsPremium[userPosition])
+            : 0
+        );
+      } else if (!isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountManta(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9])
+              : Number(skaleStars[userPosition])
+            : 0
+        );
+      } else setDailyDataAmountManta(0);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerManta(true);
+          setUserDataManta([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerManta(false);
+          setUserDataManta(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerManta(false);
+        setUserDataManta(...testArray);
+      }
+    }
+  };
+  const fetchWeeklyRecordsAroundPlayerManta = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardMantaWeekly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+      if (goldenPassRemainingTime && testArray[0].statValue != 0) {
+        setWeeklyDataAmountManta(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesWeekly[9]) +
+                Number(skalePrizesWeeklyGolden[9])
+              : Number(skalePrizesWeekly[userPosition]) +
+                Number(skalePrizesWeeklyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
+        setWeeklyDataAmountManta(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesWeekly[9])
+              : Number(skalePrizesWeekly[userPosition])
+            : 0
+        );
+      } else setWeeklyDataAmountManta(0);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerMantaWeekly(true);
+          setUserDataMantaWeekly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerMantaWeekly(false);
+          setUserDataMantaWeekly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerMantaWeekly(false);
+        setUserDataMantaWeekly(...testArray);
+      }
+    }
+  };
+
+  const fetchMonthlyRecordsAroundPlayerManta = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardMantaMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
+
+      if (goldenPassRemainingTime) {
+        setMonthlyDataAmountManta(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setMonthlyDataAmountManta(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
+            : 0
+        );
+      }
+
+      setUserRankManta(testArray[0].position);
+      setUserMantaScore(testArray[0].statValue);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerMantaMonthly(true);
+          setUserDataMantaMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerMantaMonthly(false);
+          setUserDataMantaMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerMantaMonthly(false);
+        setUserDataMantaMonthly(...testArray);
+      }
+    }
+  };
+
+  const fillRecordsTaiko = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsTaiko(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsTaiko(finalData);
+    }
+  };
+  const fillRecordsWeeklyTaiko = (itemData) => {
+    if (itemData.length === 0) {
+      setWeeklyRecordsTaiko(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setWeeklyRecordsTaiko(finalData);
+    }
+  };
+  const fillRecordsMonthlyTaiko = (itemData) => {
+    if (itemData.length === 0) {
+      setMonthlyRecordsTaiko(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setMonthlyRecordsTaiko(finalData);
+    }
+  };
+  const fetchPreviousWinnersTaiko = async () => {
+    if (prevVersionTaiko != 0) {
+      const data = {
+        StatisticName: "LeaderboardTaikoDaily",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionTaiko - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      setPrevDataTaiko(result.data.data.leaderboard);
+    } else {
+      setPrevDataTaiko(placeholderplayerData);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+  const fetchPreviousWeeklyWinnersTaiko = async () => {
+    if (prevVersionTaikoWeekly != 0) {
+      const data = {
+        StatisticName: "LeaderboardTaikoWeekly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionTaikoWeekly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setPrevDataTaikoWeekly(result.data.data.leaderboard);
+    } else {
+      setPrevDataTaikoWeekly(placeholderplayerData);
+    }
+  };
+  const fetchPreviousMonthlyWinnersTaiko = async () => {
+    if (prevVersionTaikoMonthly != 0) {
+      const data = {
+        StatisticName: "LeaderboardTaikoMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionTaikoMonthly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setPrevDataVictionMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataTaikoMonthly(placeholderplayerData);
+    }
+  };
+  const fetchDailyRecordsTaiko = async () => {
+    const data = {
+      StatisticName: "LeaderboardTaikoDaily",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsTaiko([]);
+      });
+    setPrevVersionTaiko(parseInt(result.data.data.version));
+    setDailyRecordsTaiko(result.data.data.leaderboard);
+    fillRecordsTaiko(result.data.data.leaderboard);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    if (testArray.length > 0) {
+      setActivePlayerTaiko(true);
+      fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    } else if (testArray.length === 0) {
+      setActivePlayerTaiko(false);
+      fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    }
+  };
+  const fetchWeeklyRecordsTaiko = async () => {
+    const data = {
+      StatisticName: "LeaderboardTaikoWeekly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsWeeklyTaiko([]);
+      });
+    setWeeklyRecordsTaiko(result.data.data.leaderboard);
+    setPrevVersionTaikoWeekly(result.data.data.version);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    fillRecordsWeeklyTaiko(result.data.data.leaderboard);
+
+    if (testArray.length > 0) {
+      setActivePlayerTaikoWeekly(true);
+      fetchWeeklyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    }
+    if (testArray.length === 0) {
+      setActivePlayerTaikoWeekly(false);
+      fetchWeeklyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    }
+  };
+  const fetchMonthlyRecordsTaiko = async () => {
+    const data = {
+      StatisticName: "LeaderboardTaikoMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMonthlyTaiko([]);
+      });
+    setMonthlyRecordsTaiko(result.data.data.leaderboard);
+    setPrevVersionTaikoMonthly(result.data.data.version);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    if (testArray.length > 0) {
+      setActivePlayerTaikoMonthly(true);
+      fetchMonthlyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    }
+    fillRecordsMonthlyTaiko(result.data.data.leaderboard);
+
+    if (testArray.length === 0) {
+      setActivePlayerTaikoMonthly(false);
+      fetchMonthlyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    }
+  };
+  const fetchDailyRecordsAroundPlayerTaiko = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardTaikoDaily",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+
+      if (isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
+              : Number(skaleStars[userPosition]) +
+                Number(skaleStarsPremium[userPosition])
+            : 0
+        );
+      } else if (!isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9])
+              : Number(skaleStars[userPosition])
+            : 0
+        );
+      } else setDailyDataAmountTaiko(0);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerTaiko(true);
+          setUserDataTaiko([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerTaiko(false);
+          setUserDataTaiko(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerTaiko(false);
+        setUserDataTaiko(...testArray);
+      }
+    }
+  };
+  const fetchWeeklyRecordsAroundPlayerTaiko = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardTaikoWeekly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+      if (goldenPassRemainingTime && testArray[0].statValue != 0) {
+        setWeeklyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesWeekly[9]) +
+                Number(skalePrizesWeeklyGolden[9])
+              : Number(skalePrizesWeekly[userPosition]) +
+                Number(skalePrizesWeeklyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
+        setWeeklyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesWeekly[9])
+              : Number(skalePrizesWeekly[userPosition])
+            : 0
+        );
+      } else setWeeklyDataAmountTaiko(0);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerTaikoWeekly(true);
+          setUserDataTaikoWeekly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerTaikoWeekly(false);
+          setUserDataTaikoWeekly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerTaikoWeekly(false);
+        setUserDataTaikoWeekly(...testArray);
+      }
+    }
+  };
+
+  const fetchMonthlyRecordsAroundPlayerTaiko = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardTaikoMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
+
+      if (goldenPassRemainingTime) {
+        setMonthlyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setMonthlyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
+            : 0
+        );
+      }
+
+      setUserRankTaiko(testArray[0].position);
+      setUserTaikoScore(testArray[0].statValue);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerTaikoMonthly(true);
+          setUserDataTaikoMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerTaikoMonthly(false);
+          setUserDataTaikoMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerTaikoMonthly(false);
+        setUserDataTaikoMonthly(...testArray);
+      }
+    }
+  };
+
   const fillRecordsSkale = (itemData) => {
     if (itemData.length === 0) {
       setDailyRecordsSkale(placeholderplayerData);
@@ -2424,22 +3454,22 @@ function Dashboard({
     }
   };
   const fetchPreviousMonthlyWinnersSkale = async () => {
-    // if (prevVersionSkaleMonthly != 0) {
-    //   const data = {
-    //     StatisticName: "LeaderboardSkaleMonthly",
-    //     StartPosition: 0,
-    //     MaxResultsCount: 10,
-    //     Version: prevVersionSkaleMonthly - 1,
-    //   };
-    //   const result = await axios.post(
-    //     `${backendApi}/auth/GetLeaderboard?Version=-1`,
-    //     data
-    //   );
+    if (prevVersionSkaleMonthly != 0) {
+      const data = {
+        StatisticName: "LeaderboardSkaleMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionSkaleMonthly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-    //   setPrevDataSkaleMonthly(result.data.data.leaderboard);
-    // } else {
-    setPrevDataSkaleMonthly(placeholderplayerData);
-    // }
+      setPrevDataSkaleMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataSkaleMonthly(placeholderplayerData);
+    }
   };
   const fetchDailyRecordsSkale = async () => {
     const data = {
@@ -2456,6 +3486,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerSkale(true);
+      fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
     } else if (testArray.length === 0) {
       setActivePlayerSkale(false);
       fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
@@ -2477,6 +3508,7 @@ function Dashboard({
 
     if (testArray.length > 0) {
       setActivePlayerSkaleWeekly(true);
+      fetchWeeklyRecordsAroundPlayerSkale(result.data.data.leaderboard);
     }
     if (testArray.length === 0) {
       setActivePlayerSkaleWeekly(false);
@@ -2497,6 +3529,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerSkaleMonthly(true);
+      fetchMonthlyRecordsAroundPlayerSkale(result.data.data.leaderboard);
     }
     fillRecordsMonthlySkale(result.data.data.leaderboard);
 
@@ -2937,6 +3970,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayer(true);
+      fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
     } else if (testArray.length === 0) {
       setActivePlayer(false);
       fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
@@ -2959,6 +3993,7 @@ function Dashboard({
 
     if (testArray.length > 0) {
       setActivePlayerWeekly(true);
+      fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
     }
     if (testArray.length === 0) {
       setActivePlayerWeekly(false);
@@ -2979,6 +4014,7 @@ function Dashboard({
     );
     if (testArray.length > 0) {
       setActivePlayerMonthly(true);
+      fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
     }
     fillRecordsMonthly(result.data.data.leaderboard);
 
@@ -3080,12 +4116,47 @@ function Dashboard({
     fetchDailyRecordsViction();
     fetchWeeklyRecordsViction();
     fetchMonthlyRecordsViction();
+    fetchDailyRecordsManta();
+    fetchWeeklyRecordsManta();
+    fetchMonthlyRecordsManta();
+    fetchDailyRecordsTaiko();
+    fetchWeeklyRecordsTaiko();
+    fetchMonthlyRecordsTaiko();
     fetchDailyRecordsSkale();
     fetchWeeklyRecordsSkale();
     fetchMonthlyRecordsSkale();
-
     fetchRecordsStar();
-  }, [username, count, userId, goldenPassRemainingTime]);
+  }, [username, userId, goldenPassRemainingTime]);
+
+  useEffect(() => {
+    fetchDailyRecords();
+    getAllChests(email);
+  }, [count]);
+
+  useEffect(() => {
+    fetchDailyRecordsCore();
+    getAllCoreChests(email);
+  }, [corecount]);
+
+  useEffect(() => {
+    fetchDailyRecordsSkale();
+    getAllSkaleChests(email);
+  }, [skalecount]);
+
+  useEffect(() => {
+    fetchDailyRecordsViction();
+    getAllVictionChests(email);
+  }, [vicitoncount]);
+
+  useEffect(() => {
+    fetchDailyRecordsManta();
+    getAllMantaChests(email);
+  }, [mantacount]);
+
+  useEffect(() => {
+    fetchDailyRecordsTaiko();
+    getAllTaikoChests(email);
+  }, [taikocount]);
 
   useEffect(() => {
     fetchGenesisPreviousWinners();
@@ -3098,6 +4169,12 @@ function Dashboard({
     fetchPreviousWinnersViction();
     fetchPreviousWeeklyWinnersViction();
     fetchPreviousMonthlyWinnersViction();
+    fetchPreviousWinnersManta();
+    fetchPreviousWeeklyWinnersManta();
+    fetchPreviousMonthlyWinnersManta();
+    fetchPreviousWinnersTaiko();
+    fetchPreviousWeeklyWinnersTaiko();
+    fetchPreviousMonthlyWinnersTaiko();
     fetchPreviousWinnersSkale();
     fetchPreviousWeeklyWinnersSkale();
     fetchPreviousMonthlyWinnersSkale();
@@ -3113,9 +4190,15 @@ function Dashboard({
     prevVersionStar,
     prevVersionSkaleMonthly,
     prevVersionCore,
+    prevVersionManta,
+    prevVersionTaiko,
     prevVersionVictionMonthly,
     prevVersionCoreWeekly,
     prevVersionCoreMonthly,
+    prevVersionMantaWeekly,
+    prevVersionMantaMonthly,
+    prevVersionTaikoWeekly,
+    prevVersionTaikoMonthly,
     prevVersionViction,
     prevVersionVictionWeekly,
   ]);
@@ -3252,12 +4335,15 @@ function Dashboard({
     ]);
   }, [
     dailyRecordsSkale,
-    prevDataSkale,
+    weeklyRecordsSkale,
+    monthlyRecordsSkale,
     userDataSkale,
     activePlayerSkale,
-    monthlyRecordsSkale,
+    prevDataSkale,
     prevDataSkaleMonthly,
+    prevDataSkaleWeekly,
     userDataSkaleMonthly,
+    userDataSkaleWeekly,
   ]);
   useEffect(() => {
     setAllCoreData([
@@ -3297,12 +4383,15 @@ function Dashboard({
     ]);
   }, [
     dailyRecordsCore,
+    weeklyRecordsCore,
     prevDataCore,
     userDataCore,
     activePlayerCore,
     monthlyRecordsCore,
     prevDataCoreMonthly,
+    prevDataCoreWeekly,
     userDataCoreMonthly,
+    userDataCoreWeekly,
   ]);
   useEffect(() => {
     setAllVictionData([
@@ -3342,12 +4431,117 @@ function Dashboard({
     ]);
   }, [
     dailyRecordsViction,
-    prevDataViction,
-    userDataViction,
-    activePlayerViction,
+    weeklyRecordsViction,
     monthlyRecordsViction,
+    prevDataViction,
+    prevDataVictionWeekly,
     prevDataVictionMonthly,
+    userDataViction,
+    userDataVictionWeekly,
     userDataVictionMonthly,
+    activePlayerViction,
+  ]);
+
+  useEffect(() => {
+    setAllMantaData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: skaleStars,
+        premium_rewards: skaleStarsPremium,
+        activeData: dailyRecordsManta,
+        previousData: prevDataManta,
+        player_data: userDataManta,
+        is_active: activePlayerManta, //change when apis are ready
+      },
+      {
+        title: "WEEKLY",
+        reset: "Monday (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesWeekly,
+        premium_rewards: skalePrizesWeeklyGolden,
+        activeData: weeklyRecordsManta,
+        previousData: prevDataMantaWeekly,
+        player_data: userDataMantaWeekly,
+        is_active: activePlayerMantaWeekly,
+      },
+      {
+        title: "MONTHLY",
+        reset: "Monthly (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesMonthly,
+        premium_rewards: skalePrizesMonthlyGolden,
+        activeData: monthlyRecordsManta,
+        previousData: prevDataMantaMonthly,
+        player_data: userDataMantaMonthly,
+        is_active: activePlayerMantaMonthly, //change when apis are ready
+      },
+    ]);
+  }, [
+    dailyRecordsManta,
+    weeklyRecordsManta,
+    monthlyRecordsManta,
+    prevDataManta,
+    prevDataMantaWeekly,
+    prevDataMantaMonthly,
+    userDataManta,
+    userDataMantaWeekly,
+    userDataMantaMonthly,
+    activePlayerManta,
+    activePlayerMantaMonthly,
+    activePlayerMantaWeekly,
+  ]);
+
+  useEffect(() => {
+    setAllTaikoData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: skaleStars,
+        premium_rewards: skaleStarsPremium,
+        activeData: dailyRecordsTaiko,
+        previousData: prevDataTaiko,
+        player_data: userDataTaiko,
+        is_active: activePlayerTaiko, //change when apis are ready
+      },
+      {
+        title: "WEEKLY",
+        reset: "Monday (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesWeekly,
+        premium_rewards: skalePrizesWeeklyGolden,
+        activeData: weeklyRecordsTaiko,
+        previousData: prevDataTaikoWeekly,
+        player_data: userDataTaikoWeekly,
+        is_active: activePlayerTaikoWeekly,
+      },
+      {
+        title: "MONTHLY",
+        reset: "Monthly (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesMonthly,
+        premium_rewards: skalePrizesMonthlyGolden,
+        activeData: monthlyRecordsTaiko,
+        previousData: prevDataTaikoMonthly,
+        player_data: userDataTaikoMonthly,
+        is_active: activePlayerTaikoMonthly, //change when apis are ready
+      },
+    ]);
+  }, [
+    dailyRecordsTaiko,
+    weeklyRecordsTaiko,
+    monthlyRecordsTaiko,
+    prevDataTaiko,
+    prevDataTaikoWeekly,
+    prevDataTaikoMonthly,
+    userDataTaiko,
+    userDataTaikoWeekly,
+    userDataTaikoMonthly,
+    activePlayerTaiko,
+    activePlayerTaikoMonthly,
+    activePlayerTaikoWeekly,
   ]);
 
   const handleSetAvailableTime = (value) => {
@@ -3359,92 +4553,92 @@ function Dashboard({
       setcountdown700();
       handleSetAvailableTime();
     } else if (bundlesBought > 0) {
-      const dypv1 = new window.infuraWeb3.eth.Contract(
-        DYP_700V1_ABI,
-        dyp700v1Address
-      );
+      // const dypv1 = new window.infuraWeb3.eth.Contract(
+      //   DYP_700V1_ABI,
+      //   dyp700v1Address
+      // );
 
-      const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
+      // const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
 
-      const remainingTimev1 = await dypv1.methods
-        .getTimeOfExpireBuff(coinbase)
-        .call();
+      // const remainingTimev1 = await dypv1.methods
+      //   .getTimeOfExpireBuff(coinbase)
+      //   .call();
 
-      const remainingTimev2 = await dypv2.methods
-        .getTimeOfExpireBuff(coinbase)
-        .call();
+      // const remainingTimev2 = await dypv2.methods
+      //   .getTimeOfExpireBuff(coinbase)
+      //   .call();
 
-      var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
+      // var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
 
-      var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
-      const timeofDepositv1 = await dypv1.methods
-        .getTimeOfDeposit(coinbase)
-        .call();
+      // var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
+      // const timeofDepositv1 = await dypv1.methods
+      //   .getTimeOfDeposit(coinbase)
+      //   .call();
 
-      const timeofDepositv2 = await dypv2.methods
-        .getTimeOfDeposit(coinbase)
-        .call();
+      // const timeofDepositv2 = await dypv2.methods
+      //   .getTimeOfDeposit(coinbase)
+      //   .call();
 
-      if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
-        remainingTime_milisecondsv1 = timeofDepositv1 * 1000;
-        remainingTime_milisecondsv2 = timeofDepositv2 * 1000;
+      // if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
+      //   remainingTime_milisecondsv1 = timeofDepositv1 * 1000;
+      //   remainingTime_milisecondsv2 = timeofDepositv2 * 1000;
 
-        const timeofDeposit_Datev1 = new Intl.DateTimeFormat("en-US", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        }).format(remainingTime_milisecondsv1);
+      //   const timeofDeposit_Datev1 = new Intl.DateTimeFormat("en-US", {
+      //     year: "numeric",
+      //     month: "2-digit",
+      //     day: "2-digit",
+      //     hour: "2-digit",
+      //     minute: "2-digit",
+      //     second: "2-digit",
+      //   }).format(remainingTime_milisecondsv1);
 
-        const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Datev1);
+      //   const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Datev1);
 
-        const timeofDeposit_Hoursv1 = timeofDeposit_Date_formattedv1.getHours();
-        const timeofDeposit_Minutesv1 =
-          timeofDeposit_Date_formattedv1.getMinutes();
-        const finalHoursv1 = timeofDeposit_Hoursv1 - 11;
+      //   const timeofDeposit_Hoursv1 = timeofDeposit_Date_formattedv1.getHours();
+      //   const timeofDeposit_Minutesv1 =
+      //     timeofDeposit_Date_formattedv1.getMinutes();
+      //   const finalHoursv1 = timeofDeposit_Hoursv1 - 11;
 
-        const finalMinutesv1 = timeofDeposit_Minutesv1 - 11;
+      //   const finalMinutesv1 = timeofDeposit_Minutesv1 - 11;
 
-        const resultv1 =
-          remainingTimev1 - finalHoursv1 * 60 * 60 - finalMinutesv1 * 60;
+      //   const resultv1 =
+      //     remainingTimev1 - finalHoursv1 * 60 * 60 - finalMinutesv1 * 60;
 
-        const timeofDeposit_Datev2 = new Intl.DateTimeFormat("en-US", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        }).format(remainingTime_milisecondsv2);
+      //   const timeofDeposit_Datev2 = new Intl.DateTimeFormat("en-US", {
+      //     year: "numeric",
+      //     month: "2-digit",
+      //     day: "2-digit",
+      //     hour: "2-digit",
+      //     minute: "2-digit",
+      //     second: "2-digit",
+      //   }).format(remainingTime_milisecondsv2);
 
-        const timeofDeposit_Date_formattedv2 = new Date(timeofDeposit_Datev2);
-        const timeofDeposit_day = timeofDeposit_Date_formattedv2.getDate();
-        const timeofDeposit_Hoursv2 = timeofDeposit_Date_formattedv2.getHours();
-        const timeofDeposit_Minutesv2 =
-          timeofDeposit_Date_formattedv2.getMinutes();
-        const finalHoursv2 = timeofDeposit_Hoursv2 - 11;
+      //   const timeofDeposit_Date_formattedv2 = new Date(timeofDeposit_Datev2);
+      //   const timeofDeposit_day = timeofDeposit_Date_formattedv2.getDate();
+      //   const timeofDeposit_Hoursv2 = timeofDeposit_Date_formattedv2.getHours();
+      //   const timeofDeposit_Minutesv2 =
+      //     timeofDeposit_Date_formattedv2.getMinutes();
+      //   const finalHoursv2 = timeofDeposit_Hoursv2 - 11;
 
-        const finalMinutesv2 = timeofDeposit_Minutesv2 - 11;
+      //   const finalMinutesv2 = timeofDeposit_Minutesv2 - 11;
 
-        const resultv2 =
-          remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
-        setcountdown700((resultv2 + resultv1) * 1000);
-        handleSetAvailableTime((resultv2 + resultv1) * 1000);
-        // setcountdown700(result * 1000);
-        //}
-      } else {
-        setcountdown700();
-        handleSetAvailableTime();
-      }
+      //   const resultv2 =
+      //     remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
+      setcountdown700(firstOfNextMonth.getTime());
+      handleSetAvailableTime(firstOfNextMonth.getTime());
+      // setcountdown700(result * 1000);
+      //}
+      // } else {
+      //   setcountdown700();
+      //   handleSetAvailableTime();
+      // }
     }
   };
 
   const fetchSkalePrice = async () => {
     await axios
       .get(
-        `https://api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd`
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
       )
       .then((obj) => {
         setSkalePrice(obj.data.skale.usd);
@@ -3456,7 +4650,7 @@ function Dashboard({
         `https://pro-api.coingecko.com/api/v3/simple/price?ids=sei-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
       )
       .then((obj) => {
-        setSeiPrice(obj.data["sei-network"].usd.usd);
+        setSeiPrice(obj.data["sei-network"].usd);
       });
   };
 
@@ -3467,6 +4661,36 @@ function Dashboard({
       )
       .then((obj) => {
         setCorePrice(obj.data.core.usd);
+      });
+  };
+
+  const fetchMantaPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=manta-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setMantaPrice(obj.data["manta-network"].usd);
+      });
+  };
+
+  const fetchTaikoPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=taiko&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setTaikoPrice(obj.data["taiko"].usd);
+      });
+  };
+
+  const fetchCookiePrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=cookie&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setCookiePrice(obj.data.cookie.usd);
       });
   };
 
@@ -3499,6 +4723,9 @@ function Dashboard({
   let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
   let wseiAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
+  let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
+  let wtaikoddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
+
   let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];
@@ -3739,9 +4966,11 @@ function Dashboard({
   const getCawsStakesIds = async () => {
     const address = coinbase;
 
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.CAWSPREMIUM_ABI,
+      window.config.nft_caws_premiumstake_address
     );
+
     let stakenft = [];
     let myStakes = await staking_contract.methods
       .depositsOf(address)
@@ -3761,9 +4990,11 @@ function Dashboard({
     let myStakes = await getCawsStakesIds(address);
     let result = 0;
     let calculateRewards = [];
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.CAWSPREMIUM_ABI,
+      window.config.nft_caws_premiumstake_address
     );
+
     if (address !== null) {
       if (myStakes && myStakes.length > 0) {
         calculateRewards = await staking_contract.methods
@@ -3869,36 +5100,70 @@ function Dashboard({
   };
 
   const signWalletPublicAddress = async () => {
-    try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner(account);
-      const signature = await signer.signMessage(
-        `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
-      );
-      verifyWallet({
-        variables: {
-          publicAddress: account,
-          signature: signature,
-        },
-      }).then(() => {
-        setsyncStatus("success");
+    if (window.ethereum && window.WALLET_TYPE !== "binance") {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner(account);
+        const signature = await signer.signMessage(
+          `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+        );
+        verifyWallet({
+          variables: {
+            publicAddress: account,
+            signature: signature,
+          },
+        }).then(() => {
+          setsyncStatus("success");
+          setTimeout(() => {
+            setshowSyncModal(false);
+            setsyncStatus("initial");
+          }, 1000);
+          onSubscribeSuccess(account);
+
+          if (isonlink) {
+            handleFirstTask(account);
+          }
+        });
+      } catch (error) {
+        setsyncStatus("error");
         setTimeout(() => {
-          setshowSyncModal(false);
           setsyncStatus("initial");
-        }, 1000);
-        onSubscribeSuccess(account);
+        }, 3000);
 
-        if (isonlink) {
-          handleFirstTask(account);
-        }
-      });
-    } catch (error) {
-      setsyncStatus("error");
-      setTimeout(() => {
-        setsyncStatus("initial");
-      }, 3000);
+        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+      }
+    } else if (binanceWallet && binanceW3WProvider) {
+      try {
+        const provider = binanceW3WProvider;
+        const signer = provider.getSigner();
+        const signature = await signer.signMessage(
+          `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+        );
+        verifyWallet({
+          variables: {
+            publicAddress: binanceWallet,
+            signature: signature,
+          },
+        }).then(() => {
+          setsyncStatus("success");
+          setTimeout(() => {
+            setshowSyncModal(false);
+            setsyncStatus("initial");
+          }, 1000);
+          onSubscribeSuccess(binanceWallet);
 
-      console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+          if (isonlink) {
+            handleFirstTask(binanceWallet);
+          }
+        });
+      } catch (error) {
+        setsyncStatus("error");
+        setTimeout(() => {
+          setsyncStatus("initial");
+        }, 3000);
+
+        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+      }
     }
   };
 
@@ -3937,7 +5202,6 @@ function Dashboard({
       );
 
       const userPosition = testArray[0].position;
-      // console.log(userPosition)
 
       if (goldenPassRemainingTime) {
         setUserRank2(
@@ -3945,8 +5209,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(monthlyPrizes[9]) + Number(monthlyPrizesGolden[9])
-              : Number(monthlyPrizes[userPosition]) +
+              ? Number(monthlyPrizesBnb[9]) + Number(monthlyPrizesGolden[9])
+              : Number(monthlyPrizesBnb[userPosition]) +
                 Number(monthlyPrizesGolden[userPosition])
             : 0
         );
@@ -3956,8 +5220,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(monthlyPrizes[9])
-              : Number(monthlyPrizes[userPosition])
+              ? Number(monthlyPrizesBnb[9])
+              : Number(monthlyPrizesBnb[userPosition])
             : 0
         );
       }
@@ -4034,9 +5298,19 @@ function Dashboard({
       window.config.subscription_newbnb2_address
     );
 
+    const premiumSc_viction = new window.victionWeb3.eth.Contract(
+      window.SUBSCRIPTION_VICTION_ABI,
+      window.config.subscription_viction_address
+    );
+
     const nftContract = new window.bscWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_ABI,
       window.config.nft_dypius_premium_address
+    );
+
+    const nftContract_viction = new window.victionWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
+      window.config.nft_dypius_premium_viction_address
     );
 
     if (wallet) {
@@ -4048,7 +5322,22 @@ function Dashboard({
           return 0;
         });
 
+      const result_viction = await nftContract_viction.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
       const discount = await premiumSc.methods
+        .discountPercentageGlobal()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+      const discount_viction = await premiumSc_viction.methods
         .discountPercentageGlobal()
         .call()
         .catch((e) => {
@@ -4058,6 +5347,13 @@ function Dashboard({
 
       const nftObject = await premiumSc.methods
         .nftDiscounts(window.config.nft_dypius_premium_address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const nftObject_viction = await premiumSc_viction.methods
+        .nftDiscounts(window.config.nft_dypius_premium_viction_address)
         .call()
         .catch((e) => {
           console.error(e);
@@ -4086,18 +5382,47 @@ function Dashboard({
 
         setnftPremium_tokenId(tokenId);
         setnftPremium_total(parseInt(result));
+      } else if (result_viction && parseInt(result_viction) > 0) {
+        const tokenId = await nftContract_viction.methods
+          .tokenOfOwnerByIndex(wallet, 0)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+
+        if (nftObject_viction) {
+          setnftDiscountObjectViction(nftObject_viction);
+          if (discount_viction) {
+            setdiscountPercentageViction(
+              Math.max(
+                parseInt(discount_viction),
+                parseInt(nftObject_viction.discountPercentage)
+              )
+            );
+          }
+        }
+
+        setnftPremium_tokenIdViction(tokenId);
+        setnftPremium_totalViction(parseInt(result_viction));
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
-
+        setnftPremium_tokenIdViction(0);
+        setnftPremium_totalViction(0);
         if (discount) {
           setdiscountPercentage(parseInt(discount));
+        } else if (discount_viction) {
+          setdiscountPercentageViction(parseInt(discount_viction));
         }
       }
     } else {
       setnftPremium_tokenId(0);
       setnftPremium_total(0);
+      setnftPremium_tokenIdViction(0);
+      setnftPremium_totalViction(0);
     }
+
     // } else setdiscountPercentage(0);
   };
 
@@ -4221,8 +5546,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(weeklyPrizes[9]) + Number(weeklyPrizesGolden[9])
-              : Number(weeklyPrizes[userPosition]) +
+              ? Number(weeklyPrizesBnb[9]) + Number(weeklyPrizesGolden[9])
+              : Number(weeklyPrizesBnb[userPosition]) +
                 Number(weeklyPrizesGolden[userPosition])
             : 0
         );
@@ -4232,8 +5557,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(weeklyPrizes[9])
-              : Number(weeklyPrizes[userPosition])
+              ? Number(weeklyPrizesBnb[9])
+              : Number(weeklyPrizesBnb[userPosition])
             : 0
         );
       }
@@ -4264,14 +5589,18 @@ function Dashboard({
           claimedChests + claimedPremiumChests < 20 ||
           claimedSkaleChests + claimedSkalePremiumChests < 20 ||
           claimedCoreChests + claimedCorePremiumChests < 20 ||
-          claimedVictionChests + claimedVictionPremiumChests < 20
+          claimedVictionChests + claimedVictionPremiumChests < 20 ||
+          claimedMantaChests + claimedMantaPremiumChests < 20 ||
+          claimedTaikoChests + claimedTaikoPremiumChests < 20
         ) {
           setCanBuy(true);
         } else if (
           claimedChests + claimedPremiumChests === 20 &&
           claimedSkaleChests + claimedSkalePremiumChests === 20 &&
           claimedCoreChests + claimedCorePremiumChests === 20 &&
-          claimedVictionChests + claimedVictionPremiumChests === 20
+          claimedVictionChests + claimedVictionPremiumChests === 20 &&
+          claimedMantaChests + claimedMantaPremiumChests === 20 &&
+          claimedTaikoChests + claimedTaikoPremiumChests === 20
         ) {
           setCanBuy(false);
         }
@@ -4280,14 +5609,18 @@ function Dashboard({
           claimedChests < 10 ||
           claimedSkaleChests < 10 ||
           claimedCoreChests < 10 ||
-          claimedVictionChests < 10
+          claimedVictionChests < 10 ||
+          claimedMantaChests < 10 ||
+          claimedTaikoChests < 10
         ) {
           setCanBuy(true);
         } else if (
           claimedChests === 10 &&
           claimedSkaleChests === 10 &&
           claimedCoreChests === 10 &&
-          claimedVictionChests === 10
+          claimedVictionChests === 10 &&
+          claimedMantaChests === 10 &&
+          claimedTaikoChests === 10
         ) {
           setCanBuy(false);
         }
@@ -4484,6 +5817,100 @@ function Dashboard({
     }
   };
 
+  const getAllMantaChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "manta" };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedMantaChests(openedChests);
+        setStandardMantaChests(standardChestsArray);
+        setPremiumMantaChests(premiumChestsArray);
+
+        setclaimedMantaChests(openedStandardChests.length);
+        setclaimedMantaPremiumChests(openedPremiumChests.length);
+        setallMantaChests(chestOrder);
+      }
+    }
+  };
+
+  const getAllTaikoChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "taiko" };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedTaikoChests(openedChests);
+        setStandardTaikoChests(standardChestsArray);
+        setPremiumTaikoChests(premiumChestsArray);
+
+        setclaimedTaikoChests(openedStandardChests.length);
+        setclaimedTaikoPremiumChests(openedPremiumChests.length);
+        setallTaikoChests(chestOrder);
+      }
+    }
+  };
+
   const getAllSeiChests = async (userEmail) => {
     const emailData = { emailAddress: userEmail, chainId: "sei" };
 
@@ -4564,15 +5991,15 @@ function Dashboard({
       setMyNFTSCaws(NFTS)
     );
 
-    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
-    //   (NFTS) => setMyNFTSCawsBNB(NFTS)
-    // );
-    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
-    //   (NFTS) => setMyNFTSCawsBase(NFTS)
-    // );
-    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
-    //   (NFTS) => setMyNFTSCawsAvax(NFTS)
-    // );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
+      (NFTS) => setMyNFTSCawsBNB(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
+      (NFTS) => setMyNFTSCawsBase(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
+      (NFTS) => setMyNFTSCawsAvax(NFTS)
+    );
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "timepiece").then(
       (NFTS) => setMyNFTSTimepiece(NFTS)
@@ -4582,23 +6009,23 @@ function Dashboard({
       setMyNFTSLand(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "bnb").then((NFTS) =>
-      setMyNFTSBNB(NFTS)
-    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "bnb").then((NFTS) => {
+      setMyNFTSBNB(NFTS);
+    });
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "opbnb").then((NFTS) =>
       setMyNFTSopBNB(NFTS)
     );
 
-    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
-    //   (NFTS) => setMyNFTSLandBNB(NFTS)
-    // );
-    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
-    //   (NFTS) => setMyNFTSLandBase(NFTS)
-    // );
-    // getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
-    //   (NFTS) => setMyNFTSLandAvax(NFTS)
-    // );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
+      (NFTS) => setMyNFTSLandBNB(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
+      (NFTS) => setMyNFTSLandBase(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
+      (NFTS) => setMyNFTSLandAvax(NFTS)
+    );
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "coingecko").then(
       (NFTS) => setMyNFTSCoingecko(NFTS)
     );
@@ -4636,6 +6063,17 @@ function Dashboard({
 
     getMyNFTS(userWallet !== "" ? userWallet : coinbase, "skale").then((NFTS) =>
       setmySkaleNfts(NFTS)
+    );
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "manta").then((NFTS) =>
+      setmyMantaNfts(NFTS)
+    );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "taiko").then((NFTS) =>
+      setmyTaikoNfts(NFTS)
+    );
+
+    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cookie3").then(
+      (NFTS) => setmyCookieNfts(NFTS)
     );
   };
 
@@ -4697,6 +6135,7 @@ function Dashboard({
         ERC20_ABI,
         token_addressIDYP
       );
+
       const bal1 = await contract1.methods
         .balanceOf(coinbase)
         .call()
@@ -4955,6 +6394,10 @@ function Dashboard({
         ? window.config.subscriptionsei_tokens[token]?.decimals
         : chainId === 88
         ? window.config.subscriptionviction_tokens[token]?.decimals
+        : chainId === 169
+        ? window.config.subscriptionmanta_tokens[token]?.decimals
+        : chainId === 167000
+        ? window.config.subscriptiontaiko_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -4981,7 +6424,14 @@ function Dashboard({
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 88
-        ? await window.getEstimatedTokenSubscriptionAmountViction(token)
+        ? await window.getEstimatedTokenSubscriptionAmountViction(
+            token,
+            discountPercentageViction
+          )
+        : chainId === 169
+        ? await window.getEstimatedTokenSubscriptionAmountManta(token)
+        : chainId === 167000
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
         : chainId === 713715
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
@@ -4992,10 +6442,17 @@ function Dashboard({
       tokenprice / 10 ** tokenDecimals,
       tokenDecimals
     );
-    let tokenBalance2 = await window.getTokenHolderBalance(token, coinbase);
+    if (coinbase && window.WALLET_TYPE === "binance") {
+      let token_Sc = new ethers.Contract(
+        token,
+        window.ERC20_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      let tokenBalance2 = await token_Sc.balanceOf(coinbase);
+      setTokenBalance(tokenBalance2);
+    }
     setprice(tokenprice);
     setformattedPrice(formattedTokenPrice);
-    setTokenBalance(tokenBalance2);
   };
 
   const handleApprove = async (e) => {
@@ -5009,29 +6466,118 @@ function Dashboard({
     const skalesubscribeAddress = window.config.subscription_skale_address;
     const seisubscribeAddress = window.config.subscription_sei_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
+    const mantasubscribeAddress = window.config.subscription_manta_address;
+    const taikosubscribeAddress = window.config.subscription_taiko_address;
+
     const coresubscribeAddress = window.config.subscription_core_address;
 
     const web3 = new Web3(window.ethereum);
 
-    let tokenContract = new web3.eth.Contract(
-      window.ERC20_ABI,
-      selectedSubscriptionToken
-    );
     setloadspinner(true);
-    let nftContract = new window.web3.eth.Contract(
-      window.NFT_DYPIUS_PREMIUM_ABI,
-      window.config.nft_dypius_premium_address
+
+    const nftContract_viction = new window.victionWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
+      window.config.nft_dypius_premium_viction_address
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
-      if (approveStatus === "initial") {
-        await nftContract.methods
-          .approve(
-            window.config.subscription_newbnb2_address,
-            nftPremium_tokenId
-          )
-          .send({ from: coinbase })
-          .then(() => {
+      if (window.WALLET_TYPE !== "binance") {
+        let tokenContract = new web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
+        let nftContract = new window.web3.eth.Contract(
+          window.NFT_DYPIUS_PREMIUM_ABI,
+          window.config.nft_dypius_premium_address
+        );
+
+        if (approveStatus === "initial") {
+          await nftContract.methods
+            .approve(
+              window.config.subscription_newbnb2_address,
+              nftPremium_tokenId
+            )
+            .send({ from: coinbase })
+            .then(() => {
+              setloadspinner(false);
+              setisApproved(true);
+              if (discountPercentage < 100) {
+                if (
+                  selectedSubscriptionToken.toLowerCase() ===
+                  "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+                ) {
+                  setapproveStatus("deposit");
+                } else setapproveStatus("approveAmount");
+              } else {
+                setapproveStatus("deposit");
+              }
+            })
+            .catch((e) => {
+              setstatus(e?.message);
+              setloadspinner(false);
+              setapproveStatus("fail");
+              window.alertify.error(e?.message);
+              setTimeout(() => {
+                setstatus("");
+                setloadspinner(false);
+                setapproveStatus("initial");
+              }, 5000);
+            });
+        } else if (approveStatus === "approveAmount") {
+          await tokenContract.methods
+            .approve(bnbsubscribeAddress, price)
+            .send({ from: coinbase })
+            .then(() => {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            })
+            .catch((e) => {
+              setstatus(e?.message);
+              setloadspinner(false);
+              setapproveStatus("fail");
+              window.alertify.error(e?.message);
+              setTimeout(() => {
+                setstatus("");
+                setloadspinner(false);
+                setapproveStatus("initial");
+              }, 5000);
+            });
+        }
+      } else if (window.WALLET_TYPE === "binance") {
+        let tokenContract_binance = new ethers.Contract(
+          selectedSubscriptionToken,
+          window.ERC20_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+        let nftContract_binance = new ethers.Contract(
+          window.config.nft_dypius_premium_address,
+          window.NFT_DYPIUS_PREMIUM_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+        if (approveStatus === "initial") {
+          const txResponse = await nftContract_binance
+            .approve(
+              window.config.subscription_newbnb2_address,
+              nftPremium_tokenId,
+              { from: coinbase }
+            )
+            .catch((e) => {
+              setstatus(e?.message);
+              setloadspinner(false);
+              setapproveStatus("fail");
+              window.alertify.error(e?.message);
+              setTimeout(() => {
+                setstatus("");
+                setloadspinner(false);
+                setapproveStatus("initial");
+              }, 5000);
+            });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
             setloadspinner(false);
             setisApproved(true);
             if (discountPercentage < 100) {
@@ -5041,6 +6587,50 @@ function Dashboard({
               ) {
                 setapproveStatus("deposit");
               } else setapproveStatus("approveAmount");
+            } else {
+              setapproveStatus("deposit");
+            }
+          }
+        } else if (approveStatus === "approveAmount") {
+          const txResponse = await tokenContract_binance
+            .approve(bnbsubscribeAddress, price, { from: coinbase })
+            .catch((e) => {
+              setstatus(e?.message);
+              setloadspinner(false);
+              setapproveStatus("fail");
+              window.alertify.error(e?.message);
+              setTimeout(() => {
+                setstatus("");
+                setloadspinner(false);
+                setapproveStatus("initial");
+              }, 5000);
+            });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          }
+        }
+      }
+    } else if (
+      chainId === 88 &&
+      nftPremium_totalViction > 0 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
+      if (approveStatus === "initial") {
+        await nftContract_viction.methods
+          .approve(
+            window.config.subscription_viction_address,
+            nftPremium_tokenIdViction
+          )
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentageViction < 100) {
+              setapproveStatus("approveAmount");
             } else {
               setapproveStatus("deposit");
             }
@@ -5057,8 +6647,12 @@ function Dashboard({
             }, 5000);
           });
       } else if (approveStatus === "approveAmount") {
+        let tokenContract = new web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
         await tokenContract.methods
-          .approve(bnbsubscribeAddress, price)
+          .approve(victionsubscribeAddress, price)
           .send({ from: coinbase })
           .then(() => {
             setloadspinner(false);
@@ -5078,46 +6672,110 @@ function Dashboard({
           });
       }
     } else {
-      await tokenContract.methods
-        .approve(
-          chainId === 1
-            ? ethsubscribeAddress
-            : chainId === 56
-            ? bnbsubscribeAddress
-            : chainId === 1030
-            ? cfxsubscribeAddress
-            : chainId === 8453
-            ? basesubscribeAddress
-            : chainId === 43114
-            ? avaxsubscribeAddress
-            : chainId === 1482601649
-            ? skalesubscribeAddress
-            : chainId === 88
-            ? victionsubscribeAddress
-            : chainId === 1116
-            ? coresubscribeAddress
-            : chainId === 713715
-            ? seisubscribeAddress
-            : cfxsubscribeAddress,
-          price
-        )
-        .send({ from: coinbase })
-        .then(() => {
+      if (window.WALLET_TYPE !== "binance") {
+        let tokenContract = new web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
+        await tokenContract.methods
+
+          .approve(
+            chainId === 1
+              ? ethsubscribeAddress
+              : chainId === 56
+              ? bnbsubscribeAddress
+              : chainId === 1030
+              ? cfxsubscribeAddress
+              : chainId === 8453
+              ? basesubscribeAddress
+              : chainId === 43114
+              ? avaxsubscribeAddress
+              : chainId === 1482601649
+              ? skalesubscribeAddress
+              : chainId === 88
+              ? victionsubscribeAddress
+              : chainId === 169
+              ? mantasubscribeAddress
+              : chainId === 167000
+              ? taikosubscribeAddress
+              : chainId === 1116
+              ? coresubscribeAddress
+              : chainId === 713715
+              ? seisubscribeAddress
+              : cfxsubscribeAddress,
+            price
+          )
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      } else if (window.WALLET_TYPE === "binance") {
+        let tokenContract_binance = new ethers.Contract(
+          selectedSubscriptionToken,
+          window.ERC20_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+        const txResponse = await tokenContract_binance
+          .approve(
+            chainId === 1
+              ? ethsubscribeAddress
+              : chainId === 56
+              ? bnbsubscribeAddress
+              : chainId === 1030
+              ? cfxsubscribeAddress
+              : chainId === 8453
+              ? basesubscribeAddress
+              : chainId === 43114
+              ? avaxsubscribeAddress
+              : chainId === 1482601649
+              ? skalesubscribeAddress
+              : chainId === 88
+              ? victionsubscribeAddress
+              : chainId === 169
+              ? mantasubscribeAddress
+              : chainId === 167000
+              ? taikosubscribeAddress
+              : chainId === 1116
+              ? coresubscribeAddress
+              : chainId === 713715
+              ? seisubscribeAddress
+              : cfxsubscribeAddress,
+            price,
+            { from: coinbase }
+          )
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
           setloadspinner(false);
           setisApproved(true);
           setapproveStatus("deposit");
-        })
-        .catch((e) => {
-          setstatus(e?.message);
-          setloadspinner(false);
-          setapproveStatus("fail");
-          window.alertify.error(e?.message);
-          setTimeout(() => {
-            setstatus("");
-            setloadspinner(false);
-            setapproveStatus("initial");
-          }, 5000);
-        });
+        }
+      }
     }
   };
 
@@ -5140,6 +6798,8 @@ function Dashboard({
     const seiWeb3 = new Web3(window.config.sei_endpoint);
     const coreWeb3 = new Web3(window.config.core_endpoint);
     const victionWeb3 = new Web3(window.config.viction_endpoint);
+    const mantaWeb3 = new Web3(window.config.manta_endpoint);
+    const taikoWeb3 = new Web3(window.config.taiko_endpoint);
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
@@ -5150,6 +6810,8 @@ function Dashboard({
     const seisubscribeAddress = window.config.subscription_sei_address;
     const coresubscribeAddress = window.config.subscription_core_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
+    const mantasubscribeAddress = window.config.subscription_manta_address;
+    const taikosubscribeAddress = window.config.subscription_taiko_address;
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -5197,6 +6859,15 @@ function Dashboard({
       subscribeToken
     );
 
+    const subscribeTokencontractmanta = new mantaWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+    const subscribeTokencontracttaiko = new taikoWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
     let tokenprice =
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
@@ -5214,7 +6885,14 @@ function Dashboard({
         : chainId === 1482601649
         ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
         : chainId === 88
-        ? await window.getEstimatedTokenSubscriptionAmountViction(token)
+        ? await window.getEstimatedTokenSubscriptionAmountViction(
+            token,
+            discountPercentageViction
+          )
+        : chainId === 169
+        ? await window.getEstimatedTokenSubscriptionAmountManta(token)
+        : chainId === 167000
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 713715
@@ -5238,9 +6916,23 @@ function Dashboard({
           setisApproved(false);
           setapproveStatus("initial");
         }
-      } else if (chainId === 88) {
-        const result = await subscribeTokencontractviction.methods
-          .allowance(coinbase, victionsubscribeAddress)
+      } else if (chainId === 169) {
+        const result = await subscribeTokencontractmanta.methods
+          .allowance(coinbase, mantasubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } else if (chainId === 167000) {
+        const result = await subscribeTokencontracttaiko.methods
+          .allowance(coinbase, taikosubscribeAddress)
           .call()
           .then();
         if (result != 0 && Number(result) >= Number(tokenprice)) {
@@ -5355,6 +7047,68 @@ function Dashboard({
             }
           }
         }
+      } else if (chainId === 88) {
+        if (nftPremium_totalViction > 0) {
+          let contract = new window.web3.eth.Contract(
+            window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
+            window.config.nft_dypius_premium_viction_address
+          );
+
+          let approved = await contract.methods
+            .getApproved(nftPremium_tokenIdViction)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          let approvedAll = await contract.methods
+            .isApprovedForAll(coinbase, victionsubscribeAddress)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          if (
+            approved.toLowerCase() === victionsubscribeAddress.toLowerCase() ||
+            approvedAll === true
+          ) {
+            if (discountPercentageViction === 100) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            }
+            // if (discountPercentageViction < 100) {
+            //   setloadspinner(false);
+            //   setisApproved(true);
+            //   setapproveStatus("approveAmount");
+            // } else {
+            //   setloadspinner(false);
+            //   setisApproved(false);
+            //   setapproveStatus("initial");
+            // }
+          } else {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        } else {
+          const result = await subscribeTokencontractviction.methods
+            .allowance(coinbase, victionsubscribeAddress)
+            .call()
+            .then();
+
+          if (result != 0 && Number(result) >= Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else if (result == 0 || Number(result) < Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        }
       } else if (chainId === 43114) {
         const result = await subscribeTokencontractavax.methods
           .allowance(coinbase, avaxsubscribeAddress)
@@ -5417,44 +7171,415 @@ function Dashboard({
     }
   };
 
+  const getContractBinance = async ({ key, address = null, ABI = null }) => {
+    ABI = window[key + "_ABI"];
+    address = window.config[key.toLowerCase() + "_address"];
+    if (!window.cached_contracts[key + "-" + address.toLowerCase()]) {
+      window.cached_contracts[key + "-" + address?.toLowerCase()] =
+        new ethers.Contract(address, ABI, binanceW3WProvider.getSigner());
+    }
+    return window.cached_contracts[key + "-" + address.toLowerCase()];
+  };
+
   const handleSubscribe = async (e) => {
     // e.preventDefault();
-    let subscriptionContract = await window.getContract({
-      key:
-        chainId === 1
-          ? "SUBSCRIPTION_NEWETH"
-          : chainId === 56
-          ? "SUBSCRIPTION_NEWBNB2"
-          : chainId === 43114
-          ? "SUBSCRIPTION_NEWAVAX"
-          : chainId === 1030
-          ? "SUBSCRIPTION_CFX"
-          : chainId === 8453
-          ? "SUBSCRIPTION_BASE"
-          : chainId === 1482601649
-          ? "SUBSCRIPTION_SKALE"
-          : chainId === 88
-          ? "SUBSCRIPTION_VICTION"
-          : chainId === 1116
-          ? "SUBSCRIPTION_CORE"
-          : chainId === 713715
-          ? "SUBSCRIPTION_SKALE"
-          : "",
-    });
-    const today = Date.now();
-    setloadspinnerSub(true);
+    if (window.WALLET_TYPE !== "binance") {
+      let subscriptionContract = await window.getContract({
+        key:
+          chainId === 1
+            ? "SUBSCRIPTION_NEWETH"
+            : chainId === 56
+            ? "SUBSCRIPTION_NEWBNB2"
+            : chainId === 43114
+            ? "SUBSCRIPTION_NEWAVAX"
+            : chainId === 1030
+            ? "SUBSCRIPTION_CFX"
+            : chainId === 8453
+            ? "SUBSCRIPTION_BASE"
+            : chainId === 1482601649
+            ? "SUBSCRIPTION_SKALE"
+            : chainId === 88
+            ? "SUBSCRIPTION_VICTION"
+            : chainId === 169
+            ? "SUBSCRIPTION_MANTA"
+            : chainId === 167000
+            ? "SUBSCRIPTION_TAIKO"
+            : chainId === 1116
+            ? "SUBSCRIPTION_CORE"
+            : chainId === 713715
+            ? "SUBSCRIPTION_SKALE"
+            : "",
+      });
+      const today = Date.now();
+      setloadspinnerSub(true);
 
-    if (chainId === 56 && nftPremium_total > 0) {
-      await window
-        .subscribeNFT(
-          nftDiscountObject.nftAddress,
-          nftPremium_tokenId,
-          selectedSubscriptionToken,
-          price
-        )
-        .then(async (data) => {
+      if (chainId === 56 && nftPremium_total > 0) {
+        await window
+          .subscribeNFT(
+            nftDiscountObject.nftAddress,
+            nftPremium_tokenId,
+            selectedSubscriptionToken,
+            price
+          )
+          .then(async (data) => {
+            if (dailyBonusPopup === true) {
+              setPremiumTxHash(data.transactionHash);
+              const selectedchain =
+                chainId === 1
+                  ? "eth"
+                  : chainId === 56
+                  ? "bnb"
+                  : chainId === 43114
+                  ? "avax"
+                  : chainId === 1030
+                  ? "cfx"
+                  : chainId === 8453
+                  ? "base"
+                  : chainId === 1482601649
+                  ? "skale"
+                  : chainId === 88
+                  ? "viction"
+                  : chainId === 169
+                  ? "manta"
+                  : chainId === 1116
+                  ? "core"
+                  : chainId === 713715
+                  ? "sei"
+                  : chainId === 167000
+                  ? "taiko"
+                  : "";
+
+              setselectedChainforPremium(selectedchain);
+              setTimeout(() => {
+                setgetPremiumPopup(false);
+              }, 2000);
+            }
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: chainId.toString(),
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+            setTimeout(() => {
+              setgetPremiumPopup(false);
+              onSubscribeSuccess();
+            }, 2000);
+          })
+          .catch(() => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      } else if (
+        chainId === 56 &&
+        selectedSubscriptionToken.toLowerCase() ===
+          "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+      ) {
+        await subscriptionContract.methods
+          .subscribeWithBNB()
+          .send({ from: await window.getCoinbase(), value: price })
+          .then(async (data) => {
+            if (dailyBonusPopup === true) {
+              setPremiumTxHash(data.transactionHash);
+              const selectedchain =
+                chainId === 1
+                  ? "eth"
+                  : chainId === 56
+                  ? "bnb"
+                  : chainId === 43114
+                  ? "avax"
+                  : chainId === 1030
+                  ? "cfx"
+                  : chainId === 8453
+                  ? "base"
+                  : chainId === 1482601649
+                  ? "skale"
+                  : chainId === 88
+                  ? "viction"
+                  : chainId === 169
+                  ? "manta"
+                  : chainId === 1116
+                  ? "core"
+                  : chainId === 713715
+                  ? "sei"
+                  : chainId === 167000
+                  ? "taiko"
+                  : "";
+              setselectedChainforPremium(selectedchain);
+            }
+            setloadspinnerSub(false);
+            onSubscribeSuccess();
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: chainId.toString(),
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+              setgetPremiumPopup(false);
+              onSubscribeSuccess();
+            }, 5000);
+            // this.props.onSubscribe();
+            // window.location.href = "https://app.dypius.com/account";
+          })
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      } else if (chainId === 88 && nftPremium_totalViction > 0) {
+        await window
+          .subscribeNFTViction(
+            nftDiscountObjectViction.nftAddress,
+            nftPremium_tokenIdViction,
+            selectedSubscriptionToken,
+            price
+          )
+          .then(async (data) => {
+            if (dailyBonusPopup === true) {
+              setPremiumTxHash(data.transactionHash);
+              const selectedchain =
+                chainId === 1
+                  ? "eth"
+                  : chainId === 56
+                  ? "bnb"
+                  : chainId === 43114
+                  ? "avax"
+                  : chainId === 1030
+                  ? "cfx"
+                  : chainId === 8453
+                  ? "base"
+                  : chainId === 1482601649
+                  ? "skale"
+                  : chainId === 88
+                  ? "viction"
+                  : chainId === 169
+                  ? "manta"
+                  : chainId === 1116
+                  ? "core"
+                  : chainId === 713715
+                  ? "sei"
+                  : "";
+              setselectedChainforPremium(selectedchain);
+              setTimeout(() => {
+                setgetPremiumPopup(false);
+              }, 2000);
+            }
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: chainId.toString(),
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+            setTimeout(() => {
+              setgetPremiumPopup(false);
+              onSubscribeSuccess();
+            }, 2000);
+          })
+          .catch(() => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      } else {
+        await subscriptionContract.methods
+          .subscribe(selectedSubscriptionToken, price)
+          .send({ from: await window.getCoinbase() })
+          .then(async (data) => {
+            if (dailyBonusPopup === true) {
+              setPremiumTxHash(data.transactionHash);
+              const selectedchain =
+                chainId === 1
+                  ? "eth"
+                  : chainId === 56
+                  ? "bnb"
+                  : chainId === 43114
+                  ? "avax"
+                  : chainId === 1030
+                  ? "cfx"
+                  : chainId === 8453
+                  ? "base"
+                  : chainId === 1482601649
+                  ? "skale"
+                  : chainId === 88
+                  ? "viction"
+                  : chainId === 169
+                  ? "manta"
+                  : chainId === 1116
+                  ? "core"
+                  : chainId === 713715
+                  ? "sei"
+                  : chainId === 167000
+                  ? "taiko"
+                  : "";
+              setselectedChainforPremium(selectedchain);
+              setTimeout(() => {
+                setgetPremiumPopup(false);
+                onSubscribeSuccess();
+              }, 2000);
+            }
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: chainId.toString(),
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+            // this.props.onSubscribe();
+            // window.location.href = "https://app.dypius.com/account";
+          })
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      }
+    } else if (window.WALLET_TYPE === "binance") {
+      let subscriptionContract = await getContractBinance({
+        key:
+          chainId === 1
+            ? "SUBSCRIPTION_NEWETH"
+            : chainId === 56
+            ? "SUBSCRIPTION_NEWBNB2"
+            : chainId === 43114
+            ? "SUBSCRIPTION_NEWAVAX"
+            : chainId === 1030
+            ? "SUBSCRIPTION_CFX"
+            : chainId === 8453
+            ? "SUBSCRIPTION_BASE"
+            : chainId === 1482601649
+            ? "SUBSCRIPTION_SKALE"
+            : chainId === 88
+            ? "SUBSCRIPTION_VICTION"
+            : chainId === 169
+            ? "SUBSCRIPTION_MANTA"
+            : chainId === 167000
+            ? "SUBSCRIPTION_TAIKO"
+            : chainId === 1116
+            ? "SUBSCRIPTION_CORE"
+            : chainId === 713715
+            ? "SUBSCRIPTION_SKALE"
+            : "",
+      });
+      const today = Date.now();
+      setloadspinnerSub(true);
+
+      if (chainId === 56 && nftPremium_total > 0) {
+        let subscriptionContract = await getContractBinance({
+          key: "SUBSCRIPTION_NEWBNB2",
+        });
+        const txResponse = await subscriptionContract
+          .subscribeNFT(
+            nftDiscountObject.nftAddress,
+            nftPremium_tokenId,
+            selectedSubscriptionToken,
+            price,
+            { from: coinbase }
+          )
+          .catch(() => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
           if (dailyBonusPopup === true) {
-            setPremiumTxHash(data.transactionHash);
+            setPremiumTxHash(txResponse.hash);
             const selectedchain =
               chainId === 1
                 ? "eth"
@@ -5470,6 +7595,10 @@ function Dashboard({
                 ? "skale"
                 : chainId === 88
                 ? "viction"
+                : chainId === 169
+                ? "manta"
+                : chainId === 167000
+                ? "taiko"
                 : chainId === 1116
                 ? "core"
                 : chainId === 713715
@@ -5502,167 +7631,161 @@ function Dashboard({
             setgetPremiumPopup(false);
             onSubscribeSuccess();
           }, 2000);
-        })
-        .catch(() => {
-          setloadspinnerSub(false);
-          setapproveStatus("failsubscribe");
-          setstatus(e?.message);
-          window.alertify.error(e?.message);
-
-          setTimeout(() => {
+        }
+      } else if (
+        chainId === 56 &&
+        selectedSubscriptionToken.toLowerCase() ===
+          "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+      ) {
+        await subscriptionContract
+          .subscribeWithBNB({ from: coinbase, value: price })
+          .then(async (data) => {
+            if (dailyBonusPopup === true) {
+              setPremiumTxHash(data.hash);
+              const selectedchain =
+                chainId === 1
+                  ? "eth"
+                  : chainId === 56
+                  ? "bnb"
+                  : chainId === 43114
+                  ? "avax"
+                  : chainId === 1030
+                  ? "cfx"
+                  : chainId === 8453
+                  ? "base"
+                  : chainId === 1482601649
+                  ? "skale"
+                  : chainId === 88
+                  ? "viction"
+                  : chainId === 169
+                  ? "manta"
+                  : chainId === 167000
+                  ? "taiko"
+                  : chainId === 1116
+                  ? "core"
+                  : chainId === 713715
+                  ? "sei"
+                  : "";
+              setselectedChainforPremium(selectedchain);
+            }
             setloadspinnerSub(false);
-            setloadspinner(false);
-            setapproveStatus("initial");
-            setstatus("");
-          }, 5000);
-        });
-    } else if (
-      chainId === 56 &&
-      selectedSubscriptionToken.toLowerCase() ===
-        "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
-    ) {
-      await subscriptionContract.methods
-        .subscribeWithBNB()
-        .send({ from: await window.getCoinbase(), value: price })
-        .then(async (data) => {
-          if (dailyBonusPopup === true) {
-            setPremiumTxHash(data.transactionHash);
-            const selectedchain =
-              chainId === 1
-                ? "eth"
-                : chainId === 56
-                ? "bnb"
-                : chainId === 43114
-                ? "avax"
-                : chainId === 1030
-                ? "cfx"
-                : chainId === 8453
-                ? "base"
-                : chainId === 1482601649
-                ? "skale"
-                : chainId === 88
-                ? "viction"
-                : chainId === 1116
-                ? "core"
-                : chainId === 713715
-                ? "sei"
-                : "";
-            setselectedChainforPremium(selectedchain);
-          }
-          setloadspinnerSub(false);
-          onSubscribeSuccess();
-          handleUpdatePremiumUser(coinbase);
-          setapproveStatus("successsubscribe");
-          await axios
-            .patch(
-              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-              {
-                multiplier: "yes",
-                chain: chainId.toString(),
-                premiumTimestamp: today.toString(),
-              }
-            )
-            .then(() => {
-              getRankData();
-            })
-            .catch((e) => {
-              console.error(e);
-            });
-          setTimeout(() => {
-            setloadspinnerSub(false);
-            setloadspinner(false);
-            setapproveStatus("initial");
-            setstatus("");
-            setgetPremiumPopup(false);
             onSubscribeSuccess();
-          }, 5000);
-          // this.props.onSubscribe();
-          // window.location.href = "https://app.dypius.com/account";
-        })
-        .catch((e) => {
-          setloadspinnerSub(false);
-          setapproveStatus("failsubscribe");
-          setstatus(e?.message);
-          window.alertify.error(e?.message);
-          setTimeout(() => {
-            setloadspinnerSub(false);
-            setloadspinner(false);
-            setapproveStatus("initial");
-            setstatus("");
-          }, 5000);
-        });
-    } else {
-      await subscriptionContract.methods
-        .subscribe(selectedSubscriptionToken, price)
-        .send({ from: await window.getCoinbase() })
-        .then(async (data) => {
-          if (dailyBonusPopup === true) {
-            setPremiumTxHash(data.transactionHash);
-            const selectedchain =
-              chainId === 1
-                ? "eth"
-                : chainId === 56
-                ? "bnb"
-                : chainId === 43114
-                ? "avax"
-                : chainId === 1030
-                ? "cfx"
-                : chainId === 8453
-                ? "base"
-                : chainId === 1482601649
-                ? "skale"
-                : chainId === 88
-                ? "viction"
-                : chainId === 1116
-                ? "core"
-                : chainId === 713715
-                ? "sei"
-                : "";
-            setselectedChainforPremium(selectedchain);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: chainId.toString(),
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
             setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
               setgetPremiumPopup(false);
               onSubscribeSuccess();
-            }, 2000);
-          }
-          setloadspinnerSub(false);
-          handleUpdatePremiumUser(coinbase);
-          setapproveStatus("successsubscribe");
-          await axios
-            .patch(
-              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-              {
-                multiplier: "yes",
-                chain: chainId.toString(),
-                premiumTimestamp: today.toString(),
-              }
-            )
-            .then(() => {
-              getRankData();
-            })
-            .catch((e) => {
-              console.error(e);
-            });
-          setTimeout(() => {
+            }, 5000);
+            // this.props.onSubscribe();
+            // window.location.href = "https://app.dypius.com/account";
+          })
+          .catch((e) => {
             setloadspinnerSub(false);
-            setloadspinner(false);
-            setapproveStatus("initial");
-            setstatus("");
-          }, 5000);
-          // this.props.onSubscribe();
-          // window.location.href = "https://app.dypius.com/account";
-        })
-        .catch((e) => {
-          setloadspinnerSub(false);
-          setapproveStatus("failsubscribe");
-          setstatus(e?.message);
-          window.alertify.error(e?.message);
-          setTimeout(() => {
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      } else {
+        await subscriptionContract
+          .subscribe(selectedSubscriptionToken, price, { from: coinbase })
+          .then(async (data) => {
+            if (dailyBonusPopup === true) {
+              setPremiumTxHash(data.hash);
+              const selectedchain =
+                chainId === 1
+                  ? "eth"
+                  : chainId === 56
+                  ? "bnb"
+                  : chainId === 43114
+                  ? "avax"
+                  : chainId === 1030
+                  ? "cfx"
+                  : chainId === 8453
+                  ? "base"
+                  : chainId === 1482601649
+                  ? "skale"
+                  : chainId === 88
+                  ? "viction"
+                  : chainId === 169
+                  ? "manta"
+                  : chainId === 167000
+                  ? "taiko"
+                  : chainId === 1116
+                  ? "core"
+                  : chainId === 713715
+                  ? "sei"
+                  : "";
+              setselectedChainforPremium(selectedchain);
+              setTimeout(() => {
+                setgetPremiumPopup(false);
+                onSubscribeSuccess();
+              }, 2000);
+            }
             setloadspinnerSub(false);
-            setloadspinner(false);
-            setapproveStatus("initial");
-            setstatus("");
-          }, 5000);
-        });
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: chainId.toString(),
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+            // this.props.onSubscribe();
+            // window.location.href = "https://app.dypius.com/account";
+          })
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      }
     }
   };
 
@@ -5689,16 +7812,21 @@ function Dashboard({
 
   const handleEthPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x1")
           .then(() => {
             handleSwitchNetwork(1);
-            setChainDropdown(chainDropdowns[0]);
           })
           .catch((e) => {
             console.log(e);
           });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(1);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -5706,16 +7834,21 @@ function Dashboard({
 
   const handleBnbPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x38")
           .then(() => {
             handleSwitchNetwork(56);
-            setChainDropdown(chainDropdowns[1]);
           })
           .catch((e) => {
             console.log(e);
           });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(56);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(56);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(56);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -5723,46 +7856,65 @@ function Dashboard({
 
   const handleAvaxPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0xa86a")
           .then(() => {
             handleSwitchNetwork(43114);
-            setChainDropdown(chainDropdowns[2]);
           })
           .catch((e) => {
             console.log(e);
           });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(43114);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(43114);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(43114);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
   const handleBasePool = async () => {
-    if (!window.gatewallet) {
-      await handleSwitchNetworkhook("0x2105")
-        .then(() => {
-          handleSwitchNetwork(8453);
-          setChainDropdown(chainDropdowns[4]);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    if (window.ethereum) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+        await handleSwitchNetworkhook("0x2105")
+          .then(() => {
+            handleSwitchNetwork(8453);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(8453);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(8453);
+      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(8453);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
   const handleConfluxPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x406")
           .then(() => {
             handleSwitchNetwork(1030);
-            setChainDropdown(chainDropdowns[3]);
           })
           .catch((e) => {
             console.log(e);
           });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(1030);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1030);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1030);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -5770,16 +7922,36 @@ function Dashboard({
 
   const handleSkalePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
             handleSwitchNetwork(1482601649);
-            setChainDropdown(chainDropdowns[5]);
           })
           .catch((e) => {
             console.log(e);
           });
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
+        handleSwitchChainGateWallet(1482601649);
+      } else if (
+        window.ethereum?.isBinance ||
+        window.WALLET_TYPE === "binance"
+      ) {
+        window.alertify.error(
+          "This network is not available on Binance Web3 Wallet"
+        );
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -5804,20 +7976,39 @@ function Dashboard({
 
   const handleVictionPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         await handleSwitchNetworkhook("0x58")
           .then(() => {
             handleSwitchNetwork(88);
-            setChainDropdown(chainDropdowns[7]);
           })
           .catch((e) => {
             console.log(e);
           });
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
+        handleSwitchChainGateWallet(88);
+      } else if (
+        window.ethereum?.isBinance ||
+        window.WALLET_TYPE === "binance"
+      ) {
+        window.alertify.error(
+          "This network is not available on Binance Web3 Wallet"
+        );
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(88);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
+
   const handleSeiPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
@@ -5834,18 +8025,85 @@ function Dashboard({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
+  const handleMantaPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+        await handleSwitchNetworkhook("0xa9")
+          .then(() => {
+            handleSwitchNetwork(169);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(169);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(169);
+      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(169);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
 
+  const handleTaikoPool = async () => {
+    if (window.ethereum) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
+        await handleSwitchNetworkhook("0x28c58")
+          .then(() => {
+            handleSwitchNetwork(167000);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
+        handleSwitchChainGateWallet(167000);
+      } else if (
+        window.ethereum?.isBinance ||
+        window.WALLET_TYPE === "binance"
+      ) {
+        window.alertify.error(
+          "This network is not available on Binance Web3 Wallet"
+        );
+      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(167000);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
   const userTotalScore =
-    userBnbScore + userSkaleScore + userCoreScore + userVictionScore;
-
+    userBnbScore +
+    userSkaleScore +
+    userCoreScore +
+    userVictionScore +
+    userMantaScore +
+    userTaikoScore;
+ 
   const handleRankRewards = () => {
-    if (userTotalScore > 10000000) {
+    const totalScore =
+      userBnbScore +
+      userSkaleScore +
+      userCoreScore +
+      userVictionScore +
+      userMantaScore +
+      userTaikoScore;
+    if (totalScore > 11999999 && totalScore < 24000000) {
       setUserRankRewards(5);
-    } else if (userTotalScore > 22000000) {
+    } else if (totalScore >= 24000000 && totalScore < 37000000) {
       setUserRankRewards(10);
-    } else if (userTotalScore > 35000000) {
+    } else if (totalScore >= 37000000 && totalScore < 62000000) {
       setUserRankRewards(25);
-    } else if (userTotalScore > 60000000) {
+    } else if (totalScore >= 62000000) {
       setUserRankRewards(100);
     }
   };
@@ -5857,40 +8115,40 @@ function Dashboard({
     } else if (rankData && rankData.multiplier === "no") {
       allScore = userTotalScore;
     }
-    if (allScore > 59999999) {
+    if (allScore > 61999999) {
       setUserRankName({
         name: "unstoppable",
         id: 4,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(4);
       setUserProgress(100);
-    } else if (allScore > 34999999) {
+    } else if (allScore > 36999999) {
       setUserRankName({
         name: "champion",
         id: 3,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(3);
-      setUserProgress((allScore / 60000000) * 100);
-    } else if (allScore > 21999999) {
+      setUserProgress((allScore / 62000000) * 100);
+    } else if (allScore > 23999999) {
       setUserRankName({
         name: "underdog",
         id: 2,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(2);
-      setUserProgress((allScore / 35000000) * 100);
-    } else if (allScore > 9999999) {
+      setUserProgress((allScore / 37000000) * 100);
+    } else if (allScore > 11999999) {
       setUserRankName({
         name: "rookie",
         id: 1,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(1);
-      setUserProgress((allScore / 22000000) * 100);
+      setUserProgress((allScore / 24000000) * 100);
     } else {
       sliderRef?.current?.innerSlider?.slickGoTo(0);
-      setUserProgress((allScore / 10000000) * 100);
+      setUserProgress((allScore / 12000000) * 100);
     }
   };
-
+  
   const updateUserRank = async () => {
     if (rankData && userRankName) {
       if (rankData.rank == userRankName.id) {
@@ -5912,18 +8170,24 @@ function Dashboard({
 
   useEffect(() => {
     handleRankRewards();
-  }, [userBnbScore, userSkaleScore, userCoreScore, userVictionScore]);
+  }, [
+    userBnbScore,
+    userSkaleScore,
+    userCoreScore,
+    userVictionScore,
+    userMantaScore,
+    userTaikoScore,
+  ]);
 
   useEffect(() => {
     handleUserRank();
   }, [
     userRank,
     userRankSkale,
-    userBnbScore,
     userRankCore,
     userRankViction,
-    userCoreScore,
-    userVictionScore,
+    userRankManta,
+    userRankTaiko,
   ]);
 
   useEffect(() => {
@@ -5940,9 +8204,13 @@ function Dashboard({
   useEffect(() => {
     fetchSkalePrice();
     fetchSeiPrice();
+    fetchMantaPrice();
+    fetchTaikoPrice();
+    fetchCookiePrice();
     fetchCorePrice();
     fetchVictionPrice();
     fetchEgldPrice();
+    fetchImmutablePrice();
   }, []);
 
   useEffect(() => {
@@ -5953,7 +8221,8 @@ function Dashboard({
       data.getPlayer.playerId &&
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress &&
-      chainId === 1
+      chainId === 1 &&
+      window.WALLET_TYPE !== ""
     ) {
       calculateAllRewardsCawsPremium(data.getPlayer.wallet.publicAddress);
     }
@@ -5976,9 +8245,10 @@ function Dashboard({
         setBnbImages(shuffle(chestImagesBnb));
         setSkaleImages(shuffle(chestImagesSkale));
         setVictionImages(shuffle(chestImagesViction));
+        setMantaImages(shuffle(chestImagesViction));
+        setTaikoImages(shuffle(chestImagesTaiko));
         setCoreImages(shuffle(chestImagesCore));
         setSeiImages(shuffle(chestImagesSei));
-
         clearInterval(interval);
       }
     };
@@ -6005,6 +8275,24 @@ function Dashboard({
       );
       handleSubscriptionTokenChange(wvictionAddress);
       handleCheckIfAlreadyApproved(wvictionAddress);
+    } else if (chainId === 169) {
+      setChainDropdown(chainDropdowns[8]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionmanta_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wmantaddress);
+      handleCheckIfAlreadyApproved(wmantaddress);
+    } else if (chainId === 167000) {
+      setChainDropdown(chainDropdowns[9]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptiontaiko_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wtaikoddress);
+      handleCheckIfAlreadyApproved(wtaikoddress);
     } else if (chainId === 1116) {
       setChainDropdown(chainDropdowns[6]);
       setdropdownIcon("usdt");
@@ -6079,10 +8367,12 @@ function Dashboard({
     }
   }, [
     chainId,
-    getPremiumPopup,
-    discountPercentage,
     nftPremium_total,
+    nftPremium_totalViction,
+    discountPercentage,
+    discountPercentageViction,
     nftPremium_tokenId,
+    nftPremium_tokenIdViction,
   ]);
 
   useEffect(() => {
@@ -6120,6 +8410,16 @@ function Dashboard({
         window.config.subscriptionviction_tokens[selectedSubscriptionToken]
           ?.decimals
       );
+    } else if (chainId === 169 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionmanta_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 167000 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptiontaiko_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
     } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptioncore_tokens[selectedSubscriptionToken]
@@ -6146,55 +8446,61 @@ function Dashboard({
     }
   }, [dataNonce]);
 
-  useEffect(() => {
-    if (
-      data &&
-      data.getPlayer &&
-      data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
-      data.getPlayer.wallet &&
-      data.getPlayer.wallet.publicAddress &&
-      email
-    ) {
-      fetchMonthlyRecordsAroundPlayer(monthlyrecords);
-      fetchGenesisAroundPlayer(
-        data.getPlayer.playerId,
-        data.getPlayer.displayName
-      );
-      fetchWeeklyRecordsAroundPlayer(weeklyrecords);
-      fetchDailyRecordsAroundPlayer(dailyrecords);
-      fetchKittyDashAroundPlayer(
-        data.getPlayer.playerId,
-        data.getPlayer.displayName
-      );
-      fetchDailyRecordsAroundPlayerCore(dailyRecordsCore);
-      fetchWeeklyRecordsAroundPlayerCore(weeklyRecordsCore);
-      fetchMonthlyRecordsAroundPlayerCore(monthlyRecordsCore);
-      fetchDailyRecordsAroundPlayerViction(dailyRecordsViction);
-      fetchWeeklyRecordsAroundPlayerViction(weeklyRecordsViction);
-      fetchMonthlyRecordsAroundPlayerViction(monthlyRecordsViction);
-      fetchDailyRecordsAroundPlayerSkale(dailyRecordsSkale);
-      fetchWeeklyRecordsAroundPlayerSkale(weeklyRecordsSkale);
-      fetchMonthlyRecordsAroundPlayerSkale(monthlyRecordsSkale);
-    }
-  }, [
-    data,
-    email,
-    weeklyrecords,
-    dailyRecordsSkale,
-    goldenPassRemainingTime,
-    monthlyrecords,
-    dailyrecords,
-    userId,
-    username,
-    isPremium,
-    dailyRecordsCore,
-    weeklyRecordsCore,
-    monthlyRecordsCore,
-    dailyRecordsViction,
-    weeklyRecordsViction,
-    monthlyRecordsViction,
-  ]);
+  // useEffect(() => {
+  //   if (
+  //     data &&
+  //     data.getPlayer &&
+  //     data.getPlayer.displayName &&
+  //     data.getPlayer.playerId &&
+  //     data.getPlayer.wallet &&
+  //     data.getPlayer.wallet.publicAddress &&
+  //     email
+  //   ) {
+  //     fetchMonthlyRecordsAroundPlayer(monthlyrecords);
+  //     fetchGenesisAroundPlayer(
+  //       data.getPlayer.playerId,
+  //       data.getPlayer.displayName
+  //     );
+  //     fetchWeeklyRecordsAroundPlayer(weeklyrecords);
+  //     fetchDailyRecordsAroundPlayer(dailyrecords);
+  //     fetchKittyDashAroundPlayer(
+  //       data.getPlayer.playerId,
+  //       data.getPlayer.displayName
+  //     );
+  //     fetchDailyRecordsAroundPlayerCore(dailyRecordsCore);
+  //     fetchWeeklyRecordsAroundPlayerCore(weeklyRecordsCore);
+  //     fetchMonthlyRecordsAroundPlayerCore(monthlyRecordsCore);
+  //     fetchDailyRecordsAroundPlayerViction(dailyRecordsViction);
+  //     fetchWeeklyRecordsAroundPlayerViction(weeklyRecordsViction);
+  //     fetchMonthlyRecordsAroundPlayerViction(monthlyRecordsViction);
+  //     // fetchDailyRecordsAroundPlayerManta(dailyRecordsManta);
+  //     // fetchWeeklyRecordsAroundPlayerManta(weeklyRecordsManta);
+  //     // fetchMonthlyRecordsAroundPlayerManta(monthlyRecordsManta);
+  //     fetchDailyRecordsAroundPlayerSkale(dailyRecordsSkale);
+  //     fetchWeeklyRecordsAroundPlayerSkale(weeklyRecordsSkale);
+  //     fetchMonthlyRecordsAroundPlayerSkale(monthlyRecordsSkale);
+  //   }
+  // }, [
+  //   data,
+  //   email,
+  //   weeklyrecords,
+  //   dailyRecordsSkale,
+  //   goldenPassRemainingTime,
+  //   monthlyrecords,
+  //   dailyrecords,
+  //   userId,
+  //   username,
+  //   isPremium,
+  //   dailyRecordsCore,
+  //   weeklyRecordsCore,
+  //   monthlyRecordsCore,
+  //   dailyRecordsViction,
+  //   weeklyRecordsViction,
+  //   monthlyRecordsViction,
+  //   dailyRecordsManta,
+  //   weeklyRecordsManta,
+  //   monthlyRecordsManta,
+  // ]);
 
   useEffect(() => {
     if (
@@ -6234,13 +8540,18 @@ function Dashboard({
   }, [data, email]);
 
   useEffect(() => {
-    if (coinbase) {
+    if (coinbase && isConnected) {
       setsyncStatus("initial");
       fetchAllMyNfts();
-      getmyCawsWodStakes();
-      getmyWodStakes();
+      // getmyCawsWodStakes();
+      // getmyWodStakes();
     }
-  }, [userWallet, data?.getPlayer?.wallet?.publicAddress, coinbase]);
+  }, [
+    userWallet,
+    isConnected,
+    data?.getPlayer?.wallet?.publicAddress,
+    coinbase,
+  ]);
 
   useEffect(() => {
     getOtherNfts();
@@ -6290,9 +8601,11 @@ function Dashboard({
       getAllChests(email);
       getAllCoreChests(email);
       getAllVictionChests(email);
+      getAllMantaChests(email);
+      getAllTaikoChests(email);
       // getAllSeiChests(email);
     }
-  }, [email, count]);
+  }, [email]);
 
   useEffect(() => {
     if (bundlesBought === 1) {
@@ -6343,9 +8656,7 @@ function Dashboard({
               isPremium={isPremium}
               address={data?.getPlayer?.wallet?.publicAddress}
               coinbase={coinbase}
-              totalScore={
-                userBnbScore + userSkaleScore + userCoreScore + userVictionScore
-              }
+              totalScore={userTotalScore}
               openChainsLeaderboard={() => setLeaderboard(true)}
               openGlobalLeaderboard={() => setGlobalLeaderboard(true)}
               openGenesisLeaderboard={() => setGenesisLeaderboard(true)}
@@ -6395,6 +8706,7 @@ function Dashboard({
               coinbase={coinbase}
               wallet={data?.getPlayer?.wallet?.publicAddress}
               chainId={chainId}
+              binanceW3WProvider={binanceW3WProvider}
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (
@@ -6652,7 +8964,14 @@ function Dashboard({
           />
         )}
 
-        {showEventPopup && <EventsPopup  dummyEvent={selectedEvent} onClose={()=>{setshowEventPopup(false)}}/>}
+        {showEventPopup && (
+          <EventsPopup
+            dummyEvent={selectedEvent}
+            onClose={() => {
+              setshowEventPopup(false);
+            }}
+          />
+        )}
 
         {showWalletModal === true && success === false && (
           <WalletModal
@@ -7155,162 +9474,232 @@ function Dashboard({
                               />
                               {chainDropdown.name}
                             </div>
-                            <img src={launchpadIndicator} alt="" />
                           </button>
-                          <ul className="dropdown-menu w-100">
-                            <li
-                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                              onClick={handleEthPool}
-                            >
-                              <img
-                                src={
-                                  require(`../../Images/premium/tokens/ethIcon.svg`)
-                                    .default
-                                }
-                                style={{ width: 18, height: 18 }}
-                                alt=""
-                              />
-                              Ethereum
-                            </li>
-                            <li
-                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                              onClick={handleBnbPool}
-                            >
-                              <img
-                                src={
-                                  require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                                    .default
-                                }
-                                style={{ width: 18, height: 18 }}
-                                alt=""
-                              />
-                              BNB Chain
-                            </li>
-                            <li
-                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                              onClick={handleAvaxPool}
-                            >
-                              <img
-                                src={
-                                  require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                                    .default
-                                }
-                                style={{ width: 18, height: 18 }}
-                                alt=""
-                              />
-                              Avalanche
-                            </li>
-                            <li
-                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                              onClick={handleBasePool}
-                            >
-                              <img
-                                src={baseLogo}
-                                alt=""
-                                style={{
-                                  width: "18px",
-                                  height: "18px",
-                                }}
-                              />
-                              Base Network
-                            </li>
-                            <li
-                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                              onClick={handleConfluxPool}
-                            >
-                              <img
-                                src={conflux}
-                                alt=""
-                                style={{
-                                  width: "18px",
-                                  height: "18px",
-                                }}
-                              />
-                              Conflux Network
-                            </li>
-                            <li
-                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                              onClick={handleSkalePool}
-                            >
-                              <img
-                                src={skaleIcon}
-                                alt=""
-                                style={{
-                                  width: "18px",
-                                  height: "18px",
-                                }}
-                              />
-                              SKALE
-                            </li>
-                            <li
-                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                              onClick={handleCorePool}
-                            >
-                              <img
-                                src={coreIcon}
-                                alt=""
-                                style={{
-                                  width: "18px",
-                                  height: "18px",
-                                }}
-                              />
-                              CORE
-                            </li>
-                            <li
-                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                              onClick={handleVictionPool}
-                            >
-                              <img
-                                src={vicitonIcon}
-                                alt=""
-                                style={{
-                                  width: "18px",
-                                  height: "18px",
-                                }}
-                              />
-                              Viction
-                            </li>
-                            {/*   <li
-                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                              onClick={handleSeiPool}
-                            >
-                              <img
-                                src={seiIcon}
-                                alt=""
-                                style={{
-                                  width: "18px",
-                                  height: "18px",
-                                }}
-                              />
-                              SEI
-                            </li> */}
-                          </ul>
+                          {discountPercentage > 0 ||
+                          discountPercentageViction > 0 ||
+                          nftPremium_total > 0 ||
+                          nftPremium_totalViction > 0 ? (
+                            <div className="premium-discount-bg mt-3 p-4 position-relative">
+                              <div className="premiumRedTag position-absolute">
+                                <div className="position-relative d-flex flex-column">
+                                  <img src={premiumRedTag} alt="" />
+                                  <div className="d-flex flex-column position-absolute discountwrap">
+                                    <span className="discount-price2 font-oxanium">
+                                      {discountPercentage}%
+                                    </span>
+                                    <span className="discount-price-bottom">
+                                      Discount
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
+                                <div className="d-flex flex-column">
+                                  <h6 className="lifetime-plan-text m-0">
+                                    Lifetime plan
+                                  </h6>
+                                  {nftPremium_total > 0 ||
+                                    (nftPremium_totalViction > 0 && (
+                                      <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                                        Valid until:{" "}
+                                        {new Date(
+                                          nftPremium_total > 0
+                                            ? nftDiscountObject.expiration *
+                                              1000
+                                            : nftDiscountObjectViction.expiration *
+                                              1000
+                                        )
+                                          .toDateString()
+                                          .slice(
+                                            3,
+                                            new Date(
+                                              nftPremium_total > 0
+                                                ? nftDiscountObject.expiration *
+                                                  1000
+                                                : nftDiscountObjectViction.expiration *
+                                                  1000
+                                            ).toDateString().length
+                                          )}
+                                      </h6>
+                                    ))}
+                                </div>
+                                <div className="d-flex align-items-end gap-2">
+                                  <h6 className="discount-price">
+                                    {discountPercentage == 100 ||
+                                    discountPercentageViction == 100
+                                      ? "FREE"
+                                      : "$" +
+                                        (100 -
+                                          Number(
+                                            discountPercentage > 0
+                                              ? discountPercentage
+                                              : discountPercentageViction > 0
+                                              ? discountPercentageViction
+                                              : discountPercentage
+                                          ))}
+                                  </h6>
+                                  <h6 className="old-price-text">$100</h6>
+                                </div>
+                                {(nftPremium_total > 0 ||
+                                  nftPremium_totalViction > 0) && (
+                                  <h6 className="token-amount-placeholder m-0 premium-custom-text">
+                                    Valid until:{" "}
+                                    {new Date(
+                                      nftPremium_total > 0
+                                        ? nftDiscountObject.expiration * 1000
+                                        : nftDiscountObjectViction.expiration *
+                                          1000
+                                    )
+                                      .toDateString()
+                                      .slice(
+                                        3,
+                                        new Date(
+                                          nftPremium_total > 0
+                                            ? nftDiscountObject.expiration *
+                                              1000
+                                            : nftDiscountObjectViction.expiration *
+                                              1000
+                                        ).toDateString().length
+                                      )}
+                                  </h6>
+                                )}
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
+                              <div className="d-flex flex-column gap-2">
+                                <span className="lifetime-plan mb-0">
+                                  Lifetime plan
+                                </span>
+                                <h6 className="plan-cost mb-0">$100</h6>
+                              </div>
+                              <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
+                                <div className="premium-chains-wrapper">
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={
+                                        require(`../../Images/premium/tokens/ethIcon.svg`)
+                                          .default
+                                      }
+                                      style={{ width: 18, height: 18 }}
+                                      alt=""
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Ethereum
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={
+                                        require(`../../Images/premium/tokens/wbnbIcon.svg`)
+                                          .default
+                                      }
+                                      style={{ width: 18, height: 18 }}
+                                      alt=""
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      BNB Chain
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={require(`../../../../../components/Header/assets/manta.png`)}
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Manta
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={
+                                        require(`../../../../../components/Header/assets/taiko.svg`)
+                                          .default
+                                      }
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Taiko
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={
+                                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                                          .default
+                                      }
+                                      style={{ width: 18, height: 18 }}
+                                      alt=""
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Avalanche
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={baseLogo}
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Base
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={conflux}
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      Conflux
+                                    </span>
+                                  </div>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <img
+                                      src={skaleIcon}
+                                      alt=""
+                                      style={{ width: 18, height: 18 }}
+                                    />
+                                    <span className="subscription-chain mb-0">
+                                      SKALE
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>{" "}
+                            </div>
+                          )}
                         </div>
-                      </div>
-
-                      {/* <div className="d-flex flex-column gap-3 subscribe-input-container"></div> */}
-                      {discountPercentage < 100 && (
-                        <div className="d-flex flex-column align-items-end gap-3">
-                          <span className="my-premium-balance-text mb-0">
-                            My balance:{" "}
-                            {getFormattedNumber(
-                              tokenBalance / 10 ** tokenDecimals,
-                              5
-                            )}{" "}
-                            {dropdownIcon.toUpperCase()}
-                          </span>
-                          <div
-                            className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
-                            style={{ height: "34px" }}
-                          >
-                            <span className="subscription-price-text mb-0">
-                              Subscription Price:
-                            </span>
-
+                        <div className="d-flex flex-column gap-2">
+                          <div className="d-flex align-items-center gap-2">
+                            <img src={dappsIcon} alt="" />
+                            <h6 className="premium-benefits-title mb-0">
+                              Dapps
+                            </h6>
+                          </div>
+                          {dappsBenefits.map((item, index) => (
                             <div className="d-flex align-items-center gap-2">
+                              <img src={greenCheck} alt="" />
+                              <span className="premium-benefits-item mb-0">
+                                {item}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>{" "}
+                      <hr className="form-divider my-4" />
+                      {isConnected && (
+                        <>
+                          <div className="d-flex mt-4 mb-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
+                            <div className="d-flex flex-column gap-3 subscribe-input-container">
+                              <span className="token-amount-placeholder">
+                                Select chain
+                              </span>
                               <div className="dropdown position relative">
                                 <button
-                                  class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
+                                  class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle`}
                                   type="button"
                                   data-bs-toggle="dropdown"
                                   aria-expanded="false"
@@ -7320,41 +9709,169 @@ function Dashboard({
                                     style={{ color: "#fff" }}
                                   >
                                     <img
-                                      src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                                      src={require(`../../Images/premium/tokens/${chainDropdown.symbol}Icon.svg`)}
                                       alt=""
-                                      style={{
-                                        width: 18,
-                                        height: 18,
-                                      }}
+                                      style={{ width: 18, height: 18 }}
                                     />
-                                    {/* {dropdownTitle} */}
+                                    {chainDropdown.name}
                                   </div>
                                   <img src={launchpadIndicator} alt="" />
                                 </button>
                                 <ul className="dropdown-menu w-100">
-                                  {Object.keys(
-                                    chainId === 1
-                                      ? window.config.subscriptioneth_tokens
-                                      : chainId === 56
-                                      ? window.config.subscriptionbnb_tokens
-                                      : chainId === 1030
-                                      ? window.config.subscriptioncfx_tokens
-                                      : chainId === 43114
-                                      ? window.config.subscription_tokens
-                                      : chainId === 8453
-                                      ? window.config.subscriptionbase_tokens
-                                      : chainId === 1482601649
-                                      ? window.config.subscriptionskale_tokens
-                                      : chainId === 88
-                                      ? window.config.subscriptionviction_tokens
-                                      : chainId === 1116
-                                      ? window.config.subscriptioncore_tokens
-                                      : chainId === 713715
-                                      ? window.config.subscriptionsei_tokens
-                                      : window.config.subscription_tokens
-                                  ).map((t, i) => (
-                                    <li
-                                      key={i}
+                                  <li
+                                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                    onClick={handleEthPool}
+                                  >
+                                    <img
+                                      src={
+                                        require(`../../Images/premium/tokens/ethIcon.svg`)
+                                          .default
+                                      }
+                                      style={{ width: 18, height: 18 }}
+                                      alt=""
+                                    />
+                                    Ethereum
+                                  </li>
+                                  <li
+                                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                    onClick={handleBnbPool}
+                                  >
+                                    <img
+                                      src={
+                                        require(`../../Images/premium/tokens/wbnbIcon.svg`)
+                                          .default
+                                      }
+                                      style={{ width: 18, height: 18 }}
+                                      alt=""
+                                    />
+                                    BNB Chain
+                                  </li>
+
+                                  <li
+                                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                    onClick={handleMantaPool}
+                                  >
+                                    <img
+                                      src={
+                                        require(`../../Images/premium/tokens/mantaIcon.svg`)
+                                          .default
+                                      }
+                                      style={{ width: 18, height: 18 }}
+                                      alt=""
+                                    />
+                                    Manta
+                                  </li>
+                                  {window.WALLET_TYPE !== "binance" &&
+                                    !window.ethereum?.isBinance && (
+                                      <li
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={handleTaikoPool}
+                                      >
+                                        <img
+                                          src={
+                                            require(`../../Images/premium/tokens/taikoIcon.svg`)
+                                              .default
+                                          }
+                                          style={{ width: 18, height: 18 }}
+                                          alt=""
+                                        />
+                                        Taiko
+                                      </li>
+                                    )}
+                                  <li
+                                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                    onClick={handleAvaxPool}
+                                  >
+                                    <img
+                                      src={
+                                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                                          .default
+                                      }
+                                      style={{ width: 18, height: 18 }}
+                                      alt=""
+                                    />
+                                    Avalanche
+                                  </li>
+                                  <li
+                                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                    onClick={handleBasePool}
+                                  >
+                                    <img
+                                      src={baseLogo}
+                                      alt=""
+                                      style={{
+                                        width: "18px",
+                                        height: "18px",
+                                      }}
+                                    />
+                                    Base Network
+                                  </li>
+                                  <li
+                                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                    onClick={handleConfluxPool}
+                                  >
+                                    <img
+                                      src={conflux}
+                                      alt=""
+                                      style={{
+                                        width: "18px",
+                                        height: "18px",
+                                      }}
+                                    />
+                                    Conflux Network
+                                  </li>
+                                  {window.WALLET_TYPE !== "binance" &&
+                                    !window.ethereum?.isBinance && (
+                                      <li
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={handleSkalePool}
+                                      >
+                                        <img
+                                          src={skaleIcon}
+                                          alt=""
+                                          style={{
+                                            width: "18px",
+                                            height: "18px",
+                                          }}
+                                        />
+                                        SKALE
+                                      </li>
+                                    )}
+                                  {window.WALLET_TYPE !== "binance" &&
+                                    !window.ethereum?.isBinance && (
+                                      <li
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={handleCorePool}
+                                      >
+                                        <img
+                                          src={coreIcon}
+                                          alt=""
+                                          style={{
+                                            width: "18px",
+                                            height: "18px",
+                                          }}
+                                        />
+                                        CORE
+                                      </li>
+                                    )}
+                                  {window.WALLET_TYPE !== "binance" &&
+                                    !window.ethereum?.isBinance && (
+                                      <li
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={handleVictionPool}
+                                      >
+                                        <img
+                                          src={vicitonIcon}
+                                          alt=""
+                                          style={{
+                                            width: "18px",
+                                            height: "18px",
+                                          }}
+                                        />
+                                        Viction
+                                      </li>
+                                    )}
+                                  {/*   <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={() => {
                                         window.cached_contracts =
@@ -7497,63 +10014,794 @@ function Dashboard({
                                           height: 18,
                                         }}
                                       />
-                                      {chainId === 1
-                                        ? window.config.subscriptioneth_tokens[
-                                            t
-                                          ]?.symbol
-                                        : chainId === 56
-                                        ? window.config.subscriptionbnb_tokens[
-                                            t
-                                          ]?.symbol
-                                        : chainId === 43114
-                                        ? window.config.subscription_tokens[t]
-                                            ?.symbol
-                                        : chainId === 1030
-                                        ? window.config.subscriptioncfx_tokens[
-                                            t
-                                          ]?.symbol
-                                        : chainId === 8453
-                                        ? window.config.subscriptionbase_tokens[
-                                            t
-                                          ]?.symbol
-                                        : chainId === 1482601649
-                                        ? window.config
-                                            .subscriptionskale_tokens[t]?.symbol
-                                        : chainId === 1116
-                                        ? window.config.subscriptioncore_tokens[
-                                            t
-                                          ]?.symbol
-                                        : chainId === 88
-                                        ? window.config
-                                            .subscriptionviction_tokens[t]
-                                            ?.symbol
-                                        : chainId === 713715
-                                        ? window.config.subscriptionsei_tokens[
-                                            t
-                                          ]?.symbol
-                                        : window.config.subscription_tokens[t]
-                                            ?.symbol}
-                                    </li>
-                                  ))}
+                                      SEI
+                                    </li> */}
                                 </ul>
                               </div>
-                              {/* <img
-                              src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
-                              height={16}
-                              width={16}
-                              alt="usdt"
-                            /> */}
-                              <span className="subscription-price-token mb-0">
-                                {formattedPrice.slice(0, 7)}
-                              </span>
                             </div>
-                            <span className="subscription-price-usd mb-0">
-                              ${100 - Number(discountPercentage)}
+
+                            {/* <div className="d-flex flex-column gap-3 subscribe-input-container"></div> */}
+                            {(discountPercentage < 100 ||
+                              discountPercentageViction < 100) && (
+                              <div className="d-flex flex-column align-items-end gap-3">
+                                <span className="my-premium-balance-text mb-0">
+                                  My balance:{" "}
+                                  {getFormattedNumber(
+                                    tokenBalance / 10 ** tokenDecimals,
+                                    5
+                                  )}{" "}
+                                  {dropdownIcon.toUpperCase()}
+                                </span>
+                                <div
+                                  className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
+                                  style={{ height: "34px" }}
+                                >
+                                  <span className="subscription-price-text mb-0">
+                                    Subscription Price:
+                                  </span>
+
+                                  <div className="d-flex align-items-center gap-2">
+                                    <div className="dropdown position relative">
+                                      <button
+                                        class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                      >
+                                        <div
+                                          className="d-flex align-items-center gap-2"
+                                          style={{ color: "#fff" }}
+                                        >
+                                          <img
+                                            src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                                            alt=""
+                                            style={{
+                                              width: 18,
+                                              height: 18,
+                                            }}
+                                          />
+                                          {/* {dropdownTitle} */}
+                                        </div>
+                                        <img src={launchpadIndicator} alt="" />
+                                      </button>
+                                      <ul className="dropdown-menu w-100">
+                                        {Object.keys(
+                                          chainId === 1
+                                            ? window.config
+                                                .subscriptioneth_tokens
+                                            : chainId === 56
+                                            ? window.config
+                                                .subscriptionbnb_tokens
+                                            : chainId === 1030
+                                            ? window.config
+                                                .subscriptioncfx_tokens
+                                            : chainId === 43114
+                                            ? window.config.subscription_tokens
+                                            : chainId === 8453
+                                            ? window.config
+                                                .subscriptionbase_tokens
+                                            : chainId === 1482601649
+                                            ? window.config
+                                                .subscriptionskale_tokens
+                                            : chainId === 88
+                                            ? window.config
+                                                .subscriptionviction_tokens
+                                            : chainId === 169
+                                            ? window.config
+                                                .subscriptionmanta_tokens
+                                            : chainId === 167000
+                                            ? window.config
+                                                .subscriptiontaiko_tokens
+                                            : chainId === 1116
+                                            ? window.config
+                                                .subscriptioncore_tokens
+                                            : chainId === 713715
+                                            ? window.config
+                                                .subscriptionsei_tokens
+                                            : window.config.subscription_tokens
+                                        ).map((t, i) => (
+                                          <li
+                                            key={i}
+                                            className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                            onClick={() => {
+                                              window.cached_contracts =
+                                                Object.create(null);
+                                              setTimeout(() => {
+                                                setdropdownIcon(
+                                                  chainId === 1
+                                                    ? window.config
+                                                        .subscriptioneth_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 56
+                                                    ? window.config
+                                                        .subscriptionbnb_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 43114
+                                                    ? window.config
+                                                        .subscription_tokens[t]
+                                                        ?.symbol
+                                                    : chainId === 8453
+                                                    ? window.config
+                                                        .subscriptionbase_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 1030
+                                                    ? window.config
+                                                        .subscriptioncfx_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 1482601649
+                                                    ? window.config
+                                                        .subscriptionskale_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 88
+                                                    ? window.config
+                                                        .subscriptionviction_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 169
+                                                    ? window.config
+                                                        .subscriptionmanta_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 167000
+                                                    ? window.config
+                                                        .subscriptiontaiko_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 1116
+                                                    ? window.config
+                                                        .subscriptioncore_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 713715
+                                                    ? window.config
+                                                        .subscriptionsei_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : window.config
+                                                        .subscription_tokens[t]
+                                                        ?.symbol
+                                                );
+                                                setdropdownTitle(
+                                                  chainId === 1
+                                                    ? window.config
+                                                        .subscriptioneth_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 56
+                                                    ? window.config
+                                                        .subscriptionbnb_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 43114
+                                                    ? window.config
+                                                        .subscription_tokens[t]
+                                                        ?.symbol
+                                                    : chainId === 8453
+                                                    ? window.config
+                                                        .subscriptionbase_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 1030
+                                                    ? window.config
+                                                        .subscriptioncfx_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 1482601649
+                                                    ? window.config
+                                                        .subscriptionskale_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 88
+                                                    ? window.config
+                                                        .subscriptionviction_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 169
+                                                    ? window.config
+                                                        .subscriptionmanta_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 167000
+                                                    ? window.config
+                                                        .subscriptiontaiko_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 713715
+                                                    ? window.config
+                                                        .subscriptionsei_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 1116
+                                                    ? window.config
+                                                        .subscriptioncore_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : window.config
+                                                        .subscription_tokens[t]
+                                                        ?.symbol
+                                                );
+
+                                                // console.log(t);
+                                                handleSubscriptionTokenChange(
+                                                  t
+                                                );
+                                                handleCheckIfAlreadyApproved(t);
+                                              }, 200);
+                                            }}
+                                          >
+                                            <img
+                                              src={
+                                                chainId === 1
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 56
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 43114
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 1030
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 8453
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 1482601649
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 1116
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 88
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 169
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 167000
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : chainId === 713715
+                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                                  : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                              }
+                                              alt=""
+                                              style={{
+                                                width: 18,
+                                                height: 18,
+                                              }}
+                                            />
+                                            {chainId === 1
+                                              ? window.config
+                                                  .subscriptioneth_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 56
+                                              ? window.config
+                                                  .subscriptionbnb_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 43114
+                                              ? window.config
+                                                  .subscription_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 1030
+                                              ? window.config
+                                                  .subscriptioncfx_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 8453
+                                              ? window.config
+                                                  .subscriptionbase_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 1482601649
+                                              ? window.config
+                                                  .subscriptionskale_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 1116
+                                              ? window.config
+                                                  .subscriptioncore_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 88
+                                              ? window.config
+                                                  .subscriptionviction_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 169
+                                              ? window.config
+                                                  .subscriptionmanta_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 167000
+                                              ? window.config
+                                                  .subscriptiontaiko_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 713715
+                                              ? window.config
+                                                  .subscriptionsei_tokens[t]
+                                                  ?.symbol
+                                              : window.config
+                                                  .subscription_tokens[t]
+                                                  ?.symbol}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                    {/* <img
+                                      src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                                      height={16}
+                                      width={16}
+                                      alt="usdt"
+                                    /> */}
+                                    <span className="subscription-price-token mb-0">
+                                      {formattedPrice.slice(0, 7)}
+                                    </span>
+                                  </div>
+                                  <span className="subscription-price-usd mb-0">
+                                    $
+                                    {100 -
+                                      Number(
+                                        discountPercentage != 0
+                                          ? discountPercentage
+                                          : discountPercentageViction != 0
+                                          ? discountPercentageViction
+                                          : discountPercentage
+                                      )}
+                                  </span>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
+                                <span className="token-balance-placeholder">
+                                  Token Balance
+                                </span>
+                                <h6 className="account-token-amount">
+                                  {" "}
+                                  {getFormattedNumber(
+                                    tokenBalance / 10 ** tokenDecimals,
+                                    6
+                                  )}
+                                </h6>
+                              </div> */}
+                          </div>
+                        </>
+                      )}
+                      {/* <div
+                              className="subscription-token-wrapper  p-2 d-flex align-items-center justify-content-between  mt-3"
+                              style={{ width: "100%" }}
+                            >
+                              <span className="token-amount-placeholder">
+                                Subscription price:
+                              </span>
+                              <div className="d-flex align-items-center gap-2">
+                                <span className="usdt-text">
+                                  {formattedPrice.slice(0, 9)}
+                                </span>
+
+                                <img
+                                  src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                                  height={24}
+                                  width={24}
+                                  alt="usdt"
+                                />
+                              </div>
+                            </div> */}
+                      {chainId === 1482601649 && (
+                        <div className="gotoNebula-wrapper p-3 mb-3">
+                          <div className="d-flex w-100 justify-content-between gap-2">
+                            <span className="nebula-wrapper-text">
+                              Bridge your USDC to Nebula now!
                             </span>
+                            <a
+                              className="nebula-bridgebtn"
+                              href="https://portal.skale.space/bridge?from=mainnet&to=green-giddy-denebola&token=usdc&type=erc20"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Nebula Bridge
+                            </a>
                           </div>
                         </div>
                       )}
-
+                      {isConnected &&
+                      discountPercentage > 0 &&
+                      chainId === 56 ? (
+                        <div className="d-flex align-items-center gap-3 justify-content-center">
+                          <div
+                            className={` ${
+                              approveStatus === "fail" ||
+                              !coinbase ||
+                              isApproved
+                                ? "linear-border-disabled"
+                                : "linear-border"
+                            }`}
+                          >
+                            <button
+                              className={`btn ${
+                                approveStatus === "fail" ||
+                                !coinbase ||
+                                isApproved
+                                  ? "outline-btn-disabled"
+                                  : "filled-btn"
+                              } px-4`}
+                              disabled={
+                                approveStatus === "fail" ||
+                                !coinbase ||
+                                isApproved
+                                  ? true
+                                  : false
+                              }
+                              onClick={(e) => handleApprove(e)}
+                            >
+                              {loadspinner === false &&
+                              (approveStatus === "initial" ||
+                                approveStatus === "deposit" ||
+                                approveStatus === "failsubscribe" ||
+                                approveStatus === "approveAmount" ||
+                                approveStatus === "successsubscribe") ? (
+                                <>
+                                  Approve{" "}
+                                  {approveStatus === "approveAmount"
+                                    ? "token"
+                                    : nftPremium_total > 0
+                                    ? "NFT"
+                                    : ""}
+                                </>
+                              ) : loadspinner === false &&
+                                approveStatus === "fail" ? (
+                                "Failed"
+                              ) : (
+                                <div className="d-flex align-items-center gap-2">
+                                  Processing
+                                  <div
+                                    className="spinner-border "
+                                    role="status"
+                                    style={{
+                                      height: "1rem",
+                                      width: "1rem",
+                                    }}
+                                  ></div>{" "}
+                                </div>
+                              )}
+                            </button>
+                          </div>
+                          <div
+                            className={` ${
+                              isApproved === false
+                                ? "linear-border-disabled"
+                                : "linear-border"
+                            }`}
+                          >
+                            <button
+                              className={`btn ${
+                                isApproved === false
+                                  ? "outline-btn-disabled"
+                                  : "filled-btn"
+                              } px-4`}
+                              onClick={() => handleSubscribe()}
+                            >
+                              {loadspinnerSub === false &&
+                              (approveStatus === "initial" ||
+                                approveStatus === "fail" ||
+                                approveStatus === "deposit") ? (
+                                <>
+                                  {discountPercentage > 0 ||
+                                  nftPremium_total > 0
+                                    ? "Redeem"
+                                    : "Buy"}
+                                </>
+                              ) : loadspinnerSub === false &&
+                                approveStatus === "successsubscribe" ? (
+                                "Success"
+                              ) : loadspinnerSub === false &&
+                                approveStatus === "failsubscribe" ? (
+                                "Failed"
+                              ) : (
+                                <div className="d-flex align-items-center gap-2">
+                                  Processing
+                                  <div
+                                    className="spinner-border "
+                                    role="status"
+                                    style={{
+                                      height: "1rem",
+                                      width: "1rem",
+                                    }}
+                                  ></div>{" "}
+                                </div>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      ) : isConnected &&
+                        discountPercentageViction > 0 &&
+                        chainId === 88 ? (
+                        <div className="d-flex align-items-center gap-3 justify-content-center">
+                          <div
+                            className={` ${
+                              approveStatus === "fail" ||
+                              !coinbase ||
+                              isApproved
+                                ? "linear-border-disabled"
+                                : "linear-border"
+                            }`}
+                          >
+                            <button
+                              className={`btn ${
+                                approveStatus === "fail" ||
+                                !coinbase ||
+                                isApproved
+                                  ? "outline-btn-disabled"
+                                  : "filled-btn"
+                              } px-4`}
+                              disabled={
+                                approveStatus === "fail" ||
+                                !coinbase ||
+                                isApproved
+                                  ? true
+                                  : false
+                              }
+                              onClick={(e) => handleApprove(e)}
+                            >
+                              {loadspinner === false &&
+                              (approveStatus === "initial" ||
+                                approveStatus === "deposit" ||
+                                approveStatus === "failsubscribe" ||
+                                approveStatus === "approveAmount" ||
+                                approveStatus === "successsubscribe") ? (
+                                <>
+                                  Approve{" "}
+                                  {approveStatus === "approveAmount"
+                                    ? "token"
+                                    : nftPremium_totalViction > 0
+                                    ? "NFT"
+                                    : ""}
+                                </>
+                              ) : loadspinner === false &&
+                                approveStatus === "fail" ? (
+                                "Failed"
+                              ) : (
+                                <div className="d-flex align-items-center gap-2">
+                                  Processing
+                                  <div
+                                    className="spinner-border "
+                                    role="status"
+                                    style={{
+                                      height: "1rem",
+                                      width: "1rem",
+                                    }}
+                                  ></div>{" "}
+                                </div>
+                              )}
+                            </button>
+                          </div>
+                          <div
+                            className={` ${
+                              isApproved === false
+                                ? "linear-border-disabled"
+                                : "linear-border"
+                            }`}
+                          >
+                            <button
+                              className={`btn ${
+                                isApproved === false
+                                  ? "outline-btn-disabled"
+                                  : "filled-btn"
+                              } px-4`}
+                              onClick={() => handleSubscribe()}
+                            >
+                              {loadspinnerSub === false &&
+                              (approveStatus === "initial" ||
+                                approveStatus === "fail" ||
+                                approveStatus === "deposit") ? (
+                                <>
+                                  {discountPercentageViction > 0 ||
+                                  nftPremium_totalViction > 0
+                                    ? "Redeem"
+                                    : "Buy"}
+                                </>
+                              ) : loadspinnerSub === false &&
+                                approveStatus === "successsubscribe" ? (
+                                "Success"
+                              ) : loadspinnerSub === false &&
+                                approveStatus === "failsubscribe" ? (
+                                "Failed"
+                              ) : (
+                                <div className="d-flex align-items-center gap-2">
+                                  Processing
+                                  <div
+                                    className="spinner-border "
+                                    role="status"
+                                    style={{
+                                      height: "1rem",
+                                      width: "1rem",
+                                    }}
+                                  ></div>{" "}
+                                </div>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      ) : isConnected &&
+                        discountPercentage === 0 &&
+                        discountPercentageViction === 0 ? (
+                        <div className="d-flex align-items-center gap-3 justify-content-center">
+                          <div
+                            className={` ${
+                              approveStatus === "fail" ||
+                              !coinbase ||
+                              isApproved
+                                ? "linear-border-disabled"
+                                : "linear-border"
+                            }`}
+                          >
+                            <button
+                              className={`btn ${
+                                approveStatus === "fail" ||
+                                !coinbase ||
+                                isApproved
+                                  ? "outline-btn-disabled"
+                                  : "filled-btn"
+                              } px-4`}
+                              disabled={
+                                approveStatus === "fail" ||
+                                !coinbase ||
+                                isApproved
+                                  ? true
+                                  : false
+                              }
+                              onClick={(e) => handleApprove(e)}
+                            >
+                              {loadspinner === false &&
+                              (approveStatus === "initial" ||
+                                approveStatus === "deposit" ||
+                                approveStatus === "failsubscribe" ||
+                                approveStatus === "approveAmount" ||
+                                approveStatus === "successsubscribe") ? (
+                                <>
+                                  Approve{" "}
+                                  {approveStatus === "approveAmount"
+                                    ? "token"
+                                    : nftPremium_total > 0
+                                    ? "NFT"
+                                    : ""}
+                                </>
+                              ) : loadspinner === false &&
+                                approveStatus === "fail" ? (
+                                "Failed"
+                              ) : (
+                                <div className="d-flex align-items-center gap-2">
+                                  Processing
+                                  <div
+                                    className="spinner-border "
+                                    role="status"
+                                    style={{
+                                      height: "1rem",
+                                      width: "1rem",
+                                    }}
+                                  ></div>{" "}
+                                </div>
+                              )}
+                            </button>
+                          </div>
+                          <div
+                            className={` ${
+                              isApproved === false
+                                ? "linear-border-disabled"
+                                : "linear-border"
+                            }`}
+                          >
+                            <button
+                              className={`btn ${
+                                isApproved === false
+                                  ? "outline-btn-disabled"
+                                  : "filled-btn"
+                              } px-4`}
+                              onClick={() => handleSubscribe()}
+                            >
+                              {loadspinnerSub === false &&
+                              (approveStatus === "initial" ||
+                                approveStatus === "fail" ||
+                                approveStatus === "deposit") ? (
+                                <>
+                                  {discountPercentage > 0 ||
+                                  nftPremium_total > 0
+                                    ? "Redeem"
+                                    : "Buy"}
+                                </>
+                              ) : loadspinnerSub === false &&
+                                approveStatus === "successsubscribe" ? (
+                                "Success"
+                              ) : loadspinnerSub === false &&
+                                approveStatus === "failsubscribe" ? (
+                                "Failed"
+                              ) : (
+                                <div
+                                  className="spinner-border "
+                                  role="status"
+                                  style={{
+                                    height: "1rem",
+                                    width: "1rem",
+                                  }}
+                                ></div>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      ) : isConnected &&
+                        discountPercentage > 0 &&
+                        chainId !== 56 ? (
+                        <div
+                          className={`d-flex align-items-center justify-content-center mb-2`}
+                        >
+                          <button
+                            className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                            onClick={() => {
+                              handleBnbPool();
+                            }}
+                            style={{
+                              width: "fit-content",
+                              whiteSpace: "nowrap",
+                              fontSize: 14,
+                            }}
+                          >
+                            Switch to BNB Chain
+                          </button>
+                        </div>
+                      ) : isConnected &&
+                        discountPercentageViction > 0 &&
+                        chainId !== 88 ? (
+                        <div
+                          className={`d-flex align-items-center justify-content-center mb-2`}
+                        >
+                          <button
+                            className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                            onClick={() => {
+                              handleVictionPool();
+                            }}
+                            style={{
+                              width: "fit-content",
+                              whiteSpace: "nowrap",
+                              fontSize: 14,
+                            }}
+                          >
+                            Switch to Viction
+                          </button>
+                        </div>
+                      ) : (
+                        <div
+                          className={`d-flex align-items-center justify-content-center mb-2`}
+                        >
+                          <button
+                            className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                            onClick={() => {
+                              setshowWalletModal(true);
+                              setgetPremiumPopup(false);
+                            }}
+                            style={{
+                              width: "fit-content",
+                              whiteSpace: "nowrap",
+                              fontSize: 14,
+                            }}
+                          >
+                            Connect wallet
+                          </button>
+                        </div>
+                      )}
                       {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
                         <span className="token-balance-placeholder">
                           Token Balance

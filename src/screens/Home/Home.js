@@ -22,6 +22,7 @@ import dailyGameDelightBanner from "../../components/TimepieceMint/assets/dailyG
 import dypiansDiscoveryQuest from "../../components/TimepieceMint/assets/dypiansDiscoveryQuest.webp";
 
 import dogePopup from "../../components/TimepieceMint/assets/dogePopup.png";
+import mantaPopup from "../../components/TimepieceMint/assets/mantaPopup.png";
 import gatePopup from "../../components/TimepieceMint/assets/gatePopup.webp";
 import cmcPopup from "../../components/TimepieceMint/assets/cmcPopup.webp";
 
@@ -39,7 +40,11 @@ import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreas
 import corePopupBg from "../../components/TimepieceMint/assets/corePopupBg.webp";
 import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
 import immutablePopup from "../../components/TimepieceMint/assets/immutablePopup.webp";
+import taikoPopup from "../../components/TimepieceMint/assets/taikoPopup.png";
+import taikoTreasureHunt from "../../components/TimepieceMint/assets/taikoTreasureHunt.png";
 import bnbcampaign from "../../components/TimepieceMint/assets/bnbcampaign.webp";
+import festivecampaign from "../../components/TimepieceMint/assets/festiveCampaign.webp";
+
 
 
 import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
@@ -67,10 +72,20 @@ const Home = ({
     img: cmcTreasureHuntPopup,
     state: "cmc",
   };
-  const opbnbInfo = {
+  const bnbInfo = {
     title: "opBNB",
-    img: bnbcampaign,
+    img: festivecampaign,
     state: "opbnb",
+  };
+  const mantaInfo = {
+    title: "Manta",
+    img: mantaPopup,
+    state: "manta",
+  };
+  const taikoInfo = {
+    title: "Taiko",
+    img: taikoTreasureHunt,
+    state: "taiko",
   };
 
   const [activePopup, setActivePopup] = useState(false);
@@ -106,7 +121,7 @@ const Home = ({
       >
         {/* <MintPopup
           active={activePopup}
-          data={opbnbInfo}
+          data={bnbInfo}
           onClose={() => setActivePopup(false)}
         /> */}
       </OutsideClickHandler>

@@ -34,10 +34,12 @@ const CawsNFT = ({
   listedNFTS,
   coinbase,
   ethTokenData,
-  dypTokenData,dypTokenData_old,
+  dypTokenData,
+  dypTokenData_old,
   cawsBought,
   handleRefreshListing,
   nftCount,
+  binanceW3WProvider,chainId
 }) => {
   const override = {
     display: "block",
@@ -47,133 +49,132 @@ const CawsNFT = ({
 
   const dummyData = [
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "0",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "0",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0x38735bE0B0E44BF0B8Da1dD5aA96B787879F1c72",
-      "tokenId": "1",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0x38735bE0B0E44BF0B8Da1dD5aA96B787879F1c72",
+      tokenId: "1",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0x9058FF24462B6fe98a73781c6EEdad9D4e550c7a",
-      "tokenId": "2",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0x9058FF24462B6fe98a73781c6EEdad9D4e550c7a",
+      tokenId: "2",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0x76E60102AE09386eE0c848F2Ee36ede6d03ad4B3",
-      "tokenId": "3",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0x76E60102AE09386eE0c848F2Ee36ede6d03ad4B3",
+      tokenId: "3",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0xf6180221a94aCA479f71e2A3a48e9A65E0dF179c",
-      "tokenId": "4",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0xf6180221a94aCA479f71e2A3a48e9A65E0dF179c",
+      tokenId: "4",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0xd577E2b4C4B85Cc28B35DA6bC8475729b7197a50",
-      "tokenId": "5",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0xd577E2b4C4B85Cc28B35DA6bC8475729b7197a50",
+      tokenId: "5",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
-      "tokenId": "6",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
+      tokenId: "6",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "7",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "7",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "8",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "8",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0xb8CAC1C259bA3a73e26744fB8D09B5Bd77c2207B",
-      "tokenId": "9",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0xb8CAC1C259bA3a73e26744fB8D09B5Bd77c2207B",
+      tokenId: "9",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A",
-      "tokenId": "10",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A",
+      tokenId: "10",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0xcE8Bb137Ed6204a8259e9bD44197D4BD1184344B",
-      "tokenId": "11",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0xcE8Bb137Ed6204a8259e9bD44197D4BD1184344B",
+      tokenId: "11",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "12",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "12",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0x86aBfF52425D7159C1220BA7532eD69674DCef45",
-      "tokenId": "13",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0x86aBfF52425D7159C1220BA7532eD69674DCef45",
+      tokenId: "13",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
-      "tokenId": "14",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0x65C3d0F9438644945dF5BF321c9F0fCf333302b8",
+      tokenId: "14",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0x105704a52DEB48895226f2C6C47Fb4cc353A4560",
-      "tokenId": "15",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0x105704a52DEB48895226f2C6C47Fb4cc353A4560",
+      tokenId: "15",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "16",
-      "type": "caws",
-      "chain": 1
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "16",
+      type: "caws",
+      chain: 1,
     },
     {
-      "nftAddress": "0xd06cf9e1189feab09c844c597abc3767bc12608c",
-      "buyer": "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
-      "tokenId": "17",
-      "type": "caws",
-      "chain": 1
-    }
-  ]
-
+      nftAddress: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
+      buyer: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
+      tokenId: "17",
+      type: "caws",
+      chain: 1,
+    },
+  ];
 
   const windowSize = useWindowSize();
   const nftsPerRow = 18;
@@ -214,7 +215,7 @@ const CawsNFT = ({
   const [hat, setHat] = useState({ trait_type: "Hat", value: [] });
   const [eyewear, setEyewear] = useState({ trait_type: "Eyewear", value: [] });
   const [count, setCount] = useState(0);
-  const [priceCount, setPriceCount] = useState(0)
+  const [priceCount, setPriceCount] = useState(0);
   const [displayFilters, setDisplayFilters] = useState([]);
   const [pricePoint, setPricePoint] = useState("lth");
   const [selectedFilters, setSelectedFilters] = useState([
@@ -492,7 +493,6 @@ const CawsNFT = ({
   //     });
   // };
 
-  
   const sortNfts = (sortValue) => {
     if (sortValue === "all") {
       setCawsNFTS(initialNfts);
@@ -539,8 +539,10 @@ const CawsNFT = ({
 
     if (uniquecaws && uniquecaws.length > 0) {
       let datedNfts = uniquecaws.map((nft, index) => {
-        if (nft.tokenId == cawsArray2[index]?.tokenId&&
-          !cawsBought.find((obj) => obj.tokenId === nft.tokenId)) {
+        if (
+          nft.tokenId == cawsArray2[index]?.tokenId &&
+          !cawsBought.find((obj) => obj.tokenId === nft.tokenId)
+        ) {
           let date = new Date(nft?.blockTimestamp * 1000);
 
           return {
@@ -551,7 +553,7 @@ const CawsNFT = ({
             LastSold: cawsArray2[index]?.price,
             soldPriceType: cawsArray2[index]?.payment_priceType,
           };
-        }  else if (
+        } else if (
           nft.tokenId == cawsArray2[index]?.tokenId &&
           cawsBought.find((obj) => obj.tokenId === nft.tokenId) !== undefined
         ) {
@@ -568,8 +570,7 @@ const CawsNFT = ({
             lastSoldTimeStamp: result?.blockTimestamp,
             soldPriceType: result?.payment_priceType,
           };
-        }
-        else if (nft.tokenId != cawsArray2[index]?.tokenId && nft?.buyer) {
+        } else if (nft.tokenId != cawsArray2[index]?.tokenId && nft?.buyer) {
           let date = new Date(nft?.blockTimestamp * 1000);
 
           return {
@@ -587,7 +588,6 @@ const CawsNFT = ({
       setAllcaws(datedNfts);
     }
   };
-
 
   const getCawsCollection = async () => {
     let finalArray = [];
@@ -699,7 +699,8 @@ const CawsNFT = ({
 
     if (wrappedElement) {
       const isBottom =
-        parseInt(wrappedElement.getBoundingClientRect()?.bottom) <= window.innerHeight;
+        parseInt(wrappedElement.getBoundingClientRect()?.bottom) <=
+        window.innerHeight;
       if (isBottom) {
         if (count === 0) {
           if (next < allCaws) {
@@ -731,7 +732,6 @@ const CawsNFT = ({
     setFilters(cawstraits.collection.traits);
     document.title = "CAWS NFT";
   }, []);
- 
 
   useEffect(() => {
     if (count > 0) {
@@ -745,7 +745,7 @@ const CawsNFT = ({
     if (cawsBought) {
       getListedCaws();
     }
-  }, [cawsBought, nftCount,allCawsNfts.length]);
+  }, [cawsBought, nftCount, allCawsNfts.length]);
 
   useEffect(() => {
     getCawsCollection();
@@ -756,7 +756,6 @@ const CawsNFT = ({
       fetchInitialCaws();
     }
   }, [allCawsNfts.length, finalData.length, cawsBought]);
-
 
   useEffect(() => {
     if (cawsNFTS && cawsNFTS.length === 0) {
@@ -982,6 +981,9 @@ const CawsNFT = ({
                             isListed={nft.isListed}
                             soldPriceType={nft.soldPriceType}
                             handleRefreshListing={handleRefreshListing}
+                            binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
+
                           />
                         </NavLink>
                       ))}
@@ -996,178 +998,183 @@ const CawsNFT = ({
                         </button>
                       ) : count === 0 && loading && next < allCaws ? (
                         <>
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          variant="rounded"
-                          height={230}
-                          sx={{ bgcolor: "black.700" }}
-                        />
-                      </>
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                          <Skeleton
+                            animation="wave"
+                            width={"100%"}
+                            variant="rounded"
+                            height={230}
+                            sx={{ bgcolor: "black.700" }}
+                          />
+                        </>
                       ) : (
                         <></>
                       )}
                     </>
                   ) : cawsNFTS && cawsNFTS.length === 0 && count === 0 ? (
-                    dummyData.map((nft, index)=>{
-                      return  <NavLink
-                      to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
-                      style={{ textDecoration: "none" }}
-                      key={index}
-                      state={{
-                        nft: nft,
-                        type: "caws",
-                        isOwner:
-                          nft.seller?.toLowerCase() ===
-                            coinbase?.toLowerCase() ||
-                          nft.buyer?.toLowerCase() ===
-                            coinbase?.toLowerCase(),
-                        chain: nft.chain,
-                      }}
-                      onClick={() => {
-                        updateViewCount(
-                          nft.tokenId,
-                          window.config.nft_address
-                        );
-                      }}
-                    >
-                      <ItemCard
-                        ethTokenData={ethTokenData}
-                        dypTokenData={dypTokenData}
-                        dypTokenData_old={dypTokenData_old}
-                        key={nft.id}
-                        nft={nft}
-                        isConnected={isConnected}
-                        showConnectWallet={handleConnect}
-                        isCaws={true}
-                        isTimepiece={false}
-                        isWod={false}
-                        coinbase={coinbase}
-                        lastSold={nft.LastSold}
-                        isLatestSale={nft.isLatestSale}
-                        isListed={nft.isListed}
-                        soldPriceType={nft.soldPriceType}
-                      />
-                    </NavLink>
+                    dummyData.map((nft, index) => {
+                      return (
+                        <NavLink
+                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          style={{ textDecoration: "none" }}
+                          key={index}
+                          state={{
+                            nft: nft,
+                            type: "caws",
+                            isOwner:
+                              nft.seller?.toLowerCase() ===
+                                coinbase?.toLowerCase() ||
+                              nft.buyer?.toLowerCase() ===
+                                coinbase?.toLowerCase(),
+                            chain: nft.chain,
+                          }}
+                          onClick={() => {
+                            updateViewCount(
+                              nft.tokenId,
+                              window.config.nft_address
+                            );
+                          }}
+                        >
+                          <ItemCard
+                            ethTokenData={ethTokenData}
+                            dypTokenData={dypTokenData}
+                            dypTokenData_old={dypTokenData_old}
+                            key={nft.id}
+                            nft={nft}
+                            isConnected={isConnected}
+                            showConnectWallet={handleConnect}
+                            isCaws={true}
+                            isTimepiece={false}
+                            isWod={false}
+                            coinbase={coinbase}
+                            lastSold={nft.LastSold}
+                            isLatestSale={nft.isLatestSale}
+                            isListed={nft.isListed}
+                            soldPriceType={nft.soldPriceType}
+                            binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
+
+                          />
+                        </NavLink>
+                      );
                     })
                   ) : (
                     <></>
@@ -1213,6 +1220,9 @@ const CawsNFT = ({
                             isLatestSale={nft.isLatestSale}
                             isListed={nft.isListed}
                             soldPriceType={nft.soldPriceType}
+                            binanceW3WProvider={binanceW3WProvider}
+                            chainId={chainId}
+
                           />
                         </NavLink>
                       ))}
@@ -1229,7 +1239,7 @@ const CawsNFT = ({
                         loading &&
                         next2 < filterIds.length &&
                         filterIds.length > 0 ? (
-                          <>
+                        <>
                           <Skeleton
                             animation="wave"
                             width={"100%"}
@@ -1363,133 +1373,133 @@ const CawsNFT = ({
                     </>
                   ) : count > 0 && cawsNFTS2 && cawsNFTS2.length === 0 ? (
                     <>
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                    <Skeleton
-                      animation="wave"
-                      width={"100%"}
-                      variant="rounded"
-                      height={230}
-                      sx={{ bgcolor: "black.700" }}
-                    />
-                  </>
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        width={"100%"}
+                        variant="rounded"
+                        height={230}
+                        sx={{ bgcolor: "black.700" }}
+                      />
+                    </>
                   ) : (
                     <></>
                   )}

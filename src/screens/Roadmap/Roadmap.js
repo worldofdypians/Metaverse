@@ -26,10 +26,13 @@ import betaPassAddition from "./assets/betaPassAddition.png";
 import globalEvents from "./assets/globalEvents.png";
 import partnershipAddition from "./assets/partnershipAddition.png";
 import epicwhite from "./assets/epicwhite.svg";
-import wodAnimalsBanner from "./assets/wodAnimalsBanner.png";
-import wodLeaderBoardBanner from "./assets/wodLeaderboardBanner.png";
-import dailyBonusBanner from "./assets/dailyBonusBanner.png";
-import premiumBanner from "./assets/premiumsubscBanner.png";
+import wodAnimalsBanner from './assets/wodAnimalsBanner.png';
+import wodLeaderBoardBanner from './assets/wodLeaderboardBanner.png';
+import dailyBonusBanner from './assets/dailyBonusBanner.png';
+import premiumBanner from './assets/premiumsubscBanner.png';
+import uiDevelopment from './assets/uiDevelopment.png';
+import trackingRewards from './assets/trackingRewards.png';
+import myRank from './assets/myRank.png';
 
 const Roadmap = () => {
   useEffect(() => {
@@ -420,21 +423,19 @@ const Roadmap = () => {
           completed: true,
         },
         {
+          title: "CAWS Staking Pool",
+          desc: "The launch of a new NFT staking pool for CAWS NFT holders that is accessible only to Premium Subscribers.",
+          completed: true,
+        },
+        {
+          title: "My Rank Introduction",
+          desc: "Introducing My Rank, a new feature that allows players to track their progress and achievements within the game.",
+          completed: true,
+        },
+        {
           title: "Partnership Development",
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
           completed: true,
-        },
-        
-        {
-          title: "Multiplayer Social Hub",
-          desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
-          completed: false,
-        },
-      
-        {
-          title: "Addition of Game Currency",
-          desc: "Introduce a new in-game currency to enhance the game's economy and provide more options for players.",
-          completed: false,
         },
       ],
     },
@@ -467,6 +468,17 @@ const Roadmap = () => {
         {
           title: "Introduction of Shop v1",
           desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
+          completed: false,
+        },
+        {
+          title: "Multiplayer Social Hub",
+          desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
+          completed: false,
+        },
+      
+        {
+          title: "Addition of Game Currency",
+          desc: "Introduce a new in-game currency to enhance the game's economy and provide more options for players.",
           completed: false,
         },
         {
@@ -544,6 +556,21 @@ const Roadmap = () => {
   const [roadmapItems, setRoadmapItems] = useState(roadmapItems2024);
 
   const mainUpdate = [
+    {
+      title: "Improving Tracking Rewards",
+      date: "June 2024",
+      image: trackingRewards,
+    },
+    {
+      title: "New Game UI Development",
+      date: "May 2024",
+      image: uiDevelopment,
+    },
+    {
+      title: "My Rank Introduction",
+      date: "April 2024",
+      image: myRank,
+    },
     {
       title: "Addition of New Game Creatures",
       date: "March 2024",
@@ -907,7 +934,26 @@ const Roadmap = () => {
                   ))}
                 </div>
                 <div className="d-flex flex-column gap-3">
-                  {mainUpdate.slice(21, mainUpdate.length).map((item) => (
+                  {mainUpdate.slice(21, 24).map((item) => (
+                    <div className="roadmap-main-update position-relative">
+                      <img
+                        src={item.image}
+                        className="main-update-image"
+                        alt=""
+                      />
+                      <div className="main-update-title-wrapper w-100">
+                        <span className="font-organetto main-update-date">
+                          {item.date}
+                        </span>
+                        <h6 className="main-update-title mb-0 font-organetto">
+                          {item.title}
+                        </h6>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="d-flex flex-column gap-3">
+                  {mainUpdate.slice(24, mainUpdate.length).map((item) => (
                     <div className="roadmap-main-update position-relative">
                       <img
                         src={item.image}

@@ -26,12 +26,18 @@ import coreActive from "./assets/coreActive.svg";
 import coreInactive from "./assets/coreInactive.svg";
 import victionActive from "./assets/victionActive.svg";
 import victionInactive from "./assets/victionInactive.svg";
+import taikoActive from "./assets/taikoActive.svg";
+import taikoInactive from "./assets/taikoInactive.svg";
+import taikoWhite from "./assets/taikoWhite.svg";
 import multiversxActive from "./assets/multiversxActive.svg";
 import seiActive from "./assets/seiActive.svg";
 import seiInactive from "./assets/seiInactive.svg";
 import Slider from "react-slick";
 import bnbActive from "./assets/bnbActive.svg";
 import bnbInactive from "./assets/bnbInactive.svg";
+import mantaActive from "./assets/mantaActive.png";
+import mantaInactive from "./assets/mantaInactive.png";
+import mantaWhite from "./assets/mantaWhite.png";
 import skaleActive from "./assets/skaleActive.svg";
 import skaleInactive from "./assets/skaleInactive.svg";
 import wodActive from "./assets/wodActive.svg";
@@ -106,7 +112,7 @@ const NewLeaderBoard = ({
   allBnbData,
   allCoreData,
   allSkaleData,
-  allVictionData,
+  allVictionData,allMantaData,allTaikoData
 }) => {
   const chainItems = [
     {
@@ -115,19 +121,29 @@ const NewLeaderBoard = ({
       image: bnbActive,
     },
     {
-      title: "SKALE",
+      title: "Manta",
       id: 1,
+      image: mantaActive,
+    },
+    {
+      title: "Taiko",
+      id: 2,
+      image: taikoActive,
+    },
+    {
+      title: "SKALE",
+      id: 3,
       image: skaleActive,
     },
     {
       title: "CORE",
-      id: 2,
+      id: 4,
       image: coreActive,
     },
 
     {
       title: "Viction",
-      id: 3,
+      id: 5,
       image: victionActive,
     },
   ];
@@ -244,12 +260,18 @@ const NewLeaderBoard = ({
         setAllData(allBnbData);
         setOptionText2("bnb");
       } else if (selectedChain.id - 1 === 1) {
+        setAllData(allMantaData);
+        setOptionText2("manta");
+      } else if (selectedChain.id - 1 === 2) {
+        setAllData(allTaikoData);
+        setOptionText2("taiko");
+      } else if (selectedChain.id - 1 === 3) {
         setAllData(allSkaleData);
         setOptionText2("skale");
-      } else if (selectedChain.id - 1 === 2) {
+      } else if (selectedChain.id - 1 === 4) {
         setAllData(allCoreData);
         setOptionText2("core");
-      } else if (selectedChain.id - 1 === 3) {
+      } else if (selectedChain.id - 1 === 5) {
         setAllData(allVictionData);
         setOptionText2("viction");
       }
@@ -257,25 +279,33 @@ const NewLeaderBoard = ({
     }
   };
   const handleNextChain = () => {
-    if (selectedChain.id === 3) {
+    if (selectedChain.id + 1 === 6) {
       return;
     } else {
       if (selectedChain.id + 1 === 1) {
+        setAllData(allMantaData);
+        setOptionText2("manta");
+      }
+      if (selectedChain.id + 1 === 2) {
+        setAllData(allTaikoData);
+        setOptionText2("taiko");
+      }
+      if (selectedChain.id + 1 === 3) {
         setAllData(allSkaleData);
         setOptionText2("skale");
       }
-      if (selectedChain.id + 1 === 2) {
+      if (selectedChain.id + 1 === 4) {
         setAllData(allCoreData);
         setOptionText2("core");
       }
-      if (selectedChain.id + 1 === 3) {
+      if (selectedChain.id + 1 === 5) {
         setAllData(allVictionData);
         setOptionText2("viction");
       }
       setSelectedChain(chainItems[selectedChain.id + 1]);
     }
   };
-
+  
   useEffect(() => {
     handleOption(optionText2);
   }, [inactiveBoard]);
@@ -320,7 +350,7 @@ const NewLeaderBoard = ({
       prevSlide()
     }, 500);
   }, []);
-
+  
   return (
     <>
       <div className="row w-100 justify-content-start"></div>
@@ -347,12 +377,16 @@ const NewLeaderBoard = ({
                 <div className="optionsWrapper position-relative col-12">
                   <div
                     className={`optionswrapper-bg ${
-                      optionText2 === "skale"
-                        ? "move-1"
+                      optionText2 === "manta"
+                        ? "move-1" :
+                        optionText2 === "taiko"
+                        ? "move-2" : 
+                        optionText2 === "skale" ? 
+                        "move-3"
                         : optionText2 === "core"
-                        ? "move-2"
+                        ? "move-4"
                         : optionText2 === "viction"
-                        ? "move-3"
+                        ? "move-5"
                         : ""
                     }`}
                   ></div>
@@ -372,7 +406,7 @@ const NewLeaderBoard = ({
                         handleOption("bnb");
                         setAllData(allBnbData);
                       }}
-                      style={{ width: "25%" }}
+                      style={{ width: "14%" }}
                     >
                       <img
                         src={
@@ -398,6 +432,82 @@ const NewLeaderBoard = ({
                         : ""}
                     </span>
                     <span
+                      onMouseEnter={() => handleMouseEnter("manta")}
+                      onMouseLeave={handleMouseLeave}
+                      className={`
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "manta" && "otheroptionsActive"
+                     } optionText col-3`}
+                      onClick={() => {
+                        handleOption("manta");
+                        setAllData(allMantaData);
+                      }}
+                      style={{ width: "14%" }}
+                    >
+                      <img
+                        src={
+                          optionText2 === "manta"
+                            ? mantaActive
+                            : optionText2 !== "manta" && hoverState === "manta"
+                            ? mantaWhite
+                            : mantaInactive
+                        }
+                        className={`${
+                          optionText2 === "manta"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "Manta"
+                        : windowSize.width < 786 && optionText2 === "manta"
+                        ? "Manta"
+                        : ""}
+                    </span>
+
+                    <span
+                      onMouseEnter={() => handleMouseEnter("taiko")}
+                      onMouseLeave={handleMouseLeave}
+                      className={`
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "taiko" && "otheroptionsActive"
+                     } optionText col-3`}
+                      onClick={() => {
+                        handleOption("taiko");
+                        setAllData(allTaikoData);
+                      }}
+                      style={{ width: "14%" }}
+                    >
+                      <img
+                        src={
+                          optionText2 === "taiko"
+                            ? taikoActive
+                            : optionText2 !== "taiko" && hoverState === "taiko"
+                            ? taikoWhite
+                            : taikoInactive
+                        }
+                        className={`${
+                          optionText2 === "taiko"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "Taiko"
+                        : windowSize.width < 786 && optionText2 === "taiko"
+                        ? "Taiko"
+                        : ""}
+                    </span>
+
+                    <span
                       onMouseEnter={() => handleMouseEnter("skale")}
                       onMouseLeave={handleMouseLeave}
                       className={` 
@@ -405,7 +515,7 @@ const NewLeaderBoard = ({
                      ${
                        optionText2 === "skale" && "otheroptionsActive"
                      } optionText col-3`}
-                      style={{ width: "25%" }}
+                      style={{ width: "14%" }}
                       onClick={() => {
                         handleOption("skale");
                         setAllData(allSkaleData);
@@ -442,7 +552,7 @@ const NewLeaderBoard = ({
                     ${
                       optionText2 === "core" && "otheroptionsActive"
                     } optionText col-3`}
-                      style={{ width: "25%" }}
+                      style={{ width: "14%" }}
                       onClick={() => {
                         handleOption("core");
                         setAllData(allCoreData);
@@ -481,7 +591,7 @@ const NewLeaderBoard = ({
                      ${
                        optionText2 === "viction" && "otheroptionsActive"
                      } optionText col-3`}
-                      style={{ width: "25%" }}
+                      style={{ width: "14%" }}
                       onClick={() => {
                         handleOption("viction");
                         setAllData(allVictionData);
@@ -561,6 +671,14 @@ const NewLeaderBoard = ({
               className="d-flex flex-column gap-2 tablewrapper position-relative"
               style={{ height: optionText === "genesis" ? "345px" : "384px" }}
             >
+               {/* {optionText2 !==  "taiko" ? (
+                <></>
+              ) : (
+                <div className="coming-soon-position d-flex align-items-center justify-content-center">
+                  <h6 className="mb-0">Coming Soon</h6>
+                </div>
+              )} */}
+
               {optionText !== "genesis" ? (
                 <div className="position-relative">
                   <img

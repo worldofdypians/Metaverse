@@ -106,6 +106,30 @@ const AmplifySection = () => {
           </div>
         </div>
       </div>
+      <div className="new-amplify-wrapper d-flex align-items-center justify-content-center">
+        <div className="custom-container">
+          <div className="d-flex align-items-center justify-content-center justify-content-lg-end">
+            <div className="d-flex flex-column col-lg-3 gap-4">
+              <span className="amp-benefits-desc">BENEFITS</span>
+              <span className="ways-to-amplify-title">
+                WAYS TO AMPLIFY REWARDS
+              </span>
+              <span className="ways-to-amplify-desc">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen
+              </span>
+              <div className="d-flex align-items-center gap-3 justify-content-end">
+                <button className="explore-btn col-lg-4 py-2">Explore</button>
+                <button className="getpremium-btn col-lg-4 py-2">
+                  Get Premium
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="container-fluid d-flex align-items-center justify-content-center">
         <div className="custom-container d-flex flex-column  mt-5 w-100">
           <h2 className="font-montserrat builders-title explorer-grid-title px-0">
@@ -151,43 +175,43 @@ const AmplifySection = () => {
                 </tr>
               ))}
               <tr
-                  className="game-table-row "
-                  style={{
-                    backgroundColor: "transparent",
-                  }}
-                >
-                  <td className="game-table-text py-3 ps-3"></td>
-                  <td>
+                className="game-table-row "
+                style={{
+                  backgroundColor: "transparent",
+                }}
+              >
+                <td className="game-table-text py-3 ps-3"></td>
+                <td>
                   <div className="py-4">
-                 <a
-              className="stake-wod-btn px-4 py-2 mt-4"
-              href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-            >
-              Download
-            </a>
-                 </div>
-                  </td>
-                  <td>
-                 <div className="py-4">
-                 <NavLink
-              className="stake-wod-btn px-4 py-2 mt-4"
-              to={"/marketplace/mint"}
-            >
-              Get Beta Pass
-            </NavLink>
-                 </div>
-                  </td>
-                  <td>
-                  <div className="py-4">
-                  <NavLink
-              className="stake-wod-btn buy-premium-btn px-4 py-2 mt-4"
-              to={"/account"}
-            >
-              Buy Premium
-            </NavLink>
+                    <a
+                      className="stake-wod-btn px-4 py-2 mt-4"
+                      href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                    >
+                      Download
+                    </a>
                   </div>
-                  </td>
-                </tr>
+                </td>
+                <td>
+                  <div className="py-4">
+                    <NavLink
+                      className="stake-wod-btn px-4 py-2 mt-4"
+                      to={"/marketplace/mint/timepiece"}
+                    >
+                      Get Beta Pass
+                    </NavLink>
+                  </div>
+                </td>
+                <td>
+                  <div className="py-4">
+                    <NavLink
+                      className="stake-wod-btn buy-premium-btn px-4 py-2 mt-4"
+                      to={"/account"}
+                    >
+                      Buy Premium
+                    </NavLink>
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

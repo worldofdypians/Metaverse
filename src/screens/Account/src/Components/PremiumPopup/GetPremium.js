@@ -13,8 +13,7 @@ import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
 import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import coreIcon from "../../Components/WalletBalance/assets/coreLogo.svg";
 import vicitonIcon from "../../Components/WalletBalance/assets/victionLogo.svg";
-
-
+import { ethers } from "ethers";
 import axios from "axios";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 
@@ -24,6 +23,10 @@ const GetPremiumPopup = ({
   onClose,
   handleSwitchNetwork,
   onSuccessDeposit,
+  binanceW3WProvider,
+  handleSwitchChainBinanceWallet,
+  handleSwitchChainGateWallet,
+  binanceWallet,
 }) => {
   const chainDropdowns = [
     {
@@ -58,6 +61,14 @@ const GetPremiumPopup = ({
       name: "Viction",
       symbol: "viction",
     },
+    {
+      name: "Manta",
+      symbol: "manta",
+    },
+    {
+      name: "Taiko",
+      symbol: "taiko",
+    },
   ];
 
   const { BigNumber } = window;
@@ -70,6 +81,8 @@ const GetPremiumPopup = ({
   let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
   let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
+  let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
+  let wtaikoddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
 
   const metaverseBenefits = [
     "Exclusive access to World of Dypians",
@@ -105,10 +118,21 @@ const GetPremiumPopup = ({
   const [nftPremium_total, setnftPremium_total] = useState(0);
   const [nftDiscountObject, setnftDiscountObject] = useState([]);
 
+  const [discountPercentageViction, setdiscountPercentageViction] = useState(0);
+  const [nftPremium_tokenIdViction, setnftPremium_tokenIdViction] = useState(0);
+  const [nftPremium_totalViction, setnftPremium_totalViction] = useState(0);
+  const [nftDiscountObjectViction, setnftDiscountObjectViction] = useState([]);
+
   const calculatePremiumDiscount = async (wallet) => {
+    // if (chainId === 56) {
     const premiumSc = new window.bscWeb3.eth.Contract(
       window.SUBSCRIPTION_NEWBNB2_ABI,
       window.config.subscription_newbnb2_address
+    );
+
+    const premiumSc_viction = new window.victionWeb3.eth.Contract(
+      window.SUBSCRIPTION_VICTION_ABI,
+      window.config.subscription_viction_address
     );
 
     const nftContract = new window.bscWeb3.eth.Contract(
@@ -116,8 +140,21 @@ const GetPremiumPopup = ({
       window.config.nft_dypius_premium_address
     );
 
+    const nftContract_viction = new window.victionWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
+      window.config.nft_dypius_premium_viction_address
+    );
+
     if (wallet) {
       const result = await nftContract.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+      const result_viction = await nftContract_viction.methods
         .balanceOf(wallet)
         .call()
         .catch((e) => {
@@ -133,8 +170,23 @@ const GetPremiumPopup = ({
           return 0;
         });
 
+      const discount_viction = await premiumSc_viction.methods
+        .discountPercentageGlobal()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
       const nftObject = await premiumSc.methods
         .nftDiscounts(window.config.nft_dypius_premium_address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const nftObject_viction = await premiumSc_viction.methods
+        .nftDiscounts(window.config.nft_dypius_premium_viction_address)
         .call()
         .catch((e) => {
           console.error(e);
@@ -163,18 +215,47 @@ const GetPremiumPopup = ({
 
         setnftPremium_tokenId(tokenId);
         setnftPremium_total(parseInt(result));
+      } else if (result_viction && parseInt(result_viction) > 0) {
+        const tokenId = await nftContract_viction.methods
+          .tokenOfOwnerByIndex(wallet, 0)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+
+        if (nftObject_viction) {
+          setnftDiscountObjectViction(nftObject_viction);
+          if (discount_viction) {
+            setdiscountPercentageViction(
+              Math.max(
+                parseInt(discount_viction),
+                parseInt(nftObject_viction.discountPercentage)
+              )
+            );
+          }
+        }
+
+        setnftPremium_tokenIdViction(tokenId);
+        setnftPremium_totalViction(parseInt(result_viction));
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
-
+        setnftPremium_tokenIdViction(0);
+        setnftPremium_totalViction(0);
         if (discount) {
           setdiscountPercentage(parseInt(discount));
+        } else if (discount_viction) {
+          setdiscountPercentageViction(parseInt(discount_viction));
         }
       }
     } else {
       setnftPremium_tokenId(0);
       setnftPremium_total(0);
+      setnftPremium_tokenIdViction(0);
+      setnftPremium_totalViction(0);
     }
+    // } else setdiscountPercentage(0);
   };
 
   const handleUpdatePremiumUser = async (wallet) => {
@@ -187,16 +268,21 @@ const GetPremiumPopup = ({
 
   const handleEthPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x1")
           .then(() => {
             handleSwitchNetwork(1);
-            setChainDropdown(chainDropdowns[0]);
           })
           .catch((e) => {
             console.log(e);
           });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(1);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -204,16 +290,21 @@ const GetPremiumPopup = ({
 
   const handleBnbPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x38")
           .then(() => {
             handleSwitchNetwork(56);
-            setChainDropdown(chainDropdowns[1]);
           })
           .catch((e) => {
             console.log(e);
           });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(56);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(56);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(56);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -221,11 +312,54 @@ const GetPremiumPopup = ({
 
   const handleAvaxPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0xa86a")
           .then(() => {
             handleSwitchNetwork(43114);
-            setChainDropdown(chainDropdowns[2]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(43114);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(43114);
+      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(43114);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleMantaPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+        await handleSwitchNetworkhook("0xa9")
+          .then(() => {
+            handleSwitchNetwork(169);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(169);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(169);
+      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(169);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleTaikoPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x28c58")
+          .then(() => {
+            handleSwitchNetwork(167000);
           })
           .catch((e) => {
             console.log(e);
@@ -237,30 +371,44 @@ const GetPremiumPopup = ({
   };
 
   const handleBasePool = async () => {
-    if (!window.gatewallet) {
-      await handleSwitchNetworkhook("0x2105")
-        .then(() => {
-          handleSwitchNetwork(8453);
-          setChainDropdown(chainDropdowns[4]);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    if (window.ethereum) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+        await handleSwitchNetworkhook("0x2105")
+          .then(() => {
+            handleSwitchNetwork(8453);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(8453);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(8453);
+      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(8453);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
   const handleConfluxPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x406")
           .then(() => {
             handleSwitchNetwork(1030);
-            setChainDropdown(chainDropdowns[3]);
           })
           .catch((e) => {
             console.log(e);
           });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(1030);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1030);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1030);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -268,22 +416,41 @@ const GetPremiumPopup = ({
 
   const handleSkalePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
             handleSwitchNetwork(1482601649);
-            setChainDropdown(chainDropdowns[5]);
           })
           .catch((e) => {
             console.log(e);
           });
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
+        handleSwitchChainGateWallet(1482601649);
+      } else if (
+        window.ethereum?.isBinance ||
+        window.WALLET_TYPE === "binance"
+      ) {
+        window.alertify.error(
+          "This network is not available on Binance Web3 Wallet"
+        );
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
-  
   const handleCorePool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
@@ -303,16 +470,34 @@ const GetPremiumPopup = ({
 
   const handleVictionPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         await handleSwitchNetworkhook("0x58")
           .then(() => {
             handleSwitchNetwork(88);
-            setChainDropdown(chainDropdowns[7]);
           })
           .catch((e) => {
             console.log(e);
           });
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
+        handleSwitchChainGateWallet(88);
+      } else if (
+        window.ethereum?.isBinance ||
+        window.WALLET_TYPE === "binance"
+      ) {
+        window.alertify.error(
+          "This network is not available on Binance Web3 Wallet"
+        );
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(88);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -349,6 +534,10 @@ const GetPremiumPopup = ({
         ? window.config.subscriptionsei_tokens[token]?.decimals
         : chainId === 88
         ? window.config.subscriptionviction_tokens[token]?.decimals
+        : chainId === 169
+        ? window.config.subscriptionmanta_tokens[token]?.decimals
+        : chainId === 167000
+        ? window.config.subscriptiontaiko_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -375,7 +564,14 @@ const GetPremiumPopup = ({
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 88
-        ? await window.getEstimatedTokenSubscriptionAmountViction(token)
+        ? await window.getEstimatedTokenSubscriptionAmountViction(
+            token,
+            discountPercentageViction
+          )
+        : chainId === 169
+        ? await window.getEstimatedTokenSubscriptionAmountManta(token)
+        : chainId === 167000
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
         : chainId === 713715
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
@@ -386,10 +582,17 @@ const GetPremiumPopup = ({
       tokenprice / 10 ** tokenDecimals,
       tokenDecimals
     );
-    let tokenBalance2 = await window.getTokenHolderBalance(token, coinbase);
+    if (coinbase && window.WALLET_TYPE === "binance") {
+      let token_Sc = new ethers.Contract(
+        token,
+        window.ERC20_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      let tokenBalance2 = await token_Sc.balanceOf(coinbase);
+      setTokenBalance(tokenBalance2);
+    }
     setprice(tokenprice);
     setformattedPrice(formattedTokenPrice);
-    setTokenBalance(tokenBalance2);
   };
 
   const handleApprove = async (e) => {
@@ -403,30 +606,118 @@ const GetPremiumPopup = ({
     const skalesubscribeAddress = window.config.subscription_skale_address;
     const seisubscribeAddress = window.config.subscription_sei_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
+    const mantasubscribeAddress = window.config.subscription_manta_address;
+    const taikosubscribeAddress = window.config.subscription_taiko_address;
+
     const coresubscribeAddress = window.config.subscription_core_address;
 
     const web3 = new Web3(window.ethereum);
 
-    let tokenContract = new web3.eth.Contract(
-      window.ERC20_ABI,
-      selectedSubscriptionToken
-    );
     setloadspinner(true);
 
-    let nftContract = new window.web3.eth.Contract(
-      window.NFT_DYPIUS_PREMIUM_ABI,
-      window.config.nft_dypius_premium_address
+    let nftContract_viction = new window.web3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
+      window.config.nft_dypius_premium_viction_address
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
-      if (approveStatus === "initial") {
-        await nftContract.methods
-          .approve(
-            window.config.subscription_newbnb2_address,
-            nftPremium_tokenId
-          )
-          .send({ from: coinbase })
-          .then(() => {
+      if (window.WALLET_TYPE !== "binance") {
+        let tokenContract = new web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
+        let nftContract = new window.web3.eth.Contract(
+          window.NFT_DYPIUS_PREMIUM_ABI,
+          window.config.nft_dypius_premium_address
+        );
+
+        if (approveStatus === "initial") {
+          await nftContract.methods
+            .approve(
+              window.config.subscription_newbnb2_address,
+              nftPremium_tokenId
+            )
+            .send({ from: coinbase })
+            .then(() => {
+              setloadspinner(false);
+              setisApproved(true);
+              if (discountPercentage < 100) {
+                if (
+                  selectedSubscriptionToken.toLowerCase() ===
+                  "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+                ) {
+                  setapproveStatus("deposit");
+                } else setapproveStatus("approveAmount");
+              } else {
+                setapproveStatus("deposit");
+              }
+            })
+            .catch((e) => {
+              setstatus(e?.message);
+              setloadspinner(false);
+              setapproveStatus("fail");
+              window.alertify.error(e?.message);
+              setTimeout(() => {
+                setstatus("");
+                setloadspinner(false);
+                setapproveStatus("initial");
+              }, 5000);
+            });
+        } else if (approveStatus === "approveAmount") {
+          await tokenContract.methods
+            .approve(bnbsubscribeAddress, price)
+            .send({ from: coinbase })
+            .then(() => {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            })
+            .catch((e) => {
+              setstatus(e?.message);
+              setloadspinner(false);
+              setapproveStatus("fail");
+              window.alertify.error(e?.message);
+              setTimeout(() => {
+                setstatus("");
+                setloadspinner(false);
+                setapproveStatus("initial");
+              }, 5000);
+            });
+        }
+      } else if (window.WALLET_TYPE === "binance") {
+        let tokenContract_binance = new ethers.Contract(
+          selectedSubscriptionToken,
+          window.ERC20_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+        let nftContract_binance = new ethers.Contract(
+          window.config.nft_dypius_premium_address,
+          window.NFT_DYPIUS_PREMIUM_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+        if (approveStatus === "initial") {
+          const txResponse = await nftContract_binance
+            .approve(
+              window.config.subscription_newbnb2_address,
+              nftPremium_tokenId,
+              { from: coinbase }
+            )
+            .catch((e) => {
+              setstatus(e?.message);
+              setloadspinner(false);
+              setapproveStatus("fail");
+              window.alertify.error(e?.message);
+              setTimeout(() => {
+                setstatus("");
+                setloadspinner(false);
+                setapproveStatus("initial");
+              }, 5000);
+            });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
             setloadspinner(false);
             setisApproved(true);
             if (discountPercentage < 100) {
@@ -436,6 +727,50 @@ const GetPremiumPopup = ({
               ) {
                 setapproveStatus("deposit");
               } else setapproveStatus("approveAmount");
+            } else {
+              setapproveStatus("deposit");
+            }
+          }
+        } else if (approveStatus === "approveAmount") {
+          const txResponse = await tokenContract_binance
+            .approve(bnbsubscribeAddress, price, { from: coinbase })
+            .catch((e) => {
+              setstatus(e?.message);
+              setloadspinner(false);
+              setapproveStatus("fail");
+              window.alertify.error(e?.message);
+              setTimeout(() => {
+                setstatus("");
+                setloadspinner(false);
+                setapproveStatus("initial");
+              }, 5000);
+            });
+
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          }
+        }
+      }
+    } else if (
+      chainId === 88 &&
+      nftPremium_totalViction > 0 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
+      if (approveStatus === "initial") {
+        await nftContract_viction.methods
+          .approve(
+            window.config.subscription_viction_address,
+            nftPremium_tokenIdViction
+          )
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentageViction < 100) {
+              setapproveStatus("approveAmount");
             } else {
               setapproveStatus("deposit");
             }
@@ -452,8 +787,12 @@ const GetPremiumPopup = ({
             }, 5000);
           });
       } else if (approveStatus === "approveAmount") {
+        let tokenContract = new web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
         await tokenContract.methods
-          .approve(bnbsubscribeAddress, price)
+          .approve(victionsubscribeAddress, price)
           .send({ from: coinbase })
           .then(() => {
             setloadspinner(false);
@@ -473,46 +812,110 @@ const GetPremiumPopup = ({
           });
       }
     } else {
-      await tokenContract.methods
-        .approve(
-          chainId === 1
-            ? ethsubscribeAddress
-            : chainId === 56
-            ? bnbsubscribeAddress
-            : chainId === 1030
-            ? cfxsubscribeAddress
-            : chainId === 8453
-            ? basesubscribeAddress
-            : chainId === 43114
-            ? avaxsubscribeAddress
-            : chainId === 1482601649
-            ? skalesubscribeAddress
-            : chainId === 88
-            ? victionsubscribeAddress
-            : chainId === 1116
-            ? coresubscribeAddress
-            : chainId === 713715
-            ? seisubscribeAddress
-            : cfxsubscribeAddress,
-          price
-        )
-        .send({ from: coinbase })
-        .then(() => {
+      if (window.WALLET_TYPE !== "binance") {
+        let tokenContract = new web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
+        await tokenContract.methods
+
+          .approve(
+            chainId === 1
+              ? ethsubscribeAddress
+              : chainId === 56
+              ? bnbsubscribeAddress
+              : chainId === 1030
+              ? cfxsubscribeAddress
+              : chainId === 8453
+              ? basesubscribeAddress
+              : chainId === 43114
+              ? avaxsubscribeAddress
+              : chainId === 1482601649
+              ? skalesubscribeAddress
+              : chainId === 88
+              ? victionsubscribeAddress
+              : chainId === 169
+              ? mantasubscribeAddress
+              : chainId === 167000
+              ? taikosubscribeAddress
+              : chainId === 1116
+              ? coresubscribeAddress
+              : chainId === 713715
+              ? seisubscribeAddress
+              : cfxsubscribeAddress,
+            price
+          )
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      } else if (window.WALLET_TYPE === "binance") {
+        let tokenContract_binance = new ethers.Contract(
+          selectedSubscriptionToken,
+          window.ERC20_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+        const txResponse = await tokenContract_binance
+          .approve(
+            chainId === 1
+              ? ethsubscribeAddress
+              : chainId === 56
+              ? bnbsubscribeAddress
+              : chainId === 1030
+              ? cfxsubscribeAddress
+              : chainId === 8453
+              ? basesubscribeAddress
+              : chainId === 43114
+              ? avaxsubscribeAddress
+              : chainId === 1482601649
+              ? skalesubscribeAddress
+              : chainId === 88
+              ? victionsubscribeAddress
+              : chainId === 169
+              ? mantasubscribeAddress
+              : chainId === 167000
+              ? taikosubscribeAddress
+              : chainId === 1116
+              ? coresubscribeAddress
+              : chainId === 713715
+              ? seisubscribeAddress
+              : cfxsubscribeAddress,
+            price,
+            { from: coinbase }
+          )
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
           setloadspinner(false);
           setisApproved(true);
           setapproveStatus("deposit");
-        })
-        .catch((e) => {
-          setstatus(e?.message);
-          setloadspinner(false);
-          setapproveStatus("fail");
-          window.alertify.error(e?.message);
-          setTimeout(() => {
-            setstatus("");
-            setloadspinner(false);
-            setapproveStatus("initial");
-          }, 5000);
-        });
+        }
+      }
     }
   };
 
@@ -527,6 +930,8 @@ const GetPremiumPopup = ({
     const seiWeb3 = new Web3(window.config.sei_endpoint);
     const coreWeb3 = new Web3(window.config.core_endpoint);
     const victionWeb3 = new Web3(window.config.viction_endpoint);
+    const mantaWeb3 = new Web3(window.config.manta_endpoint);
+    const taikoWeb3 = new Web3(window.config.taiko_endpoint);
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
@@ -537,6 +942,8 @@ const GetPremiumPopup = ({
     const seisubscribeAddress = window.config.subscription_sei_address;
     const coresubscribeAddress = window.config.subscription_core_address;
     const victionsubscribeAddress = window.config.subscription_viction_address;
+    const mantasubscribeAddress = window.config.subscription_manta_address;
+    const taikosubscribeAddress = window.config.subscription_taiko_address;
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -584,6 +991,15 @@ const GetPremiumPopup = ({
       subscribeToken
     );
 
+    const subscribeTokencontractmanta = new mantaWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+    const subscribeTokencontracttaiko = new taikoWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
     let tokenprice =
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
@@ -601,7 +1017,14 @@ const GetPremiumPopup = ({
         : chainId === 1482601649
         ? await window.getEstimatedTokenSubscriptionAmountSkale(token)
         : chainId === 88
-        ? await window.getEstimatedTokenSubscriptionAmountViction(token)
+        ? await window.getEstimatedTokenSubscriptionAmountViction(
+            token,
+            discountPercentageViction
+          )
+        : chainId === 169
+        ? await window.getEstimatedTokenSubscriptionAmountManta(token)
+        : chainId === 167000
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 713715
@@ -625,9 +1048,23 @@ const GetPremiumPopup = ({
           setisApproved(false);
           setapproveStatus("initial");
         }
-      } else if (chainId === 88) {
-        const result = await subscribeTokencontractviction.methods
-          .allowance(coinbase, victionsubscribeAddress)
+      } else if (chainId === 169) {
+        const result = await subscribeTokencontractmanta.methods
+          .allowance(coinbase, mantasubscribeAddress)
+          .call()
+          .then();
+        if (result != 0 && Number(result) >= Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } else if (chainId === 167000) {
+        const result = await subscribeTokencontracttaiko.methods
+          .allowance(coinbase, taikosubscribeAddress)
           .call()
           .then();
         if (result != 0 && Number(result) >= Number(tokenprice)) {
@@ -742,6 +1179,68 @@ const GetPremiumPopup = ({
             }
           }
         }
+      } else if (chainId === 88) {
+        if (nftPremium_totalViction > 0) {
+          let contract = new window.web3.eth.Contract(
+            window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
+            window.config.nft_dypius_premium_viction_address
+          );
+
+          let approved = await contract.methods
+            .getApproved(nftPremium_tokenIdViction)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          let approvedAll = await contract.methods
+            .isApprovedForAll(coinbase, victionsubscribeAddress)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          if (
+            approved.toLowerCase() === victionsubscribeAddress.toLowerCase() ||
+            approvedAll === true
+          ) {
+            if (discountPercentageViction === 100) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            }
+            // if (discountPercentageViction < 100) {
+            //   setloadspinner(false);
+            //   setisApproved(true);
+            //   setapproveStatus("approveAmount");
+            // } else {
+            //   setloadspinner(false);
+            //   setisApproved(false);
+            //   setapproveStatus("initial");
+            // }
+          } else {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        } else {
+          const result = await subscribeTokencontractviction.methods
+            .allowance(coinbase, victionsubscribeAddress)
+            .call()
+            .then();
+
+          if (result != 0 && Number(result) >= Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else if (result == 0 || Number(result) < Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        }
       } else if (chainId === 43114) {
         const result = await subscribeTokencontractavax.methods
           .allowance(coinbase, avaxsubscribeAddress)
@@ -804,74 +1303,263 @@ const GetPremiumPopup = ({
     }
   };
 
+  const getContractBinance = async ({ key, address = null, ABI = null }) => {
+    ABI = window[key + "_ABI"];
+    address = window.config[key.toLowerCase() + "_address"];
+    if (!window.cached_contracts[key + "-" + address.toLowerCase()]) {
+      window.cached_contracts[key + "-" + address?.toLowerCase()] =
+        new ethers.Contract(address, ABI, binanceW3WProvider.getSigner());
+    }
+    return window.cached_contracts[key + "-" + address.toLowerCase()];
+  };
+
   const handleSubscribe = async (e) => {
-    // e.preventDefault();
-    let subscriptionContract = await window.getContract({
-      key:
-        chainId === 1
-          ? "SUBSCRIPTION_NEWETH"
-          : chainId === 56
-          ? "SUBSCRIPTION_NEWBNB2"
-          : chainId === 43114
-          ? "SUBSCRIPTION_NEWAVAX"
-          : chainId === 1030
-          ? "SUBSCRIPTION_CFX"
-          : chainId === 8453
-          ? "SUBSCRIPTION_BASE"
-          : chainId === 1482601649
-          ? "SUBSCRIPTION_SKALE"
-          : chainId === 88
-          ? "SUBSCRIPTION_VICTION"
-          : chainId === 1116
-          ? "SUBSCRIPTION_CORE"
-          : chainId === 713715
-          ? "SUBSCRIPTION_SKALE"
-          : "",
-    });
+    if (window.WALLET_TYPE !== "binance") {
+      let subscriptionContract = await window.getContract({
+        key:
+          chainId === 1
+            ? "SUBSCRIPTION_NEWETH"
+            : chainId === 56
+            ? "SUBSCRIPTION_NEWBNB2"
+            : chainId === 43114
+            ? "SUBSCRIPTION_NEWAVAX"
+            : chainId === 1030
+            ? "SUBSCRIPTION_CFX"
+            : chainId === 8453
+            ? "SUBSCRIPTION_BASE"
+            : chainId === 1482601649
+            ? "SUBSCRIPTION_SKALE"
+            : chainId === 88
+            ? "SUBSCRIPTION_VICTION"
+            : chainId === 169
+            ? "SUBSCRIPTION_MANTA"
+            : chainId === 167000
+            ? "SUBSCRIPTION_TAIKO"
+            : chainId === 1116
+            ? "SUBSCRIPTION_CORE"
+            : chainId === 713715
+            ? "SUBSCRIPTION_SKALE"
+            : "",
+      });
 
-    setloadspinnerSub(true);
-    if (chainId === 56 && nftPremium_total > 0) {
-      await window
-        .subscribeNFT(
-          nftDiscountObject.nftAddress,
-          nftPremium_tokenId,
-          selectedSubscriptionToken,
-          price
-        )
-        .then(async (data) => {
-          setloadspinnerSub(false);
-          handleUpdatePremiumUser(coinbase);
-          setapproveStatus("successsubscribe");
-          onSuccessDeposit();
-          setTimeout(() => {
+      setloadspinnerSub(true);
+      if (chainId === 56 && nftPremium_total > 0) {
+        await window
+          .subscribeNFT(
+            nftDiscountObject.nftAddress,
+            nftPremium_tokenId,
+            selectedSubscriptionToken,
+            price
+          )
+          .then(async (data) => {
             setloadspinnerSub(false);
-            setloadspinner(false);
-            setapproveStatus("initial");
-            setstatus("");
-          }, 5000);
-        })
-        .catch(() => {
-          setloadspinnerSub(false);
-          setapproveStatus("failsubscribe");
-          setstatus(e?.message);
-          window.alertify.error(e?.message);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            onSuccessDeposit();
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          })
+          .catch(() => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
 
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      } else if (
+        chainId === 56 &&
+        selectedSubscriptionToken.toLowerCase() ===
+          "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+      ) {
+        await subscriptionContract.methods
+          .subscribeWithBNB()
+          .send({ from: await window.getCoinbase(), value: price })
+          .then(async (data) => {
+            setloadspinnerSub(false);
+            onSuccessDeposit();
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          })
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      } else if (chainId === 88 && nftPremium_totalViction > 0) {
+        await window
+          .subscribeNFTViction(
+            nftDiscountObjectViction.nftAddress,
+            nftPremium_tokenIdViction,
+            selectedSubscriptionToken,
+            price
+          )
+          .then(async (data) => {
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            onSuccessDeposit();
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          })
+          .catch(() => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      } else {
+        await subscriptionContract.methods
+          .subscribe(selectedSubscriptionToken, price)
+          .send({ from: await window.getCoinbase() })
+          .then((data) => {
+            setloadspinnerSub(false);
+            onSuccessDeposit();
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+            // this.props.onSubscribe();
+            // window.location.href = "https://app.dypius.com/account";
+          })
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      }
+    } else if (window.WALLET_TYPE === "binance") {
+      let subscriptionContract = await getContractBinance({
+        key:
+          chainId === 1
+            ? "SUBSCRIPTION_NEWETH"
+            : chainId === 56
+            ? "SUBSCRIPTION_NEWBNB2"
+            : chainId === 43114
+            ? "SUBSCRIPTION_NEWAVAX"
+            : chainId === 1030
+            ? "SUBSCRIPTION_CFX"
+            : chainId === 8453
+            ? "SUBSCRIPTION_BASE"
+            : chainId === 1482601649
+            ? "SUBSCRIPTION_SKALE"
+            : chainId === 88
+            ? "SUBSCRIPTION_VICTION"
+            : chainId === 169
+            ? "SUBSCRIPTION_MANTA"
+            : chainId === 1116
+            ? "SUBSCRIPTION_CORE"
+            : chainId === 713715
+            ? "SUBSCRIPTION_SKALE"
+            : "",
+      });
+
+      setloadspinnerSub(true);
+      if (chainId === 56 && nftPremium_total > 0) {
+        let subscriptionContract = await getContractBinance({
+          key: "SUBSCRIPTION_NEWBNB2",
+        });
+        const txResponse = await subscriptionContract
+          .subscribeNFT(
+            nftDiscountObject.nftAddress,
+            nftPremium_tokenId,
+            selectedSubscriptionToken,
+            price,
+            { from: coinbase }
+          )
+          .catch(() => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setloadspinnerSub(false);
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          onSuccessDeposit();
           setTimeout(() => {
             setloadspinnerSub(false);
             setloadspinner(false);
             setapproveStatus("initial");
             setstatus("");
           }, 5000);
-        });
-    } else if (
-      chainId === 56 &&
-      selectedSubscriptionToken.toLowerCase() ===
-        "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
-    ) {
-      await subscriptionContract.methods
-        .subscribeWithBNB()
-        .send({ from: await window.getCoinbase(), value: price })
-        .then(async (data) => {
+        }
+      } else if (
+        chainId === 56 &&
+        selectedSubscriptionToken.toLowerCase() ===
+          "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+      ) {
+        const txResponse = await subscriptionContract
+          .subscribeWithBNB({ from: coinbase, value: price })
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
           setloadspinnerSub(false);
           onSuccessDeposit();
           handleUpdatePremiumUser(coinbase);
@@ -882,24 +1570,25 @@ const GetPremiumPopup = ({
             setapproveStatus("initial");
             setstatus("");
           }, 5000);
-        })
-        .catch((e) => {
-          setloadspinnerSub(false);
-          setapproveStatus("failsubscribe");
-          setstatus(e?.message);
-          window.alertify.error(e?.message);
-          setTimeout(() => {
+        }
+      } else {
+        const txResponse = await subscriptionContract
+          .subscribe(selectedSubscriptionToken, price, { from: coinbase })
+          .catch((e) => {
             setloadspinnerSub(false);
-            setloadspinner(false);
-            setapproveStatus("initial");
-            setstatus("");
-          }, 5000);
-        });
-    } else {
-      await subscriptionContract.methods
-        .subscribe(selectedSubscriptionToken, price)
-        .send({ from: await window.getCoinbase() })
-        .then((data) => {
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
           setloadspinnerSub(false);
           onSuccessDeposit();
           handleUpdatePremiumUser(coinbase);
@@ -910,21 +1599,8 @@ const GetPremiumPopup = ({
             setapproveStatus("initial");
             setstatus("");
           }, 5000);
-          // this.props.onSubscribe();
-          // window.location.href = "https://app.dypius.com/account";
-        })
-        .catch((e) => {
-          setloadspinnerSub(false);
-          setapproveStatus("failsubscribe");
-          setstatus(e?.message);
-          window.alertify.error(e?.message);
-          setTimeout(() => {
-            setloadspinnerSub(false);
-            setloadspinner(false);
-            setapproveStatus("initial");
-            setstatus("");
-          }, 5000);
-        });
+        }
+      }
     }
   };
 
@@ -990,6 +1666,24 @@ const GetPremiumPopup = ({
       );
       handleSubscriptionTokenChange(wvictionAddress);
       handleCheckIfAlreadyApproved(wvictionAddress);
+    } else if (chainId === 169) {
+      setChainDropdown(chainDropdowns[8]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionmanta_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wmantaddress);
+      handleCheckIfAlreadyApproved(wmantaddress);
+    } else if (chainId === 167000) {
+      setChainDropdown(chainDropdowns[9]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptiontaiko_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wtaikoddress);
+      handleCheckIfAlreadyApproved(wtaikoddress);
     } else if (chainId === 1116) {
       setChainDropdown(chainDropdowns[6]);
       setdropdownIcon("usdt");
@@ -1019,7 +1713,15 @@ const GetPremiumPopup = ({
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
     }
-  }, [chainId, nftPremium_total, discountPercentage, nftPremium_tokenId]);
+  }, [
+    chainId,
+    nftPremium_total,
+    nftPremium_totalViction,
+    discountPercentage,
+    discountPercentageViction,
+    nftPremium_tokenId,
+    nftPremium_tokenIdViction,
+  ]);
 
   useEffect(() => {
     if (chainId === 1 && selectedSubscriptionToken !== "") {
@@ -1046,6 +1748,16 @@ const GetPremiumPopup = ({
         window.config.subscriptionviction_tokens[selectedSubscriptionToken]
           ?.decimals
       );
+    } else if (chainId === 169 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionmanta_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 167000 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptiontaiko_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
     } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptioncore_tokens[selectedSubscriptionToken]
@@ -1069,11 +1781,22 @@ const GetPremiumPopup = ({
   }, [chainId, coinbase]);
 
   return (
-        <div className="custom-container">
+    <div className="custom-container">
       <div className="subscribe-container p-2 position-relative">
         <div className="" style={{ background: "#8E97CD" }}></div>
-      
-        {discountPercentage > 0 || nftPremium_total > 0 ? (
+        <div className="d-flex justify-content-between align-items-center">
+          <h6 className="free-plan-title">Premium Subscription</h6>
+          <img
+            src={xMark}
+            onClick={onClose}
+            alt=""
+            style={{ cursor: "pointer" }}
+          />
+        </div>
+        {discountPercentage > 0 ||
+        discountPercentageViction > 0 ||
+        nftPremium_total > 0 ||
+        nftPremium_totalViction > 0 ? (
           <div className="premium-discount-bg mt-3 p-4 position-relative">
             <div className="premiumRedTag position-absolute">
               <div className="position-relative d-flex flex-column">
@@ -1089,41 +1812,63 @@ const GetPremiumPopup = ({
             <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
               <div className="d-flex flex-column">
                 <h6 className="lifetime-plan-text m-0">Lifetime plan</h6>
-                {nftPremium_total > 0 && (
-                  <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                {nftPremium_total > 0 ||
+                  (nftPremium_totalViction > 0 && (
+                    <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                      Valid until:{" "}
+                      {new Date(
+                        nftPremium_total > 0
+                          ? nftDiscountObject.expiration * 1000
+                          : nftDiscountObjectViction.expiration * 1000
+                      )
+                        .toDateString()
+                        .slice(
+                          3,
+                          new Date(
+                            nftPremium_total > 0
+                              ? nftDiscountObject.expiration * 1000
+                              : nftDiscountObjectViction.expiration * 1000
+                          ).toDateString().length
+                        )}
+                    </h6>
+                  ))}
+              </div>
+              <div className="d-flex align-items-end gap-2">
+                <h6 className="discount-price">
+                  {discountPercentage == 100 || discountPercentageViction == 100
+                    ? "FREE"
+                    : "$" +
+                      (100 -
+                        Number(
+                          discountPercentage > 0
+                            ? discountPercentage
+                            : discountPercentageViction > 0
+                            ? discountPercentageViction
+                            : discountPercentage
+                        ))}
+                </h6>
+                <h6 className="old-price-text">$100</h6>
+              </div>
+              {nftPremium_total > 0 ||
+                (nftPremium_totalViction > 0 && (
+                  <h6 className="token-amount-placeholder m-0 premium-custom-text">
                     Valid until:{" "}
-                    {new Date(nftDiscountObject.expiration * 1000)
+                    {new Date(
+                      nftPremium_total > 0
+                        ? nftDiscountObject.expiration * 1000
+                        : nftDiscountObjectViction.expiration * 1000
+                    )
                       .toDateString()
                       .slice(
                         3,
                         new Date(
-                          nftDiscountObject.expiration * 1000
+                          nftPremium_total > 0
+                            ? nftDiscountObject.expiration * 1000
+                            : nftDiscountObjectViction.expiration * 1000
                         ).toDateString().length
                       )}
                   </h6>
-                )}
-              </div>
-              <div className="d-flex align-items-end gap-2">
-                <h6 className="discount-price">
-                  {discountPercentage == 100
-                    ? "FREE"
-                    : "$" + (100 - Number(discountPercentage))}
-                </h6>
-                <h6 className="old-price-text">$100</h6>
-              </div>
-              {nftPremium_total > 0 && (
-                <h6 className="token-amount-placeholder m-0 premium-custom-text">
-                  Valid until:{" "}
-                  {new Date(nftDiscountObject.expiration * 1000)
-                    .toDateString()
-                    .slice(
-                      3,
-                      new Date(
-                        nftDiscountObject.expiration * 1000
-                      ).toDateString().length
-                    )}
-                </h6>
-              )}
+                ))}
             </div>
           </div>
         ) : (
@@ -1139,6 +1884,7 @@ const GetPremiumPopup = ({
                     src={
                       require(`../../Images/premium/tokens/ethIcon.svg`).default
                     }
+                    style={{ width: 18, height: 18 }}
                     alt=""
                   />
                   <span className="subscription-chain mb-0">Ethereum</span>
@@ -1149,6 +1895,7 @@ const GetPremiumPopup = ({
                       require(`../../Images/premium/tokens/wbnbIcon.svg`)
                         .default
                     }
+                    style={{ width: 18, height: 18 }}
                     alt=""
                   />
                   <span className="subscription-chain mb-0">BNB Chain</span>
@@ -1156,10 +1903,30 @@ const GetPremiumPopup = ({
 
                 <div className="d-flex align-items-center gap-2">
                   <img
+                    src={require(`../../../../../components/Header/assets/manta.png`)}
+                    alt=""
+                    style={{ width: 18, height: 18 }}
+                  />
+                  <span className="subscription-chain mb-0">Manta</span>
+                </div>
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={
+                      require(`../../../../../components/Header/assets/taiko.svg`)
+                        .default
+                    }
+                    alt=""
+                    style={{ width: 18, height: 18 }}
+                  />
+                  <span className="subscription-chain mb-0">Taiko</span>
+                </div>
+                <div className="d-flex align-items-center gap-2">
+                  <img
                     src={
                       require(`../../Images/premium/tokens/wavaxIcon.svg`)
                         .default
                     }
+                    style={{ width: 18, height: 18 }}
                     alt=""
                   />
                   <span className="subscription-chain mb-0">Avalanche</span>
@@ -1265,6 +2032,7 @@ const GetPremiumPopup = ({
                   <img
                     src={require(`../../Images/premium/tokens/${chainDropdown.symbol}Icon.svg`)}
                     alt=""
+                    style={{ width: 18, height: 18 }}
                   />
                   {chainDropdown.name}
                 </div>
@@ -1296,6 +2064,37 @@ const GetPremiumPopup = ({
                   />
                   BNB Chain
                 </li>
+                <li
+                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                  onClick={handleMantaPool}
+                >
+                  <img
+                    src={
+                      require(`../../Images/premium/tokens/mantaIcon.svg`)
+                        .default
+                    }
+                    style={{ width: 18, height: 18 }}
+                    alt=""
+                  />
+                  Manta
+                </li>
+                {window.WALLET_TYPE !== "binance" &&
+                  !window.ethereum?.isBinance && (
+                    <li
+                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                      onClick={handleTaikoPool}
+                    >
+                      <img
+                        src={
+                          require(`../../Images/premium/tokens/taikoIcon.svg`)
+                            .default
+                        }
+                        style={{ width: 18, height: 18 }}
+                        alt=""
+                      />
+                      Taiko
+                    </li>
+                  )}
                 <li
                   className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                   onClick={handleAvaxPool}
@@ -1337,49 +2136,59 @@ const GetPremiumPopup = ({
                   />
                   Conflux Network
                 </li>
-                <li
-                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                  onClick={handleSkalePool}
-                >
-                  <img
-                    src={skaleIcon}
-                    alt=""
-                    style={{
-                      width: "18px",
-                      height: "18px",
-                    }}
-                  />
-                  SKALE
-                </li>
-                <li
-                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                      onClick={handleCorePool}
-                                    >
-                                      <img
-                                        src={coreIcon}
-                                        alt=""
-                                        style={{
-                                          width: "18px",
-                                          height: "18px",
-                                        }}
-                                      />
-                                      CORE
-                                    </li>
-                                    <li
-                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                      onClick={handleVictionPool}
-                                    >
-                                      <img
-                                        src={vicitonIcon}
-                                        alt=""
-                                        style={{
-                                          width: "18px",
-                                          height: "18px",
-                                        }}
-                                      />
-                                      Viction
-                                    </li>
-                                {/*     <li
+                {window.WALLET_TYPE !== "binance" &&
+                  !window.ethereum?.isBinance && (
+                    <li
+                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                      onClick={handleSkalePool}
+                    >
+                      <img
+                        src={skaleIcon}
+                        alt=""
+                        style={{
+                          width: "18px",
+                          height: "18px",
+                        }}
+                      />
+                      SKALE
+                    </li>
+                  )}
+
+                {window.WALLET_TYPE !== "binance" &&
+                  !window.ethereum?.isBinance && (
+                    <li
+                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                      onClick={handleCorePool}
+                    >
+                      <img
+                        src={coreIcon}
+                        alt=""
+                        style={{
+                          width: "18px",
+                          height: "18px",
+                        }}
+                      />
+                      CORE
+                    </li>
+                  )}
+                {window.WALLET_TYPE !== "binance" &&
+                  !window.ethereum?.isBinance && (
+                    <li
+                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                      onClick={handleVictionPool}
+                    >
+                      <img
+                        src={vicitonIcon}
+                        alt=""
+                        style={{
+                          width: "18px",
+                          height: "18px",
+                        }}
+                      />
+                      Viction
+                    </li>
+                  )}
+                {/*     <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={handleSeiPool}
                                     >
@@ -1397,7 +2206,7 @@ const GetPremiumPopup = ({
             </div>
           </div>
           <div className="d-flex flex-column gap-3 subscribe-input-container"></div>
-          {discountPercentage < 100 && (
+          {(discountPercentage < 100 || discountPercentageViction < 100) && (
             <div className="d-flex flex-column align-items-end gap-3">
               <span className="my-premium-balance-text mb-0">
                 My balance:{" "}
@@ -1451,6 +2260,10 @@ const GetPremiumPopup = ({
                           ? window.config.subscriptionskale_tokens
                           : chainId === 88
                           ? window.config.subscriptionviction_tokens
+                          : chainId === 169
+                          ? window.config.subscriptionmanta_tokens
+                          : chainId === 167000
+                          ? window.config.subscriptiontaiko_tokens
                           : chainId === 1116
                           ? window.config.subscriptioncore_tokens
                           : chainId === 713715
@@ -1484,6 +2297,12 @@ const GetPremiumPopup = ({
                                   : chainId === 88
                                   ? window.config.subscriptionviction_tokens[t]
                                       ?.symbol
+                                  : chainId === 169
+                                  ? window.config.subscriptionmanta_tokens[t]
+                                      ?.symbol
+                                  : chainId === 167000
+                                  ? window.config.subscriptiontaiko_tokens[t]
+                                      ?.symbol
                                   : chainId === 1116
                                   ? window.config.subscriptioncore_tokens[t]
                                       ?.symbol
@@ -1512,6 +2331,12 @@ const GetPremiumPopup = ({
                                       ?.symbol
                                   : chainId === 88
                                   ? window.config.subscriptionviction_tokens[t]
+                                      ?.symbol
+                                  : chainId === 169
+                                  ? window.config.subscriptionmanta_tokens[t]
+                                      ?.symbol
+                                  : chainId === 167000
+                                  ? window.config.subscriptiontaiko_tokens[t]
                                       ?.symbol
                                   : chainId === 713715
                                   ? window.config.subscriptionsei_tokens[t]
@@ -1562,6 +2387,14 @@ const GetPremiumPopup = ({
                                 ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
                                     t
                                   ]?.symbol.toLowerCase()}Icon.svg`)
+                                : chainId === 169
+                                ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
+                                    t
+                                  ]?.symbol.toLowerCase()}Icon.svg`)
+                                : chainId === 167000
+                                ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
+                                    t
+                                  ]?.symbol.toLowerCase()}Icon.svg`)
                                 : chainId === 713715
                                 ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
                                     t
@@ -1588,6 +2421,17 @@ const GetPremiumPopup = ({
                             ? window.config.subscriptionbase_tokens[t]?.symbol
                             : chainId === 1482601649
                             ? window.config.subscriptionskale_tokens[t]?.symbol
+                            : chainId === 1116
+                            ? window.config.subscriptioncore_tokens[t]?.symbol
+                            : chainId === 88
+                            ? window.config.subscriptionviction_tokens[t]
+                                ?.symbol
+                            : chainId === 169
+                            ? window.config.subscriptionmanta_tokens[t]?.symbol
+                            : chainId === 167000
+                            ? window.config.subscriptiontaiko_tokens[t]?.symbol
+                            : chainId === 713715
+                            ? window.config.subscriptionsei_tokens[t]?.symbol
                             : window.config.subscription_tokens[t]?.symbol}
                         </li>
                       ))}
@@ -1605,7 +2449,15 @@ const GetPremiumPopup = ({
                 </div>
                 <span className="subscription-price-usd mb-0">
                   {" "}
-                  ${100 - Number(discountPercentage)}
+                  $
+                  {100 -
+                    Number(
+                      discountPercentage != 0
+                        ? discountPercentage
+                        : discountPercentageViction != 0
+                        ? discountPercentageViction
+                        : discountPercentage
+                    )}
                 </span>
               </div>
             </div>
@@ -1773,6 +2625,119 @@ const GetPremiumPopup = ({
               Switch to BNB Chain
             </button>{" "}
           </div>
+        ) : discountPercentageViction > 0 && chainId === 88 ? (
+          <div className="d-flex align-items-center gap-3 justify-content-center">
+            <div
+              className={` ${
+                approveStatus === "fail" || !coinbase || isApproved
+                  ? "linear-border-disabled"
+                  : "linear-border"
+              }`}
+            >
+              <button
+                className={`btn ${
+                  approveStatus === "fail" || !coinbase || isApproved
+                    ? "outline-btn-disabled"
+                    : "filled-btn"
+                } px-4`}
+                disabled={
+                  approveStatus === "fail" || !coinbase || isApproved
+                    ? true
+                    : false
+                }
+                onClick={(e) => handleApprove(e)}
+              >
+                {loadspinner === false &&
+                (approveStatus === "initial" ||
+                  approveStatus === "deposit" ||
+                  approveStatus === "approveAmount" ||
+                  approveStatus === "failsubscribe" ||
+                  approveStatus === "successsubscribe") ? (
+                  <>
+                    Approve{" "}
+                    {approveStatus === "approveAmount"
+                      ? "token"
+                      : nftPremium_totalViction > 0
+                      ? "NFT"
+                      : ""}
+                  </>
+                ) : loadspinner === false && approveStatus === "fail" ? (
+                  "Failed"
+                ) : (
+                  <div className="d-flex align-items-center gap-2">
+                    Processing
+                    <div
+                      className="spinner-border "
+                      role="status"
+                      style={{
+                        height: "1rem",
+                        width: "1rem",
+                      }}
+                    ></div>{" "}
+                  </div>
+                )}
+              </button>
+            </div>
+            <div
+              className={` ${
+                isApproved === false
+                  ? "linear-border-disabled"
+                  : "linear-border"
+              }`}
+            >
+              <button
+                className={`btn ${
+                  isApproved === false ? "outline-btn-disabled" : "filled-btn"
+                } px-4`}
+                onClick={() => handleSubscribe()}
+              >
+                {loadspinnerSub === false &&
+                (approveStatus === "initial" ||
+                  approveStatus === "fail" ||
+                  approveStatus === "deposit") ? (
+                  <>
+                    {discountPercentageViction > 0 ||
+                    nftPremium_totalViction > 0
+                      ? "Redeem"
+                      : "Buy"}
+                  </>
+                ) : loadspinnerSub === false &&
+                  approveStatus === "successsubscribe" ? (
+                  "Success"
+                ) : loadspinnerSub === false &&
+                  approveStatus === "failsubscribe" ? (
+                  "Failed"
+                ) : (
+                  <div
+                    className="spinner-border "
+                    role="status"
+                    style={{
+                      height: "1rem",
+                      width: "1rem",
+                    }}
+                  ></div>
+                )}
+              </button>
+            </div>
+          </div>
+        ) : discountPercentageViction > 0 && chainId !== 88 ? (
+          <div
+            className={`d-flex align-items-center justify-content-center mb-2`}
+          >
+            <button
+              className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+              onClick={() => {
+                handleVictionPool();
+              }}
+              style={{
+                width: "fit-content",
+                whiteSpace: "nowrap",
+                fontSize: 14,
+              }}
+            >
+              Switch to Viction
+            </button>{" "}
+          </div>
         ) : (
           <div className="d-flex align-items-center gap-3 justify-content-center">
             <div
@@ -1880,7 +2845,7 @@ const GetPremiumPopup = ({
           )}
         </div>
       </div>
-        </div>
+    </div>
   );
 };
 

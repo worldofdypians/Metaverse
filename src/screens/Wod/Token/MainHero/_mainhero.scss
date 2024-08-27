@@ -9,7 +9,8 @@
 }
 
 .buy-item-logo {
-  width: 47px;
+  // width: 47px;
+  height: 32px;
 }
 
 .buy-item-title {
@@ -28,12 +29,18 @@
 }
 
 .buy-token-wrapper {
-  border: 0.1rem solid rgb(149 143 135);
+  // border: 0.1rem solid rgb(149 143 135);
   min-height: 87px;
+  background: #281A53;
+}
+
+.buy-outertoken-wrapper {
+padding: 4px;
+background: linear-gradient(to bottom, #15BFFDB2, #9C37FDB2);
 }
 
 .buy-token-wrapper:hover {
-  border: 0.1rem solid #fff;
+  // border: 0.1rem solid #fff;
   transition: all 0.25s ease;
   // filter: drop-shadow(0 0 6px #fff);
 }

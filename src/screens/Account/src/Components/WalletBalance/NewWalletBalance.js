@@ -45,6 +45,10 @@ import gateUpcoming from "../../../../Marketplace/assets/gateUpcoming.webp";
 import eventPopupImage from "./assets/eventPopupImage.png";
 import coin98Upcoming from "./assets/coin98Upcoming.png";
 import victionThumb from "./assets/victionThumb.png";
+import mantaThumb from "./assets/mantaThumb.png";
+import taikoThumb from "./assets/taikoThumb.webp";
+import cookie3Thumb from "./assets/cookie3Thumb.png";
+
 import seiThumb from "./assets/seiThumb.png";
 import multiversThumb from "./assets/multiversThumb.png";
 import immutableThumb from "./assets/immutableThumb.png";
@@ -92,8 +96,14 @@ import multiversBg from "./assets/multiversBg.webp";
 import seiLogo from "./assets/seiLogo.svg";
 import seiBg from "./assets/seiBg.webp";
 import coreLogo from "./assets/coreLogo.svg";
+import taikoLogo from "./assets/taikoLogo.svg";
+import mantaLogo from "./assets/mantaLogo2.png";
+import cookieLogo from "../../../../Marketplace/assets/cookie3Logo.svg";
+
 import bnbLogo from "./assets/bnbIcon.svg";
 import coreBg from "./assets/coreBg.webp";
+import taikoBg from "./assets/taikoBg.png";
+
 import immutableLogo from "./assets/immutableLogo.svg";
 import immutableBg from "./assets/immutableBg.webp";
 
@@ -183,35 +193,13 @@ const renderer2 = ({ hours, minutes }) => {
 const NewWalletBalance = ({
   dypBalance,
   weeklyplayerData,
-  dailyplayerData,
-  skaleplayerDataAmount,
   address,
   coinbase,
-  dypBalancebnb,
-  dypBalanceavax,
-  isVerified,
   email,
   // handleConnectWallet,
   handleShowWalletPopup,
-  idypBalance,
-  idypBalancebnb,
-  idypBalanceavax,
   userId,
   username,
-  listedNFTS,
-  landStaked,
-  myCawsWodStakes,
-  myWodWodStakes,
-  myCawsCollected,
-  myCawsOldCollected,
-  myLandCollected,
-  myTimepieceCollected,
-  myBoughtNfts,
-  isConnected,
-  handleConnect,
-  ethTokenData,
-  dypTokenData,
-  dailyDataAmountCore,
   weeklyDataAmountCore,
   monthlyDataAmountCore,
   dailyDataAmountViction,
@@ -220,13 +208,6 @@ const NewWalletBalance = ({
   dailyDataAmountSkale,
   weeklyDataAmountSkale,
   monthlyDataAmountSkale,
-  favoritesArray,
-  latestBoughtNFTS,
-  myOffers,
-  allActiveOffers,
-  myNFTSCoingecko,
-  myGateNfts,
-  myConfluxNfts,
   onDailyRewardsPopupOpen,
   onOpenLeaderboard,
   isPremium,
@@ -234,9 +215,6 @@ const NewWalletBalance = ({
   onBalanceClick,
   claimedChests,
   claimedPremiumChests,
-  claimedSkaleChests,
-  claimedSkalePremiumChests,
-  availableTime,
   canBuy,
   rewardsPopup,
   dailyPopup,
@@ -276,10 +254,6 @@ const NewWalletBalance = ({
   skaleEarnToken,
   skaleEarnUsd,
   skalePoints,
-  claimedCoreChests,
-  claimedCorePremiumChests,
-  claimedVictionChests,
-  claimedVictionPremiumChests,
   openedCoreChests,
   openedVictionChests,
   openedSeiChests,
@@ -300,6 +274,24 @@ const NewWalletBalance = ({
   multiversEarnToken,
   multiversEarnUsd,
   kittyDashRecords,
+  weeklyDataAmountManta,
+  monthlyDataAmountManta,
+  mantaEarnUsd,
+  openedMantaChests,
+  mantaPoints,
+  mantaEarnToken,
+  userDataStar,
+  weeklyDataAmountTaiko,
+  monthlyDataAmountTaiko,
+  taikoEarnUsd,
+  claimedTaikoChests,
+  claimedTaikoPremiumChests,
+  openedTaikoChests,
+  taikoPoints,
+  taikoEarnToken,
+  immutableEarnUsd,
+  immutableEarnToken,
+  immutablePoints,cookieEarnUsd, cookieEarnToken, cookiePoints
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -312,6 +304,11 @@ const NewWalletBalance = ({
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+  let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
+  let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
+  let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
+  let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
+
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
@@ -336,9 +333,6 @@ const NewWalletBalance = ({
     learnMore:
       "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
   };
-
-
-      
 
   const dummyViction = {
     title: "VICTION",
@@ -383,6 +377,76 @@ const NewWalletBalance = ({
     chain: "CORE Chain",
     linkState: "core",
     rewards: "CORE",
+    status: "Live",
+  };
+  const dummyManta = {
+    title: "Manta",
+    logo: mantaLogo,
+    eventStatus: "Live",
+    totalRewards: "$20,000 in MANTA Rewards",
+    myEarnings: 0.0,
+    eventDate: "Aug 01, 2024",
+    date: "Aug 01, 2024",
+    id: "event21",
+    eventType: "Explore & Mine",
+    eventDuration: mantaLastDay,
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "",
+
+    chain: "Manta",
+    linkState: "manta",
+    rewards: "MANTA",
+    status: "Live",
+  };
+
+  const dummyImmutable = {
+    title: "Immutable",
+    logo: immutableLogo,
+    eventStatus: "Live",
+    totalRewards: "$20,000 in IMX Rewards",
+    myEarnings: 0.0,
+    eventDate: "Aug 15, 2024",
+    date: "Aug 15, 2024",
+    id: "event15",
+    eventType: "Explore & Mine",
+    eventDuration: immutableLastDay,
+    backgroundImage: immutableBg,
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
+    chain: "Immutable",
+    linkState: "immutable",
+    rewards: "IMX",
+    status: "Live",
+  };
+
+  const dummyTaiko = {
+    title: "Taiko",
+    logo: taikoLogo,
+    eventStatus: "Live",
+    totalRewards: "$20,000 in TAIKO Rewards",
+    myEarnings: 0.0,
+    eventDate: "Aug 19, 2024",
+    date: "Aug 19, 2024",
+    id: "event22",
+    eventType: "Explore & Mine",
+    eventDuration: taikoLastDay,
+    backgroundImage: taikoBg,
+
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "",
+
+    chain: "TAIKO",
+    linkState: "taiko",
+    rewards: "TAIKO",
     status: "Live",
   };
 
@@ -435,6 +499,7 @@ const NewWalletBalance = ({
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
+
     {
       title: "CORE",
       logo: coreLogo,
@@ -498,6 +563,153 @@ const NewWalletBalance = ({
         eventDate: "Jul 01, 2024",
       },
     },
+    {
+      title: "BNB Chain",
+      logo: bnbLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jun 12, 2024",
+      backgroundImage: upcomingSkale,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Live",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore:
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        eventDate: "Jun 12, 2024",
+      },
+    },
+    {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in TAIKO Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 19, 2024",
+      backgroundImage: taikoBg,
+      popupInfo: {
+        title: "Taiko",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Live",
+        logo: taikoLogo,
+        date: "Aug 19, 2024",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        backgroundImage: taikoBg,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 19, 2024",
+      },
+    },
+    {
+      title: "Immutable",
+      logo: immutableLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in IMX Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 15, 2024",
+      backgroundImage: immutableBg,
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable",
+        linkState: "immutable",
+        rewards: "IMX",
+        status: "Live",
+        logo: immutableLogo,
+        date: "Aug 15, 2024",
+        id: "event15",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in IMX Rewards",
+        eventDuration: immutableLastDay,
+        backgroundImage: immutableBg,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
+        eventDate: "Aug 15, 2024",
+      },
+    },
+    {
+      title: "Manta",
+      logo: mantaLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in MANTA Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 20, 2024",
+      popupInfo: {
+        title: "Manta",
+        chain: "Manta",
+        linkState: "manta",
+        rewards: "MANTA",
+        status: "Live",
+        logo: mantaLogo,
+        date: "Aug 20, 2024",
+        id: "event21",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in MANTA Rewards",
+        eventDuration: mantaLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 20, 2024",
+      },
+    },
+
+    {
+      title: "Cookie3",
+      logo: cookieLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in COOKIE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 26, 2024",
+      popupInfo: {
+        title: "Cookie3",
+        chain: "BNB Chain",
+        linkState: "cookie3",
+        rewards: "COOKIE",
+        status: "Live",
+        logo: cookieLogo,
+        date: "Aug 26, 2024",
+        id: "event23",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in COOKIE Rewards",
+        eventDuration: cookieLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 26, 2024",
+      },
+    },
+    
+   
     // {
     //   title: "SEI",
     //   logo: seiLogo,
@@ -531,34 +743,6 @@ const NewWalletBalance = ({
     //   },
     // },
 
-    {
-      title: "BNB Chain",
-      logo: bnbLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Jun 12, 2024",
-      backgroundImage: upcomingSkale,
-      popupInfo: {
-        title: "BNB Chain",
-        chain: "BNB Chain",
-        linkState: "bnb",
-        rewards: "BNB",
-        status: "Live",
-        id: "event20",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: bnbLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore:
-          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
-        eventDate: "Jun 12, 2024",
-      },
-    },
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -884,9 +1068,11 @@ const NewWalletBalance = ({
     claimedPremiumChests +
     openedSkaleChests.length +
     openedCoreChests.length +
-    openedVictionChests.length;
+    openedVictionChests.length +
+    openedTaikoChests.length +
+    openedMantaChests.length;
 
-  const chestPercentage = (totalClaimedChests / 80) * 100;
+  const chestPercentage = (totalClaimedChests / 120) * 100;
 
   const dummyEvents = [
     {
@@ -1022,7 +1208,44 @@ const NewWalletBalance = ({
     }
 
     if (openedVictionChests && openedVictionChests.length > 0) {
-      openedCoreChests.forEach((chest) => {
+      openedVictionChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedMantaChests && openedMantaChests.length > 0) {
+      openedMantaChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+    if (openedTaikoChests && openedTaikoChests.length > 0) {
+      openedTaikoChests.forEach((chest) => {
         if (chest.isOpened === true) {
           if (chest.rewards.length > 1) {
             chest.rewards.forEach((innerChest) => {
@@ -1392,6 +1615,8 @@ const NewWalletBalance = ({
     openedCoreChests,
     openedVictionChests,
     openedSkaleChests,
+    openedMantaChests,
+    openedTaikoChests,
   ]);
 
   useEffect(() => {
@@ -1413,13 +1638,12 @@ const NewWalletBalance = ({
 
   const recaptchaRef = useRef(null);
   const kittyDashRewards = [30, 20, 10, 10, 5, 5, 5, 5, 5, 5];
-
   return (
     <>
       <div className="container px-0">
         <div className="row gap-3 gap-lg-0 mx-0">
           <div className="col-12 rankings-outer-wrapper px-0 pe-lg-3 col-lg-4 position-relative">
-            <div className="purple-container rankings-wrapper px-3 px-lg-4 py-3  d-flex flex-column gap-2 position-relative custom-height-2 ">
+            <div className="purple-container rankings-wrapper px-3 px-lg-4 py-3  d-flex flex-column gap-2 position-relative custom-height-2">
               <div className="green-div"></div>
               <h6
                 className="profile-div-title mb-0"
@@ -1428,20 +1652,20 @@ const NewWalletBalance = ({
                 Treasure Hunt
               </h6>{" "}
               <ActiveProfileEvent
-                data={dummyBNB}
-                event={dummyBNB}
-                userEarnedUsd={0}
+                data={dummyImmutable}
+                event={dummyImmutable}
+                userEarnedUsd={immutableEarnUsd}
                 onOpenEvent={() => {
-                  setDummyEvent(dummyBNB);
+                  setDummyEvent(dummyImmutable);
                   setEventPopup(true);
                 }}
               />
               <ActiveProfileEvent
-                data={dummyViction}
-                event={dummyViction}
-                userEarnedUsd={victionEarnUsd}
+                data={dummyBNB}
+                event={dummyBNB}
+                userEarnedUsd={bnbEarnUsd}
                 onOpenEvent={() => {
-                  setDummyEvent(dummyViction);
+                  setDummyEvent(dummyBNB);
                   setEventPopup(true);
                 }}
               />
@@ -1525,6 +1749,14 @@ const NewWalletBalance = ({
                           ? skaleEarnUsd
                           : item.title === "VICTION"
                           ? victionEarnUsd
+                          : item.title === "Manta"
+                          ? mantaEarnUsd
+                          : item.title === "Taiko"
+                          ? taikoEarnUsd
+                          : item.title === "Cookie3"
+                          ? cookieEarnUsd
+                          : item.title === "Immutable"
+                          ? immutableEarnUsd
                           : item.title === "CORE"
                           ? coreEarnUsd
                           : item.title === "CMC" ||
@@ -1890,14 +2122,28 @@ const NewWalletBalance = ({
                           Number(monthlyDataAmountCore) +
                           // Number(dailyDataAmountSkale) +
                           Number(weeklyDataAmountSkale) +
-                          (kittyDashRecords[0] ? kittyDashRecords[0]?.position+1 > 10 ? 0 : kittyDashRewards[kittyDashRecords[0]?.position] : 0) +
+                          Number(weeklyDataAmountManta) +
+                          Number(monthlyDataAmountManta) +
+                          Number(weeklyDataAmountTaiko) +
+                          Number(monthlyDataAmountTaiko) +
+                          (kittyDashRecords[0]
+                            ? kittyDashRecords[0]?.position + 1 > 10
+                              ? 0
+                              : kittyDashRewards[kittyDashRecords[0]?.position]
+                            : 0) +
                           +Number(monthlyDataAmountSkale) +
-                          // Number(dailyDataAmountViction) +
+                          Number(userDataStar) +
                           Number(weeklyDataAmountViction) +
                           Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd) +
                           Number(coreEarnUsd) +
-                          Number(victionEarnUsd),
+                          Number(cawsPremiumRewards) +
+                          Number(bnbEarnUsd) +
+                          Number(victionEarnUsd) +
+                          Number(taikoEarnUsd) + 
+                          Number(immutableEarnUsd) +
+                          Number(mantaEarnUsd) +
+                          Number(cookieEarnUsd),
                         2
                       )}
                     </h6>
@@ -2112,20 +2358,35 @@ const NewWalletBalance = ({
                   activeTab={item.activeTab}
                   userEarnUsd={
                     item.title === "Conflux"
-                      ? confluxEarnUSD
-                      : item.title === "Base"
-                      ? baseEarnUSD
-                      : item.title === "Dypius"
-                      ? dypiusEarnTokens
-                      : item.title === "Gate.io"
-                      ? gateEarnUSD
-                      : item.title === "CoinGecko"
-                      ? userEarnUsd
-                      : item.title === "Dogecoin"
-                      ? dogeEarnUSD
-                      : item.title === "CMC" || item.title === "CoinMarketCap"
-                      ? cmcuserEarnUsd
-                      : 0
+                    ? confluxEarnUSD
+                    : item.title === "Base"
+                    ? baseEarnUSD
+                    : item.title === "Dypius"
+                    ? dypiusEarnTokens
+                    : item.title === "Gate.io"
+                    ? gateEarnUSD
+                    : item.title === "CoinGecko"
+                    ? userEarnUsd
+                    : item.title === "Dogecoin"
+                    ? dogeEarnUSD
+                    : item.title === "SKALE"
+                    ? skaleEarnUsd
+                    : item.title === "VICTION"
+                    ? victionEarnUsd
+                    : item.title === "Manta"
+                    ? mantaEarnUsd
+                    : item.title === "Taiko"
+                    ? taikoEarnUsd
+                    : item.title === "Cookie3"
+                    ? cookieEarnUsd
+                    : item.title === "Immutable"
+                    ? immutableEarnUsd
+                    : item.title === "CORE"
+                    ? coreEarnUsd
+                    : item.title === "CMC" ||
+                      item.title === "CoinMarketCap"
+                    ? cmcuserEarnUsd
+                    : 0
                   }
                 />
               ))}
@@ -2203,6 +2464,12 @@ const NewWalletBalance = ({
                         ? multiversThumb
                         : dummyEvent.linkState === "bnb"
                         ? bnbPopupImage
+                        : dummyEvent.linkState === "manta"
+                        ? mantaThumb
+                        : dummyEvent.linkState === "taiko"
+                        ? taikoThumb
+                        : dummyEvent.linkState === "cookie3"
+                        ? cookie3Thumb
                         : eventPopupImage
                     }
                     alt=""
@@ -2254,7 +2521,7 @@ const NewWalletBalance = ({
             </div>
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="how-it-works mb-0">How it works?</h6>
-              {dummyEvent.status === "Live" && dummyEvent.learnMore !== "" && (
+              {dummyEvent.status === "Live" && dummyEvent.learnMore !== "" && dummyEvent.id!=='event15' && (
                 <NavLink
                   to={dummyEvent.learnMore}
                   className="events-page-details d-flex align-items-center gap-2"
@@ -2262,6 +2529,17 @@ const NewWalletBalance = ({
                   Learn more
                   <img src={eventsArrow} alt="" />
                 </NavLink>
+              )}
+              {dummyEvent.status === "Live" && dummyEvent.learnMore !== "" && dummyEvent.id==='event15' && (
+                <a
+                  href={dummyEvent.learnMore}
+                  target="_blank"
+                  rel='noreferrer'
+                  className="events-page-details d-flex align-items-center gap-2"
+                >
+                  Learn more
+                  <img src={eventsArrow} alt="" />
+                </a>
               )}
             </div>
             <div className="row mb-3 gap-3 gap-lg-0">
@@ -2457,6 +2735,42 @@ const NewWalletBalance = ({
                       Remember to log in to the game daily and venture into the
                       MultiversX area to uncover hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event21" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Manta Beta Pass NFT</b>. You can get the Manta
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      Manta area, players not only stand a chance to secure
+                      daily rewards in MANTA, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Manta area to uncover
+                      hidden treasures.
+                    </p>
+                  ) : dummyEvent.id === "event22" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Taiko Beta Pass NFT</b>. You can get the Taiko
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      Taiko area, players not only stand a chance to secure
+                      daily rewards in TAIKO, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Taiko area to uncover
+                      hidden treasures.
+                    </p>
+                  )  : dummyEvent.id === "event23" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Cookie3 Beta Pass NFT</b>. You can get the
+                      Cookie3 Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Cookie3 area, players not only stand a
+                      chance to secure daily rewards in COOKIE, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Cookie3 area to uncover hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -2523,6 +2837,12 @@ const NewWalletBalance = ({
                           ? "CORE"
                           : dummyEvent.id === "event16"
                           ? "EGLD"
+                          : dummyEvent.id === "event21"
+                          ? "MANTA"
+                          : dummyEvent.id === "event22"
+                          ? "TAIKO"
+                          : dummyEvent.id === "event23"
+                          ? "COOKIE"
                           : "ETH"}{" "}
                         rewards
                       </li>
@@ -2574,6 +2894,12 @@ const NewWalletBalance = ({
                 ? "MultiversX"
                 : dummyEvent.id === "event20"
                 ? "BNB Chain"
+                : dummyEvent.id === "event21"
+                ? "Manta"
+                : dummyEvent.id === "event22"
+                ? "Taiko"
+                : dummyEvent.id === "event23"
+                ? "Cookie3"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2666,6 +2992,41 @@ const NewWalletBalance = ({
                 a highly secure decentralised system of storing information as a
                 public ledger that is maintained by a network of computers
                 called nodes.
+              </p>
+            ) : dummyEvent.id === "event21" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Manta is the multi-modular ecosystem for zero-knowledge (ZK)
+                applications. Manta was created by a team of experienced
+                founders from prestigious institutions, including Harvard, MIT,
+                and Algorand. Manta has received investments from many top web3
+                investment funds, including Binance Labs and Polychain Capital.
+                It has grown through participation in the best web3
+                accelerators, including Alliance DAO and Berkeley Blockchain
+                Xcelerator. Manta is poised to bring the next generation of web3
+                users and usher in a new chapter of web3 zkApp applications.
+              </p>
+            ) : dummyEvent.id === "event22" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Taiko is an Ethereum-equivalent (Type 1) ZK-EVM, maximally
+                compatible with Ethereum. No additional compiling, reaudits, or
+                tooling needed. Everything works out of the box, guaranteed.
+              </p>
+            )  : dummyEvent.id === "event23" ? (
+              <p
+                className="popup-event-desc"
+              >
+                Cookie3 is the first MarketingFi protocol and AI-powered data
+                layer, built to revolutionize how users, creators, and
+                businesses interact. By leveraging AI and blockchain, Cookie3
+                enhances marketing strategies and data insights, empowering
+                everyone in the digital ecosystem to thrive with smarter, more
+                efficient tools.
               </p>
             ) : dummyEvent.id === "event11" ? (
               <p
@@ -2790,6 +3151,12 @@ const NewWalletBalance = ({
                     ? "https://twitter.com/Coredao_Org"
                     : dummyEvent.id === "event16"
                     ? "https://twitter.com/MultiversX"
+                    : dummyEvent.id === "event21"
+                    ? "https://x.com/mantanetwork"
+                    : dummyEvent.id === "event22"
+                    ? "https://x.com/taikoxyz"
+                    : dummyEvent.id === "event23"
+                    ? "https://x.com/cookie3_com"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2827,6 +3194,12 @@ const NewWalletBalance = ({
                     ? "https://t.me/CoreDAOTelegram"
                     : dummyEvent.id === "event16"
                     ? "https://t.me/MultiversX"
+                    : dummyEvent.id === "event21"
+                    ? "https://www.t.me/mantanetworkofficial"
+                    : dummyEvent.id === "event22"
+                    ? "https://t.me/TaikoEcosystem"
+                    : dummyEvent.id === "event23"
+                    ? "https://t.me/cookie3_co"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -2873,6 +3246,12 @@ const NewWalletBalance = ({
                     ? "https://coredao.org/"
                     : dummyEvent.id === "event16"
                     ? "https://multiversx.com/"
+                    : dummyEvent.id === "event21"
+                    ? "https://manta.network/"
+                    : dummyEvent.id === "event22"
+                    ? "https://taiko.xyz/"
+                    : dummyEvent.id === "event23"
+                    ? "https://www.cookie3.com/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -2919,6 +3298,15 @@ const NewWalletBalance = ({
                         ? corePoints
                         : dummyEvent.id === "event16"
                         ? multiversPoints
+                        : dummyEvent.id === "event21"
+                        ? mantaPoints
+                        : dummyEvent.id === "event22"
+                        ? taikoPoints
+                        : dummyEvent.id === "event15"
+                        ? immutablePoints
+                        : dummyEvent.id === "event23"
+                        ? cookiePoints
+                        
                         : 0,
                       0
                     )}
@@ -2964,6 +3352,14 @@ const NewWalletBalance = ({
                         ? bnbEarnUsd
                         : dummyEvent.id === "event16"
                         ? multiversEarnUsd
+                        : dummyEvent.id === "event21"
+                        ? mantaEarnUsd
+                        : dummyEvent.id === "event22"
+                        ? taikoEarnUsd
+                        : dummyEvent.id === "event15"
+                        ? immutableEarnUsd
+                        : dummyEvent.id === "event23"
+                        ? cookieEarnUsd
                         : 0,
                       2
                     )}
@@ -2995,6 +3391,14 @@ const NewWalletBalance = ({
                               ? bnbEarnToken
                               : dummyEvent.id === "event16"
                               ? multiversEarnToken
+                              : dummyEvent.id === "event21"
+                              ? mantaEarnToken
+                              : dummyEvent.id === "event22"
+                              ? taikoEarnToken
+                              : dummyEvent.id === "event15"
+                              ? immutableEarnToken
+                              : dummyEvent.id === "event23"
+                              ? cookieEarnToken
                               : 0,
                             2
                           )}
@@ -3025,6 +3429,12 @@ const NewWalletBalance = ({
                             ? "CORE"
                             : dummyEvent.id === "event16"
                             ? "EGLD"
+                            : dummyEvent.id === "event21"
+                            ? "MANTA"
+                            : dummyEvent.id === "event22"
+                            ? "TAIKO"
+                            : dummyEvent.id === "event23"
+                            ? "COOKIE"
                             : "ETH"}
                         </>
                       )}
@@ -3041,8 +3451,8 @@ const NewWalletBalance = ({
               </span>
             </div>
             {dummyEvent.status === "Coming Soon" &&
-              dummyEvent.id !== "event7" &&
-              dummyEvent.id !== "event9" && (
+              dummyEvent.id !== "event15" &&
+              dummyEvent.id !== "event22" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
                   <NavLink
                     to={`/marketplace/beta-pass/${dummyEvent.linkState}`}

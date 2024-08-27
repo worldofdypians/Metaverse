@@ -122,6 +122,18 @@ export const handleSwitchNetworkhook = async (chainID) => {
     blockExplorerUrls: ["https://seistream.app/"],
   };
 
+  const TAIKOPARAMS = {
+    chainId: "0x28c58", // A 0x-prefixed hexadecimal string
+    chainName: "Taiko Mainnet",
+    nativeCurrency: {
+      name: "ETH",
+      symbol: "ETH", // 2-6 characters long
+      decimals: 18,
+    },
+    rpcUrls: ["https://rpc.taiko.xyz"],
+    blockExplorerUrls: ["https://taikoscan.io"],
+  };
+
   const IMMUTABLEPARAMS = {
     chainId: "0x343b", // A 0x-prefixed hexadecimal string
     chainName: "Immutable zkEVM",
@@ -132,6 +144,17 @@ export const handleSwitchNetworkhook = async (chainID) => {
     },
     rpcUrls: ["https://rpc.immutable.com"],
     blockExplorerUrls: ["https://explorer.immutable.com"],
+  };
+  const MANTAPARAMS = {
+    chainId: "0xa9", // A 0x-prefixed hexadecimal string
+    chainName: "Manta Pacific Mainnet",
+    nativeCurrency: {
+      name: "ETH",
+      symbol: "ETH", // 2-6 characters long
+      decimals: 18,
+    },
+    rpcUrls: ["https://pacific-rpc.manta.network/http"],
+    blockExplorerUrls: ["https://pacific-explorer.manta.network/"],
   };
 
   try {
@@ -150,10 +173,12 @@ export const handleSwitchNetworkhook = async (chainID) => {
       (chainID === "0x406" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x2105" && switchError.code.toString().includes("32603")) ||
       (chainID === "0xcc" && switchError.code.toString().includes("32603")) ||
-      (chainID === "0x45c" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0x45c" && switchError.code.toString().includes("32603"))||
+      (chainID === "0x28c58" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x58" && switchError.code.toString().includes("32603")) ||
       (chainID === "0xae3f3" && switchError.code.toString().includes("32603"))||
       (chainID === "0x343b" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0xa9" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x585eb4b1" &&
         switchError.code.toString().includes("32603")) ||
       (switchError.code === 4902 &&
@@ -179,12 +204,16 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [SKALE_MAINNET]
               : chainID === "0x45c"
               ? [COREPARAMS]
+              : chainID === "0x28c58"
+              ? [TAIKOPARAMS]
               : chainID === "0x58"
               ? [VICTIONPARAMS]
               : chainID === "0xae3f3"
               ? [SEIPARAMS]
               : chainID === "0x343b"
               ? [IMMUTABLEPARAMS]
+              : chainID === "0xa9"
+              ? [MANTAPARAMS]
               : "",
         });
         if (window.ethereum && window.ethereum.isTrust === true) {

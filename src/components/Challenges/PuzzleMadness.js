@@ -11,6 +11,7 @@ import { idyp3500Address } from "../../screens/Account/src/web3";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { idyp3500_abi, idyptoken_abi } from "../../screens/Account/src/web3";
 import { CircularProgress } from "@mui/material";
+import { ethers } from "ethers";
 const renderer = ({ days, hours, minutes }) => {
   return (
     <div className="timer-wrapper d-flex align-items-start gap-2 justify-content-center">
@@ -33,7 +34,7 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const PuzzleMadness = ({ coinbase, chainId, wallet }) => {
+const PuzzleMadness = ({ coinbase, chainId, wallet, binanceW3WProvider }) => {
   const [puzzleMadnessDypAmount, setPuzzleMadnessDypAmount] = useState(0);
   const [statusColor3500, setStatusColor3500] = useState("#FE7A00");
   const [bundleState3500, setbundleState3500] = useState("initial");
@@ -129,23 +130,51 @@ const PuzzleMadness = ({ coinbase, chainId, wallet }) => {
     setDepositState3500("loading-deposit");
     setStatus3500("Confirm to complete purchase");
     setStatusColor3500("#00FECF");
+    if (window.WALLET_TYPE !== "binance") {
+      await idyp3500_abi.methods
+        .deposit()
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus3500("Bundle successfully purchased!");
+          setDepositState3500("success");
+          setStatusColor3500("#00FECF");
+          handleRefreshCountdown3500();
+          checkApproval3500();
+        })
+        .catch((e) => {
+          setStatusColor3500("#FE7A00");
+          setStatus3500(e?.message);
+          setDepositState3500("failDeposit");
+        });
+      handleRefreshCountdown3500();
+    } else if (window.WALLET_TYPE === "binance") {
+      const token_address = "0x54ad1fAaf2781E58Fcb58b7D02E25c8289a08b06";
 
-    await idyp3500_abi.methods
-      .deposit()
-      .send({ from: coinbase })
-      .then(() => {
-        setStatus3500("Bundle successfully purchased!");
-        setDepositState3500("success");
-        setStatusColor3500("#00FECF");
-        handleRefreshCountdown3500();
-        checkApproval3500();
-      })
-      .catch((e) => {
-        setStatusColor3500("#FE7A00");
-        setStatus3500(e?.message);
-        setDepositState3500("failDeposit");
-      });
-    handleRefreshCountdown3500();
+      const puzzleSc = new ethers.Contract(
+        token_address,
+        iDYP_3500_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      const txResponse = await puzzleSc
+        .deposit({ from: coinbase })
+        .catch((e) => {
+          setStatusColor3500("#FE7A00");
+          setStatus3500(e?.message);
+          setDepositState3500("failDeposit");
+        });
+
+        const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setStatus3500("Bundle successfully purchased!");
+            setDepositState3500("success");
+            setStatusColor3500("#00FECF");
+            handleRefreshCountdown3500();
+            checkApproval3500();
+          }
+
+      handleRefreshCountdown3500();
+    }
   };
 
   useEffect(() => {

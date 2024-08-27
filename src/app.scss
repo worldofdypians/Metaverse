@@ -320,14 +320,13 @@ body {
     outline: currentcolor none medium;
     border: 1px solid rgb(237, 238, 242);
     border-radius: 12px;
-    width: 93% !important;
+    width: 100% !important;
     display: flex;
     flex-direction: row;
     -moz-box-align: center;
     align-items: center;
     -moz-box-pack: justify;
-    padding: 1rem;
-    margin: auto;
+    padding: 10px;
     opacity: 1;
   }
 
@@ -340,6 +339,8 @@ body {
     display: flex;
     flex-direction: column;
   }
+
+
 
   .walletclose {
     display: flex;

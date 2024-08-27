@@ -8,7 +8,7 @@ const Utilities = () => {
       image: "dyp.svg",
       desc: `
       <p class="utility-desc">
-      Launched on December 29, 2022, World of Dypians it is currently live on Ethereum, BNB Chain, Conflux Network, and Base mainnets. By being on the mainnet, users can participate in activities and integrations in real-time and explore the benefits of blockchain technology.
+      Launched on December 29, 2022, World of Dypians it is currently live on Ethereum, BNB Chain, opBNB Chain, Manta Network, Taiko Network, CORE Network, SKALE Network, Immutable Network, Viction Network, Conflux Network,  Avalanche and Base. By being on the mainnet, users can participate in activities and integrations in real-time and explore the benefits of blockchain technology.
       </p>`,
       class: "mainnet-card",
     },
@@ -17,10 +17,7 @@ const Utilities = () => {
       image: "idyp.svg",
       desc: `
       <p class="utility-desc">
-      Beta demo game with 25,000 beta testers currently enjoying it.
-More than 11,000 applicants are waiting for beta access.
-5 new events are currently available for users to participate in.
-Over $100,000 in distributed rewards, the equivalent of more than 260 BNB.
+     World of Dypians boasts over 492,000 daily active users (DAU) and 582,000 monthly active users (MAU). The platform has achieved over 90 million on-chain transactions and sold 140,000 NFTs. Our community has grown to over 600,000 members.
       </p>`,
       class: "stats-card",
     },

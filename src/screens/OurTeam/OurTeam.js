@@ -18,6 +18,8 @@ import arben from "./assets/team/arben.jpg";
 import jeff from "./assets/team/jeff.jpg";
 import wei from "./assets/team/wei.jpg";
 import alex from "./assets/team/alex.png";
+import yavuz from "./assets/team/yavuz.jpg";
+import navid from "./assets/team/navid.jpg";
 
 import { useState } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -151,7 +153,7 @@ const OurTeam = () => {
       link: "",
       content: `Jeff, the Founder of Maven Capital, is a seasoned software engineer boasting over a decade of expertise in cutting-edge technologies such as AI, IoT, and Web3. Leveraging his extensive experience, Jeff provides founders with invaluable strategic advisory services and unparalleled expertise in Go-To-Market (GTM) strategies. His impressive portfolio includes collaborations with leading blockchain projects like Filecoin, IPFS, R3, Polygon, KCC, Telos, among others. Jeff is dedicated to fostering collaborative innovation aimed at achieving widespread adoption within the industry.`,
     },
-     {
+    {
       id: "wei",
       name: "Wee Yao Liang",
       position: "Advisor",
@@ -159,6 +161,22 @@ const OurTeam = () => {
       link: "https://www.linkedin.com/in/skywee97/",
       content: `Sky Wee is Managing Partner of VC, Crypto Influencer, Advisor. Sky Wee works closely with venture partners like LDA Capital, Elevate Ventures and ATF Capital.
       Sky Wee has secured over $45 million in funding for an outstanding portfolio of 40+ projects. Official Influencer of Binance, showcasing his exceptional expertise and impact in the industry.`,
+    },
+    {
+      id: "yavuz",
+      name: "Yavuz Saglam",
+      position: "Advisor",
+      photo: yavuz,
+      link: "https://x.com/sidrevocx",
+      content: `Yavuz Sağlam brings over 10 years of experience in the blockchain and Web3 industry to his role as a Strategic Advisor for World of Dypians. As a key figure at Castrum Capital, Turkey's largest Web3 venture capital firm, Yavuz has a proven track record of guiding innovative projects toward success. His deep expertise in investment strategies, market analysis, and scaling Web3 ventures empowers World of Dypians to accelerate growth and navigate the ever-evolving landscape of gaming and blockchain with confidence. Yavuz’s strategic insights are instrumental in helping us identify new opportunities and achieve our ambitious goals.`,
+    },
+    {
+      id: "navid",
+      name: "Navid Shokriyan",
+      position: "Advisor",
+      photo: navid,
+      link: "https://x.com/navidshokriyan",
+      content: `Navid Shokriyan is a seasoned investor and influential leader in the KOL space, known for his pivotal roles in the crypto space. With a proven track record of attracting over $15 million for 11 projects, Navid is set to play a crucial role in expanding our KOL services and driving further success`,
     },
     {
       id: "soni",
