@@ -3,7 +3,7 @@ import "./_wodbuilders.scss";
 import { useState } from "react";
 import useWindowSize from "../../../hooks/useWindowSize";
 
-const WodBuilders = () => {
+const WodBuilders = ({ page }) => {
   const [slice, setSlice] = useState(2);
   const windowSize = useWindowSize();
 
@@ -11,68 +11,93 @@ const WodBuilders = () => {
     {
       name: "BNB Chain",
       icon: "bnbIcon",
-      banner: "bnbChainBanner.png",
-      link: "https://twitter.com/BNBCHAIN/status/1705265706747548051?t=7iSDimripaRiwq6A_Z6ViQ&s=19",
+      banner: "bnbChainBanner.webp",
+      link: "https://x.com/BNBCHAIN/status/1821018678550306906",
+      backer: true,
     },
     {
       name: "CORE",
       icon: "core",
       banner: "coreBanner.png",
       link: "https://x.com/Coredao_Org/status/1790336632823910804",
+      backer: true,
     },
     {
       name: "MultiversX",
       icon: "multiversx",
       banner: "multiversBanner.png",
       link: "https://x.com/MultiversX/status/1790422563849466280",
+      backer: false,
     },
     {
       name: "CoinMarketCap",
       icon: "cmcIcon",
       banner: "coinmarketcapBanner.png",
       link: "https://twitter.com/CoinMarketCap/status/1736697110073119098",
+      backer: false,
     },
     {
       name: "CoinGecko",
       icon: "coingeckoIcon",
       banner: "coingeckoBanner.png",
       link: "https://twitter.com/coingecko/status/1702286607846682909",
+      backer: false,
     },
     {
       name: "Viction",
       icon: "viction",
       banner: "victionBanner.png",
       link: "https://x.com/VictionEco/status/1789987120083562640",
+      backer: true,
     },
     {
       name: "SKALE",
       icon: "skaleIcon",
       banner: "skaleBanner.webp",
       link: "https://twitter.com/SkaleNetwork/status/1777372050832658644",
+      backer: true,
+    },
+    {
+      name: "Manta",
+      icon: "manta",
+      banner: "mantaBanner.webp",
+      link: "https://x.com/MantaNetwork/status/1819260085945749903",
+      backer: true,
+    },
+    {
+      name: "Taiko",
+      icon: "taiko",
+      banner: "taikoBanner.webp",
+      // link: "https://x.com/MantaNetwork/status/1819260085945749903",
+      backer: true,
     },
     {
       name: "Conflux",
       icon: "confluxIcon",
       banner: "confluxBanner.png",
       link: "https://twitter.com/Conflux_Network/status/1677017988497563660",
+      backer: true,
     },
     {
       name: "BabyDoge",
       icon: "babydogeIcon",
       banner: "babyDogeBanner.webp",
       link: "https://twitter.com/BabyDogeCoin/status/1777714397667893544",
+      backer: false,
     },
     {
       name: "Avalanche",
       icon: "avaxIcon",
       banner: "avalancheBanner.png",
       link: "https://twitter.com/ArtOnAvax/status/1666852593480658944",
+      backer: false,
     },
     {
       name: "Chainlink",
       icon: "chainlinkIcon",
       banner: "chainlinkBanner.png",
       link: "https://twitter.com/smartcontract/status/1639280913870893056?s=46&t=nb0doR-1o7k9PQ3EaZE8aw",
+      backer: false,
     },
 
     {
@@ -80,30 +105,35 @@ const WodBuilders = () => {
       icon: "coin98Icon",
       banner: "coin98Banner.png",
       link: "https://twitter.com/coin98_wallet/status/1628742662047272961",
+      backer: false,
     },
     {
       name: "Gate.io",
       icon: "gateIcon",
       banner: "gateBanner.png",
       link: "https://twitter.com/gate_io/status/1628384476496527361?s=20",
+      backer: false,
     },
     {
       name: "MEXC Global",
       icon: "mexcIcon",
       banner: "mexcBanner.png",
       link: "https://twitter.com/MEXC_Official/status/1651888989098455043",
+      backer: false,
     },
     {
       name: "Easy2Stake",
       icon: "easy2stakeIcon",
       banner: "easy2stakeBanner.png",
       link: "https://twitter.com/Easy2Stake/status/1654120741221326850",
+      backer: false,
     },
 
     {
       name: "KuCoin",
       icon: "kucoinIcon",
       banner: "kucoinBanner.png",
+      backer: false,
     },
 
     {
@@ -111,54 +141,71 @@ const WodBuilders = () => {
       icon: "seiLogo",
       banner: "seiBanner.webp",
       link: "https://x.com/worldofdypians/status/1795177907821617607",
+      backer: false,
     },
     {
       name: "Immutable",
       icon: "immutable",
       banner: "immutableBanner.png",
       link: "https://x.com/Immutable/status/1813966964957884795",
+      backer: false,
     },
 
     {
       name: "Midle",
       icon: "midle",
       banner: "kucoinBanner.png",
+      backer: false,
     },
     {
       name: "Playground",
       icon: "playground",
       banner: "kucoinBanner.png",
+      backer: false,
     },
     {
       name: "Cookie3",
       icon: "cookie3",
       banner: "kucoinBanner.png",
+      backer: true,
     },
     {
       name: "KlapAI",
       icon: "klapai",
       banner: "kucoinBanner.png",
+      backer: false,
     },
     {
       name: "Magic Store",
       icon: "magic",
       banner: "kucoinBanner.png",
+      backer: false,
     },
     {
       name: "GGPLAY",
       icon: "ggplay",
       banner: "kucoinBanner.png",
       link: "https://x.com/GGPlayOfficial/status/1801263235221647731",
+      backer: false,
     },
     {
       name: "KAPGAMES",
       icon: "kapgames",
       banner: "kucoinBanner.png",
+      backer: false,
     },
     {
       name: "Micro3",
       icon: "micro3",
       banner: "kucoinBanner.png",
+      backer: false,
+    },
+
+    {
+      name: "Cyborg",
+      icon: "cyborg",
+      banner: "kucoinBanner.png",
+      backer: false,
     },
   ];
 
@@ -194,7 +241,7 @@ const WodBuilders = () => {
                   alt=""
                 />
                 <div className="d-flex align-items-center gap-2">
-                  {item.icon === "klapai" ? (
+                  {item.icon === "klapai" || item.icon === "manta" ? (
                     <img
                       src={require(`./assets/${item.icon}.png`)}
                       width={24}
@@ -215,30 +262,30 @@ const WodBuilders = () => {
               </a>
             ))}
           </div>
+          {windowSize.width < 786 ? (
+            <div className="d-flex justify-content-center mt-3">
+              <div
+                className="linear-border"
+                onClick={() => (slice === 2 ? setSlice(20) : setSlice(2))}
+              >
+                <button className="btn filled-btn px-5">
+                  {slice === 2 ? "View More" : "View Less"}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="d-flex justify-content-center mt-3">
+              <div
+                className="linear-border"
+                onClick={() => (slice === 8 ? setSlice(20) : setSlice(8))}
+              >
+                <button className="btn filled-btn px-5">
+                  {slice === 8 ? "View More" : "View Less"}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
-        {windowSize.width < 786 ? (
-          <div className="d-flex justify-content-center mt-3">
-            <div
-              className="linear-border"
-              onClick={() => (slice === 2 ? setSlice(18) : setSlice(2))}
-            >
-              <button className="btn filled-btn px-5">
-                {slice === 2 ? "View More" : "View Less"}
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="d-flex justify-content-center mt-3">
-            <div
-              className="linear-border"
-              onClick={() => (slice === 8 ? setSlice(18) : setSlice(8))}
-            >
-              <button className="btn filled-btn px-5">
-                {slice === 8 ? "View More" : "View Less"}
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

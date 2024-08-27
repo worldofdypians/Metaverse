@@ -73,7 +73,48 @@ const MintPopup = ({ active, onClose, data }) => {
             </div>
           </div>
         </>
-      ) : data.title === "DogeCoin" ? (
+      ) 
+      
+      : data.title === "Taiko" ? (
+        <>
+          <div className="d-flex align-items-center gap-2 mt-3 mt-lg-0 mb-4 mb-lg-0">
+            <div className="d-flex flex-column align-items-center">
+              <div className="d-flex align-items-center justify-content-center">
+                <div className="pulsatingDot"></div>
+                <h6
+                  className="mint-popup-title  mb-0"
+                  style={{ color: "#18FFFF" }}
+                >
+                  $20,000 TAIKO Rewards
+                </h6>
+              </div>
+              <h6 className="mint-popup-title m-0">
+              Taiko Treasure Hunt 
+              </h6>
+            </div>
+          </div>
+        </>
+      ) : data.title === "Manta" ? (
+        <>
+          <div className="d-flex align-items-center gap-2 mt-3 mt-lg-0 mb-4 mb-lg-0">
+            <div className="d-flex flex-column align-items-center">
+              <div className="d-flex align-items-center justify-content-center">
+                <div className="pulsatingDot"></div>
+                <h6
+                  className="mint-popup-title  mb-0"
+                  style={{ color: "#18FFFF" }}
+                >
+                  Live Giveaway
+                </h6>
+              </div>
+              <h6 className="mint-popup-title m-0">
+              Manta Beta Pass
+              </h6>
+            </div>
+          </div>
+        </>
+      )
+      : data.title === "DogeCoin" ? (
         <>
           <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
@@ -138,7 +179,7 @@ const MintPopup = ({ active, onClose, data }) => {
    <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-            Dypians Global Challenge
+            Festive 4YA Celebration
             </h6>
           </div>
           {/* <h6 className="mint-popup-title">opBNB Beta Pass</h6> */}
@@ -203,11 +244,11 @@ const MintPopup = ({ active, onClose, data }) => {
           </div>
         </div>
       )}
-      {data.title === "Treasure Hunt" ? (
+      {data.title === "Taiko" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-          {data.title === "Treasure Hunt" && (
+          {data.title === "Taiko" && (
             <span className="popup-available-mint">
-              Explore the downtown area and use your{" "}
+              Explore the Taiko area and use your{" "}
               <img src={whiteExplore} className="white-explore" alt="" /> to
               generate rewards!
             </span>
@@ -218,30 +259,24 @@ const MintPopup = ({ active, onClose, data }) => {
         data.title === "opBNB" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           <span className="popup-available-mint">
-          Train Like a Champion with BNB Chain for your share of $250K+: Dypians' Global Challenge - DappBay
+          Don't miss this chance to be part of the World of Dypians exciting Festive 4YA Celebration campaign.
           </span>
         </div>
-      ) : //  : data.title === "Viction" ? (
+      ) : 
+      //   data.title === "Taiko" ? (
       //   <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-      //     {data.title === "Viction" && (
       //       <span className="popup-available-mint">
-      //         Explore the Viction area and use your{" "}
-      //         <img src={whiteExplore} className="white-explore" alt="" /> to
-      //         generate rewards!
+      //       Get access to the game and a unique event filled with surprises and rewards!
       //       </span>
-      //     )}
       //   </div>
-      // ) : data.title === "CORE" ? (
-      //   <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
-      //     {data.title === "CORE" && (
-      //       <span className="popup-available-mint">
-      //         Explore the CORE area and use your{" "}
-      //         <img src={whiteExplore} className="white-explore" alt="" /> to
-      //         generate rewards!
-      //       </span>
-      //     )}
-      //   </div>
-      // )
+      // ): 
+      data.title === "Manta" ? (
+      <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
+          <span className="popup-available-mint">
+          Get access to the game and a unique event filled with surprises and rewards!
+          </span>
+      </div>
+    ):
       data.title === "SKALE" ? (
         <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           {data.title === "SKALE" && (
@@ -274,7 +309,27 @@ const MintPopup = ({ active, onClose, data }) => {
           >
             <button className="btn filled-btn px-4">More</button>
           </Link>
-        ) : data.title === "CORE" ? (
+        ) 
+        : data.title === "Manta" ? (
+          <Link
+            onClick={onClose}
+            to={"/marketplace/beta-pass/manta"}
+            state={{ event: data.state }}
+            className="linear-border"
+          >
+            <button className="btn filled-btn px-4">More</button>
+          </Link>
+        ) : data.title === "Taiko" ? (
+          <Link
+            onClick={onClose}
+            to={"/marketplace/events/treasure-hunt"}
+            state={{ event: data.state }}
+            className="linear-border"
+          >
+            <button className="btn filled-btn px-4">More</button>
+          </Link>
+        )
+        : data.title === "CORE" ? (
           <Link
             onClick={onClose}
             to={"/marketplace/mint/core"}
@@ -286,7 +341,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "opBNB" ? (
           <a
             onClick={onClose}
-            href={"https://dappbay.bnbchain.org/campaign/train-like-a-champion-with-bnb-chain-and-share-$250K/11"}
+            href={"https://dappbay.bnbchain.org/campaign/join-bnb-chain-4-year-ecosystem-celebration-with-$300K-in-rewards/2-festive-4ya-celebration"}
             target="_blank"
             rel="noreferrer"
             state={{ event: data.state }}

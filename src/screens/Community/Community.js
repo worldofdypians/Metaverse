@@ -13,6 +13,8 @@ import base from "../Account/src/Components/WalletBalance/assets/baseLogo.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
 import skaleLogo from "../Account/src/Components/WalletBalance/assets/skaleLogo.svg";
 import bnblogo from "../Account/src/Components/WalletBalance/assets/bnblogo.svg";
+import immutableLogo from "../Account/src/Components/WalletBalance/assets/immutableLogo.svg";
+
 
 import gate from "../Account/src/Components/WalletBalance/assets/gate.svg";
 import conflux from "../Account/src/Components/WalletBalance/assets/conflux.svg";
@@ -46,6 +48,8 @@ import victionBg from "../Home/VideoWrapper/assets/victionBg.webp";
 import coreLogo from "../Home/VideoWrapper/assets/coreLogo.svg";
 import coreBg from "../Home/VideoWrapper/assets/coreBg.webp";
 import opbnbCampaign from './assets/opbnbCampaign.png'
+import wodFestive from './assets/wodfestive.webp'
+
 
 const theme = createTheme({
   palette: {
@@ -126,6 +130,8 @@ const Community = ({socials}) => {
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+  let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
+
 
 
 
@@ -228,6 +234,36 @@ const Community = ({socials}) => {
         learnMore:
           "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
         eventDate: "Apr 15, 2024",
+      },
+    },
+    {
+      title: "Immutable",
+      logo: immutableLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in IMX Rewards",
+      myEarnings: 0.0,
+      eventDuration: immutableLastDay,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 15, 2024",
+      date: "Aug 15, 2024",
+      // backgroundImage: upcomingSkale,
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable",
+        linkState: "chain",
+        rewards: "IMX",
+        status: "Live",
+        id: "event15",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in IMX Rewards",
+        eventDuration: immutableLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore:
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        eventDate: "Aug 15, 2024",
       },
     },
     {
@@ -513,7 +549,7 @@ const Community = ({socials}) => {
 
     {
       title: "Dypians Global Challenge",
-      status: "Live",
+      status: "Expired",
       start_date: "July 24, 2024",
       end_date: "August 14, 2024",
       image: opbnbCampaign,
@@ -563,18 +599,17 @@ const Community = ({socials}) => {
     link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/105-bnb-chain-game-expedition",
   };
   const dummyBanner =  {
-    title: "Dypians Global Challenge",
+    title: "Festive 4YA Celebration",
     status: "Live",
-    start_date: "July 24, 2024",
-    end_date: "August 14, 2024",
-    image: opbnbCampaign,
-    desc: `Join the Dypians Global Challenge and immerse yourself in a series of exciting tasks inspired by the Summer Olympics and show your dedication and skill by completing the following:
+    start_date: "August 26, 2024",
+    end_date: "September 08, 2024",
+    image: wodFestive,
+    desc: `Join the Festive 4YA Celebration campaign and immerse yourself in a series of exciting tasks to celebrate the BNB Chain 4 Year Anniversary. Show your dedication and skill by completing the following:
     <ul class="mt-2">
-    <li>Login or Create a Game Account</li>
-    <li>Mint Beta Pass NFT on opBNB</li>
-    <li>Open at Least 10 Daily Bonus Chests</li>
+    <li>Login or Create a Game Account: Get started by logging in or creating a new game account in the World of Dypians.</li>
+    <li>Open at Least 10 Daily Bonus Chests: Test your luck and consistency by opening at least 10 Daily Bonus Chests on BNB Chain or opBNB.</li>
     </ul>`,
-    link: "https://dappbay.bnbchain.org/campaign/train-like-a-champion-with-bnb-chain-and-share-$250K/11"
+    link: "https://dappbay.bnbchain.org/campaign/join-bnb-chain-4-year-ecosystem-celebration-with-$300K-in-rewards/2-festive-4ya-celebration"
   }
 
   const html = document.querySelector("html");
@@ -609,7 +644,7 @@ const Community = ({socials}) => {
               </h6>
             </div>
             <div className="col-12 col-lg-8 mb-5">
-              <div className="community-active-banner d-flex flex-column flex-lg-row align-items-center">
+              <div className="community-active-banner d-flex flex-column flex-lg-row">
                 <div className="col-12 col-lg-6">
                   <img
                     src={dummyBanner.image}
@@ -645,6 +680,7 @@ const Community = ({socials}) => {
                   <p className="community-card-desc" dangerouslySetInnerHTML={{__html: dummyBanner.desc}}></p>
 
                   <div className="d-flex flex-column align-items-start gap-3 justify-content-between">
+                    {dummyBanner.link &&
                     <div
                       className="linear-border"
                       style={{ width: "fit-content" }}
@@ -658,7 +694,7 @@ const Community = ({socials}) => {
                         Explore
                       </a>
                     </div>
-
+ }
                     <div className="d-flex align-items-center gap-2 mt-2">
                       <span className="community-card-date">Duration:</span>
                       <div className="d-flex align-items-center gap-2">
@@ -682,7 +718,7 @@ const Community = ({socials}) => {
               </div>
             </div>
             <div className="community-items-grid">
-              {dummyData.slice(1, 4).map((item, index) =>
+              {dummyData.slice(0, 3).map((item, index) =>
                 item.status === "Expired" ? (
                   <a href={item.link} target="_blank">
                     <div
@@ -819,7 +855,7 @@ const Community = ({socials}) => {
                     className="community-active-title mb-0"
                     style={{ color: "#d9fa86" }}
                   >
-                    463,692
+                    565,251
                   </h6>
                 </div>
                 <div className="row w-100 mt-5 mt-lg-0">
@@ -1016,7 +1052,7 @@ const Community = ({socials}) => {
                       Treasure Hunt
                     </h6>
                     <div className="community-events-grid w-100 p-3">
-                      {dummyBetaPassData2.slice(0, 3).map((item, index) => (
+                      {dummyBetaPassData2.slice(0, 4).map((item, index) => (
                         <ActiveProfileEvent
                           onOpenEvent={() => {
                             navigate("/marketplace/events/treasure-hunt");
@@ -1030,7 +1066,7 @@ const Community = ({socials}) => {
                 ) : (
                   <div className="community-events-grid mt-5  w-100 p-3">
                     {dummyBetaPassData2
-                      .slice(3, dummyBetaPassData2.length)
+                      .slice(4, dummyBetaPassData2.length)
                       .map((item, index) => (
                         <ExpiredProfileEvent
                           onOpenEvent={() => {

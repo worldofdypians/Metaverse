@@ -11,7 +11,7 @@
 
 .premium-chains-wrapper {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
 
@@ -74,6 +74,20 @@
   flex-direction: column;
 }
 
+.wallet-items-wrapper {
+  max-height: 500px;
+  overflow: hidden auto;
+}
+
+.wallet-item-icon {
+  width: 35px;
+  height: 35px;
+}
+
+.wallet-item-name {
+  font-size: 14px;
+}
+
 .walletclose {
   display: flex;
   justify-content: end;
@@ -88,14 +102,13 @@
   outline: currentcolor none medium;
   border: 1px solid rgb(237, 238, 242);
   border-radius: 12px;
-  width: 93% !important;
+  width: 100% !important;
   display: flex;
   flex-direction: row;
   -moz-box-align: center;
   align-items: center;
   -moz-box-pack: justify;
-  padding: 1rem;
-  margin: auto;
+  padding: 10px;
   opacity: 1;
 }
 

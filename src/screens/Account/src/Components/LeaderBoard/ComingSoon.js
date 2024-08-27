@@ -78,7 +78,6 @@ const ComingSoon = ({ optionText, data, username, inactiveBoard }) => {
     },
   ];
 
-  console.log('data',data)
 
   return (
     <div

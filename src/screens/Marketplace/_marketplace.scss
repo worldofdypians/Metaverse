@@ -1243,7 +1243,7 @@ backdrop-filter: blur(5.5px);
 }
 .home-card-rewards-currency {
   color: #ffeace;
-  font-size: 14px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -1506,6 +1506,10 @@ backdrop-filter: blur(5.5px);
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #482193 168.67%);
 }
+.new-wod-stake-wrapper{
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, #6F2723 168.67%);
+}
 
 .new-caws-apr {
   position: absolute;
@@ -1515,6 +1519,24 @@ backdrop-filter: blur(5.5px);
   top: 0;
   margin: auto;
   background-image: url("./assets/cawsAprBg.svg");
+  width: 100px;
+  height: 100px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    position: relative;
+  }
+}
+
+.new-wod-apr{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  background-image: url('./assets/wodAprBg.svg');
   width: 100px;
   height: 100px;
   background-size: 100%;
@@ -1789,7 +1811,7 @@ backdrop-filter: blur(5.5px);
   display: flex;
   align-items: center;
   color: #ffffff;
-  width: 75%;
+  width: 100%;
 
   @media screen and (max-width: 786px) {
     width: 100%;
@@ -2222,6 +2244,47 @@ backdrop-filter: blur(5.5px);
 }
 
 
+.past-core-mint {
+  background-image: url("./assets/corePastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/corePastMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
+
+.past-opbnb-mint {
+  background-image: url("./assets/opbnbPastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/opbnbPastMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
+.past-immutable-mint {
+  background-image: url("./assets/immutablePastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/immutablePastMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
+
 .past-bnb-mint {
   background-image: url("./assets/bnbMintDesktop.webp");
   width: 100%;
@@ -2338,6 +2401,42 @@ backdrop-filter: blur(5.5px);
   }
 }
 
+.past-immutable-mint-amount {
+  color: #883aff;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-core-mint-amount {
+  color: #FC9210;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+
+.past-opbnb-mint-amount {
+  color: #FC9210;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
 
 
 .past-conflux-mint-desc {
@@ -2372,6 +2471,50 @@ backdrop-filter: blur(5.5px);
 .past-bnb-mint-desc {
   color: #fff;
   text-shadow: 0px 3px 4px rgb(255 232 67 / 70%);
+  font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-immutable-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(155, 67, 255, 0.7);
+  font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+
+
+.past-core-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(255, 174, 67, 0.7);
+  font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-opbnb-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(255, 174, 67, 0.7);
   font-family: Poppins;
   font-size: 40px;
   font-style: normal;
@@ -2817,6 +2960,16 @@ backdrop-filter: blur(5.5px);
   background: linear-gradient(to bottom, #181636 15.48%, #004861 254.86%);
 }
 
+.manta-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #8f2b78 15.48%, #0bd2ff 254.86%);
+}
+
+.taiko-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to top, #8f2b78 15.48%, #000000 254.86%);
+}
+
 .doge-eventwrapper {
   border-radius: 20px;
   background: linear-gradient(to bottom, #1c1a39 15.48%, #ffc800 254.86%);
@@ -3077,6 +3230,12 @@ backdrop-filter: blur(5.5px);
 }
 .mint-bnb {
   background: linear-gradient(90deg, #181B38 0%, rgba(6, 136, 255, 0.05) 168.67%);
+}
+.mint-taiko {
+  background: linear-gradient(90deg, #181B38 0%, #CC238C 168.67%);
+}
+.mint-manta {
+  background: linear-gradient(90deg, #181B38 0%, #BE2CB0 168.67%);
 }
 
 .active-mint-title {
@@ -4011,8 +4170,19 @@ text-transform: uppercase;
 
 .upcoming-skale-event {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181b38 0%, #002c39 168.67%);
+  background: linear-gradient(90deg, #181B38 0%, #002C39 168.67%) !important;
 }
+
+.upcoming-cookie-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(55, 113, 55, 0.5) 168.67%) !important; 
+}
+
+.upcoming-midle-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(176, 106, 63, 0.5) 168.67%) !important;
+}
+
 
 .upcoming-sei-event {
   border-radius: 20px;
@@ -4040,14 +4210,14 @@ text-transform: uppercase;
     rgba(108, 44, 190, 1) 168.67%
   ) !important;
 }
+.upcoming-manta-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181b38 0%, #BE2CB0 168.67%) !important;
+}
 
 .upcoming-immutable-event {
   border-radius: 20px;
-  background: linear-gradient(
-    90deg,
-    #181b38 0%,
-    rgba(44, 190, 181, 1) 168.67%
-  ) !important;
+  background: linear-gradient(90deg, #181b38 0%, rgb(35 133 127) 168.67%) !important;
 }
 
 .upcoming-multivers-event {
@@ -4058,6 +4228,16 @@ text-transform: uppercase;
     rgba(44, 102, 190, 1) 168.67%
   ) !important;
 }
+.upcoming-manta-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181b38 0%, #BE2CB0 168.67%) !important;
+}
+
+.upcoming-taiko-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(204, 35, 140, 0.5) 168.67%) !important;
+}
+
 
 .upcoming-babydoge-event {
   border-radius: 20px;

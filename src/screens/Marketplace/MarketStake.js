@@ -15,12 +15,15 @@ import cawsStakeImage from "./assets/cawsStakeImage.png";
 import cawsStakeMobileImage from "./assets/cawsStakeMobileImage.png";
 import newCawsStake from "./assets/newCawsStake.png";
 import newCawsStakeMobile from "./assets/newCawsStakeMobile.png";
+import newWodStake from "./assets/newWodStake.png";
+import newWodStakeMobile from "./assets/newWodStakeMobile.png";
 import { useLocation } from "react-router-dom";
 import CawsStakeModal from "../../components/StakeModal/CawsStakeModal";
 import { useNavigate } from "react-router-dom";
 import GetPremiumPopup from "../Account/src/Components/PremiumPopup/GetPremium";
 import OutsideClickHandler from "react-outside-click-handler";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
+import { ethers } from "ethers";
 const MarketStake = ({
   coinbase,
   chainId,
@@ -28,7 +31,7 @@ const MarketStake = ({
   isConnected,
   isPremium,
   onSuccessDeposit,
-  handleSwitchNetwork,
+  handleSwitchNetwork,binanceW3WProvider,handleSwitchChainGateWallet,handleSwitchChainBinanceWallet,binanceWallet
 }) => {
   const windowSize = useWindowSize();
   const [mystakes, setMystakes] = useState([]);
@@ -105,7 +108,7 @@ const MarketStake = ({
 
   const handleEthPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x1")
           .then(() => {
             handleSwitchNetwork(1);
@@ -113,7 +116,13 @@ const MarketStake = ({
           .catch((e) => {
             console.log(e);
           });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(1);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1);
       }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -121,9 +130,8 @@ const MarketStake = ({
 
   const totalStakedNft = async () => {
     let staking_contract = await new window.infuraWeb3.eth.Contract(
-      window.NFT_ABI,
-      window.config.nft_address,
-      { from: undefined }
+      window.CAWS_ABI,
+      window.config.nft_address
     );
 
     await staking_contract.methods
@@ -163,14 +171,18 @@ const MarketStake = ({
 
   const getCawsStakesIds = async () => {
     const address = coinbase;
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
+        
+    let  staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.CAWSPREMIUM_ABI,
+      window.config.nft_caws_premiumstake_address
     );
+
     let stakenft = [];
     let myStakes = await staking_contract.methods
       .depositsOf(address)
       .call()
       .then((result) => {
+        console.log('resultresultresultresult',result)
         for (let i = 0; i < result.length; i++)
           stakenft.push(parseInt(result[i]));
         return stakenft;
@@ -261,7 +273,11 @@ const MarketStake = ({
 
   const getStakesIdsLandPool = async () => {
     if (coinbase && isConnected && chainId === 1) {
-      let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
+      let staking_contract = await new window.infuraWeb3.eth.Contract(
+        window.LANDSTAKING_ABI ,  window.config.landnftstake_address
+      ,
+      );
+
       let stakenft = [];
       let myStakes = await staking_contract.methods
         .depositsOf(coinbase)
@@ -326,7 +342,7 @@ const MarketStake = ({
     let result = 0;
 
     if (coinbase !== null) {
-      if (myStakes.length > 0) {
+      if (myStakes && myStakes.length > 0) {
         let rewards = await window.wod_caws
           .calculateRewardsWodCaws(coinbase, myStakes)
           .then((data) => {
@@ -373,8 +389,9 @@ const MarketStake = ({
     let myStakes = await getCawsStakesIds();
     let result = 0;
     let calculateRewards = [];
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
+    let  staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.CAWSPREMIUM_ABI,
+      window.config.nft_caws_premiumstake_address
     );
     if (coinbase !== null) {
       if (myStakes && myStakes.length > 0) {
@@ -395,20 +412,36 @@ const MarketStake = ({
     setEthRewardsCawsPremium(result);
   };
 
+
+
   const claimRewards = async () => {
     let myStakes = await getStakesIds();
     // setclaimAllStatus("Claiming all rewards, please wait...");
-    await window.wod_caws
+    if(window.WALLET_TYPE !=='binance')
+{    await window.wod_caws
       .claimRewardsWodCaws(myStakes)
       .then(() => {
         setEthRewards(0);
       })
+      .catch((err) => {});} 
+      else if (window.WALLET_TYPE === 'binance') {
+        let contract = new ethers.Contract( 
+          window.config.wod_caws_address, window.WOD_CAWS_ABI, binanceW3WProvider.getSigner() );
+
+          await contract
+          .claimRewards(myStakes)
+      .then(() => {
+        setEthRewards(0);
+      })
       .catch((err) => {});
+      
+      }
   };
 
   const claimRewardsLandPool = async () => {
     let myStakes = await getStakesIdsLandPool();
-    let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
+    if(window.WALLET_TYPE !== 'binance')
+    {let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
 
     await staking_contract.methods
       .claimRewards(myStakes)
@@ -418,12 +451,29 @@ const MarketStake = ({
       })
       .catch((err) => {
         console.log(err);
-      });
+      });}
+      else  if(window.WALLET_TYPE === 'binance')
+        {
+          let stake_contract = new ethers.Contract(
+            window.config.landnftstake_address,
+            window.LANDSTAKING_ABI,
+            binanceW3WProvider.getSigner()
+          );
+    
+        await stake_contract
+          .claimRewards(myStakes)
+          .then(() => {
+            setEthRewards(0);
+          })
+          .catch((err) => {
+            console.log(err);
+          });}
   };
 
   const claimRewardsCawsPremium = async () => {
     let myStakes = await getCawsStakesIds();
-    let staking_contract = await window.getContractCawsPremiumNFT(
+    if(window.WALLET_TYPE !=='binance')
+   { let staking_contract = await window.getContractCawsPremiumNFT(
       "CAWSPREMIUM"
     );
 
@@ -435,8 +485,25 @@ const MarketStake = ({
       })
       .catch((err) => {
         console.log(err);
-      });
+      });}
+
+      else if(window.WALLET_TYPE ==='binance')
+        { let staking_contract = await new ethers.Contract(
+          window.config.nft_caws_premiumstake_address,
+          window.CAWSPREMIUM_ABI,
+          binanceW3WProvider.getSigner()
+        );
+         await staking_contract 
+           .claimRewards(myStakes)
+           .then(() => {
+             setEthRewards(0);
+           })
+           .catch((err) => {
+             console.log(err);
+           });}
   };
+
+
 
   const getApprovedNfts = (data) => {
     setApprovedNfts(data);
@@ -492,7 +559,7 @@ const MarketStake = ({
   }, [isConnected, EthRewards, EthRewardsCawsPremium]);
 
   useEffect(() => {
-    if (coinbase && chainId === 1) {
+    if (coinbase && chainId === 1 && isConnected) {
       calculateAllRewards();
       calculateAllRewardsLandPool();
       calculateAllRewardsCawsPremium();
@@ -556,9 +623,7 @@ const MarketStake = ({
             </h6>
             <div className="d-flex w-100 align-items-center justify-content-center gap-4">
               <div className="position-relative">
-                <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                  <span className="mb-0">New</span>
-                </div>
+               
                 <h6
                   className={`new-stake-tab ${
                     activeTab === "live" && "stake-tab-active"
@@ -569,6 +634,9 @@ const MarketStake = ({
                 </h6>
               </div>
               <div className="position-relative">
+              <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                  <span className="mb-0">New</span>
+                </div>
                 <h6
                   className={`new-stake-tab ${
                     activeTab === "upcoming" && "stake-tab-active"
@@ -684,7 +752,7 @@ const MarketStake = ({
                           </button>
                         )}
 
-{isConnected && chainId !== 1 && isPremium && (
+                        {isConnected && chainId !== 1 && isPremium && (
                           <button
                             className="btn pill-btn px-4 py-2"
                             style={{ width: "fit-content" }}
@@ -716,12 +784,43 @@ const MarketStake = ({
               </>
             )}
             {activeTab === "upcoming" && (
-              <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <h6 className="upcoming-stake">
-                    Staking pools are coming...
-                  </h6>
-                  <span className="upcoming-stake-desc">Check back soon!</span>
+              // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+              //   <div className="d-flex flex-column align-items-center gap-2">
+              //     <h6 className="upcoming-stake">
+              //       Staking pools are coming...
+              //     </h6>
+              //     <span className="upcoming-stake-desc">Check back soon!</span>
+              //   </div>
+              // </div>
+              <div className="col-12 px-0 mt-4">
+                <div className="new-wod-stake-wrapper d-flex position-relative align-items-center w-100 ">
+                 
+                  <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                    <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
+                      <div className="d-flex flex-column gap-2">
+                        <h6 className="market-stake-title">
+                        Genesis Land NFTs
+                        </h6>
+                        <span className="market-stake-desc">
+                        Stake your Genesis Land to earn daily ETH rewards.  
+                        </span>
+                      </div>
+                  
+                    </div>
+                    <div className="new-wod-apr d-flex flex-column align-items-center justify-content-center position-relative">
+                      <h6 className="caws-apr-percent mb-0">25%</h6>
+                      <span className="caws-apr">APR</span>
+                    </div>
+                    <img
+                      className="new-caws-stake-img"
+                      src={
+                        windowSize.width < 786
+                          ? newWodStakeMobile
+                          : newWodStake
+                      }
+                      alt=""
+                    />
+                  </div>
                 </div>
               </div>
             )}
@@ -970,6 +1069,7 @@ const MarketStake = ({
           onClaimAll={() => {
             claimRewards();
           }}
+          binanceW3WProvider={binanceW3WProvider}
         />
       )}
       {landStakeModal && (
@@ -994,13 +1094,15 @@ const MarketStake = ({
           nftItem={myNFTs}
           isConnected={isConnected}
           coinbase={coinbase}
-          onDepositComplete={() => refreshStakes()}
+          onDepositComplete={refreshStakes}
           onClaimAll={() => {
             claimRewardsCawsPremium();
           }}
           isStake={false}
           handleConnect={handleConnect}
           myCawsstakes={myCawsstakes}
+          binanceW3WProvider={binanceW3WProvider}
+          onUnstake={refreshStakes}
         />
       )}
 
@@ -1019,6 +1121,7 @@ const MarketStake = ({
           }}
           isStake={true}
           handleConnect={handleConnect}
+          binanceW3WProvider={binanceW3WProvider}
         />
       )}
       {cawsUnstakeModal && (
@@ -1028,7 +1131,7 @@ const MarketStake = ({
           nftItem={myCawsstakes}
           isConnected={isConnected}
           coinbase={coinbase}
-          onDepositComplete={() => refreshStakes()}
+          onDepositComplete={refreshStakes}
           ETHrewards={EthRewardsCawsPremium}
           finalUsd={ethToUSDCawsPremium}
           onClaimAll={() => {
@@ -1037,6 +1140,9 @@ const MarketStake = ({
           isStake={true}
           handleConnect={handleConnect}
           myCawsstakes={myCawsstakes}
+          binanceW3WProvider={binanceW3WProvider}
+          onUnstake={refreshStakes}
+
         />
       )}
 
@@ -1059,6 +1165,10 @@ const MarketStake = ({
             onClose={() => {
               setgetPremiumPopup(false);
             }}
+            binanceW3WProvider={binanceW3WProvider}
+            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+            binanceWallet={binanceWallet}
           />
         </OutsideClickHandler>
       )}

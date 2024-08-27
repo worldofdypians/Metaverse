@@ -46,6 +46,8 @@ import skaleActive from "../../Components/LeaderBoard/assets/skaleActive.svg";
 import bnbActive from "../../Components/LeaderBoard/assets/bnbActive.svg";
 import coreActive from "../../Components/LeaderBoard/assets/coreActive.svg";
 import victionActive from "../../Components/LeaderBoard/assets/victionActive.svg";
+import mantaActive from "../../Components/LeaderBoard/assets/mantaActive.png";
+
 import starAlert from "./assets/star-alert.svg";
 import axios from "axios";
 import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
@@ -96,7 +98,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 }));
 
 const ProfileCard = ({
-  email,
+  email,discountPercentageViction,
   discountPercentage,
   username,
   balance,
@@ -132,9 +134,9 @@ const ProfileCard = ({
   domainName,
   rankData,
   setRankData,
-  getRankData,userDataStar, userDataPosition
+  getRankData,userDataStar, userDataPosition, userRankManta, userMantaScore, userRankTaiko, userTaikoScore
 }) => {
-  let id = Math.random().toString(36); 
+  let id = Math.random().toString(36);
   const windowSize = useWindowSize();
   const [exclusivePremium, setExclusivePremium] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -161,7 +163,68 @@ const ProfileCard = ({
   const sliderRef = useRef(null);
   const [rankTooltip, setRankTooltip] = useState(false);
 
+  const userTotalScore =
+    userBnbScore + userSkaleScore + userCoreScore + userVictionScore + userMantaScore;
 
+  const handleUserRank = () => {
+    let allScore;
+    if (rankData && rankData.multiplier === "yes") {
+      allScore = userTotalScore * 4;
+    } else if (rankData && rankData.multiplier === "no") {
+      allScore = userTotalScore;
+    }
+    if (allScore > 61999999) {
+      setUserRankName({
+        name: "unstoppable",
+        id: 4,
+      });
+      sliderRef?.current?.innerSlider?.slickGoTo(4);
+      setUserProgress(100);
+    } else if (allScore > 36999999) {
+      setUserRankName({
+        name: "champion",
+        id: 3,
+      });
+      sliderRef?.current?.innerSlider?.slickGoTo(3);
+      setUserProgress((allScore / 62000000) * 100);
+    } else if (allScore > 23999999) {
+      setUserRankName({
+        name: "underdog",
+        id: 2,
+      });
+      sliderRef?.current?.innerSlider?.slickGoTo(2);
+      setUserProgress((allScore / 37000000) * 100);
+    } else if (allScore > 11999999) {
+      setUserRankName({
+        name: "rookie",
+        id: 1,
+      });
+      sliderRef?.current?.innerSlider?.slickGoTo(1);
+      setUserProgress((allScore / 24000000) * 100);
+    } else {
+      sliderRef?.current?.innerSlider?.slickGoTo(0);
+      setUserProgress((allScore / 12000000) * 100);
+    }
+  };
+
+  const updateUserRank = async () => {
+    if (rankData && userRankName) {
+      if (rankData.rank == userRankName.id) {
+        return;
+      } else if (rankData.rank < userRankName.id) {
+        await axios
+          .patch(
+            `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
+            {
+              rank: userRankName.id,
+            }
+          )
+          .then(async () => {
+            getRankData();
+          });
+      }
+    }
+  };
 
   var settings = {
     dots: false,
@@ -343,10 +406,25 @@ const ProfileCard = ({
 
   useEffect(() => {
     countBundle();
-    setlastDay(address);
+    if (address) {
+      setlastDay(address);
+    }
   }, [address]);
 
+  useEffect(() => {
+    handleUserRank();
+  }, [
+    userRank,
+    userRankSkale,
+    userBnbScore,
+    userRankCore,
+    userRankViction,
+    userRankManta,
+    userCoreScore,
+    userVictionScore,
+    userMantaScore,
 
+  ]);
 
   const html = document.querySelector("html");
 
@@ -694,7 +772,7 @@ const ProfileCard = ({
                       placeItems: "flex-end",
                     }}
                   >
-                    {!isPremium && discountPercentage == 0 && (
+                    {!isPremium && (discountPercentage == 0 && discountPercentageViction === 0) && (
                       <div
                         className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
@@ -713,7 +791,7 @@ const ProfileCard = ({
                       </div>
                     )}
 
-                    {!isPremium && discountPercentage > 0 && (
+                    {!isPremium && (discountPercentage > 0 || discountPercentageViction>0) && (
                       <div
                         className={` wallet-wrapper-active-discount hoverdiscount position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
@@ -728,7 +806,7 @@ const ProfileCard = ({
                             />
                             <div className="d-flex flex-column position-absolute discountwrap-profile">
                               <span className="discount-price2-profile font-oxanium">
-                                {discountPercentage}%
+                                {discountPercentage > 0 ? discountPercentage : discountPercentageViction > 0 ? discountPercentageViction : discountPercentage}%
                               </span>
                               <span className="discount-price-bottom">
                                 Discount
@@ -743,9 +821,18 @@ const ProfileCard = ({
 
                           <div className="d-flex align-items-center gap-2">
                             <h6 className="discount-price-profile m-0">
-                              {discountPercentage == 100
-                                ? "FREE"
-                                : "$" + (100 - Number(discountPercentage))}
+                            {discountPercentage == 100 ||
+                                      discountPercentageViction == 100
+                                        ? "FREE"
+                                        : "$" +
+                                          (100 -
+                                            Number(
+                                              discountPercentage > 0
+                                                ? discountPercentage
+                                                : discountPercentageViction > 0
+                                                ? discountPercentageViction
+                                                : discountPercentage
+                                            ))}
                             </h6>
                             <h6 className="old-price-text-profile m-0">$100</h6>
                           </div>
@@ -851,6 +938,35 @@ const ProfileCard = ({
                                       {getFormattedNumber(userBnbScore, 0)}
                                     </span>
                                   </div>
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
+                                        src={mantaActive}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
+                                      <span className="rank-dropdown-text">
+                                        Manta
+                                      </span>
+                                    </div>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      #{userRankManta + 1}
+                                    </span>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      {getFormattedNumber(userMantaScore, 0)}
+                                    </span>
+                                  </div>
+
                                   <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
                                     <div
                                       className="d-flex align-items-center gap-2"
@@ -1061,11 +1177,11 @@ const ProfileCard = ({
                                   </span> */}
                                   {/* <span className="rank-current-score">
                                     {userRankName?.name === "rookie"
-                                      ? "22M"
+                                      ? "24M"
                                       : userRankName?.name === "underdog"
-                                      ? "35M"
+                                      ? "37M"
                                       : userRankName?.name === "champion"
-                                      ? "60M"
+                                      ? "62M"
                                       : userRankName?.name === "unstoppable"
                                       ? ""
                                       : "10M"}
@@ -1164,7 +1280,8 @@ const ProfileCard = ({
                 className={`bordereddiv border-0 ${
                   (email &&
                     coinbase &&
-                    username && address &&
+                    username &&
+                    address &&
                     address.toLowerCase() !== coinbase.toLowerCase()) ||
                   (!coinbase && email) ||
                   (!coinbase && !email)
@@ -1182,7 +1299,8 @@ const ProfileCard = ({
                   {address &&
                     email &&
                     coinbase &&
-                    syncStatus !== "" && address &&
+                    syncStatus !== "" &&
+                    address &&
                     address.toLowerCase() !== coinbase.toLowerCase() && (
                       <div className="sync-wrapper">
                         <div className="d-flex gap-2 align-items-center">
@@ -1234,11 +1352,14 @@ const ProfileCard = ({
                     className=" align-items-center gap-2"
                     style={{
                       width: "fit-content",
-                      display: address &&
-                      email &&
-                      coinbase &&
-                      syncStatus !== "" &&
-                      address.toLowerCase() !== coinbase.toLowerCase() ? 'flex' : 'none',
+                      display:
+                        address &&
+                        email &&
+                        coinbase &&
+                        syncStatus !== "" &&
+                        address.toLowerCase() !== coinbase.toLowerCase()
+                          ? "flex"
+                          : "none",
                       justifyContent:
                         address &&
                         email &&
@@ -1482,7 +1603,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">0 - 9,999,999</span>
+                    <span className="needed-points mb-0">0 - 11,999,999</span>
                   </div>
                   <div
                     className={` ${
@@ -1520,7 +1641,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">10,000,000</span>
+                    <span className="needed-points mb-0">12,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1559,7 +1680,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">22,000,000</span>
+                    <span className="needed-points mb-0">24,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1598,7 +1719,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">35,000,000</span>
+                    <span className="needed-points mb-0">37,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1637,7 +1758,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">60,000,000</span>
+                    <span className="needed-points mb-0">62,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1677,7 +1798,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">0 - 5,999,999</span>
+                    <span className="needed-points mb-0">0 - 11,999,999</span>
                   </div>
                   <div
                     className={` ${
@@ -1714,7 +1835,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">6,000,000</span>
+                    <span className="needed-points mb-0">12,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1751,7 +1872,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">12,000,000</span>
+                    <span className="needed-points mb-0">24,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1788,7 +1909,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">24,000,000</span>
+                    <span className="needed-points mb-0">37,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1825,7 +1946,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">40,000,000</span>
+                    <span className="needed-points mb-0">62,000,000</span>
                   </div>
                   <div
                     className={` ${

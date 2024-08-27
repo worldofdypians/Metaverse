@@ -507,6 +507,18 @@
   // }
 }
 
+.market-mint-taiko {
+  background-image: url("./assets/taikoMarketMint.webp");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  // @media screen and (max-width: 786px) {
+  //   background-image: none;
+  //   background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  // }
+}
+
 .market-stake-bg{
   background-image: url("./assets/cawsMarketplaceBanner.png");
   background-size: cover;
@@ -770,6 +782,42 @@
 
 .opbnb-mint-bg {
   background-image: url("./assets/opBnbBackground.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+.manta-mint-bg {
+  background-image: url("./assets/mantaBackground.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+.taiko-mint-bg {
+  background-image: url("./assets/taikoBackground.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+.cookie3-mint-bg {
+  background-image: url("./assets/cookieBackground.webp");
   background-size: cover;
   background-position: right;
   background-repeat: no-repeat;
@@ -1249,6 +1297,25 @@
 
 .core-active {
   background-image: url("../../assets/coreActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+.manta-active {
+  background-image: url("./assets/mantaNft.png");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+.taiko-active {
+  background-image: url("./assets/taikoNft.png");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.cookie3-active {
+  background-image: url("./assets/cookie3Nft.webp");
   background-repeat: no-repeat;
   background-size: cover !important;
   background-position: center;
