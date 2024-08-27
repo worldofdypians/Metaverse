@@ -3373,7 +3373,7 @@ function App() {
 
   return (
     <>
-      <div className="container-fluid p-0 main-wrapper2 position-relative">
+      <div className="container-fluid main-wrapper2 position-relative">
         <Header
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}
@@ -3475,7 +3475,7 @@ function App() {
             path="/community"
             element={<Community socials={socials} />}
           />
-          {/* <Route exact path="/team" element={<OurTeam />} /> */}
+          <Route exact path="/team" element={<OurTeam />} />
           <Route
             exact
             path="/explorer"

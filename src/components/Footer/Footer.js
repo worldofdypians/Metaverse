@@ -169,21 +169,21 @@ const Footer = () => {
       } footer-container d-flex justify-content-center align-items-center px-3 px-lg-5 w-100 `}
     >
       <div className="custom-container">
-        <div className="d-flex align-items-center justify-content-between">
-          <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2 gap-lg-5 gap-md-5">
-            <a href="#" className="new-footer-link">
+        <div className="d-flex align-items-center gap-lg-0 gap-4 justify-content-between flex-lg-row flex-column">
+          <div className="d-flex footerlink-wrapper flex-column flex-lg-row flex-md-row align-items-center gap-2 gap-lg-5 gap-md-5">
+            <NavLink to="/token" className="new-footer-link">
               Wod Token
-            </a>
-            <a href="#" className="new-footer-link">
+            </NavLink>
+            <NavLink to="/marketplace" className="new-footer-link">
               Marketplace
-            </a>
-            <a href="#" className="new-footer-link">
+            </NavLink>
+            <NavLink to="/earn" className="new-footer-link">
               Earn
-            </a>
-            <a href="#" className="new-footer-link">
+            </NavLink>
+            <NavLink to="/team" className="new-footer-link">
               Team
-            </a>
-            <a href="#" className="new-footer-link">
+            </NavLink>
+            <a href="https://drive.google.com/drive/folders/1GvrV3iDooxFZhbiDGUMZcjNbi5TcR2i5?usp=sharing" className="new-footer-link" target="_blank" rel="noreferrer">
               Brand
             </a>
             <NavLink to="/join-beta" className="new-footer-link">
@@ -191,7 +191,7 @@ const Footer = () => {
             </NavLink>
           </div>
           <a
-            className="epic-games-btn p-2 d-flex align-items-center gap-2"
+            className="epic-games-btn fullBtn p-2 d-flex align-items-center gap-2"
             href="https://store.epicgames.com/p/world-of-dypians-2e0694"
             target="_blank"
           >
@@ -200,25 +200,25 @@ const Footer = () => {
           </a>
         </div>
         <hr className="footer-divider my-4" />
-        <div className="d-flex flex-column flex-lg-row flex-md-row align-items-lg-center justify-content-between mb-5">
-          <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2 gap-lg-5">
+        <div className="d-flex flex-column-reverse flex-lg-row flex-md-row align-items-lg-center justify-content-between mb-5">
+          <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-4 gap-lg-5">
             <img src={metaverse} height={64} alt="" />
             <div className="d-flex flex-column justify-content-between">
-              <span className="copyright-text">©2024 World of Dypians Ltd</span>
+              <span className="copyright-text">©{year} World of Dypians Ltd</span>
               <span className="trademark-text">
                 All trademarks referenced herein are the properties of their
                 respective owners.
               </span>
               <div className="d-flex align-items-center gap-5">
-                <a href="#" className="gray-footer-link">
+                <NavLink to="/terms-conditions" className="gray-footer-link">
                   Terms
-                </a>
-                <a href="#" className="gray-footer-link">
+                </NavLink>
+                <NavLink to="/privacy-policy" className="gray-footer-link">
                   Privacy
-                </a>
-                <a href="#" className="gray-footer-link">
+                </NavLink>
+                <NavLink to="/contact-us" className="gray-footer-link">
                   Contact Us{" "}
-                </a>
+                </NavLink>
               </div>
             </div>
           </div>

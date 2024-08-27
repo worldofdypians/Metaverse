@@ -20,13 +20,13 @@ const MainHero = () => {
     {
       link: "/bridge",
       title: "Bridge",
-      desc: "Bridge your assets securely between chains",
+      desc: "Easily bridge WOD tokens across networks",
       class: "tokenBridgeClass",
     },
     {
       link: "/governance",
       title: "Governance",
-      desc: "Lorem ipsum governance something",
+      desc: "Participate in governance with WOD tokens",
       class: "tokenGovernanceClass",
     },
   ];
@@ -149,7 +149,7 @@ const MainHero = () => {
     <div className="mainhero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-end gap-5">
       <div className="custom-container  mt-5 mt-lg-0">
         <div className="d-flex flex-column w-100">
-          <div className="row mx-0 align-items-center justify-content-between gap-2 mt-5 mt-lg-0">
+          <div className="row mx-0 align-items-center justify-content-center gap-2 mt-5 mt-lg-0">
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-start">
                 <h4 className="main-hero-title font-montserrat text-start">

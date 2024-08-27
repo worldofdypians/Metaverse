@@ -7,7 +7,8 @@ import Clipboard from "react-clipboard.js";
 import copyIcon from "../../../../assets/wodAssets/copyIcon.svg";
 import tokenomicsChart from "../../../../assets/wodAssets/tokenomicsChart.svg";
 import bnb from '../../../../components/Header/assets/bnb.svg'
-import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
+import useWindowSize from "../../../../hooks/useWindowSize";
+import { shortAddress } from "../../../Caws/functions/shortAddress";
 
 const Tokenomics = () => {
   const [tooltip, setTooltip] = useState(false);
@@ -15,96 +16,111 @@ const Tokenomics = () => {
   const tokenomicsData = [
     {
       category: "Seed",
+      tokens: "80,000,000",
+      allocation: 8,
       tge: 4,
       cliff: 6,
       vesting: 19,
       color: "#8303AE",
-      allocation: 8,
-      tokens: 80000000,
     },
     {
       category: "Private",
+      tokens: "85,000,000",
+      allocation: 8.5,
+
       tge: 6,
       cliff: 3,
       vesting: 16,
       color: "#D83EE0",
-      allocation: 8.5,
-      tokens: 85000000,
     },
     {
       category: "KOL",
+      tokens: "15,000,000",
+      allocation: 1.5,
+
       tge: 15,
       cliff: 1,
       vesting: 8,
       color: "#F3A8E2",
-      allocation: 1.5,
-      tokens: 15000000,
     },
     {
       category: "Public",
+      tokens: "20,000,000",
+      allocation: 2,
+
       tge: 20,
       cliff: 0,
       vesting: 6,
       color: "#34609E",
-      allocation: 2,
-      tokens: 20000000,
     },
     {
       category: "Team",
+      tokens: "12,000,000",
+      allocation: 12,
+
       tge: 0,
       cliff: 12,
       vesting: 36,
       color: "#B711AE",
-      allocation: 12,
-      tokens: 120000000,
     },
     {
       category: "Advisors",
+      tokens: "50,000,000",
+      allocation: 5,
+
       tge: 0,
       cliff: 9,
       vesting: 30,
       color: "#5690FF",
-      allocation: 5,
-      tokens: 50000000,
     },
     {
       category: "Community",
+      tokens: "300,000,000",
+      allocation: 30,
+
       tge: 2,
       cliff: 0,
       vesting: 48,
       color: "#8303AE",
-      allocation: 30,
-      tokens: 300000000,
     },
     {
       category: "Ecosystem",
+      tokens: "250,000,000",
+      allocation: 25,
+
       tge: 0,
       cliff: 1,
       vesting: 36,
       color: "#6A07C7",
-      allocation: 25,
-      tokens: 250000000,
     },
     {
       category: "Liquidity",
+      tokens: "800,000,000",
+      allocation: 8,
+
       tge: 50,
       cliff: 0,
       vesting: 3,
       color: "#5A8BFF",
-      allocation: 8,
-      tokens: 80000000,
     },
   ];
 
+  const windowSize = useWindowSize();
+
   return (
     <div
-      className="d-flex flex-column align-items-center gap-5"
+      className="d-flex flex-column align-items-center gap-4"
       id="tokenomics"
     >
       <div className="custom-container d-flex flex-column w-100 gap-3">
-        <h4 className="explorer-grid-title font-montserrat text-start mb-0">
+        <h4
+          className="explorer-grid-title text-uppercase font-montserrat text-start mb-0"
+          
+        >
           WoD{" "}
-          <mark className="font-montserrat explorer-grid-title explore-tag pe-2">
+          <mark
+            className="font-montserrat explorer-grid-title  text-uppercase explore-tag pe-2"
+          >
             Tokenomics
           </mark>
         </h4>
@@ -114,10 +130,11 @@ const Tokenomics = () => {
         </span>
       </div>
       <div className="w-100 py-5 d-flex justify-content-center new-tokenomics-bg">
-        <div className="custom-container">
+        <div className="custom-container w-100">
           <div className="row mx-0 align-items-end">
-            <div className="col-12 col-lg-6">
-              <div className="row mx-0">
+            <div className="col-12 col-lg-6 tablesalewrapper h-100">
+              <div className="tokenomicsTablewrapper">
+              <div className="row mx-0 mb-1 flex-nowrap">
                 <div className="col-2 d-flex justify-content-start">
                   <h6 className="tokenomics-table-title mb-0">CATEGORY</h6>
                 </div>
@@ -127,15 +144,14 @@ const Tokenomics = () => {
                 <div className="col-2 d-flex justify-content-center">
                   <h6 className="tokenomics-table-title mb-0">TOKENS</h6>
                 </div>
-              
-                <div className="col-2 d-flex justify-content-center">
+                <div className="col-2 d-flex justify-content-lg-center justify-content-end">
                   <h6 className="tokenomics-table-title mb-0">
-                    CLIFF (MONTHS)
+                    CLIFF {windowSize.width > 767 && '(MONTHS)'}
                   </h6>
                 </div>
                 <div className="col-2 d-flex justify-content-center">
                   <h6 className="tokenomics-table-title mb-0">
-                    VESTING (MONTHS)
+                    VESTING {windowSize.width > 767 && '(MONTHS)'}
                   </h6>
                 </div>
                 <div className="col-2 d-flex justify-content-center">
@@ -145,24 +161,23 @@ const Tokenomics = () => {
               <div className="d-flex flex-column gap-1">
                 {tokenomicsData.map((item, index) => (
                   <div
-                    className="tokenomics-table-row mx-0 row d-flex align-items-center justify-content-center p-2"
+                    className="tokenomics-table-row mx-0 row d-flex align-items-center justify-content-between justify-content-lg-center p-2"
                     key={index}
                   >
-                    <h6 className="tokenomics-table-head d-flex align-items-center gap-2 col-2 mb-0">
+                    <h6 className="tokenomics-table-head d-flex align-items-center gap-lg-2 gap-1 col-2 mb-0">
                       <div
                         className="tokenomics-dot"
                         style={{ background: item.color }}
                       ></div>
                       {item.category}
                     </h6>
-                  
                     <h6 className="tokenomics-table-item col-2 mb-0">
                       {item.allocation}%
                     </h6>
                     <h6 className="tokenomics-table-item col-2 mb-0">
-                      {getFormattedNumber(item.tokens, 0)}
+                      {item.tokens}
                     </h6>
-                    <h6 className="tokenomics-table-item col-2 mb-0">
+                    <h6 className="tokenomics-table-item col-2 mb-0 text-end text-lg-center">
                       {item.cliff}
                     </h6>
                     <h6 className="tokenomics-table-item col-2 mb-0">
@@ -174,6 +189,7 @@ const Tokenomics = () => {
                   </div>
                 ))}
               </div>
+              </div>
             </div>
             <div className="col-12 col-lg-6 mt-4 mt-lg-0">
               <div className="d-flex flex-column align-items-center align-items-lg-end gap-2">
@@ -182,8 +198,16 @@ const Tokenomics = () => {
                 <div className="d-flex flex-column">
                   <span className="wod-copy-span">WOD Contract Address</span>
                   <div className="d-flex align-items-center gap-2">
-                    <a href="https://bscscan.com/token/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8" target="_blank" className="wod-address">
-                    0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8
+                    <a
+                      href="https://bscscan.com/token/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                      target="_blank"
+                      className="wod-address"
+                    >
+                      {windowSize.width > 991
+                        ? "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                        : shortAddress(
+                            "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                          )}
                     </a>
                     <Clipboard
                       component="div"
@@ -211,7 +235,7 @@ const Tokenomics = () => {
                   <img
                     src={tokenomicsChart}
                     alt=""
-                    className="tokenomics-chart w-100"
+                    className="tokenomics-chart"
                   />
                 </div>
               </div>
