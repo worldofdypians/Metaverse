@@ -3,102 +3,98 @@ import epicblack from "../../assets/epicblack.svg";
 import useWindowSize from "../../hooks/useWindowSize";
 import Slider from "react-slick";
 import { NavLink } from "react-router-dom";
-import BetaEventCardHome from '../Marketplace/components/BetaEventCardHome'
-
+import BetaEventCardHome from "../Marketplace/components/BetaEventCardHome";
 
 const GameHero = () => {
   const [activeSlide, setActiveSlide] = useState();
   const [showFirstNext, setShowFirstNext] = useState();
 
-
-    var settings = {
-        dots: false,
-        arrows: false,
-        // dotsClass: "button__bar",
-        infinite: false,
-        speed: 300,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        initialSlide: 0,
-        beforeChange: (current, next) => {
-          setActiveSlide(next);
-          setShowFirstNext(current);
+  var settings = {
+    dots: false,
+    arrows: false,
+    // dotsClass: "button__bar",
+    infinite: false,
+    speed: 300,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    beforeChange: (current, next) => {
+      setActiveSlide(next);
+      setShowFirstNext(current);
+    },
+    afterChange: (current) => setActiveSlide(current),
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
         },
-        afterChange: (current) => setActiveSlide(current),
-        responsive: [
-          {
-            breakpoint: 1600,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 1,
-              initialSlide: 0,
-            },
-          },
-          {
-            breakpoint: 1500,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 1,
-              initialSlide: 0,
-            },
-          },
-          {
-            breakpoint: 1400,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 1,
-              initialSlide: 0,
-            },
-          },
-          {
-            breakpoint: 1050,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
-              initialSlide: 0,
-            },
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              initialSlide: 0,
-            },
-          },
-        ],
-      };
-    const betaSlider = useRef(null)
-    const windowSize = useWindowSize();
-    const dummyBetaPassData2 = [
-        {
-          link: "/token",
-          title: "MAPS",
-          desc: 'Unique game world environments',
-          class: 'tokenClass',
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
         },
-        {
-          link: "/earn",
-          title: "LAND",
-          desc: 'Own and develop virtual areas',
-          class: 'earnClass',
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
         },
-        {
-          link: "/marketplace/events/treasure-hunt",
-          title: "CAWS",
-          desc: 'AI-driven digital companions',
-          class: 'eventClass',
+      },
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 0,
         },
-    
-      ];
-
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+    ],
+  };
+  const betaSlider = useRef(null);
+  const windowSize = useWindowSize();
+  const dummyBetaPassData2 = [
+    {
+      link: "/token",
+      title: "MAPS",
+      desc: "Unique game world environments",
+      class: "tokenClass",
+    },
+    {
+      link: "/earn",
+      title: "LAND",
+      desc: "Own and develop virtual areas",
+      class: "earnClass",
+    },
+    {
+      link: "/marketplace/events/treasure-hunt",
+      title: "CAWS",
+      desc: "AI-driven digital companions",
+      class: "eventClass",
+    },
+  ];
 
   return (
     <div className="mainhero-wrapper about-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-center mt-5 mt-lg-0 gap-5 position-relative">
       <div className="custom-container  mt-5 mt-lg-0">
         <div className="d-flex w-100 flex-column align-items-center gap-2">
           <h2 className="font-montserrat main-hero-title  px-0">
-            What is World of Dypians?
+            What is <br/>World of Dypians?
           </h2>
           <p className="about-hero-desc">
             An action-packed multiplayer game where heroes come together to
@@ -113,11 +109,11 @@ const GameHero = () => {
               target="_blank"
             >
               <img
-              src={epicblack}
-              alt="icon"
-              className="epicgame2"
-              style={{ width: "auto", height: "30px" }}
-            />{" "}
+                src={epicblack}
+                alt="icon"
+                className="epicgame2"
+                style={{ width: "auto", height: "30px" }}
+              />{" "}
               Download
             </a>
           </div>
@@ -126,10 +122,7 @@ const GameHero = () => {
           <div className="opacitywrapper custom-container">
             <Slider {...settings} ref={betaSlider}>
               {dummyBetaPassData2.slice(0, 4).map((item, index) => (
-                <NavLink
-                  to={`${item.link}`}
-                 
-                >
+                <NavLink to={`${item.link}`}>
                   <BetaEventCardHome
                     data={item}
                     key={index}

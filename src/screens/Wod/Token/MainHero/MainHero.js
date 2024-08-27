@@ -4,8 +4,9 @@ import BetaEventCardHome from "../../../Marketplace/components/BetaEventCardHome
 import { NavLink } from "react-router-dom";
 import Slider from "react-slick";
 import kucoin from "../../../../assets/wodAssets/buyWod/kuCoin.png";
-import pancake from "../../../../assets/wodAssets/buyWod/pancake.png";
-import coinbaseLogo from "../../../../assets/wodAssets/buyWod/coinbase.png";
+import pancake from "../../../../assets/wodAssets/buyWod/pancake.png"; 
+import mexc from "../../../../assets/wodAssets/buyWod/mexc.png";
+
 import gateio from "../../../../assets/wodAssets/buyWod/gateio.png";
 import newToken from "../../../../assets/wodAssets/newToken.svg";
 
@@ -202,32 +203,51 @@ const MainHero = () => {
                   </h4>
                   <div className="row w-100 mx-0 align-items-center justify-content-between">
                     <Slider {...settings2} ref={betaSlider2} className="px-0">
-                      <div className="w-100 buy-token-wrapper p-3 rounded">
-                        <div className="d-flex align-items-center gap-2">
-                          <img src={kucoin} alt="" className="buy-item-logo" />
-                          <h4 className="m-0 buy-item-title">KuCoin</h4>
+                      <div className="w-100 buy-outertoken-wrapper rounded">
+                        <div className="w-100 buy-token-wrapper d-flex justify-content-center p-3 rounded">
+                          <div className="d-flex align-items-center gap-2">
+                            <img
+                              src={kucoin}
+                              alt=""
+                              className="buy-item-logo"
+                            />
+                            <h4 className="m-0 buy-item-title">KuCoin</h4>
+                          </div>
                         </div>
                       </div>
-                      <div className="w-100 buy-token-wrapper p-3 rounded">
-                        <div className="d-flex align-items-center gap-2">
-                          <img src={gateio} alt="" className="buy-item-logo" />
-                          <h4 className="m-0 buy-item-title">Gate.io</h4>
+                      <div className="w-100 buy-outertoken-wrapper rounded">
+                        <div className="w-100 buy-token-wrapper d-flex justify-content-center p-3 rounded">
+                          <div className="d-flex align-items-center gap-2">
+                            <img
+                              src={gateio}
+                              alt=""
+                              className="buy-item-logo"
+                            />
+                            <h4 className="m-0 buy-item-title">Gate.io</h4>
+                          </div>
                         </div>
                       </div>
-                      <div className="w-100 buy-token-wrapper p-3 rounded">
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={coinbaseLogo}
-                            alt=""
-                            className="buy-item-logo"
-                          />
-                          <h4 className="m-0 buy-item-title">Coinbase</h4>
+                      <div className="w-100 buy-outertoken-wrapper rounded">
+                        <div className="w-100 buy-token-wrapper d-flex justify-content-center p-3 rounded">
+                          <div className="d-flex align-items-center gap-2">
+                            <img
+                              src={mexc}
+                              alt=""
+                              className="buy-item-logo"
+                            />
+                          </div>
                         </div>
                       </div>
-                      <div className="w-100 buy-token-wrapper p-3 rounded">
-                        <div className="d-flex align-items-center gap-2">
-                          <img src={pancake} alt="" className="buy-item-logo" />
-                          <h4 className="m-0 buy-item-title">PancakeSwap</h4>
+                      <div className="w-100 buy-outertoken-wrapper rounded">
+                        <div className="w-100 buy-token-wrapper d-flex justify-content-center p-3 rounded">
+                          <div className="d-flex align-items-center gap-2">
+                            <img
+                              src={pancake}
+                              alt=""
+                              className="buy-item-logo"
+                            />
+                            <h4 className="m-0 buy-item-title">PancakeSwap</h4>
+                          </div>
                         </div>
                       </div>
                     </Slider>
