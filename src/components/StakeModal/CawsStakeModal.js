@@ -14,6 +14,7 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import { formattedNum } from "../../screens/Caws/functions/formatUSD";
 import EmptyCawsCard from "./EmptyCawsCard";
 import CawsPremiumChecklist from "./CawsPremiumChecklist";
+import { ethers } from "ethers";
 
 const CawsStakeModal = ({
   onModalClose,
@@ -27,7 +28,10 @@ const CawsStakeModal = ({
   hideItem,
   finalUsd,
   onClaimAll,
-  handleConnect,myCawsstakes
+  handleConnect,
+  myCawsstakes,
+  binanceW3WProvider,
+  onUnstake,
 }) => {
   const [active, setActive] = useState(true);
   const [showToStake, setshowToStake] = useState(false);
@@ -99,11 +103,11 @@ const CawsStakeModal = ({
     setCheckBtn(!checkbtn);
     if (checkbtn === false) {
       if (nftIds.length > 4) {
-        setSelectedNftIds(nftIds.slice(0, 4 -myCawsstakes.length));
-        getApprovedLandPoolsNfts(nftIds.slice(0, 4 -myCawsstakes.length));
+        setSelectedNftIds(nftIds.slice(0, 4 - myCawsstakes.length));
+        getApprovedLandPoolsNfts(nftIds.slice(0, 4 - myCawsstakes.length));
       } else if (nftIds.length <= 4) {
-        setSelectedNftIds(nftIds.slice(0, 4 -myCawsstakes.length));
-        getApprovedLandPoolsNfts(nftIds.slice(0, 4 -myCawsstakes.length));
+        setSelectedNftIds(nftIds.slice(0, 4 - myCawsstakes.length));
+        getApprovedLandPoolsNfts(nftIds.slice(0, 4 - myCawsstakes.length));
       }
     } else if (checkbtn === true) {
       setSelectedNftIds([]);
@@ -132,40 +136,104 @@ const CawsStakeModal = ({
     setloading(true);
     setStatus("*Waiting for approval");
     setColor("#52A8A4");
-    await window.nft
-      .approveStake(stake25)
-      .then(() => {
+    if (window.WALLET_TYPE !== "binance") {
+      await window.nft
+        .approveStake(stake25)
+        .then(() => {
+          setActive(false);
+          setloading(false);
+          setColor("#52A8A4");
+          setStatus("*Now you can deposit");
+        })
+        .catch((err) => {
+          setloading(false);
+          setColor("#F13227");
+          setStatus("*An error occurred. Please try again");
+          handleClearStatus();
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      const nft_contract = new ethers.Contract(
+        window.config.nft_caws_address,
+        window.CAWS_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const txResponse = await nft_contract
+        .setApprovalForAll(stake25, true)
+        .catch((err) => {
+          setloading(false);
+          setColor("#F13227");
+          setStatus("*An error occurred. Please try again");
+          handleClearStatus();
+        });
+
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setActive(false);
         setloading(false);
         setColor("#52A8A4");
         setStatus("*Now you can deposit");
-      })
-      .catch((err) => {
-        setloading(false);
-        setColor("#F13227");
-        setStatus("*An error occurred. Please try again");
-        handleClearStatus();
-      });
+      }
+    }
   };
 
   const handleDeposit = async (value) => {
-    let stake_contract = await await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
-    );
     setloadingdeposit(true);
     setStatus("*Processing deposit");
     setColor("#52A8A4");
-    // console.log(selectNftIds)
-    await stake_contract.methods
-      .deposit(
-        checkbtn === true
-          ? nftIds.length === selectNftIds.length
-            ? nftIds
+    if (window.WALLET_TYPE !== "binance") {
+      let stake_contract = await new window.getContractCawsPremiumNFT(
+        "CAWSPREMIUM"
+      );
+      await stake_contract.methods
+        .deposit(
+          checkbtn === true
+            ? nftIds.length === selectNftIds.length
+              ? nftIds
+              : selectNftIds
             : selectNftIds
-          : selectNftIds
-      )
-      .send()
-      .then(() => {
+        )
+        .send()
+        .then(() => {
+          setloadingdeposit(false);
+          setshowClaim(true);
+          setActive(true);
+          setStatus("*Sucessfully deposited");
+          setSelectedNftIds([]);
+          setColor("#57AEAA");
+          handleClearStatus();
+          onDepositComplete();
+        })
+        .catch((err) => {
+          setloadingdeposit(false);
+          setColor("#F13227");
+          setStatus("*An error occurred. Please try again");
+          setSelectedNftIds([]);
+          handleClearStatus();
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let stake_contract = await new ethers.Contract(
+        window.config.nft_caws_premiumstake_address,
+        window.CAWSPREMIUM_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const txResponse = await stake_contract
+        .deposit(
+          checkbtn === true
+            ? nftIds.length === selectNftIds.length
+              ? nftIds
+              : selectNftIds
+            : selectNftIds
+        )
+        .catch((err) => {
+          setloadingdeposit(false);
+          setColor("#F13227");
+          setStatus("*An error occurred. Please try again");
+          setSelectedNftIds([]);
+          handleClearStatus();
+        });
+
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setloadingdeposit(false);
         setshowClaim(true);
         setActive(true);
@@ -174,14 +242,8 @@ const CawsStakeModal = ({
         setColor("#57AEAA");
         handleClearStatus();
         onDepositComplete();
-      })
-      .catch((err) => {
-        setloadingdeposit(false);
-        setColor("#F13227");
-        setStatus("*An error occurred. Please try again");
-        setSelectedNftIds([]);
-        handleClearStatus();
-      });
+      }
+    }
   };
 
   useEffect(() => {
@@ -242,7 +304,7 @@ const CawsStakeModal = ({
     if (isStake === false) {
       checkApproval();
     } else setSelectedNftIds([]);
-  }, [isStake,coinbase]);
+  }, [isStake, coinbase]);
 
   useEffect(() => {
     if (hideItem === "staked") {
@@ -254,69 +316,140 @@ const CawsStakeModal = ({
   const onEmptyState = () => {};
 
   const handleUnstake = async (value) => {
-    let stake_contract = await window.getContractCawsPremiumNFT("CAWSPREMIUM");
     setStatus("*Processing unstake");
     setColor("#52A8A4");
-
-    await stake_contract.methods
-      .withdraw(
-        checkUnstakebtn === true
-          ? nftIds.length === selectNftIds.length
-            ? nftIds
+    setloadingWithdraw(true);
+    if (window.WALLET_TYPE !== "binance") {
+      let stake_contract = await window.getContractCawsPremiumNFT(
+        "CAWSPREMIUM"
+      );
+      await stake_contract.methods
+        .withdraw(
+          checkUnstakebtn === true
+            ? nftIds.length === selectNftIds.length
+              ? nftIds
+              : selectNftIds
             : selectNftIds
-          : selectNftIds
-      )
-      .send()
-      .then(() => {
+        )
+        .send()
+        .then(() => {
+          setStatus("*Unstaked successfully");
+          setColor("#57AEAA");
+          handleClearStatus();
+          setSelectedNftIds([]);
+          setloadingWithdraw(false);
+        })
+        .catch((err) => {
+          window.alertify.error(err?.message);
+          setStatus("An error occurred, please try again");
+          setColor("#F13227");
+          setSelectedNftIds([]);
+          handleClearStatus();
+          setloadingWithdraw(false);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let stake_contract = await new ethers.Contract(
+        window.config.nft_caws_premiumstake_address,
+        window.CAWSPREMIUM_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      const txResponse = await stake_contract
+        .withdraw(
+          checkUnstakebtn === true
+            ? nftIds.length === selectNftIds.length
+              ? nftIds
+              : selectNftIds
+            : selectNftIds
+        )
+        .catch((err) => {
+          window.alertify.error(err?.message);
+          setStatus("An error occurred, please try again");
+          setColor("#F13227");
+          setSelectedNftIds([]);
+          handleClearStatus();
+          setloadingWithdraw(false);
+        });
+
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setStatus("*Unstaked successfully");
         setColor("#57AEAA");
         handleClearStatus();
         setSelectedNftIds([]);
-      })
-      .catch((err) => {
-        window.alertify.error(err?.message);
-        setStatus("An error occurred, please try again");
-        setColor("#F13227");
-        setSelectedNftIds([]);
-        handleClearStatus();
-      });
+        onUnstake();
+        setloadingWithdraw(false);
+      }
+    }
   };
 
   const handleClaim = async (itemId) => {
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
-    );
     setColor("#52A8A4");
     setloadingClaim(true);
     setActive(false);
     setStatus("*Claiming rewards...");
 
-    await staking_contract.methods
-      .claimRewards(
-        checkUnstakebtn === true
-          ? nftIds.length === selectNftIds.length
-            ? nftIds
+    if (window.WALLET_TYPE !== "binance") {
+      let staking_contract = await window.getContractCawsPremiumNFT(
+        "CAWSPREMIUM"
+      );
+      await staking_contract.methods
+        .claimRewards(
+          checkUnstakebtn === true
+            ? nftIds.length === selectNftIds.length
+              ? nftIds
+              : selectNftIds
             : selectNftIds
-          : selectNftIds
-      )
-      .send()
-      .then(() => {
+        )
+        .send()
+        .then(() => {
+          setloadingClaim(false);
+          setStatus("*Claimed successfully");
+          handleClearStatus();
+          setColor("#57AEAA");
+          setSelectedNftIds([]);
+        })
+        .catch((err) => {
+          window.alertify.error(err?.message);
+          setloadingClaim(false);
+          setStatus("An error occurred, please try again");
+          setSelectedNftIds([]);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let staking_contract = await new ethers.Contract(
+        window.config.nft_caws_premiumstake_address,
+        window.CAWSPREMIUM_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      const txResponse = await staking_contract
+        .claimRewards(
+          checkUnstakebtn === true
+            ? nftIds.length === selectNftIds.length
+              ? nftIds
+              : selectNftIds
+            : selectNftIds
+        )
+        .catch((err) => {
+          window.alertify.error(err?.message);
+          setloadingClaim(false);
+          setStatus("An error occurred, please try again");
+          setSelectedNftIds([]);
+        });
+
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setloadingClaim(false);
         setStatus("*Claimed successfully");
         handleClearStatus();
         setColor("#57AEAA");
         setSelectedNftIds([]);
-      })
-      .catch((err) => {
-        window.alertify.error(err?.message);
-        setloadingClaim(false);
-        setStatus("An error occurred, please try again");
-        setSelectedNftIds([]);
-      });
+      }
+    }
   };
 
   const devicewidth = window.innerWidth;
-  
+
   return (
     <div className="stake-modal p-3">
       <div className="d-flex align-items-center justify-content-between">
@@ -415,13 +548,14 @@ const CawsStakeModal = ({
                           isStake={isStake}
                           countDownLeft={0}
                           checked={
-                            
                             (isStake === false &&
                               checkbtn === true &&
                               selectNftIds.length <= 4 &&
-                              selectNftIds.includes(nftId)) || (isStake === true &&checkUnstakebtn === true &&
-                                selectNftIds.length <= 4 &&
-                                selectNftIds.includes(nftId))
+                              selectNftIds.includes(nftId)) ||
+                            (isStake === true &&
+                              checkUnstakebtn === true &&
+                              selectNftIds.length <= 4 &&
+                              selectNftIds.includes(nftId))
                           }
                           checked2={selectNftIds.length <= 4 ? true : false}
                           checklistItemID={nftId}
@@ -440,6 +574,8 @@ const CawsStakeModal = ({
                           }}
                           coinbase={coinbase}
                           isConnected={isConnected}
+                          binanceW3WProvider={binanceW3WProvider}
+                          onUnstake={onUnstake}
                         />
                       </>
                     );
@@ -474,9 +610,11 @@ const CawsStakeModal = ({
                             (isStake === false &&
                               checkbtn === true &&
                               selectNftIds.length <= 4 &&
-                              selectNftIds.includes(nftId)) || (isStake === true &&checkUnstakebtn === true &&
-                                selectNftIds.length <= 4 &&
-                                selectNftIds.includes(nftId))
+                              selectNftIds.includes(nftId)) ||
+                            (isStake === true &&
+                              checkUnstakebtn === true &&
+                              selectNftIds.length <= 4 &&
+                              selectNftIds.includes(nftId))
                           }
                           checked2={selectNftIds.length <= 4 ? true : false}
                           checklistItemID={nftId}
@@ -495,6 +633,8 @@ const CawsStakeModal = ({
                           }}
                           coinbase={coinbase}
                           isConnected={isConnected}
+                          binanceW3WProvider={binanceW3WProvider}
+                          onUnstake={onUnstake}
                         />
                       </>
                     );

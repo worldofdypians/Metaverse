@@ -177,7 +177,7 @@ const MarketEvents = ({
   tabState,
   ethTokenData,
   dyptokenData_old,
-  dogePrice,
+  dogePrice,binanceW3WProvider
 }) => {
   const location = useLocation();
   const windowSize = useWindowSize();
@@ -1739,6 +1739,7 @@ const MarketEvents = ({
                         }}
                         availableTime={availableTime}
                         dyptokenData_old={dyptokenData_old}
+                        binanceW3WProvider={binanceW3WProvider}
                       />
                     )}
                   </div>
