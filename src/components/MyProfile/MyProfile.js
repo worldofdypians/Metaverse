@@ -298,9 +298,9 @@ const MyProfile = ({
                 </div>
               </div>
               <div className="d-flex flex-column gap-2 w-100">
-                <div className="d-flex align-items-center gap-2">
+                <div className="d-flex align-items-center gap-0">
                   <div
-                    className={`d-flex align-items-center ${
+                    className={`d-flex flex-column flex-lg-row align-items-lg-center ${
                       !email
                         ? "justify-content-between w-100"
                         : "justify-content-start"
@@ -324,7 +324,7 @@ const MyProfile = ({
                   </span>
                 </div>
                 <span className="my-profile-email mb-2">{email}</span>
-                <div className="d-flex flex-column flex-lg-row align-items-center gap-2">
+                <div className="d-flex flex-column flex-lg-row gap-2">
                   <div
                     className={` ${
                       isConnected &&

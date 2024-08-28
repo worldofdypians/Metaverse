@@ -619,24 +619,48 @@ const Header = ({
                 </NavLink>
                 <hr className="header-divider my-0" />
                 <div className="d-flex align-items-center justify-content-between px-2 mb-2">
-                  <a href="#">
+                  <a
+                    href="https://twitter.com/worldofdypians"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <img src={twitterHeader} width={25} alt="" />
                   </a>
-                  <a href="#">
+                  <a
+                    href="https://t.me/worldofdypians"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <img src={telegramHeader} width={25} alt="" />
                   </a>
-                  <a href="#">
+                  <a
+                    href="https://discord.gg/worldofdypians"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <img src={discordHeader} width={25} alt="" />
                   </a>
                 </div>
                 <div className="d-flex align-items-center justify-content-between px-2 mb-2">
-                  <a href="#">
+                  <a
+                    href="https://www.instagram.com/worldofdypians"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <img src={instagramHeader} width={25} alt="" />
                   </a>
-                  <a href="#">
+                  <a
+                    href="https://www.youtube.com/@Dypius"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <img src={youtubeHeader} width={25} alt="" />
                   </a>
-                  <a href="#">
+                  <a
+                    href="https://medium.com/@worldofdypians"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <img src={mediumHeader} width={25} alt="" />
                   </a>
                 </div>
