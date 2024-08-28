@@ -561,6 +561,11 @@ text-transform: uppercase;
   transform: matrix(1, 0, -0.18, 0.98, 0, 0);
   border-left: 2px solid #015f86;
   border-bottom: 2px solid #015f86;
+
+  @media screen and (max-width: 786px) {
+    transform: none;
+    border: 2px solid #015f86;
+  }
 }
 
 .limited-offer-reward {

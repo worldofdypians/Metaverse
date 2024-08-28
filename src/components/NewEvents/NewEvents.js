@@ -70,15 +70,15 @@ const NewEvents = ({ events, onEventClick, coinbase, wallet, chainId, binanceW3W
               )}
             </div>
             <div className="new-events-bottom-wrapper p-3">
-              <div className="row">
+              <div className="row gap-2 gap-lg-0">
                 <div className="col-12 col-lg-2">
-                  <div className="challenges-list-wrapper py-3 d-flex flex-column gap-3">
+                  <div className="challenges-list-wrapper py-3 px-1 px-lg-0 d-flex flex-column gap-2">
                     <div
                       className={`${
                         challenge === "treasureHunt"
                           ? "active-challenge-item"
                           : "challenge-item"
-                      } d-flex align-items-center gap-2 py-2 px-4`}
+                      } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
                       onClick={() => {
                         setChallenge("treasureHunt");
                       }}
@@ -91,7 +91,7 @@ const NewEvents = ({ events, onEventClick, coinbase, wallet, chainId, binanceW3W
                         challenge === "dragonRuins"
                           ? "active-challenge-item"
                           : "challenge-item"
-                      } d-flex align-items-center gap-2 py-2 px-4`}
+                      } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
                       onClick={() => {
                         setChallenge("dragonRuins");
                       }}
@@ -104,7 +104,7 @@ const NewEvents = ({ events, onEventClick, coinbase, wallet, chainId, binanceW3W
                         challenge === "goldenPass"
                           ? "active-challenge-item"
                           : "challenge-item"
-                      } d-flex align-items-center gap-2 py-2 px-4`}
+                      } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
                       onClick={() => {
                         setChallenge("goldenPass");
                       }}
@@ -117,7 +117,7 @@ const NewEvents = ({ events, onEventClick, coinbase, wallet, chainId, binanceW3W
                         challenge === "scorpionKing"
                           ? "active-challenge-item"
                           : "challenge-item"
-                      } d-flex align-items-center gap-2 py-2 px-4`}
+                      } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
                       onClick={() => {
                         setChallenge("scorpionKing");
                       }}
@@ -130,7 +130,7 @@ const NewEvents = ({ events, onEventClick, coinbase, wallet, chainId, binanceW3W
                         challenge === "puzzleMadness"
                           ? "active-challenge-item"
                           : "challenge-item"
-                      } d-flex align-items-center gap-2 py-2 px-4`}
+                      } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
                       onClick={() => {
                         setChallenge("puzzleMadness");
                       }}
@@ -143,7 +143,7 @@ const NewEvents = ({ events, onEventClick, coinbase, wallet, chainId, binanceW3W
                         challenge === "criticalHit"
                           ? "active-challenge-item"
                           : "challenge-item"
-                      } d-flex align-items-center gap-2 py-2 px-4`}
+                      } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
                       onClick={() => {
                         setChallenge("criticalHit");
                       }}
@@ -156,7 +156,7 @@ const NewEvents = ({ events, onEventClick, coinbase, wallet, chainId, binanceW3W
                         challenge === "mazeGarden"
                           ? "active-challenge-item"
                           : "challenge-item"
-                      } d-flex align-items-center gap-2 py-2 px-4`}
+                      } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
                       onClick={() => {
                         setChallenge("mazeGarden");
                       }}

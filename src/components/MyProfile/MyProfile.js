@@ -1,26 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./_myprofile.scss";
-
 import domainIcon from "./assets/domainIcon.svg";
 import errordomainIcon from "./assets/errordomainIcon.svg";
-
 import chainsFlag from "./assets/chainsFlag2.svg";
 import chainsIcon from "./assets/chainsIcon.svg";
 import globalFlag from "./assets/globalFlag2.svg";
 import globalIcon from "./assets/globalIcon2.png";
 import landFlag from "./assets/landFlag2.svg";
 import landIcon from "./assets/landIcon.svg";
-
 import redArrow from "./assets/redArrow.svg";
 import cyanArrow from "./assets/cyanArrow.svg";
 import pinkArrow from "./assets/pinkArrow.svg";
-
 import mageStarter from "../../screens/Account/src/Components/WalletBalance/assets/mageStarter.png";
 import mageGoing from "../../screens/Account/src/Components/WalletBalance/assets/mageGoing.png";
 import mageFinish from "../../screens/Account/src/Components/WalletBalance/assets/mageFinish.png";
 import readyBorder from "../../screens/Account/src/Components/WalletBalance/newAssets/readyBorder2.svg";
 import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.svg";
-
 import stakeNft from "./assets/stakeNft.png";
 import myRewardsMiner from "./assets/myRewardsMiner.png";
 import Countdown from "react-countdown";
@@ -58,10 +53,11 @@ import underdogProfilePremium from "./assets/underdogProfilePremium.png";
 import championProfilePremium from "./assets/championProfilePremium.png";
 import unstoppableProfilePremium from "./assets/unstoppableProfilePremium.png";
 import errorChain from "./assets/errorchain.svg";
-
+import Slider from "react-slick";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { NavLink } from "react-router-dom";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -157,6 +153,10 @@ const MyProfile = ({
   const [allEvents, setAllEvents] = useState(false);
   const [finished, setFinished] = useState(false);
   const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
+  const [activeSlide, setActiveSlide] = useState();
+  const [showFirstNext, setShowFirstNext] = useState();
+  const sliderRef = useRef(null);
+  const windowSize = useWindowSize();
 
   const getTreasureChestsInfo = async () => {
     var moneyResult = 0;
@@ -238,6 +238,70 @@ const MyProfile = ({
     }
 
     setTreasureRewardMoney(moneyResult);
+  };
+
+  var settings = {
+    dots: false,
+    arrows: false,
+    dotsClass: "button__bar",
+    infinite: false,
+    speed: 1000,
+    autoplay: false,
+    autoplaySpeed: 5000,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    // beforeChange: (current, next) => {
+    //   setActiveSlide(next);
+    //   setShowFirstNext(current);
+    // },
+    // afterChange: (current) => setActiveSlide(current),
+    responsive: [
+      // {
+      //   breakpoint: 1600,
+      //   settings: {
+      //     slidesToShow: 1,
+      //     slidesToScroll: 1,
+      //     initialSlide: 0,
+      //   },
+      // },
+      // {
+      //   breakpoint: 1500,
+      //   settings: {
+      //     slidesToShow: 1,
+      //     slidesToScroll: 1,
+      //     initialSlide: 0,
+      //   },
+      // },
+      // {
+      //   breakpoint: 1400,
+      //   settings: {
+      //     slidesToShow: 1,
+      //     slidesToScroll: 1,
+      //     initialSlide: 0,
+      //   },
+      // },
+      // {
+      //   breakpoint: 1050,
+      //   settings: {
+      //     slidesToShow: 1,
+      //     slidesToScroll: 1,
+      //     initialSlide: 0,
+      //   },
+      // },
+      {
+        breakpoint: 500,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: false,
+          fade: false,
+          initialSlide: 0,
+          autoplay: true,
+          infinite: true,
+        },
+      },
+    ],
   };
 
   useEffect(() => {
@@ -720,7 +784,7 @@ const MyProfile = ({
               </div>
             </div>
             <div className="col-12 col-lg-8 mt-3">
-              <div className="limited-offers-wrapper  d-flex align-items-center justify-content-between gap-3 p-3">
+              <div className="limited-offers-wrapper  d-flex flex-column flex-lg-row  align-items-center justify-content-between gap-3 p-3">
                 <div className="d-flex flex-column gap-2">
                   <h6 className="leaderboards-title mb-0">Limited</h6>
                   <h6
@@ -730,10 +794,12 @@ const MyProfile = ({
                     Offers
                   </h6>
                 </div>
+                {windowSize.width > 991 ?
                 <div
                   className="d-flex align-items-center justify-content-between gap-4"
                   style={{ height: "140px" }}
                 >
+                   {/* <Slider {...settings} ref={sliderRef}> */}
                   <div className="limited-offer-card d-flex flex-column justify-content-between">
                     <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
                       <span className="limited-offer-reward">Extra</span>
@@ -744,7 +810,7 @@ const MyProfile = ({
                         200 Stars
                       </span>
                     </div>
-                    <div className="d-flex flex-column">
+                    <div className="d-flex flex-column align-items-center">
                       <img
                         src={premiumDummy}
                         className="limited-offer-img"
@@ -773,7 +839,7 @@ const MyProfile = ({
                         700 Stars
                       </span>
                     </div>
-                    <div className="d-flex flex-column">
+                    <div className="d-flex flex-column align-items-center">
                       <img
                         src={dummyDragon}
                         className="limited-offer-img"
@@ -802,7 +868,7 @@ const MyProfile = ({
                         1,200 Stars
                       </span>
                     </div>
-                    <div className="d-flex flex-column">
+                    <div className="d-flex flex-column align-items-center">
                       <img
                         src={dummyCaws}
                         className="limited-offer-img"
@@ -819,7 +885,100 @@ const MyProfile = ({
                       {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
                     </div>
                   </div>
-                </div>
+                  {/* </Slider> */}
+                </div> : 
+                // <div
+                //   className="d-flex align-items-center justify-content-between gap-4"
+                //   style={{ height: "140px" }}
+                // >
+                  <Slider {...settings} ref={sliderRef}> 
+                  <div className="limited-offer-card d-flex flex-column justify-content-between">
+                    <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                      <span className="limited-offer-reward">Extra</span>
+                      <span
+                        className="limited-offer-reward"
+                        style={{ color: "#F3C009" }}
+                      >
+                        200 Stars
+                      </span>
+                    </div>
+                    <div className="d-flex flex-column align-items-center">
+                      <img
+                        src={premiumDummy}
+                        className="limited-offer-img"
+                        alt=""
+                      />
+                      <div
+                        className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
+                        style={{ background: "#061F33" }}
+                      >
+                        <span className="limited-offer-purchase">
+                          Get Premium
+                        </span>
+                      </div>
+                    </div>
+                    <div className="d-flex w-100 justify-content-center">
+                      {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
+                    </div>
+                  </div>
+                  <div className="limited-offer-card d-flex flex-column justify-content-between">
+                    <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                      <span className="limited-offer-reward">Extra</span>
+                      <span
+                        className="limited-offer-reward"
+                        style={{ color: "#F3C009" }}
+                      >
+                        700 Stars
+                      </span>
+                    </div>
+                    <div className="d-flex flex-column align-items-center">
+                      <img
+                        src={dummyDragon}
+                        className="limited-offer-img"
+                        alt=""
+                      />
+                      <div
+                        className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
+                        style={{ background: "#061F33" }}
+                      >
+                        <span className="limited-offer-purchase">
+                          Get Dragon Ruins
+                        </span>
+                      </div>
+                    </div>
+                    <div className="d-flex w-100 justify-content-center">
+                      {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
+                    </div>
+                  </div>
+                  <div className="limited-offer-card d-flex flex-column justify-content-between">
+                    <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                      <span className="limited-offer-reward">Extra</span>
+                      <span
+                        className="limited-offer-reward"
+                        style={{ color: "#F3C009" }}
+                      >
+                        1,200 Stars
+                      </span>
+                    </div>
+                    <div className="d-flex flex-column align-items-center">
+                      <img
+                        src={dummyCaws}
+                        className="limited-offer-img"
+                        alt=""
+                      />
+                      <div
+                        className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
+                        style={{ background: "#061F33" }}
+                      >
+                        <span className="limited-offer-purchase">Get CAWS</span>
+                      </div>
+                    </div>
+                    <div className="d-flex w-100 justify-content-center">
+                      {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
+                    </div>
+                  </div>
+                  </Slider>
+                 }
               </div>
             </div>
             <div className="col-12 col-lg-4 mt-3">
