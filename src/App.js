@@ -5186,6 +5186,10 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
                 totalMantaNft={totalMantaNft}
                 mantaMintAllowed={mantaMintAllowed}
                 myMantaNfts={myMantaNfts}
@@ -5465,10 +5469,14 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
                 cawsArray={allCawsForTimepieceMint}
                 mintloading={mintloading}
                 isConnected={isConnected}
-                chainId={chainId}
+                chainId={networkId}
                 handleMint={handleTaikoNftMint}
                 mintStatus={mintStatus}
                 textColor={textColor}
