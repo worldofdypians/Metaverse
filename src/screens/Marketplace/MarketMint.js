@@ -880,15 +880,15 @@ const MarketMint = ({
             setStatus("");
           }
         }
-        //  else if (selectedMint.id === "taiko") {
-        //   if (chainId !== 167000) {
-        //     setactiveButton(false);
-        //     setStatus("Switch to Taiko to continue minting.");
-        //   } else if (chainId === 167000) {
-        //     setactiveButton(true);
-        //     setStatus("");
-        //   }
-        // }
+         else if (selectedMint.id === "taiko") {
+          if (chainId !== 167000) {
+            setactiveButton(false);
+            setStatus("Switch to Taiko to continue minting.");
+          } else if (chainId === 167000) {
+            setactiveButton(true);
+            setStatus("");
+          }
+        }
       }
     }
   }, [isConnected, chainId, coinbase, selectedMint]);
