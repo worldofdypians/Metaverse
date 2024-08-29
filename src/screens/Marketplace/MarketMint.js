@@ -2790,7 +2790,7 @@ const MarketMint = ({
                                   className={
                                       
                                       mintloading === "error" ||
-                                      totalTaikoNft > 0
+                                      totalTaikoNft > 0 && chainId === 167000
                                       ? "linear-border-disabled"
                                       : "linear-border"
                                   }
@@ -2798,7 +2798,7 @@ const MarketMint = ({
                                   <button
                                     className={`btn ${mintloading === "error"
                                         ? "filled-error-btn"
-                                        : totalTaikoNft > 0
+                                        : totalTaikoNft > 0 && chainId === 167000
                                           ? "outline-btn-disabled"
                                           : "filled-btn"
                                       }  px-4 w-100`}
@@ -2815,7 +2815,7 @@ const MarketMint = ({
                                         
                                         
                                        
-                                        totalTaikoNft > 0
+                                        (totalTaikoNft > 0&& chainId === 167000)
                                         ? true
                                         : false
                                     }
