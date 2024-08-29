@@ -1,3 +1,195 @@
-.leaflet-container{
-background: #fff !important;
-}
+
+  
+  .leaflet-container{
+    height: calc(-90px + 100vh) !important;
+      // background: black !important;
+      background-image: url('./assets/chainImages/coreBanner.png') !important;
+    }
+  
+  .leaflet-popup-content-wrapper{
+    background: linear-gradient(126.67deg,#181636 35.2%,#7133e5 191.04%) !important;
+  }
+  
+  /* The sidebar menu */
+  .sidebar {
+      height: 100%; /* 100% Full-height */
+      width: 0; /* 0 width - change this with JavaScript */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Stay on top */
+      top: 90px;
+      left: 0;
+      background-color: #080b2a; /* Black*/
+      overflow-x: hidden; /* Disable horizontal scroll */
+      transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+    }
+    
+    /* The sidebar links */
+    .sidebar a {
+      padding: 8px 0px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #fff;
+      display: block;
+      transition: 0.3s;
+    }
+    
+    /* When you mouse over the navigation links, change their color */
+    .sidebar a:hover {
+      color: #f1f1f1;
+    }
+    
+    /* Position and style the close button (top right corner) */
+    .sidebar .closebtn {
+      top: 0;
+      font-size: 36px;
+      cursor: pointer;
+    }
+    
+    /* The button used to open the sidebar */
+    .openbtn {
+      font-size: 20px;
+      cursor: pointer;
+      background-color: #111;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+    }
+    
+    .openbtn:hover {
+      background-color: #444;
+    }
+    
+    /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+    #main {
+      transition: margin-left .5s; /* If you want a transition effect */
+    }
+    
+    /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+    @media screen and (max-height: 450px) {
+      .sidebar {padding-top: 15px;}
+      .sidebar a {font-size: 18px;}
+    }
+  
+    .MuiAccordionSummary-content > span {
+      display: flex;
+      align-items: center !important;
+      color: white;
+    }
+  
+    .MuiFormControl-root{
+      width: 100%;
+    }
+  
+    .MuiPaper-root{
+      background: none !important;
+    }
+  
+    .chain-popup .leaflet-popup-content-wrapper{
+      width: 100%;
+    }
+  
+  
+    .area-text-marker{
+      font-family: "Poppins", sans-serif;
+      font-size: 16px;
+      text-align: center;
+      color: #fff;
+      font-weight: 800;
+      text-transform: uppercase;
+      -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    }
+    .city-text-marker{
+      font-family: "Poppins", sans-serif;
+      font-size: 14px;
+      text-align: center;
+      color: white;
+      font-weight: 800;
+      text-transform: uppercase;
+      -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    }
+    .sea-text-marker{
+      font-family: "Poppins", sans-serif;
+      font-size: 12px;
+      text-align: center;
+      color: #3d6b80 !important;
+      font-weight: 600;
+      text-transform: uppercase;
+      /* -webkit-text-stroke-width: 1px; */
+    /* -webkit-text-stroke-color: black; */
+    }
+  
+    .map-search{
+      width: 100%;
+    }
+  
+    .search-box{
+      position: absolute;
+      width: 100%;
+      height: 300px;
+      overflow-y: scroll;
+      z-index: 6;
+      background: #080b2a;
+      border-radius: 12px;
+      border: 2px solid #525469;
+    }
+  
+    .search-item{
+      color: #fff;
+      cursor: pointer;
+      transition: all .25s;
+    }
+  
+    .search-item:hover{
+      background: rgba(255, 255, 255, 0.3);
+    }
+  
+    .closebtn-2{
+      position: absolute;
+      right: 3%;
+      top: 18%;
+      bottom: 0;
+      margin: auto;
+      font-size: 20px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+  
+    .land-btn{
+      align-items: center;
+      background: linear-gradient(90deg, #7bd8af -10.16%, #d9fa86 129.3%);
+      border-radius: 8px;
+      color: #080b2a;
+      display: flex;
+      font-size: 14px;
+      font-style: normal;
+      font-family: "Montserrat";
+      font-weight: 600;
+      line-height: 20px;
+      padding: 10px 15px;
+      border: none;
+    }
+  
+  
+    .land-title{
+      color: #b8b8e0;
+      font-size: 20px;
+      font-style: normal;
+      font-family: "Montserrat";
+      font-weight: 700;
+      line-height: 29px;
+    }
+  
+    .marker-details {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 300px;
+      height: 100vh;
+      background: #080b2a;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 1000; /* Ensure it's on top of the map */
+    }

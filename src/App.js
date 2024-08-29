@@ -76,6 +76,7 @@ import Redirect from "./screens/Home/Redirect";
 import WalletModal2 from "./components/WalletModal/WalletModal2";
 import Token from './screens/Token/Token'
 import { isMobile } from "react-device-detect";
+import Map from "./screens/Map/Map.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -5704,6 +5705,8 @@ function App() {
                 />
               }
             /> */}
+          <Route exact path="/map" element={<Map />} />
+
         </Routes>
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
         <ScrollTop />
@@ -5714,7 +5717,11 @@ function App() {
           location.pathname.includes("land") ? null : (
             <MarketplaceFooter />
           )
-        ) : (
+        ) : location.pathname.includes("map") ? 
+        <>
+        </>
+        :
+        (
           <Footer />
         )}
       </div>
@@ -5722,6 +5729,7 @@ function App() {
       {!location.pathname.includes("account") &&
         !location.pathname.includes("auth") &&
         !location.pathname.includes("explorer") &&
+        !location.pathname.includes("map") &&
         !location.pathname.includes("bnbchain-alliance-program") && (
           <ChestFlyout />
         )}
