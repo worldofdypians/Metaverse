@@ -43,7 +43,7 @@ import MapSidebar from "./components/MapSidebar";
 import ZoomToLocation from "./components/ZoomToLocation";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import landIcon from "./assets/landIcon.png";
-import L from "leaflet";
+import L, { marker } from "leaflet";
 import MapWithZoomHandler from "./components/MapWithZoomHandler";
 import CustomMarker from "./components/CustomMarker";
 import LogCoordinates from "./components/LogCoordinates";
@@ -115,14 +115,15 @@ const Map = () => {
     cities: true,
     borders: true,
     bosses: true,
-    quests: true,
+    quests: false,
   });
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const [markerType, setmarkerType] = useState(null)
 
-
-  const handleMarkerClick = (marker) => {
+  const handleMarkerClick = (marker, type) => {
     setSelectedMarker(marker);
     setCenter(marker.location);
+    setmarkerType(type)
     setZoom(17);
   };
 
@@ -191,6 +192,7 @@ const Map = () => {
             <CustomMarker
               icon={questMarker}
               item={item}
+              type={"quest"}
               handleMarkerClick={handleMarkerClick}
             />
           ))}
@@ -243,7 +245,8 @@ const Map = () => {
       </MapContainer>
       <MarkerDetails
         marker={selectedMarker}
-        onClose={() => setSelectedMarker(null)}
+        type={markerType}
+        onClose={() => {setSelectedMarker(null); setmarkerType(null)}}
       />
     </div>
   );

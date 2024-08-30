@@ -1,4 +1,8 @@
 import { bnbMarker, coreMarker, dypMarker, mantaMarker, skaleMarker, taikoMarker, victionMarker } from "./markers";
+import questDummy1 from '../assets/banners/questDummy1.webp'
+import questDummy2 from '../assets/banners/questDummy2.webp'
+import questDummy3 from '../assets/banners/questDummy3.webp'
+import questDummy4 from '../assets/banners/questDummy4.webp'
 
 const chainAreas = [
   {
@@ -9,6 +13,7 @@ const chainAreas = [
     link: "https://www.bnbchain.org/en",
     logo: "bnbBackers.svg",
     banner: "bnbBanner.webp",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"]
   },
   {
     title: "CORE Area",
@@ -18,6 +23,7 @@ const chainAreas = [
     link: "https://coredao.org/",
     logo: "coreBackers.svg",
     banner: "coreBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event", "Test Event 2"]
   },
   {
     title: "Dypius Area",
@@ -27,6 +33,7 @@ const chainAreas = [
     link: "https://www.dypius.com/",
     logo: "coreBackers.svg",
     banner: "bnbBanner.webp",
+    events: ["Treasure Hunt", "NFT Mint"]
   },
   {
     title: "Manta Area",
@@ -36,6 +43,7 @@ const chainAreas = [
     link: "https://manta.network/",
     logo: "mantaBackers.svg",
     banner: "mantaBanner.webp",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event", "Test Event 2"]
   },
   {
     title: "SKALE Area",
@@ -45,6 +53,7 @@ const chainAreas = [
     link: "https://skale.space/",
     logo: "skaleBackers.svg",
     banner: "skaleBanner.webp",
+    events: ["Treasure Hunt", ]
   },
   {
     title: "Taiko Area",
@@ -54,6 +63,8 @@ const chainAreas = [
     link: "https://taiko.xyz/",
     logo: "taikoBackers.svg",
     banner: "taikoBanner.webp",
+    events: ["Treasure Hunt", "NFT Mint", ]
+
   },
   {
     title: "Viction Area",
@@ -63,6 +74,7 @@ const chainAreas = [
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
     banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"]
   },
 ];
 
@@ -396,18 +408,34 @@ const bearAreas = [
     {
       title: "Dragon Slaying",
       location: [-0.06608961547135184, 0.085294246673584],
+      conditions: ["8x Wolf Pelts", "6x Deer Horns", "3x Bunny Ears", "4x Lime Stone"],
+      rewards: ["50x Gold", "2x Red Gem", "1x Serrated Blade", "500x Points"],
+      questGiver: "Aragon The Brave",
+      banner: questDummy1
     },
     {
       title: "Scorpion Hunt",
       location: [-0.06945846763671572, 0.08226871490478517],
+      conditions: ["8x Wolf Pelts", "6x Deer Horns", "3x Bunny Ears"],
+      rewards: ["50x Gold", "2x Red Gem", "1x Serrated Blade"],
+      questGiver: "Paraxys The Wicked",
+      banner: questDummy2
     },
     {
       title: "Alchemy Reagents",
       location: [-0.07126091073560278, 0.08694648742675783],
+      conditions: ["8x Wolf Pelts", "6x Deer Horns"],
+      rewards: ["50x Gold", "2x Red Gem"],
+      questGiver: "Richard Lionheart",
+      banner: questDummy3
     },
     {
       title: "Portal Fuel",
       location: [-0.06817100823818639, 0.08831977844238283],
+      conditions: ["8x Wolf Pelts"],
+      rewards: ["50x Gold"],
+      questGiver: "Napoleon Bonaparte",
+      banner: questDummy4
     },
 
   ]
