@@ -2026,7 +2026,7 @@ function Dashboard({
         data
       );
 
-      setPrevDataVictionMonthly(result.data.data.leaderboard);
+      setPrevDataMantaMonthly(result.data.data.leaderboard);
     } else {
       setPrevDataMantaMonthly(placeholderplayerData);
     }
@@ -2375,7 +2375,7 @@ function Dashboard({
         data
       );
 
-      setPrevDataVictionMonthly(result.data.data.leaderboard);
+      setPrevDataTaikoMonthly(result.data.data.leaderboard);
     } else {
       setPrevDataTaikoMonthly(placeholderplayerData);
     }
