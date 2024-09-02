@@ -180,8 +180,9 @@ const CawsStakeModal = ({
     setloadingdeposit(true);
     setStatus("*Processing deposit");
     setColor("#52A8A4");
+
     if (window.WALLET_TYPE !== "binance") {
-      let stake_contract = await new window.getContractCawsPremiumNFT(
+      let stake_contract = await window.getContractCawsPremiumNFT(
         "CAWSPREMIUM"
       );
       await stake_contract.methods
