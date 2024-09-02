@@ -7,7 +7,7 @@ const LogCoordinates = () => {
   
     // Attach the click event listener only once
     useEffect(() => {
-      const handleClick = (e) => console.log([e.latlng.lat, e.latlng.lng]);
+      const handleClick = (e) => console.log(`[${e.latlng.lat}, ${e.latlng.lng}]`);
       map.on("click", handleClick);
   
       // Clean up event listener on component unmount

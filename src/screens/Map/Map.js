@@ -1,22 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   MapContainer,
   TileLayer,
-  Marker,
-  Popup,
   Polyline,
-  useMap,
+  Polygon,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./_map.scss";
 import {
-  bnbMarker,
-  coreMarker,
-  mantaMarker,
-  dypMarker,
-  skaleMarker,
-  taikoMarker,
-  victionMarker,
+
   AreaTextMarker,
   CityTextMarker,
   SeaTextMarker,
@@ -24,6 +16,8 @@ import {
   questMarker,
   dragonMarker,
   scorpionMarker,
+  teleportMarker,
+  craftingMarker,
 } from "./mapdata/markers";
 import {
   areas,
@@ -31,23 +25,26 @@ import {
   seas,
   hypatiaBorders,
   keplerBorders,
-  firstParcel,
-  secondParcel,
-  thirdParcel,
+
   calderaBorders,
   quests,
   bosses,
   chainAreas,
+  teleports,
+  craftingTables,
+  regions,
 } from "./mapdata/areas";
 import MapSidebar from "./components/MapSidebar";
 import ZoomToLocation from "./components/ZoomToLocation";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import landIcon from "./assets/landIcon.png";
-import L, { marker } from "leaflet";
+import L from "leaflet";
 import MapWithZoomHandler from "./components/MapWithZoomHandler";
 import CustomMarker from "./components/CustomMarker";
 import LogCoordinates from "./components/LogCoordinates";
 import MarkerDetails from "./components/MarkerDetails";
+import EventsBar from "./components/EventsBar";
+import LeafletDraw from "./components/LeafletDraw";
 
 // Utility Functions
 
@@ -65,24 +62,7 @@ const ChainMarkers = ({ chainsVisible, chainAreas, handleMarkerClick }) =>
     />
   ));
 
-const LandMarkers = ({ parcels, handleMarkerClick, landMarker }) =>
-  parcels.map((parcel) => (
-    <MarkerClusterGroup
-      chunkedLoading
-      iconCreateFunction={createLandIcon}
-      disableClusteringAtZoom={15}
-    >
-      {parcel.map((item) => (
-        <CustomMarker
-          key={item.title}
-          item={item}
-          icon={landMarker}
-          type="land"
-          handleMarkerClick={handleMarkerClick}
-        />
-      ))}
-    </MarkerClusterGroup>
-  ));
+
 
 const createLandIcon = () =>
   L.icon({
@@ -103,6 +83,9 @@ const createChainIcon = () => {
 
 // Main Component
 const Map = () => {
+
+  const mapRef = useRef();
+
   const [center, setCenter] = useState([
     -0.06862161903162572, 0.08585214614868165,
   ]);
@@ -111,26 +94,33 @@ const Map = () => {
   const [citiesVisible, setCitiesVisible] = useState(false);
   const [areasVisible, setAreasVisible] = useState(true);
   const [switches, setSwitches] = useState({
-    areas: true,
-    cities: true,
-    borders: true,
-    bosses: true,
+    areas: false,
+    cities: false,
+    borders: false,
+    bosses: false,
     quests: false,
+    teleports: false,
+    craftingTables: false,
   });
   const [selectedMarker, setSelectedMarker] = useState(null);
-  const [markerType, setmarkerType] = useState(null)
+  const [markerType, setmarkerType] = useState(null);
+  const [events, setEvents] = useState(false);
 
   const handleMarkerClick = (marker, type) => {
-    setSelectedMarker(marker);
-    setCenter(marker.location);
-    setmarkerType(type)
-    setZoom(17);
+    if (type === "" || !type) {
+      setCenter(marker.location);
+      setZoom(18);
+    } else {
+      setSelectedMarker(marker);
+      setCenter(marker.location);
+      setmarkerType(type);
+      setZoom(18);
+    }
   };
 
 
-
   return (
-    <div className="d-flex align-items-start" > 
+    <div className="d-flex align-items-start">
       <MapSidebar
         switches={switches}
         setSwitches={setSwitches}
@@ -162,12 +152,7 @@ const Map = () => {
           />
         </MarkerClusterGroup>
 
-        <LandMarkers
-          parcels={[firstParcel, secondParcel, thirdParcel]}
-          handleMarkerClick={handleMarkerClick}
-          landMarker={landMarker}
-        />
-
+      
         {switches.areas &&
           areasVisible &&
           areas.map((item) => (
@@ -196,6 +181,24 @@ const Map = () => {
               handleMarkerClick={handleMarkerClick}
             />
           ))}
+        {switches.teleports &&
+          teleports.map((item) => (
+            <CustomMarker
+              icon={teleportMarker}
+              item={item}
+              type={""}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.craftingTables &&
+          craftingTables.map((item) => (
+            <CustomMarker
+              icon={craftingMarker}
+              item={item}
+              type={""}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
         {switches.bosses && (
           <>
             <CustomMarker
@@ -210,7 +213,13 @@ const Map = () => {
             />
           </>
         )}
-
+       {regions.map((item, index) => (
+      <Polygon
+        key={index}
+        pathOptions={{ fillColor: 'red', color: 'red' }}
+        positions={item.location}
+      />
+    ))}
         {seas.map((item) => (
           <SeaTextMarker
             key={item.title}
@@ -242,12 +251,30 @@ const Map = () => {
           setCities={setCitiesVisible}
         />
         <ZoomToLocation coordinates={center} zoomLevel={zoom} />
+        <LeafletDraw />
       </MapContainer>
       <MarkerDetails
         marker={selectedMarker}
         type={markerType}
-        onClose={() => {setSelectedMarker(null); setmarkerType(null)}}
+        onClose={() => {
+          setSelectedMarker(null);
+          setmarkerType(null);
+        }}
       />
+      <div
+        className={`events-arrow ${
+          events ? "d-none" : "d-flex"
+        } align-items-center justify-content-center p-3`}
+        onClick={() => setEvents(true)}
+      >
+        <img
+          src={require("./assets/rightArrow.svg").default}
+          width={24}
+          height={24}
+          alt=""
+        />
+      </div>
+      <EventsBar show={events} onClose={() => setEvents(false)} />
     </div>
   );
 };

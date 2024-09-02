@@ -11,8 +11,9 @@ const Sidebar = ({
   chainAreas,
   handleMarkerClick,
 }) => {
-  const [search, setSearch] = useState("");
 
+
+  const [search, setSearch] = useState("");
   const [sidebar, setSidebar] = useState(true);
   const [searchBox, setSearchBox] = useState(false);
 
@@ -40,18 +41,27 @@ const Sidebar = ({
     document.getElementById("mySidebar").style.paddingLeft = "0";
     document.getElementById("mySidebar").style.paddingRight = "0";
 
+
     setSidebar(false);
   }
+
+  useEffect(() => {
+    const leafletControls = document.querySelectorAll(".leaflet-left");
+    leafletControls.forEach((control) => {
+      control.style.left = sidebar ? "0px" : "50px";
+    });
+  }, [sidebar]);
+
 
   useEffect(() => {
     openNav();
   }, []);
 
   return (
-    <div style={{marginTop: "90px"}}>
-      <div id="mySidebar" class="sidebar">
+    <div>
+      <div id="mySidebar" className="sidebar">
         <div className="d-flex align-items-center justify-content-end">
-          <a href="javascript:void(0)" class="closebtn" onClick={closeNav}>
+          <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
             ×
           </a>
         </div>
@@ -64,7 +74,7 @@ const Sidebar = ({
             placeholder="Search..."
           />
          {search !== "" && 
-          <span class="closebtn-2" onClick={() => {setSearch(""); setSearchBox(false)}}>
+          <span className="closebtn-2" onClick={() => {setSearch(""); setSearchBox(false)}}>
           ×
         </span>
          }
@@ -77,8 +87,9 @@ const Sidebar = ({
               .filter((item) => {
                 return item.title.toLowerCase().includes(search.toLowerCase());
               })
-              .map((item) => (
+              .map((item, index) => (
                 <h6
+                key={index}
                   className="search-item mb-0 p-3"
                   onClick={() => {
                     handleMarkerClick(item);
@@ -187,11 +198,47 @@ const Sidebar = ({
             />
             <span style={{ marginLeft: 8, color: "white" }}>Game Bosses</span>
           </div>
+          <div>
+            <Checkbox
+              checked={switches.teleports}
+              onChange={() =>
+                setSwitches((prevState) => ({
+                  ...prevState,
+                  teleports: !switches.teleports,
+                }))
+              }
+              sx={{
+                color: "white",
+                "&.Mui-checked": {
+                  color: "white",
+                },
+              }}
+            />
+            <span style={{ marginLeft: 8, color: "white" }}>Teleports</span>
+          </div>
+          <div>
+            <Checkbox
+              checked={switches.craftingTables}
+              onChange={() =>
+                setSwitches((prevState) => ({
+                  ...prevState,
+                  craftingTables: !switches.craftingTables,
+                }))
+              }
+              sx={{
+                color: "white",
+                "&.Mui-checked": {
+                  color: "white",
+                },
+              }}
+            />
+            <span style={{ marginLeft: 8, color: "white" }}>Crafting Tables</span>
+          </div>
         </div>
       </div>
       <div id="main">
         <button
-          class="openbtn"
+          className="openbtn"
           onClick={openNav}
           style={{ display: sidebar ? "none" : "flex" }}
         >
