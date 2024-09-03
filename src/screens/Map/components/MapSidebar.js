@@ -7,7 +7,6 @@ import { allAreas } from "../mapdata/areas";
 const Sidebar = ({
   switches,
   setSwitches,
-  setChainsVisible,
   chainAreas,
   handleMarkerClick,
 }) => {
@@ -30,7 +29,7 @@ const Sidebar = ({
     document.getElementById("mySidebar").style.width = "300px";
     document.getElementById("mySidebar").style.paddingLeft = "12px";
     document.getElementById("mySidebar").style.paddingRight = "12px";
-    document.getElementById("main").style.marginLeft = "300px";
+    document.getElementById("main").style.marginLeft = "0px";
     setSidebar(true);
   }
 
@@ -48,7 +47,7 @@ const Sidebar = ({
   useEffect(() => {
     const leafletControls = document.querySelectorAll(".leaflet-left");
     leafletControls.forEach((control) => {
-      control.style.left = sidebar ? "0px" : "50px";
+      control.style.left = sidebar ? "300px" : "50px";
     });
   }, [sidebar]);
 
@@ -92,7 +91,7 @@ const Sidebar = ({
                 key={index}
                   className="search-item mb-0 p-3"
                   onClick={() => {
-                    handleMarkerClick(item);
+                    handleMarkerClick(item, 18);
                   }}
                 >
                   {item.title}
@@ -104,10 +103,27 @@ const Sidebar = ({
          
           <CheckboxDropdown
             parent={"Dypians City"}
-            handleParentEvent={setChainsVisible}
             options={chainAreas}
             onZoomIn={handleMarkerClick}
           />
+          <div>
+            <Checkbox
+              checked={switches.regions}
+              onChange={() =>
+                setSwitches((prevState) => ({
+                  ...prevState,
+                  regions: !switches.regions,
+                }))
+              }
+              sx={{
+                color: "white",
+                "&.Mui-checked": {
+                  color: "white",
+                },
+              }}
+            />
+            <span style={{ marginLeft: 8, color: "white" }}>Regions</span>
+          </div>
           <div>
             <Checkbox
               checked={switches.areas}
@@ -125,24 +141,6 @@ const Sidebar = ({
               }}
             />
             <span style={{ marginLeft: 8, color: "white" }}>Areas</span>
-          </div>
-          <div>
-            <Checkbox
-              checked={switches.cities}
-              onChange={() =>
-                setSwitches((prevState) => ({
-                  ...prevState,
-                  cities: !switches.cities,
-                }))
-              }
-              sx={{
-                color: "white",
-                "&.Mui-checked": {
-                  color: "white",
-                },
-              }}
-            />
-            <span style={{ marginLeft: 8, color: "white" }}>Cities</span>
           </div>
           <div>
             <Checkbox

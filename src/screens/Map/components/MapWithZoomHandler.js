@@ -1,18 +1,19 @@
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 
-const MapWithZoomHandler = ({ setCities, setAreas }) => {
+const MapWithZoomHandler = ({ setAreas, setRegions, setChains, setAreaInfo }) => {
     const map = useMap();
     useEffect(() => {
       const handleZoomEnd = () => {
         const zoomLevel = map.getZoom();
-        setAreas(zoomLevel === 13);
-        setCities(zoomLevel !== 13);
+        setAreas(zoomLevel <= 14);
+        setChains(zoomLevel >= 14);
+        setRegions(zoomLevel >= 15);
       };
   
       map.on("zoomend", handleZoomEnd);
       return () => map.off("zoomend", handleZoomEnd);
-    }, [map, setCities, setAreas]);
+    }, [map, setAreas, setChains, setRegions]);
   
     return null;
   };

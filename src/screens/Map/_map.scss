@@ -1,9 +1,9 @@
 
   
   .leaflet-container{
-    height: calc(-90px + 100vh) !important;
-      background: black !important;
-      // background-image: url('./assets/chainImages/coreBanner.png') !important;
+    height: calc(-105px + 100vh) !important;
+      // background: black !important;
+      background-image: url('./assets/cloudBg.jpg') !important;
     }
   
   .leaflet-popup-content-wrapper{
@@ -15,7 +15,7 @@
       height: 100%; /* 100% Full-height */
       width: 0; /* 0 width - change this with JavaScript */
       position: fixed; /* Stay in place */
-      z-index: 1; /* Stay on top */
+      z-index: 1000; /* Stay on top */
       top: 90px;
       left: 0;
       background-color: #080b2a; /* Black*/
@@ -239,7 +239,7 @@
       border-radius: 8px;
       position: absolute;
       right: 15px;
-      top: 105px;
+      top: 120px;
       z-index: 1000;
       cursor: pointer;
     }

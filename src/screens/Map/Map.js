@@ -1,18 +1,11 @@
 import React, { useRef, useState } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  Polyline,
-  Polygon,
-} from "react-leaflet";
+import { MapContainer, TileLayer, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./_map.scss";
 import {
-
   AreaTextMarker,
   CityTextMarker,
   SeaTextMarker,
-  landMarker,
   questMarker,
   dragonMarker,
   scorpionMarker,
@@ -21,12 +14,9 @@ import {
 } from "./mapdata/markers";
 import {
   areas,
-  cities,
   seas,
   hypatiaBorders,
   keplerBorders,
-
-  calderaBorders,
   quests,
   bosses,
   chainAreas,
@@ -37,14 +27,14 @@ import {
 import MapSidebar from "./components/MapSidebar";
 import ZoomToLocation from "./components/ZoomToLocation";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import landIcon from "./assets/landIcon.png";
 import L from "leaflet";
 import MapWithZoomHandler from "./components/MapWithZoomHandler";
 import CustomMarker from "./components/CustomMarker";
 import LogCoordinates from "./components/LogCoordinates";
 import MarkerDetails from "./components/MarkerDetails";
 import EventsBar from "./components/EventsBar";
-import LeafletDraw from "./components/LeafletDraw";
+import CustomPolygon from "./components/CustomPolygon";
+import AreaInfo from "./components/AreaInfo";
 
 // Utility Functions
 
@@ -62,16 +52,6 @@ const ChainMarkers = ({ chainsVisible, chainAreas, handleMarkerClick }) =>
     />
   ));
 
-
-
-const createLandIcon = () =>
-  L.icon({
-    iconUrl: landIcon,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32],
-  });
-
 const createChainIcon = () => {
   return L.divIcon({
     className: "custom-div-icon",
@@ -83,7 +63,6 @@ const createChainIcon = () => {
 
 // Main Component
 const Map = () => {
-
   const mapRef = useRef();
 
   const [center, setCenter] = useState([
@@ -91,11 +70,13 @@ const Map = () => {
   ]);
   const [zoom, setZoom] = useState(17);
   const [chainsVisible, setChainsVisible] = useState(true);
-  const [citiesVisible, setCitiesVisible] = useState(false);
+  const [areaInfo, setAreaInfo] = useState(false);
+  const [areaContent, setAreaContent] = useState(null)
+  const [regionsVisible, setRegionsVisible] = useState(true);
   const [areasVisible, setAreasVisible] = useState(true);
   const [switches, setSwitches] = useState({
-    areas: false,
-    cities: false,
+    regions: true,
+    areas: true,
     borders: false,
     bosses: false,
     quests: false,
@@ -106,25 +87,28 @@ const Map = () => {
   const [markerType, setmarkerType] = useState(null);
   const [events, setEvents] = useState(false);
 
-  const handleMarkerClick = (marker, type) => {
+  const handleMarkerClick = (marker,zoom, type) => {
     if (type === "" || !type) {
       setCenter(marker.location);
-      setZoom(18);
+      setZoom(zoom);
     } else {
       setSelectedMarker(marker);
       setCenter(marker.location);
       setmarkerType(type);
-      setZoom(18);
+      setZoom(zoom);
     }
   };
 
-
+  const bounds = [
+    [-0.16, 0.0], // Southwest corner
+    [0.16, 0.16], // Northeast corner
+  ];
+  
   return (
     <div className="d-flex align-items-start">
       <MapSidebar
         switches={switches}
         setSwitches={setSwitches}
-        setChainsVisible={setChainsVisible}
         handleMarkerClick={handleMarkerClick}
         chainAreas={chainAreas}
       />
@@ -133,6 +117,8 @@ const Map = () => {
           [0.0, 0.0],
           [-0.14373029, 0.14373045],
         ]}
+        maxBounds={bounds}
+        maxBoundsViscosity={1.0}
         center={center}
         zoom={zoom}
         minZoom={13}
@@ -140,20 +126,16 @@ const Map = () => {
         style={{ height: "100vh", width: "100%" }}
       >
         <TileLayer url="/mapTiles/{z}/{x}/{y}.png" />
-        <MarkerClusterGroup
-          chunkedLoading
-          iconCreateFunction={createChainIcon}
-          disableClusteringAtZoom={15}
-        >
-          <ChainMarkers
-            chainsVisible={chainsVisible}
-            chainAreas={chainAreas}
-            handleMarkerClick={handleMarkerClick}
-          />
-        </MarkerClusterGroup>
+      {zoom >= 14 &&
+           
+           <ChainMarkers
+           chainsVisible={chainsVisible}
+           chainAreas={chainAreas}
+           handleMarkerClick={handleMarkerClick}
+         />
+      }
 
-      
-        {switches.areas &&
+        {switches.regions &&
           areasVisible &&
           areas.map((item) => (
             <AreaTextMarker
@@ -163,15 +145,7 @@ const Map = () => {
             />
           ))}
 
-        {switches.cities &&
-          citiesVisible &&
-          cities.map((item) => (
-            <CityTextMarker
-              key={item.title}
-              position={item.location}
-              area={item.title}
-            />
-          ))}
+      
         {switches.quests &&
           quests.map((item) => (
             <CustomMarker
@@ -213,13 +187,22 @@ const Map = () => {
             />
           </>
         )}
-       {regions.map((item, index) => (
-      <Polygon
-        key={index}
-        pathOptions={{ fillColor: 'red', color: 'red' }}
-        positions={item.location}
-      />
-    ))}
+        {regionsVisible && switches.areas &&
+          regions.map((item, index) => (
+            <>
+              <CustomPolygon
+                key={index}
+                item={item}
+                handleMarkerClick={handleMarkerClick}
+                setInfo={setAreaInfo}
+                setContent={setAreaContent}
+                content={areaContent}
+              />
+              {item.location.length > 0 && (
+                <CityTextMarker position={item.location} area={item.title} />
+              )}
+            </>
+          ))}
         {seas.map((item) => (
           <SeaTextMarker
             key={item.title}
@@ -232,26 +215,24 @@ const Map = () => {
         {switches.borders && (
           <>
             <Polyline
-              pathOptions={{ color: "#fff", dashArray: "5, 10" }}
+              pathOptions={{ color: "#fff", weight: 2 }}
               positions={hypatiaBorders}
             />
             <Polyline
-              pathOptions={{ color: "#fff", dashArray: "5, 10" }}
+              pathOptions={{ color: "#fff", weight: 2 }}
               positions={keplerBorders}
-            />
-            <Polyline
-              pathOptions={{ color: "#fff", dashArray: "5, 10" }}
-              positions={calderaBorders}
             />
           </>
         )}
         <LogCoordinates />
         <MapWithZoomHandler
           setAreas={setAreasVisible}
-          setCities={setCitiesVisible}
+          setRegions={setRegionsVisible}
+          setChains={setChainsVisible}
+          setAreaInfo={setAreaInfo}
         />
         <ZoomToLocation coordinates={center} zoomLevel={zoom} />
-        <LeafletDraw />
+        {/* <LeafletDraw /> */}
       </MapContainer>
       <MarkerDetails
         marker={selectedMarker}
@@ -263,7 +244,7 @@ const Map = () => {
       />
       <div
         className={`events-arrow ${
-          events ? "d-none" : "d-flex"
+          events || selectedMarker ? "d-none" : "d-flex"
         } align-items-center justify-content-center p-3`}
         onClick={() => setEvents(true)}
       >
@@ -275,6 +256,7 @@ const Map = () => {
         />
       </div>
       <EventsBar show={events} onClose={() => setEvents(false)} />
+      <AreaInfo show={areaInfo} content={areaContent} onClose={() => {setAreaInfo(false); setAreaContent(null)}} />
     </div>
   );
 };

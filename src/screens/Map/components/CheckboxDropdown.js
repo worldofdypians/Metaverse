@@ -2,22 +2,9 @@ import React, { useState } from 'react';
 import { Accordion, AccordionSummary, AccordionDetails, Checkbox, FormControl, FormControlLabel, FormGroup } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const CheckboxDropdown = ({options, parent, handleParentEvent, onZoomIn}) => {
-    const [parentChecked, setParentChecked] = useState(false);
+const CheckboxDropdown = ({options, parent, onZoomIn}) => {
 
-    const handleParentCheckboxChange = (event) => {
-        const isChecked = event.target.checked;
-        setParentChecked(isChecked);
-        if (isChecked) {
-            handleParentEvent(true)
-          
-        } else {
-            handleParentEvent(false)
-       
-
-        }
-    };
-
+   
  
 
     return (
@@ -43,7 +30,7 @@ const CheckboxDropdown = ({options, parent, handleParentEvent, onZoomIn}) => {
                 <AccordionDetails>
                      <div className="d-flex flex-column gap-3">
                      {options.map((option, index) => (
-                          <div key={index} className="d-flex align-items-start gap-2" style={{cursor: "pointer"}} onClick={() => onZoomIn(option, "chain")}>
+                          <div key={index} className="d-flex align-items-start gap-2" style={{cursor: "pointer"}} onClick={() => onZoomIn(option, 18, "chain")}>
                             <img src={require(`../assets/${option.icon}`)} width={24} height={24} alt="" />
                             <h6 className="chain-sidebar-title mb-0 text-white">
                                 {option.title}
