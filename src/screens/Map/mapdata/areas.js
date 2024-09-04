@@ -1,24 +1,21 @@
 import {
   bnbMarker,
   coreMarker,
+  dragonMarker,
   dypMarker,
   mantaMarker,
+  mazeMarker,
+  puzzleMarker,
+  scorpionMarker,
   skaleMarker,
   taikoMarker,
+  treasureMarker,
   victionMarker,
 } from "./markers";
 import questDummy1 from "../assets/banners/questDummy1.webp";
 import questDummy2 from "../assets/banners/questDummy2.webp";
 import questDummy3 from "../assets/banners/questDummy3.webp";
 import questDummy4 from "../assets/banners/questDummy4.webp";
-import coreLogo from "../assets/coreIcon.svg";
-import bnbLogo from "../assets/bnbIcon.svg";
-import victionLogo from "../assets/victionIcon.svg";
-import taikoLogo from "../assets/taikoIcon.svg";
-import mantaLogo from "../assets/mantaIcon.png";
-import immutableLogo from "../assets/immutableLogo.svg";
-import cookieLogo from "../assets/cookieLogo.svg";
-
 const chainAreas = [
   {
     title: "BNB Chain Area",
@@ -316,105 +313,6 @@ const craftingTables = [
   {
     title: "Armor Crafting",
     location: [-0.10574334817385038, 0.0885772705078125],
-  },
-];
-
-const allAreas = [
-  ...bearAreas,
-  ...deerAreas,
-  ...boarAreas,
-  ...areas,
-  ...seas,
-  ...chainAreas,
-  ...bosses,
-  ...quests,
-  ...teleports,
-  ...craftingTables,
-];
-
-let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
-let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
-let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
-let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
-let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
-let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
-
-const treasureHuntEvents = [
-  {
-    title: "CORE",
-    logo: coreLogo,
-    eventStatus: "Live",
-    totalRewards: "$20,000 in CORE Rewards",
-    myEarnings: 0.0,
-    eventDate: "Jul 01, 2024",
-    date: "Jul 01, 2024",
-    id: "event12",
-    eventType: "Explore & Mine",
-    eventDuration: coreLastDay,
-    minRewards: "0.5",
-    maxRewards: "20",
-    minPoints: "5,000",
-    maxPoints: "50,000",
-    learnMore: "",
-
-    chain: "CORE Chain",
-    linkState: "core",
-    rewards: "CORE",
-    status: "Live",
-  },
-  {
-    title: "Manta",
-    logo: mantaLogo,
-    eventStatus: "Live",
-    date: "Aug 01, 2024",
-    eventType: "Explore & Mine",
-    eventDuration: mantaLastDay,
-    status: "Live",
-  },
-
-  {
-    title: "Immutable",
-    logo: immutableLogo,
-    eventStatus: "Live",
-    date: "Aug 15, 2024",
-    eventType: "Explore & Mine",
-    eventDuration: immutableLastDay,
-    status: "Live",
-  },
-
-  {
-    title: "Taiko",
-    logo: taikoLogo,
-    eventStatus: "Live",
-    date: "Aug 19, 2024",
-    eventType: "Explore & Mine",
-    eventDuration: taikoLastDay,
-    status: "Live",
-  },
-
-  {
-    title: "BNB Chain",
-    status: "Live",
-    eventType: "Explore & Mine",
-    date: "Jun 12, 2024",
-    logo: bnbLogo,
-    eventDuration: bnbLastDay,
-  },
-  {
-    title: "VICTION",
-    status: "Live",
-    eventType: "Explore & Find",
-    date: "Jul 01, 2024",
-    logo: victionLogo,
-    eventDuration: coreLastDay,
-  },
-  {
-    title: "Cookie3",
-    status: "Live",
-    eventType: "Explore & Mine",
-    date: "Aug 26, 2024",
-    logo: cookieLogo,
-    eventDuration: cookieLastDay,
   },
 ];
 
@@ -1324,7 +1222,7 @@ const regions = [
     ],
   },
   {
-    title: "Dypius City",
+    title: "Dypians City",
     location: [-0.06445883344864528, 0.08557319641113281],
     area: [
       [
@@ -2069,6 +1967,102 @@ const regions = [
   },
 ];
 
+
+let midleLastDay = new Date("2024-09-10T13:00:00.000+02:00");
+let cookieLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
+let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
+
+const dummyEvents = [
+  {
+    title: "Puzzle Madness",
+    duration: "--",
+    image: "puzzleMadnessDummy.png",
+    type: "Puzzle",
+    marker: puzzleMarker,
+    location: [-0.041627880248805656, 0.10673046112060548],
+
+  },
+  {
+    title: "Dragon Ruins",
+    duration: "--",
+    image: "dragonRuinsDummy.png",
+    type: "Boss Fight",
+    marker: dragonMarker,
+    location: [-0.11415474014968524, 0.08462905883789064],
+  },
+  {
+    title: "Scorpion King",
+    duration: "--",
+    image: "scorpionKingDummy.png",
+    type: "Boss Fight",
+    marker: scorpionMarker,
+    location: [-0.02729415790322787, 0.07261276245117189],
+  },
+  {
+    title: "Maze Garden",
+    duration: "--",
+    image: "mazeGardenDummy.png",
+    type: "Puzzle",
+    marker: mazeMarker,
+    location: [-0.04827975655460935, 0.042529106140136726],
+
+  },
+  {
+    title: "Cookie3 Treasure Hunt",
+    duration: cookieLastDay,
+    image: "cookieEventDummy.png",
+    type: "Treasure Hunt",
+    marker: treasureMarker,
+    location: [-0.05935191046684262, 0.03785133361816407],
+
+  },
+  {
+    title: "Manta Treasure Hunt",
+    duration: mantaLastDay,
+    image: "mantaEventDummy.png",
+    type: "Treasure Hunt",
+    marker: treasureMarker,
+    location: [-0.06124018456762751, 0.11788845062255861],
+
+  },
+  {
+    title: "Midle Treasure Hunt",
+    duration: midleLastDay,
+    image: "midleEventDummy.png",
+    type: "Treasure Hunt",
+    marker: treasureMarker,
+    location: [-0.033817289296309505, 0.09595870971679689],
+
+  },
+  {
+    title: "Taiko Treasure Hunt",
+    duration: taikoLastDay,
+    image: "taikoEventDummy.png",
+    type: "Treasure Hunt",
+    marker: treasureMarker,
+    location: [-0.12891758531392564, 0.059008598327636726],
+
+  },
+];
+
+
+const allAreas = [
+  ...bearAreas,
+  ...deerAreas,
+  ...boarAreas,
+  ...areas,
+  ...seas,
+  ...chainAreas,
+  ...bosses,
+  ...quests,
+  ...teleports,
+  ...craftingTables,
+];
+
+
+
+
 export {
   bearAreas,
   deerAreas,
@@ -2084,6 +2078,6 @@ export {
   chainAreas,
   teleports,
   craftingTables,
-  treasureHuntEvents,
   regions,
+  dummyEvents,
 };

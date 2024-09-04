@@ -13,9 +13,15 @@ import questIcon from "../assets/questIcon.svg";
 import craftingIcon from "../assets/craftingIcon.svg";
 import teleportIcon from "../assets/teleportIcon.svg";
 import dragon from "../assets/dragon.png";
+import dragonIcon from "../assets/dragonIcon.png";
+import scorpionIcon from "../assets/scorpionIcon.png";
+import treasureHuntIcon from "../assets/treasureHuntIcon.png";
+import puzzleMadnessIcon from "../assets/puzzleMadnessIcon.png";
+import mazeGardenIcon from "../assets/mazeGardenIcon.png";
+
 import scorpionKing from "../assets/scorpionKing.png";
-import whitePickaxe from '../assets/whitePickaxe.svg'
-import magnifier from '../assets/magnifier.svg'
+import whitePickaxe from "../assets/whitePickaxe.svg";
+import magnifier from "../assets/magnifier.svg";
 import L from "leaflet";
 import { Marker } from "react-leaflet";
 
@@ -35,7 +41,7 @@ const AreaTextMarker = ({ area, position }) => {
 };
 const CityTextMarker = ({ area, position }) => {
   const textIcon = L.divIcon({
-    className: "custom-div-icon",
+    className: "custom-div-icon area-marker",
     html: `<div class="city-text-marker">${area}</div>`,
     iconSize: [100, 40],
     iconAnchor: [50, 20], // Center the text
@@ -81,13 +87,16 @@ const skaleMarker = createIcon(skaleIcon, 24);
 const taikoMarker = createIcon(taikoIcon, 24);
 const victionMarker = createIcon(victionIcon, 24);
 const landMarker = createIcon(landIcon, 24);
-const dragonMarker = createIcon(dragon, 40);
-const scorpionMarker = createIcon(scorpionKing, 40);
+const dragonMarker = createIcon(dragonIcon, 40);
+const scorpionMarker = createIcon(scorpionIcon, 40);
 const questMarker = createIcon(questIcon, 24);
 const teleportMarker = createIcon(teleportIcon, 24);
 const craftingMarker = createIcon(craftingIcon, 24);
 const findMarker = createIcon(magnifier, 32);
 const mineMarker = createIcon(whitePickaxe, 32);
+const mazeMarker = createIcon(mazeGardenIcon, 32);
+const puzzleMarker = createIcon(puzzleMadnessIcon, 32);
+const treasureMarker = createIcon(treasureHuntIcon, 32);
 
 // Exporting the markers
 export {
@@ -112,4 +121,7 @@ export {
   craftingMarker,
   findMarker,
   mineMarker,
+  mazeMarker,
+  puzzleMarker,
+  treasureMarker,
 };

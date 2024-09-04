@@ -15,7 +15,7 @@ const CustomPolygon = ({ item, handleMarkerClick, setInfo, setContent, content }
       eventHandlers={{
         mouseover: () => setHovered(true),  
         mouseout: () => setHovered(false),
-        click: () => {setContent(item.title); handleMarkerClick(item, 15); setInfo(true);}
+        click: () => {setContent(item.title); handleMarkerClick(item, 15, "area"); setInfo(true);}
       }}
     />
   );

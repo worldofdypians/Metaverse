@@ -23,10 +23,10 @@ import {
   teleports,
   craftingTables,
   regions,
+  dummyEvents,
 } from "./mapdata/areas";
 import MapSidebar from "./components/MapSidebar";
 import ZoomToLocation from "./components/ZoomToLocation";
-import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
 import MapWithZoomHandler from "./components/MapWithZoomHandler";
 import CustomMarker from "./components/CustomMarker";
@@ -34,7 +34,6 @@ import LogCoordinates from "./components/LogCoordinates";
 import MarkerDetails from "./components/MarkerDetails";
 import EventsBar from "./components/EventsBar";
 import CustomPolygon from "./components/CustomPolygon";
-import AreaInfo from "./components/AreaInfo";
 
 // Utility Functions
 
@@ -52,14 +51,6 @@ const ChainMarkers = ({ chainsVisible, chainAreas, handleMarkerClick }) =>
     />
   ));
 
-const createChainIcon = () => {
-  return L.divIcon({
-    className: "custom-div-icon",
-    html: '<div class="area-text-marker">Dypians City</div>',
-    iconSize: [150, 60],
-    iconAnchor: [75, 30], // Center the text
-  });
-};
 
 // Main Component
 const Map = () => {
@@ -70,7 +61,7 @@ const Map = () => {
   ]);
   const [zoom, setZoom] = useState(17);
   const [chainsVisible, setChainsVisible] = useState(true);
-  const [areaInfo, setAreaInfo] = useState(false);
+  const [show, setShow] = useState(false);
   const [areaContent, setAreaContent] = useState(null)
   const [regionsVisible, setRegionsVisible] = useState(true);
   const [areasVisible, setAreasVisible] = useState(true);
@@ -88,10 +79,12 @@ const Map = () => {
   const [events, setEvents] = useState(false);
 
   const handleMarkerClick = (marker,zoom, type) => {
+    setEvents(false)
     if (type === "" || !type) {
       setCenter(marker.location);
       setZoom(zoom);
     } else {
+      setShow(true);
       setSelectedMarker(marker);
       setCenter(marker.location);
       setmarkerType(type);
@@ -173,6 +166,15 @@ const Map = () => {
               handleMarkerClick={handleMarkerClick}
             />
           ))}
+        {
+          dummyEvents.map((item) => (
+            <CustomMarker
+              icon={item.marker}
+              item={item}
+              type={""}
+              handleMarkerClick={() => handleMarkerClick(item, 18, "event")}
+            />
+          ))}
         {switches.bosses && (
           <>
             <CustomMarker
@@ -194,7 +196,6 @@ const Map = () => {
                 key={index}
                 item={item}
                 handleMarkerClick={handleMarkerClick}
-                setInfo={setAreaInfo}
                 setContent={setAreaContent}
                 content={areaContent}
               />
@@ -229,24 +230,16 @@ const Map = () => {
           setAreas={setAreasVisible}
           setRegions={setRegionsVisible}
           setChains={setChainsVisible}
-          setAreaInfo={setAreaInfo}
         />
         <ZoomToLocation coordinates={center} zoomLevel={zoom} />
         {/* <LeafletDraw /> */}
       </MapContainer>
-      <MarkerDetails
-        marker={selectedMarker}
-        type={markerType}
-        onClose={() => {
-          setSelectedMarker(null);
-          setmarkerType(null);
-        }}
-      />
+    
       <div
-        className={`events-arrow ${
-          events || selectedMarker ? "d-none" : "d-flex"
+        className={`events-arrow ${events ? "events-arrow-open" : ""} ${
+          show || selectedMarker ? "d-none" : "d-flex"
         } align-items-center justify-content-center p-3`}
-        onClick={() => setEvents(true)}
+        onClick={() => setEvents(!events)}
       >
         <img
           src={require("./assets/rightArrow.svg").default}
@@ -255,8 +248,17 @@ const Map = () => {
           alt=""
         />
       </div>
-      <EventsBar show={events} onClose={() => setEvents(false)} />
-      <AreaInfo show={areaInfo} content={areaContent} onClose={() => {setAreaInfo(false); setAreaContent(null)}} />
+      <EventsBar show={events} onClose={() => setEvents(false)} handleMarkerClick={handleMarkerClick} />
+      <MarkerDetails
+        marker={selectedMarker}
+        type={markerType}
+        show={show}
+        onClose={() => {
+          setSelectedMarker(null);
+          setmarkerType(null);
+          setShow(false);
+        }}
+      />
     </div>
   );
 };

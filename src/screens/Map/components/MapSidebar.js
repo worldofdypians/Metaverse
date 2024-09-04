@@ -47,7 +47,8 @@ const Sidebar = ({
   useEffect(() => {
     const leafletControls = document.querySelectorAll(".leaflet-left");
     leafletControls.forEach((control) => {
-      control.style.left = sidebar ? "300px" : "50px";
+      control.style.left = sidebar ? "300px" : "65px";
+      control.style.top = "10px";
     });
   }, [sidebar]);
 
