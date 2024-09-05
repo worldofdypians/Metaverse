@@ -1,5 +1,5 @@
 .leaflet-container {
-  height: calc(-90px + 100vh) !important;
+  height: calc(-105px + 100vh) !important;
   // background: black !important;
   background-image: url("./assets/cloudBg.jpg") !important;
 }
@@ -18,7 +18,7 @@
   width: 0; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 1000; /* Stay on top */
-  top: 90px;
+  top: 105px;
   left: 0;
   background-color: #080b2a; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
@@ -27,7 +27,7 @@
 
 /* The sidebar links */
 .sidebar a {
-  padding: 8px 0px 8px 32px;
+  padding: 8px 0px 8px 8px;
   text-decoration: none;
   font-size: 25px;
   color: #fff;
@@ -58,7 +58,7 @@
   position: absolute;
   width: 56px;
   height: 56px;
-  top: 110px;
+  top: 125px;
   left: 15px;
   display: flex;
   justify-content: center;
@@ -203,9 +203,9 @@ border-radius: 8px;
 .marker-details {
   position: fixed;
   right: 0;
-  top: 90px;
+  top: 105px;
   width: 350px;
-  height: calc(-90px + 100vh);
+  height: calc(-105px + 100vh);
   background: #080b2a;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -215,9 +215,9 @@ border-radius: 8px;
 .marker-details-2 {
   position: fixed;
   right: -450px;
-  top: 90px;
+  top: 105px;
   width: 450px;
-  height: calc(-90px + 100vh);
+  height: calc(-105px + 100vh);
   background: #080b2a;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -258,7 +258,6 @@ border-radius: 8px;
 }
 
 .closebtn-3 {
-  padding: 8px 0px 8px 32px;
   text-decoration: none;
   font-size: 25px;
   color: #fff;
@@ -281,7 +280,7 @@ border-radius: 8px;
   border-radius: 8px;
   position: absolute;
   right: 15px;
-  top: 110px;
+  top: 125px;
   z-index: 1000;
   cursor: pointer;
   transition: all .25s;

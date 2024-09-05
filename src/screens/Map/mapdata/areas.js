@@ -134,7 +134,7 @@ const boarAreas = [
 const areas = [
   {
     title: "Onyx",
-    location: [-0.03493308804567959, 0.07063865661621095],
+    location: [-0.030913798501249583, 0.07072448730468751],
   },
   {
     title: "Hypatia",
@@ -346,7 +346,7 @@ const regions = [
   },
   {
     title: "Upper Yards",
-    
+
     location: [-0.018281936335281662, 0.04870891571044922],
     area: [
       [-0.026328562763600093, 0.050704479217529304],
@@ -378,7 +378,7 @@ const regions = [
   {
     title: "Arid Land",
     location: [-0.012917518506282545, 0.057635307312011726],
-    
+
     area: [
       [-0.008969306909170008, 0.04955649375915528],
       [-0.006651878341994806, 0.05199193954467774],
@@ -438,7 +438,7 @@ const regions = [
   {
     title: "Barren Sands",
     location: [-0.02935409417485113, 0.06111145019531251],
-   
+
     area: [
       [
         [-0.035308597237211685, 0.061690807342529304],
@@ -459,7 +459,7 @@ const regions = [
   },
   {
     title: "Scorcher",
-    location:[-0.02188682502923144, 0.06862163543701173],
+    location: [-0.02188682502923144, 0.06862163543701173],
     area: [
       [-0.006002783764337538, 0.062077045440673835],
       [-0.005450248710035862, 0.06149232387542725],
@@ -674,8 +674,7 @@ const regions = [
   },
   {
     title: "Zephyr Winds",
-    location: [-0.04265784823190613, 0.08664608001708984]
-    ,
+    location: [-0.04265784823190613, 0.08664608001708984],
     area: [
       [
         [-0.0395894019095973, 0.07819175720214845],
@@ -819,8 +818,7 @@ const regions = [
   },
   {
     title: "Hesperian",
-    location: [-0.05214213605220192, 0.04677772521972657]
-    ,
+    location: [-0.05214213605220192, 0.04677772521972657],
     area: [
       [
         [-0.050066107100576865, 0.04185318946838379],
@@ -965,6 +963,7 @@ const regions = [
   },
   {
     title: "Genesis Land",
+    special: true,
     location: [-0.05965231771451968, 0.09518623352050783],
     area: [
       [
@@ -1223,6 +1222,7 @@ const regions = [
   },
   {
     title: "Dypians City",
+    special: true,
     location: [-0.06445883344864528, 0.08557319641113281],
     area: [
       [
@@ -1917,6 +1917,7 @@ const regions = [
   },
   {
     title: "Island Zero",
+    special: true,
     location: [-0.06949065412123623, 0.07364809513092042],
     area: [
       [
@@ -1967,6 +1968,810 @@ const regions = [
   },
 ];
 
+const firstParcel = [
+  {
+    title: "Genesis Land #1",
+    location: [-0.05465473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #2",
+    location: [-0.05465473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #3",
+    location: [-0.05465473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #4",
+    location: [-0.05465473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #5",
+    location: [-0.05465473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #6",
+    location: [-0.05465473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #7",
+    location: [-0.05465473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #8",
+    location: [-0.05465473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #9",
+    location: [-0.05465473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #10",
+    location: [-0.05465473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #11",
+    location: [-0.05480473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #12",
+    location: [-0.05480473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #13",
+    location: [-0.05480473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #14",
+    location: [-0.05480473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #15",
+    location: [-0.05480473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #16",
+    location: [-0.05480473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #17",
+    location: [-0.05480473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #18",
+    location: [-0.05480473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #19",
+    location: [-0.05480473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #20",
+    location: [-0.05480473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #21",
+    location: [-0.05495473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #22",
+    location: [-0.05495473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #23",
+    location: [-0.05495473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #24",
+    location: [-0.05495473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #25",
+    location: [-0.05495473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #26",
+    location: [-0.05495473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #27",
+    location: [-0.05495473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #28",
+    location: [-0.05495473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #29",
+    location: [-0.05495473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #30",
+    location: [-0.05495473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #31",
+    location: [-0.05510473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #32",
+    location: [-0.05510473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #33",
+    location: [-0.05510473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #34",
+    location: [-0.05510473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #35",
+    location: [-0.05510473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #36",
+    location: [-0.05510473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #37",
+    location: [-0.05510473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #38",
+    location: [-0.05510473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #39",
+    location: [-0.05510473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #40",
+    location: [-0.05510473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #41",
+    location: [-0.05525473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #42",
+    location: [-0.05525473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #43",
+    location: [-0.05525473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #44",
+    location: [-0.05525473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #45",
+    location: [-0.05525473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #46",
+    location: [-0.05525473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #47",
+    location: [-0.05525473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #48",
+    location: [-0.05525473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #49",
+    location: [-0.05525473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #50",
+    location: [-0.05525473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #51",
+    location: [-0.05540473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #52",
+    location: [-0.05540473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #53",
+    location: [-0.05540473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #54",
+    location: [-0.05540473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #55",
+    location: [-0.05540473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #56",
+    location: [-0.05540473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #57",
+    location: [-0.05540473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #58",
+    location: [-0.05540473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #59",
+    location: [-0.05540473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #60",
+    location: [-0.05540473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #61",
+    location: [-0.05555473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #62",
+    location: [-0.05555473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #63",
+    location: [-0.05555473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #64",
+    location: [-0.05555473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #65",
+    location: [-0.05555473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #66",
+    location: [-0.05555473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #67",
+    location: [-0.05555473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #68",
+    location: [-0.05555473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #69",
+    location: [-0.05555473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #70",
+    location: [-0.05555473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #71",
+    location: [-0.05570473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #72",
+    location: [-0.05570473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #73",
+    location: [-0.05570473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #74",
+    location: [-0.05570473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #75",
+    location: [-0.05570473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #76",
+    location: [-0.05570473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #77",
+    location: [-0.05570473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #78",
+    location: [-0.05570473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #79",
+    location: [-0.05570473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #80",
+    location: [-0.05570473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #81",
+    location: [-0.05585473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #82",
+    location: [-0.05585473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #83",
+    location: [-0.05585473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #84",
+    location: [-0.05585473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #85",
+    location: [-0.05585473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #86",
+    location: [-0.05585473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #87",
+    location: [-0.05585473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #88",
+    location: [-0.05585473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #89",
+    location: [-0.05585473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #90",
+    location: [-0.05585473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #91",
+    location: [-0.05600473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #92",
+    location: [-0.05600473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #93",
+    location: [-0.05600473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #94",
+    location: [-0.05600473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #95",
+    location: [-0.05600473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #96",
+    location: [-0.05600473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #97",
+    location: [-0.05600473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #98",
+    location: [-0.05600473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #99",
+    location: [-0.05600473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #100",
+    location: [-0.05600473025383857, 0.09360871894836427],
+  },
+];
+const secondParcel = [
+  {
+    title: "Genesis Land #101",
+    location: [-0.05765473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #102",
+    location: [-0.05765473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #103",
+    location: [-0.05765473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #104",
+    location: [-0.05765473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #105",
+    location: [-0.05765473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #106",
+    location: [-0.05765473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #107",
+    location: [-0.05765473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #108",
+    location: [-0.05765473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #109",
+    location: [-0.05765473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #110",
+    location: [-0.05765473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #111",
+    location: [-0.05780473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #112",
+    location: [-0.05780473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #113",
+    location: [-0.05780473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #114",
+    location: [-0.05780473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #115",
+    location: [-0.05780473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #116",
+    location: [-0.05780473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #117",
+    location: [-0.05780473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #118",
+    location: [-0.05780473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #119",
+    location: [-0.05780473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #120",
+    location: [-0.05780473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #121",
+    location: [-0.05795473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #122",
+    location: [-0.05795473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #123",
+    location: [-0.05795473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #124",
+    location: [-0.05795473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #125",
+    location: [-0.05795473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #126",
+    location: [-0.05795473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #127",
+    location: [-0.05795473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #128",
+    location: [-0.05795473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #129",
+    location: [-0.05795473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #130",
+    location: [-0.05795473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #131",
+    location: [-0.05810473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #132",
+    location: [-0.05810473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #133",
+    location: [-0.05810473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #134",
+    location: [-0.05810473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #135",
+    location: [-0.05810473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #136",
+    location: [-0.05810473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #137",
+    location: [-0.05810473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #138",
+    location: [-0.05810473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #139",
+    location: [-0.05810473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #140",
+    location: [-0.05810473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #141",
+    location: [-0.05825473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #142",
+    location: [-0.05825473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #143",
+    location: [-0.05825473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #144",
+    location: [-0.05825473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #145",
+    location: [-0.05825473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #146",
+    location: [-0.05825473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #147",
+    location: [-0.05825473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #148",
+    location: [-0.05825473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #149",
+    location: [-0.05825473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #150",
+    location: [-0.05825473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #151",
+    location: [-0.05840473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #152",
+    location: [-0.05840473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #153",
+    location: [-0.05840473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #154",
+    location: [-0.05840473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #155",
+    location: [-0.05840473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #156",
+    location: [-0.05840473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #157",
+    location: [-0.05840473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #158",
+    location: [-0.05840473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #159",
+    location: [-0.05840473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #160",
+    location: [-0.05840473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #161",
+    location: [-0.05855473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #162",
+    location: [-0.05855473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #163",
+    location: [-0.05855473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #164",
+    location: [-0.05855473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #165",
+    location: [-0.05855473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #166",
+    location: [-0.05855473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #167",
+    location: [-0.05855473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #168",
+    location: [-0.05855473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #169",
+    location: [-0.05855473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #170",
+    location: [-0.05855473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #171",
+    location: [-0.05870473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #172",
+    location: [-0.05870473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #173",
+    location: [-0.05870473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #174",
+    location: [-0.05870473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #175",
+    location: [-0.05870473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #176",
+    location: [-0.05870473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #177",
+    location: [-0.05870473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #178",
+    location: [-0.05870473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #179",
+    location: [-0.05870473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #180",
+    location: [-0.05870473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #181",
+    location: [-0.05885473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #182",
+    location: [-0.05885473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #183",
+    location: [-0.05885473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #184",
+    location: [-0.05885473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #185",
+    location: [-0.05885473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #186",
+    location: [-0.05885473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #187",
+    location: [-0.05885473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #188",
+    location: [-0.05885473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #189",
+    location: [-0.05885473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #190",
+    location: [-0.05885473025383857, 0.09360871894836427],
+  },
+  {
+    title: "Genesis Land #191",
+    location: [-0.05900473025383857, 0.09225871894836427],
+  },
+  {
+    title: "Genesis Land #192",
+    location: [-0.05900473025383857, 0.09240871894836427],
+  },
+  {
+    title: "Genesis Land #193",
+    location: [-0.05900473025383857, 0.09255871894836427],
+  },
+  {
+    title: "Genesis Land #194",
+    location: [-0.05900473025383857, 0.09270871894836427],
+  },
+  {
+    title: "Genesis Land #195",
+    location: [-0.05900473025383857, 0.09285871894836427],
+  },
+  {
+    title: "Genesis Land #196",
+    location: [-0.05900473025383857, 0.09300871894836427],
+  },
+  {
+    title: "Genesis Land #197",
+    location: [-0.05900473025383857, 0.09315871894836427],
+  },
+  {
+    title: "Genesis Land #198",
+    location: [-0.05900473025383857, 0.09330871894836427],
+  },
+  {
+    title: "Genesis Land #199",
+    location: [-0.05900473025383857, 0.09345871894836427],
+  },
+  {
+    title: "Genesis Land #200",
+    location: [-0.05900473025383857, 0.09360871894836427],
+  },
+];
 
 let midleLastDay = new Date("2024-09-10T13:00:00.000+02:00");
 let cookieLastDay = new Date("2024-10-01T14:00:00.000+02:00");
@@ -1981,7 +2786,6 @@ const dummyEvents = [
     type: "Puzzle",
     marker: puzzleMarker,
     location: [-0.041627880248805656, 0.10673046112060548],
-
   },
   {
     title: "Dragon Ruins",
@@ -1989,7 +2793,7 @@ const dummyEvents = [
     image: "dragonRuinsDummy.png",
     type: "Boss Fight",
     marker: dragonMarker,
-    location: [-0.11415474014968524, 0.08462905883789064],
+    location: [-0.07085058232491746, 0.07364278764323107],
   },
   {
     title: "Scorpion King",
@@ -1997,7 +2801,7 @@ const dummyEvents = [
     image: "scorpionKingDummy.png",
     type: "Boss Fight",
     marker: scorpionMarker,
-    location: [-0.02729415790322787, 0.07261276245117189],
+    location: [-0.022588222633792756, 0.07132530212402345],
   },
   {
     title: "Maze Garden",
@@ -2006,7 +2810,6 @@ const dummyEvents = [
     type: "Puzzle",
     marker: mazeMarker,
     location: [-0.04827975655460935, 0.042529106140136726],
-
   },
   {
     title: "Cookie3 Treasure Hunt",
@@ -2015,7 +2818,6 @@ const dummyEvents = [
     type: "Treasure Hunt",
     marker: treasureMarker,
     location: [-0.05935191046684262, 0.03785133361816407],
-
   },
   {
     title: "Manta Treasure Hunt",
@@ -2024,7 +2826,6 @@ const dummyEvents = [
     type: "Treasure Hunt",
     marker: treasureMarker,
     location: [-0.06124018456762751, 0.11788845062255861],
-
   },
   {
     title: "Midle Treasure Hunt",
@@ -2033,7 +2834,6 @@ const dummyEvents = [
     type: "Treasure Hunt",
     marker: treasureMarker,
     location: [-0.033817289296309505, 0.09595870971679689],
-
   },
   {
     title: "Taiko Treasure Hunt",
@@ -2042,10 +2842,8 @@ const dummyEvents = [
     type: "Treasure Hunt",
     marker: treasureMarker,
     location: [-0.12891758531392564, 0.059008598327636726],
-
   },
 ];
-
 
 const allAreas = [
   ...bearAreas,
@@ -2058,10 +2856,8 @@ const allAreas = [
   ...quests,
   ...teleports,
   ...craftingTables,
+  ...regions
 ];
-
-
-
 
 export {
   bearAreas,
@@ -2080,4 +2876,6 @@ export {
   craftingTables,
   regions,
   dummyEvents,
+  firstParcel,
+  secondParcel
 };

@@ -61,11 +61,8 @@ const Sidebar = ({
     <div>
       <div id="mySidebar" className="sidebar">
         <div className="d-flex align-items-center justify-content-end">
-          <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
-            ×
-          </a>
-        </div>
-        <div className="position-relative" style={{ zIndex: 6 }}>
+        <div className="d-flex align-items-center gap-2 w-100">
+        <div className="position-relative w-100" style={{ zIndex: 6 }}>
           <input
             type="text"
             value={search}
@@ -100,6 +97,12 @@ const Sidebar = ({
               ))}
           </div>
         </div>
+          <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
+            ×
+          </a>
+        </div>
+        </div>
+       
         <div className="d-flex flex-column gap-2" style={{ zIndex: 2 }}>
          
           <CheckboxDropdown
@@ -141,26 +144,9 @@ const Sidebar = ({
                 },
               }}
             />
-            <span style={{ marginLeft: 8, color: "white" }}>Areas</span>
+            <span style={{ marginLeft: 8, color: "white" }}>Cities</span>
           </div>
-          <div>
-            <Checkbox
-              checked={switches.borders}
-              onChange={() =>
-                setSwitches((prevState) => ({
-                  ...prevState,
-                  borders: !switches.borders,
-                }))
-              }
-              sx={{
-                color: "white",
-                "&.Mui-checked": {
-                  color: "white",
-                },
-              }}
-            />
-            <span style={{ marginLeft: 8, color: "white" }}>Borders</span>
-          </div>
+        
           <div>
             <Checkbox
               checked={switches.quests}

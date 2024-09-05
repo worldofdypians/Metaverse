@@ -11,6 +11,7 @@ import {
   scorpionMarker,
   teleportMarker,
   craftingMarker,
+  landMarker,
 } from "./mapdata/markers";
 import {
   areas,
@@ -24,6 +25,8 @@ import {
   craftingTables,
   regions,
   dummyEvents,
+  firstParcel,
+  secondParcel,
 } from "./mapdata/areas";
 import MapSidebar from "./components/MapSidebar";
 import ZoomToLocation from "./components/ZoomToLocation";
@@ -34,6 +37,8 @@ import LogCoordinates from "./components/LogCoordinates";
 import MarkerDetails from "./components/MarkerDetails";
 import EventsBar from "./components/EventsBar";
 import CustomPolygon from "./components/CustomPolygon";
+import MarkerClusterGroup from "react-leaflet-cluster";
+import landIcon from './assets/landIcon.png'
 
 // Utility Functions
 
@@ -51,7 +56,6 @@ const ChainMarkers = ({ chainsVisible, chainAreas, handleMarkerClick }) =>
     />
   ));
 
-
 // Main Component
 const Map = () => {
   const mapRef = useRef();
@@ -62,7 +66,7 @@ const Map = () => {
   const [zoom, setZoom] = useState(17);
   const [chainsVisible, setChainsVisible] = useState(true);
   const [show, setShow] = useState(false);
-  const [areaContent, setAreaContent] = useState(null)
+  const [areaContent, setAreaContent] = useState(null);
   const [regionsVisible, setRegionsVisible] = useState(true);
   const [areasVisible, setAreasVisible] = useState(true);
   const [switches, setSwitches] = useState({
@@ -78,8 +82,8 @@ const Map = () => {
   const [markerType, setmarkerType] = useState(null);
   const [events, setEvents] = useState(false);
 
-  const handleMarkerClick = (marker,zoom, type) => {
-    setEvents(false)
+  const handleMarkerClick = (marker, zoom, type) => {
+    setEvents(false);
     if (type === "" || !type) {
       setCenter(marker.location);
       setZoom(zoom);
@@ -92,11 +96,27 @@ const Map = () => {
     }
   };
 
-  const bounds = [
-    [-0.16, 0.0], // Southwest corner
-    [0.16, 0.16], // Northeast corner
-  ];
+
+  const customClusterIcon = L.icon({
+    iconUrl: landIcon, // Replace with your custom icon path
+    iconSize: [40, 40], // Adjust the size of the icon
+    iconAnchor: [20, 40], // Adjust the anchor point as needed
+    popupAnchor: [0, -40], // Adjust the popup anchor point as needed
+  });
   
+  const createCustomClusterIcon = (cluster) => {
+    return L.divIcon({
+      html: `<img src="${customClusterIcon.options.iconUrl}" style="width: ${customClusterIcon.options.iconSize[0]}px; height: ${customClusterIcon.options.iconSize[1]}px;" />`,
+      className: 'custom-cluster-icon',
+      iconSize: customClusterIcon.options.iconSize,
+    });
+  };
+
+  // const bounds = [
+  //   [-0.16, 0.0], // Southwest corner
+  //   [0.16, 0.16], // Northeast corner
+  // ];
+
   return (
     <div className="d-flex align-items-start">
       <MapSidebar
@@ -110,8 +130,8 @@ const Map = () => {
           [0.0, 0.0],
           [-0.14373029, 0.14373045],
         ]}
-        maxBounds={bounds}
-        maxBoundsViscosity={1.0}
+        // maxBounds={bounds}
+        // maxBoundsViscosity={1.0}
         center={center}
         zoom={zoom}
         minZoom={13}
@@ -119,14 +139,13 @@ const Map = () => {
         style={{ height: "100vh", width: "100%" }}
       >
         <TileLayer url="/mapTiles/{z}/{x}/{y}.png" />
-      {zoom >= 14 &&
-           
-           <ChainMarkers
-           chainsVisible={chainsVisible}
-           chainAreas={chainAreas}
-           handleMarkerClick={handleMarkerClick}
-         />
-      }
+        {zoom >= 14 && (
+          <ChainMarkers
+            chainsVisible={chainsVisible}
+            chainAreas={chainAreas}
+            handleMarkerClick={handleMarkerClick}
+          />
+        )}
 
         {switches.regions &&
           areasVisible &&
@@ -138,7 +157,6 @@ const Map = () => {
             />
           ))}
 
-      
         {switches.quests &&
           quests.map((item) => (
             <CustomMarker
@@ -166,15 +184,36 @@ const Map = () => {
               handleMarkerClick={handleMarkerClick}
             />
           ))}
-        {
-          dummyEvents.map((item) => (
-            <CustomMarker
-              icon={item.marker}
-              item={item}
-              type={""}
-              handleMarkerClick={() => handleMarkerClick(item, 18, "event")}
-            />
-          ))}
+        {dummyEvents.map((item) => (
+          <CustomMarker
+            icon={item.marker}
+            item={item}
+            type={""}
+            handleMarkerClick={() => handleMarkerClick(item, 18, "event")}
+          />
+        ))}
+        <MarkerClusterGroup
+           iconCreateFunction={createCustomClusterIcon}
+        disableClusteringAtZoom={18}
+        // iconCreateFunction={landMarker}
+        >
+        {firstParcel.map((item) => (
+          <CustomMarker
+            icon={landMarker}
+            item={item}
+            type={""}
+            handleMarkerClick={() => handleMarkerClick(item, 18, "area")}
+          />
+        ))}
+        {secondParcel.map((item) => (
+          <CustomMarker
+            icon={landMarker}
+            item={item}
+            type={""}
+            handleMarkerClick={() => handleMarkerClick(item, 18, "area")}
+          />
+        ))}
+        </MarkerClusterGroup>
         {switches.bosses && (
           <>
             <CustomMarker
@@ -189,7 +228,8 @@ const Map = () => {
             />
           </>
         )}
-        {regionsVisible && switches.areas &&
+        {regionsVisible &&
+          switches.areas &&
           regions.map((item, index) => (
             <>
               <CustomPolygon
@@ -213,7 +253,7 @@ const Map = () => {
           />
         ))}
 
-        {switches.borders && (
+        {switches.regions && (
           <>
             <Polyline
               pathOptions={{ color: "#fff", weight: 2 }}
@@ -234,7 +274,7 @@ const Map = () => {
         <ZoomToLocation coordinates={center} zoomLevel={zoom} />
         {/* <LeafletDraw /> */}
       </MapContainer>
-    
+
       <div
         className={`events-arrow ${events ? "events-arrow-open" : ""} ${
           show || selectedMarker ? "d-none" : "d-flex"
@@ -248,7 +288,11 @@ const Map = () => {
           alt=""
         />
       </div>
-      <EventsBar show={events} onClose={() => setEvents(false)} handleMarkerClick={handleMarkerClick} />
+      <EventsBar
+        show={events}
+        onClose={() => setEvents(false)}
+        handleMarkerClick={handleMarkerClick}
+      />
       <MarkerDetails
         marker={selectedMarker}
         type={markerType}

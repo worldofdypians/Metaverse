@@ -9,7 +9,7 @@ const CheckboxDropdown = ({options, parent, onZoomIn}) => {
 
     return (
         <FormControl>
-            <Accordion>
+            <Accordion defaultExpanded>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon sx={{color: "white"}} />}
                     aria-controls="panel1a-content"

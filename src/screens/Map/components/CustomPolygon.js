@@ -8,8 +8,9 @@ const CustomPolygon = ({ item, handleMarkerClick, setInfo, setContent, content }
     <Polygon
       pathOptions={{
         fillColor: hovered || content === item.title ? 'beige' : 'transparent',  
-        color: 'beige',     
-        dashArray: "5, 10", weight: 1.5 
+        color: item?.special ? "gold" : 'beige',     
+        dashArray: item?.special ? "none" : "5, 10", 
+        weight: item?.special ? 2 : 1.5 
       }}
       positions={item.area}
       eventHandlers={{
