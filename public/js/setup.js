@@ -2428,6 +2428,7 @@ window.approveNFT = async (type) => {
 window.cancelListNFT = async (nftAddress, tokenId, priceType, tokenType) => {
   let price_address;
   const coinbase = await getCoinbase();
+  window.web3 = new Web3(window.ethereum);
 
   if (priceType === 0) {
     price_address = "0x0000000000000000000000000000000000000000";
@@ -2452,7 +2453,7 @@ window.cancelListNFT = async (nftAddress, tokenId, priceType, tokenType) => {
 
 window.updateListingNFT = async (token, price, priceType, type, tokenType) => {
   let nft_address, price_nft, price_address;
-
+window.web3 = new Web3(window.ethereum);
   if (type === "timepiece") {
     nft_address = window.config.nft_timepiece_address;
   } else if (type === "land") {
@@ -2490,6 +2491,7 @@ window.updateListingNFT = async (token, price, priceType, type, tokenType) => {
 window.listNFT = async (token, price, priceType, type = "", tokenType) => {
   let nft_address, price_nft, price_address;
   console.log(token, price, priceType, type, tokenType);
+  window.web3 = new Web3(window.ethereum);
   if (type === "timepiece") {
     nft_address = window.config.nft_timepiece_address;
   } else if (type === "land") {
@@ -2579,7 +2581,7 @@ window.isApproved = async (token, type) => {
 
 window.makeOffer = async (nftAddress, tokenId, price, priceType, tokenType) => {
   let price_address;
-
+  window.web3 = new Web3(window.ethereum);
   if (priceType === 0) {
     price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
   }
@@ -2620,6 +2622,7 @@ window.makeOffer = async (nftAddress, tokenId, price, priceType, tokenType) => {
 };
 
 window.cancelOffer = async (nftAddress, tokenId, offerIndex) => {
+  window.web3 = new Web3(window.ethereum);
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
@@ -2657,7 +2660,7 @@ window.updateOffer = async (
   tokenType
 ) => {
   let price_address;
-
+  window.web3 = new Web3(window.ethereum);
   if (priceType === 0) {
     price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
   }
@@ -2742,6 +2745,7 @@ window.approveOffer = async (amount, priceType, tokenType) => {
 };
 
 window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
+  window.web3 = new Web3(window.ethereum);
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
@@ -2817,7 +2821,7 @@ window.isApprovedOffer = async (amount, priceType, tokenType) => {
 
 window.getAllOffers = async (nftAddress, tokenId) => {
   //getActiveOffers
-
+  window.web3 = new Web3(window.ethereum);
   const marketplace = new window.infuraWeb3.eth.Contract(
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
@@ -3262,7 +3266,6 @@ async function myNftListContract(address) {
   );
 
   let getBalanceOf = await nft_contract.methods.balanceOf(address).call();
-  console.log('getBalanceOfgetBalanceOfgetBalanceOf',getBalanceOf)
 
   let nftList = [];
   if (getBalanceOf && getBalanceOf > 0) {
