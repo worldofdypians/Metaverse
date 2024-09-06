@@ -12,6 +12,8 @@ import {
   teleportMarker,
   craftingMarker,
   landMarker,
+  leaderboardsMarker,
+  mineMarker,
 } from "./mapdata/markers";
 import {
   areas,
@@ -27,6 +29,12 @@ import {
   dummyEvents,
   firstParcel,
   secondParcel,
+  leaderboards,
+  dypiansTransport,
+  bearAreas,
+  boarAreas,
+  deerAreas,
+  mines,
 } from "./mapdata/areas";
 import MapSidebar from "./components/MapSidebar";
 import ZoomToLocation from "./components/ZoomToLocation";
@@ -38,7 +46,7 @@ import MarkerDetails from "./components/MarkerDetails";
 import EventsBar from "./components/EventsBar";
 import CustomPolygon from "./components/CustomPolygon";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import landIcon from './assets/landIcon.png'
+import landIcon from "./assets/landIcon.png";
 
 // Utility Functions
 
@@ -77,6 +85,12 @@ const Map = () => {
     quests: false,
     teleports: false,
     craftingTables: false,
+    leaderboards: false,
+    mines: false,
+    deer: false,
+    boar: false,
+    bear: false,
+    challenges: false,
   });
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [markerType, setmarkerType] = useState(null);
@@ -96,18 +110,17 @@ const Map = () => {
     }
   };
 
-
   const customClusterIcon = L.icon({
     iconUrl: landIcon, // Replace with your custom icon path
     iconSize: [40, 40], // Adjust the size of the icon
     iconAnchor: [20, 40], // Adjust the anchor point as needed
     popupAnchor: [0, -40], // Adjust the popup anchor point as needed
   });
-  
+
   const createCustomClusterIcon = (cluster) => {
     return L.divIcon({
       html: `<img src="${customClusterIcon.options.iconUrl}" style="width: ${customClusterIcon.options.iconSize[0]}px; height: ${customClusterIcon.options.iconSize[1]}px;" />`,
-      className: 'custom-cluster-icon',
+      className: "custom-cluster-icon",
       iconSize: customClusterIcon.options.iconSize,
     });
   };
@@ -124,6 +137,8 @@ const Map = () => {
         setSwitches={setSwitches}
         handleMarkerClick={handleMarkerClick}
         chainAreas={chainAreas}
+        setContent={setAreaContent}
+        setInfo={areaContent}
       />
       <MapContainer
         bounds={[
@@ -139,13 +154,11 @@ const Map = () => {
         style={{ height: "100vh", width: "100%" }}
       >
         <TileLayer url="/mapTiles/{z}/{x}/{y}.png" />
-        {zoom >= 14 && (
-          <ChainMarkers
-            chainsVisible={chainsVisible}
-            chainAreas={chainAreas}
-            handleMarkerClick={handleMarkerClick}
-          />
-        )}
+        <ChainMarkers
+          chainsVisible={chainsVisible}
+          chainAreas={chainAreas}
+          handleMarkerClick={handleMarkerClick}
+        />
 
         {switches.regions &&
           areasVisible &&
@@ -166,15 +179,70 @@ const Map = () => {
               handleMarkerClick={handleMarkerClick}
             />
           ))}
-        {switches.teleports &&
-          teleports.map((item) => (
+        {switches.leaderboards &&
+          leaderboards.map((item) => (
             <CustomMarker
-              icon={teleportMarker}
+              icon={leaderboardsMarker}
               item={item}
               type={""}
               handleMarkerClick={handleMarkerClick}
             />
           ))}
+        {switches.teleports &&
+          dypiansTransport.map((item) => (
+            <CustomMarker
+              icon={item.marker}
+              item={item}
+              type={""}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.leaderboards &&
+          leaderboards.map((item) => (
+            <CustomMarker
+              icon={leaderboardsMarker}
+              item={item}
+              type={""}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.bear &&
+          bearAreas.map((item) => (
+            <CustomMarker
+              icon={item.marker}
+              item={item}
+              type={""}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.boar &&
+          boarAreas.map((item) => (
+            <CustomMarker
+              icon={item.marker}
+              item={item}
+              type={""}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.deer &&
+          deerAreas.map((item) => (
+            <CustomMarker
+              icon={item.marker}
+              item={item}
+              type={""}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.mines &&
+          mines.map((item) => (
+            <CustomMarker
+              icon={mineMarker}
+              item={item}
+              type={""}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+
         {switches.craftingTables &&
           craftingTables.map((item) => (
             <CustomMarker
@@ -193,26 +261,26 @@ const Map = () => {
           />
         ))}
         <MarkerClusterGroup
-           iconCreateFunction={createCustomClusterIcon}
-        disableClusteringAtZoom={18}
-        // iconCreateFunction={landMarker}
+          iconCreateFunction={createCustomClusterIcon}
+          disableClusteringAtZoom={18}
+          // iconCreateFunction={landMarker}
         >
-        {firstParcel.map((item) => (
-          <CustomMarker
-            icon={landMarker}
-            item={item}
-            type={""}
-            handleMarkerClick={() => handleMarkerClick(item, 18, "area")}
-          />
-        ))}
-        {secondParcel.map((item) => (
-          <CustomMarker
-            icon={landMarker}
-            item={item}
-            type={""}
-            handleMarkerClick={() => handleMarkerClick(item, 18, "area")}
-          />
-        ))}
+          {firstParcel.map((item) => (
+            <CustomMarker
+              icon={landMarker}
+              item={item}
+              type={""}
+              handleMarkerClick={() => handleMarkerClick(item, 18, "area")}
+            />
+          ))}
+          {secondParcel.map((item) => (
+            <CustomMarker
+              icon={landMarker}
+              item={item}
+              type={""}
+              handleMarkerClick={() => handleMarkerClick(item, 18, "area")}
+            />
+          ))}
         </MarkerClusterGroup>
         {switches.bosses && (
           <>

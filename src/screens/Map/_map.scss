@@ -1,5 +1,5 @@
 .leaflet-container {
-  height: calc(-105px + 100vh) !important;
+  height: calc(-90px + 100vh) !important;
   // background: black !important;
   background-image: url("./assets/cloudBg.jpg") !important;
 }
@@ -18,7 +18,7 @@
   width: 0; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 1000; /* Stay on top */
-  top: 105px;
+  top: 90px;
   left: 0;
   background-color: #080b2a; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
@@ -58,16 +58,14 @@
   position: absolute;
   width: 56px;
   height: 56px;
-  top: 125px;
+  top: 110px;
   left: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-border-radius: 8px;
+  border-radius: 8px;
 }
-
-
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
@@ -124,7 +122,7 @@ border-radius: 8px;
   pointer-events: none;
 }
 
-.area-marker{
+.area-marker {
   pointer-events: none !important;
 }
 .sea-text-marker {
@@ -203,9 +201,9 @@ border-radius: 8px;
 .marker-details {
   position: fixed;
   right: 0;
-  top: 105px;
+  top: 90px;
   width: 350px;
-  height: calc(-105px + 100vh);
+  height: calc(-90px + 100vh);
   background: #080b2a;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -215,42 +213,40 @@ border-radius: 8px;
 .marker-details-2 {
   position: fixed;
   right: -450px;
-  top: 105px;
+  top: 90px;
   width: 450px;
-  height: calc(-105px + 100vh);
+  height: calc(-90px + 100vh);
   background: #080b2a;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
   overflow-y: auto;
   z-index: 1000; /* Ensure it's on top of the map */
-  transition: all 0.25s
-
+  transition: all 0.25s;
 }
 @media screen and (max-width: 768px) {
-
-  .sidebar{
+  .sidebar {
     top: 59px;
   }
 
-  .openbtn{
+  .openbtn {
     top: 74px;
   }
 
-  .events-arrow{
+  .events-arrow {
     top: 74px !important;
   }
-  
- .marker-details-2{
-  width: 100%;
-  right: -100%;
-  height: calc(-59px + 100%);
-  top: 59px;
- }
- .leaflet-container{
-  position: absolute !important;
-  bottom: 0 !important;
-  height: calc(-59px + 100%) !important;
- }
+
+  .marker-details-2 {
+    width: 100%;
+    right: -100%;
+    height: calc(-59px + 100%);
+    top: 59px;
+  }
+  .leaflet-container {
+    position: absolute !important;
+    bottom: 0 !important;
+    height: calc(-59px + 100%) !important;
+  }
 }
 
 .marker-events-active {
@@ -280,18 +276,18 @@ border-radius: 8px;
   border-radius: 8px;
   position: absolute;
   right: 15px;
-  top: 125px;
+  top: 110px;
   z-index: 1000;
   cursor: pointer;
-  transition: all .25s;
-  img{
+  transition: all 0.25s;
+  img {
     transform: rotate(180deg);
   }
 }
 
-.events-arrow-open{
+.events-arrow-open {
   right: 465px;
-  img{
+  img {
     transform: rotate(0deg);
   }
 }
@@ -318,10 +314,10 @@ border-radius: 8px;
 
 .map-event-type-span {
   font-size: 11px;
-    line-height: 14px;
+  line-height: 14px;
   font-family: "Montserrat" !important;
   color: green;
-font-weight: 500;
+  font-weight: 500;
 }
 
 .map-event-duration {
@@ -338,8 +334,54 @@ font-weight: 500;
   object-fit: cover;
 }
 
-.arrow-pos-2{
+.arrow-pos-2 {
   position: relative !important;
   right: 0 !important;
   top: 0 !important;
+}
+#areas-header {
+  padding: 0 !important;
+}
+#animals-header {
+  padding: 0 !important;
+}
+
+.map-sidebar-btn {
+  cursor: pointer;
+  width: 100%;
+  background: linear-gradient(269.74deg,#ffffff36 -254.09%,#fff0 99.84%);
+  border-radius: 8px;
+}
+
+.switches-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.MuiAccordionSummary-content{
+  margin: 0 !important;
+}
+
+#panel1a-header{
+  min-height: auto !important;
+  padding: 10px;
+  background: linear-gradient(269.74deg, #00ffff36 -254.09%, #00ffff00 99.84%);
+  border-radius: 8px;
+}
+#panel2a-header{
+  min-height: auto !important;
+  padding: 10px;
+  background: linear-gradient(269.74deg, #00a86b36 -254.09%, #00a86b00 99.84%);
+
+  border-radius: 8px;
+}
+
+.genesis-focus-btn{
+  background: linear-gradient(269.74deg, #d8b9ff36 -254.09%, #d8b9ff00 99.84%);
+
+}
+
+.leaflet-control-container{
+  display: none !important;
 }

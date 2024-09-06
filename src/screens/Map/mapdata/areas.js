@@ -1,14 +1,20 @@
 import {
+  bearMarker,
   bnbMarker,
+  boarMarker,
   coreMarker,
+  deerMarker,
   dragonMarker,
   dypMarker,
   mantaMarker,
   mazeMarker,
+  mineMarker,
   puzzleMarker,
   scorpionMarker,
   skaleMarker,
   taikoMarker,
+  teleportMarker,
+  trainMarker,
   treasureMarker,
   victionMarker,
 } from "./markers";
@@ -16,6 +22,12 @@ import questDummy1 from "../assets/banners/questDummy1.webp";
 import questDummy2 from "../assets/banners/questDummy2.webp";
 import questDummy3 from "../assets/banners/questDummy3.webp";
 import questDummy4 from "../assets/banners/questDummy4.webp";
+import trainIcon from '../assets/trainIcon.svg'
+import teleportIcon from '../assets/teleportIcon.svg'
+import { marker } from "leaflet";
+
+
+
 const chainAreas = [
   {
     title: "BNB Chain Area",
@@ -92,45 +104,65 @@ const chainAreas = [
 const bearAreas = [
   {
     title: "Sherwood Forest",
-    location: [-0.02180099434699208, 0.012788772583007812],
+    location: [-0.068364127150182, 0.07230162620544435],
+    marker: bearMarker
   },
   {
     title: "Cedar Groove",
-    location: [-0.011329650805073449, 0.03141403198242188],
+    location: [-0.06817100823818639, 0.07427573204040529],
+    marker: bearMarker
   },
-  {
-    title: "Flag Mountain",
-    location: [-0.019140243174277705, 0.049953460693359375],
-  },
+ 
 ];
 const deerAreas = [
   {
     title: "Kruger Creek",
-    location: [-0.03742217751510986, 0.010385513305664062],
+    location: [-0.07038114685080327, 0.07243573665618898],
+    marker: deerMarker
   },
   {
     title: "Flaming Field",
-    location: [-0.015363693053192292, 0.04205703735351563],
+    location: [-0.07046697747444408, 0.0741201639175415],
+    marker: deerMarker
   },
-  {
-    title: "Broad Hill",
-    location: [-0.06154059180485963, 0.03416061401367188],
-  },
+
 ];
 const boarAreas = [
   {
     title: "Water Swamp",
-    location: [-0.023946761387772898, 0.031843185424804694],
+    location: [-0.06880400911347165, 0.07497310638427736],
+    marker: boarMarker
   },
   {
     title: "Burning Man",
-    location: [-0.037937161534604455, 0.02051353454589844],
-  },
-  {
-    title: "Brood Mountain",
-    location: [-0.033645627949107575, 0.05887985229492188],
+    location: [-0.06976423923874447, 0.07502138614654542],
+    marker: boarMarker
   },
 ];
+const mines = [
+  {
+    title: "Diamond Mine",
+    location: [-0.06919024693155976, 0.07365882396698],
+  },
+  {
+    title: "Gold Mine",
+    location: [-0.07021485001704436, 0.07322967052459718],
+  },
+];
+
+const craftingTables = [
+  {
+    title: "Alchemy Crafting",
+    location: [-0.07105169859378926, 0.07447957992553712],
+  },
+  {
+    title: "Weapon Crafting",
+    location: [-0.07088003734850502, 0.07480144500732422],
+  }
+];
+
+const animals = [...bearAreas, ...deerAreas, ...boarAreas]
+
 const areas = [
   {
     title: "Onyx",
@@ -192,6 +224,39 @@ const teleports = [
     location: [-0.115699689434191, 0.0735461711883545],
   },
 ];
+
+const dypiansTransport = [
+  {
+    title: "Island Zero Teleport",
+    location: [-0.06903467892188205, 0.08158743381500246],
+    marker: teleportMarker,
+    icon: teleportIcon,
+  },
+  {
+    title: "Genesis Land Teleport",
+    location: [-0.07081029996742978, 0.08242964744567872],
+    marker: teleportMarker,
+    icon: teleportIcon,
+  },
+  {
+    title: "Onyx Train Station",
+    location: [-0.07013438380695172, 0.08632421493530275],
+    marker: trainMarker,
+    icon: trainIcon,
+  },
+  {
+    title: "Kepler Land Train Station",
+    location: [-0.06864307668833743, 0.08873283863067628],
+    marker: trainMarker,
+    icon: trainIcon,
+  },
+  {
+    title: "Hypatia Train Station",
+    location: [-0.06732879519631745, 0.08794426918029787],
+    marker: trainMarker,
+    icon: trainIcon,
+  },
+]
 
 const quests = [
   {
@@ -297,24 +362,7 @@ const bosses = [
   },
 ];
 
-const craftingTables = [
-  {
-    title: "Alchemy Crafting",
-    location: [-0.02223014775769269, 0.07312774658203126],
-  },
-  {
-    title: "Weapon Crafting",
-    location: [-0.05793570484882854, 0.07261276245117189],
-  },
-  {
-    title: "Potion Crafting",
-    location: [-0.0790500390079301, 0.04823684692382813],
-  },
-  {
-    title: "Armor Crafting",
-    location: [-0.10574334817385038, 0.0885772705078125],
-  },
-];
+
 
 const regions = [
   {
@@ -2773,6 +2821,34 @@ const secondParcel = [
   },
 ];
 
+
+const leaderboards = [
+  {
+    title: "BNB Chain Leaderboard",
+    location: [-0.06775258392621424, 0.08520841598510744],
+  },
+  {
+    title: "Manta Leaderboard",
+    location: [-0.06855724606138884, 0.08495092391967773],
+  },
+  {
+    title: "Taiko Leaderboard",
+    location: [-0.0689971280229101, 0.08639931678771973],
+  },
+  {
+    title: "CORE Leaderboard",
+    location: [-0.0681495505812457, 0.08628129959106447],
+  },
+  {
+    title: "SKALE Leaderboard",
+    location: [-0.06927607755737608, 0.08556246757507326],
+  },
+  {
+    title: "VICTION Leaderboard",
+    location: [-0.06696937943514361, 0.08530497550964355],
+  },
+]
+
 let midleLastDay = new Date("2024-09-10T13:00:00.000+02:00");
 let cookieLastDay = new Date("2024-10-01T14:00:00.000+02:00");
 let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
@@ -2856,7 +2932,11 @@ const allAreas = [
   ...quests,
   ...teleports,
   ...craftingTables,
-  ...regions
+  ...regions,
+  ...leaderboards,
+  ...dypiansTransport,
+  ...mines,
+  ...animals,
 ];
 
 export {
@@ -2877,5 +2957,9 @@ export {
   regions,
   dummyEvents,
   firstParcel,
-  secondParcel
+  secondParcel,
+  leaderboards,
+  dypiansTransport,
+  mines,
+  animals
 };

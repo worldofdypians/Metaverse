@@ -18,10 +18,12 @@ import scorpionIcon from "../assets/tempScorpion2.png";
 import treasureHuntIcon from "../assets/treasureHuntIcon.png";
 import puzzleMadnessIcon from "../assets/puzzleMadnessIcon.png";
 import mazeGardenIcon from "../assets/mazeGardenIcon.png";
-
+import trainIcon from '../assets/trainIcon.svg';
 import scorpionKing from "../assets/scorpionKing.png";
 import whitePickaxe from "../assets/whitePickaxe.svg";
 import magnifier from "../assets/magnifier.svg";
+import leaderboardsIcon from '../assets/leaderboardsIcon.svg'
+import minerIcon from '../assets/minerIcon.svg'
 import L from "leaflet";
 import { Marker } from "react-leaflet";
 
@@ -76,9 +78,9 @@ const createIcon = (iconUrl, size) =>
     popupAnchor: [0, -size],
   });
 
-const bearMarker = createIcon(bearIcon, 24);
-const boarMarker = createIcon(boarIcon, 24);
-const deerMarker = createIcon(deerIcon, 24);
+const bearMarker = createIcon(bearIcon, 32);
+const boarMarker = createIcon(boarIcon, 32);
+const deerMarker = createIcon(deerIcon, 32);
 const bnbMarker = createIcon(bnbIcon, 24);
 const coreMarker = createIcon(coreIcon, 24);
 const mantaMarker = createIcon(mantaIcon, 24);
@@ -86,17 +88,19 @@ const dypMarker = createIcon(dypIcon, 24);
 const skaleMarker = createIcon(skaleIcon, 24);
 const taikoMarker = createIcon(taikoIcon, 24);
 const victionMarker = createIcon(victionIcon, 24);
-const landMarker = createIcon(landIcon, 24);
-const dragonMarker = createIcon(dragonIcon, 40);
+const landMarker = createIcon(landIcon, 32);
+const dragonMarker = createIcon(dragonIcon, 32);
 const scorpionMarker = createIcon(scorpionIcon, 32);
-const questMarker = createIcon(questIcon, 24);
-const teleportMarker = createIcon(teleportIcon, 24);
-const craftingMarker = createIcon(craftingIcon, 24);
+const questMarker = createIcon(questIcon, 32);
+const teleportMarker = createIcon(teleportIcon, 32);
+const craftingMarker = createIcon(craftingIcon, 32);
 const findMarker = createIcon(magnifier, 32);
-const mineMarker = createIcon(whitePickaxe, 32);
+const mineMarker = createIcon(minerIcon, 32);
 const mazeMarker = createIcon(mazeGardenIcon, 32);
 const puzzleMarker = createIcon(puzzleMadnessIcon, 32);
 const treasureMarker = createIcon(treasureHuntIcon, 32);
+const trainMarker = createIcon(trainIcon, 32);
+const leaderboardsMarker = createIcon(leaderboardsIcon, 32);
 
 // Exporting the markers
 export {
@@ -124,4 +128,6 @@ export {
   mazeMarker,
   puzzleMarker,
   treasureMarker,
+  trainMarker,
+  leaderboardsMarker
 };

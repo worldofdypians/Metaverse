@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import wodLogo from "../assets/wodLogo.svg";
-import CheckboxDropdown from "./CheckboxDropdown";
 import { Checkbox } from "@mui/material";
 import { allAreas } from "../mapdata/areas";
-
+import DypiusDropdown from "./DypiusDropdown";
+import IslandDropdown from "./IslandDropdown";
+import regionIcon from '../assets/regionIcon.svg'
+import cityIcon from '../assets/cityIcon.svg'
+import challengeIcon from '../assets/challengeIcon.svg';
+import landIcon from '../assets/landIcon.png'
 const Sidebar = ({
   switches,
   setSwitches,
   chainAreas,
   handleMarkerClick,
+  setContent,
+setInfo,
 }) => {
 
 
@@ -26,7 +31,7 @@ const Sidebar = ({
   };
 
   function openNav() {
-    document.getElementById("mySidebar").style.width = "300px";
+    document.getElementById("mySidebar").style.width = "400px";
     document.getElementById("mySidebar").style.paddingLeft = "12px";
     document.getElementById("mySidebar").style.paddingRight = "12px";
     document.getElementById("main").style.marginLeft = "0px";
@@ -47,11 +52,18 @@ const Sidebar = ({
   useEffect(() => {
     const leafletControls = document.querySelectorAll(".leaflet-left");
     leafletControls.forEach((control) => {
-      control.style.left = sidebar ? "300px" : "65px";
+      control.style.left = sidebar ? "400px" : "65px";
       control.style.top = "10px";
     });
   }, [sidebar]);
 
+
+const genesisLocation = {
+    title: "Genesis Land",
+    special: true,
+    location: [-0.05965231771451968, 0.09518623352050783],
+   
+}
 
   useEffect(() => {
     openNav();
@@ -103,121 +115,66 @@ const Sidebar = ({
         </div>
         </div>
        
-        <div className="d-flex flex-column gap-2" style={{ zIndex: 2 }}>
-         
-          <CheckboxDropdown
-            parent={"Dypians City"}
-            options={chainAreas}
-            onZoomIn={handleMarkerClick}
-          />
-          <div>
-            <Checkbox
-              checked={switches.regions}
-              onChange={() =>
+        <div className="d-flex flex-column gap-3" style={{ zIndex: 2 }}>
+          <div className="switches-grid mb-3">
+          <div className="map-sidebar-btn p-2 d-flex align-items-center justify-content-center gap-2" onClick={() =>
                 setSwitches((prevState) => ({
                   ...prevState,
                   regions: !switches.regions,
-                }))
-              }
-              sx={{
-                color: "white",
-                "&.Mui-checked": {
-                  color: "white",
-                },
-              }}
-            />
-            <span style={{ marginLeft: 8, color: "white" }}>Regions</span>
+                }))}
+                style={{opacity: switches.regions ? "1" : "0.6"}}
+                >
+            <img src={regionIcon} alt="" width={24} height={24} />
+            <h6 className="chain-sidebar-title mb-0 text-white">
+              Regions
+            </h6>
           </div>
-          <div>
-            <Checkbox
-              checked={switches.areas}
-              onChange={() =>
+          <div className="map-sidebar-btn p-2 d-flex align-items-center justify-content-center gap-2" onClick={() =>
                 setSwitches((prevState) => ({
                   ...prevState,
                   areas: !switches.areas,
-                }))
-              }
-              sx={{
-                color: "white",
-                "&.Mui-checked": {
-                  color: "white",
-                },
-              }}
-            />
-            <span style={{ marginLeft: 8, color: "white" }}>Cities</span>
+                }))}
+                style={{opacity: switches.areas ? "1" : "0.6"}}
+                >
+            <img src={cityIcon} alt="" width={24} height={24} />
+            <h6 className="chain-sidebar-title mb-0 text-white">
+              Areas
+            </h6>
           </div>
-        
-          <div>
-            <Checkbox
-              checked={switches.quests}
-              onChange={() =>
+          <div className="map-sidebar-btn p-2 d-flex align-items-center justify-content-center gap-2" onClick={() =>
                 setSwitches((prevState) => ({
                   ...prevState,
-                  quests: !switches.quests,
-                }))
-              }
-              sx={{
-                color: "white",
-                "&.Mui-checked": {
-                  color: "white",
-                },
-              }}
-            />
-            <span style={{ marginLeft: 8, color: "white" }}>Quests</span>
+                  challenges: !switches.challenges,
+                }))}
+                style={{opacity: switches.challenges ? "1" : "0.6"}}
+                >
+            <img src={challengeIcon} alt="" width={24} height={24} />
+            <h6 className="chain-sidebar-title mb-0 text-white">
+              Challenges
+            </h6>
           </div>
-          <div>
-            <Checkbox
-              checked={switches.bosses}
-              onChange={() =>
-                setSwitches((prevState) => ({
-                  ...prevState,
-                  bosses: !switches.bosses,
-                }))
-              }
-              sx={{
-                color: "white",
-                "&.Mui-checked": {
-                  color: "white",
-                },
-              }}
-            />
-            <span style={{ marginLeft: 8, color: "white" }}>Game Bosses</span>
           </div>
-          <div>
-            <Checkbox
-              checked={switches.teleports}
-              onChange={() =>
-                setSwitches((prevState) => ({
-                  ...prevState,
-                  teleports: !switches.teleports,
-                }))
-              }
-              sx={{
-                color: "white",
-                "&.Mui-checked": {
-                  color: "white",
-                },
-              }}
-            />
-            <span style={{ marginLeft: 8, color: "white" }}>Teleports</span>
-          </div>
-          <div>
-            <Checkbox
-              checked={switches.craftingTables}
-              onChange={() =>
-                setSwitches((prevState) => ({
-                  ...prevState,
-                  craftingTables: !switches.craftingTables,
-                }))
-              }
-              sx={{
-                color: "white",
-                "&.Mui-checked": {
-                  color: "white",
-                },
-              }}
-            />
-            <span style={{ marginLeft: 8, color: "white" }}>Crafting Tables</span>
+          
+          <DypiusDropdown
+            parent={"Dypians City"}
+            options={chainAreas}
+            onZoomIn={handleMarkerClick}
+            switches={switches}
+            setSwitches={setSwitches}
+          />
+          <IslandDropdown
+            parent={"Island Zero"}
+            options={chainAreas}
+            onZoomIn={handleMarkerClick}
+            switches={switches}
+            setSwitches={setSwitches}
+          />
+           <div className="map-sidebar-btn genesis-focus-btn p-2 d-flex align-items-center gap-2" onClick={() => {handleMarkerClick(genesisLocation, 15, "area"); setContent(genesisLocation.title)}}
+                >
+            <img src={landIcon} alt="" width={24} height={24} />
+            <h6 className="chain-sidebar-title mb-0 text-white">
+              Genesis Land
+            </h6>
           </div>
         </div>
       </div>
