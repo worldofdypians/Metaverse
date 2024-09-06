@@ -5729,18 +5729,18 @@ function Dashboard({
 
     const coresubscribeAddress = window.config.subscription_core_address;
 
-    const web3 = new Web3(window.ethereum);
+    window.web3 = new Web3(window.ethereum);
 
     setloadspinner(true);
 
-    const nftContract_viction = new window.victionWeb3.eth.Contract(
+    const nftContract_viction = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
       if (window.WALLET_TYPE !== "binance") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -5905,7 +5905,7 @@ function Dashboard({
             }, 5000);
           });
       } else if (approveStatus === "approveAmount") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -5931,7 +5931,7 @@ function Dashboard({
       }
     } else {
       if (window.WALLET_TYPE !== "binance") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
