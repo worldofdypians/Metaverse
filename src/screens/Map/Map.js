@@ -153,7 +153,8 @@ const Map = () => {
         maxZoom={18}
         style={{ height: "100vh", width: "100%" }}
       >
-        <TileLayer url="/mapTiles/{z}/{x}/{y}.png" />
+        {/* <TileLayer url="/mapTiles/{z}/{x}/{y}.png" /> */}
+        <TileLayer url="https://cdn.worldofdypians.com/MapTiles/{z}/{x}/{y}.png" />
         <ChainMarkers
           chainsVisible={chainsVisible}
           chainAreas={chainAreas}
@@ -252,7 +253,7 @@ const Map = () => {
               handleMarkerClick={handleMarkerClick}
             />
           ))}
-        {dummyEvents.map((item) => (
+        {switches.challenges && dummyEvents.map((item) => (
           <CustomMarker
             icon={item.marker}
             item={item}
