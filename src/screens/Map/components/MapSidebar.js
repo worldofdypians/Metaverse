@@ -169,7 +169,7 @@ const genesisLocation = {
             switches={switches}
             setSwitches={setSwitches}
           />
-           <div className="map-sidebar-btn genesis-focus-btn p-2 d-flex align-items-center gap-2" onClick={() => {handleMarkerClick(genesisLocation, 15, "area"); setContent(genesisLocation.title)}}
+           <div className="map-sidebar-btn genesis-focus-btnodb p-2 d-flex align-items-center gap-2" onClick={() => {handleMarkerClick(genesisLocation, 15, "area"); setContent(genesisLocation.title)}}
                 >
             <img src={landIcon} alt="" width={24} height={24} />
             <h6 className="chain-sidebar-title mb-0 text-white">
