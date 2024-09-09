@@ -2694,6 +2694,8 @@ const NewDailyBonus = ({
                             chain === "manta" && "chain-item-active"
                           } w-100`}
                         >
+                            <img src={require('./assets/gift.png')}  alt='' className="position-absolute manta-gift" />
+
                           <img
                             src={mantaBg}
                             className={`chain-img ${
@@ -2712,9 +2714,7 @@ const NewDailyBonus = ({
                               setRewardData([]);
                             }}
                           >
-                            {/* <h6 className="chain-title-position mb-0">
-                              BNB CHAIN
-                            </h6> */}
+                            
                             <div
                               className="d-flex align-items-center gap-2"
                               style={{ width: "fit-content" }}
@@ -3337,6 +3337,8 @@ const NewDailyBonus = ({
                             chain === "manta" && "chain-item-active"
                           } w-100`}
                         >
+                            <img src={require('./assets/gift.png')}  alt='' className="position-absolute manta-gift" />
+
                           <img
                             src={mantaBg}
                             className={`chain-img ${
