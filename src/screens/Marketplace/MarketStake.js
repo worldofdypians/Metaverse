@@ -924,7 +924,7 @@ const MarketStake = ({
                         style={{ top: "-12px", left: "15px" }}
                       />
                     )}
-                  <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                  <div className="d-flex flex-column flex-lg-row gap-2 gap-lg-0 align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
                     <div className="d-flex flex-column ps-4 pe-4 pe-lg-0 pt-4 pt-lg-0 gap-4 col-lg-4">
                       <div className="d-flex flex-column gap-2">
                         <h6 className="market-stake-title">
