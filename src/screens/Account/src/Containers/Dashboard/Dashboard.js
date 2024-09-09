@@ -547,6 +547,8 @@ function Dashboard({
   const [premiumTxHash, setPremiumTxHash] = useState("");
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
   const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
+  const [landPremiumRewards, setlandPremiumRewards] = useState(0);
+
   const [dateofBundle, setdateofBundle] = useState(0);
   const [dateofBundlev1, setdateofBundlev1] = useState(0);
   const [portfolio, setPortfolio] = useState(false);
@@ -4242,6 +4244,28 @@ function Dashboard({
     return myStakes;
   };
 
+  const getLandPremiumStakesIds = async () => {
+    const address = coinbase;
+
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDPREMIUM_ABI,
+      window.config.nft_land_premiumstake_address
+    );
+
+    let stakenft = [];
+    let myStakes = await staking_contract.methods
+      .depositsOf(address)
+      .call()
+      .then((result) => {
+        for (let i = 0; i < result.length; i++)
+          stakenft.push(parseInt(result[i]));
+        return stakenft;
+      });
+
+    return myStakes;
+  };
+
+
   const calculateAllRewardsCawsPremium = async () => {
     const address = coinbase;
 
@@ -4270,6 +4294,36 @@ function Dashboard({
       }
     }
     setcawsPremiumRewards(result);
+  };
+
+  const calculateAllRewardsLandPremium = async () => {
+    const address = coinbase;
+
+    let myStakes = await getLandPremiumStakesIds(address);
+    let result = 0;
+    let calculateRewards = [];
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDPREMIUM_ABI,
+      window.config.nft_land_premiumstake_address
+    );
+
+    if (address !== null) {
+      if (myStakes && myStakes.length > 0) {
+        calculateRewards = await staking_contract.methods
+          .calculateRewards(address, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          });
+      }
+      let a = 0;
+
+      for (let i = 0; i < calculateRewards.length; i++) {
+        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
+        result = result + Number(a);
+      }
+    }
+    setlandPremiumRewards(result);
   };
 
   const getmyCawsWodStakes = async () => {
@@ -7401,6 +7455,7 @@ function Dashboard({
       window.WALLET_TYPE !== ""
     ) {
       calculateAllRewardsCawsPremium(data.getPlayer.wallet.publicAddress);
+      calculateAllRewardsLandPremium(data.getPlayer.wallet.publicAddress)
     }
   }, [data, chainId]);
 
@@ -8185,6 +8240,7 @@ function Dashboard({
                           setgetPremiumPopup(true);
                         }}
                         cawsPremiumRewards={cawsPremiumRewards}
+                        landPremiumRewards={landPremiumRewards}
                         userRankRewards={userRankRewards}
                         adClicked={adClicked}
                         onClearAd={() => {
@@ -8672,6 +8728,7 @@ function Dashboard({
                             kittyDashRecords={kittyDashRecords}
                             userRankRewards={userRankRewards}
                             cawsPremiumRewards={cawsPremiumRewards}
+                            landPremiumRewards={landPremiumRewards}
                             genesisRank2={genesisRank2}
                             cookieEarnUsd={cookieEarnUsd}
                           />
@@ -9194,7 +9251,7 @@ function Dashboard({
                                   </div>
 
                                   {/* <div className="d-flex flex-column gap-3 subscribe-input-container"></div> */}
-                                  {(discountPercentage < 100 ||
+                                  {(discountPercentage < 100 &&
                                     discountPercentageViction < 100) && (
                                     <div className="d-flex flex-column align-items-end gap-3">
                                       <span className="my-premium-balance-text mb-0">

@@ -74,7 +74,7 @@ const MyRewardsPopupNew = ({
   monthlyDataAmountTaiko,
   allTaikoChests,
   taikoEarnUsd,
-  immutableEarnUsd,cookieEarnUsd
+  immutableEarnUsd,cookieEarnUsd, landPremiumRewards
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -773,7 +773,7 @@ const MyRewardsPopupNew = ({
                       Number(userRankRewards) +
                       Number(userDataStar) +
                       Number(userSocialRewardsCached) +
-                      Number(cawsPremiumRewards),
+                      Number(cawsPremiumRewards) + Number(landPremiumRewards),
                     2
                   )}
             </span>
@@ -1127,6 +1127,13 @@ const MyRewardsPopupNew = ({
               </div>
 
               <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Genesis NFT Premium</span>
+                <span className="item-name-right">
+                  ${getFormattedNumber(0, 2)}
+                </span>
+              </div>
+
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CAWS</span>
                 <span className="item-name-right">
                   ${getFormattedNumber(cawsRewards, 2)}
@@ -1167,10 +1174,17 @@ const MyRewardsPopupNew = ({
             }
           >
             <div className="d-flex flex-column gap-2">
-              <div className="d-flex w-100 justify-content-between gap-2">
+             
+            <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">CAWS Premium</span>
                 <span className="item-name-right">
                   ${getFormattedNumber(cawsPremiumRewards, 2)}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Genesis NFT Premium</span>
+                <span className="item-name-right">
+                  ${getFormattedNumber(landPremiumRewards, 2)}
                 </span>
               </div>
             </div>

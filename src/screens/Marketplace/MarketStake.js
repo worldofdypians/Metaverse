@@ -24,6 +24,7 @@ import GetPremiumPopup from "../Account/src/Components/PremiumPopup/GetPremium";
 import OutsideClickHandler from "react-outside-click-handler";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import { ethers } from "ethers";
+import LandPremiumStakeModal from "../../components/StakeModal/LandPremiumModal";
 const MarketStake = ({
   coinbase,
   chainId,
@@ -36,6 +37,8 @@ const MarketStake = ({
   const windowSize = useWindowSize();
   const [mystakes, setMystakes] = useState([]);
   const [myCawsstakes, setMyCawsstakes] = useState([]);
+  const [myLandPremiumstakes, setMyLandPremiumstakes] = useState([]);
+
 
   const [mystakesLandPool, setMystakesLandPool] = useState([]);
   const [myLandstakes, setMyLandstakes] = useState([]);
@@ -45,23 +48,32 @@ const MarketStake = ({
   const [rewardModal, setRewardModal] = useState(false);
   const [landStakeModal, setlandStakeModal] = useState(false);
   const [cawsStakeModal, setCawsStakeModal] = useState(false);
+  const [landPremiumStakeModal, setLandPremiumStakeModal] = useState(false);
+
   const [landunStakeModal, setlandunStakeModal] = useState(false);
   const [cawsUnstakeModal, setCawsUnstakeModal] = useState(false);
+  const [landPremiumUnStakeModal, setLandPremiumUnStakeModal] = useState(false);
 
   const [newStakes, setnewStakes] = useState(0);
   const [approvedNfts, setApprovedNfts] = useState([]);
   const [approvedLandPoolNfts, setApprovedLandPoolNfts] = useState([]);
   const [approvedNftsPremiumCaws, setApprovedNftsPremiumCaws] = useState([]);
+  const [approvedNftsPremiumLand, setApprovedNftsPremiumLand] = useState([]);
+
 
   const [approvedWodNfts, setApprovedWodNfts] = useState([]);
   const [approvedLandNfts, setApprovedLandNfts] = useState([]);
   const [EthRewards, setEthRewards] = useState(0);
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
   const [EthRewardsCawsPremium, setEthRewardsCawsPremium] = useState(0);
+  const [EthRewardsLandPremium, setEthRewardsLandPremium] = useState(0);
+
 
   const [ethToUSD, setethToUSD] = useState(0);
   const [ethToUSDLandPool, setethToUSDLandPool] = useState(0);
   const [ethToUSDCawsPremium, setethToUSDCawsPremium] = useState(0);
+  const [ethToUSDLandPremium, setethToUSDLandPremium] = useState(0);
+
 
   const [landtvl, setlandTvl] = useState(0);
   const [cawslandTvl, setCawsLandtvl] = useState(0);
@@ -73,6 +85,8 @@ const MarketStake = ({
   const location = useLocation();
   const [getPremiumPopup, setgetPremiumPopup] = useState(false);
   const [totalStakesCawsPremium, settotalStakesCawsPremium] = useState(0);
+  const [totalStakesLandPremium, settotalStakesLandPremium] = useState(0);
+
 
   const navigate = useNavigate();
 
@@ -134,11 +148,23 @@ const MarketStake = ({
       window.config.nft_address
     );
 
+    let staking_contract_land = await new window.infuraWeb3.eth.Contract(
+      window.LANDMINTING_ABI,
+      window.config.landnft_address
+    );
+
     await staking_contract.methods
       .balanceOf(window.config.nft_caws_premiumstake_address)
       .call()
       .then((data) => {
         settotalStakesCawsPremium(data);
+      });
+
+      await staking_contract_land.methods
+      .balanceOf(window.config.nft_land_premiumstake_address)
+      .call()
+      .then((data) => {
+        settotalStakesLandPremium(data);
       });
   };
 
@@ -207,6 +233,34 @@ const MarketStake = ({
 
       return allCawsStakes;
     }
+  };
+
+  const getStakesIdsLandPremium = async () => {
+    const address = coinbase;
+    let staking_contract = await window.getContractLandPremiumNFT(
+      "LANDPREMIUM"
+    );
+    let stakenft = [];
+    let myStakes = await staking_contract.methods
+      .depositsOf(address)
+      .call()
+      .then((result) => {
+        for (let i = 0; i < result.length; i++)
+          stakenft.push(parseInt(result[i]));
+        return stakenft;
+      });
+
+    return myStakes;
+  };
+
+  const myStakesLandPremium = async () => {
+    let myStakes = await getStakesIdsLandPremium();
+
+    let stakes = myStakes.map((stake) => window.getLandNft(stake));
+
+    stakes = await Promise.all(stakes);
+    stakes.reverse();
+    setMyLandPremiumstakes(stakes);
   };
 
   const myCawsStakes = async () => {
@@ -412,6 +466,33 @@ const MarketStake = ({
     setEthRewardsCawsPremium(result);
   };
 
+  const calculateAllRewardsLandPremium = async () => {
+    let myStakes = await getCawsStakesIds();
+    let result = 0;
+    let calculateRewards = [];
+    let  staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDPREMIUM_ABI,
+      window.config.nft_land_premiumstake_address
+    );
+    if (coinbase !== null) {
+      if (myStakes && myStakes.length > 0) {
+        calculateRewards = await staking_contract.methods
+          .calculateRewards(coinbase, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          });
+      }
+      let a = 0;
+
+      for (let i = 0; i < calculateRewards.length; i++) {
+        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
+        result = result + Number(a);
+      }
+    }
+    setEthRewardsLandPremium(result);
+  };
+
 
 
   const claimRewards = async () => {
@@ -503,6 +584,39 @@ const MarketStake = ({
            });}
   };
 
+  const claimRewardsLandPremium = async () => {
+    let myStakes = await getStakesIdsLandPremium();
+    if(window.WALLET_TYPE !=='binance')
+   { let staking_contract = await window.getContractLandPremiumNFT(
+      "LANDPREMIUM"
+    );
+
+    await staking_contract.methods
+      .claimRewards(myStakes)
+      .send()
+      .then(() => {
+        setEthRewardsLandPremium(0);
+      })
+      .catch((err) => {
+        console.log(err);
+      });}
+
+      else if(window.WALLET_TYPE ==='binance')
+        { let staking_contract = await new ethers.Contract(
+          window.config.nft_land_premiumstake_address,
+          window.LANDPREMIUM_ABI,
+          binanceW3WProvider.getSigner()
+        );
+         await staking_contract 
+           .claimRewards(myStakes)
+           .then(() => {
+            setEthRewardsLandPremium(0);
+           })
+           .catch((err) => {
+             console.log(err);
+           });}
+  };
+
 
 
   const getApprovedNfts = (data) => {
@@ -512,6 +626,11 @@ const MarketStake = ({
 
   const getApprovedNftsPremiumCaws = (data) => {
     setApprovedNftsPremiumCaws(data);
+    return data;
+  };
+
+  const getApprovedNftsPremiumLand = (data) => {
+    setApprovedNftsPremiumLand(data);
     return data;
   };
 
@@ -538,6 +657,14 @@ const MarketStake = ({
   };
   const onCawsStakeModalClose = () => {
     setCawsStakeModal(false);
+  };
+
+  const onLandPremiumStakeModalClose = () => {
+    setLandPremiumStakeModal(false);
+  };
+
+  const onLandPremiumUnstakeModalClose = () => {
+    setLandPremiumUnStakeModal(false);
   };
 
   const onLandunStakeModalClose = () => {
@@ -568,6 +695,7 @@ const MarketStake = ({
       myCawsStakes();
       myLandNft();
       myLandStakes();
+      myStakesLandPremium()
       myStakesLandPool();
     }
   }, [isConnected, coinbase, newStakes, chainId]);
@@ -591,7 +719,9 @@ const MarketStake = ({
       landStakeModal ||
       landunStakeModal ||
       cawsStakeModal ||
-      cawsUnstakeModal
+      cawsUnstakeModal ||
+      landPremiumStakeModal ||
+      landPremiumUnStakeModal
     ) {
       html.classList.add("hidescroll");
     } else {
@@ -604,6 +734,8 @@ const MarketStake = ({
     landunStakeModal,
     cawsStakeModal,
     cawsUnstakeModal,
+    landPremiumStakeModal,
+    landPremiumUnStakeModal
   ]);
 
   return (
@@ -623,7 +755,9 @@ const MarketStake = ({
             </h6>
             <div className="d-flex w-100 align-items-center justify-content-center gap-4">
               <div className="position-relative">
-               
+                 <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                  <span className="mb-0">New</span>
+                </div>
                 <h6
                   className={`new-stake-tab ${
                     activeTab === "live" && "stake-tab-active"
@@ -634,9 +768,7 @@ const MarketStake = ({
                 </h6>
               </div>
               <div className="position-relative">
-              <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                  <span className="mb-0">New</span>
-                </div>
+            
                 <h6
                   className={`new-stake-tab ${
                     activeTab === "upcoming" && "stake-tab-active"
@@ -693,7 +825,7 @@ const MarketStake = ({
                       />
                     )}
                     <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                      <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
+                      <div className="d-flex flex-column ps-4 pe-4 pe-lg-0 pt-4 pt-lg-0 gap-4 col-lg-4">
                         <div className="d-flex flex-column gap-2">
                           <h6 className="market-stake-title">
                             Cats and Watches Society (CAWS)
@@ -781,31 +913,87 @@ const MarketStake = ({
                     </div>
                   </div>
                 </div>
-              </>
-            )}
-            {activeTab === "upcoming" && (
-              // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-              //   <div className="d-flex flex-column align-items-center gap-2">
-              //     <h6 className="upcoming-stake">
-              //       Staking pools are coming...
-              //     </h6>
-              //     <span className="upcoming-stake-desc">Check back soon!</span>
-              //   </div>
-              // </div>
-              <div className="col-12 px-0 mt-4">
+
+                <div className="col-12 px-0 mt-4">
                 <div className="new-wod-stake-wrapper d-flex position-relative align-items-center w-100 ">
-                 
+                {myLandPremiumstakes && myLandPremiumstakes.length > 0 && (
+                      <img
+                        src={instake}
+                        alt=""
+                        className="position-absolute"
+                        style={{ top: "-12px", left: "15px" }}
+                      />
+                    )}
                   <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
-                    <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
+                    <div className="d-flex flex-column ps-4 pe-4 pe-lg-0 pt-4 pt-lg-0 gap-4 col-lg-4">
                       <div className="d-flex flex-column gap-2">
                         <h6 className="market-stake-title">
                         Genesis Land NFTs
                         </h6>
                         <span className="market-stake-desc">
-                        Stake your Genesis Land to earn daily ETH rewards.  
+                        Stake your Genesis Land NFT to earn daily ETH rewards.  
                         </span>
                       </div>
-                  
+                      {isPremium && isConnected && chainId === 1 && (
+                          <div className="d-flex align-items-center gap-3">
+                            <button
+                              className="btn pill-btn px-4 py-2"
+                              onClick={() => {
+                                
+                                totalStakesLandPremium === 100
+                                  ? window.alertify.error(
+                                      
+                                         "There are already 100 NFTs staked. Pool cap has been reached."
+                                    )
+                                  : setLandPremiumStakeModal(true);
+                              }}
+                            >
+                              Deposit
+                            </button>
+                            <button
+                              className="btn rewards-btn px-4 py-2"
+                              onClick={() => {
+                                setLandPremiumUnStakeModal(true);
+                              }}
+                            >
+                              Rewards
+                            </button>
+                          </div>
+                        )}
+                        {!isConnected && (
+                          <button
+                            className="btn pill-btn px-4 py-2"
+                            style={{ width: "fit-content" }}
+                            onClick={() => {
+                              handleConnect();
+                            }}
+                          >
+                            Connect Wallet
+                          </button>
+                        )}
+                        {isConnected && !isPremium && (
+                          <button
+                            className="btn pill-btn px-4 py-2"
+                            style={{ width: "fit-content" }}
+                            onClick={() => {
+                              setgetPremiumPopup(true);
+                            }}
+                          >
+                            Become Premium
+                          </button>
+                        )}
+
+                        {isConnected && chainId !== 1 && isPremium && (
+                          <button
+                            className="btn pill-btn px-4 py-2"
+                            style={{ width: "fit-content" }}
+                            onClick={() => {
+                              handleEthPool();
+                            }}
+                          >
+                            Switch to Ethereum
+                          </button>
+                        )}
                     </div>
                     <div className="new-wod-apr d-flex flex-column align-items-center justify-content-center position-relative">
                       <h6 className="caws-apr-percent mb-0">25%</h6>
@@ -823,6 +1011,18 @@ const MarketStake = ({
                   </div>
                 </div>
               </div>
+              </>
+            )}
+            {activeTab === "upcoming" && (
+              <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <h6 className="upcoming-stake">
+                    Staking pools are coming...
+                  </h6>
+                  <span className="upcoming-stake-desc">Check back soon!</span>
+                </div>
+              </div>
+              
             )}
             {activeTab === "past" && (
               <div className="row w-100 m-0 mt-5">
@@ -1106,6 +1306,26 @@ const MarketStake = ({
         />
       )}
 
+{landPremiumStakeModal && (
+        <LandPremiumStakeModal
+          onModalClose={onLandPremiumStakeModalClose}
+          getApprovedLandPoolsNfts={getApprovedNftsPremiumLand}
+          nftItem={myLandNFTs}
+          isConnected={isConnected}
+          coinbase={coinbase}
+          onDepositComplete={refreshStakes}
+          onClaimAll={() => {
+            claimRewardsLandPremium();
+          }}
+          isStake={false}
+          handleConnect={handleConnect}
+          myCawsstakes={myLandPremiumstakes}
+          binanceW3WProvider={binanceW3WProvider}
+          onUnstake={refreshStakes}
+        />
+      )}
+
+
       {landunStakeModal && (
         <StakeLandModal
           onModalClose={onLandunStakeModalClose}
@@ -1140,6 +1360,28 @@ const MarketStake = ({
           isStake={true}
           handleConnect={handleConnect}
           myCawsstakes={myCawsstakes}
+          binanceW3WProvider={binanceW3WProvider}
+          onUnstake={refreshStakes}
+
+        />
+      )}
+
+{landPremiumUnStakeModal && (
+        <LandPremiumStakeModal
+          onModalClose={onLandPremiumUnstakeModalClose}
+          getApprovedLandPoolsNfts={getApprovedNftsPremiumLand}
+          nftItem={myLandPremiumstakes}
+          isConnected={isConnected}
+          coinbase={coinbase}
+          onDepositComplete={refreshStakes}
+          ETHrewards={EthRewardsLandPremium}
+          finalUsd={ethToUSDLandPremium}
+          onClaimAll={() => {
+            claimRewardsLandPremium();
+          }}
+          isStake={true}
+          handleConnect={handleConnect}
+          myCawsstakes={myLandPremiumstakes}
           binanceW3WProvider={binanceW3WProvider}
           onUnstake={refreshStakes}
 
