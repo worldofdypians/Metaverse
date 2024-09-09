@@ -547,6 +547,8 @@ function Dashboard({
   const [premiumTxHash, setPremiumTxHash] = useState("");
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
   const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
+  const [landPremiumRewards, setlandPremiumRewards] = useState(0);
+
   const [dateofBundle, setdateofBundle] = useState(0);
   const [dateofBundlev1, setdateofBundlev1] = useState(0);
   const [portfolio, setPortfolio] = useState(false);
@@ -2026,7 +2028,7 @@ function Dashboard({
         data
       );
 
-      setPrevDataVictionMonthly(result.data.data.leaderboard);
+      setPrevDataMantaMonthly(result.data.data.leaderboard);
     } else {
       setPrevDataMantaMonthly(placeholderplayerData);
     }
@@ -2375,7 +2377,7 @@ function Dashboard({
         data
       );
 
-      setPrevDataVictionMonthly(result.data.data.leaderboard);
+      setPrevDataTaikoMonthly(result.data.data.leaderboard);
     } else {
       setPrevDataTaikoMonthly(placeholderplayerData);
     }
@@ -3383,6 +3385,7 @@ function Dashboard({
     fetchWeeklyRecordsSkale();
     fetchMonthlyRecordsSkale();
     fetchRecordsStar();
+    fetchKittyDashAroundPlayer(userId, username);
   }, [username, userId, goldenPassRemainingTime]);
 
   useEffect(() => {
@@ -4241,6 +4244,28 @@ function Dashboard({
     return myStakes;
   };
 
+  const getLandPremiumStakesIds = async () => {
+    const address = coinbase;
+
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDPREMIUM_ABI,
+      window.config.nft_land_premiumstake_address
+    );
+
+    let stakenft = [];
+    let myStakes = await staking_contract.methods
+      .depositsOf(address)
+      .call()
+      .then((result) => {
+        for (let i = 0; i < result.length; i++)
+          stakenft.push(parseInt(result[i]));
+        return stakenft;
+      });
+
+    return myStakes;
+  };
+
+
   const calculateAllRewardsCawsPremium = async () => {
     const address = coinbase;
 
@@ -4269,6 +4294,36 @@ function Dashboard({
       }
     }
     setcawsPremiumRewards(result);
+  };
+
+  const calculateAllRewardsLandPremium = async () => {
+    const address = coinbase;
+
+    let myStakes = await getLandPremiumStakesIds(address);
+    let result = 0;
+    let calculateRewards = [];
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDPREMIUM_ABI,
+      window.config.nft_land_premiumstake_address
+    );
+
+    if (address !== null) {
+      if (myStakes && myStakes.length > 0) {
+        calculateRewards = await staking_contract.methods
+          .calculateRewards(address, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          });
+      }
+      let a = 0;
+
+      for (let i = 0; i < calculateRewards.length; i++) {
+        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
+        result = result + Number(a);
+      }
+    }
+    setlandPremiumRewards(result);
   };
 
   const getmyCawsWodStakes = async () => {
@@ -4357,7 +4412,7 @@ function Dashboard({
   };
 
   const signWalletPublicAddress = async () => {
-    if (window.ethereum && window.WALLET_TYPE !=='binance') {
+    if (window.ethereum && window.WALLET_TYPE !== "binance") {
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner(account);
@@ -5699,7 +5754,7 @@ function Dashboard({
       tokenprice / 10 ** tokenDecimals,
       tokenDecimals
     );
-    if (coinbase && window.WALLET_TYPE === 'binance') {
+    if (coinbase && window.WALLET_TYPE === "binance") {
       let token_Sc = new ethers.Contract(
         token,
         window.ERC20_ABI,
@@ -5728,18 +5783,18 @@ function Dashboard({
 
     const coresubscribeAddress = window.config.subscription_core_address;
 
-    const web3 = new Web3(window.ethereum);
+    window.web3 = new Web3(window.ethereum);
 
     setloadspinner(true);
 
-    const nftContract_viction = new window.victionWeb3.eth.Contract(
+    const nftContract_viction = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
       if (window.WALLET_TYPE !== "binance") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -5833,22 +5888,21 @@ function Dashboard({
               }, 5000);
             });
 
-            const txReceipt = await txResponse.wait();
-        if (txReceipt) {
-          setloadspinner(false);
-          setisApproved(true);
-          if (discountPercentage < 100) {
-            if (
-              selectedSubscriptionToken.toLowerCase() ===
-              "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
-            ) {
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentage < 100) {
+              if (
+                selectedSubscriptionToken.toLowerCase() ===
+                "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+              ) {
+                setapproveStatus("deposit");
+              } else setapproveStatus("approveAmount");
+            } else {
               setapproveStatus("deposit");
-            } else setapproveStatus("approveAmount");
-          } else {
-            setapproveStatus("deposit");
+            }
           }
-        }
-
         } else if (approveStatus === "approveAmount") {
           const txResponse = await tokenContract_binance
             .approve(bnbsubscribeAddress, price, { from: coinbase })
@@ -5864,16 +5918,19 @@ function Dashboard({
               }, 5000);
             });
 
-            const txReceipt = await txResponse.wait();
-        if (txReceipt) {
-          setloadspinner(false);
-              setisApproved(true);
-              setapproveStatus("deposit");
-        }
-
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          }
         }
       }
-    } else if (chainId === 88 && nftPremium_totalViction > 0 && window.WALLET_TYPE !== "binance") {
+    } else if (
+      chainId === 88 &&
+      nftPremium_totalViction > 0 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
       if (approveStatus === "initial") {
         await nftContract_viction.methods
           .approve(
@@ -5902,7 +5959,7 @@ function Dashboard({
             }, 5000);
           });
       } else if (approveStatus === "approveAmount") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -5926,9 +5983,9 @@ function Dashboard({
             }, 5000);
           });
       }
-    }  else {
+    } else {
       if (window.WALLET_TYPE !== "binance") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -5936,29 +5993,29 @@ function Dashboard({
 
           .approve(
             chainId === 1
-            ? ethsubscribeAddress
-            : chainId === 56
-            ? bnbsubscribeAddress
-            : chainId === 1030
-            ? cfxsubscribeAddress
-            : chainId === 8453
-            ? basesubscribeAddress
-            : chainId === 43114
-            ? avaxsubscribeAddress
-            : chainId === 1482601649
-            ? skalesubscribeAddress
-            : chainId === 88
-            ? victionsubscribeAddress
-            : chainId === 169
-            ? mantasubscribeAddress
-            : chainId === 167000
-            ? taikosubscribeAddress
-            : chainId === 1116
-            ? coresubscribeAddress
-            : chainId === 713715
-            ? seisubscribeAddress
-            : cfxsubscribeAddress,
-          price
+              ? ethsubscribeAddress
+              : chainId === 56
+              ? bnbsubscribeAddress
+              : chainId === 1030
+              ? cfxsubscribeAddress
+              : chainId === 8453
+              ? basesubscribeAddress
+              : chainId === 43114
+              ? avaxsubscribeAddress
+              : chainId === 1482601649
+              ? skalesubscribeAddress
+              : chainId === 88
+              ? victionsubscribeAddress
+              : chainId === 169
+              ? mantasubscribeAddress
+              : chainId === 167000
+              ? taikosubscribeAddress
+              : chainId === 1116
+              ? coresubscribeAddress
+              : chainId === 713715
+              ? seisubscribeAddress
+              : cfxsubscribeAddress,
+            price
           )
           .send({ from: coinbase })
           .then(() => {
@@ -5987,29 +6044,29 @@ function Dashboard({
         const txResponse = await tokenContract_binance
           .approve(
             chainId === 1
-            ? ethsubscribeAddress
-            : chainId === 56
-            ? bnbsubscribeAddress
-            : chainId === 1030
-            ? cfxsubscribeAddress
-            : chainId === 8453
-            ? basesubscribeAddress
-            : chainId === 43114
-            ? avaxsubscribeAddress
-            : chainId === 1482601649
-            ? skalesubscribeAddress
-            : chainId === 88
-            ? victionsubscribeAddress
-            : chainId === 169
-            ? mantasubscribeAddress
-            : chainId === 167000
-            ? taikosubscribeAddress
-            : chainId === 1116
-            ? coresubscribeAddress
-            : chainId === 713715
-            ? seisubscribeAddress
-            : cfxsubscribeAddress,
-          price,
+              ? ethsubscribeAddress
+              : chainId === 56
+              ? bnbsubscribeAddress
+              : chainId === 1030
+              ? cfxsubscribeAddress
+              : chainId === 8453
+              ? basesubscribeAddress
+              : chainId === 43114
+              ? avaxsubscribeAddress
+              : chainId === 1482601649
+              ? skalesubscribeAddress
+              : chainId === 88
+              ? victionsubscribeAddress
+              : chainId === 169
+              ? mantasubscribeAddress
+              : chainId === 167000
+              ? taikosubscribeAddress
+              : chainId === 1116
+              ? coresubscribeAddress
+              : chainId === 713715
+              ? seisubscribeAddress
+              : cfxsubscribeAddress,
+            price,
             { from: coinbase }
           )
           .catch((e) => {
@@ -6024,13 +6081,12 @@ function Dashboard({
             }, 5000);
           });
 
-          const txReceipt = await txResponse.wait();
+        const txReceipt = await txResponse.wait();
         if (txReceipt) {
           setloadspinner(false);
           setisApproved(true);
           setapproveStatus("deposit");
         }
-
       }
     }
   };
@@ -6291,7 +6347,7 @@ function Dashboard({
               .allowance(coinbase, bnbsubscribeAddress)
               .call()
               .then();
-              
+
             if (result != 0 && Number(result) >= Number(tokenprice)) {
               setloadspinner(false);
               setisApproved(true);
@@ -6325,13 +6381,12 @@ function Dashboard({
               console.error(e);
               return false;
             });
-           
+
           if (
-            (approved.toLowerCase() === victionsubscribeAddress.toLowerCase()) ||
+            approved.toLowerCase() === victionsubscribeAddress.toLowerCase() ||
             approvedAll === true
           ) {
-         
-            if(discountPercentageViction === 100) {
+            if (discountPercentageViction === 100) {
               setloadspinner(false);
               setisApproved(true);
               setapproveStatus("deposit");
@@ -6443,30 +6498,29 @@ function Dashboard({
     if (window.WALLET_TYPE !== "binance") {
       let subscriptionContract = await window.getContract({
         key:
-        chainId === 1
-        ? "SUBSCRIPTION_NEWETH"
-        : chainId === 56
-        ? "SUBSCRIPTION_NEWBNB2"
-        : chainId === 43114
-        ? "SUBSCRIPTION_NEWAVAX"
-        : chainId === 1030
-        ? "SUBSCRIPTION_CFX"
-        : chainId === 8453
-        ? "SUBSCRIPTION_BASE"
-        : chainId === 1482601649
-        ? "SUBSCRIPTION_SKALE"
-        : chainId === 88
-        ? "SUBSCRIPTION_VICTION"
-        : chainId === 169
-        ? "SUBSCRIPTION_MANTA"
-        : chainId === 167000
-        ? "SUBSCRIPTION_TAIKO"
-        : chainId === 1116
-        ? "SUBSCRIPTION_CORE"
-        : chainId === 713715
-        ? "SUBSCRIPTION_SKALE"
-        : "",
-
+          chainId === 1
+            ? "SUBSCRIPTION_NEWETH"
+            : chainId === 56
+            ? "SUBSCRIPTION_NEWBNB2"
+            : chainId === 43114
+            ? "SUBSCRIPTION_NEWAVAX"
+            : chainId === 1030
+            ? "SUBSCRIPTION_CFX"
+            : chainId === 8453
+            ? "SUBSCRIPTION_BASE"
+            : chainId === 1482601649
+            ? "SUBSCRIPTION_SKALE"
+            : chainId === 88
+            ? "SUBSCRIPTION_VICTION"
+            : chainId === 169
+            ? "SUBSCRIPTION_MANTA"
+            : chainId === 167000
+            ? "SUBSCRIPTION_TAIKO"
+            : chainId === 1116
+            ? "SUBSCRIPTION_CORE"
+            : chainId === 713715
+            ? "SUBSCRIPTION_SKALE"
+            : "",
       });
       const today = Date.now();
       setloadspinnerSub(true);
@@ -6483,29 +6537,29 @@ function Dashboard({
             if (dailyBonusPopup === true) {
               setPremiumTxHash(data.transactionHash);
               const selectedchain =
-              chainId === 1
-              ? "eth"
-              : chainId === 56
-              ? "bnb"
-              : chainId === 43114
-              ? "avax"
-              : chainId === 1030
-              ? "cfx"
-              : chainId === 8453
-              ? "base"
-              : chainId === 1482601649
-              ? "skale"
-              : chainId === 88
-              ? "viction"
-              : chainId === 169
-              ? "manta"
-              : chainId === 1116
-              ? "core"
-              : chainId === 713715
-              ? "sei"
-              :  chainId === 167000
-              ? 'taiko'
-              : "";
+                chainId === 1
+                  ? "eth"
+                  : chainId === 56
+                  ? "bnb"
+                  : chainId === 43114
+                  ? "avax"
+                  : chainId === 1030
+                  ? "cfx"
+                  : chainId === 8453
+                  ? "base"
+                  : chainId === 1482601649
+                  ? "skale"
+                  : chainId === 88
+                  ? "viction"
+                  : chainId === 169
+                  ? "manta"
+                  : chainId === 1116
+                  ? "core"
+                  : chainId === 713715
+                  ? "sei"
+                  : chainId === 167000
+                  ? "taiko"
+                  : "";
 
               setselectedChainforPremium(selectedchain);
               setTimeout(() => {
@@ -6560,29 +6614,29 @@ function Dashboard({
             if (dailyBonusPopup === true) {
               setPremiumTxHash(data.transactionHash);
               const selectedchain =
-              chainId === 1
-              ? "eth"
-              : chainId === 56
-              ? "bnb"
-              : chainId === 43114
-              ? "avax"
-              : chainId === 1030
-              ? "cfx"
-              : chainId === 8453
-              ? "base"
-              : chainId === 1482601649
-              ? "skale"
-              : chainId === 88
-              ? "viction"
-              : chainId === 169
-              ? "manta"
-              : chainId === 1116
-              ? "core"
-              : chainId === 713715
-              ? "sei"
-              :  chainId === 167000
-              ? 'taiko'
-              : "";
+                chainId === 1
+                  ? "eth"
+                  : chainId === 56
+                  ? "bnb"
+                  : chainId === 43114
+                  ? "avax"
+                  : chainId === 1030
+                  ? "cfx"
+                  : chainId === 8453
+                  ? "base"
+                  : chainId === 1482601649
+                  ? "skale"
+                  : chainId === 88
+                  ? "viction"
+                  : chainId === 169
+                  ? "manta"
+                  : chainId === 1116
+                  ? "core"
+                  : chainId === 713715
+                  ? "sei"
+                  : chainId === 167000
+                  ? "taiko"
+                  : "";
               setselectedChainforPremium(selectedchain);
             }
             setloadspinnerSub(false);
@@ -6693,7 +6747,7 @@ function Dashboard({
             setapproveStatus("failsubscribe");
             setstatus(e?.message);
             window.alertify.error(e?.message);
-  
+
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -6709,29 +6763,29 @@ function Dashboard({
             if (dailyBonusPopup === true) {
               setPremiumTxHash(data.transactionHash);
               const selectedchain =
-              chainId === 1
-              ? "eth"
-              : chainId === 56
-              ? "bnb"
-              : chainId === 43114
-              ? "avax"
-              : chainId === 1030
-              ? "cfx"
-              : chainId === 8453
-              ? "base"
-              : chainId === 1482601649
-              ? "skale"
-              : chainId === 88
-              ? "viction"
-              : chainId === 169
-              ? "manta"
-              : chainId === 1116
-              ? "core"
-              : chainId === 713715
-              ? "sei"
-              :  chainId === 167000
-              ? 'taiko'
-              : "";
+                chainId === 1
+                  ? "eth"
+                  : chainId === 56
+                  ? "bnb"
+                  : chainId === 43114
+                  ? "avax"
+                  : chainId === 1030
+                  ? "cfx"
+                  : chainId === 8453
+                  ? "base"
+                  : chainId === 1482601649
+                  ? "skale"
+                  : chainId === 88
+                  ? "viction"
+                  : chainId === 169
+                  ? "manta"
+                  : chainId === 1116
+                  ? "core"
+                  : chainId === 713715
+                  ? "sei"
+                  : chainId === 167000
+                  ? "taiko"
+                  : "";
               setselectedChainforPremium(selectedchain);
               setTimeout(() => {
                 setgetPremiumPopup(false);
@@ -6781,30 +6835,29 @@ function Dashboard({
     } else if (window.WALLET_TYPE === "binance") {
       let subscriptionContract = await getContractBinance({
         key:
-        chainId === 1
-        ? "SUBSCRIPTION_NEWETH"
-        : chainId === 56
-        ? "SUBSCRIPTION_NEWBNB2"
-        : chainId === 43114
-        ? "SUBSCRIPTION_NEWAVAX"
-        : chainId === 1030
-        ? "SUBSCRIPTION_CFX"
-        : chainId === 8453
-        ? "SUBSCRIPTION_BASE"
-        : chainId === 1482601649
-        ? "SUBSCRIPTION_SKALE"
-        : chainId === 88
-        ? "SUBSCRIPTION_VICTION"
-        : chainId === 169
-        ? "SUBSCRIPTION_MANTA"
-        : chainId === 167000
-        ? "SUBSCRIPTION_TAIKO"
-        : chainId === 1116
-        ? "SUBSCRIPTION_CORE"
-        : chainId === 713715
-        ? "SUBSCRIPTION_SKALE"
-        : "",
-
+          chainId === 1
+            ? "SUBSCRIPTION_NEWETH"
+            : chainId === 56
+            ? "SUBSCRIPTION_NEWBNB2"
+            : chainId === 43114
+            ? "SUBSCRIPTION_NEWAVAX"
+            : chainId === 1030
+            ? "SUBSCRIPTION_CFX"
+            : chainId === 8453
+            ? "SUBSCRIPTION_BASE"
+            : chainId === 1482601649
+            ? "SUBSCRIPTION_SKALE"
+            : chainId === 88
+            ? "SUBSCRIPTION_VICTION"
+            : chainId === 169
+            ? "SUBSCRIPTION_MANTA"
+            : chainId === 167000
+            ? "SUBSCRIPTION_TAIKO"
+            : chainId === 1116
+            ? "SUBSCRIPTION_CORE"
+            : chainId === 713715
+            ? "SUBSCRIPTION_SKALE"
+            : "",
       });
       const today = Date.now();
       setloadspinnerSub(true);
@@ -6813,14 +6866,14 @@ function Dashboard({
         let subscriptionContract = await getContractBinance({
           key: "SUBSCRIPTION_NEWBNB2",
         });
-       const txResponse =  await subscriptionContract
+        const txResponse = await subscriptionContract
           .subscribeNFT(
             nftDiscountObject.nftAddress,
             nftPremium_tokenId,
             selectedSubscriptionToken,
             price,
             { from: coinbase }
-          ) 
+          )
           .catch(() => {
             setloadspinnerSub(false);
             setapproveStatus("failsubscribe");
@@ -6835,11 +6888,11 @@ function Dashboard({
             }, 5000);
           });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            if (dailyBonusPopup === true) {
-              setPremiumTxHash(txResponse.hash);
-              const selectedchain =
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          if (dailyBonusPopup === true) {
+            setPremiumTxHash(txResponse.hash);
+            const selectedchain =
               chainId === 1
                 ? "eth"
                 : chainId === 56
@@ -6864,34 +6917,33 @@ function Dashboard({
                 ? "sei"
                 : "";
             setselectedChainforPremium(selectedchain);
-              setTimeout(() => {
-                setgetPremiumPopup(false);
-              }, 2000);
-            }
-            setloadspinnerSub(false);
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: chainId.toString(),
-                  premiumTimestamp: today.toString(),
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
             setTimeout(() => {
               setgetPremiumPopup(false);
-              onSubscribeSuccess();
             }, 2000);
           }
-
+          setloadspinnerSub(false);
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          await axios
+            .patch(
+              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+              {
+                multiplier: "yes",
+                chain: chainId.toString(),
+                premiumTimestamp: today.toString(),
+              }
+            )
+            .then(() => {
+              getRankData();
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+          setTimeout(() => {
+            setgetPremiumPopup(false);
+            onSubscribeSuccess();
+          }, 2000);
+        }
       } else if (
         chainId === 56 &&
         selectedSubscriptionToken.toLowerCase() ===
@@ -6903,30 +6955,30 @@ function Dashboard({
             if (dailyBonusPopup === true) {
               setPremiumTxHash(data.hash);
               const selectedchain =
-              chainId === 1
-                ? "eth"
-                : chainId === 56
-                ? "bnb"
-                : chainId === 43114
-                ? "avax"
-                : chainId === 1030
-                ? "cfx"
-                : chainId === 8453
-                ? "base"
-                : chainId === 1482601649
-                ? "skale"
-                : chainId === 88
-                ? "viction"
-                : chainId === 169
-                ? "manta"
-                : chainId === 167000
-                ? "taiko"
-                : chainId === 1116
-                ? "core"
-                : chainId === 713715
-                ? "sei"
-                : "";
-            setselectedChainforPremium(selectedchain);
+                chainId === 1
+                  ? "eth"
+                  : chainId === 56
+                  ? "bnb"
+                  : chainId === 43114
+                  ? "avax"
+                  : chainId === 1030
+                  ? "cfx"
+                  : chainId === 8453
+                  ? "base"
+                  : chainId === 1482601649
+                  ? "skale"
+                  : chainId === 88
+                  ? "viction"
+                  : chainId === 169
+                  ? "manta"
+                  : chainId === 167000
+                  ? "taiko"
+                  : chainId === 1116
+                  ? "core"
+                  : chainId === 713715
+                  ? "sei"
+                  : "";
+              setselectedChainforPremium(selectedchain);
             }
             setloadspinnerSub(false);
             onSubscribeSuccess();
@@ -6977,30 +7029,30 @@ function Dashboard({
             if (dailyBonusPopup === true) {
               setPremiumTxHash(data.hash);
               const selectedchain =
-              chainId === 1
-                ? "eth"
-                : chainId === 56
-                ? "bnb"
-                : chainId === 43114
-                ? "avax"
-                : chainId === 1030
-                ? "cfx"
-                : chainId === 8453
-                ? "base"
-                : chainId === 1482601649
-                ? "skale"
-                : chainId === 88
-                ? "viction"
-                : chainId === 169
-                ? "manta"
-                : chainId === 167000
-                ? "taiko"
-                : chainId === 1116
-                ? "core"
-                : chainId === 713715
-                ? "sei"
-                : "";
-            setselectedChainforPremium(selectedchain);
+                chainId === 1
+                  ? "eth"
+                  : chainId === 56
+                  ? "bnb"
+                  : chainId === 43114
+                  ? "avax"
+                  : chainId === 1030
+                  ? "cfx"
+                  : chainId === 8453
+                  ? "base"
+                  : chainId === 1482601649
+                  ? "skale"
+                  : chainId === 88
+                  ? "viction"
+                  : chainId === 169
+                  ? "manta"
+                  : chainId === 167000
+                  ? "taiko"
+                  : chainId === 1116
+                  ? "core"
+                  : chainId === 713715
+                  ? "sei"
+                  : "";
+              setselectedChainforPremium(selectedchain);
               setTimeout(() => {
                 setgetPremiumPopup(false);
                 onSubscribeSuccess();
@@ -7180,10 +7232,13 @@ function Dashboard({
     }
   };
 
-
   const handleSkalePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance"  && !window.ethereum?.isBinance) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
             handleSwitchNetwork(1482601649);
@@ -7191,9 +7246,16 @@ function Dashboard({
           .catch((e) => {
             console.log(e);
           });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         handleSwitchChainGateWallet(1482601649);
-      } else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+      } else if (
+        window.ethereum?.isBinance ||
+        window.WALLET_TYPE === "binance"
+      ) {
         window.alertify.error(
           "This network is not available on Binance Web3 Wallet"
         );
@@ -7223,10 +7285,14 @@ function Dashboard({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-  
+
   const handleVictionPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         await handleSwitchNetworkhook("0x58")
           .then(() => {
             handleSwitchNetwork(88);
@@ -7234,9 +7300,16 @@ function Dashboard({
           .catch((e) => {
             console.log(e);
           });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         handleSwitchChainGateWallet(88);
-      }  else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+      } else if (
+        window.ethereum?.isBinance ||
+        window.WALLET_TYPE === "binance"
+      ) {
         window.alertify.error(
           "This network is not available on Binance Web3 Wallet"
         );
@@ -7288,7 +7361,11 @@ function Dashboard({
 
   const handleTaikoPool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         await handleSwitchNetworkhook("0x28c58")
           .then(() => {
             handleSwitchNetwork(167000);
@@ -7296,9 +7373,16 @@ function Dashboard({
           .catch((e) => {
             console.log(e);
           });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         handleSwitchChainGateWallet(167000);
-      }  else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+      } else if (
+        window.ethereum?.isBinance ||
+        window.WALLET_TYPE === "binance"
+      ) {
         window.alertify.error(
           "This network is not available on Binance Web3 Wallet"
         );
@@ -7308,7 +7392,6 @@ function Dashboard({
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
-
   };
 
   const handleRankRewards = () => {
@@ -7372,6 +7455,7 @@ function Dashboard({
       window.WALLET_TYPE !== ""
     ) {
       calculateAllRewardsCawsPremium(data.getPlayer.wallet.publicAddress);
+      calculateAllRewardsLandPremium(data.getPlayer.wallet.publicAddress)
     }
   }, [data, chainId]);
 
@@ -7512,7 +7596,15 @@ function Dashboard({
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
     }
-  }, [chainId, nftPremium_total, nftPremium_totalViction, discountPercentage, discountPercentageViction, nftPremium_tokenId, nftPremium_tokenIdViction]);
+  }, [
+    chainId,
+    nftPremium_total,
+    nftPremium_totalViction,
+    discountPercentage,
+    discountPercentageViction,
+    nftPremium_tokenId,
+    nftPremium_tokenIdViction,
+  ]);
 
   useEffect(() => {
     if (chainId === 1 && selectedSubscriptionToken !== "") {
@@ -7816,7 +7908,6 @@ function Dashboard({
                       <ProfileCard
                         discountPercentage={discountPercentage}
                         discountPercentageViction={discountPercentageViction}
-
                         getRankData={getRankData}
                         setPortfolio={() => setPortfolio(!portfolio)}
                         rankData={rankData}
@@ -8149,6 +8240,7 @@ function Dashboard({
                           setgetPremiumPopup(true);
                         }}
                         cawsPremiumRewards={cawsPremiumRewards}
+                        landPremiumRewards={landPremiumRewards}
                         userRankRewards={userRankRewards}
                         adClicked={adClicked}
                         onClearAd={() => {
@@ -8636,9 +8728,9 @@ function Dashboard({
                             kittyDashRecords={kittyDashRecords}
                             userRankRewards={userRankRewards}
                             cawsPremiumRewards={cawsPremiumRewards}
+                            landPremiumRewards={landPremiumRewards}
                             genesisRank2={genesisRank2}
-                        cookieEarnUsd={cookieEarnUsd}
-
+                            cookieEarnUsd={cookieEarnUsd}
                           />
                         </div>
                       </OutsideClickHandler>
@@ -8690,7 +8782,10 @@ function Dashboard({
                                 style={{ cursor: "pointer" }}
                               />
                             </div>
-                            {(discountPercentage > 0 || discountPercentageViction > 0) || (nftPremium_total > 0 || nftPremium_totalViction > 0) ? (
+                            {discountPercentage > 0 ||
+                            discountPercentageViction > 0 ||
+                            nftPremium_total > 0 ||
+                            nftPremium_totalViction > 0 ? (
                               <div className="premium-discount-bg mt-3 p-4 position-relative">
                                 <div className="premiumRedTag position-absolute">
                                   <div className="position-relative d-flex flex-column">
@@ -8752,29 +8847,29 @@ function Dashboard({
                                     </h6>
                                     <h6 className="old-price-text">$100</h6>
                                   </div>
-                                  { (nftPremium_total > 0 || nftPremium_totalViction > 0) && (
-                                      <h6 className="token-amount-placeholder m-0 premium-custom-text">
-                                        Valid until:{" "}
-                                        {new Date(
-                                          nftPremium_total > 0
-                                            ? nftDiscountObject.expiration *
-                                              1000
-                                            : nftDiscountObjectViction.expiration *
-                                              1000
-                                        )
-                                          .toDateString()
-                                          .slice(
-                                            3,
-                                            new Date(
-                                              nftPremium_total > 0
-                                                ? nftDiscountObject.expiration *
-                                                  1000
-                                                : nftDiscountObjectViction.expiration *
-                                                  1000
-                                            ).toDateString().length
-                                          )}
-                                      </h6>
-                                    )}
+                                  {(nftPremium_total > 0 ||
+                                    nftPremium_totalViction > 0) && (
+                                    <h6 className="token-amount-placeholder m-0 premium-custom-text">
+                                      Valid until:{" "}
+                                      {new Date(
+                                        nftPremium_total > 0
+                                          ? nftDiscountObject.expiration * 1000
+                                          : nftDiscountObjectViction.expiration *
+                                            1000
+                                      )
+                                        .toDateString()
+                                        .slice(
+                                          3,
+                                          new Date(
+                                            nftPremium_total > 0
+                                              ? nftDiscountObject.expiration *
+                                                1000
+                                              : nftDiscountObjectViction.expiration *
+                                                1000
+                                          ).toDateString().length
+                                        )}
+                                    </h6>
+                                  )}
                                 </div>
                               </div>
                             ) : (
@@ -9024,22 +9119,26 @@ function Dashboard({
                                           />
                                           Manta
                                         </li>
-                                        {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
-                                        <li
-                                          className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                          onClick={handleTaikoPool}
-                                        >
-                                          <img
-                                            src={
-                                              require(`../../Images/premium/tokens/taikoIcon.svg`)
-                                                .default
-                                            }
-                                            style={{ width: 18, height: 18 }}
-                                            alt=""
-                                          />
-                                          Taiko
-                                        </li>
-)}
+                                        {window.WALLET_TYPE !== "binance" &&
+                                          !window.ethereum?.isBinance && (
+                                            <li
+                                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                              onClick={handleTaikoPool}
+                                            >
+                                              <img
+                                                src={
+                                                  require(`../../Images/premium/tokens/taikoIcon.svg`)
+                                                    .default
+                                                }
+                                                style={{
+                                                  width: 18,
+                                                  height: 18,
+                                                }}
+                                                alt=""
+                                              />
+                                              Taiko
+                                            </li>
+                                          )}
                                         <li
                                           className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                           onClick={handleAvaxPool}
@@ -9082,54 +9181,57 @@ function Dashboard({
                                           />
                                           Conflux Network
                                         </li>
-                                        {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
-                                          <li
-                                            className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                            onClick={handleSkalePool}
-                                          >
-                                            <img
-                                              src={skaleIcon}
-                                              alt=""
-                                              style={{
-                                                width: "18px",
-                                                height: "18px",
-                                              }}
-                                            />
-                                            SKALE
-                                          </li>
-                                        )}
-                                        {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
-                                          <li
-                                            className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                            onClick={handleCorePool}
-                                          >
-                                            <img
-                                              src={coreIcon}
-                                              alt=""
-                                              style={{
-                                                width: "18px",
-                                                height: "18px",
-                                              }}
-                                            />
-                                            CORE
-                                          </li>
-                                        )}
-                                        {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
-                                          <li
-                                            className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                            onClick={handleVictionPool}
-                                          >
-                                            <img
-                                              src={vicitonIcon}
-                                              alt=""
-                                              style={{
-                                                width: "18px",
-                                                height: "18px",
-                                              }}
-                                            />
-                                            Viction
-                                          </li>
-                                        )}
+                                        {window.WALLET_TYPE !== "binance" &&
+                                          !window.ethereum?.isBinance && (
+                                            <li
+                                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                              onClick={handleSkalePool}
+                                            >
+                                              <img
+                                                src={skaleIcon}
+                                                alt=""
+                                                style={{
+                                                  width: "18px",
+                                                  height: "18px",
+                                                }}
+                                              />
+                                              SKALE
+                                            </li>
+                                          )}
+                                        {window.WALLET_TYPE !== "binance" &&
+                                          !window.ethereum?.isBinance && (
+                                            <li
+                                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                              onClick={handleCorePool}
+                                            >
+                                              <img
+                                                src={coreIcon}
+                                                alt=""
+                                                style={{
+                                                  width: "18px",
+                                                  height: "18px",
+                                                }}
+                                              />
+                                              CORE
+                                            </li>
+                                          )}
+                                        {window.WALLET_TYPE !== "binance" &&
+                                          !window.ethereum?.isBinance && (
+                                            <li
+                                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                              onClick={handleVictionPool}
+                                            >
+                                              <img
+                                                src={vicitonIcon}
+                                                alt=""
+                                                style={{
+                                                  width: "18px",
+                                                  height: "18px",
+                                                }}
+                                              />
+                                              Viction
+                                            </li>
+                                          )}
                                         {/*   <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={handleSeiPool}
@@ -9149,7 +9251,8 @@ function Dashboard({
                                   </div>
 
                                   {/* <div className="d-flex flex-column gap-3 subscribe-input-container"></div> */}
-                                  {(discountPercentage < 100 || discountPercentageViction  < 100) && (
+                                  {(discountPercentage < 100 &&
+                                    discountPercentageViction < 100) && (
                                     <div className="d-flex flex-column align-items-end gap-3">
                                       <span className="my-premium-balance-text mb-0">
                                         My balance:{" "}
@@ -9502,7 +9605,15 @@ function Dashboard({
                                           </span>
                                         </div>
                                         <span className="subscription-price-usd mb-0">
-                                          ${100 - Number(discountPercentage!= 0  ? discountPercentage : discountPercentageViction != 0 ? discountPercentageViction : discountPercentage) }
+                                          $
+                                          {100 -
+                                            Number(
+                                              discountPercentage != 0
+                                                ? discountPercentage
+                                                : discountPercentageViction != 0
+                                                ? discountPercentageViction
+                                                : discountPercentage
+                                            )}
                                         </span>
                                       </div>
                                     </div>
@@ -9670,8 +9781,8 @@ function Dashboard({
                                 </div>
                               </div>
                             ) : isConnected &&
-                            discountPercentageViction > 0 &&
-                            chainId === 88 ? (
+                              discountPercentageViction > 0 &&
+                              chainId === 88 ? (
                               <div className="d-flex align-items-center gap-3 justify-content-center">
                                 <div
                                   className={` ${
@@ -9778,7 +9889,9 @@ function Dashboard({
                                   </button>
                                 </div>
                               </div>
-                            ) : isConnected && (discountPercentage === 0 && discountPercentageViction === 0) ? (
+                            ) : isConnected &&
+                              discountPercentage === 0 &&
+                              discountPercentageViction === 0 ? (
                               <div className="d-flex align-items-center gap-3 justify-content-center">
                                 <div
                                   className={` ${
@@ -9902,27 +10015,27 @@ function Dashboard({
                                   Switch to BNB Chain
                                 </button>
                               </div>
-                            )  : isConnected &&
-                            discountPercentageViction > 0 &&
-                            chainId !== 88 ? (
-                            <div
-                              className={`d-flex align-items-center justify-content-center mb-2`}
-                            >
-                              <button
-                                className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                                onClick={() => {
-                                  handleVictionPool();
-                                }}
-                                style={{
-                                  width: "fit-content",
-                                  whiteSpace: "nowrap",
-                                  fontSize: 14,
-                                }}
+                            ) : isConnected &&
+                              discountPercentageViction > 0 &&
+                              chainId !== 88 ? (
+                              <div
+                                className={`d-flex align-items-center justify-content-center mb-2`}
                               >
-                                Switch to Viction
-                              </button>
-                            </div>
-                          ) : (
+                                <button
+                                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                                  onClick={() => {
+                                    handleVictionPool();
+                                  }}
+                                  style={{
+                                    width: "fit-content",
+                                    whiteSpace: "nowrap",
+                                    fontSize: 14,
+                                  }}
+                                >
+                                  Switch to Viction
+                                </button>
+                              </div>
+                            ) : (
                               <div
                                 className={`d-flex align-items-center justify-content-center mb-2`}
                               >

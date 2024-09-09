@@ -1762,7 +1762,7 @@ line-height: normal;
 .market-stake-title {
   font-style: normal;
   font-weight: 800;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 24px;
   letter-spacing: 0.005em;
   color: #ffffff;
@@ -2938,6 +2938,11 @@ line-height: normal;
   background: linear-gradient(to top, #8f2b78 15.48%, #000000 254.86%);
 }
 
+.cookie-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #181B38 0%, rgba(55, 113, 55, 0.9) 168.67%);
+}
+
 .doge-eventwrapper {
   border-radius: 20px;
   background: linear-gradient(to bottom, #1c1a39 15.48%, #ffc800 254.86%);
@@ -3929,6 +3934,20 @@ background: linear-gradient(90deg, #7F43FF 1.45%, #C01BDB 96.22%);
   width: fit-content !important;
   border-radius: 20px;
   background: linear-gradient(90deg, #5e54a0 -10.16%, #00fecf 129.3%);
+  backdrop-filter: blur(13px);
+  span {
+    color: #fff;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+
+.homepage-nft-stake-tag {
+  width: fit-content !important;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #D42F55 -10.16%, #B53878 129.3%);
   backdrop-filter: blur(13px);
   span {
     color: #fff;

@@ -4610,32 +4610,7 @@ function App() {
               />
             }
           />
-          <Route
-            exact
-            path="/account"
-            element={
-              <Dashboard
-                logoutCount={logoutCount}
-                ethTokenData={ethTokenData}
-                dypTokenData={dypTokenData}
-                handleSwitchChain={handleSwitchChain}
-                dypTokenData_old={dypTokenData_old}
-                coinbase={coinbase}
-                account={coinbase}
-                isConnected={isConnected}
-                chainId={networkId}
-                handleConnect={handleConnectWallet}
-                onSigninClick={checkData}
-                success={success}
-                availableTime={availTime}
-                handleSwitchNetwork={handleSwitchNetwork}
-                handleOpenDomains={() => setDomainPopup(true)}
-                domainName={domainName}
-                dogePrice={dogePrice}
-              />
-            }
-          />
-
+         
           <Route
             exact
             path="/marketplace/beta-pass/multiversx"

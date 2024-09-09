@@ -22,7 +22,7 @@ const WalletModal = ({
           <div className="wallet-items-wrapper">
             <div className="row flex-column mx-2 mx-lg-3 align-items-center gap-3">
               {(!isMobile ||
-                (isMobile   &&(window.ethereum?.isMetaMask === true || window.ethereum?.isSafePal === true))) && (
+                (isMobile   &&(window.ethereum?.isMetaMask === true || window.ethereum?.isSafePal === true || !window.ethereum))) && (
                   <button
                     onClick={handleConnection}
                     id="connect-METAMASK"
@@ -44,7 +44,7 @@ const WalletModal = ({
                   </button>
                 )}
               {(!isMobile ||
-                (isMobile && window.ethereum?.isBinance === true)) && (
+                (isMobile && window.ethereum?.isBinance === true || !window.ethereum)) && (
                   <button
                     onClick={handleConnectBinance}
                     id="connect-METAMASK"
@@ -66,7 +66,7 @@ const WalletModal = ({
                   </button>
                 )}
                 {(!isMobile ||
-                (isMobile&& !window.ethereum?.isBinance && window.ethereum?.isMetaMask === true)) && (
+                (isMobile&& !window.ethereum?.isBinance && window.ethereum?.isMetaMask === true || !window.ethereum)) && (
               <button
                 onClick={handleConnectionPassport}
                 id="connect-METAMASK"
@@ -88,7 +88,7 @@ const WalletModal = ({
               </button>
                 )}
               {(!isMobile ||
-                (isMobile && window.gatewallet)) && (
+                (isMobile && window.gatewallet || !window.ethereum)) && (
                   <button
                     onClick={handleConnection}
                     id="connect-METAMASK"
@@ -111,7 +111,7 @@ const WalletModal = ({
                   </button>
                 )}
               {(!isMobile ||
-                (isMobile && window.ethereum?.isCoinbaseWallet)) && (
+                (isMobile && window.ethereum?.isCoinbaseWallet || !window.ethereum)) && (
                   <button
                     onClick={handleConnection}
                     id="connect-METAMASK"
@@ -133,7 +133,7 @@ const WalletModal = ({
                   </button>
                 )}
               {(!isMobile ||
-                (isMobile && window.coin98)) && (
+                (isMobile && window.coin98 || !window.ethereum)) && (
                   <button
                     onClick={handleConnection}
                     id="connect-COIN98"
@@ -155,7 +155,7 @@ const WalletModal = ({
                   </button>
                 )}
               {(!isMobile ||
-                (isMobile && (window.ethereum?.isTrust === true || window.ethereum?.isSafePal === true || window.ethereum?.isBinance))) && (
+                (isMobile && (window.ethereum?.isTrust === true || window.ethereum?.isSafePal === true || window.ethereum?.isBinance || !window.ethereum))) && (
                   <button
                     onClick={handleConnection}
                     id="connect-COIN98"
@@ -177,7 +177,7 @@ const WalletModal = ({
                   </button>
                 )}
                 {(!isMobile ||
-                (isMobile &&  window.ethereum?.isSafePal === true)) && (
+                (isMobile &&  window.ethereum?.isSafePal === true || !window.ethereum)) && (
               <button
                 onClick={handleConnection}
                 id="connect-COIN98"
