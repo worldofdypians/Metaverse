@@ -4432,9 +4432,9 @@ function Dashboard({
           }, 1000);
           onSubscribeSuccess(account);
 
-          if (isonlink) {
-            handleFirstTask(account);
-          }
+          // if (isonlink) {
+          //   handleFirstTask(account);
+          // }
         });
       } catch (error) {
         setsyncStatus("error");
@@ -4464,9 +4464,9 @@ function Dashboard({
           }, 1000);
           onSubscribeSuccess(binanceWallet);
 
-          if (isonlink) {
-            handleFirstTask(binanceWallet);
-          }
+          // if (isonlink) {
+          //   handleFirstTask(binanceWallet);
+          // }
         });
       } catch (error) {
         setsyncStatus("error");

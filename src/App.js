@@ -2332,9 +2332,9 @@ function App() {
             let tokenId = await window.opbnb_nft
               .mintOPBNBNFT()
               .then(() => {
-                setTimeout(() => {
-                  handleSecondTask(coinbase);
-                }, 5000);
+                // setTimeout(() => {
+                //   handleSecondTask(coinbase);
+                // }, 5000);
                 setmintStatus("Success! Your Nft was minted successfully!");
                 setmintloading("success");
                 settextColor("rgb(123, 216, 176)");
@@ -2375,9 +2375,9 @@ function App() {
             let tokenId = await contract
               .mintBetaPass({ from: coinbase })
               .then(() => {
-                setTimeout(() => {
-                  handleSecondTask(coinbase);
-                }, 5000);
+                // setTimeout(() => {
+                //   handleSecondTask(coinbase);
+                // }, 5000);
                 setmintStatus("Success! Your Nft was minted successfully!");
                 setmintloading("success");
                 settextColor("rgb(123, 216, 176)");
