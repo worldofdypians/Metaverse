@@ -315,6 +315,8 @@ const Roadmap = () => {
     //   ],
     // },
   ];
+
+
   const roadmapItems2024 = [
     {
       quarter: "quarterOne",
@@ -445,58 +447,60 @@ const Roadmap = () => {
       image: "quarterThreeImage",
 
       content: [
-        {
-          title: "Launch of Crypto Museum",
-          desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
-          completed: false,
-        },
-       
-        {
-          title: "Introduction of Character Customization",
-          desc: "Allow players to personalize their main avatar/character with facial and body features.",
-          completed: false,
-        },
+     
         {
           title: "Expanding with a New Environment",
           desc: "Create a new environment, such as an island, for players to explore, complete tasks, and engage in battles.",
-          completed: false,
+          completed: true,
+        },
+        {
+          title: "Genesis Land NFT Staking Pool",
+          desc: "Launch the Genesis Land NFT Staking Pool, allowing landholders to stake their NFTs and earn rewards, adding a new utility for Genesis Land owners within the World of Dypians.",
+          completed: true,
         },
         // {
         //   title: "Introduction of Shop v2",
         //   desc: "Improve and expand the in-game shop with new features and offerings.",
         //   completed: false,
         // },
-        {
-          title: "Introduction of Shop v1",
-          desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
-          completed: false,
-        },
-        {
-          title: "Multiplayer Social Hub",
-          desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
-          completed: false,
-        },
+
       
         {
           title: "Addition of Game Currency",
           desc: "Introduce a new in-game currency to enhance the game's economy and provide more options for players.",
           completed: false,
         },
+
         {
-          title: "Loot Box Introduction",
-          desc: "Introduce loot boxes as a new gameplay mechanic to reward players with random items.",
+          title: "Website Revamped UI/UX",
+          desc: "Unveil a redesigned website with a revamped UI/UX, offering users a more intuitive and visually engaging experience for seamless navigation and interaction within the World of Dypians ecosystem.",
           completed: false,
         },
+
         {
-          title: "Introduction of the Mall Center",
-          desc: "Introduce a mall center in the game where players can shop for various items and goods.",
+          title: "Introduction of Scorpion King Event",
+          desc: "Launch the Scorpion King event, a thrilling in-game challenge where players face off against the formidable Scorpion King, with the chance to earn exclusive rewards and valuable in-game items.",
           completed: false,
         },
+
         {
-          title: "Full Release of the Multiplayer PvE",
-          desc: "Launch the full version of the multiplayer player-versus-environment mode for all players to enjoy.",
+          title: "Maze Garden Challenge",
+          desc: "Introduce the Maze Garden challenge, a weekly event within the BNB Chain area where players navigate through intricate mazes and compete for one-time rewards, adding an exciting layer of strategy and fun.",
           completed: false,
         },
+        
+        {
+          title: "Full Map Enhancement",
+          desc: "Upgrade the World of Dypians map with enhanced visuals, new terrains, and detailed environments, providing a richer and more immersive experience for players exploring the game world.",
+          completed: false,
+        },
+
+        {
+          title: "Addition of New Creatures and Animals",
+          desc: "Expand the diversity of creatures and animals across the maps, introducing new species that will enhance exploration, interactions, and in-game encounters for players.",
+          completed: false,
+        },
+
         {
           title: "Partnership Development",
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
@@ -509,32 +513,68 @@ const Roadmap = () => {
       image: "quarterFourImage",
 
       content: [
+       
         {
+          title: "Launch of Crypto Museum",
+          desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
+          completed: false,
+        },
+        {
+          title: "Introduction of Character Customization",
+          desc: "Allow players to personalize their main avatar/character with facial and body features.",
+          completed: false,
+        },
+         {
           title: "Full Release of the Multiplayer PvP",
           desc: "Launch the full version of the multiplayer player-versus-player mode for competitive gameplay.",
           completed: false,
         },
         {
-          title: "Introduction of Character NFT Generation",
-          desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
+          title: "Introduction of Shop v1",
+          desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
           completed: false,
         },
+        {
+          title: "Multiplayer Social Hub",
+          desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
+          completed: false,
+        },
+        // {
+        //   title: "Loot Box Introduction",
+        //   desc: "Introduce loot boxes as a new gameplay mechanic to reward players with random items.",
+        //   completed: false,
+        // },
+        {
+          title: "Introduction of the Mall Center",
+          desc: "Introduce a mall center in the game where players can shop for various items and goods.",
+          completed: false,
+        },
+        {
+          title: "Full Release of the Multiplayer PvE",
+          desc: "Launch the full version of the multiplayer player-versus-environment mode for all players to enjoy.",
+          completed: false,
+        },
+        // {
+        //   title: "Introduction of Character NFT Generation",
+        //   desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
+        //   completed: false,
+        // },
         {
           title: "Adopt CAWS Functionality",
           desc: "Allow players to adopt a CAWS (cat) in-game, feed it, grow it, and use it within the game world.",
           completed: false,
         },
-        {
-          title: "NFT Customization",
-          desc: "Enable players to customize their NFTs, such as weapons and equipment, by adding elements or items to them.",
-          completed: false,
-        },
+        // {
+        //   title: "NFT Customization",
+        //   desc: "Enable players to customize their NFTs, such as weapons and equipment, by adding elements or items to them.",
+        //   completed: false,
+        // },
 
-        {
-          title: "Addition of Trade P2P",
-          desc: "Introduce peer-to-peer trading functionality in the game to allow players to exchange items and goods directly.",
-          completed: false,
-        },
+        // {
+        //   title: "Addition of Trade P2P",
+        //   desc: "Introduce peer-to-peer trading functionality in the game to allow players to exchange items and goods directly.",
+        //   completed: false,
+        // },
         {
           title: "Addition of New AI Powered NPCs",
           desc: "Introduce new AI-powered NPCs to the game to provide additional challenges and interactions for players.",
