@@ -204,45 +204,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
   const dummyBetaPassData2 = [
   
 
-    {
-      title: "BNB Chain",
-      chain: "SKALE Nebula Hub",
-      linkState: "skale",
-      rewards: "BNB",
-      status: "Live",
-      eventStatus: "Live",
-      id: "event14",
-      eventType: "Explore & Mine",
-      date: "December 22, 2023",
-      logo: bnbLogo,
-      totalRewards: "$20,000 in BNB Rewards",
-      rewardsAmount: "$20,000",
-      rewardsCurrency: "BNB Rewards",
-      minRewards: "1",
-      maxRewards: "100",
-      minPoints: "5,000",
-      maxPoints: "50,000",
-      learnMore:
-        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
-      popupInfo: {
-        title: "BNB Chain",
-        chain: "BNB Chain",
-        linkState: "bnb",
-        rewards: "BNB",
-        status: "Live",
-        id: "event14",
-        eventStatus: "Live",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore:
-          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
-        eventDate: "December 22, 2023",
-      },
-    },
+
 
     {
       title: "CORE",
@@ -465,7 +427,45 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
         eventDate: "December 22, 2023",
       },
     },
-
+    {
+      title: "BNB Chain",
+      chain: "SKALE Nebula Hub",
+      linkState: "skale",
+      rewards: "BNB",
+      status: "Expired",
+      eventStatus: "Expired",
+      id: "event14",
+      eventType: "Explore & Mine",
+      date: "December 22, 2023",
+      logo: bnbLogo,
+      totalRewards: "$20,000 in BNB Rewards",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "BNB Rewards",
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore:
+        "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event14",
+        eventStatus: "Expired",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "December 22, 2023",
+      },
+    },
 
     {
       title: "SKALE",

@@ -66,6 +66,21 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     justifyContent: "center",
   },
 }));
+
+
+const HtmlTooltipGift = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    background: "linear-gradient(135deg, #222448 0%, #2c3867 34.54%, #2c3867 66.84%, #1d2040 100%) !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "150px !important",
+    minWidth: "150px !important",
+    fontSize: theme.typography.pxToRem(12),
+    display: "flex",
+    justifyContent: "center",
+  },
+}));
 const GeneralTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -767,8 +782,6 @@ const NewDailyBonus = ({
   };
 
   const handleTaikoPool = async () => {
- 
-
     if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
         if (!window.gatewallet) {
@@ -779,8 +792,7 @@ const NewDailyBonus = ({
             .catch((e) => {
               console.log(e);
             });
-        }
-        else if(window.ethereum?.isBinance) {
+        } else if (window.ethereum?.isBinance) {
           window.alertify.error(
             "This network is not available on Binance Web3 Wallet"
           );
@@ -793,13 +805,15 @@ const NewDailyBonus = ({
         "This network is not available on Binance Web3 Wallet"
       );
     }
-
-
   };
-  
+
   const handleSkalePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance"  && !window.ethereum?.isBinance) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
             handleSwitchNetwork(1482601649);
@@ -807,9 +821,16 @@ const NewDailyBonus = ({
           .catch((e) => {
             console.log(e);
           });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         handleSwitchChainGateWallet(1482601649);
-      } else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+      } else if (
+        window.ethereum?.isBinance ||
+        window.WALLET_TYPE === "binance"
+      ) {
         window.alertify.error(
           "This network is not available on Binance Web3 Wallet"
         );
@@ -824,7 +845,6 @@ const NewDailyBonus = ({
   };
 
   const handleCorePool = async () => {
- 
     if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
         if (!window.gatewallet) {
@@ -835,8 +855,7 @@ const NewDailyBonus = ({
             .catch((e) => {
               console.log(e);
             });
-        }
-        else if(window.ethereum?.isBinance) {
+        } else if (window.ethereum?.isBinance) {
           window.alertify.error(
             "This network is not available on Binance Web3 Wallet"
           );
@@ -849,7 +868,6 @@ const NewDailyBonus = ({
         "This network is not available on Binance Web3 Wallet"
       );
     }
-
   };
   const handleVictionPool = async () => {
     if (window.WALLET_TYPE !== "binance") {
@@ -862,8 +880,7 @@ const NewDailyBonus = ({
             .catch((e) => {
               console.log(e);
             });
-        }
-        else if(window.ethereum?.isBinance) {
+        } else if (window.ethereum?.isBinance) {
           window.alertify.error(
             "This network is not available on Binance Web3 Wallet"
           );
@@ -876,8 +893,6 @@ const NewDailyBonus = ({
         "This network is not available on Binance Web3 Wallet"
       );
     }
-
-
   };
 
   const handleSeiPool = async () => {
@@ -2121,7 +2136,10 @@ const NewDailyBonus = ({
           setMessage("login");
           setDisable(true);
         }
-      } else if (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) {
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.ethereum?.isBinance
+      ) {
         setMessage("notsupported");
       }
     } else if (chain === "core") {
@@ -2187,7 +2205,10 @@ const NewDailyBonus = ({
           setMessage("login");
           setDisable(true);
         }
-      } else if (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) {
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.ethereum?.isBinance
+      ) {
         setMessage("notsupported");
       }
     } else if (chain === "viction") {
@@ -2253,7 +2274,10 @@ const NewDailyBonus = ({
           setMessage("login");
           setDisable(true);
         }
-      } else if (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) {
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.ethereum?.isBinance
+      ) {
         setMessage("notsupported");
       }
     } else if (chain === "manta") {
@@ -2319,68 +2343,72 @@ const NewDailyBonus = ({
         setDisable(true);
       }
     } else if (chain === "taiko") {
-      if(window.WALLET_TYPE !=='binance')
-     { if (email && coinbase && address) {
-        if (coinbase.toLowerCase() === address.toLowerCase()) {
-          if (isPremium) {
-            if (
-              claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase()
-            ) {
-              setMessage("complete");
-            } else if (
-              claimedTaikoChests + claimedTaikoPremiumChests < 20 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 167000
-            ) {
-              setMessage("");
-              setDisable(false);
-            } else if (
-              claimedTaikoChests + claimedTaikoPremiumChests < 20 &&
-              // rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 167000
-            ) {
-              setMessage("switch");
-              setDisable(true);
+      if (window.WALLET_TYPE !== "binance") {
+        if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedTaikoChests + claimedTaikoPremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 167000
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedTaikoChests + claimedTaikoPremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 167000
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedTaikoChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 167000
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedTaikoChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 167000
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedTaikoChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 167000
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
             }
-          } else if (!isPremium) {
-            if (
-              claimedTaikoChests === 10 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 167000
-            ) {
-              setMessage("premium");
-              setDisable(true);
-            } else if (
-              claimedTaikoChests < 10 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 167000
-            ) {
-              setMessage("");
-              setDisable(false);
-            } else if (
-              claimedTaikoChests < 10 &&
-              // rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 167000
-            ) {
-              setMessage("switch");
-              setDisable(true);
-            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
           }
         } else {
-          setMessage("switchAccount");
+          setMessage("login");
           setDisable(true);
         }
-      } else {
-        setMessage("login");
-        setDisable(true);
-      }} else if (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) {
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.ethereum?.isBinance
+      ) {
         setMessage("notsupported");
       }
     }
@@ -2694,7 +2722,22 @@ const NewDailyBonus = ({
                             chain === "manta" && "chain-item-active"
                           } w-100`}
                         >
-                            <img src={require('./assets/gift.png')}  alt='' className="position-absolute manta-gift" />
+                          <HtmlTooltipGift
+                            placement="top"
+                            
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                              
+                            }
+                          >
+                            <img
+                              src={require("./assets/gift.png")}
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
 
                           <img
                             src={mantaBg}
@@ -2714,7 +2757,6 @@ const NewDailyBonus = ({
                               setRewardData([]);
                             }}
                           >
-                            
                             <div
                               className="d-flex align-items-center gap-2"
                               style={{ width: "fit-content" }}
@@ -3102,7 +3144,6 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                      
 
                         <div
                           className={`position-relative chain-item ${
@@ -3235,7 +3276,7 @@ const NewDailyBonus = ({
                           <div
                             className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
                           >
-                             <div className="d-flex align-items-center gap-2">
+                            <div className="d-flex align-items-center gap-2">
                               <span className="percentage-span">
                                 Coming Soon
                               </span>
@@ -3337,7 +3378,20 @@ const NewDailyBonus = ({
                             chain === "manta" && "chain-item-active"
                           } w-100`}
                         >
-                            <img src={require('./assets/gift.png')}  alt='' className="position-absolute manta-gift" />
+                          <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={require("./assets/gift.png")}
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
 
                           <img
                             src={mantaBg}
@@ -4489,7 +4543,7 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 9 }}></div>
                         </div>
                       </div>
-                    )  : message === "notsupported" ? (
+                    ) : message === "notsupported" ? (
                       <div
                         className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -4510,11 +4564,11 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 9 }}></div>
                         </div>
                         <h6
-                            className="loader-text mb-0"
-                            style={{ color: "#ce5d1b" }}
-                          >
-                        Not available 
-                       </h6>
+                          className="loader-text mb-0"
+                          style={{ color: "#ce5d1b" }}
+                        >
+                          Not available
+                        </h6>
                         <div className="loader red-loader">
                           <div className="dot" style={{ "--i": 0 }}></div>
                           <div className="dot" style={{ "--i": 1 }}></div>

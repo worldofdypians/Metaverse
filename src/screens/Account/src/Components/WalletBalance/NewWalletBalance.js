@@ -567,34 +567,7 @@ const NewWalletBalance = ({
         eventDate: "Jul 01, 2024",
       },
     },
-    {
-      title: "BNB Chain",
-      logo: bnbLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Jun 12, 2024",
-      backgroundImage: upcomingSkale,
-      popupInfo: {
-        title: "BNB Chain",
-        chain: "BNB Chain",
-        linkState: "bnb",
-        rewards: "BNB",
-        status: "Live",
-        id: "event20",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: bnbLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore:
-          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
-        eventDate: "Jun 12, 2024",
-      },
-    },
+
     {
       title: "Taiko",
       logo: taikoLogo,
@@ -713,7 +686,34 @@ const NewWalletBalance = ({
       },
     },
     
-   
+    {
+      title: "BNB Chain",
+      logo: bnbLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jun 12, 2024",
+      backgroundImage: upcomingSkale,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore:
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        eventDate: "Jun 12, 2024",
+      },
+    },
     // {
     //   title: "SEI",
     //   logo: seiLogo,
@@ -1665,11 +1665,11 @@ const NewWalletBalance = ({
                 }}
               />
               <ActiveProfileEvent
-                data={dummyBNB}
-                event={dummyBNB}
-                userEarnedUsd={bnbEarnUsd}
+                data={dummyManta}
+                event={dummyManta}
+                userEarnedUsd={mantaEarnUsd}
                 onOpenEvent={() => {
-                  setDummyEvent(dummyBNB);
+                  setDummyEvent(dummyManta);
                   setEventPopup(true);
                 }}
               />
@@ -2142,7 +2142,6 @@ const NewWalletBalance = ({
                           Number(skaleEarnUsd) +
                           Number(coreEarnUsd) +
                           Number(cawsPremiumRewards) + Number(landPremiumRewards) +
-                          Number(bnbEarnUsd) +
                           Number(victionEarnUsd) +
                           Number(taikoEarnUsd) + 
                           Number(immutableEarnUsd) +
