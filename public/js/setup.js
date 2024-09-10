@@ -420,11 +420,16 @@ class NFT {
   }
 
   async approveStake(addr) {
-    let nft_contract = await getContractNFT("CAWS_NFT");
+    window.web3 = new Web3(window.ethereum)
+    let nft_contract = new window.web3.eth.Contract(
+      window.CAWS_ABI,
+      window.config.nft_caws_address
+    );
+    
     let staking_addr = addr;
     return await nft_contract.methods
       .setApprovalForAll(staking_addr, true)
-      .send();
+      .send({from: await getCoinbase()});
   }
 
   async checkapproveStake(useraddr, addr) {
