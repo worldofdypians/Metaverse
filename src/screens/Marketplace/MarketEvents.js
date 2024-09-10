@@ -455,33 +455,7 @@ const MarketEvents = ({
         eventDate: "Jul 01, 2024",
       },
     },
-    {
-      title: "BNB Chain",
-      logo: bnbLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Jun 12, 2024",
-      backgroundImage: upcomingBnb,
-      popupInfo: {
-        title: "BNB Chain",
-        chain: "BNB Chain",
-        linkState: "bnb",
-        rewards: "BNB",
-        status: "Live",
-        id: "event20",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: bnbLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "/news",
-        eventDate: "Jun 12, 2024",
-      },
-    },
+ 
     {
       title: "Immutable",
       logo: immutableLogo,
@@ -590,7 +564,33 @@ const MarketEvents = ({
         eventDate: "Aug 26, 2024",
       },
     },
-
+    {
+      title: "BNB Chain",
+      logo: bnbLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jun 12, 2024",
+      backgroundImage: upcomingBnb,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news",
+        eventDate: "Jun 12, 2024",
+      },
+    },
     // {
     //   title: "SEI",
     //   logo: seiLogo,
@@ -1655,7 +1655,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 7).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 6).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1664,9 +1664,7 @@ const MarketEvents = ({
                               setDummyEvent(item.popupInfo);
                             }}
                             userEarnUsd={
-                              item.title === "BNB Chain"
-                                ? bnbEarnUsd
-                                : item.title === "Immutable"
+                              item.title === "Immutable"
                                 ? immutableEarnUsd
                                 : item.title === "Manta"
                                 ? mantaEarnUsd
@@ -1913,7 +1911,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(7, dummyBetaPassData2.length)
+                    .slice(6, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
@@ -1936,6 +1934,8 @@ const MarketEvents = ({
                             ? gateEarnUSD
                             : item.title === "Dypius"
                             ? dypiusEarnTokens
+                            : item.title === "BNB Chain"
+                            ? bnbEarnUsd
                             : item.title === "Dypius Premium"
                             ? dypiusPremiumEarnUsd
                             : item.title === "CoinMarketCap"
