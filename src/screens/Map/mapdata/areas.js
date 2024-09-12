@@ -124,7 +124,7 @@ const chainAreas = [
     location: [-0.0671697067836984, 0.08526742458343507],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
-    banner: "victionBanner.png",
+    banner: "coinmarketcapBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
   },
   {
@@ -134,7 +134,7 @@ const chainAreas = [
     location: [-0.0673360036280549, 0.08455395698547363],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
-    banner: "victionBanner.png",
+    banner: "coingeckoBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
   },
   {
@@ -144,7 +144,7 @@ const chainAreas = [
     location: [-0.06727163065611323, 0.0842052698135376],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
-    banner: "victionBanner.png",
+    banner: "multiversBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
   },
   {
@@ -154,7 +154,7 @@ const chainAreas = [
     location: [-0.06773297028649591, 0.08424818515777588],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
-    banner: "victionBanner.png",
+    banner: "confluxBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
   },
   {
@@ -164,7 +164,7 @@ const chainAreas = [
     location: [-0.06778661442929296, 0.08464515209198],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
-    banner: "victionBanner.png",
+    banner: "babyDogeBanner.webp",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
   },
   {
@@ -174,7 +174,7 @@ const chainAreas = [
     location: [-0.06854299683618559, 0.08485436439514162],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
-    banner: "victionBanner.png",
+    banner: "avalancheBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
   },
   {
@@ -184,7 +184,7 @@ const chainAreas = [
     location: [-0.06845180179486188, 0.08445203304290771],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
-    banner: "victionBanner.png",
+    banner: "chainlinkBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
   },
   {
@@ -194,7 +194,7 @@ const chainAreas = [
     location: [-0.06881121754499282, 0.08454322814941408],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
-    banner: "victionBanner.png",
+    banner: "coin98Banner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
   },
   {
@@ -204,7 +204,7 @@ const chainAreas = [
     location: [-0.06912771797944854, 0.0847846269607544],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
-    banner: "victionBanner.png",
+    banner: "gateBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
   },
   {
@@ -214,7 +214,7 @@ const chainAreas = [
     location: [-0.06897214996956727, 0.08645832538604736],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
-    banner: "victionBanner.png",
+    banner: "mexcBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
   },
   {
@@ -224,7 +224,7 @@ const chainAreas = [
     location: [-0.06942812516951939, 0.08510112762451173],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
-    banner: "victionBanner.png",
+    banner: "easy2stakeBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
   },
   {
@@ -234,7 +234,7 @@ const chainAreas = [
     location: [-0.06764713965793161, 0.08595943450927736],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
-    banner: "victionBanner.png",
+    banner: "kucoinBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
   },
   {
@@ -264,7 +264,7 @@ const chainAreas = [
     location: [-0.07001821071588557, 0.08503675460815431],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
-    banner: "victionBanner.png",
+    banner: "immutableBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
   },
 ];
