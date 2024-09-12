@@ -1,13 +1,28 @@
+import bnbIcon from "../assets/chainIcons/bnbIcon.svg";
+import coreIcon from "../assets/chainIcons/coreIcon.svg";
+import baseIcon from "../assets/chainIcons/baseIcon.svg";
+import skaleIcon from "../assets/chainIcons/skaleIcon.svg";
+import taikoIcon from "../assets/chainIcons/taikoIcon.svg";
+import victionIcon from "../assets/chainIcons/victionIcon.svg";
+import cmcIcon from "../assets/chainIcons/cmcIcon.svg";
+import coingeckoIcon from "../assets/chainIcons/coingeckoIcon.svg";
+import confluxIcon from "../assets/chainIcons/confluxIcon.svg";
+import babydogeIcon from "../assets/chainIcons/babydogeIcon.svg";
+import multiversx from "../assets/chainIcons/multiversx.svg";
+import avaxIcon from "../assets/chainIcons/avaxIcon.svg";
+import coin98Icon from "../assets/chainIcons/coin98Icon.svg";
+import gateIcon from "../assets/chainIcons/gateIcon.svg";
+import mexcIcon from "../assets/chainIcons/mexcIcon.svg";
+import easy2stakeIcon from "../assets/chainIcons/easy2stakeIcon.svg";
+import kucoinIcon from "../assets/chainIcons/kucoinIcon.svg";
+import seiLogo from "../assets/chainIcons/seiLogo.svg";
+import immutable from "../assets/chainIcons/immutable.svg";
+import chainlinkIcon from "../assets/chainIcons/chainlinkIcon.svg";
+import mantaIcon from "../assets/chainIcons/mantaIcon.png";
+import dypIcon from "../assets/chainIcons/dypIcon.svg";
 import bearIcon from "../assets/bearIcon.svg";
 import boarIcon from "../assets/boarIcon.svg";
-import bnbIcon from "../assets/bnbIcon.svg";
-import coreIcon from "../assets/coreIcon.svg";
 import deerIcon from "../assets/deerIcon.svg";
-import dypIcon from "../assets/dypIcon.svg";
-import skaleIcon from "../assets/skaleIcon.svg";
-import taikoIcon from "../assets/taikoIcon.svg";
-import victionIcon from "../assets/victionIcon.svg";
-import mantaIcon from "../assets/mantaIcon.png";
 import landIcon from "../assets/landIcon.png";
 import questIcon from "../assets/questIcon.svg";
 import craftingIcon from "../assets/craftingIcon.svg";
@@ -18,12 +33,12 @@ import scorpionIcon from "../assets/tempScorpion2.png";
 import treasureHuntIcon from "../assets/treasureHuntIcon.png";
 import puzzleMadnessIcon from "../assets/puzzleMadnessIcon.png";
 import mazeGardenIcon from "../assets/mazeGardenIcon.png";
-import trainIcon from '../assets/trainIcon.svg';
+import trainIcon from "../assets/trainIcon.svg";
 import scorpionKing from "../assets/scorpionKing.png";
 import whitePickaxe from "../assets/whitePickaxe.svg";
 import magnifier from "../assets/magnifier.svg";
-import leaderboardsIcon from '../assets/leaderboardsIcon.svg'
-import minerIcon from '../assets/minerIcon.svg'
+import leaderboardsIcon from "../assets/leaderboardsIcon.svg";
+import minerIcon from "../assets/minerIcon.svg";
 import L from "leaflet";
 import { Marker } from "react-leaflet";
 
@@ -102,6 +117,22 @@ const treasureMarker = createIcon(treasureHuntIcon, 32);
 const trainMarker = createIcon(trainIcon, 32);
 const leaderboardsMarker = createIcon(leaderboardsIcon, 32);
 
+const confluxMarker = createIcon(confluxIcon, 24);
+const cmcMarker = createIcon(cmcIcon, 24);
+const coingeckoMarker = createIcon(coingeckoIcon, 24);
+const multiversxMarker = createIcon(multiversx, 24);
+const babydogeMarker = createIcon(babydogeIcon, 24);
+const avaxMarker = createIcon(avaxIcon, 24);
+const chainlinkMarker = createIcon(chainlinkIcon, 24);
+const coin98Marker = createIcon(coin98Icon, 24);
+const gateMarker = createIcon(gateIcon, 24);
+const mexcMarker = createIcon(mexcIcon, 24);
+const easy2stakeMarker = createIcon(easy2stakeIcon, 24);
+const kucoinMarker = createIcon(kucoinIcon, 24);
+const seiMarker = createIcon(seiLogo, 24);
+const immutableMarker = createIcon(immutable, 24);
+const baseMarker = createIcon(baseIcon, 24);
+
 // Exporting the markers
 export {
   bearMarker,
@@ -129,5 +160,20 @@ export {
   puzzleMarker,
   treasureMarker,
   trainMarker,
-  leaderboardsMarker
+  leaderboardsMarker,
+  baseMarker,
+  cmcMarker,
+  coingeckoMarker,
+  multiversxMarker,
+  confluxMarker,
+  babydogeMarker,
+  avaxMarker,
+  chainlinkMarker,
+  coin98Marker,
+  gateMarker,
+  mexcMarker,
+  easy2stakeMarker,
+  kucoinMarker,
+  seiMarker,
+  immutableMarker,
 };

@@ -1,16 +1,31 @@
 import {
+  avaxMarker,
+  babydogeMarker,
+  baseMarker,
   bearMarker,
   bnbMarker,
   boarMarker,
+  chainlinkMarker,
+  cmcMarker,
+  coin98Marker,
+  coingeckoMarker,
+  confluxMarker,
   coreMarker,
   deerMarker,
   dragonMarker,
   dypMarker,
+  easy2stakeMarker,
+  gateMarker,
+  immutableMarker,
+  kucoinMarker,
   mantaMarker,
   mazeMarker,
+  mexcMarker,
   mineMarker,
+  multiversxMarker,
   puzzleMarker,
   scorpionMarker,
+  seiMarker,
   skaleMarker,
   taikoMarker,
   teleportMarker,
@@ -24,6 +39,29 @@ import questDummy3 from "../assets/banners/questDummy3.webp";
 import questDummy4 from "../assets/banners/questDummy4.webp";
 import trainIcon from '../assets/trainIcon.svg'
 import teleportIcon from '../assets/teleportIcon.svg'
+import deerIcon from "../assets/deerIcon.svg";
+import bnbIcon from "../assets/chainIcons/bnbIcon.svg";
+import coreIcon from "../assets/chainIcons/coreIcon.svg";
+import baseIcon from "../assets/chainIcons/baseIcon.svg";
+import skaleIcon from "../assets/chainIcons/skaleIcon.svg";
+import taikoIcon from "../assets/chainIcons/taikoIcon.svg";
+import victionIcon from "../assets/chainIcons/victionIcon.svg";
+import cmcIcon from "../assets/chainIcons/cmcIcon.svg";
+import coingeckoIcon from "../assets/chainIcons/coingeckoIcon.svg";
+import confluxIcon from "../assets/chainIcons/confluxIcon.svg";
+import babydogeIcon from "../assets/chainIcons/babydogeIcon.svg";
+import multiversx from "../assets/chainIcons/multiversx.svg";
+import avaxIcon from "../assets/chainIcons/avaxIcon.svg";
+import coin98Icon from "../assets/chainIcons/coin98Icon.svg";
+import gateIcon from "../assets/chainIcons/gateIcon.svg";
+import mexcIcon from "../assets/chainIcons/mexcIcon.svg";
+import easy2stakeIcon from "../assets/chainIcons/easy2stakeIcon.svg";
+import kucoinIcon from "../assets/chainIcons/kucoinIcon.svg";
+import seiLogo from "../assets/chainIcons/seiLogo.svg";
+import immutable from "../assets/chainIcons/immutable.svg";
+import chainlinkIcon from "../assets/chainIcons/chainlinkIcon.svg";
+import mantaIcon from "../assets/chainIcons/mantaIcon.png";
+
 import { marker } from "leaflet";
 
 
@@ -32,7 +70,7 @@ const chainAreas = [
   {
     title: "BNB Chain Area",
     marker: bnbMarker,
-    icon: "bnbIcon.svg",
+    icon: bnbIcon,
     location: [-0.06735561726792588, 0.08666753768920898],
     link: "https://www.bnbchain.org/en",
     logo: "bnbBackers.svg",
@@ -42,7 +80,7 @@ const chainAreas = [
   {
     title: "CORE Area",
     marker: coreMarker,
-    icon: "coreIcon.svg",
+    icon: coreIcon,
     location: [-0.06806371995340654, 0.08683919906616212],
     link: "https://coredao.org/",
     logo: "coreBackers.svg",
@@ -50,19 +88,9 @@ const chainAreas = [
     events: ["Treasure Hunt", "NFT Mint", "Test Event", "Test Event 2"],
   },
   {
-    title: "Dypius Area",
-    marker: dypMarker,
-    icon: "dypIcon.svg",
-    location: [-0.07008073966681364, 0.08507966995239259],
-    link: "https://www.dypius.com/",
-    logo: "coreBackers.svg",
-    banner: "bnbBanner.webp",
-    events: ["Treasure Hunt", "NFT Mint"],
-  },
-  {
     title: "Manta Area",
     marker: mantaMarker,
-    icon: "mantaIcon.png",
+    icon: mantaIcon,
     location: [-0.06883619559843743, 0.08705377578735353],
     link: "https://manta.network/",
     logo: "mantaBackers.svg",
@@ -72,7 +100,7 @@ const chainAreas = [
   {
     title: "SKALE Area",
     marker: skaleMarker,
-    icon: "skaleIcon.svg",
+    icon: skaleIcon,
     location: [-0.0694799252930712, 0.08724689483642578],
     link: "https://skale.space/",
     logo: "skaleBackers.svg",
@@ -82,7 +110,7 @@ const chainAreas = [
   {
     title: "Taiko Area",
     marker: taikoMarker,
-    icon: "taikoIcon.svg",
+    icon: taikoIcon,
     location: [-0.06973741716847187, 0.08653879165649415],
     link: "https://taiko.xyz/",
     logo: "taikoBackers.svg",
@@ -90,10 +118,150 @@ const chainAreas = [
     events: ["Treasure Hunt", "NFT Mint"],
   },
   {
+    title: "CoinMarketCap Area",
+    marker: cmcMarker,
+    icon: cmcIcon,
+    location: [-0.0671697067836984, 0.08526742458343507],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
+    title: "Coingecko Area",
+    marker: coingeckoMarker,
+    icon: coingeckoIcon,
+    location: [-0.0673360036280549, 0.08455395698547363],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
+    title: "MultiversX Area",
+    marker: multiversxMarker,
+    icon: multiversx,
+    location: [-0.06727163065611323, 0.0842052698135376],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
+    title: "Conflux Area",
+    marker: confluxMarker,
+    icon: confluxIcon,
+    location: [-0.06773297028649591, 0.08424818515777588],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
+    title: "BabyDoge Area",
+    marker: babydogeMarker,
+    icon: babydogeIcon,
+    location: [-0.06778661442929296, 0.08464515209198],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
+    title: "Avalanche Area",
+    marker: avaxMarker,
+    icon: avaxIcon,
+    location: [-0.06854299683618559, 0.08485436439514162],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
+    title: "Chainlink Area",
+    marker: chainlinkMarker,
+    icon: chainlinkIcon,
+    location: [-0.06845180179486188, 0.08445203304290771],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
+    title: "Coin98 Area",
+    marker: coin98Marker,
+    icon: coin98Icon,
+    location: [-0.06881121754499282, 0.08454322814941408],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
+    title: "GateIo Area",
+    marker: gateMarker,
+    icon: gateIcon,
+    location: [-0.06912771797944854, 0.0847846269607544],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
+    title: "MEXC Area",
+    marker: mexcMarker,
+    icon: mexcIcon,
+    location: [-0.06897214996956727, 0.08645832538604736],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
+    title: "Easy2Stake Area",
+    marker: easy2stakeMarker,
+    icon: easy2stakeIcon,
+    location: [-0.06942812516951939, 0.08510112762451173],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
+    title: "KuCoin Area",
+    marker: kucoinMarker,
+    icon: kucoinIcon,
+    location: [-0.06764713965793161, 0.08595943450927736],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
+    title: "Base Area",
+    marker: baseMarker,
+    icon: baseIcon,
+    location: [-0.06778125001500689, 0.08511722087860107],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
     title: "Viction Area",
     marker: victionMarker,
-    icon: "victionIcon.svg",
+    icon: victionIcon,
     location: [-0.06990907841795445, 0.08591651916503908],
+    link: "https://www.viction.xyz/",
+    logo: "victionBackers.svg",
+    banner: "victionBanner.png",
+    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+  },
+  {
+    title: "Immutable Area",
+    marker: immutableMarker,
+    icon: immutable,
+    location: [-0.07001821071588557, 0.08503675460815431],
     link: "https://www.viction.xyz/",
     logo: "victionBackers.svg",
     banner: "victionBanner.png",

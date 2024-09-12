@@ -44,7 +44,7 @@ const DypiusDropdown = ({ options, parent, onZoomIn, switches, setSwitches }) =>
               <span>Areas</span>
             </AccordionSummary>
             <AccordionDetails>
-              <div className="d-flex flex-column gap-3">
+              <div className="d-flex flex-column gap-3" style={{maxHeight: "300px", overflowY: "scroll"}}>
                 {options?.map((option, idx) => (
                   <div
                     key={idx}
@@ -53,7 +53,7 @@ const DypiusDropdown = ({ options, parent, onZoomIn, switches, setSwitches }) =>
                     onClick={() => onZoomIn(option, 18, "chain")}
                   >
                     <img
-                      src={require(`../assets/${option.icon}`)}
+                      src={option.icon}
                       width={24}
                       height={24}
                       alt=""
