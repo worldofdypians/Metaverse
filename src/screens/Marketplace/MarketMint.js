@@ -271,12 +271,14 @@ const MarketMint = ({
   const [coreNftsSold, setCoreNftsSold] = useState(0);
   const [opbnbNftsSold, setopBnbNftsSold] = useState(0);
   const [immutableNftsSold, setimmutableNftsSold] = useState(0);
+  const [taikoNftsSold, setTaikoNftsSold] = useState(0);
+
 
 
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(taikoData);
+  const [selectedMint, setSelectedMint] = useState(timepieceData);
   const [mintTitle, setMintTitle] = useState("taiko");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
@@ -404,6 +406,23 @@ const MarketMint = ({
       });
 
     setimmutableNftsSold(immutableresult);
+
+
+    const taikonftContract = new window.taikoWeb3.eth.Contract(
+      window.TAIKO_NFT_ABI,
+      window.config.nft_taiko_address
+    );
+
+    const taikoresult = await taikonftContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    setTaikoNftsSold(taikoresult);
+
 
 
   };
@@ -613,15 +632,15 @@ const MarketMint = ({
     //   class: "mint-bnb",
     //   id: "opbnb",
     // },
-    {
-      title: "Taiko Pass",
-      eventId: "taiko",
-      desc: "Gain entry to metaverse, and join exclusive Taiko event with special ticket.",
-      img: taikoActive,
-      data: taikoData,
-      class: "mint-taiko",
-      id: "taiko",
-    },
+    // {
+    //   title: "Taiko Pass",
+    //   eventId: "taiko",
+    //   desc: "Gain entry to metaverse, and join exclusive Taiko event with special ticket.",
+    //   img: taikoActive,
+    //   data: taikoData,
+    //   class: "mint-taiko",
+    //   id: "taiko",
+    // },
     // {
     //   title: "Immutable Pass",
     //   eventId: "immutable",
@@ -997,7 +1016,7 @@ const MarketMint = ({
 
               {activeTab === "live" && (
                 <>
-                  {dummyCards.length > 1 && (
+                  {/* {dummyCards.length > 1 && (
                     <div className="pb-5 px-0 position-relative">
                       {activeSlide > 0 && (
                         <div className="prev-arrow-nft" onClick={firstPrev}>
@@ -1035,7 +1054,7 @@ const MarketMint = ({
                         ))}
                       </Slider>
                     </div>
-                  )}
+                  )} */}
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -3270,6 +3289,26 @@ const MarketMint = ({
                       </div>
                     </div>
                   </div>
+
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-taiko-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">Taiko Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6
+                            className="past-taiko-mint-amount"
+                          >
+                            {getFormattedNumber(taikoNftsSold, 0)}
+                          </h6>
+                          <span className="past-taiko-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               )}
             </div>
