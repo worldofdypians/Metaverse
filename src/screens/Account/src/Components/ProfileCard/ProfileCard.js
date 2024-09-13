@@ -47,6 +47,7 @@ import bnbActive from "../../Components/LeaderBoard/assets/bnbActive.svg";
 import coreActive from "../../Components/LeaderBoard/assets/coreActive.svg";
 import victionActive from "../../Components/LeaderBoard/assets/victionActive.svg";
 import mantaActive from "../../Components/LeaderBoard/assets/mantaActive.png";
+import taikoLogo from "../../Components/LeaderBoard/assets/taikoActive.svg";
 
 import starAlert from "./assets/star-alert.svg";
 import axios from "axios";
@@ -164,7 +165,7 @@ const ProfileCard = ({
   const [rankTooltip, setRankTooltip] = useState(false);
 
   const userTotalScore =
-    userBnbScore + userSkaleScore + userCoreScore + userVictionScore + userMantaScore;
+    userBnbScore + userSkaleScore + userCoreScore + userVictionScore + userMantaScore + userTaikoScore;
 
   const handleUserRank = () => {
     let allScore;
@@ -425,7 +426,7 @@ const ProfileCard = ({
     userCoreScore,
     userVictionScore,
     userMantaScore,
-
+    userTaikoScore
   ]);
 
   const html = document.querySelector("html");
@@ -968,7 +969,34 @@ const ProfileCard = ({
                                       {getFormattedNumber(userMantaScore, 0)}
                                     </span>
                                   </div>
-
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
+                                        src={taikoLogo}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
+                                      <span className="rank-dropdown-text">
+                                        Taiko
+                                      </span>
+                                    </div>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      #{userRankTaiko + 1}
+                                    </span>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      {getFormattedNumber(userTaikoScore, 0)}
+                                    </span>
+                                  </div>
                                   <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
                                     <div
                                       className="d-flex align-items-center gap-2"
