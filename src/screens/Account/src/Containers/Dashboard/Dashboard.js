@@ -7402,13 +7402,16 @@ function Dashboard({
       userVictionScore +
       userMantaScore +
       userTaikoScore;
-    if (totalScore > 11999999 && totalScore < 24000000) {
+      
+      const totalScore_multiplied = (rankData && rankData.multiplier === "yes") ? totalScore * 4 : totalScore
+    if (totalScore_multiplied > 11999999 && totalScore_multiplied < 24000000) {
+ 
       setUserRankRewards(5);
-    } else if (totalScore >= 24000000 && totalScore < 37000000) {
+    } else if (totalScore_multiplied >= 24000000 && totalScore_multiplied < 37000000) {
       setUserRankRewards(10);
-    } else if (totalScore >= 37000000 && totalScore < 62000000) {
+    } else if (totalScore_multiplied >= 37000000 && totalScore_multiplied < 62000000) {
       setUserRankRewards(25);
-    } else if (totalScore >= 62000000) {
+    } else if (totalScore_multiplied >= 62000000) {
       setUserRankRewards(100);
     }
   };
@@ -7422,6 +7425,7 @@ function Dashboard({
     userVictionScore,
     userMantaScore,
     userTaikoScore,
+    rankData
   ]);
 
   useEffect(() => {
