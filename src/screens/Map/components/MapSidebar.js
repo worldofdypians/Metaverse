@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Checkbox } from "@mui/material";
-import { allAreas } from "../mapdata/areas";
+import { allAreas, regions } from "../mapdata/areas";
 import DypiusDropdown from "./DypiusDropdown";
 import IslandDropdown from "./IslandDropdown";
 import regionIcon from '../assets/regionIcon.svg'
@@ -116,6 +116,28 @@ const genesisLocation = {
         </div>
        
         <div className="d-flex flex-column gap-3" style={{ zIndex: 2 }}>
+        <div className="map-sidebar-btn p-2 d-flex align-items-center justify-content-center gap-2" onClick={() =>
+                setSwitches((prevState) => ({
+                  ...prevState,
+                  regions: false,
+                  areas: false,
+                  borders: false,
+                  bosses: false,
+                  quests: false,
+                  teleports: false,
+                  craftingTables: false,
+                  leaderboards: false,
+                  mines: false,
+                  deer: false,
+                  boar: false,
+                  bear: false,
+                  challenges: false,
+                }))}
+                >
+            <h6 className="chain-sidebar-title mb-0 text-white">
+              Clear All 
+            </h6>
+          </div>
           <div className="switches-grid mb-3">
           <div className="map-sidebar-btn p-2 d-flex align-items-center justify-content-center gap-2" onClick={() =>
                 setSwitches((prevState) => ({

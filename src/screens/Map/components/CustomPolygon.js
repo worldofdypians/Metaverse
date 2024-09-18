@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Polygon } from "react-leaflet";
+import { Polygon, useMap } from "react-leaflet";
 
 const CustomPolygon = ({ item, handleMarkerClick, setInfo, setContent, content }) => {
   const [hovered, setHovered] = useState(false);
@@ -12,6 +12,9 @@ const CustomPolygon = ({ item, handleMarkerClick, setInfo, setContent, content }
     if (item.title !== "Dypians City") setHovered(false);
   };
 
+  useMap().createPane('bottomPane');
+  useMap().getPane('bottomPane').style.zIndex = 600;
+
   return (
     <Polygon
       pathOptions={{
@@ -20,6 +23,7 @@ const CustomPolygon = ({ item, handleMarkerClick, setInfo, setContent, content }
         dashArray: item?.special ? "none" : "5, 10",
         weight: item?.special ? 2 : 1.5
       }}
+      pane="bottomPane"
       positions={item.area}
       eventHandlers={{
         mouseover: handleMouseOver,

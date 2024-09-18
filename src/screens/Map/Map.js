@@ -47,6 +47,8 @@ import EventsBar from "./components/EventsBar";
 import CustomPolygon from "./components/CustomPolygon";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import landIcon from "./assets/landIcon.png";
+import LeafletDraw from "./components/LeafletDraw";
+import ChainPolygon from "./components/ChainPolygon";
 
 // Utility Functions
 
@@ -55,13 +57,16 @@ import landIcon from "./assets/landIcon.png";
 const ChainMarkers = ({ chainsVisible, chainAreas, handleMarkerClick }) =>
   chainsVisible &&
   chainAreas.map((item) => (
-    <CustomMarker
-      key={item.title}
-      item={item}
-      icon={item.marker}
-      type="chain"
-      handleMarkerClick={handleMarkerClick}
-    />
+    <>
+      <ChainPolygon item={item} handleMarkerClick={handleMarkerClick} />
+      <CustomMarker
+        key={item.title}
+        item={item}
+        icon={item.marker}
+        type="chain"
+        handleMarkerClick={handleMarkerClick}
+      />
+    </>
   ));
 
 // Main Component
@@ -253,14 +258,15 @@ const Map = () => {
               handleMarkerClick={handleMarkerClick}
             />
           ))}
-        {switches.challenges && dummyEvents.map((item) => (
-          <CustomMarker
-            icon={item.marker}
-            item={item}
-            type={""}
-            handleMarkerClick={() => handleMarkerClick(item, 18, "event")}
-          />
-        ))}
+        {switches.challenges &&
+          dummyEvents.map((item) => (
+            <CustomMarker
+              icon={item.marker}
+              item={item}
+              type={""}
+              handleMarkerClick={() => handleMarkerClick(item, 18, "event")}
+            />
+          ))}
         <MarkerClusterGroup
           iconCreateFunction={createCustomClusterIcon}
           disableClusteringAtZoom={18}

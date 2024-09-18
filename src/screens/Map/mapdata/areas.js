@@ -37,8 +37,8 @@ import questDummy1 from "../assets/banners/questDummy1.webp";
 import questDummy2 from "../assets/banners/questDummy2.webp";
 import questDummy3 from "../assets/banners/questDummy3.webp";
 import questDummy4 from "../assets/banners/questDummy4.webp";
-import trainIcon from '../assets/trainIcon.svg'
-import teleportIcon from '../assets/teleportIcon.svg'
+import trainIcon from "../assets/trainIcon.svg";
+import teleportIcon from "../assets/teleportIcon.svg";
 import deerIcon from "../assets/deerIcon.svg";
 import bnbIcon from "../assets/chainIcons/bnbIcon.svg";
 import coreIcon from "../assets/chainIcons/coreIcon.svg";
@@ -64,8 +64,6 @@ import mantaIcon from "../assets/chainIcons/mantaIcon.png";
 
 import { marker } from "leaflet";
 
-
-
 const chainAreas = [
   {
     title: "BNB Chain Area",
@@ -76,6 +74,14 @@ const chainAreas = [
     logo: "bnbBackers.svg",
     banner: "bnbBanner.webp",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.06702838799312999, 0.08624374866485597],
+        [-0.0668513623189673, 0.08691966533660889],
+        [-0.067521914111659, 0.08707523345947267],
+        [-0.0676774821262475, 0.08641004562377931],
+      ],
+    ],
   },
   {
     title: "CORE Area",
@@ -86,6 +92,14 @@ const chainAreas = [
     logo: "coreBackers.svg",
     banner: "coreBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event", "Test Event 2"],
+    area: [
+      [
+        [-0.06759165149756868, 0.08708059787750244],
+        [-0.06774185509765483, 0.08642077445983887],
+        [-0.06842850012066062, 0.086592435836792],
+        [-0.06823538120893217, 0.08725762367248537],
+      ],
+    ],
   },
   {
     title: "Manta Area",
@@ -96,6 +110,14 @@ const chainAreas = [
     logo: "mantaBackers.svg",
     banner: "mantaBanner.webp",
     events: ["Treasure Hunt", "NFT Mint", "Test Event", "Test Event 2"],
+    area: [
+      [
+        [-0.06848750867686589, 0.08663535118103029],
+        [-0.06912587396209893, 0.08679628372192383],
+        [-0.06894348388147434, 0.0874614715576172],
+        [-0.06832121183646599, 0.08728981018066406],
+      ],
+    ],
   },
   {
     title: "SKALE Area",
@@ -106,6 +128,14 @@ const chainAreas = [
     logo: "skaleBackers.svg",
     banner: "skaleBanner.webp",
     events: ["Treasure Hunt"],
+    area: [
+      [
+        [-0.06921170458802975, 0.08680164813995363],
+        [-0.06985006986351756, 0.08696794509887697],
+        [-0.06966231537162208, 0.08763313293457033],
+        [-0.06904540775014885, 0.0874561071395874],
+      ],
+    ],
   },
   {
     title: "Taiko Area",
@@ -116,6 +146,14 @@ const chainAreas = [
     logo: "taikoBackers.svg",
     banner: "taikoBanner.webp",
     events: ["Treasure Hunt", "NFT Mint"],
+    area: [
+      [
+        [-0.06938873025352861, 0.08608818054199219],
+        [-0.07003245994063083, 0.08624911308288576],
+        [-0.06986079869160625, 0.08689284324645997],
+        [-0.06922779783037905, 0.08672654628753663],
+      ],
+    ],
   },
   {
     title: "CoinMarketCap Area",
@@ -126,6 +164,14 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "coinmarketcapBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.06700693033569312, 0.08538544178009033],
+        [-0.06708203213669037, 0.08505284786224365],
+        [-0.06725905781002611, 0.08509576320648193],
+        [-0.06716249835192278, 0.08542835712432861],
+      ],
+    ],
   },
   {
     title: "Coingecko Area",
@@ -136,6 +182,17 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "coingeckoBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.06724296456701524, 0.0847148895263672],
+        [-0.0671410406945368, 0.08460223674774171],
+        [-0.0671732271806094, 0.08445739746093751],
+        [-0.06730733753899508, 0.08441448211669922],
+        [-0.06746826996858207, 0.0845003128051758],
+        [-0.06743608348271303, 0.08465588092803955],
+        [-0.06733952402495319, 0.08472561836242677],
+      ],
+    ],
   },
   {
     title: "MultiversX Area",
@@ -146,6 +203,16 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "multiversBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.06709276096540244, 0.08439302444458008],
+        [-0.06722687132400439, 0.08443593978881837],
+        [-0.06730733753899508, 0.08441984653472902],
+        [-0.06741999023976578, 0.08447349071502686],
+        [-0.06750045645443842, 0.0841730833053589],
+        [-0.06717859159495908, 0.08407652378082275],
+      ],
+    ],
   },
   {
     title: "Conflux Area",
@@ -156,6 +223,14 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "confluxBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.067521914111659, 0.0843501091003418],
+        [-0.06759165149756868, 0.08407115936279298],
+        [-0.06792424518284669, 0.08415162563323976],
+        [-0.06783305014033982, 0.08444130420684816],
+      ],
+    ],
   },
   {
     title: "BabyDoge Area",
@@ -166,6 +241,14 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "babyDogeBanner.webp",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.06743071906840152, 0.08473098278045656],
+        [-0.06749509204012691, 0.08443057537078857],
+        [-0.06815491499548088, 0.08459687232971191],
+        [-0.06806908436765445, 0.08490800857543945],
+      ],
+    ],
   },
   {
     title: "Avalanche Area",
@@ -176,6 +259,14 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "avalancheBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.0681495505812457, 0.08491873741149904],
+        [-0.0682192879662521, 0.08461296558380128],
+        [-0.0688952041541338, 0.0847846269607544],
+        [-0.06880400911347165, 0.08508503437042238],
+      ],
+    ],
   },
   {
     title: "Chainlink Area",
@@ -186,6 +277,14 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "chainlinkBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.06825147445161225, 0.08453786373138428],
+        [-0.06831584742224353, 0.08426427841186523],
+        [-0.0685947969607043, 0.08434474468231203],
+        [-0.06851969516204794, 0.08462369441986085],
+      ],
+    ],
   },
   {
     title: "Coin98 Area",
@@ -196,6 +295,14 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "coin98Banner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.0685947969607043, 0.08462905883789064],
+        [-0.06865916993087758, 0.0843554735183716],
+        [-0.06897567036633834, 0.08443057537078857],
+        [-0.06888983973998769, 0.08470952510833742],
+      ],
+    ],
   },
   {
     title: "GateIo Area",
@@ -206,6 +313,14 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "gateBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.06902395009360253, 0.08444666862487794],
+        [-0.06931362845611903, 0.08451640605926514],
+        [-0.06913123837621961, 0.08517622947692871],
+        [-0.06885765325506008, 0.08509039878845216],
+      ],
+    ],
   },
   {
     title: "MEXC Area",
@@ -216,6 +331,16 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "mexcBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.06853042399042923, 0.08655488491058351],
+        [-0.06916342486095638, 0.08669972419738771],
+        [-0.06928144197148403, 0.08621156215667725],
+        [-0.06893811946732821, 0.08610427379608156],
+        [-0.06876645821432159, 0.08624911308288576],
+        [-0.0685787037181387, 0.08626520633697511],
+      ],
+    ],
   },
   {
     title: "Easy2Stake Area",
@@ -226,6 +351,14 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "easy2stakeBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.06921170458802975, 0.08519768714904785],
+        [-0.06937800142532542, 0.08453249931335449],
+        [-0.06968913744193285, 0.08460223674774171],
+        [-0.06952284060573127, 0.08527278900146486],
+      ],
+    ],
   },
   {
     title: "KuCoin Area",
@@ -236,6 +369,14 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "kucoinBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.06706593889362861, 0.0861632823944092],
+        [-0.06722150690966744, 0.08551955223083497],
+        [-0.06789742311154359, 0.0856912136077881],
+        [-0.06771503302624994, 0.08634567260742189],
+      ],
+    ],
   },
   {
     title: "Base Area",
@@ -246,6 +387,14 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "victionBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.0672483289813522, 0.08544981479644775],
+        [-0.06740389699681852, 0.08479535579681398],
+        [-0.06806371995340654, 0.08496701717376709],
+        [-0.06787596545447566, 0.08562147617340089],
+      ],
+    ],
   },
   {
     title: "Viction Area",
@@ -256,6 +405,14 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "victionBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.06940482349580157, 0.086018443107605],
+        [-0.06956575591835319, 0.08535325527191163],
+        [-0.07021485001704436, 0.08553028106689453],
+        [-0.07004318876868135, 0.08616864681243896],
+      ],
+    ],
   },
   {
     title: "Immutable Area",
@@ -266,6 +423,14 @@ const chainAreas = [
     logo: "victionBackers.svg",
     banner: "immutableBanner.png",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    area: [
+      [
+        [-0.06961403564501943, 0.08528888225555421],
+        [-0.06976960365280153, 0.08463442325592042],
+        [-0.07041333333468765, 0.08480072021484376],
+        [-0.07022021443105055, 0.08544981479644775],
+      ],
+    ],
   },
 ];
 
@@ -273,38 +438,36 @@ const bearAreas = [
   {
     title: "Sherwood Forest",
     location: [-0.068364127150182, 0.07230162620544435],
-    marker: bearMarker
+    marker: bearMarker,
   },
   {
     title: "Cedar Groove",
     location: [-0.06817100823818639, 0.07427573204040529],
-    marker: bearMarker
+    marker: bearMarker,
   },
- 
 ];
 const deerAreas = [
   {
     title: "Kruger Creek",
     location: [-0.07038114685080327, 0.07243573665618898],
-    marker: deerMarker
+    marker: deerMarker,
   },
   {
     title: "Flaming Field",
     location: [-0.07046697747444408, 0.0741201639175415],
-    marker: deerMarker
+    marker: deerMarker,
   },
-
 ];
 const boarAreas = [
   {
     title: "Water Swamp",
     location: [-0.06880400911347165, 0.07497310638427736],
-    marker: boarMarker
+    marker: boarMarker,
   },
   {
     title: "Burning Man",
     location: [-0.06976423923874447, 0.07502138614654542],
-    marker: boarMarker
+    marker: boarMarker,
   },
 ];
 const mines = [
@@ -326,10 +489,10 @@ const craftingTables = [
   {
     title: "Weapon Crafting",
     location: [-0.07088003734850502, 0.07480144500732422],
-  }
+  },
 ];
 
-const animals = [...bearAreas, ...deerAreas, ...boarAreas]
+const animals = [...bearAreas, ...deerAreas, ...boarAreas];
 
 const areas = [
   {
@@ -424,7 +587,7 @@ const dypiansTransport = [
     marker: trainMarker,
     icon: trainIcon,
   },
-]
+];
 
 const quests = [
   {
@@ -529,8 +692,6 @@ const bosses = [
     location: [-0.02729415790322787, 0.07261276245117189],
   },
 ];
-
-
 
 const regions = [
   {
@@ -2989,7 +3150,6 @@ const secondParcel = [
   },
 ];
 
-
 const leaderboards = [
   {
     title: "BNB Chain Leaderboard",
@@ -3015,7 +3175,7 @@ const leaderboards = [
     title: "VICTION Leaderboard",
     location: [-0.06696937943514361, 0.08530497550964355],
   },
-]
+];
 
 let midleLastDay = new Date("2024-09-10T13:00:00.000+02:00");
 let cookieLastDay = new Date("2024-10-01T14:00:00.000+02:00");
@@ -3129,5 +3289,5 @@ export {
   leaderboards,
   dypiansTransport,
   mines,
-  animals
+  animals,
 };
