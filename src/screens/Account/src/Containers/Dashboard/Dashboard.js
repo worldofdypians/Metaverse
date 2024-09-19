@@ -661,11 +661,9 @@ function Dashboard({
   const [premiumTxHash, setPremiumTxHash] = useState("");
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
   const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
-  const [dateofBundle, setdateofBundle] = useState(0);
-  const [dateofBundlev1, setdateofBundlev1] = useState(0);
+
   const [portfolio, setPortfolio] = useState(false);
-  const [datewhenBundleBought, setdatewhenBundleBought] = useState(0);
-  const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
+
   const [bnbImages, setBnbImages] = useState(shuffle(chestImagesBnb));
   const [skaleImages, setSkaleImages] = useState(shuffle(chestImagesSkale));
   const [coreImages, setCoreImages] = useState(shuffle(chestImagesCore));
@@ -8088,7 +8086,7 @@ function Dashboard({
     userVictionScore +
     userMantaScore +
     userTaikoScore;
- 
+
   const handleRankRewards = () => {
     const totalScore =
       userBnbScore +
@@ -8148,7 +8146,7 @@ function Dashboard({
       setUserProgress((allScore / 12000000) * 100);
     }
   };
-  
+
   const updateUserRank = async () => {
     if (rankData && userRankName) {
       if (rankData.rank == userRankName.id) {
@@ -8691,7 +8689,7 @@ function Dashboard({
                 Number(monthlyDataAmountViction) +
                 Number(coreEarnUsd) +
                 Number(victionEarnUsd) +
-                Number(bnbEarnUsd)
+                Number(bnbEarnUsd) + Number(weeklyDataAmountManta) + Number(monthlyDataAmountManta) + Number(weeklyDataAmountTaiko) + Number(monthlyDataAmountTaiko)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
@@ -8774,6 +8772,8 @@ function Dashboard({
             skaleImages={skaleImages}
             seiImages={seiImages}
             victionImages={victionImages}
+            mantaImages={mantaImages}
+            taikoImages={taikoImages}
             coreImages={coreImages}
             chainId={chainId}
             dypTokenData={dypTokenData}
@@ -8795,6 +8795,10 @@ function Dashboard({
             premiumCoreChests={premiumCoreChests}
             standardVictionChests={standardVictionChests}
             premiumVictionChests={premiumVictionChests}
+            standardMantaChests={standardMantaChests}
+            premiumMantaChests={premiumMantaChests}
+            standardTaikoChests={standardTaikoChests}
+            premiumTaikoChests={premiumTaikoChests}
             standardSeiChests={standardSeiChests}
             premiumSeiChests={premiumSeiChests}
             claimedChests={claimedChests}
@@ -8805,6 +8809,10 @@ function Dashboard({
             claimedCorePremiumChests={claimedCorePremiumChests}
             claimedVictionChests={claimedVictionChests}
             claimedVictionPremiumChests={claimedVictionPremiumChests}
+            claimedMantaChests={claimedMantaChests}
+            claimedMantaPremiumChests={claimedMantaPremiumChests}
+            claimedTaikoChests={claimedTaikoChests}
+            claimedTaikoPremiumChests={claimedTaikoPremiumChests}
             claimedSeiChests={claimedSeiChests}
             claimedSeiPremiumChests={claimedSeiPremiumChests}
             email={email}
@@ -8812,6 +8820,8 @@ function Dashboard({
             openedSkaleChests={openedSkaleChests}
             openedCoreChests={openedCoreChests}
             openedVictionChests={openedVictionChests}
+            openedMantaChests={openedMantaChests}
+            openedTaikoChests={openedTaikoChests}
             openedSeiChests={openedSeiChests}
             canBuy={canBuy}
             address={data?.getPlayer?.wallet?.publicAddress}
@@ -8819,18 +8829,26 @@ function Dashboard({
             allSkaleChests={allSkaleChests}
             allCoreChests={allCoreChests}
             allVictionChests={allVictionChests}
+            allMantaChests={allMantaChests}
+            allTaikoChests={allTaikoChests}
             allSeiChests={allSeiChests}
             onChestClaimed={() => {
               setCount(count + 1);
             }}
             onSkaleChestClaimed={() => {
-              setCount(count + 1);
+              setskalecount(skalecount + 1);
             }}
             onCoreChestClaimed={() => {
-              setCount(count + 1);
+              setcorecount(corecount + 1);
             }}
             onVictionChestClaimed={() => {
-              setCount(count + 1);
+              setvicitoncount(vicitoncount + 1);
+            }}
+            onMantaChestClaimed={() => {
+              setmantacount(mantacount + 1);
+            }}
+            onTaikoChestClaimed={() => {
+              settaikocount(taikocount + 1);
             }}
             onSeiChestClaimed={() => {
               setCount(count + 1);
@@ -8940,6 +8958,8 @@ function Dashboard({
                 allSkaleData={allSkaleData}
                 allCoreData={allCoreData}
                 allVictionData={allVictionData}
+                allMantaData={allMantaData}
+                allTaikoData={allTaikoData}
                 dailyplayerData={dailyplayerData}
                 weeklyplayerData={weeklyplayerData}
                 monthlyplayerData={monthlyplayerData}
@@ -9191,6 +9211,7 @@ function Dashboard({
                 myWodWodStakes={myWodWodStakesAll}
                 myNFTSCoingecko={MyNFTSCoingecko}
                 myGateNfts={myGateNfts}
+                myNFTSopBNB={MyNFTSopBNB}
                 myConfluxNfts={myConfluxNfts}
                 myBaseNfts={myBaseNfts}
                 myDogeNfts={myDogeNfts}
@@ -9198,6 +9219,10 @@ function Dashboard({
                 myCoreNfts={myCoreNfts}
                 myVictionNfts={myVictionNfts}
                 myMultiversNfts={myMultiversNfts}
+                myImmutableNfts={myImmutableNfts}
+                myMantaNfts={myMantaNfts}
+                myTaikoNfts={myTaikoNfts}
+                myCookieNfts={myCookieNfts}
                 mySkaleNfts={mySkaleNfts}
                 latestBoughtNFTS={latest20BoughtNFTS}
                 myOffers={myOffers}

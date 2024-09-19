@@ -74,6 +74,10 @@
   border-radius: 10px;
   background: #121235;
   height: 100%;
+  @media screen and (max-width: 600px) {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .active-challenge-item {
@@ -87,8 +91,11 @@
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
-    line-height: 24px; /* 200% */
+    // line-height: 24px;
     text-transform: uppercase;
+    @media screen and (max-width: 600px) {
+      font-size: 11px;
+    }
   }
 }
 
@@ -103,8 +110,11 @@
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
-    line-height: 24px; /* 200% */
+    // line-height: 24px;
     text-transform: uppercase;
+    @media screen and (max-width: 600px) {
+      font-size: 11px;
+    }
   }
 }
 

@@ -18,7 +18,7 @@
 background: linear-gradient(90deg, #B936F5 0%, #C64C85 100%);
 color: #EEEDFF;
 text-align: center; 
-font-size: 12px;
+font-size: 14px;
 font-style: normal;
 font-weight: 700;
 line-height: normal;
@@ -561,6 +561,11 @@ text-transform: uppercase;
   transform: matrix(1, 0, -0.18, 0.98, 0, 0);
   border-left: 2px solid #015f86;
   border-bottom: 2px solid #015f86;
+
+  @media screen and (max-width: 786px) {
+    transform: none;
+    border: 2px solid #015f86;
+  }
 }
 
 .limited-offer-reward {

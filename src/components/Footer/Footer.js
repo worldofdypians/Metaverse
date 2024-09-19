@@ -224,7 +224,7 @@ const Footer = () => {
           </div>
           <div className="d-flex align-items-center gap-4 footer-socials-wrapper">
             {socials.map((item, index) => (
-              <a href={item.link} key={index}>
+              <a href={item.link} key={index} target="_blank" rel="noreferrer">
                 <img
                   src={require(`../../assets/footerIcons/${item.icon}.svg`)}
                   alt=""

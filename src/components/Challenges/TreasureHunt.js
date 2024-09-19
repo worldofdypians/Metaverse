@@ -15,11 +15,11 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
         .map((item, index) => {
           return (
             <div
-              className="new-treasure-hunt-wrapper upcoming-mint-wrapper2 d-flex align-items-center justify-content-between"
+              className="new-treasure-hunt-wrapper p-3 p-lg-0 upcoming-mint-wrapper2 d-flex align-items-center justify-content-between"
               key={index}
               onClick={()=>onEventClick(item)}
             >
-              <div className="ps-5 w-25 d-flex align-items-center gap-3">
+              <div className="ps-lg-5 d-flex align-items-center gap-3">
                 <img src={item.logo} height={36} width={36} alt="" />
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 new-treasure-hunt-title">{item.title}</h6>
@@ -28,15 +28,15 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
                   </span>
                 </div>
               </div>
-              <div className="d-flex flex-column gap-4">
+              <div className="d-flex flex-column gap-2 gap-lg-4">
                 <img src={totalEarningsIcon} alt="" />
                 <div className="d-flex flex-column gap-2">
                   <span className="total-earnings-amount">${getFormattedNumber(item.userEarnUsd)}</span>
                   <span className="total-earnings-span">My Earnings</span>
                 </div>
               </div>
-              <div className="d-flex align-items-center position-relative">
-                <div className="d-flex flex-column gap-3 treasure-type-date">
+              <div className="d-none d-lg-flex align-items-center position-relative">
+                <div className="d-none d-lg-flex flex-column gap-3 treasure-type-date">
                   <div className="d-flex align-items-center gap-2">
                     <img src={pickaxe} alt="" />
                     <span className="treasure-hunt-type">{item.eventType}</span>
