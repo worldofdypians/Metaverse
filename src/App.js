@@ -69,13 +69,25 @@ import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
 import OurTeam from "./screens/OurTeam/OurTeam.js";
+import Token from "./screens/Wod/Token/Token.js";
+import Bridge from "./screens/Wod/Bridge/Bridge.js";
+import Earn from "./screens/Wod/Earn/Earn.js";
+import Buy from "./screens/Wod/Buy/Buy.js";
+import Governance from "./screens/Community/Governance/Governance.js";
+import GovernanceInner from "./screens/Community/Governance/GovernanceContent/GovernanceInner.js";
+import GameUpdates from "./screens/Community/GameUpdates/GameUpdates.js";
+import Brand from "./screens/About/Brand/Brand.js";
+import Partners from "./screens/About/Partners/Partners.js";
+import Tokenomics from "./screens/About/Tokenomics/Tokenomics.js";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 import Redirect from "./screens/Home/Redirect";
 import WalletModal2 from "./components/WalletModal/WalletModal2";
-import Token from './screens/Token/Token'
 import { isMobile } from "react-device-detect";
+import About from "./screens/About/About.js";
+import Game from "./screens/Game/Game.js";
+import Campaigns from "./screens/Community/Campaigns/Campaigns.js";
 import Map from "./screens/Map/Map.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
@@ -258,6 +270,8 @@ function App() {
   const [totalSupply, setTotalSupply] = useState(0);
 
   const [isConnected, setIsConnected] = useState(false);
+  const [loginListener, setloginListener] = useState(0);
+
   const [coinbase, setCoinbase] = useState();
   const [networkId, setChainId] = useState();
   const [currencyAmount, setCurrencyAmount] = useState(0);
@@ -3130,6 +3144,7 @@ function App() {
   };
 
   const { ethereum } = window;
+  const {email} = useAuth();
 
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
@@ -3894,7 +3909,7 @@ function App() {
 
   return (
     <>
-      <div className="container-fluid p-0 main-wrapper2 position-relative">
+      <div className="container-fluid main-wrapper2 position-relative">
         <Header
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}
@@ -3918,6 +3933,10 @@ function App() {
             setCount55(count55 + 1);
           }}
           onSigninClick={checkData}
+          gameAccount = {data?.getPlayer?.wallet?.publicAddress}
+          email={email}
+          username={data?.getPlayer?.displayName}
+          loginListener={loginListener}
         />
         <MobileNavbar
           handleSignUp={handleShowWalletModal}
@@ -4004,7 +4023,7 @@ function App() {
             path="/explorer"
             element={<Explorer count={count2} setCount={setCount2} />}
           />
-          <Route exact path="/stake" element={<NftMinting />} />
+          {/* <Route exact path="/stake" element={<NftMinting />} /> */}
           <Route exact path="/contact-us" element={<PartnerForm />} />
           <Route exact path="/unsubscribe/:email" element={<Unsubscribe />} />
           <Route
@@ -4089,7 +4108,7 @@ function App() {
           <Route
             exact
             path="/auth"
-            element={<Auth isConnected={isConnected} coinbase={coinbase} />}
+            element={<Auth isConnected={isConnected} coinbase={coinbase} onSuccessLogin={()=>{setloginListener(loginListener+1)}}/>}
           />
 
           <Route exact path="/redirect" element={<Redirect />} />
@@ -4148,6 +4167,67 @@ function App() {
                 handleConnectBinance={handleConnectBinance}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/account/my-rewards"
+            element={
+              <Dashboard
+                ethTokenData={ethTokenData}
+                dyptokenDatabnb={dyptokenDatabnb}
+                dypTokenData={dypTokenData}
+                handleSwitchChain={handleSwitchChain}
+                dypTokenData_old={dypTokenData_old}
+                coinbase={coinbase}
+                account={coinbase}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleConnect={handleConnectWallet}
+                onSigninClick={checkData}
+                success={success}
+                availableTime={availTime}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleOpenDomains={() => setDomainPopup(true)}
+                domainName={domainName}
+                dogePrice={dogePrice}
+                onSubscribeSuccess={() => {
+                  setCount55(count55 + 1);
+                }}
+                isPremium={isPremium}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/account/premium"
+            element={
+              <Dashboard
+              onSuccessDeposit={() => {
+                setCount55(count55 + 1);
+              }}
+                ethTokenData={ethTokenData}
+                dyptokenDatabnb={dyptokenDatabnb}
+                dypTokenData={dypTokenData}
+                handleSwitchChain={handleSwitchChain}
+                dypTokenData_old={dypTokenData_old}
+                coinbase={coinbase}
+                account={coinbase}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleConnect={handleConnectWallet}
+                onSigninClick={checkData}
+                success={success}
+                availableTime={availTime}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleOpenDomains={() => setDomainPopup(true)}
+                domainName={domainName}
+                dogePrice={dogePrice}
+                onSubscribeSuccess={() => {
+                  setCount55(count55 + 1);
+                }}
+                isPremium={isPremium}
               />
             }
           />
@@ -5060,7 +5140,7 @@ function App() {
           />
           <Route
             exact
-            path="/marketplace/events/:eventId"
+            path="/account/events/:eventId"
             element={
               <MarketEvents
                 tabState={"live"}
@@ -5214,6 +5294,38 @@ function App() {
               />
             }
           />
+          <Route exact path="/token" element={<Token />} />
+          <Route exact path="/bridge" element={<Bridge />} />
+          <Route
+            exact
+            path="/earn"
+            element={
+              <Earn
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={chainId}
+                handleSwitchNetwork={handleSwitchNetwork}
+                onConnectWallet={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+          <Route exact path="/buy" element={<Buy />} />
+          <Route exact path="/governance" element={<Governance />} />
+          <Route exact path="/campaigns" element={<Campaigns />} />
+          <Route
+            exact
+            path="/governance/proposal/:proposalId"
+            element={<GovernanceInner />}
+          />
+
+          <Route exact path="/game" element={<Game />} />
+          <Route exact path="/game-updates" element={<GameUpdates />} />
+          {/* <Route exact path="/brand" element={<Brand />} /> */}
+          {/* <Route exact path="/partners" element={<Partners />} />
+            <Route exact path="/tokenomics" element={<Tokenomics />} /> */}
+          <Route exact path="/about" element={<About />} />
 
           {/* <Route
             exact
@@ -5683,31 +5795,19 @@ function App() {
           <Route exact path="/map" element={<Map />} />
 
         </Routes>
+
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
         <ScrollTop />
-        {location.pathname.includes("marketplace") ||
-        location.pathname.includes("notifications") ||
-        location.pathname.includes("account") ? (
-          location.pathname.includes("caws") ||
-          location.pathname.includes("land") ? null : (
-            <MarketplaceFooter />
-          )
-        ) : location.pathname.includes("map") ? 
-        <>
-        </>
-        :
-        (
-          <Footer />
-        )}
+        <Footer />
       </div>
 
-      {!location.pathname.includes("account") &&
+      {/* {!location.pathname.includes("account") &&
         !location.pathname.includes("auth") &&
         !location.pathname.includes("explorer") &&
         !location.pathname.includes("map") &&
         !location.pathname.includes("bnbchain-alliance-program") && (
           <ChestFlyout />
-        )}
+        )} */}
       {domainPopup && (
         <DomainModal
           onClose={() => setDomainPopup(false)}

@@ -483,8 +483,8 @@ const Land = ({
   }, []);
 
   return (
-    <div className="container-fluid d-flex px-0 align-items-center justify-content-center">
-         <OutsideClickHandler
+    <div className="container-fluid mt-lg-5 pt-lg-5 d-flex px-0 align-items-center justify-content-center">
+         {/* <OutsideClickHandler
         id="popup"
           onOutsideClick={() => {setActivePopup(false); setCount(1)}}
       >
@@ -492,7 +492,7 @@ const Land = ({
           active={activePopup}
               onClose={() => {setActivePopup(false); setCount(1)}}
         />
-      </OutsideClickHandler>
+      </OutsideClickHandler> */}
       {openStakeChecklist === true && (
         <LandStakingChecklistModal
           onClose={() => {

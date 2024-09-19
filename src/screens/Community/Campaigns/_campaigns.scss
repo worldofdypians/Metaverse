@@ -1,0 +1,59 @@
+.campaign-banner-title{
+    color: #EEEDFF;
+    font-family: "Montserrat";
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 27px; /* 112.5% */
+}
+
+.campaign-banner-divider{
+    border-top: 1px solid rgba(255, 255, 255, 0.54);
+    width: 100%;
+}
+
+.campaign-banner-date{
+    color: #FFD37E;
+    font-family: "Montserrat";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+}
+
+.campaign-banner-desc{
+    color: rgba(238, 237, 255, 0.80);
+    font-family: "Montserrat";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+}
+
+.campaign-items-grid{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 24px;
+
+    @media screen and (max-width: 786px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.campaign-item-title{
+    color: #EEEDFF;
+    font-family: "Montserrat";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 27px; /* 135% */
+}
+
+.campaign-item-date{
+    color: #AAA9BF;
+    font-family: "Montserrat";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+}
