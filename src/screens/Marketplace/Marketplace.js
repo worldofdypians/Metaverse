@@ -1229,100 +1229,64 @@ const Marketplace = ({
                     </NavLink>
                   </div> */}
                 </div>
-                <div className="w-100 d-flex flex-column gap-2">
-                  <NavLink
-                    to={"/marketplace/stake"}
-                    className="w-100 m-0 d-flex flex-column gap-5 h-100 flex-wrapper"
-                  >
-                    <div className="p-4 mint-wrappernew market-stake-bg w-100 m-0 d-flex flex-column gap-lg-5 gap-3 justify-content-start staking-height staking-height2 h-100">
-                      <div className="d-flex flex-column gap-5 align-items-center align-items-lg-start">
-                        <div className="d-flex flex-column">
-                          <h6 className="marketmintnewtitle position-relative">
-                            CAWS NFT
-                            <span
-                              className="marketmintnewtitle-marked mx-2"
-                              style={{ color: "#FE53BB" }}
-                            >
-                              Staking
-                            </span>
-                          </h6>
-                          <p className="market-stake-desc">
-                            Stake your CAWS NFTs to earn daily ETH rewards.
-                          </p>
-                        </div>
-                        <img src={newCawsApr} alt="" className="w-25" />
-                      </div>
-
-                      <img
-                        src={cawsMarketplaceBannerMobile}
-                        alt=""
-                        className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
-                        style={{ scale: 1 }}
-                      />
-                    </div>
-                  </NavLink>
-                  <NavLink to="/marketplace/stake">
-                    <span
-                      className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
-                      style={{ width: "fit-content" }}
-                    >
-                      Stake now <img src={greenArrow} alt="" />{" "}
-                    </span>
-                  </NavLink>
-                  {/* <div className=" d-flex flex-column align-items-start align-items-lg-center gap-lg-4 gap-2">
+                <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
+                  <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
                     <NavLink
-                      to="/marketplace/stake"
-                      className={
-                        "d-flex flex-column justify-content-center gap-3 w-100 "
-                      }
+                      to={"/marketplace/stake"}
+                      className="w-100 m-0 d-flex flex-column gap-5"
                     >
-                      <div className="caws-wod-stake-wrapper2 d-flex flex-column justify-content-start justify-content-xxl-center justify-content-xl-center justify-content-lg-center gap-3 w-100 p-3">
-                        <div className="instakeWrapper2 position-relative">
-                          <span className="instaketxt">NFT Staking</span>
+                      <div className="p-4 mint-wrappernew market-stake-bg w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
+                        <div className="d-flex align-items-center justify-content-center homepage-nft-stake-tag px-3 py-1">
+                          <span>NFT Staking</span>
                         </div>
-                        <div className="d-flex align-items-start align-items-lg-center justify-content-between w-100 position-relative">
-                          <div className="d-flex flex-column gap-4">
-                            <div className="d-flex flex-column gap-2">
-                              <h6 className="market-stake-title2">
-                                World of Dypians
-                                <br /> Land & CAWS
-                              </h6>
-                            </div>
-                          </div>
+                        <div className="d-flex flex-column gap-2 mb-3">
+                          <h6 className="newminttitlehome m-0 position-relative">
+                            CAWS NFT
+                          </h6>
+                          <h6 className="newminttitlehome m-0 position-relative">
+                            Staking
+                          </h6>
                         </div>
                       </div>
                     </NavLink>
-                    <NavLink
-                      to="/marketplace/stake"
-                      className={
-                        "d-flex flex-column justify-content-center gap-3 w-100 "
-                      }
-                    >
-                      <div className="wod-stake-wrapper2 justify-content-start justify-content-xxl-center justify-content-xl-center justify-content-lg-center  gap-3 d-flex flex-column  w-100 p-3">
-                        <div className="instakeWrapper2 position-relative">
-                          <span className="instaketxt">NFT Staking</span>
-                        </div>
-                        <div className="d-flex align-items-start align-items-lg-center justify-content-between w-100 position-relative">
-                          <div className="d-flex flex-column gap-4">
-                            <div className="d-flex flex-column gap-2">
-                              <h6 className="market-stake-title2">
-                                World of Dypians
-                                <br /> Land NFT
-                              </h6>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    <NavLink to="/marketplace/stake">
+                      <span
+                        className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
+                        style={{ width: "fit-content" }}
+                      >
+                        Stake now <img src={greenArrow} alt="" />{" "}
+                      </span>
                     </NavLink>
                   </div>
-                  <NavLink to="/marketplace/stake">
-                    <span
-                      className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
-                      style={{ width: "fit-content" }}
+                  <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
+                    <NavLink
+                      to={"/marketplace/stake"}
+                      className="w-100 m-0 d-flex flex-column gap-5"
                     >
-                      Stake now <img src={greenArrow} alt="" />{" "}
-                    </span>
-                  </NavLink> */}
+                      <div className="p-4 mint-wrappernew market-land-stake-bg w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
+                        <div className="d-flex align-items-center justify-content-center homepage-nft-stake-tag px-3 py-1">
+                          <span>NFT Staking</span>
+                        </div>
+                        <div className="d-flex flex-column gap-2 mb-3">
+                        <h6 className="newminttitlehome m-0 position-relative">
+                            Genesis NFT
+                          </h6>
+                          <h6 className="newminttitlehome m-0 position-relative">
+                            Staking
+                          </h6>
+                        </div>
+                      </div>
+                    </NavLink>
+                    <NavLink to="/marketplace/stake">
+                      <span
+                        className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
+                        style={{ width: "fit-content" }}
+                      >
+                        Stake now <img src={greenArrow} alt="" />{" "}
+                      </span>
+                    </NavLink>
+                  </div>
+                   
                 </div>
               </div>
             </div>

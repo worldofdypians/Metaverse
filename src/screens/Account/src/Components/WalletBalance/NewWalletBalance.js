@@ -61,6 +61,10 @@ import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
 import newCawsStake from "../../../../Marketplace/assets/newCawsStake.png";
 import newCawsStakeMobile from "../../../../Marketplace/assets/newCawsStakeMobile.png";
+
+import newLandStake from "../../../../Marketplace/assets/newWodStake.png";
+import newLandStakeMobile from "../../../../Marketplace/assets/newWodStakeMobile.png";
+
 import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
@@ -250,7 +254,7 @@ const NewWalletBalance = ({
   cmcuserPoints,
   onPremiumClick,
   openedSkaleChests,
-  cawsPremiumRewards,
+  cawsPremiumRewards, landPremiumRewards,
   skaleEarnToken,
   skaleEarnUsd,
   skalePoints,
@@ -2137,7 +2141,7 @@ const NewWalletBalance = ({
                           Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd) +
                           Number(coreEarnUsd) +
-                          Number(cawsPremiumRewards) +
+                          Number(cawsPremiumRewards) + Number(landPremiumRewards) +
                           Number(bnbEarnUsd) +
                           Number(victionEarnUsd) +
                           Number(taikoEarnUsd) + 
@@ -3530,7 +3534,7 @@ const NewWalletBalance = ({
         <OutsideClickHandler onOutsideClick={() => setStakePopup(false)}>
           <div
             className="popup-wrapper popup-active nft-wrapper-popup p-3"
-            style={{ width: "fit-content" }}
+            style={{ width: "fit-content", height: windowSize.width < 500 ? '80%' : 'fit-content', overflow: 'auto' }}
           >
             <div className="d-flex align-items-center justify-content-between w-100 mb-4">
               <h6 className="popup-title-2 mb-0">Stake NFT</h6>
@@ -3577,6 +3581,40 @@ const NewWalletBalance = ({
                 />
               </div>
             </div>
+
+            <div className="new-wod-stake-wrapper d-flex flex-column flex-lg-row align-items-center mb-3">
+              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
+                  <div className="d-flex flex-column gap-2">
+                    <h6
+                      className="market-stake-title"
+                      style={{ fontSize: "20px" }}
+                    >
+                     Genesis Land NFTs
+                    </h6>
+                    <span
+                      className="market-stake-desc"
+                      style={{ fontSize: "11px" }}
+                    >
+                      Stake your Genesis Land NFT to earn daily ETH rewards.
+                    </span>
+                  </div>
+                  <div className="d-flex align-items-center gap-3"></div>
+                </div>
+              </div>
+              <div className="row w-100 m-0  position-relative">
+             
+
+                <img
+                  className="new-caws-stake-img p-0"
+                  src={
+                    windowSize.width > 786 ? newLandStake : newLandStakeMobile
+                  }
+                  alt=""
+                />
+              </div>
+            </div>
+
             <div className="d-flex justify-content-center">
               <NavLink to={`/marketplace/stake`}>
                 <div className="linear-border">

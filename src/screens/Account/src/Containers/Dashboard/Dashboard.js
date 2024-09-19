@@ -661,6 +661,7 @@ function Dashboard({
   const [premiumTxHash, setPremiumTxHash] = useState("");
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
   const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
+  const [landPremiumRewards, setlandPremiumRewards] = useState(0);
 
   const [portfolio, setPortfolio] = useState(false);
 
@@ -2767,7 +2768,7 @@ function Dashboard({
         data
       );
 
-      setPrevDataVictionMonthly(result.data.data.leaderboard);
+      setPrevDataMantaMonthly(result.data.data.leaderboard);
     } else {
       setPrevDataMantaMonthly(placeholderplayerData);
     }
@@ -3116,7 +3117,7 @@ function Dashboard({
         data
       );
 
-      setPrevDataVictionMonthly(result.data.data.leaderboard);
+      setPrevDataTaikoMonthly(result.data.data.leaderboard);
     } else {
       setPrevDataTaikoMonthly(placeholderplayerData);
     }
@@ -4124,6 +4125,7 @@ function Dashboard({
     fetchWeeklyRecordsSkale();
     fetchMonthlyRecordsSkale();
     fetchRecordsStar();
+    fetchKittyDashAroundPlayer(userId, username);
   }, [username, userId, goldenPassRemainingTime]);
 
   useEffect(() => {
@@ -4982,6 +4984,27 @@ function Dashboard({
     return myStakes;
   };
 
+  const getLandPremiumStakesIds = async () => {
+    const address = coinbase;
+
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDPREMIUM_ABI,
+      window.config.nft_land_premiumstake_address
+    );
+
+    let stakenft = [];
+    let myStakes = await staking_contract.methods
+      .depositsOf(address)
+      .call()
+      .then((result) => {
+        for (let i = 0; i < result.length; i++)
+          stakenft.push(parseInt(result[i]));
+        return stakenft;
+      });
+
+    return myStakes;
+  };
+
   const calculateAllRewardsCawsPremium = async () => {
     const address = coinbase;
 
@@ -5010,6 +5033,36 @@ function Dashboard({
       }
     }
     setcawsPremiumRewards(result);
+  };
+
+  const calculateAllRewardsLandPremium = async () => {
+    const address = coinbase;
+
+    let myStakes = await getLandPremiumStakesIds(address);
+    let result = 0;
+    let calculateRewards = [];
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDPREMIUM_ABI,
+      window.config.nft_land_premiumstake_address
+    );
+
+    if (address !== null) {
+      if (myStakes && myStakes.length > 0) {
+        calculateRewards = await staking_contract.methods
+          .calculateRewards(address, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          });
+      }
+      let a = 0;
+
+      for (let i = 0; i < calculateRewards.length; i++) {
+        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
+        result = result + Number(a);
+      }
+    }
+    setlandPremiumRewards(result);
   };
 
   const getmyCawsWodStakes = async () => {
@@ -6469,18 +6522,18 @@ function Dashboard({
 
     const coresubscribeAddress = window.config.subscription_core_address;
 
-    const web3 = new Web3(window.ethereum);
+    window.web3 = new Web3(window.ethereum);
 
     setloadspinner(true);
 
-    const nftContract_viction = new window.victionWeb3.eth.Contract(
+    const nftContract_viction = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
       if (window.WALLET_TYPE !== "binance") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -6645,7 +6698,7 @@ function Dashboard({
             }, 5000);
           });
       } else if (approveStatus === "approveAmount") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -6671,7 +6724,7 @@ function Dashboard({
       }
     } else {
       if (window.WALLET_TYPE !== "binance") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -8223,6 +8276,7 @@ function Dashboard({
       window.WALLET_TYPE !== ""
     ) {
       calculateAllRewardsCawsPremium(data.getPlayer.wallet.publicAddress);
+      calculateAllRewardsLandPremium(data.getPlayer.wallet.publicAddress);
     }
   }, [data, chainId]);
 
@@ -8689,7 +8743,11 @@ function Dashboard({
                 Number(monthlyDataAmountViction) +
                 Number(coreEarnUsd) +
                 Number(victionEarnUsd) +
-                Number(bnbEarnUsd) + Number(weeklyDataAmountManta) + Number(monthlyDataAmountManta) + Number(weeklyDataAmountTaiko) + Number(monthlyDataAmountTaiko)
+                Number(bnbEarnUsd) +
+                Number(weeklyDataAmountManta) +
+                Number(monthlyDataAmountManta) +
+                Number(weeklyDataAmountTaiko) +
+                Number(monthlyDataAmountTaiko)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
@@ -10443,390 +10501,6 @@ function Dashboard({
                           </div>
                         </div>
                       )}
-                      {isConnected &&
-                      discountPercentage > 0 &&
-                      chainId === 56 ? (
-                        <div className="d-flex align-items-center gap-3 justify-content-center">
-                          <div
-                            className={` ${
-                              approveStatus === "fail" ||
-                              !coinbase ||
-                              isApproved
-                                ? "linear-border-disabled"
-                                : "linear-border"
-                            }`}
-                          >
-                            <button
-                              className={`btn ${
-                                approveStatus === "fail" ||
-                                !coinbase ||
-                                isApproved
-                                  ? "outline-btn-disabled"
-                                  : "filled-btn"
-                              } px-4`}
-                              disabled={
-                                approveStatus === "fail" ||
-                                !coinbase ||
-                                isApproved
-                                  ? true
-                                  : false
-                              }
-                              onClick={(e) => handleApprove(e)}
-                            >
-                              {loadspinner === false &&
-                              (approveStatus === "initial" ||
-                                approveStatus === "deposit" ||
-                                approveStatus === "failsubscribe" ||
-                                approveStatus === "approveAmount" ||
-                                approveStatus === "successsubscribe") ? (
-                                <>
-                                  Approve{" "}
-                                  {approveStatus === "approveAmount"
-                                    ? "token"
-                                    : nftPremium_total > 0
-                                    ? "NFT"
-                                    : ""}
-                                </>
-                              ) : loadspinner === false &&
-                                approveStatus === "fail" ? (
-                                "Failed"
-                              ) : (
-                                <div className="d-flex align-items-center gap-2">
-                                  Processing
-                                  <div
-                                    className="spinner-border "
-                                    role="status"
-                                    style={{
-                                      height: "1rem",
-                                      width: "1rem",
-                                    }}
-                                  ></div>{" "}
-                                </div>
-                              )}
-                            </button>
-                          </div>
-                          <div
-                            className={` ${
-                              isApproved === false
-                                ? "linear-border-disabled"
-                                : "linear-border"
-                            }`}
-                          >
-                            <button
-                              className={`btn ${
-                                isApproved === false
-                                  ? "outline-btn-disabled"
-                                  : "filled-btn"
-                              } px-4`}
-                              onClick={() => handleSubscribe()}
-                            >
-                              {loadspinnerSub === false &&
-                              (approveStatus === "initial" ||
-                                approveStatus === "fail" ||
-                                approveStatus === "deposit") ? (
-                                <>
-                                  {discountPercentage > 0 ||
-                                  nftPremium_total > 0
-                                    ? "Redeem"
-                                    : "Buy"}
-                                </>
-                              ) : loadspinnerSub === false &&
-                                approveStatus === "successsubscribe" ? (
-                                "Success"
-                              ) : loadspinnerSub === false &&
-                                approveStatus === "failsubscribe" ? (
-                                "Failed"
-                              ) : (
-                                <div className="d-flex align-items-center gap-2">
-                                  Processing
-                                  <div
-                                    className="spinner-border "
-                                    role="status"
-                                    style={{
-                                      height: "1rem",
-                                      width: "1rem",
-                                    }}
-                                  ></div>{" "}
-                                </div>
-                              )}
-                            </button>
-                          </div>
-                        </div>
-                      ) : isConnected &&
-                        discountPercentageViction > 0 &&
-                        chainId === 88 ? (
-                        <div className="d-flex align-items-center gap-3 justify-content-center">
-                          <div
-                            className={` ${
-                              approveStatus === "fail" ||
-                              !coinbase ||
-                              isApproved
-                                ? "linear-border-disabled"
-                                : "linear-border"
-                            }`}
-                          >
-                            <button
-                              className={`btn ${
-                                approveStatus === "fail" ||
-                                !coinbase ||
-                                isApproved
-                                  ? "outline-btn-disabled"
-                                  : "filled-btn"
-                              } px-4`}
-                              disabled={
-                                approveStatus === "fail" ||
-                                !coinbase ||
-                                isApproved
-                                  ? true
-                                  : false
-                              }
-                              onClick={(e) => handleApprove(e)}
-                            >
-                              {loadspinner === false &&
-                              (approveStatus === "initial" ||
-                                approveStatus === "deposit" ||
-                                approveStatus === "failsubscribe" ||
-                                approveStatus === "approveAmount" ||
-                                approveStatus === "successsubscribe") ? (
-                                <>
-                                  Approve{" "}
-                                  {approveStatus === "approveAmount"
-                                    ? "token"
-                                    : nftPremium_totalViction > 0
-                                    ? "NFT"
-                                    : ""}
-                                </>
-                              ) : loadspinner === false &&
-                                approveStatus === "fail" ? (
-                                "Failed"
-                              ) : (
-                                <div className="d-flex align-items-center gap-2">
-                                  Processing
-                                  <div
-                                    className="spinner-border "
-                                    role="status"
-                                    style={{
-                                      height: "1rem",
-                                      width: "1rem",
-                                    }}
-                                  ></div>{" "}
-                                </div>
-                              )}
-                            </button>
-                          </div>
-                          <div
-                            className={` ${
-                              isApproved === false
-                                ? "linear-border-disabled"
-                                : "linear-border"
-                            }`}
-                          >
-                            <button
-                              className={`btn ${
-                                isApproved === false
-                                  ? "outline-btn-disabled"
-                                  : "filled-btn"
-                              } px-4`}
-                              onClick={() => handleSubscribe()}
-                            >
-                              {loadspinnerSub === false &&
-                              (approveStatus === "initial" ||
-                                approveStatus === "fail" ||
-                                approveStatus === "deposit") ? (
-                                <>
-                                  {discountPercentageViction > 0 ||
-                                  nftPremium_totalViction > 0
-                                    ? "Redeem"
-                                    : "Buy"}
-                                </>
-                              ) : loadspinnerSub === false &&
-                                approveStatus === "successsubscribe" ? (
-                                "Success"
-                              ) : loadspinnerSub === false &&
-                                approveStatus === "failsubscribe" ? (
-                                "Failed"
-                              ) : (
-                                <div className="d-flex align-items-center gap-2">
-                                  Processing
-                                  <div
-                                    className="spinner-border "
-                                    role="status"
-                                    style={{
-                                      height: "1rem",
-                                      width: "1rem",
-                                    }}
-                                  ></div>{" "}
-                                </div>
-                              )}
-                            </button>
-                          </div>
-                        </div>
-                      ) : isConnected &&
-                        discountPercentage === 0 &&
-                        discountPercentageViction === 0 ? (
-                        <div className="d-flex align-items-center gap-3 justify-content-center">
-                          <div
-                            className={` ${
-                              approveStatus === "fail" ||
-                              !coinbase ||
-                              isApproved
-                                ? "linear-border-disabled"
-                                : "linear-border"
-                            }`}
-                          >
-                            <button
-                              className={`btn ${
-                                approveStatus === "fail" ||
-                                !coinbase ||
-                                isApproved
-                                  ? "outline-btn-disabled"
-                                  : "filled-btn"
-                              } px-4`}
-                              disabled={
-                                approveStatus === "fail" ||
-                                !coinbase ||
-                                isApproved
-                                  ? true
-                                  : false
-                              }
-                              onClick={(e) => handleApprove(e)}
-                            >
-                              {loadspinner === false &&
-                              (approveStatus === "initial" ||
-                                approveStatus === "deposit" ||
-                                approveStatus === "failsubscribe" ||
-                                approveStatus === "approveAmount" ||
-                                approveStatus === "successsubscribe") ? (
-                                <>
-                                  Approve{" "}
-                                  {approveStatus === "approveAmount"
-                                    ? "token"
-                                    : nftPremium_total > 0
-                                    ? "NFT"
-                                    : ""}
-                                </>
-                              ) : loadspinner === false &&
-                                approveStatus === "fail" ? (
-                                "Failed"
-                              ) : (
-                                <div className="d-flex align-items-center gap-2">
-                                  Processing
-                                  <div
-                                    className="spinner-border "
-                                    role="status"
-                                    style={{
-                                      height: "1rem",
-                                      width: "1rem",
-                                    }}
-                                  ></div>{" "}
-                                </div>
-                              )}
-                            </button>
-                          </div>
-                          <div
-                            className={` ${
-                              isApproved === false
-                                ? "linear-border-disabled"
-                                : "linear-border"
-                            }`}
-                          >
-                            <button
-                              className={`btn ${
-                                isApproved === false
-                                  ? "outline-btn-disabled"
-                                  : "filled-btn"
-                              } px-4`}
-                              onClick={() => handleSubscribe()}
-                            >
-                              {loadspinnerSub === false &&
-                              (approveStatus === "initial" ||
-                                approveStatus === "fail" ||
-                                approveStatus === "deposit") ? (
-                                <>
-                                  {discountPercentage > 0 ||
-                                  nftPremium_total > 0
-                                    ? "Redeem"
-                                    : "Buy"}
-                                </>
-                              ) : loadspinnerSub === false &&
-                                approveStatus === "successsubscribe" ? (
-                                "Success"
-                              ) : loadspinnerSub === false &&
-                                approveStatus === "failsubscribe" ? (
-                                "Failed"
-                              ) : (
-                                <div
-                                  className="spinner-border "
-                                  role="status"
-                                  style={{
-                                    height: "1rem",
-                                    width: "1rem",
-                                  }}
-                                ></div>
-                              )}
-                            </button>
-                          </div>
-                        </div>
-                      ) : isConnected &&
-                        discountPercentage > 0 &&
-                        chainId !== 56 ? (
-                        <div
-                          className={`d-flex align-items-center justify-content-center mb-2`}
-                        >
-                          <button
-                            className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                            onClick={() => {
-                              handleBnbPool();
-                            }}
-                            style={{
-                              width: "fit-content",
-                              whiteSpace: "nowrap",
-                              fontSize: 14,
-                            }}
-                          >
-                            Switch to BNB Chain
-                          </button>
-                        </div>
-                      ) : isConnected &&
-                        discountPercentageViction > 0 &&
-                        chainId !== 88 ? (
-                        <div
-                          className={`d-flex align-items-center justify-content-center mb-2`}
-                        >
-                          <button
-                            className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                            onClick={() => {
-                              handleVictionPool();
-                            }}
-                            style={{
-                              width: "fit-content",
-                              whiteSpace: "nowrap",
-                              fontSize: 14,
-                            }}
-                          >
-                            Switch to Viction
-                          </button>
-                        </div>
-                      ) : (
-                        <div
-                          className={`d-flex align-items-center justify-content-center mb-2`}
-                        >
-                          <button
-                            className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                            onClick={() => {
-                              setshowWalletModal(true);
-                              setgetPremiumPopup(false);
-                            }}
-                            style={{
-                              width: "fit-content",
-                              whiteSpace: "nowrap",
-                              fontSize: 14,
-                            }}
-                          >
-                            Connect wallet
-                          </button>
-                        </div>
-                      )}
                       {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
                         <span className="token-balance-placeholder">
                           Token Balance
@@ -10979,7 +10653,112 @@ function Dashboard({
                       </button>
                     </div>
                   </div>
-                ) : isConnected && discountPercentage === 0 ? (
+                ) : isConnected &&
+                  discountPercentageViction > 0 &&
+                  chainId === 88 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    <div
+                      className={` ${
+                        approveStatus === "fail" || !coinbase || isApproved
+                          ? "linear-border-disabled"
+                          : "linear-border"
+                      }`}
+                    >
+                      <button
+                        className={`btn ${
+                          approveStatus === "fail" || !coinbase || isApproved
+                            ? "outline-btn-disabled"
+                            : "filled-btn"
+                        } px-4`}
+                        disabled={
+                          approveStatus === "fail" || !coinbase || isApproved
+                            ? true
+                            : false
+                        }
+                        onClick={(e) => handleApprove(e)}
+                      >
+                        {loadspinner === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "deposit" ||
+                          approveStatus === "failsubscribe" ||
+                          approveStatus === "approveAmount" ||
+                          approveStatus === "successsubscribe") ? (
+                          <>
+                            Approve{" "}
+                            {approveStatus === "approveAmount"
+                              ? "token"
+                              : nftPremium_totalViction > 0
+                              ? "NFT"
+                              : ""}
+                          </>
+                        ) : loadspinner === false &&
+                          approveStatus === "fail" ? (
+                          "Failed"
+                        ) : (
+                          <div className="d-flex align-items-center gap-2">
+                            Processing
+                            <div
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>{" "}
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                    <div
+                      className={` ${
+                        isApproved === false
+                          ? "linear-border-disabled"
+                          : "linear-border"
+                      }`}
+                    >
+                      <button
+                        className={`btn ${
+                          isApproved === false
+                            ? "outline-btn-disabled"
+                            : "filled-btn"
+                        } px-4`}
+                        onClick={() => handleSubscribe()}
+                      >
+                        {loadspinnerSub === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "fail" ||
+                          approveStatus === "deposit") ? (
+                          <>
+                            {discountPercentageViction > 0 ||
+                            nftPremium_totalViction > 0
+                              ? "Redeem"
+                              : "Buy"}
+                          </>
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "successsubscribe" ? (
+                          "Success"
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "failsubscribe" ? (
+                          "Failed"
+                        ) : (
+                          <div className="d-flex align-items-center gap-2">
+                            Processing
+                            <div
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>{" "}
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                ) : isConnected &&
+                  discountPercentage === 0 &&
+                  discountPercentageViction === 0 ? (
                   <div className="d-flex align-items-center gap-3 justify-content-center">
                     <div
                       className={` ${
@@ -11092,6 +10871,26 @@ function Dashboard({
                       }}
                     >
                       Switch to BNB Chain
+                    </button>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageViction > 0 &&
+                  chainId !== 88 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      onClick={() => {
+                        handleVictionPool();
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Viction
                     </button>
                   </div>
                 ) : (

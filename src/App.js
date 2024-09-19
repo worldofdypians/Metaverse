@@ -88,6 +88,7 @@ import { isMobile } from "react-device-detect";
 import About from "./screens/About/About.js";
 import Game from "./screens/Game/Game.js";
 import Campaigns from "./screens/Community/Campaigns/Campaigns.js";
+import Map from "./screens/Map/Map.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -4689,32 +4690,7 @@ function App() {
               />
             }
           />
-          <Route
-            exact
-            path="/account"
-            element={
-              <Dashboard
-                logoutCount={logoutCount}
-                ethTokenData={ethTokenData}
-                dypTokenData={dypTokenData}
-                handleSwitchChain={handleSwitchChain}
-                dypTokenData_old={dypTokenData_old}
-                coinbase={coinbase}
-                account={coinbase}
-                isConnected={isConnected}
-                chainId={networkId}
-                handleConnect={handleConnectWallet}
-                onSigninClick={checkData}
-                success={success}
-                availableTime={availTime}
-                handleSwitchNetwork={handleSwitchNetwork}
-                handleOpenDomains={() => setDomainPopup(true)}
-                domainName={domainName}
-                dogePrice={dogePrice}
-              />
-            }
-          />
-
+         
           <Route
             exact
             path="/marketplace/beta-pass/multiversx"
@@ -5266,6 +5242,10 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
                 totalMantaNft={totalMantaNft}
                 mantaMintAllowed={mantaMintAllowed}
                 myMantaNfts={myMantaNfts}
@@ -5577,10 +5557,14 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
                 cawsArray={allCawsForTimepieceMint}
                 mintloading={mintloading}
                 isConnected={isConnected}
-                chainId={chainId}
+                chainId={networkId}
                 handleMint={handleTaikoNftMint}
                 mintStatus={mintStatus}
                 textColor={textColor}
@@ -5808,6 +5792,8 @@ function App() {
                 />
               }
             /> */}
+          <Route exact path="/map" element={<Map />} />
+
         </Routes>
 
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
@@ -5818,6 +5804,7 @@ function App() {
       {/* {!location.pathname.includes("account") &&
         !location.pathname.includes("auth") &&
         !location.pathname.includes("explorer") &&
+        !location.pathname.includes("map") &&
         !location.pathname.includes("bnbchain-alliance-program") && (
           <ChestFlyout />
         )} */}

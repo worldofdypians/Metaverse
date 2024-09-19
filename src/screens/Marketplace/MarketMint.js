@@ -72,6 +72,7 @@ import coin98Upcoming from "./assets/coin98Upcoming.png";
 
 import Countdown from "react-countdown";
 import getFormattedNumber from "../Account/src/Utils.js/hooks/get-formatted-number";
+import { handleSwitchNetworkhook } from "../../hooks/hooks";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -90,7 +91,7 @@ const renderer2 = ({ days, hours, minutes }) => {
 };
 
 const MarketMint = ({
-  showWalletConnect,
+  showWalletConnect, handleSwitchNetwork,handleSwitchChainGateWallet,handleSwitchChainBinanceWallet,binanceWallet,
   handleMint,
   checkTotalcaws,
   coinbase,
@@ -134,7 +135,7 @@ const MarketMint = ({
   totalMantaNft,
   mantaMintAllowed,
   myMantaNfts,
-  myMantaNFTsCreated,totalTaikoNft,taikoMintAllowed,myTaikoNfts, myTaikoNFTsCreated
+  myMantaNFTsCreated, totalTaikoNft, taikoMintAllowed, myTaikoNfts, myTaikoNFTsCreated
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -378,31 +379,82 @@ const MarketMint = ({
     );
 
     const opbnbresult = await opbnbnftContract.methods
-    .totalSupply()
-    .call()
-    .catch((e) => {
-      console.error(e);
-      return 0;
-    });
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
 
-  setopBnbNftsSold(opbnbresult);
+    setopBnbNftsSold(opbnbresult);
 
 
-  
-  const immutableContract = new window.immutableWeb3.eth.Contract(
-    window.IMMUTABLE_NFT_ABI,
-    window.config.nft_immutable_address
-  );
 
-  const immutableresult = await immutableContract.methods
-  .totalSupply()
-  .call()
-  .catch((e) => {
-    console.error(e);
-    return 0;
-  });
+    const immutableContract = new window.immutableWeb3.eth.Contract(
+      window.IMMUTABLE_NFT_ABI,
+      window.config.nft_immutable_address
+    );
 
-setimmutableNftsSold(immutableresult);
+    const immutableresult = await immutableContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    setimmutableNftsSold(immutableresult);
+
+
+  };
+
+  const handleEthPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+        await handleSwitchNetworkhook("0x1")
+          .then(() => {
+            handleSwitchNetwork(1);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(1);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(1);
+      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(1);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleTaikoPool = async () => {
+    if (window.WALLET_TYPE !== "binance") {
+      if (window.ethereum) {
+        if (!window.gatewallet) {
+          await handleSwitchNetworkhook("0x28c58")
+            .then(() => {
+              handleSwitchNetwork(167000);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
+        else if(window.ethereum?.isBinance) {
+          window.alertify.error(
+            "This network is not available on Binance Web3 Wallet"
+          );
+        }
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
+      }
+    } else {
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
+    }
 
 
   };
@@ -827,7 +879,8 @@ setimmutableNftsSold(immutableresult);
             setactiveButton(true);
             setStatus("");
           }
-        } else if (selectedMint.id === "taiko") {
+        }
+         else if (selectedMint.id === "taiko") {
           if (chainId !== 167000) {
             setactiveButton(false);
             setStatus("Switch to Taiko to continue minting.");
@@ -870,7 +923,7 @@ setimmutableNftsSold(immutableresult);
     document.title = "NFT Mint";
   }, []);
 
-  
+
 
   return (
     <>
@@ -914,29 +967,26 @@ setimmutableNftsSold(immutableresult);
               <div className="d-flex flex-column">
                 <div className="d-flex w-100 align-items-center justify-content-center gap-4">
                   <h6
-                    className={`new-stake-tab position-relative ${
-                      activeTab === "live" && "stake-tab-active"
-                    } px-3 py-2`}
+                    className={`new-stake-tab position-relative ${activeTab === "live" && "stake-tab-active"
+                      } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
                   >
-                     <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
                       <span className="mb-0">New</span>
                     </div>
                     Live
                   </h6>
                   <h6
-                    className={`new-stake-tab position-relative ${
-                      activeTab === "upcoming" && "stake-tab-active"
-                    } px-3 py-2`}
+                    className={`new-stake-tab position-relative ${activeTab === "upcoming" && "stake-tab-active"
+                      } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
-                   
+
                     Upcoming
                   </h6>
                   <h6
-                    className={`new-stake-tab ${
-                      activeTab === "past" && "stake-tab-active"
-                    } px-3 py-2`}
+                    className={`new-stake-tab ${activeTab === "past" && "stake-tab-active"
+                      } px-3 py-2`}
                     onClick={() => setActiveTab("past")}
                   >
                     Past
@@ -957,10 +1007,10 @@ setimmutableNftsSold(immutableresult);
                       {showFirstNext === activeSlide
                         ? null
                         : dummyCards.length > sliderCut && (
-                            <div className="next-arrow-nft" onClick={firstNext}>
-                              <img src={nextArrow} alt="1" />
-                            </div>
-                          )}
+                          <div className="next-arrow-nft" onClick={firstNext}>
+                            <img src={nextArrow} alt="1" />
+                          </div>
+                        )}
                       {windowSize.width < 480 && (
                         <>
                           <div className="prev-arrow-nft" onClick={firstPrev}>
@@ -1019,7 +1069,7 @@ setimmutableNftsSold(immutableresult);
                                   <span>{myMantaNFTsCreated.length}</span>
                                 </div>
                               )}
-                               {showBadge &&
+                            {showBadge &&
                               myTaikoNFTsCreated.length > 0 &&
                               selectedMint.id === "taiko" && (
                                 <div className="totalcreated">
@@ -1027,55 +1077,54 @@ setimmutableNftsSold(immutableresult);
                                 </div>
                               )}
                             <div
-                              className={`genesis-wrapper ${
-                                selectedMint.id === "timepiece" &&
-                                totalCreated > 0
+                              className={`genesis-wrapper ${selectedMint.id === "timepiece" &&
+                                  totalCreated > 0
                                   ? "genesis-land"
                                   : selectedMint.id === "timepiece" &&
                                     totalCreated === 0
-                                  ? "genesis-land-empty"
-                                  : selectedMint.id === "sei" && totalseiNft > 0
-                                  ? "sei-active"
-                                  : selectedMint.id === "sei" &&
-                                    totalseiNft === 0
-                                  ? "conflux-empty"
-                                  : selectedMint.id === "core" &&
-                                    totalCoreNft === 0
-                                  ? "conflux-empty"
-                                  : selectedMint.id === "core" &&
-                                    totalCoreNft > 0
-                                  ? "core-active"
-                                  : selectedMint.id === "manta" &&
-                                    totalMantaNft > 0
-                                  ? "manta-active"
-                                  : selectedMint.id === "taiko" &&
-                                    totalTaikoNft > 0
-                                  ? "taiko-active"
-                                  : selectedMint.id === "viction" &&
-                                    totalVictionNft > 0
-                                  ? "viction-active"
-                                  : selectedMint.id === "viction" &&
-                                    totalVictionNft === 0
-                                  ? "conflux-empty"
-                                  : selectedMint.id === "immutable" &&
-                                    totalImmutableNft === 0
-                                  ? "conflux-empty"
-                                  : selectedMint.id === "immutable" &&
-                                    totalImmutableNft > 0
-                                  ? "immutable-active"
-                                  : selectedMint.id === "multiversx" &&
-                                    totalMultiversNft > 0
-                                  ? "multivers-active"
-                                  : selectedMint.id === "bnb" && totalBnbNft > 0
-                                  ? "bnb-active"
-                                  : selectedMint.id === "opbnb" &&
-                                    totalopbnbNft > 0
-                                  ? "opbnb-active"
-                                  : selectedMint.id === "multiversx" &&
-                                    totalMultiversNft === 0
-                                  ? "conflux-empty"
-                                  : "conflux-empty"
-                              } d-flex justify-content-center align-items-center p-3 position-relative`}
+                                    ? "genesis-land-empty"
+                                    : selectedMint.id === "sei" && totalseiNft > 0
+                                      ? "sei-active"
+                                      : selectedMint.id === "sei" &&
+                                        totalseiNft === 0
+                                        ? "conflux-empty"
+                                        : selectedMint.id === "core" &&
+                                          totalCoreNft === 0
+                                          ? "conflux-empty"
+                                          : selectedMint.id === "core" &&
+                                            totalCoreNft > 0
+                                            ? "core-active"
+                                            : selectedMint.id === "manta" &&
+                                              totalMantaNft > 0
+                                              ? "manta-active"
+                                              : selectedMint.id === "taiko" &&
+                                                totalTaikoNft > 0
+                                                ? "taiko-active"
+                                                : selectedMint.id === "viction" &&
+                                                  totalVictionNft > 0
+                                                  ? "viction-active"
+                                                  : selectedMint.id === "viction" &&
+                                                    totalVictionNft === 0
+                                                    ? "conflux-empty"
+                                                    : selectedMint.id === "immutable" &&
+                                                      totalImmutableNft === 0
+                                                      ? "conflux-empty"
+                                                      : selectedMint.id === "immutable" &&
+                                                        totalImmutableNft > 0
+                                                        ? "immutable-active"
+                                                        : selectedMint.id === "multiversx" &&
+                                                          totalMultiversNft > 0
+                                                          ? "multivers-active"
+                                                          : selectedMint.id === "bnb" && totalBnbNft > 0
+                                                            ? "bnb-active"
+                                                            : selectedMint.id === "opbnb" &&
+                                                              totalopbnbNft > 0
+                                                              ? "opbnb-active"
+                                                              : selectedMint.id === "multiversx" &&
+                                                                totalMultiversNft === 0
+                                                                ? "conflux-empty"
+                                                                : "conflux-empty"
+                                } d-flex justify-content-center align-items-center p-3 position-relative`}
                               style={{ height: 312 }}
                             >
                               <img
@@ -1099,20 +1148,19 @@ setimmutableNftsSold(immutableresult);
                             <div
                               className={
                                 isConnected === false ||
-                                activeButton === false ||
-                                totalCreated === 0
+                                  activeButton === false ||
+                                  totalCreated === 0
                                   ? "linear-border-disabled"
                                   : "linear-border"
                               }
                             >
                               <button
-                                className={`btn ${
-                                  isConnected === false ||
-                                  activeButton === false ||
-                                  totalCreated === 0
+                                className={`btn ${isConnected === false ||
+                                    activeButton === false ||
+                                    totalCreated === 0
                                     ? "outline-btn-disabled"
                                     : "outline-btn"
-                                } px-5 w-100`}
+                                  } px-5 w-100`}
                                 disabled={
                                   isConnected === false ||
                                   activeButton === false ||
@@ -1128,20 +1176,19 @@ setimmutableNftsSold(immutableresult);
                             <div
                               className={
                                 isConnected === false ||
-                                activeButton === false ||
-                                totalBnbNft === 0
+                                  activeButton === false ||
+                                  totalBnbNft === 0
                                   ? "linear-border-disabled"
                                   : "linear-border"
                               }
                             >
                               <NavLink
-                                className={`btn ${
-                                  isConnected === false ||
-                                  activeButton === false ||
-                                  totalBnbNft === 0
+                                className={`btn ${isConnected === false ||
+                                    activeButton === false ||
+                                    totalBnbNft === 0
                                     ? "outline-btn-disabled"
                                     : "outline-btn"
-                                } px-5 w-100`}
+                                  } px-5 w-100`}
                                 disabled={
                                   isConnected === false ||
                                   activeButton === false ||
@@ -1164,20 +1211,19 @@ setimmutableNftsSold(immutableresult);
                             <div
                               className={
                                 isConnected === false ||
-                                activeButton === false ||
-                                totalopbnbNft === 0
+                                  activeButton === false ||
+                                  totalopbnbNft === 0
                                   ? "linear-border-disabled"
                                   : "linear-border"
                               }
                             >
                               <NavLink
-                                className={`btn ${
-                                  isConnected === false ||
-                                  activeButton === false ||
-                                  totalopbnbNft === 0
+                                className={`btn ${isConnected === false ||
+                                    activeButton === false ||
+                                    totalopbnbNft === 0
                                     ? "outline-btn-disabled"
                                     : "outline-btn"
-                                } px-5 w-100`}
+                                  } px-5 w-100`}
                                 disabled={
                                   isConnected === false ||
                                   activeButton === false ||
@@ -1200,20 +1246,19 @@ setimmutableNftsSold(immutableresult);
                             <div
                               className={
                                 isConnected === false ||
-                                activeButton === false ||
-                                myCoreNfts.length === 0
+                                  activeButton === false ||
+                                  myCoreNfts.length === 0
                                   ? "linear-border-disabled"
                                   : "linear-border"
                               }
                             >
                               <NavLink
-                                className={`btn ${
-                                  isConnected === false ||
-                                  activeButton === false ||
-                                  myCoreNfts.length === 0
+                                className={`btn ${isConnected === false ||
+                                    activeButton === false ||
+                                    myCoreNfts.length === 0
                                     ? "outline-btn-disabled"
                                     : "outline-btn"
-                                } px-5 w-100`}
+                                  } px-5 w-100`}
                                 disabled={
                                   isConnected === false ||
                                   activeButton === false ||
@@ -1235,20 +1280,19 @@ setimmutableNftsSold(immutableresult);
                             <div
                               className={
                                 isConnected === false ||
-                                activeButton === false ||
-                                myseiNfts.length === 0
+                                  activeButton === false ||
+                                  myseiNfts.length === 0
                                   ? "linear-border-disabled"
                                   : "linear-border"
                               }
                             >
                               <NavLink
-                                className={`btn ${
-                                  isConnected === false ||
-                                  activeButton === false ||
-                                  myseiNfts.length === 0
+                                className={`btn ${isConnected === false ||
+                                    activeButton === false ||
+                                    myseiNfts.length === 0
                                     ? "outline-btn-disabled"
                                     : "outline-btn"
-                                } px-5 w-100`}
+                                  } px-5 w-100`}
                                 disabled={
                                   isConnected === false ||
                                   activeButton === false ||
@@ -1270,20 +1314,19 @@ setimmutableNftsSold(immutableresult);
                             <div
                               className={
                                 isConnected === false ||
-                                activeButton === false ||
-                                myImmutableNfts.length === 0
+                                  activeButton === false ||
+                                  myImmutableNfts.length === 0
                                   ? "linear-border-disabled"
                                   : "linear-border"
                               }
                             >
                               <NavLink
-                                className={`btn ${
-                                  isConnected === false ||
-                                  activeButton === false ||
-                                  myImmutableNfts.length === 0
+                                className={`btn ${isConnected === false ||
+                                    activeButton === false ||
+                                    myImmutableNfts.length === 0
                                     ? "outline-btn-disabled"
                                     : "outline-btn"
-                                } px-5 w-100`}
+                                  } px-5 w-100`}
                                 disabled={
                                   isConnected === false ||
                                   activeButton === false ||
@@ -1305,20 +1348,19 @@ setimmutableNftsSold(immutableresult);
                             <div
                               className={
                                 isConnected === false ||
-                                activeButton === false ||
-                                myVictionNfts.length === 0
+                                  activeButton === false ||
+                                  myVictionNfts.length === 0
                                   ? "linear-border-disabled"
                                   : "linear-border"
                               }
                             >
                               <NavLink
-                                className={`btn ${
-                                  isConnected === false ||
-                                  activeButton === false ||
-                                  myVictionNfts.length === 0
+                                className={`btn ${isConnected === false ||
+                                    activeButton === false ||
+                                    myVictionNfts.length === 0
                                     ? "outline-btn-disabled"
                                     : "outline-btn"
-                                } px-5 w-100`}
+                                  } px-5 w-100`}
                                 disabled={
                                   isConnected === false ||
                                   activeButton === false ||
@@ -1340,20 +1382,19 @@ setimmutableNftsSold(immutableresult);
                             <div
                               className={
                                 isConnected === false ||
-                                activeButton === false ||
-                                myMantaNfts.length === 0
+                                  activeButton === false ||
+                                  myMantaNfts.length === 0
                                   ? "linear-border-disabled"
                                   : "linear-border"
                               }
                             >
                               <NavLink
-                                className={`btn ${
-                                  isConnected === false ||
-                                  activeButton === false ||
-                                  myMantaNfts.length === 0
+                                className={`btn ${isConnected === false ||
+                                    activeButton === false ||
+                                    myMantaNfts.length === 0
                                     ? "outline-btn-disabled"
                                     : "outline-btn"
-                                } px-5 w-100`}
+                                  } px-5 w-100`}
                                 disabled={
                                   isConnected === false ||
                                   activeButton === false ||
@@ -1372,24 +1413,23 @@ setimmutableNftsSold(immutableresult);
                             </div>
                           )}
 
-{selectedMint.id === "taiko" && (
+                          {selectedMint.id === "taiko" && (
                             <div
                               className={
                                 isConnected === false ||
-                                activeButton === false ||
-                                myTaikoNfts.length === 0
+                                  activeButton === false ||
+                                  myTaikoNfts.length === 0
                                   ? "linear-border-disabled"
                                   : "linear-border"
                               }
                             >
                               <NavLink
-                                className={`btn ${
-                                  isConnected === false ||
-                                  activeButton === false ||
-                                  myTaikoNfts.length === 0
+                                className={`btn ${isConnected === false ||
+                                    activeButton === false ||
+                                    myTaikoNfts.length === 0
                                     ? "outline-btn-disabled"
                                     : "outline-btn"
-                                } px-5 w-100`}
+                                  } px-5 w-100`}
                                 disabled={
                                   isConnected === false ||
                                   activeButton === false ||
@@ -1465,7 +1505,7 @@ setimmutableNftsSold(immutableresult);
                                     Minting is available on Manta
                                   </span>
                                 </div>
-                              ): mintTitle === "taiko" ? (
+                              ) : mintTitle === "taiko" ? (
                                 <div className="d-flex align-items-center gap-2">
                                   <img
                                     src={blockChainIcon}
@@ -1566,9 +1606,9 @@ setimmutableNftsSold(immutableresult);
                                 <img
                                   src={
                                     nftCount > 1 &&
-                                    isConnected === true &&
-                                    activeButton === true &&
-                                    status === ""
+                                      isConnected === true &&
+                                      activeButton === true &&
+                                      status === ""
                                       ? subtractActive
                                       : subtractInactive
                                   }
@@ -1577,13 +1617,13 @@ setimmutableNftsSold(immutableresult);
                                   style={{
                                     cursor:
                                       isConnected === true &&
-                                      activeButton === true
+                                        activeButton === true
                                         ? "pointer"
                                         : "default",
                                     pointerEvents:
                                       isConnected === true &&
-                                      activeButton === true &&
-                                      status === ""
+                                        activeButton === true &&
+                                        status === ""
                                         ? "auto"
                                         : "none",
                                   }}
@@ -1591,10 +1631,10 @@ setimmutableNftsSold(immutableresult);
                                 <img
                                   src={
                                     nftCount < cawsArray.length &&
-                                    nftCount >= 1 &&
-                                    isConnected === true &&
-                                    activeButton === true &&
-                                    status === ""
+                                      nftCount >= 1 &&
+                                      isConnected === true &&
+                                      activeButton === true &&
+                                      status === ""
                                       ? addActive
                                       : addInactive
                                   }
@@ -1603,13 +1643,13 @@ setimmutableNftsSold(immutableresult);
                                   style={{
                                     cursor:
                                       isConnected === true &&
-                                      activeButton === true
+                                        activeButton === true
                                         ? "pointer"
                                         : "default",
                                     pointerEvents:
                                       isConnected === true &&
-                                      activeButton === true &&
-                                      status === ""
+                                        activeButton === true &&
+                                        status === ""
                                         ? "auto"
                                         : "none",
                                   }}
@@ -1617,7 +1657,7 @@ setimmutableNftsSold(immutableresult);
                               </div>
                             </div>
                             {mintTitle === "timepiece" ||
-                            mintTitle === "bnbchain" ? (
+                              mintTitle === "bnbchain" ? (
                               <span
                                 className="limit-span position-relative"
                                 style={{
@@ -1667,50 +1707,50 @@ setimmutableNftsSold(immutableresult);
                                 />
                               </span>
                             ) : // : mintTitle === "skale" ? (
-                            //   <span
-                            //     className="limit-span position-relative d-flex align-items-center gap-2"
-                            //     style={{ bottom: "0px" }}
-                            //   >
-                            //     Available only on SEI
-                            //     <img src={seiLogo} alt="" />
-                            //   </span>
-                            // )
-                            mintTitle === "bnbchain" ? (
-                              <span
-                                className="limit-span position-relative d-flex align-items-center gap-2"
-                                style={{ bottom: "0px" }}
-                              >
-                                Available only on BNB Chain
-                                <img src={bnbLogo} alt="" />
-                              </span>
-                            ) : mintTitle === "opbnbchain" ? (
-                              <span
-                                className="limit-span position-relative d-flex align-items-center gap-2"
-                                style={{ bottom: "0px" }}
-                              >
-                                Available only on opBNB Chain
-                                <img src={bnbLogo} alt="" />
-                              </span>
-                            ) : mintTitle === "multiversx" ? (
-                              <span
-                                className="limit-span position-relative d-flex align-items-center gap-2"
-                                style={{ bottom: "0px" }}
-                              >
-                                Available only on MultiversX
-                                <img src={multiversLogo} alt="" />
-                              </span>
-                            ) : mintTitle === "coin98" ||
-                              mintTitle === "coingecko" ||
-                              mintTitle === "kucoin" ||
-                              mintTitle === "gate" ? (
-                              <span
-                                className="limit-span position-relative d-flex align-items-center gap-2"
-                                style={{ bottom: "0px" }}
-                              >
-                                Available only on BNB Chain
-                                <img src={bnbLogo} alt="" />
-                              </span>
-                            ) : null}
+                              //   <span
+                              //     className="limit-span position-relative d-flex align-items-center gap-2"
+                              //     style={{ bottom: "0px" }}
+                              //   >
+                              //     Available only on SEI
+                              //     <img src={seiLogo} alt="" />
+                              //   </span>
+                              // )
+                              mintTitle === "bnbchain" ? (
+                                <span
+                                  className="limit-span position-relative d-flex align-items-center gap-2"
+                                  style={{ bottom: "0px" }}
+                                >
+                                  Available only on BNB Chain
+                                  <img src={bnbLogo} alt="" />
+                                </span>
+                              ) : mintTitle === "opbnbchain" ? (
+                                <span
+                                  className="limit-span position-relative d-flex align-items-center gap-2"
+                                  style={{ bottom: "0px" }}
+                                >
+                                  Available only on opBNB Chain
+                                  <img src={bnbLogo} alt="" />
+                                </span>
+                              ) : mintTitle === "multiversx" ? (
+                                <span
+                                  className="limit-span position-relative d-flex align-items-center gap-2"
+                                  style={{ bottom: "0px" }}
+                                >
+                                  Available only on MultiversX
+                                  <img src={multiversLogo} alt="" />
+                                </span>
+                              ) : mintTitle === "coin98" ||
+                                mintTitle === "coingecko" ||
+                                mintTitle === "kucoin" ||
+                                mintTitle === "gate" ? (
+                                <span
+                                  className="limit-span position-relative d-flex align-items-center gap-2"
+                                  style={{ bottom: "0px" }}
+                                >
+                                  Available only on BNB Chain
+                                  <img src={bnbLogo} alt="" />
+                                </span>
+                              ) : null}
                             <hr className="mint-divider m-0" />
                             {/* {cawsArray.length > 0 && nftCount > 0 && (
          <span className="land-name">
@@ -1740,50 +1780,35 @@ setimmutableNftsSold(immutableresult);
                                 <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
                                   <div
                                     className={
-                                      (isConnected === true &&
-                                        chainId !== 1 &&
-                                        cawsArray.length === 0) ||
-                                      (status !== "Connect your wallet." &&
-                                        status !== "") ||
-                                      mintloading === "error" ||
-                                      (isConnected === true &&
-                                        chainId === 1 &&
-                                        cawsArray.length === 0)
+                                        
+                                        mintloading === "error" ||
+                                        (isConnected === true  &&
+                                          cawsArray.length === 0 && chainId === 1)
                                         ? "linear-border-disabled"
                                         : "linear-border"
                                     }
                                   >
                                     <button
-                                      className={`btn ${
-                                        mintloading === "error"
+                                      className={`btn ${mintloading === "error"
                                           ? "filled-error-btn"
-                                          : (isConnected === true &&
-                                              chainId !== 1 &&
-                                              cawsArray.length === 0) ||
-                                            (status !==
-                                              "Connect your wallet." &&
-                                              status !== "") ||
-                                            (isConnected === true &&
-                                              chainId === 1 &&
-                                              cawsArray.length === 0)
-                                          ? "outline-btn-disabled"
-                                          : "filled-btn"
-                                      }  px-4 w-100`}
+                                          : (isConnected === true  &&
+                                            cawsArray.length === 0 && chainId === 1) 
+                                            ? "outline-btn-disabled"
+                                            : "filled-btn"
+                                        }  px-4 w-100`}
                                       onClick={() => {
                                         isConnected === true && chainId === 1
                                           ? handleCreate()
+                                          : isConnected === true && chainId !== 1
+                                          ? handleEthPool()
                                           : showWalletConnect();
                                       }}
                                       disabled={
                                         mintloading === "error" ||
-                                        mintloading === "success" ||
-                                        (isConnected === true &&
-                                          chainId !== 1) ||
-                                        (status !== "Connect your wallet." &&
-                                          status !== "") ||
-                                        (isConnected === true &&
-                                          chainId === 1 &&
-                                          cawsArray.length === 0)
+                                          mintloading === "success" ||
+                                           
+                                          (isConnected === true   &&
+                                            cawsArray.length === 0 && chainId === 1)
                                           ? true
                                           : false
                                       }
@@ -1794,24 +1819,23 @@ setimmutableNftsSold(immutableresult);
                                         setMouseOver(false);
                                       }}
                                     >
-                                      {(isConnected === false ||
-                                        chainId !== 1) && (
-                                        <img
-                                          src={
-                                            mouseOver === false
-                                              ? blackWallet
-                                              : whitewallet
-                                          }
-                                          alt=""
-                                          style={{
-                                            width: "23px",
-                                            height: "23px",
-                                          }}
-                                        />
-                                      )}{" "}
+                                      {(isConnected === false  ) && (
+                                          <img
+                                            src={
+                                              mouseOver === false
+                                                ? blackWallet
+                                                : whitewallet
+                                            }
+                                            alt=""
+                                            style={{
+                                              width: "23px",
+                                              height: "23px",
+                                            }}
+                                          />
+                                        )}{" "}
                                       {mintloading === "initial" &&
-                                      isConnected === true &&
-                                      chainId === 1 ? (
+                                        isConnected === true &&
+                                        chainId === 1 ? (
                                         "Mint"
                                       ) : mintloading === "mint" &&
                                         isConnected === true &&
@@ -1829,8 +1853,8 @@ setimmutableNftsSold(immutableresult);
                                       ) : mintloading === "success" &&
                                         isConnected === true &&
                                         activeButton ===
-                                          (isConnected === true &&
-                                            chainId === 1) ? (
+                                        (isConnected === true &&
+                                          chainId === 1) ? (
                                         "Success"
                                       ) : isConnected === true &&
                                         chainId !== 1 ? (
@@ -1888,18 +1912,18 @@ setimmutableNftsSold(immutableresult);
                                       {mintTitle === "core"
                                         ? coreMintAllowed
                                         : mintTitle === "viction"
-                                        ? victionMintAllowed
-                                        : mintTitle === "bnbchain"
-                                        ? bnbMintAllowed
-                                        : mintTitle === "manta"
-                                        ? mantaMintAllowed
-                                        : mintTitle === "taiko"
-                                        ? taikoMintAllowed
-                                        : mintTitle === "multiversx"
-                                        ? 1
-                                        : mintTitle === "immutable"
-                                        ? immutableMintAllowed
-                                        : 0}{" "}
+                                          ? victionMintAllowed
+                                          : mintTitle === "bnbchain"
+                                            ? bnbMintAllowed
+                                            : mintTitle === "manta"
+                                              ? mantaMintAllowed
+                                              : mintTitle === "taiko"
+                                                ? taikoMintAllowed
+                                                : mintTitle === "multiversx"
+                                                  ? 1
+                                                  : mintTitle === "immutable"
+                                                    ? immutableMintAllowed
+                                                    : 0}{" "}
                                       NFT
                                     </h6>
                                   </div>
@@ -1914,12 +1938,12 @@ setimmutableNftsSold(immutableresult);
                                         mintTitle === "core"
                                           ? countToExpireConflux
                                           : mintTitle === "manta"
-                                          ? countToExpireManta
-                                          : mintTitle === "immutable"
-                                          ? countToExpireImmutable
-                                          : mintTitle === "taiko"
-                                          ? countToExpireTaiko
-                                          : countToExpireOpbnb
+                                            ? countToExpireManta
+                                            : mintTitle === "immutable"
+                                              ? countToExpireImmutable
+                                              : mintTitle === "taiko"
+                                                ? countToExpireTaiko
+                                                : countToExpireOpbnb
                                       }
                                       renderer={renderer2}
                                     />
@@ -1941,41 +1965,41 @@ setimmutableNftsSold(immutableresult);
                               {mintTitle === "core"
                                 ? "CORE"
                                 : mintTitle === "viction"
-                                ? "Viction"
-                                : mintTitle === "immutable"
-                                ? "Immutable"
-                                : mintTitle === "multiversx"
-                                ? "MultiversX"
-                                : mintTitle === "bnbchain"
-                                ? "BNB Chain"
-                                : mintTitle === "opbnbchain"
-                                ? "opBNB Chain"
-                                : mintTitle === "manta"
-                                ? "Manta"
-                                : mintTitle === "taiko"
-                                ? "Taiko"
-                                : "SEI"}
+                                  ? "Viction"
+                                  : mintTitle === "immutable"
+                                    ? "Immutable"
+                                    : mintTitle === "multiversx"
+                                      ? "MultiversX"
+                                      : mintTitle === "bnbchain"
+                                        ? "BNB Chain"
+                                        : mintTitle === "opbnbchain"
+                                          ? "opBNB Chain"
+                                          : mintTitle === "manta"
+                                            ? "Manta"
+                                            : mintTitle === "taiko"
+                                              ? "Taiko"
+                                              : "SEI"}
                               <img
                                 style={{ width: 24, height: 24 }}
                                 src={
                                   mintTitle === "multiversx"
                                     ? multiversLogo
                                     : mintTitle === "sei"
-                                    ? seiLogo
-                                    : mintTitle === "viction"
-                                    ? victionLogo
-                                    : mintTitle === "core"
-                                    ? coreLogo
-                                    : mintTitle === "immutable"
-                                    ? immutableLogo
-                                    : mintTitle === "manta"
-                                    ? mantaLogo
-                                    : mintTitle === "taiko"
-                                    ? taikoLogo
-                                    : mintTitle === "bnbchain" ||
-                                      mintTitle === "opbnbchain"
-                                    ? bnbLogo
-                                    : seiLogo
+                                      ? seiLogo
+                                      : mintTitle === "viction"
+                                        ? victionLogo
+                                        : mintTitle === "core"
+                                          ? coreLogo
+                                          : mintTitle === "immutable"
+                                            ? immutableLogo
+                                            : mintTitle === "manta"
+                                              ? mantaLogo
+                                              : mintTitle === "taiko"
+                                                ? taikoLogo
+                                                : mintTitle === "bnbchain" ||
+                                                  mintTitle === "opbnbchain"
+                                                  ? bnbLogo
+                                                  : seiLogo
                                 }
                                 alt=""
                               />
@@ -1998,26 +2022,25 @@ setimmutableNftsSold(immutableresult);
                                 <div
                                   className={
                                     (isConnected === true && chainId !== 56) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    mintloading === "error" ||
-                                    bnbMintAllowed === 0
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      mintloading === "error" ||
+                                      bnbMintAllowed === 0
                                       ? "linear-border-disabled"
                                       : "linear-border"
                                   }
                                 >
                                   <button
-                                    className={`btn ${
-                                      mintloading === "error"
+                                    className={`btn ${mintloading === "error"
                                         ? "filled-error-btn"
                                         : (isConnected === true &&
-                                            chainId !== 56) ||
+                                          chainId !== 56) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
                                           bnbMintAllowed === 0
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    }  px-4 w-100`}
+                                          ? "outline-btn-disabled"
+                                          : "filled-btn"
+                                      }  px-4 w-100`}
                                     onClick={() => {
                                       isConnected === true && chainId === 56
                                         ? handleMint()
@@ -2025,12 +2048,12 @@ setimmutableNftsSold(immutableresult);
                                     }}
                                     disabled={
                                       mintloading === "error" ||
-                                      mintloading === "success" ||
-                                      (isConnected === true &&
-                                        chainId !== 56) ||
-                                      (status !== "Connect your wallet." &&
-                                        status !== "") ||
-                                      bnbMintAllowed === 0
+                                        mintloading === "success" ||
+                                        (isConnected === true &&
+                                          chainId !== 56) ||
+                                        (status !== "Connect your wallet." &&
+                                          status !== "") ||
+                                        bnbMintAllowed === 0
                                         ? true
                                         : false
                                     }
@@ -2043,22 +2066,22 @@ setimmutableNftsSold(immutableresult);
                                   >
                                     {(isConnected === false ||
                                       chainId !== 56) && (
-                                      <img
-                                        src={
-                                          mouseOver === false
-                                            ? blackWallet
-                                            : whitewallet
-                                        }
-                                        alt=""
-                                        style={{
-                                          width: "23px",
-                                          height: "23px",
-                                        }}
-                                      />
-                                    )}{" "}
+                                        <img
+                                          src={
+                                            mouseOver === false
+                                              ? blackWallet
+                                              : whitewallet
+                                          }
+                                          alt=""
+                                          style={{
+                                            width: "23px",
+                                            height: "23px",
+                                          }}
+                                        />
+                                      )}{" "}
                                     {mintloading === "initial" &&
-                                    isConnected === true &&
-                                    chainId === 56 ? (
+                                      isConnected === true &&
+                                      chainId === 56 ? (
                                       "Mint"
                                     ) : mintloading === "mint" &&
                                       isConnected === true &&
@@ -2080,8 +2103,8 @@ setimmutableNftsSold(immutableresult);
                                     ) : mintloading === "success" &&
                                       isConnected === true &&
                                       activeButton ===
-                                        (isConnected === true &&
-                                          chainId === 56) ? (
+                                      (isConnected === true &&
+                                        chainId === 56) ? (
                                       "Success"
                                     ) : isConnected === true &&
                                       chainId !== 56 ? (
@@ -2096,26 +2119,25 @@ setimmutableNftsSold(immutableresult);
                                 <div
                                   className={
                                     (isConnected === true && chainId !== 204) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    mintloading === "error" ||
-                                    opbnbMintAllowed === 0
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      mintloading === "error" ||
+                                      opbnbMintAllowed === 0
                                       ? "linear-border-disabled"
                                       : "linear-border"
                                   }
                                 >
                                   <button
-                                    className={`btn ${
-                                      mintloading === "error"
+                                    className={`btn ${mintloading === "error"
                                         ? "filled-error-btn"
                                         : (isConnected === true &&
-                                            chainId !== 204) ||
+                                          chainId !== 204) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
                                           opbnbMintAllowed === 0
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    }  px-4 w-100`}
+                                          ? "outline-btn-disabled"
+                                          : "filled-btn"
+                                      }  px-4 w-100`}
                                     onClick={() => {
                                       isConnected === true && chainId === 204
                                         ? handleMint()
@@ -2123,12 +2145,12 @@ setimmutableNftsSold(immutableresult);
                                     }}
                                     disabled={
                                       mintloading === "error" ||
-                                      mintloading === "success" ||
-                                      (isConnected === true &&
-                                        chainId !== 204) ||
-                                      (status !== "Connect your wallet." &&
-                                        status !== "") ||
-                                      opbnbMintAllowed === 0
+                                        mintloading === "success" ||
+                                        (isConnected === true &&
+                                          chainId !== 204) ||
+                                        (status !== "Connect your wallet." &&
+                                          status !== "") ||
+                                        opbnbMintAllowed === 0
                                         ? true
                                         : false
                                     }
@@ -2141,22 +2163,22 @@ setimmutableNftsSold(immutableresult);
                                   >
                                     {(isConnected === false ||
                                       chainId !== 204) && (
-                                      <img
-                                        src={
-                                          mouseOver === false
-                                            ? blackWallet
-                                            : whitewallet
-                                        }
-                                        alt=""
-                                        style={{
-                                          width: "23px",
-                                          height: "23px",
-                                        }}
-                                      />
-                                    )}{" "}
+                                        <img
+                                          src={
+                                            mouseOver === false
+                                              ? blackWallet
+                                              : whitewallet
+                                          }
+                                          alt=""
+                                          style={{
+                                            width: "23px",
+                                            height: "23px",
+                                          }}
+                                        />
+                                      )}{" "}
                                     {mintloading === "initial" &&
-                                    isConnected === true &&
-                                    chainId === 204 ? (
+                                      isConnected === true &&
+                                      chainId === 204 ? (
                                       "Mint"
                                     ) : mintloading === "mint" &&
                                       isConnected === true &&
@@ -2178,8 +2200,8 @@ setimmutableNftsSold(immutableresult);
                                     ) : mintloading === "success" &&
                                       isConnected === true &&
                                       activeButton ===
-                                        (isConnected === true &&
-                                          chainId === 204) ? (
+                                      (isConnected === true &&
+                                        chainId === 204) ? (
                                       "Success"
                                     ) : isConnected === true &&
                                       chainId !== 204 ? (
@@ -2195,26 +2217,25 @@ setimmutableNftsSold(immutableresult);
                                   className={
                                     (isConnected === true &&
                                       chainId !== 1116) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    mintloading === "error" ||
-                                    totalCoreNft > 0
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      mintloading === "error" ||
+                                      totalCoreNft > 0
                                       ? "linear-border-disabled"
                                       : "linear-border"
                                   }
                                 >
                                   <button
-                                    className={`btn ${
-                                      mintloading === "error"
+                                    className={`btn ${mintloading === "error"
                                         ? "filled-error-btn"
                                         : (isConnected === true &&
-                                            chainId !== 1116) ||
+                                          chainId !== 1116) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
                                           totalCoreNft > 0
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    }  px-4 w-100`}
+                                          ? "outline-btn-disabled"
+                                          : "filled-btn"
+                                      }  px-4 w-100`}
                                     onClick={() => {
                                       isConnected === true && chainId === 1116
                                         ? handleMint()
@@ -2222,12 +2243,12 @@ setimmutableNftsSold(immutableresult);
                                     }}
                                     disabled={
                                       mintloading === "error" ||
-                                      mintloading === "success" ||
-                                      (isConnected === true &&
-                                        chainId !== 1116) ||
-                                      (status !== "Connect your wallet." &&
-                                        status !== "") ||
-                                      totalCoreNft > 0
+                                        mintloading === "success" ||
+                                        (isConnected === true &&
+                                          chainId !== 1116) ||
+                                        (status !== "Connect your wallet." &&
+                                          status !== "") ||
+                                        totalCoreNft > 0
                                         ? true
                                         : false
                                     }
@@ -2240,22 +2261,22 @@ setimmutableNftsSold(immutableresult);
                                   >
                                     {(isConnected === false ||
                                       chainId !== 1116) && (
-                                      <img
-                                        src={
-                                          mouseOver === false
-                                            ? blackWallet
-                                            : whitewallet
-                                        }
-                                        alt=""
-                                        style={{
-                                          width: "23px",
-                                          height: "23px",
-                                        }}
-                                      />
-                                    )}{" "}
+                                        <img
+                                          src={
+                                            mouseOver === false
+                                              ? blackWallet
+                                              : whitewallet
+                                          }
+                                          alt=""
+                                          style={{
+                                            width: "23px",
+                                            height: "23px",
+                                          }}
+                                        />
+                                      )}{" "}
                                     {mintloading === "initial" &&
-                                    isConnected === true &&
-                                    chainId === 1116 ? (
+                                      isConnected === true &&
+                                      chainId === 1116 ? (
                                       "Mint"
                                     ) : mintloading === "mint" &&
                                       isConnected === true &&
@@ -2277,8 +2298,8 @@ setimmutableNftsSold(immutableresult);
                                     ) : mintloading === "success" &&
                                       isConnected === true &&
                                       activeButton ===
-                                        (isConnected === true &&
-                                          chainId === 1116) ? (
+                                      (isConnected === true &&
+                                        chainId === 1116) ? (
                                       "Success"
                                     ) : isConnected === true &&
                                       chainId !== 1116 ? (
@@ -2293,26 +2314,25 @@ setimmutableNftsSold(immutableresult);
                                 <div
                                   className={
                                     (isConnected === true && chainId !== 88) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    mintloading === "error" ||
-                                    totalVictionNft > 0
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      mintloading === "error" ||
+                                      totalVictionNft > 0
                                       ? "linear-border-disabled"
                                       : "linear-border"
                                   }
                                 >
                                   <button
-                                    className={`btn ${
-                                      mintloading === "error"
+                                    className={`btn ${mintloading === "error"
                                         ? "filled-error-btn"
                                         : (isConnected === true &&
-                                            chainId !== 88) ||
+                                          chainId !== 88) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
                                           totalVictionNft > 0
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    }  px-4 w-100`}
+                                          ? "outline-btn-disabled"
+                                          : "filled-btn"
+                                      }  px-4 w-100`}
                                     onClick={() => {
                                       isConnected === true && chainId === 88
                                         ? handleMint()
@@ -2320,12 +2340,12 @@ setimmutableNftsSold(immutableresult);
                                     }}
                                     disabled={
                                       mintloading === "error" ||
-                                      mintloading === "success" ||
-                                      (isConnected === true &&
-                                        chainId !== 88) ||
-                                      (status !== "Connect your wallet." &&
-                                        status !== "") ||
-                                      totalVictionNft > 0
+                                        mintloading === "success" ||
+                                        (isConnected === true &&
+                                          chainId !== 88) ||
+                                        (status !== "Connect your wallet." &&
+                                          status !== "") ||
+                                        totalVictionNft > 0
                                         ? true
                                         : false
                                     }
@@ -2338,22 +2358,22 @@ setimmutableNftsSold(immutableresult);
                                   >
                                     {(isConnected === false ||
                                       chainId !== 88) && (
-                                      <img
-                                        src={
-                                          mouseOver === false
-                                            ? blackWallet
-                                            : whitewallet
-                                        }
-                                        alt=""
-                                        style={{
-                                          width: "23px",
-                                          height: "23px",
-                                        }}
-                                      />
-                                    )}{" "}
+                                        <img
+                                          src={
+                                            mouseOver === false
+                                              ? blackWallet
+                                              : whitewallet
+                                          }
+                                          alt=""
+                                          style={{
+                                            width: "23px",
+                                            height: "23px",
+                                          }}
+                                        />
+                                      )}{" "}
                                     {mintloading === "initial" &&
-                                    isConnected === true &&
-                                    chainId === 88 ? (
+                                      isConnected === true &&
+                                      chainId === 88 ? (
                                       "Mint"
                                     ) : mintloading === "mint" &&
                                       isConnected === true &&
@@ -2375,8 +2395,8 @@ setimmutableNftsSold(immutableresult);
                                     ) : mintloading === "success" &&
                                       isConnected === true &&
                                       activeButton ===
-                                        (isConnected === true &&
-                                          chainId === 88) ? (
+                                      (isConnected === true &&
+                                        chainId === 88) ? (
                                       "Success"
                                     ) : isConnected === true &&
                                       chainId !== 88 ? (
@@ -2392,26 +2412,25 @@ setimmutableNftsSold(immutableresult);
                                   className={
                                     (isConnected === true &&
                                       chainId !== 713715) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    mintloading === "error" ||
-                                    totalseiNft > 0
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      mintloading === "error" ||
+                                      totalseiNft > 0
                                       ? "linear-border-disabled"
                                       : "linear-border"
                                   }
                                 >
                                   <button
-                                    className={`btn ${
-                                      mintloading === "error"
+                                    className={`btn ${mintloading === "error"
                                         ? "filled-error-btn"
                                         : (isConnected === true &&
-                                            chainId !== 713715) ||
+                                          chainId !== 713715) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
                                           totalseiNft > 0
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    }  px-4 w-100`}
+                                          ? "outline-btn-disabled"
+                                          : "filled-btn"
+                                      }  px-4 w-100`}
                                     onClick={() => {
                                       isConnected === true && chainId === 713715
                                         ? handleBaseNftMint()
@@ -2419,12 +2438,12 @@ setimmutableNftsSold(immutableresult);
                                     }}
                                     disabled={
                                       mintloading === "error" ||
-                                      mintloading === "success" ||
-                                      (isConnected === true &&
-                                        chainId !== 713715) ||
-                                      (status !== "Connect your wallet." &&
-                                        status !== "") ||
-                                      totalseiNft > 0
+                                        mintloading === "success" ||
+                                        (isConnected === true &&
+                                          chainId !== 713715) ||
+                                        (status !== "Connect your wallet." &&
+                                          status !== "") ||
+                                        totalseiNft > 0
                                         ? true
                                         : false
                                     }
@@ -2437,22 +2456,22 @@ setimmutableNftsSold(immutableresult);
                                   >
                                     {(isConnected === false ||
                                       chainId !== 713715) && (
-                                      <img
-                                        src={
-                                          mouseOver === false
-                                            ? blackWallet
-                                            : whitewallet
-                                        }
-                                        alt=""
-                                        style={{
-                                          width: "23px",
-                                          height: "23px",
-                                        }}
-                                      />
-                                    )}{" "}
+                                        <img
+                                          src={
+                                            mouseOver === false
+                                              ? blackWallet
+                                              : whitewallet
+                                          }
+                                          alt=""
+                                          style={{
+                                            width: "23px",
+                                            height: "23px",
+                                          }}
+                                        />
+                                      )}{" "}
                                     {mintloading === "initial" &&
-                                    isConnected === true &&
-                                    chainId === 713715 ? (
+                                      isConnected === true &&
+                                      chainId === 713715 ? (
                                       "Mint"
                                     ) : mintloading === "mint" &&
                                       isConnected === true &&
@@ -2470,8 +2489,8 @@ setimmutableNftsSold(immutableresult);
                                     ) : mintloading === "success" &&
                                       isConnected === true &&
                                       activeButton ===
-                                        (isConnected === true &&
-                                          chainId === 713715) ? (
+                                      (isConnected === true &&
+                                        chainId === 713715) ? (
                                       "Success"
                                     ) : isConnected === true &&
                                       chainId !== 713715 ? (
@@ -2487,26 +2506,25 @@ setimmutableNftsSold(immutableresult);
                                   className={
                                     (isConnected === true &&
                                       chainId !== 13371) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    mintloading === "error" ||
-                                    totalImmutableNft > 0
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      mintloading === "error" ||
+                                      totalImmutableNft > 0
                                       ? "linear-border-disabled"
                                       : "linear-border"
                                   }
                                 >
                                   <button
-                                    className={`btn ${
-                                      mintloading === "error"
+                                    className={`btn ${mintloading === "error"
                                         ? "filled-error-btn"
                                         : (isConnected === true &&
-                                            chainId !== 13371) ||
+                                          chainId !== 13371) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
                                           totalImmutableNft > 0
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    }  px-4 w-100`}
+                                          ? "outline-btn-disabled"
+                                          : "filled-btn"
+                                      }  px-4 w-100`}
                                     onClick={() => {
                                       isConnected === true && chainId === 13371
                                         ? handleMint()
@@ -2514,12 +2532,12 @@ setimmutableNftsSold(immutableresult);
                                     }}
                                     disabled={
                                       mintloading === "error" ||
-                                      mintloading === "success" ||
-                                      (isConnected === true &&
-                                        chainId !== 13371) ||
-                                      (status !== "Connect your wallet." &&
-                                        status !== "") ||
-                                      totalImmutableNft > 0
+                                        mintloading === "success" ||
+                                        (isConnected === true &&
+                                          chainId !== 13371) ||
+                                        (status !== "Connect your wallet." &&
+                                          status !== "") ||
+                                        totalImmutableNft > 0
                                         ? true
                                         : false
                                     }
@@ -2532,22 +2550,22 @@ setimmutableNftsSold(immutableresult);
                                   >
                                     {(isConnected === false ||
                                       chainId !== 13371) && (
-                                      <img
-                                        src={
-                                          mouseOver === false
-                                            ? blackWallet
-                                            : whitewallet
-                                        }
-                                        alt=""
-                                        style={{
-                                          width: "23px",
-                                          height: "23px",
-                                        }}
-                                      />
-                                    )}{" "}
+                                        <img
+                                          src={
+                                            mouseOver === false
+                                              ? blackWallet
+                                              : whitewallet
+                                          }
+                                          alt=""
+                                          style={{
+                                            width: "23px",
+                                            height: "23px",
+                                          }}
+                                        />
+                                      )}{" "}
                                     {mintloading === "initial" &&
-                                    isConnected === true &&
-                                    chainId === 13371 ? (
+                                      isConnected === true &&
+                                      chainId === 13371 ? (
                                       "Mint"
                                     ) : mintloading === "mint" &&
                                       isConnected === true &&
@@ -2565,8 +2583,8 @@ setimmutableNftsSold(immutableresult);
                                     ) : mintloading === "success" &&
                                       isConnected === true &&
                                       activeButton ===
-                                        (isConnected === true &&
-                                          chainId === 13371) ? (
+                                      (isConnected === true &&
+                                        chainId === 13371) ? (
                                       "Success"
                                     ) : isConnected === true &&
                                       chainId !== 13371 ? (
@@ -2581,26 +2599,25 @@ setimmutableNftsSold(immutableresult);
                                 <div
                                   className={
                                     (isConnected === true && chainId !== 1) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    mintloading === "error" ||
-                                    totalMultiversNft > 0
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      mintloading === "error" ||
+                                      totalMultiversNft > 0
                                       ? "linear-border-disabled"
                                       : "linear-border"
                                   }
                                 >
                                   <button
-                                    className={`btn ${
-                                      mintloading === "error"
+                                    className={`btn ${mintloading === "error"
                                         ? "filled-error-btn"
                                         : (isConnected === true &&
-                                            chainId !== 1) ||
+                                          chainId !== 1) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
                                           totalMultiversNft > 0
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    }  px-4 w-100`}
+                                          ? "outline-btn-disabled"
+                                          : "filled-btn"
+                                      }  px-4 w-100`}
                                     onClick={() => {
                                       isConnected === true && chainId === 1
                                         ? handleBaseNftMint()
@@ -2608,11 +2625,11 @@ setimmutableNftsSold(immutableresult);
                                     }}
                                     disabled={
                                       mintloading === "error" ||
-                                      mintloading === "success" ||
-                                      (isConnected === true && chainId !== 1) ||
-                                      (status !== "Connect your wallet." &&
-                                        status !== "") ||
-                                      totalMultiversNft > 0
+                                        mintloading === "success" ||
+                                        (isConnected === true && chainId !== 1) ||
+                                        (status !== "Connect your wallet." &&
+                                          status !== "") ||
+                                        totalMultiversNft > 0
                                         ? true
                                         : false
                                     }
@@ -2625,22 +2642,22 @@ setimmutableNftsSold(immutableresult);
                                   >
                                     {(isConnected === false ||
                                       chainId !== 1) && (
-                                      <img
-                                        src={
-                                          mouseOver === false
-                                            ? blackWallet
-                                            : whitewallet
-                                        }
-                                        alt=""
-                                        style={{
-                                          width: "23px",
-                                          height: "23px",
-                                        }}
-                                      />
-                                    )}{" "}
+                                        <img
+                                          src={
+                                            mouseOver === false
+                                              ? blackWallet
+                                              : whitewallet
+                                          }
+                                          alt=""
+                                          style={{
+                                            width: "23px",
+                                            height: "23px",
+                                          }}
+                                        />
+                                      )}{" "}
                                     {mintloading === "initial" &&
-                                    isConnected === true &&
-                                    chainId === 1 ? (
+                                      isConnected === true &&
+                                      chainId === 1 ? (
                                       "Mint"
                                     ) : mintloading === "mint" &&
                                       isConnected === true &&
@@ -2658,8 +2675,8 @@ setimmutableNftsSold(immutableresult);
                                     ) : mintloading === "success" &&
                                       isConnected === true &&
                                       activeButton ===
-                                        (isConnected === true &&
-                                          chainId === 1) ? (
+                                      (isConnected === true &&
+                                        chainId === 1) ? (
                                       "Success"
                                     ) : isConnected === true &&
                                       chainId !== 1 ? (
@@ -2674,26 +2691,25 @@ setimmutableNftsSold(immutableresult);
                                 <div
                                   className={
                                     (isConnected === true && chainId !== 169) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    mintloading === "error" ||
-                                    totalMantaNft > 0
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      mintloading === "error" ||
+                                      totalMantaNft > 0
                                       ? "linear-border-disabled"
                                       : "linear-border"
                                   }
                                 >
                                   <button
-                                    className={`btn ${
-                                      mintloading === "error"
+                                    className={`btn ${mintloading === "error"
                                         ? "filled-error-btn"
                                         : (isConnected === true &&
-                                            chainId !== 169) ||
+                                          chainId !== 169) ||
                                           (status !== "Connect your wallet." &&
                                             status !== "") ||
                                           totalMantaNft > 0
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    }  px-4 w-100`}
+                                          ? "outline-btn-disabled"
+                                          : "filled-btn"
+                                      }  px-4 w-100`}
                                     onClick={() => {
                                       isConnected === true && chainId === 169
                                         ? handleMint()
@@ -2701,12 +2717,12 @@ setimmutableNftsSold(immutableresult);
                                     }}
                                     disabled={
                                       mintloading === "error" ||
-                                      mintloading === "success" ||
-                                      (isConnected === true &&
-                                        chainId !== 169) ||
-                                      (status !== "Connect your wallet." &&
-                                        status !== "") ||
-                                      totalMantaNft > 0
+                                        mintloading === "success" ||
+                                        (isConnected === true &&
+                                          chainId !== 169) ||
+                                        (status !== "Connect your wallet." &&
+                                          status !== "") ||
+                                        totalMantaNft > 0
                                         ? true
                                         : false
                                     }
@@ -2719,22 +2735,22 @@ setimmutableNftsSold(immutableresult);
                                   >
                                     {(isConnected === false ||
                                       chainId !== 169) && (
-                                      <img
-                                        src={
-                                          mouseOver === false
-                                            ? blackWallet
-                                            : whitewallet
-                                        }
-                                        alt=""
-                                        style={{
-                                          width: "23px",
-                                          height: "23px",
-                                        }}
-                                      />
-                                    )}{" "}
+                                        <img
+                                          src={
+                                            mouseOver === false
+                                              ? blackWallet
+                                              : whitewallet
+                                          }
+                                          alt=""
+                                          style={{
+                                            width: "23px",
+                                            height: "23px",
+                                          }}
+                                        />
+                                      )}{" "}
                                     {mintloading === "initial" &&
-                                    isConnected === true &&
-                                    chainId === 169 ? (
+                                      isConnected === true &&
+                                      chainId === 169 ? (
                                       "Mint"
                                     ) : mintloading === "mint" &&
                                       isConnected === true &&
@@ -2756,8 +2772,8 @@ setimmutableNftsSold(immutableresult);
                                     ) : mintloading === "success" &&
                                       isConnected === true &&
                                       activeButton ===
-                                        (isConnected === true &&
-                                          chainId === 169) ? (
+                                      (isConnected === true &&
+                                        chainId === 169) ? (
                                       "Success"
                                     ) : isConnected === true &&
                                       chainId !== 169 ? (
@@ -2769,43 +2785,37 @@ setimmutableNftsSold(immutableresult);
                                 </div>
                               )}
 
-{selectedMint.id === "taiko" && (
+                              {selectedMint.id === "taiko" && (
                                 <div
                                   className={
-                                    (isConnected === true && chainId !== 167000) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    mintloading === "error" ||
-                                    totalTaikoNft > 0
+                                      
+                                      mintloading === "error" ||
+                                      totalTaikoNft > 0 && chainId === 167000
                                       ? "linear-border-disabled"
                                       : "linear-border"
                                   }
                                 >
                                   <button
-                                    className={`btn ${
-                                      mintloading === "error"
+                                    className={`btn ${mintloading === "error"
                                         ? "filled-error-btn"
-                                        : (isConnected === true &&
-                                            chainId !== 167000) ||
-                                          (status !== "Connect your wallet." &&
-                                            status !== "") ||
-                                            totalTaikoNft > 0
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    }  px-4 w-100`}
+                                        : totalTaikoNft > 0 && chainId === 167000
+                                          ? "outline-btn-disabled"
+                                          : "filled-btn"
+                                      }  px-4 w-100`}
                                     onClick={() => {
                                       isConnected === true && chainId === 167000
                                         ? handleMint()
+                                        :isConnected === true && chainId !== 167000
+                                        ? handleTaikoPool()
                                         : showWalletConnect();
                                     }}
                                     disabled={
                                       mintloading === "error" ||
-                                      mintloading === "success" ||
-                                      (isConnected === true &&
-                                        chainId !== 167000) ||
-                                      (status !== "Connect your wallet." &&
-                                        status !== "") ||
-                                      totalTaikoNft > 0
+                                        mintloading === "success" ||
+                                        
+                                        
+                                       
+                                        (totalTaikoNft > 0&& chainId === 167000)
                                         ? true
                                         : false
                                     }
@@ -2816,24 +2826,23 @@ setimmutableNftsSold(immutableresult);
                                       setMouseOver(false);
                                     }}
                                   >
-                                    {(isConnected === false ||
-                                      chainId !== 167000) && (
-                                      <img
-                                        src={
-                                          mouseOver === false
-                                            ? blackWallet
-                                            : whitewallet
-                                        }
-                                        alt=""
-                                        style={{
-                                          width: "23px",
-                                          height: "23px",
-                                        }}
-                                      />
-                                    )}{" "}
+                                    {(isConnected === false) && (
+                                        <img
+                                          src={
+                                            mouseOver === false
+                                              ? blackWallet
+                                              : whitewallet
+                                          }
+                                          alt=""
+                                          style={{
+                                            width: "23px",
+                                            height: "23px",
+                                          }}
+                                        />
+                                      )}{" "}
                                     {mintloading === "initial" &&
-                                    isConnected === true &&
-                                    chainId === 167000 ? (
+                                      isConnected === true &&
+                                      chainId === 167000 ? (
                                       "Mint"
                                     ) : mintloading === "mint" &&
                                       isConnected === true &&
@@ -2855,8 +2864,8 @@ setimmutableNftsSold(immutableresult);
                                     ) : mintloading === "success" &&
                                       isConnected === true &&
                                       activeButton ===
-                                        (isConnected === true &&
-                                          chainId === 167000) ? (
+                                      (isConnected === true &&
+                                        chainId === 167000) ? (
                                       "Success"
                                     ) : isConnected === true &&
                                       chainId !== 167000 ? (
@@ -2886,7 +2895,7 @@ setimmutableNftsSold(immutableresult);
                 //   </div>
                 // </div>
                 <div className="d-flex flex-column gap-4">
-                    {/* <div className="upcoming-mint-wrapper upcoming-taiko-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  {/* <div className="upcoming-mint-wrapper upcoming-taiko-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Taiko Beta Pass</h6>
                       <p className="upcoming-mint-desc">
@@ -2924,7 +2933,7 @@ setimmutableNftsSold(immutableresult);
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
-                
+
                   {/* <div className="upcoming-mint-wrapper upcoming-immutable-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Immutable Beta Pass</h6>
@@ -2944,7 +2953,7 @@ setimmutableNftsSold(immutableresult);
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div> */}
-                
+
 
                   <div className="upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
@@ -3200,7 +3209,7 @@ setimmutableNftsSold(immutableresult);
                             className="past-bnb-mint-amount"
                             style={{ color: "#901C77" }}
                           >
-                            {getFormattedNumber(victionNftsSold,0)}
+                            {getFormattedNumber(victionNftsSold, 0)}
                           </h6>
                           <span className="past-bnb-mint-desc">SOLD OUT</span>
                         </div>
@@ -3218,7 +3227,7 @@ setimmutableNftsSold(immutableresult);
                           <h6
                             className="past-core-mint-amount"
                           >
-                            {getFormattedNumber(coreNftsSold,0)}
+                            {getFormattedNumber(coreNftsSold, 0)}
                           </h6>
                           <span className="past-core-mint-desc">SOLD OUT</span>
                         </div>
@@ -3236,7 +3245,7 @@ setimmutableNftsSold(immutableresult);
                           <h6
                             className="past-bnb-mint-amount"
                           >
-                            {getFormattedNumber(opbnbNftsSold,0)}
+                            {getFormattedNumber(opbnbNftsSold, 0)}
                           </h6>
                           <span className="past-bnb-mint-desc">SOLD OUT</span>
                         </div>
@@ -3254,7 +3263,7 @@ setimmutableNftsSold(immutableresult);
                           <h6
                             className="past-immutable-mint-amount"
                           >
-                            {getFormattedNumber(immutableNftsSold,0)}
+                            {getFormattedNumber(immutableNftsSold, 0)}
                           </h6>
                           <span className="past-immutable-mint-desc">SOLD OUT</span>
                         </div>

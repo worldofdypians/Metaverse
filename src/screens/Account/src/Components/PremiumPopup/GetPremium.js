@@ -611,7 +611,7 @@ const GetPremiumPopup = ({
 
     const coresubscribeAddress = window.config.subscription_core_address;
 
-    const web3 = new Web3(window.ethereum);
+    window.web3 = new Web3(window.ethereum);
 
     setloadspinner(true);
 
@@ -622,7 +622,7 @@ const GetPremiumPopup = ({
 
     if (chainId === 56 && nftPremium_total > 0) {
       if (window.WALLET_TYPE !== "binance") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new  window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -787,7 +787,7 @@ const GetPremiumPopup = ({
             }, 5000);
           });
       } else if (approveStatus === "approveAmount") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -813,7 +813,7 @@ const GetPremiumPopup = ({
       }
     } else {
       if (window.WALLET_TYPE !== "binance") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -2206,7 +2206,7 @@ const GetPremiumPopup = ({
             </div>
           </div>
           <div className="d-flex flex-column gap-3 subscribe-input-container"></div>
-          {(discountPercentage < 100 || discountPercentageViction < 100) && (
+          {(discountPercentage < 100 && discountPercentageViction  < 100) && (
             <div className="d-flex flex-column align-items-end gap-3">
               <span className="my-premium-balance-text mb-0">
                 My balance:{" "}
