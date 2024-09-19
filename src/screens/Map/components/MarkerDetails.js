@@ -5,16 +5,17 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
         {type === "chain" ? (
           <div className="d-flex flex-column justify-content-between h-100">
             <div className="d-flex flex-column gap-2">
-              <div className="d-flex align-items-center justify-content-between">
-                <h3 className="text-white mb-0">{marker.title}</h3>
-                <a
+             
+              <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
+            <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
+            <a
                   href="javascript:void(0)"
                   class="closebtn-3"
                   onClick={onClose}
                 >
                   ×
                 </a>
-              </div>
+          </div>
               <img
                 src={require(`../assets/chainImages/${marker.banner}`)}
                 alt={marker.title}

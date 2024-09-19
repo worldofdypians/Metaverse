@@ -159,6 +159,7 @@ const Map = () => {
         style={{ height: "100vh", width: "100%" }}
       >
         {/* <TileLayer url="/mapTiles/{z}/{x}/{y}.png" /> */}
+        {/* <TileLayer url="/testtiles/{z}/{x}/{y}.png" /> */}
         <TileLayer url="https://cdn.worldofdypians.com/MapTiles/{z}/{x}/{y}.png" />
         <ChainMarkers
           chainsVisible={chainsVisible}

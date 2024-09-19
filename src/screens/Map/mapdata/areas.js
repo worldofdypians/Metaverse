@@ -57,7 +57,6 @@ import gateIcon from "../assets/chainIcons/gateIcon.svg";
 import mexcIcon from "../assets/chainIcons/mexcIcon.svg";
 import easy2stakeIcon from "../assets/chainIcons/easy2stakeIcon.svg";
 import kucoinIcon from "../assets/chainIcons/kucoinIcon.svg";
-import seiLogo from "../assets/chainIcons/seiLogo.svg";
 import immutable from "../assets/chainIcons/immutable.svg";
 import chainlinkIcon from "../assets/chainIcons/chainlinkIcon.svg";
 import mantaIcon from "../assets/chainIcons/mantaIcon.png";
@@ -70,8 +69,7 @@ const chainAreas = [
     marker: bnbMarker,
     icon: bnbIcon,
     location: [-0.06735561726792588, 0.08666753768920898],
-    link: "https://www.bnbchain.org/en",
-    logo: "bnbBackers.svg",
+    website: "https://www.bnbchain.org/en",
     banner: "bnbBanner.webp",
     events: ["Treasure Hunt", "NFT Mint", "Test Event"],
     area: [

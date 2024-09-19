@@ -10,104 +10,97 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { dypiansTransport, leaderboards, quests } from "../mapdata/areas";
-import teleportIcon from "../assets/teleportIcon.svg";
-import questIcon from "../assets/questIcon.svg";
-import leaderboardsIcon from "../assets/leaderboardsIcon.svg";
+import teleportsIcon from "../assets/sidebarIcons/teleportsIcon.svg";
+import questsIcon from "../assets/sidebarIcons/questsIcon.svg";
+import leaderboardsIcon from "../assets/sidebarIcons/leaderboardsIcon.svg";
+import areasIcon from '../assets/sidebarIcons/areasIcon.svg'
 
-const DypiusDropdown = ({ options, parent, onZoomIn, switches, setSwitches }) => {
- 
+const DypiusDropdown = ({
+  options,
+  parent,
+  onZoomIn,
+  switches,
+  setSwitches,
+}) => {
   return (
-    <FormControl>
-      <Accordion defaultExpanded>
+    <div className="d-flex px-3 flex-column gap-2">
+      <div
+        className="d-flex py-1 w-100 align-items-center"
+        style={{ borderBottom: "1px solid #828FBB" }}
+      >
+        <h6 className="sidebar-section-title mb-0">Dypians City</h6>
+      </div>
+      <div
+        className={`section-switch-btn ${
+          switches.leaderboards && "section-switch-btn-active"
+        } d-flex align-items-center gap-2 p-2 w-100`}
+        onClick={() =>
+          setSwitches((prev) => ({
+            ...prev,
+            leaderboards: !switches.leaderboards,
+          }))
+        }
+      >
+        <img src={leaderboardsIcon} alt="" />
+        <span>Leaderboards</span>
+      </div>
+      <div
+        className={`section-switch-btn ${
+          switches.teleports && "section-switch-btn-active"
+        } d-flex align-items-center gap-2 p-2 w-100`}
+        onClick={() =>
+          setSwitches((prev) => ({
+            ...prev,
+            teleports: !switches.teleports,
+          }))
+        }
+      >
+        <img src={teleportsIcon} alt="" />
+        <span>Teleports</span>
+      </div>
+      <div
+        className={`section-switch-btn ${
+          switches.quests && "section-switch-btn-active"
+        } d-flex align-items-center gap-2 p-2 w-100`}
+        onClick={() =>
+          setSwitches((prev) => ({
+            ...prev,
+            quests: !switches.quests,
+          }))
+        }
+      >
+        <img src={questsIcon} alt="" />
+        <span>Quests</span>
+      </div>
+      <Accordion >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
+          aria-controls={`areas-content`}
+          id={`areas-header`}
           sx={{
-            color: "white",
-            padding: 0,
-            "& .MuiAccordionSummary-content": {
-              margin: 0,
-            },
+            background: "rgba(73, 71, 115, 0.70)",
+            border: "1px solid #828FBB",
+            borderRadius: "10px",
+            paddingLeft: "0.5rem",
+            paddingRight: "0.5rem",
           }}
         >
-          {/* Wrapper to prevent label click from toggling checkbox */}
-          <span style={{ marginLeft: 8 }}>{parent}</span>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Accordion >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
-              aria-controls={`areas-content`}
-              id={`areas-header`}
-            >
-              <span>Areas</span>
-            </AccordionSummary>
-            <AccordionDetails>
-              <div className="d-flex flex-column gap-3" style={{maxHeight: "300px", overflowY: "scroll"}}>
-                {options?.map((option, idx) => (
-                  <div
-                    key={idx}
-                    className="d-flex align-items-start gap-2"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => onZoomIn(option, 18, "chain")}
-                  >
-                    <img
-                      src={option.icon}
-                      width={24}
-                      height={24}
-                      alt=""
-                    />
-                    <h6 className="chain-sidebar-title mb-0 text-white">
-                      {option.title}
-                    </h6>
-                  </div>
-                ))}
-              </div>
-            </AccordionDetails>
-          </Accordion>
-         <div className="d-flex flex-column gap-3">
-          <div className="map-sidebar-btn p-2 d-flex align-items-center gap-2" onClick={() =>
-                setSwitches((prevState) => ({
-                  ...prevState,
-                  leaderboards: !switches.leaderboards,
-                }))}
-                style={{opacity: switches.leaderboards ? "1" : "0.6"}}
-                >
-            <img src={leaderboardsIcon} alt="" width={24} height={24} />
-            <h6 className="chain-sidebar-title mb-0 text-white">
-              Leaderboards
-            </h6>
-          </div>
-          <div className="map-sidebar-btn p-2 d-flex align-items-center gap-2" onClick={() =>
-                setSwitches((prevState) => ({
-                  ...prevState,
-                  teleports: !switches.teleports,
-                }))}
-                style={{opacity: switches.teleports ? "1" : "0.6"}}
-                >
-            <img src={teleportIcon} alt="" width={24} height={24} />
-            <h6 className="chain-sidebar-title mb-0 text-white">
-              Teleports
-            </h6>
-          </div>
-          <div className="map-sidebar-btn p-2 d-flex align-items-center gap-2" onClick={() =>
-                setSwitches((prevState) => ({
-                  ...prevState,
-                  quests: !switches.quests,
-                }))}
-                style={{opacity: switches.quests ? "1" : "0.6"}}
-                >
-            <img src={questIcon} alt="" width={24} height={24} />
-            <h6 className="chain-sidebar-title mb-0 text-white">
-              Quests
-            </h6>
-          </div>
+         <div className="d-flex align-items-center gap-2">
+          <img src={areasIcon} alt="" />
+           <span className="accordion-side-text">Areas</span>
          </div>
-          
+        </AccordionSummary>
+        <AccordionDetails sx={{padding: 0, marginTop: "12px"}}>
+          <div className="dypians-areas-grid">
+           {options.map((item, index) => (
+             <div key={index} className="areas-grid-item py-1 d-flex align-items-center justify-content-center"  onClick={() => onZoomIn(item, 18, "chain")}>
+             <span>{item.title.slice(0, item.title.length - 5)}</span>
+           </div>
+           ))}
+          </div>
         </AccordionDetails>
       </Accordion>
-    </FormControl>
+    </div>
   );
 };
 
