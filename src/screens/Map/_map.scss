@@ -1,7 +1,7 @@
 .leaflet-container {
   height: 100vh !important;
   // background: black !important;
-  background-image: url("./assets/sky.jpg") !important;
+  background-image: url("./assets/stars.webp") !important;
   background-size: 100%;
 }
 
@@ -15,7 +15,7 @@
 
 /* The sidebar menu */
 .sidebar {
-  height: 85%; /* 100% Full-height */
+  height: 87%; /* 100% Full-height */
   width: 0; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 1000; /* Stay on top */
@@ -34,12 +34,11 @@
   right: -450px;
   top: 12%;
   width: 450px;
-  height: 85%;
+  height: 87%;
   border-radius: 10px;
   border: 0.5px solid #525469;
   background: rgba(8, 11, 42, 0.9);
   backdrop-filter: blur(2px);
-  overflow-y: auto;
   z-index: 1000; /* Ensure it's on top of the map */
   transition: all 0.25s;
 }
@@ -294,7 +293,6 @@
   font-style: normal;
   font-family: "Montserrat";
   font-weight: 500;
-  line-height: 29px;
 }
 
 .events-arrow {
@@ -471,7 +469,7 @@
   background: rgba(25, 28, 67, 0.2);
   border: 1px solid #262b4a;
   border-radius: 10px;
-  transition: all .35s;
+  transition: all 0.35s;
   cursor: pointer;
   span {
     color: #828fbb;
@@ -483,23 +481,23 @@
   }
 }
 
-.section-switch-btn:hover{
-  background: rgba(73, 71, 115, 0.70);
-  border: 1px solid #828FBB;
-  span{
+.section-switch-btn:hover {
+  background: rgba(73, 71, 115, 0.7);
+  border: 1px solid #828fbb;
+  span {
     color: #f1edff;
   }
 }
 
-.section-switch-btn-active{
-  background: rgba(73, 71, 115, 0.70);
-  border: 1px solid #828FBB;
-  span{
+.section-switch-btn-active {
+  background: rgba(73, 71, 115, 0.7);
+  border: 1px solid #828fbb;
+  span {
     color: #f1edff;
   }
 }
 
-.accordion-side-text{
+.accordion-side-text {
   color: #f1edff;
   font-family: "Montserrat";
   font-size: 14px;
@@ -508,25 +506,25 @@
   line-height: 24px; /* 240% */
 }
 
-#areas-header{
+#areas-header {
   min-height: 42px !important;
 }
 
-.MuiPaper-elevation{
+.MuiPaper-elevation {
   margin-top: 0 !important;
 }
 
-.dypians-areas-grid{
+.dypians-areas-grid {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
 }
 
-.areas-grid-item{
+.areas-grid-item {
   background: rgba(25, 28, 67, 0.2);
   border: 1px solid #262b4a;
   border-radius: 10px;
-  transition: all .35s;
+  transition: all 0.35s;
   cursor: pointer;
   span {
     color: #828fbb;
@@ -537,10 +535,124 @@
     line-height: 24px; /* 240% */
   }
 }
-.areas-grid-item:hover{
-  background: rgba(73, 71, 115, 0.70);
-  border: 1px solid #828FBB;
-  span{
+.areas-grid-item:hover {
+  background: rgba(73, 71, 115, 0.7);
+  border: 1px solid #828fbb;
+  span {
     color: #f1edff;
   }
+}
+
+.chain-marker-info-wrapper {
+  border-radius: 4px;
+  background: #161b37;
+  backdrop-filter: blur(2px);
+}
+.chain-marker-title {
+  color: #edeeff;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 300% */
+  text-transform: uppercase;
+}
+
+.chain-marker-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.chain-marker-info-item {
+  border-radius: 4px;
+  background: #2d314f;
+  h6 {
+    color: #edeeff;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  span {
+    color: #828fbb;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+  }
+}
+
+.chain-marker-benefits-title {
+  color: #edeeff;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.green-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00c6c3;
+}
+
+.marker-event-item {
+  border-radius: 4px;
+  border: 0.5px solid #2d314f;
+  background: #161b37;
+  transition: all .25s;
+  span {
+    color: rgba(130, 143, 187, 0.98);
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 12px; /* 150% */
+  }
+}
+
+.marker-event-item:hover{
+  border-radius: 4px;
+border: 0.5px solid #FFC808;
+background: rgba(255, 200, 8, 0.10);
+span{
+  color: #FFC808;
+}
+}
+
+.marker-event-time{
+  color: #EEEDFF;
+text-align: center;
+font-family: "Montserrat";
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.144px;
+cursor: pointer;
+}
+
+@media screen and (max-height: 900px) {
+  .marker-details-inner-wrapper{
+    overflow-y: scroll;
+    height: 80%;
+  }
+}
+
+.clear-all-span{
+  color: #FFB45B;
+font-family: "Montserrat";
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 300% */
+position: absolute;
+bottom: 2%;
+cursor: pointer;
 }

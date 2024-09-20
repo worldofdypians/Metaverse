@@ -190,6 +190,23 @@ const genesisLocation = {
             setSwitches={setSwitches}
           />
         </div>
+        <div className="d-flex w-100 justify-content-center">
+          <span className="clear-all-span" onClick={() => setSwitches({
+              regions: false,
+              areas: false,
+              borders: false,
+              bosses: false,
+              quests: false,
+              teleports: false,
+              craftingTables: false,
+              leaderboards: false,
+              mines: false,
+              deer: false,
+              boar: false,
+              bear: false,
+              challenges: false,
+          })}>Clear All</span>
+        </div>
       </div>
       <div id="main">
         <button

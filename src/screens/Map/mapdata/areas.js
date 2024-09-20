@@ -60,6 +60,14 @@ import kucoinIcon from "../assets/chainIcons/kucoinIcon.svg";
 import immutable from "../assets/chainIcons/immutable.svg";
 import chainlinkIcon from "../assets/chainIcons/chainlinkIcon.svg";
 import mantaIcon from "../assets/chainIcons/mantaIcon.png";
+import twitter from "../assets/twitter.svg";
+import telegram from "../assets/telegram.svg";
+import discord from "../assets/discord.svg";
+import website from "../assets/website.svg";
+import treasureHuntInfo from "../assets/treasureHuntInfo.png";
+import dailyBonusInfo from "../assets/dailyBonusInfo.png";
+import mazeGardenInfo from "../assets/mazeGardenInfo.png";
+import leaderboardInfo from "../assets/leaderboardInfo.png";
 
 import { marker } from "leaflet";
 
@@ -69,9 +77,61 @@ const chainAreas = [
     marker: bnbMarker,
     icon: bnbIcon,
     location: [-0.06735561726792588, 0.08666753768920898],
-    website: "https://www.bnbchain.org/en",
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
     banner: "bnbBanner.webp",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+
     area: [
       [
         [-0.06702838799312999, 0.08624374866485597],
