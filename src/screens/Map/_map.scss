@@ -656,3 +656,9 @@ position: absolute;
 bottom: 2%;
 cursor: pointer;
 }
+
+.animals-dropdown-grid{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+}

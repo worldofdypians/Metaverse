@@ -75,7 +75,50 @@ const IslandDropdown = ({ options, parent, onZoomIn, switches, setSwitches }) =>
        </div>
       </AccordionSummary>
       <AccordionDetails sx={{padding: 0, marginTop: "12px"}}>
-    
+        <div className="animals-dropdown-grid">
+        <div
+      className={`section-switch-btn ${
+        switches.bear && "section-switch-btn-active"
+      } d-flex align-items-center gap-2 p-2 w-100`}
+      onClick={() =>
+        setSwitches((prev) => ({
+          ...prev,
+          bear: !switches.bear,
+        }))
+      }
+    >
+      <img src={bearIcon} width={24} height={24} alt="" />
+      <span>Bears</span>
+    </div>
+    <div
+      className={`section-switch-btn ${
+        switches.deer && "section-switch-btn-active"
+      } d-flex align-items-center gap-2 p-2 w-100`}
+      onClick={() =>
+        setSwitches((prev) => ({
+          ...prev,
+          deer: !switches.deer,
+        }))
+      }
+    >
+      <img src={deerIcon} width={24} height={24} alt="" />
+      <span>Deer</span>
+    </div>
+    <div
+      className={`section-switch-btn ${
+        switches.boar && "section-switch-btn-active"
+      } d-flex align-items-center gap-2 p-2 w-100`}
+      onClick={() =>
+        setSwitches((prev) => ({
+          ...prev,
+          boar: !switches.boar,
+        }))
+      }
+    >
+      <img src={boarIcon} width={24} height={24} alt="" />
+      <span>Boars</span>
+    </div>
+        </div>
       </AccordionDetails>
     </Accordion>
   </div>

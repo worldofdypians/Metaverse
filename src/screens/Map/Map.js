@@ -1,19 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useMemo, useCallback, Suspense } from "react";
 import { MapContainer, TileLayer, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./_map.scss";
 import {
+  markers,
   AreaTextMarker,
   CityTextMarker,
   SeaTextMarker,
-  questMarker,
-  dragonMarker,
-  scorpionMarker,
-  teleportMarker,
-  craftingMarker,
-  landMarker,
-  leaderboardsMarker,
-  mineMarker,
 } from "./mapdata/markers";
 import {
   areas,
@@ -26,7 +19,6 @@ import {
   teleports,
   craftingTables,
   regions,
-  dummyEvents,
   firstParcel,
   secondParcel,
   leaderboards,
@@ -36,43 +28,23 @@ import {
   deerAreas,
   mines,
 } from "./mapdata/areas";
-import MapSidebar from "./components/MapSidebar";
 import ZoomToLocation from "./components/ZoomToLocation";
 import L from "leaflet";
 import MapWithZoomHandler from "./components/MapWithZoomHandler";
 import CustomMarker from "./components/CustomMarker";
-import LogCoordinates from "./components/LogCoordinates";
 import MarkerDetails from "./components/MarkerDetails";
 import EventsBar from "./components/EventsBar";
 import CustomPolygon from "./components/CustomPolygon";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import landIcon from "./assets/landIcon.png";
-import LeafletDraw from "./components/LeafletDraw";
 import ChainPolygon from "./components/ChainPolygon";
+import LogCoordinates from "./components/LogCoordinates";
 
-// Utility Functions
+// Lazy load for performance
+const MapSidebar = React.lazy(() => import("./components/MapSidebar"));
 
-// Custom Components
-
-const ChainMarkers = ({ chainsVisible, chainAreas, handleMarkerClick }) =>
-  chainsVisible &&
-  chainAreas.map((item) => (
-    <>
-      <ChainPolygon item={item} handleMarkerClick={handleMarkerClick} />
-      <CustomMarker
-        key={item.title}
-        item={item}
-        icon={item.marker}
-        type="chain"
-        handleMarkerClick={handleMarkerClick}
-      />
-    </>
-  ));
-
-// Main Component
 const Map = () => {
   const mapRef = useRef();
-
   const [center, setCenter] = useState([
     -0.06862161903162572, 0.08585214614868165,
   ]);
@@ -83,8 +55,8 @@ const Map = () => {
   const [regionsVisible, setRegionsVisible] = useState(true);
   const [areasVisible, setAreasVisible] = useState(true);
   const [switches, setSwitches] = useState({
-    regions: true,
-    areas: true,
+    regions: false,
+    areas: false,
     borders: false,
     bosses: false,
     quests: false,
@@ -98,74 +70,95 @@ const Map = () => {
     challenges: false,
   });
   const [selectedMarker, setSelectedMarker] = useState(null);
-  const [markerType, setmarkerType] = useState(null);
+  const [markerType, setMarkerType] = useState(null);
   const [events, setEvents] = useState(false);
 
-  const handleMarkerClick = (marker, zoom, type) => {
+  // Memoize large data to avoid re-renders
+  const memoizedChainAreas = useMemo(() => chainAreas, [chainAreas]);
+  const memoizedRegions = useMemo(() => regions, [regions]);
+  const memoizedQuests = useMemo(() => quests, [quests]);
+  const memoizedBearAreas = useMemo(() => bearAreas, [bearAreas]);
+  const memoizedBoarAreas = useMemo(() => boarAreas, [boarAreas]);
+  const memoizedDeerAreas = useMemo(() => deerAreas, [deerAreas]);
+  const memoizedFirstParcel = useMemo(() => firstParcel, [firstParcel]);
+  const memoizedSecondParcel = useMemo(() => secondParcel, [secondParcel]);
+
+  // Custom marker click handler with memoization
+  const handleMarkerClick = useCallback((marker, zoom, type) => {
     setEvents(false);
-    if (type === "" || !type) {
-      setCenter(marker.location);
-      setZoom(zoom);
-    } else {
-      setShow(true);
-      setSelectedMarker(marker);
-      setCenter(marker.location);
-      setmarkerType(type);
-      setZoom(zoom);
-    }
-  };
+    setSelectedMarker(marker);
+    setCenter(marker.location);
+    setZoom(zoom);
+    setMarkerType(type || "");
+    setShow(true);
+  }, []);
 
-  const customClusterIcon = L.icon({
-    iconUrl: landIcon, // Replace with your custom icon path
-    iconSize: [40, 40], // Adjust the size of the icon
-    iconAnchor: [20, 40], // Adjust the anchor point as needed
-    popupAnchor: [0, -40], // Adjust the popup anchor point as needed
-  });
+  // Create custom cluster icon
+  const customClusterIcon = useMemo(
+    () =>
+      L.icon({
+        iconUrl: landIcon,
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [0, -40],
+      }),
+    []
+  );
 
-  const createCustomClusterIcon = (cluster) => {
-    return L.divIcon({
-      html: `<img src="${customClusterIcon.options.iconUrl}" style="width: ${customClusterIcon.options.iconSize[0]}px; height: ${customClusterIcon.options.iconSize[1]}px;" />`,
-      className: "custom-cluster-icon",
-      iconSize: customClusterIcon.options.iconSize,
-    });
-  };
+  const createCustomClusterIcon = useCallback(
+    (cluster) =>
+      L.divIcon({
+        html: `<img src="${customClusterIcon.options.iconUrl}" style="width: ${customClusterIcon.options.iconSize[0]}px; height: ${customClusterIcon.options.iconSize[1]}px;" />`,
+        className: "custom-cluster-icon",
+        iconSize: customClusterIcon.options.iconSize,
+      }),
+    [customClusterIcon]
+  );
 
-  // const bounds = [
-  //   [-0.16, 0.0], // Southwest corner
-  //   [0.16, 0.16], // Northeast corner
-  // ];
+  // Render chain markers and polygons
+  const ChainMarkers = useCallback(
+    () =>
+      chainsVisible &&
+      memoizedChainAreas.map((item) => (
+        <React.Fragment key={item.title}>
+          <ChainPolygon item={item} handleMarkerClick={handleMarkerClick} />
+          <CustomMarker
+            item={item}
+            icon={item.marker}
+            type="chain"
+            handleMarkerClick={handleMarkerClick}
+          />
+        </React.Fragment>
+      )),
+    [chainsVisible, memoizedChainAreas, handleMarkerClick]
+  );
 
   return (
     <div className="d-flex align-items-start">
-      <MapSidebar
-        switches={switches}
-        setSwitches={setSwitches}
-        handleMarkerClick={handleMarkerClick}
-        chainAreas={chainAreas}
-        setContent={setAreaContent}
-        setInfo={areaContent}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <MapSidebar
+          switches={switches}
+          setSwitches={setSwitches}
+          handleMarkerClick={handleMarkerClick}
+          chainAreas={chainAreas}
+          setContent={setAreaContent}
+          setInfo={areaContent}
+        />
+      </Suspense>
       <MapContainer
         bounds={[
           [0.0, 0.0],
           [-0.14373029, 0.14373045],
         ]}
-        // maxBounds={bounds}
-        // maxBoundsViscosity={1.0}
         center={center}
         zoom={zoom}
         minZoom={13}
         maxZoom={18}
         style={{ height: "100vh", width: "100%" }}
       >
-        {/* <TileLayer url="/mapTiles/{z}/{x}/{y}.png" /> */}
-        <TileLayer url="/testtiles2/{z}/{x}/{y}.png" />
-        {/* <TileLayer url="https://cdn.worldofdypians.com/MapTiles/{z}/{x}/{y}.png" /> */}
-        <ChainMarkers
-          chainsVisible={chainsVisible}
-          chainAreas={chainAreas}
-          handleMarkerClick={handleMarkerClick}
-        />
+        <TileLayer url="https://cdn.worldofdypians.com/MapTiles/{z}/{x}/{y}.png" />
+
+        <ChainMarkers />
 
         {switches.regions &&
           areasVisible &&
@@ -178,138 +171,60 @@ const Map = () => {
           ))}
 
         {switches.quests &&
-          quests.map((item) => (
+          memoizedQuests.map((item) => (
             <CustomMarker
-              icon={questMarker}
+              key={item.title}
+              icon={markers.questMarker}
               item={item}
               type={"quest"}
               handleMarkerClick={handleMarkerClick}
             />
           ))}
-        {switches.leaderboards &&
-          leaderboards.map((item) => (
-            <CustomMarker
-              icon={leaderboardsMarker}
-              item={item}
-              type={""}
-              handleMarkerClick={handleMarkerClick}
-            />
-          ))}
-        {switches.teleports &&
-          dypiansTransport.map((item) => (
-            <CustomMarker
-              icon={item.marker}
-              item={item}
-              type={""}
-              handleMarkerClick={handleMarkerClick}
-            />
-          ))}
-        {switches.leaderboards &&
-          leaderboards.map((item) => (
-            <CustomMarker
-              icon={leaderboardsMarker}
-              item={item}
-              type={""}
-              handleMarkerClick={handleMarkerClick}
-            />
-          ))}
-        {switches.bear &&
-          bearAreas.map((item) => (
-            <CustomMarker
-              icon={item.marker}
-              item={item}
-              type={""}
-              handleMarkerClick={handleMarkerClick}
-            />
-          ))}
-        {switches.boar &&
-          boarAreas.map((item) => (
-            <CustomMarker
-              icon={item.marker}
-              item={item}
-              type={""}
-              handleMarkerClick={handleMarkerClick}
-            />
-          ))}
-        {switches.deer &&
-          deerAreas.map((item) => (
-            <CustomMarker
-              icon={item.marker}
-              item={item}
-              type={""}
-              handleMarkerClick={handleMarkerClick}
-            />
-          ))}
-        {switches.mines &&
-          mines.map((item) => (
-            <CustomMarker
-              icon={mineMarker}
-              item={item}
-              type={""}
-              handleMarkerClick={handleMarkerClick}
-            />
-          ))}
 
-        {switches.craftingTables &&
-          craftingTables.map((item) => (
-            <CustomMarker
-              icon={craftingMarker}
-              item={item}
-              type={""}
-              handleMarkerClick={handleMarkerClick}
-            />
-          ))}
-        {switches.challenges &&
-          dummyEvents.map((item) => (
-            <CustomMarker
-              icon={item.marker}
-              item={item}
-              type={""}
-              handleMarkerClick={() => handleMarkerClick(item, 18, "event")}
-            />
-          ))}
         <MarkerClusterGroup
           iconCreateFunction={createCustomClusterIcon}
           disableClusteringAtZoom={18}
-          // iconCreateFunction={landMarker}
         >
-          {firstParcel.map((item) => (
+          {memoizedFirstParcel.map((item) => (
             <CustomMarker
-              icon={landMarker}
+              key={item.title}
+              icon={markers.landMarker}
               item={item}
-              type={""}
               handleMarkerClick={() => handleMarkerClick(item, 18, "area")}
             />
           ))}
-          {secondParcel.map((item) => (
+          {memoizedSecondParcel.map((item) => (
             <CustomMarker
-              icon={landMarker}
+              key={item.title}
+              icon={markers.landMarker}
               item={item}
-              type={""}
               handleMarkerClick={() => handleMarkerClick(item, 18, "area")}
             />
           ))}
         </MarkerClusterGroup>
+
         {switches.bosses && (
           <>
             <CustomMarker
-              icon={dragonMarker}
+              icon={markers.dragonMarker}
               item={bosses[0]}
               handleMarkerClick={handleMarkerClick}
             />
             <CustomMarker
-              icon={scorpionMarker}
+              icon={markers.scorpionMarker}
               item={bosses[1]}
               handleMarkerClick={handleMarkerClick}
             />
           </>
         )}
+
         {regionsVisible &&
           switches.areas &&
-          regions.map((item, index) => (
-            <>
+          memoizedRegions.map((item, index) => (
+            <React.Fragment key={index}>
               <CustomPolygon
                 key={index}
+                compKey={index}
                 item={item}
                 handleMarkerClick={handleMarkerClick}
                 setContent={setAreaContent}
@@ -318,8 +233,9 @@ const Map = () => {
               {item.location.length > 0 && (
                 <CityTextMarker position={item.location} area={item.title} />
               )}
-            </>
+            </React.Fragment>
           ))}
+
         {seas.map((item) => (
           <SeaTextMarker
             key={item.title}
@@ -341,6 +257,7 @@ const Map = () => {
             />
           </>
         )}
+
         <LogCoordinates />
         <MapWithZoomHandler
           setAreas={setAreasVisible}
@@ -348,7 +265,6 @@ const Map = () => {
           setChains={setChainsVisible}
         />
         <ZoomToLocation coordinates={center} zoomLevel={zoom} />
-        {/* <LeafletDraw /> */}
       </MapContainer>
 
       <div
@@ -364,20 +280,21 @@ const Map = () => {
           alt=""
         />
       </div>
-      <EventsBar
-        show={events}
-        onClose={() => setEvents(false)}
-        handleMarkerClick={handleMarkerClick}
-      />
+
       <MarkerDetails
         marker={selectedMarker}
         type={markerType}
         show={show}
         onClose={() => {
           setSelectedMarker(null);
-          setmarkerType(null);
+          setMarkerType(null);
           setShow(false);
         }}
+      />
+      <EventsBar
+        show={events}
+        handleMarkerClick={handleMarkerClick}
+        onClose={() => setEvents(false)}
       />
     </div>
   );

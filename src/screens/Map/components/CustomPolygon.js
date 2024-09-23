@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Polygon, useMap } from "react-leaflet";
 
-const CustomPolygon = ({ item, handleMarkerClick, setInfo, setContent, content }) => {
+const CustomPolygon = ({ item, handleMarkerClick, setInfo, setContent, content, compKey }) => {
   const [hovered, setHovered] = useState(false);
 
   const handleMouseOver = () => {
@@ -17,6 +17,7 @@ const CustomPolygon = ({ item, handleMarkerClick, setInfo, setContent, content }
 
   return (
     <Polygon
+    key={compKey}
       pathOptions={{
         fillColor: hovered || (content === item.title && item.title !== "Dypians City") ? 'beige' : 'transparent',
         color: item?.special ? "gold" : 'beige',

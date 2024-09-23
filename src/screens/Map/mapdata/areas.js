@@ -1,37 +1,5 @@
 import {
-  avaxMarker,
-  babydogeMarker,
-  baseMarker,
-  bearMarker,
-  bnbMarker,
-  boarMarker,
-  chainlinkMarker,
-  cmcMarker,
-  coin98Marker,
-  coingeckoMarker,
-  confluxMarker,
-  coreMarker,
-  deerMarker,
-  dragonMarker,
-  dypMarker,
-  easy2stakeMarker,
-  gateMarker,
-  immutableMarker,
-  kucoinMarker,
-  mantaMarker,
-  mazeMarker,
-  mexcMarker,
-  mineMarker,
-  multiversxMarker,
-  puzzleMarker,
-  scorpionMarker,
-  seiMarker,
-  skaleMarker,
-  taikoMarker,
-  teleportMarker,
-  trainMarker,
-  treasureMarker,
-  victionMarker,
+  markers
 } from "./markers";
 import questDummy1 from "../assets/banners/questDummy1.webp";
 import questDummy2 from "../assets/banners/questDummy2.webp";
@@ -39,7 +7,6 @@ import questDummy3 from "../assets/banners/questDummy3.webp";
 import questDummy4 from "../assets/banners/questDummy4.webp";
 import trainIcon from "../assets/trainIcon.svg";
 import teleportIcon from "../assets/teleportIcon.svg";
-import deerIcon from "../assets/deerIcon.svg";
 import bnbIcon from "../assets/chainIcons/bnbIcon.svg";
 import coreIcon from "../assets/chainIcons/coreIcon.svg";
 import baseIcon from "../assets/chainIcons/baseIcon.svg";
@@ -69,12 +36,11 @@ import dailyBonusInfo from "../assets/dailyBonusInfo.png";
 import mazeGardenInfo from "../assets/mazeGardenInfo.png";
 import leaderboardInfo from "../assets/leaderboardInfo.png";
 
-import { marker } from "leaflet";
 
 const chainAreas = [
   {
     title: "BNB Chain Area",
-    marker: bnbMarker,
+    marker: markers.bnbMarker,
     icon: bnbIcon,
     location: [-0.06735561726792588, 0.08666753768920898],
     events: [
@@ -143,7 +109,7 @@ const chainAreas = [
   },
   {
     title: "CORE Area",
-    marker: coreMarker,
+    marker: markers.coreMarker,
     icon: coreIcon,
     location: [-0.06806371995340654, 0.08683919906616212],
     link: "https://coredao.org/",
@@ -158,10 +124,63 @@ const chainAreas = [
         [-0.06823538120893217, 0.08725762367248537],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "Manta Area",
-    marker: mantaMarker,
+    marker: markers.mantaMarker,
     icon: mantaIcon,
     location: [-0.06883619559843743, 0.08705377578735353],
     link: "https://manta.network/",
@@ -176,10 +195,64 @@ const chainAreas = [
         [-0.06832121183646599, 0.08728981018066406],
       ],
     ],
+
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "SKALE Area",
-    marker: skaleMarker,
+    marker: markers.skaleMarker,
     icon: skaleIcon,
     location: [-0.0694799252930712, 0.08724689483642578],
     link: "https://skale.space/",
@@ -194,10 +267,63 @@ const chainAreas = [
         [-0.06904540775014885, 0.0874561071395874],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "Taiko Area",
-    marker: taikoMarker,
+    marker: markers.taikoMarker,
     icon: taikoIcon,
     location: [-0.06973741716847187, 0.08653879165649415],
     link: "https://taiko.xyz/",
@@ -212,10 +338,63 @@ const chainAreas = [
         [-0.06922779783037905, 0.08672654628753663],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "CoinMarketCap Area",
-    marker: cmcMarker,
+    marker: markers.cmcMarker,
     icon: cmcIcon,
     location: [-0.0671697067836984, 0.08526742458343507],
     link: "https://www.viction.xyz/",
@@ -230,10 +409,63 @@ const chainAreas = [
         [-0.06716249835192278, 0.08542835712432861],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "Coingecko Area",
-    marker: coingeckoMarker,
+    marker: markers.coingeckoMarker,
     icon: coingeckoIcon,
     location: [-0.0673360036280549, 0.08455395698547363],
     link: "https://www.viction.xyz/",
@@ -251,10 +483,63 @@ const chainAreas = [
         [-0.06733952402495319, 0.08472561836242677],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "MultiversX Area",
-    marker: multiversxMarker,
+    marker: markers.multiversxMarker,
     icon: multiversx,
     location: [-0.06727163065611323, 0.0842052698135376],
     link: "https://www.viction.xyz/",
@@ -271,10 +556,63 @@ const chainAreas = [
         [-0.06717859159495908, 0.08407652378082275],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "Conflux Area",
-    marker: confluxMarker,
+    marker: markers.confluxMarker,
     icon: confluxIcon,
     location: [-0.06773297028649591, 0.08424818515777588],
     link: "https://www.viction.xyz/",
@@ -289,10 +627,63 @@ const chainAreas = [
         [-0.06783305014033982, 0.08444130420684816],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "BabyDoge Area",
-    marker: babydogeMarker,
+    marker: markers.babydogeMarker,
     icon: babydogeIcon,
     location: [-0.06778661442929296, 0.08464515209198],
     link: "https://www.viction.xyz/",
@@ -307,10 +698,63 @@ const chainAreas = [
         [-0.06806908436765445, 0.08490800857543945],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "Avalanche Area",
-    marker: avaxMarker,
+    marker: markers.avaxMarker,
     icon: avaxIcon,
     location: [-0.06854299683618559, 0.08485436439514162],
     link: "https://www.viction.xyz/",
@@ -325,10 +769,63 @@ const chainAreas = [
         [-0.06880400911347165, 0.08508503437042238],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "Chainlink Area",
-    marker: chainlinkMarker,
+    marker: markers.chainlinkMarker,
     icon: chainlinkIcon,
     location: [-0.06845180179486188, 0.08445203304290771],
     link: "https://www.viction.xyz/",
@@ -343,10 +840,63 @@ const chainAreas = [
         [-0.06851969516204794, 0.08462369441986085],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "Coin98 Area",
-    marker: coin98Marker,
+    marker: markers.coin98Marker,
     icon: coin98Icon,
     location: [-0.06881121754499282, 0.08454322814941408],
     link: "https://www.viction.xyz/",
@@ -361,10 +911,63 @@ const chainAreas = [
         [-0.06888983973998769, 0.08470952510833742],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "GateIo Area",
-    marker: gateMarker,
+    marker: markers.gateMarker,
     icon: gateIcon,
     location: [-0.06912771797944854, 0.0847846269607544],
     link: "https://www.viction.xyz/",
@@ -379,10 +982,63 @@ const chainAreas = [
         [-0.06885765325506008, 0.08509039878845216],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "MEXC Area",
-    marker: mexcMarker,
+    marker: markers.mexcMarker,
     icon: mexcIcon,
     location: [-0.06897214996956727, 0.08645832538604736],
     link: "https://www.viction.xyz/",
@@ -399,10 +1055,63 @@ const chainAreas = [
         [-0.0685787037181387, 0.08626520633697511],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "Easy2Stake Area",
-    marker: easy2stakeMarker,
+    marker: markers.easy2stakeMarker,
     icon: easy2stakeIcon,
     location: [-0.06942812516951939, 0.08510112762451173],
     link: "https://www.viction.xyz/",
@@ -417,10 +1126,63 @@ const chainAreas = [
         [-0.06952284060573127, 0.08527278900146486],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "KuCoin Area",
-    marker: kucoinMarker,
+    marker: markers.kucoinMarker,
     icon: kucoinIcon,
     location: [-0.06764713965793161, 0.08595943450927736],
     link: "https://www.viction.xyz/",
@@ -435,10 +1197,63 @@ const chainAreas = [
         [-0.06771503302624994, 0.08634567260742189],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "Base Area",
-    marker: baseMarker,
+    marker: markers.baseMarker,
     icon: baseIcon,
     location: [-0.06778125001500689, 0.08511722087860107],
     link: "https://www.viction.xyz/",
@@ -453,10 +1268,63 @@ const chainAreas = [
         [-0.06787596545447566, 0.08562147617340089],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "Viction Area",
-    marker: victionMarker,
+    marker: markers.victionMarker,
     icon: victionIcon,
     location: [-0.06990907841795445, 0.08591651916503908],
     link: "https://www.viction.xyz/",
@@ -471,10 +1339,63 @@ const chainAreas = [
         [-0.07004318876868135, 0.08616864681243896],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
   {
     title: "Immutable Area",
-    marker: immutableMarker,
+    marker: markers.immutableMarker,
     icon: immutable,
     location: [-0.07001821071588557, 0.08503675460815431],
     link: "https://www.viction.xyz/",
@@ -489,6 +1410,59 @@ const chainAreas = [
         [-0.07022021443105055, 0.08544981479644775],
       ],
     ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/BNBCHAIN",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/bnbchain",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/bnbchain",
+        icon: discord,
+      },
+      {
+        link: "https://www.bnbchain.org/en",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
   },
 ];
 
@@ -496,36 +1470,36 @@ const bearAreas = [
   {
     title: "Sherwood Forest",
     location: [-0.068364127150182, 0.07230162620544435],
-    marker: bearMarker,
+    marker: markers.bearMarker,
   },
   {
     title: "Cedar Groove",
     location: [-0.06817100823818639, 0.07427573204040529],
-    marker: bearMarker,
+    marker: markers.bearMarker,
   },
 ];
 const deerAreas = [
   {
     title: "Kruger Creek",
     location: [-0.07038114685080327, 0.07243573665618898],
-    marker: deerMarker,
+    marker: markers.deerMarker,
   },
   {
     title: "Flaming Field",
     location: [-0.07046697747444408, 0.0741201639175415],
-    marker: deerMarker,
+    marker: markers.deerMarker,
   },
 ];
 const boarAreas = [
   {
     title: "Water Swamp",
     location: [-0.06880400911347165, 0.07497310638427736],
-    marker: boarMarker,
+    marker: markers.boarMarker,
   },
   {
     title: "Burning Man",
     location: [-0.06976423923874447, 0.07502138614654542],
-    marker: boarMarker,
+    marker: markers.boarMarker,
   },
 ];
 const mines = [
@@ -618,31 +1592,31 @@ const dypiansTransport = [
   {
     title: "Island Zero Teleport",
     location: [-0.06903467892188205, 0.08158743381500246],
-    marker: teleportMarker,
+    marker: markers.teleportMarker,
     icon: teleportIcon,
   },
   {
     title: "Genesis Land Teleport",
     location: [-0.07081029996742978, 0.08242964744567872],
-    marker: teleportMarker,
+    marker: markers.teleportMarker,
     icon: teleportIcon,
   },
   {
     title: "Onyx Train Station",
     location: [-0.07013438380695172, 0.08632421493530275],
-    marker: trainMarker,
+    marker: markers.trainMarker,
     icon: trainIcon,
   },
   {
     title: "Kepler Land Train Station",
     location: [-0.06864307668833743, 0.08873283863067628],
-    marker: trainMarker,
+    marker: markers.trainMarker,
     icon: trainIcon,
   },
   {
     title: "Hypatia Train Station",
     location: [-0.06732879519631745, 0.08794426918029787],
-    marker: trainMarker,
+    marker: markers.trainMarker,
     icon: trainIcon,
   },
 ];
@@ -3246,7 +4220,7 @@ const dummyEvents = [
     duration: "--",
     image: "puzzleMadnessDummy.png",
     type: "Puzzle",
-    marker: puzzleMarker,
+    marker: markers.puzzleMarker,
     location: [-0.041627880248805656, 0.10673046112060548],
   },
   {
@@ -3254,7 +4228,7 @@ const dummyEvents = [
     duration: "--",
     image: "dragonRuinsDummy.png",
     type: "Boss Fight",
-    marker: dragonMarker,
+    marker: markers.dragonMarker,
     location: [-0.07085058232491746, 0.07364278764323107],
   },
   {
@@ -3262,7 +4236,7 @@ const dummyEvents = [
     duration: "--",
     image: "scorpionKingDummy.png",
     type: "Boss Fight",
-    marker: scorpionMarker,
+    marker: markers.scorpionMarker,
     location: [-0.022588222633792756, 0.07132530212402345],
   },
   {
@@ -3270,7 +4244,7 @@ const dummyEvents = [
     duration: "--",
     image: "mazeGardenDummy.png",
     type: "Puzzle",
-    marker: mazeMarker,
+    marker: markers.mazeMarker,
     location: [-0.04827975655460935, 0.042529106140136726],
   },
   {
@@ -3278,7 +4252,7 @@ const dummyEvents = [
     duration: cookieLastDay,
     image: "cookieEventDummy.png",
     type: "Treasure Hunt",
-    marker: treasureMarker,
+    marker: markers.treasureMarker,
     location: [-0.05935191046684262, 0.03785133361816407],
   },
   {
@@ -3286,7 +4260,7 @@ const dummyEvents = [
     duration: mantaLastDay,
     image: "mantaEventDummy.png",
     type: "Treasure Hunt",
-    marker: treasureMarker,
+    marker: markers.treasureMarker,
     location: [-0.06124018456762751, 0.11788845062255861],
   },
   {
@@ -3294,7 +4268,7 @@ const dummyEvents = [
     duration: midleLastDay,
     image: "midleEventDummy.png",
     type: "Treasure Hunt",
-    marker: treasureMarker,
+    marker: markers.treasureMarker,
     location: [-0.033817289296309505, 0.09595870971679689],
   },
   {
@@ -3302,7 +4276,7 @@ const dummyEvents = [
     duration: taikoLastDay,
     image: "taikoEventDummy.png",
     type: "Treasure Hunt",
-    marker: treasureMarker,
+    marker: markers.treasureMarker,
     location: [-0.12891758531392564, 0.059008598327636726],
   },
 ];
