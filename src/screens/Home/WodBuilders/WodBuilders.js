@@ -15,6 +15,7 @@ const WodBuilders = ({ page }) => {
       link: "https://x.com/BNBCHAIN/status/1821018678550306906",
       backer: true,
     },
+
     {
       name: "CORE",
       icon: "core",
@@ -157,7 +158,13 @@ const WodBuilders = ({ page }) => {
       link: 'https://x.com/Cookie3_com/status/1824052238404255889',
       backer: true,
     },
-
+    {
+      name: "Binance Web3",
+      icon: "binanceWeb3",
+      banner: "bnbChainBanner.webp",
+      // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
+      backer: true,
+    },
     {
       name: "Midle",
       icon: "midle",
@@ -263,7 +270,7 @@ const WodBuilders = ({ page }) => {
                   alt=""
                 />
                 <div className="d-flex align-items-center gap-2">
-                  {item.icon === "klapai" || item.icon === "manta" || item.icon === "hamsterChain" ? (
+                  {item.icon === "klapai" || item.icon === "manta" || item.icon === "binanceWeb3" || item.icon === "hamsterChain" ? (
                     <img
                       src={require(`./assets/${item.icon}.png`)}
                       width={24}
@@ -321,7 +328,7 @@ const WodBuilders = ({ page }) => {
               <div className="builders-second-half">
                 {builders.map((item, index) => (
                   <div key={index} className={`${page === "wod" && item.backer ? "d-none" : "d-flex"} align-items-center gap-2`}>
-                    {item.icon === "klapai" || item.icon === "manta" || item.icon === "hamsterChain" ? (
+                    {item.icon === "klapai" || item.icon === "manta" || item.icon === "binanceWeb3" || item.icon === "hamsterChain" ? (
                       <img
                         src={require(`./assets/${item.icon}.png`)}
                         width={page === "home" ?  24 : 30}
