@@ -10,6 +10,7 @@ function getTokenContract(address) {
 
 // ALL THE ADDRESSES IN CONFIG MUST BE LOWERCASE
 window.config = {
+  beta_test: "WorldOfDypians Beta Tester Application",
   dyp_token_address: "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17",
   token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dypius token on eth
   nft_marketplace_address: "0xF55D96735Fa22ba1C119bA37aF76C2c4E3BeC224",
@@ -26573,6 +26574,7 @@ function readAsText(file) {
 }
 
 window.sign = async function (msg, account) {
+  window.web3 = new Web3(window.ethereum);
   let signature = await window.web3.eth.personal.sign(msg, account);
   return signature;
 };
