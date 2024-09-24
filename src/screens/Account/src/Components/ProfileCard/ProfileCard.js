@@ -135,7 +135,7 @@ const ProfileCard = ({
   domainName,
   rankData,
   setRankData,
-  getRankData,userDataStar, userDataPosition, userRankManta, userMantaScore, userRankTaiko, userTaikoScore
+  getRankData,userDataStar, userDataPosition, userRankManta, userMantaScore, userRankBase, userBaseScore,  userRankTaiko, userTaikoScore
 }) => {
   let id = Math.random().toString(36);
   const windowSize = useWindowSize();
@@ -165,7 +165,7 @@ const ProfileCard = ({
   const [rankTooltip, setRankTooltip] = useState(false);
 
   const userTotalScore =
-    userBnbScore + userSkaleScore + userCoreScore + userVictionScore + userMantaScore + userTaikoScore;
+    userBnbScore + userSkaleScore + userCoreScore + userVictionScore + userMantaScore + userBaseScore + userTaikoScore;
 
   const handleUserRank = () => {
     let allScore;
@@ -423,9 +423,13 @@ const ProfileCard = ({
     userRankCore,
     userRankViction,
     userRankManta,
+    userRankBase,
+
     userCoreScore,
     userVictionScore,
     userMantaScore,
+    userBaseScore,
+
     userTaikoScore
   ]);
 
@@ -967,6 +971,34 @@ const ProfileCard = ({
                                       style={{ width: "33%" }}
                                     >
                                       {getFormattedNumber(userMantaScore, 0)}
+                                    </span>
+                                  </div>
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
+                                        src={mantaActive}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
+                                      <span className="rank-dropdown-text">
+                                        Base
+                                      </span>
+                                    </div>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      #{userRankBase + 1}
+                                    </span>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      {getFormattedNumber(userBaseScore, 0)}
                                     </span>
                                   </div>
                                   <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">

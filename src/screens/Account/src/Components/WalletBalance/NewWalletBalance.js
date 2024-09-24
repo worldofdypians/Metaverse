@@ -280,8 +280,12 @@ const NewWalletBalance = ({
   kittyDashRecords,
   weeklyDataAmountManta,
   monthlyDataAmountManta,
+  weeklyDataAmountBase,
+  monthlyDataAmountBase, 
   mantaEarnUsd,
+  baseEarnUsd,
   openedMantaChests,
+  openedBaseChests,
   mantaPoints,
   mantaEarnToken,
   userDataStar,
@@ -1074,9 +1078,10 @@ const NewWalletBalance = ({
     openedCoreChests.length +
     openedVictionChests.length +
     openedTaikoChests.length +
-    openedMantaChests.length;
+    openedMantaChests.length+
+    openedBaseChests.length;
 
-  const chestPercentage = (totalClaimedChests / 120) * 100;
+  const chestPercentage = (totalClaimedChests / 140) * 100;
 
   const dummyEvents = [
     {
@@ -1248,6 +1253,26 @@ const NewWalletBalance = ({
         }
       });
     }
+
+    if (openedBaseChests && openedBaseChests.length > 0) {
+      openedBaseChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+    
     if (openedTaikoChests && openedTaikoChests.length > 0) {
       openedTaikoChests.forEach((chest) => {
         if (chest.isOpened === true) {
@@ -1619,7 +1644,8 @@ const NewWalletBalance = ({
     openedCoreChests,
     openedVictionChests,
     openedSkaleChests,
-    openedMantaChests,
+    openedMantaChests,,
+    openedBaseChests,
     openedTaikoChests,
   ]);
 
@@ -2127,7 +2153,9 @@ const NewWalletBalance = ({
                           // Number(dailyDataAmountSkale) +
                           Number(weeklyDataAmountSkale) +
                           Number(weeklyDataAmountManta) +
-                          Number(monthlyDataAmountManta) +
+                          Number(monthlyDataAmountManta)+
+                          Number(weeklyDataAmountBase) +
+                          Number(monthlyDataAmountBase) +
                           Number(weeklyDataAmountTaiko) +
                           Number(monthlyDataAmountTaiko) +
                           (kittyDashRecords[0]

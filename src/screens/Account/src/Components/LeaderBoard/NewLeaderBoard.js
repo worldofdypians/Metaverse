@@ -112,7 +112,10 @@ const NewLeaderBoard = ({
   allBnbData,
   allCoreData,
   allSkaleData,
-  allVictionData,allMantaData,allTaikoData
+  allVictionData,
+  allMantaData,
+  allBaseData,
+  allTaikoData
 }) => {
   const chainItems = [
     {
@@ -126,24 +129,29 @@ const NewLeaderBoard = ({
       image: mantaActive,
     },
     {
-      title: "Taiko",
+      title: "Base",
       id: 2,
+      image: mantaActive,
+    },
+    {
+      title: "Taiko",
+      id: 3,
       image: taikoActive,
     },
     {
       title: "SKALE",
-      id: 3,
+      id: 4,
       image: skaleActive,
     },
     {
       title: "CORE",
-      id: 4,
+      id: 5,
       image: coreActive,
     },
 
     {
       title: "Viction",
-      id: 5,
+      id: 6,
       image: victionActive,
     },
   ];
@@ -263,15 +271,18 @@ const NewLeaderBoard = ({
         setAllData(allMantaData);
         setOptionText2("manta");
       } else if (selectedChain.id - 1 === 2) {
+        setAllData(allBaseData);
+        setOptionText2("base");
+      } else if (selectedChain.id - 1 === 3) {
         setAllData(allTaikoData);
         setOptionText2("taiko");
-      } else if (selectedChain.id - 1 === 3) {
+      } else if (selectedChain.id - 1 === 4) {
         setAllData(allSkaleData);
         setOptionText2("skale");
-      } else if (selectedChain.id - 1 === 4) {
+      } else if (selectedChain.id - 1 === 5) {
         setAllData(allCoreData);
         setOptionText2("core");
-      } else if (selectedChain.id - 1 === 5) {
+      } else if (selectedChain.id - 1 === 6) {
         setAllData(allVictionData);
         setOptionText2("viction");
       }
@@ -279,7 +290,7 @@ const NewLeaderBoard = ({
     }
   };
   const handleNextChain = () => {
-    if (selectedChain.id + 1 === 6) {
+    if (selectedChain.id + 1 === 7) {
       return;
     } else {
       if (selectedChain.id + 1 === 1) {
@@ -287,18 +298,23 @@ const NewLeaderBoard = ({
         setOptionText2("manta");
       }
       if (selectedChain.id + 1 === 2) {
+        setAllData(allBaseData);
+        setOptionText2("base");
+      }
+
+      if (selectedChain.id + 1 === 3) {
         setAllData(allTaikoData);
         setOptionText2("taiko");
       }
-      if (selectedChain.id + 1 === 3) {
+      if (selectedChain.id + 1 === 4) {
         setAllData(allSkaleData);
         setOptionText2("skale");
       }
-      if (selectedChain.id + 1 === 4) {
+      if (selectedChain.id + 1 === 5) {
         setAllData(allCoreData);
         setOptionText2("core");
       }
-      if (selectedChain.id + 1 === 5) {
+      if (selectedChain.id + 1 === 6) {
         setAllData(allVictionData);
         setOptionText2("viction");
       }
@@ -379,6 +395,8 @@ const NewLeaderBoard = ({
                     className={`optionswrapper-bg ${
                       optionText2 === "manta"
                         ? "move-1" :
+                        optionText2 === "base"
+                        ? "move-6" :
                         optionText2 === "taiko"
                         ? "move-2" : 
                         optionText2 === "skale" ? 
@@ -468,6 +486,44 @@ const NewLeaderBoard = ({
                         ? "Manta"
                         : ""}
                     </span>
+                    <span
+                      onMouseEnter={() => handleMouseEnter("base")}
+                      onMouseLeave={handleMouseLeave}
+                      className={`
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "base" && "otheroptionsActive"
+                     } optionText col-3`}
+                      onClick={() => {
+                        handleOption("base");
+                        setAllData(allBaseData);
+                      }}
+                      style={{ width: "14%" }}
+                    >
+                      <img
+                        src={
+                          optionText2 === "base"
+                            ? mantaActive
+                            : optionText2 !== "base" && hoverState === "base"
+                            ? mantaWhite
+                            : mantaInactive
+                        }
+                        className={`${
+                          optionText2 === "base"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "Base"
+                        : windowSize.width < 786 && optionText2 === "base"
+                        ? "Base"
+                        : ""}
+                    </span>
+
 
                     <span
                       onMouseEnter={() => handleMouseEnter("taiko")}
