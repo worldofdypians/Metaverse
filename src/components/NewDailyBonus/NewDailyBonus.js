@@ -35,6 +35,8 @@ import infoIcon from "./assets/infoIcon.svg";
 import skaleIcon from "./assets/skaleIcon.svg";
 import manta from "./assets/manta.png";
 import taiko from "./assets/taikoIcon.svg";
+import baseLogo from "./assets/base.svg";
+
 import seiIcon from "./assets/seiIcon.svg";
 import multiversxIcon from "./assets/multiversxIcon.svg";
 import danger from "./assets/danger.svg";
@@ -3127,7 +3129,7 @@ const NewDailyBonus = ({
                                 onClick={handleBasePool}
                               >
                                 {" "}
-                                <img src={manta} alt="" /> Base
+                                <img src={baseLogo} alt="" /> Base
                               </button>
                             </div>
                             <div className="d-flex align-items-center gap-2">
@@ -3818,7 +3820,7 @@ const NewDailyBonus = ({
                                 onClick={handleBasePool}
                               >
                                 {" "}
-                                <img src={manta} alt="" /> Base
+                                <img src={baseLogo} alt="" /> Base
                               </button>
                             </div>
                           </div>
