@@ -24,6 +24,10 @@ import arrowLeft from "./assets/arrowLeft.svg";
 import arrowRight from "./assets/arrowRight.svg";
 import coreActive from "./assets/coreActive.svg";
 import coreInactive from "./assets/coreInactive.svg";
+
+import baseActive from "./assets/baseActive.svg";
+import baseInactive from "./assets/baseInactive.svg";
+
 import victionActive from "./assets/victionActive.svg";
 import victionInactive from "./assets/victionInactive.svg";
 import taikoActive from "./assets/taikoActive.svg";
@@ -57,6 +61,8 @@ import goldenPremiumPlayer from "./assets/goldenPremiumPlayer.png";
 import bnbWhite from "./assets/bnbWhite.svg";
 import victionWhite from "./assets/victionWhite.svg";
 import coreWhite from "./assets/coreWhite.svg";
+import baseWhite from "./assets/baseWhite.svg";
+
 import skaleWhite from "./assets/skaleWhite.svg";
 import seiWhite from "./assets/seiWhite.svg";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
@@ -503,10 +509,10 @@ const NewLeaderBoard = ({
                       <img
                         src={
                           optionText2 === "base"
-                            ? mantaActive
+                            ? baseActive
                             : optionText2 !== "base" && hoverState === "base"
-                            ? mantaWhite
-                            : mantaInactive
+                            ? baseWhite
+                            : baseInactive
                         }
                         className={`${
                           optionText2 === "base"
