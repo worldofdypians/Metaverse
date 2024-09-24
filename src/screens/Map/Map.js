@@ -32,16 +32,19 @@ import ZoomToLocation from "./components/ZoomToLocation";
 import L from "leaflet";
 import MapWithZoomHandler from "./components/MapWithZoomHandler";
 import CustomMarker from "./components/CustomMarker";
-import MarkerDetails from "./components/MarkerDetails";
-import EventsBar from "./components/EventsBar";
+// import MarkerDetails from "./components/MarkerDetails";
+// import EventsBar from "./components/EventsBar";
 import CustomPolygon from "./components/CustomPolygon";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import landIcon from "./assets/landIcon.png";
 import ChainPolygon from "./components/ChainPolygon";
 import LogCoordinates from "./components/LogCoordinates";
+import DynamicBounds from "./components/DynamicBounds";
 
 // Lazy load for performance
 const MapSidebar = React.lazy(() => import("./components/MapSidebar"));
+const MarkerDetails = React.lazy(() => import("./components/MarkerDetails"));
+const EventsBar = React.lazy(() => import("./components/EventsBar"));
 
 const Map = () => {
   const mapRef = useRef();
@@ -77,6 +80,8 @@ const Map = () => {
   const memoizedChainAreas = useMemo(() => chainAreas, [chainAreas]);
   const memoizedRegions = useMemo(() => regions, [regions]);
   const memoizedQuests = useMemo(() => quests, [quests]);
+  const memoizedSeas = useMemo(() => seas, [seas]);
+  const memoizedAreas = useMemo(() => areas, [areas]);
   const memoizedBearAreas = useMemo(() => bearAreas, [bearAreas]);
   const memoizedBoarAreas = useMemo(() => boarAreas, [boarAreas]);
   const memoizedDeerAreas = useMemo(() => deerAreas, [deerAreas]);
@@ -154,15 +159,20 @@ const Map = () => {
         zoom={zoom}
         minZoom={13}
         maxZoom={18}
+        maxBounds={[
+          [0.0, 0.0],
+          [-0.12373029, 0.11373045],
+        ]}
         style={{ height: "100vh", width: "100%" }}
       >
+        {/* <TileLayer url="/testtiles/{z}/{x}/{y}.png" noWrap={true} /> */}
         <TileLayer url="https://cdn.worldofdypians.com/MapTiles/{z}/{x}/{y}.png" />
 
         <ChainMarkers />
 
         {switches.regions &&
           areasVisible &&
-          areas.map((item) => (
+          memoizedAreas.map((item) => (
             <AreaTextMarker
               key={item.title}
               position={item.location}
@@ -177,6 +187,33 @@ const Map = () => {
               icon={markers.questMarker}
               item={item}
               type={"quest"}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.boar &&
+          memoizedBoarAreas.map((item) => (
+            <CustomMarker
+              key={item.title}
+              icon={markers.questMarker}
+              item={item}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.bear &&
+          memoizedBearAreas.map((item) => (
+            <CustomMarker
+              key={item.title}
+              icon={markers.questMarker}
+              item={item}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.deer &&
+          memoizedDeerAreas.map((item) => (
+            <CustomMarker
+              key={item.title}
+              icon={markers.questMarker}
+              item={item}
               handleMarkerClick={handleMarkerClick}
             />
           ))}
@@ -203,21 +240,6 @@ const Map = () => {
           ))}
         </MarkerClusterGroup>
 
-        {switches.bosses && (
-          <>
-            <CustomMarker
-              icon={markers.dragonMarker}
-              item={bosses[0]}
-              handleMarkerClick={handleMarkerClick}
-            />
-            <CustomMarker
-              icon={markers.scorpionMarker}
-              item={bosses[1]}
-              handleMarkerClick={handleMarkerClick}
-            />
-          </>
-        )}
-
         {regionsVisible &&
           switches.areas &&
           memoizedRegions.map((item, index) => (
@@ -236,7 +258,7 @@ const Map = () => {
             </React.Fragment>
           ))}
 
-        {seas.map((item) => (
+        {memoizedSeas.map((item) => (
           <SeaTextMarker
             key={item.title}
             position={item.location}
@@ -259,6 +281,7 @@ const Map = () => {
         )}
 
         <LogCoordinates />
+        <DynamicBounds />
         <MapWithZoomHandler
           setAreas={setAreasVisible}
           setRegions={setRegionsVisible}
@@ -280,22 +303,25 @@ const Map = () => {
           alt=""
         />
       </div>
-
-      <MarkerDetails
-        marker={selectedMarker}
-        type={markerType}
-        show={show}
-        onClose={() => {
-          setSelectedMarker(null);
-          setMarkerType(null);
-          setShow(false);
-        }}
-      />
-      <EventsBar
-        show={events}
-        handleMarkerClick={handleMarkerClick}
-        onClose={() => setEvents(false)}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <MarkerDetails
+          marker={selectedMarker}
+          type={markerType}
+          show={show}
+          onClose={() => {
+            setSelectedMarker(null);
+            setMarkerType(null);
+            setShow(false);
+          }}
+        />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <EventsBar
+          show={events}
+          handleMarkerClick={handleMarkerClick}
+          onClose={() => setEvents(false)}
+        />
+      </Suspense>
     </div>
   );
 };
