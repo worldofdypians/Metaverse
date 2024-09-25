@@ -1794,7 +1794,7 @@ backdrop-filter: blur(5.5px);
 .market-stake-title {
   font-style: normal;
   font-weight: 800;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 24px;
   letter-spacing: 0.005em;
   color: #ffffff;
@@ -2285,6 +2285,20 @@ backdrop-filter: blur(5.5px);
 }
 
 
+.past-taiko-mint {
+  background-image: url("./assets/taikoPastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/taikoPastMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
+
 .past-bnb-mint {
   background-image: url("./assets/bnbMintDesktop.webp");
   width: 100%;
@@ -2413,6 +2427,18 @@ backdrop-filter: blur(5.5px);
   }
 }
 
+.past-taiko-mint-amount {
+  color: #b61994;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
 .past-core-mint-amount {
   color: #FC9210;
   text-align: center;
@@ -2486,6 +2512,20 @@ backdrop-filter: blur(5.5px);
   color: #fff;
   text-shadow: 0px 3px 4px rgba(155, 67, 255, 0.7);
   font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+
+.past-taiko-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(155, 67, 255, 0.7);
   font-size: 40px;
   font-style: normal;
   font-weight: 700;
@@ -2968,6 +3008,11 @@ backdrop-filter: blur(5.5px);
 .taiko-eventwrapper {
   border-radius: 20px;
   background: linear-gradient(to top, #8f2b78 15.48%, #000000 254.86%);
+}
+
+.cookie-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #181B38 0%, rgba(55, 113, 55, 0.9) 168.67%);
 }
 
 .doge-eventwrapper {
@@ -4024,6 +4069,20 @@ background: linear-gradient(0deg, #080B2A 15.09%, rgba(8, 11, 42, 0.00) 100%);
   width: fit-content !important;
   border-radius: 20px;
   background: linear-gradient(90deg, #5e54a0 -10.16%, #00fecf 129.3%);
+  backdrop-filter: blur(13px);
+  span {
+    color: #fff;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+
+.homepage-nft-stake-tag {
+  width: fit-content !important;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #D42F55 -10.16%, #B53878 129.3%);
   backdrop-filter: blur(13px);
   span {
     color: #fff;

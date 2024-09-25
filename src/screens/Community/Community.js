@@ -12,7 +12,7 @@ import dypius from "../Account/src/Components/WalletBalance/assets/dypIcon.svg";
 import base from "../Account/src/Components/WalletBalance/assets/baseLogo.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
 import skaleLogo from "../Account/src/Components/WalletBalance/assets/skaleLogo.svg";
-import bnblogo from "../Account/src/Components/WalletBalance/assets/bnblogo.svg";
+import bnblogo from "../Account/src/Components/WalletBalance/assets/mantaLogo2.png";
 import immutableLogo from "../Account/src/Components/WalletBalance/assets/immutableLogo.svg";
 
 
@@ -128,7 +128,7 @@ const Community = ({socials}) => {
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
-  let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
+  let bnbLastDay = new Date("2024-11-18T14:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
 
@@ -207,25 +207,25 @@ const Community = ({socials}) => {
       },
     },
     {
-      title: "BNB Chain",
+      title: "Manta",
       logo: bnblogo,
       eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
+      totalRewards: "$20,000 in MANTA Rewards",
       myEarnings: 0.0,
       eventDuration: bnbLastDay,
       eventType: "Explore & Mine",
-      eventDate: "Apr 15, 2024",
-      date: "Apr 15, 2024",
+      eventDate: "Aug 01, 2024",
+      date: "Aug 01, 2024",
       // backgroundImage: upcomingSkale,
       popupInfo: {
-        title: "BNB Chain",
-        chain: "BNB Chain",
+        title: "Manta",
+        chain: "Manta Chain",
         linkState: "chain",
-        rewards: "BNB",
+        rewards: "MANTA",
         status: "Live",
         id: "event14",
         eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
+        totalRewards: "$20,000 in Manta Rewards",
         eventDuration: bnbLastDay,
         minRewards: "0.5",
         maxRewards: "20",
@@ -233,7 +233,7 @@ const Community = ({socials}) => {
         maxPoints: "30,000",
         learnMore:
           "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
-        eventDate: "Apr 15, 2024",
+        eventDate: "Aug 01, 2024",
       },
     },
     {
@@ -600,7 +600,7 @@ const Community = ({socials}) => {
   };
   const dummyBanner =  {
     title: "Festive 4YA Celebration",
-    status: "Live",
+    status: "Expired",
     start_date: "August 26, 2024",
     end_date: "September 08, 2024",
     image: wodFestive,

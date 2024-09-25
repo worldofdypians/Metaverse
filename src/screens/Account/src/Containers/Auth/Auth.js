@@ -112,9 +112,8 @@ function Auth({ isConnected, coinbase,onSuccessLogin }) {
           {value === 0 && (
             <Login
               onSuccessLogin={() => {
-                handleFirstTask(coinbase);
-                onSuccessLogin()
                 // handleFirstTask(coinbase);
+                console.log('success')
               }}
             />
           )}

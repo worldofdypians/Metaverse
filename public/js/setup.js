@@ -10,12 +10,15 @@ function getTokenContract(address) {
 
 // ALL THE ADDRESSES IN CONFIG MUST BE LOWERCASE
 window.config = {
+  beta_test: "WorldOfDypians Beta Tester Application",
   dyp_token_address: "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17",
   token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dypius token on eth
   nft_marketplace_address: "0xF55D96735Fa22ba1C119bA37aF76C2c4E3BeC224",
   nft_caws_address: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
   nft_cawsold_address: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
   nft_caws_premiumstake_address: "0x097bB1679AC734E90907Ff4173bA966c694428Fc",
+  nft_land_premiumstake_address: "0x3E0c0443A6a5382B2Ef20ECfe3bdbE84F1436523",
+
   nft_timepiece_address: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
   nft_coingecko_address: "0x9b7c2B05367A729e0E671a24B8a143C0d4F6A90D",
   nft_gate_address: "0x2FED6783AdA5eA6B2D7cE9aE749c76B9f4858526",
@@ -418,11 +421,16 @@ class NFT {
   }
 
   async approveStake(addr) {
-    let nft_contract = await getContractNFT("CAWS_NFT");
+    window.web3 = new Web3(window.ethereum)
+    let nft_contract = new window.web3.eth.Contract(
+      window.CAWS_ABI,
+      window.config.nft_caws_address
+    );
+    
     let staking_addr = addr;
     return await nft_contract.methods
       .setApprovalForAll(staking_addr, true)
-      .send();
+      .send({from: await getCoinbase()});
   }
 
   async checkapproveStake(useraddr, addr) {
@@ -531,6 +539,85 @@ class CAWSPREMIUM {
 }
 
 window.cawsPremium = new CAWSPREMIUM();
+
+
+
+
+
+
+
+/*===================LAND PREMIUM STAKING POOL*/
+
+/**
+ *
+ * @param {"TOKEN" | "LANDPREMIUM" } key
+ */
+async function getContractLandPremiumNFT(key) {
+  let address = window.config.nft_land_premiumstake_address;
+
+  window.web3 = new Web3(window.ethereum);
+  window.cached_contracts[key] = new window.web3.eth.Contract(
+    window.LANDPREMIUM_ABI,
+    address,
+    {
+      from: await getCoinbase(),
+    }
+  );
+
+  return window.cached_contracts[key];
+}
+
+class LANDPREMIUM {
+  constructor(key = "LANDPREMIUM") {
+    this.key = key;
+    [
+      "LOCKUP_TIME",
+      "MAX_DEPOSIT",
+      "MAX_POOL",
+      "depositsOf",
+      "expiration",
+      "stakingTime",
+    ].forEach((fn_name) => {
+      this[fn_name] = async function (...args) {
+        let contract = await new window.infuraWeb3.eth.Contract(
+          window.LANDPREMIUM_ABI,
+          window.config.nft_land_premiumstake_address
+        );
+        return await contract.methods[fn_name](...args).call();
+      };
+    });
+  }
+
+  async approveStakeLandPremium(addr) {
+    let nft_contract = await getContractLandPremiumNFT("LANDPREMIUM");
+    return await nft_contract.methods.setApprovalForAll(addr, true).send();
+  }
+
+  async checkapproveStakeLandPremium(useraddr, addr) {
+    let nft_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDPREMIUM_ABI,
+      window.config.nft_land_premiumstake_address
+    );
+    return await nft_contract.methods.isApprovedForAll(useraddr, addr).call();
+  }
+
+  async depositStakeLandPremium() {
+    let nft_contract = await getContractLandPremiumNFT("LANDPREMIUM");
+    return await nft_contract.methods.deposit([]).send();
+  }
+
+  async checkLockoutTimeLandPremium() {
+    let nft_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDPREMIUM_ABI,
+      window.config.nft_land_premiumstake_address
+    );
+    const time = await nft_contract.methods.LOCKUP_TIME().call();
+    return time;
+  }
+}
+
+window.landPremium = new LANDPREMIUM();
+
 
 /**
  *
@@ -2428,6 +2515,7 @@ window.approveNFT = async (type) => {
 window.cancelListNFT = async (nftAddress, tokenId, priceType, tokenType) => {
   let price_address;
   const coinbase = await getCoinbase();
+  window.web3 = new Web3(window.ethereum);
 
   if (priceType === 0) {
     price_address = "0x0000000000000000000000000000000000000000";
@@ -2452,7 +2540,7 @@ window.cancelListNFT = async (nftAddress, tokenId, priceType, tokenType) => {
 
 window.updateListingNFT = async (token, price, priceType, type, tokenType) => {
   let nft_address, price_nft, price_address;
-
+window.web3 = new Web3(window.ethereum);
   if (type === "timepiece") {
     nft_address = window.config.nft_timepiece_address;
   } else if (type === "land") {
@@ -2490,6 +2578,7 @@ window.updateListingNFT = async (token, price, priceType, type, tokenType) => {
 window.listNFT = async (token, price, priceType, type = "", tokenType) => {
   let nft_address, price_nft, price_address;
   console.log(token, price, priceType, type, tokenType);
+  window.web3 = new Web3(window.ethereum);
   if (type === "timepiece") {
     nft_address = window.config.nft_timepiece_address;
   } else if (type === "land") {
@@ -2579,7 +2668,7 @@ window.isApproved = async (token, type) => {
 
 window.makeOffer = async (nftAddress, tokenId, price, priceType, tokenType) => {
   let price_address;
-
+  window.web3 = new Web3(window.ethereum);
   if (priceType === 0) {
     price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
   }
@@ -2620,6 +2709,7 @@ window.makeOffer = async (nftAddress, tokenId, price, priceType, tokenType) => {
 };
 
 window.cancelOffer = async (nftAddress, tokenId, offerIndex) => {
+  window.web3 = new Web3(window.ethereum);
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
@@ -2657,7 +2747,7 @@ window.updateOffer = async (
   tokenType
 ) => {
   let price_address;
-
+  window.web3 = new Web3(window.ethereum);
   if (priceType === 0) {
     price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
   }
@@ -2742,6 +2832,7 @@ window.approveOffer = async (amount, priceType, tokenType) => {
 };
 
 window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
+  window.web3 = new Web3(window.ethereum);
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
@@ -2817,7 +2908,7 @@ window.isApprovedOffer = async (amount, priceType, tokenType) => {
 
 window.getAllOffers = async (nftAddress, tokenId) => {
   //getActiveOffers
-
+  window.web3 = new Web3(window.ethereum);
   const marketplace = new window.infuraWeb3.eth.Contract(
     window.MARKETPLACE_ABI,
     window.config.nft_marketplace_address
@@ -3262,7 +3353,6 @@ async function myNftListContract(address) {
   );
 
   let getBalanceOf = await nft_contract.methods.balanceOf(address).call();
-  console.log('getBalanceOfgetBalanceOfgetBalanceOf',getBalanceOf)
 
   let nftList = [];
   if (getBalanceOf && getBalanceOf > 0) {
@@ -4453,6 +4543,320 @@ window.CAWSPREMIUM_ABI = [
   {
     inputs: [{ internalType: "uint256", name: "_maxDeposit", type: "uint256" }],
     name: "setMaxDeposit",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_maxPool", type: "uint256" }],
+    name: "setPoolCap",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_rate", type: "uint256" }],
+    name: "setRate",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "stakingDestinationAddress",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "stakingTime",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "unpause",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256[]", name: "tokenIds", type: "uint256[]" },
+    ],
+    name: "withdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdrawTokens",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
+window.LANDPREMIUM_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_stakingDestinationAddress",
+        type: "address",
+      },
+      { internalType: "uint256", name: "_rate", type: "uint256" },
+      { internalType: "uint256", name: "_expiration", type: "uint256" },
+      { internalType: "address", name: "_erc20Address", type: "address" },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newExpiration",
+        type: "uint256",
+      },
+    ],
+    name: "ExpirationChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newLockTime",
+        type: "uint256",
+      },
+    ],
+    name: "LockTimeChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "Paused",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newRate",
+        type: "uint256",
+      },
+    ],
+    name: "RateChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "Unpaused",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "LOCKUP_TIME",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "MAX_POOL",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "uint256", name: "", type: "uint256" },
+    ],
+    name: "_depositBlocks",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "account", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+    ],
+    name: "calculateReward",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "account", type: "address" },
+      { internalType: "uint256[]", name: "tokenIds", type: "uint256[]" },
+    ],
+    name: "calculateRewards",
+    outputs: [
+      { internalType: "uint256[]", name: "rewards", type: "uint256[]" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256[]", name: "tokenIds", type: "uint256[]" },
+    ],
+    name: "claimRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256[]", name: "tokenIds", type: "uint256[]" },
+    ],
+    name: "deposit",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "depositsOf",
+    outputs: [{ internalType: "uint256[]", name: "", type: "uint256[]" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256[]", name: "tokenIds", type: "uint256[]" },
+    ],
+    name: "emergencyWithdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "erc20Address",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "expiration",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "uint256", name: "", type: "uint256" },
+      { internalType: "bytes", name: "", type: "bytes" },
+    ],
+    name: "onERC721Received",
+    outputs: [{ internalType: "bytes4", name: "", type: "bytes4" }],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "pause",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "paused",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "rate",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_expiration", type: "uint256" }],
+    name: "setExpiration",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_lockTime", type: "uint256" }],
+    name: "setLockTime",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -26170,6 +26574,7 @@ function readAsText(file) {
 }
 
 window.sign = async function (msg, account) {
+  window.web3 = new Web3(window.ethereum);
   let signature = await window.web3.eth.personal.sign(msg, account);
   return signature;
 };

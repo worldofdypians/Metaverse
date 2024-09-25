@@ -661,7 +661,8 @@ function Dashboard({
   const [premiumTxHash, setPremiumTxHash] = useState("");
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
   const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
-
+  const [landPremiumRewards, setlandPremiumRewards] = useState(0);
+ 
   const [portfolio, setPortfolio] = useState(false);
 
   const [bnbImages, setBnbImages] = useState(shuffle(chestImagesBnb));
@@ -2767,7 +2768,7 @@ function Dashboard({
         data
       );
 
-      setPrevDataVictionMonthly(result.data.data.leaderboard);
+      setPrevDataMantaMonthly(result.data.data.leaderboard);
     } else {
       setPrevDataMantaMonthly(placeholderplayerData);
     }
@@ -3116,7 +3117,7 @@ function Dashboard({
         data
       );
 
-      setPrevDataVictionMonthly(result.data.data.leaderboard);
+      setPrevDataTaikoMonthly(result.data.data.leaderboard);
     } else {
       setPrevDataTaikoMonthly(placeholderplayerData);
     }
@@ -4124,6 +4125,7 @@ function Dashboard({
     fetchWeeklyRecordsSkale();
     fetchMonthlyRecordsSkale();
     fetchRecordsStar();
+    fetchKittyDashAroundPlayer(userId, username);
   }, [username, userId, goldenPassRemainingTime]);
 
   useEffect(() => {
@@ -4982,6 +4984,28 @@ function Dashboard({
     return myStakes;
   };
 
+  const getLandPremiumStakesIds = async () => {
+    const address = coinbase;
+
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDPREMIUM_ABI,
+      window.config.nft_land_premiumstake_address
+    );
+
+    let stakenft = [];
+    let myStakes = await staking_contract.methods
+      .depositsOf(address)
+      .call()
+      .then((result) => {
+        for (let i = 0; i < result.length; i++)
+          stakenft.push(parseInt(result[i]));
+        return stakenft;
+      });
+
+    return myStakes;
+  };
+
+
   const calculateAllRewardsCawsPremium = async () => {
     const address = coinbase;
 
@@ -5010,6 +5034,36 @@ function Dashboard({
       }
     }
     setcawsPremiumRewards(result);
+  };
+
+  const calculateAllRewardsLandPremium = async () => {
+    const address = coinbase;
+
+    let myStakes = await getLandPremiumStakesIds(address);
+    let result = 0;
+    let calculateRewards = [];
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDPREMIUM_ABI,
+      window.config.nft_land_premiumstake_address
+    );
+
+    if (address !== null) {
+      if (myStakes && myStakes.length > 0) {
+        calculateRewards = await staking_contract.methods
+          .calculateRewards(address, myStakes)
+          .call()
+          .then((data) => {
+            return data;
+          });
+      }
+      let a = 0;
+
+      for (let i = 0; i < calculateRewards.length; i++) {
+        a = await window.infuraWeb3.utils.fromWei(calculateRewards[i], "ether");
+        result = result + Number(a);
+      }
+    }
+    setlandPremiumRewards(result);
   };
 
   const getmyCawsWodStakes = async () => {
@@ -5118,9 +5172,9 @@ function Dashboard({
           }, 1000);
           onSubscribeSuccess(account);
 
-          if (isonlink) {
-            handleFirstTask(account);
-          }
+          // if (isonlink) {
+          //   handleFirstTask(account);
+          // }
         });
       } catch (error) {
         setsyncStatus("error");
@@ -5150,9 +5204,9 @@ function Dashboard({
           }, 1000);
           onSubscribeSuccess(binanceWallet);
 
-          if (isonlink) {
-            handleFirstTask(binanceWallet);
-          }
+          // if (isonlink) {
+          //   handleFirstTask(binanceWallet);
+          // }
         });
       } catch (error) {
         setsyncStatus("error");
@@ -6469,18 +6523,18 @@ function Dashboard({
 
     const coresubscribeAddress = window.config.subscription_core_address;
 
-    const web3 = new Web3(window.ethereum);
+    window.web3 = new Web3(window.ethereum);
 
     setloadspinner(true);
 
-    const nftContract_viction = new window.victionWeb3.eth.Contract(
+    const nftContract_viction = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
       if (window.WALLET_TYPE !== "binance") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -6645,7 +6699,7 @@ function Dashboard({
             }, 5000);
           });
       } else if (approveStatus === "approveAmount") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -6671,7 +6725,7 @@ function Dashboard({
       }
     } else {
       if (window.WALLET_TYPE !== "binance") {
-        let tokenContract = new web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -8095,13 +8149,16 @@ function Dashboard({
       userVictionScore +
       userMantaScore +
       userTaikoScore;
-    if (totalScore > 11999999 && totalScore < 24000000) {
+      
+      const totalScore_multiplied = (rankData && rankData.multiplier === "yes") ? totalScore * 4 : totalScore
+    if (totalScore_multiplied > 11999999 && totalScore_multiplied < 24000000) {
+ 
       setUserRankRewards(5);
-    } else if (totalScore >= 24000000 && totalScore < 37000000) {
+    } else if (totalScore_multiplied >= 24000000 && totalScore_multiplied < 37000000) {
       setUserRankRewards(10);
-    } else if (totalScore >= 37000000 && totalScore < 62000000) {
+    } else if (totalScore_multiplied >= 37000000 && totalScore_multiplied < 62000000) {
       setUserRankRewards(25);
-    } else if (totalScore >= 62000000) {
+    } else if (totalScore_multiplied >= 62000000) {
       setUserRankRewards(100);
     }
   };
@@ -8175,6 +8232,7 @@ function Dashboard({
     userVictionScore,
     userMantaScore,
     userTaikoScore,
+    rankData
   ]);
 
   useEffect(() => {
@@ -8223,6 +8281,7 @@ function Dashboard({
       window.WALLET_TYPE !== ""
     ) {
       calculateAllRewardsCawsPremium(data.getPlayer.wallet.publicAddress);
+      calculateAllRewardsLandPremium(data.getPlayer.wallet.publicAddress)
     }
   }, [data, chainId]);
 

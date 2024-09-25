@@ -61,6 +61,10 @@ import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
 import newCawsStake from "../../../../Marketplace/assets/newCawsStake.png";
 import newCawsStakeMobile from "../../../../Marketplace/assets/newCawsStakeMobile.png";
+
+import newLandStake from "../../../../Marketplace/assets/newWodStake.png";
+import newLandStakeMobile from "../../../../Marketplace/assets/newWodStakeMobile.png";
+
 import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
@@ -250,7 +254,7 @@ const NewWalletBalance = ({
   cmcuserPoints,
   onPremiumClick,
   openedSkaleChests,
-  cawsPremiumRewards,
+  cawsPremiumRewards, landPremiumRewards,
   skaleEarnToken,
   skaleEarnUsd,
   skalePoints,
@@ -563,34 +567,7 @@ const NewWalletBalance = ({
         eventDate: "Jul 01, 2024",
       },
     },
-    {
-      title: "BNB Chain",
-      logo: bnbLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Jun 12, 2024",
-      backgroundImage: upcomingSkale,
-      popupInfo: {
-        title: "BNB Chain",
-        chain: "BNB Chain",
-        linkState: "bnb",
-        rewards: "BNB",
-        status: "Live",
-        id: "event20",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: bnbLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore:
-          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
-        eventDate: "Jun 12, 2024",
-      },
-    },
+
     {
       title: "Taiko",
       logo: taikoLogo,
@@ -709,7 +686,34 @@ const NewWalletBalance = ({
       },
     },
     
-   
+    {
+      title: "BNB Chain",
+      logo: bnbLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jun 12, 2024",
+      backgroundImage: upcomingSkale,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore:
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        eventDate: "Jun 12, 2024",
+      },
+    },
     // {
     //   title: "SEI",
     //   logo: seiLogo,
@@ -1661,11 +1665,11 @@ const NewWalletBalance = ({
                 }}
               />
               <ActiveProfileEvent
-                data={dummyBNB}
-                event={dummyBNB}
-                userEarnedUsd={bnbEarnUsd}
+                data={dummyManta}
+                event={dummyManta}
+                userEarnedUsd={mantaEarnUsd}
                 onOpenEvent={() => {
-                  setDummyEvent(dummyBNB);
+                  setDummyEvent(dummyManta);
                   setEventPopup(true);
                 }}
               />
@@ -2137,8 +2141,7 @@ const NewWalletBalance = ({
                           Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd) +
                           Number(coreEarnUsd) +
-                          Number(cawsPremiumRewards) +
-                          Number(bnbEarnUsd) +
+                          Number(cawsPremiumRewards) + Number(landPremiumRewards) +
                           Number(victionEarnUsd) +
                           Number(taikoEarnUsd) + 
                           Number(immutableEarnUsd) +
@@ -3530,7 +3533,7 @@ const NewWalletBalance = ({
         <OutsideClickHandler onOutsideClick={() => setStakePopup(false)}>
           <div
             className="popup-wrapper popup-active nft-wrapper-popup p-3"
-            style={{ width: "fit-content" }}
+            style={{ width: "fit-content", height: windowSize.width < 500 ? '80%' : 'fit-content', overflow: 'auto' }}
           >
             <div className="d-flex align-items-center justify-content-between w-100 mb-4">
               <h6 className="popup-title-2 mb-0">Stake NFT</h6>
@@ -3577,6 +3580,40 @@ const NewWalletBalance = ({
                 />
               </div>
             </div>
+
+            <div className="new-wod-stake-wrapper d-flex flex-column flex-lg-row align-items-center mb-3">
+              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between h-100 w-100 position-relative">
+                <div className="d-flex flex-column ps-4 pt-4 pt-lg-0 gap-4">
+                  <div className="d-flex flex-column gap-2">
+                    <h6
+                      className="market-stake-title"
+                      style={{ fontSize: "20px" }}
+                    >
+                     Genesis Land NFTs
+                    </h6>
+                    <span
+                      className="market-stake-desc"
+                      style={{ fontSize: "11px" }}
+                    >
+                      Stake your Genesis Land NFT to earn daily ETH rewards.
+                    </span>
+                  </div>
+                  <div className="d-flex align-items-center gap-3"></div>
+                </div>
+              </div>
+              <div className="row w-100 m-0  position-relative">
+             
+
+                <img
+                  className="new-caws-stake-img p-0"
+                  src={
+                    windowSize.width > 786 ? newLandStake : newLandStakeMobile
+                  }
+                  alt=""
+                />
+              </div>
+            </div>
+
             <div className="d-flex justify-content-center">
               <NavLink to={`/marketplace/stake`}>
                 <div className="linear-border">

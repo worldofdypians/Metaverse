@@ -2346,9 +2346,9 @@ function App() {
             let tokenId = await window.opbnb_nft
               .mintOPBNBNFT()
               .then(() => {
-                setTimeout(() => {
-                  handleSecondTask(coinbase);
-                }, 5000);
+                // setTimeout(() => {
+                //   handleSecondTask(coinbase);
+                // }, 5000);
                 setmintStatus("Success! Your Nft was minted successfully!");
                 setmintloading("success");
                 settextColor("rgb(123, 216, 176)");
@@ -2389,9 +2389,9 @@ function App() {
             let tokenId = await contract
               .mintBetaPass({ from: coinbase })
               .then(() => {
-                setTimeout(() => {
-                  handleSecondTask(coinbase);
-                }, 5000);
+                // setTimeout(() => {
+                //   handleSecondTask(coinbase);
+                // }, 5000);
                 setmintStatus("Success! Your Nft was minted successfully!");
                 setmintloading("success");
                 settextColor("rgb(123, 216, 176)");
@@ -4689,32 +4689,7 @@ function App() {
               />
             }
           />
-          <Route
-            exact
-            path="/account"
-            element={
-              <Dashboard
-                logoutCount={logoutCount}
-                ethTokenData={ethTokenData}
-                dypTokenData={dypTokenData}
-                handleSwitchChain={handleSwitchChain}
-                dypTokenData_old={dypTokenData_old}
-                coinbase={coinbase}
-                account={coinbase}
-                isConnected={isConnected}
-                chainId={networkId}
-                handleConnect={handleConnectWallet}
-                onSigninClick={checkData}
-                success={success}
-                availableTime={availTime}
-                handleSwitchNetwork={handleSwitchNetwork}
-                handleOpenDomains={() => setDomainPopup(true)}
-                domainName={domainName}
-                dogePrice={dogePrice}
-              />
-            }
-          />
-
+         
           <Route
             exact
             path="/marketplace/beta-pass/multiversx"
@@ -5266,6 +5241,10 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
                 totalMantaNft={totalMantaNft}
                 mantaMintAllowed={mantaMintAllowed}
                 myMantaNfts={myMantaNfts}
@@ -5568,7 +5547,7 @@ function App() {
             }
           /> */}
 
-          <Route
+          {/* <Route
             exact
             path="/marketplace/mint/taiko"
             element={
@@ -5577,10 +5556,14 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
                 cawsArray={allCawsForTimepieceMint}
                 mintloading={mintloading}
                 isConnected={isConnected}
-                chainId={chainId}
+                chainId={networkId}
                 handleMint={handleTaikoNftMint}
                 mintStatus={mintStatus}
                 textColor={textColor}
@@ -5624,7 +5607,7 @@ function App() {
                 myTaikoNFTsCreated={myTaikoNFTsCreated}
               />
             }
-          />
+          /> */}
 
           {/* <Route
             exact

@@ -15,6 +15,7 @@ const WodBuilders = ({ page }) => {
       link: "https://x.com/BNBCHAIN/status/1821018678550306906",
       backer: true,
     },
+
     {
       name: "CORE",
       icon: "core",
@@ -150,7 +151,20 @@ const WodBuilders = ({ page }) => {
       link: "https://x.com/Immutable/status/1813966964957884795",
       backer: false,
     },
-
+    {
+      name: "Cookie3",
+      icon: "cookie3",
+      banner: "cookie3Banner.webp",
+      link: 'https://x.com/Cookie3_com/status/1824052238404255889',
+      backer: true,
+    },
+    {
+      name: "Binance Web3",
+      icon: "binanceWeb3",
+      banner: "bnbChainBanner.webp",
+      // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
+      backer: true,
+    },
     {
       name: "Midle",
       icon: "midle",
@@ -164,10 +178,10 @@ const WodBuilders = ({ page }) => {
       backer: false,
     },
     {
-      name: "Cookie3",
-      icon: "cookie3",
+      name: "AlterVerse",
+      icon: "alterverse",
       banner: "kucoinBanner.png",
-      backer: true,
+      backer: false,
     },
     {
       name: "KlapAI",
@@ -207,6 +221,27 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
+    {
+      name: "SpaceID",
+      icon: "spaceId",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+
+    {
+      name: "Hamster Chain",
+      icon: "hamsterChain",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+
+    {
+      name: "Balance",
+      icon: "balance",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    
   ];
 
   useEffect(() => {
@@ -241,7 +276,7 @@ const WodBuilders = ({ page }) => {
                   alt=""
                 />
                 <div className="d-flex align-items-center gap-2">
-                  {item.icon === "klapai" || item.icon === "manta" ? (
+                  {item.icon === "klapai" || item.icon === "manta" || item.icon === "alterverse" || item.icon === "binanceWeb3" || item.icon === "hamsterChain" ? (
                     <img
                       src={require(`./assets/${item.icon}.png`)}
                       width={24}
@@ -266,7 +301,7 @@ const WodBuilders = ({ page }) => {
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="linear-border"
-                onClick={() => (slice === 2 ? setSlice(20) : setSlice(2))}
+                onClick={() => (slice === 2 ? setSlice(21) : setSlice(2))}
               >
                 <button className="btn filled-btn px-5">
                   {slice === 2 ? "View More" : "View Less"}
@@ -277,7 +312,7 @@ const WodBuilders = ({ page }) => {
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="linear-border"
-                onClick={() => (slice === 8 ? setSlice(20) : setSlice(8))}
+                onClick={() => (slice === 8 ? setSlice(21) : setSlice(8))}
               >
                 <button className="btn filled-btn px-5">
                   {slice === 8 ? "View More" : "View Less"}
