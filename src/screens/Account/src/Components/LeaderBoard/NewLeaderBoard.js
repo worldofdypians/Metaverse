@@ -137,7 +137,7 @@ const NewLeaderBoard = ({
     {
       title: "Base",
       id: 2,
-      image: mantaActive,
+      image: baseActive,
     },
     {
       title: "Taiko",
