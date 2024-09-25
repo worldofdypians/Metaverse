@@ -7955,14 +7955,14 @@ function Dashboard({
       userTaikoScore;
       
       const totalScore_multiplied = (rankData && rankData.multiplier === "yes") ? totalScore * 4 : totalScore
-    if (totalScore_multiplied > 11999999 && totalScore_multiplied < 24000000) {
+    if (totalScore_multiplied > 13999999 && totalScore_multiplied < 26000000) {
  
       setUserRankRewards(5);
-    } else if (totalScore_multiplied >= 24000000 && totalScore_multiplied < 37000000) {
+    } else if (totalScore_multiplied >= 26000000 && totalScore_multiplied < 39000000) {
       setUserRankRewards(10);
-    } else if (totalScore_multiplied >= 37000000 && totalScore_multiplied < 62000000) {
+    } else if (totalScore_multiplied >= 39000000 && totalScore_multiplied < 64000000) {
       setUserRankRewards(25);
-    } else if (totalScore_multiplied >= 62000000) {
+    } else if (totalScore_multiplied >= 64000000) {
       setUserRankRewards(100);
     }
   };

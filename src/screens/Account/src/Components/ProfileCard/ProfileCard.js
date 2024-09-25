@@ -176,37 +176,37 @@ const ProfileCard = ({
     } else if (rankData && rankData.multiplier === "no") {
       allScore = userTotalScore;
     }
-    if (allScore > 61999999) {
+    if (allScore > 63999999) {
       setUserRankName({
         name: "unstoppable",
         id: 4,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(4);
       setUserProgress(100);
-    } else if (allScore > 36999999) {
+    } else if (allScore > 38999999) {
       setUserRankName({
         name: "champion",
         id: 3,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(3);
-      setUserProgress((allScore / 62000000) * 100);
-    } else if (allScore > 23999999) {
+      setUserProgress((allScore / 64000000) * 100);
+    } else if (allScore > 25999999) {
       setUserRankName({
         name: "underdog",
         id: 2,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(2);
-      setUserProgress((allScore / 37000000) * 100);
-    } else if (allScore > 11999999) {
+      setUserProgress((allScore / 39000000) * 100);
+    } else if (allScore > 13999999) {
       setUserRankName({
         name: "rookie",
         id: 1,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(1);
-      setUserProgress((allScore / 24000000) * 100);
+      setUserProgress((allScore / 26000000) * 100);
     } else {
       sliderRef?.current?.innerSlider?.slickGoTo(0);
-      setUserProgress((allScore / 12000000) * 100);
+      setUserProgress((allScore / 14000000) * 100);
     }
   };
 
@@ -1241,14 +1241,14 @@ const ProfileCard = ({
                                   </span>
                                   <span className="rank-current-score">
                                     {userRankName?.name === "rookie"
-                                      ? "24M"
+                                      ? "26M"
                                       : userRankName?.name === "underdog"
-                                      ? "37M"
+                                      ? "39M"
                                       : userRankName?.name === "champion"
-                                      ? "62M"
+                                      ? "64M"
                                       : userRankName?.name === "unstoppable"
                                       ? ""
-                                      : "12M"}
+                                      : "14M"}
                                   </span>
                                 </div>
                                 {rankData?.multiplier === "no" && !isPremium ? (
@@ -1667,7 +1667,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">0 - 11,999,999</span>
+                    <span className="needed-points mb-0">0 - 13,999,999</span>
                   </div>
                   <div
                     className={` ${
@@ -1705,7 +1705,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">12,000,000</span>
+                    <span className="needed-points mb-0">14,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1744,7 +1744,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">24,000,000</span>
+                    <span className="needed-points mb-0">26,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1783,7 +1783,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">37,000,000</span>
+                    <span className="needed-points mb-0">39,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1822,7 +1822,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">62,000,000</span>
+                    <span className="needed-points mb-0">64,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1862,7 +1862,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">0 - 11,999,999</span>
+                    <span className="needed-points mb-0">0 - 13,999,999</span>
                   </div>
                   <div
                     className={` ${
@@ -1899,7 +1899,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">12,000,000</span>
+                    <span className="needed-points mb-0">14,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1936,7 +1936,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">24,000,000</span>
+                    <span className="needed-points mb-0">26,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1973,7 +1973,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">37,000,000</span>
+                    <span className="needed-points mb-0">39,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -2010,7 +2010,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">62,000,000</span>
+                    <span className="needed-points mb-0">64,000,000</span>
                   </div>
                   <div
                     className={` ${
