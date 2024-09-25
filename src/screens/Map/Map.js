@@ -140,7 +140,7 @@ const Map = () => {
 
   return (
     <div className="d-flex align-items-start">
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div className="d-none">Loading...</div>}>
         <MapSidebar
           switches={switches}
           setSwitches={setSwitches}
@@ -303,7 +303,7 @@ const Map = () => {
           alt=""
         />
       </div>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div className="d-none">Loading...</div>}>
         <MarkerDetails
           marker={selectedMarker}
           type={markerType}
@@ -315,7 +315,7 @@ const Map = () => {
           }}
         />
       </Suspense>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div className="d-none">Loading...</div>}>
         <EventsBar
           show={events}
           handleMarkerClick={handleMarkerClick}
