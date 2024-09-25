@@ -662,7 +662,7 @@ function Dashboard({
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
   const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
   const [landPremiumRewards, setlandPremiumRewards] = useState(0);
- 
+
   const [portfolio, setPortfolio] = useState(false);
 
   const [bnbImages, setBnbImages] = useState(shuffle(chestImagesBnb));
@@ -1163,6 +1163,7 @@ function Dashboard({
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
+
     {
       title: "CORE",
       logo: coreLogo,
@@ -1226,7 +1227,7 @@ function Dashboard({
     {
       title: "BNB Chain",
       logo: bnbLogo,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -1240,7 +1241,7 @@ function Dashboard({
         chain: "BNB Chain",
         linkState: "bnb",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event20",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -1387,10 +1388,6 @@ function Dashboard({
     //     chain: "SEI Chain",
     //     linkState: "sei",
     //     rewards: "SEI",
-    //     logo: seiLogo,
-    //     backgroundImage: seiBg,
-    //     date: "XXX XX, XXXX",
-
     //     status: "Coming Soon",
     //     id: "event13",
     //     eventType: "Explore & Find",
@@ -1405,7 +1402,6 @@ function Dashboard({
     //     eventDate: "XXX XX, XXXX",
     //   },
     // },
-
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -1431,13 +1427,12 @@ function Dashboard({
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "30,000",
+        maxPoints: "50,000",
         learnMore:
           "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
         eventDate: "Apr 15, 2024",
       },
     },
-
     {
       title: "Dypius Premium",
       logo: dypiusPremium,
@@ -1525,7 +1520,6 @@ function Dashboard({
       maxPoints: "50,000",
       learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
       userEarnUsd: dogeEarnUSD,
-
       popupInfo: {
         title: "Dogecoin",
         chain: "BNB Chain",
@@ -1652,7 +1646,7 @@ function Dashboard({
         title: "Gate.io",
         chain: "BNB Chain",
         linkState: "gate",
-        rewards: "GT",
+        rewards: "BNB",
         status: "Expired",
         id: "event6",
         totalRewards: "$2,000 in BNB Rewards",
@@ -1989,6 +1983,9 @@ function Dashboard({
   const [genesisData, setgenesisData] = useState([]);
   const [previousgenesisData, setpreviousgenesisData] = useState([]);
   const [specialRewardsSuccess, setSpecialRewardsSuccess] = useState(false);
+
+
+  
   const fillRecords = (itemData) => {
     if (itemData.length === 0) {
       setRecords(placeholderplayerData);
@@ -5004,7 +5001,6 @@ function Dashboard({
 
     return myStakes;
   };
-
 
   const calculateAllRewardsCawsPremium = async () => {
     const address = coinbase;
@@ -8149,14 +8145,20 @@ function Dashboard({
       userVictionScore +
       userMantaScore +
       userTaikoScore;
-      
-      const totalScore_multiplied = (rankData && rankData.multiplier === "yes") ? totalScore * 4 : totalScore
+
+    const totalScore_multiplied =
+      rankData && rankData.multiplier === "yes" ? totalScore * 4 : totalScore;
     if (totalScore_multiplied > 11999999 && totalScore_multiplied < 24000000) {
- 
       setUserRankRewards(5);
-    } else if (totalScore_multiplied >= 24000000 && totalScore_multiplied < 37000000) {
+    } else if (
+      totalScore_multiplied >= 24000000 &&
+      totalScore_multiplied < 37000000
+    ) {
       setUserRankRewards(10);
-    } else if (totalScore_multiplied >= 37000000 && totalScore_multiplied < 62000000) {
+    } else if (
+      totalScore_multiplied >= 37000000 &&
+      totalScore_multiplied < 62000000
+    ) {
       setUserRankRewards(25);
     } else if (totalScore_multiplied >= 62000000) {
       setUserRankRewards(100);
@@ -8232,7 +8234,7 @@ function Dashboard({
     userVictionScore,
     userMantaScore,
     userTaikoScore,
-    rankData
+    rankData,
   ]);
 
   useEffect(() => {
@@ -8281,7 +8283,7 @@ function Dashboard({
       window.WALLET_TYPE !== ""
     ) {
       calculateAllRewardsCawsPremium(data.getPlayer.wallet.publicAddress);
-      calculateAllRewardsLandPremium(data.getPlayer.wallet.publicAddress)
+      calculateAllRewardsLandPremium(data.getPlayer.wallet.publicAddress);
     }
   }, [data, chainId]);
 
@@ -8743,12 +8745,17 @@ function Dashboard({
                 Number(weeklyDataAmountCore) +
                 Number(monthlyDataAmountCore) +
                 Number(weeklyDataAmountSkale) +
-                +Number(monthlyDataAmountSkale) +
+                Number(monthlyDataAmountSkale) +
                 Number(weeklyDataAmountViction) +
                 Number(monthlyDataAmountViction) +
                 Number(coreEarnUsd) +
                 Number(victionEarnUsd) +
-                Number(bnbEarnUsd) + Number(weeklyDataAmountManta) + Number(monthlyDataAmountManta) + Number(weeklyDataAmountTaiko) + Number(monthlyDataAmountTaiko)
+                Number(weeklyDataAmountManta) +
+                Number(monthlyDataAmountManta) +
+                Number(weeklyDataAmountTaiko) +
+                Number(monthlyDataAmountTaiko) +
+                Number(cawsPremiumRewards) +
+                Number(landPremiumRewards)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
@@ -8770,14 +8777,15 @@ function Dashboard({
           <MyRewardsPopupNew
             address={data?.getPlayer?.wallet?.publicAddress}
             weeklyplayerData={weeklyplayerDataAmount}
-            dailyplayerData={dailyplayerDataAmount}
             dailyDataAmountCore={dailyDataAmountCore}
             weeklyDataAmountCore={weeklyDataAmountCore}
             monthlyDataAmountCore={monthlyDataAmountCore}
-            dailyDataAmountViction={dailyDataAmountViction}
             weeklyDataAmountViction={weeklyDataAmountViction}
             monthlyDataAmountViction={monthlyDataAmountViction}
-            dailyDataAmountSkale={dailyDataAmountSkale}
+            weeklyDataAmountManta={weeklyDataAmountManta}
+            monthlyDataAmountManta={monthlyDataAmountManta}
+            weeklyDataAmountTaiko={weeklyDataAmountTaiko}
+            monthlyDataAmountTaiko={monthlyDataAmountTaiko}
             weeklyDataAmountSkale={weeklyDataAmountSkale}
             monthlyDataAmountSkale={monthlyDataAmountSkale}
             userRank2={userRank2}
@@ -8787,6 +8795,8 @@ function Dashboard({
             allSkaleChests={allSkaleChests}
             allCoreChests={allCoreChests}
             allVictionChests={allVictionChests}
+            allMantaChests={allMantaChests}
+            allTaikoChests={allTaikoChests}
             allSeiChests={allSeiChests}
             availableTime={goldenPassRemainingTime}
             userSocialRewards={userSocialRewards}
@@ -8795,11 +8805,16 @@ function Dashboard({
             multiversEarnUsd={multiversEarnUsd}
             seiEarnUsd={seiEarnUsd}
             victionEarnUsd={victionEarnUsd}
+            mantaEarnUsd={mantaEarnUsd}
+            taikoEarnUsd={taikoEarnUsd}
+            immutableEarnUsd={immutableEarnUsd}
             coreEarnUsd={coreEarnUsd}
             kittyDashRecords={kittyDashRecords}
             userRankRewards={userRankRewards}
             cawsPremiumRewards={cawsPremiumRewards}
+            landPremiumRewards={landPremiumRewards}
             genesisRank2={genesisRank2}
+            cookieEarnUsd={cookieEarnUsd}
           />
         ) : location.pathname === "/account/premium" ? (
           <GetPremiumPopup
@@ -8845,6 +8860,7 @@ function Dashboard({
               setdailyBonusPopup(false);
               window.location.hash = "";
             }}
+            binanceW3WProvider={binanceW3WProvider}
             coinbase={coinbase}
             standardChests={standardChests}
             premiumChests={premiumChests}
@@ -8922,6 +8938,9 @@ function Dashboard({
               setdailyBonusPopup(false);
               setgetPremiumPopup(true);
             }}
+            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+            binanceWallet={binanceWallet}
           />
           // </OutsideClickHandler>
         )}
@@ -9182,14 +9201,15 @@ function Dashboard({
               <MyRewardsPopupNew
                 address={data?.getPlayer?.wallet?.publicAddress}
                 weeklyplayerData={weeklyplayerDataAmount}
-                dailyplayerData={dailyplayerDataAmount}
                 dailyDataAmountCore={dailyDataAmountCore}
                 weeklyDataAmountCore={weeklyDataAmountCore}
                 monthlyDataAmountCore={monthlyDataAmountCore}
-                dailyDataAmountViction={dailyDataAmountViction}
                 weeklyDataAmountViction={weeklyDataAmountViction}
                 monthlyDataAmountViction={monthlyDataAmountViction}
-                dailyDataAmountSkale={dailyDataAmountSkale}
+                weeklyDataAmountManta={weeklyDataAmountManta}
+                monthlyDataAmountManta={monthlyDataAmountManta}
+                weeklyDataAmountTaiko={weeklyDataAmountTaiko}
+                monthlyDataAmountTaiko={monthlyDataAmountTaiko}
                 weeklyDataAmountSkale={weeklyDataAmountSkale}
                 monthlyDataAmountSkale={monthlyDataAmountSkale}
                 userRank2={userRank2}
@@ -9199,6 +9219,8 @@ function Dashboard({
                 allSkaleChests={allSkaleChests}
                 allCoreChests={allCoreChests}
                 allVictionChests={allVictionChests}
+                allMantaChests={allMantaChests}
+                allTaikoChests={allTaikoChests}
                 allSeiChests={allSeiChests}
                 availableTime={goldenPassRemainingTime}
                 userSocialRewards={userSocialRewards}
@@ -9207,11 +9229,16 @@ function Dashboard({
                 multiversEarnUsd={multiversEarnUsd}
                 seiEarnUsd={seiEarnUsd}
                 victionEarnUsd={victionEarnUsd}
+                mantaEarnUsd={mantaEarnUsd}
+                taikoEarnUsd={taikoEarnUsd}
+                immutableEarnUsd={immutableEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 kittyDashRecords={kittyDashRecords}
                 userRankRewards={userRankRewards}
                 cawsPremiumRewards={cawsPremiumRewards}
+                landPremiumRewards={landPremiumRewards}
                 genesisRank2={genesisRank2}
+                cookieEarnUsd={cookieEarnUsd}
               />
             </div>
           </OutsideClickHandler>
