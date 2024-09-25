@@ -47,6 +47,8 @@ import bnbActive from "../../Components/LeaderBoard/assets/bnbActive.svg";
 import coreActive from "../../Components/LeaderBoard/assets/coreActive.svg";
 import victionActive from "../../Components/LeaderBoard/assets/victionActive.svg";
 import mantaActive from "../../Components/LeaderBoard/assets/mantaActive.png";
+import baseLogo from "../../Components/LeaderBoard/assets/baseActive.svg";
+
 import taikoLogo from "../../Components/LeaderBoard/assets/taikoActive.svg";
 
 import starAlert from "./assets/star-alert.svg";
@@ -979,7 +981,7 @@ const ProfileCard = ({
                                       style={{ width: "33%" }}
                                     >
                                       <img
-                                        src={mantaActive}
+                                        src={baseLogo}
                                         width={20}
                                         height={20}
                                         alt=""
