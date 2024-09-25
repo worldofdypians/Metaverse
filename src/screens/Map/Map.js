@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo, useCallback, Suspense } from "react";
+import React, { useRef, useState, useMemo, useCallback, Suspense, useEffect } from "react";
 import { MapContainer, TileLayer, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./_map.scss";
@@ -75,6 +75,7 @@ const Map = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [markerType, setMarkerType] = useState(null);
   const [events, setEvents] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Memoize large data to avoid re-renders
   const memoizedChainAreas = useMemo(() => chainAreas, [chainAreas]);
@@ -138,8 +139,25 @@ const Map = () => {
     [chainsVisible, memoizedChainAreas, handleMarkerClick]
   );
 
+  useEffect(() => {
+   setTimeout(() => {
+    setLoading(false)
+   }, 3000);
+  }, [])
+  
+
+if(loading){
   return (
-    <div className="d-flex align-items-start">
+<div className="map-fallback d-flex align-items-center justify-content-center">
+<div class="spinner-border text-primary" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+   </div>
+  )
+}
+
+  return (
+     <div className="d-flex align-items-start">
       <Suspense fallback={<div className="d-none">Loading...</div>}>
         <MapSidebar
           switches={switches}
@@ -218,7 +236,7 @@ const Map = () => {
             />
           ))}
 
-        <MarkerClusterGroup
+        {/* <MarkerClusterGroup
           iconCreateFunction={createCustomClusterIcon}
           disableClusteringAtZoom={18}
         >
@@ -238,7 +256,7 @@ const Map = () => {
               handleMarkerClick={() => handleMarkerClick(item, 18, "area")}
             />
           ))}
-        </MarkerClusterGroup>
+        </MarkerClusterGroup> */}
 
         {regionsVisible &&
           switches.areas &&

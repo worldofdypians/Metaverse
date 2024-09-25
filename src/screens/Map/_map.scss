@@ -25,8 +25,12 @@
   border: 0.5px solid #525469;
   background: rgba(8, 11, 42, 0.9);
   backdrop-filter: blur(2px);
-  overflow-x: hidden; /* Disable horizontal scroll */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+}
+
+.map-sidebar-scroll{
+  height: 78%;
+  overflow-y: scroll;
 }
 
 .marker-details-2 {
@@ -138,6 +142,12 @@
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: black;
   pointer-events: none;
+}
+
+.map-fallback{
+  width: 100vw;
+  height: 100vh;
+  background: white;
 }
 
 .area-marker {
@@ -516,7 +526,7 @@
 
 .dypians-areas-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
 
@@ -652,9 +662,9 @@ font-size: 12px;
 font-style: normal;
 font-weight: 600;
 line-height: 24px; /* 300% */
-position: absolute;
-bottom: 2%;
 cursor: pointer;
+position: absolute;
+bottom: 1%;
 }
 
 .animals-dropdown-grid{

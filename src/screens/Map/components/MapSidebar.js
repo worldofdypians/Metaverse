@@ -124,7 +124,8 @@ const genesisLocation = {
        
         </div>
         </div>
-        <div className="d-flex flex-column gap-3" style={{ zIndex: 2 }}>
+       <div className="map-sidebar-scroll">
+       <div className="d-flex flex-column gap-3" style={{ zIndex: 2 }}>
         {/* <div className="map-sidebar-btn p-2 d-flex align-items-center justify-content-center gap-2" onClick={() =>
                 setSwitches((prevState) => ({
                   ...prevState,
@@ -190,7 +191,9 @@ const genesisLocation = {
             setSwitches={setSwitches}
           />
         </div>
-        <div className="d-flex w-100 justify-content-center">
+       
+       </div>
+      <div className="d-flex w-100 justify-content-center mt-2">
           <span className="clear-all-span" onClick={() => setSwitches({
               regions: false,
               areas: false,

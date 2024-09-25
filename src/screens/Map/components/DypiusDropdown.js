@@ -30,7 +30,8 @@ const DypiusDropdown = ({
       >
         <h6 className="sidebar-section-title mb-0">Dypians City</h6>
       </div>
-      <div
+    <div className="dypians-areas-grid">
+    <div
         className={`section-switch-btn ${
           switches.leaderboards && "section-switch-btn-active"
         } d-flex align-items-center gap-2 p-2 w-100`}
@@ -72,7 +73,8 @@ const DypiusDropdown = ({
         <img src={questsIcon} alt="" />
         <span>Quests</span>
       </div>
-      <Accordion >
+    </div>
+      <Accordion defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
           aria-controls={`areas-content`}
@@ -93,7 +95,8 @@ const DypiusDropdown = ({
         <AccordionDetails sx={{padding: 0, marginTop: "12px"}}>
           <div className="dypians-areas-grid">
            {options.map((item, index) => (
-             <div key={index} className="areas-grid-item py-1 d-flex align-items-center justify-content-center"  onClick={() => onZoomIn(item, 18, "chain")}>
+             <div key={index} className="areas-grid-item py-1 d-flex align-items-center gap-1 justify-content-start ps-1"  onClick={() => onZoomIn(item, 18, "chain")}>
+             <img src={item.icon} width={20} height={20} alt="" />
              <span>{item.title.slice(0, item.title.length - 5)}</span>
            </div>
            ))}
