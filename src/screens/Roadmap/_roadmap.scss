@@ -27,8 +27,8 @@
 
   .roadmap-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 30px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
 
     @media screen and (max-width: 786px) {
       grid-template-columns: auto;
@@ -80,13 +80,14 @@
   }
 
   .roadmap-items {
-    --mask: linear-gradient(-153.5deg, #0000 30.57px, #000 0);
+    --mask: linear-gradient(-53.5deg, #0000 30.57px, #000 0);
     -webkit-mask: var(--mask);
     mask: var(--mask);
     width: 100%;
-    background: linear-gradient(180deg, #5b08d0 -341.29%, #7f2df7 -177.5%);
-    bottom: 40px;
+    background: linear-gradient(180deg, #5B08D0 44.48%, #B936F5 100%);;
+    bottom: 135px;
     min-height: 230px;
+    padding-top: 100px;
 
     .roadmap-items-wrapper {
       padding-bottom: 100px;
@@ -99,7 +100,8 @@
   .quarter {
     width: 100%;
     position: relative;
-    bottom: 135px;
+    top: -50px;
+    z-index: 2;
 
     @media screen and (max-width: 1620px) {
       bottom: 110px;

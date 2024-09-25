@@ -777,7 +777,7 @@ const CawsNFT = ({
       style={{ overflow: "auto" }}
     >
       <div
-        className="container-fluid d-flex justify-content-end p-0"
+        className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
@@ -786,7 +786,7 @@ const CawsNFT = ({
           className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative"
           style={{ backgroundSize: "cover" }}
         >
-          <div className="container-lg mx-0 position-relative">
+          <div className="custom-container mx-0 position-relative">
             <div className="row align-items-center justify-content-between mt-4 gap-4 gap-lg-0">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
