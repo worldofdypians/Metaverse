@@ -330,6 +330,25 @@ const Marketplace = ({
   var month = moment().subtract(30, "days");
   const [topSalesDate, setTopSalesDate] = useState("week");
 
+  const benefits = [
+    {
+      title: "Exclusive Access",
+      icon: "draft",
+    },
+    {
+      title: "Enhanced Interactions",
+      icon: "user",
+    },
+    {
+      title: "Special Rewards",
+      icon: "star",
+    },
+    {
+      title: "Expanded Functionality",
+      icon: "expand",
+    },
+  ];
+  
   const initialSales = () => {
     let datedSales = topSales.map((item) => {
       return { ...item, date: new Date(parseInt(item.blockTimestamp * 1000)) };

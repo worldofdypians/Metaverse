@@ -25,7 +25,6 @@ import taikoLogo from "./assets/taikoLogo.svg";
 import mantaLogo from "./assets/mantaLogo.png";
 import cookieLogo from "./assets/cookie3Logo.svg";
 
-
 import coreBg from "./assets/coreBg.webp";
 import immutableLogo from "./assets/immutableLogo.svg";
 import immutableBg from "./assets/immutableBg.webp";
@@ -203,8 +202,6 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
 
   const dummyBetaPassData2 = [
-  
-
     {
       link: "/token",
       title: "TOKEN",
@@ -231,8 +228,10 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
       class: "leaderboardClass",
     },
   ];
+
+
   var settings = {
-    dots: true,
+    dots: false,
     arrows: false,
     dotsClass: "button__bar",
     infinite: true,
@@ -412,20 +411,59 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
         {windowSize.width > 992 && (
           <div className="opacitywrapper custom-container">
             <Slider {...settings} ref={betaSlider}>
-              {dummyBetaPassData2.slice(0, 4).map((item, index) => (
-                <NavLink
-                  to={`${item.link}`}
-                  onClick={() => {
-                    item.link === "/" && setModal(true);
-                  }}
-                >
-                  <BetaEventCardHome
-                    data={item}
-                    key={index}
-                    isFrontPage={true}
-                  />
-                </NavLink>
-              ))}
+              {/* {dummyBetaPassData2.map((item, index) => {
+                return ( */}
+                  {/* <NavLink
+                    to={`${dummyBetaPassData2[0].link}`}
+                    onClick={() => {
+                      dummyBetaPassData2[0].link === "/" && setModal(true);
+                    }}
+                  > */}
+                    <BetaEventCardHome
+                      data={dummyBetaPassData2[0]}
+                      // key={index}
+                      isFrontPage={true}
+                    />
+                  {/* </NavLink> */}
+                  {/* <NavLink
+                    to={`${dummyBetaPassData2[1].link}`}
+                    onClick={() => {
+                      dummyBetaPassData2[1].link === "/" && setModal(true);
+                    }}
+                  > */}
+                    <BetaEventCardHome
+                      data={dummyBetaPassData2[1]}
+                      // key={index}
+                      isFrontPage={true}
+                    />
+                  {/* </NavLink> */}
+                  {/* <NavLink
+                    to={`${dummyBetaPassData2[2].link}`}
+                    onClick={() => {
+                      dummyBetaPassData2[2].link === "/" && setModal(true);
+                    }}
+                  > */}
+                    <BetaEventCardHome
+                      data={dummyBetaPassData2[2]}
+                      // key={index}
+                      isFrontPage={true}
+                    />
+                  {/* </NavLink> */}
+                  {/* <NavLink
+                    to={`${dummyBetaPassData2[3].link}`}
+                    onClick={() => {
+                      dummyBetaPassData2[3].link === "/" && setModal(true);
+                    }}
+                  > */}
+                    <BetaEventCardHome
+                      data={dummyBetaPassData2[3]}
+                      // key={index}
+                      isFrontPage={true}
+                    />
+                  {/* </NavLink> */}
+
+                {/* );
+              })} */}
             </Slider>
           </div>
         )}
