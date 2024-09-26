@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox } from "@mui/material";
-import { allAreas, regions } from "../mapdata/areas";
+import { allAreas } from "../mapdata/areas";
 import DypiusDropdown from "./DypiusDropdown";
 import IslandDropdown from "./IslandDropdown";
 import regionIcon from '../assets/sidebarIcons/regionIcon.svg'
@@ -10,9 +9,7 @@ import cityIconActive from '../assets/sidebarIcons/cityIconActive.svg'
 import challengeIcon from '../assets/sidebarIcons/challengeIcon.svg'
 import challengeIconActive from '../assets/sidebarIcons/challengeIconActive.svg'
 import genesisIcon from '../assets/sidebarIcons/genesisIcon.svg'
-import genesisIconActive from '../assets/sidebarIcons/genesisIconActive.svg'
 import minimize from '../assets/sidebarIcons/minimize.svg'
-import landIcon from '../assets/landIcon.png'
 import searchIcon from '../assets/sidebarIcons/searchIcon.svg'
 const Sidebar = ({
   switches,
@@ -20,7 +17,6 @@ const Sidebar = ({
   chainAreas,
   handleMarkerClick,
   setContent,
-setInfo,
 }) => {
 
 
@@ -38,21 +34,11 @@ setInfo,
   };
 
   function openNav() {
-    document.getElementById("mySidebar").style.width = "400px";
-    document.getElementById("mySidebar").style.opacity = "1";
-    document.getElementById("main").style.marginLeft = "0px";
     setSidebar(true);
   }
 
   /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
   function closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("mySidebar").style.opacity = "0";
-    document.getElementById("main").style.marginLeft = "0";
-    document.getElementById("mySidebar").style.paddingLeft = "0";
-    document.getElementById("mySidebar").style.paddingRight = "0";
-
-
     setSidebar(false);
   }
 
@@ -64,6 +50,11 @@ setInfo,
     });
   }, [sidebar]);
 
+  useEffect(() => {
+    
+   closeNav();
+  }, [])
+  
 
 const genesisLocation = {
     title: "Genesis Land",
@@ -72,13 +63,11 @@ const genesisLocation = {
    
 }
 
-  useEffect(() => {
-    openNav();
-  }, []);
+  
 
   return (
     <div>
-      <div id="mySidebar" className="sidebar">
+      <div id="mySidebar" className={`sidebar ${sidebar ? "" : "closed"}`}>
           <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
             <h6 className="map-sidebar-title mb-0">Map</h6>
             <img src={minimize} className="ps-2 py-2" style={{cursor: "pointer"}} alt="" onClick={closeNav} />

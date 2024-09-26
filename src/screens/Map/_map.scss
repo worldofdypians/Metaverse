@@ -16,9 +16,9 @@
 /* The sidebar menu */
 .sidebar {
   height: 87%; /* 100% Full-height */
-  width: 0; /* 0 width - change this with JavaScript */
+  width: 400px; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
-  z-index: 1000; /* Stay on top */
+  z-index: 1001; /* Stay on top */
   top: 12%;
   left: 15px;
   border-radius: 10px;
@@ -26,6 +26,24 @@
   background: rgba(8, 11, 42, 0.9);
   backdrop-filter: blur(2px);
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+}
+
+.sidebar.closed{
+  width: 0;
+  opacity: 0;
+  padding-left: 0;
+  padding-right: 0;
+  pointer-events: none;
+}
+
+
+@media screen and (max-width: 786px) {
+  .sidebar{
+    width: 100%;
+    height: calc(-60px + 100%);
+    left: 0;
+  }
+
 }
 
 .map-sidebar-scroll{
@@ -404,7 +422,7 @@
     font-size: 10px;
     font-style: normal;
     font-weight: 600;
-    line-height: 24px; /* 300% */
+    line-height: 16px; /* 300% */
   }
 }
 
@@ -652,6 +670,15 @@ cursor: pointer;
   .marker-details-inner-wrapper{
     overflow-y: scroll;
     height: 80%;
+  }
+}
+@media screen and (max-width: 786px) {
+  .marker-details-inner-wrapper{
+    overflow-y: scroll;
+    height: 100% !important;
+  }
+  .marker-events-active{
+    right: 0 !important;
   }
 }
 

@@ -23,7 +23,10 @@ import seiLogo from "../assets/chainIcons/seiLogo.svg";
 import immutable from "../assets/chainIcons/immutable.svg";
 import chainlinkIcon from "../assets/chainIcons/chainlinkIcon.svg";
 import mantaIcon from "../assets/chainIcons/mantaIcon.png";
+import midle from "../assets/chainIcons/midle.png";
 import dypIcon from "../assets/chainIcons/dypIcon.svg";
+import cookie3 from "../assets/chainIcons/cookie3.svg";
+import dogecoin from "../assets/chainIcons/dogecoin.svg";
 import bearIcon from "../assets/bearIcon.svg";
 import boarIcon from "../assets/boarIcon.svg";
 import deerIcon from "../assets/deerIcon.svg";
@@ -81,6 +84,9 @@ const iconData = [
   { name: "seiMarker", url: seiLogo, size: 24 },
   { name: "immutableMarker", url: immutable, size: 24 },
   { name: "baseMarker", url: baseIcon, size: 24 },
+  { name: "dogecoinMarker", url: dogecoin, size: 24 },
+  { name: "cookieMarker", url: cookie3, size: 24 },
+  { name: "midleMarker", url: midle, size: 24 },
 ];
 
 // Function to create markers dynamically

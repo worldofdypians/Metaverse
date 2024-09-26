@@ -1,6 +1,4 @@
-import {
-  markers
-} from "./markers";
+import { markers } from "./markers";
 import questDummy1 from "../assets/banners/questDummy1.webp";
 import questDummy2 from "../assets/banners/questDummy2.webp";
 import questDummy3 from "../assets/banners/questDummy3.webp";
@@ -26,6 +24,9 @@ import easy2stakeIcon from "../assets/chainIcons/easy2stakeIcon.svg";
 import kucoinIcon from "../assets/chainIcons/kucoinIcon.svg";
 import immutable from "../assets/chainIcons/immutable.svg";
 import chainlinkIcon from "../assets/chainIcons/chainlinkIcon.svg";
+import midle from "../assets/chainIcons/midle.png";
+import cookie3 from "../assets/chainIcons/cookie3.svg";
+import dogecoin from "../assets/chainIcons/dogecoin.svg";
 import mantaIcon from "../assets/chainIcons/mantaIcon.png";
 import twitter from "../assets/twitter.svg";
 import telegram from "../assets/telegram.svg";
@@ -36,13 +37,13 @@ import dailyBonusInfo from "../assets/dailyBonusInfo.png";
 import mazeGardenInfo from "../assets/mazeGardenInfo.png";
 import leaderboardInfo from "../assets/leaderboardInfo.png";
 
-
 const chainAreas = [
   {
     title: "BNB Chain Area",
     marker: markers.bnbMarker,
     icon: bnbIcon,
     location: [-0.06735561726792588, 0.08666753768920898],
+    banner: "bnbBanner.webp",
     events: [
       {
         title: "Treasure Hunt",
@@ -96,7 +97,6 @@ const chainAreas = [
       "Interact with AI-powered NPCs for immersive experiences ",
       "Participate in daily, weekly, and monthly leaderboards",
     ],
-    banner: "bnbBanner.webp",
 
     area: [
       [
@@ -111,17 +111,18 @@ const chainAreas = [
     title: "CORE Area",
     marker: markers.coreMarker,
     icon: coreIcon,
-    location: [-0.06806371995340654, 0.08683919906616212],
-    link: "https://coredao.org/",
-    logo: "coreBackers.svg",
+    location: [-0.06862698344579729, 0.08752048015594482],
     banner: "coreBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event", "Test Event 2"],
     area: [
       [
-        [-0.06759165149756868, 0.08708059787750244],
-        [-0.06774185509765483, 0.08642077445983887],
-        [-0.06842850012066062, 0.086592435836792],
-        [-0.06823538120893217, 0.08725762367248537],
+        [-0.06825147445161225, 0.08750975131988527],
+        [-0.0682890253511567, 0.08732199668884279],
+        [-0.06897030595220494, 0.08749365806579591],
+        [-0.0688952041541338, 0.08769750595092775],
+        [-0.06869135641594512, 0.08769214153289796],
+        [-0.06863234785998158, 0.08797109127044678],
+        [-0.06834266949333036, 0.0878959894180298],
+        [-0.06842850012066062, 0.08762240409851074],
       ],
     ],
     events: [
@@ -148,19 +149,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/Coredao_Org",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/CoreDAOTelegram",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/coredaoofficial",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://coredao.org/",
         icon: website,
       },
     ],
@@ -179,14 +180,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "Manta Area",
-    marker: markers.mantaMarker,
-    icon: mantaIcon,
+    title: "Coingecko Area",
+    marker: markers.coingeckoMarker,
+    icon: coingeckoIcon,
     location: [-0.06883619559843743, 0.08705377578735353],
-    link: "https://manta.network/",
-    logo: "mantaBackers.svg",
-    banner: "mantaBanner.webp",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event", "Test Event 2"],
+    banner: "coingeckoBanner.png",
     area: [
       [
         [-0.06848750867686589, 0.08663535118103029],
@@ -220,19 +218,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/coingecko",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/coingecko",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/EhrkaCH",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://www.coingecko.com/",
         icon: website,
       },
     ],
@@ -251,14 +249,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "SKALE Area",
-    marker: markers.skaleMarker,
-    icon: skaleIcon,
+    title: "Base Area",
+    marker: markers.baseMarker,
+    icon: baseIcon,
     location: [-0.0694799252930712, 0.08724689483642578],
-    link: "https://skale.space/",
-    logo: "skaleBackers.svg",
     banner: "skaleBanner.webp",
-    events: ["Treasure Hunt"],
     area: [
       [
         [-0.06921170458802975, 0.08680164813995363],
@@ -291,19 +286,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/base",
         icon: twitter,
       },
+      // {
+      //   link: "https://t.me/bnbchain",
+      //   icon: telegram,
+      // },
       {
-        link: "https://t.me/bnbchain",
-        icon: telegram,
-      },
-      {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/buildonbase",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://www.base.org/",
         icon: website,
       },
     ],
@@ -322,14 +317,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "Taiko Area",
-    marker: markers.taikoMarker,
-    icon: taikoIcon,
+    title: "Coin98 Area",
+    marker: markers.coin98Marker,
+    icon: coin98Icon,
     location: [-0.06973741716847187, 0.08653879165649415],
-    link: "https://taiko.xyz/",
-    logo: "taikoBackers.svg",
-    banner: "taikoBanner.webp",
-    events: ["Treasure Hunt", "NFT Mint"],
+    banner: "coin98Banner.png",
     area: [
       [
         [-0.06938873025352861, 0.08608818054199219],
@@ -362,19 +354,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/coin98_wallet",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/coin98wallet",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/ytkeARXYu9",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://coin98.com/",
         icon: website,
       },
     ],
@@ -393,14 +385,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "CoinMarketCap Area",
-    marker: markers.cmcMarker,
-    icon: cmcIcon,
+    title: "Immutable Area",
+    marker: markers.immutableMarker,
+    icon: immutable,
     location: [-0.0671697067836984, 0.08526742458343507],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
-    banner: "coinmarketcapBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    banner: "immutableBanner.png",
     area: [
       [
         [-0.06700693033569312, 0.08538544178009033],
@@ -433,19 +422,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/Immutable",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/immutablex",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/CYsjMdctsP",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://www.immutable.com/",
         icon: website,
       },
     ],
@@ -464,14 +453,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "Coingecko Area",
-    marker: markers.coingeckoMarker,
-    icon: coingeckoIcon,
+    title: "SKALE Area",
+    marker: markers.skaleMarker,
+    icon: skaleIcon,
     location: [-0.0673360036280549, 0.08455395698547363],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
-    banner: "coingeckoBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    banner: "skaleBanner.webp",
     area: [
       [
         [-0.06724296456701524, 0.0847148895263672],
@@ -507,19 +493,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/SkaleNetwork",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/skaleofficial",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/gM5XBy6",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://skale.space/",
         icon: website,
       },
     ],
@@ -538,14 +524,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "MultiversX Area",
-    marker: markers.multiversxMarker,
-    icon: multiversx,
+    title: "MEXC Area",
+    marker: markers.mexcMarker,
+    icon: mexcIcon,
     location: [-0.06727163065611323, 0.0842052698135376],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
-    banner: "multiversBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    banner: "mexcBanner.png",
     area: [
       [
         [-0.06709276096540244, 0.08439302444458008],
@@ -580,19 +563,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/MEXC_Official",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/MEXCEnglish",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/AsDwGJ5T95",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://www.mexc.com/",
         icon: website,
       },
     ],
@@ -611,14 +594,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "Conflux Area",
-    marker: markers.confluxMarker,
-    icon: confluxIcon,
+    title: "Midle Area",
+    marker: markers.midleMarker,
+    icon: midle,
     location: [-0.06773297028649591, 0.08424818515777588],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
     banner: "confluxBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
     area: [
       [
         [-0.067521914111659, 0.0843501091003418],
@@ -651,19 +631,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/midle_official",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/midlecommunity",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.gg/midle",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://app.midle.io/",
         icon: website,
       },
     ],
@@ -682,14 +662,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "BabyDoge Area",
-    marker: markers.babydogeMarker,
-    icon: babydogeIcon,
+    title: "KuCoin Area",
+    marker: markers.kucoinMarker,
+    icon: kucoinIcon,
     location: [-0.06778661442929296, 0.08464515209198],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
-    banner: "babyDogeBanner.webp",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    banner: "kucoinBanner.png",
     area: [
       [
         [-0.06743071906840152, 0.08473098278045656],
@@ -722,19 +699,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/KuCoinCom",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/Kucoin_Exchange",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/kucoinofficialserver",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://www.kucoin.com/",
         icon: website,
       },
     ],
@@ -757,10 +734,7 @@ const chainAreas = [
     marker: markers.avaxMarker,
     icon: avaxIcon,
     location: [-0.06854299683618559, 0.08485436439514162],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
     banner: "avalancheBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
     area: [
       [
         [-0.0681495505812457, 0.08491873741149904],
@@ -793,19 +767,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/avax",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/avalancheavax",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/avax",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://www.avax.network/",
         icon: website,
       },
     ],
@@ -824,14 +798,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "Chainlink Area",
-    marker: markers.chainlinkMarker,
-    icon: chainlinkIcon,
+    title: "GateIo Area",
+    marker: markers.gateMarker,
+    icon: gateIcon,
     location: [-0.06845180179486188, 0.08445203304290771],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
-    banner: "chainlinkBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    banner: "gateBanner.png",
     area: [
       [
         [-0.06825147445161225, 0.08453786373138428],
@@ -864,19 +835,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/gate_io",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/gateio_en",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.gg/QZWFkuQvzP",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://www.gate.io/",
         icon: website,
       },
     ],
@@ -895,14 +866,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "Coin98 Area",
-    marker: markers.coin98Marker,
-    icon: coin98Icon,
+    title: "Easy2Stake Area",
+    marker: markers.easy2stakeMarker,
+    icon: easy2stakeIcon,
     location: [-0.06881121754499282, 0.08454322814941408],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
-    banner: "coin98Banner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    banner: "easy2stakeBanner.png",
     area: [
       [
         [-0.0685947969607043, 0.08462905883789064],
@@ -935,19 +903,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/easy2stake",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/easy2stake",
         icon: telegram,
       },
+      // {
+      //   link: "https://discord.com/invite/bnbchain",
+      //   icon: discord,
+      // },
       {
-        link: "https://discord.com/invite/bnbchain",
-        icon: discord,
-      },
-      {
-        link: "https://www.bnbchain.org/en",
+        link: "https://www.easy2stake.com/",
         icon: website,
       },
     ],
@@ -966,14 +934,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "GateIo Area",
-    marker: markers.gateMarker,
-    icon: gateIcon,
+    title: "Chainlink Area",
+    marker: markers.chainlinkMarker,
+    icon: chainlinkIcon,
     location: [-0.06912771797944854, 0.0847846269607544],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
-    banner: "gateBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    banner: "chainlinkBanner.png",
     area: [
       [
         [-0.06902395009360253, 0.08444666862487794],
@@ -1006,19 +971,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/chainlink",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/chainlinkofficial",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/chainlink",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://chain.link/",
         icon: website,
       },
     ],
@@ -1037,22 +1002,17 @@ const chainAreas = [
     ],
   },
   {
-    title: "MEXC Area",
-    marker: markers.mexcMarker,
-    icon: mexcIcon,
-    location: [-0.06897214996956727, 0.08645832538604736],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
-    banner: "mexcBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    title: "Viction Area",
+    marker: markers.victionMarker,
+    icon: victionIcon,
+    location: [-0.07002709552661193, 0.08453786373138428],
+    banner: "victionBanner.png",
     area: [
       [
-        [-0.06853042399042923, 0.08655488491058351],
-        [-0.06916342486095638, 0.08669972419738771],
-        [-0.06928144197148403, 0.08621156215667725],
-        [-0.06893811946732821, 0.08610427379608156],
-        [-0.06876645821432159, 0.08624911308288576],
-        [-0.0685787037181387, 0.08626520633697511],
+        [-0.06978569689494729, 0.08455932140350342],
+        [-0.06981788337923879, 0.08439302444458008],
+        [-0.07016120587699533, 0.08447349071502686],
+        [-0.07009683290887032, 0.08467197418212892],
       ],
     ],
     events: [
@@ -1079,19 +1039,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/BuildOnViction",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/buildonviction",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/viction",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://www.viction.xyz/",
         icon: website,
       },
     ],
@@ -1110,14 +1070,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "Easy2Stake Area",
-    marker: markers.easy2stakeMarker,
-    icon: easy2stakeIcon,
+    title: "Taiko Area",
+    marker: markers.taikoMarker,
+    icon: taikoIcon,
     location: [-0.06942812516951939, 0.08510112762451173],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
-    banner: "easy2stakeBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    banner: "taikoBanner.webp",
     area: [
       [
         [-0.06921170458802975, 0.08519768714904785],
@@ -1150,19 +1107,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/taikoxyz",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/TaikoEcosystem",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/taikoxyz",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://taiko.xyz/",
         icon: website,
       },
     ],
@@ -1181,20 +1138,17 @@ const chainAreas = [
     ],
   },
   {
-    title: "KuCoin Area",
-    marker: markers.kucoinMarker,
-    icon: kucoinIcon,
-    location: [-0.06764713965793161, 0.08595943450927736],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
-    banner: "kucoinBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    title: "Cookie3 Area",
+    marker: markers.cookieMarker,
+    icon: cookie3,
+    location: [-0.0680959064388685, 0.0843554735183716],
+    banner: "cookie3Banner.webp",
     area: [
       [
-        [-0.06706593889362861, 0.0861632823944092],
-        [-0.06722150690966744, 0.08551955223083497],
-        [-0.06789742311154359, 0.0856912136077881],
-        [-0.06771503302624994, 0.08634567260742189],
+        [-0.06791888076858607, 0.08444130420684816],
+        [-0.06798861815392325, 0.08418381214141846],
+        [-0.0682675676942669, 0.08424818515777588],
+        [-0.0681871014808792, 0.08451104164123535],
       ],
     ],
     events: [
@@ -1221,19 +1175,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/cookie3_com",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/cookie3_co",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/cookie3com",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://www.cookie3.com/",
         icon: website,
       },
     ],
@@ -1252,20 +1206,17 @@ const chainAreas = [
     ],
   },
   {
-    title: "Base Area",
-    marker: markers.baseMarker,
-    icon: baseIcon,
-    location: [-0.06778125001500689, 0.08511722087860107],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
-    banner: "victionBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    title: "MultiversX Area",
+    marker: markers.multiversxMarker,
+    icon: multiversx,
+    location: [-0.0696194000590765, 0.08443593978881837],
+    banner: "multiversBanner.png",
     area: [
       [
-        [-0.0672483289813522, 0.08544981479644775],
-        [-0.06740389699681852, 0.08479535579681398],
-        [-0.06806371995340654, 0.08496701717376709],
-        [-0.06787596545447566, 0.08562147617340089],
+        [-0.06938873025352861, 0.08447349071502686],
+        [-0.06942091673808727, 0.08428573608398438],
+        [-0.06978033248090294, 0.08438229560852052],
+        [-0.0696998662700597, 0.084570050239563],
       ],
     ],
     events: [
@@ -1292,19 +1243,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/MultiversX",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/MultiversX",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/multiversxbuilders",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://multiversx.com/",
         icon: website,
       },
     ],
@@ -1323,14 +1274,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "Viction Area",
-    marker: markers.victionMarker,
-    icon: victionIcon,
+    title: "Conflux Area",
+    marker: markers.confluxMarker,
+    icon: confluxIcon,
     location: [-0.06990907841795445, 0.08591651916503908],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
-    banner: "victionBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    banner: "confluxBanner.png",
     area: [
       [
         [-0.06940482349580157, 0.086018443107605],
@@ -1363,19 +1311,19 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/Conflux_Network",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://t.me/Conflux_English",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/confluxnetwork",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://confluxnetwork.org/",
         icon: website,
       },
     ],
@@ -1394,14 +1342,11 @@ const chainAreas = [
     ],
   },
   {
-    title: "Immutable Area",
-    marker: markers.immutableMarker,
-    icon: immutable,
+    title: "Manta Area",
+    marker: markers.mantaMarker,
+    icon: mantaIcon,
     location: [-0.07001821071588557, 0.08503675460815431],
-    link: "https://www.viction.xyz/",
-    logo: "victionBackers.svg",
-    banner: "immutableBanner.png",
-    events: ["Treasure Hunt", "NFT Mint", "Test Event"],
+    banner: "mantaBanner.webp",
     area: [
       [
         [-0.06961403564501943, 0.08528888225555421],
@@ -1434,19 +1379,223 @@ const chainAreas = [
     ],
     socials: [
       {
-        link: "https://x.com/BNBCHAIN",
+        link: "https://x.com/mantanetwork",
         icon: twitter,
       },
       {
-        link: "https://t.me/bnbchain",
+        link: "https://www.t.me/mantanetworkofficial",
         icon: telegram,
       },
       {
-        link: "https://discord.com/invite/bnbchain",
+        link: "https://discord.com/invite/mantanetwork",
         icon: discord,
       },
       {
-        link: "https://www.bnbchain.org/en",
+        link: "https://manta.network/",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
+  },
+  {
+    title: "BabyDoge Area",
+    marker: markers.babydogeMarker,
+    icon: babydogeIcon,
+    location: [-0.06669579430174531, 0.08574485778808595],
+    banner: "babydogeBanner.webp",
+    area: [
+      [
+        [-0.06632564970708857, 0.0857287645339966],
+        [-0.06637392943698626, 0.08555710315704347],
+        [-0.06693719294894378, 0.0856912136077881],
+        [-0.06687281997648051, 0.08589506149291994],
+      ],
+    ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/babydogecoin",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/babydogearmy",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/babydogecoin1",
+        icon: discord,
+      },
+      {
+        link: "https://babydoge.com/",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
+  },
+  {
+    title: "DogeCoin Area",
+    marker: markers.dogecoinMarker,
+    icon: dogecoin,
+    location: [-0.06900249243705621, 0.08157670497894287],
+    banner: "immutableBanner.png",
+    area: [
+      [
+        [-0.06869672083011669, 0.08172154426574707],
+        [-0.06879864469931281, 0.08129775524139406],
+        [-0.06924389107271563, 0.08141577243804933],
+        [-0.06911514513384485, 0.0818610191345215],
+      ],
+    ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/dogecoin",
+        icon: twitter,
+      },
+      // {
+      //   link: "https://t.me/bnbchain",
+      //   icon: telegram,
+      // },
+      {
+        link: "https://discord.com/invite/X3fHfpvpCM",
+        icon: discord,
+      },
+      {
+        link: "https://dogecoin.com/",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
+  },
+  {
+    title: "CoinMarketCap Area",
+    marker: markers.cmcMarker,
+    icon: cmcIcon,
+    location: [-0.06756482942607475, 0.08595407009124757],
+    banner: "coinmarketcapBanner.png",
+    area: [
+      [
+        [-0.06704448123620446, 0.08616864681243896],
+        [-0.06720541366665657, 0.08551418781280519],
+        [-0.06789742311154359, 0.08568048477172853],
+        [-0.06770430419767781, 0.08635640144348145],
+      ],
+    ],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account",
+      },
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account",
+      },
+      {
+        title: "Maze Garden",
+        image: mazeGardenInfo,
+        link: "/account",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    socials: [
+      {
+        link: "https://x.com/CoinMarketCap",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/CoinMarketCapAnnouncements",
+        icon: telegram,
+      },
+      // {
+      //   link: "https://discord.com/invite/X3fHfpvpCM",
+      //   icon: discord,
+      // },
+      {
+        link: "https://coinmarketcap.com/",
         icon: website,
       },
     ],
@@ -1549,13 +1698,13 @@ const seas = [
   {
     title: "Glacialis Frozen Sea",
     location: [-0.036629332982360708, 0.043945947265625003],
-    color: "white",
+    color: "#3d6b80",
   },
 
   {
     title: "The Great Alimentum Reef",
     location: [-0.1025198918026858, 0.059226074218750003],
-    color: "cyan",
+    color: "#3d6b80",
   },
   {
     title: "Levamen Waters",

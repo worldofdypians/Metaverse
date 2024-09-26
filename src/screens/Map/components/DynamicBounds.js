@@ -15,7 +15,7 @@ function DynamicBounds() {
         } else {
           map.setMaxBounds([
             [0.0, 0.0],
-            [-0.12373029, 0.11373045], // Default bounds when zoomed out
+            [-0.12673029, 0.14373045], // Default bounds when zoomed out
           ]);
         }
       },

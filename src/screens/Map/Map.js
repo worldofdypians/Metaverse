@@ -40,6 +40,7 @@ import landIcon from "./assets/landIcon.png";
 import ChainPolygon from "./components/ChainPolygon";
 import LogCoordinates from "./components/LogCoordinates";
 import DynamicBounds from "./components/DynamicBounds";
+import LeafletDraw from "./components/LeafletDraw";
 
 // Lazy load for performance
 const MapSidebar = React.lazy(() => import("./components/MapSidebar"));
@@ -75,7 +76,6 @@ const Map = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [markerType, setMarkerType] = useState(null);
   const [events, setEvents] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   // Memoize large data to avoid re-renders
   const memoizedChainAreas = useMemo(() => chainAreas, [chainAreas]);
@@ -121,6 +121,7 @@ const Map = () => {
     [customClusterIcon]
   );
 
+  
   // Render chain markers and polygons
   const ChainMarkers = useCallback(
     () =>
@@ -139,22 +140,9 @@ const Map = () => {
     [chainsVisible, memoizedChainAreas, handleMarkerClick]
   );
 
-  useEffect(() => {
-   setTimeout(() => {
-    setLoading(false)
-   }, 3000);
-  }, [])
   
 
-if(loading){
-  return (
-<div className="map-fallback d-flex align-items-center justify-content-center">
-<div class="spinner-border text-primary" role="status">
-  <span class="visually-hidden">Loading...</span>
-</div>
-   </div>
-  )
-}
+
 
   return (
      <div className="d-flex align-items-start">
@@ -179,7 +167,7 @@ if(loading){
         maxZoom={18}
         maxBounds={[
           [0.0, 0.0],
-          [-0.12373029, 0.11373045],
+          [-0.12373029, 0.14373045],
         ]}
         style={{ height: "100vh", width: "100%" }}
       >
@@ -300,6 +288,7 @@ if(loading){
 
         <LogCoordinates />
         <DynamicBounds />
+        {/* <LeafletDraw /> */}
         <MapWithZoomHandler
           setAreas={setAreasVisible}
           setRegions={setRegionsVisible}
