@@ -159,18 +159,26 @@ const WodBuilders = ({ page }) => {
       backer: true,
     },
     {
+      name: "Midle",
+      icon: "midle",
+      banner: "midleBanner.webp",
+      link: "https://x.com/midle_official/status/1819705076966940996",
+      backer: false,
+    },
+    {
+      name: "DogeCoin",
+      icon: "dogecoinIcon",
+      banner: "dogecoinBanner.webp",
+      backer: false,
+    },
+    {
       name: "Binance Web3",
       icon: "binanceWeb3",
       banner: "bnbChainBanner.webp",
       // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
       backer: true,
     },
-    {
-      name: "Midle",
-      icon: "midle",
-      banner: "kucoinBanner.png",
-      backer: false,
-    },
+  
     {
       name: "Playground",
       icon: "playground",
@@ -241,7 +249,12 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
-    
+    {
+      name: "WorldShards",
+      icon: "worldshards",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
   ];
 
   useEffect(() => {
@@ -275,7 +288,7 @@ const WodBuilders = ({ page }) => {
                   alt=""
                 />
                 <div className="d-flex align-items-center gap-2">
-                  {item.icon === "klapai" || item.icon === "manta" || item.icon === "alterverse" || item.icon === "binanceWeb3" || item.icon === "hamsterChain" ? (
+                  {item.icon === "klapai" || item.icon === "manta" || item.icon === "alterverse" || item.icon === "worldshards" || item.icon === "binanceWeb3" || item.icon === "hamsterChain" ? (
                     <img
                       src={require(`./assets/${item.icon}.png`)}
                       width={24}
@@ -300,7 +313,7 @@ const WodBuilders = ({ page }) => {
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="linear-border"
-                onClick={() => (slice === 2 ? setSlice(21) : setSlice(2))}
+                onClick={() => (slice === 2 ? setSlice(23) : setSlice(2))}
               >
                 <button className="btn filled-btn px-5">
                   {slice === 2 ? "View More" : "View Less"}
@@ -311,7 +324,7 @@ const WodBuilders = ({ page }) => {
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="linear-border"
-                onClick={() => (slice === 8 ? setSlice(21) : setSlice(8))}
+                onClick={() => (slice === 8 ? setSlice(23) : setSlice(8))}
               >
                 <button className="btn filled-btn px-5">
                   {slice === 8 ? "View More" : "View Less"}
@@ -333,7 +346,7 @@ const WodBuilders = ({ page }) => {
               <div className="builders-second-half">
                 {builders.map((item, index) => (
                   <div key={index} className={`${page === "wod" && item.backer ? "d-none" : "d-flex"} align-items-center gap-2`}>
-                    {item.icon === "klapai" || item.icon === "manta" || item.icon === "binanceWeb3" || item.icon === "alterverse"  || item.icon === "hamsterChain" ? (
+                    {item.icon === "klapai" || item.icon === "manta" || item.icon === "binanceWeb3" || item.icon === "alterverse" || item.icon === "worldshards"  || item.icon === "hamsterChain" ? (
                       <img
                         src={require(`./assets/${item.icon}.png`)}
                         width={page === "home" ?  24 : 30}
