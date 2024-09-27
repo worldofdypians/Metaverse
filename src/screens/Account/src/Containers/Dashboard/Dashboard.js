@@ -4265,7 +4265,6 @@ function Dashboard({
     return myStakes;
   };
 
-
   const calculateAllRewardsCawsPremium = async () => {
     const address = coinbase;
 
@@ -7402,14 +7401,20 @@ function Dashboard({
       userVictionScore +
       userMantaScore +
       userTaikoScore;
-      
-      const totalScore_multiplied = (rankData && rankData.multiplier === "yes") ? totalScore * 4 : totalScore
+
+    const totalScore_multiplied =
+      rankData && rankData.multiplier === "yes" ? totalScore * 4 : totalScore;
     if (totalScore_multiplied > 11999999 && totalScore_multiplied < 24000000) {
- 
       setUserRankRewards(5);
-    } else if (totalScore_multiplied >= 24000000 && totalScore_multiplied < 37000000) {
+    } else if (
+      totalScore_multiplied >= 24000000 &&
+      totalScore_multiplied < 37000000
+    ) {
       setUserRankRewards(10);
-    } else if (totalScore_multiplied >= 37000000 && totalScore_multiplied < 62000000) {
+    } else if (
+      totalScore_multiplied >= 37000000 &&
+      totalScore_multiplied < 62000000
+    ) {
       setUserRankRewards(25);
     } else if (totalScore_multiplied >= 62000000) {
       setUserRankRewards(100);
@@ -7425,7 +7430,7 @@ function Dashboard({
     userVictionScore,
     userMantaScore,
     userTaikoScore,
-    rankData
+    rankData,
   ]);
 
   useEffect(() => {
@@ -7459,7 +7464,7 @@ function Dashboard({
       window.WALLET_TYPE !== ""
     ) {
       calculateAllRewardsCawsPremium(data.getPlayer.wallet.publicAddress);
-      calculateAllRewardsLandPremium(data.getPlayer.wallet.publicAddress)
+      calculateAllRewardsLandPremium(data.getPlayer.wallet.publicAddress);
     }
   }, [data, chainId]);
 
@@ -7869,7 +7874,12 @@ function Dashboard({
       className="container-fluid d-flex justify-content-end p-0"
       style={{ minHeight: "72vh", maxWidth: "2400px", overflow: "hidden" }}
     >
-      {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
+      {windowSize.width < 992 ? (
+        <MobileNav />
+      ) : (
+        <MarketSidebar
+        />
+      )}
       <div className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative">
         <div className="container-lg mx-0">
           <LoginWrapper
@@ -9255,373 +9265,377 @@ function Dashboard({
                                   </div>
 
                                   {/* <div className="d-flex flex-column gap-3 subscribe-input-container"></div> */}
-                                  {(discountPercentage < 100 &&
-                                    discountPercentageViction < 100) && (
-                                    <div className="d-flex flex-column align-items-end gap-3">
-                                      <span className="my-premium-balance-text mb-0">
-                                        My balance:{" "}
-                                        {getFormattedNumber(
-                                          tokenBalance / 10 ** tokenDecimals,
-                                          5
-                                        )}{" "}
-                                        {dropdownIcon.toUpperCase()}
-                                      </span>
-                                      <div
-                                        className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
-                                        style={{ height: "34px" }}
-                                      >
-                                        <span className="subscription-price-text mb-0">
-                                          Subscription Price:
+                                  {discountPercentage < 100 &&
+                                    discountPercentageViction < 100 && (
+                                      <div className="d-flex flex-column align-items-end gap-3">
+                                        <span className="my-premium-balance-text mb-0">
+                                          My balance:{" "}
+                                          {getFormattedNumber(
+                                            tokenBalance / 10 ** tokenDecimals,
+                                            5
+                                          )}{" "}
+                                          {dropdownIcon.toUpperCase()}
                                         </span>
+                                        <div
+                                          className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
+                                          style={{ height: "34px" }}
+                                        >
+                                          <span className="subscription-price-text mb-0">
+                                            Subscription Price:
+                                          </span>
 
-                                        <div className="d-flex align-items-center gap-2">
-                                          <div className="dropdown position relative">
-                                            <button
-                                              class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
-                                              type="button"
-                                              data-bs-toggle="dropdown"
-                                              aria-expanded="false"
-                                            >
-                                              <div
-                                                className="d-flex align-items-center gap-2"
-                                                style={{ color: "#fff" }}
+                                          <div className="d-flex align-items-center gap-2">
+                                            <div className="dropdown position relative">
+                                              <button
+                                                class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
+                                                type="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
                                               >
-                                                <img
-                                                  src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
-                                                  alt=""
-                                                  style={{
-                                                    width: 18,
-                                                    height: 18,
-                                                  }}
-                                                />
-                                                {/* {dropdownTitle} */}
-                                              </div>
-                                              <img
-                                                src={launchpadIndicator}
-                                                alt=""
-                                              />
-                                            </button>
-                                            <ul className="dropdown-menu w-100">
-                                              {Object.keys(
-                                                chainId === 1
-                                                  ? window.config
-                                                      .subscriptioneth_tokens
-                                                  : chainId === 56
-                                                  ? window.config
-                                                      .subscriptionbnb_tokens
-                                                  : chainId === 1030
-                                                  ? window.config
-                                                      .subscriptioncfx_tokens
-                                                  : chainId === 43114
-                                                  ? window.config
-                                                      .subscription_tokens
-                                                  : chainId === 8453
-                                                  ? window.config
-                                                      .subscriptionbase_tokens
-                                                  : chainId === 1482601649
-                                                  ? window.config
-                                                      .subscriptionskale_tokens
-                                                  : chainId === 88
-                                                  ? window.config
-                                                      .subscriptionviction_tokens
-                                                  : chainId === 169
-                                                  ? window.config
-                                                      .subscriptionmanta_tokens
-                                                  : chainId === 167000
-                                                  ? window.config
-                                                      .subscriptiontaiko_tokens
-                                                  : chainId === 1116
-                                                  ? window.config
-                                                      .subscriptioncore_tokens
-                                                  : chainId === 713715
-                                                  ? window.config
-                                                      .subscriptionsei_tokens
-                                                  : window.config
-                                                      .subscription_tokens
-                                              ).map((t, i) => (
-                                                <li
-                                                  key={i}
-                                                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                                  onClick={() => {
-                                                    window.cached_contracts =
-                                                      Object.create(null);
-                                                    setTimeout(() => {
-                                                      setdropdownIcon(
-                                                        chainId === 1
-                                                          ? window.config
-                                                              .subscriptioneth_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 56
-                                                          ? window.config
-                                                              .subscriptionbnb_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 43114
-                                                          ? window.config
-                                                              .subscription_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 8453
-                                                          ? window.config
-                                                              .subscriptionbase_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 1030
-                                                          ? window.config
-                                                              .subscriptioncfx_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId ===
-                                                            1482601649
-                                                          ? window.config
-                                                              .subscriptionskale_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 88
-                                                          ? window.config
-                                                              .subscriptionviction_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 169
-                                                          ? window.config
-                                                              .subscriptionmanta_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 167000
-                                                          ? window.config
-                                                              .subscriptiontaiko_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 1116
-                                                          ? window.config
-                                                              .subscriptioncore_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 713715
-                                                          ? window.config
-                                                              .subscriptionsei_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : window.config
-                                                              .subscription_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                      );
-                                                      setdropdownTitle(
-                                                        chainId === 1
-                                                          ? window.config
-                                                              .subscriptioneth_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 56
-                                                          ? window.config
-                                                              .subscriptionbnb_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 43114
-                                                          ? window.config
-                                                              .subscription_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 8453
-                                                          ? window.config
-                                                              .subscriptionbase_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 1030
-                                                          ? window.config
-                                                              .subscriptioncfx_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId ===
-                                                            1482601649
-                                                          ? window.config
-                                                              .subscriptionskale_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 88
-                                                          ? window.config
-                                                              .subscriptionviction_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 169
-                                                          ? window.config
-                                                              .subscriptionmanta_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 167000
-                                                          ? window.config
-                                                              .subscriptiontaiko_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 713715
-                                                          ? window.config
-                                                              .subscriptionsei_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 1116
-                                                          ? window.config
-                                                              .subscriptioncore_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : window.config
-                                                              .subscription_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                      );
-
-                                                      // console.log(t);
-                                                      handleSubscriptionTokenChange(
-                                                        t
-                                                      );
-                                                      handleCheckIfAlreadyApproved(
-                                                        t
-                                                      );
-                                                    }, 200);
-                                                  }}
+                                                <div
+                                                  className="d-flex align-items-center gap-2"
+                                                  style={{ color: "#fff" }}
                                                 >
                                                   <img
-                                                    src={
-                                                      chainId === 1
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 56
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 43114
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 1030
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 8453
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 1482601649
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 1116
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 88
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 169
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 167000
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 713715
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                    }
+                                                    src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
                                                     alt=""
                                                     style={{
                                                       width: 18,
                                                       height: 18,
                                                     }}
                                                   />
-                                                  {chainId === 1
+                                                  {/* {dropdownTitle} */}
+                                                </div>
+                                                <img
+                                                  src={launchpadIndicator}
+                                                  alt=""
+                                                />
+                                              </button>
+                                              <ul className="dropdown-menu w-100">
+                                                {Object.keys(
+                                                  chainId === 1
                                                     ? window.config
-                                                        .subscriptioneth_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptioneth_tokens
                                                     : chainId === 56
                                                     ? window.config
-                                                        .subscriptionbnb_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 43114
-                                                    ? window.config
-                                                        .subscription_tokens[t]
-                                                        ?.symbol
+                                                        .subscriptionbnb_tokens
                                                     : chainId === 1030
                                                     ? window.config
-                                                        .subscriptioncfx_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptioncfx_tokens
+                                                    : chainId === 43114
+                                                    ? window.config
+                                                        .subscription_tokens
                                                     : chainId === 8453
                                                     ? window.config
-                                                        .subscriptionbase_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptionbase_tokens
                                                     : chainId === 1482601649
                                                     ? window.config
-                                                        .subscriptionskale_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 1116
-                                                    ? window.config
-                                                        .subscriptioncore_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptionskale_tokens
                                                     : chainId === 88
                                                     ? window.config
-                                                        .subscriptionviction_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptionviction_tokens
                                                     : chainId === 169
                                                     ? window.config
-                                                        .subscriptionmanta_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptionmanta_tokens
                                                     : chainId === 167000
                                                     ? window.config
-                                                        .subscriptiontaiko_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptiontaiko_tokens
+                                                    : chainId === 1116
+                                                    ? window.config
+                                                        .subscriptioncore_tokens
                                                     : chainId === 713715
                                                     ? window.config
-                                                        .subscriptionsei_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptionsei_tokens
                                                     : window.config
-                                                        .subscription_tokens[t]
-                                                        ?.symbol}
-                                                </li>
-                                              ))}
-                                            </ul>
-                                          </div>
-                                          {/* <img
+                                                        .subscription_tokens
+                                                ).map((t, i) => (
+                                                  <li
+                                                    key={i}
+                                                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                                    onClick={() => {
+                                                      window.cached_contracts =
+                                                        Object.create(null);
+                                                      setTimeout(() => {
+                                                        setdropdownIcon(
+                                                          chainId === 1
+                                                            ? window.config
+                                                                .subscriptioneth_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 56
+                                                            ? window.config
+                                                                .subscriptionbnb_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 43114
+                                                            ? window.config
+                                                                .subscription_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 8453
+                                                            ? window.config
+                                                                .subscriptionbase_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 1030
+                                                            ? window.config
+                                                                .subscriptioncfx_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId ===
+                                                              1482601649
+                                                            ? window.config
+                                                                .subscriptionskale_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 88
+                                                            ? window.config
+                                                                .subscriptionviction_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 169
+                                                            ? window.config
+                                                                .subscriptionmanta_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 167000
+                                                            ? window.config
+                                                                .subscriptiontaiko_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 1116
+                                                            ? window.config
+                                                                .subscriptioncore_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 713715
+                                                            ? window.config
+                                                                .subscriptionsei_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : window.config
+                                                                .subscription_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                        );
+                                                        setdropdownTitle(
+                                                          chainId === 1
+                                                            ? window.config
+                                                                .subscriptioneth_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 56
+                                                            ? window.config
+                                                                .subscriptionbnb_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 43114
+                                                            ? window.config
+                                                                .subscription_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 8453
+                                                            ? window.config
+                                                                .subscriptionbase_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 1030
+                                                            ? window.config
+                                                                .subscriptioncfx_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId ===
+                                                              1482601649
+                                                            ? window.config
+                                                                .subscriptionskale_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 88
+                                                            ? window.config
+                                                                .subscriptionviction_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 169
+                                                            ? window.config
+                                                                .subscriptionmanta_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 167000
+                                                            ? window.config
+                                                                .subscriptiontaiko_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 713715
+                                                            ? window.config
+                                                                .subscriptionsei_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 1116
+                                                            ? window.config
+                                                                .subscriptioncore_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : window.config
+                                                                .subscription_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                        );
+
+                                                        // console.log(t);
+                                                        handleSubscriptionTokenChange(
+                                                          t
+                                                        );
+                                                        handleCheckIfAlreadyApproved(
+                                                          t
+                                                        );
+                                                      }, 200);
+                                                    }}
+                                                  >
+                                                    <img
+                                                      src={
+                                                        chainId === 1
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 56
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 43114
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 1030
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 8453
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId ===
+                                                            1482601649
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 1116
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 88
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 169
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 167000
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 713715
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                      }
+                                                      alt=""
+                                                      style={{
+                                                        width: 18,
+                                                        height: 18,
+                                                      }}
+                                                    />
+                                                    {chainId === 1
+                                                      ? window.config
+                                                          .subscriptioneth_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 56
+                                                      ? window.config
+                                                          .subscriptionbnb_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 43114
+                                                      ? window.config
+                                                          .subscription_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1030
+                                                      ? window.config
+                                                          .subscriptioncfx_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 8453
+                                                      ? window.config
+                                                          .subscriptionbase_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1482601649
+                                                      ? window.config
+                                                          .subscriptionskale_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1116
+                                                      ? window.config
+                                                          .subscriptioncore_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 88
+                                                      ? window.config
+                                                          .subscriptionviction_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 169
+                                                      ? window.config
+                                                          .subscriptionmanta_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 167000
+                                                      ? window.config
+                                                          .subscriptiontaiko_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 713715
+                                                      ? window.config
+                                                          .subscriptionsei_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : window.config
+                                                          .subscription_tokens[
+                                                          t
+                                                        ]?.symbol}
+                                                  </li>
+                                                ))}
+                                              </ul>
+                                            </div>
+                                            {/* <img
                                       src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
                                       height={16}
                                       width={16}
                                       alt="usdt"
                                     /> */}
-                                          <span className="subscription-price-token mb-0">
-                                            {formattedPrice.slice(0, 7)}
+                                            <span className="subscription-price-token mb-0">
+                                              {formattedPrice.slice(0, 7)}
+                                            </span>
+                                          </div>
+                                          <span className="subscription-price-usd mb-0">
+                                            $
+                                            {100 -
+                                              Number(
+                                                discountPercentage != 0
+                                                  ? discountPercentage
+                                                  : discountPercentageViction !=
+                                                    0
+                                                  ? discountPercentageViction
+                                                  : discountPercentage
+                                              )}
                                           </span>
                                         </div>
-                                        <span className="subscription-price-usd mb-0">
-                                          $
-                                          {100 -
-                                            Number(
-                                              discountPercentage != 0
-                                                ? discountPercentage
-                                                : discountPercentageViction != 0
-                                                ? discountPercentageViction
-                                                : discountPercentage
-                                            )}
-                                        </span>
                                       </div>
-                                    </div>
-                                  )}
+                                    )}
 
                                   {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
                                 <span className="token-balance-placeholder">
