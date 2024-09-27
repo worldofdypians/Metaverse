@@ -164,6 +164,18 @@ const NewBuilders = () => {
           banner: "kucoinBanner.png",
           backer: false,
         },
+        {
+          name: "Balance",
+          icon: "balance",
+          banner: "kucoinBanner.png",
+          backer: false,
+        },
+        {
+          name: "WorldShards",
+          icon: "worldshards",
+          banner: "kucoinBanner.png",
+          backer: false,
+        },
       ];
 
   return (
@@ -176,7 +188,7 @@ const NewBuilders = () => {
           <div className="new-builders-second-half">
             {builders.map((item, index) => (
               <div key={index} className={`d-flex flex-column align-items-center gap-2`}>
-                {item.icon === "klapai" || item.icon === "manta" || item.icon === "hamsterChain" ? (
+                {item.icon === "klapai" || item.icon === "manta" || item.icon === "alterverse" || item.icon === "worldshards" || item.icon === "binanceWeb3" || item.icon === "hamsterChain" ? (
                   <img
                     src={require(`./assets/${item.icon}.png`)}
                     width={45}
