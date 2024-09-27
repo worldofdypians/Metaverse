@@ -4169,7 +4169,7 @@ function App() {
               />
             }
           />
-          <Route exact path="/terms-conditions" element={<TermsConditions />} />
+          <Route exact path="/terms-of-service" element={<TermsConditions />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             exact
