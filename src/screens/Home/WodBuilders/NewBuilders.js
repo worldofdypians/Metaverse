@@ -150,8 +150,21 @@ const NewBuilders = () => {
       name: "Cookie3",
       icon: "cookie3",
       banner: "cookie3Banner.webp",
-      link: "https://x.com/Cookie3_com/status/1824052238404255889",
+      link: 'https://x.com/Cookie3_com/status/1824052238404255889',
       backer: true,
+    },
+    {
+      name: "Midle",
+      icon: "midle",
+      banner: "midleBanner.webp",
+      link: "https://x.com/midle_official/status/1819705076966940996",
+      backer: false,
+    },
+    {
+      name: "DogeCoin",
+      icon: "dogecoinIcon",
+      banner: "dogecoinBanner.webp",
+      backer: false,
     },
     {
       name: "Binance Web3",
@@ -160,12 +173,7 @@ const NewBuilders = () => {
       // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
       backer: true,
     },
-    {
-      name: "Midle",
-      icon: "midle",
-      banner: "kucoinBanner.png",
-      backer: false,
-    },
+  
     {
       name: "Playground",
       icon: "playground",
@@ -243,7 +251,6 @@ const NewBuilders = () => {
       backer: false,
     },
   ];
-
   return (
     <div className={`w-100  mx-0 `}>
       <div className="d-flex flex-column gap-2">
