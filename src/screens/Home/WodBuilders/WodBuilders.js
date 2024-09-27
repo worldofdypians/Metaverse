@@ -241,7 +241,12 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
-    
+    {
+      name: "WorldShards",
+      icon: "worldshards",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
   ];
 
   useEffect(() => {
@@ -275,7 +280,7 @@ const WodBuilders = ({ page }) => {
                   alt=""
                 />
                 <div className="d-flex align-items-center gap-2">
-                  {item.icon === "klapai" || item.icon === "manta" || item.icon === "alterverse" || item.icon === "binanceWeb3" || item.icon === "hamsterChain" ? (
+                  {item.icon === "klapai" || item.icon === "manta" || item.icon === "alterverse" || item.icon === "worldshards" || item.icon === "binanceWeb3" || item.icon === "hamsterChain" ? (
                     <img
                       src={require(`./assets/${item.icon}.png`)}
                       width={24}
@@ -333,7 +338,7 @@ const WodBuilders = ({ page }) => {
               <div className="builders-second-half">
                 {builders.map((item, index) => (
                   <div key={index} className={`${page === "wod" && item.backer ? "d-none" : "d-flex"} align-items-center gap-2`}>
-                    {item.icon === "klapai" || item.icon === "manta" || item.icon === "binanceWeb3" || item.icon === "alterverse"  || item.icon === "hamsterChain" ? (
+                    {item.icon === "klapai" || item.icon === "manta" || item.icon === "binanceWeb3" || item.icon === "alterverse" || item.icon === "worldshards"  || item.icon === "hamsterChain" ? (
                       <img
                         src={require(`./assets/${item.icon}.png`)}
                         width={page === "home" ?  24 : 30}
