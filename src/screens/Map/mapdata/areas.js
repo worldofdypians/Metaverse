@@ -1414,7 +1414,7 @@ const chainAreas = [
     marker: markers.babydogeMarker,
     icon: babydogeIcon,
     location: [-0.06669579430174531, 0.08574485778808595],
-    banner: "babydogeBanner.webp",
+    banner: "babyDogeBanner.webp",
     area: [
       [
         [-0.06632564970708857, 0.0857287645339966],
