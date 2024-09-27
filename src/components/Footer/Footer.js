@@ -114,9 +114,9 @@ const scrollToTop = (name) => {
             <NavLink to="/team" onClick={() => scrollToTop("team")} style={{ textDecoration: "none" }}>
               <span className="footer-link font-poppins">Team</span>
             </NavLink>
-            <NavLink to="/terms-conditions" onClick={() => scrollToTop("terms")} style={{ textDecoration: "none" }}>
+            <NavLink to="/terms-of-service" onClick={() => scrollToTop("terms")} style={{ textDecoration: "none" }}>
               <span className="footer-link font-poppins">
-                Terms & Conditions
+              Terms of Service
               </span>
             </NavLink>
             <NavLink to="/privacy-policy" onClick={() => scrollToTop("privacy")} style={{ textDecoration: "none" }}>
