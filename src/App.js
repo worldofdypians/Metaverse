@@ -1,5 +1,5 @@
 import Home from "./screens/Home/Home";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./fonts/Organetto.ttf";
 import { Amplify } from "aws-amplify";
@@ -44,6 +44,12 @@ import axios from "axios";
 import Unsubscribe from "./screens/Unsubscribe/Unsubscribe";
 import Marketplace from "./screens/Marketplace/Marketplace";
 import getListedNFTS from "./actions/Marketplace";
+import {
+  getAllNfts,
+  getCawsNfts,
+  getTimepieceNfts,
+  getWodNfts,
+} from "./actions/convertUsd.js";
 import CawsNFT from "./screens/Marketplace/MarketNFTs/CawsNFT";
 import WoDNFT from "./screens/Marketplace/MarketNFTs/WoDNFT";
 import TimepieceNFT from "./screens/Marketplace/MarketNFTs/TimepieceNFT";
@@ -74,7 +80,7 @@ import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 import Redirect from "./screens/Home/Redirect";
 import WalletModal2 from "./components/WalletModal/WalletModal2";
-import Token from './screens/Token/Token'
+import Token from "./screens/Token/Token";
 import { isMobile } from "react-device-detect";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
@@ -118,6 +124,10 @@ const binanceConnector = new Connector({
 });
 
 function App() {
+
+  const dataFetchedRef = useRef(false);
+
+
   const CHAINLIST = {
     1: {
       chainId: 1,
@@ -270,12 +280,12 @@ function App() {
   const [mystakes, setMystakes] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [listedNFTS, setListedNFTS] = useState([]);
-  const [listedNFTS2, setListedNFTS2] = useState([]);
   const [recentListedNFTS2, setrecentListedNFTS2] = useState([]);
-  const [count33, setCount33] = useState(0);
   const [count44, setCount44] = useState(0);
   const [count55, setCount55] = useState(0);
-
+  const [cawsListed, setcawsListed] = useState([]);
+  const [wodListed, setwodListed] = useState([]);
+  const [timepieceListed, settimepieceListed] = useState([]);
   const [myCAWstakes, setCAWMystakes] = useState([]);
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
   const [myConfluxNFTsCreated, setmyConfluxNFTsCreated] = useState([]);
@@ -352,8 +362,7 @@ function App() {
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
 
   const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
-  const [totalBoughtNFTSinETH, setTotalBoughtNFTSinETH] = useState(0);
-  const [totalBoughtNFTSinDYP, setTotalBoughtNFTSinDYP] = useState(0);
+
   const [availTime, setavailTime] = useState();
 
   const [MyNFTSTimepiece, setMyNFTSTimepiece] = useState([]);
@@ -396,15 +405,6 @@ function App() {
   const [logoutCount, setLogoutCount] = useState(0);
 
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
-  const [
-    top20BoughtByPriceAndPriceTypeETHNFTS,
-    settop20BoughtByPriceAndPriceTypeETHNFTS,
-  ] = useState([]);
-
-  const [
-    top20BoughtByPriceAndPriceTypeDYPNFTS,
-    settop20BoughtByPriceAndPriceTypeDYPNFTS,
-  ] = useState([]);
 
   const [nftCount, setNftCount] = useState(1);
   const [count, setCount] = useState(1);
@@ -877,7 +877,9 @@ function App() {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const register = new SIDRegister({ signer, chainId: 56 });
-      const available = await register.getAvailable(domain).catch((e)=>{console.error(e)});
+      const available = await register.getAvailable(domain).catch((e) => {
+        console.error(e);
+      });
       const price = await register.getRentPrice(domain, 1);
       const newPrice = new BigNumber(price._hex / 1e18).toFixed();
       setDomainPrice(newPrice);
@@ -1799,9 +1801,9 @@ function App() {
     const cawsArray = [...myCAWNFTs, ...myCAWstakes, ...myCawsWodStakesAll];
 
     let nft_contract = new window.infuraWeb3.eth.Contract(
-          window.CAWS_TIMEPIECE_ABI,
-          window.config.caws_timepiece_address
-        );
+      window.CAWS_TIMEPIECE_ABI,
+      window.config.caws_timepiece_address
+    );
 
     if (cawsArray.length > 0) {
       for (let i = 0; i < cawsArray.length; i++) {
@@ -2918,15 +2920,6 @@ function App() {
   };
 
   const getListedNfts2 = async () => {
-    getListedNFTS(0)
-      .then((data) => {
-        setListedNFTS2(data);
-        setCount33(count33 + 1);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
     getListedNFTS(0, "", "recentListedNFTS")
       .then((data) => {
         setrecentListedNFTS2(data);
@@ -2941,89 +2934,28 @@ function App() {
     let finalboughtItems1 = [];
     let finalboughtItems2 = [];
     const nft_contract = new window.infuraWeb3.eth.Contract(
-        window.CAWS_ABI,
-        window.config.nft_caws_address
-      );
-      const nft_contract_land = new window.infuraWeb3.eth.Contract(
-        window.WOD_ABI,
-        window.config.nft_land_address
-      );
+      window.CAWS_ABI,
+      window.config.nft_caws_address
+    );
+    const nft_contract_land = new window.infuraWeb3.eth.Contract(
+      window.WOD_ABI,
+      window.config.nft_land_address
+    );
 
-      const nft_contract_timepiece = new window.infuraWeb3.eth.Contract(
-        window.TIMEPIECE_ABI,
-        window.config.nft_timepiece_address
-      );
-       
-    if (listedNFTS2 && listedNFTS2.length > 0) {
-  
-      await Promise.all(
-        listedNFTS2.map(async (nft) => {
-          if (nft.nftAddress === window.config.nft_caws_address) {
-       
-            const nftowner = await nft_contract.methods
-              .ownerOf(nft.tokenId)
-              .call()
-              .catch((e) => {
-                console.log(e);
-              });
-            if (
-              nftowner &&
-              nftowner.toLowerCase() === nft.seller.toLowerCase()
-            ) {
-              nft.type = "caws";
-              nft.chain = 1;
-              finalboughtItems1.push(nft);
-            }
-          } else if (nft.nftAddress === window.config.nft_land_address) {
-          
-            const nftowner_land = await nft_contract_land.methods
-              .ownerOf(nft.tokenId)
-              .call()
-              .catch((e) => {
-                console.log(e);
-              });
-            if (
-              nftowner_land &&
-              nftowner_land.toLowerCase() === nft.seller.toLowerCase()
-            ) {
-              nft.type = "land";
-              nft.chain = 1;
-              finalboughtItems1.push(nft);
-            }
-          } else if (
-            nft.nftAddress.toLowerCase() ===
-            window.config.nft_timepiece_address.toLowerCase()
-          ) {
-       
-            const nftowner_timepiece = await nft_contract_timepiece.methods
-              .ownerOf(nft.tokenId)
-              .call()
-              .catch((e) => {
-                console.log(e);
-                return "";
-              });
+    const nft_contract_timepiece = new window.infuraWeb3.eth.Contract(
+      window.TIMEPIECE_ABI,
+      window.config.nft_timepiece_address
+    );
+    finalboughtItems1 = await getAllNfts();
 
-            if (
-              nftowner_timepiece &&
-              nftowner_timepiece.toLowerCase() === nft.seller.toLowerCase()
-            ) {
-              nft.type = "timepiece";
-              nft.chain = 1;
-              finalboughtItems1.push(nft);
-            }
-          }
-        })
-      );
-
+    if (finalboughtItems1 && finalboughtItems1.length > 0) {
       setListedNFTS(finalboughtItems1);
       setListedNFTSCount(finalboughtItems1.length);
-    }
-
+    } 
     if (recentListedNFTS2 && recentListedNFTS2.length > 0) {
       await Promise.all(
         recentListedNFTS2.map(async (nft) => {
           if (nft.nftAddress === window.config.nft_caws_address) {
-         
             const nftowner = await nft_contract.methods
               .ownerOf(nft.tokenId)
               .call()
@@ -3039,8 +2971,6 @@ function App() {
               finalboughtItems2.push(nft);
             }
           } else if (nft.nftAddress === window.config.nft_land_address) {
-           
-
             const nftowner_land = await nft_contract_land.methods
               .ownerOf(nft.tokenId)
               .call()
@@ -3056,7 +2986,6 @@ function App() {
               finalboughtItems2.push(nft);
             }
           } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          
             const nftowner_timepiece = await nft_contract_timepiece.methods
               .ownerOf(nft.tokenId)
               .call()
@@ -3185,9 +3114,9 @@ function App() {
       setCoinbase();
       localStorage.setItem("logout", "true");
     } else if (
-      window.ethereum 
-      && window.WALLET_TYPE === "binance"
-       && window.ethereum?.isBinance &&
+      window.ethereum &&
+      window.WALLET_TYPE === "binance" &&
+      window.ethereum?.isBinance &&
       logout === "false"
     ) {
       if (account) {
@@ -3212,7 +3141,7 @@ function App() {
       myLandStakes();
       getmyCawsWodStakes();
       myNft2();
-      myLandNft(); 
+      myLandNft();
     }
     if (isConnected === true && coinbase) {
       myNft();
@@ -3220,11 +3149,7 @@ function App() {
       fetchAllMyNfts();
     }
 
-    if (
-      isConnected === true &&
-      coinbase &&
-      networkId === 56
-    ) {
+    if (isConnected === true && coinbase && networkId === 56) {
       myNftBNB();
       myLandNftBNB();
     } else if (isConnected === true && coinbase && networkId === 43114) {
@@ -3234,9 +3159,7 @@ function App() {
       myNftsBase();
       myLandNftsBase();
     }
-    
   }, [isConnected, networkId, coinbase, count]);
- 
 
   // useEffect(() => {
   //   if (
@@ -3265,28 +3188,6 @@ function App() {
 
   const handleShowWalletModal = () => {
     setwalletModal(true);
-  };
-
-  const getallNfts = async () => {
-    getBoughtNFTS().then((NFTS) => {
-      setTotalBoughtNFTSCount(NFTS.length);
-
-      let totalBoughtNFTSinETH = 0;
-
-      let totalBoughtNFTSinDYP = 0;
-
-      for (let i = 0; i < NFTS.length; i++) {
-        if (NFTS[i].payment_priceType === 0) {
-          totalBoughtNFTSinETH += parseFloat(NFTS[i].price);
-        } else {
-          totalBoughtNFTSinETH += parseFloat(NFTS[i].price);
-        }
-      }
-
-      setTotalBoughtNFTSinETH(totalBoughtNFTSinETH);
-
-      setTotalBoughtNFTSinDYP(totalBoughtNFTSinDYP);
-    });
   };
 
   async function fetchUserFavorites(userId) {
@@ -3339,6 +3240,45 @@ function App() {
       setLandBought(uniqueWod);
       setTimepieceBought(uniqueTimepiece);
     }
+  };
+
+  const fetchCawsNfts = async () => {
+    const cawsNft = await getCawsNfts();
+    let cawsNft_ETH = cawsNft.filter((item) => item.payment_priceType === 0);
+    let latestCaws = cawsNft_ETH.sort((a, b) => {
+      return (
+        new Date(Number(b.blockTimestamp) * 1000) -
+        new Date(Number(a.blockTimestamp) * 1000)
+      );
+    });
+    setcawsListed(latestCaws);
+  };
+
+  const fetchLandNfts = async () => {
+    const wodNft = await getWodNfts();
+    let wodNft_ETH = wodNft.filter((item) => item.payment_priceType === 0);
+    let latestWod = wodNft_ETH.sort((a, b) => {
+      return (
+        new Date(Number(b.blockTimestamp) * 1000) -
+        new Date(Number(a.blockTimestamp) * 1000)
+      );
+    });
+    setwodListed(latestWod);
+  };
+
+  const fetchTimepieceNfts = async () => {
+    const timepieceNft = await getTimepieceNfts();
+    let timepieceNft_ETH = timepieceNft.filter(
+      (item) => item.payment_priceType === 0
+    );
+    let latestTimepiece = timepieceNft_ETH.sort((a, b) => {
+      return (
+        new Date(Number(b.blockTimestamp) * 1000) -
+        new Date(Number(a.blockTimestamp) * 1000)
+      );
+    });
+
+    settimepieceListed(latestTimepiece);
   };
 
   const refreshSubscription = async (addr) => {
@@ -3451,7 +3391,6 @@ function App() {
                   } else {
                     setIsPremium(false);
                   }
-                 
                 }
               }
             }
@@ -3511,7 +3450,7 @@ function App() {
       }
       // window.location.reload();
     } else if (window.WALLET_TYPE === "binance" && binanceData) {
-      console.log('yes')
+      console.log("yes");
       try {
         await binanceConnector.binanceW3WProvider
           .request({
@@ -3826,7 +3765,6 @@ function App() {
   }, [coinbase, nftCount]);
 
   useEffect(() => {
-
     getListedNfts2();
     getLatest20BoughtNFTS();
     // getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
@@ -3835,7 +3773,6 @@ function App() {
     // getTop20BoughtByPriceAndPriceTypeNFTS(1).then((NFTS) =>
     //   settop20BoughtByPriceAndPriceTypeDYPNFTS(NFTS)
     // );
-    getallNfts();
   }, [nftCount]);
 
   const checkData = async () => {
@@ -3845,11 +3782,10 @@ function App() {
   };
 
   useEffect(() => {
-    if (count33 !== 0 && count44 !== 0) {
-    
+    if (count44 !== 0) {
       getOtherNfts();
     }
-  }, [count33, count44, nftCount]);
+  }, [count44, nftCount]);
 
   useEffect(() => {
     if (latest20BoughtNFTS.length > 0) {
@@ -3876,6 +3812,8 @@ function App() {
   }, [count2]);
 
   useEffect(() => {
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
     fetchSocialData();
     getTotalSupply();
     checkBinanceData();
@@ -3883,7 +3821,9 @@ function App() {
     getTokenDatabnb();
     getPriceDYP();
     fetchDogeCoinPrice();
-
+    fetchCawsNfts();
+    fetchLandNfts();
+    fetchTimepieceNfts();
   }, []);
 
   return (
@@ -3971,6 +3911,9 @@ function App() {
                 dyptokenDatabnb={dyptokenDatabnb}
                 dyptokenDatabnb_old={dyptokenDatabnb_old}
                 idyptokenDatabnb={idyptokenDatabnb}
+                cawsListed={cawsListed}
+                wodListed={wodListed}
+                timepieceListed={timepieceListed}
               />
             }
           />
@@ -4000,7 +3943,7 @@ function App() {
             path="/explorer"
             element={<Explorer count={count2} setCount={setCount2} />}
           />
-          <Route exact path="/stake" element={<NftMinting />} />
+          {/* <Route exact path="/stake" element={<NftMinting />} /> */}
           <Route exact path="/contact-us" element={<PartnerForm />} />
           <Route exact path="/unsubscribe/:email" element={<Unsubscribe />} />
           <Route
@@ -4144,6 +4087,7 @@ function App() {
                 handleConnectBinance={handleConnectBinance}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                latest20BoughtNFTS={latest20BoughtNFTS}
               />
             }
           />
@@ -4184,15 +4128,10 @@ function App() {
                 handleConnect={handleShowWalletModal}
                 listedNFTS={listedNFTS}
                 totalListed={listedNFTSCount}
-                totalBoughtNFTSinETH={totalBoughtNFTSinETH / 1e18}
-                totalBoughtNFTSinDYP={totalBoughtNFTSinDYP / 1e18}
                 latest20RecentListedNFTS={latest20RecentListedNFTS}
                 totalBoughtNFTSCount={totalBoughtNFTSCount}
                 recentSales={latest20BoughtNFTS}
-                topSales={[
-                  ...top20BoughtByPriceAndPriceTypeETHNFTS,
-                  ...top20BoughtByPriceAndPriceTypeDYPNFTS,
-                ]}
+               
                 nftCount={nftCount}
                 totalTx={totalTx}
                 totalvolume={totalvolume}
@@ -4218,6 +4157,7 @@ function App() {
                 nftCount={nftCount}
                 binanceW3WProvider={library}
                 chainId={networkId}
+                caws={cawsListed}
               />
             }
           />
@@ -4238,6 +4178,7 @@ function App() {
                 nftCount={nftCount}
                 binanceW3WProvider={library}
                 chainId={networkId}
+                wod={wodListed}
               />
             }
           />
@@ -4258,6 +4199,7 @@ function App() {
                 nftCount={nftCount}
                 binanceW3WProvider={library}
                 chainId={networkId}
+                timepiece={timepieceListed}
               />
             }
           />
@@ -4606,7 +4548,7 @@ function App() {
               />
             }
           />
-         
+
           <Route
             exact
             path="/marketplace/beta-pass/multiversx"

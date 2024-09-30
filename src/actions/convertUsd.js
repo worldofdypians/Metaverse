@@ -83,10 +83,9 @@ const getAllNfts = async () => {
       window.TIMEPIECE_ABI,
       window.config.nft_timepiece_address
     );
-    
+
     const conversionPromises = result.map(async (nft) => {
       if (nft.nftAddress === window.config.nft_caws_address) {
-  
         const nftowner = await nft_contract.methods
           .ownerOf(nft.tokenId)
           .call()
@@ -99,27 +98,31 @@ const getAllNfts = async () => {
           convertedNFTs.push(nft);
         }
       } else if (nft.nftAddress === window.config.nft_land_address) {
-   
         const nftowner_land = await nft_contract_land.methods
           .ownerOf(nft.tokenId)
           .call()
           .catch((e) => {
             console.log(e);
           });
-        if (nftowner_land && nftowner_land.toLowerCase() === nft.seller.toLowerCase()) {
+        if (
+          nftowner_land &&
+          nftowner_land.toLowerCase() === nft.seller.toLowerCase()
+        ) {
           nft.type = "land";
           nft.chain = 1;
           convertedNFTs.push(nft);
         }
       } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-    
         const nftowner_timepiece = await nft_contract_timepiece.methods
           .ownerOf(nft.tokenId)
           .call()
           .catch((e) => {
             console.log(e);
           });
-        if (nftowner_timepiece && nftowner_timepiece.toLowerCase() === nft.seller.toLowerCase()) {
+        if (
+          nftowner_timepiece &&
+          nftowner_timepiece.toLowerCase() === nft.seller.toLowerCase()
+        ) {
           nft.type = "timepiece";
           nft.chain = 1;
           convertedNFTs.push(nft);
@@ -149,46 +152,50 @@ const convertAndFilterNFTs = async (nfts, nftAddress) => {
 };
 
 const getCawsNfts = async () => {
-  await getAllNfts();
-  const cawsNFTs = await convertAndFilterNFTs(
-    all_listed_nfts,
+  const listed_caws_nfts = await getListedNFTS(
+    0,
+    "",
+    "nftAddress",
+    window.config.nft_caws_address,
     window.config.nft_caws_address
   );
-  return cawsNFTs;
-};
-
-const getCawsOldNfts = async () => {
-  await getAllNfts();
   const cawsNFTs = await convertAndFilterNFTs(
-    all_listed_nfts,
-    window.config.nft_cawsold_address
+    listed_caws_nfts,
+    window.config.nft_caws_address
   );
+
   return cawsNFTs;
 };
 
 const getWodNfts = async () => {
-  await getAllNfts();
+  const listed_wods_nfts = await getListedNFTS(
+    0,
+    "",
+    "nftAddress",
+    window.config.nft_land_address,
+    window.config.nft_land_address
+  );
   const wodNFTs = await convertAndFilterNFTs(
-    all_listed_nfts,
+    listed_wods_nfts,
     window.config.nft_land_address
   );
   return wodNFTs;
 };
 
 const getTimepieceNfts = async () => {
-  await getAllNfts();
+  const listed_timepiece_nfts = await getListedNFTS(
+    0,
+    "",
+    "nftAddress",
+    window.config.nft_timepiece_address,
+    window.config.nft_timepiece_address
+  );
+
   const tpNFTs = await convertAndFilterNFTs(
-    all_listed_nfts,
+    listed_timepiece_nfts,
     window.config.nft_timepiece_address
   );
   return tpNFTs;
 };
 
-export {
-  convertToUSD,
-  getCawsNfts,
-  getCawsOldNfts,
-  getWodNfts,
-  getTimepieceNfts,
-  getAllNfts,
-};
+export { convertToUSD, getCawsNfts, getWodNfts, getTimepieceNfts, getAllNfts };

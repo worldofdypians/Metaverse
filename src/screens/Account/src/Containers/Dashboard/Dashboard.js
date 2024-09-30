@@ -95,6 +95,7 @@ function Dashboard({
   binanceWallet,
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
+  latest20BoughtNFTS
 }) {
   const { email, logout } = useAuth();
 
@@ -427,9 +428,7 @@ function Dashboard({
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
 
-  const [listedNFTS, setListedNFTS] = useState([]);
-  const [myBoughtNfts, setmyBoughtNfts] = useState([]);
-  const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
+  const [listedNFTS, setListedNFTS] = useState([]); 
   const [standardChests, setStandardChests] = useState([]);
   const [premiumChests, setPremiumChests] = useState([]);
   const [openedChests, setOpenedChests] = useState([]);
@@ -493,7 +492,6 @@ function Dashboard({
     Object.keys(window.config.subscription_tokens)[0]
   );
   const [tokenDecimals, settokenDecimals] = useState(1);
-  const [userWallet, setuserWallet] = useState("");
   const [dummypremiumChests, setDummyPremiumChests] = useState([]);
 
   const [claimedChests, setclaimedChests] = useState(0);
@@ -1099,6 +1097,9 @@ function Dashboard({
 
   const userId = data?.getPlayer?.playerId;
   const username = data?.getPlayer?.displayName;
+  const userWallet = data?.getPlayer?.wallet?.publicAddress;
+  const dataFetchedRef = useRef(false);
+
 
   const [allData, setAllData] = useState([]);
   const [allBnbData, setAllBnbData] = useState([]);
@@ -3813,85 +3814,9 @@ function Dashboard({
       setcountdown700();
       handleSetAvailableTime();
     } else if (bundlesBought > 0) {
-      // const dypv1 = new window.infuraWeb3.eth.Contract(
-      //   DYP_700V1_ABI,
-      //   dyp700v1Address
-      // );
-
-      // const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
-
-      // const remainingTimev1 = await dypv1.methods
-      //   .getTimeOfExpireBuff(coinbase)
-      //   .call();
-
-      // const remainingTimev2 = await dypv2.methods
-      //   .getTimeOfExpireBuff(coinbase)
-      //   .call();
-
-      // var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
-
-      // var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
-      // const timeofDepositv1 = await dypv1.methods
-      //   .getTimeOfDeposit(coinbase)
-      //   .call();
-
-      // const timeofDepositv2 = await dypv2.methods
-      //   .getTimeOfDeposit(coinbase)
-      //   .call();
-
-      // if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
-      //   remainingTime_milisecondsv1 = timeofDepositv1 * 1000;
-      //   remainingTime_milisecondsv2 = timeofDepositv2 * 1000;
-
-      //   const timeofDeposit_Datev1 = new Intl.DateTimeFormat("en-US", {
-      //     year: "numeric",
-      //     month: "2-digit",
-      //     day: "2-digit",
-      //     hour: "2-digit",
-      //     minute: "2-digit",
-      //     second: "2-digit",
-      //   }).format(remainingTime_milisecondsv1);
-
-      //   const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Datev1);
-
-      //   const timeofDeposit_Hoursv1 = timeofDeposit_Date_formattedv1.getHours();
-      //   const timeofDeposit_Minutesv1 =
-      //     timeofDeposit_Date_formattedv1.getMinutes();
-      //   const finalHoursv1 = timeofDeposit_Hoursv1 - 11;
-
-      //   const finalMinutesv1 = timeofDeposit_Minutesv1 - 11;
-
-      //   const resultv1 =
-      //     remainingTimev1 - finalHoursv1 * 60 * 60 - finalMinutesv1 * 60;
-
-      //   const timeofDeposit_Datev2 = new Intl.DateTimeFormat("en-US", {
-      //     year: "numeric",
-      //     month: "2-digit",
-      //     day: "2-digit",
-      //     hour: "2-digit",
-      //     minute: "2-digit",
-      //     second: "2-digit",
-      //   }).format(remainingTime_milisecondsv2);
-
-      //   const timeofDeposit_Date_formattedv2 = new Date(timeofDeposit_Datev2);
-      //   const timeofDeposit_day = timeofDeposit_Date_formattedv2.getDate();
-      //   const timeofDeposit_Hoursv2 = timeofDeposit_Date_formattedv2.getHours();
-      //   const timeofDeposit_Minutesv2 =
-      //     timeofDeposit_Date_formattedv2.getMinutes();
-      //   const finalHoursv2 = timeofDeposit_Hoursv2 - 11;
-
-      //   const finalMinutesv2 = timeofDeposit_Minutesv2 - 11;
-
-      //   const resultv2 =
-      //     remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
       setcountdown700(firstOfNextMonth.getTime());
       handleSetAvailableTime(firstOfNextMonth.getTime());
-      // setcountdown700(result * 1000);
-      //}
-      // } else {
-      //   setcountdown700();
-      //   handleSetAvailableTime();
-      // }
+   
     }
   };
 
@@ -4943,7 +4868,8 @@ function Dashboard({
   };
 
   const getAllChests = async (userEmail) => {
-    const emailData = { emailAddress: userEmail, chainId: "bnb" };
+    if(userEmail)
+ {   const emailData = { emailAddress: userEmail, chainId: "bnb" };
 
     const result = await axios.post(
       "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
@@ -4985,10 +4911,12 @@ function Dashboard({
         setclaimedPremiumChests(openedPremiumChests.length);
         setallChests(chestOrder);
       }
-    }
+    
+    }}
   };
 
   const getAllSkaleChests = async (userEmail) => {
+    if(userEmail){
     const emailData = { emailAddress: userEmail, chainId: "skale" };
 
     const result = await axios.post(
@@ -5032,10 +4960,11 @@ function Dashboard({
         setclaimedSkalePremiumChests(openedPremiumChests.length);
         setallSkaleChests(chestOrder);
       }
-    }
+    }}
   };
 
   const getAllCoreChests = async (userEmail) => {
+    if(userEmail){
     const emailData = { emailAddress: userEmail, chainId: "core" };
 
     const result = await axios.post(
@@ -5080,9 +5009,11 @@ function Dashboard({
         setallCoreChests(chestOrder);
       }
     }
+  }
   };
 
   const getAllVictionChests = async (userEmail) => {
+    if(userEmail){
     const emailData = { emailAddress: userEmail, chainId: "viction" };
 
     const result = await axios.post(
@@ -5127,9 +5058,11 @@ function Dashboard({
         setallVictionChests(chestOrder);
       }
     }
+  }
   };
 
   const getAllMantaChests = async (userEmail) => {
+    if(userEmail){
     const emailData = { emailAddress: userEmail, chainId: "manta" };
 
     const result = await axios.post(
@@ -5174,9 +5107,11 @@ function Dashboard({
         setallMantaChests(chestOrder);
       }
     }
+  }
   };
 
   const getAllTaikoChests = async (userEmail) => {
+    if(userEmail){
     const emailData = { emailAddress: userEmail, chainId: "taiko" };
 
     const result = await axios.post(
@@ -5221,6 +5156,7 @@ function Dashboard({
         setallTaikoChests(chestOrder);
       }
     }
+  }
   };
 
   const getAllSeiChests = async (userEmail) => {
@@ -5299,92 +5235,92 @@ function Dashboard({
 
   //todo
   const fetchAllMyNfts = async () => {
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "caws").then((NFTS) =>
+    getMyNFTS(userWallet  ? userWallet : coinbase, "caws").then((NFTS) =>
       setMyNFTSCaws(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
+    getMyNFTS(userWallet ? userWallet : coinbase, "cawsbnb").then(
       (NFTS) => setMyNFTSCawsBNB(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
+    getMyNFTS(userWallet ? userWallet : coinbase, "cawsbase").then(
       (NFTS) => setMyNFTSCawsBase(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
+    getMyNFTS(userWallet ? userWallet : coinbase, "cawsavax").then(
       (NFTS) => setMyNFTSCawsAvax(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "timepiece").then(
+    getMyNFTS(userWallet ? userWallet : coinbase, "timepiece").then(
       (NFTS) => setMyNFTSTimepiece(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "land").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "land").then((NFTS) =>
       setMyNFTSLand(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "bnb").then((NFTS) => {
+    getMyNFTS(userWallet ? userWallet : coinbase, "bnb").then((NFTS) => {
       setMyNFTSBNB(NFTS);
     });
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "opbnb").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "opbnb").then((NFTS) =>
       setMyNFTSopBNB(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
+    getMyNFTS(userWallet ? userWallet : coinbase, "landbnb").then(
       (NFTS) => setMyNFTSLandBNB(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
+    getMyNFTS(userWallet ? userWallet : coinbase, "landbase").then(
       (NFTS) => setMyNFTSLandBase(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
+    getMyNFTS(userWallet ? userWallet : coinbase, "landavax").then(
       (NFTS) => setMyNFTSLandAvax(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "coingecko").then(
+    getMyNFTS(userWallet ? userWallet : coinbase, "coingecko").then(
       (NFTS) => setMyNFTSCoingecko(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "gate").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "gate").then((NFTS) =>
       setmyGateNfts(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "conflux").then(
+    getMyNFTS(userWallet ? userWallet : coinbase, "conflux").then(
       (NFTS) => setmyConfluxNfts(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "base").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "base").then((NFTS) =>
       setmyBaseNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "doge").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "doge").then((NFTS) =>
       setmyDogeNfts(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cmc").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "cmc").then((NFTS) =>
       setmyCmcNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "core").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "core").then((NFTS) =>
       setmyCoreNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "viction").then(
+    getMyNFTS(userWallet ? userWallet : coinbase, "viction").then(
       (NFTS) => setmyVictionNfts(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "immutable").then(
+    getMyNFTS(userWallet ? userWallet : coinbase, "immutable").then(
       (NFTS) => setmyImmutableNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "multivers").then(
+    getMyNFTS(userWallet ? userWallet : coinbase, "multivers").then(
       (NFTS) => setmyMultiversNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "skale").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "skale").then((NFTS) =>
       setmySkaleNfts(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "manta").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "manta").then((NFTS) =>
       setmyMantaNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "taiko").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "taiko").then((NFTS) =>
       setmyTaikoNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cookie3").then(
+    getMyNFTS(userWallet ? userWallet : coinbase, "cookie3").then(
       (NFTS) => setmyCookieNfts(NFTS)
     );
   };
@@ -5392,7 +5328,7 @@ function Dashboard({
   const getOtherNfts = async () => {
     let finalboughtItems1 = [];
 
-    const listedNFTS = await getListedNFTS(0, "", "buyer", coinbase, "");
+    const listedNFTS = await getListedNFTS(0, "", "seller", coinbase, "");
     listedNFTS &&
       listedNFTS.length > 0 &&
       listedNFTS.map((nft) => {
@@ -5409,8 +5345,7 @@ function Dashboard({
           nft.chain = 1;
           finalboughtItems1.push(nft);
         }
-      });
-    setmyBoughtNfts(finalboughtItems1);
+      }); 
     setListedNFTS(finalboughtItems1);
   };
 
@@ -5528,56 +5463,7 @@ function Dashboard({
     }
   }
 
-  const getLatest20BoughtNFTS = async () => {
-    let boughtItems = [];
-    let finalboughtItems = [];
 
-    const URL =
-      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
-
-    const itemBoughtQuery = `
-        {
-            itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
-            nftAddress
-            tokenId
-            payment_priceType
-            price
-            buyer
-            blockNumber
-            blockTimestamp
-        }
-        }
-        `;
-
-    await axios
-      .post(URL, { query: itemBoughtQuery })
-      .then(async (result) => {
-        boughtItems = await result.data.data.itemBoughts;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    // console.log("boughtItems", boughtItems);
-
-    boughtItems &&
-      boughtItems.map((nft) => {
-        if (nft.nftAddress === window.config.nft_caws_address) {
-          nft.type = "caws";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
-          nft.type = "land";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          nft.type = "timepiece";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        }
-      });
-    return finalboughtItems;
-  };
 
   const getUserRewardData = async (addr) => {
     const result = await axios
@@ -7436,6 +7322,8 @@ function Dashboard({
   }, [coinbase, bundlesBought]);
 
   useEffect(() => {
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
     fetchSkalePrice();
     fetchSeiPrice();
     fetchMantaPrice();
@@ -7445,6 +7333,11 @@ function Dashboard({
     fetchVictionPrice();
     fetchEgldPrice();
     fetchImmutablePrice();
+    setDummyPremiumChests(shuffle(dummyPremiums));
+    fetchReleases();
+    window.scrollTo(0, 0);
+    getTokenDatabnb();
+    fetchCFXPrice();
   }, []);
 
   useEffect(() => {
@@ -7463,33 +7356,9 @@ function Dashboard({
     }
   }, [data, chainId]);
 
-  useEffect(() => {
-    setDummyPremiumChests(shuffle(dummyPremiums));
-    fetchReleases();
-  }, []);
+ 
 
-  useEffect(() => {
-    const checkMidnight = () => {
-      const now = new Date();
-      if (
-        now.getHours() === 0 &&
-        now.getMinutes() === 0 &&
-        now.getSeconds() === 0
-      ) {
-        setDummyPremiumChests(shuffle(dummyPremiums));
-        setBnbImages(shuffle(chestImagesBnb));
-        setSkaleImages(shuffle(chestImagesSkale));
-        setVictionImages(shuffle(chestImagesViction));
-        setMantaImages(shuffle(chestImagesViction));
-        setTaikoImages(shuffle(chestImagesTaiko));
-        setCoreImages(shuffle(chestImagesCore));
-        setSeiImages(shuffle(chestImagesSei));
-        clearInterval(interval);
-      }
-    };
-    const interval = setInterval(checkMidnight, 1000);
-    return () => clearInterval(interval);
-  }, []);
+
 
   useEffect(() => {
     if (chainId === 1) {
@@ -7758,6 +7627,15 @@ function Dashboard({
     claimedPremiumChests,
     claimedSkaleChests,
     claimedSkalePremiumChests,
+    claimedCoreChests,
+    claimedCorePremiumChests,
+    claimedVictionChests,
+    claimedVictionPremiumChests,
+    claimedMantaChests,
+    claimedMantaPremiumChests,
+    claimedTaikoChests,
+    claimedTaikoPremiumChests
+
   ]);
 
   useEffect(() => {
@@ -7784,7 +7662,6 @@ function Dashboard({
   }, [
     userWallet,
     isConnected,
-    data?.getPlayer?.wallet?.publicAddress,
     coinbase,
   ]);
 
@@ -7792,13 +7669,9 @@ function Dashboard({
     getOtherNfts();
     getDypBalance();
     fetchUserFavorites(coinbase);
-  }, [account, email, data?.getPlayer?.wallet]);
+  }, [account, userWallet, isConnected]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    getTokenDatabnb();
-    fetchCFXPrice();
-  }, []);
+ 
 
   useEffect(() => {
     refetchPlayer();
@@ -7817,12 +7690,7 @@ function Dashboard({
     }
   }, [dailyBonusPopup, dailyrewardpopup, leaderboard]);
 
-  useEffect(() => {
-    // if (coinbase) {
-    getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
-    // getMyOffers();
-    // }
-  }, [coinbase, isConnected]);
+
 
   const logoutItem = localStorage.getItem("logout");
 
@@ -7859,7 +7727,7 @@ function Dashboard({
   }, [dailyBonusPopup]);
 
   useEffect(() => {
-    calculatePremiumDiscount(userWallet !== "" ? userWallet : coinbase);
+    calculatePremiumDiscount(userWallet ? userWallet : coinbase);
   }, [userWallet, coinbase, chainId]);
 
   const hashValue = window.location.hash;
@@ -8024,8 +7892,7 @@ function Dashboard({
                               ethTokenData={ethTokenData}
                               dypTokenData={dypTokenData}
                               onOpenNfts={onOpenNfts}
-                              listedNFTS={listedNFTS}
-                              myBoughtNfts={myBoughtNfts}
+                              listedNFTS={listedNFTS} 
                               address={data?.getPlayer?.wallet?.publicAddress}
                               coinbase={account}
                               isVerified={data?.getPlayer?.wallet}
@@ -8138,8 +8005,7 @@ function Dashboard({
                         ethTokenData={ethTokenData}
                         dypTokenData={dypTokenData}
                         onOpenNfts={onOpenNfts}
-                        listedNFTS={listedNFTS}
-                        myBoughtNfts={myBoughtNfts}
+                        listedNFTS={listedNFTS} 
                         address={data?.getPlayer?.wallet?.publicAddress}
                         coinbase={account}
                         isVerified={data?.getPlayer?.wallet}
@@ -8259,8 +8125,7 @@ function Dashboard({
                       ethTokenData={ethTokenData}
                       dypTokenData={dypTokenData}
                       onOpenNfts={onOpenNfts}
-                      listedNFTS={listedNFTS}
-                      myBoughtNfts={myBoughtNfts}
+                      listedNFTS={listedNFTS} 
                       address={data?.getPlayer?.wallet?.publicAddress}
                       coinbase={account}
                       isVerified={data?.getPlayer?.wallet}
@@ -8400,7 +8265,6 @@ function Dashboard({
                         dypTokenData={dypTokenData}
                         onOpenNfts={onOpenNfts}
                         listedNFTS={listedNFTS}
-                        myBoughtNfts={myBoughtNfts}
                         address={data?.getPlayer?.wallet?.publicAddress}
                         coinbase={account}
                         isVerified={data?.getPlayer?.wallet}
