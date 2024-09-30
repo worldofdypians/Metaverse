@@ -61,8 +61,8 @@ const Footer = () => {
             Dypius
           </a>
           {/* <span className="footer-link font-poppins">Whitepaper</span> */}
-          <a href="https://www.worldofdypians.com/terms-conditions" style={{ textDecoration: "none" }}>
-            <span className="footer-link font-poppins">Terms & Conditions</span>
+          <a href="https://www.worldofdypians.com/terms-of-service" style={{ textDecoration: "none" }}>
+            <span className="footer-link font-poppins">Terms of Service</span>
           </a>
           <a href="https://www.worldofdypians.com/privacy-policy" style={{ textDecoration: "none" }}>
             <span className="footer-link font-poppins">Privacy Policy</span>

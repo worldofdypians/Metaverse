@@ -4,7 +4,7 @@ import "./_terms.scss";
 const TermsConditions = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Terms and Conditions'
+    document.title = 'Terms of Service'
 
 
   }, []);
@@ -14,7 +14,7 @@ const TermsConditions = () => {
       <div className="d-flex w-100 flex-column news-main-wrapper">
         <div className="row w-100 px-3 px-lg-5 mx-0 news-container">
           <div className="update-title font-organetto">
-            Terms AND CONDITIONS
+          Terms of Service
           </div>
           <div className="news-card terms-container p-4 d-flex flex-column gap-3 mb-5">
             <p className="text-white m-0">Last Revised on December 27, 2022</p>
