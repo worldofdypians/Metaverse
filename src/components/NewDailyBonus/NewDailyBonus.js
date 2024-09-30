@@ -2687,7 +2687,7 @@ const NewDailyBonus = ({
     claimedTaikoPremiumChests,
     rewardData,
   ]);
-
+console.log('chain, chainid, message', chain, chainId, message)
   return (
     <>
       <div className={`package-popup-wrapper2 `}>
@@ -3099,7 +3099,7 @@ const NewDailyBonus = ({
                            
 
                           <img
-                            src={mantaBg}
+                            src={comingSoon4}
                             className={`chain-img ${
                               chain === "base" && "chain-img-active"
                             }`}
@@ -3787,7 +3787,7 @@ const NewDailyBonus = ({
                        
 
                           <img
-                            src={mantaBg}
+                            src={comingSoon4}
                             className={`chain-img ${
                               chain === "base" && "chain-img-active"
                             }`}
@@ -4901,6 +4901,22 @@ const NewDailyBonus = ({
                               onClick={handleVictionPool}
                             >
                               Viction Network
+                            </span>
+                          </h6>
+                        )  : chain === "base" ? (
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                            Switch to{" "}
+                            <span
+                              style={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
+                              onClick={handleBasePool}
+                            >
+                              BASE Network
                             </span>
                           </h6>
                         ) : (
