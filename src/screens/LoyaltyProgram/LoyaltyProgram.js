@@ -28,6 +28,7 @@ import "./landpopup.css";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../hooks/useWindowSize";
+import { Checkbox } from "@mui/material";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -55,10 +56,37 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
   const [expired, setisExpired] = useState(false);
   const [isWinner, setisWinner] = useState(false);
 
-  // const [dypPrice, setDypPrice] = useState(0);
-  // const [ethPrice, setEthPrice] = useState(0);
+  const [dypPrice, setDypPrice] = useState(0);
+  const [ethPrice, setEthPrice] = useState(0);
+  const [chains, setChains] = useState({
+    bnbChain: { title: "BNB Chain", checked: false },
+    manta: { title: "Manta", checked: false },
+    base: { title: "Base", checked: false },
+    taiko: { title: "Taiko", checked: false },
+    core: { title: "CORE", checked: false },
+    opBnb: { title: "opBnb", checked: false },
+    viction: { title: "Viction", checked: false },
+  });
 
-  let loyaltyCd = new Date("2024-09-16T12:59:59.000+02:00");
+  const selectedCount = Object.values(chains).filter(
+    (chain) => chain.checked
+  ).length;
+
+  const handleCheckboxChange = (chainId) => {
+    setChains((prevChains) => {
+      const updatedChains = {
+        ...prevChains,
+        [chainId]: {
+          ...prevChains[chainId],
+          checked: !prevChains[chainId].checked,
+        },
+      };
+      return updatedChains;
+    });
+  };
+
+
+  let loyaltyCd = new Date("2025-09-16T12:59:59.000+02:00");
 
   const convertEthToUsd = async () => {
     const res = axios
@@ -219,60 +247,66 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
 
         <div className="container-nft justify-content-center d-flex align-items-start px-3 px-lg-5 position-relative flex-column">
           <div className="container-lg mx-0">
-          <div className="row gap-3 gap-lg-0">
-            <div className="col-12">
-              <div className="loyalty-banner loyalty-container d-flex flex-column flex-lg-row p-4 gap-3 gap-lg-5 align-items-center mb-4">
-                <div className="d-flex flex-column gap-2 loyalty-banner-content">
-                  <h6 className="loyalty-banner-title mb-0">Loyalty Program</h6>
-                  <p className="loyalty-banner-desc mb-0">
-                    This program rewards your interactions within Dypius
-                    ecosystem by offering gas fee rebates on Base. Join us in
-                    exploring the ecosystem with lower costs and great benefits
-                    for loyal participants!
-                  </p>
-                </div>
-                <div className="loyalty-banner-timer px-5 py-4 position-relative d-flex align-items-center justify-content-center">
-                  <img src={clock} alt="" className="loyalty-clock" />
-                  <div className="d-flex flex-column align-items-center ">
-                    <Countdown
-                      renderer={renderer}
-                      date={loyaltyCd}
-                      onComplete={() => {
-                        setisExpired(true);
-                      }}
-                    />
-                    <span className="loyalty-time-left">Coming Soon</span>
+            <div className="row gap-3 gap-lg-0">
+              <div className="col-12">
+                <div className="loyalty-banner loyalty-container d-flex flex-column flex-lg-row p-4 gap-3 gap-lg-5 align-items-center mb-4">
+                  <div className="d-flex flex-column gap-2 loyalty-banner-content">
+                    <h6 className="loyalty-banner-title mb-0">
+                      Loyalty Program
+                    </h6>
+                    <p className="loyalty-banner-desc mb-0">
+                      This program rewards your interactions within Dypius
+                      ecosystem by offering gas fee rebates on Base. Join us in
+                      exploring the ecosystem with lower costs and great
+                      benefits for loyal participants!
+                    </p>
+                  </div>
+                  <div className="loyalty-banner-timer px-5 py-4 position-relative d-flex align-items-center justify-content-center">
+                    <img src={clock} alt="" className="loyalty-clock" />
+                    <div className="d-flex flex-column align-items-center ">
+                      <Countdown
+                        renderer={renderer}
+                        date={loyaltyCd}
+                        onComplete={() => {
+                          setisExpired(true);
+                        }}
+                      />
+                      <span className="loyalty-time-left">Coming Soon</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="col-12 col-lg-6 ">
-              <div className="loyalty-container p-3 h-100">
-                <div className="row h-100 gap-3 gap-lg-0">
-                  <div className="col-12 col-lg-5 d-flex flex-column gap-4 justify-content-start align-items-center">
-                    <div className="d-flex flex-column justify-content-start gap-3">
-                      <h6 className="loyalty-banner-title text-center mb-0">
-                        90 days gas free
-                      </h6>
-                      <div className="d-flex flex-column gap-5 h-100 justify-content-start align-items-center pt-3">
-                        <p className="loyalty-desc mb-0 align-items-center  d-flex">
-                          Winners will enjoy 90 days of gas-free transactions in
-                          the Dypius ecosystem on Base, with ETH and DYPv2
-                          reimbursed to cover the gas costs for one transaction
-                          per day.
-                        </p>
-                        {/* {step !== 5 && step !== 4 && expired === false && (
-                        <button
-                          className="btn hero-stake-eth-btn2 w-75"
-                          onClick={() => setPopup(true)}
-                        >
-                          Apply
-                        </button>
-                      )} */}
+              <div className="col-12 col-lg-6 ">
+                <div className="loyalty-container p-3 h-100">
+                  <div className="row h-100 gap-3 gap-lg-0">
+                    <div className="col-12 col-lg-5 d-flex flex-column gap-4 justify-content-start align-items-center">
+                      <div className="d-flex flex-column justify-content-start gap-3">
+                        <h6 className="loyalty-banner-title text-center mb-0">
+                          90 days gas free
+                        </h6>
+                        <div className="d-flex flex-column gap-5 h-100 justify-content-start align-items-center pt-3">
+                          <p className="loyalty-desc mb-0 align-items-center  d-flex">
+                            Winners will enjoy 90 days of gas-free transactions
+                            in the Dypius ecosystem on Base, with ETH and DYPv2
+                            reimbursed to cover the gas costs for one
+                            transaction per day.
+                          </p>
+                          {step !== 5 && step !== 4 && expired === false && (
+                            <button
+                              className=" btn filled-btn w-75"
+                              onClick={() => setPopup(true)}
+                            >
+                              Apply
+                            </button>
+                          )}
 
-                        {/* {expired === true && <button className="disabled-btn pe-none" disabled>Ended</button>} */}
-                      </div>
-                      {/* <div className="d-flex flex-column w-100 mb-3 mb-lg-0">
+                          {expired === true && (
+                            <button className="disabled-btn pe-none" disabled>
+                              Ended
+                            </button>
+                          )}
+                        </div>
+                        {/* <div className="d-flex flex-column w-100 mb-3 mb-lg-0">
                       <div className="d-flex align-items-center justify-content-center p-2 my-reimbursement">
                         My Reimbursement
                       </div>
@@ -298,99 +332,106 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                         </div>
                       </div>
                     </div> */}
+                      </div>
+                      {isWinner && (
+                        <img
+                          src={winnerBadge}
+                          alt=""
+                          className="appliedbadge"
+                        />
+                      )}
+                      {step === 5 && (
+                        <div className="d-flex flex-column w-100 mb-3 mb-lg-0">
+                          <div className="d-flex p-3 flex-column align-items-center justify-content-center gap-2 reimbursement-wrapper">
+                            <div className="d-flex align-items-center justify-content-between w-100">
+                              <div className="d-flex align-items-center gap-2">
+                                <h6 className="loyalty-joined m-0">
+                                  You have already applied.
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    {isWinner && (
-                      <img src={winnerBadge} alt="" className="appliedbadge" />
-                    )}
-                    {/* <div className="d-flex flex-column w-100 mb-3 mb-lg-0">
-                    <div className="d-flex p-3 flex-column align-items-center justify-content-center gap-2 reimbursement-wrapper">
-                      <div className="d-flex align-items-center justify-content-between w-100">
+                    <div className="col-12 col-lg-7">
+                      <div
+                        className="reimbursement-wrapper h-100 p-3 d-flex flex-column align-items-center gap-2"
+                        style={{ borderRadius: "12px" }}
+                      >
+                        <h6 className="participants-title mb-0">
+                          Participants
+                        </h6>
                         <div className="d-flex align-items-center gap-2">
-                          {step === 5 && (
-                            <h6 className="loyalty-joined m-0">
-                              You have already applied.
-                            </h6>
-                          )}
+                          <img src={fireIcon} alt="" />
+                          <span className="participants-desc">
+                            <span style={{ color: "#FCE202" }}>
+                              {getFormattedNumber(totalUsers, 0)}
+                            </span>{" "}
+                            joined the Loyalty Program
+                          </span>
+                        </div>
+                        <div className="d-flex flex-column w-100">
+                          {latestUsers.slice(0, 7).map((item, index) => (
+                            <div
+                              key={index}
+                              className="participant-item d-flex align-items-center justify-content-between w-100 py-2"
+                            >
+                              <span className="participant-name">
+                                {shortAddress(item.walletAddress)} joined
+                              </span>
+                              <span className="participant-time-ago">
+                                {getTimeAgo(item.timestamp)}
+                              </span>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
-                  </div> */}
                   </div>
-                  <div className="col-12 col-lg-7">
-                    <div
-                      className="reimbursement-wrapper h-100 p-3 d-flex flex-column align-items-center gap-2"
-                      style={{ borderRadius: "12px" }}
-                    >
-                      <h6 className="participants-title mb-0">Participants</h6>
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={fireIcon} alt="" />
-                        <span className="participants-desc">
-                          <span style={{ color: "#FCE202" }}>
-                            {getFormattedNumber(totalUsers, 0)}
-                          </span>{" "}
-                          joined the Loyalty Program
-                        </span>
+                </div>
+              </div>
+              <div className="col-12 col-lg-6">
+                <div className="loyalty-container h-100 p-3 d-flex flex-column align-items-center gap-2">
+                  <h6 className="loyalty-banner-title mb-0">Benefits</h6>
+                  <div className="loyalty-benefits-grid w-100">
+                    <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
+                      <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
+                        <img src={contractIcon} alt="" />
                       </div>
-                      <div className="d-flex flex-column w-100">
-                        {latestUsers.slice(0, 7).map((item, index) => (
-                          <div
-                            key={index}
-                            className="participant-item d-flex align-items-center justify-content-between w-100 py-2"
-                          >
-                            <span className="participant-name">
-                              {shortAddress(item.walletAddress)} joined
-                            </span>
-                            <span className="participant-time-ago">
-                              {getTimeAgo(item.timestamp)}
-                            </span>
-                          </div>
-                        ))}
+                      <p className="loyalty-benefits-desc mb-0">
+                        Rewards for consistent engagement and participation
+                      </p>
+                    </div>
+                    <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
+                      <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
+                        <img src={starIcon} alt="" />
                       </div>
+                      <p className="loyalty-benefits-desc mb-0">
+                        Gas fee rebates for interactions with Dypius products
+                      </p>
+                    </div>
+                    <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
+                      <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
+                        <img src={coinsIcon} alt="" />
+                      </div>
+                      <p className="loyalty-benefits-desc mb-0">
+                        Exclusive incentives for Base network users
+                      </p>
+                    </div>
+                    <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
+                      <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
+                        <img src={moneyIcon} alt="" />
+                      </div>
+                      <p className="loyalty-benefits-desc mb-0">
+                        Lower costs to explore and engage in the ecosystem
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-12 col-lg-6">
-              <div className="loyalty-container h-100 p-3 d-flex flex-column align-items-center gap-2">
-                <h6 className="loyalty-banner-title mb-0">Benefits</h6>
-                <div className="loyalty-benefits-grid w-100">
-                  <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
-                    <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
-                      <img src={contractIcon} alt="" />
-                    </div>
-                    <p className="loyalty-benefits-desc mb-0">
-                      Rewards for consistent engagement and participation
-                    </p>
-                  </div>
-                  <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
-                    <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
-                      <img src={starIcon} alt="" />
-                    </div>
-                    <p className="loyalty-benefits-desc mb-0">
-                      Gas fee rebates for interactions with Dypius products
-                    </p>
-                  </div>
-                  <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
-                    <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
-                      <img src={coinsIcon} alt="" />
-                    </div>
-                    <p className="loyalty-benefits-desc mb-0">
-                      Exclusive incentives for Base network users
-                    </p>
-                  </div>
-                  <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
-                    <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
-                      <img src={moneyIcon} alt="" />
-                    </div>
-                    <p className="loyalty-benefits-desc mb-0">
-                      Lower costs to explore and engage in the ecosystem
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div></div>
+          </div>
         </div>
       </div>
       <div
@@ -420,8 +461,8 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
           </>
         )}
         {step === 1 ? (
-          <button className="btn filled-btn" onClick={() => setStep(2)}>
-            Connect wallet
+          <button className="btn filled-btn px-4" onClick={() => setStep(2)}>
+            Connect Wallet
           </button>
         ) : step === 2 ? (
           <div className="d-flex flex-column gap-2 w-100">
@@ -470,7 +511,34 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
               </span>
             </div>
             <div className="reimbursement-divider "></div>
+
             <form className="d-flex flex-column gap-3 w-100">
+              <span className="loyalty-popup-span">Select Chains (max 3)</span>
+              <div className="select-chains-grid">
+                {Object.keys(chains).map((chainId) => (
+                  <div
+                    className="select-chain-item d-flex align-items-center gap-2"
+                    key={chainId}
+                  >
+                    <Checkbox
+                      checked={chains[chainId].checked}
+                      disabled={!chains[chainId].checked && selectedCount >= 3} // Disable if 3 are selected and this one is unchecked
+                      onChange={() => handleCheckboxChange(chainId)}
+                      sx={{
+                        color: "white",
+                        "&.Mui-checked": {
+                          color: "#058380",
+                        },
+                      }}
+                    />
+                    <span className="select-chain-title">
+                      {chains[chainId].title}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="reimbursement-divider"></div>
+
               <span className="loyalty-popup-span">
                 Other Details (optional)
               </span>
@@ -492,7 +560,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
             <div className="d-flex w-100 justify-content-center">
               <button
                 type="submit"
-                className="btn filled-btn"
+                className="btn filled-btn px-5"
                 style={{ width: "fit-content" }}
                 disabled={loading}
                 onClick={handleSubmit}

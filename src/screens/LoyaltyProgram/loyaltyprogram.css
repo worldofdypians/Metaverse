@@ -1,10 +1,6 @@
 .loyalty-container {
   border-radius: 12px;
-  background: radial-gradient(
-    100% 100% at 100% 50.3%,
-    #242152 0%,
-    #242152 100%
-  );
+  background: #1D1445;
   position: relative;
 }
 
@@ -47,8 +43,7 @@
 
 .loyalty-banner-timer {
   border-radius: 8px;
-  border: 2px solid #50add3;
-  background: #2a2859;
+  border: 2px solid #7BD8AF;
 }
 
 .loyalty-timer {
@@ -62,9 +57,10 @@
 
 .loyalty-clock {
   position: absolute;
-  top: -20px;
-  left: 0;
-  right: 0;
+  /* top: -20px; */
+  top: 0;
+  bottom: 0;
+  left: -20px;
   margin: auto;
 }
 
@@ -94,9 +90,9 @@
 }
 
 .reimbursement-wrapper{
-    border-radius: 12px;
-    background: #312F69;
-    box-shadow: 0px 32px 64px 0px rgba(17, 17, 17, 0.12);
+  border-radius: 12px;
+  background: #271C56;
+  box-shadow: 0px 32px 64px 0px rgba(17, 17, 17, 0.12);
 }
 
 .appliedbadge {
@@ -187,7 +183,7 @@ gap: 12px;
 
 .loyalty-benefit-item{
   border-radius: 12px;
-  background-color: #312F69;
+  background-color: #271C56;
 }
 
 .benefit-icon-wrapper{
@@ -319,4 +315,16 @@ cursor: pointer;
   .loyalty-benefits-grid{
     grid-template-columns: repeat(1, 1fr);
   }
+}
+.select-chains-grid{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+}
+
+.select-chain-title{
+  color: #F7F7FC;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
 }
