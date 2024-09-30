@@ -109,6 +109,8 @@ const SingleNft = ({
   favorites,
   dyptokenData_old,
   binanceW3WProvider,
+  dyptokenData,
+  ethTokenData
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -150,9 +152,7 @@ const SingleNft = ({
 
   const [isOwner, setisOwner] = useState(
     location.state?.isOwner ? location.state?.isOwner : false
-  );
-  const [dyptokenData, setDypTokenData] = useState(0);
-  const [ethtokenData, setEthTokenData] = useState(0);
+  );  
   const [viewCount, setViewCount] = useState(0);
   const [favCount, setfavCount] = useState(0);
   const { email, logout } = useAuth();
@@ -338,31 +338,8 @@ const SingleNft = ({
       setofferData(finalArray);
     }
   };
-
-  const getPriceDYP = async () => {
-    const dypprice = await axios
-      .get(
-        "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
-      )
-      .then((res) => {
-        return res.data.data.attributes.base_token_price_usd;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    setDypTokenData(dypprice);
-  };
-
-  const getTokenData = async () => {
-    await axios
-      .get("https://api.dyp.finance/api/the_graph_eth_v2")
-      .then((data) => {
-        const propertyETH = data.data.the_graph_eth_v2.usd_per_eth;
-
-        setEthTokenData(propertyETH);
-      });
-  };
+ 
+ 
 
   const getNftOwner = async (type, Id) => {
     if (type === "timepiece") {
@@ -719,26 +696,7 @@ const SingleNft = ({
     }
   };
 
-  const getOldNftOwner = async (type, Id) => {
-    if (type === "timepiece") {
-      const nftowner = await window.caws_timepiece.ownerOf(Id).catch((e) => {
-        console.log(e);
-      });
-
-      localStorage.setItem("oldOwner", nftowner);
-    } else if (type === "land") {
-      const nftowner = await window.landnft.ownerOf(Id).catch((e) => {
-        console.log(e);
-      });
-      localStorage.setItem("oldOwner", nftowner);
-    } else if (type === "caws") {
-      const nftowner = await window.nft.ownerOf(Id).catch((e) => {
-        console.log(e);
-      });
-
-      localStorage.setItem("oldOwner", nftowner);
-    }
-  };
+ 
 
   const getMetaData = async (addr, tokenid) => {
     if (
@@ -2470,7 +2428,7 @@ const SingleNft = ({
       }
     }
     // }
-  }, [isConnected, IsListed, isOwner, coinbase, nftCount]);
+  }, [isConnected, coinbase, nftCount]);
 
   useEffect(() => {
     if (isConnected === true && nft && nft.payment_priceType === 1) {
@@ -2510,94 +2468,13 @@ const SingleNft = ({
         setisOwner(false);
       }
     }
-  }, [isConnected, isOwner, IsListed, coinbase, nft, owner, nftCount]);
+  }, [isConnected, coinbase, nft, owner, nftCount]);
 
-  useEffect(() => {
-    getNftOwner(
-      nftAddress.toLowerCase() ===
-        window.config.nft_timepiece_address.toLowerCase()
-        ? "timepiece"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_land_address.toLowerCase()
-        ? "land"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_coingecko_address.toLowerCase()
-        ? "coingecko"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_opbnb_address.toLowerCase()
-        ? "opbnb"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_gate_address.toLowerCase()
-        ? "gate"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_conflux_address.toLowerCase()
-        ? "conflux"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_manta_address.toLowerCase()
-        ? "manta"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_taiko_address.toLowerCase()
-        ? "taiko"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_cookie3_address.toLowerCase()
-        ? "cookie3"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_doge_address.toLowerCase()
-        ? "doge"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_bnb_address.toLowerCase()
-        ? "bnb"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_skale_address.toLowerCase()
-        ? "skale"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_cmc_address.toLowerCase()
-        ? "cmc"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_core_address.toLowerCase()
-        ? "core"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_viction_address.toLowerCase()
-        ? "viction"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_immutable_address.toLowerCase()
-        ? "immutable"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_multivers_address.toLowerCase()
-        ? "multivers"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_base_address.toLowerCase()
-        ? "base"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_caws_bnb_address.toLowerCase()
-        ? "cawsbnb"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_caws_avax_address.toLowerCase()
-        ? "cawsavax"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_caws_base_address.toLowerCase()
-        ? "cawsbase"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_land_bnb_address.toLowerCase()
-        ? "landbnb"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_land_avax_address.toLowerCase()
-        ? "landavax"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_land_base_address.toLowerCase()
-        ? "landbase"
-        : "caws",
-      nftId
-    );
-  }, [nftId, nftAddress, nftCount]);
-
+ 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getTokenData();
-    getPriceDYP();
     getFavoritesCount(nftId, nftAddress);
     getLatest20BoughtNFTS(nftAddress, nftId);
-
     getListedNtsAsc();
   }, []);
 
@@ -2606,6 +2483,16 @@ const SingleNft = ({
   }, [nftId, nftAddress]);
 
   useEffect(() => {
+    checkisListedNFT(nftId, nftAddress);
+    handleRefreshList(
+      nftAddress === window.config.nft_caws_address
+        ? "caws"
+        : nftAddress === window.config.nft_timepiece_address
+        ? "timepiece"
+        : "land",
+      nftId
+    );
+
     if (
       nftAddress.toLowerCase() === window.config.nft_caws_address.toLowerCase()
     ) {
@@ -2721,20 +2608,86 @@ const SingleNft = ({
       setType("landbase");
     }
 
-    getMetaData(nftAddress, nftId);
-  }, [nftId, nftAddress, nft, nftCount]);
-
-  useEffect(() => {
-    checkisListedNFT(nftId, nftAddress);
-    handleRefreshList(
-      nftAddress === window.config.nft_caws_address
-        ? "caws"
-        : nftAddress === window.config.nft_timepiece_address
+    getNftOwner(
+      nftAddress.toLowerCase() ===
+        window.config.nft_timepiece_address.toLowerCase()
         ? "timepiece"
-        : "land",
+        : nftAddress.toLowerCase() ===
+          window.config.nft_land_address.toLowerCase()
+        ? "land"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_coingecko_address.toLowerCase()
+        ? "coingecko"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_opbnb_address.toLowerCase()
+        ? "opbnb"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_gate_address.toLowerCase()
+        ? "gate"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_conflux_address.toLowerCase()
+        ? "conflux"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_manta_address.toLowerCase()
+        ? "manta"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_taiko_address.toLowerCase()
+        ? "taiko"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_cookie3_address.toLowerCase()
+        ? "cookie3"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_doge_address.toLowerCase()
+        ? "doge"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_bnb_address.toLowerCase()
+        ? "bnb"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_skale_address.toLowerCase()
+        ? "skale"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_cmc_address.toLowerCase()
+        ? "cmc"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_core_address.toLowerCase()
+        ? "core"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_viction_address.toLowerCase()
+        ? "viction"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_immutable_address.toLowerCase()
+        ? "immutable"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_multivers_address.toLowerCase()
+        ? "multivers"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_base_address.toLowerCase()
+        ? "base"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_caws_bnb_address.toLowerCase()
+        ? "cawsbnb"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_caws_avax_address.toLowerCase()
+        ? "cawsavax"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_caws_base_address.toLowerCase()
+        ? "cawsbase"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_land_bnb_address.toLowerCase()
+        ? "landbnb"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_land_avax_address.toLowerCase()
+        ? "landavax"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_land_base_address.toLowerCase()
+        ? "landbase"
+        : "caws",
       nftId
     );
-  }, [nftCount, owner]);
+
+    getMetaData(nftAddress, nftId);
+  }, [nftId, nftAddress, nftCount]);
+ 
 
   useEffect(() => {
     getOffer();
@@ -3287,7 +3240,7 @@ const SingleNft = ({
                               $
                               {getFormattedNumber(
                                 nft?.payment_priceType === 0
-                                  ? ethtokenData * (nft?.price / 1e18)
+                                  ? ethTokenData * (nft?.price / 1e18)
                                   : nft?.payment_tokenAddress ===
                                     window.config.dyp_token_address
                                   ? dyptokenData_old * (nft?.price / 1e18)
@@ -3332,7 +3285,7 @@ const SingleNft = ({
                                 $
                                 {getFormattedNumber(
                                   nft?.payment_priceType === 0
-                                    ? ethtokenData * (nft?.price / 1e18)
+                                    ? ethTokenData * (nft?.price / 1e18)
                                     : nft?.payment_tokenAddress ===
                                       window.config.dyp_token_address
                                     ? dyptokenData_old * (nft?.price / 1e18)
@@ -3450,7 +3403,7 @@ const SingleNft = ({
                                   $
                                   {getFormattedNumber(
                                     nft?.payment_priceType === 0
-                                      ? ethtokenData * (nft?.price / 1e18)
+                                      ? ethTokenData * (nft?.price / 1e18)
                                       : nft?.payment_tokenAddress ===
                                         window.config.dyp_token_address
                                       ? dyptokenData_old * (nft?.price / 1e18)
@@ -3598,7 +3551,7 @@ const SingleNft = ({
                                     $
                                     {getFormattedNumber(
                                       priceType === 0
-                                        ? ethtokenData * nftPrice
+                                        ? ethTokenData * nftPrice
                                         : priceType === 2
                                         ? dyptokenData * nftPrice
                                         : dyptokenData_old * nftPrice,
@@ -4568,7 +4521,7 @@ const SingleNft = ({
                               $
                               {getFormattedNumber(
                                 item.offer.payment.priceType === "0"
-                                  ? ethtokenData * (item.offer[0] / 1e18)
+                                  ? ethTokenData * (item.offer[0] / 1e18)
                                   : dyptokenData * (item.offer[0] / 1e18),
                                 item.offer.payment.priceType === "0" ? 3 : 0
                               )}
@@ -4723,7 +4676,7 @@ const SingleNft = ({
           nft={nft}
           nftAddr={nftAddress}
           nftId={nftId}
-          ethTokenData={ethtokenData}
+          ethTokenData={ethTokenData}
           dypTokenData={dyptokenData}
           dyptokenData_old={dyptokenData_old}
           handleMakeOffer={handleMakeOffer}

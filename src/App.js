@@ -2940,15 +2940,26 @@ function App() {
   const getOtherNfts = async () => {
     let finalboughtItems1 = [];
     let finalboughtItems2 = [];
+    const nft_contract = new window.infuraWeb3.eth.Contract(
+        window.CAWS_ABI,
+        window.config.nft_caws_address
+      );
+      const nft_contract_land = new window.infuraWeb3.eth.Contract(
+        window.WOD_ABI,
+        window.config.nft_land_address
+      );
 
+      const nft_contract_timepiece = new window.infuraWeb3.eth.Contract(
+        window.TIMEPIECE_ABI,
+        window.config.nft_timepiece_address
+      );
+       
     if (listedNFTS2 && listedNFTS2.length > 0) {
+  
       await Promise.all(
         listedNFTS2.map(async (nft) => {
           if (nft.nftAddress === window.config.nft_caws_address) {
-            const nft_contract = new window.infuraWeb3.eth.Contract(
-              window.CAWS_ABI,
-              window.config.nft_caws_address
-            );
+       
             const nftowner = await nft_contract.methods
               .ownerOf(nft.tokenId)
               .call()
@@ -2964,19 +2975,16 @@ function App() {
               finalboughtItems1.push(nft);
             }
           } else if (nft.nftAddress === window.config.nft_land_address) {
-            const nft_contract = new window.infuraWeb3.eth.Contract(
-              window.WOD_ABI,
-              window.config.nft_land_address
-            );
-            const nftowner = await nft_contract.methods
+          
+            const nftowner_land = await nft_contract_land.methods
               .ownerOf(nft.tokenId)
               .call()
               .catch((e) => {
                 console.log(e);
               });
             if (
-              nftowner &&
-              nftowner.toLowerCase() === nft.seller.toLowerCase()
+              nftowner_land &&
+              nftowner_land.toLowerCase() === nft.seller.toLowerCase()
             ) {
               nft.type = "land";
               nft.chain = 1;
@@ -2986,11 +2994,8 @@ function App() {
             nft.nftAddress.toLowerCase() ===
             window.config.nft_timepiece_address.toLowerCase()
           ) {
-            const nft_contract = new window.infuraWeb3.eth.Contract(
-              window.TIMEPIECE_ABI,
-              window.config.nft_timepiece_address
-            );
-            const nftowner = await nft_contract.methods
+       
+            const nftowner_timepiece = await nft_contract_timepiece.methods
               .ownerOf(nft.tokenId)
               .call()
               .catch((e) => {
@@ -2999,8 +3004,8 @@ function App() {
               });
 
             if (
-              nftowner &&
-              nftowner.toLowerCase() === nft.seller.toLowerCase()
+              nftowner_timepiece &&
+              nftowner_timepiece.toLowerCase() === nft.seller.toLowerCase()
             ) {
               nft.type = "timepiece";
               nft.chain = 1;
@@ -3018,10 +3023,7 @@ function App() {
       await Promise.all(
         recentListedNFTS2.map(async (nft) => {
           if (nft.nftAddress === window.config.nft_caws_address) {
-            const nft_contract = new window.infuraWeb3.eth.Contract(
-              window.CAWS_ABI,
-              window.config.nft_caws_address
-            );
+         
             const nftowner = await nft_contract.methods
               .ownerOf(nft.tokenId)
               .call()
@@ -3037,31 +3039,25 @@ function App() {
               finalboughtItems2.push(nft);
             }
           } else if (nft.nftAddress === window.config.nft_land_address) {
-            const nft_contract = new window.infuraWeb3.eth.Contract(
-              window.WOD_ABI,
-              window.config.nft_land_address
-            );
+           
 
-            const nftowner = await nft_contract.methods
+            const nftowner_land = await nft_contract_land.methods
               .ownerOf(nft.tokenId)
               .call()
               .catch((e) => {
                 console.log(e);
               });
             if (
-              nftowner &&
-              nftowner.toLowerCase() === nft.seller.toLowerCase()
+              nftowner_land &&
+              nftowner_land.toLowerCase() === nft.seller.toLowerCase()
             ) {
               nft.type = "land";
               nft.chain = 1;
               finalboughtItems2.push(nft);
             }
           } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-            const nft_contract = new window.infuraWeb3.eth.Contract(
-              window.TIMEPIECE_ABI,
-              window.config.nft_timepiece_address
-            );
-            const nftowner = await nft_contract.methods
+          
+            const nftowner_timepiece = await nft_contract_timepiece.methods
               .ownerOf(nft.tokenId)
               .call()
               .catch((e) => {
@@ -3069,8 +3065,8 @@ function App() {
               });
 
             if (
-              nftowner &&
-              nftowner.toLowerCase() === nft.seller.toLowerCase()
+              nftowner_timepiece &&
+              nftowner_timepiece.toLowerCase() === nft.seller.toLowerCase()
             ) {
               nft.type = "timepiece";
               nft.chain = 1;
@@ -3203,33 +3199,28 @@ function App() {
         setIsConnected(false);
       }
     }
-    checkNetworkId();
+    // checkNetworkId();
   }, [coinbase, networkId, active, account]);
 
-  useEffect(() => {
-    checkNetworkId();
-  }, [isConnected, coinbase, networkId, provider]);
-  // console.log(provider)
+  // useEffect(() => {
+  //   checkNetworkId();
+  // }, [isConnected, coinbase, networkId, provider]);
+
   useEffect(() => {
     if (isConnected === true && coinbase && networkId === 1) {
       myCAWStakes();
       myLandStakes();
       getmyCawsWodStakes();
       myNft2();
-      myLandNft();
+      myLandNft(); 
     }
     if (isConnected === true && coinbase) {
       myNft();
       myCAWNft();
+      fetchAllMyNfts();
     }
-    fetchAllMyNfts();
-  }, [isConnected, networkId, currencyAmount, coinbase]);
 
-  useEffect(() => {
-    if (isConnected === true && coinbase && networkId === 1) {
-      myNft2();
-      myLandNft();
-    } else if (
+    if (
       isConnected === true &&
       coinbase &&
       networkId === 56
@@ -3243,7 +3234,9 @@ function App() {
       myNftsBase();
       myLandNftsBase();
     }
+    
   }, [isConnected, networkId, coinbase, count]);
+ 
 
   // useEffect(() => {
   //   if (
@@ -3319,7 +3312,6 @@ function App() {
 
   const getCawsSold = async () => {
     const allSold = latest20BoughtNFTS;
-
     if (allSold && allSold.length > 0) {
       let cawsFilter = allSold.filter(
         (item) => item.nftAddress === window.config.nft_caws_address
@@ -3817,7 +3809,6 @@ function App() {
 
   useEffect(() => {
     getAllData();
-    fetchDogeCoinPrice();
   }, [coinbase, count55, isConnected]);
 
   useEffect(() => {
@@ -3835,9 +3826,7 @@ function App() {
   }, [coinbase, nftCount]);
 
   useEffect(() => {
-    getTokenData();
-    getTokenDatabnb();
-    getPriceDYP();
+
     getListedNfts2();
     getLatest20BoughtNFTS();
     // getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
@@ -3857,6 +3846,7 @@ function App() {
 
   useEffect(() => {
     if (count33 !== 0 && count44 !== 0) {
+    
       getOtherNfts();
     }
   }, [count33, count44, nftCount]);
@@ -3889,6 +3879,11 @@ function App() {
     fetchSocialData();
     getTotalSupply();
     checkBinanceData();
+    getTokenData();
+    getTokenDatabnb();
+    getPriceDYP();
+    fetchDogeCoinPrice();
+
   }, []);
 
   return (
@@ -3956,7 +3951,9 @@ function App() {
                 nftCount={nftCount}
                 favorites={favorites}
                 dyptokenData_old={dypTokenData_old}
+                dyptokenData={dypTokenData}
                 binanceW3WProvider={library}
+                ethTokenData={ethTokenData}
               />
             }
           />
