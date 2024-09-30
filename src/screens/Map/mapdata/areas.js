@@ -253,7 +253,7 @@ const chainAreas = [
     marker: markers.baseMarker,
     icon: baseIcon,
     location: [-0.0694799252930712, 0.08724689483642578],
-    banner: "skaleBanner.webp",
+    banner: "baseBanner.webp",
     area: [
       [
         [-0.06921170458802975, 0.08680164813995363],
@@ -598,7 +598,7 @@ const chainAreas = [
     marker: markers.midleMarker,
     icon: midle,
     location: [-0.06773297028649591, 0.08424818515777588],
-    banner: "confluxBanner.png",
+    banner: "midleBanner.webp",
     area: [
       [
         [-0.067521914111659, 0.0843501091003418],
@@ -1482,7 +1482,7 @@ const chainAreas = [
     marker: markers.dogecoinMarker,
     icon: dogecoin,
     location: [-0.06900249243705621, 0.08157670497894287],
-    banner: "immutableBanner.png",
+    banner: "dogecoinBanner.webp",
     area: [
       [
         [-0.06869672083011669, 0.08172154426574707],
@@ -2879,8 +2879,9 @@ const regions = [
     ],
   },
   {
-    title: "Nebulae",
-    location: [-0.08205411013540762, 0.10140895843505861],
+    title: "Chaosity",
+    location: [-0.08377072210751556, 0.08982181549072267],
+
     area: [
       [
         [-0.07738170655524347, 0.10318994522094728],
@@ -2934,8 +2935,8 @@ const regions = [
     ],
   },
   {
-    title: "Blazing Woods",
-    location: [-0.08364197621219294, 0.11351108551025392],
+    title: "Nebulae",
+    location: [-0.08205411013540762, 0.10140895843505861],
     area: [
       [
         [-0.07848141123408599, 0.10690748691558838],
@@ -2966,8 +2967,8 @@ const regions = [
     ],
   },
   {
-    title: "Chaosity",
-    location: [-0.08377072210751556, 0.08982181549072267],
+    title: "Blazing Woods",
+    location: [-0.08364197621219294, 0.11351108551025392],
     area: [
       [
         [-0.08646902139857016, 0.10769069194793703],
@@ -4363,7 +4364,7 @@ let cookieLastDay = new Date("2024-10-01T14:00:00.000+02:00");
 let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
 let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
 
-const dummyEvents = [
+const challenges = [
   {
     title: "Puzzle Madness",
     duration: "--",
@@ -4464,7 +4465,7 @@ export {
   teleports,
   craftingTables,
   regions,
-  dummyEvents,
+  challenges,
   firstParcel,
   secondParcel,
   leaderboards,

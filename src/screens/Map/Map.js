@@ -1,4 +1,11 @@
-import React, { useRef, useState, useMemo, useCallback, Suspense, useEffect } from "react";
+import React, {
+  useRef,
+  useState,
+  useMemo,
+  useCallback,
+  Suspense,
+  useEffect,
+} from "react";
 import { MapContainer, TileLayer, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./_map.scss";
@@ -27,6 +34,7 @@ import {
   boarAreas,
   deerAreas,
   mines,
+  challenges,
 } from "./mapdata/areas";
 import ZoomToLocation from "./components/ZoomToLocation";
 import L from "leaflet";
@@ -82,7 +90,12 @@ const Map = () => {
   const memoizedRegions = useMemo(() => regions, [regions]);
   const memoizedQuests = useMemo(() => quests, [quests]);
   const memoizedSeas = useMemo(() => seas, [seas]);
+  const memoizedChallenges = useMemo(() => challenges, [challenges]);
   const memoizedAreas = useMemo(() => areas, [areas]);
+  const memoizedTeleports = useMemo(() => teleports, [teleports]);
+  const memoizedLeaderboards = useMemo(() => leaderboards, [leaderboards]);
+  const memoizedCraftingTables = useMemo(() => craftingTables, [craftingTables]);
+  const memoizedMines = useMemo(() => mines, [mines]);
   const memoizedBearAreas = useMemo(() => bearAreas, [bearAreas]);
   const memoizedBoarAreas = useMemo(() => boarAreas, [boarAreas]);
   const memoizedDeerAreas = useMemo(() => deerAreas, [deerAreas]);
@@ -121,7 +134,6 @@ const Map = () => {
     [customClusterIcon]
   );
 
-  
   // Render chain markers and polygons
   const ChainMarkers = useCallback(
     () =>
@@ -140,12 +152,8 @@ const Map = () => {
     [chainsVisible, memoizedChainAreas, handleMarkerClick]
   );
 
-  
-
-
-
   return (
-     <div className="d-flex align-items-start">
+    <div className="d-flex align-items-start">
       <Suspense fallback={<div className="d-none">Loading...</div>}>
         <MapSidebar
           switches={switches}
@@ -200,7 +208,7 @@ const Map = () => {
           memoizedBoarAreas.map((item) => (
             <CustomMarker
               key={item.title}
-              icon={markers.questMarker}
+              icon={markers.boarMarker}
               item={item}
               handleMarkerClick={handleMarkerClick}
             />
@@ -209,21 +217,67 @@ const Map = () => {
           memoizedBearAreas.map((item) => (
             <CustomMarker
               key={item.title}
-              icon={markers.questMarker}
-              item={item}
-              handleMarkerClick={handleMarkerClick}
-            />
-          ))}
-        {switches.deer &&
-          memoizedDeerAreas.map((item) => (
-            <CustomMarker
-              key={item.title}
-              icon={markers.questMarker}
+              icon={markers.bearMarker}
               item={item}
               handleMarkerClick={handleMarkerClick}
             />
           ))}
 
+        {switches.deer &&
+          memoizedDeerAreas.map((item) => (
+            <CustomMarker
+              key={item.title}
+              icon={markers.deerMarker}
+              item={item}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.challenges &&
+          memoizedChallenges.map((item) => (
+            <CustomMarker
+              key={item.title}
+              icon={item.marker}
+              type={"event"}
+              item={item}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.leaderboards &&
+          memoizedLeaderboards.map((item) => (
+            <CustomMarker
+              key={item.title}
+              icon={markers.leaderboardsMarker}
+              item={item}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.teleports &&
+          memoizedTeleports.map((item) => (
+            <CustomMarker
+              key={item.title}
+              icon={markers.teleportMarker}
+              item={item}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.mines &&
+          memoizedMines.map((item) => (
+            <CustomMarker
+              key={item.title}
+              icon={markers.mineMarker}
+              item={item}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
+        {switches.craftingTables &&
+          memoizedCraftingTables.map((item) => (
+            <CustomMarker
+              key={item.title}
+              icon={markers.craftingMarker}
+              item={item}
+              handleMarkerClick={handleMarkerClick}
+            />
+          ))}
         {/* <MarkerClusterGroup
           iconCreateFunction={createCustomClusterIcon}
           disableClusteringAtZoom={18}
