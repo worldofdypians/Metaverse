@@ -1109,6 +1109,61 @@ function Dashboard({
     "15",
     "15",
   ];
+
+
+
+
+  const updatedSkalePrizesWeekly = [
+    "10",
+    "10",
+    "5",
+    "4",
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+  ];
+  const updatedSkalePrizesWeeklyGolden = [
+    "20",
+    "10",
+    "10",
+    "10",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+  ];
+  const updatedSkalePrizesMonthly = [
+    "30",
+    "20",
+    "15",
+    "10",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+  ];
+  const updatedSkalePrizesMonthlyGolden = [
+    "80",
+    "40",
+    "20",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+  ];
+
+
+
   const genesisPrizes = [
     "100",
     "100",
@@ -2713,13 +2768,6 @@ function Dashboard({
 
 
 
-
-
-
-
-
-
-
   const fillRecordsTaiko = (itemData) => {
     if (itemData.length === 0) {
       setDailyRecordsTaiko(placeholderplayerData);
@@ -3300,10 +3348,10 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesWeekly[9]) +
-                Number(skalePrizesWeeklyGolden[9])
-              : Number(skalePrizesWeekly[userPosition]) +
-                Number(skalePrizesWeeklyGolden[userPosition])
+              ? Number(updatedSkalePrizesWeekly[9]) +
+                Number(updatedSkalePrizesWeeklyGolden[9])
+              : Number(updatedSkalePrizesWeekly[userPosition]) +
+                Number(updatedSkalePrizesWeeklyGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -3312,8 +3360,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesWeekly[9])
-              : Number(skalePrizesWeekly[userPosition])
+              ? Number(updatedSkalePrizesWeekly[9])
+              : Number(updatedSkalePrizesWeekly[userPosition])
             : 0
         );
       }
@@ -3361,10 +3409,10 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesMonthly[9]) +
-                Number(skalePrizesMonthlyGolden[9])
-              : Number(skalePrizesMonthly[userPosition]) +
-                Number(skalePrizesMonthlyGolden[userPosition])
+              ? Number(updatedSkalePrizesMonthly[9]) +
+                Number(updatedSkalePrizesMonthlyGolden[9])
+              : Number(updatedSkalePrizesMonthly[userPosition]) +
+                Number(updatedSkalePrizesMonthlyGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -3373,8 +3421,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesMonthly[9])
-              : Number(skalePrizesMonthly[userPosition])
+              ? Number(updatedSkalePrizesMonthly[9])
+              : Number(updatedSkalePrizesMonthly[userPosition])
             : 0
         );
       }
@@ -4015,8 +4063,11 @@ function Dashboard({
         title: "WEEKLY",
         reset: "Monday (00:00 UTC)",
         type: "cash",
-        rewards: skalePrizesWeekly,
-        premium_rewards: skalePrizesWeeklyGolden,
+        rewards: updatedSkalePrizesWeekly,
+        past_rewards: skalePrizesWeekly,
+        premium_rewards:  updatedSkalePrizesWeeklyGolden,
+        past_premium_rewards: skalePrizesWeeklyGolden,
+
         activeData: weeklyRecordsSkale,
         previousData: prevDataSkaleWeekly,
         player_data: userDataSkaleWeekly,
@@ -4026,8 +4077,10 @@ function Dashboard({
         title: "MONTHLY",
         reset: "Monthly (00:00 UTC)",
         type: "cash",
-        rewards: skalePrizesMonthly,
-        premium_rewards: skalePrizesMonthlyGolden,
+        rewards: updatedSkalePrizesMonthly,
+        past_rewards: skalePrizesMonthly,
+        premium_rewards: updatedSkalePrizesMonthlyGolden,
+        past_premium_rewards: skalePrizesMonthlyGolden,
         activeData: monthlyRecordsSkale,
         previousData: prevDataSkaleMonthly,
         player_data: userDataSkaleMonthly,

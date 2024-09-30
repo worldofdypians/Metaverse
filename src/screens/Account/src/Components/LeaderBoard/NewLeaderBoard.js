@@ -121,7 +121,7 @@ const NewLeaderBoard = ({
   allVictionData,
   allMantaData,
   allBaseData,
-  allTaikoData
+  allTaikoData,
 }) => {
   const chainItems = [
     {
@@ -331,8 +331,6 @@ const NewLeaderBoard = ({
   useEffect(() => {
     handleOption(optionText2);
   }, [inactiveBoard]);
-
- 
   useEffect(() => {
     if (
       availableTime === null ||
@@ -356,7 +354,7 @@ const NewLeaderBoard = ({
   //     setisActive(false);
   //   } else setisActive(true);
   // }, [countdown]);
-  
+
   const nextSlide = () => {
     sliderRef.current.slickNext();
   };
@@ -369,10 +367,10 @@ const NewLeaderBoard = ({
   useEffect(() => {
     setAllData(allBnbData);
     setTimeout(() => {
-      prevSlide()
+      prevSlide();
     }, 500);
   }, []);
-  
+
   return (
     <>
       <div className="row w-100 justify-content-start"></div>
@@ -400,13 +398,13 @@ const NewLeaderBoard = ({
                   <div
                     className={`optionswrapper-bg ${
                       optionText2 === "manta"
-                        ? "move-1" :
-                        optionText2 === "base"
-                        ? "move-6" :
-                        optionText2 === "taiko"
-                        ? "move-2" : 
-                        optionText2 === "skale" ? 
-                        "move-3"
+                        ? "move-1"
+                        : optionText2 === "base"
+                        ? "move-6"
+                        : optionText2 === "taiko"
+                        ? "move-2"
+                        : optionText2 === "skale"
+                        ? "move-3"
                         : optionText2 === "core"
                         ? "move-4"
                         : optionText2 === "viction"
@@ -529,7 +527,6 @@ const NewLeaderBoard = ({
                         ? "Base"
                         : ""}
                     </span>
-
 
                     <span
                       onMouseEnter={() => handleMouseEnter("taiko")}
@@ -711,7 +708,6 @@ const NewLeaderBoard = ({
                       className={`
                    d-flex align-items-center gap-2
                    otheroptionsActive optionText col-3`}
-                   
                       style={{ width: "100%" }}
                     >
                       <img
@@ -733,7 +729,7 @@ const NewLeaderBoard = ({
               className="d-flex flex-column gap-2 tablewrapper position-relative"
               style={{ height: optionText === "genesis" ? "345px" : "384px" }}
             >
-               {/* {optionText2 !==  "taiko" ? (
+              {/* {optionText2 !==  "taiko" ? (
                 <></>
               ) : (
                 <div className="coming-soon-position d-flex align-items-center justify-content-center">
@@ -934,10 +930,15 @@ const NewLeaderBoard = ({
                                                           item.displayName
                                                           ? "rgb(243, 192, 9)"
                                                           : "gray",
-                                                          whiteSpace: 'nowrap'
+                                                      whiteSpace: "nowrap",
                                                     }}
                                                   >
-                                                    +<img src={starIcon} alt="" />{getFormattedNumber(
+                                                    +
+                                                    <img
+                                                      src={starIcon}
+                                                      alt=""
+                                                    />
+                                                    {getFormattedNumber(
                                                       leaderboard
                                                         .premium_rewards[index],
                                                       0
@@ -1043,7 +1044,7 @@ const NewLeaderBoard = ({
                                             }`}
                                           >
                                             <td className="playerData col-1 font-montserrat">
-                                              {parseInt(item.position) + 1}
+                                              {parseInt(item.position) + 1}555
                                             </td>
                                             <td className="playerName col-3 font-montserrat">
                                               {item.displayName === username ? (
@@ -1099,12 +1100,13 @@ const NewLeaderBoard = ({
                                                     className="leaderboard-text"
                                                     style={{ color: "#fff" }}
                                                   >
-                                                    {getFormattedNumber(
-                                                      leaderboard.rewards[
-                                                        index
-                                                      ],
-                                                      0
-                                                    )}
+                                                    { getFormattedNumber(
+                                                          leaderboard.rewards[
+                                                            index
+                                                          ],
+                                                          0
+                                                        )
+                                                      }
                                                   </span>
                                                 </div>
                                               </td>
@@ -1122,12 +1124,22 @@ const NewLeaderBoard = ({
                                                     style={{ color: "#fff" }}
                                                   >
                                                     $
-                                                    {getFormattedNumber(
-                                                      leaderboard.rewards[
-                                                        index
-                                                      ],
-                                                      0
-                                                    )}
+                                                    {
+                                                    optionText2 !== "skale"
+                                                      ? getFormattedNumber(
+                                                          leaderboard.rewards[
+                                                            index
+                                                          ],
+                                                          0
+                                                        )
+                                                      : 
+                                                      getFormattedNumber(
+                                                          leaderboard
+                                                            .past_rewards[
+                                                            index
+                                                          ],
+                                                          0
+                                                        )}
                                                   </span>
                                                 </div>
                                               </td>
@@ -1154,15 +1166,22 @@ const NewLeaderBoard = ({
                                                           item.displayName
                                                           ? "rgb(243, 192, 9)"
                                                           : "gray",
-                                                          whiteSpace:'nowrap'
+                                                      whiteSpace: "nowrap",
                                                     }}
                                                   >
-                                                    +<img src={starIcon} alt="" />
+                                                    +
+                                                    <img
+                                                      src={starIcon}
+                                                      alt=""
+                                                    />
                                                     {getFormattedNumber(
-                                                      leaderboard
-                                                        .premium_rewards[index],
-                                                      0
-                                                    )}
+                                                          leaderboard
+                                                            .premium_rewards[
+                                                            index
+                                                          ],
+                                                          0
+                                                        )
+                                                     }
                                                   </span>
                                                   <HtmlTooltip
                                                     placement="top"
@@ -1211,11 +1230,21 @@ const NewLeaderBoard = ({
                                                     }}
                                                   >
                                                     +$
-                                                    {getFormattedNumber(
-                                                      leaderboard
-                                                        .premium_rewards[index],
-                                                      0
-                                                    )}
+                                                    {optionText2 !== "skale"
+                                                      ? getFormattedNumber(
+                                                          leaderboard
+                                                            .premium_rewards[
+                                                            index
+                                                          ],
+                                                          0
+                                                        )
+                                                      : getFormattedNumber(
+                                                          leaderboard
+                                                            .past_premium_rewards[
+                                                            index
+                                                          ],
+                                                          0
+                                                        )}
                                                   </span>
                                                   <HtmlTooltip
                                                     placement="top"
@@ -1421,7 +1450,7 @@ const NewLeaderBoard = ({
                                                         .displayName
                                                       ? "#fff"
                                                       : "gray",
-                                                      whiteSpace:'nowrap'
+                                                  whiteSpace: "nowrap",
                                                 }}
                                               >
                                                 + <img src={starIcon} alt="" />
