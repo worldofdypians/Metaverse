@@ -992,16 +992,17 @@ const MarketMint = ({
                       } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
                   >
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     Live
                   </h6>
                   <h6
                     className={`new-stake-tab position-relative ${activeTab === "upcoming" && "stake-tab-active"
                       } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
-                  >
+                  > 
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
 
                     Upcoming
                   </h6>
