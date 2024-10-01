@@ -49,6 +49,8 @@ import taikoBg from "./assets/taikoBg.webp";
 import seiBg from "./assets/seiBg.webp";
 import coreBg from "./assets/coreBg.webp";
 import mantaBg from "./assets/mantaBg.webp";
+import baseBg from "./assets/baseBg.png";
+import baseMobileBg from "./assets/baseMobileBg.png";
 import taikoMobileBg from './assets/taikoActive.png'
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
@@ -990,16 +992,17 @@ const MarketMint = ({
                       } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
                   >
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
+                   
                     Live
                   </h6>
                   <h6
                     className={`new-stake-tab position-relative ${activeTab === "upcoming" && "stake-tab-active"
                       } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
-                  >
+                  > 
+                  <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
 
                     Upcoming
                   </h6>
@@ -2933,6 +2936,25 @@ const MarketMint = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div> */}
+                  <div className="upcoming-mint-wrapper upcoming-base-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Base Beta Pass</h6>
+                      <p className="upcoming-mint-desc">
+                        Get access to a special ticket to enter the metaverse
+                        and participate in an exclusive event hosted by Base
+                      </p>
+                    </div>
+                    <img
+                      src={baseBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={baseMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
                   <div className="upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Manta Beta Pass</h6>

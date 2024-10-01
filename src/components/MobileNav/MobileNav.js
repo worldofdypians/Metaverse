@@ -7,6 +7,7 @@ import collectionsIcon from "../MarketSidebar/assets/collectionsIcon.svg";
 import collectionsIconActive from "../MarketSidebar/assets/collectionsIconActive.svg";
 import { useState } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
+import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
 
 const MobileNav = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -16,6 +17,8 @@ const MobileNav = () => {
   const hamburger = document.querySelector("#mobileNav");
   const bgmenu = document.querySelector("#bgmenu");
   const location = useLocation();
+  const { email } = useAuth();
+
 
   useEffect(() => {
     if (openNav === true || openMint === true) {
@@ -147,6 +150,24 @@ const MobileNav = () => {
             );
           }}
         />
+        {email && <NavLink
+          to="/loyalty-program"
+          end
+          className={({ isActive }) =>
+            isActive ? "active-mobile-link" : "mobile-link"
+          }
+          children={({ isActive }) => {
+            const icon = isActive ? "loyaltyIconActive" : "loyaltyIcon";
+            return (
+              <>
+                <img
+                  src={require(`../MarketSidebar/assets/${icon}.svg`)}
+                  alt=""
+                />
+              </>
+            );
+          }}
+        />}
         {/* <div className="mobile-link" onClick={() => setOpenMint(!openMint)}>
           <img src={require(`../MarketSidebar/assets/mintIcon.svg`).default} alt="" />
         </div> */}
@@ -176,7 +197,7 @@ const MobileNav = () => {
           } nft-outer-wrapper-1 mobile-nft-wrapper d-flex flex-column p-3 gap-3 w-100`}
         >
           <NavLink
-            to={"/marketplace/beta-pass/cookie3"}
+            to={"/marketplace/beta-pass/base"}
             className={({ isActive }) =>
               isActive
                 ? "nft-link-active d-flex align-items-center justify-content-between"
