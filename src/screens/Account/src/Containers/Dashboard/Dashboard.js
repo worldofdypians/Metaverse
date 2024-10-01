@@ -9279,6 +9279,8 @@ function Dashboard({
                             width: "fit-content",
                             pointerEvents: "auto",
                             overflowX: "auto",
+                            maxWidth: 'fit-content',
+                            background: '#1a1c39'
                           }}
                         >
                           <div className="d-flex align-items-center justify-content-between">
