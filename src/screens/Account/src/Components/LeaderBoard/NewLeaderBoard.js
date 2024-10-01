@@ -134,15 +134,16 @@ const NewLeaderBoard = ({
       id: 1,
       image: mantaActive,
     },
-    {
-      title: "Base",
-      id: 2,
-      image: baseActive,
-    },
+
     {
       title: "Taiko",
-      id: 3,
+      id: 2,
       image: taikoActive,
+    }, 
+       {
+      title: "Base",
+      id: 3,
+      image: baseActive,
     },
     {
       title: "SKALE",
@@ -277,11 +278,11 @@ const NewLeaderBoard = ({
         setAllData(allMantaData);
         setOptionText2("manta");
       } else if (selectedChain.id - 1 === 2) {
-        setAllData(allBaseData);
-        setOptionText2("base");
-      } else if (selectedChain.id - 1 === 3) {
         setAllData(allTaikoData);
         setOptionText2("taiko");
+      } else if (selectedChain.id - 1 === 3) {
+        setAllData(allBaseData);
+        setOptionText2("base");
       } else if (selectedChain.id - 1 === 4) {
         setAllData(allSkaleData);
         setOptionText2("skale");
@@ -304,13 +305,13 @@ const NewLeaderBoard = ({
         setOptionText2("manta");
       }
       if (selectedChain.id + 1 === 2) {
-        setAllData(allBaseData);
-        setOptionText2("base");
+        setAllData(allTaikoData);
+        setOptionText2("taiko");
       }
 
       if (selectedChain.id + 1 === 3) {
-        setAllData(allTaikoData);
-        setOptionText2("taiko");
+        setAllData(allBaseData);
+        setOptionText2("base");
       }
       if (selectedChain.id + 1 === 4) {
         setAllData(allSkaleData);
@@ -400,9 +401,9 @@ const NewLeaderBoard = ({
                       optionText2 === "manta"
                         ? "move-1"
                         : optionText2 === "base"
-                        ? "move-6"
-                        : optionText2 === "taiko"
                         ? "move-2"
+                        : optionText2 === "taiko"
+                        ? "move-6"
                         : optionText2 === "skale"
                         ? "move-3"
                         : optionText2 === "core"
@@ -490,6 +491,45 @@ const NewLeaderBoard = ({
                         ? "Manta"
                         : ""}
                     </span>
+                 
+                    <span
+                      onMouseEnter={() => handleMouseEnter("taiko")}
+                      onMouseLeave={handleMouseLeave}
+                      className={`
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "taiko" && "otheroptionsActive"
+                     } optionText col-3`}
+                      onClick={() => {
+                        handleOption("taiko");
+                        setAllData(allTaikoData);
+                      }}
+                      style={{ width: "14%" }}
+                    >
+                      <img
+                        src={
+                          optionText2 === "taiko"
+                            ? taikoActive
+                            : optionText2 !== "taiko" && hoverState === "taiko"
+                            ? taikoWhite
+                            : taikoInactive
+                        }
+                        className={`${
+                          optionText2 === "taiko"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "Taiko"
+                        : windowSize.width < 786 && optionText2 === "taiko"
+                        ? "Taiko"
+                        : ""}
+                    </span>
+
                     <span
                       onMouseEnter={() => handleMouseEnter("base")}
                       onMouseLeave={handleMouseLeave}
@@ -528,43 +568,6 @@ const NewLeaderBoard = ({
                         : ""}
                     </span>
 
-                    <span
-                      onMouseEnter={() => handleMouseEnter("taiko")}
-                      onMouseLeave={handleMouseLeave}
-                      className={`
-                     d-flex align-items-center gap-2
-                     ${
-                       optionText2 === "taiko" && "otheroptionsActive"
-                     } optionText col-3`}
-                      onClick={() => {
-                        handleOption("taiko");
-                        setAllData(allTaikoData);
-                      }}
-                      style={{ width: "14%" }}
-                    >
-                      <img
-                        src={
-                          optionText2 === "taiko"
-                            ? taikoActive
-                            : optionText2 !== "taiko" && hoverState === "taiko"
-                            ? taikoWhite
-                            : taikoInactive
-                        }
-                        className={`${
-                          optionText2 === "taiko"
-                            ? "leaderboard-icon leaderboard-icon-active"
-                            : "leaderboard-icon"
-                        }`}
-                        width={20}
-                        height={20}
-                        alt=""
-                      />
-                      {windowSize.width > 768
-                        ? "Taiko"
-                        : windowSize.width < 786 && optionText2 === "taiko"
-                        ? "Taiko"
-                        : ""}
-                    </span>
 
                     <span
                       onMouseEnter={() => handleMouseEnter("skale")}

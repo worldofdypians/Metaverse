@@ -3091,106 +3091,7 @@ const NewDailyBonus = ({
                           </div>
                         </div>
 
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "base" && "chain-item-active"
-                          } w-100`}
-                        >
-                           
-
-                          <img
-                            src={comingSoon4}
-                            className={`chain-img ${
-                              chain === "base" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "base" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("base");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 8453
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleBasePool}
-                              >
-                                {" "}
-                                <img src={baseLogo} alt="" /> Base
-                              </button>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(basePercentage)}%
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                     
 
 
                         <div
@@ -3401,6 +3302,106 @@ const NewDailyBonus = ({
                                 }}
                               >
                                 {parseInt(corePercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "base" && "chain-item-active"
+                          } w-100`}
+                        >
+                           
+
+                          <img
+                            src={comingSoon4}
+                            className={`chain-img ${
+                              chain === "base" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "base" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("base");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 8453
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleBasePool}
+                              >
+                                {" "}
+                                <img src={baseLogo} alt="" /> Base
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(basePercentage)}%
                               </span>
                             </div>
                           </div>
@@ -3781,53 +3782,6 @@ const NewDailyBonus = ({
 
                         <div
                           className={`position-relative chain-item ${
-                            chain === "base" && "chain-item-active"
-                          } w-100`}
-                        >
-                       
-
-                          <img
-                            src={comingSoon4}
-                            className={`chain-img ${
-                              chain === "base" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "base" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center justify-content-between`}
-                            onClick={() => {
-                              setChain("base");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            {/* <h6 className="chain-title-position mb-0">
-                              Manta CHAIN
-                            </h6> */}
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 8453
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleBasePool}
-                              >
-                                {" "}
-                                <img src={baseLogo} alt="" /> Base
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div
-                          className={`position-relative chain-item ${
                             chain === "taiko" && "chain-item-active"
                           } w-100`}
                         >
@@ -3959,6 +3913,53 @@ const NewDailyBonus = ({
                                   alt=""
                                 />{" "}
                                 CORE
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "base" && "chain-item-active"
+                          } w-100`}
+                        >
+                       
+
+                          <img
+                            src={comingSoon4}
+                            className={`chain-img ${
+                              chain === "base" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "base" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("base");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">
+                              Manta CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 8453
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleBasePool}
+                              >
+                                {" "}
+                                <img src={baseLogo} alt="" /> Base
                               </button>
                             </div>
                           </div>
