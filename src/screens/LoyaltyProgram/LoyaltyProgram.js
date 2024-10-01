@@ -42,15 +42,12 @@ import { Checkbox } from "@mui/material";
 const renderer = ({ days, hours, minutes }) => {
   return (
     <h6 className="loyalty-timer mb-0">
-      {days}d : {hours}h : {minutes}m
-      {/* Season two */}
+      {days}d : {hours}h : {minutes}m{/* Season two */}
     </h6>
   );
 };
 
 const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
-
-
   const baseUrl = "https://api.worldofdypians.com/api";
   const windowSize = useWindowSize();
 
@@ -369,14 +366,14 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                       )} */}
                       {step === 5 && (
                         <div className="d-flex flex-column w-100 mb-3 mb-lg-0">
-                            <div className="d-flex align-items-center justify-content-center w-100">
-                              <div className="d-flex align-items-center justify-content-center gap-2">
-                                {/* <h6 className="loyalty-joined m-0">
+                          <div className="d-flex align-items-center justify-content-center w-100">
+                            <div className="d-flex align-items-center justify-content-center gap-2">
+                              {/* <h6 className="loyalty-joined m-0">
                                   You have already applied.
                                 </h6> */}
-                                <img src={appliedBadge} className="w-75" alt="" />
-                              </div>
+                              <img src={appliedBadge} className="w-75" alt="" />
                             </div>
+                          </div>
                         </div>
                       )}
                     </div>
@@ -408,29 +405,32 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                               </span>
                               <div className="d-flex align-items-center gap-1">
                                 <div className="d-flex align-items-center">
-                                 {item.chains.map((item, index) => (
-                                  item === "manta" ?
-                                  <img
-                                  key={index}
-                                  src={require(`./assets/${item}Icon.png`)}
-                                  width={16}
-                                  height={16}
-                                  alt=""
-                                  className="participant-chain"
-                                />
-                                : 
-                                <img
-                                key={index}
-                                src={require(`./assets/${item}Icon.svg`)}
-                                width={16}
-                                height={16}
-                                alt=""
-                                className="participant-chain"
-                              />
-                            
-                                 ))}
+                                  {item.chains.map((item, index) =>
+                                    item === "manta" ? (
+                                      <img
+                                        key={index}
+                                        src={require(`./assets/${item}Icon.png`)}
+                                        width={16}
+                                        height={16}
+                                        alt=""
+                                        className="participant-chain"
+                                      />
+                                    ) : (
+                                      <img
+                                        key={index}
+                                        src={require(`./assets/${item}Icon.svg`)}
+                                        width={16}
+                                        height={16}
+                                        alt=""
+                                        className="participant-chain"
+                                      />
+                                    )
+                                  )}
                                 </div>
-                                <span className="participant-time-ago" style={{width: "75px"}}>
+                                <span
+                                  className="participant-time-ago"
+                                  style={{ width: "75px" }}
+                                >
                                   {getTimeAgo(item.timestamp)}
                                 </span>
                               </div>
@@ -490,7 +490,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
         className={`popup-wrapper ${
           popup && "popup-active"
         } p-3 d-flex flex-column gap-3 justify-content-center align-items-center`}
-        style={{ borderRadius: "8px", background: "#312F69" }}
+        style={{ borderRadius: "8px", background: "#312F69", maxWidth: '540px' }}
       >
         <div className="d-flex py-3 align-items-center justify-content-between w-100">
           <h6 className="loyalty-popup-title mb-0">Loyalty Program</h6>
