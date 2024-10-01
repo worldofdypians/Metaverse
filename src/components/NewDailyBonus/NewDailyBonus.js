@@ -2687,7 +2687,7 @@ const NewDailyBonus = ({
     claimedTaikoPremiumChests,
     rewardData,
   ]);
-console.log('chain, chainid, message', chain, chainId, message)
+
   return (
     <>
       <div className={`package-popup-wrapper2 `}>
@@ -7122,7 +7122,7 @@ console.log('chain, chainid, message', chain, chainId, message)
             onCoreChestClaimed();
             onMantaChestClaimed();
             onTaikoChestClaimed();
-
+            onBaseChestClaimed()
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
             setTimeout(() => {
@@ -7145,6 +7145,11 @@ console.log('chain, chainid, message', chain, chainId, message)
                   )
                 : chain === "viction"
                 ? showSingleRewardDataViction(
+                    rewardData.chestId,
+                    isActiveIndex - 1
+                  )
+                  : chain === "base"
+                ? showSingleRewardDataBase(
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
