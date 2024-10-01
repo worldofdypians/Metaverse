@@ -76,6 +76,7 @@ import Redirect from "./screens/Home/Redirect";
 import WalletModal2 from "./components/WalletModal/WalletModal2";
 import Token from "./screens/Token/Token";
 import { isMobile } from "react-device-detect";
+import LoyaltyProgram from "./screens/LoyaltyProgram/LoyaltyProgram.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -3131,6 +3132,7 @@ function App() {
   };
 
   const { ethereum } = window;
+  const {email} = useAuth()
 
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
@@ -4102,7 +4104,7 @@ function App() {
           <Route
             exact
             path="/auth"
-            element={<Auth isConnected={isConnected} coinbase={coinbase} />}
+            element={<Auth isConnected={isConnected} coinbase={coinbase} onSuccessLogin={refetchPlayer} />}
           />
 
           <Route exact path="/redirect" element={<Redirect />} />
@@ -4467,6 +4469,25 @@ function App() {
             }
           />
 
+          {email && data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+
+          <Route
+            exact
+            path="/loyalty-program"
+            element={
+              <LoyaltyProgram
+                coinbase={coinbase}
+                isConnected={isConnected}
+                handleConnection={handleConnectWallet}
+              />
+            }
+          />
+ }
           <Route
             exact
             path="/marketplace/beta-pass/conflux"
@@ -5698,9 +5719,10 @@ function App() {
         <ScrollTop />
         {location.pathname.includes("marketplace") ||
         location.pathname.includes("notifications") ||
-        location.pathname.includes("account") ? (
+        location.pathname.includes("account") ||
+          location.pathname.includes("loyalty-program") ? (
           location.pathname.includes("caws") ||
-          location.pathname.includes("land") ? null : (
+          location.pathname.includes("land")  ? null : (
             <MarketplaceFooter />
           )
         ) : (
