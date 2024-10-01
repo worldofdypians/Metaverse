@@ -242,6 +242,20 @@ function Dashboard({
     "10",
   ];
 
+  const chestImagesBase = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+
   function shuffle(array) {
     let currentIndex = array.length,
       randomIndex;
@@ -442,6 +456,9 @@ function Dashboard({
   const [standardSeiChests, setStandardSeiChests] = useState([]);
   const [premiumSeiChests, setPremiumSeiChests] = useState([]);
 
+  const [standardBaseChests, setStandardBaseChests] = useState([]);
+  const [premiumBaseChests, setPremiumBaseChests] = useState([]);
+
   const [standardMantaChests, setStandardMantaChests] = useState([]);
   const [premiumMantaChests, setPremiumMantaChests] = useState([]);
 
@@ -457,8 +474,10 @@ function Dashboard({
   const [openedSeiChests, setOpenedSeiChests] = useState([]);
   const [openedMantaChests, setOpenedMantaChests] = useState([]);
   const [openedTaikoChests, setOpenedTaikoChests] = useState([]);
+  const [openedBaseChests, setOpenedBaseChests] = useState([]);
 
-  const [kittyDashRecords, setkittyDashRecords] = useState([]);
+
+
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
   const [skaleEarnToken, setSkaleEarnToken] = useState(0);
   const [skalePoints, setSkalePoints] = useState(0);
@@ -505,6 +524,9 @@ function Dashboard({
   const [claimedCoreChests, setclaimedCoreChests] = useState(0);
   const [claimedCorePremiumChests, setclaimedCorePremiumChests] = useState(0);
 
+  const [claimedBaseChests, setclaimedBaseChests] = useState(0);
+  const [claimedBasePremiumChests, setclaimedBasePremiumChests] = useState(0);
+
   const [claimedVictionChests, setclaimedVictionChests] = useState(0);
   const [claimedSeiChests, setclaimedSeiChests] = useState(0);
   const [claimedMantaChests, setclaimedMantaChests] = useState(0);
@@ -527,6 +549,8 @@ function Dashboard({
   const [allTaikoChests, setallTaikoChests] = useState([]);
   const [allSeiChests, setallSeiChests] = useState([]);
   const [allMantaChests, setallMantaChests] = useState([]);
+  const [allBaseChests, setallBaseChests] = useState([]);
+
 
   const [countdown700, setcountdown700] = useState();
   const [bundlesBought, setbundlesBought] = useState(0);
@@ -536,6 +560,8 @@ function Dashboard({
   const [corecount, setcorecount] = useState(0);
   const [mantacount, setmantacount] = useState(0);
   const [taikocount, settaikocount] = useState(0);
+  const [basecount, setbasecount] = useState(0);
+
 
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
@@ -562,6 +588,8 @@ function Dashboard({
   );
   const [taikoImages, setTaikoImages] = useState(shuffle(chestImagesTaiko));
   const [mantaImages, setMantaImages] = useState(shuffle(chestImagesViction));
+  const [baseImages, setBaseImages] = useState(shuffle(chestImagesBase));
+
   const [seiImages, setSeiImages] = useState(shuffle(chestImagesSei));
   const [seiEarnUsd, setSeiEarnUsd] = useState(0);
   const [seiPrice, setSeiPrice] = useState(0);
@@ -1081,6 +1109,61 @@ function Dashboard({
     "15",
     "15",
   ];
+
+
+
+
+  const updatedSkalePrizesWeekly = [
+    "10",
+    "10",
+    "5",
+    "4",
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+  ];
+  const updatedSkalePrizesWeeklyGolden = [
+    "20",
+    "10",
+    "10",
+    "10",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+  ];
+  const updatedSkalePrizesMonthly = [
+    "30",
+    "20",
+    "15",
+    "10",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+  ];
+  const updatedSkalePrizesMonthlyGolden = [
+    "80",
+    "40",
+    "20",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+  ];
+
+
+
   const genesisPrizes = [
     "100",
     "100",
@@ -1107,6 +1190,7 @@ function Dashboard({
   const [allVictionData, setAllVictionData] = useState([]);
   const [allMantaData, setAllMantaData] = useState([]);
   const [allTaikoData, setAllTaikoData] = useState([]);
+  const [allBaseData, setAllBaseData] = useState([]);
 
   const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
   const [weeklyRecordsCore, setWeeklyRecordsCore] = useState([]);
@@ -1202,6 +1286,34 @@ function Dashboard({
   const [monthlyDataAmountManta, setMonthlyDataAmountManta] = useState([]);
   const [userRankManta, setUserRankManta] = useState("");
   const [userMantaScore, setUserMantaScore] = useState(0);
+
+
+
+
+  const [dailyRecordsBase, setDailyRecordsBase] = useState([]);
+  const [weeklyRecordsBase, setWeeklyRecordsBase] = useState([]);
+  const [monthlyRecordsBase, setMonthlyRecordsBase] = useState([]);
+  const [activePlayerBase, setActivePlayerBase] = useState(false);
+  const [activePlayerBaseWeekly, setActivePlayerBaseWeekly] = useState(false);
+  const [activePlayerBaseMonthly, setActivePlayerBaseMonthly] =
+    useState(false);
+  const [userDataBase, setUserDataBase] = useState({});
+  const [userDataBaseWeekly, setUserDataBaseWeekly] = useState({});
+  const [userDataBaseMonthly, setUserDataBaseMonthly] = useState({});
+  const [prevDataBase, setPrevDataBase] = useState([]);
+  const [prevDataBaseWeekly, setPrevDataBaseWeekly] = useState([]);
+  const [prevDataBaseMonthly, setPrevDataBaseMonthly] = useState([]);
+  const [prevVersionBase, setPrevVersionBase] = useState(0);
+  const [prevVersionBaseWeekly, setPrevVersionBaseWeekly] = useState(0);
+  const [prevVersionBaseMonthly, setPrevVersionBaseMonthly] = useState(0);
+  const [dailyDataAmountBase, setDailyDataAmountBase] = useState([]);
+  const [weeklyDataAmountBase, setWeeklyDataAmountBase] = useState([]);
+  const [monthlyDataAmountBase, setMonthlyDataAmountBase] = useState([]);
+  const [userRankBase, setUserRankBase] = useState("");
+  const [userBaseScore, setUserBaseScore] = useState(0);
+
+
+
 
   const [dailyRecordsTaiko, setDailyRecordsTaiko] = useState([]);
   const [weeklyRecordsTaiko, setWeeklyRecordsTaiko] = useState([]);
@@ -2297,6 +2409,365 @@ function Dashboard({
     }
   };
 
+
+
+
+
+
+
+
+  
+  const fillRecordsBase = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsBase(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsBase(finalData);
+    }
+  };
+  const fillRecordsWeeklyBase = (itemData) => {
+    if (itemData.length === 0) {
+      setWeeklyRecordsBase(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setWeeklyRecordsBase(finalData);
+    }
+  };
+  const fillRecordsMonthlyBase = (itemData) => {
+    if (itemData.length === 0) {
+      setMonthlyRecordsBase(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setMonthlyRecordsBase(finalData);
+    }
+  };
+  const fetchPreviousWinnersBase = async () => {
+    if (prevVersionBase != 0) {
+      const data = {
+        StatisticName: "LeaderboardBaseDaily",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionBase - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      setPrevDataBase(result.data.data.leaderboard);
+    } else {
+      setPrevDataBase(placeholderplayerData);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+  const fetchPreviousWeeklyWinnersBase = async () => {
+    if (prevVersionBaseWeekly != 0) {
+      const data = {
+        StatisticName: "LeaderboardBaseWeekly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionBaseWeekly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setPrevDataBaseWeekly(result.data.data.leaderboard);
+    } else {
+      setPrevDataBaseWeekly(placeholderplayerData);
+    }
+  };
+  const fetchPreviousMonthlyWinnersBase = async () => {
+    if (prevVersionBaseMonthly != 0) {
+      const data = {
+        StatisticName: "LeaderboardBaseMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionBaseMonthly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setPrevDataBaseMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataBaseMonthly(placeholderplayerData);
+    }
+  };
+  const fetchDailyRecordsBase = async () => {
+    const data = {
+      StatisticName: "LeaderboardBaseDaily",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsBase([]);
+      });
+    setPrevVersionBase(parseInt(result.data.data.version));
+    setDailyRecordsBase(result.data.data.leaderboard);
+    fillRecordsBase(result.data.data.leaderboard);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    if (testArray.length > 0) {
+      setActivePlayerBase(true);
+      fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    } else if (testArray.length === 0) {
+      setActivePlayerBase(false);
+      fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    }
+  };
+  const fetchWeeklyRecordsBase = async () => {
+    const data = {
+      StatisticName: "LeaderboardBaseWeekly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsWeeklyBase([]);
+      });
+    setWeeklyRecordsBase(result.data.data.leaderboard);
+    setPrevVersionBaseWeekly(result.data.data.version);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    fillRecordsWeeklyBase(result.data.data.leaderboard);
+
+    if (testArray.length > 0) {
+      setActivePlayerBaseWeekly(true);
+      fetchWeeklyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    }
+    if (testArray.length === 0) {
+      setActivePlayerBaseWeekly(false);
+      fetchWeeklyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    }
+  };
+  const fetchMonthlyRecordsBase = async () => {
+    const data = {
+      StatisticName: "LeaderboardBaseMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMonthlyBase([]);
+      });
+    setMonthlyRecordsBase(result.data.data.leaderboard);
+    setPrevVersionBaseMonthly(result.data.data.version);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    if (testArray.length > 0) {
+      setActivePlayerBaseMonthly(true);
+      fetchMonthlyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    }
+    fillRecordsMonthlyBase(result.data.data.leaderboard);
+
+    if (testArray.length === 0) {
+      setActivePlayerBaseMonthly(false);
+      fetchMonthlyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    }
+  };
+  const fetchDailyRecordsAroundPlayerBase = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardBaseDaily",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+
+      if (isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
+              : Number(skaleStars[userPosition]) +
+                Number(skaleStarsPremium[userPosition])
+            : 0
+        );
+      } else if (!isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9])
+              : Number(skaleStars[userPosition])
+            : 0
+        );
+      } else setDailyDataAmountBase(0);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerBase(true);
+          setUserDataBase([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerBase(false);
+          setUserDataBase(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerBase(false);
+        setUserDataBase(...testArray);
+      }
+    }
+  };
+  const fetchWeeklyRecordsAroundPlayerBase = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardBaseWeekly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+      if (goldenPassRemainingTime && testArray[0].statValue != 0) {
+        setWeeklyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesWeekly[9]) +
+                Number(skalePrizesWeeklyGolden[9])
+              : Number(skalePrizesWeekly[userPosition]) +
+                Number(skalePrizesWeeklyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
+        setWeeklyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesWeekly[9])
+              : Number(skalePrizesWeekly[userPosition])
+            : 0
+        );
+      } else setWeeklyDataAmountBase(0);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerBaseWeekly(true);
+          setUserDataBaseWeekly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerBaseWeekly(false);
+          setUserDataBaseWeekly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerBaseWeekly(false);
+        setUserDataBaseWeekly(...testArray);
+      }
+    }
+  };
+
+  const fetchMonthlyRecordsAroundPlayerBase = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardBaseMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
+
+      if (goldenPassRemainingTime) {
+        setMonthlyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setMonthlyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
+            : 0
+        );
+      }
+
+      setUserRankBase(testArray[0].position);
+      setUserBaseScore(testArray[0].statValue);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerBaseMonthly(true);
+          setUserDataBaseMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerBaseMonthly(false);
+          setUserDataBaseMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerBaseMonthly(false);
+        setUserDataBaseMonthly(...testArray);
+      }
+    }
+  };
+
+
+
   const fillRecordsTaiko = (itemData) => {
     if (itemData.length === 0) {
       setDailyRecordsTaiko(placeholderplayerData);
@@ -2877,10 +3348,10 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesWeekly[9]) +
-                Number(skalePrizesWeeklyGolden[9])
-              : Number(skalePrizesWeekly[userPosition]) +
-                Number(skalePrizesWeeklyGolden[userPosition])
+              ? Number(updatedSkalePrizesWeekly[9]) +
+                Number(updatedSkalePrizesWeeklyGolden[9])
+              : Number(updatedSkalePrizesWeekly[userPosition]) +
+                Number(updatedSkalePrizesWeeklyGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2889,8 +3360,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesWeekly[9])
-              : Number(skalePrizesWeekly[userPosition])
+              ? Number(updatedSkalePrizesWeekly[9])
+              : Number(updatedSkalePrizesWeekly[userPosition])
             : 0
         );
       }
@@ -2938,10 +3409,10 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesMonthly[9]) +
-                Number(skalePrizesMonthlyGolden[9])
-              : Number(skalePrizesMonthly[userPosition]) +
-                Number(skalePrizesMonthlyGolden[userPosition])
+              ? Number(updatedSkalePrizesMonthly[9]) +
+                Number(updatedSkalePrizesMonthlyGolden[9])
+              : Number(updatedSkalePrizesMonthly[userPosition]) +
+                Number(updatedSkalePrizesMonthlyGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2950,8 +3421,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesMonthly[9])
-              : Number(skalePrizesMonthly[userPosition])
+              ? Number(updatedSkalePrizesMonthly[9])
+              : Number(updatedSkalePrizesMonthly[userPosition])
             : 0
         );
       }
@@ -3378,6 +3849,11 @@ function Dashboard({
     fetchDailyRecordsManta();
     fetchWeeklyRecordsManta();
     fetchMonthlyRecordsManta();
+
+    fetchDailyRecordsBase();
+    fetchWeeklyRecordsBase();
+    fetchMonthlyRecordsBase();
+
     fetchDailyRecordsTaiko();
     fetchWeeklyRecordsTaiko();
     fetchMonthlyRecordsTaiko();
@@ -3385,7 +3861,6 @@ function Dashboard({
     fetchWeeklyRecordsSkale();
     fetchMonthlyRecordsSkale();
     fetchRecordsStar();
-    fetchKittyDashAroundPlayer(userId, username);
   }, [username, userId, goldenPassRemainingTime]);
 
   useEffect(() => {
@@ -3414,6 +3889,11 @@ function Dashboard({
   }, [mantacount]);
 
   useEffect(() => {
+    fetchDailyRecordsBase();
+    getAllBaseChests(email);
+  }, [basecount]);
+
+  useEffect(() => {
     fetchDailyRecordsTaiko();
     getAllTaikoChests(email);
   }, [taikocount]);
@@ -3432,6 +3912,11 @@ function Dashboard({
     fetchPreviousWinnersManta();
     fetchPreviousWeeklyWinnersManta();
     fetchPreviousMonthlyWinnersManta();
+
+    fetchPreviousWinnersBase();
+    fetchPreviousWeeklyWinnersBase();
+    fetchPreviousMonthlyWinnersBase();
+
     fetchPreviousWinnersTaiko();
     fetchPreviousWeeklyWinnersTaiko();
     fetchPreviousMonthlyWinnersTaiko();
@@ -3451,12 +3936,15 @@ function Dashboard({
     prevVersionSkaleMonthly,
     prevVersionCore,
     prevVersionManta,
+    prevVersionBase,
     prevVersionTaiko,
     prevVersionVictionMonthly,
     prevVersionCoreWeekly,
     prevVersionCoreMonthly,
     prevVersionMantaWeekly,
     prevVersionMantaMonthly,
+    prevVersionBaseWeekly,
+    prevVersionBaseMonthly,
     prevVersionTaikoWeekly,
     prevVersionTaikoMonthly,
     prevVersionViction,
@@ -3574,8 +4062,11 @@ function Dashboard({
         title: "WEEKLY",
         reset: "Monday (00:00 UTC)",
         type: "cash",
-        rewards: skalePrizesWeekly,
-        premium_rewards: skalePrizesWeeklyGolden,
+        rewards: updatedSkalePrizesWeekly,
+        past_rewards: skalePrizesWeekly,
+        premium_rewards:  updatedSkalePrizesWeeklyGolden,
+        past_premium_rewards: skalePrizesWeeklyGolden,
+
         activeData: weeklyRecordsSkale,
         previousData: prevDataSkaleWeekly,
         player_data: userDataSkaleWeekly,
@@ -3585,8 +4076,10 @@ function Dashboard({
         title: "MONTHLY",
         reset: "Monthly (00:00 UTC)",
         type: "cash",
-        rewards: skalePrizesMonthly,
-        premium_rewards: skalePrizesMonthlyGolden,
+        rewards: updatedSkalePrizesMonthly,
+        past_rewards: skalePrizesMonthly,
+        premium_rewards: updatedSkalePrizesMonthlyGolden,
+        past_premium_rewards: skalePrizesMonthlyGolden,
         activeData: monthlyRecordsSkale,
         previousData: prevDataSkaleMonthly,
         player_data: userDataSkaleMonthly,
@@ -3752,6 +4245,63 @@ function Dashboard({
     activePlayerMantaMonthly,
     activePlayerMantaWeekly,
   ]);
+
+
+
+
+
+
+  useEffect(() => {
+    setAllBaseData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: skaleStars,
+        premium_rewards: skaleStarsPremium,
+        activeData: dailyRecordsBase,
+        previousData: prevDataBase,
+        player_data: userDataBase,
+        is_active: activePlayerBase, //change when apis are ready
+      },
+      {
+        title: "WEEKLY",
+        reset: "Monday (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesWeekly,
+        premium_rewards: skalePrizesWeeklyGolden,
+        activeData: weeklyRecordsBase,
+        previousData: prevDataBaseWeekly,
+        player_data: userDataBaseWeekly,
+        is_active: activePlayerBaseWeekly,
+      },
+      {
+        title: "MONTHLY",
+        reset: "Monthly (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesMonthly,
+        premium_rewards: skalePrizesMonthlyGolden,
+        activeData: monthlyRecordsBase,
+        previousData: prevDataBaseMonthly,
+        player_data: userDataBaseMonthly,
+        is_active: activePlayerBaseMonthly, //change when apis are ready
+      },
+    ]);
+  }, [
+    dailyRecordsBase,
+    weeklyRecordsBase,
+    monthlyRecordsBase,
+    prevDataBase,
+    prevDataBaseWeekly,
+    prevDataBaseMonthly,
+    userDataBase,
+    userDataBaseWeekly,
+    userDataBaseMonthly,
+    activePlayerBase,
+    activePlayerBaseMonthly,
+    activePlayerBaseWeekly,
+  ]);
+
 
   useEffect(() => {
     setAllTaikoData([
@@ -4756,24 +5306,7 @@ function Dashboard({
     setGenesisRank2(testArray[0].statValue);
   };
 
-  const fetchKittyDashAroundPlayer = async (userId, userName) => {
-    const data = {
-      StatisticName: "MobileGameDailyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
 
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === userName
-    );
-    setkittyDashRecords(testArray);
-    // setGenesisRank(testArray[0].position);
-    // setGenesisRank2(testArray[0].statValue);
-  };
 
   const fetchDailyRecordsAroundPlayer = async (itemData) => {
     const data = {
@@ -4902,6 +5435,7 @@ function Dashboard({
           claimedCoreChests + claimedCorePremiumChests < 20 ||
           claimedVictionChests + claimedVictionPremiumChests < 20 ||
           claimedMantaChests + claimedMantaPremiumChests < 20 ||
+          claimedBaseChests + claimedBasePremiumChests < 20||
           claimedTaikoChests + claimedTaikoPremiumChests < 20
         ) {
           setCanBuy(true);
@@ -4910,7 +5444,8 @@ function Dashboard({
           claimedSkaleChests + claimedSkalePremiumChests === 20 &&
           claimedCoreChests + claimedCorePremiumChests === 20 &&
           claimedVictionChests + claimedVictionPremiumChests === 20 &&
-          claimedMantaChests + claimedMantaPremiumChests === 20 &&
+          claimedMantaChests + claimedMantaPremiumChests === 20&&
+          claimedBaseChests + claimedBasePremiumChests === 20 &&
           claimedTaikoChests + claimedTaikoPremiumChests === 20
         ) {
           setCanBuy(false);
@@ -4922,6 +5457,7 @@ function Dashboard({
           claimedCoreChests < 10 ||
           claimedVictionChests < 10 ||
           claimedMantaChests < 10 ||
+          claimedBaseChests < 10 ||
           claimedTaikoChests < 10
         ) {
           setCanBuy(true);
@@ -4931,6 +5467,7 @@ function Dashboard({
           claimedCoreChests === 10 &&
           claimedVictionChests === 10 &&
           claimedMantaChests === 10 &&
+          claimedBaseChests === 10 &&
           claimedTaikoChests === 10
         ) {
           setCanBuy(false);
@@ -5171,6 +5708,54 @@ function Dashboard({
         setclaimedMantaChests(openedStandardChests.length);
         setclaimedMantaPremiumChests(openedPremiumChests.length);
         setallMantaChests(chestOrder);
+      }
+    }
+  };
+
+
+  const getAllBaseChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "base" };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedBaseChests(openedChests);
+        setStandardBaseChests(standardChestsArray);
+        setPremiumBaseChests(premiumChestsArray);
+
+        setclaimedBaseChests(openedStandardChests.length);
+        setclaimedBasePremiumChests(openedPremiumChests.length);
+        setallBaseChests(chestOrder);
       }
     }
   };
@@ -7400,23 +7985,18 @@ function Dashboard({
       userCoreScore +
       userVictionScore +
       userMantaScore +
+      userBaseScore +
       userTaikoScore;
-
-    const totalScore_multiplied =
-      rankData && rankData.multiplier === "yes" ? totalScore * 4 : totalScore;
-    if (totalScore_multiplied > 11999999 && totalScore_multiplied < 24000000) {
+      
+      const totalScore_multiplied = (rankData && rankData.multiplier === "yes") ? totalScore * 4 : totalScore
+    if (totalScore_multiplied > 13999999 && totalScore_multiplied < 26000000) {
+ 
       setUserRankRewards(5);
-    } else if (
-      totalScore_multiplied >= 24000000 &&
-      totalScore_multiplied < 37000000
-    ) {
+    } else if (totalScore_multiplied >= 26000000 && totalScore_multiplied < 39000000) {
       setUserRankRewards(10);
-    } else if (
-      totalScore_multiplied >= 37000000 &&
-      totalScore_multiplied < 62000000
-    ) {
+    } else if (totalScore_multiplied >= 39000000 && totalScore_multiplied < 64000000) {
       setUserRankRewards(25);
-    } else if (totalScore_multiplied >= 62000000) {
+    } else if (totalScore_multiplied >= 64000000) {
       setUserRankRewards(100);
     }
   };
@@ -7429,6 +8009,7 @@ function Dashboard({
     userCoreScore,
     userVictionScore,
     userMantaScore,
+    userBaseScore,
     userTaikoScore,
     rankData,
   ]);
@@ -7486,6 +8067,8 @@ function Dashboard({
         setSkaleImages(shuffle(chestImagesSkale));
         setVictionImages(shuffle(chestImagesViction));
         setMantaImages(shuffle(chestImagesViction));
+        setBaseImages(shuffle(chestImagesBase));
+
         setTaikoImages(shuffle(chestImagesTaiko));
         setCoreImages(shuffle(chestImagesCore));
         setSeiImages(shuffle(chestImagesSei));
@@ -7703,10 +8286,6 @@ function Dashboard({
   //     );
   //     fetchWeeklyRecordsAroundPlayer(weeklyrecords);
   //     fetchDailyRecordsAroundPlayer(dailyrecords);
-  //     fetchKittyDashAroundPlayer(
-  //       data.getPlayer.playerId,
-  //       data.getPlayer.displayName
-  //     );
   //     fetchDailyRecordsAroundPlayerCore(dailyRecordsCore);
   //     fetchWeeklyRecordsAroundPlayerCore(weeklyRecordsCore);
   //     fetchMonthlyRecordsAroundPlayerCore(monthlyRecordsCore);
@@ -7838,6 +8417,7 @@ function Dashboard({
       getAllCoreChests(email);
       getAllVictionChests(email);
       getAllMantaChests(email);
+      getAllBaseChests(email);
       getAllTaikoChests(email);
       // getAllSeiChests(email);
     }
@@ -7934,6 +8514,8 @@ function Dashboard({
                         userVictionScore={userVictionScore}
                         userRankManta={userRankManta}
                         userMantaScore={userMantaScore}
+                        userRankBase={userRankBase}
+                        userBaseScore={userBaseScore}
                         userRankTaiko={userRankTaiko}
                         userTaikoScore={userTaikoScore}
                         userSkaleScore={userSkaleScore}
@@ -8123,6 +8705,9 @@ function Dashboard({
                         monthlyDataAmountViction={monthlyDataAmountViction}
                         weeklyDataAmountManta={weeklyDataAmountManta}
                         monthlyDataAmountManta={monthlyDataAmountManta}
+                        weeklyDataAmountBase={weeklyDataAmountBase}
+                        monthlyDataAmountBase={monthlyDataAmountBase}
+
                         weeklyDataAmountTaiko={weeklyDataAmountTaiko}
                         monthlyDataAmountTaiko={monthlyDataAmountTaiko}
                         dailyDataAmountSkale={dailyDataAmountSkale}
@@ -8134,6 +8719,8 @@ function Dashboard({
                         coreEarnUsd={coreEarnUsd}
                         victionEarnUsd={victionEarnUsd}
                         mantaEarnUsd={mantaEarnUsd}
+                        baseEarnUsd={baseEarnUSD}
+
                         taikoEarnUsd={taikoEarnUsd}
                         cookieEarnUsd={cookieEarnUsd}
                         cookieEarnToken={cookieEarnToken}
@@ -8175,7 +8762,6 @@ function Dashboard({
                         claimedMantaPremiumChests={claimedMantaPremiumChests}
                         claimedTaikoChests={claimedTaikoChests}
                         claimedTaikoPremiumChests={claimedTaikoPremiumChests}
-                        kittyDashRecords={kittyDashRecords}
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
@@ -8212,6 +8798,8 @@ function Dashboard({
                         openedSeiChests={openedSeiChests}
                         openedVictionChests={openedVictionChests}
                         openedMantaChests={openedMantaChests}
+                        openedBaseChests={openedBaseChests}
+
                         openedTaikoChests={openedTaikoChests}
                         onDailyBonusInfoClick={() => {
                           setdailyBonusInfo(true);
@@ -8587,6 +9175,8 @@ function Dashboard({
                             allCoreData={allCoreData}
                             allVictionData={allVictionData}
                             allMantaData={allMantaData}
+                            allBaseData={allBaseData}
+
                             allTaikoData={allTaikoData}
                             dailyplayerData={dailyplayerData}
                             weeklyplayerData={weeklyplayerData}
@@ -8714,6 +9304,10 @@ function Dashboard({
                             monthlyDataAmountViction={monthlyDataAmountViction}
                             weeklyDataAmountManta={weeklyDataAmountManta}
                             monthlyDataAmountManta={monthlyDataAmountManta}
+
+                            weeklyDataAmountBase={weeklyDataAmountBase}
+                            monthlyDataAmountBase={monthlyDataAmountBase}
+
                             weeklyDataAmountTaiko={weeklyDataAmountTaiko}
                             monthlyDataAmountTaiko={monthlyDataAmountTaiko}
                             weeklyDataAmountSkale={weeklyDataAmountSkale}
@@ -8726,6 +9320,8 @@ function Dashboard({
                             allCoreChests={allCoreChests}
                             allVictionChests={allVictionChests}
                             allMantaChests={allMantaChests}
+                            allBaseChests={allBaseChests}
+
                             allTaikoChests={allTaikoChests}
                             allSeiChests={allSeiChests}
                             availableTime={goldenPassRemainingTime}
@@ -8739,7 +9335,6 @@ function Dashboard({
                             taikoEarnUsd={taikoEarnUsd}
                             immutableEarnUsd={immutableEarnUsd}
                             coreEarnUsd={coreEarnUsd}
-                            kittyDashRecords={kittyDashRecords}
                             userRankRewards={userRankRewards}
                             cawsPremiumRewards={cawsPremiumRewards}
                             landPremiumRewards={landPremiumRewards}
@@ -10237,6 +10832,8 @@ function Dashboard({
                 seiImages={seiImages}
                 victionImages={victionImages}
                 mantaImages={mantaImages}
+                baseImages={baseImages}
+
                 taikoImages={taikoImages}
                 coreImages={coreImages}
                 chainId={chainId}
@@ -10276,6 +10873,8 @@ function Dashboard({
                 claimedVictionPremiumChests={claimedVictionPremiumChests}
                 claimedMantaChests={claimedMantaChests}
                 claimedMantaPremiumChests={claimedMantaPremiumChests}
+                claimedBaseChests={claimedBaseChests}
+                claimedBasePremiumChests={claimedBasePremiumChests}
                 claimedTaikoChests={claimedTaikoChests}
                 claimedTaikoPremiumChests={claimedTaikoPremiumChests}
                 claimedSeiChests={claimedSeiChests}
@@ -10286,6 +10885,8 @@ function Dashboard({
                 openedCoreChests={openedCoreChests}
                 openedVictionChests={openedVictionChests}
                 openedMantaChests={openedMantaChests}
+                openedBaseChests={openedBaseChests}
+
                 openedTaikoChests={openedTaikoChests}
                 openedSeiChests={openedSeiChests}
                 canBuy={canBuy}
@@ -10295,6 +10896,8 @@ function Dashboard({
                 allCoreChests={allCoreChests}
                 allVictionChests={allVictionChests}
                 allMantaChests={allMantaChests}
+                allBaseChests={allBaseChests}
+
                 allTaikoChests={allTaikoChests}
                 allSeiChests={allSeiChests}
                 onChestClaimed={() => {
@@ -10311,6 +10914,9 @@ function Dashboard({
                 }}
                 onMantaChestClaimed={() => {
                   setmantacount(mantacount + 1);
+                }}
+                onBaseChestClaimed={() => {
+                  setbasecount(basecount + 1);
                 }}
                 onTaikoChestClaimed={() => {
                   settaikocount(taikocount + 1);

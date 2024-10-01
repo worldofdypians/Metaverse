@@ -3385,6 +3385,11 @@ function App() {
       window.config.daily_bonus_taiko_address
     );
 
+    const daily_bonus_contract_base = new window.baseWeb3.eth.Contract(
+      window.DAILY_BONUS_BASE_ABI,
+      window.config.daily_bonus_base_address
+    );
+
     if (addr) {
       const isPremium_bnb = await daily_bonus_contract_bnb.methods
         .isPremiumUser(addr)
@@ -3457,7 +3462,19 @@ function App() {
                   if (isPremium_taiko === true) {
                     setIsPremium(true);
                   } else {
-                    setIsPremium(false);
+                    const isPremium_base =
+                      await daily_bonus_contract_base.methods
+                        .isPremiumUser(addr)
+                        .call()
+                        .catch((e) => {
+                          console.error(e);
+                          return false;
+                        });
+                    if (isPremium_base === true) {
+                      setIsPremium(true);
+                    } else {
+                      setIsPremium(false);
+                    }
                   }
                 }
               }
@@ -4168,7 +4185,7 @@ function App() {
               />
             }
           />
-          <Route exact path="/terms-conditions" element={<TermsConditions />} />
+          <Route exact path="/terms-of-service" element={<TermsConditions />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             exact

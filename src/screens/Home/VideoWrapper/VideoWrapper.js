@@ -7,7 +7,7 @@ import epicwhite from "../../../assets/epicwhite.svg";
 import epicblack from "../../../assets/epicblack.svg";
 import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
 import coingecko from "../../Marketplace/MarketNFTs/assets/coingecko.svg";
-import coinbaseimg from "../../Marketplace/MarketNFTs/assets/base.svg";
+import coinbaseimg from "./assets/baseLogo.svg";
 import dypius from "../../Marketplace/MarketNFTs/assets/dypiusPremium16.svg";
 import doge from "../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../Marketplace/MarketNFTs/assets/cmc.svg";
@@ -206,68 +206,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
 
 
 
-    {
-      title: "CORE",
-      logo: coreLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in CORE Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "XXX XX, XXXX",
-      rewardsAmount: "$20,000",
-      rewardsCurrency: "CORE Rewards",
 
-      backgroundImage: coreBg,
-      popupInfo: {
-        title: "CORE",
-        chain: "CORE Chain",
-        linkState: "core",
-        rewards: "CORE",
-        status: "Live",
-        id: "event12",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in SEI Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "XXX XX, XXXX",
-      },
-    },
-    {
-      title: "VICTION",
-      logo: victionLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in VIC Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "XXX XX, XXXX",
-      rewardsAmount: "$20,000",
-      rewardsCurrency: "VIC Rewards",
-
-      backgroundImage: victionBg,
-      popupInfo: {
-        title: "VICTION",
-        chain: "VICTION Chain",
-        linkState: "viction",
-        rewards: "VIC",
-        status: "Coming Soon",
-        id: "event14",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in VIC Rewards",
-        eventDuration: dypius2LastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore:
-          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-        eventDate: "XXX XX, XXXX",
-      },
-    },
     {
       title: "Taiko",
       chain: "Taiko Chain",
@@ -425,6 +364,96 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
         learnMore:
           "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
         eventDate: "December 22, 2023",
+      },
+    },
+    {
+      title: "Base",
+      logo: coinbaseimg,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in ETH Rewards",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "ETH Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "Oct 07, 2024",
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Base",
+        chain: "Base Chain",
+        linkState: "base",
+        rewards: "ETH",
+        status: "Coming Soon",
+        id: "event4",
+        date: "Oct 07, 2024",
+        totalRewards: "$20,000 in ETH Rewards",
+        eventDate: "Oct 07, 2024",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "CORE Rewards",
+
+      backgroundImage: coreBg,
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Expired",
+        id: "event12",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in SEI Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
+      },
+    },
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "XXX XX, XXXX",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "VIC Rewards",
+
+      backgroundImage: victionBg,
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Expired",
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "XXX XX, XXXX",
       },
     },
     {
