@@ -1044,6 +1044,24 @@ const BetaPassNFT = ({
                 {windowSize.width > 991 ? (
                   <>
                     <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
+                    <NavLink
+                        to={"/marketplace/beta-pass/base"}
+                        className={`${
+                          location.pathname.includes("base") &&
+                          "selected-beta-pass-item"
+                        } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
+                        onClick={() => {
+                          setSelectedMint(baseData);
+                          setMintTitle("base");
+                        }}
+                      >
+                        <img
+                          src={coinbaseimg}
+                          className="beta-pass-chain-img"
+                          alt=""
+                        />
+                        <span>Base</span>
+                      </NavLink>
                       <NavLink
                         to={"/marketplace/beta-pass/cookie3"}
                         className={`${
@@ -1188,7 +1206,6 @@ const BetaPassNFT = ({
                         />
                         <span>VICTION</span>
                       </NavLink>
-
                       <NavLink
                         to={"/marketplace/beta-pass/skale"}
                         className={`${
@@ -1240,25 +1257,7 @@ const BetaPassNFT = ({
                         />
                         <span>Dogecoin</span>
                       </NavLink>
-
-                      <NavLink
-                        to={"/marketplace/beta-pass/base"}
-                        className={`${
-                          location.pathname.includes("base") &&
-                          "selected-beta-pass-item"
-                        } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
-                        onClick={() => {
-                          setSelectedMint(baseData);
-                          setMintTitle("base");
-                        }}
-                      >
-                        <img
-                          src={coinbaseimg}
-                          className="beta-pass-chain-img"
-                          alt=""
-                        />
-                        <span>Base</span>
-                      </NavLink>
+                    
                       <NavLink
                         to={"/marketplace/beta-pass/coingecko"}
                         className={`${
@@ -1856,6 +1855,18 @@ const BetaPassNFT = ({
                         >
                           <img
                             src={seiLogo}
+                            style={{ width: 20, height: 20 }}
+                            alt=""
+                          />{" "}
+                          Coming Soon
+                        </span>
+                      )}
+                      {mintTitle === "base" && (
+                        <span
+                          className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
+                        >
+                          <img
+                            src={baseLogo}
                             style={{ width: 20, height: 20 }}
                             alt=""
                           />{" "}
@@ -3189,18 +3200,20 @@ const BetaPassNFT = ({
                           </div>
                         )}
 
-                        {mintTitle === "base" && (
+                        {/* {mintTitle === "base" && (
                           <div className="">
                             <div className="d-flex flex-column gap-3">
                               <div className="d-flex align-items-center position-relative gap-2">
                                 <h6 className="coingecko-eventh6 m-0">
                                   Base Treasure Hunt
                                 </h6>{" "}
-                                <div
-                                  className={`position-relative  events-page-status-tag-expired px-2 d-flex align-items-center justify-content-center gap-0`}
+                               <div
+                                  className={`position-relative  events-page-status-tag-upcoming px-2 d-flex align-items-center justify-content-center gap-0`}
                                   style={{ top: 0 }}
                                 >
-                                  <span>Expired</span>
+                        
+
+                                  <span>Coming Soon</span>
                                 </div>
                               </div>
                               <div className="base-eventwrapper p-3">
@@ -3305,7 +3318,7 @@ const BetaPassNFT = ({
                               </div>
                             </div>
                           </div>
-                        )}
+                        )} */}
 
                         {mintTitle === "cmc" && (
                           <div className="">
@@ -3960,9 +3973,9 @@ const BetaPassNFT = ({
                       </button>
                     </div> */}
 
-                        {alreadyRegistered && mintTitle === "sei" && (
+                        {alreadyRegistered && (mintTitle === "sei" ||  mintTitle === "base") && (
                           <h6 className="land-name">
-                            {mintTitle === "sei" && totalseiNft > 0
+                            {(mintTitle === "sei" && totalseiNft > 0) || (mintTitle === "base" &&  totalBaseNft > 0)
                               ? "My NFT"
                               : "Registered"}{" "}
                           </h6>
@@ -3976,7 +3989,7 @@ const BetaPassNFT = ({
                         )} */}
                         {!alreadyRegistered &&
                           activeTab === "create" &&
-                          mintTitle === "sei" && (
+                          (mintTitle === "sei" ||  mintTitle === "base") && (
                             <div>
                               <ul className="timeline m-0 p-0" id="timeline">
                                 <li className="col-3 li complete">
@@ -4020,7 +4033,7 @@ const BetaPassNFT = ({
                           )}
                         {playerCreation === false &&
                           !alreadyRegistered &&
-                          mintTitle === "sei" && (
+                          (mintTitle === "sei" ||  mintTitle === "base") && (
                             <SignUpGecko
                               onSuccessVerify={(value) => {
                                 setplayerCreation(value);
@@ -4048,7 +4061,7 @@ const BetaPassNFT = ({
                         {playerCreation === true &&
                           linkWallet === false &&
                           !alreadyRegistered &&
-                          mintTitle === "sei" && (
+                          (mintTitle === "sei" ||  mintTitle === "base") && (
                             <PlayerCreationGecko
                               onSuccessCreation={() => {
                                 setLinkWallet(true);
@@ -4059,7 +4072,7 @@ const BetaPassNFT = ({
 
                         {linkWallet === true &&
                           !alreadyRegistered &&
-                          mintTitle === "sei" && (
+                          (mintTitle === "sei" ||  mintTitle === "base") && (
                             <div className="d-flex flex-column gap-4 justify-content-between p-4">
                               <span className={"createplayertxt"}>
                                 *Make sure to connect the same wallet address as
@@ -4162,6 +4175,106 @@ const BetaPassNFT = ({
                                     >
                                       {"SEIBP"}
                                       {`#${myseiNfts[0]}`}
+                                    </h6>
+                                  </div>
+                                </div>
+                              </NavLink>
+                            )}
+                            <span className="footertxt-coingecko">
+                              After NFT distribution, you can view{" "}
+                              {selectedMint.cardTitle}.
+                            </span>
+                            <div className="summaryseparator mt-3 mb-3"></div>
+                            <div className="d-flex align-items-center gap-2 justify-content-between">
+                              <div className="opacitywrapper4 m-0">
+                                <a
+                                  className="game-event-download text-white  d-flex align-items-center gap-2"
+                                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={epicwhite}
+                                    alt="icon"
+                                    className="epicgame2"
+                                  />
+                                  Download
+                                </a>
+                              </div>
+                              <NavLink
+                                to="/account"
+                                className="accountbtn-coingecko btn d-flex align-items-center gap-1"
+                              >
+                                <img src={user} alt="" className="user2" />
+                                My Account
+                              </NavLink>
+                            </div>
+                          </div>
+                        )}
+                        {alreadyRegistered && mintTitle === "base" && (
+                          <div className="d-flex flex-column justify-content-between h-100">
+                            {mintTitle === "base" && totalBaseNft === 0 ? (
+                              <div className="col-12 col-lg-6 d-flex flex-column mx-auto position-relative">
+                                <div
+                                  className={`coingeckoempty-wrapper conflux-empty d-flex justify-content-center align-items-center p-3 position-relative`}
+                                  style={{
+                                    height: windowSize.width > 991 ? 210 : 295,
+                                  }}
+                                ></div>
+                                <div
+                                  className="genesis-desc nomask px-3 py-2 position-relative"
+                                  style={{
+                                    bottom: "5px",
+                                    minWidth: "100%",
+                                    maxWidth: "100%",
+                                  }}
+                                >
+                                  <h6
+                                    className="land-desc w-75 m-auto text-center justify-content-center"
+                                    style={{ fontWeight: 500, fontSize: 16 }}
+                                  >
+                                    {selectedMint.cardTitle}
+                                  </h6>
+                                </div>
+                              </div>
+                            ) : (
+                              <NavLink
+                                to={`/marketplace/nft/${myBaseNFTs[0]}/${window.config.nft_base_address}`}
+                                onClick={() => {
+                                  updateViewCount(
+                                    myBaseNFTs[0],
+                                    window.config.nft_base_address
+                                  );
+                                }}
+                              >
+                                <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
+                                  <div
+                                    className={`coingeckoempty-wrapper  ${
+                                      totalBaseNft > 0 && mintTitle === "base"
+                                        ? "base-active"
+                                        : "conflux-empty"
+                                    } d-flex justify-content-center align-items-center p-3 position-relative`}
+                                    style={{
+                                      height:
+                                        windowSize.width > 991 ? 210 : 295,
+                                    }}
+                                  ></div>
+                                  <div
+                                    className="genesis-desc nomask px-3 py-2 position-relative"
+                                    style={{
+                                      bottom: "20px",
+                                      minWidth: "100%",
+                                      maxWidth: "100%",
+                                    }}
+                                  >
+                                    <h6
+                                      className="land-desc w-75 m-auto text-center justify-content-center"
+                                      style={{
+                                        fontWeight: 500,
+                                        fontSize: 16,
+                                      }}
+                                    >
+                                      {"BSBP"}
+                                      {`#${myBaseNFTs[0]}`}
                                     </h6>
                                   </div>
                                 </div>

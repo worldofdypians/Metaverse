@@ -19,6 +19,13 @@ const NewBuilders = () => {
       backer: true,
     },
     {
+      name: "Base",
+      icon: "base",
+      banner: "baseBanner.png",
+      // link: "https://x.com/Coredao_Org/status/1790336632823910804",
+      backer: false,
+    },
+    {
       name: "MultiversX",
       icon: "multiversx",
       banner: "multiversBanner.png",

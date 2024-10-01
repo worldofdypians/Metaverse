@@ -24,6 +24,13 @@ const WodBuilders = ({ page }) => {
       backer: true,
     },
     {
+      name: "Base",
+      icon: "base",
+      banner: "baseBanner.png",
+      // link: "https://x.com/Coredao_Org/status/1790336632823910804",
+      backer: false,
+    },
+    {
       name: "MultiversX",
       icon: "multiversx",
       banner: "multiversBanner.png",
@@ -313,7 +320,7 @@ const WodBuilders = ({ page }) => {
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="linear-border"
-                onClick={() => (slice === 2 ? setSlice(23) : setSlice(2))}
+                onClick={() => (slice === 2 ? setSlice(24) : setSlice(2))}
               >
                 <button className="btn filled-btn px-5">
                   {slice === 2 ? "View More" : "View Less"}
@@ -324,7 +331,7 @@ const WodBuilders = ({ page }) => {
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="linear-border"
-                onClick={() => (slice === 8 ? setSlice(23) : setSlice(8))}
+                onClick={() => (slice === 8 ? setSlice(24) : setSlice(8))}
               >
                 <button className="btn filled-btn px-5">
                   {slice === 8 ? "View More" : "View Less"}
