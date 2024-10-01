@@ -51,7 +51,6 @@ const MyRewardsPopupNew = ({
   coreEarnUsd,
   victionEarnUsd,
   allSkaleChests,
-  kittyDashRecords,
   userRankRewards,
   cawsPremiumRewards,
   allCoreChests,
@@ -618,8 +617,7 @@ const MyRewardsPopupNew = ({
       behavior: "smooth",
     });
   };
-
-  const kittyDashRewards = [30, 20, 10, 10, 5, 5, 5, 5, 5, 5];
+ 
 
   return (
     <div className="d-grid rewardstable-wrapper2 gap-2 mt-3 px-1">
@@ -749,11 +747,6 @@ const MyRewardsPopupNew = ({
                       Number(taikoEarnUsd) +
                       Number(cookieEarnUsd) +
                       Number(mantaEarnUsd) +
-                      (kittyDashRecords[0]
-                        ? kittyDashRecords[0]?.position + 1 > 10
-                          ? 0
-                          : kittyDashRewards[kittyDashRecords[0]?.position]
-                        : 0) +
                       // Number(dailyplayerData) +
                       // Number(dailyDataAmountCore) +
                       Number(weeklyDataAmountCore) +
@@ -945,11 +938,6 @@ const MyRewardsPopupNew = ({
                     // Number(dailyplayerData) +
                     // Number(dailyDataAmountCore) +
                     Number(weeklyDataAmountCore) +
-                      (kittyDashRecords[0]
-                        ? kittyDashRecords[0]?.position + 1 > 10
-                          ? 0
-                          : kittyDashRewards[kittyDashRecords[0]?.position]
-                        : 0) +
                       +Number(monthlyDataAmountCore) +
                       // Number(dailyDataAmountSkale) +
                       Number(weeklyDataAmountSkale) +
@@ -1349,15 +1337,7 @@ const MyRewardsPopupNew = ({
                       )}
                 </span>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">Global</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(Number(userDataStar), 2)}
-                </span>
-              </div>
+              
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Manta</span>
                 <span className="item-name-right">
@@ -1394,7 +1374,15 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(genesisRank2, 2)}
                 </span>
               </div>
-
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Global</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(Number(userDataStar), 2)}
+                </span>
+              </div>
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Viction</span>
                 <span className="item-name-right">
@@ -1409,22 +1397,7 @@ const MyRewardsPopupNew = ({
                       )}
                 </span>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">Kitty Dash</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : kittyDashRecords[0]
-                    ? kittyDashRecords[0]?.position + 1 > 10
-                      ? getFormattedNumber(0, 2)
-                      : getFormattedNumber(
-                          kittyDashRewards[kittyDashRecords[0]?.position],
-                          2
-                        )
-                    : getFormattedNumber(0, 2)}
-                </span>
-              </div>
+           
               {/* <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
                 <span className="item-name-right">

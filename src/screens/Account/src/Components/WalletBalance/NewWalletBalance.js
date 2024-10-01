@@ -277,7 +277,6 @@ const NewWalletBalance = ({
   multiversPoints,
   multiversEarnToken,
   multiversEarnUsd,
-  kittyDashRecords,
   weeklyDataAmountManta,
   monthlyDataAmountManta,
   mantaEarnUsd,
@@ -1641,7 +1640,7 @@ const NewWalletBalance = ({
   }, [adClicked]);
 
   const recaptchaRef = useRef(null);
-  const kittyDashRewards = [30, 20, 10, 10, 5, 5, 5, 5, 5, 5];
+  
   return (
     <>
       <div className="container px-0">
@@ -2130,11 +2129,6 @@ const NewWalletBalance = ({
                           Number(monthlyDataAmountManta) +
                           Number(weeklyDataAmountTaiko) +
                           Number(monthlyDataAmountTaiko) +
-                          (kittyDashRecords[0]
-                            ? kittyDashRecords[0]?.position + 1 > 10
-                              ? 0
-                              : kittyDashRewards[kittyDashRecords[0]?.position]
-                            : 0) +
                           +Number(monthlyDataAmountSkale) +
                           Number(userDataStar) +
                           Number(weeklyDataAmountViction) +
