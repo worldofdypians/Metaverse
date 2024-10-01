@@ -53,9 +53,9 @@
 }
 
 .leaderboard-popup {
-  background-image: url("./newLeaderboardBg.jpg");
-  background-size: 100%;
-  background-repeat: no-repeat;
+  background-image: url("./newLeaderboardBg.jpg") !important;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
   @media screen and (max-width: 1525px) {
     width: 95% !important;
   }

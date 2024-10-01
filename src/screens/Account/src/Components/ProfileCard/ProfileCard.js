@@ -1513,7 +1513,7 @@ const ProfileCard = ({
       {rankPopup && (
         <OutsideClickHandler onOutsideClick={() => setRankPopup(false)}>
           <div
-            className="popup-wrapper leaderboard-popup rank-popup popup-active p-3"
+            className="popup-wrapper rank-popup popup-active p-3"
             id="leaderboard"
             style={{ width: "70%", pointerEvents: "auto" }}
           >
