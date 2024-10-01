@@ -384,7 +384,7 @@ const NewLeaderBoard = ({
             <div className="d-none">
               {availableTime !== "0" && availableTime && (
                 <Countdown
-                  date={availableTime}
+                  date={Number(availableTime)*1000}
                   renderer={renderer}
                   onComplete={() => {
                     setcountdown();
@@ -1318,7 +1318,6 @@ const NewLeaderBoard = ({
                                           <div className="position-relative  d-flex align-items-center">
                                             {availableTime !== "0" &&
                                             availableTime &&
-                                            availableTime >= today1.getTime() &&
                                             availableTime !== undefined ? (
                                               <div className="position-relative d-flex align-items-center">
                                                 <img

@@ -168,16 +168,7 @@ const GlobalLeaderboard = ({
           </div>
         </div>
       )}
-      {availableTime !== "0" && availableTime && (
-        <Countdown
-          date={availableTime}
-          renderer={renderer}
-          onComplete={() => {
-            setcountdown();
-            setisActive(false);
-          }}
-        />
-      )}
+  
 
       {/* <div className="grandPrices-wrapper position-relative"></div> */}
       <div
