@@ -3301,12 +3301,12 @@ const NewWalletBalance = ({
                 <img
                   alt=""
                   src={
-                    dummyEvent.id !== "event4" && dummyEvent.id !== "event7"
+                    dummyEvent.id !== "event4" && dummyEvent.id !== "event24" && dummyEvent.id !== "event7"
                       ? telegram
                       : discord
                   }
                 />
-                {dummyEvent.id !== "event4" && dummyEvent.id !== "event7"
+                {dummyEvent.id !== "event4" && dummyEvent.id !== "event24" && dummyEvent.id !== "event7"
                   ? "Telegram"
                   : "Discord"}
               </a>
