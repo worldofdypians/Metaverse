@@ -7,7 +7,7 @@ import epicwhite from "../../../assets/epicwhite.svg";
 import epicblack from "../../../assets/epicblack.svg";
 import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
 import coingecko from "../../Marketplace/MarketNFTs/assets/coingecko.svg";
-import coinbaseimg from "../../Marketplace/MarketNFTs/assets/base.svg";
+import coinbaseimg from "./assets/baseLogo.svg";
 import dypius from "../../Marketplace/MarketNFTs/assets/dypiusPremium16.svg";
 import doge from "../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../Marketplace/MarketNFTs/assets/cmc.svg";
@@ -425,6 +425,34 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
         learnMore:
           "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
         eventDate: "December 22, 2023",
+      },
+    },
+      {
+      title: "Base",
+      logo: coinbaseimg,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in ETH Rewards",
+      rewardsAmount: "$20,000",
+      rewardsCurrency: "ETH Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "Oct 07, 2024",
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Base",
+        chain: "Base Chain",
+        linkState: "base",
+        rewards: "ETH",
+        status: "Coming Soon",
+        id: "event4",
+        date: "Oct 07, 2024",
+        totalRewards: "$20,000 in ETH Rewards",
+        eventDate: "Oct 07, 2024",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
       },
     },
     {
