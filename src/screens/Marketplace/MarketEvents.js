@@ -401,60 +401,7 @@ const MarketEvents = ({
     //   },
     // },
 
-    {
-      title: "CORE",
-      logo: coreLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in CORE Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Jul 01, 2024",
-      backgroundImage: coreBg,
-      popupInfo: {
-        title: "CORE",
-        chain: "CORE Chain",
-        linkState: "core",
-        rewards: "CORE",
-        status: "Live",
-        id: "event12",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in CORE Rewards",
-        eventDuration: coreLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Jul 01, 2024",
-      },
-    },
-    {
-      title: "VICTION",
-      logo: victionLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in VIC Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "Jul 01, 2024",
-      backgroundImage: victionBg,
-      popupInfo: {
-        title: "VICTION",
-        chain: "VICTION Chain",
-        linkState: "viction",
-        rewards: "VIC",
-        status: "Live",
-        id: "event14",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in VIC Rewards",
-        eventDuration: coreLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Jul 01, 2024",
-      },
-    },
+
  
     {
       title: "Immutable",
@@ -562,6 +509,60 @@ const MarketEvents = ({
         maxPoints: "50,000",
         learnMore: "",
         eventDate: "Aug 26, 2024",
+      },
+    },
+    {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: coreBg,
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Expired",
+        id: "event12",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in CORE Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: victionBg,
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Expired",
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
       },
     },
     {
@@ -1655,7 +1656,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 6).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 4).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1672,10 +1673,7 @@ const MarketEvents = ({
                                 ? taikoEarnUsd
                                 : item.title === "Cookie3"
                                 ? cookieEarnUsd
-                                : item.title === "CORE"
-                                ? coreEarnUsd
-                                : item.title === "Viciton"
-                                ? victionEarnUsd
+                               
                                 : 0
                             }
                           />
@@ -1911,7 +1909,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(6, dummyBetaPassData2.length)
+                    .slice(4, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
@@ -1942,6 +1940,10 @@ const MarketEvents = ({
                             ? cmcuserEarnUsd
                             : item.title === "SKALE"
                             ? skaleEarnUsd
+                            : item.title === "CORE"
+                            ? coreEarnUsd
+                            : item.title === "Viciton"
+                            ? victionEarnUsd
                             : 0
                         }
                       />

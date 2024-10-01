@@ -504,69 +504,7 @@ const NewWalletBalance = ({
     //   },
     // },
 
-    {
-      title: "CORE",
-      logo: coreLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in CORE Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      backgroundImage: coreBg,
-      eventDate: "Jul 01, 2024",
 
-      popupInfo: {
-        title: "CORE",
-        chain: "CORE Chain",
-        linkState: "core",
-        rewards: "CORE",
-        status: "Live",
-        backgroundImage: coreBg,
-        logo: coreLogo,
-        date: "Jul 01, 2024",
-
-        id: "event12",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in CORE Rewards",
-        eventDuration: coreLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Jul 01, 2024",
-      },
-    },
-    {
-      title: "VICTION",
-      logo: victionLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in VIC Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "Jul 01, 2024",
-      backgroundImage: victionBg,
-      popupInfo: {
-        title: "VICTION",
-        chain: "VICTION Chain",
-        linkState: "viction",
-        rewards: "VIC",
-        status: "Live",
-        logo: victionLogo,
-        backgroundImage: victionBg,
-        date: "Jul 01, 2024",
-
-        id: "event14",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in VIC Rewards",
-        eventDuration: coreLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Jul 01, 2024",
-      },
-    },
 
     {
       title: "Taiko",
@@ -685,7 +623,69 @@ const NewWalletBalance = ({
         eventDate: "Aug 26, 2024",
       },
     },
-    
+    {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      backgroundImage: coreBg,
+      eventDate: "Jul 01, 2024",
+
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Expired",
+        backgroundImage: coreBg,
+        logo: coreLogo,
+        date: "Jul 01, 2024",
+
+        id: "event12",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in CORE Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: victionBg,
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Expired",
+        logo: victionLogo,
+        backgroundImage: victionBg,
+        date: "Jul 01, 2024",
+
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
     {
       title: "BNB Chain",
       logo: bnbLogo,
@@ -1674,11 +1674,11 @@ const NewWalletBalance = ({
                 }}
               />
               <ActiveProfileEvent
-                data={dummyCore}
-                event={dummyCore}
-                userEarnedUsd={coreEarnUsd}
+                data={dummyTaiko}
+                event={dummyTaiko}
+                userEarnedUsd={taikoEarnUsd}
                 onOpenEvent={() => {
-                  setDummyEvent(dummyCore);
+                  setDummyEvent(dummyTaiko);
                   setEventPopup(true);
                 }}
               />
@@ -2140,9 +2140,7 @@ const NewWalletBalance = ({
                           Number(weeklyDataAmountViction) +
                           Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd) +
-                          Number(coreEarnUsd) +
                           Number(cawsPremiumRewards) + Number(landPremiumRewards) +
-                          Number(victionEarnUsd) +
                           Number(taikoEarnUsd) + 
                           Number(immutableEarnUsd) +
                           Number(mantaEarnUsd) +
