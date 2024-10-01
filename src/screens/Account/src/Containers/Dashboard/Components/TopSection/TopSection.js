@@ -16,12 +16,12 @@ import landIcon from "./assets/landIcon.svg";
 import Slider from "react-slick";
 import multiversAd from "./assets/multiversAd.png";
 import premiumAd from "./assets/premiumAd.png";
-import coreAd from "./assets/coreAd.png";
-import victionAd from "./assets/victionAd.png";
+import criticalHit from "./assets/criticalHit.jpg";
+import genesisLand from "./assets/genesisLand.jpg";
 import multiversAdMobile from "./assets/multiversAdMobile.png";
 import premiumAdMobile from "./assets/premiumAdMobile.png";
-import coreAdMobile from "./assets/coreAdMobile.png";
-import victionAdMobile from "./assets/victionAdMobile.png";
+import criticalHitMobile from "./assets/criticalHitMobile.jpg";
+import genesisLandMobile from "./assets/genesisLandMobile.jpg";
 import goldenAd from "./assets/goldenAd.png";
 import goldenAdMobile from "./assets/goldenAdMobile.png";
 import dragonAd from "./assets/dragonAd.png";
@@ -146,8 +146,12 @@ const TopSection = ({
 
   const slidercontent = [
     // { title: "multiversx", image: multiversAd, mobileImage: multiversAdMobile },
-    { title: "core", image: coreAd, mobileImage: coreAdMobile },
-    { title: "viction", image: victionAd, mobileImage: victionAdMobile },
+    {
+      title: "critical-hit",
+      image: criticalHit,
+      mobileImage: criticalHitMobile,
+    },
+    { title: "land", image: genesisLand, mobileImage: genesisLandMobile },
     { title: "premium", image: premiumAd, mobileImage: premiumAdMobile },
     { title: "dragon", image: dragonAd, mobileImage: dragonAdMobile },
     { title: "goldenPass", image: goldenAd, mobileImage: goldenAdMobile },
@@ -287,8 +291,14 @@ const TopSection = ({
                     alt=""
                     onClick={() => {
                       item.title === "goldenPass"
-                        ?  navigate("/marketplace/events/golden-pass") 
-                        : item.title === "dragon" ? navigate("/marketplace/events/dragon-ruins") : handleShowPopup(item.title)
+                        ? navigate("/marketplace/events/golden-pass")
+                        : item.title === "dragon"
+                        ? navigate("/marketplace/events/dragon-ruins")
+                        : item.title === "critical-hit"
+                        ? navigate("/marketplace/events/critical-hit")
+                        : item.title === "land"
+                        ? navigate("/marketplace/land")
+                        : handleShowPopup(item.title);
                     }}
                     key={index}
                   />

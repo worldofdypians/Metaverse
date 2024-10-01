@@ -477,7 +477,7 @@ function Dashboard({
   const [openedBaseChests, setOpenedBaseChests] = useState([]);
 
 
-  const [kittyDashRecords, setkittyDashRecords] = useState([]);
+
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
   const [skaleEarnToken, setSkaleEarnToken] = useState(0);
   const [skalePoints, setSkalePoints] = useState(0);
@@ -3861,7 +3861,6 @@ function Dashboard({
     fetchWeeklyRecordsSkale();
     fetchMonthlyRecordsSkale();
     fetchRecordsStar();
-    fetchKittyDashAroundPlayer(userId, username);
   }, [username, userId, goldenPassRemainingTime]);
 
   useEffect(() => {
@@ -5308,24 +5307,7 @@ function Dashboard({
     setGenesisRank2(testArray[0].statValue);
   };
 
-  const fetchKittyDashAroundPlayer = async (userId, userName) => {
-    const data = {
-      StatisticName: "MobileGameDailyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
 
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === userName
-    );
-    setkittyDashRecords(testArray);
-    // setGenesisRank(testArray[0].position);
-    // setGenesisRank2(testArray[0].statValue);
-  };
 
   const fetchDailyRecordsAroundPlayer = async (itemData) => {
     const data = {
@@ -8305,10 +8287,6 @@ function Dashboard({
   //     );
   //     fetchWeeklyRecordsAroundPlayer(weeklyrecords);
   //     fetchDailyRecordsAroundPlayer(dailyrecords);
-  //     fetchKittyDashAroundPlayer(
-  //       data.getPlayer.playerId,
-  //       data.getPlayer.displayName
-  //     );
   //     fetchDailyRecordsAroundPlayerCore(dailyRecordsCore);
   //     fetchWeeklyRecordsAroundPlayerCore(weeklyRecordsCore);
   //     fetchMonthlyRecordsAroundPlayerCore(monthlyRecordsCore);
@@ -8780,7 +8758,6 @@ function Dashboard({
                         claimedMantaPremiumChests={claimedMantaPremiumChests}
                         claimedTaikoChests={claimedTaikoChests}
                         claimedTaikoPremiumChests={claimedTaikoPremiumChests}
-                        kittyDashRecords={kittyDashRecords}
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
@@ -9354,7 +9331,6 @@ function Dashboard({
                             taikoEarnUsd={taikoEarnUsd}
                             immutableEarnUsd={immutableEarnUsd}
                             coreEarnUsd={coreEarnUsd}
-                            kittyDashRecords={kittyDashRecords}
                             userRankRewards={userRankRewards}
                             cawsPremiumRewards={cawsPremiumRewards}
                             landPremiumRewards={landPremiumRewards}
