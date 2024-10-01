@@ -65,7 +65,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
   const [loading, setLoading] = useState(false);
   const [totalUsers, setTotalUsers] = useState(0);
   const [expired, setisExpired] = useState(false);
-  const [isWinner, setisWinner] = useState(false);
+  // const [isWinner, setisWinner] = useState(false);
 
   const [dypPrice, setDypPrice] = useState(0);
   const [ethPrice, setEthPrice] = useState(0);
@@ -220,20 +220,20 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
       });
   };
 
-  const checkIfWinner = () => {
-    let found = 0;
-    for (let i of loyaltyAddresses) {
-      if (coinbase.toLowerCase() === i.toLowerCase()) {
-        found = 1;
-      }
-    }
+  // const checkIfWinner = () => {
+  //   let found = 0;
+  //   for (let i of loyaltyAddresses) {
+  //     if (coinbase.toLowerCase() === i.toLowerCase()) {
+  //       found = 1;
+  //     }
+  //   }
 
-    if (found === 0) {
-      setisWinner(false);
-    } else if (found === 1) {
-      setisWinner(true);
-    }
-  };
+  //   if (found === 0) {
+  //     setisWinner(false);
+  //   } else if (found === 1) {
+  //     setisWinner(true);
+  //   }
+  // };
 
   const html = document.querySelector("html");
 
@@ -248,10 +248,10 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
   useEffect(() => {
     if (coinbase && isConnected) {
       loyaltyCheck();
-      checkIfWinner();
+      // checkIfWinner();
     } else {
       setStep(1);
-      setisWinner(false);
+      // setisWinner(false);
     }
   }, [coinbase, isConnected]);
 
@@ -360,13 +360,13 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                       </div>
                     </div> */}
                       </div>
-                      {isWinner && (
+                      {/* {isWinner && (
                         <img
                           src={winnerBadge}
                           alt=""
                           className="appliedbadge"
                         />
-                      )}
+                      )} */}
                       {step === 5 && (
                         <div className="d-flex flex-column w-100 mb-3 mb-lg-0">
                             <div className="d-flex align-items-center justify-content-center w-100">

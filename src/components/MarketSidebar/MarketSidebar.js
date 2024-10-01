@@ -286,13 +286,15 @@ const MarketSidebar = () => {
               );
             }}
           />
-          {email &&
-            data &&
-            data.getPlayer &&
-            data.getPlayer.displayName &&
-            data.getPlayer.playerId &&
-            data.getPlayer.wallet &&
-            data.getPlayer.wallet.publicAddress && (
+          {email
+          //  &&
+          //   data &&
+          //   data.getPlayer &&
+          //   data.getPlayer.displayName &&
+          //   data.getPlayer.playerId &&
+          //   data.getPlayer.wallet &&
+          //   data.getPlayer.wallet.publicAddress
+             && (
               <NavLink
                 to="/loyalty-program"
                 end
