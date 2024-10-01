@@ -328,3 +328,11 @@ font-style: normal;
 font-weight: 400;
 line-height: normal;
 }
+
+.participant-chain:nth-child(2){
+  transform: translateX(-5px);
+}
+
+.participant-chain:nth-child(3){
+  transform: translateX(-10px);
+}

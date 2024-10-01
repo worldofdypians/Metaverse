@@ -16,6 +16,13 @@ import checkIcon from "./assets/checkIcon.svg";
 import coin98 from "./assets/coin98.png";
 import trustwallet from "./assets/trustwallet.png";
 import coinbaseWallet from "./assets/coinbase.png";
+import bnbIcon from "./assets/bnbIcon.svg";
+import baseIcon from "./assets/baseIcon.svg";
+import coreIcon from "./assets/coreIcon.svg";
+import skaleIcon from "./assets/skaleIcon.svg";
+import taikoIcon from "./assets/taikoIcon.svg";
+import victionIcon from "./assets/victionIcon.svg";
+import mantaIcon from "./assets/mantaIcon.png";
 
 import safepal from "./assets/safepal.png";
 import axios from "axios";
@@ -380,9 +387,16 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                               <span className="participant-name">
                                 {shortAddress(item.walletAddress)} joined
                               </span>
-                              <span className="participant-time-ago">
+                             <div className="d-flex align-items-center gap-1">
+                              <div className="d-flex align-items-center">
+                                <img src={bnbIcon} width={16} height={16} alt="" className="participant-chain" />
+                                <img src={taikoIcon} width={16} height={16} alt="" className="participant-chain" />
+                                <img src={baseIcon} width={16} height={16} alt="" className="participant-chain" />
+                              </div>
+                             <span className="participant-time-ago">
                                 {getTimeAgo(item.timestamp)}
                               </span>
+                             </div>
                             </div>
                           ))}
                         </div>
