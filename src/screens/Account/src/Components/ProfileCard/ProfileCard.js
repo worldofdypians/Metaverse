@@ -69,26 +69,26 @@ import premiumOfferTag from "./assets/premiumOfferTag2.png";
 import premiumExclusive from "./assets/premiumExclusive2.svg";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 
-// const renderer = ({ hours, minutes, seconds }) => {
-//   return (
-//     <div className="timer-wrapper d-none align-items-start gap-3 justify-content-center">
-//       <div className="d-flex flex-column gap-1">
-//         <h6 className="mint-time">{hours < 10 ? "0" + hours : hours}</h6>
-//         <span className="days">Hours</span>
-//       </div>
-//       <h6 className="mint-time">:</h6>
-//       <div className="d-flex flex-column gap-1">
-//         <h6 className="mint-time">{minutes < 10 ? "0" + minutes : minutes}</h6>
-//         <span className="days">minutes</span>
-//       </div>
-//       <h6 className="mint-time">:</h6>
-//       <div className="d-flex flex-column gap-1">
-//         <h6 className="mint-time">{seconds < 10 ? "0" + seconds : seconds}</h6>
-//         <span className="days">seconds</span>
-//       </div>
-//     </div>
-//   );
-// };
+const renderer = ({ hours, minutes, seconds }) => {
+  return (
+    <div className="timer-wrapper d-none align-items-start gap-3 justify-content-center">
+      <div className="d-flex flex-column gap-1">
+        <h6 className="mint-time">{hours < 10 ? "0" + hours : hours}</h6>
+        <span className="days">Hours</span>
+      </div>
+      <h6 className="mint-time">:</h6>
+      <div className="d-flex flex-column gap-1">
+        <h6 className="mint-time">{minutes < 10 ? "0" + minutes : minutes}</h6>
+        <span className="days">minutes</span>
+      </div>
+      <h6 className="mint-time">:</h6>
+      <div className="d-flex flex-column gap-1">
+        <h6 className="mint-time">{seconds < 10 ? "0" + seconds : seconds}</h6>
+        <span className="days">seconds</span>
+      </div>
+    </div>
+  );
+};
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -1331,13 +1331,7 @@ const ProfileCard = ({
                       </>
                     )}
                   </div>
-                  {/* {availableTime !== "0" && availableTime && availableTime!==undefined &&  (
-            <div className="d-flex flex-column">
-            <span className="emailtext" style={{color: '#ffbf00'}}>*Golden Pass</span>
-            <span className="emailtext" style={{color: '#00FECF'}}>{remainingTime} (GMT + 2)</span>
-
-            </div>
-          )} */}
+                  
                 </div>
               </div>
               <div

@@ -64,6 +64,7 @@ import { NavLink } from "react-router-dom";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 import TopSection from "./Components/TopSection/TopSection";
 import Portfolio from "../../Components/WalletBalance/Portfolio";
+import Countdown from "react-countdown";
 
 function Dashboard({
   account,
@@ -476,8 +477,6 @@ function Dashboard({
   const [openedTaikoChests, setOpenedTaikoChests] = useState([]);
   const [openedBaseChests, setOpenedBaseChests] = useState([]);
 
-
-
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
   const [skaleEarnToken, setSkaleEarnToken] = useState(0);
   const [skalePoints, setSkalePoints] = useState(0);
@@ -551,9 +550,7 @@ function Dashboard({
   const [allMantaChests, setallMantaChests] = useState([]);
   const [allBaseChests, setallBaseChests] = useState([]);
 
-
   const [countdown700, setcountdown700] = useState();
-  const [bundlesBought, setbundlesBought] = useState(0);
   const [count, setCount] = useState(0);
   const [skalecount, setskalecount] = useState(0);
   const [vicitoncount, setvicitoncount] = useState(0);
@@ -561,7 +558,6 @@ function Dashboard({
   const [mantacount, setmantacount] = useState(0);
   const [taikocount, settaikocount] = useState(0);
   const [basecount, setbasecount] = useState(0);
-
 
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
@@ -1110,9 +1106,6 @@ function Dashboard({
     "15",
   ];
 
-
-
-
   const updatedSkalePrizesWeekly = [
     "10",
     "10",
@@ -1161,8 +1154,6 @@ function Dashboard({
     "10",
     "10",
   ];
-
-
 
   const genesisPrizes = [
     "100",
@@ -1287,16 +1278,12 @@ function Dashboard({
   const [userRankManta, setUserRankManta] = useState("");
   const [userMantaScore, setUserMantaScore] = useState(0);
 
-
-
-
   const [dailyRecordsBase, setDailyRecordsBase] = useState([]);
   const [weeklyRecordsBase, setWeeklyRecordsBase] = useState([]);
   const [monthlyRecordsBase, setMonthlyRecordsBase] = useState([]);
   const [activePlayerBase, setActivePlayerBase] = useState(false);
   const [activePlayerBaseWeekly, setActivePlayerBaseWeekly] = useState(false);
-  const [activePlayerBaseMonthly, setActivePlayerBaseMonthly] =
-    useState(false);
+  const [activePlayerBaseMonthly, setActivePlayerBaseMonthly] = useState(false);
   const [userDataBase, setUserDataBase] = useState({});
   const [userDataBaseWeekly, setUserDataBaseWeekly] = useState({});
   const [userDataBaseMonthly, setUserDataBaseMonthly] = useState({});
@@ -1311,9 +1298,6 @@ function Dashboard({
   const [monthlyDataAmountBase, setMonthlyDataAmountBase] = useState([]);
   const [userRankBase, setUserRankBase] = useState("");
   const [userBaseScore, setUserBaseScore] = useState(0);
-
-
-
 
   const [dailyRecordsTaiko, setDailyRecordsTaiko] = useState([]);
   const [weeklyRecordsTaiko, setWeeklyRecordsTaiko] = useState([]);
@@ -2409,14 +2393,6 @@ function Dashboard({
     }
   };
 
-
-
-
-
-
-
-
-  
   const fillRecordsBase = (itemData) => {
     if (itemData.length === 0) {
       setDailyRecordsBase(placeholderplayerData);
@@ -2765,8 +2741,6 @@ function Dashboard({
       }
     }
   };
-
-
 
   const fillRecordsTaiko = (itemData) => {
     if (itemData.length === 0) {
@@ -3604,16 +3578,6 @@ function Dashboard({
     }
   };
 
-  const getBundles = async (address) => {
-    if (address) {
-      const result = await axios.get(
-        `https://api3.dyp.finance/api/bundles/count/${address}`
-      );
-      const result_formatted = result.data.count;
-      setbundlesBought(result_formatted);
-    }
-  };
-
   const fetchPreviousWinners = async () => {
     if (previousVersion != 0) {
       const data = {
@@ -4064,7 +4028,7 @@ function Dashboard({
         type: "cash",
         rewards: updatedSkalePrizesWeekly,
         past_rewards: skalePrizesWeekly,
-        premium_rewards:  updatedSkalePrizesWeeklyGolden,
+        premium_rewards: updatedSkalePrizesWeeklyGolden,
         past_premium_rewards: skalePrizesWeeklyGolden,
 
         activeData: weeklyRecordsSkale,
@@ -4246,11 +4210,6 @@ function Dashboard({
     activePlayerMantaWeekly,
   ]);
 
-
-
-
-
-
   useEffect(() => {
     setAllBaseData([
       {
@@ -4301,7 +4260,6 @@ function Dashboard({
     activePlayerBaseMonthly,
     activePlayerBaseWeekly,
   ]);
-
 
   useEffect(() => {
     setAllTaikoData([
@@ -4359,90 +4317,93 @@ function Dashboard({
   };
 
   const handleRefreshCountdown700 = async () => {
-    if (bundlesBought === 0) {
-      setcountdown700();
-      handleSetAvailableTime();
-    } else if (bundlesBought > 0) {
-      // const dypv1 = new window.infuraWeb3.eth.Contract(
-      //   DYP_700V1_ABI,
-      //   dyp700v1Address
-      // );
+    const dypv1 = new window.infuraWeb3.eth.Contract(
+      DYP_700V1_ABI,
+      dyp700v1Address
+    );
 
-      // const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
+    const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
 
-      // const remainingTimev1 = await dypv1.methods
-      //   .getTimeOfExpireBuff(coinbase)
-      //   .call();
+    const remainingTimev1 = await dypv1.methods
+      .getTimeOfExpireBuff(coinbase)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
 
-      // const remainingTimev2 = await dypv2.methods
-      //   .getTimeOfExpireBuff(coinbase)
-      //   .call();
+    const remainingTimev2 = await dypv2.methods
+      .getTimeOfExpireBuff(coinbase)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
 
-      // var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
+    // var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
 
-      // var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
-      // const timeofDepositv1 = await dypv1.methods
-      //   .getTimeOfDeposit(coinbase)
-      //   .call();
+    // var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
+    // const timeofDepositv1 = await dypv1.methods
+    //   .getTimeOfDeposit(coinbase)
+    //   .call();
 
-      // const timeofDepositv2 = await dypv2.methods
-      //   .getTimeOfDeposit(coinbase)
-      //   .call();
+    // const timeofDepositv2 = await dypv2.methods
+    //   .getTimeOfDeposit(coinbase)
+    //   .call();
 
-      // if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
-      //   remainingTime_milisecondsv1 = timeofDepositv1 * 1000;
-      //   remainingTime_milisecondsv2 = timeofDepositv2 * 1000;
+    // if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
+    //   remainingTime_milisecondsv1 = timeofDepositv1 * 1000;
+    //   remainingTime_milisecondsv2 = timeofDepositv2 * 1000;
 
-      //   const timeofDeposit_Datev1 = new Intl.DateTimeFormat("en-US", {
-      //     year: "numeric",
-      //     month: "2-digit",
-      //     day: "2-digit",
-      //     hour: "2-digit",
-      //     minute: "2-digit",
-      //     second: "2-digit",
-      //   }).format(remainingTime_milisecondsv1);
+    //   const timeofDeposit_Datev1 = new Intl.DateTimeFormat("en-US", {
+    //     year: "numeric",
+    //     month: "2-digit",
+    //     day: "2-digit",
+    //     hour: "2-digit",
+    //     minute: "2-digit",
+    //     second: "2-digit",
+    //   }).format(remainingTime_milisecondsv1);
 
-      //   const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Datev1);
+    //   const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Datev1);
 
-      //   const timeofDeposit_Hoursv1 = timeofDeposit_Date_formattedv1.getHours();
-      //   const timeofDeposit_Minutesv1 =
-      //     timeofDeposit_Date_formattedv1.getMinutes();
-      //   const finalHoursv1 = timeofDeposit_Hoursv1 - 11;
+    //   const timeofDeposit_Hoursv1 = timeofDeposit_Date_formattedv1.getHours();
+    //   const timeofDeposit_Minutesv1 =
+    //     timeofDeposit_Date_formattedv1.getMinutes();
+    //   const finalHoursv1 = timeofDeposit_Hoursv1 - 11;
 
-      //   const finalMinutesv1 = timeofDeposit_Minutesv1 - 11;
+    //   const finalMinutesv1 = timeofDeposit_Minutesv1 - 11;
 
-      //   const resultv1 =
-      //     remainingTimev1 - finalHoursv1 * 60 * 60 - finalMinutesv1 * 60;
+    //   const resultv1 =
+    //     remainingTimev1 - finalHoursv1 * 60 * 60 - finalMinutesv1 * 60;
 
-      //   const timeofDeposit_Datev2 = new Intl.DateTimeFormat("en-US", {
-      //     year: "numeric",
-      //     month: "2-digit",
-      //     day: "2-digit",
-      //     hour: "2-digit",
-      //     minute: "2-digit",
-      //     second: "2-digit",
-      //   }).format(remainingTime_milisecondsv2);
+    //   const timeofDeposit_Datev2 = new Intl.DateTimeFormat("en-US", {
+    //     year: "numeric",
+    //     month: "2-digit",
+    //     day: "2-digit",
+    //     hour: "2-digit",
+    //     minute: "2-digit",
+    //     second: "2-digit",
+    //   }).format(remainingTime_milisecondsv2);
 
-      //   const timeofDeposit_Date_formattedv2 = new Date(timeofDeposit_Datev2);
-      //   const timeofDeposit_day = timeofDeposit_Date_formattedv2.getDate();
-      //   const timeofDeposit_Hoursv2 = timeofDeposit_Date_formattedv2.getHours();
-      //   const timeofDeposit_Minutesv2 =
-      //     timeofDeposit_Date_formattedv2.getMinutes();
-      //   const finalHoursv2 = timeofDeposit_Hoursv2 - 11;
+    //   const timeofDeposit_Date_formattedv2 = new Date(timeofDeposit_Datev2);
+    //   const timeofDeposit_day = timeofDeposit_Date_formattedv2.getDate();
+    //   const timeofDeposit_Hoursv2 = timeofDeposit_Date_formattedv2.getHours();
+    //   const timeofDeposit_Minutesv2 =
+    //     timeofDeposit_Date_formattedv2.getMinutes();
+    //   const finalHoursv2 = timeofDeposit_Hoursv2 - 11;
 
-      //   const finalMinutesv2 = timeofDeposit_Minutesv2 - 11;
+    //   const finalMinutesv2 = timeofDeposit_Minutesv2 - 11;
 
-      //   const resultv2 =
-      //     remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
-      setcountdown700(firstOfNextMonth.getTime());
-      handleSetAvailableTime(firstOfNextMonth.getTime());
-      // setcountdown700(result * 1000);
-      //}
-      // } else {
-      //   setcountdown700();
-      //   handleSetAvailableTime();
-      // }
-    }
+    //   const resultv2 =
+    //     remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
+    setcountdown700(Number(remainingTimev1) + Number(remainingTimev2));
+    handleSetAvailableTime(Number(remainingTimev1) + Number(remainingTimev2));
+    // setcountdown700(result * 1000);
+    //}
+    // } else {
+    //   setcountdown700();
+    //   handleSetAvailableTime();
+    // }
   };
 
   const fetchSkalePrice = async () => {
@@ -5306,8 +5267,6 @@ function Dashboard({
     setGenesisRank2(testArray[0].statValue);
   };
 
-
-
   const fetchDailyRecordsAroundPlayer = async (itemData) => {
     const data = {
       StatisticName: "DailyLeaderboard",
@@ -5435,7 +5394,7 @@ function Dashboard({
           claimedCoreChests + claimedCorePremiumChests < 20 ||
           claimedVictionChests + claimedVictionPremiumChests < 20 ||
           claimedMantaChests + claimedMantaPremiumChests < 20 ||
-          claimedBaseChests + claimedBasePremiumChests < 20||
+          claimedBaseChests + claimedBasePremiumChests < 20 ||
           claimedTaikoChests + claimedTaikoPremiumChests < 20
         ) {
           setCanBuy(true);
@@ -5444,7 +5403,7 @@ function Dashboard({
           claimedSkaleChests + claimedSkalePremiumChests === 20 &&
           claimedCoreChests + claimedCorePremiumChests === 20 &&
           claimedVictionChests + claimedVictionPremiumChests === 20 &&
-          claimedMantaChests + claimedMantaPremiumChests === 20&&
+          claimedMantaChests + claimedMantaPremiumChests === 20 &&
           claimedBaseChests + claimedBasePremiumChests === 20 &&
           claimedTaikoChests + claimedTaikoPremiumChests === 20
         ) {
@@ -5711,7 +5670,6 @@ function Dashboard({
       }
     }
   };
-
 
   const getAllBaseChests = async (userEmail) => {
     const emailData = { emailAddress: userEmail, chainId: "base" };
@@ -7987,14 +7945,20 @@ function Dashboard({
       userMantaScore +
       userBaseScore +
       userTaikoScore;
-      
-      const totalScore_multiplied = (rankData && rankData.multiplier === "yes") ? totalScore * 4 : totalScore
+
+    const totalScore_multiplied =
+      rankData && rankData.multiplier === "yes" ? totalScore * 4 : totalScore;
     if (totalScore_multiplied > 13999999 && totalScore_multiplied < 26000000) {
- 
       setUserRankRewards(5);
-    } else if (totalScore_multiplied >= 26000000 && totalScore_multiplied < 39000000) {
+    } else if (
+      totalScore_multiplied >= 26000000 &&
+      totalScore_multiplied < 39000000
+    ) {
       setUserRankRewards(10);
-    } else if (totalScore_multiplied >= 39000000 && totalScore_multiplied < 64000000) {
+    } else if (
+      totalScore_multiplied >= 39000000 &&
+      totalScore_multiplied < 64000000
+    ) {
       setUserRankRewards(25);
     } else if (totalScore_multiplied >= 64000000) {
       setUserRankRewards(100);
@@ -8017,9 +7981,8 @@ function Dashboard({
   useEffect(() => {
     if (coinbase) {
       getRankData();
-      getBundles(coinbase);
     }
-  }, [coinbase, bundlesBought]);
+  }, [coinbase]);
 
   useEffect(() => {
     fetchSkalePrice();
@@ -8424,10 +8387,8 @@ function Dashboard({
   }, [email]);
 
   useEffect(() => {
-    if (bundlesBought === 1) {
-      handleRefreshCountdown700();
-    }
-  }, [bundlesBought]);
+    handleRefreshCountdown700();
+  }, [coinbase]);
 
   useEffect(() => {
     if (success === true) {
@@ -8446,7 +8407,7 @@ function Dashboard({
   useEffect(() => {
     calculatePremiumDiscount(userWallet !== "" ? userWallet : coinbase);
   }, [userWallet, coinbase, chainId]);
-
+ 
   const hashValue = window.location.hash;
   // console.log(allSkaleData)
   return (
@@ -8454,12 +8415,18 @@ function Dashboard({
       className="container-fluid d-flex justify-content-end p-0"
       style={{ minHeight: "72vh", maxWidth: "2400px", overflow: "hidden" }}
     >
-      {windowSize.width < 992 ? (
-        <MobileNav />
-      ) : (
-        <MarketSidebar
-        />
-      )}
+      <div className="d-none">
+        {goldenPassRemainingTime !== "0" && goldenPassRemainingTime && (
+          <Countdown
+            date={Number(goldenPassRemainingTime) * 1000}
+            onComplete={() => {
+              setcountdown700();
+              setGoldenPassRemainingTime()
+            }}
+          />
+        )}
+      </div>
+      {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative">
         <div className="container-lg mx-0">
           <LoginWrapper
@@ -8582,6 +8549,7 @@ function Dashboard({
                           setgetPremiumPopup(true);
                         }}
                         handleSetAvailableTime={(value) => {
+                          console.log(value, "yes");
                           setGoldenPassRemainingTime(value);
                         }}
                         handleOpenDomains={handleOpenDomains}
@@ -8707,7 +8675,6 @@ function Dashboard({
                         monthlyDataAmountManta={monthlyDataAmountManta}
                         weeklyDataAmountBase={weeklyDataAmountBase}
                         monthlyDataAmountBase={monthlyDataAmountBase}
-
                         weeklyDataAmountTaiko={weeklyDataAmountTaiko}
                         monthlyDataAmountTaiko={monthlyDataAmountTaiko}
                         dailyDataAmountSkale={dailyDataAmountSkale}
@@ -8720,7 +8687,6 @@ function Dashboard({
                         victionEarnUsd={victionEarnUsd}
                         mantaEarnUsd={mantaEarnUsd}
                         baseEarnUsd={baseEarnUSD}
-
                         taikoEarnUsd={taikoEarnUsd}
                         cookieEarnUsd={cookieEarnUsd}
                         cookieEarnToken={cookieEarnToken}
@@ -8799,7 +8765,6 @@ function Dashboard({
                         openedVictionChests={openedVictionChests}
                         openedMantaChests={openedMantaChests}
                         openedBaseChests={openedBaseChests}
-
                         openedTaikoChests={openedTaikoChests}
                         onDailyBonusInfoClick={() => {
                           setdailyBonusInfo(true);
@@ -9176,7 +9141,6 @@ function Dashboard({
                             allVictionData={allVictionData}
                             allMantaData={allMantaData}
                             allBaseData={allBaseData}
-
                             allTaikoData={allTaikoData}
                             dailyplayerData={dailyplayerData}
                             weeklyplayerData={weeklyplayerData}
@@ -9279,8 +9243,8 @@ function Dashboard({
                             width: "fit-content",
                             pointerEvents: "auto",
                             overflowX: "auto",
-                            maxWidth: 'fit-content',
-                            background: '#1a1c39'
+                            maxWidth: "fit-content",
+                            background: "#1a1c39",
                           }}
                         >
                           <div className="d-flex align-items-center justify-content-between">
@@ -9306,10 +9270,8 @@ function Dashboard({
                             monthlyDataAmountViction={monthlyDataAmountViction}
                             weeklyDataAmountManta={weeklyDataAmountManta}
                             monthlyDataAmountManta={monthlyDataAmountManta}
-
                             weeklyDataAmountBase={weeklyDataAmountBase}
                             monthlyDataAmountBase={monthlyDataAmountBase}
-
                             weeklyDataAmountTaiko={weeklyDataAmountTaiko}
                             monthlyDataAmountTaiko={monthlyDataAmountTaiko}
                             weeklyDataAmountSkale={weeklyDataAmountSkale}
@@ -9323,7 +9285,6 @@ function Dashboard({
                             allVictionChests={allVictionChests}
                             allMantaChests={allMantaChests}
                             allBaseChests={allBaseChests}
-
                             allTaikoChests={allTaikoChests}
                             allSeiChests={allSeiChests}
                             availableTime={goldenPassRemainingTime}
@@ -10835,7 +10796,6 @@ function Dashboard({
                 victionImages={victionImages}
                 mantaImages={mantaImages}
                 baseImages={baseImages}
-
                 taikoImages={taikoImages}
                 coreImages={coreImages}
                 chainId={chainId}
@@ -10888,7 +10848,6 @@ function Dashboard({
                 openedVictionChests={openedVictionChests}
                 openedMantaChests={openedMantaChests}
                 openedBaseChests={openedBaseChests}
-
                 openedTaikoChests={openedTaikoChests}
                 openedSeiChests={openedSeiChests}
                 canBuy={canBuy}
@@ -10899,7 +10858,6 @@ function Dashboard({
                 allVictionChests={allVictionChests}
                 allMantaChests={allMantaChests}
                 allBaseChests={allBaseChests}
-
                 allTaikoChests={allTaikoChests}
                 allSeiChests={allSeiChests}
                 onChestClaimed={() => {
