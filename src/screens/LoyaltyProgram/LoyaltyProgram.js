@@ -17,6 +17,7 @@ import coin98 from "./assets/coin98.png";
 import trustwallet from "./assets/trustwallet.png";
 import coinbaseWallet from "./assets/coinbase.png";
 import bnbIcon from "./assets/bnbIcon.svg";
+import opbnbIcon from "./assets/bnbIcon.svg";
 import baseIcon from "./assets/baseIcon.svg";
 import coreIcon from "./assets/coreIcon.svg";
 import skaleIcon from "./assets/skaleIcon.svg";
@@ -30,6 +31,7 @@ import { shortAddress } from "../Caws/functions/shortAddress";
 import Countdown from "react-countdown";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import winnerBadge from "./assets/winnerBadge.webp";
+import appliedBadge from "./assets/appliedBadge.webp";
 import { loyaltyAddresses } from ".";
 import "./landpopup.css";
 import MobileNav from "../../components/MobileNav/MobileNav";
@@ -40,13 +42,15 @@ import { Checkbox } from "@mui/material";
 const renderer = ({ days, hours, minutes }) => {
   return (
     <h6 className="loyalty-timer mb-0">
-      {/* {days}d : {hours}h : {minutes}m */}
-      Season two
+      {days}d : {hours}h : {minutes}m
+      {/* Season two */}
     </h6>
   );
 };
 
 const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
+
+
   const baseUrl = "https://api.worldofdypians.com/api";
   const windowSize = useWindowSize();
 
@@ -66,15 +70,15 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
   const [dypPrice, setDypPrice] = useState(0);
   const [ethPrice, setEthPrice] = useState(0);
   const [chains, setChains] = useState({
-    bnbChain: { title: "BNB Chain", checked: false },
-    manta: { title: "Manta", checked: false },
-    base: { title: "Base", checked: false },
-    taiko: { title: "Taiko", checked: false },
-    core: { title: "CORE", checked: false },
-    opBnb: { title: "opBnb", checked: false },
-    viction: { title: "Viction", checked: false },
+    bnbChain: { title: "BNB Chain", value: "bnb", checked: false },
+    manta: { title: "Manta", value: "manta", checked: false },
+    base: { title: "Base", value: "base", checked: false },
+    taiko: { title: "Taiko", value: "taiko", checked: false },
+    core: { title: "CORE", value: "core", checked: false },
+    opBnb: { title: "opBnb", value: "opbnb", checked: false },
+    viction: { title: "Viction", value: "viction", checked: false },
   });
-
+  const [reqChains, setReqChains] = useState([]);
   const selectedCount = Object.values(chains).filter(
     (chain) => chain.checked
   ).length;
@@ -88,12 +92,24 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
           checked: !prevChains[chainId].checked,
         },
       };
+
+      const chainValue = prevChains[chainId].value;
+
+      setReqChains((prevReqChains) => {
+        if (!prevChains[chainId].checked) {
+          // Add to reqChains if the checkbox is being checked
+          return [...prevReqChains, chainValue];
+        } else {
+          // Remove from reqChains if the checkbox is being unchecked
+          return prevReqChains.filter((value) => value !== chainValue);
+        }
+      });
+
       return updatedChains;
     });
   };
 
-
-  let loyaltyCd = new Date("2025-09-16T12:59:59.000+02:00");
+  let loyaltyCd = new Date("2024-10-08T12:59:59.000+02:00");
 
   const convertEthToUsd = async () => {
     const res = axios
@@ -188,7 +204,11 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
   const handleSubmit = async () => {
     setLoading(true);
     await axios
-      .post(`${baseUrl}/loyalty/add`, { ...formData, walletAddress: coinbase })
+      .post(`${baseUrl}/loyalty/add`, {
+        ...formData,
+        walletAddress: coinbase,
+        chains: reqChains,
+      })
       .then((res) => {
         setLoading(false);
         setRefresh(true);
@@ -278,7 +298,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                           setisExpired(true);
                         }}
                       />
-                      <span className="loyalty-time-left">Coming Soon</span>
+                      <span className="loyalty-time-left">Time left</span>
                     </div>
                   </div>
                 </div>
@@ -307,11 +327,11 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                             </button>
                           )}
 
-                          {expired === true && (
+                          {/* {expired === true && (
                             <button className="disabled-btn pe-none" disabled>
                               Ended
                             </button>
-                          )}
+                          )} */}
                         </div>
                         {/* <div className="d-flex flex-column w-100 mb-3 mb-lg-0">
                       <div className="d-flex align-items-center justify-content-center p-2 my-reimbursement">
@@ -349,15 +369,14 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                       )}
                       {step === 5 && (
                         <div className="d-flex flex-column w-100 mb-3 mb-lg-0">
-                          <div className="d-flex p-3 flex-column align-items-center justify-content-center gap-2 reimbursement-wrapper">
-                            <div className="d-flex align-items-center justify-content-between w-100">
-                              <div className="d-flex align-items-center gap-2">
-                                <h6 className="loyalty-joined m-0">
+                            <div className="d-flex align-items-center justify-content-center w-100">
+                              <div className="d-flex align-items-center justify-content-center gap-2">
+                                {/* <h6 className="loyalty-joined m-0">
                                   You have already applied.
-                                </h6>
+                                </h6> */}
+                                <img src={appliedBadge} className="w-75" alt="" />
                               </div>
                             </div>
-                          </div>
                         </div>
                       )}
                     </div>
@@ -387,16 +406,34 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                               <span className="participant-name">
                                 {shortAddress(item.walletAddress)} joined
                               </span>
-                             <div className="d-flex align-items-center gap-1">
-                              <div className="d-flex align-items-center">
-                                <img src={bnbIcon} width={16} height={16} alt="" className="participant-chain" />
-                                <img src={taikoIcon} width={16} height={16} alt="" className="participant-chain" />
-                                <img src={baseIcon} width={16} height={16} alt="" className="participant-chain" />
+                              <div className="d-flex align-items-center gap-1">
+                                <div className="d-flex align-items-center">
+                                 {item.chains.map((item, index) => (
+                                  item === "manta" ?
+                                  <img
+                                  key={index}
+                                  src={require(`./assets/${item}Icon.png`)}
+                                  width={16}
+                                  height={16}
+                                  alt=""
+                                  className="participant-chain"
+                                />
+                                : 
+                                <img
+                                key={index}
+                                src={require(`./assets/${item}Icon.svg`)}
+                                width={16}
+                                height={16}
+                                alt=""
+                                className="participant-chain"
+                              />
+                            
+                                 ))}
+                                </div>
+                                <span className="participant-time-ago" style={{width: "75px"}}>
+                                  {getTimeAgo(item.timestamp)}
+                                </span>
                               </div>
-                             <span className="participant-time-ago">
-                                {getTimeAgo(item.timestamp)}
-                              </span>
-                             </div>
                             </div>
                           ))}
                         </div>
