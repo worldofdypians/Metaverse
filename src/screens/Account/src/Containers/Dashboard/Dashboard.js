@@ -95,6 +95,7 @@ import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.
 import baseUpcoming from "../../Components/WalletBalance/assets/baseUpcoming.webp";
 import cmcUpcoming from "../../../../Marketplace/assets/upcomingCmc.webp";
 import upcomingDyp2 from "../../../../Marketplace/assets/dypiusBgPic2.webp";
+import upcomingBase2 from '../../../../Marketplace/assets/upcomingBase2.webp'
 
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
@@ -1191,7 +1192,7 @@ function Dashboard({
     {
       title: "CORE",
       logo: coreLogo,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -1205,7 +1206,7 @@ function Dashboard({
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
-        status: "Live",
+        status: "Expired",
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",
@@ -1221,7 +1222,7 @@ function Dashboard({
     {
       title: "VICTION",
       logo: victionLogo,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in VIC Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -1235,7 +1236,7 @@ function Dashboard({
         chain: "VICTION Chain",
         linkState: "viction",
         rewards: "VIC",
-        status: "Live",
+        status: "Expired",
         id: "event14",
         eventType: "Explore & Find",
         totalRewards: "$20,000 in VIC Rewards",
@@ -1246,6 +1247,36 @@ function Dashboard({
         maxPoints: "50,000",
         learnMore: "",
         eventDate: "Jul 01, 2024",
+      },
+    },
+    {
+      title: "Base",
+      logo: baseLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in ETH Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Oct 07, 2024",
+      backgroundImage: upcomingBase2,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
+      popupInfo: {
+        title: "Base",
+        chain: "Base",
+        linkState: "base",
+        rewards: "ETH",
+        status: "Coming Soon",
+        id: "event24",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in ETH Rewards",
+        eventDuration: baseLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Oct 07, 2024",
       },
     },
     {
@@ -8676,6 +8707,7 @@ function Dashboard({
     userCoreScore +
     userVictionScore +
     userMantaScore +
+    userBaseScore +
     userTaikoScore;
 
   const handleRankRewards = () => {
@@ -9348,7 +9380,6 @@ function Dashboard({
             taikoEarnUsd={taikoEarnUsd}
             immutableEarnUsd={immutableEarnUsd}
             coreEarnUsd={coreEarnUsd}
-            kittyDashRecords={kittyDashRecords}
             userRankRewards={userRankRewards}
             cawsPremiumRewards={cawsPremiumRewards}
             landPremiumRewards={landPremiumRewards}
