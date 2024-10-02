@@ -47,6 +47,8 @@ import bnbActive from "../../Components/LeaderBoard/assets/bnbActive.svg";
 import coreActive from "../../Components/LeaderBoard/assets/coreActive.svg";
 import victionActive from "../../Components/LeaderBoard/assets/victionActive.svg";
 import mantaActive from "../../Components/LeaderBoard/assets/mantaActive.png";
+import baseLogo from "../../Components/LeaderBoard/assets/baseActive.svg";
+
 import taikoLogo from "../../Components/LeaderBoard/assets/taikoActive.svg";
 
 import starAlert from "./assets/star-alert.svg";
@@ -67,26 +69,26 @@ import premiumOfferTag from "./assets/premiumOfferTag2.png";
 import premiumExclusive from "./assets/premiumExclusive2.svg";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 
-// const renderer = ({ hours, minutes, seconds }) => {
-//   return (
-//     <div className="timer-wrapper d-none align-items-start gap-3 justify-content-center">
-//       <div className="d-flex flex-column gap-1">
-//         <h6 className="mint-time">{hours < 10 ? "0" + hours : hours}</h6>
-//         <span className="days">Hours</span>
-//       </div>
-//       <h6 className="mint-time">:</h6>
-//       <div className="d-flex flex-column gap-1">
-//         <h6 className="mint-time">{minutes < 10 ? "0" + minutes : minutes}</h6>
-//         <span className="days">minutes</span>
-//       </div>
-//       <h6 className="mint-time">:</h6>
-//       <div className="d-flex flex-column gap-1">
-//         <h6 className="mint-time">{seconds < 10 ? "0" + seconds : seconds}</h6>
-//         <span className="days">seconds</span>
-//       </div>
-//     </div>
-//   );
-// };
+const renderer = ({ hours, minutes, seconds }) => {
+  return (
+    <div className="timer-wrapper d-none align-items-start gap-3 justify-content-center">
+      <div className="d-flex flex-column gap-1">
+        <h6 className="mint-time">{hours < 10 ? "0" + hours : hours}</h6>
+        <span className="days">Hours</span>
+      </div>
+      <h6 className="mint-time">:</h6>
+      <div className="d-flex flex-column gap-1">
+        <h6 className="mint-time">{minutes < 10 ? "0" + minutes : minutes}</h6>
+        <span className="days">minutes</span>
+      </div>
+      <h6 className="mint-time">:</h6>
+      <div className="d-flex flex-column gap-1">
+        <h6 className="mint-time">{seconds < 10 ? "0" + seconds : seconds}</h6>
+        <span className="days">seconds</span>
+      </div>
+    </div>
+  );
+};
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -135,7 +137,7 @@ const ProfileCard = ({
   domainName,
   rankData,
   setRankData,
-  getRankData,userDataStar, userDataPosition, userRankManta, userMantaScore, userRankTaiko, userTaikoScore
+  getRankData,userDataStar, userDataPosition, userRankManta, userMantaScore, userRankBase, userBaseScore,  userRankTaiko, userTaikoScore
 }) => {
   let id = Math.random().toString(36);
   const windowSize = useWindowSize();
@@ -165,7 +167,7 @@ const ProfileCard = ({
   const [rankTooltip, setRankTooltip] = useState(false);
 
   const userTotalScore =
-    userBnbScore + userSkaleScore + userCoreScore + userVictionScore + userMantaScore + userTaikoScore;
+    userBnbScore + userSkaleScore + userCoreScore + userVictionScore + userMantaScore + userBaseScore + userTaikoScore;
 
   const handleUserRank = () => {
     let allScore;
@@ -174,37 +176,37 @@ const ProfileCard = ({
     } else if (rankData && rankData.multiplier === "no") {
       allScore = userTotalScore;
     }
-    if (allScore > 61999999) {
+    if (allScore > 63999999) {
       setUserRankName({
         name: "unstoppable",
         id: 4,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(4);
       setUserProgress(100);
-    } else if (allScore > 36999999) {
+    } else if (allScore > 38999999) {
       setUserRankName({
         name: "champion",
         id: 3,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(3);
-      setUserProgress((allScore / 62000000) * 100);
-    } else if (allScore > 23999999) {
+      setUserProgress((allScore / 64000000) * 100);
+    } else if (allScore > 25999999) {
       setUserRankName({
         name: "underdog",
         id: 2,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(2);
-      setUserProgress((allScore / 37000000) * 100);
-    } else if (allScore > 11999999) {
+      setUserProgress((allScore / 39000000) * 100);
+    } else if (allScore > 13999999) {
       setUserRankName({
         name: "rookie",
         id: 1,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(1);
-      setUserProgress((allScore / 24000000) * 100);
+      setUserProgress((allScore / 26000000) * 100);
     } else {
       sliderRef?.current?.innerSlider?.slickGoTo(0);
-      setUserProgress((allScore / 12000000) * 100);
+      setUserProgress((allScore / 14000000) * 100);
     }
   };
 
@@ -421,9 +423,13 @@ const ProfileCard = ({
     userRankCore,
     userRankViction,
     userRankManta,
+    userRankBase,
+
     userCoreScore,
     userVictionScore,
     userMantaScore,
+    userBaseScore,
+
     userTaikoScore
   ]);
 
@@ -973,6 +979,34 @@ const ProfileCard = ({
                                       style={{ width: "33%" }}
                                     >
                                       <img
+                                        src={baseLogo}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
+                                      <span className="rank-dropdown-text">
+                                        Base
+                                      </span>
+                                    </div>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      #{userRankBase + 1}
+                                    </span>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      {getFormattedNumber(userBaseScore, 0)}
+                                    </span>
+                                  </div>
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
                                         src={taikoLogo}
                                         width={20}
                                         height={20}
@@ -1205,14 +1239,14 @@ const ProfileCard = ({
                                   </span> */}
                                   {/* <span className="rank-current-score">
                                     {userRankName?.name === "rookie"
-                                      ? "24M"
+                                      ? "26M"
                                       : userRankName?.name === "underdog"
-                                      ? "37M"
+                                      ? "39M"
                                       : userRankName?.name === "champion"
-                                      ? "62M"
+                                      ? "64M"
                                       : userRankName?.name === "unstoppable"
                                       ? ""
-                                      : "10M"}
+                                      : "14M"}
                                   </span> */}
                                 </div>
                                 {rankData?.multiplier === "no" && !isPremium ? (
@@ -1295,13 +1329,7 @@ const ProfileCard = ({
                       </>
                     )}
                   </div>
-                  {/* {availableTime !== "0" && availableTime && availableTime!==undefined &&  (
-            <div className="d-flex flex-column">
-            <span className="emailtext" style={{color: '#ffbf00'}}>*Golden Pass</span>
-            <span className="emailtext" style={{color: '#00FECF'}}>{remainingTime} (GMT + 2)</span>
-
-            </div>
-          )} */}
+                  
                 </div>
               </div>
               <div
@@ -1477,7 +1505,7 @@ const ProfileCard = ({
       {rankPopup && (
         <OutsideClickHandler onOutsideClick={() => setRankPopup(false)}>
           <div
-            className="popup-wrapper leaderboard-popup rank-popup popup-active p-3"
+            className="popup-wrapper rank-popup popup-active p-3"
             id="leaderboard"
             style={{ width: "70%", pointerEvents: "auto" }}
           >
@@ -1631,7 +1659,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">0 - 11,999,999</span>
+                    <span className="needed-points mb-0">0 - 13,999,999</span>
                   </div>
                   <div
                     className={` ${
@@ -1669,7 +1697,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">12,000,000</span>
+                    <span className="needed-points mb-0">14,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1708,7 +1736,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">24,000,000</span>
+                    <span className="needed-points mb-0">26,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1747,7 +1775,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">37,000,000</span>
+                    <span className="needed-points mb-0">39,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1786,7 +1814,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">62,000,000</span>
+                    <span className="needed-points mb-0">64,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1826,7 +1854,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">0 - 11,999,999</span>
+                    <span className="needed-points mb-0">0 - 13,999,999</span>
                   </div>
                   <div
                     className={` ${
@@ -1863,7 +1891,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">12,000,000</span>
+                    <span className="needed-points mb-0">14,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1900,7 +1928,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">24,000,000</span>
+                    <span className="needed-points mb-0">26,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1937,7 +1965,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">37,000,000</span>
+                    <span className="needed-points mb-0">39,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1974,7 +2002,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">62,000,000</span>
+                    <span className="needed-points mb-0">64,000,000</span>
                   </div>
                   <div
                     className={` ${

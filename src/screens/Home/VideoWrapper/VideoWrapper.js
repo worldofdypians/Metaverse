@@ -7,7 +7,7 @@ import epicwhite from "../../../assets/epicwhite.svg";
 import epicblack from "../../../assets/epicblack.svg";
 import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
 import coingecko from "../../Marketplace/MarketNFTs/assets/coingecko.svg";
-import coinbaseimg from "../../Marketplace/MarketNFTs/assets/base.svg";
+import coinbaseimg from "./assets/baseLogo.svg";
 import dypius from "../../Marketplace/MarketNFTs/assets/dypiusPremium16.svg";
 import doge from "../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../Marketplace/MarketNFTs/assets/cmc.svg";
