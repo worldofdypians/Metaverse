@@ -824,24 +824,23 @@ const NFTBridge = ({
               if (!isApproved) {
                 setbuttonStatus("loadingApprove");
                 setbuttonText("Approving");
-               const txResponse =  await landContract
+                const txResponse = await landContract
                   .approve(sourceBridge_address, selectNftId, {
                     from: coinbase,
                   })
-                 
+
                   .catch((e) => {
                     window.alertify.error(e?.message);
                     setbuttonText("Approve");
                     setisApproved(false);
                     setbuttonStatus("errorapprove");
                   });
-                  const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonText("Transfer");
-                    setisApproved(true);
-                    setbuttonStatus("successApprove");
-                  }
-
+                const txReceipt = await txResponse.wait();
+                if (txReceipt) {
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                  setbuttonStatus("successApprove");
+                }
               } else if (isApproved) {
                 const contract = new ethers.Contract(
                   sourceBridge_address,
@@ -866,18 +865,17 @@ const NFTBridge = ({
                     setbuttonStatus("errorDeposit");
                   });
 
-                  const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonStatus("successDeposit");
-                    setbuttonText("Successfully Transferred");
-                    onSuccessTransfer();
-                    setTimeout(() => {
-                      setSelectedNftId(0);
-                      setisApproved(false);
-                      setbuttonStatus("initial");
-                    }, 4000);
-                  }
-
+                const txReceipt = await txResponse.wait();
+                if (txReceipt) {
+                  setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
+                }
               }
             } else if (finalNftType === "caws") {
               // const web3 = new Web3(window.ethereum);
@@ -895,7 +893,7 @@ const NFTBridge = ({
               if (!isApproved) {
                 setbuttonText("Approving");
                 setbuttonStatus("loadingApprove");
-               const txResponse =  await cawsContract
+                const txResponse = await cawsContract
                   .approve(sourceBridge_address, selectNftId, {
                     from: coinbase,
                   })
@@ -905,12 +903,11 @@ const NFTBridge = ({
                     setisApproved(false);
                     setbuttonStatus("errorApprove");
                   });
-                  const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonText("Transfer");
-                    setisApproved(true);
-                  }
-
+                const txReceipt = await txResponse.wait();
+                if (txReceipt) {
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                }
               } else if (isApproved) {
                 const contract = new ethers.Contract(
                   sourceBridge_address,
@@ -920,7 +917,7 @@ const NFTBridge = ({
                 setbuttonText("Transferring");
                 setbuttonStatus("loadingDeposit");
 
-               const txResponse =  await contract
+                const txResponse = await contract
                   .BridgeNFT(
                     destinationChainSelector,
                     destinationBridge_address,
@@ -935,18 +932,17 @@ const NFTBridge = ({
                     setbuttonStatus("errorDeposit");
                   });
 
-                  const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonStatus("successDeposit");
-                    setbuttonText("Successfully Transferred");
-                    onSuccessTransfer();
-                    setTimeout(() => {
-                      setSelectedNftId(0);
-                      setisApproved(false);
-                      setbuttonStatus("initial");
-                    }, 4000);
-                  }
-
+                const txReceipt = await txResponse.wait();
+                if (txReceipt) {
+                  setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
+                }
               }
             }
           } else if (destinationFilterTitle === "Avalanche") {
@@ -972,7 +968,7 @@ const NFTBridge = ({
               if (!isApproved) {
                 setbuttonText("Approving");
                 setbuttonStatus("loadingApprove");
-               const txResponse = await landContract
+                const txResponse = await landContract
                   .approve(sourceBridge_address, selectNftId, {
                     from: coinbase,
                   })
@@ -983,17 +979,16 @@ const NFTBridge = ({
                     setbuttonStatus("errorApprove");
                   });
 
-                  const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonText("Transfer");
-                    setisApproved(true);
-                    setbuttonStatus("successApprove");
-                  }
-
+                const txReceipt = await txResponse.wait();
+                if (txReceipt) {
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                  setbuttonStatus("successApprove");
+                }
               } else if (isApproved) {
                 setbuttonText("Transferring");
                 setbuttonStatus("loadingDeposit");
-               const txResponse = await contract
+                const txResponse = await contract
                   .BridgeNFT(
                     destinationChainSelector,
                     destinationBridge_address,
@@ -1008,18 +1003,17 @@ const NFTBridge = ({
                     setbuttonStatus("errorDeposit");
                   });
 
-                  const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonText("Successfully Transferred");
-                    setbuttonStatus("successDeposit");
-                    onSuccessTransfer();
-                    setTimeout(() => {
-                      setSelectedNftId(0);
-                      setisApproved(false);
-                      setbuttonStatus("initial");
-                    }, 4000);
-                  }
-
+                const txReceipt = await txResponse.wait();
+                if (txReceipt) {
+                  setbuttonText("Successfully Transferred");
+                  setbuttonStatus("successDeposit");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
+                }
               }
             } else if (finalNftType === "caws") {
               // const web3 = new Web3(window.ethereum);
@@ -1049,12 +1043,12 @@ const NFTBridge = ({
                     setisApproved(false);
                   });
 
-                  const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonText("Transfer");
-                    setisApproved(true);
-                    setbuttonStatus("successApprove");
-                  }
+                const txReceipt = await txResponse.wait();
+                if (txReceipt) {
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                  setbuttonStatus("successApprove");
+                }
               } else if (isApproved) {
                 const contract = new ethers.Contract(
                   sourceBridge_address,
@@ -1064,7 +1058,7 @@ const NFTBridge = ({
                 setbuttonText("Transferring");
                 setbuttonStatus("loadingDeposit");
 
-              const txResponse =   await contract
+                const txResponse = await contract
                   .BridgeNFT(
                     destinationChainSelector,
                     destinationBridge_address,
@@ -1080,18 +1074,17 @@ const NFTBridge = ({
                     setbuttonStatus("errorDeposit");
                   });
 
-                  const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonStatus("successDeposit");
-                    setbuttonText("Successfully Transferred");
-                    onSuccessTransfer();
-                    setTimeout(() => {
-                      setSelectedNftId(0);
-                      setisApproved(false);
-                      setbuttonStatus("initial");
-                    }, 4000);
-                  }
-
+                const txReceipt = await txResponse.wait();
+                if (txReceipt) {
+                  setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
+                }
               }
             }
           } else if (destinationFilterTitle === "Base Network") {
@@ -1117,7 +1110,7 @@ const NFTBridge = ({
               if (!isApproved) {
                 setbuttonText("Approving");
                 setbuttonStatus("loadingApprove");
-               const txResponse = await landContract
+                const txResponse = await landContract
                   .approve(sourceBridge_address, selectNftId, {
                     from: coinbase,
                   })
@@ -1128,14 +1121,13 @@ const NFTBridge = ({
 
                     setisApproved(false);
                   });
-                  
-                  const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonText("Transfer");
-                    setisApproved(true);
-                    setbuttonStatus("successApprove");
-                  }
 
+                const txReceipt = await txResponse.wait();
+                if (txReceipt) {
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                  setbuttonStatus("successApprove");
+                }
               } else if (isApproved) {
                 setbuttonText("Transferring");
                 setbuttonStatus("loadingDeposit");
@@ -1154,18 +1146,17 @@ const NFTBridge = ({
                     setbuttonStatus("errorDeposit");
                   });
 
-                  const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonStatus("successDeposit");
-                    setbuttonText("Successfully Transferred");
-                    onSuccessTransfer();
-                    setTimeout(() => {
-                      setSelectedNftId(0);
-                      setisApproved(false);
-                      setbuttonStatus("initial");
-                    }, 4000);
-                  }
-
+                const txReceipt = await txResponse.wait();
+                if (txReceipt) {
+                  setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
+                }
               }
             } else if (finalNftType === "caws") {
               const web3 = new Web3(window.ethereum);
@@ -1194,13 +1185,12 @@ const NFTBridge = ({
                     setbuttonStatus("errorApprove");
                   });
 
-                  const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonText("Transfer");
-                    setisApproved(true);
-                    setbuttonStatus("successApprove");
-                  }
-
+                const txReceipt = await txResponse.wait();
+                if (txReceipt) {
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                  setbuttonStatus("successApprove");
+                }
               } else if (isApproved) {
                 const contract = new ethers.Contract(
                   sourceBridge_address,
@@ -1224,23 +1214,24 @@ const NFTBridge = ({
                     setbuttonStatus("errorDeposit");
                   });
 
-                  const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonStatus("successDeposit");
-                    setbuttonText("Successfully Transferred");
-                    onSuccessTransfer();
-                    setTimeout(() => {
-                      setSelectedNftId(0);
-                      setisApproved(false);
-                      setbuttonStatus("initial");
-                    }, 4000);
-                  }
+                const txReceipt = await txResponse.wait();
+                if (txReceipt) {
+                  setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
+                }
               }
             }
           }
         }
       } else if (filterTitle === "BNB Chain") {
         if (finalNftType === "land") {
+          if(window.WALLET_TYPE === "binance"){
           const sourceBridge_address = window.config.ccip_bnb_wod_address;
           const destinationBridge_address = window.config.ccip_eth_wod_address;
           const destinationChainSelector =
@@ -1269,12 +1260,12 @@ const NFTBridge = ({
                 setisApproved(false);
                 setbuttonStatus("errorApprove");
               });
-              const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonText("Transfer");
-                setisApproved(true);
-                setbuttonStatus("successApprove");
-                  }
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setbuttonText("Transfer");
+              setisApproved(true);
+              setbuttonStatus("successApprove");
+            }
           } else if (isApproved) {
             setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
@@ -1294,19 +1285,80 @@ const NFTBridge = ({
                 setbuttonStatus("errorDeposit");
               });
 
-              const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonStatus("successDeposit");
-                    setbuttonText("Successfully Transferred");
-                    onSuccessTransfer();
-                    setTimeout(() => {
-                      setSelectedNftId(0);
-                      setisApproved(false);
-                      setbuttonStatus("initial");
-                    }, 4000);
-                  }
-          }
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setbuttonStatus("successDeposit");
+              setbuttonText("Successfully Transferred");
+              onSuccessTransfer();
+              setTimeout(() => {
+                setSelectedNftId(0);
+                setisApproved(false);
+                setbuttonStatus("initial");
+              }, 4000);
+            }
+          }} else if(window.WALLET_TYPE !== "binance"){
+            const sourceBridge_address = window.config.ccip_bnb_wod_address;
+            const destinationBridge_address = window.config.ccip_eth_wod_address;
+            const destinationChainSelector =
+              window.config.destination_chain_selector_eth;
+            const web3 = new Web3(window.ethereum);
+            const contract = new web3.eth.Contract(
+              window.CCIP_ABI,   sourceBridge_address,
+            );
+  
+            const landContract = new web3.eth.Contract(
+             
+              window.LAND_CCIP_ABI, window.config.nft_land_bnb_address,
+              
+            );
+  
+            if (!isApproved) {
+              setbuttonText("Approving");
+              setbuttonStatus("loadingApprove");
+               await landContract.methods
+                .approve(sourceBridge_address, selectNftId).send({ from: coinbase }).then(()=>{
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                  setbuttonStatus("successApprove");
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  setbuttonText("Approve");
+                  setisApproved(false);
+                  setbuttonStatus("errorApprove");
+                });
+             
+            } else if (isApproved) {
+              setbuttonText("Transferring");
+              setbuttonStatus("loadingDeposit");
+  
+               await contract.methods
+                .BridgeNFT(
+                  destinationChainSelector,
+                  destinationBridge_address,
+                  0,
+                  selectNftId
+                  
+                ).send({ from: coinbase }).then(()=>{
+                  setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  console.error(e);
+                  setbuttonText("Transfer");
+                  setbuttonStatus("errorDeposit");
+                }); 
+              
+            }}
         } else if (finalNftType === "caws") {
+          if(window.WALLET_TYPE === "binance"){
           // const web3 = new Web3(window.ethereum);
           const sourceBridge_address = window.config.ccip_bnb_caws_address;
           const destinationBridge_address = window.config.ccip_eth_caws_address;
@@ -1321,7 +1373,7 @@ const NFTBridge = ({
           if (!isApproved) {
             setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
-           const txResponse = await cawsContract
+            const txResponse = await cawsContract
               .approve(sourceBridge_address, selectNftId, { from: coinbase })
               .catch((e) => {
                 window.alertify.error(e?.message);
@@ -1330,13 +1382,12 @@ const NFTBridge = ({
                 setbuttonStatus("errorApprove");
               });
 
-              const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonText("Transfer");
-                    setbuttonStatus("successApprove");
-                    setisApproved(true);
-                  }
-
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setbuttonText("Transfer");
+              setbuttonStatus("successApprove");
+              setisApproved(true);
+            }
           } else if (isApproved) {
             const contract = new ethers.Contract(
               sourceBridge_address,
@@ -1345,7 +1396,7 @@ const NFTBridge = ({
             );
             setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
-           const txResponse = await contract
+            const txResponse = await contract
               .BridgeNFT(
                 destinationChainSelector,
                 destinationBridge_address,
@@ -1360,9 +1411,62 @@ const NFTBridge = ({
                 setbuttonStatus("errorDeposit");
               });
 
-              const txReceipt = await txResponse.wait();
-                  if (txReceipt) {
-                    setbuttonStatus("successDeposit");
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setbuttonStatus("successDeposit");
+              setbuttonText("Successfully Transferred");
+              onSuccessTransfer();
+              setTimeout(() => {
+                setSelectedNftId(0);
+                setisApproved(false);
+                setbuttonStatus("initial");
+              }, 4000);
+            }
+          }} 
+          else if(window.WALLET_TYPE !== "binance"){
+            const web3 = new Web3(window.ethereum);
+            const sourceBridge_address = window.config.ccip_bnb_caws_address;
+            const destinationBridge_address = window.config.ccip_eth_caws_address;
+            const destinationChainSelector =
+              window.config.destination_chain_selector_eth;
+            const cawsContract = new web3.eth.Contract(
+            
+              window.CAWS_CCIP_ABI,  window.config.nft_caws_bnb_address,
+            
+            );
+  
+            if (!isApproved) {
+              setbuttonText("Approving");
+              setbuttonStatus("loadingApprove");
+            await cawsContract.methods
+                .approve(sourceBridge_address, selectNftId).send({ from: coinbase }).then(()=>{
+                setbuttonText("Transfer");
+                setbuttonStatus("successApprove");
+                setisApproved(true);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  setbuttonText("Approve");
+                  setisApproved(false);
+                  setbuttonStatus("errorApprove");
+                });
+  
+              
+            } else if (isApproved) {
+              const contract = new web3.eth.Contract(
+                window.CCIP_ABI, sourceBridge_address,
+              );
+              setbuttonText("Transferring");
+              setbuttonStatus("loadingDeposit");
+        await contract.methods
+                .BridgeNFT(
+                  destinationChainSelector,
+                  destinationBridge_address,
+                  0,
+                  selectNftId
+                  
+                ).send({ from: coinbase }).then(()=>{
+                  setbuttonStatus("successDeposit");
                 setbuttonText("Successfully Transferred");
                 onSuccessTransfer();
                 setTimeout(() => {
@@ -1370,11 +1474,20 @@ const NFTBridge = ({
                   setisApproved(false);
                   setbuttonStatus("initial");
                 }, 4000);
-                  }
-          }
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  console.error(e);
+                  setbuttonText("Transfer");
+                  setbuttonStatus("errorDeposit");
+                });
+  
+              
+            }}
         }
       } else if (filterTitle === "Avalanche") {
         if (finalNftType === "land") {
+          if(window.WALLET_TYPE === "binance"){
           const sourceBridge_address = window.config.ccip_avax_wod_address;
           const destinationBridge_address = window.config.ccip_eth_wod_address;
           const destinationChainSelector =
@@ -1404,17 +1517,16 @@ const NFTBridge = ({
                 setbuttonStatus("errorApprove");
               });
 
-              const txReceipt = await txResponse.wait();
-              if (txReceipt) {
-                setbuttonText("Transfer");
-                setisApproved(true);
-                setbuttonStatus("successApprove");
-              }
-
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setbuttonText("Transfer");
+              setisApproved(true);
+              setbuttonStatus("successApprove");
+            }
           } else if (isApproved) {
             setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
-           const txResponse = await contract
+            const txResponse = await contract
               .BridgeNFT(
                 destinationChainSelector,
                 destinationBridge_address,
@@ -1429,20 +1541,81 @@ const NFTBridge = ({
                 setbuttonStatus("errorDeposit");
               });
 
-              const txReceipt = await txResponse.wait();
-              if (txReceipt) {
-                setbuttonStatus("successDeposit");
-                setbuttonText("Successfully Transferred");
-                onSuccessTransfer();
-                setTimeout(() => {
-                  setSelectedNftId(0);
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setbuttonStatus("successDeposit");
+              setbuttonText("Successfully Transferred");
+              onSuccessTransfer();
+              setTimeout(() => {
+                setSelectedNftId(0);
+                setisApproved(false);
+                setbuttonStatus("initial");
+              }, 4000);
+            }
+          }} else if(window.WALLET_TYPE !== "binance"){
+            const sourceBridge_address = window.config.ccip_avax_wod_address;
+            const destinationBridge_address = window.config.ccip_eth_wod_address;
+            const destinationChainSelector =
+              window.config.destination_chain_selector_eth;
+            const web3 = new Web3(window.ethereum);
+            const contract = new web3.eth.Contract(
+              window.CCIP_ABI, sourceBridge_address,
+            );
+  
+            const landContract = new web3.eth.Contract(
+              window.LAND_CCIP_ABI,   window.config.nft_land_avax_address,
+            );
+  
+            if (!isApproved) {
+              setbuttonText("Approving");
+              setbuttonStatus("loadingApprove");
+           await landContract.methods
+                .approve(sourceBridge_address, selectNftId)
+                .send({ from: coinbase })
+                .then(()=>{
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                  setbuttonStatus("successApprove");
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  setbuttonText("Approve");
                   setisApproved(false);
-                  setbuttonStatus("initial");
-                }, 4000);
-              }
-
-          }
+                  setbuttonStatus("errorApprove");
+                });
+  
+               
+            } else if (isApproved) {
+              setbuttonText("Transferring");
+              setbuttonStatus("loadingDeposit");
+             await contract.methods
+                .BridgeNFT(
+                  destinationChainSelector,
+                  destinationBridge_address,
+                  0,
+                  selectNftId
+                ).send({ from: coinbase })
+                .then(()=>{
+                  setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  console.error(e);
+                  setbuttonText("Transfer");
+                  setbuttonStatus("errorDeposit");
+                });
+  
+              
+            }}
         } else if (finalNftType === "caws") {
+          if(window.WALLET_TYPE === "binance"){
           // const web3 = new Web3(window.ethereum);
           const sourceBridge_address = window.config.ccip_avax_caws_address;
           const destinationBridge_address = window.config.ccip_eth_caws_address;
@@ -1466,13 +1639,12 @@ const NFTBridge = ({
                 setisApproved(false);
               });
 
-              const txReceipt = await txResponse.wait();
-              if (txReceipt) {
-                setbuttonText("Transfer");
-                setbuttonStatus("successApprove");
-                setisApproved(true);
-              }
-
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setbuttonText("Transfer");
+              setbuttonStatus("successApprove");
+              setisApproved(true);
+            }
           } else if (isApproved) {
             const contract = new ethers.Contract(
               sourceBridge_address,
@@ -1481,7 +1653,7 @@ const NFTBridge = ({
             );
             setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
-           const txResponse = await contract
+            const txResponse = await contract
               .BridgeNFT(
                 destinationChainSelector,
                 destinationBridge_address,
@@ -1496,22 +1668,85 @@ const NFTBridge = ({
                 setbuttonStatus("errorDeposit");
               });
 
-              const txReceipt = await txResponse.wait();
-              if (txReceipt) {
-                setbuttonStatus("successDeposit");
-                setbuttonText("Successfully Transferred");
-                onSuccessTransfer();
-                setTimeout(() => {
-                  setSelectedNftId(0);
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setbuttonStatus("successDeposit");
+              setbuttonText("Successfully Transferred");
+              onSuccessTransfer();
+              setTimeout(() => {
+                setSelectedNftId(0);
+                setisApproved(false);
+                setbuttonStatus("initial");
+              }, 4000);
+            }
+          }} else if(window.WALLET_TYPE !== "binance"){
+            const web3 = new Web3(window.ethereum);
+            const sourceBridge_address = window.config.ccip_avax_caws_address;
+            const destinationBridge_address = window.config.ccip_eth_caws_address;
+            const destinationChainSelector =
+              window.config.destination_chain_selector_eth;
+            const cawsContract = new web3.eth.Contract(
+              window.CAWS_CCIP_ABI,  window.config.nft_caws_avax_address, 
+            );
+  
+            if (!isApproved) {
+              setbuttonText("Approving");
+              setbuttonStatus("loadingApprove");
+               await cawsContract.methods
+                .approve(sourceBridge_address, selectNftId)
+                .send({ from: coinbase })
+                .then(()=>{
+                setbuttonText("Transfer");
+                setbuttonStatus("successApprove");
+                setisApproved(true);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  setbuttonText("Approve");
+                  setbuttonStatus("errorApprove");
                   setisApproved(false);
-                  setbuttonStatus("initial");
-                }, 4000);
-              }
+                });
+  
+              
+            } else if (isApproved) {
+              const contract = new web3.eth.Contract(
+                window.CCIP_ABI, sourceBridge_address, 
+              );
 
-          }
+              setbuttonText("Transferring");
+              setbuttonStatus("loadingDeposit");
+
+             await contract.methods
+                .BridgeNFT(
+                  destinationChainSelector,
+                  destinationBridge_address,
+                  0,
+                  selectNftId
+                )
+                .send({ from: coinbase })
+                .then(()=>{
+                  setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  console.error(e);
+                  setbuttonText("Transfer");
+                  setbuttonStatus("errorDeposit");
+                });
+  
+               
+            }}
         }
       } else if (filterTitle === "Base Network") {
         if (finalNftType === "land") {
+          if(window.WALLET_TYPE === "binance"){
           const sourceBridge_address = window.config.ccip_base_wod_address;
           const destinationBridge_address = window.config.ccip_eth_wod_address;
           const destinationChainSelector =
@@ -1541,13 +1776,12 @@ const NFTBridge = ({
                 setbuttonStatus("errorApprove");
               });
 
-              const txReceipt = await txResponse.wait();
-              if (txReceipt) {
-                setbuttonText("Transfer");
-                setisApproved(true);
-                setbuttonStatus("successApprove");
-              }
-
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setbuttonText("Transfer");
+              setisApproved(true);
+              setbuttonStatus("successApprove");
+            }
           } else if (isApproved) {
             setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
@@ -1566,20 +1800,80 @@ const NFTBridge = ({
                 setbuttonStatus("errorDeposit");
               });
 
-              const txReceipt = await txResponse.wait();
-              if (txReceipt) {
-                setbuttonStatus("successDeposit");
-                setbuttonText("Successfully Transferred");
-                onSuccessTransfer();
-                setTimeout(() => {
-                  setSelectedNftId(0);
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setbuttonStatus("successDeposit");
+              setbuttonText("Successfully Transferred");
+              onSuccessTransfer();
+              setTimeout(() => {
+                setSelectedNftId(0);
+                setisApproved(false);
+                setbuttonStatus("initial");
+              }, 4000);
+            }
+          }} else if(window.WALLET_TYPE !== "binance"){
+            const sourceBridge_address = window.config.ccip_base_wod_address;
+            const destinationBridge_address = window.config.ccip_eth_wod_address;
+            const destinationChainSelector =
+              window.config.destination_chain_selector_eth;
+            const web3 = new Web3(window.ethereum);
+            const contract = new web3.eth.Contract(
+              window.CCIP_ABI, sourceBridge_address,
+            
+            );
+  
+            const landContract = new web3.eth.Contract(window.LAND_CCIP_ABI, window.config.nft_land_base_address);
+  
+            if (!isApproved) {
+              setbuttonText("Approving");
+              setbuttonStatus("loadingApprove");
+               await landContract.methods
+                .approve(sourceBridge_address, selectNftId)
+                .send({ from: coinbase })
+                .then(()=>{
+                  setbuttonText("Transfer");
+                setisApproved(true);
+                setbuttonStatus("successApprove");
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  setbuttonText("Approve");
                   setisApproved(false);
-                  setbuttonStatus("initial");
-                }, 4000);
-              }
-
-          }
+                  setbuttonStatus("errorApprove");
+                });
+  
+               
+            } else if (isApproved) {
+              setbuttonText("Transferring");
+              setbuttonStatus("loadingDeposit");
+               await contract.methods
+                .BridgeNFT(
+                  destinationChainSelector,
+                  destinationBridge_address,
+                  0,
+                  selectNftId
+                ).send({ from: coinbase })
+                .then(()=>{
+                  setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  console.error(e);
+                  setbuttonText("Transfer");
+                  setbuttonStatus("errorDeposit");
+                });
+  
+              
+            }}
         } else if (finalNftType === "caws") {
+          if(window.WALLET_TYPE === "binance"){
           const sourceBridge_address = window.config.ccip_base_caws_address;
           const destinationBridge_address = window.config.ccip_eth_caws_address;
           const destinationChainSelector =
@@ -1593,7 +1887,7 @@ const NFTBridge = ({
           if (!isApproved) {
             setbuttonText("Approving");
             setbuttonStatus("loadingApprove");
-            const txResponse = await cawsContract.methods
+            const txResponse = await cawsContract
               .approve(sourceBridge_address, selectNftId, { from: coinbase })
               .catch((e) => {
                 window.alertify.error(e?.message);
@@ -1602,13 +1896,12 @@ const NFTBridge = ({
                 setbuttonStatus("errorApprove");
               });
 
-              const txReceipt = await txResponse.wait();
-              if (txReceipt) {
-                setbuttonText("Transfer");
-                setisApproved(true);
-                setbuttonStatus("successApprove");
-              }
-
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setbuttonText("Transfer");
+              setisApproved(true);
+              setbuttonStatus("successApprove");
+            }
           } else if (isApproved) {
             const contract = new ethers.Contract(
               sourceBridge_address,
@@ -1617,7 +1910,7 @@ const NFTBridge = ({
             );
             setbuttonText("Transferring");
             setbuttonStatus("loadingDeposit");
-           const txResponse = await contract
+            const txResponse = await contract
               .BridgeNFT(
                 destinationChainSelector,
                 destinationBridge_address,
@@ -1632,18 +1925,79 @@ const NFTBridge = ({
                 setbuttonStatus("errorDeposit");
               });
 
-              const txReceipt = await txResponse.wait();
-              if (txReceipt) {
-                setbuttonStatus("successDeposit");
-                setbuttonText("Successfully Transferred");
-                onSuccessTransfer();
-                setTimeout(() => {
-                  setSelectedNftId(0);
-                  setisApproved(false);
-                  setbuttonStatus("initial");
-                }, 4000);
-              }
+            const txReceipt = await txResponse.wait();
+            if (txReceipt) {
+              setbuttonStatus("successDeposit");
+              setbuttonText("Successfully Transferred");
+              onSuccessTransfer();
+              setTimeout(() => {
+                setSelectedNftId(0);
+                setisApproved(false);
+                setbuttonStatus("initial");
+              }, 4000);
+            }
           }
+        } else if(window.WALLET_TYPE !== "binance"){
+            const sourceBridge_address = window.config.ccip_base_caws_address;
+            const destinationBridge_address = window.config.ccip_eth_caws_address;
+            const destinationChainSelector =
+              window.config.destination_chain_selector_eth;
+            const web3 = new Web3(window.ethereum);
+
+            const cawsContract = new web3.eth.Contract(
+              window.CAWS_CCIP_ABI, window.config.nft_caws_base_address,
+            );
+  
+            if (!isApproved) {
+              setbuttonText("Approving");
+              setbuttonStatus("loadingApprove");
+              await cawsContract.methods
+                .approve(sourceBridge_address, selectNftId)
+                .send({ from: coinbase })
+                .then(()=>{
+                  setbuttonText("Transfer");
+                  setisApproved(true);
+                  setbuttonStatus("successApprove");
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  setbuttonText("Approve");
+                  setisApproved(false);
+                  setbuttonStatus("errorApprove");
+                });
+  
+             
+            } else if (isApproved) {
+              const contract = new web3.eth.Contract(
+                window.CCIP_ABI, sourceBridge_address, 
+              );
+              setbuttonText("Transferring");
+              setbuttonStatus("loadingDeposit");
+              await contract.methods
+                .BridgeNFT(
+                  destinationChainSelector,
+                  destinationBridge_address,
+                  0,
+                  selectNftId
+                )
+                .send({ from: coinbase })
+                .then(()=>{
+                  setbuttonStatus("successDeposit");
+                  setbuttonText("Successfully Transferred");
+                  onSuccessTransfer();
+                  setTimeout(() => {
+                    setSelectedNftId(0);
+                    setisApproved(false);
+                    setbuttonStatus("initial");
+                  }, 4000);
+                })
+                .catch((e) => {
+                  window.alertify.error(e?.message);
+                  console.error(e);
+                  setbuttonText("Transfer");
+                  setbuttonStatus("errorDeposit");
+                });
+            }}
         }
       }
     }

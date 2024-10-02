@@ -17,17 +17,24 @@
 // .slick-list {
 //   margin: 0 -24px;
 // }
-.slick-slider,.slick-list {
-  width: 100%;
-  height: 100%;
-}
+// .slick-slider,.slick-list {
+//   width: 100%;
+//   height: 100%;
+// }
 
-.slick-list {
-  margin: 0 -10px;
-}
+// .slick-list {
+//   margin: 0 -10px;
+// }
 // .slick-slide > div {
 //   padding: 0 10px;
 // }
+
+.slick-list {
+  margin: 0 -5px;
+}
+.slick-slide > div {
+  padding: 0 5px;
+}
 
 .button__bar {
   display: flex !important;

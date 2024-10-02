@@ -85,7 +85,12 @@ import immutableThumb from "../Account/src/Components/WalletBalance/assets/immut
 import coreThumb from "../Account/src/Components/WalletBalance/assets/coreThumb.png";
 import mantaThumb from "../Account/src/Components/WalletBalance/assets/mantaThumb.png";
 import taikoThumb from "../Account/src/Components/WalletBalance/assets/taikoThumb.webp";
+import baseThumb from "../Account/src/Components/WalletBalance/assets/baseThumb.webp";
+
 import cookie3Thumb from "../Account/src/Components/WalletBalance/assets/cookie3Thumb.png";
+import baseLogo from "../Home/VideoWrapper/assets/baseLogo.svg";
+
+
 
 import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.svg";
@@ -97,6 +102,8 @@ import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
 import upcomingDoge from "./assets/upcomingDoge.webp";
 import upcomingSkale from "./assets/upcomingSkale.webp";
 import upcomingCookie from "./assets/cookieBg.webp";
+import upcomingBase2 from "./assets/upcomingBase2.webp";
+
 import upcomingCookieMobile from "./assets/cookieMobileBg.webp";
 
 import upcomingMidle from "./assets/midleBg.webp";
@@ -353,6 +360,8 @@ const MarketEvents = ({
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
+  let baseLastDay2 = new Date("2025-01-25T16:00:00.000+02:00");
+
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let dogeLastDay = new Date("2024-04-02T13:00:00.000+02:00");
@@ -375,87 +384,8 @@ const MarketEvents = ({
   const dummyBetaPassData2 = [
  
 
-    {
-      title: "CORE",
-      logo: coreLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in CORE Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Jul 01, 2024",
-      backgroundImage: coreBg,
-      popupInfo: {
-        title: "CORE",
-        chain: "CORE Chain",
-        linkState: "core",
-        rewards: "CORE",
-        status: "Live",
-        id: "event12",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in CORE Rewards",
-        eventDuration: coreLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Jul 01, 2024",
-      },
-    },
-    {
-      title: "VICTION",
-      logo: victionLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in VIC Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "Jul 01, 2024",
-      backgroundImage: victionBg,
-      popupInfo: {
-        title: "VICTION",
-        chain: "VICTION Chain",
-        linkState: "viction",
-        rewards: "VIC",
-        status: "Live",
-        id: "event14",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in VIC Rewards",
-        eventDuration: coreLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Jul 01, 2024",
-      },
-    },
-    {
-      title: "BNB Chain",
-      logo: bnbLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Jun 12, 2024",
-      backgroundImage: upcomingBnb,
-      popupInfo: {
-        title: "BNB Chain",
-        chain: "BNB Chain",
-        linkState: "bnb",
-        rewards: "BNB",
-        status: "Live",
-        id: "event20",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: bnbLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "/news",
-        eventDate: "Jun 12, 2024",
-      },
-    },
+
+ 
     {
       title: "Immutable",
       logo: immutableLogo,
@@ -564,7 +494,114 @@ const MarketEvents = ({
         eventDate: "Aug 26, 2024",
       },
     },
-
+    {
+      title: "Base",
+      logo: baseLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in ETH Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Oct 07, 2024",
+      backgroundImage: upcomingBase2,
+      popupInfo: {
+        title: "Base",
+        chain: "Base",
+        linkState: "base",
+        rewards: "ETH",
+        status: "Coming Soon",
+        id: "event24",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in ETH Rewards",
+        eventDuration: baseLastDay2,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Oct 07, 2024",
+      },
+    },
+    {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: coreBg,
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Expired",
+        id: "event12",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in CORE Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: victionBg,
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Expired",
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
+    {
+      title: "BNB Chain",
+      logo: bnbLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jun 12, 2024",
+      backgroundImage: upcomingBnb,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news",
+        eventDate: "Jun 12, 2024",
+      },
+    },
     // {
     //   title: "SEI",
     //   logo: seiLogo,
@@ -1629,7 +1666,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 7).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 5).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1638,9 +1675,7 @@ const MarketEvents = ({
                               setDummyEvent(item.popupInfo);
                             }}
                             userEarnUsd={
-                              item.title === "BNB Chain"
-                                ? bnbEarnUsd
-                                : item.title === "Immutable"
+                              item.title === "Immutable"
                                 ? immutableEarnUsd
                                 : item.title === "Manta"
                                 ? mantaEarnUsd
@@ -1648,10 +1683,7 @@ const MarketEvents = ({
                                 ? taikoEarnUsd
                                 : item.title === "Cookie3"
                                 ? cookieEarnUsd
-                                : item.title === "CORE"
-                                ? coreEarnUsd
-                                : item.title === "Viciton"
-                                ? victionEarnUsd
+                               
                                 : 0
                             }
                           />
@@ -1887,7 +1919,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(7, dummyBetaPassData2.length)
+                    .slice(5, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
@@ -1910,12 +1942,18 @@ const MarketEvents = ({
                             ? gateEarnUSD
                             : item.title === "Dypius"
                             ? dypiusEarnTokens
+                            : item.title === "BNB Chain"
+                            ? bnbEarnUsd
                             : item.title === "Dypius Premium"
                             ? dypiusPremiumEarnUsd
                             : item.title === "CoinMarketCap"
                             ? cmcuserEarnUsd
                             : item.title === "SKALE"
                             ? skaleEarnUsd
+                            : item.title === "CORE"
+                            ? coreEarnUsd
+                            : item.title === "Viciton"
+                            ? victionEarnUsd
                             : 0
                         }
                       />
@@ -1989,8 +2027,10 @@ const MarketEvents = ({
                         ? eventPopupImageGecko
                         : dummyEvent.linkState === "gate"
                         ? gatePopupImage
-                        : dummyEvent.linkState === "base"
+                        : dummyEvent.linkState === "base" && dummyEvent.id === 'event4'
                         ? eventPopupImageBase
+                        : dummyEvent.id === 'event24'
+                        ? baseThumb
                         : dummyEvent.linkState === "doge"
                         ? dogePopupImage
                         : dummyEvent.linkState === "coinmarketcap"
@@ -2749,12 +2789,12 @@ const MarketEvents = ({
                 <img
                   alt=""
                   src={
-                    dummyEvent.id !== "event4" && dummyEvent.id !== "event7"
+                    dummyEvent.id !== "event4" &&  dummyEvent.id !== "event24" && dummyEvent.id !== "event7"
                       ? telegram
                       : discord
                   }
                 />
-                {dummyEvent.id !== "event4" && dummyEvent.id !== "event7"
+                {dummyEvent.id !== "event4" && dummyEvent.id !== "event24" && dummyEvent.id !== "event7"
                   ? "Telegram"
                   : "Discord"}
               </a>
@@ -2992,7 +3032,7 @@ const MarketEvents = ({
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
             </div>
-            {dummyEvent.status === "Coming Soon" &&
+            {/* {dummyEvent.status === "Coming Soon" &&
               dummyEvent.id !== "event15" &&
               dummyEvent.id !== "event22" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
@@ -3002,7 +3042,7 @@ const MarketEvents = ({
                     <button className="btn get-beta-btn">Get Beta Pass</button>
                   </NavLink>
                 </div>
-              )}
+              )}*/}
           </div>
         </OutsideClickHandler>
       )}

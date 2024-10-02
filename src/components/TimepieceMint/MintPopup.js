@@ -104,11 +104,11 @@ const MintPopup = ({ active, onClose, data }) => {
                   className="mint-popup-title  mb-0"
                   style={{ color: "#18FFFF" }}
                 >
-                  Live Giveaway
+                   $20,000 in MANTA Rewards 
                 </h6>
               </div>
               <h6 className="mint-popup-title m-0">
-              Manta Beta Pass
+             Manta  Treasure Hunt
               </h6>
             </div>
           </div>
@@ -273,8 +273,10 @@ const MintPopup = ({ active, onClose, data }) => {
       data.title === "Manta" ? (
       <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
           <span className="popup-available-mint">
-          Get access to the game and a unique event filled with surprises and rewards!
-          </span>
+              Explore the Manta area and use your{" "}
+              <img src={whiteExplore} className="white-explore" alt="" /> to
+              generate rewards!
+            </span>
       </div>
     ):
       data.title === "SKALE" ? (
@@ -313,7 +315,7 @@ const MintPopup = ({ active, onClose, data }) => {
         : data.title === "Manta" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/beta-pass/manta"}
+            to={"/marketplace/events/treasure-hunt"}
             state={{ event: data.state }}
             className="linear-border"
           >

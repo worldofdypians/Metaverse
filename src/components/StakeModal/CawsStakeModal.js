@@ -146,6 +146,7 @@ const CawsStakeModal = ({
           setStatus("*Now you can deposit");
         })
         .catch((err) => {
+          console.error(err)
           setloading(false);
           setColor("#F13227");
           setStatus("*An error occurred. Please try again");

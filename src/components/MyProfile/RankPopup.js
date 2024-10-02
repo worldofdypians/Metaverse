@@ -96,7 +96,7 @@ const RankPopup = ({
   return (
     <OutsideClickHandler onOutsideClick={() => onClose()}>
       <div
-        className="popup-wrapper leaderboard-popup rank-popup popup-active p-3"
+        className="popup-wrapper rank-popup popup-active p-3"
         id="leaderboard"
         style={{ width: "70%", pointerEvents: "auto" }}
       >
@@ -244,7 +244,7 @@ const RankPopup = ({
               </div>
               <div className="d-flex flex-column align-items-center gap-1">
                 <span className="needed-points-span mb-0">Points Required</span>
-                <span className="needed-points mb-0">0 - 11,999,999</span>
+                <span className="needed-points mb-0">0 - 13,999,999</span>
               </div>
               <div
                 className={` ${
@@ -280,7 +280,7 @@ const RankPopup = ({
               </div>
               <div className="d-flex flex-column align-items-center gap-1">
                 <span className="needed-points-span mb-0">Points Required</span>
-                <span className="needed-points mb-0">12,000,000</span>
+                <span className="needed-points mb-0">14,000,000</span>
               </div>
               <div
                 className={` ${
@@ -317,7 +317,7 @@ const RankPopup = ({
               </div>
               <div className="d-flex flex-column align-items-center gap-1">
                 <span className="needed-points-span mb-0">Points Required</span>
-                <span className="needed-points mb-0">24,000,000</span>
+                <span className="needed-points mb-0">26,000,000</span>
               </div>
               <div
                 className={` ${
@@ -354,7 +354,7 @@ const RankPopup = ({
               </div>
               <div className="d-flex flex-column align-items-center gap-1">
                 <span className="needed-points-span mb-0">Points Required</span>
-                <span className="needed-points mb-0">37,000,000</span>
+                <span className="needed-points mb-0">39,000,000</span>
               </div>
               <div
                 className={` ${
@@ -391,7 +391,7 @@ const RankPopup = ({
               </div>
               <div className="d-flex flex-column align-items-center gap-1">
                 <span className="needed-points-span mb-0">Points Required</span>
-                <span className="needed-points mb-0">62,000,000</span>
+                <span className="needed-points mb-0">64,000,000</span>
               </div>
               <div
                 className={` ${
@@ -429,7 +429,7 @@ const RankPopup = ({
               </div>
               <div className="d-flex flex-column align-items-center gap-1">
                 <span className="needed-points-span mb-0">Points Required</span>
-                <span className="needed-points mb-0">0 - 11,999,999</span>
+                <span className="needed-points mb-0">0 - 13,999,999</span>
               </div>
               <div
                 className={` ${
@@ -464,7 +464,7 @@ const RankPopup = ({
               </div>
               <div className="d-flex flex-column align-items-center gap-1">
                 <span className="needed-points-span mb-0">Points Required</span>
-                <span className="needed-points mb-0">12,000,000</span>
+                <span className="needed-points mb-0">14,000,000</span>
               </div>
               <div
                 className={` ${
@@ -499,7 +499,7 @@ const RankPopup = ({
               </div>
               <div className="d-flex flex-column align-items-center gap-1">
                 <span className="needed-points-span mb-0">Points Required</span>
-                <span className="needed-points mb-0">24,000,000</span>
+                <span className="needed-points mb-0">26,000,000</span>
               </div>
               <div
                 className={` ${
@@ -534,7 +534,7 @@ const RankPopup = ({
               </div>
               <div className="d-flex flex-column align-items-center gap-1">
                 <span className="needed-points-span mb-0">Points Required</span>
-                <span className="needed-points mb-0">37,000,000</span>
+                <span className="needed-points mb-0">39,000,000</span>
               </div>
               <div
                 className={` ${
@@ -569,7 +569,7 @@ const RankPopup = ({
               </div>
               <div className="d-flex flex-column align-items-center gap-1">
                 <span className="needed-points-span mb-0">Points Required</span>
-                <span className="needed-points mb-0">62,000,000</span>
+                <span className="needed-points mb-0">64,000,000</span>
               </div>
               <div
                 className={` ${

@@ -4,26 +4,23 @@ import "./_terms.scss";
 const TermsConditions = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Terms and Conditions'
-
-
+    document.title = "Terms of Service";
   }, []);
 
   return (
     <div className="container-fluid mt-lg-5 pt-lg-5 px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex w-100 flex-column news-main-wrapper">
         <div className="row w-100 px-3 px-lg-5 mx-0 news-container">
-          <div className="update-title font-organetto">
-            Terms AND CONDITIONS
-          </div>
+          <div className="update-title font-organetto">Terms of Service</div>
           <div className="news-card terms-container p-4 d-flex flex-column gap-3 mb-5">
-            <p className="text-white m-0">Last Revised on December 27, 2022</p>
+            <p className="text-white m-0">Last Revised on October 01, 2024</p>
             <p className="text-white m-0">
               Welcome to the Terms of Service (these “Terms”) for the website
-              https://www.worldofdypians.com/ (the “Website”), the World of Dypians
-              game (the “Game”), and all content and functionalities accessible
-              via our Website and the Game (the “Services”), in each case
-              operated by or on behalf of Dypius (“Company,” “we,” or “us”).
+              https://www.worldofdypians.com/ (the “Website”), the World of
+              Dypians game (the “Game”), and all content and functionalities
+              accessible via our Website and the Game (the “Services”), in each
+              case operated by or on behalf of Dypius (“Company,” “we,” or
+              “us”).
             </p>
             <p className="text-white m-0">
               These Terms govern your access to and use of the Services. Please
@@ -45,23 +42,20 @@ const TermsConditions = () => {
               <p className="text-white m-0"> TABLE OF CONTENTS</p>
             </b>
             <ol>
-              <li className="text-white">SERVICES AND ACCOUNTS </li>
+              <li className="text-white"> SERVICES AND ACCOUNTS </li>
+              <li className="text-white">LOCATION OF OUR PRIVACY POLICY</li>
               <li className="text-white">
-                LOCATION OF OUR PRIVACY POLICY ELIGIBILITY
+                ELIGIBILITY; RIGHTS WE GRANT YOU; USAGE LIMITATIONS
               </li>
-              <li className="text-white">RIGHTS WE GRANT YOU </li>
+              <li className="text-white">OWNERSHIP AND CONTENT</li>
+              <li className="text-white">THIRD-PARTY SERVICES AND MATERIALS</li>
+              <li className="text-white">UPDATES AND PATCHES</li>
+              <li className="text-white">TERMINATION</li>
               <li className="text-white">
-                USAGE LIMITATIONS OWNERSHIP AND CONTENT
+                COMPLIANCE WITH SANCTIONS, DISCLAIMERS, LIMITATIONS OF
+                LIABILITY, INDEMNIFICATION
               </li>
-              <li className="text-white">
-                THIRD-PARTY SERVICES AND MATERIALS{" "}
-              </li>
-              <li className="text-white">UPDATES AND PATCHES TERMINATION </li>
-              <li className="text-white">
-                DISCLAIMERS, LIMITATIONS OF LIABILITY, INDEMNIFICATION
-                ADDITIONAL
-              </li>
-              <li className="text-white">INDEMNIFICATION ADDITIONAL</li>
+              <li className="text-white">ADDITIONAL PROVISIONS</li>
             </ol>
             <p
               className="text-white m-0"
@@ -699,10 +693,45 @@ const TermsConditions = () => {
               herein immediately shall terminate.
             </p>
             <p className="text-white m-0">
-              8. DISCLAIMERS; LIMITATIONS OF LIABILITY; INDEMNIFICATION
+              8. COMPLIANCE WITH SANCTIONS, DISCLAIMERS, LIMITATIONS OF
+              LIABILITY, INDEMNIFICATION
             </p>
             <p className="text-white m-0">
-              8.1. DISCLAIMERS. YOUR ACCESS TO AND USE OF THE SERVICES ARE AT
+            8.1. By using our Services, you represent and warrant that: (a) neither
+              you, as an individual or entity, nor any entity or individual you
+              represent or are affiliated with, are subject to any sanctions
+              imposed by the U.S. Government (including the Office of Foreign
+              Assets Control of the U.S. Department of the Treasury ("OFAC")),
+              the United Nations Security Council, the European Union, Her
+              Majesty's Treasury, or any other relevant sanctions authority; (b)
+              neither you nor any entity or individual you represent or are
+              affiliated with, are located, organized, or resident in a country
+              or territory that is the subject or target of sanctions imposed by
+              any of the aforementioned authorities; and (c) neither you, as an
+              individual or entity, nor your wallet address, appear on the
+              Specially Designated Nationals and Blocked Persons List,
+              Consolidated Sanctions List, or any other sanctions lists
+              administered by OFAC or the other listed authorities (d) you are
+              not using the Services for money laundering or any illegal
+              activity; (e) you have not engaged in fraudulent activity; (f) you
+              have not acquired cryptoassets using inappropriate methods,
+              including the use of stolen funds to purchase such assets. You
+              further agree not to use our Services for any activities that
+              would result in a violation of such sanctions, including but not
+              limited to engaging with any person or entity subject to
+              sanctions, or conducting business in any country or territory that
+              is the subject of sanctions, including Crimea, Russia, Cuba, Iran,
+              North Korea, Côte d'Ivoire, Belarus, Iraq, Liberia, Sudan and
+              Syria. We reserve the right to take whatever action we deem
+              appropriate, including to terminate or restrict access to our
+              Services, if we reasonably suspect any violation of applicable
+              sanctions laws or regulations. You agree to indemnify and hold
+              harmless the Company from any liability arising from your
+              breach of this clause.
+            </p>
+
+            <p className="text-white m-0">
+              8.2. DISCLAIMERS. YOUR ACCESS TO AND USE OF THE SERVICES ARE AT
               YOUR OWN RISK. YOU UNDERSTAND AND AGREE THAT THE SERVICES ARE
               PROVIDED TO YOU ON AN “AS IS” AND “AS AVAILABLE” BASIS. WITHOUT
               LIMITING THE FOREGOING, TO THE MAXIMUM EXTENT PERMITTED UNDER
@@ -731,7 +760,7 @@ const TermsConditions = () => {
               TRANSACTIONS THEREIN.
             </p>
             <p className="text-white m-0">
-              8.2. LIMITATIONS OF LIABILITY. TO THE MAXIMUM EXTENT NOT
+              8.3. LIMITATIONS OF LIABILITY. TO THE MAXIMUM EXTENT NOT
               PROHIBITED BY LAW, YOU AGREE THAT IN NO EVENT WILL THE COMPANY
               ENTITIES BE LIABLE FOR ANY INDIRECT, SPECIAL, EXEMPLARY,
               INCIDENTAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES (INCLUDING, BUT NOT
@@ -756,7 +785,7 @@ const TermsConditions = () => {
               FAILS OF ITS ESSENTIAL PURPOSE.
             </p>
             <p className="text-white m-0">
-              8.3. Indemnification. By entering into these Terms and accessing
+              8.4. Indemnification. By entering into these Terms and accessing
               or using the Services, you agree that you shall defend, indemnify,
               and hold the Company Entities harmless from and against any and
               all claims, costs, damages, losses, liabilities, and expenses
@@ -768,7 +797,7 @@ const TermsConditions = () => {
               (e) your negligence or willful misconduct.
             </p>
             <p className="text-white m-0">
-              8.4. Assumption of Risks. You acknowledge and agree that there are
+              8.5. Assumption of Risks. You acknowledge and agree that there are
               risks associated with purchasing and holding NFTs and using
               blockchain technology. These include, but are not limited to, risk
               of losing access to NFTs due to loss of a PIN, wallet keys, seed
@@ -793,7 +822,7 @@ const TermsConditions = () => {
               including any that are related to your Game NFTs.
             </p>
             <p className="text-white m-0">
-              8.5. Taxes. You are solely responsible to pay any and all sales,
+              8.6. Taxes. You are solely responsible to pay any and all sales,
               use, value-added, and other taxes, duties, and assessments (except
               taxes on our net income) now or hereafter claimed or imposed by
               any governmental authority associated with your use of the
@@ -816,7 +845,7 @@ const TermsConditions = () => {
               Offerings and the Services.
             </p>
             <p className="text-white m-0">
-              8.6. Force Majeure. We will not be liable or responsible to you,
+              8.7. Force Majeure. We will not be liable or responsible to you,
               nor be deemed to have defaulted under or breached these Terms, for
               any failure or delay in fulfilling or performing any of our
               obligations under these Terms or in operating the Services, when
@@ -832,6 +861,7 @@ const TermsConditions = () => {
               shortage of adequate power or electricity, and other similar
               events beyond our control.
             </p>
+
             <p className="text-white m-0">9. ADDITIONAL PROVISIONS</p>
             <p className="text-white m-0">
               9.1. Updating These Terms. We may modify these Terms from time to

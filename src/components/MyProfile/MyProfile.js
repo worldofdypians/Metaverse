@@ -362,7 +362,7 @@ const MyProfile = ({
                 </div>
               </div>
               <div className="d-flex flex-column gap-2 w-100">
-                <div className="d-flex align-items-center gap-0">
+                <div className="d-flex align-items-center gap-0 gap-lg-1">
                   <div
                     className={`d-flex flex-column flex-lg-row align-items-lg-center ${
                       !email

@@ -17,7 +17,7 @@ const GovernanceHero = ({onCreateProposal}) => {
                 Dypians platform. Participate in the governance and make your
                 voice heard.
               </span>
-              <button className="stake-wod-btn px-4 py-2 auto-button" onClick={onCreateProposal}>
+              <button className="stake-wod-btn px-4 py-2 auto-button2" onClick={onCreateProposal}>
                 CREATE PROPOSAL
               </button>
             </div>

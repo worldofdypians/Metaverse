@@ -522,14 +522,13 @@ const NewBundleCard = ({
           setbundleState("fail");
         });
 
-        const txReceipt = await txResponse.wait();
-        if (txReceipt) {
-          setStatus("Succesfully approved!");
-          setbundleState("deposit");
-          setStatusColor("#00FECF");
-          setSliderValue(2);
-        }
-
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setStatus("Succesfully approved!");
+        setbundleState("deposit");
+        setStatusColor("#00FECF");
+        setSliderValue(2);
+      }
     }
   };
 
@@ -595,15 +594,14 @@ const NewBundleCard = ({
             setbundleState700("fail");
           });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setStatus700("Succesfully approved!");
-            setbundleState700("deposit");
-            setStatusColor700("#00FECF");
-            setSliderValue700(2);
-            setDepositState700("deposit");
-          }
-
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setStatus700("Succesfully approved!");
+          setbundleState700("deposit");
+          setStatusColor700("#00FECF");
+          setSliderValue700(2);
+          setDepositState700("deposit");
+        }
       } else if (priceType === 0) {
         const token_address = "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17";
 
@@ -624,15 +622,14 @@ const NewBundleCard = ({
             setbundleState700("fail");
           });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setStatus700("Succesfully approved!");
-            setbundleState700("deposit");
-            setStatusColor700("#00FECF");
-            setSliderValue700(2);
-            setDepositState700("deposit");
-          }
-
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setStatus700("Succesfully approved!");
+          setbundleState700("deposit");
+          setStatusColor700("#00FECF");
+          setSliderValue700(2);
+          setDepositState700("deposit");
+        }
       }
     }
   };
@@ -666,7 +663,7 @@ const NewBundleCard = ({
         binanceW3WProvider.getSigner()
       );
 
-     const txResponse = await idypSc
+      const txResponse = await idypSc
         .approve(idyp3500Address, "500000000000000000000000000", {
           from: coinbase,
         })
@@ -676,14 +673,13 @@ const NewBundleCard = ({
           setbundleState3500("fail");
         });
 
-        const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setStatus3500("Succesfully approved!");
-            setbundleState3500("deposit");
-            setStatusColor3500("#00FECF");
-            setSliderValue3500(2);
-          }
-
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setStatus3500("Succesfully approved!");
+        setbundleState3500("deposit");
+        setStatusColor3500("#00FECF");
+        setSliderValue3500(2);
+      }
     }
   };
 
@@ -761,7 +757,7 @@ const NewBundleCard = ({
       //   console.error(error);
       // }
 
-     const txResponse = await dragonsc
+      const txResponse = await dragonsc
         .deposit({ from: coinbase, ...transactionParameters })
         .catch((e) => {
           setStatusColor("#FE7A00");
@@ -769,45 +765,25 @@ const NewBundleCard = ({
           setDepositState("failDeposit");
           console.log(e);
         });
-        const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-          setStatus("Bundle successfully purchased!");
-          setDepositState("success");
-          setStatusColor("#00FECF");
-          handleJoinLottery();
-          getDypBalance();
-          handleRefreshCountdown();
-          checkApproval();
-          }
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setStatus("Bundle successfully purchased!");
+        setDepositState("success");
+        setStatusColor("#00FECF");
+        handleJoinLottery();
+        getDypBalance();
+        handleRefreshCountdown();
+        checkApproval();
+      }
 
       handleRefreshCountdown();
     }
   };
 
   const increaseBundle = async () => {
-    const result = await axios.get(
-      `https://api3.dyp.finance/api/bundles/count/${coinbase}`
-    );
-
-    const result_formatted = result.data.count;
-    if (result_formatted <= 4) {
-      if (parseInt(result_formatted) === 0) {
-        setbundlesBought(0);
-        setProgressValue(0);
-      } else if (parseInt(result_formatted) === 1) {
-        setbundlesBought(1);
-        setProgressValue(25);
-      } else if (parseInt(result_formatted) === 2) {
-        setProgressValue(50);
-        setbundlesBought(2);
-      } else if (parseInt(result_formatted) === 3) {
-        setProgressValue(75);
-        setbundlesBought(3);
-      } else if (parseInt(result_formatted) === 4) {
-        setProgressValue(100);
-        setbundlesBought(4);
-      }
-    }
+    if (countdown700) {
+      setbundlesBought(1);
+    } else setbundlesBought(0);
   };
 
   const setlastDay = async () => {
@@ -989,7 +965,7 @@ const NewBundleCard = ({
           DYP_700_ABI,
           binanceW3WProvider.getSigner()
         );
-       const txResponse = await goldenSc
+        const txResponse = await goldenSc
           .deposit({ from: coinbase })
           .catch((e) => {
             setStatusColor700("#FE7A00");
@@ -997,18 +973,17 @@ const NewBundleCard = ({
             setDepositState700("failDeposit");
           });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setStatus700("Bundle successfully purchased!");
-            setDepositState700("success");
-            setStatusColor700("#00FECF");
-            getDypBalance();
-            insertBundle();
-            increaseBundle();
-            handleRefreshCountdown700();
-            checkApproval700(priceType);
-          }
-
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setStatus700("Bundle successfully purchased!");
+          setDepositState700("success");
+          setStatusColor700("#00FECF");
+          getDypBalance();
+          insertBundle();
+          increaseBundle();
+          handleRefreshCountdown700();
+          checkApproval700(priceType);
+        }
       } else if (priceType === 0) {
         const dyp700_address = "0x6493e45F0D9B81355035f07d6FAf59309B2e2f89";
         const goldenSc = new ethers.Contract(
@@ -1017,7 +992,7 @@ const NewBundleCard = ({
           binanceW3WProvider.getSigner()
         );
 
-       const txResponse = await goldenSc
+        const txResponse = await goldenSc
           .deposit({ from: coinbase })
           .catch((e) => {
             setStatusColor700("#FE7A00");
@@ -1025,18 +1000,17 @@ const NewBundleCard = ({
             setDepositState700("failDeposit");
           });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setStatus700("Bundle successfully purchased!");
-            setDepositState700("success");
-            setStatusColor700("#00FECF");
-            getDypBalance();
-            insertBundle();
-            increaseBundle();
-            handleRefreshCountdown700();
-            checkApproval700(priceType);
-          }
-
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setStatus700("Bundle successfully purchased!");
+          setDepositState700("success");
+          setStatusColor700("#00FECF");
+          getDypBalance();
+          insertBundle();
+          increaseBundle();
+          handleRefreshCountdown700();
+          checkApproval700(priceType);
+        }
       }
     }
   };
@@ -1080,39 +1054,41 @@ const NewBundleCard = ({
           setDepositState3500("failDeposit");
         });
 
-        const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setStatus3500("Bundle successfully purchased!");
-            setDepositState3500("success");
-            setStatusColor3500("#00FECF");
-            getiDypBalance();
-            handleRefreshCountdown3500();
-            checkApproval3500();
-          }
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setStatus3500("Bundle successfully purchased!");
+        setDepositState3500("success");
+        setStatusColor3500("#00FECF");
+        getiDypBalance();
+        handleRefreshCountdown3500();
+        checkApproval3500();
+      }
 
       handleRefreshCountdown3500();
     }
   };
 
   const handleRefreshCountdown = async () => {
- 
-      const wod_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
-      const dragonsc = new window.bscWeb3.eth.Contract(
-        WOD_ABI, wod_address,
-      );
+    const wod_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
+    const dragonsc = new window.bscWeb3.eth.Contract(WOD_ABI, wod_address);
 
-      const remainingTime = await dragonsc.methods.getTimeOfExpireBuff(coinbase).call().catch((e)=>{console.error(e); return 0});
-      setcountdown(remainingTime);
-   
+    const remainingTime = await dragonsc.methods
+      .getTimeOfExpireBuff(coinbase)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+    setcountdown(remainingTime);
   };
 
   const handleRefreshCountdown700 = async () => {
-    // const dypv1 = new window.infuraWeb3.eth.Contract(
-    //   DYP_700V1_ABI,
-    //   dyp700v1Address
-    // );
+    const dypv1 = new window.infuraWeb3.eth.Contract(
+      DYP_700V1_ABI,
+      dyp700v1Address
+    );
 
-    // const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
+    const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
 
     // const dyp700_address = "0xd16DAad6bEd59a2c6806868855A05f4abF3b2ac9";
     // const goldenSc_v2 = new ethers.Contract(
@@ -1128,13 +1104,21 @@ const NewBundleCard = ({
     //   binanceW3WProvider.getSigner()
     // );
 
-    // const remainingTimev1 = await dypv1.methods
-    //   .getTimeOfExpireBuff(coinbase)
-    //   .call();
+    const remainingTimev1 = await dypv1.methods
+      .getTimeOfExpireBuff(coinbase)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
 
-    // const remainingTimev2 = await dypv2.methods
-    //   .getTimeOfExpireBuff(coinbase)
-    //   .call();
+    const remainingTimev2 = await dypv2.methods
+      .getTimeOfExpireBuff(coinbase)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
 
     // var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
 
@@ -1192,8 +1176,8 @@ const NewBundleCard = ({
 
     //   const resultv2 =
     //     remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
-    setcountdown700(firstOfNextMonth.getTime());
-    handleSetAvailableTime(firstOfNextMonth.getTime());
+    setcountdown700(Number(remainingTimev1) + Number(remainingTimev2));
+    handleSetAvailableTime(Number(remainingTimev1) + Number(remainingTimev2));
     // setcountdown700(result * 1000);
     //
     // } else {
@@ -1229,8 +1213,11 @@ const NewBundleCard = ({
 
     checkApproval3500();
     checkApproval();
-    increaseBundle();
   }, [coinbase, chainId, packageData, status700, bundlesBought, priceType]);
+
+  useEffect(() => {
+    increaseBundle();
+  }, [countdown700]);
 
   useEffect(() => {
     if (coinbase) {
@@ -1279,7 +1266,8 @@ const NewBundleCard = ({
       );
     }
     if (chainId === 56 && coinbase?.toLowerCase() === wallet?.toLowerCase()) {
-      if (priceType === 0) {
+      if(isAtlimit === false)
+    {  if (priceType === 0) {
         setStatus700(
           "You are on the wrong chain. Switch back to Ethereum to purchase the bundle."
         );
@@ -1288,6 +1276,7 @@ const NewBundleCard = ({
       }
       setStatus("");
       setStatus3500("");
+    }
     }
 
     if (chainId !== 56 && coinbase?.toLowerCase() !== wallet?.toLowerCase()) {
@@ -1321,21 +1310,18 @@ const NewBundleCard = ({
   };
 
   useEffect(() => {
-    if (
-      // bundlesBought === 4 &&
-      // lastDayofBundleMilliseconds > 0 &&
-      // bundleExpireMiliseconds > 0
-      bundlesBought === 1
-      // bundleExpireMiliseconds > 0
-    ) {
+    if (countdown700) {
       setisAtlimit(true);
-
-      handleRefreshCountdown700();
       setStatus700(
         "The Golden Pass bundle is currently not available for purchase. Please check back next month."
       );
     }
-  }, [priceType, chainId, bundlesBought, countdown700]);
+  }, [countdown700]);
+
+  useEffect(() => {
+    handleRefreshCountdown700();
+  }, [coinbase])
+   
 
   useEffect(() => {
     getTokenData();
@@ -1345,7 +1331,6 @@ const NewBundleCard = ({
   useEffect(() => {
     getBundlePrizes();
   }, []);
-
   return (
     <>
       <div className="row m-0 align-items-center gap-4 gap-lg-0">
@@ -1960,7 +1945,7 @@ const NewBundleCard = ({
                 </div>
                 {countdown700 !== 0 && countdown700 && (
                   <Countdown
-                    date={Number(countdown700)}
+                    date={Number(countdown700)*1000}
                     renderer={renderer700}
                     onComplete={() => {
                       setcountdown700();

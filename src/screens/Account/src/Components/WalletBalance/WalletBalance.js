@@ -1034,6 +1034,7 @@ const WalletBalance = ({
       setmyNftsOffer(recievedOffers);
 
       finalCollection = [
+        ...baseNftsArray,
         ...bnbNftsArray,
         ...opbnbNftsArray,
         ...cookieNftsArray,
@@ -1045,7 +1046,6 @@ const WalletBalance = ({
         ...coreNftsArray,
         ...confluxNftsArray,
         ...gateNftsArray,
-        ...baseNftsArray,
         ...dogeNftsArray,
         ...cmcNftsArray,
         ...coingeckoNftsArray,

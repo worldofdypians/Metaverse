@@ -57,7 +57,7 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
               : data.linkState == "gate"
               ? gateProfileBanner
               : data.linkState == "base"
-              ? baseProfileBanner
+              ? data.backgroundImage
               : data.linkState == "doge"
               ? dogeProfileBanner
               : data.linkState == "coinmarketcap"

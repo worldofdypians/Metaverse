@@ -55,7 +55,7 @@ const Tokenomics = () => {
     },
     {
       category: "Team",
-      tokens: "12,000,000",
+      tokens: "120,000,000",
       allocation: 12,
 
       tge: 0,
@@ -95,7 +95,7 @@ const Tokenomics = () => {
     },
     {
       category: "Liquidity",
-      tokens: "800,000,000",
+      tokens: "80,000,000",
       allocation: 8,
 
       tge: 50,

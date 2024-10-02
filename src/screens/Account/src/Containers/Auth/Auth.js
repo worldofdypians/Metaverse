@@ -48,7 +48,7 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
   })
 );
 
-function Auth({ isConnected, coinbase,onSuccessLogin }) {
+function Auth({ isConnected, coinbase, onSuccessLogin }) {
   const { isAuthenticated, loginError, setLoginValues, playerId } = useAuth();
 
   const [value, setValue] = React.useState(0);
@@ -112,9 +112,9 @@ function Auth({ isConnected, coinbase,onSuccessLogin }) {
           {value === 0 && (
             <Login
               onSuccessLogin={() => {
-                handleFirstTask(coinbase);
-                onSuccessLogin()
                 // handleFirstTask(coinbase);
+                console.log('success')
+                onSuccessLogin()
               }}
             />
           )}

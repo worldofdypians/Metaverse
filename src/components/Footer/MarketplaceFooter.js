@@ -191,11 +191,11 @@ const Footer = () => {
                   <span className="footer-link font-poppins">Team</span>
                 </NavLink>
                 <NavLink
-                  to="/terms-conditions"
+                  to="/terms-of-service"
                   style={{ textDecoration: "none" }}
                 >
                   <span className="footer-link font-poppins">
-                    Terms & Conditions
+                  Terms of Service
                   </span>
                 </NavLink>
                 <NavLink

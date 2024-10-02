@@ -690,6 +690,7 @@ const MarketStake = ({
       calculateAllRewards();
       calculateAllRewardsLandPool();
       calculateAllRewardsCawsPremium();
+      calculateAllRewardsLandPremium()
       myNft();
       myStakes();
       myCawsStakes();
