@@ -284,7 +284,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          dots: true,
+          dots: false,
         },
       },
     ],

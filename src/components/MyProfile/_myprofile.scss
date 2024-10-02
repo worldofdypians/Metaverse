@@ -419,12 +419,14 @@ text-transform: uppercase;
 }
 
 .progress-line {
-  stroke-width: 0.5px;
-  stroke: rgba(255, 211, 126, 0);
+  height: 1px;
+  background: linear-gradient(to right, #FFD37E00, #FFD37E80);
+  width: 100%;
 }
 .progress-line-2 {
-  stroke-width: 0.5px;
-  stroke: rgba(255, 211, 126, 0);
+  height: 1px;
+  background: linear-gradient(to left, #FFD37E00, #FFD37E80);
+  width: 100%;
 }
 
 .daily-progress-span {
@@ -436,6 +438,7 @@ text-transform: uppercase;
   font-weight: 600;
   line-height: 24px; /* 240% */
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .daily-progress-grid {
@@ -556,16 +559,16 @@ text-transform: uppercase;
 
 .limited-offer-card {
   background: #092e4b;
-  height: 160px;
+  // height: 160px;
   width: 120px;
-  transform: matrix(1, 0, -0.18, 0.98, 0, 0);
-  border-left: 2px solid #015f86;
-  border-bottom: 2px solid #015f86;
+  // transform: matrix(1, 0, -0.18, 0.98, 0, 0);
+  // border-left: 2px solid #015f86;
+  // border-bottom: 2px solid #015f86;
 
-  @media screen and (max-width: 786px) {
-    transform: none;
-    border: 2px solid #015f86;
-  }
+  // @media screen and (max-width: 786px) {
+  //   transform: none;
+  //   border: 2px solid #015f86;
+  // }
 }
 
 .limited-offer-reward {
