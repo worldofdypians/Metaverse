@@ -1722,6 +1722,21 @@
   }
 }
 
+
+.new-benefits-grid2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  place-items: center;
+
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 786px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 .new-benefits-header {
   font-weight: 800;
   font-size: 24px;
