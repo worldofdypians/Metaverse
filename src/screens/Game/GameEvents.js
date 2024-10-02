@@ -5,43 +5,43 @@ import { NavLink } from "react-router-dom";
 const GameEvents = () => {
   const events = [
     {
-      link: "/marketplace/events/treasure-hunt",
+      link: "/account/challenges/treasure-hunt",
       title: "TREASURE HUNT",
       desc: "Find hidden items in daily quests",
       class: "treasureHuntCard",
     },
     {
-      link: "/marketplace/events/dragon-ruins",
+      link: "/account/challenges/dragon-ruins",
       title: "DRAGON RUINS",
       desc: "Conquer ancient challenges in dragon ruins",
       class: "dragonRuinsCard",
     },
     {
-      link: "/marketplace/events/scorpion-king",
+      link: "/account/challenges/scorpion-king",
       title: "SCORPION KING",
       desc: "Battle the formidable ruler of the sands",
       class: "scorpionKingCard",
     },
     {
-      link: "/marketplace/events/puzzle-madness",
+      link: "/account/challenges/puzzle-madness",
       title: "PUZZLE MADNESS",
       desc: "Solve puzzles and unravel mysteries",
       class: "puzzleMadnessCard",
     },
     {
-      link: "/marketplace/events/critical-hit",
+      link: "/account/challenges/critical-hit",
       title: "CRITICAL HIT",
       desc: "Break the ancient gem",
       class: "criticalHitCard",
     },
     {
-      link: "/marketplace/events/maze-garden",
+      link: "/account/challenges/maze-garden",
       title: "MAZE GARDEN",
       desc: "Explore intricate labyrinths for hidden treasures",
       class: "mazeGardenCard",
     },
     {
-      link: "/account",
+      link: "/account#dailybonus",
       title: "DAILY BONUS",
       desc: "Log in daily to claim exciting rewards",
       class: "dailyBonusCard",

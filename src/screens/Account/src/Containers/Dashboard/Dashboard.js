@@ -95,7 +95,7 @@ import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.
 import baseUpcoming from "../../Components/WalletBalance/assets/baseUpcoming.webp";
 import cmcUpcoming from "../../../../Marketplace/assets/upcomingCmc.webp";
 import upcomingDyp2 from "../../../../Marketplace/assets/dypiusBgPic2.webp";
-import upcomingBase2 from '../../../../Marketplace/assets/upcomingBase2.webp'
+import upcomingBase2 from "../../../../Marketplace/assets/upcomingBase2.webp";
 
 import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
@@ -114,6 +114,7 @@ import NewEvents from "../../../../../components/NewEvents/NewEvents";
 import successMark from "../../Components/WalletBalance/newAssets/successMark.svg";
 import RankPopup from "../../../../../components/MyProfile/RankPopup";
 import EventsPopup from "../../../../../components/MyProfile/EventsPopup";
+import { useParams } from "react-router-dom";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -211,7 +212,8 @@ function Dashboard({
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
 
   const { email, logout } = useAuth();
-
+  const { eventId } = useParams();
+  console.log(eventId);
   const override = {
     display: "block",
     margin: "auto",
@@ -8780,6 +8782,24 @@ function Dashboard({
     }
   };
 
+  const scrollToElement = () => {
+    const element = document.getElementById(eventId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+    }
+     else {
+      window.scrollTo(0, 0);
+    }
+  };
+
+  useEffect(() => {
+    if (eventId) {
+      scrollToElement();
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [eventId]);
+
   const updateUserRank = async () => {
     if (rankData && userRankName) {
       if (rankData.rank == userRankName.id) {
@@ -9180,7 +9200,7 @@ function Dashboard({
   }, [account, email, data?.getPlayer?.wallet]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     getTokenDatabnb();
     fetchCFXPrice();
   }, []);
@@ -9272,7 +9292,8 @@ function Dashboard({
       </div>
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft2 d-flex flex-column align-items-start px-3 px-lg-5 position-relative">
-        {location.pathname === "/account" ? (
+        {location.pathname === "/account" ||
+        location.pathname.includes("/account/challenges/") ? (
           <>
             <MyProfile
               claimedChests={claimedChests}
@@ -9342,6 +9363,7 @@ function Dashboard({
               wallet={data?.getPlayer?.wallet?.publicAddress}
               chainId={chainId}
               binanceW3WProvider={binanceW3WProvider}
+              selectedEvent={eventId}
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (
@@ -9417,6 +9439,7 @@ function Dashboard({
             seiImages={seiImages}
             victionImages={victionImages}
             mantaImages={mantaImages}
+            baseImages={baseImages}
             taikoImages={taikoImages}
             coreImages={coreImages}
             chainId={chainId}
@@ -9456,6 +9479,8 @@ function Dashboard({
             claimedVictionPremiumChests={claimedVictionPremiumChests}
             claimedMantaChests={claimedMantaChests}
             claimedMantaPremiumChests={claimedMantaPremiumChests}
+            claimedBaseChests={claimedBaseChests}
+            claimedBasePremiumChests={claimedBasePremiumChests}
             claimedTaikoChests={claimedTaikoChests}
             claimedTaikoPremiumChests={claimedTaikoPremiumChests}
             claimedSeiChests={claimedSeiChests}
@@ -9466,6 +9491,7 @@ function Dashboard({
             openedCoreChests={openedCoreChests}
             openedVictionChests={openedVictionChests}
             openedMantaChests={openedMantaChests}
+            openedBaseChests={openedBaseChests}
             openedTaikoChests={openedTaikoChests}
             openedSeiChests={openedSeiChests}
             canBuy={canBuy}
@@ -9475,6 +9501,7 @@ function Dashboard({
             allCoreChests={allCoreChests}
             allVictionChests={allVictionChests}
             allMantaChests={allMantaChests}
+            allBaseChests={allBaseChests}
             allTaikoChests={allTaikoChests}
             allSeiChests={allSeiChests}
             onChestClaimed={() => {
@@ -9491,6 +9518,9 @@ function Dashboard({
             }}
             onMantaChestClaimed={() => {
               setmantacount(mantacount + 1);
+            }}
+            onBaseChestClaimed={() => {
+              setbasecount(basecount + 1);
             }}
             onTaikoChestClaimed={() => {
               settaikocount(taikocount + 1);
