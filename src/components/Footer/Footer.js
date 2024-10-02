@@ -166,7 +166,7 @@ const Footer = () => {
     <div
       className={`${
         padding ? "extra-padding" : null
-      } footer-container d-flex justify-content-center align-items-center px-3 px-lg-5 w-100 `}
+      } footer-container ${location.pathname.includes("map") ? "d-none" : "d-flex"} justify-content-center align-items-center px-3 px-lg-5 w-100  `}
     >
       <div className="custom-container">
         <div className="d-flex align-items-center gap-lg-0 gap-4 justify-content-between flex-lg-row flex-column">

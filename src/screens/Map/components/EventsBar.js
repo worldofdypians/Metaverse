@@ -1,7 +1,7 @@
 import React from "react";
 
 import Countdown from "react-countdown";
-import { dummyEvents } from "../mapdata/areas";
+import { challenges } from "../mapdata/areas";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -36,10 +36,10 @@ const EventsBar = ({ onClose, show, handleMarkerClick }) => {
 
   return (
     <div
-      className={`marker-details-2 ${show && "marker-events-active"}`}
-      style={{ background: "none", boxShadow: "none" }}
+      className={`marker-details-2 ${show && "marker-events-active"} ps-2 py-0 pe-0`}
+      style={{ background: "none", boxShadow: "none", border: "none", backdropFilter: "none" }}
     >
-      <div className="d-flex flex-column justify-content-between h-100">
+      <div className="d-flex flex-column justify-content-between h-100 ">
         <div className="d-flex align-items-center justify-content-end">
         <div
         className={`events-arrow arrow-pos-2 mb-3 align-items-center justify-content-center d-flex d-lg-none p-3`}
@@ -53,8 +53,8 @@ const EventsBar = ({ onClose, show, handleMarkerClick }) => {
         />
       </div>
         </div>
-        <div className="d-flex flex-column gap-3 mb-3" style={{height: "100%", overflowY: "scroll"}}>
-          {dummyEvents.map((item, index) => (
+        <div className="d-flex flex-column gap-3 mb-3 pe-3" style={{height: "100%", overflowY: "scroll"}}>
+          {challenges.map((item, index) => (
             <div
               key={index}
               onClick={() => handleMarkerClick(item, 18, "event")}

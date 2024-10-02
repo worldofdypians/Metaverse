@@ -1,3 +1,7 @@
+import L from "leaflet";
+import { Marker } from "react-leaflet";
+
+// Consolidated icon data
 import bnbIcon from "../assets/chainIcons/bnbIcon.svg";
 import coreIcon from "../assets/chainIcons/coreIcon.svg";
 import baseIcon from "../assets/chainIcons/baseIcon.svg";
@@ -19,161 +23,112 @@ import seiLogo from "../assets/chainIcons/seiLogo.svg";
 import immutable from "../assets/chainIcons/immutable.svg";
 import chainlinkIcon from "../assets/chainIcons/chainlinkIcon.svg";
 import mantaIcon from "../assets/chainIcons/mantaIcon.png";
+import midle from "../assets/chainIcons/midle.png";
 import dypIcon from "../assets/chainIcons/dypIcon.svg";
+import cookie3 from "../assets/chainIcons/cookie3.svg";
+import dogecoin from "../assets/chainIcons/dogecoin.svg";
 import bearIcon from "../assets/bearIcon.svg";
 import boarIcon from "../assets/boarIcon.svg";
 import deerIcon from "../assets/deerIcon.svg";
 import landIcon from "../assets/landIcon.png";
-import questIcon from "../assets/questIcon.svg";
-import craftingIcon from "../assets/craftingIcon.svg";
-import teleportIcon from "../assets/teleportIcon.svg";
-import dragon from "../assets/dragon.png";
+import questIcon from "../assets/sidebarIcons/questsIcon.svg";
+import craftingIcon from "../assets/sidebarIcons/craftIcon.svg";
+import teleportIcon from "../assets/sidebarIcons/teleportsIcon.svg";
 import dragonIcon from "../assets/dragonIcon.png";
 import scorpionIcon from "../assets/tempScorpion2.png";
 import treasureHuntIcon from "../assets/treasureHuntIcon.png";
 import puzzleMadnessIcon from "../assets/puzzleMadnessIcon.png";
 import mazeGardenIcon from "../assets/mazeGardenIcon.png";
 import trainIcon from "../assets/trainIcon.svg";
-import scorpionKing from "../assets/scorpionKing.png";
-import whitePickaxe from "../assets/whitePickaxe.svg";
 import magnifier from "../assets/magnifier.svg";
-import leaderboardsIcon from "../assets/leaderboardsIcon.svg";
-import minerIcon from "../assets/minerIcon.svg";
-import L from "leaflet";
-import { Marker } from "react-leaflet";
+import leaderboardsIcon from "../assets/sidebarIcons/leaderboardsIcon.svg";
+import minerIcon from "../assets/sidebarIcons/minesIcon.svg";
 
-const AreaTextMarker = ({ area, position }) => {
-  const textIcon = L.divIcon({
-    className: "custom-div-icon",
-    html: `<div class="area-text-marker">${area}</div>`,
-    iconSize: [150, 60],
-    iconAnchor: [75, 30], // Center the text
-  });
+// Consolidated icon data array
+const iconData = [
+  { name: "bearMarker", url: bearIcon, size: 32 },
+  { name: "boarMarker", url: boarIcon, size: 32 },
+  { name: "deerMarker", url: deerIcon, size: 32 },
+  { name: "bnbMarker", url: bnbIcon, size: 24 },
+  { name: "coreMarker", url: coreIcon, size: 24 },
+  { name: "mantaMarker", url: mantaIcon, size: 24 },
+  { name: "dypMarker", url: dypIcon, size: 24 },
+  { name: "skaleMarker", url: skaleIcon, size: 24 },
+  { name: "taikoMarker", url: taikoIcon, size: 24 },
+  { name: "victionMarker", url: victionIcon, size: 24 },
+  { name: "landMarker", url: landIcon, size: 32 },
+  { name: "dragonMarker", url: dragonIcon, size: 32 },
+  { name: "scorpionMarker", url: scorpionIcon, size: 32 },
+  { name: "questMarker", url: questIcon, size: 32 },
+  { name: "teleportMarker", url: teleportIcon, size: 32 },
+  { name: "craftingMarker", url: craftingIcon, size: 32 },
+  { name: "findMarker", url: magnifier, size: 32 },
+  { name: "mineMarker", url: minerIcon, size: 32 },
+  { name: "mazeMarker", url: mazeGardenIcon, size: 32 },
+  { name: "puzzleMarker", url: puzzleMadnessIcon, size: 32 },
+  { name: "treasureMarker", url: treasureHuntIcon, size: 32 },
+  { name: "trainMarker", url: trainIcon, size: 32 },
+  { name: "leaderboardsMarker", url: leaderboardsIcon, size: 32 },
+  { name: "confluxMarker", url: confluxIcon, size: 24 },
+  { name: "cmcMarker", url: cmcIcon, size: 24 },
+  { name: "coingeckoMarker", url: coingeckoIcon, size: 24 },
+  { name: "multiversxMarker", url: multiversx, size: 24 },
+  { name: "babydogeMarker", url: babydogeIcon, size: 24 },
+  { name: "avaxMarker", url: avaxIcon, size: 24 },
+  { name: "chainlinkMarker", url: chainlinkIcon, size: 24 },
+  { name: "coin98Marker", url: coin98Icon, size: 24 },
+  { name: "gateMarker", url: gateIcon, size: 24 },
+  { name: "mexcMarker", url: mexcIcon, size: 24 },
+  { name: "easy2stakeMarker", url: easy2stakeIcon, size: 24 },
+  { name: "kucoinMarker", url: kucoinIcon, size: 24 },
+  { name: "seiMarker", url: seiLogo, size: 24 },
+  { name: "immutableMarker", url: immutable, size: 24 },
+  { name: "baseMarker", url: baseIcon, size: 24 },
+  { name: "dogecoinMarker", url: dogecoin, size: 24 },
+  { name: "cookieMarker", url: cookie3, size: 24 },
+  { name: "midleMarker", url: midle, size: 24 },
+];
 
-  return (
-    <Marker position={position} icon={textIcon}>
-      {/* You can add a Popup here if needed */}
-    </Marker>
-  );
-};
-const CityTextMarker = ({ area, position }) => {
-  const textIcon = L.divIcon({
-    className: "custom-div-icon area-marker",
-    html: `<div class="city-text-marker">${area}</div>`,
-    iconSize: [100, 40],
-    iconAnchor: [50, 20], // Center the text
-  });
-
-  return (
-    <Marker position={position} icon={textIcon}>
-      {/* You can add a Popup here if needed */}
-    </Marker>
-  );
-};
-const SeaTextMarker = ({ area, position, color }) => {
-  const textIcon = L.divIcon({
-    className: "custom-div-icon",
-    html: `<div class="sea-text-marker" style="color: ${color};">${area}</div>`,
-    iconSize: [100, 40],
-    iconAnchor: [50, 20], // Center the text
-  });
-
-  return (
-    <Marker position={position} icon={textIcon}>
-      {/* You can add a Popup here if needed */}
-    </Marker>
-  );
-};
-
-const createIcon = (iconUrl, size) =>
-  L.icon({
-    iconUrl,
+// Function to create markers dynamically
+const markers = {};
+iconData.forEach(({ name, url, size }) => {
+  markers[name] = L.icon({
+    iconUrl: url,
     iconSize: [size, size],
     iconAnchor: [size / 2, size],
     popupAnchor: [0, -size],
   });
+});
 
-const bearMarker = createIcon(bearIcon, 32);
-const boarMarker = createIcon(boarIcon, 32);
-const deerMarker = createIcon(deerIcon, 32);
-const bnbMarker = createIcon(bnbIcon, 24);
-const coreMarker = createIcon(coreIcon, 24);
-const mantaMarker = createIcon(mantaIcon, 24);
-const dypMarker = createIcon(dypIcon, 24);
-const skaleMarker = createIcon(skaleIcon, 24);
-const taikoMarker = createIcon(taikoIcon, 24);
-const victionMarker = createIcon(victionIcon, 24);
-const landMarker = createIcon(landIcon, 32);
-const dragonMarker = createIcon(dragonIcon, 32);
-const scorpionMarker = createIcon(scorpionIcon, 32);
-const questMarker = createIcon(questIcon, 32);
-const teleportMarker = createIcon(teleportIcon, 32);
-const craftingMarker = createIcon(craftingIcon, 32);
-const findMarker = createIcon(magnifier, 32);
-const mineMarker = createIcon(minerIcon, 32);
-const mazeMarker = createIcon(mazeGardenIcon, 32);
-const puzzleMarker = createIcon(puzzleMadnessIcon, 32);
-const treasureMarker = createIcon(treasureHuntIcon, 32);
-const trainMarker = createIcon(trainIcon, 32);
-const leaderboardsMarker = createIcon(leaderboardsIcon, 32);
+// Generic Text Marker Component
+const TextMarker = ({ area, position, className, color, size }) => {
+  const textIcon = L.divIcon({
+    className: `custom-div-icon ${className}`,
+    html: `<div style="color: ${color};">${area}</div>`,
+    iconSize: [size.width, size.height],
+    iconAnchor: [size.width / 2, size.height / 2], // Center the text
+  });
 
-const confluxMarker = createIcon(confluxIcon, 24);
-const cmcMarker = createIcon(cmcIcon, 24);
-const coingeckoMarker = createIcon(coingeckoIcon, 24);
-const multiversxMarker = createIcon(multiversx, 24);
-const babydogeMarker = createIcon(babydogeIcon, 24);
-const avaxMarker = createIcon(avaxIcon, 24);
-const chainlinkMarker = createIcon(chainlinkIcon, 24);
-const coin98Marker = createIcon(coin98Icon, 24);
-const gateMarker = createIcon(gateIcon, 24);
-const mexcMarker = createIcon(mexcIcon, 24);
-const easy2stakeMarker = createIcon(easy2stakeIcon, 24);
-const kucoinMarker = createIcon(kucoinIcon, 24);
-const seiMarker = createIcon(seiLogo, 24);
-const immutableMarker = createIcon(immutable, 24);
-const baseMarker = createIcon(baseIcon, 24);
+  return <Marker position={position} icon={textIcon} />;
+};
 
-// Exporting the markers
+// Specific marker components with predefined styles
+const AreaTextMarker = (props) => (
+  <TextMarker {...props} className="area-text-marker" size={{ width: 150, height: 60 }} />
+);
+
+const CityTextMarker = (props) => (
+  <TextMarker {...props} className="city-text-marker" size={{ width: 100, height: 40 }} />
+);
+
+const SeaTextMarker = (props) => (
+  <TextMarker {...props} className="sea-text-marker" size={{ width: 100, height: 40 }} />
+);
+
+// Exporting the markers and text markers
 export {
-  bearMarker,
-  boarMarker,
-  deerMarker,
-  bnbMarker,
-  coreMarker,
-  mantaMarker,
-  dypMarker,
-  skaleMarker,
-  taikoMarker,
-  victionMarker,
+  markers, // Exports all dynamically created markers
   AreaTextMarker,
   CityTextMarker,
   SeaTextMarker,
-  landMarker,
-  dragonMarker,
-  questMarker,
-  scorpionMarker,
-  teleportMarker,
-  craftingMarker,
-  findMarker,
-  mineMarker,
-  mazeMarker,
-  puzzleMarker,
-  treasureMarker,
-  trainMarker,
-  leaderboardsMarker,
-  baseMarker,
-  cmcMarker,
-  coingeckoMarker,
-  multiversxMarker,
-  confluxMarker,
-  babydogeMarker,
-  avaxMarker,
-  chainlinkMarker,
-  coin98Marker,
-  gateMarker,
-  mexcMarker,
-  easy2stakeMarker,
-  kucoinMarker,
-  seiMarker,
-  immutableMarker,
 };
