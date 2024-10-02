@@ -16,6 +16,7 @@ import vicitonIcon from "../../Components/WalletBalance/assets/victionLogo.svg";
 import { ethers } from "ethers";
 import axios from "axios";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
+import "./_getpremium.scss";
 
 const GetPremiumPopup = ({
   coinbase,
@@ -622,7 +623,7 @@ const GetPremiumPopup = ({
 
     if (chainId === 56 && nftPremium_total > 0) {
       if (window.WALLET_TYPE !== "binance") {
-        let tokenContract = new  window.web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -1784,15 +1785,6 @@ const GetPremiumPopup = ({
     <div className="custom-container">
       <div className="subscribe-container p-2 position-relative">
         <div className="" style={{ background: "#8E97CD" }}></div>
-        <div className="d-flex justify-content-between align-items-center">
-          <h6 className="free-plan-title">Premium Subscription</h6>
-          <img
-            src={xMark}
-            onClick={onClose}
-            alt=""
-            style={{ cursor: "pointer" }}
-          />
-        </div>
         {discountPercentage > 0 ||
         discountPercentageViction > 0 ||
         nftPremium_total > 0 ||
@@ -2014,181 +2006,189 @@ const GetPremiumPopup = ({
             ))}
           </div>
         </div>{" "}
-        <hr className="form-divider my-4" />
-        <div className="d-flex mt-4 mb-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
-          <div className="d-flex flex-column gap-3 subscribe-input-container">
-            <span className="token-amount-placeholder">Select chain</span>
-            <div class="dropdown position relative">
-              <button
-                class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle`}
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <div
-                  className="d-flex align-items-center gap-2"
-                  style={{ color: "#fff" }}
+        {/* <hr className="form-divider my-4" /> */}
+        <div className="d-flex align-items-end justify-content-between mt-3">
+          <h6 className="become-premium-new-title mb-0">
+            Become Premium Subscriber
+          </h6>
+          <span className="my-premium-balance">My Balance: 2.14 WETH</span>
+        </div>
+        <div className="premium-benefits-wrapper mt-3 d-flex p-3 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
+          <div className="d-flex align-items-end gap-4">
+            <div className="d-flex flex-column gap-3 subscribe-input-container">
+              <span className="token-amount-placeholder">Select chain</span>
+              <div class="dropdown position relative">
+                <button
+                  class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle`}
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
-                  <img
-                    src={require(`../../Images/premium/tokens/${chainDropdown.symbol}Icon.svg`)}
-                    alt=""
-                    style={{ width: 18, height: 18 }}
-                  />
-                  {chainDropdown.name}
-                </div>
-                <img src={launchpadIndicator} alt="" />
-              </button>
-              <ul class="dropdown-menu w-100">
-                <li
-                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                  onClick={handleEthPool}
-                >
-                  <img
-                    src={
-                      require(`../../Images/premium/tokens/ethIcon.svg`).default
-                    }
-                    alt=""
-                  />
-                  Ethereum
-                </li>
-                <li
-                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                  onClick={handleBnbPool}
-                >
-                  <img
-                    src={
-                      require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                        .default
-                    }
-                    alt=""
-                  />
-                  BNB Chain
-                </li>
-                <li
-                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                  onClick={handleMantaPool}
-                >
-                  <img
-                    src={
-                      require(`../../Images/premium/tokens/mantaIcon.svg`)
-                        .default
-                    }
-                    style={{ width: 18, height: 18 }}
-                    alt=""
-                  />
-                  Manta
-                </li>
-                {window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
-                    <li
-                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                      onClick={handleTaikoPool}
-                    >
-                      <img
-                        src={
-                          require(`../../Images/premium/tokens/taikoIcon.svg`)
-                            .default
-                        }
-                        style={{ width: 18, height: 18 }}
-                        alt=""
-                      />
-                      Taiko
-                    </li>
-                  )}
-                <li
-                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                  onClick={handleAvaxPool}
-                >
-                  <img
-                    src={
-                      require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                        .default
-                    }
-                    alt=""
-                  />
-                  Avalanche
-                </li>
-                <li
-                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                  onClick={handleBasePool}
-                >
-                  <img
-                    src={baseLogo}
-                    alt=""
-                    style={{
-                      width: "18px",
-                      height: "18px",
-                    }}
-                  />
-                  Base Network
-                </li>
-                <li
-                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                  onClick={handleConfluxPool}
-                >
-                  <img
-                    src={conflux}
-                    alt=""
-                    style={{
-                      width: "18px",
-                      height: "18px",
-                    }}
-                  />
-                  Conflux Network
-                </li>
-                {window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
-                    <li
-                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                      onClick={handleSkalePool}
-                    >
-                      <img
-                        src={skaleIcon}
-                        alt=""
-                        style={{
-                          width: "18px",
-                          height: "18px",
-                        }}
-                      />
-                      SKALE
-                    </li>
-                  )}
+                  <div
+                    className="d-flex align-items-center gap-2"
+                    style={{ color: "#fff" }}
+                  >
+                    <img
+                      src={require(`../../Images/premium/tokens/${chainDropdown.symbol}Icon.svg`)}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    {chainDropdown.name}
+                  </div>
+                  <img src={launchpadIndicator} alt="" />
+                </button>
+                <ul class="dropdown-menu w-100">
+                  <li
+                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                    onClick={handleEthPool}
+                  >
+                    <img
+                      src={
+                        require(`../../Images/premium/tokens/ethIcon.svg`)
+                          .default
+                      }
+                      alt=""
+                    />
+                    Ethereum
+                  </li>
+                  <li
+                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                    onClick={handleBnbPool}
+                  >
+                    <img
+                      src={
+                        require(`../../Images/premium/tokens/wbnbIcon.svg`)
+                          .default
+                      }
+                      alt=""
+                    />
+                    BNB Chain
+                  </li>
+                  <li
+                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                    onClick={handleMantaPool}
+                  >
+                    <img
+                      src={
+                        require(`../../Images/premium/tokens/mantaIcon.svg`)
+                          .default
+                      }
+                      style={{ width: 18, height: 18 }}
+                      alt=""
+                    />
+                    Manta
+                  </li>
+                  {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <li
+                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                        onClick={handleTaikoPool}
+                      >
+                        <img
+                          src={
+                            require(`../../Images/premium/tokens/taikoIcon.svg`)
+                              .default
+                          }
+                          style={{ width: 18, height: 18 }}
+                          alt=""
+                        />
+                        Taiko
+                      </li>
+                    )}
+                  <li
+                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                    onClick={handleAvaxPool}
+                  >
+                    <img
+                      src={
+                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                          .default
+                      }
+                      alt=""
+                    />
+                    Avalanche
+                  </li>
+                  <li
+                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                    onClick={handleBasePool}
+                  >
+                    <img
+                      src={baseLogo}
+                      alt=""
+                      style={{
+                        width: "18px",
+                        height: "18px",
+                      }}
+                    />
+                    Base Network
+                  </li>
+                  <li
+                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                    onClick={handleConfluxPool}
+                  >
+                    <img
+                      src={conflux}
+                      alt=""
+                      style={{
+                        width: "18px",
+                        height: "18px",
+                      }}
+                    />
+                    Conflux Network
+                  </li>
+                  {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <li
+                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                        onClick={handleSkalePool}
+                      >
+                        <img
+                          src={skaleIcon}
+                          alt=""
+                          style={{
+                            width: "18px",
+                            height: "18px",
+                          }}
+                        />
+                        SKALE
+                      </li>
+                    )}
 
-                {window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
-                    <li
-                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                      onClick={handleCorePool}
-                    >
-                      <img
-                        src={coreIcon}
-                        alt=""
-                        style={{
-                          width: "18px",
-                          height: "18px",
-                        }}
-                      />
-                      CORE
-                    </li>
-                  )}
-                {window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
-                    <li
-                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                      onClick={handleVictionPool}
-                    >
-                      <img
-                        src={vicitonIcon}
-                        alt=""
-                        style={{
-                          width: "18px",
-                          height: "18px",
-                        }}
-                      />
-                      Viction
-                    </li>
-                  )}
-                {/*     <li
+                  {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <li
+                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                        onClick={handleCorePool}
+                      >
+                        <img
+                          src={coreIcon}
+                          alt=""
+                          style={{
+                            width: "18px",
+                            height: "18px",
+                          }}
+                        />
+                        CORE
+                      </li>
+                    )}
+                  {window.WALLET_TYPE !== "binance" &&
+                    !window.ethereum?.isBinance && (
+                      <li
+                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                        onClick={handleVictionPool}
+                      >
+                        <img
+                          src={vicitonIcon}
+                          alt=""
+                          style={{
+                            width: "18px",
+                            height: "18px",
+                          }}
+                        />
+                        Viction
+                      </li>
+                    )}
+                  {/*     <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={handleSeiPool}
                                     >
@@ -2202,29 +2202,16 @@ const GetPremiumPopup = ({
                                       />
                                       SEI
                                     </li> */}
-              </ul>
+                </ul>
+              </div>
             </div>
-          </div>
-          <div className="d-flex flex-column gap-3 subscribe-input-container"></div>
-          {(discountPercentage < 100 && discountPercentageViction  < 100) && (
-            <div className="d-flex flex-column align-items-end gap-3">
-              <span className="my-premium-balance-text mb-0">
-                My balance:{" "}
-                {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 5)}{" "}
-                {dropdownIcon.toUpperCase()}
-              </span>
-              <div
-                className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
-                style={{ height: "34px" }}
-              >
-                <span className="subscription-price-text mb-0">
-                  Subscription Price:
-                </span>
-
-                <div className="d-flex align-items-center gap-2">
+            <div className="d-flex flex-column gap-3">
+              <span className="token-amount-placeholder">Subscription Price</span>
+                  <div className="launchpad-dropdown dropdown-toggle d-flex align-items-center ps-0 gap-3">
+                  <div className="d-flex align-items-center gap-2">
                   <div class="dropdown position relative">
                     <button
-                      class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
+                      class={`btn launchpad-dropdown d-flex gap-1 justify-content-between dropdown-toggle align-items-center  w-100`}
                       type="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
@@ -2459,61 +2446,11 @@ const GetPremiumPopup = ({
                         : discountPercentage
                     )}
                 </span>
-              </div>
+                  </div>
             </div>
-          )}
-
-          {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
-              <span className="token-balance-placeholder">
-                Token Balance
-              </span>
-              <h6 className="account-token-amount">
-                {" "}
-                {getFormattedNumber(
-                  tokenBalance / 10 ** tokenDecimals,
-                  6
-                )}
-              </h6>
-            </div> */}
-        </div>
-        {/* <div
-            className="subscription-token-wrapper  p-2 d-flex align-items-center justify-content-between  mt-3"
-            style={{ width: "100%" }}
-          >
-            <span className="token-amount-placeholder">
-              Subscription price:
-            </span>
-            <div className="d-flex align-items-center gap-2">
-              <span className="usdt-text">
-                {formattedPrice.slice(0, 9)}
-              </span>
-
-              <img
-                src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
-                height={24}
-                width={24}
-                alt="usdt"
-              />
-            </div>
-          </div> */}
-        {chainId === 1482601649 && (
-          <div className="gotoNebula-wrapper p-3 mb-3">
-            <div className="d-flex w-100 justify-content-between gap-2">
-              <span className="nebula-wrapper-text">
-                Bridge your USDC to Nebula now!
-              </span>
-              <a
-                className="nebula-bridgebtn"
-                href="https://portal.skale.space/bridge?from=mainnet&to=green-giddy-denebola&token=usdc&type=erc20"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Nebula Bridge
-              </a>
-            </div>
+           
           </div>
-        )}
-        {discountPercentage > 0 && chainId === 56 ? (
+          {discountPercentage > 0 && chainId === 56 ? (
           <div className="d-flex align-items-center gap-3 justify-content-center">
             <div
               className={` ${
@@ -2833,6 +2770,77 @@ const GetPremiumPopup = ({
             </div>
           </div>
         )}
+          {/* {discountPercentage < 100 && discountPercentageViction < 100 && (
+            <div className="d-flex flex-column align-items-end gap-3">
+              <span className="my-premium-balance-text mb-0">
+                My balance:{" "}
+                {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 5)}{" "}
+                {dropdownIcon.toUpperCase()}
+              </span>
+              <div
+                className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
+                style={{ height: "34px" }}
+              >
+                <span className="subscription-price-text mb-0">
+                  Subscription Price:
+                </span>
+
+                
+              </div>
+            </div>
+          )} */}
+
+          {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
+              <span className="token-balance-placeholder">
+                Token Balance
+              </span>
+              <h6 className="account-token-amount">
+                {" "}
+                {getFormattedNumber(
+                  tokenBalance / 10 ** tokenDecimals,
+                  6
+                )}
+              </h6>
+            </div> */}
+        </div>
+        {/* <div
+            className="subscription-token-wrapper  p-2 d-flex align-items-center justify-content-between  mt-3"
+            style={{ width: "100%" }}
+          >
+            <span className="token-amount-placeholder">
+              Subscription price:
+            </span>
+            <div className="d-flex align-items-center gap-2">
+              <span className="usdt-text">
+                {formattedPrice.slice(0, 9)}
+              </span>
+
+              <img
+                src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                height={24}
+                width={24}
+                alt="usdt"
+              />
+            </div>
+          </div> */}
+        {chainId === 1482601649 && (
+          <div className="gotoNebula-wrapper p-3 mb-3">
+            <div className="d-flex w-100 justify-content-between gap-2">
+              <span className="nebula-wrapper-text">
+                Bridge your USDC to Nebula now!
+              </span>
+              <a
+                className="nebula-bridgebtn"
+                href="https://portal.skale.space/bridge?from=mainnet&to=green-giddy-denebola&token=usdc&type=erc20"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Nebula Bridge
+              </a>
+            </div>
+          </div>
+        )}
+     
         <div
           className={`d-flex align-items-center ${
             !coinbase ? "justify-content-between" : "justify-content-end"
