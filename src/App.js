@@ -4186,7 +4186,7 @@ function App() {
               />
             }
           />
-          <Route
+          {/* <Route
             exact
             path="/account/my-rewards"
             element={
@@ -4214,7 +4214,7 @@ function App() {
                 isPremium={isPremium}
               />
             }
-          />
+          /> */}
           <Route
             exact
             path="/account/premium"
@@ -5175,29 +5175,40 @@ function App() {
           />
           <Route
             exact
-            path="/account/events/:eventId"
+            path="/account/challenges/:eventId"
             element={
-              <MarketEvents
-                tabState={"live"}
-                isConnected={isConnected}
-                handleConnect={handleShowWalletModal}
-                listedNFTS={listedNFTS}
-                account={coinbase?.toLowerCase()}
-                chainId={networkId}
-                dyptokenDatabnb={dyptokenDatabnb}
-                dyptokenDatabnb_old={dyptokenDatabnb_old}
-                idyptokenDatabnb={idyptokenDatabnb}
-                handleAvailableTime={(value) => {
-                  setavailTime(value);
-                }}
-                ethTokenData={ethTokenData}
-                dyptokenData_old={dypTokenData_old}
-                dogePrice={dogePrice}
-                binanceW3WProvider={library}
-              />
+              <Dashboard
+              ethTokenData={ethTokenData}
+              dyptokenDatabnb={dyptokenDatabnb}
+              dypTokenData={dypTokenData}
+              handleSwitchChain={handleSwitchChain}
+              dypTokenData_old={dypTokenData_old}
+              coinbase={coinbase}
+              account={coinbase}
+              binanceW3WProvider={library}
+              binanceWallet={coinbase}
+              isConnected={isConnected}
+              chainId={networkId}
+              handleConnect={handleConnectWallet}
+              onSigninClick={checkData}
+              success={success}
+              availableTime={availTime}
+              handleSwitchNetwork={handleSwitchNetwork}
+              handleOpenDomains={() => setDomainPopup(true)}
+              domainName={domainName}
+              dogePrice={dogePrice}
+              onSubscribeSuccess={() => {
+                setCount55(count55 + 1);
+              }}
+              isPremium={isPremium}
+              handleConnectionPassport={handleConnectPassport}
+              handleConnectBinance={handleConnectBinance}
+              handleSwitchChainGateWallet={handleSwitchNetwork}
+              handleSwitchChainBinanceWallet={handleSwitchNetwork}
+            />
             }
           />
-          <Route
+          {/* <Route
             exact
             path="/marketplace/events/upcoming"
             element={
@@ -5220,8 +5231,8 @@ function App() {
                 binanceW3WProvider={library}
               />
             }
-          />
-          <Route
+          /> */}
+          {/* <Route
             exact
             path="/marketplace/events/past"
             element={
@@ -5244,7 +5255,7 @@ function App() {
                 binanceW3WProvider={library}
               />
             }
-          />
+          /> */}
           <Route
             exact
             path="/marketplace/stake"
